@@ -9,6 +9,7 @@
 
 #include "ash/ash_constants.h"
 #include "ash/focus_cycler.h"
+#include "ash/lock_screen_action/lock_screen_action.h"
 #include "ash/lock_screen_action/lock_screen_action_background_controller.h"
 #include "ash/lock_screen_action/lock_screen_action_background_state.h"
 #include "ash/login/lock_screen_controller.h"
@@ -25,7 +26,6 @@
 #include "ash/system/status_area_widget_delegate.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/system/tray/tray_popup_utils.h"
-#include "ash/tray_action/tray_action.h"
 #include "ash/wm/lock_state_controller.h"
 #include "base/metrics/user_metrics.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -114,7 +114,7 @@ class LoginShelfButton : public views::LabelButton {
 LoginShelfView::LoginShelfView(
     LockScreenActionBackgroundController* lock_screen_action_background)
     : lock_screen_action_background_(lock_screen_action_background),
-      tray_action_observer_(this),
+      lock_screen_action_observer_(this),
       lock_screen_action_background_observer_(this),
       shutdown_controller_observer_(this) {
   // We reuse the focusable state on this view as a signal that focus should
@@ -139,7 +139,7 @@ LoginShelfView::LoginShelfView(
   add_button(kCancel, IDS_ASH_SHELF_CANCEL_BUTTON, kShelfCancelButtonIcon);
 
   // Adds observers for states that affect the visiblity of different buttons.
-  tray_action_observer_.Add(Shell::Get()->tray_action());
+  lock_screen_action_observer_.Add(Shell::Get()->lock_screen_action());
   shutdown_controller_observer_.Add(Shell::Get()->shutdown_controller());
   lock_screen_action_background_observer_.Add(lock_screen_action_background);
   UpdateUi();
@@ -190,7 +190,7 @@ void LoginShelfView::ButtonPressed(views::Button* sender,
       Shell::Get()->session_controller()->RequestSignOut();
       break;
     case kCloseNote:
-      Shell::Get()->tray_action()->CloseLockScreenNote(
+      Shell::Get()->lock_screen_action()->CloseNote(
           mojom::CloseLockScreenNoteReason::kUnlockButtonPressed);
       break;
     case kCancel:
@@ -199,8 +199,7 @@ void LoginShelfView::ButtonPressed(views::Button* sender,
   }
 }
 
-void LoginShelfView::OnLockScreenNoteStateChanged(
-    mojom::TrayActionState state) {
+void LoginShelfView::OnNoteStateChanged(mojom::LockScreenActionState state) {
   UpdateUi();
 }
 
@@ -231,11 +230,11 @@ void LoginShelfView::UpdateUi() {
     return;
   }
   bool show_reboot = Shell::Get()->shutdown_controller()->reboot_on_shutdown();
-  mojom::TrayActionState tray_action_state =
-      Shell::Get()->tray_action()->GetLockScreenNoteState();
+  mojom::LockScreenActionState lock_screen_action_state =
+      Shell::Get()->lock_screen_action()->GetNoteState();
   bool is_lock_screen_note_in_foreground =
-      (tray_action_state == mojom::TrayActionState::kActive ||
-       tray_action_state == mojom::TrayActionState::kLaunching) &&
+      (lock_screen_action_state == mojom::LockScreenActionState::kActive ||
+       lock_screen_action_state == mojom::LockScreenActionState::kLaunching) &&
       !LockScreenActionBackgroundAnimating();
 
   // The following should be kept in sync with |updateUI_| in md_header_bar.js.

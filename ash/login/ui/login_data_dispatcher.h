@@ -8,8 +8,8 @@
 #include <vector>
 
 #include "ash/ash_export.h"
+#include "ash/public/interfaces/lock_screen_action.mojom.h"
 #include "ash/public/interfaces/login_user_info.mojom.h"
-#include "ash/public/interfaces/tray_action.mojom.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 
@@ -51,7 +51,7 @@ class ASH_EXPORT LoginDataDispatcher {
                                                       bool enabled);
 
     // Called when the lock screen note state changes.
-    virtual void OnLockScreenNoteStateChanged(mojom::TrayActionState state);
+    virtual void OnNoteActionStateChanged(mojom::LockScreenActionState state);
 
     // Called when an easy unlock icon should be displayed.
     virtual void OnShowEasyUnlockIcon(
@@ -68,7 +68,7 @@ class ASH_EXPORT LoginDataDispatcher {
   void NotifyUsers(const std::vector<mojom::LoginUserInfoPtr>& users);
   void SetPinEnabledForUser(const AccountId& user, bool enabled);
   void SetClickToUnlockEnabledForUser(const AccountId& user, bool enabled);
-  void SetLockScreenNoteState(mojom::TrayActionState state);
+  void SetNoteActionState(mojom::LockScreenActionState state);
   void ShowEasyUnlockIcon(const AccountId& user,
                           const mojom::EasyUnlockIconOptionsPtr& icon);
 

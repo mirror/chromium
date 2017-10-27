@@ -21,13 +21,13 @@ class LoginDataDispatcher;
 class LockContentsView;
 
 namespace mojom {
-enum class TrayActionState;
+enum class LockScreenActionState;
 }
 
 // Contains the debug UI row (ie, add user, toggle PIN buttons).
 class LockDebugView : public views::View, public views::ButtonListener {
  public:
-  LockDebugView(mojom::TrayActionState initial_note_action_state,
+  LockDebugView(mojom::LockScreenActionState initial_note_action_state,
                 LoginDataDispatcher* data_dispatcher);
   ~LockDebugView() override;
 

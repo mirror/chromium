@@ -2,18 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef ASH_TRAY_ACTION_TRAY_ACTION_H_
-#define ASH_TRAY_ACTION_TRAY_ACTION_H_
+#ifndef ASH_LOCK_SCREEN_ACTION_LOCK_SCREEN_ACTION_H_
+#define ASH_LOCK_SCREEN_ACTION_LOCK_SCREEN_ACTION_H_
 
 #include "ash/ash_export.h"
-#include "ash/public/interfaces/tray_action.mojom.h"
+#include "ash/public/interfaces/lock_screen_action.mojom.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 
 namespace ash {
 
-class TrayActionObserver;
+class LockScreenActionObserver;
 
 // Controller that ash can use to request a predefined set of actions to be
 // performed by clients.
@@ -24,56 +24,56 @@ class TrayActionObserver;
 // Currently, only single action is supported - creating new note on the lock
 // screen - Chrome handles this action by launching an app (if any) that is
 // registered as a lock screen enabled action handler for the new note action.
-class ASH_EXPORT TrayAction : public mojom::TrayAction {
+class ASH_EXPORT LockScreenAction : public mojom::LockScreenAction {
  public:
-  TrayAction();
-  ~TrayAction() override;
+  LockScreenAction();
+  ~LockScreenAction() override;
 
-  void AddObserver(TrayActionObserver* observer);
-  void RemoveObserver(TrayActionObserver* observer);
+  void AddObserver(LockScreenActionObserver* observer);
+  void RemoveObserver(LockScreenActionObserver* observer);
 
-  void BindRequest(mojom::TrayActionRequest request);
+  void BindRequest(mojom::LockScreenActionRequest request);
 
   // Gets last known handler state for the lock screen note action.
   // It will return kNotAvailable if an action handler has not been set using
   // |SetClient|.
-  mojom::TrayActionState GetLockScreenNoteState() const;
+  mojom::LockScreenActionState GetNoteState() const;
 
   // Helper method for determining if lock screen not action is in active state.
-  bool IsLockScreenNoteActive() const;
+  bool IsNoteActive() const;
 
   // If the client is set, sends it a request to handle the lock screen note
   // action.
-  void RequestNewLockScreenNote(mojom::LockScreenNoteOrigin origin);
+  void RequestNewNote(mojom::LockScreenNoteOrigin origin);
 
   // If the client is set, sends a request to close the lock screen note.
-  void CloseLockScreenNote(mojom::CloseLockScreenNoteReason reason);
+  void CloseNote(mojom::CloseLockScreenNoteReason reason);
 
-  // mojom::TrayAction:
-  void SetClient(mojom::TrayActionClientPtr action_handler,
-                 mojom::TrayActionState lock_screen_note_state) override;
-  void UpdateLockScreenNoteState(mojom::TrayActionState state) override;
+  // mojom::LockScreenAction:
+  void SetClient(mojom::LockScreenActionClientPtr action_handler,
+                 mojom::LockScreenActionState note_state) override;
+  void UpdateNoteState(mojom::LockScreenActionState state) override;
 
   void FlushMojoForTesting();
 
  private:
   // Notifies the observers that state for the lock screen note action has been
   // updated.
-  void NotifyLockScreenNoteStateChanged();
+  void NotifyNoteStateChanged();
 
   // Last known state for lock screen note action.
-  mojom::TrayActionState lock_screen_note_state_ =
-      mojom::TrayActionState::kNotAvailable;
+  mojom::LockScreenActionState note_state_ =
+      mojom::LockScreenActionState::kNotAvailable;
 
-  base::ObserverList<TrayActionObserver> observers_;
+  base::ObserverList<LockScreenActionObserver> observers_;
 
-  mojo::BindingSet<mojom::TrayAction> bindings_;
+  mojo::BindingSet<mojom::LockScreenAction> bindings_;
 
-  mojom::TrayActionClientPtr tray_action_client_;
+  mojom::LockScreenActionClientPtr lock_screen_action_client_;
 
-  DISALLOW_COPY_AND_ASSIGN(TrayAction);
+  DISALLOW_COPY_AND_ASSIGN(LockScreenAction);
 };
 
 }  // namespace ash
 
-#endif  // ASH_TRAY_ACTION_TRAY_ACTION_H_
+#endif  // ASH_LOCK_SCREEN_ACTION_LOCK_SCREEN_ACTION_H_

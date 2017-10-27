@@ -7,11 +7,11 @@
 #include <utility>
 #include <vector>
 
+#include "ash/lock_screen_action/lock_screen_action.h"
 #include "ash/lock_screen_action/lock_screen_action_background_controller.h"
 #include "ash/public/cpp/shell_window_ids.h"
-#include "ash/public/interfaces/tray_action.mojom.h"
+#include "ash/public/interfaces/lock_screen_action.mojom.h"
 #include "ash/shell.h"
-#include "ash/tray_action/tray_action.h"
 #include "ash/wm/lock_window_state.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
@@ -26,9 +26,9 @@ namespace {
 // Whether child windows should be shown depending on lock screen note action
 // state and lock screen action background state.
 // This should not be used for lock screen background windows.
-bool ShowChildWindows(mojom::TrayActionState action_state,
+bool ShowChildWindows(mojom::LockScreenActionState action_state,
                       LockScreenActionBackgroundState background_state) {
-  return action_state == mojom::TrayActionState::kActive &&
+  return action_state == mojom::LockScreenActionState::kActive &&
          (background_state == LockScreenActionBackgroundState::kShown ||
           background_state == LockScreenActionBackgroundState::kHidden);
 }
@@ -41,10 +41,10 @@ LockActionHandlerLayoutManager::LockActionHandlerLayoutManager(
     LockScreenActionBackgroundController* action_background_controller)
     : LockLayoutManager(window, shelf),
       action_background_controller_(action_background_controller),
-      tray_action_observer_(this),
+      lock_screen_action_observer_(this),
       action_background_observer_(this) {
-  TrayAction* tray_action = Shell::Get()->tray_action();
-  tray_action_observer_.Add(tray_action);
+  LockScreenAction* lock_screen_action = Shell::Get()->lock_screen_action();
+  lock_screen_action_observer_.Add(lock_screen_action);
   action_background_observer_.Add(action_background_controller_);
 }
 
@@ -74,26 +74,26 @@ void LockActionHandlerLayoutManager::OnChildWindowVisibilityChanged(
 
   // Windows should be shown only in active state.
   if (visible &&
-      !ShowChildWindows(Shell::Get()->tray_action()->GetLockScreenNoteState(),
+      !ShowChildWindows(Shell::Get()->lock_screen_action()->GetNoteState(),
                         action_background_controller_->state())) {
     child->Hide();
   }
 }
 
-void LockActionHandlerLayoutManager::OnLockScreenNoteStateChanged(
-    mojom::TrayActionState state) {
+void LockActionHandlerLayoutManager::OnNoteStateChanged(
+    mojom::LockScreenActionState state) {
   // Update the background controller state first.
   bool background_changed = false;
   switch (state) {
-    case mojom::TrayActionState::kNotAvailable:
+    case mojom::LockScreenActionState::kNotAvailable:
       background_changed =
           action_background_controller_->HideBackgroundImmediately();
       break;
-    case mojom::TrayActionState::kAvailable:
+    case mojom::LockScreenActionState::kAvailable:
       background_changed = action_background_controller_->HideBackground();
       break;
-    case mojom::TrayActionState::kLaunching:
-    case mojom::TrayActionState::kActive:
+    case mojom::LockScreenActionState::kLaunching:
+    case mojom::LockScreenActionState::kActive:
       background_changed = action_background_controller_->ShowBackground();
       break;
   }
@@ -110,11 +110,11 @@ void LockActionHandlerLayoutManager::OnLockScreenNoteStateChanged(
 
 void LockActionHandlerLayoutManager::OnLockScreenActionBackgroundStateChanged(
     LockScreenActionBackgroundState state) {
-  UpdateChildren(Shell::Get()->tray_action()->GetLockScreenNoteState(), state);
+  UpdateChildren(Shell::Get()->lock_screen_action()->GetNoteState(), state);
 }
 
 void LockActionHandlerLayoutManager::UpdateChildren(
-    mojom::TrayActionState action_state,
+    mojom::LockScreenActionState action_state,
     LockScreenActionBackgroundState background_state) {
   // Update children state:
   // * a child can be visible only in active state

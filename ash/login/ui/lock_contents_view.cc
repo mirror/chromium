@@ -215,7 +215,7 @@ LockContentsView::UserState::UserState(UserState&&) = default;
 LockContentsView::UserState::~UserState() = default;
 
 LockContentsView::LockContentsView(
-    mojom::TrayActionState initial_note_action_state,
+    mojom::LockScreenActionState initial_note_action_state,
     LoginDataDispatcher* data_dispatcher)
     : NonAccessibleView(kLockContentsViewName),
       data_dispatcher_(data_dispatcher),
@@ -242,7 +242,7 @@ LockContentsView::LockContentsView(
       new NoteActionLaunchButton(initial_note_action_state, data_dispatcher_);
   AddChildView(note_action_);
 
-  OnLockScreenNoteStateChanged(initial_note_action_state);
+  OnNoteActionStateChanged(initial_note_action_state);
 }
 
 LockContentsView::~LockContentsView() {
@@ -402,10 +402,10 @@ void LockContentsView::OnShowEasyUnlockIcon(
   }
 }
 
-void LockContentsView::OnLockScreenNoteStateChanged(
-    mojom::TrayActionState state) {
+void LockContentsView::OnNoteActionStateChanged(
+    mojom::LockScreenActionState state) {
   bool old_lock_screen_apps_active = lock_screen_apps_active_;
-  lock_screen_apps_active_ = state == mojom::TrayActionState::kActive;
+  lock_screen_apps_active_ = state == mojom::LockScreenActionState::kActive;
 
   // If lock screen apps just got deactivated - request focus for primary auth,
   // which should focus the password field.

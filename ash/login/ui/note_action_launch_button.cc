@@ -6,7 +6,7 @@
 
 #include <memory>
 
-#include "ash/public/interfaces/tray_action.mojom.h"
+#include "ash/public/interfaces/lock_screen_action.mojom.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -274,10 +274,10 @@ class NoteActionLaunchButton::ActionButton : public views::ImageButton,
         LoginMetricsRecorder::LockScreenUserClickTarget::
             kLockScreenNoteActionButton);
     if (event.IsKeyEvent()) {
-      Shell::Get()->tray_action()->RequestNewLockScreenNote(
+      Shell::Get()->lock_screen_action()->RequestNewNote(
           mojom::LockScreenNoteOrigin::kLockScreenButtonKeyboard);
     } else {
-      Shell::Get()->tray_action()->RequestNewLockScreenNote(
+      Shell::Get()->lock_screen_action()->RequestNewNote(
           mojom::LockScreenNoteOrigin::kLockScreenButtonTap);
     }
   }
@@ -304,7 +304,7 @@ class NoteActionLaunchButton::ActionButton : public views::ImageButton,
       return;
     }
 
-    Shell::Get()->tray_action()->RequestNewLockScreenNote(
+    Shell::Get()->lock_screen_action()->RequestNewNote(
         mojom::LockScreenNoteOrigin::kLockScreenButtonSwipe);
   }
 
@@ -342,7 +342,7 @@ const views::View* NoteActionLaunchButton::TestApi::BackgroundView() const {
 }
 
 NoteActionLaunchButton::NoteActionLaunchButton(
-    mojom::TrayActionState initial_note_action_state,
+    mojom::LockScreenActionState initial_note_action_state,
     LoginDataDispatcher* login_data_dispatcher)
     : login_data_observer_(this) {
   login_data_observer_.Add(login_data_dispatcher);
@@ -360,14 +360,14 @@ NoteActionLaunchButton::NoteActionLaunchButton(
 
 NoteActionLaunchButton::~NoteActionLaunchButton() = default;
 
-void NoteActionLaunchButton::OnLockScreenNoteStateChanged(
-    mojom::TrayActionState state) {
+void NoteActionLaunchButton::OnNoteActionStateChanged(
+    mojom::LockScreenActionState state) {
   UpdateVisibility(state);
 }
 
 void NoteActionLaunchButton::UpdateVisibility(
-    mojom::TrayActionState action_state) {
-  SetVisible(action_state == mojom::TrayActionState::kAvailable);
+    mojom::LockScreenActionState action_state) {
+  SetVisible(action_state == mojom::LockScreenActionState::kAvailable);
 }
 
 }  // namespace ash

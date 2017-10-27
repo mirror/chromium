@@ -37,7 +37,7 @@ class LoginUserView;
 class NoteActionLaunchButton;
 
 namespace mojom {
-enum class TrayActionState;
+enum class LockScreenActionState;
 }
 
 // LockContentsView hosts the root view for the lock screen. All other lock
@@ -68,7 +68,7 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
     LockContentsView* const view_;
   };
 
-  LockContentsView(mojom::TrayActionState initial_note_action_state,
+  LockContentsView(mojom::LockScreenActionState initial_note_action_state,
                    LoginDataDispatcher* data_dispatcher);
   ~LockContentsView() override;
 
@@ -85,7 +85,7 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   void OnUsersChanged(
       const std::vector<mojom::LoginUserInfoPtr>& users) override;
   void OnPinEnabledForUserChanged(const AccountId& user, bool enabled) override;
-  void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override;
+  void OnNoteActionStateChanged(mojom::LockScreenActionState state) override;
   void OnClickToUnlockEnabledForUserChanged(const AccountId& user,
                                             bool enabled) override;
   void OnShowEasyUnlockIcon(

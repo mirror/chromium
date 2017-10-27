@@ -8,8 +8,8 @@
 #include <unordered_map>
 
 #include "ash/ash_export.h"
+#include "ash/lock_screen_action/lock_screen_action_observer.h"
 #include "ash/session/session_observer.h"
-#include "ash/tray_action/tray_action_observer.h"
 #include "base/macros.h"
 #include "base/scoped_observer.h"
 
@@ -21,9 +21,9 @@ namespace ash {
 
 class LockWindow;
 class LoginDataDispatcher;
-class TrayAction;
+class LockScreenAction;
 
-class LockScreen : public TrayActionObserver, public SessionObserver {
+class LockScreen : public LockScreenActionObserver, public SessionObserver {
  public:
   // Fetch the global lock screen instance. |Show()| must have been called
   // before this.
@@ -45,8 +45,8 @@ class LockScreen : public TrayActionObserver, public SessionObserver {
   // Returns the active data dispatcher.
   LoginDataDispatcher* data_dispatcher();
 
-  // TrayActionObserver:
-  void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override;
+  // LockScreenActionObserver:
+  void OnNoteStateChanged(mojom::LockScreenActionState state) override;
 
   // SessionObserver:
   void OnLockStateChanged(bool locked) override;
@@ -61,7 +61,8 @@ class LockScreen : public TrayActionObserver, public SessionObserver {
   // The wallpaper bluriness before entering lock_screen.
   std::unordered_map<ui::Layer*, float> initial_blur_;
 
-  ScopedObserver<TrayAction, TrayActionObserver> tray_action_observer_;
+  ScopedObserver<LockScreenAction, LockScreenActionObserver>
+      lock_screen_action_observer_;
   ScopedSessionObserver session_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(LockScreen);

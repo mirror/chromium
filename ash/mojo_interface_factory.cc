@@ -11,6 +11,7 @@
 #include "ash/display/ash_display_controller.h"
 #include "ash/highlighter/highlighter_controller.h"
 #include "ash/ime/ime_controller.h"
+#include "ash/lock_screen_action/lock_screen_action.h"
 #include "ash/login/lock_screen_controller.h"
 #include "ash/media_controller.h"
 #include "ash/message_center/message_center_controller.h"
@@ -26,7 +27,6 @@
 #include "ash/system/network/vpn_list.h"
 #include "ash/system/night_light/night_light_controller.h"
 #include "ash/system/tray/system_tray_controller.h"
-#include "ash/tray_action/tray_action.h"
 #include "ash/wallpaper/wallpaper_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/bind.h"
@@ -127,8 +127,9 @@ void BindTabletModeRequestOnMainThread(
   Shell::Get()->tablet_mode_controller()->BindRequest(std::move(request));
 }
 
-void BindTrayActionRequestOnMainThread(mojom::TrayActionRequest request) {
-  Shell::Get()->tray_action()->BindRequest(std::move(request));
+void BindLockScreenActionRequestOnMainThread(
+    mojom::LockScreenActionRequest request) {
+  Shell::Get()->lock_screen_action()->BindRequest(std::move(request));
 }
 
 void BindVpnListRequestOnMainThread(mojom::VpnListRequest request) {
@@ -191,7 +192,7 @@ void RegisterInterfaces(
                          main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindTabletModeRequestOnMainThread),
                          main_thread_task_runner);
-  registry->AddInterface(base::Bind(&BindTrayActionRequestOnMainThread),
+  registry->AddInterface(base::Bind(&BindLockScreenActionRequestOnMainThread),
                          main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindVpnListRequestOnMainThread),
                          main_thread_task_runner);

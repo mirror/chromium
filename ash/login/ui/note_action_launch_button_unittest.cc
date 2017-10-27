@@ -7,11 +7,11 @@
 #include <memory>
 #include <vector>
 
+#include "ash/lock_screen_action/test_lock_screen_action_client.h"
 #include "ash/login/ui/layout_util.h"
 #include "ash/login/ui/login_test_base.h"
-#include "ash/public/interfaces/tray_action.mojom.h"
+#include "ash/public/interfaces/lock_screen_action.mojom.h"
 #include "ash/shell.h"
-#include "ash/tray_action/test_tray_action_client.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "ui/events/test/event_generator.h"
@@ -42,20 +42,21 @@ class NoteActionLaunchButtonTest : public LoginTestBase {
   void SetUp() override {
     LoginTestBase::SetUp();
 
-    Shell::Get()->tray_action()->SetClient(
-        tray_action_client_.CreateInterfacePtrAndBind(),
-        mojom::TrayActionState::kAvailable);
+    Shell::Get()->lock_screen_action()->SetClient(
+        lock_screen_action_client_.CreateInterfacePtrAndBind(),
+        mojom::LockScreenActionState::kAvailable);
   }
 
-  TestTrayActionClient* tray_action_client() { return &tray_action_client_; }
-
+  TestLockScreenActionClient* lock_screen_action_client() {
+    return &lock_screen_action_client_;
+  }
 
   void PerformClick(const gfx::Point& point) {
     ui::test::EventGenerator& generator = GetEventGenerator();
     generator.MoveMouseTo(point.x(), point.y());
     generator.ClickLeftButton();
 
-    Shell::Get()->tray_action()->FlushMojoForTesting();
+    Shell::Get()->lock_screen_action()->FlushMojoForTesting();
   }
 
   void GestureFling(const gfx::Point& start, const gfx::Point& end) {
@@ -63,12 +64,12 @@ class NoteActionLaunchButtonTest : public LoginTestBase {
     generator.GestureScrollSequence(start, end,
                                     base::TimeDelta::FromMilliseconds(10), 2);
 
-    Shell::Get()->tray_action()->FlushMojoForTesting();
+    Shell::Get()->lock_screen_action()->FlushMojoForTesting();
   }
 
  private:
   std::unique_ptr<LoginDataDispatcher> data_dispatcher_;
-  TestTrayActionClient tray_action_client_;
+  TestLockScreenActionClient lock_screen_action_client_;
 
   DISALLOW_COPY_AND_ASSIGN(NoteActionLaunchButtonTest);
 };
@@ -77,7 +78,7 @@ class NoteActionLaunchButtonTest : public LoginTestBase {
 // is not enabled.
 TEST_F(NoteActionLaunchButtonTest, VisibilityActionNotAvailable) {
   auto note_action_button = std::make_unique<NoteActionLaunchButton>(
-      mojom::TrayActionState::kNotAvailable, data_dispatcher());
+      mojom::LockScreenActionState::kNotAvailable, data_dispatcher());
   EXPECT_FALSE(note_action_button->visible());
 }
 
@@ -85,7 +86,7 @@ TEST_F(NoteActionLaunchButtonTest, VisibilityActionNotAvailable) {
 // taking is available.
 TEST_F(NoteActionLaunchButtonTest, VisibilityActionAvailable) {
   auto note_action_button = std::make_unique<NoteActionLaunchButton>(
-      mojom::TrayActionState::kAvailable, data_dispatcher());
+      mojom::LockScreenActionState::kAvailable, data_dispatcher());
   NoteActionLaunchButton::TestApi test_api(note_action_button.get());
 
   EXPECT_TRUE(note_action_button->visible());
@@ -100,7 +101,7 @@ TEST_F(NoteActionLaunchButtonTest, VisibilityActionAvailable) {
 // the note action visibility is updated accordingly.
 TEST_F(NoteActionLaunchButtonTest, StateChanges) {
   auto* note_action_button = new NoteActionLaunchButton(
-      mojom::TrayActionState::kAvailable, data_dispatcher());
+      mojom::LockScreenActionState::kAvailable, data_dispatcher());
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(
       login_layout_util::WrapViewForPreferredSize(note_action_button));
   NoteActionLaunchButton::TestApi test_api(note_action_button);
@@ -114,24 +115,26 @@ TEST_F(NoteActionLaunchButtonTest, StateChanges) {
             note_action_button->GetBoundsInScreen());
 
   // In kLaunching state, the action button should not be visible.
-  data_dispatcher()->SetLockScreenNoteState(mojom::TrayActionState::kLaunching);
+  data_dispatcher()->SetNoteActionState(
+      mojom::LockScreenActionState::kLaunching);
   EXPECT_FALSE(note_action_button->visible());
 
   // In kActive state, the action button should not be visible.
-  data_dispatcher()->SetLockScreenNoteState(mojom::TrayActionState::kActive);
+  data_dispatcher()->SetNoteActionState(mojom::LockScreenActionState::kActive);
   EXPECT_FALSE(note_action_button->visible());
 
   // When moved back to kAvailable state, the action button should become
   // visible again.
-  data_dispatcher()->SetLockScreenNoteState(mojom::TrayActionState::kAvailable);
+  data_dispatcher()->SetNoteActionState(
+      mojom::LockScreenActionState::kAvailable);
   EXPECT_TRUE(note_action_button->visible());
   EXPECT_EQ(gfx::Rect(gfx::Point(),
                       gfx::Size(kLargeButtonRadiusDp, kLargeButtonRadiusDp)),
             note_action_button->GetBoundsInScreen());
 
   // In kNotAvailable state, the action button should not be visible.
-  data_dispatcher()->SetLockScreenNoteState(
-      mojom::TrayActionState::kNotAvailable);
+  data_dispatcher()->SetNoteActionState(
+      mojom::LockScreenActionState::kNotAvailable);
   EXPECT_FALSE(note_action_button->visible());
 }
 
@@ -139,7 +142,7 @@ TEST_F(NoteActionLaunchButtonTest, StateChanges) {
 // a new note action.
 TEST_F(NoteActionLaunchButtonTest, KeyboardTest) {
   auto* note_action_button = new NoteActionLaunchButton(
-      mojom::TrayActionState::kAvailable, data_dispatcher());
+      mojom::LockScreenActionState::kAvailable, data_dispatcher());
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(
       login_layout_util::WrapViewForPreferredSize(note_action_button));
   NoteActionLaunchButton::TestApi test_api(note_action_button);
@@ -151,11 +154,11 @@ TEST_F(NoteActionLaunchButtonTest, KeyboardTest) {
 
   ui::test::EventGenerator& generator = GetEventGenerator();
   generator.PressKey(ui::KeyboardCode::VKEY_RETURN, ui::EF_NONE);
-  Shell::Get()->tray_action()->FlushMojoForTesting();
+  Shell::Get()->lock_screen_action()->FlushMojoForTesting();
 
   EXPECT_EQ(std::vector<mojom::LockScreenNoteOrigin>(
                 {mojom::LockScreenNoteOrigin::kLockScreenButtonKeyboard}),
-            tray_action_client()->note_origins());
+            lock_screen_action_client()->note_origins());
 }
 
 // The button hit area is expected to be a circle centered in the top right
@@ -164,7 +167,7 @@ TEST_F(NoteActionLaunchButtonTest, KeyboardTest) {
 // requests a new note action.
 TEST_F(NoteActionLaunchButtonTest, ClickTest) {
   auto* note_action_button = new NoteActionLaunchButton(
-      mojom::TrayActionState::kAvailable, data_dispatcher());
+      mojom::LockScreenActionState::kAvailable, data_dispatcher());
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(
       login_layout_util::WrapViewForPreferredSize(note_action_button));
 
@@ -180,103 +183,103 @@ TEST_F(NoteActionLaunchButtonTest, ClickTest) {
   PerformClick(view_bounds.top_right() +
                gfx::Vector2d(-kSmallButtonRadiusDp / kSqrt2 + 2,
                              kSmallButtonRadiusDp / kSqrt2 - 2));
-  EXPECT_EQ(expected_actions, tray_action_client()->note_origins());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_EQ(expected_actions, lock_screen_action_client()->note_origins());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point near the center of the view, outside the actionable area:
   PerformClick(view_bounds.top_right() +
                gfx::Vector2d(-kSmallButtonRadiusDp / kSqrt2 - 2,
                              kSmallButtonRadiusDp / kSqrt2 + 2));
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point near the top right corner:
   PerformClick(view_bounds.top_right() + gfx::Vector2d(-2, 2));
-  EXPECT_EQ(expected_actions, tray_action_client()->note_origins());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_EQ(expected_actions, lock_screen_action_client()->note_origins());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point near the bottom left corner:
   PerformClick(view_bounds.bottom_left() + gfx::Vector2d(2, -2));
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point near the origin:
   PerformClick(view_bounds.origin() + gfx::Vector2d(2, 2));
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point near the origin of the actionable area bounds (inside the bounds):
   PerformClick(view_bounds.top_right() +
                gfx::Vector2d(-kSmallButtonRadiusDp + 2, 2));
-  EXPECT_EQ(expected_actions, tray_action_client()->note_origins());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_EQ(expected_actions, lock_screen_action_client()->note_origins());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point near the origin of the actionable area bounds (outside the bounds):
   PerformClick(view_bounds.top_right() +
                gfx::Vector2d(-kSmallButtonRadiusDp - 2, 2));
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point near the bottom right corner:
   PerformClick(view_bounds.bottom_right() + gfx::Vector2d(0, -2));
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point near the bottom right corner of the actionable area bounds (inside
   // the bounds):
   PerformClick(view_bounds.top_right() +
                gfx::Vector2d(-2, kSmallButtonRadiusDp - 2));
-  EXPECT_EQ(expected_actions, tray_action_client()->note_origins());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_EQ(expected_actions, lock_screen_action_client()->note_origins());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point near the bottom right corner of the actionable area bounds (outside
   // the bounds):
   PerformClick(view_bounds.top_right() +
                gfx::Vector2d(-2, kSmallButtonRadiusDp + 2));
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point near the bottom edge:
   PerformClick(view_bounds.bottom_left() +
                gfx::Vector2d(kSmallButtonRadiusDp / 2, -1));
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point near the top edge:
   PerformClick(view_bounds.origin() +
                gfx::Vector2d(kSmallButtonRadiusDp / 2, 1));
-  EXPECT_EQ(expected_actions, tray_action_client()->note_origins());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_EQ(expected_actions, lock_screen_action_client()->note_origins());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point near the left edge:
   PerformClick(view_bounds.origin() +
                gfx::Vector2d(1, kSmallButtonRadiusDp / 2));
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point near the right edge:
   PerformClick(view_bounds.top_right() +
                gfx::Vector2d(-1, kSmallButtonRadiusDp / 2));
-  EXPECT_EQ(expected_actions, tray_action_client()->note_origins());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_EQ(expected_actions, lock_screen_action_client()->note_origins());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point in the center of the actionable area:
   PerformClick(
       view_bounds.top_right() +
       gfx::Vector2d(-kSmallButtonRadiusDp / 2, kSmallButtonRadiusDp / 2));
-  EXPECT_EQ(expected_actions, tray_action_client()->note_origins());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_EQ(expected_actions, lock_screen_action_client()->note_origins());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Point outside the view bounds:
   PerformClick(view_bounds.top_right() + gfx::Vector2d(2, 2));
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
+  lock_screen_action_client()->ClearRecordedRequests();
 }
 
 // Tests tap gesture in and outside of the note action launch button.
 TEST_F(NoteActionLaunchButtonTest, TapTest) {
   auto* note_action_button = new NoteActionLaunchButton(
-      mojom::TrayActionState::kAvailable, data_dispatcher());
+      mojom::LockScreenActionState::kAvailable, data_dispatcher());
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(
       login_layout_util::WrapViewForPreferredSize(note_action_button));
 
@@ -293,17 +296,17 @@ TEST_F(NoteActionLaunchButtonTest, TapTest) {
   generator.GestureTapAt(view_bounds.top_right() +
                          gfx::Vector2d(-kSmallButtonRadiusDp / kSqrt2 + 2,
                                        kSmallButtonRadiusDp / kSqrt2 - 2));
-  Shell::Get()->tray_action()->FlushMojoForTesting();
-  EXPECT_EQ(expected_actions, tray_action_client()->note_origins());
-  tray_action_client()->ClearRecordedRequests();
+  Shell::Get()->lock_screen_action()->FlushMojoForTesting();
+  EXPECT_EQ(expected_actions, lock_screen_action_client()->note_origins());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Tap in non-actionable area of the button does not request action:
   generator.GestureTapAt(view_bounds.top_right() +
                          gfx::Vector2d(-kSmallButtonRadiusDp / kSqrt2 - 2,
                                        kSmallButtonRadiusDp / kSqrt2 + 2));
-  Shell::Get()->tray_action()->FlushMojoForTesting();
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
-  tray_action_client()->ClearRecordedRequests();
+  Shell::Get()->lock_screen_action()->FlushMojoForTesting();
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
+  lock_screen_action_client()->ClearRecordedRequests();
 }
 
 // Tests a number of fling gestures that interact with the note action button.
@@ -311,7 +314,7 @@ TEST_F(NoteActionLaunchButtonTest, TapTest) {
 // direction generate an action request.
 TEST_F(NoteActionLaunchButtonTest, FlingGesture) {
   auto* note_action_button = new NoteActionLaunchButton(
-      mojom::TrayActionState::kAvailable, data_dispatcher());
+      mojom::LockScreenActionState::kAvailable, data_dispatcher());
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(
       login_layout_util::WrapViewForPreferredSize(note_action_button));
 
@@ -337,35 +340,35 @@ TEST_F(NoteActionLaunchButtonTest, FlingGesture) {
 
   // Fling from the center of the actionable area to bottom left:
   GestureFling(start, view_bounds.bottom_left() + gfx::Vector2d(-50, 50));
-  EXPECT_EQ(expected_actions, tray_action_client()->note_origins());
-  tray_action_client()->ClearRecordedRequests();
+  EXPECT_EQ(expected_actions, lock_screen_action_client()->note_origins());
+  lock_screen_action_client()->ClearRecordedRequests();
 
   // Fling from the center of the actionable area to bottom right:
   GestureFling(start, view_bounds.bottom_right() + gfx::Vector2d(0, 50));
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
 
   // Fling from the center of the actionable area to top left:
   GestureFling(start, view_bounds.origin() + gfx::Vector2d(-50, 0));
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
 
   // Fling accross the button:
   GestureFling(view_bounds.top_right() + gfx::Vector2d(25, -25),
                view_bounds.bottom_left() + gfx::Vector2d(-25, 25));
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
 
   // Fling from non-actionable area of the button:
   GestureFling(view_bounds.top_right() +
                    gfx::Vector2d(-kSmallButtonRadiusDp / kSqrt2 - 2,
                                  kSmallButtonRadiusDp / kSqrt2 + 2),
                view_bounds.bottom_left() + gfx::Vector2d(-25, 25));
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
 }
 
 // Generates multi-finger fling in the direction that would be accepted for
 // single finger fling, and verifies no action is requested.
 TEST_F(NoteActionLaunchButtonTest, MultiFingerFling) {
   auto* note_action_button = new NoteActionLaunchButton(
-      mojom::TrayActionState::kAvailable, data_dispatcher());
+      mojom::LockScreenActionState::kAvailable, data_dispatcher());
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(
       login_layout_util::WrapViewForPreferredSize(note_action_button));
 
@@ -398,7 +401,7 @@ TEST_F(NoteActionLaunchButtonTest, MultiFingerFling) {
       delays_releasing_fingers_ms, 4 /* event_separaation_time_ms*/,
       5 /*steps*/);
 
-  Shell::Get()->tray_action()->FlushMojoForTesting();
-  EXPECT_TRUE(tray_action_client()->note_origins().empty());
+  Shell::Get()->lock_screen_action()->FlushMojoForTesting();
+  EXPECT_TRUE(lock_screen_action_client()->note_origins().empty());
 }
 }  // namespace ash

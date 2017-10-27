@@ -19,8 +19,8 @@ void LoginDataDispatcher::Observer::OnClickToUnlockEnabledForUserChanged(
     const AccountId& user,
     bool enabled) {}
 
-void LoginDataDispatcher::Observer::OnLockScreenNoteStateChanged(
-    mojom::TrayActionState state) {}
+void LoginDataDispatcher::Observer::OnNoteActionStateChanged(
+    mojom::LockScreenActionState state) {}
 
 void LoginDataDispatcher::Observer::OnShowEasyUnlockIcon(
     const AccountId& user,
@@ -56,9 +56,10 @@ void LoginDataDispatcher::SetClickToUnlockEnabledForUser(const AccountId& user,
     observer.OnClickToUnlockEnabledForUserChanged(user, enabled);
 }
 
-void LoginDataDispatcher::SetLockScreenNoteState(mojom::TrayActionState state) {
+void LoginDataDispatcher::SetNoteActionState(
+    mojom::LockScreenActionState state) {
   for (auto& observer : observers_)
-    observer.OnLockScreenNoteStateChanged(state);
+    observer.OnNoteActionStateChanged(state);
 }
 
 void LoginDataDispatcher::ShowEasyUnlockIcon(

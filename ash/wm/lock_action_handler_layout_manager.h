@@ -10,8 +10,8 @@
 #include "ash/ash_export.h"
 #include "ash/lock_screen_action/lock_screen_action_background_observer.h"
 #include "ash/lock_screen_action/lock_screen_action_background_state.h"
+#include "ash/lock_screen_action/lock_screen_action_observer.h"
 #include "ash/public/cpp/shelf_types.h"
-#include "ash/tray_action/tray_action_observer.h"
 #include "ash/wm/lock_layout_manager.h"
 #include "base/macros.h"
 #include "base/scoped_observer.h"
@@ -20,7 +20,7 @@ namespace ash {
 
 class LockScreenActionBackgroundController;
 class Shelf;
-class TrayAction;
+class LockScreenAction;
 
 // Window layout manager for windows intended to handle lock tray actions.
 // Since "new note" is currently the only supported action, the layout
@@ -39,7 +39,7 @@ class TrayAction;
 // ensure that the windows do not obscure the system shelf.
 class ASH_EXPORT LockActionHandlerLayoutManager
     : public LockLayoutManager,
-      public TrayActionObserver,
+      public LockScreenActionObserver,
       public LockScreenActionBackgroundObserver {
  public:
   LockActionHandlerLayoutManager(
@@ -53,8 +53,8 @@ class ASH_EXPORT LockActionHandlerLayoutManager
   void OnChildWindowVisibilityChanged(aura::Window* child,
                                       bool visibile) override;
 
-  // TrayActionObserver:
-  void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override;
+  // LockScreenActionObserver:
+  void OnNoteStateChanged(mojom::LockScreenActionState state) override;
 
   // LockScreenActionBackgroundObserver:
   void OnLockScreenActionBackgroundStateChanged(
@@ -63,12 +63,13 @@ class ASH_EXPORT LockActionHandlerLayoutManager
  private:
   // Updates the child window visibility depending on lock screen note action
   // state and the lock screen action background state.
-  void UpdateChildren(mojom::TrayActionState action_state,
+  void UpdateChildren(mojom::LockScreenActionState action_state,
                       LockScreenActionBackgroundState background_state);
 
   LockScreenActionBackgroundController* action_background_controller_;
 
-  ScopedObserver<TrayAction, TrayActionObserver> tray_action_observer_;
+  ScopedObserver<LockScreenAction, LockScreenActionObserver>
+      lock_screen_action_observer_;
   ScopedObserver<LockScreenActionBackgroundController,
                  LockScreenActionBackgroundObserver>
       action_background_observer_;

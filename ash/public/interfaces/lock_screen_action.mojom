@@ -5,7 +5,7 @@
 module ash.mojom;
 
 // An action handler state.
-enum TrayActionState {
+enum LockScreenActionState {
   // The action cannot be handled - due to no client being set, the client not
   // supporting the action, user session not being locked etc.
   kNotAvailable,
@@ -27,8 +27,8 @@ enum TrayActionState {
 // never be changed.
 enum LockScreenNoteOrigin {
   // The note request originated from the new note button in the system
-  // tray - note that this UI element is deprecated.
-  kTrayAction = 0,
+  // tray.
+  kDeprecatedTrayAction = 0,
 
   // The user tapped the note action button shown on the lock screen.
   kLockScreenButtonTap = 1,
@@ -88,23 +88,23 @@ enum CloseLockScreenNoteReason {
 // supported) that appear as an ash status area button if the client declares
 // the action as available. Clicking the button invokes a client method that
 // requests the action associated with the button to be handled.
-interface TrayAction {
+interface LockScreenAction {
   // Sets the client to be used to handle action requests.
   // |lock_screen_note_state|: The current lock screen note action state
   //     associated with the client.
-  SetClient(TrayActionClient client, TrayActionState lock_screen_note_state);
+  SetClient(LockScreenActionClient client, LockScreenActionState note_state);
 
   // Updates action state for the lock screen note action. If called with no
   // client set, the state change will not take effect until a client is set.
   // Null client is equivalent to kNotAvailable state.
-  UpdateLockScreenNoteState(TrayActionState state);
+  UpdateNoteState(LockScreenActionState state);
 };
 
 // Used by ash to request Chrome to handle an action.
-interface TrayActionClient {
+interface LockScreenActionClient {
   // Requests a lock screen note action to be handled.
-  RequestNewLockScreenNote(LockScreenNoteOrigin origin);
+  RequestNewNote(LockScreenNoteOrigin origin);
 
   // Closes lock screen note.
-  CloseLockScreenNote(CloseLockScreenNoteReason reason);
+  CloseNote(CloseLockScreenNoteReason reason);
 };

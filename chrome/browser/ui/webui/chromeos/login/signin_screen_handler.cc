@@ -12,8 +12,8 @@
 
 #include "ash/login/ui/login_constants.h"
 #include "ash/public/interfaces/constants.mojom.h"
+#include "ash/public/interfaces/lock_screen_action.mojom.h"
 #include "ash/public/interfaces/shutdown.mojom.h"
-#include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/wallpaper/wallpaper_controller.h"
@@ -1097,21 +1097,21 @@ void SigninScreenHandler::OnTabletModeToggled(bool enabled) {
   CallJSOrDefer("login.AccountPickerScreen.setTabletModeState", enabled);
 }
 
-void SigninScreenHandler::OnLockScreenNoteStateChanged(
-    ash::mojom::TrayActionState state) {
+void SigninScreenHandler::OnNoteStateChanged(
+    ash::mojom::LockScreenActionState state) {
   if (!ScreenLocker::default_screen_locker())
     return;
 
   std::string lock_screen_apps_state;
   switch (state) {
-    case ash::mojom::TrayActionState::kLaunching:
-    case ash::mojom::TrayActionState::kActive:
+    case ash::mojom::LockScreenActionState::kLaunching:
+    case ash::mojom::LockScreenActionState::kActive:
       lock_screen_apps_state = kForegroundLockScreenApps;
       break;
-    case ash::mojom::TrayActionState::kAvailable:
+    case ash::mojom::LockScreenActionState::kAvailable:
       lock_screen_apps_state = kAvailableLockScreenApps;
       break;
-    case ash::mojom::TrayActionState::kNotAvailable:
+    case ash::mojom::LockScreenActionState::kNotAvailable:
       lock_screen_apps_state = kNoLockScreenApps;
       break;
   }
@@ -1300,8 +1300,8 @@ void SigninScreenHandler::HandleAccountPickerReady() {
   is_account_picker_showing_first_time_ = true;
 
   if (lock_screen_apps::StateController::IsEnabled()) {
-    OnLockScreenNoteStateChanged(
-        lock_screen_apps::StateController::Get()->GetLockScreenNoteState());
+    OnNoteStateChanged(
+        lock_screen_apps::StateController::Get()->GetNoteState());
   }
   // Color calculation of the first wallpaper may have completed before the
   // instance is initialized, so make sure the colors are properly updated.
@@ -1521,13 +1521,13 @@ void SigninScreenHandler::HandleRequestNewNoteAction(
       lock_screen_apps::StateController::Get();
 
   if (request_type == kNewNoteRequestTap) {
-    state_controller->RequestNewLockScreenNote(
+    state_controller->RequestNewNote(
         ash::mojom::LockScreenNoteOrigin::kLockScreenButtonTap);
   } else if (request_type == kNewNoteRequestSwipe) {
-    state_controller->RequestNewLockScreenNote(
+    state_controller->RequestNewNote(
         ash::mojom::LockScreenNoteOrigin::kLockScreenButtonSwipe);
   } else if (request_type == kNewNoteRequestKeyboard) {
-    state_controller->RequestNewLockScreenNote(
+    state_controller->RequestNewNote(
         ash::mojom::LockScreenNoteOrigin::kLockScreenButtonKeyboard);
   } else {
     NOTREACHED() << "Unknown request type " << request_type;
@@ -1539,7 +1539,7 @@ void SigninScreenHandler::HandleNewNoteLaunchAnimationDone() {
 }
 
 void SigninScreenHandler::HandleCloseLockScreenApp() {
-  lock_screen_apps::StateController::Get()->CloseLockScreenNote(
+  lock_screen_apps::StateController::Get()->CloseNote(
       ash::mojom::CloseLockScreenNoteReason::kUnlockButtonPressed);
 }
 

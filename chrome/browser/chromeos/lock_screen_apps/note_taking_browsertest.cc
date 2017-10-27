@@ -91,7 +91,7 @@ class LockScreenNoteTakingTest : public ExtensionBrowserTest {
         session_manager::SessionState::LOCKED);
 
     return LockScreenAppsEnabledWaiter().WaitForState(
-        ash::mojom::TrayActionState::kAvailable);
+        ash::mojom::LockScreenActionState::kAvailable);
   }
 
   bool RunTestAppInLockScreenContext(const std::string& test_app,
@@ -117,11 +117,11 @@ class LockScreenNoteTakingTest : public ExtensionBrowserTest {
                                                 true /* will_reply */);
 
     extensions::ResultCatcher catcher;
-    lock_screen_apps::StateController::Get()->RequestNewLockScreenNote(
+    lock_screen_apps::StateController::Get()->RequestNewNote(
         ash::mojom::LockScreenNoteOrigin::kLockScreenButtonTap);
 
-    if (lock_screen_apps::StateController::Get()->GetLockScreenNoteState() !=
-        ash::mojom::TrayActionState::kLaunching) {
+    if (lock_screen_apps::StateController::Get()->GetNoteState() !=
+        ash::mojom::LockScreenActionState::kLaunching) {
       *error = "App launch request failed";
       return false;
     }
@@ -140,8 +140,8 @@ class LockScreenNoteTakingTest : public ExtensionBrowserTest {
       return false;
     }
 
-    if (lock_screen_apps::StateController::Get()->GetLockScreenNoteState() !=
-        ash::mojom::TrayActionState::kActive) {
+    if (lock_screen_apps::StateController::Get()->GetNoteState() !=
+        ash::mojom::LockScreenActionState::kActive) {
       *error = "App not in active state.";
       return false;
     }
@@ -176,8 +176,8 @@ IN_PROC_BROWSER_TEST_F(LockScreenNoteTakingTest, Launch) {
                                             &error_message))
       << error_message;
 
-  EXPECT_EQ(ash::mojom::TrayActionState::kAvailable,
-            lock_screen_apps::StateController::Get()->GetLockScreenNoteState());
+  EXPECT_EQ(ash::mojom::LockScreenActionState::kAvailable,
+            lock_screen_apps::StateController::Get()->GetNoteState());
 }
 
 // Tests that lock screen app window creation fails if not requested from the
@@ -199,11 +199,11 @@ IN_PROC_BROWSER_TEST_F(LockScreenNoteTakingTest, LaunchInNonLockScreenContext) {
   // NOTE: This is not mandatory for the test to pass, but without it, app
   //     window creation would fail regardless of the context from which
   //     chrome.app.window.create is called.
-  lock_screen_apps::StateController::Get()->RequestNewLockScreenNote(
+  lock_screen_apps::StateController::Get()->RequestNewNote(
       ash::mojom::LockScreenNoteOrigin::kLockScreenButtonTap);
 
-  ASSERT_EQ(ash::mojom::TrayActionState::kLaunching,
-            lock_screen_apps::StateController::Get()->GetLockScreenNoteState());
+  ASSERT_EQ(ash::mojom::LockScreenActionState::kLaunching,
+            lock_screen_apps::StateController::Get()->GetNoteState());
 
   // Launch note taking in regular, non lock screen context. The test will
   // verify the app cannot create lock screen enabled app windows in this case.
@@ -225,8 +225,8 @@ IN_PROC_BROWSER_TEST_F(LockScreenNoteTakingTest, DataCreation) {
                                             &error_message))
       << error_message;
 
-  EXPECT_EQ(ash::mojom::TrayActionState::kAvailable,
-            lock_screen_apps::StateController::Get()->GetLockScreenNoteState());
+  EXPECT_EQ(ash::mojom::LockScreenActionState::kAvailable,
+            lock_screen_apps::StateController::Get()->GetNoteState());
 
   extensions::ResultCatcher catcher;
   session_manager::SessionManager::Get()->SetSessionState(
@@ -246,8 +246,8 @@ IN_PROC_BROWSER_TEST_F(LockScreenNoteTakingTest, PRE_DataAvailableOnRestart) {
                                             &error_message))
       << error_message;
 
-  EXPECT_EQ(ash::mojom::TrayActionState::kAvailable,
-            lock_screen_apps::StateController::Get()->GetLockScreenNoteState());
+  EXPECT_EQ(ash::mojom::LockScreenActionState::kAvailable,
+            lock_screen_apps::StateController::Get()->GetNoteState());
 }
 
 IN_PROC_BROWSER_TEST_F(LockScreenNoteTakingTest, DataAvailableOnRestart) {
@@ -271,10 +271,10 @@ IN_PROC_BROWSER_TEST_F(LockScreenNoteTakingTest, AppLaunchActionDataParams) {
 
   extensions::ResultCatcher catcher;
 
-  lock_screen_apps::StateController::Get()->RequestNewLockScreenNote(
+  lock_screen_apps::StateController::Get()->RequestNewNote(
       ash::mojom::LockScreenNoteOrigin::kLockScreenButtonTap);
-  ASSERT_EQ(ash::mojom::TrayActionState::kLaunching,
-            lock_screen_apps::StateController::Get()->GetLockScreenNoteState());
+  ASSERT_EQ(ash::mojom::LockScreenActionState::kLaunching,
+            lock_screen_apps::StateController::Get()->GetNoteState());
 
   ExtensionTestMessageListener expected_action_data("getExpectedActionData",
                                                     true /* will_reply */);
@@ -295,10 +295,10 @@ IN_PROC_BROWSER_TEST_F(LockScreenNoteTakingTest, AppLaunchActionDataParams) {
 
   profile()->GetPrefs()->SetBoolean(prefs::kRestoreLastLockScreenNote, false);
 
-  lock_screen_apps::StateController::Get()->RequestNewLockScreenNote(
+  lock_screen_apps::StateController::Get()->RequestNewNote(
       ash::mojom::LockScreenNoteOrigin::kLockScreenButtonTap);
-  ASSERT_EQ(ash::mojom::TrayActionState::kLaunching,
-            lock_screen_apps::StateController::Get()->GetLockScreenNoteState());
+  ASSERT_EQ(ash::mojom::LockScreenActionState::kLaunching,
+            lock_screen_apps::StateController::Get()->GetNoteState());
 
   ASSERT_TRUE(expected_action_data.WaitUntilSatisfied());
   expected_action_data.Reply(R"({"actionType": "new_note",
