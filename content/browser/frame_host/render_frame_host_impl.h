@@ -210,7 +210,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   bool GetSuddenTerminationDisablerState(
       blink::WebSuddenTerminationDisablerType disabler_type) override;
 
-  bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) override;
+  bool IsFeatureEnabled(blink::FeaturePolicyFeature feature) override;
 
   // mojom::FrameHostInterfaceBroker
   void GetInterfaceProvider(
