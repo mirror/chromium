@@ -405,6 +405,14 @@ void ThrottlingURLLoader::OnReceiveCachedMetadata(
   forwarding_client_->OnReceiveCachedMetadata(data);
 }
 
+void ThrottlingURLLoader::OnReceivedInlinedDataChunk(
+    const std::vector<uint8_t>& data) {
+  DCHECK_EQ(DEFERRED_NONE, deferred_stage_);
+  DCHECK(!loader_cancelled_);
+
+  forwarding_client_->OnReceivedInlinedDataChunk(data);
+}
+
 void ThrottlingURLLoader::OnTransferSizeUpdated(int32_t transfer_size_diff) {
   DCHECK_EQ(DEFERRED_NONE, deferred_stage_);
   DCHECK(!loader_cancelled_);

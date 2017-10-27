@@ -83,6 +83,11 @@ void CORSURLLoader::OnReceiveCachedMetadata(const std::vector<uint8_t>& data) {
   forwarding_client_->OnReceiveCachedMetadata(data);
 }
 
+void CORSURLLoader::OnReceivedInlinedDataChunk(
+    const std::vector<uint8_t>& data) {
+  forwarding_client_->OnReceivedInlinedDataChunk(data);
+}
+
 void CORSURLLoader::OnTransferSizeUpdated(int32_t transfer_size_diff) {
   forwarding_client_->OnTransferSizeUpdated(transfer_size_diff);
 }

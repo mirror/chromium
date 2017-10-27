@@ -7,6 +7,8 @@
 #include "base/callback.h"
 #include "base/single_thread_task_runner.h"
 #include "content/common/resource_messages.h"
+#include "content/public/renderer/fixed_received_data.h"
+#include "content/public/renderer/request_peer.h"
 #include "content/renderer/loader/resource_dispatcher.h"
 #include "content/renderer/loader/url_response_body_consumer.h"
 #include "net/url_request/redirect_info.h"
@@ -156,6 +158,34 @@ void URLLoaderClientImpl::OnTransferSizeUpdated(int32_t transfer_size_diff) {
     resource_dispatcher_->OnTransferSizeUpdated(request_id_,
                                                 transfer_size_diff);
   }
+}
+
+void URLLoaderClientImpl::OnReceivedInlinedDataChunk(
+    const std::vector<uint8_t>& data) {
+  TRACE_EVENT0("loader", "ResourceDispatcher::OnReceivedInlinedDataChunk");
+  DCHECK(!data.empty());
+
+  ResourceDispatcher::PendingRequestInfo* request_info =
+      resource_dispatcher_->GetPendingRequestInfo(request_id_);
+
+  if (!request_info || data.empty())
+    return;
+
+#if 0
+  // Check whether this response data is compliant with our cross-site
+  // document blocking policy. We only do this for the first chunk of data.
+  if (request_info->site_isolation_metadata.get()) {
+    SiteIsolationStatsGatherer::OnReceivedFirstChunk(
+        request_info->site_isolation_metadata, data.data(), data.size());
+    request_info->site_isolation_metadata.reset();
+  }
+#endif
+
+  DCHECK(!request_info->buffer.get());
+
+  request_info->peer->OnReceivedData(
+      base::MakeUnique<content::FixedReceivedData>((const char*)&data[0],
+                                                   data.size()));
 }
 
 void URLLoaderClientImpl::OnStartLoadingResponseBody(

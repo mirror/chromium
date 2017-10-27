@@ -153,6 +153,9 @@ void DownloadResponseHandler::OnUploadProgress(
 void DownloadResponseHandler::OnReceiveCachedMetadata(
     const std::vector<uint8_t>& data) {}
 
+void DownloadResponseHandler::OnReceivedInlinedDataChunk(
+    const std::vector<uint8_t>& data) {}
+
 void DownloadResponseHandler::OnTransferSizeUpdated(
     int32_t transfer_size_diff) {}
 

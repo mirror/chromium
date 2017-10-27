@@ -128,6 +128,7 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
                         int64_t total_size,
                         OnUploadProgressCallback ack_callback) override;
   void OnReceiveCachedMetadata(const std::vector<uint8_t>& data) override;
+  void OnReceivedInlinedDataChunk(const std::vector<uint8_t>& data) override;
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override;
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body) override;

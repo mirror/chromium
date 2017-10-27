@@ -98,6 +98,7 @@ class CONTENT_EXPORT MojoAsyncResourceHandler : public ResourceHandler,
  private:
   class SharedWriter;
   class WriterIOBuffer;
+  class InliningHelper;
 
   // This funcion copies data stored in |buffer_| to |shared_writer_| and
   // resets |buffer_| to a WriterIOBuffer when all bytes are copied. Returns
@@ -158,6 +159,7 @@ class CONTENT_EXPORT MojoAsyncResourceHandler : public ResourceHandler,
   mojo::ScopedDataPipeConsumerHandle response_body_consumer_handle_;
 
   std::unique_ptr<UploadProgressTracker> upload_progress_tracker_;
+  std::unique_ptr<InliningHelper> inlining_helper_;
 
   base::WeakPtrFactory<MojoAsyncResourceHandler> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(MojoAsyncResourceHandler);

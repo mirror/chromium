@@ -112,6 +112,11 @@ class HeaderRewritingURLLoaderClient : public mojom::URLLoaderClient {
     url_loader_client_->OnReceiveCachedMetadata(data);
   }
 
+  void OnReceivedInlinedDataChunk(const std::vector<uint8_t>& data) override {
+    DCHECK(url_loader_client_.is_bound());
+    url_loader_client_->OnReceivedInlinedDataChunk(data);
+  }
+
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override {
     DCHECK(url_loader_client_.is_bound());
     url_loader_client_->OnTransferSizeUpdated(transfer_size_diff);
@@ -521,6 +526,12 @@ void ServiceWorkerSubresourceLoader::OnUploadProgress(
 }
 
 void ServiceWorkerSubresourceLoader::OnReceiveCachedMetadata(
+    const std::vector<uint8_t>& data) {
+  // TODO(kinuko): Support this.
+  NOTIMPLEMENTED();
+}
+
+void ServiceWorkerSubresourceLoader::OnReceivedInlinedDataChunk(
     const std::vector<uint8_t>& data) {
   // TODO(kinuko): Support this.
   NOTIMPLEMENTED();

@@ -170,6 +170,9 @@ class DelegatingURLLoaderClient final : public mojom::URLLoaderClient {
   void OnReceiveCachedMetadata(const std::vector<uint8_t>& data) override {
     client_->OnReceiveCachedMetadata(data);
   }
+  void OnReceivedInlinedDataChunk(const std::vector<uint8_t>& data) override {
+    client_->OnReceivedInlinedDataChunk(data);
+  }
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override {
     client_->OnTransferSizeUpdated(transfer_size_diff);
   }

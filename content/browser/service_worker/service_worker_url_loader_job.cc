@@ -421,6 +421,11 @@ void ServiceWorkerURLLoaderJob::OnReceiveCachedMetadata(
   NOTREACHED();
 }
 
+void ServiceWorkerURLLoaderJob::OnReceivedInlinedDataChunk(
+    const std::vector<uint8_t>& data) {
+  NOTREACHED();
+}
+
 void ServiceWorkerURLLoaderJob::OnTransferSizeUpdated(
     int32_t transfer_size_diff) {
   NOTREACHED();

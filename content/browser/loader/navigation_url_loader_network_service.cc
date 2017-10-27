@@ -377,6 +377,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
                         int64_t total_size,
                         OnUploadProgressCallback callback) override {}
   void OnReceiveCachedMetadata(const std::vector<uint8_t>& data) override {}
+  void OnReceivedInlinedDataChunk(const std::vector<uint8_t>& data) override {}
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override {}
 
   void OnStartLoadingResponseBody(
