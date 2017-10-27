@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6400f0a8_cd756880",
+        "filename": "chrome/browser/resources/safe_browsing/download_file_types.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-27T21:55:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9f2649c_b2f23002",
+      "range": {
+        "startLine": 814,
+        "startChar": 13,
+        "endLine": 814,
+        "endChar": 16
+      },
+      "revId": "ef05d259d83a01c03cae1d88069122a0f684ca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cce9c7e_5e3446f0",
         "filename": "chrome/browser/resources/safe_browsing/download_file_types.asciipb",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5cdbd7eb_4e773f3d",
+        "filename": "chrome/browser/resources/safe_browsing/download_file_types.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 2274,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-27T21:55:01Z",
+      "side": 1,
+      "message": "Indeed.  I added a note to https://crbug.com/628796 and referenced that here. The TODO here is to make sure we get them all later.",
+      "parentUuid": "7cce9c7e_5e3446f0",
+      "range": {
+        "startLine": 2274,
+        "startChar": 4,
+        "endLine": 2274,
+        "endChar": 44
+      },
+      "revId": "ef05d259d83a01c03cae1d88069122a0f684ca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53b0c213_b150ff2d",
         "filename": "content/browser/download/download_stats.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "ef05d259d83a01c03cae1d88069122a0f684ca37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bdd57da_b6f7cda2",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-27T21:55:01Z",
+      "side": 1,
+      "message": "These are UMA values.  Without these, it\u0027s pretty hard to know if you\u0027ve added them correctly to enums.xml. I tried adding a comment here to say they\u0027re UMA, but then it reflows the whole thing in a single column and is kinda annoying.\n\nAH, I can add a comment at the end.  Done.",
+      "parentUuid": "53b0c213_b150ff2d",
+      "range": {
+        "startLine": 213,
+        "startChar": 76,
+        "endLine": 213,
+        "endChar": 79
+      },
+      "revId": "ef05d259d83a01c03cae1d88069122a0f684ca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
