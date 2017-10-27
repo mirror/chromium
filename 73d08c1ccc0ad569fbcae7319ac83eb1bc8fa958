@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a247df74_20555d56",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-27T09:39:46Z",
+      "side": 1,
+      "message": "Good point. The presenter needs not to be involved in the export or import at all. I bypassed that in the current patch set. Now only the porter needs a CredentialProvideInterface, nothing in the other direction.\n\n(This circular dependency has been there even before this CL, where the presenter owned the porter, which got a link back to the presenter. Glad that it\u0027s now gone.)",
+      "parentUuid": "cb74a818_1b653552",
+      "revId": "73d08c1ccc0ad569fbcae7319ac83eb1bc8fa958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55097ef1_a26ee5ef",
         "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.h",
         "patchSetId": 4
@@ -87,6 +105,30 @@
       "revId": "73d08c1ccc0ad569fbcae7319ac83eb1bc8fa958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9b9591_bbc6db0f",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-27T09:39:46Z",
+      "side": 1,
+      "message": "Thanks. I changed the comment even more, because the porter is no longer used in the presenter.",
+      "parentUuid": "412e4250_ccd64e72",
+      "range": {
+        "startLine": 95,
+        "startChar": 44,
+        "endLine": 95,
+        "endChar": 71
+      },
+      "revId": "73d08c1ccc0ad569fbcae7319ac83eb1bc8fa958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
