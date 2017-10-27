@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e128fd1_8a886fbf",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T19:17:12Z",
+      "side": 1,
+      "message": "Thanks, I move checking whether keyboard is null to the beginning of the function to make it more clear.",
+      "parentUuid": "3166d225_53cf0b48",
+      "range": {
+        "startLine": 701,
+        "startChar": 1,
+        "endLine": 701,
+        "endChar": 35
+      },
+      "revId": "2135cb7617bb780505fed8133a01669c2fe5f6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a082dc03_d9e61343",
         "filename": "ui/base/ime/input_method_chromeos.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-27T17:23:55Z",
       "side": 1,
       "message": "It\u0027s not clear from this comment under what circumstances this applies, since this is a ChromeOS-specific class (so we know it is OS_CHROMEOS), and ChromeOS runs Linux.  Is the idea that CapsLock is tracked somewhere else when running as part of ChromeOS, but we need to track it manually when running in developer-mode on a normal Linux workstation?\n\nIdeally this comment should explain why IsRunningAsSystemCompositor() is the correct check for whether CapsLock can be tracked by the ImeKeyboard.",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 53
+      },
+      "revId": "2135cb7617bb780505fed8133a01669c2fe5f6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a226b74a_0938486f",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T19:17:12Z",
+      "side": 1,
+      "message": "After talking with oshima@, we know that  IsRunningAsSystemCompositor() checks /etc/lsb-release to see whether udev exists (udev means it reads event from linux device). He said we could remove this check and sync only if neccesary.",
+      "parentUuid": "a082dc03_d9e61343",
       "range": {
         "startLine": 69,
         "startChar": 5,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "39161f17_d933b7b7",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T19:17:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2fb2458_0370496a",
+      "revId": "2135cb7617bb780505fed8133a01669c2fe5f6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f02b616a_91da245d",
         "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
         "patchSetId": 4
@@ -76,6 +142,30 @@
       "writtenOn": "2017-10-27T17:23:55Z",
       "side": 1,
       "message": "nit: This is painful to read; can we wrap it into a small helper function on the EventRewriterChromeOS?\n\n(Having asked that, I can\u0027t find any other code in here that actually uses ime_keyboard_for_testing_ - was it actually used at all, previously?)",
+      "range": {
+        "startLine": 809,
+        "startChar": 7,
+        "endLine": 812,
+        "endChar": 36
+      },
+      "revId": "2135cb7617bb780505fed8133a01669c2fe5f6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b001097d_fe4eb8db",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T19:17:12Z",
+      "side": 1,
+      "message": "Test keyboard is used for testing before I removed this code. Now I added it back to event_rewriter_unittest.cc and it is only used in the test.",
+      "parentUuid": "f02b616a_91da245d",
       "range": {
         "startLine": 809,
         "startChar": 7,
