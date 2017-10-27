@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "445e56a5_6cd99ba0",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1671,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T03:49:53Z",
+      "side": 1,
+      "message": "\u003e aside: this should probably be pulled out of the loop.\n\nDone. (also early rumours suggest our next OS deprecation will jump from 10.9 to 10.11, so this may be gone sooner rather than later \\o/)",
+      "parentUuid": "ce31c27a_816cf244",
+      "revId": "ee73a787744507a0ddb3c3e679c230400c52f588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "052bd535_5ab09b5e",
         "filename": "ui/gfx/render_text_harfbuzz.h",
         "patchSetId": 18
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T14:41:22Z",
       "side": 1,
       "message": "aside: I wonder if it makes sense to eventually combine these three helpers and force callers to supply a range and get the range\u0027s width as needed (and maybe pass render_text/iterator into the ctor)?\nRangeF GetGraphemeSpan(RenderTextHarfBuzz* render_text, const Range\u0026 char_range);",
+      "revId": "ee73a787744507a0ddb3c3e679c230400c52f588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13edf587_a3cd050a",
+        "filename": "ui/gfx/render_text_harfbuzz.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-27T03:49:53Z",
+      "side": 1,
+      "message": "\u003e aside: I wonder if it makes sense to eventually combine these three helpers and force callers to supply a range and get the range\u0027s width as needed \n\nYeah - I think outside of tests, GetGraphemeSpanForCharRange() is the only caller of GetGraphemeBounds now.. but this is a struct in internal::, so it\u0027s probably not worth adding a private: section\n\n\u003e (and maybe pass render_text/iterator into the ctor)?\n\nhm! One Day (tm) I want to cache all the text runs on gfx::Font (or something with that effect). So I like not having an `owner` pointer :). But in that case, the `key` of the cache will be `GetDisplayText`, which is really all |render_text| is needed for here...\n\n(I\u0027ve noticed base::i18n::BreakIterator actually becomes useless after calling IsGraphemeBoundary(..), since it moves the iterator! [so, e.g., caching the iterator on RenderText probably isn\u0027t useful either])",
+      "parentUuid": "052bd535_5ab09b5e",
       "revId": "ee73a787744507a0ddb3c3e679c230400c52f588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
