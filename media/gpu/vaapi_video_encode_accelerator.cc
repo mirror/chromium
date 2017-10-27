@@ -237,10 +237,6 @@ void VaapiVideoEncodeAccelerator::InitializeTask() {
   DCHECK_EQ(state_, kUninitialized);
   VLOGF(2);
 
-  va_surface_release_cb_ = BindToCurrentLoop(
-      base::Bind(&VaapiVideoEncodeAccelerator::RecycleVASurfaceID,
-                 base::Unretained(this)));
-
   if (!vaapi_wrapper_->CreateSurfaces(VA_RT_FORMAT_YUV420, coded_size_,
                                       kNumSurfaces,
                                       &available_va_surface_ids_)) {
@@ -589,14 +585,20 @@ bool VaapiVideoEncodeAccelerator::PrepareNextJob(base::TimeDelta timestamp) {
 
   current_encode_job_->timestamp = timestamp;
 
-  current_encode_job_->input_surface = new VASurface(
-      available_va_surface_ids_.back(), coded_size_,
-      vaapi_wrapper_->va_surface_format(), va_surface_release_cb_);
+  current_encode_job_->input_surface =
+      new VASurface(available_va_surface_ids_.back(), coded_size_,
+                    vaapi_wrapper_->va_surface_format(),
+                    BindToCurrentLoop(base::Bind(
+                        &VaapiVideoEncodeAccelerator::RecycleVASurfaceID,
+                        base::Unretained(this))));
   available_va_surface_ids_.pop_back();
 
-  current_encode_job_->recon_surface = new VASurface(
-      available_va_surface_ids_.back(), coded_size_,
-      vaapi_wrapper_->va_surface_format(), va_surface_release_cb_);
+  current_encode_job_->recon_surface =
+      new VASurface(available_va_surface_ids_.back(), coded_size_,
+                    vaapi_wrapper_->va_surface_format(),
+                    BindToCurrentLoop(base::Bind(
+                        &VaapiVideoEncodeAccelerator::RecycleVASurfaceID,
+                        base::Unretained(this))));
   available_va_surface_ids_.pop_back();
 
   // Reference surfaces are needed until the job is done, but they get

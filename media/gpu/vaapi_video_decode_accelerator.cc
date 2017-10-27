@@ -343,8 +343,6 @@ VaapiVideoDecodeAccelerator::VaapiVideoDecodeAccelerator(
       bind_image_cb_(bind_image_cb),
       weak_this_factory_(this) {
   weak_this_ = weak_this_factory_.GetWeakPtr();
-  va_surface_release_cb_ = BindToCurrentLoop(
-      base::Bind(&VaapiVideoDecodeAccelerator::RecycleVASurfaceID, weak_this_));
 }
 
 VaapiVideoDecodeAccelerator::~VaapiVideoDecodeAccelerator() {
@@ -1186,7 +1184,9 @@ VaapiVideoDecodeAccelerator::CreateSurface() {
   DCHECK(!awaiting_va_surfaces_recycle_);
   scoped_refptr<VASurface> va_surface(new VASurface(
       available_va_surfaces_.front(), requested_pic_size_,
-      vaapi_wrapper_->va_surface_format(), va_surface_release_cb_));
+      vaapi_wrapper_->va_surface_format(),
+      BindToCurrentLoop(base::Bind(
+          &VaapiVideoDecodeAccelerator::RecycleVASurfaceID, weak_this_))));
   available_va_surfaces_.pop_front();
 
   scoped_refptr<VaapiDecodeSurface> dec_surface =

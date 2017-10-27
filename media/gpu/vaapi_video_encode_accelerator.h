@@ -228,9 +228,6 @@ class MEDIA_GPU_EXPORT VaapiVideoEncodeAccelerator
   // Currently active reference surfaces.
   RefPicList ref_pic_list0_;
 
-  // Callback via which finished VA surfaces are returned to us.
-  VASurface::ReleaseCB va_surface_release_cb_;
-
   // VideoFrames passed from the client, waiting to be encoded.
   base::queue<linked_ptr<InputFrameRef>> encoder_input_queue_;
 
