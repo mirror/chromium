@@ -1,0 +1,503 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eafa8d28_b99e3637",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e841a1c_25f284f2",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "nit: Is this necessary?",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfebf8b5_3078ec05",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "Is there a reason for this call? Looks like pretty unexpected side effect to me. If the call is necessary, please restore cookie policy to the old value before exiting the method.",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b6fc07_679f405b",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "I don\u0027t think that testing code should not be in the header. Did you see examples where tests were in the header?",
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1366f6aa_bf427f36",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "This is not really a callback. The class has methods which are used as callbacks but class is not. Would it be better to bind blocks instead of creating a separate class? Blocks would make it easier to reason about assertions in the test.",
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc185f2_a3e1aa3a",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "Should about passing char* for |url| instead of NSURL? This will allow to get rid of ivars and ugly |this-\u003e|",
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1f1bb0_3be466e1",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "Is there a value if having wrappers for delegate calls?",
+      "range": {
+        "startLine": 91,
+        "startChar": 21,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1323a2_09158c9b",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "Should we wait for callback instead of spinning run loop for up to 1 second? Same question for other places.",
+      "range": {
+        "startLine": 127,
+        "startChar": 19,
+        "endLine": 127,
+        "endChar": 42
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9cc3057_51f4ec6b",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "This is quite large method. Do you want to explain in the comments what is actually tested here?",
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24b424b_81534508",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "nit: No need to repeat the comments for overridden methods",
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838ef1be_daadb09e",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "bool ShouldIncludeForRequestUrl() ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 19
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea61f52f_d5d0a39d",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "Please fully spell variable names",
+      "range": {
+        "startLine": 46,
+        "startChar": 25,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354ae65f_59af0f4e",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "nit: block_url ? It\u0027s not retained technically",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358a6542_bea1b0fa",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "Do you need to cast here?",
+      "range": {
+        "startLine": 118,
+        "startChar": 35,
+        "endLine": 118,
+        "endChar": 47
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a70e86_5e8a0248",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "This does not feel right. Is there even a way to change the policy for WKWebView? Should this method return a constant?",
+      "range": {
+        "startLine": 128,
+        "startChar": 31,
+        "endLine": 128,
+        "endChar": 54
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9be58a_9e6e1b0a",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "Do you need this cast?",
+      "range": {
+        "startLine": 139,
+        "startChar": 17,
+        "endLine": 139,
+        "endChar": 24
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5862c20_487b0a6e",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "nit: Linebreak after this",
+      "range": {
+        "startLine": 5,
+        "startChar": 59,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "175e866e_51b51714",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "How about using ephemeral data store? That data store will not persist anything across test runs.",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 40
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8fe7d4_1558d49d",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 38
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c51a91e_af6bbdb7",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "Please use testing::WaitUntilConditionOrTimeout this method DCHECKs",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 39
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37481d2a_98e07baa",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "It would be better to return bool and let the test code to assert the result. ASSERT/EXPECT macros print the line number where assertion happened. That logging is very useful, but it only works if ASSERT/EXPECT is called in the test itself.\n\nSame comment for other places",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de8ed8e_f2a27ff4",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "Do you need to cast here?",
+      "range": {
+        "startLine": 59,
+        "startChar": 37,
+        "endLine": 59,
+        "endChar": 49
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70147ee_b25b5d28",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-27T20:52:37Z",
+      "side": 1,
+      "message": "Would it be better to have this ivar in test fixture?",
+      "range": {
+        "startLine": 84,
+        "startChar": 27,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
