@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37ba6c79_6d4cf2e9",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2591,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-27T19:20:07Z",
+      "side": 1,
+      "message": "tiny performance nit: IsOriginSecure has non-trivial worst-case performance (mostly scanning through the scheme a bunch of times). Would you mind putting the allow_cross_origin_auth_prompt check first to allow fast-fail?",
+      "revId": "8d77ce6f87643d9cbbbedcc0e4c325bd1241eff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
