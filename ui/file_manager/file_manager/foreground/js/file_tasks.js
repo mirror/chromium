@@ -472,6 +472,28 @@ FileTasks.prototype.executeDefault = function(opt_callback) {
 };
 
 /**
+ * Returns the app that was most recently usaed among the non-generic handers.
+ * @return {?Object}
+ */
+FileTasks.prototype.findMostRecentlyUsedApp_ = function() {
+  var latestTime = 0;
+  var app = null;
+  for (var i = 0; i < this.tasks_.length; i++) {
+    const task = this.tasks_[i];
+    if (task.isGenericFileHandler)
+      continue;
+    var executedTime = this.taskHistory_.getLastExecutedTime(task.taskId);
+    if (!executedTime)
+      continue;
+    if (!app || executedTime > latestTime) {
+      latestTime = executedTime;
+      app = this.tasks_[i];
+    }
+  }
+  return app;
+};
+
+/**
  * Executes default task.
  *
  * @param {function(boolean, Array<!Entry>)=} opt_callback Called when the
@@ -484,6 +506,22 @@ FileTasks.prototype.executeDefaultInternal_ = function(opt_callback) {
   if (this.defaultTask_ !== null) {
     this.executeInternal_(this.defaultTask_.taskId);
     callback(true, this.entries_);
+    return;
+  }
+
+  var lastUsedApp = this.findMostRecentlyUsedApp_();
+  if (lastUsedApp) {
+    this.executeInternal_(lastUsedApp.taskId);
+    callback(true, this.entries_);
+    return;
+  }
+
+  if (this.tasks_.length >= 2) {
+    this.showTaskPicker(
+        this.ui_.defaultTaskPicker, str('OPEN_WITH_BUTTON_LABEL'),
+        '', function(task) {
+          this.execute(task.taskId);
+        }.bind(this), FileTasks.TaskPickerType.OpenWith);
     return;
   }
 
@@ -997,12 +1035,12 @@ FileTasks.getDefaultTask = function(tasks, opt_taskToUseIfNoDefault) {
       return tasks[i];
     }
   }
-  // If we haven't picked a default task yet, then just pick the first one
-  // which is not generic file handler.
-  for (var i = 0; i < tasks.length; i++) {
-    if (!tasks[i].isGenericFileHandler) {
-      return tasks[i];
-    }
-  }
+  // If we haven't picked a default task yet but there's a single non generic
+  // file handler, pick that one. If there are multiple non generic handlers,
+  // and none of those are default, we'll leave the default task empty so as
+  // to let user choose by the task picker UI.
+  var nonGenericHandlers = tasks.filter(task => !task.isGenericFileHandler);
+  if (nonGenericHandlers.length == 1)
+    return nonGenericHandlers[0];
   return opt_taskToUseIfNoDefault || null;
 };
