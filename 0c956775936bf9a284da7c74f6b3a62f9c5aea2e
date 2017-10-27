@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c859234_704e36f7",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-27T21:17:31Z",
+      "side": 1,
+      "message": "Can you add a comment about why it\u0027s needed and why it\u0027s only needed for left_or_top_rect?",
+      "revId": "0c956775936bf9a284da7c74f6b3a62f9c5aea2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f085533_3f501eef",
+        "filename": "ash/wm/splitview/split_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-27T21:17:31Z",
+      "side": 1,
+      "message": "nit: can you also comment on why it\u0027s only needed during resizing?",
+      "revId": "0c956775936bf9a284da7c74f6b3a62f9c5aea2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2955064c_c0a08eb5",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-27T21:17:31Z",
+      "side": 1,
+      "message": "nit: 90 degree",
+      "revId": "0c956775936bf9a284da7c74f6b3a62f9c5aea2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
