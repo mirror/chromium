@@ -357,7 +357,7 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
     win_thread_environment_ = std::make_unique<win::ScopedCOMInitializer>(
         win::ScopedCOMInitializer::kMTA);
   }
-  DCHECK(win_thread_environment_->succeeded());
+  DCHECK(win_thread_environment_->Succeeded());
 #endif  // defined(OS_WIN)
 
   DCHECK_EQ(num_tasks_since_last_wait_, 0U);
