@@ -23,6 +23,14 @@
 #include "base/threading/platform_thread.h"
 #include "base/threading/scoped_blocking_call.h"
 #include "base/threading/thread_restrictions.h"
+#include "build/build_config.h"
+
+#if defined(OS_WIN)
+#include "base/win/scoped_com_initializer.h"
+#include "base/win/scoped_windows_thread_environment.h"
+#include "base/win/scoped_winrt_initializer.h"
+#include "base/win/windows_version.h"
+#endif  // defined(OS_WIN)
 
 namespace base {
 namespace internal {
@@ -137,6 +145,10 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   // Whether this worker is currently running a task (i.e. GetWork() has
   // returned a non-empty sequence and DidRunTask() hasn't been called yet).
   bool is_running_task_ = false;
+
+#if defined(OS_WIN)
+  std::unique_ptr<win::ScopedWindowsThreadEnvironment> win_thread_environment_;
+#endif  // defined(OS_WIN)
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerDelegateImpl);
 };
@@ -338,6 +350,15 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
 #endif
   }
 
+#if defined(OS_WIN)
+  if (win::GetVersion() >= win::VERSION_WIN8) {
+    win_thread_environment_ = std::make_unique<win::ScopedWinrtInitializer>();
+  } else {
+    win_thread_environment_ = std::make_unique<win::ScopedCOMInitializer>(
+        win::ScopedCOMInitializer::kMTA);
+  }
+#endif  // defined(OS_WIN)
+
   DCHECK_EQ(num_tasks_since_last_wait_, 0U);
 
   PlatformThread::SetName(
@@ -498,6 +519,10 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainExit(
     DCHECK(!ContainsWorker(outer_->workers_, worker));
   }
 #endif
+
+#if defined(OS_WIN)
+  win_thread_environment_.reset();
+#endif  // defined(OS_WIN)
 }
 
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
