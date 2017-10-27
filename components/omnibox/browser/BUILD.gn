@@ -173,7 +173,7 @@ static_library("browser") {
     "//url",
   ]
 
-  if (!is_android && !is_ios) {
+  if (!is_ios) {
     sources += get_target_outputs(":omnibox_vector_icons")
     deps += [
       ":omnibox_vector_icons",
