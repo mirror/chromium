@@ -3,6 +3,11 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/page_load_metrics/observers/use_counter/ukm_features.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
+#include "services/metrics/public/cpp/ukm_entry_builder.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 
 #include "base/metrics/histogram_macros.h"
 
@@ -26,7 +31,8 @@ UseCounterPageLoadMetricsObserver::OnCommit(
 }
 
 void UseCounterPageLoadMetricsObserver::OnFeaturesUsageObserved(
-    const Features& features) {
+    const Features& features,
+    const ukm::SourceId source_id) {
   for (auto feature : features.features) {
     // Verify that kPageVisits is only observed at most once per observer.
     DCHECK(feature != WebFeature::kPageVisits);
@@ -38,5 +44,13 @@ void UseCounterPageLoadMetricsObserver::OnFeaturesUsageObserved(
     UMA_HISTOGRAM_ENUMERATION(internal::kFeaturesHistogramName, feature,
                               WebFeature::kNumberOfFeatures);
     features_recorded_.set(static_cast<size_t>(feature));
+    if (IsOptInUKMFeature(feature)) {
+      ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+      if (ukm_recorder) {
+        std::unique_ptr<ukm::UkmEntryBuilder> builder =
+            ukm_recorder->GetEntryBuilder(source_id, "Blink.UseCounter");
+        builder->AddMetric("Features", static_cast<int64_t>(feature));
+      }
+    }
   }
 }

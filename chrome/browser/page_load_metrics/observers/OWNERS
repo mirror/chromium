@@ -1,0 +1,3 @@
+per-file ukm_features.*=ukm-team@google.com
+# Strict reviews needed for opt-in features measured in ukm use counter.
+# Must satisfy UKM privacy requirements.
