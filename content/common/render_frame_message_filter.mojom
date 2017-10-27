@@ -7,10 +7,11 @@ module content.mojom;
 import "url/mojo/url.mojom";
 
 interface RenderFrameMessageFilter {
-  // Sets a cookie. The cookie is set asynchronously, but will be available to
-  // any subsequent GetCookies() request.
+  // Sets a cookie. This returns once the method has been dispatched on the IO
+  // thread (instead of actually being committed in the database).
+  [Sync]
   SetCookie(int32 render_frame_id, url.mojom.Url url,
-      url.mojom.Url first_party_for_cookies, string cookie);
+      url.mojom.Url first_party_for_cookies, string cookie) => ();
 
   // Used to get cookies for the given URL. This may block waiting for a
   // previous SetCookie message to be processed.
