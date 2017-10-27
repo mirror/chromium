@@ -248,6 +248,45 @@ void CrOSComponent::LoadComponent(
   }
 }
 
+static void OnRemoveComponent(base::OnceCallback<void(bool)> remove_callback,
+                              const std::string& id,
+                              base::Optional<bool> is_successful) {
+  if (is_successful.value_or(false)) {
+    // Component is removed in imageloader, now remove component in chrome.
+    component_updater::ComponentUpdateService* updater =
+        g_browser_process->component_updater();
+    if (updater->UnregisterComponent(id)) {
+      PostTask(FROM_HERE, base::BindOnce(std::move(remove_callback), true));
+    }
+  }
+  PostTask(FROM_HERE, base::BindOnce(std::move(remove_callback), false));
+}
+
+void CrOSComponent::RemoveComponent(
+    const std::string& name,
+    base::OnceCallback<void(bool)> remove_callback) {
+  const ConfigMap components = CONFIG_MAP_CONTENT;
+  const auto it = components.find(name);
+  if (name.empty() || it == components.end()) {
+    // Component |name| does not exist.
+    base::PostTask(FROM_HERE,
+                   base::BindOnce(std::move(remove_callback), false));
+    return;
+  }
+  chromeos::ImageLoaderClient* loader =
+      chromeos::DBusThreadManager::Get()->GetImageLoaderClient();
+  if (loader) {
+    loader->RemoveComponent(
+        name, base::BindOnce(&OnRemoveComponent, std::move(remove_callback),
+                             crx_file::id_util::GenerateIdFromHex(
+                                 it->second.find("sha2hashstr")->second)
+                                 .substr(0, 32)));
+  } else {
+    DVLOG(1) << "Failed to get ImageLoaderClient object.";
+    PostTask(FROM_HERE, base::BindOnce(std::move(remove_callback), false));
+  }
+}
+
 std::vector<ComponentConfig> CrOSComponent::GetInstalledComponents() {
   std::vector<ComponentConfig> configs;
   base::FilePath root;
