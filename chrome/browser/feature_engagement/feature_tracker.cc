@@ -16,15 +16,19 @@ namespace feature_engagement {
 
 FeatureTracker::FeatureTracker(
     Profile* profile,
-    SessionDurationUpdater* session_duration_updater,
     const base::Feature* feature,
+    const char* observed_session_time_pref_key,
     base::TimeDelta default_time_required_to_show_promo)
     : profile_(profile),
-      session_duration_updater_(session_duration_updater),
+      session_duration_updater_(
+          new SessionDurationUpdater(profile->GetPrefs(),
+                                     observed_session_time_pref_key)),
       session_duration_observer_(this),
       feature_(feature),
       field_trial_time_delta_(default_time_required_to_show_promo) {
-  AddSessionDurationObserver();
+  if (!HasEnoughSessionTimeElapsed(
+          session_duration_updater_->GetActiveSessionElapsedTime()))
+    AddSessionDurationObserver();
 }
 
 FeatureTracker::~FeatureTracker() = default;
@@ -42,6 +46,10 @@ bool FeatureTracker::IsObserving() {
 }
 
 bool FeatureTracker::ShouldShowPromo() {
+  if (IsObserving())
+    NotifyAndRemoveSessionDurationObserverIfSessionTimeMet(
+        session_duration_updater_->GetActiveSessionElapsedTime());
+
   return GetTracker()->ShouldTriggerHelpUI(*feature_);
 }
 
@@ -50,10 +58,7 @@ Tracker* FeatureTracker::GetTracker() const {
 }
 
 void FeatureTracker::OnSessionEnded(base::TimeDelta total_session_time) {
-  if (HasEnoughSessionTimeElapsed(total_session_time)) {
-    OnSessionTimeMet();
-    RemoveSessionDurationObserver();
-  }
+  NotifyAndRemoveSessionDurationObserverIfSessionTimeMet(total_session_time);
 }
 
 base::TimeDelta FeatureTracker::GetSessionTimeRequiredToShow() {
@@ -70,10 +75,21 @@ base::TimeDelta FeatureTracker::GetSessionTimeRequiredToShow() {
   return field_trial_time_delta_;
 }
 
+void FeatureTracker::NotifyAndRemoveSessionDurationObserverIfSessionTimeMet(
+    base::TimeDelta total_session_time) {
+  if (has_session_time_been_met_ ||
+      !HasEnoughSessionTimeElapsed(total_session_time))
+    return;
+
+  has_session_time_been_met_ = true;
+  OnSessionTimeMet();
+  RemoveSessionDurationObserver();
+}
+
 bool FeatureTracker::HasEnoughSessionTimeElapsed(
     base::TimeDelta total_session_time) {
-  return total_session_time.InMinutes() >=
-         GetSessionTimeRequiredToShow().InMinutes();
+  return total_session_time.InSeconds() >=
+         GetSessionTimeRequiredToShow().InSeconds();
 }
 
 }  // namespace feature_engagement

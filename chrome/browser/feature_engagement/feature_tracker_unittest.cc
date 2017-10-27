@@ -13,9 +13,9 @@
 #include "base/test/scoped_feature_list.h"
 #include "base/time/time.h"
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
-#include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/pref_names.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile_manager.h"
 #include "components/feature_engagement/public/event_constants.h"
@@ -30,25 +30,25 @@ namespace feature_engagement {
 
 namespace {
 
-const int kTestTimeDeltaInMinutes = 100;
-const int kTestTimeSufficentInMinutes = 110;
-const int kTestTimeInsufficientInMinutes = 90;
-const char kGroupName[] = "Enabled";
-const char kNewTabFieldTrialName[] = "NewTabFieldTrial";
-const char kTestProfileName[] = "test-profile";
+constexpr int kTestTimeDeltaInMinutes = 100;
+constexpr int kTestTimeSufficentInMinutes = 110;
+constexpr int kTestTimeInsufficientInMinutes = 90;
+constexpr char kGroupName[] = "Enabled";
+constexpr char kNewTabFieldTrialName[] = "NewTabFieldTrial";
+constexpr char kTestProfileName[] = "test-profile";
+constexpr char kTestObservedSessionTimeKey[] = "test_observed_session_time_key";
 
 class TestFeatureTracker : public FeatureTracker {
  public:
   explicit TestFeatureTracker(Profile* profile)
-      : FeatureTracker(
-            profile,
-            feature_engagement::SessionDurationUpdaterFactory::GetInstance()
-                ->GetForProfile(profile),
-            &kIPHNewTabFeature,
-            base::TimeDelta::FromMinutes(kTestTimeDeltaInMinutes)),
+      : FeatureTracker(profile,
+                       &kIPHNewTabFeature,
+                       kTestObservedSessionTimeKey,
+                       base::TimeDelta::FromMinutes(kTestTimeDeltaInMinutes)),
         pref_service_(
             base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>()) {
-    SessionDurationUpdater::RegisterProfilePrefs(pref_service_->registry());
+    pref_service_->registry()->RegisterDictionaryPref(
+        prefs::kObservedSessionTime);
   }
 
   base::TimeDelta GetSessionTimeRequiredToShowWrapper() {
@@ -87,9 +87,9 @@ class FeatureTrackerTest : public testing::Test {
   }
 
   void TearDown() override {
-    metrics::DesktopSessionDurationTracker::CleanupForTesting();
     // Need to invoke the reset method as TearDown is on the UI thread.
     testing_profile_manager_.reset();
+    metrics::DesktopSessionDurationTracker::CleanupForTesting();
   }
 
  protected:
@@ -165,9 +165,9 @@ class FeatureTrackerMinutesTest : public testing::Test {
 
   void TearDown() override {
     mock_feature_tracker_.get()->RemoveSessionDurationObserver();
-    metrics::DesktopSessionDurationTracker::CleanupForTesting();
     // Need to invoke the rest method as TearDown is on the UI thread.
     testing_profile_manager_.reset();
+    metrics::DesktopSessionDurationTracker::CleanupForTesting();
   }
 
   void SetFeatureParams(const base::Feature& feature,
