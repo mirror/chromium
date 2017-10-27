@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdd822ee_b168d063",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-27T05:44:15Z",
+      "side": 1,
+      "message": "We don\u0027t need to run the test with LayoutNG disabled, so you don\u0027t need the test to be parameterized.\n\nJust write it like this:\nclass NGInlineNodeTest : public RenderingTest,\n                         private ScopedLayoutNGForTest {\n public:\n  NGInlineNodeTest() : ScopedLayoutNGForTest(true) {}\n...",
+      "revId": "5ce0dbb3c581873ec72bcc0b5d055e36564f68f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d265b83_ee713930",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-27T05:44:15Z",
+      "side": 1,
+      "message": "Why include indirectly needed header files?",
+      "revId": "5ce0dbb3c581873ec72bcc0b5d055e36564f68f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3802a6c1_9a937ddd",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-27T05:44:15Z",
+      "side": 1,
+      "message": "All NGBaseLayoutAlgorithmTest needs LayoutNG, so please put this in NBBaseLayoutAlgorithmTest.\n\nOptional: create ng_layout_test.h containing the following class:\n\nclass NGLayoutTest : public RenderingTest,\n                     private ScopedLayoutNGForTest {\n public:\n  NGLayoutTest() : ScopedLayoutNGForTest(true) {}\n};\n\nand let all ng layout tests inherit this class instead of RenderingTest.",
+      "revId": "5ce0dbb3c581873ec72bcc0b5d055e36564f68f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
