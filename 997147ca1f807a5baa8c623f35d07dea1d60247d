@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edaecaa4_36e968fd",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioScheduledSourceNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-27T10:51:15Z",
+      "side": 0,
+      "message": "I think you need to check Context()-\u003eGetExecutionContext() here, since the context may be gone.",
+      "revId": "997147ca1f807a5baa8c623f35d07dea1d60247d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
