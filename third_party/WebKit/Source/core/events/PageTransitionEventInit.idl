@@ -6,4 +6,5 @@
 
 dictionary PageTransitionEventInit : EventInit {
     boolean persisted;
+    [RuntimeEnabled=PageLifecycle] DOMString reason;
 };
