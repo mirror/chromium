@@ -469,6 +469,24 @@
     },
     {
       "key": {
+        "uuid": "b07368df_aeb3cff4",
+        "filename": "components/exo/wayland/clients/vulkan.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-27T01:47:07Z",
+      "side": 1,
+      "message": "I conflated vkQueueSubmit with vkQueuePresentKHR here, because a normal apps would call vkQueuePresentKHR at the end of the draw loop. This test app doesn\u0027t, of course.\n\nTo answer your question, though... If vkQueueSubmit fails, then your VkInstance is effectively dead. All of vkQueueSubmit\u0027s allowed error codes are of the nasty give-up-and-die variety. However, vkQueuePresentKHR commonly fails with VK_ERROR_OUT_OF_DATE. For example, a user-initiated resize of the VkSurface will cause VK_ERROR_OUT_OF_DATE.",
+      "parentUuid": "6d5219c6_8ec18e5c",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9002e010_d00b18be",
         "filename": "components/exo/wayland/clients/vulkan.cc",
         "patchSetId": 7
@@ -498,6 +516,24 @@
       "side": 1,
       "message": "We call vkQueueWaitIdle because it was the easiest thing to do.\n\nWe should definitely improve it in the future. It can be a nice exercise to have it work with fences and pass them around once we get wayland/exo support.",
       "parentUuid": "9002e010_d00b18be",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3e41425_bc93a41b",
+        "filename": "components/exo/wayland/clients/vulkan.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1163154
+      },
+      "writtenOn": "2017-10-27T01:47:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d545f1a7_02054b6e",
       "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
