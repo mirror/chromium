@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5c7e9b59_0d8fd401",
+        "filename": "ui/base/ime/input_method_auralinux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-10-27T18:36:42Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve made this change. The Korean IME still works properly.",
+      "parentUuid": "983a0200_b88cd00c",
+      "revId": "1417843bf55be4075f9b0ed212d94522ec906e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b350e96e_0ff398a8",
         "filename": "ui/base/ime/input_method_auralinux.cc",
         "patchSetId": 2
