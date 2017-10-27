@@ -22,6 +22,30 @@
       "revId": "2135cb7617bb780505fed8133a01669c2fe5f6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c37f265_7c3d8f96",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-27T16:49:45Z",
+      "side": 1,
+      "message": "AcceleratorController handles Caps Lock state toggling triggered by Search+Alt key [1], while here we handle toggling triggered by Caps Lock key or the key that is remapped to Caps Lock.\n\n[1] https://cs.chromium.org/chromium/src/ash/accelerators/accelerator_table.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d87",
+      "parentUuid": "6ef917a4_3d222d59",
+      "range": {
+        "startLine": 813,
+        "startChar": 18,
+        "endLine": 813,
+        "endChar": 36
+      },
+      "revId": "2135cb7617bb780505fed8133a01669c2fe5f6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
