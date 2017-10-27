@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "947854ff_7f146819",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-27T17:58:09Z",
+      "side": 1,
+      "message": "Since ideally it\u0027s only needed in these 2 targets, I like not having it crashpad-globally available better.",
+      "parentUuid": "d9a47771_a679fbda",
+      "revId": "95175b70c64de7620fd3debf88725298381c9f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7783e89e_2577741d",
         "filename": "third_party/crashpad/crashpad/test/gtest_main.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-27T17:44:43Z",
       "side": 1,
       "message": "I may be wrong, but it appears that this is TestSuite or LaunchUnitTests’ responsibility when using Chromium’s test runner.\n\nSee Chrome’s base/test/run_all_unittests.cc, for example.",
+      "revId": "95175b70c64de7620fd3debf88725298381c9f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09352f7_7d719b15",
+        "filename": "third_party/crashpad/crashpad/test/gtest_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-27T17:58:09Z",
+      "side": 1,
+      "message": "Doesn\u0027t really make a difference in practice since InitGoogleTest() checks if it\u0027s called multiple times: https://cs.chromium.org/chromium/src/third_party/googletest/src/googletest/src/gtest.cc?type\u003dcs\u0026l\u003d5374 But sure, done.\n\n(I think https://cs.chromium.org/chromium/src/base/test/test_suite.cc?type\u003dcs\u0026q\u003dinitgooglemock+file:base\u0026l\u003d164 is where it\u0027s called)",
+      "parentUuid": "7783e89e_2577741d",
       "revId": "95175b70c64de7620fd3debf88725298381c9f54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "468e53f2_1c0db4b8",
+        "filename": "third_party/crashpad/crashpad/test/gtest_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-27T17:58:09Z",
+      "side": 1,
+      "message": "Meh, done.",
+      "parentUuid": "66ca969d_32a8b414",
+      "revId": "95175b70c64de7620fd3debf88725298381c9f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17fd583c_98ddaded",
         "filename": "third_party/crashpad/crashpad/util/win/process_info_test.cc",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-27T17:44:43Z",
       "side": 1,
       "message": "I can sync yesterday’s Crashpad into Chromium today, which should obviate the need to disable these.",
+      "revId": "95175b70c64de7620fd3debf88725298381c9f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f820b96_e5a93448",
+        "filename": "third_party/crashpad/crashpad/util/win/process_info_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-27T17:58:09Z",
+      "side": 1,
+      "message": "Let\u0027s please land this first, and you can do whatever you want after that.",
+      "parentUuid": "17fd583c_98ddaded",
       "revId": "95175b70c64de7620fd3debf88725298381c9f54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
