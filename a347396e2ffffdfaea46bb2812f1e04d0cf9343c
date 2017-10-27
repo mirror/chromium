@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6c59e10_9a75c0e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-27T23:11:07Z",
+      "side": 1,
+      "message": "IIRC the SurveyInfoBar is going to be reusable. These settings should probably specific to a Chrome Home version of this infobar, otherwise onCloseButtonClicked is going to check one set of data for all survey infobars.",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 98
+      },
+      "revId": "a347396e2ffffdfaea46bb2812f1e04d0cf9343c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a7ae6c_0b9048c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-27T23:11:07Z",
+      "side": 1,
+      "message": "Should we be using PrefServiceBridge here?",
+      "range": {
+        "startLine": 95,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 75
+      },
+      "revId": "a347396e2ffffdfaea46bb2812f1e04d0cf9343c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f33dd8_246a3c78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-27T23:11:07Z",
+      "side": 1,
+      "message": "nit: [was|has]InfoBarDisplayed",
+      "range": {
+        "startLine": 140,
+        "startChar": 20,
+        "endLine": 140,
+        "endChar": 33
+      },
+      "revId": "a347396e2ffffdfaea46bb2812f1e04d0cf9343c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe4543b_504fa077",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-27T23:11:07Z",
+      "side": 1,
+      "message": "nit: new line above this.",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 21
+      },
+      "revId": "a347396e2ffffdfaea46bb2812f1e04d0cf9343c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace6ec6c_81aeee0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-27T23:11:07Z",
+      "side": 1,
+      "message": "I\u0027m guessing you need the new infobar event to do this right? Right now we\u0027ll only count it as seen if it is the first one visible.",
+      "range": {
+        "startLine": 163,
+        "startChar": 16,
+        "endLine": 163,
+        "endChar": 37
+      },
+      "revId": "a347396e2ffffdfaea46bb2812f1e04d0cf9343c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
