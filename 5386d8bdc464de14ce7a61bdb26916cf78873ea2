@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51d07982_dcea9913",
+        "filename": "device/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-27T21:40:43Z",
+      "side": 1,
+      "message": "Please add a u2f/README.md (in another patch)",
+      "range": {
+        "startLine": 225,
+        "startChar": 18,
+        "endLine": 225,
+        "endChar": 21
+      },
+      "revId": "5386d8bdc464de14ce7a61bdb26916cf78873ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee3a129_4409eb40",
+        "filename": "device/u2f/u2f_ble_discovery_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-27T21:40:43Z",
+      "side": 1,
+      "message": "Please use issues to track outstanding work that should happen.  Make this TODO(00000), and ideally have the issue blocking some meta-issue that represents completing the work for shipping.",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 10
+      },
+      "revId": "5386d8bdc464de14ce7a61bdb26916cf78873ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6303130e_0e9e4f1d",
+        "filename": "device/u2f/u2f_ble_discovery_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-27T21:40:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 105,
+        "startChar": 5,
+        "endLine": 105,
+        "endChar": 9
+      },
+      "revId": "5386d8bdc464de14ce7a61bdb26916cf78873ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
