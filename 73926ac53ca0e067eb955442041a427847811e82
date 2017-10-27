@@ -22,6 +22,30 @@
       "revId": "73926ac53ca0e067eb955442041a427847811e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "947e532b_82a2d964",
+        "filename": "headless/lib/browser/headless_url_request_context_getter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-10-27T21:57:30Z",
+      "side": 1,
+      "message": "There is already a lock further down the if statement. I am a bit concerned of the lock being far away from the code that needs it and maybe being left behind/mistakenly removed.",
+      "parentUuid": "e1818912_ba84b9a7",
+      "range": {
+        "startLine": 82,
+        "startChar": 3,
+        "endLine": 83,
+        "endChar": 33
+      },
+      "revId": "73926ac53ca0e067eb955442041a427847811e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
