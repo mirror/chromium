@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f31202a2_2950921d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "TODO: we\u0027ll need to figure out how to plumb through manifest details like background color, theme color, launch orientation, etc.\n\nAlso, this will currently only allow TWAs to be launched in standalone mode - they can\u0027t launch in either minimal UI or fullscreen. That will need to be plumbed through too.\n\nMore broadly, we need to work out how these web app manifest details can make it here without us having to load the page in a compromised fashion at least once (so we have a renderer to fetch the manifest with). Ideally the developer wouldn\u0027t need to specify this in multiple places; they\u0027d just specify it in the web app manifest and we\u0027d pick it up from there (and hence be able to dynamically update if they decide to change anything)",
+      "range": {
+        "startLine": 448,
+        "startChar": 37,
+        "endLine": 448,
+        "endChar": 43
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0882127_8d8d1ce5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "TODO: the network overriding behaviour in this splash screen controller is probably something we\u0027ll want for TWAs.",
+      "range": {
+        "startLine": 51,
+        "startChar": 18,
+        "endLine": 51,
+        "endChar": 46
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a003da78_aa683adf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "We\u0027re going to want the same scope for TWAs to ensure they behave the same as WebAPKs for navigation interception.",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 82
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "357c2db9_bc8cd4b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "We probably want this custom external navigation code in TWAs too to handle when external links are run out of TWA sessions?",
+      "range": {
+        "startLine": 152,
+        "startChar": 33,
+        "endLine": 152,
+        "endChar": 57
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793be5cf_59e0c493",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "TODO: we probably would prefer the lightweight FRE for TWAs too?",
+      "range": {
+        "startLine": 181,
+        "startChar": 19,
+        "endLine": 181,
+        "endChar": 45
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9da93a_1691a0cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "This eventually calls WebappDataStorage#updateFromShortcutIntent, which assumes that the intent used to create this activity has a bunch of extra stuff that it won\u0027t have now and it\u0027ll fill the WebappDataStorage with empty strings. Possibly a TODO.",
+      "range": {
+        "startLine": 439,
+        "startChar": 8,
+        "endLine": 439,
+        "endChar": 21
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f45061af_c3bc929a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "Nit: this comment is now confusing. Replace with:\n\n\"WebappDataStorage objects are cleared if a user clears Chrome\u0027s data. Recreate them for WebAPKs and TWAs since we need to store metadata for updates and disclosure notifications.\"",
+      "range": {
+        "startLine": 445,
+        "startChar": 15,
+        "endLine": 445,
+        "endChar": 71
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fdc86d_578ef637",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "There\u0027s no icon in mWebappInfo, right? That means for TWA launch, this will always show a blank splashscreen for now (TODO to address).",
+      "range": {
+        "startLine": 526,
+        "startChar": 26,
+        "endLine": 526,
+        "endChar": 42
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be49f298_18401841",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "TODO: WebappRegistry#unregisterOldWebapps uses this information to delete WebappDataStorage objects for legacy webapps which haven\u0027t been used in a while. That will need to be updated to not delete anything for a TWA which remains installed.",
+      "range": {
+        "startLine": 544,
+        "startChar": 20,
+        "endLine": 544,
+        "endChar": 38
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f589ba58_78b9dbc9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "I don\u0027t really understand how all these pieces fit together; it would be good to get an overview of exactly how the verification works here (I tried following through the various objects and it wasn\u0027t clear to me). This is non-blocking and we can follow up offline.",
+      "range": {
+        "startLine": 683,
+        "startChar": 15,
+        "endLine": 683,
+        "endChar": 41
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a897cdcc_98499a4a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "Nit: explicitly document that \"null\" is returned if there is no associated APK.",
+      "range": {
+        "startLine": 687,
+        "startChar": 74,
+        "endLine": 687,
+        "endChar": 75
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce13601c_78a65506",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "This CL only sets NAME in the original intent right? This could mean that the task switcher shows a blank title since shortName might be null.",
+      "range": {
+        "startLine": 727,
+        "startChar": 43,
+        "endLine": 727,
+        "endChar": 52
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028b1cdc_d4b0fd93",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "Similar to above, the lack of an icon in mWebappInfo is going to cause this to degrade to using the last favicon in the task switcher (TODO)",
+      "range": {
+        "startLine": 734,
+        "startChar": 12,
+        "endLine": 734,
+        "endChar": 28
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b753c588_e69586ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-27T04:41:14Z",
+      "side": 1,
+      "message": "Please add a new source to ShortcutInfo.Source (C++): SOURCE_TRUSTED_WEB_ACTIVITY, and set that here. Otherwise our launch metrics will get more UNKNOWNs. :)",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 14
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
