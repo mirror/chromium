@@ -7,10 +7,10 @@
 #include "base/memory/ptr_util.h"
 #include "cc/animation/animation_events.h"
 #include "cc/animation/animation_id_provider.h"
-#include "cc/animation/animation_player.h"
 #include "cc/animation/animation_ticker.h"
 #include "cc/animation/animation_timeline.h"
 #include "cc/animation/element_animations.h"
+#include "cc/animation/single_animation_player.h"
 #include "cc/base/filter_operation.h"
 #include "cc/base/filter_operations.h"
 #include "ui/gfx/transform.h"
@@ -364,7 +364,7 @@ AnimationTimelinesTest::~AnimationTimelinesTest() {
 
 void AnimationTimelinesTest::SetUp() {
   timeline_ = AnimationTimeline::Create(timeline_id_);
-  player_ = AnimationPlayer::Create(player_id_);
+  player_ = SingleAnimationPlayer::Create(player_id_);
 }
 
 void AnimationTimelinesTest::TearDown() {
@@ -412,7 +412,8 @@ void AnimationTimelinesTest::CreateImplTimelineAndPlayer() {
 void AnimationTimelinesTest::GetImplTimelineAndPlayerByID() {
   timeline_impl_ = host_impl_->GetTimelineById(timeline_id_);
   EXPECT_TRUE(timeline_impl_);
-  player_impl_ = timeline_impl_->GetPlayerById(player_id_);
+  player_impl_ =
+      (SingleAnimationPlayer*)timeline_impl_->GetPlayerById(player_id_);
   EXPECT_TRUE(player_impl_);
 
   element_animations_impl_ = player_impl_->element_animations();
