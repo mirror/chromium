@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "03d13b26_2a488c5d",
+        "filename": "base/win/scoped_windows_thread_environment.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-27T19:44:08Z",
+      "side": 1,
+      "message": "Yeah, I think it should be fixed.",
+      "parentUuid": "5dde3910_b2ce1841",
+      "range": {
+        "startLine": 19,
+        "startChar": 15,
+        "endLine": 19,
+        "endChar": 16
+      },
+      "revId": "e6cf7c7cde468b056732dcefcb468f44250c63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03df5dd3_93a4e764",
         "filename": "base/win/scoped_winrt_initializer_unittest.cc",
         "patchSetId": 4
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "This dies as ScopedWinrtInitializer is not designed to be used on Win7. Added a comment.",
       "parentUuid": "03df5dd3_93a4e764",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "e6cf7c7cde468b056732dcefcb468f44250c63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61226fba_16d941a8",
+        "filename": "base/win/scoped_winrt_initializer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-27T19:44:08Z",
+      "side": 1,
+      "message": "Oh, doh, I just misread the \u003e\u003d as the other way around.",
+      "parentUuid": "0636a1cb_f73e84dc",
       "range": {
         "startLine": 32,
         "startChar": 16,
