@@ -712,6 +712,8 @@ class CC_EXPORT LayerTreeHostImpl
 
   void UpdateTileManagerMemoryPolicy(const ManagedMemoryPolicy& policy);
 
+  bool HasNoDamage();
+
   // This function should only be called from PrepareToDraw, as DidDrawAllLayers
   // must be called if this helper function is called.  Returns DRAW_SUCCESS if
   // the frame should be drawn.
