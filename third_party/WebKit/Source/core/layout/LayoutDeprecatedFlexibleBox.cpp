@@ -381,16 +381,17 @@ void LayoutDeprecatedFlexibleBox::UpdateBlockLayout(bool relayout_children) {
 
   UseCounter::Count(GetDocument(), WebFeature::kWebkitBoxLayout);
 
-  if (Style()->BoxAlign() != ComputedStyle::InitialBoxAlign())
+  if (Style()->BoxAlign() != ComputedStyleInitialFunctions::InitialBoxAlign())
     UseCounter::Count(GetDocument(), WebFeature::kWebkitBoxAlignNotInitial);
 
-  if (Style()->BoxDirection() != ComputedStyle::InitialBoxDirection())
+  if (Style()->BoxDirection() !=
+      ComputedStyleInitialFunctions::InitialBoxDirection())
     UseCounter::Count(GetDocument(), WebFeature::kWebkitBoxDirectionNotInitial);
 
-  if (Style()->BoxLines() != ComputedStyle::InitialBoxLines())
+  if (Style()->BoxLines() != ComputedStyleInitialFunctions::InitialBoxLines())
     UseCounter::Count(GetDocument(), WebFeature::kWebkitBoxLinesNotInitial);
 
-  if (Style()->BoxPack() != ComputedStyle::InitialBoxPack())
+  if (Style()->BoxPack() != ComputedStyleInitialFunctions::InitialBoxPack())
     UseCounter::Count(GetDocument(), WebFeature::kWebkitBoxPackNotInitial);
 
   if (!FirstChildBox()) {
@@ -463,17 +464,18 @@ static void GatherFlexChildrenInfo(FlexBoxIterator& iterator,
                                    unsigned& lowest_flex_group,
                                    bool& have_flex) {
   for (LayoutBox* child = iterator.First(); child; child = iterator.Next()) {
-    if (child->Style()->BoxFlex() != ComputedStyle::InitialBoxFlex())
+    if (child->Style()->BoxFlex() !=
+        ComputedStyleInitialFunctions::InitialBoxFlex())
       UseCounter::Count(document, WebFeature::kWebkitBoxChildFlexNotInitial);
 
     if (child->Style()->BoxFlexGroup() !=
-        ComputedStyle::InitialBoxFlexGroup()) {
+        ComputedStyleInitialFunctions::InitialBoxFlexGroup()) {
       UseCounter::Count(document,
                         WebFeature::kWebkitBoxChildFlexGroupNotInitial);
     }
 
     if (child->Style()->BoxOrdinalGroup() !=
-        ComputedStyle::InitialBoxOrdinalGroup()) {
+        ComputedStyleInitialFunctions::InitialBoxOrdinalGroup()) {
       UseCounter::Count(document,
                         WebFeature::kWebkitBoxChildOrdinalGroupNotInitial);
     }
