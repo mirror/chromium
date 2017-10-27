@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e83749e_8031f839",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-27T22:59:34Z",
+      "side": 1,
+      "message": "Nit: wrap to 72 if possible",
+      "revId": "a1a0d51c1cb08117c3762239961171eb1b54e4ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
