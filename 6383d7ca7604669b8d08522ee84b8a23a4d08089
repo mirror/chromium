@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a150c05f_c925666e",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-10-27T20:59:57Z",
+      "side": 1,
+      "message": "Consider updating comment here: https://cs.chromium.org/chromium/src/media/base/media_log.h?q\u003dmedia_log.h\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d105 (in media_log\u0027s id method) to say that the id is also used to associate trace events with a specific media playback.\n\nWe should also ask +sandersd or +wolenetz whether this is a misuse of the API.",
+      "range": {
+        "startLine": 507,
+        "startChar": 0,
+        "endLine": 507,
+        "endChar": 78
+      },
+      "revId": "6383d7ca7604669b8d08522ee84b8a23a4d08089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
