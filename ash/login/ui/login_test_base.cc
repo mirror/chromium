@@ -9,7 +9,6 @@
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shell_window_ids.h"
-#include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/shell.h"
 #include "base/command_line.h"
 #include "services/ui/public/cpp/property_type_converters.h"

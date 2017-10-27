@@ -101,8 +101,8 @@ testing::AssertionResult VerifyNotFocused(views::View* view) {
 // Verifies that the password input box has focus.
 TEST_F(LockScreenSanityTest, PasswordIsInitiallyFocused) {
   // Build lock screen.
-  auto* contents = new LockContentsView(mojom::TrayActionState::kNotAvailable,
-                                        data_dispatcher());
+  auto* contents = new LockContentsView(
+      mojom::LockScreenActionState::kNotAvailable, data_dispatcher());
 
   // The lock screen requires at least one user.
   SetUserCount(1);
@@ -121,8 +121,8 @@ TEST_F(LockScreenSanityTest, PasswordSubmitCallsLockScreenClient) {
     return;
 
   // Build lock screen.
-  auto* contents = new LockContentsView(mojom::TrayActionState::kNotAvailable,
-                                        data_dispatcher());
+  auto* contents = new LockContentsView(
+      mojom::LockScreenActionState::kNotAvailable, data_dispatcher());
 
   // The lock screen requires at least one user.
   SetUserCount(1);
@@ -149,7 +149,7 @@ TEST_F(LockScreenSanityTest, TabGoesFromLockToShelfAndBackToLock) {
       session_manager::SessionState::LOCKED);
 
   // Create lock screen.
-  auto* lock = new LockContentsView(mojom::TrayActionState::kNotAvailable,
+  auto* lock = new LockContentsView(mojom::LockScreenActionState::kNotAvailable,
                                     data_dispatcher());
   SetUserCount(1);
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(lock);
@@ -180,7 +180,7 @@ TEST_F(LockScreenSanityTest, ShiftTabGoesFromLockToStatusAreaAndBackToLock) {
   GetSessionControllerClient()->SetSessionState(
       session_manager::SessionState::LOCKED);
 
-  auto* lock = new LockContentsView(mojom::TrayActionState::kNotAvailable,
+  auto* lock = new LockContentsView(mojom::LockScreenActionState::kNotAvailable,
                                     data_dispatcher());
   SetUserCount(1);
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(lock);
@@ -210,7 +210,7 @@ TEST_F(LockScreenSanityTest, TabWithLockScreenAppActive) {
   GetSessionControllerClient()->SetSessionState(
       session_manager::SessionState::LOCKED);
 
-  auto* lock = new LockContentsView(mojom::TrayActionState::kNotAvailable,
+  auto* lock = new LockContentsView(mojom::LockScreenActionState::kNotAvailable,
                                     data_dispatcher());
   SetUserCount(1);
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(lock);
@@ -229,7 +229,7 @@ TEST_F(LockScreenSanityTest, TabWithLockScreenAppActive) {
       Shell::Get()->lock_screen_controller();
 
   // Initialize lock screen action state.
-  data_dispatcher()->SetLockScreenNoteState(mojom::TrayActionState::kActive);
+  data_dispatcher()->SetNoteActionState(mojom::LockScreenActionState::kActive);
 
   // Create and focus a lock screen app window.
   auto* lock_screen_app = new views::View();
@@ -282,7 +282,7 @@ TEST_F(LockScreenSanityTest, FocusLockScreenWhenLockScreenAppExit) {
   // Set up lock screen.
   GetSessionControllerClient()->SetSessionState(
       session_manager::SessionState::LOCKED);
-  auto* lock = new LockContentsView(mojom::TrayActionState::kNotAvailable,
+  auto* lock = new LockContentsView(mojom::LockScreenActionState::kNotAvailable,
                                     data_dispatcher());
   SetUserCount(1);
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(lock);
@@ -292,7 +292,7 @@ TEST_F(LockScreenSanityTest, FocusLockScreenWhenLockScreenAppExit) {
                            ->GetContentsView();
 
   // Setup and focus a lock screen app.
-  data_dispatcher()->SetLockScreenNoteState(mojom::TrayActionState::kActive);
+  data_dispatcher()->SetNoteActionState(mojom::LockScreenActionState::kActive);
   auto* lock_screen_app = new views::View();
   lock_screen_app->SetFocusBehavior(views::View::FocusBehavior::ALWAYS);
   std::unique_ptr<views::Widget> app_widget =
@@ -307,7 +307,8 @@ TEST_F(LockScreenSanityTest, FocusLockScreenWhenLockScreenAppExit) {
 
   // Move the lock screen note taking to available state (which happens when the
   // app session ends) - this should focus the lock screen.
-  data_dispatcher()->SetLockScreenNoteState(mojom::TrayActionState::kAvailable);
+  data_dispatcher()->SetNoteActionState(
+      mojom::LockScreenActionState::kAvailable);
   EXPECT_TRUE(VerifyFocused(lock));
 
   // Tab through the lock screen - the focus should eventually get to the shelf.

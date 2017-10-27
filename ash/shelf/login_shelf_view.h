@@ -7,8 +7,8 @@
 
 #include "ash/ash_export.h"
 #include "ash/lock_screen_action/lock_screen_action_background_observer.h"
+#include "ash/lock_screen_action/lock_screen_action_observer.h"
 #include "ash/shutdown_controller.h"
-#include "ash/tray_action/tray_action_observer.h"
 #include "base/scoped_observer.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/view.h"
@@ -25,13 +25,13 @@ namespace ash {
 
 class LockScreenActionBackgroundController;
 enum class LockScreenActionBackgroundState;
-class TrayAction;
+class LockScreenAction;
 
 // LoginShelfView contains the shelf buttons visible outside of an active user
 // session. ShelfView and LoginShelfView should never be shown together.
 class ASH_EXPORT LoginShelfView : public views::View,
                                   public views::ButtonListener,
-                                  public TrayActionObserver,
+                                  public LockScreenActionObserver,
                                   public LockScreenActionBackgroundObserver,
                                   public ShutdownController::Observer {
  public:
@@ -59,8 +59,8 @@ class ASH_EXPORT LoginShelfView : public views::View,
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
  protected:
-  // TrayActionObserver:
-  void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override;
+  // LockScreenActionObserver:
+  void OnNoteStateChanged(mojom::LockScreenActionState state) override;
 
   // LockScreenActionBackgroundObserver:
   void OnLockScreenActionBackgroundStateChanged(
@@ -78,7 +78,8 @@ class ASH_EXPORT LoginShelfView : public views::View,
 
   LockScreenActionBackgroundController* lock_screen_action_background_;
 
-  ScopedObserver<TrayAction, TrayActionObserver> tray_action_observer_;
+  ScopedObserver<LockScreenAction, LockScreenActionObserver>
+      lock_screen_action_observer_;
 
   ScopedObserver<LockScreenActionBackgroundController,
                  LockScreenActionBackgroundObserver>
