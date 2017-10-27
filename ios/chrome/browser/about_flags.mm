@@ -170,10 +170,6 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
     {"bookmark-new-generation", flag_descriptions::kBookmarkNewGenerationName,
      flag_descriptions::kBookmarkNewGenerationDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(kBookmarkNewGeneration)},
-    {"mailto-prompt-for-user-choice",
-     flag_descriptions::kMailtoPromptForUserChoiceName,
-     flag_descriptions::kMailtoPromptForUserChoiceDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(kMailtoPromptForUserChoice)},
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
     {"drag_and_drop", flag_descriptions::kDragAndDropName,
      flag_descriptions::kDragAndDropDescription, flags_ui::kOsIos,

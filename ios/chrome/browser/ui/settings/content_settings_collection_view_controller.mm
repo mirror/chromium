@@ -109,9 +109,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
     [_disablePopupsSetting setObserver:self];
 
     _mailtoURLRewriter =
-        base::FeatureList::IsEnabled(kMailtoPromptForUserChoice)
-            ? [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers]
-            : [LegacyMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
+        [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
     [_mailtoURLRewriter setObserver:self];
 
     // TODO(crbug.com/764578): -loadModel should not be called from
@@ -139,11 +137,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
       toSectionWithIdentifier:SectionIdentifierSettings];
   [model addItem:[self translateItem]
       toSectionWithIdentifier:SectionIdentifierSettings];
-  // Show Compose Email setting if mailto: URL rewriting feature is enabled.
-  if (base::FeatureList::IsEnabled(kMailtoUrlRewriting)) {
-    [model addItem:[self composeEmailItem]
-        toSectionWithIdentifier:SectionIdentifierSettings];
-  }
+  [model addItem:[self composeEmailItem]
+      toSectionWithIdentifier:SectionIdentifierSettings];
 }
 
 - (CollectionViewItem*)blockPopupsItem {

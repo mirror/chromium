@@ -7,15 +7,6 @@
 
 #include "base/feature_list.h"
 
-// Feature flag to enable rewriting of mailto: URLs to launch Mail client app
-// of user's choice.
-extern const base::Feature kMailtoUrlRewriting;
-
-// Feature flag to prompt user to choose a mail client app. User is prompted
-// at the first time that the user taps on a mailto: URL. This feature can be
-// enabled only when kMailtoUrlRewriting is also enabled.
-extern const base::Feature kMailtoPromptForUserChoice;
-
 // Feature flag to choose whether to use Material Design style bottom sheet
 // to present choices to the user. With MDC, it is possible to show a custom
 // row with a toggle switch to remember the setting for future use.

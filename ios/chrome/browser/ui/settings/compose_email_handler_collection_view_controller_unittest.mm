@@ -34,9 +34,7 @@ class ComposeEmailHandlerCollectionViewControllerTest
   // CollectionViewController.
   CollectionViewController* InstantiateController() override {
     rewriter_ =
-        base::FeatureList::IsEnabled(kMailtoPromptForUserChoice)
-            ? [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers]
-            : [[LegacyMailtoURLRewriter alloc] init];
+        [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
     // Clears the state so unit tests start from a known state.
     [[NSUserDefaults standardUserDefaults]
         removeObjectForKey:[[rewriter_ class] userDefaultsKey]];

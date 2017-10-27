@@ -359,14 +359,10 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
     }
   }
 
-  // If feature mailto: URL rewriting is enabled, replaces |URL| with a
-  // rewritten URL if it is of mailto: scheme.
-  if (base::FeatureList::IsEnabled(kMailtoUrlRewriting) &&
-      gURL.SchemeIs(url::kMailToScheme)) {
+  // Replaces |URL| with a rewritten URL if it is of mailto: scheme.
+  if (gURL.SchemeIs(url::kMailToScheme)) {
     MailtoURLRewriter* rewriter =
-        base::FeatureList::IsEnabled(kMailtoPromptForUserChoice)
-            ? [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers]
-            : [LegacyMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
+        [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
     NSString* handlerID = [rewriter defaultHandlerID];
     if (!handlerID) {
       if (base::FeatureList::IsEnabled(kMailtoPromptInMdcStyle))
