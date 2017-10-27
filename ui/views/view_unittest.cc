@@ -19,6 +19,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
+#include "base/test/scoped_locale.h"
 #include "build/build_config.h"
 #include "cc/paint/display_item_list.h"
 #include "ui/base/accelerators/accelerator.h"
@@ -193,23 +194,19 @@ void ScrambleTree(views::View* view) {
     view->SetVisible(!view->visible());
 }
 
-class ScopedRTL {
- public:
-  ScopedRTL() {
-    locale_ = base::i18n::GetConfiguredLocale();
-    base::i18n::SetICUDefaultLocale("he");
-  }
-  ~ScopedRTL() { base::i18n::SetICUDefaultLocale(locale_); }
-
- private:
-  std::string locale_;
-};
-
 }  // namespace
 
 namespace views {
 
-typedef ViewsTestBase ViewTest;
+class ViewTest : public ViewsTestBase {
+ public:
+  ViewTest() {}
+  ~ViewTest() override {}
+
+ private:
+  // Restores the locale to default when destructor is called.
+  base::test::ScopedRestoreICUDefaultLocale restore_locale_;
+};
 
 // A derived class for testing purpose.
 class TestView : public View {
@@ -620,7 +617,7 @@ TEST_F(ViewTest, PaintWithMovedViewUsesCache) {
 }
 
 TEST_F(ViewTest, PaintWithMovedViewUsesCacheInRTL) {
-  ScopedRTL rtl;
+  base::i18n::SetICUDefaultLocale("he");
   ScopedTestPaintWidget widget(CreateParams(Widget::InitParams::TYPE_POPUP));
   View* root_view = widget->GetRootView();
   TestView* v1 = new TestView;
@@ -775,7 +772,7 @@ TEST_F(ViewTest, PaintContainsChildren) {
 }
 
 TEST_F(ViewTest, PaintContainsChildrenInRTL) {
-  ScopedRTL rtl;
+  base::i18n::SetICUDefaultLocale("he");
   ScopedTestPaintWidget widget(CreateParams(Widget::InitParams::TYPE_POPUP));
   View* root_view = widget->GetRootView();
 
@@ -855,7 +852,7 @@ TEST_F(ViewTest, PaintIntersectsChildren) {
 }
 
 TEST_F(ViewTest, PaintIntersectsChildrenInRTL) {
-  ScopedRTL rtl;
+  base::i18n::SetICUDefaultLocale("he");
   ScopedTestPaintWidget widget(CreateParams(Widget::InitParams::TYPE_POPUP));
   View* root_view = widget->GetRootView();
 
@@ -935,7 +932,7 @@ TEST_F(ViewTest, PaintIntersectsChildButNotGrandChild) {
 }
 
 TEST_F(ViewTest, PaintIntersectsChildButNotGrandChildInRTL) {
-  ScopedRTL rtl;
+  base::i18n::SetICUDefaultLocale("he");
   ScopedTestPaintWidget widget(CreateParams(Widget::InitParams::TYPE_POPUP));
   View* root_view = widget->GetRootView();
 
@@ -1015,7 +1012,7 @@ TEST_F(ViewTest, PaintIntersectsNoChildren) {
 }
 
 TEST_F(ViewTest, PaintIntersectsNoChildrenInRTL) {
-  ScopedRTL rtl;
+  base::i18n::SetICUDefaultLocale("he");
   ScopedTestPaintWidget widget(CreateParams(Widget::InitParams::TYPE_POPUP));
   View* root_view = widget->GetRootView();
 
@@ -1108,7 +1105,7 @@ TEST_F(ViewTest, PaintIntersectsOneChild) {
 }
 
 TEST_F(ViewTest, PaintIntersectsOneChildInRTL) {
-  ScopedRTL rtl;
+  base::i18n::SetICUDefaultLocale("he");
   ScopedTestPaintWidget widget(CreateParams(Widget::InitParams::TYPE_POPUP));
   View* root_view = widget->GetRootView();
 
@@ -3776,7 +3773,7 @@ class ViewLayerTest : public ViewsTestBase {
 
   void SetUp() override {
     SetUpPixelCanvas();
-    ViewTest::SetUp();
+    ViewsTestBase::SetUp();
     widget_ = new Widget;
     Widget::InitParams params = CreateParams(Widget::InitParams::TYPE_POPUP);
     params.bounds = gfx::Rect(50, 50, 200, 200);
@@ -3804,6 +3801,8 @@ class ViewLayerTest : public ViewsTestBase {
  private:
   Widget* widget_;
   base::test::ScopedFeatureList scoped_feature_list_;
+  // Restores the locale to default when destructor is called.
+  base::test::ScopedRestoreICUDefaultLocale restore_locale_;
 };
 
 
@@ -3939,8 +3938,7 @@ TEST_F(ViewLayerTest, BoundsChangeWithLayer) {
 
 // Make sure layers are positioned correctly in RTL.
 TEST_F(ViewLayerTest, BoundInRTL) {
-  ScopedRTL rtl;
-
+  base::i18n::SetICUDefaultLocale("he");
   View* view = new View;
   widget()->SetContentsView(view);
 
@@ -3994,8 +3992,7 @@ TEST_F(ViewLayerTest, BoundInRTL) {
 
 // Make sure that resizing a parent in RTL correctly repositions its children.
 TEST_F(ViewLayerTest, ResizeParentInRTL) {
-  ScopedRTL rtl;
-
+  base::i18n::SetICUDefaultLocale("he");
   View* view = new View;
   widget()->SetContentsView(view);
 
