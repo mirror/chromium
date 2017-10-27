@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bfac3ce_c38c35a5",
+        "filename": "base/numerics/ranges.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-27T16:59:51Z",
+      "side": 1,
+      "message": "nit: someday",
+      "range": {
+        "startLine": 13,
+        "startChar": 52,
+        "endLine": 13,
+        "endChar": 54
+      },
+      "revId": "853f9c0bbdd67626924480ae8b1a7a7ff2e3a42f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
