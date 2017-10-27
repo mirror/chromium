@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeb11639_9b6cfe39",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-27T01:26:18Z",
+      "side": 0,
+      "message": "Do you mean to remove this? It\u0027ll change several layout test expectations.",
+      "revId": "f66cdd604fcd9274770160a6671f47840dea5c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
