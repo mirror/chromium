@@ -22,6 +22,121 @@
       "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42783f3_1856c700",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-27T18:39:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "62ab80b4_14abe508",
+      "range": {
+        "startLine": 8,
+        "startChar": 54,
+        "endLine": 8,
+        "endChar": 73
+      },
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cacec30d_bf24c0e6",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-27T18:39:54Z",
+      "side": 1,
+      "message": "Should this just be captured in a bug, rather than here?",
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1f50e9_9ede63ae",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-27T18:39:54Z",
+      "side": 1,
+      "message": "This recommendation is quite new to me, and is a bit surprising given the long practice of doing it.",
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c7ecb1_c27108ae",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-27T18:39:54Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 187,
+        "startChar": 51,
+        "endLine": 187,
+        "endChar": 52
+      },
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f085e8f1_f2ed5f3d",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-27T18:39:54Z",
+      "side": 1,
+      "message": "Should these look like they\u0027re defined out-of-line per the recommendation below?",
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551eb03d_da950065",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-27T18:39:54Z",
+      "side": 1,
+      "message": "optional: don\u0027t use single-line returns in example code for greater clarity",
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
