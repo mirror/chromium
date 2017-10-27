@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "e028c448_3e564805",
+        "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-27T19:29:12Z",
+      "side": 1,
+      "message": "Demetrios has much more knowledge in this area than I do.  I gladly defer to his expertise.  I was bringing up an alternative in case it looked better to y\u0027all and it hadn\u0027t been thought of (since it seems like less code and might address some of Dave\u0027s concerns), but as long as there are tests that exercise this behavior, I won\u0027t block on what the mocking architecture looks like. :)\n\nIf Demetrios has a preference, let\u0027s do that one!",
+      "parentUuid": "da9d7bf7_f4f71b6d",
+      "revId": "96acd89a1a990dc8a4b06683d16fc8f48a1c7aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5a0beb3_a91d9c3e",
         "filename": "chrome/test/data/webui/extensions/extension_shortcut_input_test.js",
         "patchSetId": 3
