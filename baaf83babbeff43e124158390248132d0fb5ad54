@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6c66f60_b101f90a",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-27T13:27:04Z",
+      "side": 1,
+      "message": "Oops, sorry for missing that when reviewing this CL the first time.\n\nReferences are just immutable pointer internally for the compiler, and blocks just copy the underlying pointer not the referenced object. So unless the referenced objects has a lifetime that is greater than the block itself, capturing references by blocks is dangerous.\n\nAnother option would have been to use a local copy, like this:\n\n  ntp_tiles::NTPTilesVector most_visited_data_copy \u003d most_visited_data;\n  base::PostTaskWithTraitsAndReply(\n      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},\n      base::BindOnce(\u0026ClearTemporaryFaviconFolder), base::BindBlockArc(^{\n        GetFaviconsAndSave(most_visited_data_copy, favicon_fetcher, favicons_folder);\n      }));\n\nNote that use base::Bind() does the same thing, it creates a copy, the difference is that it is owned by the bound object instead of the block.",
+      "revId": "baaf83babbeff43e124158390248132d0fb5ad54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
