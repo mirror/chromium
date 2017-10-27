@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d58bb1a2_993c6e51",
+        "filename": "third_party/WebKit/LayoutTests/scrollbars/rtl/overflow-scroll-rtl.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-27T19:47:47Z",
+      "side": 1,
+      "message": "Why this change to remove setMockScrollbarsEnabled?",
+      "revId": "679e9514008b59efbfb96d9566d6f0271f9fb917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80895f76_c229db4b",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 4405,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-27T19:47:47Z",
+      "side": 1,
+      "message": "LocalFrameView::NeedsScrollbarReconstruction is really close to PaintLayerScrollableArea::NeedsScrollbarReconstruction. Can you move the common logic to ScrollableArea::NeedsScrollbarReconstruction?",
+      "revId": "679e9514008b59efbfb96d9566d6f0271f9fb917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d29bcc52_d95642a8",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 4425,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-27T19:47:47Z",
+      "side": 1,
+      "message": "What is a stale m_owner? Is this code hit in any test? (Similarly for PLSA)",
+      "revId": "679e9514008b59efbfb96d9566d6f0271f9fb917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3473d44b_3789f221",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsEmulator.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-27T19:47:47Z",
+      "side": 1,
+      "message": "How are page settings and RuntimeEnabledFeatures settings different? Are their lifetimes the same?\n\nWill it be a problem that OverlayScrollbarsEnabled is a runtime enabled feature whereas ForceAndroidOverlayScrollbar is a page setting?\n\nWould it be possible to use MobileLayoutThemeEnabled instead of adding a new setting? Or, if a new setting is needed, would it be possible to remove MobileLayoutThemeEnabled?",
+      "revId": "679e9514008b59efbfb96d9566d6f0271f9fb917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a20f22_c3f06a58",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-27T19:47:47Z",
+      "side": 1,
+      "message": "We re-use renderers between tests (for performance) so it\u0027s important to use scoped features to ensure they are reset before the next test runs. Please change this to: ScopedOverlayScrollbarsForTest overlay_scrollbars(false);\n(See: https://crbug.com/769541)",
+      "revId": "679e9514008b59efbfb96d9566d6f0271f9fb917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d70461_a30553f4",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-27T19:47:47Z",
+      "side": 1,
+      "message": "nit: divs can\u0027t be self-closing (e.g., content at the end of this document would appear in the div). Please change to \u003cdiv id\u003d\"d2\"\u003e\u003c/div\u003e",
+      "revId": "679e9514008b59efbfb96d9566d6f0271f9fb917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b073a5f0_963a2bbe",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollbarThemeOverlay.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-27T19:47:47Z",
+      "side": 1,
+      "message": "I did a simple test with this patch applied on Mac (http://output.jsbin.com/yegovoh/quiet) and the inner scrollbar is really light compared to the same page on my phone. Are we using the right style here?",
+      "revId": "679e9514008b59efbfb96d9566d6f0271f9fb917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
