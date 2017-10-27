@@ -46,6 +46,30 @@
       "revId": "cbe2f108b9f1ee60f8dcfc52dab1428333a50ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011a6276_37639ea4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-27T14:07:50Z",
+      "side": 1,
+      "message": "Sorry, what I meant was: Where did this value for the key come from? Is it a value that you got yourself by setting up a Google API project? If so, you probably don\u0027t want to publish it in the commit description; you could instead say something like \"If you\u0027re a Googler, do a build with API keys built in; otherwise, obtain a Google API key and pass it into Chromium by setting it as an environment variable as follows: ...\".",
+      "parentUuid": "c75eaccb_57f3324f",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 61
+      },
+      "revId": "cbe2f108b9f1ee60f8dcfc52dab1428333a50ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
