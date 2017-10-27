@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ee37554_d4310953",
+        "filename": "base/win/scoped_windows_thread_environment.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-27T19:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "304fe018_09b17eb2",
+      "range": {
+        "startLine": 5,
+        "startChar": 50,
+        "endLine": 5,
+        "endChar": 51
+      },
+      "revId": "e6cf7c7cde468b056732dcefcb468f44250c63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "754c56c8_32c1f4fd",
         "filename": "base/win/scoped_windows_thread_environment.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-27T19:20:04Z",
       "side": 1,
       "message": "Succeeded()?",
+      "range": {
+        "startLine": 19,
+        "startChar": 15,
+        "endLine": 19,
+        "endChar": 16
+      },
+      "revId": "e6cf7c7cde468b056732dcefcb468f44250c63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dde3910_b2ce1841",
+        "filename": "base/win/scoped_windows_thread_environment.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-27T19:30:20Z",
+      "side": 1,
+      "message": "I kept this lowercase for the sake of compatibility with ScopedCOMInitializer. I can sweep through these if need be.",
+      "parentUuid": "754c56c8_32c1f4fd",
       "range": {
         "startLine": 19,
         "startChar": 15,
@@ -68,6 +116,30 @@
       "revId": "e6cf7c7cde468b056732dcefcb468f44250c63dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0636a1cb_f73e84dc",
+        "filename": "base/win/scoped_winrt_initializer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-27T19:30:20Z",
+      "side": 1,
+      "message": "This dies as ScopedWinrtInitializer is not designed to be used on Win7. Added a comment.",
+      "parentUuid": "03df5dd3_93a4e764",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "e6cf7c7cde468b056732dcefcb468f44250c63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
