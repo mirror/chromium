@@ -16,6 +16,24 @@
       "revId": "e2a6495ad84a298a611b4a832722a8a3115fce91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e9fe62_f5c9b84d",
+        "filename": "chrome/browser/ui/cocoa/first_run_dialog.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T12:49:13Z",
+      "side": 0,
+      "message": "nice catch. i\u0027m not sure why this would be done here.",
+      "parentUuid": "61c028f2_a26078f7",
+      "revId": "e2a6495ad84a298a611b4a832722a8a3115fce91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

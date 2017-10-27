@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e16fb3e_ed71887d",
+        "filename": "chrome/browser/first_run/first_run_internal_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T12:49:13Z",
+      "side": 1,
+      "message": "please document |update_metrics_reporting|.",
+      "revId": "0dc6d8657b2b233bb9f79efb0392243fd9080bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7a495c_e0ff8300",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T12:49:13Z",
+      "side": 1,
+      "message": "how about making the testing seam a base::Closure (with a proper SetBlahForTesting setter) rather than a function pointer so that you don\u0027t need the global variable? take care not to introduce a static dtor by dynamically allocating the Closure when stashing it in a global pointer.",
+      "revId": "0dc6d8657b2b233bb9f79efb0392243fd9080bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ce73ab_17409826",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-27T12:49:13Z",
+      "side": 1,
+      "message": "nit:   ADD_FAILURE() \u003c\u003c \"Should never be called\";",
+      "revId": "0dc6d8657b2b233bb9f79efb0392243fd9080bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
