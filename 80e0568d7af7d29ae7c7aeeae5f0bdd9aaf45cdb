@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "920f4a4e_35332ca2",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-27T16:32:03Z",
+      "side": 1,
+      "message": "This doesn\u0027t strike me as the right method to use. It is meant to be used during loading of a document, so once the document load has completed I\u0027m not sure it will give you the right result.\n\nIt is more correct to use GetWebFrame()-\u003eGetDocument()-\u003eUrl();",
+      "revId": "80e0568d7af7d29ae7c7aeeae5f0bdd9aaf45cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebc4558a_37903b98",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 15
