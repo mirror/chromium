@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "3e61ce1f_bb579206",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-27T16:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1498589b_e026950e",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 5
+      },
+      "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28b25c8d_429065bc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java",
         "patchSetId": 7
@@ -306,6 +330,30 @@
       "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6520d566_921c6e03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-27T16:46:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a0d3752a_72352320",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 44
+      },
+      "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
