@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05af2e69_9a2698dd",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-27T15:59:39Z",
+      "side": 0,
+      "message": "Cache skipper is removed because now we always skip cache in a PaintRecordBuilder with transient PaintController: https://chromium-review.googlesource.com/c/chromium/src/+/740376.",
+      "revId": "f76efca0091c3a368dc172542f36fbbcb8571108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
