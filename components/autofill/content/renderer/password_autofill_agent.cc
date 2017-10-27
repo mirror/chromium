@@ -725,7 +725,8 @@ bool PasswordAutofillAgent::FillSuggestion(
     password_info->password_field = password_element;
   }
 
-  if (IsUsernameAmendable(username_element, element->IsPasswordField())) {
+  if (IsUsernameAmendable(username_element, element->IsPasswordField()) &&
+      username_element.Value().Utf16() != username) {
     username_element.SetAutofillValue(blink::WebString::FromUTF16(username));
     username_element.SetAutofilled(true);
     UpdateFieldValueAndPropertiesMaskMap(username_element, &username,
