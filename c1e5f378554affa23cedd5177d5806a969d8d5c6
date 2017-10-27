@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5d7554b_51afb193",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-27T06:26:01Z",
+      "side": 0,
+      "message": "This line causing the bug that if I click the folder name, it will announce \u0027folder name, edit text, open folder\u0027. Looks like the accessible name set here affects the FolderHeaderView\u0027s a11y announcement.\n\nWe are using ui::AX_ROLE_DESKTOP for app list peeking \u003c-\u003e fullscreen announcement: https://cs.chromium.org/chromium/src/ui/app_list/views/app_list_view.cc?dr\u003dCSs\u0026q\u003dapp_list_view\u0026sq\u003dpackage:chromium\u0026l\u003d1114\n\nui::AX_ROLE_GENERIC_CONTAINER is added here: https://chromium-review.googlesource.com/c/chromium/src/+/727562, that bug could not repro after this patch, either.\n\nI don\u0027t know much here. Just using code search for fixing this.",
+      "revId": "c1e5f378554affa23cedd5177d5806a969d8d5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
