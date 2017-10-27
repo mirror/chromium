@@ -22,6 +22,30 @@
       "revId": "6383d7ca7604669b8d08522ee84b8a23a4d08089",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4eb750_656a2029",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-27T23:08:06Z",
+      "side": 1,
+      "message": "This CL would basically turn the \u0027media log ID\u0027 into a \u0027media element ID\u0027. The concepts are similar enough that I don\u0027t have a big problem with it, but I\u0027m not sure that the MediaLog is the right way to pass it around. Possibly Blink should be generating it at passing it both to the Log and to WMPI.\n\nFor now I think I\u0027m okay with just updating the comment, but I also think that it\u0027s Dale that should make the call.",
+      "parentUuid": "a150c05f_c925666e",
+      "range": {
+        "startLine": 507,
+        "startChar": 0,
+        "endLine": 507,
+        "endChar": 78
+      },
+      "revId": "6383d7ca7604669b8d08522ee84b8a23a4d08089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
