@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc45ef2c_c7e6f7f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-27T13:52:42Z",
+      "side": 1,
+      "message": "(1) Where did this key value come from, out of curiosity?\n\n(2) I think that you should be able to set this value without changing code via environment vars; see https://cs.chromium.org/chromium/src/google_apis/google_api_keys.h?type\u003dcs\u0026q\u003dgoogle_apis\u0026sq\u003dpackage:chromium\u0026l\u003d35.",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 61
+      },
+      "revId": "cbe2f108b9f1ee60f8dcfc52dab1428333a50ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
