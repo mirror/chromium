@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "1498589b_e026950e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-27T15:43:02Z",
+      "side": 1,
+      "message": "I\u0027d rather just use the the constructor; this isn\u0027t hiding any implementation details.",
+      "parentUuid": "a76eb82d_9c07eae3",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 5
+      },
+      "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28b25c8d_429065bc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java",
         "patchSetId": 7
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "ab7a514a_a7f606b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-27T15:43:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3afe9c72_3d602291",
+      "range": {
+        "startLine": 112,
+        "startChar": 24,
+        "endLine": 112,
+        "endChar": 38
+      },
+      "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "774ad22b_a9f9cde9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java",
         "patchSetId": 7
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "The goal of this class to make the operation simpler, since the everything needed is already there I figured out a shortcut would not hurt.",
       "parentUuid": "774ad22b_a9f9cde9",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 44
+      },
+      "revId": "c53c9c9cedd3534c162f34fe9d3404c31c79481f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d3752a_72352320",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-27T15:43:02Z",
+      "side": 1,
+      "message": "The reason I\u0027m not terribly fond of this is because it requires digging one level deeper to figure out what is exactly happening during insertion for the same amount of code (for example, does it always go to the same place in the hierarchy?). I guess build() is still public though, so a user could go either route.",
+      "parentUuid": "507e84e0_ff54d2b4",
       "range": {
         "startLine": 154,
         "startChar": 12,
