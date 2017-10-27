@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/guid.h"
@@ -20,11 +21,38 @@
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/mhtml_generation_params.h"
+#include "crypto/secure_hash.h"
+#include "crypto/sha2.h"
 #include "net/base/filename_util.h"
 
 namespace offline_pages {
 namespace {
 const base::FilePath::CharType kMHTMLExtension[] = FILE_PATH_LITERAL("mhtml");
+
+std::string ComputeFileHash(const base::FilePath& file_path) {
+  base::File file(file_path, base::File::FLAG_OPEN | base::File::FLAG_READ);
+  if (!file.IsValid())
+    return std::string();
+
+  std::unique_ptr<crypto::SecureHash> secure_hash(
+      crypto::SecureHash::Create(crypto::SecureHash::SHA256));
+
+  const int kMaxBufferSize = 1024;
+  std::vector<char> buffer(kMaxBufferSize);
+  int read;
+  do {
+    read = file.ReadAtCurrentPos(buffer.data(), kMaxBufferSize);
+    if (read > 0)
+      secure_hash->Update(buffer.data(), read);
+  } while (read > 0);
+  if (read < 0)
+    return std::string();
+
+  std::string result;
+  secure_hash->Finish(base::WriteInto(&result, crypto::kSHA256Length + 1),
+                      crypto::kSHA256Length);
+  return result;
+}
 
 void DeleteFileOnFileThread(const base::FilePath& file_path,
                             const base::Closure& callback) {
@@ -33,6 +61,14 @@ void DeleteFileOnFileThread(const base::FilePath& file_path,
       base::BindOnce(base::IgnoreResult(&base::DeleteFile), file_path,
                      false /* recursive */),
       callback);
+}
+
+void ComputeFileHashOnFileThread(
+    const base::FilePath& file_path,
+    const base::Callback<void(const std::string&)>& callback) {
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+      base::Bind(&ComputeFileHash, file_path), callback);
 }
 }  // namespace
 
@@ -131,11 +167,27 @@ void OfflinePageMHTMLArchiver::OnGenerateMHTMLDone(
                               weak_ptr_factory_.GetWeakPtr(),
                               ArchiverResult::ERROR_ARCHIVE_CREATION_FAILED));
   } else {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::Bind(callback_, this, ArchiverResult::SUCCESSFULLY_CREATED, url,
-                   file_path, title, file_size));
+    ComputeFileHashOnFileThread(
+        file_path, base::Bind(&OfflinePageMHTMLArchiver::OnComputeFileHashDone,
+                              weak_ptr_factory_.GetWeakPtr(), url, file_path,
+                              title, file_size));
   }
+}
+
+void OfflinePageMHTMLArchiver::OnComputeFileHashDone(
+    const GURL& url,
+    const base::FilePath& file_path,
+    const base::string16& title,
+    int64_t file_size,
+    const std::string& file_hash) {
+  if (file_hash.empty()) {
+    ReportFailure(ArchiverResult::ERROR_FILE_HASH_FAILED);
+    return;
+  }
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::Bind(callback_, this, ArchiverResult::SUCCESSFULLY_CREATED, url,
+                 file_path, title, file_size, file_hash));
 }
 
 bool OfflinePageMHTMLArchiver::HasConnectionSecurityError() {
@@ -157,7 +209,7 @@ void OfflinePageMHTMLArchiver::ReportFailure(ArchiverResult result) {
   DCHECK(result != ArchiverResult::SUCCESSFULLY_CREATED);
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(callback_, this, result, GURL(), base::FilePath(),
-                            base::string16(), 0));
+                            base::string16(), 0, std::string()));
 }
 
 }  // namespace offline_pages

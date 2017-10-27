@@ -66,6 +66,11 @@ class OfflinePageMHTMLArchiver : public OfflinePageArchiver {
                            const base::FilePath& file_path,
                            const base::string16& title,
                            int64_t file_size);
+  void OnComputeFileHashDone(const GURL& url,
+                             const base::FilePath& file_path,
+                             const base::string16& title,
+                             int64_t file_size,
+                             const std::string& file_hash);
 
   // Checks whether the page to be saved has security error when loaded over
   // HTTPS. Saving a page will fail if that is the case. HTTP connections are

@@ -50,7 +50,8 @@ class CreateArchiveTask : public Task {
                               const GURL&,
                               const base::FilePath&,
                               const base::string16&,
-                              int64_t)>
+                              int64_t,
+                              const std::string&)>
       CreateArchiveTaskCallback;
 
   CreateArchiveTask(const base::FilePath& archives_dir,
