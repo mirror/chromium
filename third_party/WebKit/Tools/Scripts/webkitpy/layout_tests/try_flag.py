@@ -3,25 +3,57 @@
 # found in the LICENSE file.
 
 """Triggers and processes results from flag try jobs.
-
 For more information, see: http://bit.ly/flag-try-jobs
+This script is a work in progress.
 
-This is a work in progress.  It currently supports the following flow for
-regenerating a flag-specific expectations file from scratch:
+- HOW TO USE THE SCRIPT FOR GARDENING -
 
-1. make a local git branch
-2. echo '--your-flag' > third_party/WebKit/LayoutTests/additional-driver-flag.setting
-3. rm third_party/WebKit/LayoutTests/FlagExpectations/your-flag
-4. git cl upload
-5. git cl try -b linux_chromium_rel_ng -b win_chromium_rel_ng -b mac_chromium_rel_ng
-6. wait for jobs to finish
-7. third_party/WebKit/Tools/Scripts/try-flag update
-8. paste output below "unexpected failures" into
-   third_party/WebKit/LayoutTests/FlagExpectations/your-flag
+To regenerate a flag expectations file from scratch, run the following in a
+local branch:
 
-The try-flag script currently automates downloading the test results from the
-three trybots and generating the expectation lines with merged platform
-specifiers.  Eventually it will automate the other steps too.
+  try-flag trigger --flag=--your-flag --regenerate
+
+Wait for the try jobs to finish, then run:
+
+  try-flag update
+
+Finally, copy the output under "unexpected failures" into the flag expectations
+file (LayoutTests/FlagExpectations/your-flag).
+
+- HOW TO USE THE SCRIPT FOR TESTING A PENDING CHANGE -
+
+To test a pending change, create a local branch off of your change for the flag
+try job (e.g. yourchange_tryflag), and run:
+
+  try-flag trigger --flag=--your-flag
+
+Wait for the try jobs to finish, then run:
+
+  try-flag update
+
+The output under "unexpected failures" indicates tests that your change may be
+regressing, and the output under "unexpected passes" indicates tests your change
+may fix.  But note the following caveats:
+
+* The results may be inaccurate if the flag expectations file is out of date.
+  For this reason, it's sometimes useful to compare output to a second flag try
+  job tracking origin/master.
+
+* The "unexpected passes" step is not yet intersected with the flag expectations
+  file, so it includes tests that are marked failing in main TestExpectations.
+  This will be fixed soon.
+
+- HOW THE SCRIPT WORKS -
+
+The trigger step commits local changes to force-enable the flag in the test
+runner (and clear the existing flag expectations if --regenerate is specified).
+
+The update step downloads the test results from all three trybots and generates
+expectation lines with merged platform specifiers.
+
+In the future, the script will be smarter about managing local git branches, and
+write new expectations directly to the flag expectations file, with support for
+incremental updates.
 """
 
 import argparse
@@ -29,6 +61,7 @@ import sys
 
 from webkitpy.common.host import Host
 from webkitpy.common.net.git_cl import GitCL
+from webkitpy.common.path_finder import PathFinder
 from webkitpy.layout_tests.models.test_configuration import TestConfiguration
 from webkitpy.layout_tests.models.test_configuration import TestConfigurationConverter
 from webkitpy.layout_tests.models.test_expectations import TestExpectationLine
@@ -36,11 +69,17 @@ from webkitpy.layout_tests.models.test_expectations import TestExpectations
 from webkitpy.layout_tests.models.test_expectations import TestExpectationsModel
 
 
-BUILDERS = {
+BUILDER_CONFIGS = {
     'linux_chromium_rel_ng': TestConfiguration('Linux', '', 'release'),
     'mac_chromium_rel_ng': TestConfiguration('Mac', '', 'release'),
     'win7_chromium_rel_ng': TestConfiguration('Win', '', 'release')
 }
+BUILDER_MASTERS = {
+    'linux_chromium_rel_ng': 'tryserver.chromium.linux',
+    'mac_chromium_rel_ng': 'tryserver.chromium.mac',
+    'win7_chromium_rel_ng': 'tryserver.chromium.win'
+}
+FLAG_FILE = 'additional-driver-flag.setting'
 
 
 class TryFlag(object):
@@ -51,10 +90,39 @@ class TryFlag(object):
         self._git_cl = git_cl
         self._expectations_model = TestExpectationsModel()
         self._test_configuration_converter = TestConfigurationConverter(
-            set(BUILDERS.values()))
+            set(BUILDER_CONFIGS.values()))
+        self._filesystem = self._host.filesystem
+        self._path_finder = PathFinder(self._filesystem)
+        self._git = self._host.git()
+
+    def _set_flag(self, flag):
+        filesystem = self._filesystem
+        path = filesystem.join(self._path_finder.layout_tests_dir(), FLAG_FILE)
+        filesystem.write_text_file(path, flag + '\n')
+        self._git.add_list([path])
+        self._git.commit_locally_with_message(
+            'Flag try job: force %s for run-webkit-tests.' % flag)
+
+    def _clear_expectations(self, flag):
+        filesystem = self._filesystem
+        path = filesystem.join(self._path_finder.layout_tests_dir(),
+                               'FlagExpectations', flag.lstrip('-'))
+        filesystem.write_text_file(path, '')
+        self._git.add_list([path])
+        self._git.commit_locally_with_message(
+            'Flag try job: clear expectations for %s.' % flag)
 
     def trigger(self):
-        print 'TODO: implement "trigger"'
+        flag = self._args.flag
+        if flag:
+            self._set_flag(flag)
+            if self._args.regenerate:
+                self._clear_expectations(flag)
+            self._git_cl.run(['upload', '--bypass-hooks', '-f',
+                              '-m', 'Flag try job for %s.' % flag])
+        for builder in sorted(BUILDER_MASTERS.keys()):
+            master = BUILDER_MASTERS[builder]
+            self._git_cl.trigger_try_jobs([builder], master)
 
     def _create_expectation_line(self, result, test_configuration):
         test_name = result.test_name()
@@ -78,18 +146,19 @@ class TryFlag(object):
     def _process_result(self, build, result):
         if not result.did_run_as_expected():
             self._expectations_model.add_expectation_line(
-                self._create_expectation_line(result,
-                                              BUILDERS[build.builder_name]),
+                self._create_expectation_line(
+                    result,
+                    BUILDER_CONFIGS[build.builder_name]),
                 model_all_expectations=True)
 
     def update(self):
         self._host.print_('Fetching results...')
         # TODO: Get jobs from the _tryflag branch. Current branch for now.
-        jobs = self._git_cl.latest_try_jobs(BUILDERS.keys())
+        jobs = self._git_cl.latest_try_jobs(BUILDER_CONFIGS.keys())
         buildbot = self._host.buildbot
         for build in sorted(jobs.keys()):
             self._host.print_('-- %s: %s/results.html' % (
-                BUILDERS[build.builder_name].version,
+                BUILDER_CONFIGS[build.builder_name].version,
                 buildbot.results_url(build.builder_name, build.build_number)))
             results = buildbot.fetch_results(build, True)
             results.for_each_test(
@@ -129,6 +198,10 @@ def parse_args(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('action', help='"trigger" or "update"')
     parser.add_argument('--bug', help='crbug number for expectation lines')
+    parser.add_argument('--flag',
+                        help='flag to force-enable in run-webkit-tests')
+    parser.add_argument('--regenerate', action='store_true',
+                        help='clear the flag expectations before triggering')
     return parser.parse_args(argv)
 
 
