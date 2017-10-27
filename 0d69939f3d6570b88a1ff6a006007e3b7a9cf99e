@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "45e464f7_6edf28a5",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-27T18:49:49Z",
+      "side": 1,
+      "message": "Also, can you update the comment for this method in the header file?",
+      "range": {
+        "startLine": 184,
+        "startChar": 8,
+        "endLine": 184,
+        "endChar": 28
+      },
+      "revId": "0d69939f3d6570b88a1ff6a006007e3b7a9cf99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6398f311_f3fcadee",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.cc",
         "patchSetId": 1
