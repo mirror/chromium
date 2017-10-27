@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1719cece_d97c080e",
+        "filename": "chrome/test/data/encoding_tests/auto_detect/expected_results/expected_iso-8859-1_saved_from_no_encoding_specified.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-27T01:06:32Z",
+      "side": 1,
+      "message": "I think this may have changed from the files HTTP path to a relative path because mock.http is a weird hostname, but I\u0027m not sure of that.  The main purpose of these tests are to test encoding detection, so I don\u0027t think this matters, regardless.",
+      "range": {
+        "startLine": 7,
+        "startChar": 77,
+        "endLine": 7,
+        "endChar": 78
+      },
+      "revId": "7b33885c35c8bf8155ee6fea28a9c085eba75b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
