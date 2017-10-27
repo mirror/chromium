@@ -22,6 +22,52 @@
       "revId": "ef05d259d83a01c03cae1d88069122a0f684ca37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cce9c7e_5e3446f0",
+        "filename": "chrome/browser/resources/safe_browsing/download_file_types.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 2274,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-27T16:46:35Z",
+      "side": 1,
+      "message": "It might be easier to track this work as a bug",
+      "range": {
+        "startLine": 2274,
+        "startChar": 4,
+        "endLine": 2274,
+        "endChar": 44
+      },
+      "revId": "ef05d259d83a01c03cae1d88069122a0f684ca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b0c213_b150ff2d",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-27T16:46:35Z",
+      "side": 1,
+      "message": "I am not sure if adding the line numbers here is useful.",
+      "range": {
+        "startLine": 213,
+        "startChar": 76,
+        "endLine": 213,
+        "endChar": 79
+      },
+      "revId": "ef05d259d83a01c03cae1d88069122a0f684ca37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
