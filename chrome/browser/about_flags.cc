@@ -151,6 +151,7 @@
 
 #if defined(OS_WIN)
 #include "base/win/windows_version.h"
+#include "chrome/browser/ui/tabs/tab_features.h"
 #endif  // OS_WIN
 
 using flags_ui::FeatureEntry;
@@ -3594,6 +3595,13 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kModuleScriptsImportMetaUrlName,
      flag_descriptions::kModuleScriptsImportMetaUrlDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kModuleScriptsImportMetaUrl)},
+
+#if defined(OS_WIN)
+    {"enable-experimental-tab-controller",
+     flag_descriptions::kExperimentalTabControllerName,
+     flag_descriptions::kExperimentalTabControllerDescription, kOsWin,
+     FEATURE_VALUE_TYPE(kExperimentalTabControllerFeature)},
+#endif  // defined(OS_WIN)
 
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
