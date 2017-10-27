@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bafb60b_8f50416d",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-27T14:38:13Z",
+      "side": 1,
+      "message": "Sorry I didn\u0027t look at this sooner, but this test needs to be cleaned up. The comments on the first and third cases don\u0027t make sense anymore. I\u0027m not sure it even makes sense to have these non-tail cases anymore. It\u0027s sort of confusing to the reader why were testing these things.\n\nI think a better test now would be to have the same text as the tail suggest case (\"star\") but with a non-tail type so the reader can compare what happens in the two cases with the same input. Thoughts?",
+      "revId": "acefec5b5457c70a8b92d8015107024d54284c58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
