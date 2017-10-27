@@ -13,20 +13,34 @@ function loadScript() {
     .then(() => iframeWindow.loadScript(url));
 }
 
+
+function continueInstall(scope) {
+    let reg = registrations[scope];
+    if (!reg)
+      return Promise.reject(new Error('No registration'));
+    if (!reg.installing)
+      return Promise.reject(new Error('No installing service worker'));
+    reg.installing.postMessage('');
+  }
+
+
 function test() {
   const scriptURL = 'resources/v8-cache-worker.js';
   const scope = 'resources/v8-cache-iframe.html';
   const frameId = 'frame_id';
 
   ApplicationTestRunner.registerServiceWorker(scriptURL, scope)
-      .then(_ => ApplicationTestRunner.waitForActivated(scope))
-      .then(() => {
-        return TestRunner.addIframe(scope, {id: frameId});
-      })
-      .then(() => {
+      .then(_ => {
         // Need to suspend targets, because V8 doesn't produce the cache when
         // the debugger is loaded.
         return SDK.targetManager.suspendAllTargets();
+      })
+      .then(_ => {
+        return TestRunner.callFunctionInPageAsync('continueInstall', [scope]);
+      })
+      .then(_ => ApplicationTestRunner.waitForActivated(scope))
+      .then(() => {
+        return TestRunner.addIframe(scope, {id: frameId});
       })
       .then(() => {
         return new Promise(
