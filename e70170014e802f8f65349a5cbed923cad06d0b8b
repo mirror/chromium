@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb3c8fa9_d5c11225",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/secure-contexts/shared-worker-insecure-first.https-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-27T13:23:46Z",
+      "side": 1,
+      "message": "We\u0027re not doing ancestor checks for workers... *sobs* Will follow up in a subsequent patch.",
+      "revId": "e70170014e802f8f65349a5cbed923cad06d0b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
