@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fce49d3_7b06b3ed",
+        "filename": "third_party/WebKit/Source/core/layout/TableLayoutAlgorithmAuto.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-10-27T21:56:23Z",
+      "side": 1,
+      "message": "Just for my understanding, not requesting any changes:\n\nThese ToInt have no effect now? (The width has been Ceil\u0027d in LayoutBlock and spacing is already an int?)",
+      "range": {
+        "startLine": 376,
+        "startChar": 70,
+        "endLine": 376,
+        "endChar": 75
+      },
+      "revId": "3e7b85d91566d31a70a38d50e1f3f7cc518b9bfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
