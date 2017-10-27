@@ -22,6 +22,30 @@
       "revId": "aad27c2d17ecbe3e3d9a2fc873f26ba27d0ac748",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c27b80_72cfe873",
+        "filename": "third_party/zlib/contrib/inffast_chunky.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-10-27T16:23:10Z",
+      "side": 1,
+      "message": "I thought about that but then I noticed that canonical zlib simply hosts all their implementation files in the root directory, delegating optimizations for \u0027contrib/ARCH\u0027, which is why I placed the C components of inffast optimization in the inside of \u0027contrib\u0027.\n\nPlacing them in a \u0027chunky\u0027 or \u0027inflate\u0027 folder wouldn\u0027t scale with time as we add more optimizations. If we follow this model of 1 folder per feature, that would require 1 folder for CRC32, 1 folder for fill_window, etc.\n\nOne potential problem that I see with a \u0027chromium\u0027 folder is that it is a bit implicit that the code would be used by Chromium only, while in reality this optimizations are valid for any user of zlib doing data decompression (e.g. skia, libpng, cronet, pdfium, etc).\n\nFinally, I faced issues with the \u0027checkdeps.py\u0027 script as it is not always happy with further variations of folder organization and will error with \"llegal include: \u0027foo\u0027 Because of no rule applying.\"\n\nMaybe as an alternative we could have something like:\ncontrib/optimizations\n           .\n           ..... arm\n           .\n           ..... x86\n\nWhat you think?\n\nIn any case this refactor in inflate fast NEON optimization is a requirement for:\na) Allow an easy implementation of the same optimization for Intel.\nb) Fix for the InflateBack corner case where the optimization could potentially overwrite the supplied external buffer (doesn\u0027t affect Chromium code base but it is a potential problem for other users of zlib).\n\nTherefore, we can address the folder organization later as I feel the priorities are to first fix the benign bug and next improve performance on other platforms (e.g. Intel).",
+      "parentUuid": "66251fcc_0afa0ea6",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "aad27c2d17ecbe3e3d9a2fc873f26ba27d0ac748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
