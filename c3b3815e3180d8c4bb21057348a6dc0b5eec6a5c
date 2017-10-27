@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7d04ea9_0b5e0fb8",
+        "filename": "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-27T05:04:18Z",
+      "side": 1,
+      "message": "Please also note that this is not used (does not work) in S13nServiceWorker subresource requests.",
+      "revId": "c3b3815e3180d8c4bb21057348a6dc0b5eec6a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
