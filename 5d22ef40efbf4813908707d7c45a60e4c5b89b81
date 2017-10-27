@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5e64345_bf38dd10",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-27T23:35:59Z",
+      "side": 1,
+      "message": "Now we have low-end devices with PAI  and 15 seconds looks potentially dangerous there.",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 32
+      },
+      "revId": "5d22ef40efbf4813908707d7c45a60e4c5b89b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
