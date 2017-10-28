@@ -362,6 +362,16 @@ class WebViewInteractiveTestBase : public extensions::PlatformAppBrowserTest {
     rwh->ForwardMouseEvent(mouse_event);
   }
 
+  void SimulateRWHLongPress(content::RenderWidgetHost* rwh, int x, int y) {
+    blink::WebGestureEvent gesture_event(
+        blink::WebInputEvent::kGestureLongPress,
+        blink::WebInputEvent::kNoModifiers,
+        blink::WebInputEvent::kTimeStampForTesting);
+    gesture_event.x = gesture_event.global_x = x;
+    gesture_event.y = gesture_event.global_y = y;
+    rwh->ForwardGestureEvent(gesture_event);
+  }
+
   class PopupCreatedObserver {
    public:
     PopupCreatedObserver()
@@ -1526,6 +1536,23 @@ IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, DISABLED_Focus_InputMethod) {
   }
 }
 #endif
+
+IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, LongPressSelection) {
+  SetupTest("web_view/text_selection",
+            "/extensions/platform_apps/web_view/text_selection/guest.html");
+  ASSERT_TRUE(guest_web_contents());
+  ASSERT_TRUE(ui_test_utils::ShowAndFocusNativeWindow(GetPlatformAppWindow()));
+
+  auto filter = std::make_unique<content::InputMsgWatcher>(
+      guest_web_contents()->GetRenderWidgetHostView()->GetRenderWidgetHost(),
+      blink::WebInputEvent::kGestureLongPress);
+  SimulateRWHLongPress(guest_web_contents()->GetRenderViewHost()->GetWidget(),
+                       20, 20);
+
+  EXPECT_EQ(content::INPUT_EVENT_ACK_STATE_CONSUMED,
+            filter->GetAckStateWaitIfNecessary());
+  EXPECT_FALSE(guest_web_contents()->IsShowingContextMenu());
+}
 
 #if defined(OS_MACOSX)
 IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, TextSelection) {
