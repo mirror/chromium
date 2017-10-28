@@ -227,7 +227,8 @@ void FakeChromeUserManager::RemoveUser(
     user_manager::RemoveUserDelegate* delegate) {}
 
 void FakeChromeUserManager::RemoveUserFromList(const AccountId& account_id) {
-  WallpaperManager::Get()->RemoveUserWallpaperInfo(account_id);
+  WallpaperManager::Get()->DeleteWallpaper(account_id,
+                                           false /* show_default_wallpaper */);
   chromeos::ProfileHelper::Get()->RemoveUserFromListForTesting(account_id);
 
   const user_manager::UserList::iterator it =
