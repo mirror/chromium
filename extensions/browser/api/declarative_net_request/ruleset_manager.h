@@ -31,6 +31,16 @@ class RulesetManager {
   explicit RulesetManager(const InfoMap* info_map);
   ~RulesetManager();
 
+  // An interface used for testing purposes.
+  class TestDelegate {
+   public:
+    virtual void OnShouldBlockRequest(const net::URLRequest& request,
+                                      bool is_incognito_context) = 0;
+
+   protected:
+    virtual ~TestDelegate() {}
+  };
+
   // Adds the ruleset for the given |extension_id|. Should not be called twice
   // in succession for an extension.
   void AddRuleset(const ExtensionId& extension_id,
@@ -47,11 +57,17 @@ class RulesetManager {
   // Returns the number of RulesetMatcher currently being managed.
   size_t GetMatcherCountForTest() const { return rules_map_.size(); }
 
+  // Sets the TestDelegate. Client maintains ownership of |delegate|.
+  void SetDelegateForTesting(TestDelegate* delegate);
+
  private:
   std::map<ExtensionId, std::unique_ptr<RulesetMatcher>> rules_map_;
 
   // Non-owning pointer to InfoMap. Owns us.
   const InfoMap* const info_map_;
+
+  // Non-owning pointer to TestDelegate.
+  TestDelegate* delegate_ = nullptr;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

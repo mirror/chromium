@@ -143,6 +143,9 @@ bool RulesetManager::ShouldBlockRequest(const net::URLRequest& request,
                                         bool is_incognito_context) const {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
+  if (delegate_)
+    delegate_->OnShouldBlockRequest(request, is_incognito_context);
+
   SCOPED_UMA_HISTOGRAM_TIMER(
       "Extensions.DeclarativeNetRequest.ShouldBlockRequestTime.AllExtensions");
 
@@ -164,6 +167,11 @@ bool RulesetManager::ShouldBlockRequest(const net::URLRequest& request,
     }
   }
   return false;
+}
+
+void RulesetManager::SetDelegateForTesting(TestDelegate* delegate) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  delegate_ = delegate;
 }
 
 }  // namespace declarative_net_request
