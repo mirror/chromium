@@ -9,9 +9,12 @@
 
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/session/session_controller.h"
+#include "ash/shelf/shelf_constants.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
+#include "ash/tray_action/tray_action.h"
 #include "ash/wm/window_dimmer.h"
 #include "ash/wm/window_util.h"
 #include "base/stl_util.h"
@@ -25,7 +28,21 @@ namespace {
 
 // The center point of the window can diverge this much from the center point
 // of the container to be kept centered upon resizing operations.
-const int kCenterPixelDelta = 32;
+constexpr int kCenterPixelDelta = 32;
+
+// The intended margin to the bottom of the system modal container for
+// "centered" modal dialog shown when a lock screen app window is active.
+// This dialog positioning is used in *lock* system modal container when a lock
+// screen app window is active - the goal is to have dialogs initially overlayed
+// over shelf area as a signal that the dialog is not shown by the app.
+constexpr int kBottomMarginForLockScreenApps = kShelfSize - 20;
+
+// Opacity that should be used by window dimmer by default.
+constexpr float kDefaultDimOpacity = 0.5;
+
+// Opacity that should be used by window dimmer in lock system modal container
+// if a lock screen app window is active.
+constexpr float kDimOpacityForActiveLockScreenApp = 0;
 
 ui::ModalType GetModalType(aura::Window* window) {
   return window->GetProperty(aura::client::kModalKey);
@@ -39,6 +56,11 @@ bool HasTransientAncestor(const aura::Window* window,
   return transient_parent ? HasTransientAncestor(transient_parent, ancestor)
                           : false;
 }
+
+bool VectorSizeWithinSquare(const gfx::Vector2d& vector, int square_size) {
+  return std::abs(vector.x()) < square_size &&
+         std::abs(vector.y()) < square_size;
+}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +68,14 @@ bool HasTransientAncestor(const aura::Window* window,
 
 SystemModalContainerLayoutManager::SystemModalContainerLayoutManager(
     aura::Window* container)
-    : container_(container) {}
+    : container_(container), tray_action_observer_(this) {
+  if (container->id() == kShellWindowId_LockSystemModalContainer) {
+    tray_action_observer_.Add(Shell::Get()->tray_action());
+    lock_screen_app_active_ =
+        Shell::Get()->tray_action()->GetLockScreenNoteState() ==
+        mojom::TrayActionState::kActive;
+  }
+}
 
 SystemModalContainerLayoutManager::~SystemModalContainerLayoutManager() {
   if (keyboard::KeyboardController::GetInstance())
@@ -104,10 +133,15 @@ void SystemModalContainerLayoutManager::SetChildBounds(
     aura::Window* child,
     const gfx::Rect& requested_bounds) {
   WmSnapToPixelLayoutManager::SetChildBounds(child, requested_bounds);
-  if (IsBoundsCentered(requested_bounds))
+
+  bool center_for_lock_screen_apps = ShouldCenterForLockScreenApps();
+  if ((!center_for_lock_screen_apps && IsBoundsCentered(requested_bounds)) ||
+      (center_for_lock_screen_apps &&
+       IsBoundsCenteredForLockScreenApps(requested_bounds))) {
     windows_to_center_.insert(child);
-  else
+  } else {
     windows_to_center_.erase(child);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -141,6 +175,21 @@ void SystemModalContainerLayoutManager::OnKeyboardBoundsChanging(
 
 void SystemModalContainerLayoutManager::OnKeyboardClosed() {}
 
+////////////////////////////////////////////////////////////////////////////////
+//  TrayActionObserver implementation:
+//
+
+void SystemModalContainerLayoutManager::OnLockScreenNoteStateChanged(
+    mojom::TrayActionState state) {
+  bool lock_screen_app_active = state == mojom::TrayActionState::kActive;
+  if (lock_screen_app_active == lock_screen_app_active_)
+    return;
+
+  lock_screen_app_active_ = lock_screen_app_active;
+  PositionDialogsAfterWorkAreaResize();
+  AdjustDimOpacityForLockScreenApps();
+}
+
 bool SystemModalContainerLayoutManager::IsPartOfActiveModalWindow(
     aura::Window* window) {
   return modal_window() &&
@@ -161,6 +210,8 @@ void SystemModalContainerLayoutManager::CreateModalBackground() {
     window_dimmer_ = std::make_unique<WindowDimmer>(container_);
     window_dimmer_->window()->SetName(
         "SystemModalContainerLayoutManager.ModalBackground");
+    AdjustDimOpacityForLockScreenApps();
+
     // There isn't always a keyboard controller.
     if (keyboard::KeyboardController::GetInstance())
       keyboard::KeyboardController::GetInstance()->AddObserver(this);
@@ -208,7 +259,12 @@ void SystemModalContainerLayoutManager::AddModalWindow(aura::Window* window) {
   window->parent()->StackChildAtTop(window);
 
   gfx::Rect target_bounds = window->bounds();
-  target_bounds.AdjustToFit(GetUsableDialogArea());
+  const gfx::Rect usable_area = GetUsableDialogArea();
+  if (IsBoundsCentered(target_bounds)) {
+    target_bounds =
+        AdjustCenteredBoundsForLockScreenApps(target_bounds, usable_area);
+  }
+  target_bounds.AdjustToFit(usable_area);
   window->SetBounds(target_bounds);
 }
 
@@ -254,6 +310,8 @@ gfx::Rect SystemModalContainerLayoutManager::GetCenteredAndOrFittedBounds(
     // Keep the dialog centered if it was centered before.
     target_bounds = usable_area;
     target_bounds.ClampToCenteredSize(window->bounds().size());
+    target_bounds =
+        AdjustCenteredBoundsForLockScreenApps(target_bounds, usable_area);
   } else {
     // Keep the dialog within the usable area.
     target_bounds = window->bounds();
@@ -268,13 +326,61 @@ gfx::Rect SystemModalContainerLayoutManager::GetCenteredAndOrFittedBounds(
   return target_bounds;
 }
 
+gfx::Rect
+SystemModalContainerLayoutManager::AdjustCenteredBoundsForLockScreenApps(
+    const gfx::Rect& bounds,
+    const gfx::Rect& usable_area) {
+  if (!ShouldCenterForLockScreenApps())
+    return bounds;
+
+  // Adjust modal dialog center, so the dialog bounds overlap with system tray,
+  // i.e. part of UI not controlled by the active lock screen app.
+  // This can be used as a signal to the user that the dialog was not shown
+  // by the app itself.
+  const int vertical_offset =
+      usable_area.bottom() - kBottomMarginForLockScreenApps - bounds.bottom();
+  gfx::Rect res = gfx::Rect(bounds.origin() + gfx::Vector2d(0, vertical_offset),
+                            bounds.size());
+  return res;
+}
+
 bool SystemModalContainerLayoutManager::IsBoundsCentered(
     const gfx::Rect& bounds) const {
-  gfx::Point window_center = bounds.CenterPoint();
-  gfx::Point container_center = GetUsableDialogArea().CenterPoint();
-  return std::abs(window_center.x() - container_center.x()) <
-             kCenterPixelDelta &&
-         std::abs(window_center.y() - container_center.y()) < kCenterPixelDelta;
+  return VectorSizeWithinSquare(
+      bounds.CenterPoint() - GetUsableDialogArea().CenterPoint(),
+      kCenterPixelDelta);
+}
+
+bool SystemModalContainerLayoutManager::IsBoundsCenteredForLockScreenApps(
+    const gfx::Rect& bounds) const {
+  if (!ShouldCenterForLockScreenApps())
+    return false;
+
+  const gfx::Rect container_bounds = GetUsableDialogArea();
+
+  const gfx::Point intended_center =
+      gfx::Point(container_bounds.CenterPoint().x(),
+                 container_bounds.bottom() - kBottomMarginForLockScreenApps -
+                     bounds.height() / 2);
+  return VectorSizeWithinSquare(bounds.CenterPoint() - intended_center,
+                                kCenterPixelDelta);
+}
+
+void SystemModalContainerLayoutManager::AdjustDimOpacityForLockScreenApps() {
+  if (!window_dimmer_)
+    return;
+
+  window_dimmer_->SetDimOpacity(ShouldCenterForLockScreenApps()
+                                    ? kDimOpacityForActiveLockScreenApp
+                                    : kDefaultDimOpacity);
+}
+
+bool SystemModalContainerLayoutManager::ShouldCenterForLockScreenApps() const {
+  // Only lock system modal dialogs are shown over lock screen app windows, so
+  // only dialogs shown in lock system dialog when a lock screen app is active
+  // should be adjusted for lock screen apps use case.
+  return container_->id() == kShellWindowId_LockSystemModalContainer &&
+         lock_screen_app_active_;
 }
 
 }  // namespace ash
