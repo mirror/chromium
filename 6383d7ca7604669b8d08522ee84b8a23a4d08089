@@ -46,6 +46,30 @@
       "revId": "6383d7ca7604669b8d08522ee84b8a23a4d08089",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c8422d8_a81ce74a",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-28T03:03:57Z",
+      "side": 1,
+      "message": "I\u0027ve added a comment to media_log.h to clarify the use usage of the MediaLog ID. If anyone feels strongly about it, I\u0027ll be happy to generate an ID by some other means. By the way, the media metric code is completely independent of how the ID is generated, as long as each playback is uniquely identified by an ID. So the source of the ID can be changed in the future without needing to update media metric.",
+      "parentUuid": "ef4eb750_656a2029",
+      "range": {
+        "startLine": 507,
+        "startChar": 0,
+        "endLine": 507,
+        "endChar": 78
+      },
+      "revId": "6383d7ca7604669b8d08522ee84b8a23a4d08089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
