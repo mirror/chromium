@@ -22,6 +22,30 @@
       "revId": "07e56b8dbf7825526c0d09b33e5991389a8f63b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd7cc62_c1325503",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-28T01:37:23Z",
+      "side": 1,
+      "message": "It only includes fullscreen controller because that\u0027s where kSetupForTestingWillCloseAllTabsNotification is defined.  I have no idea why it\u0027s defined there, and it also looks like this notification isn\u0027t even used.  I\u0027ll unwind this dependency when I delete the legacy implementation.",
+      "parentUuid": "ef64940a_6e670a4c",
+      "range": {
+        "startLine": 120,
+        "startChar": 42,
+        "endLine": 120,
+        "endChar": 70
+      },
+      "revId": "07e56b8dbf7825526c0d09b33e5991389a8f63b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
