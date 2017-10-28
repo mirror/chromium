@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0242fa5c_df2b6553",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-28T01:37:08Z",
+      "side": 1,
+      "message": "It seems weird to use the observer (designed for clients of device/bluetooth) in the impl.  It seems cleaner to have the calls that end up dispatching the event to observers to trickle up the impl chain of char -\u003e services -\u003e device -\u003e adapter.",
+      "revId": "ea4d129f278c1244187dcd58edb31aaa65f68819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198bed89_6e78df10",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-28T01:37:08Z",
+      "side": 1,
+      "message": "The logic mostly makes sense, but I\u0027m still not certain that the adapter doesn\u0027t get notified until all the services report in to this GattDiscoveryCompleteForService call.",
+      "revId": "ea4d129f278c1244187dcd58edb31aaa65f68819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
