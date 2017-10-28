@@ -36,6 +36,7 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/geometry/scroll_offset.h"
+#include "ui/gfx/geometry/vector3d_f.h"
 #include "ui/gfx/transform.h"
 
 namespace base {
@@ -132,6 +133,13 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
 
   virtual void SetNeedsDisplayRect(const gfx::Rect& dirty_rect);
   void SetNeedsDisplay() { SetNeedsDisplayRect(gfx::Rect(bounds())); }
+
+  // Set and get the scale values of the RGB color components of this layer. The
+  // components of the |color_scales| vector correspond to red, green, and blue
+  // scale values respectively, and each is in the range 0.0 to 1.0 (default, no
+  // scale is applied).
+  void SetColorScales(const gfx::Vector3dF& color_scales);
+  const gfx::Vector3dF& color_scales() const { return inputs_.color_scales_; }
 
   virtual void SetOpacity(float opacity);
   float opacity() const { return inputs_.opacity; }
@@ -551,6 +559,8 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
     bool masks_to_bounds;
 
     scoped_refptr<Layer> mask_layer;
+
+    gfx::Vector3dF color_scales_;
 
     float opacity;
     SkBlendMode blend_mode;

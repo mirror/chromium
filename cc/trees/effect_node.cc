@@ -13,6 +13,7 @@ EffectNode::EffectNode()
     : id(EffectTree::kInvalidNodeId),
       parent_id(EffectTree::kInvalidNodeId),
       stable_id(INVALID_STABLE_ID),
+      color_scales(1.f, 1.f, 1.f),
       opacity(1.f),
       screen_space_opacity(1.f),
       blend_mode(SkBlendMode::kSrcOver),
@@ -42,7 +43,8 @@ EffectNode::EffectNode(const EffectNode& other) = default;
 
 bool EffectNode::operator==(const EffectNode& other) const {
   return id == other.id && parent_id == other.parent_id &&
-         stable_id == other.stable_id && opacity == other.opacity &&
+         stable_id == other.stable_id && color_scales == other.color_scales &&
+         opacity == other.opacity &&
          screen_space_opacity == other.screen_space_opacity &&
          has_render_surface == other.has_render_surface &&
          cache_render_surface == other.cache_render_surface &&
@@ -79,6 +81,9 @@ void EffectNode::AsValueInto(base::trace_event::TracedValue* value) const {
   value->SetInteger("id", id);
   value->SetInteger("parent_id", parent_id);
   value->SetInteger("stable_id", stable_id);
+  value->SetDouble("color_scale_r", color_scales.x());
+  value->SetDouble("color_scale_g", color_scales.y());
+  value->SetDouble("color_scale_b", color_scales.z());
   value->SetDouble("opacity", opacity);
   value->SetBoolean("has_render_surface", has_render_surface);
   value->SetBoolean("cache_render_surface", cache_render_surface);

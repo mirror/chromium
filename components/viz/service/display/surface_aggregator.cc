@@ -527,7 +527,9 @@ void SurfaceAggregator::AddColorConversionPass() {
       /*quad_layer_rect=*/output_rect,
       /*visible_quad_layer_rect=*/output_rect,
       /*clip_rect=*/gfx::Rect(),
-      /*is_clipped=*/false, /*are_contents_opaque=*/false, /*opacity=*/1.f,
+      /*is_clipped=*/false, /*are_contents_opaque=*/false,
+      /*color_scales=*/gfx::Vector3dF(1.f, 1.f, 1.f),
+      /*opacity=*/1.f,
       /*blend_mode=*/SkBlendMode::kSrcOver, /*sorting_context_id=*/0);
 
   auto* quad =
@@ -557,12 +559,12 @@ SharedQuadState* SurfaceAggregator::CopySharedQuadState(
   ClipData new_clip_rect = CalculateClipRect(
       clip_rect, ClipData(source_sqs->is_clipped, source_sqs->clip_rect),
       target_transform);
-  copy_shared_quad_state->SetAll(new_transform, source_sqs->quad_layer_rect,
-                                 source_sqs->visible_quad_layer_rect,
-                                 new_clip_rect.rect, new_clip_rect.is_clipped,
-                                 source_sqs->are_contents_opaque,
-                                 source_sqs->opacity, source_sqs->blend_mode,
-                                 source_sqs->sorting_context_id);
+  copy_shared_quad_state->SetAll(
+      new_transform, source_sqs->quad_layer_rect,
+      source_sqs->visible_quad_layer_rect, new_clip_rect.rect,
+      new_clip_rect.is_clipped, source_sqs->are_contents_opaque,
+      source_sqs->color_scales, source_sqs->opacity, source_sqs->blend_mode,
+      source_sqs->sorting_context_id);
 
   return copy_shared_quad_state;
 }
