@@ -185,7 +185,7 @@ void PaletteTray::RegisterProfilePrefs(PrefRegistrySimple* registry) {
       prefs::kEnableStylusTools, true,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterBooleanPref(
-      prefs::kLaunchPaletteOnEjectEvent, true,
+      prefs::kLaunchPaletteOnEjectEvent, false,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
 }
 
