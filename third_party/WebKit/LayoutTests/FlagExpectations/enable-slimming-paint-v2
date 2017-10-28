@@ -910,13 +910,9 @@ Bug(none) paint/invalidation/svg/resize-svg-invalidate-children.html [ Failure ]
 # The expectation seems incorrect?
 Bug(none) paint/invalidation/paged-with-overflowing-block-rl.html [ Failure ]
 
+# SVG-based clip-path is not implemented yet.
 crbug.com/769942 svg/clip-path/ [ Skip ]
-crbug.com/769942 compositing/overflow/ancestor-with-clip-path.html [ Failure ]
-crbug.com/769942 compositing/overflow/descendant-with-clip-path.html [ Failure ]
-crbug.com/769942 fast/canvas/canvas-css-clip-path.html [ Failure ]
-crbug.com/769942 fast/masking/clip-path-inset-large-radii.html [ Failure ]
 crbug.com/769942 paint/clipath/clip-path-with-background-and-box-behind.html [ Failure ]
-crbug.com/769942 paint/invalidation/clip-path-constant-repaint.html [ Failure ]
 crbug.com/769942 paint/invalidation/svg/clip-path-child-changes.svg [ Failure ]
 crbug.com/769942 paint/invalidation/svg/clip-path-href-changes.svg [ Failure ]
 crbug.com/769942 paint/invalidation/svg/clip-path-id-changes.svg [ Failure ]
@@ -1366,6 +1362,8 @@ Bug(none) css3/blending/effect-background-blend-mode-stacking.html [ Failure Cra
 Bug(none) svg/custom/marker-zero-length-linecaps.svg [ Failure ]
 
 # Text failures due to layerization differences
+Bug(none) compositing/overflow/ancestor-with-clip-path.html [ Failure ]
+Bug(none) compositing/overflow/descendant-with-clip-path.html [ Failure ]
 Bug(none) compositing/overflow/no-excessive-clip-parent-if-parent-escaped.html [ Failure ]
 Bug(none) compositing/overflow/scroller-with-border-radius.html [ Failure ]
 Bug(none) css3/blending/mix-blend-mode-2nd-stacking-context-composited.html [ Failure ]
@@ -1376,6 +1374,8 @@ Bug(none) css3/blending/mix-blend-mode-isolation-layer.html [ Failure ]
 Bug(none) css3/blending/mix-blend-mode-isolation-remove.html [ Failure ]
 Bug(none) css3/blending/svg-blend-multiply-alpha.html [ Failure ]
 Bug(none) fast/borders/overflow-hidden-border-radius-force-backing-store.html [ Failure ]
+crbug.com/779191 paint/invalidation/clip-path-constant-repaint.html [ Failure ]
+crbug.com/779191 paint/invalidation/clip-path-resize.html [ Failure ]
 
 # Failures due to rounding differences
 crbug.com/589265 compositing/culling/filter-occlusion-blur-large.html [ Failure ]
@@ -1389,6 +1389,7 @@ crbug.com/589265 css3/blending/svg-blend-exclusion.html [ Failure ]
 crbug.com/589265 css3/blending/svg-blend-screen.html [ Failure ]
 crbug.com/589265 fast/backgrounds/size/contain-and-cover-zoomed.html [ Failure ]
 crbug.com/589265 fast/forms/datalist/input-appearance-range-with-transform.html [ Failure ]
+crbug.com/589265 fast/masking/clip-path-inset-large-radii.html [ Failure ]
 crbug.com/589265 images/color-profile-filter.html [ Failure ]
 crbug.com/589265 paint/invalidation/svg/deep-dynamic-updates.svg [ Failure ]
 crbug.com/589265 paint/invalidation/svg/foreign-object-repaint.svg [ Failure ]
@@ -1425,6 +1426,8 @@ crbug.com/589265 fast/clip/overflow-border-radius-composited.html [ Failure ]
 crbug.com/589265 fast/clip/overflow-border-radius-transformed.html [ Failure ]
 crbug.com/589265 fast/css/nested-rounded-corners.html [ Failure ]
 crbug.com/589265 paint/overflow/composited-rounded-clip-floating-element.html [ Failure ]
+
+crbug.com/769942 compositing/overflow/accelerated-scrolling-with-clip-reference.html [ Failure ]
 
 # Notes about rebaselined tests:
 #
