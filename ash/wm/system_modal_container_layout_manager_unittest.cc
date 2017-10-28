@@ -8,10 +8,13 @@
 
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/tray_action/test_tray_action_client.h"
+#include "ash/tray_action/tray_action.h"
 #include "ash/wm/container_finder.h"
 #include "ash/wm/window_util.h"
 #include "base/command_line.h"
@@ -42,6 +45,11 @@ namespace {
 aura::Window* GetModalContainer() {
   return Shell::GetPrimaryRootWindowController()->GetContainer(
       ash::kShellWindowId_SystemModalContainer);
+}
+
+aura::Window* GetLockModalContainer() {
+  return Shell::GetPrimaryRootWindowController()->GetContainer(
+      ash::kShellWindowId_LockSystemModalContainer);
 }
 
 bool AllRootWindowsHaveModalBackgroundsForContainer(int container_id) {
@@ -827,6 +835,190 @@ TEST_F(SystemModalContainerLayoutManagerTest, VisibilityChange) {
   modal_window->Show();
   EXPECT_TRUE(ShellPort::Get()->IsSystemModalWindowOpen());
   EXPECT_TRUE(layout_manager->has_window_dimmer());
+}
+
+TEST_F(SystemModalContainerLayoutManagerTest,
+       CenteredWindowBoundsWithActiveLockScreen) {
+  BlockUserSession(BLOCKED_BY_LOCK_SCREEN);
+
+  GetLockModalContainer()->SetBounds(gfx::Rect(0, 0, 800, 600));
+  std::unique_ptr<aura::Window> main(
+      OpenTestWindowWithParent(GetLockModalContainer(), true));
+  // Center the window.
+  main->SetBounds(gfx::Rect((800 - 512) / 2, (600 - 256) / 2, 512, 256));
+
+  // Activate a lock screen app - the window should be translated down to
+  // overlap with shelf.
+  TestTrayActionClient tray_action_client;
+  Shell::Get()->tray_action()->SetClient(
+      tray_action_client.CreateInterfacePtrAndBind(),
+      mojom::TrayActionState::kActive);
+  Shell::Get()->tray_action()->FlushMojoForTesting();
+
+  EXPECT_EQ(main->bounds(),
+            gfx::Rect((800 - 512) / 2, 600 - 256 - 28, 512, 256));
+
+  // We set now the bounds of the root window to something new which will
+  // Then trigger the reposition operation.
+  GetLockModalContainer()->SetBounds(gfx::Rect(0, 0, 1024, 768));
+
+  // The window should still be overlapping with shelf.
+  EXPECT_EQ(main->bounds(),
+            gfx::Rect((1024 - 512) / 2, 768 - 256 - 28, 512, 256));
+
+  // If the lock screen app is deactivated, the widnow should be recentered.
+  Shell::Get()->tray_action()->UpdateLockScreenNoteState(
+      mojom::TrayActionState::kAvailable);
+
+  EXPECT_EQ(main->bounds(),
+            gfx::Rect((1024 - 512) / 2, (768 - 256) / 2, 512, 256));
+}
+
+TEST_F(SystemModalContainerLayoutManagerTest,
+       CenteredWindowBoundsWithActiveLockScreenInNonLockContainer) {
+  BlockUserSession(BLOCKED_BY_LOCK_SCREEN);
+
+  GetModalContainer()->SetBounds(gfx::Rect(0, 0, 800, 600));
+  std::unique_ptr<aura::Window> main(
+      OpenTestWindowWithParent(GetModalContainer(), true));
+  // Center the window.
+  main->SetBounds(gfx::Rect((800 - 512) / 2, (600 - 256) / 2, 512, 256));
+
+  // Activate a lock screen app - the window should be translated down to
+  // overlap with shelf.
+  TestTrayActionClient tray_action_client;
+  Shell::Get()->tray_action()->SetClient(
+      tray_action_client.CreateInterfacePtrAndBind(),
+      mojom::TrayActionState::kActive);
+  Shell::Get()->tray_action()->FlushMojoForTesting();
+
+  // Window bounds should not change when the lock screen action is active if
+  // the window is not in lock system modal container.
+  EXPECT_EQ(main->bounds(),
+            gfx::Rect((800 - 512) / 2, (600 - 256) / 2, 512, 256));
+
+  // We set now the bounds of the root window to something new which will
+  // Then trigger the reposition operation.
+  GetModalContainer()->SetBounds(gfx::Rect(0, 0, 1024, 768));
+
+  EXPECT_EQ(main->bounds(),
+            gfx::Rect((1024 - 512) / 2, (768 - 256) / 2, 512, 256));
+}
+
+TEST_F(SystemModalContainerLayoutManagerTest,
+       ShowingCenteredLockModalWnidowWithActiveLockScreenNote) {
+  BlockUserSession(BLOCKED_BY_LOCK_SCREEN);
+
+  // Activate a lock screen app.
+  TestTrayActionClient tray_action_client;
+  Shell::Get()->tray_action()->SetClient(
+      tray_action_client.CreateInterfacePtrAndBind(),
+      mojom::TrayActionState::kActive);
+  Shell::Get()->tray_action()->FlushMojoForTesting();
+
+  GetLockModalContainer()->SetBounds(gfx::Rect(0, 0, 800, 600));
+  std::unique_ptr<aura::Window> main(
+      OpenTestWindowWithParent(GetLockModalContainer(), true));
+  gfx::Size main_size = main->bounds().size();
+
+  // Window bound should be translated so they overlap with shelf.
+  EXPECT_EQ(main->bounds(), gfx::Rect((800 - main_size.width()) / 2,
+                                      600 - main_size.height() - 28,
+                                      main_size.width(), main_size.height()));
+
+  // If the lock screen app is deactivated, the widnow should be recentered.
+  Shell::Get()->tray_action()->UpdateLockScreenNoteState(
+      mojom::TrayActionState::kAvailable);
+
+  EXPECT_EQ(main->bounds(), gfx::Rect((800 - main_size.width()) / 2,
+                                      (600 - main_size.height()) / 2,
+                                      main_size.width(), main_size.height()));
+}
+
+TEST_F(SystemModalContainerLayoutManagerTest,
+       NonCenteredWindowsNotMovedOnActiveLockScreenNote) {
+  BlockUserSession(BLOCKED_BY_LOCK_SCREEN);
+
+  GetLockModalContainer()->SetBounds(gfx::Rect(0, 0, 800, 600));
+  std::unique_ptr<aura::Window> main(
+      OpenTestWindowWithParent(GetLockModalContainer(), true));
+  main->SetBounds(gfx::Rect(100, 200, 512, 256));
+
+  // Activate a lock screen app.
+  TestTrayActionClient tray_action_client;
+  Shell::Get()->tray_action()->SetClient(
+      tray_action_client.CreateInterfacePtrAndBind(),
+      mojom::TrayActionState::kActive);
+  Shell::Get()->tray_action()->FlushMojoForTesting();
+
+  EXPECT_EQ(main->bounds(), gfx::Rect(100, 200, 512, 256));
+
+  // If the lock screen app is deactivated, the widnow should be recentered.
+  Shell::Get()->tray_action()->UpdateLockScreenNoteState(
+      mojom::TrayActionState::kAvailable);
+
+  EXPECT_EQ(main->bounds(), gfx::Rect(100, 200, 512, 256));
+}
+
+TEST_F(SystemModalContainerLayoutManagerTest,
+       WindowsUncenteredWhileLockScreenNoteActiveNotRecentered) {
+  BlockUserSession(BLOCKED_BY_LOCK_SCREEN);
+
+  // Activate a lock screen app.
+  TestTrayActionClient tray_action_client;
+  Shell::Get()->tray_action()->SetClient(
+      tray_action_client.CreateInterfacePtrAndBind(),
+      mojom::TrayActionState::kActive);
+  Shell::Get()->tray_action()->FlushMojoForTesting();
+
+  GetLockModalContainer()->SetBounds(gfx::Rect(0, 0, 800, 600));
+  std::unique_ptr<aura::Window> main(
+      OpenTestWindowWithParent(GetLockModalContainer(), true));
+  main->SetBounds(gfx::Rect(100, 200, 512, 256));
+
+  EXPECT_EQ(main->bounds(), gfx::Rect(100, 200, 512, 256));
+
+  GetLockModalContainer()->SetBounds(gfx::Rect(0, 0, 1024, 768));
+
+  EXPECT_EQ(main->bounds(), gfx::Rect(100, 200, 512, 256));
+
+  // If the lock screen app is deactivated, the widnow should be recentered.
+  Shell::Get()->tray_action()->UpdateLockScreenNoteState(
+      mojom::TrayActionState::kAvailable);
+
+  EXPECT_EQ(main->bounds(), gfx::Rect(100, 200, 512, 256));
+}
+
+TEST_F(SystemModalContainerLayoutManagerTest,
+       WindowsMovedToContainerCenterdWhileLockScreenNoteActive) {
+  BlockUserSession(BLOCKED_BY_LOCK_SCREEN);
+
+  // Activate a lock screen app.
+  TestTrayActionClient tray_action_client;
+  Shell::Get()->tray_action()->SetClient(
+      tray_action_client.CreateInterfacePtrAndBind(),
+      mojom::TrayActionState::kActive);
+  Shell::Get()->tray_action()->FlushMojoForTesting();
+
+  GetLockModalContainer()->SetBounds(gfx::Rect(0, 0, 800, 600));
+  std::unique_ptr<aura::Window> main(
+      OpenTestWindowWithParent(GetLockModalContainer(), true));
+  main->SetBounds(gfx::Rect((800 - 512) / 2, (600 - 256) / 2, 512, 256));
+
+  EXPECT_EQ(main->bounds(),
+            gfx::Rect((800 - 512) / 2, (600 - 256) / 2, 512, 256));
+
+  GetLockModalContainer()->SetBounds(gfx::Rect(0, 0, 1024, 768));
+
+  EXPECT_EQ(main->bounds(),
+            gfx::Rect((800 - 512) / 2, (600 - 256) / 2, 512, 256));
+
+  // If the lock screen app is deactivated, the widnow should be recentered.
+  Shell::Get()->tray_action()->UpdateLockScreenNoteState(
+      mojom::TrayActionState::kAvailable);
+
+  EXPECT_EQ(main->bounds(),
+            gfx::Rect((800 - 512) / 2, (600 - 256) / 2, 512, 256));
 }
 
 namespace {
