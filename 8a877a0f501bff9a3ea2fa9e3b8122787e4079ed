@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "703dce88_85755d09",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-28T01:03:25Z",
+      "side": 1,
+      "message": "clicked",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff356c65_6fa99969",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-28T01:03:25Z",
+      "side": 1,
+      "message": "No need for this DCHECK.",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57711da_df8212f7",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-28T01:03:25Z",
+      "side": 1,
+      "message": "I would call it previews_ui_service_ since there are many UI services in Chrome (e.g. NQE UI service). Calling it previews_ui_service_ makes the code more readable.\n\nSame comment in other files where this name is being used.",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 42
+      },
+      "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d1004a_5e63e489",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-28T01:03:25Z",
+      "side": 1,
+      "message": "why is this virtual?",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 9
+      },
+      "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d380ad0_245712d6",
+        "filename": "components/previews/core/previews_ui_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-28T01:03:25Z",
+      "side": 1,
+      "message": "s/oi/io/",
+      "range": {
+        "startLine": 65,
+        "startChar": 19,
+        "endLine": 65,
+        "endChar": 21
+      },
+      "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b000b245_02719711",
+        "filename": "components/previews/core/previews_ui_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-28T01:03:25Z",
+      "side": 1,
+      "message": "I do not understand how this method differs from the method above.",
+      "range": {
+        "startLine": 70,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 53
+      },
+      "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
