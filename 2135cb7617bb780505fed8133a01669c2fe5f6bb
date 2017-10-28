@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2c98d844_8a4a3b3c",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-28T04:45:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0e128fd1_8a886fbf",
+      "range": {
+        "startLine": 701,
+        "startChar": 1,
+        "endLine": 701,
+        "endChar": 35
+      },
+      "revId": "2135cb7617bb780505fed8133a01669c2fe5f6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a082dc03_d9e61343",
         "filename": "ui/base/ime/input_method_chromeos.cc",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "After talking with oshima@, we know that  IsRunningAsSystemCompositor() checks /etc/lsb-release to see whether udev exists (udev means it reads event from linux device). He said we could remove this check and sync only if neccesary.",
       "parentUuid": "a082dc03_d9e61343",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 53
+      },
+      "revId": "2135cb7617bb780505fed8133a01669c2fe5f6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53356209_6b7aa9fd",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-28T04:45:19Z",
+      "side": 1,
+      "message": "If the check is beneficial, and you\u0027d prefer to keep it, then I think that\u0027s fine, but we just need to explain what it means.\n\nIf we don\u0027t need the check though then yay, less code. :D",
+      "parentUuid": "a226b74a_0938486f",
       "range": {
         "startLine": 69,
         "startChar": 5,
@@ -175,6 +223,30 @@
       "revId": "2135cb7617bb780505fed8133a01669c2fe5f6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ef1429_d0d94c46",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-28T04:45:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b001097d_fe4eb8db",
+      "range": {
+        "startLine": 809,
+        "startChar": 7,
+        "endLine": 812,
+        "endChar": 36
+      },
+      "revId": "2135cb7617bb780505fed8133a01669c2fe5f6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
