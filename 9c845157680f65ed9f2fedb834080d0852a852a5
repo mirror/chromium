@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91b665e4_c2f31a94",
+        "filename": "chrome/android/java/res/layout/contextual_search_bar_banner_text_view.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-28T00:09:18Z",
+      "side": 1,
+      "message": "I don\u0027t think so. I removed them.",
+      "parentUuid": "d1950e61_dccc49ca",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "103e4b28_f6b11e29",
         "filename": "chrome/android/java/res/layout/contextual_search_bar_banner_text_view.xml",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "82ae8d7e_de74b2c3",
+        "filename": "chrome/android/java/res/layout/contextual_search_bar_banner_text_view.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-28T00:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "103e4b28_f6b11e29",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 39
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6d62434_653b66d0",
         "filename": "chrome/android/java/res/layout/contextual_search_bar_banner_text_view.xml",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35263a26_c9e9b80a",
+        "filename": "chrome/android/java/res/layout/contextual_search_bar_banner_text_view.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-28T00:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6d62434_653b66d0",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 31
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "de84f027_8722558f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-28T00:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db5d76ab_6ac05ce8",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 225,
+        "endChar": 13
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fd51d4b_d2573683",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
         "patchSetId": 9
@@ -138,6 +234,30 @@
       "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "543e8427_80c9f177",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-28T00:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fd51d4b_d2573683",
+      "range": {
+        "startLine": 642,
+        "startChar": 66,
+        "endLine": 642,
+        "endChar": 77
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "857e809a_d42dc8aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-28T00:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03e28e07_8c4649f6",
+      "range": {
+        "startLine": 644,
+        "startChar": 16,
+        "endLine": 644,
+        "endChar": 28
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24444cc7_4acc2e3f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
         "patchSetId": 9
@@ -184,6 +328,30 @@
       "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2143a146_3ed181b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-28T00:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24444cc7_4acc2e3f",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 90
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "6ac65b58_4bf49862",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-28T00:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78a3454a_37a115b7",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 9
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10d1a115_9786e869",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
         "patchSetId": 9
@@ -221,6 +413,30 @@
       "writtenOn": "2017-10-26T23:20:23Z",
       "side": 1,
       "message": "In the C++ code, we draw the panel shadow using negative positioning, and start drawing the bar at position \"0\": https://cs.chromium.org/chromium/src/chrome/browser/android/compositor/layer/overlay_panel_layer.cc?q\u003doverlay_panel_layer\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d97\n\nI think it\u0027s okay to use an inset for UX purposes, but just wanted to point this out. If the goal is align the bubble with the top edge of the bar, we should be able to figure it out programatically.",
+      "range": {
+        "startLine": 85,
+        "startChar": 24,
+        "endLine": 85,
+        "endChar": 55
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247d26cb_d0662db2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-28T00:09:18Z",
+      "side": 1,
+      "message": "Thanks for the reference to the C++ code. I think my problem was not the shadow after all. I think ContextualSearchPanel#getPanelRect() is returning the right Rect: It only includes the panel and not its shadow. It seems to me that the bubble will not appear exactly at the top edge of a given Rect, it has some padding.\nDo you know if this is true?",
+      "parentUuid": "10d1a115_9786e869",
       "range": {
         "startLine": 85,
         "startChar": 24,
@@ -256,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "36fc912a_1c7e52f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-28T00:09:18Z",
+      "side": 1,
+      "message": "The bubble for CONTEXTUAL_SEARCH_FEATURE should be shown after the panel\u0027s animation is finished and it is shown, so #showContextualSearch() is not the best place for invoking it. Also if ContextualSearchPanel#getPanelRect() is called before it is drawn, OverlayBasePanel#getOffsetY() returns 0 and the bubble is drawn on the top of the page.\nSo the bubble for CONTEXTUAL_SEARCH_FEATURE should be called after the panel is drawn.\n\nAs for CONTEXTUAL_SEARCH_TAP_FEATURE, the decision for showing it should be made before ContextualSearchPanel#requestPanelShow() is called, because the UI for this feature is the Bar Banner and it\u0027s part of the panel.\n\nAnd CONTEXTUAL_SEARCH_PANEL_FEATURE should be shown only after entity data is received, which could take a while after the panel is shown.\n\nI like the idea of moving these to ContextualSearchIPH, but I think I should create other methods as well as ContextualSearchIPH#onPanelShow, like ContextualSearchIPH#beforePanelShow (for Bar Banner) and ContextualSearchIPH#onEntityDataReceived. Does that make sense?",
+      "parentUuid": "3078e850_827b0ca3",
+      "range": {
+        "startLine": 1256,
+        "startChar": 3,
+        "endLine": 1261,
+        "endChar": 5
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f9e0f80_acf2b87d",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 9
@@ -276,6 +516,30 @@
       "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccf810a_cc2ea667",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 9
+      },
+      "lineNbr": 2853,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-28T00:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f9e0f80_acf2b87d",
+      "range": {
+        "startLine": 2853,
+        "startChar": 61,
+        "endLine": 2853,
+        "endChar": 201
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
