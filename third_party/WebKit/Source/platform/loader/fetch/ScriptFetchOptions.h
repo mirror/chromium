@@ -5,12 +5,16 @@
 #ifndef ScriptFetchOptions_h
 #define ScriptFetchOptions_h
 
+#include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebURLRequest.h"
 
 namespace blink {
+
+class KURL;
+class SecurityOrigin;
 
 // ScriptFetchOptions corresponds to the spec concept "script fetch options".
 // https://html.spec.whatwg.org/multipage/webappapis.html#script-fetch-options
@@ -48,6 +52,8 @@ class ScriptFetchOptions final {
   network::mojom::FetchCredentialsMode CredentialsMode() const {
     return credentials_mode_;
   }
+
+  FetchParameters CreateFetchParameters(const KURL& url, SecurityOrigin*) const;
 
  private:
   // https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-fetch-options-nonce

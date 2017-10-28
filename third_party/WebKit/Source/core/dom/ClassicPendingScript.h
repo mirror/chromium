@@ -76,6 +76,8 @@ class CORE_EXPORT ClassicPendingScript final
 
   void Prefinalize();
 
+  void SetIntervened(bool v) { intervened_ = v; }
+
  private:
   // See AdvanceReadyState implementation for valid state transitions.
   enum ReadyState {
@@ -93,6 +95,10 @@ class CORE_EXPORT ClassicPendingScript final
                        const ScriptFetchOptions&,
                        bool is_external);
   ClassicPendingScript() = delete;
+
+  static ScriptResource* FirstFetch(FetchParameters&,
+                                    Document&,
+                                    ClassicPendingScript*);
 
   // Advances the current state of the script, reporting to the client if
   // appropriate.
@@ -118,6 +124,8 @@ class CORE_EXPORT ClassicPendingScript final
   const bool is_external_;
   ReadyState ready_state_;
   bool integrity_failure_;
+
+  bool intervened_ = false;
 
   Member<ScriptStreamer> streamer_;
   WTF::Closure streamer_done_;
