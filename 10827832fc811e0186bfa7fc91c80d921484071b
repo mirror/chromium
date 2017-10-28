@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "cb28f0a3_bc353cb0",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_match.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-28T21:58:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e490f749_50bdafde",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01ccf297_28c3f435",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_match.html",
         "patchSetId": 1
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "0bf537b7_fab1ecd6",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_match.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-28T21:58:09Z",
+      "side": 1,
+      "message": "Yeah, this is a dumb error on my part. BUT, compounding it is the fact that both the left and right mock FOV used is the same (45 deg on all sides). So I\u0027ve fixed this issue but also modified the generic FOV used so that the right and left eye are different. (And ensured that it doesn\u0027t break with the existing tests.",
+      "parentUuid": "01ccf297_28c3f435",
+      "range": {
+        "startLine": 43,
+        "startChar": 37,
+        "endLine": 43,
+        "endChar": 45
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "839052ea_4d4c1ffc",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
         "patchSetId": 1
@@ -85,6 +133,24 @@
       "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7016755d_fc6b44ca",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-28T21:58:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "839052ea_4d4c1ffc",
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "e0d5c386_b6afbe7f",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-28T21:58:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a00b6ad_ff3ad931",
+      "range": {
+        "startLine": 33,
+        "startChar": 39,
+        "endLine": 33,
+        "endChar": 47
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc4d6547_71a5c737",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
         "patchSetId": 1
@@ -131,6 +221,30 @@
       "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6172c9_ffba3669",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-28T21:58:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc4d6547_71a5c737",
+      "range": {
+        "startLine": 42,
+        "startChar": 39,
+        "endLine": 42,
+        "endChar": 47
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "81f4840d_75194d66",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-28T21:58:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ed93173_53c1ff8c",
+      "range": {
+        "startLine": 57,
+        "startChar": 39,
+        "endLine": 57,
+        "endChar": 47
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ceab76e_4753b0d1",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
         "patchSetId": 1
@@ -177,6 +315,30 @@
       "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd0c6ee_808efb96",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-28T21:58:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ceab76e_4753b0d1",
+      "range": {
+        "startLine": 59,
+        "startChar": 10,
+        "endLine": 59,
+        "endChar": 14
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "4eeaed67_6f62c8f6",
+        "filename": "third_party/WebKit/LayoutTests/vr/resources/test-constants.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-28T21:58:09Z",
+      "side": 1,
+      "message": "The previous precision was a bit too high for the matrix comparisons I was doing. I found that dropping a zero allowed them to compare comfortably. Didn\u0027t seem like a large enough drop in precision to be problematic.",
+      "parentUuid": "941b3d30_b18f12f9",
+      "range": {
+        "startLine": 3,
+        "startChar": 20,
+        "endLine": 3,
+        "endChar": 28
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86b68747_dbdda91f",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.cpp",
         "patchSetId": 1
@@ -223,6 +409,30 @@
       "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3bb61a_0d6464ff",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-28T21:58:09Z",
+      "side": 1,
+      "message": "The C++ trig function in this call operate on radians, while the WebVR 1.x API reported values in degrees (something I argued against and lost at the time, if I recall). Once we strip the 1.1 implementation out of Chrome I\u0027d like to refactor the Mojo structs to give us more directly consumable values here (either FOV in radians or the projection matrix directly), but until that time we\u0027ll need to do some conversion.",
+      "parentUuid": "86b68747_dbdda91f",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "10827832fc811e0186bfa7fc91c80d921484071b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
