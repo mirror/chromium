@@ -229,3 +229,23 @@ TEST_F(NotificationTemplateBuilderTest, Silent) {
 
   ASSERT_NO_FATAL_FAILURE(VerifyXml(*notification, kExpectedXml));
 }
+
+TEST_F(NotificationTemplateBuilderTest, RequireInteraction) {
+  std::unique_ptr<message_center::Notification> notification =
+      InitializeBasicNotification();
+  notification->set_never_timeout(true);
+
+  const wchar_t kExpectedXml[] =
+      LR"(<toast launch="notification_id" scenario="reminder">
+ <visual>
+  <binding template="ToastGeneric">
+   <text>My Title</text>
+   <text>My Message</text>
+   <text placement="attribution">example.com</text>
+  </binding>
+ </visual>
+</toast>
+)";
+
+  ASSERT_NO_FATAL_FAILURE(VerifyXml(*notification, kExpectedXml));
+}

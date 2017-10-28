@@ -32,6 +32,8 @@ const char kInputId[] = "id";
 const char kInputType[] = "type";
 const char kPlaceholderContent[] = "placeHolderContent";
 const char kPlacement[] = "placement";
+const char kReminder[] = "reminder";
+const char kScenario[] = "scenario";
 const char kSilent[] = "silent";
 const char kText[] = "text";
 const char kTrue[] = "true";
@@ -56,12 +58,9 @@ std::unique_ptr<NotificationTemplateBuilder> NotificationTemplateBuilder::Build(
   std::unique_ptr<NotificationTemplateBuilder> builder =
       base::WrapUnique(new NotificationTemplateBuilder);
 
-  // TODO(finnur): Can we set <toast scenario="reminder"> for notifications
-  // that have set the never_timeout() flag?
-  builder->StartToastElement(notification_id);
+  builder->StartToastElement(notification_id, notification);
   builder->StartVisualElement();
 
-  // TODO(finnur): Set the correct binding template based on the |notification|.
   builder->StartBindingElement(kDefaultTemplate);
 
   // Content for the toast template.
@@ -114,9 +113,12 @@ std::string NotificationTemplateBuilder::FormatOrigin(
 }
 
 void NotificationTemplateBuilder::StartToastElement(
-    const std::string& notification_id) {
+    const std::string& notification_id,
+    const message_center::Notification& notification) {
   xml_writer_->StartElement(kToastElement);
   xml_writer_->AddAttribute(kToastElementLaunchAttribute, notification_id);
+  if (notification.buttons().size() && notification.never_timeout())
+    xml_writer_->AddAttribute(kScenario, kReminder);
 }
 
 void NotificationTemplateBuilder::EndToastElement() {
