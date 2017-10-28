@@ -47,6 +47,10 @@ gfx::Point WebContentsModalDialogHostCocoa::GetDialogPosition(
   return gfx::Point();
 }
 
+bool WebContentsModalDialogHostCocoaShouldActivateDialogs() const {
+  return false;
+}
+
 void WebContentsModalDialogHostCocoa::AddObserver(
     web_modal::ModalDialogHostObserver* observer) {
   NOTREACHED();
