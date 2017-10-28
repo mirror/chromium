@@ -4680,5 +4680,13 @@ error::Error GLES2DecoderPassthroughImpl::DoEndRasterCHROMIUM() {
   return error::kNoError;
 }
 
+error::Error GLES2DecoderPassthroughImpl::DoWindowRectanglesEXT(
+    GLenum mode,
+    GLsizei n,
+    const volatile GLint* box) {
+  api()->glWindowRectanglesEXTFn(mode, n, const_cast<const GLint*>(box));
+  return error::kNoError;
+}
+
 }  // namespace gles2
 }  // namespace gpu

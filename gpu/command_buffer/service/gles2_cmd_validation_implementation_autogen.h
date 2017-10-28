@@ -489,17 +489,13 @@ bool Validators::IndexedBufferTargetValidator::IsValid(
   return false;
 };
 
-bool Validators::IndexedGLStateValidator::IsValid(const GLenum value) const {
-  switch (value) {
-    case GL_TRANSFORM_FEEDBACK_BUFFER_BINDING:
-    case GL_TRANSFORM_FEEDBACK_BUFFER_SIZE:
-    case GL_TRANSFORM_FEEDBACK_BUFFER_START:
-    case GL_UNIFORM_BUFFER_BINDING:
-    case GL_UNIFORM_BUFFER_SIZE:
-    case GL_UNIFORM_BUFFER_START:
-      return true;
-  }
-  return false;
+static const GLenum valid_indexed_g_l_state_table[] = {
+    GL_TRANSFORM_FEEDBACK_BUFFER_BINDING,
+    GL_TRANSFORM_FEEDBACK_BUFFER_SIZE,
+    GL_TRANSFORM_FEEDBACK_BUFFER_START,
+    GL_UNIFORM_BUFFER_BINDING,
+    GL_UNIFORM_BUFFER_SIZE,
+    GL_UNIFORM_BUFFER_START,
 };
 
 bool Validators::InternalFormatParameterValidator::IsValid(
@@ -1385,6 +1381,8 @@ Validators::Validators()
       image_internal_format(valid_image_internal_format_table,
                             arraysize(valid_image_internal_format_table)),
       index_type(valid_index_type_table, arraysize(valid_index_type_table)),
+      indexed_g_l_state(valid_indexed_g_l_state_table,
+                        arraysize(valid_indexed_g_l_state_table)),
       pixel_store(valid_pixel_store_table, arraysize(valid_pixel_store_table)),
       pixel_type(valid_pixel_type_table, arraysize(valid_pixel_type_table)),
       read_buffer(valid_read_buffer_table, arraysize(valid_read_buffer_table)),
