@@ -11,6 +11,7 @@
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/timer/timer.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
@@ -23,6 +24,7 @@
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/gpu_data_manager.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/content_switches.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/ipc/common/gpu_messages.h"
 #include "ipc/ipc_channel_handle.h"
@@ -35,6 +37,12 @@
 #endif
 
 namespace content {
+
+namespace {
+void TimedOut() {
+  LOG(FATAL) << "Timed out waiting for GPU channel.";
+}
+}  // namespace
 
 BrowserGpuChannelHostFactory* BrowserGpuChannelHostFactory::instance_ = NULL;
 
@@ -54,8 +62,9 @@ class BrowserGpuChannelHostFactory::EstablishRequest
 
  private:
   friend class base::RefCountedThreadSafe<EstablishRequest>;
-  explicit EstablishRequest(int gpu_client_id, uint64_t gpu_client_tracing_id);
+  EstablishRequest(int gpu_client_id, uint64_t gpu_client_tracing_id);
   ~EstablishRequest() {}
+  void ResetTimeout();
   void EstablishOnIO();
   void OnEstablishedOnIO(const IPC::ChannelHandle& channel_handle,
                          const gpu::GPUInfo& gpu_info,
@@ -72,6 +81,9 @@ class BrowserGpuChannelHostFactory::EstablishRequest
   gpu::GpuFeatureInfo gpu_feature_info_;
   bool finished_;
   scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
+
+  // Only accessed on main thread.
+  base::OneShotTimer timeout_;
 };
 
 scoped_refptr<BrowserGpuChannelHostFactory::EstablishRequest>
@@ -82,6 +94,7 @@ BrowserGpuChannelHostFactory::EstablishRequest::Create(
       new EstablishRequest(gpu_client_id, gpu_client_tracing_id);
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
+  establish_request->ResetTimeout();
   // PostTask outside the constructor to ensure at least one reference exists.
   task_runner->PostTask(
       FROM_HERE,
@@ -100,6 +113,30 @@ BrowserGpuChannelHostFactory::EstablishRequest::EstablishRequest(
       gpu_client_tracing_id_(gpu_client_tracing_id),
       finished_(false),
       main_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+
+void BrowserGpuChannelHostFactory::EstablishRequest::ResetTimeout() {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDisableTimeoutsForProfiling)) {
+    return;
+  }
+
+  if (finished_)
+    return;
+
+#if defined(ADDRESS_SANITIZER) || defined(THREAD_SANITIZER) || \
+    defined(SYZYASAN) || defined(CYGPROFILE_INSTRUMENTATION)
+  constexpr int64_t kGpuChannelTimeoutInSeconds = 40;
+#else
+  // The GPU watchdog timeout is 15 seconds (1.5x the kGpuTimeout value due to
+  // logic in GpuWatchdogThread). Make this slightly longer to give the GPU a
+  // chance to crash itself before crashing the browser.
+  constexpr int64_t kGpuChannelTimeoutInSeconds = 20;
+#endif
+
+  timeout_.Start(FROM_HERE,
+                 base::TimeDelta::FromSeconds(kGpuChannelTimeoutInSeconds),
+                 base::Bind(&TimedOut));
+}
 
 void BrowserGpuChannelHostFactory::EstablishRequest::EstablishOnIO() {
   GpuProcessHost* host = GpuProcessHost::Get();
@@ -125,13 +162,20 @@ void BrowserGpuChannelHostFactory::EstablishRequest::OnEstablishedOnIO(
     const gpu::GPUInfo& gpu_info,
     const gpu::GpuFeatureInfo& gpu_feature_info,
     GpuProcessHost::EstablishChannelStatus status) {
+#if !defined(OS_ANDROID)
   if (!channel_handle.mojo_handle.is_valid() &&
       status == GpuProcessHost::EstablishChannelStatus::GPU_HOST_INVALID) {
     DVLOG(1) << "Failed to create channel on existing GPU process. Trying to "
                 "restart GPU process.";
+    main_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(
+            &BrowserGpuChannelHostFactory::EstablishRequest::ResetTimeout,
+            this));
     EstablishOnIO();
     return;
   }
+#endif
   channel_handle_ = channel_handle;
   gpu_info_ = gpu_info;
   gpu_feature_info_ = gpu_feature_info;
@@ -148,11 +192,13 @@ void BrowserGpuChannelHostFactory::EstablishRequest::FinishOnIO() {
 
 void BrowserGpuChannelHostFactory::EstablishRequest::FinishOnMain() {
   if (!finished_) {
+    timeout_.Stop();
     BrowserGpuChannelHostFactory* factory =
         BrowserGpuChannelHostFactory::instance();
     factory->GpuChannelEstablished();
     finished_ = true;
   }
+  DCHECK(!timeout_.IsRunning());
 }
 
 void BrowserGpuChannelHostFactory::EstablishRequest::Wait() {
