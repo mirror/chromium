@@ -58,9 +58,9 @@ class FeaturePolicyTest : public ::testing::Test {
   ~FeaturePolicyTest() {
   }
 
-  RefPtr<SecurityOrigin> origin_a_ = SecurityOrigin::CreateFromString(ORIGIN_A);
-  RefPtr<SecurityOrigin> origin_b_ = SecurityOrigin::CreateFromString(ORIGIN_B);
-  RefPtr<SecurityOrigin> origin_c_ = SecurityOrigin::CreateFromString(ORIGIN_C);
+  RefPtr<const SecurityOrigin> origin_a_ = SecurityOrigin::CreateFromString(ORIGIN_A);
+  RefPtr<const SecurityOrigin> origin_b_ = SecurityOrigin::CreateFromString(ORIGIN_B);
+  RefPtr<const SecurityOrigin> origin_c_ = SecurityOrigin::CreateFromString(ORIGIN_C);
 
   const FeatureNameMap test_feature_name_map = {
       {"fullscreen", blink::WebFeaturePolicyFeature::kFullscreen},

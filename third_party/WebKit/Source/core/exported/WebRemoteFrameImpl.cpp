@@ -215,7 +215,8 @@ WebRemoteFrameImpl* WebRemoteFrameImpl::FromFrame(RemoteFrame& frame) {
 
 void WebRemoteFrameImpl::SetReplicatedOrigin(const WebSecurityOrigin& origin) {
   DCHECK(GetFrame());
-  GetFrame()->GetSecurityContext()->SetReplicatedOrigin(origin);
+  scoped_refptr<const SecurityOrigin> security_origin = origin;
+  GetFrame()->GetSecurityContext()->SetReplicatedOrigin(security_origin->IsolatedCopy()); // FOXME
 
   // If the origin of a remote frame changed, the accessibility object for the
   // owner element now points to a different child.
@@ -289,11 +290,12 @@ void WebRemoteFrameImpl::SetReplicatedPotentiallyTrustworthyUniqueOrigin(
   // unique.
   DCHECK(!is_unique_origin_potentially_trustworthy ||
          GetFrame()->GetSecurityContext()->GetSecurityOrigin()->IsUnique());
-  GetFrame()
-      ->GetSecurityContext()
-      ->GetSecurityOrigin()
-      ->SetUniqueOriginIsPotentiallyTrustworthy(
-          is_unique_origin_potentially_trustworthy);
+  // FOXME
+  // GetFrame()
+  //     ->GetSecurityContext()
+  //     ->GetSecurityOrigin()
+  //     ->SetUniqueOriginIsPotentiallyTrustworthy(
+  //         is_unique_origin_potentially_trustworthy);
 }
 
 void WebRemoteFrameImpl::DispatchLoadEventOnFrameOwner() {

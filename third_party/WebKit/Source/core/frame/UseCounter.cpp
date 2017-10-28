@@ -1213,11 +1213,11 @@ void UseCounter::CountIfFeatureWouldBeBlockedByFeaturePolicy(
     WebFeature blocked_cross_origin,
     WebFeature blocked_same_origin) {
   // Get the origin of the top-level document
-  SecurityOrigin* topOrigin =
+  const SecurityOrigin* top_origin =
       frame.Tree().Top().GetSecurityContext()->GetSecurityOrigin();
 
   // Check if this frame is same-origin with the top-level
-  if (!frame.GetSecurityContext()->GetSecurityOrigin()->CanAccess(topOrigin)) {
+  if (!frame.GetSecurityContext()->GetSecurityOrigin()->CanAccess(top_origin)) {
     // This frame is cross-origin with the top-level frame, and so would be
     // blocked without a feature policy.
     UseCounter::Count(&frame, blocked_cross_origin);
@@ -1229,7 +1229,7 @@ void UseCounter::CountIfFeatureWouldBeBlockedByFeaturePolicy(
   // origin frame (like A->B->A) it would be blocked without a feature policy.
   const Frame* f = &frame;
   while (!f->IsMainFrame()) {
-    if (!f->GetSecurityContext()->GetSecurityOrigin()->CanAccess(topOrigin)) {
+    if (!f->GetSecurityContext()->GetSecurityOrigin()->CanAccess(top_origin)) {
       UseCounter::Count(&frame, blocked_same_origin);
       return;
     }

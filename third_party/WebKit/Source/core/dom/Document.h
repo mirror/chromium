@@ -261,7 +261,7 @@ using DocumentClassFlags = unsigned char;
 
 class CORE_EXPORT Document : public ContainerNode,
                              public TreeScope,
-                             public SecurityContext,
+                             public MutableSecurityContext,
                              public ExecutionContext,
                              public DocumentShutdownNotifier,
                              public SynchronousMutationNotifier,

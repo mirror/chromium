@@ -76,7 +76,7 @@ bool DeviceSingleWindowEventController::IsSameSecurityOriginAsMainFrame()
   if (GetDocument().GetFrame()->IsMainFrame())
     return true;
 
-  SecurityOrigin* main_security_origin = GetDocument()
+  const SecurityOrigin* main_security_origin = GetDocument()
                                              .GetPage()
                                              ->MainFrame()
                                              ->GetSecurityContext()

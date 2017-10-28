@@ -18,7 +18,7 @@ namespace blink {
 
 class NullExecutionContext
     : public GarbageCollectedFinalized<NullExecutionContext>,
-      public SecurityContext,
+      public ConstSecurityContext,
       public ExecutionContext {
   USING_GARBAGE_COLLECTED_MIXIN(NullExecutionContext);
 
@@ -61,7 +61,7 @@ class NullExecutionContext
 
   virtual void Trace(blink::Visitor* visitor) {
     visitor->Trace(queue_);
-    SecurityContext::Trace(visitor);
+    ConstSecurityContext::Trace(visitor);
     ExecutionContext::Trace(visitor);
   }
 

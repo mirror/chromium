@@ -96,7 +96,7 @@ void TextTrackLoader::DataReceived(Resource* resource,
   cue_parser_->ParseBytes(data, length);
 }
 
-void TextTrackLoader::CorsPolicyPreventedLoad(SecurityOrigin* security_origin,
+void TextTrackLoader::CorsPolicyPreventedLoad(const SecurityOrigin* security_origin,
                                               const KURL& url) {
   String console_message(
       "Text track from origin '" + SecurityOrigin::Create(url)->ToString() +

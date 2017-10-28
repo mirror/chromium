@@ -563,7 +563,7 @@ Document* Document::Create(const Document& document) {
       new Document(DocumentInit::Create()
                        .WithContextDocument(const_cast<Document*>(&document))
                        .WithURL(BlankURL()));
-  new_document->SetSecurityOrigin(document.GetSecurityOrigin());
+  new_document->SetSecurityOrigin(document.GetSecurityOrigin()->IsolatedCopy()); // FOXME
   new_document->SetContextFeatures(document.GetContextFeatures());
   return new_document;
 }
@@ -2917,7 +2917,7 @@ void Document::open(Document* entered_document,
           "Can only call open() on same-origin documents.");
       return;
     }
-    SetSecurityOrigin(entered_document->GetSecurityOrigin());
+    SetSecurityOrigin(entered_document->GetSecurityOrigin()->IsolatedCopy()); // FOXME
 
     if (this != entered_document) {
       // Clear the hash fragment from the inherited URL to prevent a
@@ -5200,7 +5200,7 @@ void Document::setDomain(const String& raw_domain,
                           ? WebFeature::kDocumentDomainSetWithDefaultPort
                           : WebFeature::kDocumentDomainSetWithNonDefaultPort);
     bool was_cross_domain = frame_->IsCrossOriginSubframe();
-    GetSecurityOrigin()->SetDomainFromDOM(new_domain);
+    GetMutableSecurityOrigin()->SetDomainFromDOM(new_domain);
     if (View() && (was_cross_domain != frame_->IsCrossOriginSubframe()))
       View()->CrossOriginStatusChanged();
 
@@ -5255,7 +5255,7 @@ const KURL Document::SiteForCookies() const {
   if (top.IsLocalFrame()) {
     top_document_url = ToLocalFrame(top).GetDocument()->Url();
   } else {
-    SecurityOrigin* origin = top.GetSecurityContext()->GetSecurityOrigin();
+    const SecurityOrigin* origin = top.GetSecurityContext()->GetSecurityOrigin();
     // TODO(yhirano): Ideally |origin| should not be null here.
     if (origin)
       top_document_url = KURL(NullURL(), origin->ToString());
@@ -5576,7 +5576,7 @@ KURL Document::OpenSearchDescriptionURL() {
 
     // Count usage; perhaps we can lock this to secure contexts.
     WebFeature osd_disposition;
-    scoped_refptr<SecurityOrigin> target =
+    scoped_refptr<const SecurityOrigin> target =
         SecurityOrigin::Create(link_element->Href());
     if (IsSecureContext()) {
       osd_disposition = target->IsPotentiallyTrustworthy()
@@ -6039,20 +6039,20 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
     Document* owner = initializer.OwnerDocument();
     if (owner) {
       if (owner->GetSecurityOrigin()->IsPotentiallyTrustworthy())
-        GetSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(true);
+        GetMutableSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(true);
       if (owner->GetSecurityOrigin()->CanLoadLocalResources())
-        GetSecurityOrigin()->GrantLoadLocalResources();
+        GetMutableSecurityOrigin()->GrantLoadLocalResources();
       policy_to_inherit = owner->GetContentSecurityPolicy();
     }
   } else if (Document* owner = initializer.OwnerDocument()) {
     cookie_url_ = owner->CookieURL();
     // We alias the SecurityOrigins to match Firefox, see Bug 15313
     // https://bugs.webkit.org/show_bug.cgi?id=15313
-    SetSecurityOrigin(owner->GetSecurityOrigin());
+    SetSecurityOrigin(owner->GetSecurityOrigin()->IsolatedCopy()); // FOXME
     policy_to_inherit = owner->GetContentSecurityPolicy();
   } else {
     cookie_url_ = url_;
-    SetSecurityOrigin(SecurityOrigin::Create(url_));
+    SetSecurityOrigin(SecurityOrigin::Create(url_)->IsolatedCopy()); // FOXME
   }
 
   // Set the address space before setting up CSP, as the latter may override
@@ -6092,23 +6092,23 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
       // Web security is turned off. We should let this document access every
       // other document. This is used primary by testing harnesses for web
       // sites.
-      GetSecurityOrigin()->GrantUniversalAccess();
+      GetMutableSecurityOrigin()->GrantUniversalAccess();
     } else if (GetSecurityOrigin()->IsLocal()) {
       if (settings->GetAllowUniversalAccessFromFileURLs()) {
         // Some clients want local URLs to have universal access, but that
         // setting is dangerous for other clients.
-        GetSecurityOrigin()->GrantUniversalAccess();
+        GetMutableSecurityOrigin()->GrantUniversalAccess();
       } else if (!settings->GetAllowFileAccessFromFileURLs()) {
         // Some clients do not want local URLs to have access to other local
         // URLs.
-        GetSecurityOrigin()->BlockLocalAccessFromLocalOrigin();
+        GetMutableSecurityOrigin()->BlockLocalAccessFromLocalOrigin();
       }
     }
   }
 
   if (GetSecurityOrigin()->IsUnique() &&
       SecurityOrigin::Create(url_)->IsPotentiallyTrustworthy())
-    GetSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(true);
+    GetMutableSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(true);
 
   if (GetSecurityOrigin()->HasSuborigin())
     EnforceSuborigin(*GetSecurityOrigin()->GetSuborigin());
@@ -6159,7 +6159,7 @@ void Document::InitContentSecurityPolicy(
 }
 
 bool Document::IsSecureTransitionTo(const KURL& url) const {
-  scoped_refptr<SecurityOrigin> other = SecurityOrigin::Create(url);
+  scoped_refptr<const SecurityOrigin> other = SecurityOrigin::Create(url);
   return GetSecurityOrigin()->CanAccess(other.get());
 }
 
@@ -6231,12 +6231,12 @@ bool Document::AllowInlineEventHandler(Node* node,
 }
 
 void Document::EnforceSandboxFlags(SandboxFlags mask) {
-  scoped_refptr<SecurityOrigin> stand_in_origin = GetSecurityOrigin();
+  scoped_refptr<const SecurityOrigin> stand_in_origin = GetSecurityOrigin();
   ApplySandboxFlags(mask);
   // Send a notification if the origin has been updated.
   if (stand_in_origin && !stand_in_origin->IsUnique() &&
       GetSecurityOrigin()->IsUnique()) {
-    GetSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(
+    GetMutableSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(
         stand_in_origin->IsPotentiallyTrustworthy());
     if (GetFrame())
       GetFrame()->Client()->DidUpdateToUniqueOrigin();

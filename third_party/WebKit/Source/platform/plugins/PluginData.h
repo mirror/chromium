@@ -94,7 +94,7 @@ class PLATFORM_EXPORT PluginData final
   const HeapVector<Member<PluginInfo>>& Plugins() const { return plugins_; }
   const HeapVector<Member<MimeClassInfo>>& Mimes() const { return mimes_; }
   const SecurityOrigin* Origin() const { return main_frame_origin_.get(); }
-  void UpdatePluginList(SecurityOrigin* main_frame_origin);
+  void UpdatePluginList(const SecurityOrigin* main_frame_origin);
   void ResetPluginData();
 
   bool SupportsMimeType(const String& mime_type) const;
@@ -109,7 +109,7 @@ class PLATFORM_EXPORT PluginData final
 
   HeapVector<Member<PluginInfo>> plugins_;
   HeapVector<Member<MimeClassInfo>> mimes_;
-  RefPtr<SecurityOrigin> main_frame_origin_;
+  RefPtr<const SecurityOrigin> main_frame_origin_;
 };
 
 }  // namespace blink

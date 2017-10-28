@@ -41,7 +41,7 @@ bool NullExecutionContext::IsSecureContext(String& error_message) const {
 
 void NullExecutionContext::SetUpSecurityContext() {
   ContentSecurityPolicy* policy = ContentSecurityPolicy::Create();
-  SecurityContext::SetSecurityOrigin(SecurityOrigin::Create(url_));
+  ConstSecurityContext::SetSecurityOrigin(SecurityOrigin::Create(url_));
   policy->BindToExecutionContext(this);
   SecurityContext::SetContentSecurityPolicy(policy);
 }

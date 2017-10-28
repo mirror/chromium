@@ -49,7 +49,7 @@ ReferrerPolicy DummyModulator::GetReferrerPolicy() {
   return kReferrerPolicyDefault;
 }
 
-SecurityOrigin* DummyModulator::GetSecurityOriginForFetch() {
+const SecurityOrigin* DummyModulator::GetSecurityOriginForFetch() const {
   NOTREACHED();
   return nullptr;
 }

@@ -64,7 +64,7 @@ struct GlobalScopeCreationParams;
 class CORE_EXPORT WorkerGlobalScope
     : public EventTargetWithInlineData,
       public ActiveScriptWrappable<WorkerGlobalScope>,
-      public SecurityContext,
+      public ConstSecurityContext,
       public WorkerOrWorkletGlobalScope,
       public Supplementable<WorkerGlobalScope>,
       public DOMWindowBase64 {

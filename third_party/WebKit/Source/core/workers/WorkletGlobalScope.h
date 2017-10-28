@@ -30,7 +30,7 @@ struct GlobalScopeCreationParams;
 
 class CORE_EXPORT WorkletGlobalScope
     : public ScriptWrappable,
-      public SecurityContext,
+      public ConstSecurityContext,
       public WorkerOrWorkletGlobalScope,
       public ActiveScriptWrappable<WorkletGlobalScope> {
   DEFINE_WRAPPERTYPEINFO();
