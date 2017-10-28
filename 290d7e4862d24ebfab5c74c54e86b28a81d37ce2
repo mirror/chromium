@@ -70,6 +70,24 @@
       "revId": "290d7e4862d24ebfab5c74c54e86b28a81d37ce2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bede7a84_56f20791",
+        "filename": "media/mojo/services/mojo_cdm_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-28T05:42:27Z",
+      "side": 1,
+      "message": "\u003e CdmAdapter owns both the cdm::CDM (wrapped in CdmWrapper) instance and MojoCdmHelper that implements CdmAuxiliaryHelper:\n\u003e 1. std::unique_ptr\u003cCdmWrapper\u003e cdm_;\n\u003e 2. std::unique_ptr\u003cCdmAuxiliaryHelper\u003e helper_;\n\u003e That said, we should revert the declaration order so |cdm_| is destroyed before |helper_|.\n\nI\u0027am fixing this in:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/742327",
+      "parentUuid": "b6027ab6_f90733e1",
+      "revId": "290d7e4862d24ebfab5c74c54e86b28a81d37ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
