@@ -18,6 +18,7 @@ namespace media {
 // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.media
 enum class VideoCaptureApi {
   LINUX_V4L2_SINGLE_PLANE,
+  LINUX_V4L2_MULTI_PLANE,
   WIN_MEDIA_FOUNDATION,
   WIN_DIRECT_SHOW,
   MACOSX_AVFOUNDATION,

@@ -69,6 +69,16 @@ class CAPTURE_EXPORT V4L2CaptureDelegate final {
 
   class BufferTracker;
 
+  void FillV4L2Format(v4l2_format* format,
+                      uint32_t width,
+                      uint32_t height,
+                      uint32_t pixelformat_fourcc) const;
+
+  void FillV4L2Buffer(v4l2_buffer* buffer, int index) const;
+
+  void FillV4L2RequestBuffer(v4l2_requestbuffers* request_buffer,
+                             int count) const;
+
   // VIDIOC_QUERYBUFs a buffer from V4L2, creates a BufferTracker for it and
   // enqueues it (VIDIOC_QBUF) back into V4L2.
   bool MapAndQueueBuffer(int index);
@@ -78,12 +88,16 @@ class CAPTURE_EXPORT V4L2CaptureDelegate final {
   void SetErrorState(const base::Location& from_here,
                      const std::string& reason);
 
+  bool isMultiplane() const { return V4L2_TYPE_IS_MULTIPLANAR(buf_type_); };
+
   const scoped_refptr<base::SingleThreadTaskRunner> v4l2_task_runner_;
   const VideoCaptureDeviceDescriptor device_descriptor_;
   const int power_line_frequency_;
 
   // The following members are only known on AllocateAndStart().
   VideoCaptureFormat capture_format_;
+  int num_planes_;
+  v4l2_buf_type buf_type_;
   v4l2_format video_fmt_;
   std::unique_ptr<VideoCaptureDevice::Client> client_;
   base::ScopedFD device_fd_;

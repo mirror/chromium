@@ -106,6 +106,8 @@ EnumTraits<media::mojom::VideoCaptureApi, media::VideoCaptureApi>::ToMojom(
   switch (input) {
     case media::VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE:
       return media::mojom::VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE;
+    case media::VideoCaptureApi::LINUX_V4L2_MULTI_PLANE:
+      return media::mojom::VideoCaptureApi::LINUX_V4L2_MULTI_PLANE;
     case media::VideoCaptureApi::WIN_MEDIA_FOUNDATION:
       return media::mojom::VideoCaptureApi::WIN_MEDIA_FOUNDATION;
     case media::VideoCaptureApi::WIN_DIRECT_SHOW:
@@ -138,6 +140,9 @@ bool EnumTraits<media::mojom::VideoCaptureApi, media::VideoCaptureApi>::
   switch (input) {
     case media::mojom::VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE:
       *output = media::VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE;
+      return true;
+    case media::mojom::VideoCaptureApi::LINUX_V4L2_MULTI_PLANE:
+      *output = media::VideoCaptureApi::LINUX_V4L2_MULTI_PLANE;
       return true;
     case media::mojom::VideoCaptureApi::WIN_MEDIA_FOUNDATION:
       *output = media::VideoCaptureApi::WIN_MEDIA_FOUNDATION;
