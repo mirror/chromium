@@ -23,6 +23,7 @@ typedef void* GLeglImageOES;
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
+#include "base/mac/mac_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
@@ -102,6 +103,7 @@ bool ImageTransportSurfaceOverlayMac::Initialize(gl::GLSurfaceFormat format) {
     ca_context_.reset([
         [CAContext contextWithCGSConnection:connection_id options:@{}] retain]);
     [ca_context_ setLayer:ca_layer_tree_coordinator_->GetCALayerForDisplay()];
+    [ca_context_ setColorSpace:base::mac::GetSystemColorSpace()];
 
     fullscreen_low_power_ca_context_.reset([
         [CAContext contextWithCGSConnection:connection_id options:@{}] retain]);
