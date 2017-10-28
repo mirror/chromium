@@ -70,6 +70,24 @@
       "revId": "aa17e9346b3064fd1f561e7fd60e0cdec31457f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f162844e_ba1d5729",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-28T00:11:53Z",
+      "side": 1,
+      "message": "You didn\u0027t answer my question about UMA + Loopback server, is this essentially an unused configuration? Or would it be useful to add metrics for real world Loopback server usage and request failure?\n\nAs for strict vs relaxed, I\u0027m not sure. I think you could have the FakeServer wrapping LoobackServer methods with extra logic that looks for mistakes. But there would be like EXPECT_X or LOG(WARNING), not DCHECK, and it would be just to help developers writes new integration tests. Tests themselves need to verify the things that the tests themselves care about and expect.\n\nTook me forever to write a test that actually hits this line, but I think I finally got there. Updating to not delete children.",
+      "parentUuid": "a9ed9cc0_7b062616",
+      "revId": "aa17e9346b3064fd1f561e7fd60e0cdec31457f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
