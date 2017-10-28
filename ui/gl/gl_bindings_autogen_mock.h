@@ -1720,3 +1720,6 @@ static void GL_BINDING_CALL Mock_glViewport(GLint x,
 static void GL_BINDING_CALL Mock_glWaitSync(GLsync sync,
                                             GLbitfield flags,
                                             GLuint64 timeout);
+static void GL_BINDING_CALL Mock_glWindowRectanglesEXT(GLenum mode,
+                                                       GLsizei n,
+                                                       const GLint* box);

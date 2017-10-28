@@ -1978,6 +1978,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                              GLint pixel_config);
   void DoEndRasterCHROMIUM();
 
+  void DoWindowRectanglesEXT(GLenum mode, GLsizei n, const volatile GLint* box);
+
   // Returns false if textures were replaced.
   bool PrepareTexturesForRender();
   void RestoreStateForTextures();
@@ -3611,6 +3613,13 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
 
   api()->glGetFloatvFn(GL_ALIASED_LINE_WIDTH_RANGE, line_width_range_);
   state_.SetLineWidthBounds(line_width_range_[0], line_width_range_[1]);
+
+  if (feature_info_->feature_flags().ext_window_rectangles) {
+    GLint max_window_rectangles = -1;
+    api()->glGetIntegervFn(GL_MAX_WINDOW_RECTANGLES_EXT,
+                           &max_window_rectangles);
+    state_.SetMaxWindowRectangles(max_window_rectangles);
+  }
 
   state_.scissor_width = state_.viewport_width;
   state_.scissor_height = state_.viewport_height;
@@ -6611,6 +6620,13 @@ bool GLES2DecoderImpl::GetHelper(
               static_cast<GLint>(state_.bound_transform_feedback->paused());
         }
         return true;
+      case GL_WINDOW_RECTANGLE_EXT:
+        *num_written = 4;
+        // This is only used for glGetIntegeri_v and similar, so params will
+        // always be null - the only path here is through
+        // GetNumValuesReturnedForGLGet.
+        DCHECK(!params);
+        return true;
     }
   }
   switch (pname) {
@@ -7246,6 +7262,11 @@ void GLES2DecoderImpl::DoGetIntegeri_v(GLenum target,
                                        GLuint index,
                                        GLint* params,
                                        GLsizei params_size) {
+  if (features().ext_window_rectangles && target == GL_WINDOW_RECTANGLE_EXT) {
+    DCHECK_EQ(params_size, 4);
+    glGetIntegeri_v(target, index, params);
+    return;
+  }
   GetIndexedIntegerImpl<GLint>("glGetIntegeri_v", target, index, params);
 }
 
@@ -7253,6 +7274,11 @@ void GLES2DecoderImpl::DoGetInteger64i_v(GLenum target,
                                          GLuint index,
                                          GLint64* params,
                                          GLsizei params_size) {
+  if (features().ext_window_rectangles && target == GL_WINDOW_RECTANGLE_EXT) {
+    DCHECK_EQ(params_size, 4);
+    glGetInteger64i_v(target, index, params);
+    return;
+  }
   GetIndexedIntegerImpl<GLint64>("glGetInteger64i_v", target, index, params);
 }
 
@@ -20331,6 +20357,13 @@ void GLES2DecoderImpl::DoEndRasterCHROMIUM() {
   sk_surface_.reset();
 
   RestoreState(nullptr);
+}
+
+void GLES2DecoderImpl::DoWindowRectanglesEXT(GLenum mode,
+                                             GLsizei n,
+                                             const volatile GLint* box) {
+  state_.SetWindowRectangles(mode, n, box);
+  api()->glWindowRectanglesEXTFn(mode, n, const_cast<const GLint*>(box));
 }
 
 // Include the auto-generated part of this file. We split this because it means

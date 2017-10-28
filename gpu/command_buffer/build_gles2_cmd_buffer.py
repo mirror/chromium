@@ -958,7 +958,6 @@ _NAMED_TYPE_INFO = {
   },
   'IndexedGLState': {
     'type': 'GLenum',
-    'is_complete': True,
     'valid': [
       'GL_TRANSFORM_FEEDBACK_BUFFER_BINDING',
       'GL_TRANSFORM_FEEDBACK_BUFFER_SIZE',
@@ -4620,6 +4619,13 @@ _FUNCTION_INFO = {
     'cmd_args': 'GLuint texture_id, GLuint shm_id, GLuint shm_offset, '
                 'GLsizei color_space_size',
     'extension': 'CHROMIUM_color_space_metadata',
+  },
+  'WindowRectanglesEXT': {
+    'type': 'PUTn',
+    'count': 4,
+    'decoder_func': 'DoWindowRectanglesEXT',
+    'extension': 'EXT_window_rectangles',
+    'extension_flag': 'ext_window_rectangles',
   },
 }
 

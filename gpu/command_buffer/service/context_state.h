@@ -321,6 +321,12 @@ struct GPU_EXPORT ContextState {
   // parameters user values; otherwise, set them to 0.
   void UpdateUnpackParameters() const;
 
+  void SetMaxWindowRectangles(size_t max);
+  void SetWindowRectangles(GLenum mode,
+                           size_t count,
+                           const volatile GLint* box);
+  void UpdateWindowRectangles() const;
+
   void EnableDisableFramebufferSRGB(bool enable);
 
   #include "gpu/command_buffer/service/context_state_autogen.h"
@@ -396,6 +402,12 @@ struct GPU_EXPORT ContextState {
 
   GLfloat line_width_min_ = 0.0f;
   GLfloat line_width_max_ = 1.0f;
+
+  GLenum window_rectangles_mode_ = GL_EXCLUSIVE_EXT;
+  size_t window_rectangles_count_ = 0;
+  // Stores the list of N window rectangles as N*4 GLints, like
+  // vector<[x,y,w,h]>. Always has space for MAX_WINDOW_RECTANGLES rectangles.
+  std::vector<GLint> window_rectangles_;
 
   gl::GLApi* api_ = nullptr;
   FeatureInfo* feature_info_;

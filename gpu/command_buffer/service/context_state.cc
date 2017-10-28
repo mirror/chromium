@@ -551,6 +551,30 @@ void ContextState::UpdatePackParameters() const {
   }
 }
 
+void ContextState::SetMaxWindowRectangles(size_t max) {
+  window_rectangles_ = std::vector<GLint>(max * 4, 0);
+}
+
+void ContextState::SetWindowRectangles(GLenum mode,
+                                       size_t count,
+                                       const volatile GLint* box) {
+  window_rectangles_mode_ = mode;
+  window_rectangles_count_ = count;
+  DCHECK_LE(count * 4, window_rectangles_.size());
+  std::copy(box, &box[count * 4], window_rectangles_.begin());
+}
+
+void ContextState::UpdateWindowRectangles() const {
+  if (!feature_info_->feature_flags().ext_window_rectangles) {
+    return;
+  }
+  DCHECK_LE(window_rectangles_count_ * 4, window_rectangles_.size());
+  const GLint* data =
+      window_rectangles_count_ ? window_rectangles_.data() : nullptr;
+  api()->glWindowRectanglesEXTFn(window_rectangles_mode_,
+                                 window_rectangles_count_, data);
+}
+
 void ContextState::UpdateUnpackParameters() const {
   if (!feature_info_->IsES3Capable())
     return;
@@ -727,6 +751,7 @@ void ContextState::InitStateManual(const ContextState*) const {
   // will opmitize this.
   UpdatePackParameters();
   UpdateUnpackParameters();
+  UpdateWindowRectangles();
 }
 
 // Include the auto-generated part of this file. We split this because it means
