@@ -18,12 +18,75 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/font.h"
 #include "ui/gfx/paint_vector_icon.h"
+#include "ui/views/bubble/bubble_border.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
+#include "ui/views/bubble/bubble_frame_view.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/box_layout.h"
 
 namespace ash {
+
+namespace {
+
+// Padding of the bubble.
+constexpr int kBubbleTopPaddingDp = 14;
+constexpr int kBubbleLeftBottomPaddingDp = 16;
+
+constexpr int kBubbleSpaceBetweenChildrenDp = 8;
+
+// Colors of the two text in the bubble.
+constexpr SkColor kBubbleTitleTextColor = SK_ColorBLACK;
+constexpr SkColor kBubbleContentTextColor = SkColorSetA(SK_ColorBLACK, 138);
+
+// Font sizes of the two text in the bubble.
+constexpr int kBubbleTitleTextFontSize = 16;
+constexpr int kBubbleContentTextFontSize = 13;
+
+// Height and width of the preferred bubble size.
+constexpr int kBubblePreferredHeightDp = 96;
+constexpr int kBubblePreferredWidthDp = 380;
+
+// The preferred size of the close button.
+constexpr gfx::Size kCloseButtonPreferredSizeDp = gfx::Size(16, 16);
+
+// The location of the arrow on the bubble, expressed as a ratio of the bubble's
+// width.
+constexpr float kArrowLocationRatio = 0.75f;
+
+}  // namespace
+
+// Custom border for the bubble, as this arrow on this bubble points to its
+// anchor at 3/4 of its size. BubbleBorder only provides a choice of pointing at
+// the beginning, center or end.
+class PaletteWelcomeBubble::CustomBubbleBorder : public views::BubbleBorder {
+ public:
+  CustomBubbleBorder()
+      : views::BubbleBorder(views::BubbleBorder::BOTTOM_CENTER,
+                            views::BubbleBorder::NO_SHADOW,
+                            SK_ColorWHITE) {}
+  ~CustomBubbleBorder() override = default;
+
+  // views::BubbleBorder:
+  gfx::Rect GetBounds(const gfx::Rect& anchor_rect,
+                      const gfx::Size& contents_size) const override {
+    gfx::Rect bounds(contents_size);
+    bounds.set_x(anchor_rect.CenterPoint().x() -
+                 kArrowLocationRatio * contents_size.width());
+    bounds.set_y(anchor_rect.y() - contents_size.height());
+    return bounds;
+  }
+
+  gfx::Rect GetArrowRect(const gfx::Rect& bounds) const override {
+    gfx::Rect rect = BubbleBorder::GetArrowRect(bounds);
+    rect.set_x(kArrowLocationRatio * bounds.width() -
+               GetArrowImage()->size().width() / 2);
+    return rect;
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(CustomBubbleBorder);
+};
 
 // View which contains two text (one title) and a close button for closing the
 // bubble. Controlled by PaletteWelcomeBubble and anchored to a PaletteTray.
@@ -31,44 +94,63 @@ class PaletteWelcomeBubble::WelcomeBubbleView
     : public views::BubbleDialogDelegateView,
       public views::ButtonListener {
  public:
-  WelcomeBubbleView(views::View* anchor, views::BubbleBorder::Arrow arrow)
-      : views::BubbleDialogDelegateView(anchor, arrow) {
+  explicit WelcomeBubbleView(views::View* anchor)
+      : views::BubbleDialogDelegateView(anchor,
+                                        views::BubbleBorder::BOTTOM_CENTER) {
     set_close_on_deactivate(true);
     set_can_activate(false);
     set_accept_events(true);
     set_parent_window(
         anchor_widget()->GetNativeWindow()->GetRootWindow()->GetChildById(
             kShellWindowId_SettingBubbleContainer));
-    SetLayoutManager(new views::BoxLayout(views::BoxLayout::kVertical));
+    set_margins(gfx::Insets());
+    auto* layout = new views::BoxLayout(
+        views::BoxLayout::kVertical,
+        gfx::Insets(kBubbleTopPaddingDp, kBubbleLeftBottomPaddingDp,
+                    kBubbleLeftBottomPaddingDp, kBubbleLeftBottomPaddingDp),
+        kBubbleSpaceBetweenChildrenDp);
+    SetLayoutManager(layout);
 
     // Add the header which contains the title and close button.
     auto* header = new views::View();
-    auto* box_layout = new views::BoxLayout(views::BoxLayout::kHorizontal);
-    header->SetLayoutManager(box_layout);
+    auto* header_layout = new views::BoxLayout(views::BoxLayout::kHorizontal);
+    header->SetLayoutManager(header_layout);
     AddChildView(header);
 
-    // Add the title, which is bolded.
+    const int default_font_size =
+        views::Label::GetDefaultFontList().GetFontSize();
+    // Add the title.
     auto* title = new views::Label(
         l10n_util::GetStringUTF16(IDS_ASH_STYLUS_WARM_WELCOME_BUBBLE_TITLE));
+    title->SetEnabledColor(kBubbleTitleTextColor);
+    title->SetFontList(views::Label::GetDefaultFontList().DeriveWithSizeDelta(
+        kBubbleTitleTextFontSize - default_font_size));
     title->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    title->SetFontList(views::Label::GetDefaultFontList().Derive(
-        0, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::BOLD));
     header->AddChildView(title);
-    box_layout->SetFlexForView(title, 1);
+    header_layout->SetFlexForView(title, 1);
 
     // Add a button to close the bubble.
     close_button_ = new views::ImageButton(this);
     close_button_->SetImage(
         views::Button::STATE_NORMAL,
         gfx::CreateVectorIcon(kWindowControlCloseIcon, SK_ColorBLACK));
+    close_button_->SetPreferredSize(gfx::Size(kCloseButtonPreferredSizeDp));
     header->AddChildView(close_button_);
 
+    // Add the content.
     auto* content = new views::Label(l10n_util::GetStringUTF16(
         IDS_ASH_STYLUS_WARM_WELCOME_BUBBLE_DESCRIPTION));
+    content->SetEnabledColor(kBubbleContentTextColor);
+    content->SetFontList(views::Label::GetDefaultFontList().DeriveWithSizeDelta(
+        kBubbleContentTextFontSize - default_font_size));
     content->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    content->SetMultiLine(true);
     AddChildView(content);
 
     views::BubbleDialogDelegateView::CreateBubble(this);
+    GetBubbleFrameView()->SetBubbleBorder(
+        std::make_unique<CustomBubbleBorder>());
+    SizeToContents();
   }
 
   ~WelcomeBubbleView() override = default;
@@ -80,13 +162,23 @@ class PaletteWelcomeBubble::WelcomeBubbleView
 
   // views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override {
+    return;
     if (sender == close_button_)
       GetWidget()->Close();
   }
 
   // views::View:
   gfx::Size CalculatePreferredSize() const override {
-    return BubbleDialogDelegateView::CalculatePreferredSize();
+    const int preferred_height =
+        GetLayoutManager()->GetPreferredSize(this).height() +
+        kBubbleLeftBottomPaddingDp;
+    return gfx::Size(kBubblePreferredWidthDp,
+                     std::max(preferred_height, kBubblePreferredHeightDp));
+  }
+
+  void Layout() override {
+    views::View::Layout();
+    SizeToPreferredSize();
   }
 
  private:
@@ -155,8 +247,7 @@ base::Optional<gfx::Rect> PaletteWelcomeBubble::GetBubbleBoundsForTest() {
 void PaletteWelcomeBubble::Show(bool shown_by_stylus) {
   if (!bubble_view_) {
     DCHECK(tray_);
-    bubble_view_ =
-        new WelcomeBubbleView(tray_, views::BubbleBorder::BOTTOM_RIGHT);
+    bubble_view_ = new WelcomeBubbleView(tray_);
   }
   active_user_pref_service_->SetBoolean(prefs::kShownPaletteWelcomeBubble,
                                         true);
