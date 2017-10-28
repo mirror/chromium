@@ -22,6 +22,30 @@
       "revId": "6a2538c11372947c1b6094f03bcdad8b8f535b78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc653ae4_dbfb45b9",
+        "filename": "chrome/test/data/extensions/api_test/serial/api/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-28T04:41:55Z",
+      "side": 1,
+      "message": "Sorry.. I hit \u0027submit\u0027 too soon. But I\u0027ve already uploaded another CL https://chromium-review.googlesource.com/c/chromium/src/+/742230 to address this. Thanks.",
+      "parentUuid": "09fedf93_6a71d1c6",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "6a2538c11372947c1b6094f03bcdad8b8f535b78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
