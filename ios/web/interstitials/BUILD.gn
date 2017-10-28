@@ -1,0 +1,43 @@
+# Copyright 2015 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//ios/build/config.gni")
+
+source_set("interstitials") {
+  deps = [
+    "//base",
+    "//components/url_formatter",
+    "//ios/net",
+    "//ios/third_party/blink:html_tokenizer",
+    "//ios/web/navigation",
+    "//ios/web/public",
+    "//ios/web/web_state",
+    "//mojo/public/cpp/system",
+    "//mojo/public/js",
+    "//services/catalog/public/cpp",
+    "//services/service_manager",
+    "//services/service_manager/embedder",
+    "//services/service_manager/public/cpp",
+    "//services/service_manager/runner/common",
+    "//services/service_manager/runner/host:lib",
+    "//ui/base",
+    "//ui/gfx",
+    "//ui/gfx/geometry",
+    "//ui/resources",
+    "//url",
+  ]
+
+  allow_circular_includes_from = [ "//ios/web/web_state" ]
+
+  sources = [
+    "html_web_interstitial_impl.h",
+    "html_web_interstitial_impl.mm",
+    "native_web_interstitial_impl.h",
+    "native_web_interstitial_impl.mm",
+    "web_interstitial_impl.h",
+    "web_interstitial_impl.mm",
+  ]
+
+  configs += [ "//build/config/compiler:enable_arc" ]
+}
