@@ -22,6 +22,30 @@
       "revId": "5d22ef40efbf4813908707d7c45a60e4c5b89b81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e9ae8c_25412f13",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-28T15:16:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c5e64345_bf38dd10",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 32
+      },
+      "revId": "5d22ef40efbf4813908707d7c45a60e4c5b89b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
