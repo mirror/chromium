@@ -6,9 +6,12 @@
 
 #include <stdint.h>
 
+#include <string>
+
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/files/file_util.h"
 #include "base/format_macros.h"
 #include "base/lazy_instance.h"
@@ -28,12 +31,46 @@ base::LazyInstance<CrashDumpManager>::Leaky g_instance =
     LAZY_INSTANCE_INITIALIZER;
 }
 
+CrashDumpManager::MinidumpDetails::MinidumpDetails(
+    int process_host_id,
+    content::ProcessType process_type,
+    base::TerminationStatus termination_status,
+    base::android::ApplicationState app_state,
+    int64_t file_size)
+    : process_host_id(process_host_id),
+      process_type(process_type),
+      termination_status(termination_status),
+      app_state(app_state),
+      file_size(file_size) {}
+
+CrashDumpManager::MinidumpDetails::MinidumpDetails() {}
+CrashDumpManager::MinidumpDetails::~MinidumpDetails() {}
+
+CrashDumpManager::MinidumpDetails::MinidumpDetails(
+    const CrashDumpManager::MinidumpDetails& other)
+    : MinidumpDetails(other.process_host_id,
+                      other.process_type,
+                      other.termination_status,
+                      other.app_state,
+                      other.file_size) {}
+
 // static
 CrashDumpManager* CrashDumpManager::GetInstance() {
   return g_instance.Pointer();
 }
 
-CrashDumpManager::CrashDumpManager() {}
+void CrashDumpManager::AddObserver(Observer* observer) {
+  async_observers_->AddObserver(observer);
+}
+
+void CrashDumpManager::RemoveObserver(Observer* observer) {
+  async_observers_->RemoveObserver(observer);
+}
+
+CrashDumpManager::CrashDumpManager()
+    : async_observers_(
+          base::MakeRefCounted<
+              base::ObserverListThreadSafe<CrashDumpManager::Observer>>()) {}
 
 CrashDumpManager::~CrashDumpManager() {}
 
@@ -60,25 +97,24 @@ base::ScopedFD CrashDumpManager::CreateMinidumpFileForChild(
   return base::ScopedFD(minidump_file.TakePlatformFile());
 }
 
-bool CrashDumpManager::ProcessMinidumpFileFromChild(
+void CrashDumpManager::ProcessMinidumpFileFromChild(
     base::FilePath crash_dump_dir,
     int process_host_id,
     content::ProcessType process_type,
     base::TerminationStatus termination_status,
     base::android::ApplicationState app_state) {
   base::AssertBlockingAllowed();
-  bool increase_crash_count = false;
   base::FilePath minidump_path;
   // If the minidump for a given child process has already been
   // processed, then there is no more work to do.
   if (!GetMinidumpPath(process_host_id, &minidump_path))
-    return increase_crash_count;
+    return;
 
   int64_t file_size = 0;
 
   if (!base::PathExists(minidump_path)) {
     LOG(ERROR) << "minidump does not exist " << minidump_path.value();
-    return increase_crash_count;
+    return;
   }
 
   int r = base::GetFileSize(minidump_path, &file_size);
@@ -115,11 +151,6 @@ bool CrashDumpManager::ProcessMinidumpFileFromChild(
     }
     if (process_type == content::PROCESS_TYPE_RENDERER) {
       if (termination_status == base::TERMINATION_STATUS_OOM_PROTECTED) {
-        // |increase_crash_count| is designed to log foreground crash.
-        // There is a delay for OOM flag to be removed when app goes to
-        // background, so we can't just check for OOM_PROTECTED flag.
-        increase_crash_count = (exit_status == VALID_MINIDUMP_WHILE_RUNNING) ||
-                               (exit_status == VALID_MINIDUMP_WHILE_PAUSED);
         UMA_HISTOGRAM_ENUMERATION("Tab.RendererDetailedExitStatus",
                                   exit_status,
                                   ExitStatus::MINIDUMP_STATUS_COUNT);
@@ -129,25 +160,29 @@ bool CrashDumpManager::ProcessMinidumpFileFromChild(
                                   ExitStatus::MINIDUMP_STATUS_COUNT);
       }
     } else if (process_type == content::PROCESS_TYPE_GPU) {
-      UMA_HISTOGRAM_ENUMERATION("GPU.GPUProcessDetailedExitStatus",
-                                exit_status,
+      UMA_HISTOGRAM_ENUMERATION("GPU.GPUProcessDetailedExitStatus", exit_status,
                                 ExitStatus::MINIDUMP_STATUS_COUNT);
     }
   }
+
+  async_observers_->Notify(
+      FROM_HERE, &CrashDumpManager::Observer::OnMinidumpProcessed,
+      MinidumpDetails(process_host_id, process_type, termination_status,
+                      app_state, file_size));
 
   if (file_size == 0) {
     // Empty minidump, this process did not crash. Just remove the file.
     r = base::DeleteFile(minidump_path, false);
     DCHECK(r) << "Failed to delete temporary minidump file "
               << minidump_path.value();
-    return increase_crash_count;
+    return;
   }
 
   // We are dealing with a valid minidump. Copy it to the crash report
   // directory from where Java code will upload it later on.
   if (crash_dump_dir.empty()) {
     NOTREACHED() << "Failed to retrieve the crash dump directory.";
-    return increase_crash_count;
+    return;
   }
   const uint64_t rand = base::RandUint64();
   const std::string filename = base::StringPrintf(
@@ -158,7 +193,7 @@ bool CrashDumpManager::ProcessMinidumpFileFromChild(
     LOG(ERROR) << "Failed to move crash dump from " << minidump_path.value()
                << " to " << dest_path.value();
     base::DeleteFile(minidump_path, false);
-    return increase_crash_count;
+    return;
   }
   VLOG(1) << "Crash minidump successfully generated: " << dest_path.value();
 
@@ -169,7 +204,7 @@ bool CrashDumpManager::ProcessMinidumpFileFromChild(
   base::android::ScopedJavaLocalRef<jstring> j_dest_path =
       base::android::ConvertUTF8ToJavaString(env, dest_path.value());
   Java_CrashDumpManager_tryToUploadMinidump(env, j_dest_path);
-  return increase_crash_count;
+  return;
 }
 
 void CrashDumpManager::SetMinidumpPath(int process_host_id,
