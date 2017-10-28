@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c0712094_4e5af2c6",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-28T00:59:29Z",
+      "side": 1,
+      "message": "Nit: Please comment boolean args\n\ne.g. c\n(this.detailLanguage_.language.code, /*asdf\u003d*/true);\nor js\n(this.detailLanguage_.language.code, true /* asdf */);",
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "988578f1_75e78e2b",
         "filename": "chrome/common/extensions/api/language_settings_private.idl",
         "patchSetId": 6
@@ -36,6 +53,91 @@
         "endLine": 96,
         "endChar": 16
       },
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff45fcd5_4d8b98db",
+        "filename": "chrome/test/data/webui/settings/fake_language_settings_private.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-28T00:59:29Z",
+      "side": 1,
+      "message": "Invitation: let and const are now allowed. Consider using them.",
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7bb695_b40b3262",
+        "filename": "chrome/test/data/webui/settings/fake_language_settings_private.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-28T00:59:29Z",
+      "side": 1,
+      "message": "Optional: maybe a make a swap() function and use it here and line 273",
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac23737_c7cb09c2",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-28T00:59:29Z",
+      "side": 1,
+      "message": "I\u0027m just eyeballing this, so I may be wrong but: \n- if the top items are disabled and the item to move follows those, then it will not be moved to the top of the list. That\u0027s fine while those languages stay disabled, but if one of them enables then our selected item is not really moved up in the list.\n\ne.g.  (the n* are disabled)\n[1*, 2*, 3] \u003d\u003d\u003e Move 3 UP \u003d\u003d\u003e [1*, 2*, 3]\nWhen 1 or 2 are later enabled, they are above 3.\n\nCounter example\n[1, 2*, 3] \u003d\u003d\u003e Move 3 UP \u003d\u003d\u003e [3, 1, 2*]\nWhen 2 is later enabled it\u0027s below 3.\n\nIs the above okay or is it an issue?",
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d47a26_9cda3808",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-28T00:59:29Z",
+      "side": 1,
+      "message": "There *may* be a similar effect here:\n\ne.g.\n[1, 2*, 3*] \u003d\u003d\u003e Move 1 DOWN \u003d\u003d\u003e [1, 2*, 3*]",
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d7261b_bd0ae8f9",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-28T00:59:29Z",
+      "side": 1,
+      "message": "Nit: I\u0027d find it easier to read this code if lines 342 and 343 were swapped :)",
       "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
