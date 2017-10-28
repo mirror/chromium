@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9566b6c3_979f30ea",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-28T01:16:39Z",
+      "side": 1,
+      "message": "optionally, init at the member declaration .. I prefer it because it\u0027s easier to see in the .h that it wasn\u0027t overlooked. http://en.cppreference.com/w/cpp/language/data_members#Member_initialization",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 32
+      },
+      "revId": "99a1e0fa3321a25cf2fc6575523b3aa791e0d1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681ad1e1_eb687e9b",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-28T01:16:39Z",
+      "side": 1,
+      "message": "Add why it shouldn\u0027t be used...\n// Not used on Android, because Android sends an event when service discovery\n// is complete for the entire device.\n\nAlso.. return true",
+      "revId": "99a1e0fa3321a25cf2fc6575523b3aa791e0d1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83af1a5_24f5c4b5",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-28T01:16:39Z",
+      "side": 1,
+      "message": "void",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 5
+      },
+      "revId": "99a1e0fa3321a25cf2fc6575523b3aa791e0d1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6226ec74_123cb1a0",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-28T01:16:39Z",
+      "side": 1,
+      "message": "comment that Android is excluded intentionally because single discovery event on device.",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 3
+      },
+      "revId": "99a1e0fa3321a25cf2fc6575523b3aa791e0d1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64fe950d_69b28531",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-28T01:16:39Z",
+      "side": 1,
+      "message": "This feels too narrow a test.. it\u0027s just testing the default state of discovery_complete_ and that the setter works correctly.\n\nIdeally we test the default is faulse and then we fake the OS activity that causes our platform specific code to call SetDiscoveryComplete.\n\ne.g. on Windows, we cause OnGetIncludedCharacteristics to be called (indirectly, by simulating what the OS does).  This may take non-trivial work to support in the test framework -- I didn\u0027t see similar tests in a quick search.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "99a1e0fa3321a25cf2fc6575523b3aa791e0d1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
