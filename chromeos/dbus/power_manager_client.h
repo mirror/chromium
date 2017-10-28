@@ -14,11 +14,13 @@
 #include "chromeos/chromeos_export.h"
 #include "chromeos/dbus/dbus_client.h"
 #include "chromeos/dbus/dbus_client_implementation_type.h"
+#include "chromeos/dbus/power_manager/suspend.pb.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
 namespace power_manager {
 class PowerManagementPolicy;
 class PowerSupplyProperties;
+class ScreenIdleState;
 }
 
 namespace chromeos {
@@ -66,6 +68,10 @@ class CHROMEOS_EXPORT PowerManagerClient : public DBusClient {
     // |user_initiated| is true if the action is initiated by the user.
     virtual void KeyboardBrightnessChanged(int level, bool user_initiated) {}
 
+    // Called when screen-related inactivity timeouts are triggered or reset.
+    virtual void ScreenIdleStateChanged(
+        const power_manager::ScreenIdleState& proto) {}
+
     // Called when peripheral device battery status is received.
     // |path| is the sysfs path for the battery of the peripheral device.
     // |name| is the human readble name of the device.
@@ -88,7 +94,8 @@ class CHROMEOS_EXPORT PowerManagerClient : public DBusClient {
     // PowerManagerClient::GetSuspendReadinessCallback() may be called from
     // within SuspendImminent().  The returned callback must be called once
     // the observer is ready for suspend.
-    virtual void SuspendImminent() {}
+    virtual void SuspendImminent(
+        power_manager::SuspendImminent::Reason reason) {}
 
     // Called when a suspend attempt (previously announced via
     // SuspendImminent()) has completed. The system may not have actually
