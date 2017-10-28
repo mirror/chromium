@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "626053aa_c6d28354",
+        "filename": "media/mojo/services/mojo_cdm_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-28T01:22:45Z",
+      "side": 1,
+      "message": "Sorry one more question: how we guarantee that MojoCdmHelper outlives MojoCdmFileIO?",
+      "revId": "290d7e4862d24ebfab5c74c54e86b28a81d37ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
