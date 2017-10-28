@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "038fa356_f2d4a8d1",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-28T01:51:35Z",
+      "side": 1,
+      "message": "No need else",
+      "range": {
+        "startLine": 87,
+        "startChar": 1,
+        "endLine": 87,
+        "endChar": 10
+      },
+      "revId": "61b6b33b6d04a5e49fc402dcf65466ed9a24a7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a96643_7af49e79",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-28T01:51:35Z",
+      "side": 1,
+      "message": "Actually we can\u0027t do that as this will be the address of a local variable.\n\nWe might have to change this function and RetrieveMetadata() to wrap it in a base::Optional\u003cDownloadEntry\u003e instead.\nOther alternative is to pass in a DownloadEntry* as an argument to these functions and populate them.\nThird alternative is to return a DownloadEntry (as in your earlier patch) and have a function DownloadEntry::IsNull() function when guid is empty or something.\n\nI would prefer base::Optional one as it is quite convenient. Example\nhttps://cs.chromium.org/chromium/src/components/download/internal/controller_impl.cc?rcl\u003dfbe91dee2c1d47d691fa84edbf721d8b362800a9\u0026l\u003d1168 and \nhttps://cs.chromium.org/chromium/src/components/download/content/internal/download_driver_impl.cc?rcl\u003dfbe91dee2c1d47d691fa84edbf721d8b362800a9\u0026l\u003d211",
+      "range": {
+        "startLine": 89,
+        "startChar": 11,
+        "endLine": 89,
+        "endChar": 12
+      },
+      "revId": "61b6b33b6d04a5e49fc402dcf65466ed9a24a7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
