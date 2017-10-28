@@ -27,7 +27,7 @@ class CompositingReasonFinderTest : public RenderingTest {
 };
 
 TEST_F(CompositingReasonFinderTest, PromoteOpaqueFixedPosition) {
-  ScopedCompositeFixedPositionForTest composite_fixed_position(true);
+  ScopedCompositeOpaqueFixedPositionForTest composite_fixed_position(true);
 
   SetBodyInnerHTML(
       "<div id='translucent' style='width: 20px; height: 20px; position: "
@@ -115,7 +115,7 @@ TEST_F(CompositingReasonFinderTest, OnlyScrollingStickyPositionPromoted) {
 // TODO(flackr): Allow integer transforms as long as all of the ancestor
 // transforms are also integer.
 TEST_F(CompositingReasonFinderTest, OnlyNonTransformedFixedLayersPromoted) {
-  ScopedCompositeFixedPositionForTest composite_fixed_position(true);
+  ScopedCompositeOpaqueFixedPositionForTest composite_fixed_position(true);
 
   SetBodyInnerHTML(
       "<style>"
@@ -164,7 +164,7 @@ TEST_F(CompositingReasonFinderTest, OnlyNonTransformedFixedLayersPromoted) {
 // Test that opacity applied to the fixed or an ancestor will cause the
 // scrolling contents layer to not be promoted.
 TEST_F(CompositingReasonFinderTest, OnlyOpaqueFixedLayersPromoted) {
-  ScopedCompositeFixedPositionForTest composite_fixed_position(true);
+  ScopedCompositeOpaqueFixedPositionForTest composite_fixed_position(true);
 
   SetBodyInnerHTML(
       "<style>"
@@ -322,7 +322,7 @@ TEST_F(CompositingReasonFinderTest, RequiresCompositingForEffectAnimation) {
 }
 
 TEST_F(CompositingReasonFinderTest, CompositeNestedSticky) {
-  ScopedCompositeFixedPositionForTest composite_fixed_position(true);
+  ScopedCompositeOpaqueFixedPositionForTest composite_fixed_position(true);
 
   SetBodyInnerHTML(
       "<style>.scroller { overflow: scroll; height: 200px; width: 100px; }"
