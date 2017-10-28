@@ -266,10 +266,24 @@ NGLayoutInputNode NGBlockNode::FirstChild() {
 }
 
 bool NGBlockNode::CanUseNewLayout() const {
-  if (!box_->IsLayoutNGMixin())
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled() || !box_->IsLayoutNGMixin())
     return false;
 
-  return RuntimeEnabledFeatures::LayoutNGEnabled();
+  const ComputedStyle& style = box_->StyleRef();
+  if (style.UserModify() != EUserModify::kReadOnly)
+    return false;
+
+  // TODO(kojii): Implement checking inline children because 'user-modify' can
+  // be applied to inline, and there are other properties NG cannot support at
+  // this phase.
+
+  return true;
+}
+
+// static
+bool NGBlockNode::CanUseNewLayout(const LayoutBox* box) {
+  NGBlockNode node(const_cast<LayoutBox*>(box));
+  return node.CanUseNewLayout();
 }
 
 String NGBlockNode::ToString() const {

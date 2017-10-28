@@ -130,6 +130,8 @@ const NGOffsetMapping* NGOffsetMapping::GetFor(
     return nullptr;
   DCHECK(block_flow->ChildrenInline());
   NGBlockNode block_node = NGBlockNode(block_flow);
+  if (!block_node.CanUseNewLayout())
+    return nullptr;
   NGLayoutInputNode node = block_node.FirstChild();
   if (node && node.IsInline())
     return ToNGInlineNode(node).ComputeOffsetMappingIfNeeded();
