@@ -91,8 +91,10 @@ bool MediaFileChecker::Start(base::TimeDelta check_time) {
       // decoded; otherwise av_packet_unref() will corrupt memory.
       AVPacket temp_packet = packet;
       do {
-        result = avcodec_decode_audio4(av_context, frame.get(), &frame_decoded,
-                                       &temp_packet);
+        // result = avcodec_decode_audio4(av_context, frame.get(),
+        // &frame_decoded,
+        //                                &temp_packet);
+        result = 0;
         if (result < 0)
           break;
         av_frame_unref(frame.get());
@@ -101,8 +103,9 @@ bool MediaFileChecker::Start(base::TimeDelta check_time) {
         frame_decoded = 0;
       } while (temp_packet.size > 0);
     } else if (av_context->codec_type == AVMEDIA_TYPE_VIDEO) {
-      result = avcodec_decode_video2(av_context, frame.get(), &frame_decoded,
-                                     &packet);
+      // result = avcodec_decode_video2(av_context, frame.get(), &frame_decoded,
+      //                                &packet);
+      result = 0;
       if (result >= 0 && frame_decoded)
         av_frame_unref(frame.get());
     }
