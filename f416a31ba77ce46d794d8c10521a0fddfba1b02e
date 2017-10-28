@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcd5536d_96f307ce",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-10-28T00:35:51Z",
+      "side": 1,
+      "message": "Hi, Oshima, I found after my change the logic here is kind of complicate and hard to understand. How about changed it to determine the distance from current resizing position to the left or right side of the screen. If one of the two distances is smaller than one third of the longer side of work area, or smaller than the corresponding snapped window minimum size. We should return not NONE SnapPosition for the black scrim. Please check the latest patch set. Thanks.",
+      "parentUuid": "343b3e9f_724223db",
+      "revId": "f416a31ba77ce46d794d8c10521a0fddfba1b02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d435eb53_e55fa264",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "f416a31ba77ce46d794d8c10521a0fddfba1b02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705611db_c683c203",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-10-28T00:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d435eb53_e55fa264",
+      "revId": "f416a31ba77ce46d794d8c10521a0fddfba1b02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
