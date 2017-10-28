@@ -97,6 +97,7 @@
 #include "chrome/browser/ssl/ssl_cert_reporter.h"
 #include "chrome/browser/ssl/ssl_client_certificate_selector.h"
 #include "chrome/browser/ssl/ssl_error_handler.h"
+#include "chrome/browser/ssl/ssl_error_navigation_throttle.h"
 #include "chrome/browser/subresource_filter/chrome_subresource_filter_client.h"
 #include "chrome/browser/sync_file_system/local/sync_file_system_backend.h"
 #include "chrome/browser/tab_contents/tab_util.h"
@@ -185,7 +186,6 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/browser_url_handler.h"
 #include "content/public/browser/browsing_data_remover.h"
-#include "content/public/browser/certificate_request_result_type.h"
 #include "content/public/browser/child_process_data.h"
 #include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/client_certificate_delegate.h"
@@ -2275,7 +2275,10 @@ void ChromeContentBrowserClient::AllowCertificateError(
 
   SSLErrorHandler::HandleSSLError(
       web_contents, cert_error, ssl_info, request_url, strict_enforcement,
-      expired_previous_decision, std::move(cert_reporter), callback);
+      expired_previous_decision, std::move(cert_reporter), callback,
+      base::Callback<void(
+          std::unique_ptr<
+              security_interstitials::SecurityInterstitialPage>)>());
 }
 
 void ChromeContentBrowserClient::SelectClientCertificate(
@@ -3389,6 +3392,17 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
       TabUnderNavigationThrottle::MaybeCreate(handle);
   if (tab_under_throttle)
     throttles.push_back(std::move(tab_under_throttle));
+
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kCommittedInterstitials)) {
+    CertificateReportingService* cert_reporting_service =
+        CertificateReportingServiceFactory::GetForBrowserContext(
+            web_contents->GetBrowserContext());
+    std::unique_ptr<CertificateReportingServiceCertReporter> cert_reporter(
+        new CertificateReportingServiceCertReporter(cert_reporting_service));
+    throttles.push_back(base::MakeUnique<SSLErrorNavigationThrottle>(
+        handle, std::move(cert_reporter)));
+  }
 
   return throttles;
 }
