@@ -52,6 +52,24 @@
       "revId": "290d7e4862d24ebfab5c74c54e86b28a81d37ce2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6027ab6_f90733e1",
+        "filename": "media/mojo/services/mojo_cdm_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-28T03:29:08Z",
+      "side": 1,
+      "message": "CdmAdapter owns both the cdm::CDM (wrapped in CdmWrapper) instance and MojoCdmHelper that implements CdmAuxiliaryHelper:\n1. std::unique_ptr\u003cCdmWrapper\u003e cdm_;\n2. std::unique_ptr\u003cCdmAuxiliaryHelper\u003e helper_;\nThat said, we should revert the declaration order so |cdm_| is destroyed before |helper_|.\n\nCdmFileAdapter is only used in clear_key_persistent_session_cdm.cc which is test-only. It has nothing to do with this CL.\n\nFor CdmAdapter::CreateFileIO(), the returned cdm::FileIO* is owned by the cdm::CDM instance wrapped inside CdmWrapper. The cdm::CDM instance should call cdm::FileIO::Close(), which will destroy the object. See MojoCdmFileIO::Close() in this CL. See the interface here: https://cs.chromium.org/chromium/src/media/cdm/api/content_decryption_module.h?rcl\u003dea5df8e78fbd0a4c24cc3a1f3faefefcd1b45237\u0026l\u003d466\nThe reason for this is that Chrome and the CDM are built on different bots, which might link to different libraries. Thus we cannot allocate the object in Chrome, but destruct it in the CDM.\n\nThat being said, I was thinking about a model where CdmAdapter holds a std::unique_ptr\u003ccdm::FileIO\u003e, and let MojoCdmFileIO::Close() calls back to CdmAdapter to release that reference. That way, even if the cdm::CDM forgot to call Close(), we still will not leak memory. But that belongs to a separate CL.",
+      "parentUuid": "9990d723_e1812218",
+      "revId": "290d7e4862d24ebfab5c74c54e86b28a81d37ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
