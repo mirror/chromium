@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b802f01_b596136c",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-28T00:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57074394_f04f405e",
+      "revId": "083f1c4a403ace012e6449bd51d96e3e02d8fa5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ed35b25_63aa0b28",
         "filename": "components/crash/content/browser/crash_dump_manager_android_unittest.cc",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e9a8f4f0_fcf327b6",
+        "filename": "components/crash/content/browser/crash_dump_manager_android_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-28T00:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ed35b25_63aa0b28",
+      "revId": "083f1c4a403ace012e6449bd51d96e3e02d8fa5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa2ac28c_11a3436f",
         "filename": "components/crash/content/browser/crash_dump_manager_android_unittest.cc",
         "patchSetId": 17
@@ -50,6 +86,24 @@
       "revId": "083f1c4a403ace012e6449bd51d96e3e02d8fa5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847119ab_cb1f7379",
+        "filename": "components/crash/content/browser/crash_dump_manager_android_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-28T00:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa2ac28c_11a3436f",
+      "revId": "083f1c4a403ace012e6449bd51d96e3e02d8fa5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
