@@ -402,6 +402,24 @@
     },
     {
       "key": {
+        "uuid": "14a9fc1a_94393550",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-28T00:38:21Z",
+      "side": 1,
+      "message": "dcheng: We used to use connection error handler, but that requires us to store the |callback| locally, and provide a different callback to the mojo interface call. Then if you have multiple callers, you need a queue of pending callbacks. Then if you have multiple methods, you need multiple queues. And things get really ugly.\n\nOn connection error, I think some mojo code will simply drop pending callbacks, which I think should only happen on the thread/sequence the interface is bound on.",
+      "parentUuid": "4d1d2968_c08c9f34",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f2450e5_8a6d256f",
         "filename": "media/mojo/services/mojo_cdm_helper.cc",
         "patchSetId": 16
