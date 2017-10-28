@@ -26,6 +26,8 @@ class CORE_TEMPLATE_CLASS_EXPORT LayoutNGMixin : public Base {
   explicit LayoutNGMixin(Element* element) : Base(element) {}
   ~LayoutNGMixin() override;
 
+  bool CreatesNewFormattingContext() const override;
+
   NGInlineNodeData* GetNGInlineNodeData() const override;
   void ResetNGInlineNodeData() override;
   bool HasNGInlineNodeData() const override {

@@ -25,6 +25,20 @@ bool LayoutNGMixin<Base>::IsOfType(LayoutObject::LayoutObjectType type) const {
 }
 
 template <typename Base>
+bool LayoutNGMixin<Base>::CreatesNewFormattingContext() const {
+  DCHECK(RuntimeEnabledFeatures::LayoutNGEnabled());
+
+  if (Base::CreatesNewFormattingContext())
+    return true;
+
+  NGBlockNode node(const_cast<LayoutNGMixin<Base>*>(this));
+  if (!node.CanUseNewLayout())
+    return true;
+
+  return false;
+}
+
+template <typename Base>
 NGInlineNodeData* LayoutNGMixin<Base>::GetNGInlineNodeData() const {
   DCHECK(ng_inline_node_data_);
   return ng_inline_node_data_.get();

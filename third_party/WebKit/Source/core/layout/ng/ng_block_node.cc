@@ -266,10 +266,14 @@ NGLayoutInputNode NGBlockNode::FirstChild() {
 }
 
 bool NGBlockNode::CanUseNewLayout() const {
-  if (!box_->IsLayoutNGMixin())
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled() || !box_->IsLayoutNGMixin())
     return false;
 
-  return RuntimeEnabledFeatures::LayoutNGEnabled();
+  const ComputedStyle& style = box_->StyleRef();
+  if (style.UserModify() != EUserModify::kReadOnly)
+    return false;
+
+  return true;
 }
 
 String NGBlockNode::ToString() const {
