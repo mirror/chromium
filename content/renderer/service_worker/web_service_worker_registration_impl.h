@@ -136,6 +136,13 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
       blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info);
   ~WebServiceWorkerRegistrationImpl() override;
 
+  // Implements blink::mojom::ServiceWorkerRegistrationObject.
+  void SetVersionAttributes(
+      int changed_mask,
+      blink::mojom::ServiceWorkerObjectInfoPtr installing,
+      blink::mojom::ServiceWorkerObjectInfoPtr waiting,
+      blink::mojom::ServiceWorkerObjectInfoPtr active) override;
+
   // RefCounted traits implementation, rather than delete |impl| directly, calls
   // |impl->DetachAndMaybeDestroy()| to notify that the last reference to it has
   // gone away.
