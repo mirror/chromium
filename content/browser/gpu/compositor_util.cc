@@ -63,6 +63,7 @@ const GpuFeatureData GetGpuFeatureData(size_t index, bool* eof) {
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
   GpuDataManagerImpl* manager = GpuDataManagerImpl::GetInstance();
+  DCHECK(manager->IsGpuFeatureInfoAvailable());
 
   const GpuFeatureData kGpuFeatureData[] = {
     {"2d_canvas",
