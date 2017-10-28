@@ -1820,6 +1820,24 @@
             ]
         }
     ],
+    "MojoCdm": [
+        {
+            "platforms": [
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "MojoCdm"
+                    ]
+                }
+            ]
+        }
+    ],
     "MojoChannel": [
         {
             "platforms": [
