@@ -114,6 +114,29 @@
       "revId": "d179fea1a1ab5aa15b7031dccc390c3b4efacb44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9844eb_9cabcc11",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-28T14:54:10Z",
+      "side": 1,
+      "message": "s/succeeded/Succeeded/ to please the bots :-)",
+      "range": {
+        "startLine": 19,
+        "startChar": 41,
+        "endLine": 19,
+        "endChar": 50
+      },
+      "revId": "d179fea1a1ab5aa15b7031dccc390c3b4efacb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
