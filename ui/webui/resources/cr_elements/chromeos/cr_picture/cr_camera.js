@@ -97,17 +97,26 @@ Polymer({
 
     /** Start capturing frames at an interval. */
     var capturedFrames = [];
-    this.$.userImageStreamCrop.classList.add('capture');
     var interval = setInterval(() => {
+      this.$.userImageStreamCrop.classList.add('capture');
+
+      /** Restart flash animation. */
+      this.$.userImageStreamCrop.classList.remove('flash');
+      this.$.userImageStreamCrop.offsetHeight;  // Trigger reflow.
+      this.$.userImageStreamCrop.classList.add('flash');
+
       capturedFrames.push(this.captureFrame_(this.$.cameraVideo, frames.pop()));
 
       /** Stop capturing frames when all allocated frames have been consumed. */
       if (!frames.length) {
-        this.$.userImageStreamCrop.classList.remove('capture');
         clearInterval(interval);
-        this.fire(
-            'photo-taken',
-            {photoDataUrl: this.convertFramesToPng_(capturedFrames)});
+        /** Short delay to allow flash animation to start running. */
+        setTimeout(() => {
+          this.fire(
+              'photo-taken',
+              {photoDataUrl: this.convertFramesToPng_(capturedFrames)});
+          this.$.userImageStreamCrop.classList.remove('capture');
+        }, 1);
       }
     }, CAPTURE_INTERVAL_MS);
   },

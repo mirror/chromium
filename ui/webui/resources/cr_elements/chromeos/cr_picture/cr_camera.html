@@ -38,19 +38,18 @@
         width: 100%;
       }
 
-      @-webkit-keyframes pulse {
+      #userImageStreamCrop.capture::after {
+        -webkit-mask-image: none;
+      }
+
+      @-webkit-keyframes flash {
         0% { opacity: 0; }
-        50% { opacity: 1; }
+        33% { opacity: 0.65; }
         100% { opacity: 0; }
       }
 
-      #userImageStreamCrop.capture::after {
-        -webkit-mask-image: none;
-        animation: pulse linear 100ms normal forwards;
-      }
-
-      :host([videomode]) #userImageStreamCrop.capture::after {
-        animation: pulse linear 50ms 20;
+      #userImageStreamCrop.flash::after {
+        animation: 100ms ease-out flash;
       }
 
       paper-spinner {
