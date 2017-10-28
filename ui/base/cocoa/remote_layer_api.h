@@ -37,6 +37,7 @@ typedef uint32_t CAContextID;
                        options:(NSDictionary*)optionsDict;
 @property(readonly) CAContextID contextId;
 @property(retain) CALayer *layer;
+@property CGColorSpaceRef colorSpace;
 @end
 
 // The CALayerHost is created in the process that will display the content
