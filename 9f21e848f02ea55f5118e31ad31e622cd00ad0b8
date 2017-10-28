@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab1929d6_cfcbb605",
+        "filename": "content/public/test/test_frame_sink_manager_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-28T14:02:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is waiting for the right thing. It seems like you\u0027re waiting for the root\u0027s surface not the OOPIF\u0027s.",
+      "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b177280_baa1c882",
+        "filename": "content/public/test/test_frame_sink_manager_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-28T14:02:40Z",
+      "side": 1,
+      "message": "Every RenderWidgetHostView has a GetFrameSinkId(). You can always use that, even for OOPIFs. The plumbing isn\u0027t quite right for Mus but maybe we can fix that.",
+      "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e414d3_017dd5ab",
+        "filename": "content/public/test/test_frame_sink_manager_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-28T14:02:40Z",
+      "side": 1,
+      "message": "This isn\u0027t right. OOPIFs don\u0027t have a backing aura::Window",
+      "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aec2bab_c454a9ae",
+        "filename": "content/public/test/test_frame_sink_manager_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-28T14:02:40Z",
+      "side": 1,
+      "message": "This is icky. Maybe instead track the RunLoop and the quit condition and quit when you a given frame_sink_id is available?",
+      "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a229624_a3126444",
+        "filename": "content/public/test/test_frame_sink_manager_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-28T14:02:40Z",
+      "side": 1,
+      "message": "make_pair?",
+      "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8fc12c_2871c824",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-28T14:02:40Z",
+      "side": 1,
+      "message": "This has become VizMain so I think you need to rebase.",
+      "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
