@@ -361,20 +361,19 @@ const char kUsersWallpaperInfo[] = "user_wallpaper_info";
 // Enqueued but not started request might be updated by subsequent load
 // request. Therefore it's created empty, and updated being enqueued.
 //
-// PendingWallpaper is owned by WallpaperManager, but reference to this object
-// is passed to other threads by PostTask() calls, therefore it is
-// RefCountedThreadSafe.
-class WallpaperManager::PendingWallpaper
-    : public base::RefCountedThreadSafe<PendingWallpaper> {
+// PendingWallpaper is owned by WallpaperManager.
+class WallpaperManager::PendingWallpaper {
  public:
-  PendingWallpaper(const base::TimeDelta delay)
-      : on_finish_(new MovableOnDestroyCallback(
-            base::Bind(&WallpaperManager::PendingWallpaper::OnWallpaperSet,
-                       this))) {
-    timer.Start(
-        FROM_HERE, delay,
-        base::Bind(&WallpaperManager::PendingWallpaper::ProcessRequest, this));
+  PendingWallpaper(const base::TimeDelta delay) : weak_factory_(this) {
+    on_finish_ = std::make_unique<MovableOnDestroyCallback>(
+        base::Bind(&WallpaperManager::PendingWallpaper::OnWallpaperSet,
+                   weak_factory_.GetWeakPtr()));
+    timer.Start(FROM_HERE, delay,
+                base::Bind(&WallpaperManager::PendingWallpaper::ProcessRequest,
+                           weak_factory_.GetWeakPtr()));
   }
+
+  ~PendingWallpaper() { weak_factory_.InvalidateWeakPtrs(); }
 
   // There are four cases:
   // 1) gfx::ImageSkia is found in cache.
@@ -408,10 +407,6 @@ class WallpaperManager::PendingWallpaper
   }
 
  private:
-  friend class base::RefCountedThreadSafe<PendingWallpaper>;
-
-  ~PendingWallpaper() {}
-
   // All methods use SetMode() to set object to new state.
   void SetMode(const AccountId& account_id,
                const gfx::ImageSkia& image,
@@ -470,10 +465,8 @@ class WallpaperManager::PendingWallpaper
 
   // This method is called by callback, when load request is finished.
   void OnWallpaperSet() {
-    DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
     // The only known case for this check to fail is global destruction during
-    // wallpaper load. It should never happen.
+    // wallpaper load.
     if (!BrowserThread::CurrentlyOn(BrowserThread::UI))
       return;
 
@@ -509,6 +502,8 @@ class WallpaperManager::PendingWallpaper
 
   // Load start time to calculate duration.
   base::Time started_load_at_;
+
+  base::WeakPtrFactory<PendingWallpaper> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PendingWallpaper);
 };
@@ -620,6 +615,9 @@ WallpaperManager::~WallpaperManager() {
   device_wallpaper_image_subscription_.reset();
   user_manager::UserManager::Get()->RemoveObserver(this);
   weak_factory_.InvalidateWeakPtrs();
+  // In case there's wallpaper load request being processed.
+  for (size_t i = 0; i < loading_.size(); ++i)
+    delete loading_[i];
 }
 
 // static
@@ -1996,6 +1994,7 @@ base::TimeDelta WallpaperManager::GetWallpaperLoadDelay() const {
   if (last_load_times_.size() == 0) {
     delay = base::TimeDelta::FromMilliseconds(kLoadDefaultDelayMs);
   } else {
+    // Calculate the average loading time.
     delay = std::accumulate(last_load_times_.begin(), last_load_times_.end(),
                             base::TimeDelta(), std::plus<base::TimeDelta>()) /
             last_load_times_.size();
@@ -2005,16 +2004,13 @@ base::TimeDelta WallpaperManager::GetWallpaperLoadDelay() const {
     else if (delay > base::TimeDelta::FromMilliseconds(kLoadMaxDelayMs))
       delay = base::TimeDelta::FromMilliseconds(kLoadMaxDelayMs);
 
-    // If we had ever loaded wallpaper, adjust wait delay by time since last
-    // load.
-    if (!last_load_finished_at_.is_null()) {
-      const base::TimeDelta interval =
-          base::Time::Now() - last_load_finished_at_;
-      if (interval > delay)
-        delay = base::TimeDelta::FromMilliseconds(0);
-      else if (interval > base::TimeDelta::FromMilliseconds(0))
-        delay -= interval;
-    }
+    // Reduce the delay by the time passed after the last wallpaper load.
+    DCHECK(!last_load_finished_at_.is_null());
+    const base::TimeDelta interval = base::Time::Now() - last_load_finished_at_;
+    if (interval > delay)
+      delay = base::TimeDelta::FromMilliseconds(0);
+    else
+      delay -= interval;
   }
   return delay;
 }
@@ -2220,18 +2216,18 @@ WallpaperManager::PendingWallpaper* WallpaperManager::GetPendingWallpaper() {
   if (!pending_inactive_) {
     loading_.push_back(
         new WallpaperManager::PendingWallpaper(GetWallpaperLoadDelay()));
-    pending_inactive_ = loading_.back().get();
+    pending_inactive_ = loading_.back();
   }
   return pending_inactive_;
 }
 
 void WallpaperManager::RemovePendingWallpaperFromList(
-    PendingWallpaper* pending) {
+    PendingWallpaper* finished_loading_request) {
   DCHECK(loading_.size() > 0);
-  for (WallpaperManager::PendingList::iterator i = loading_.begin();
-       i != loading_.end(); ++i) {
-    if (i->get() == pending) {
-      loading_.erase(i);
+  for (size_t i = 0; i < loading_.size(); ++i) {
+    if (loading_[i] == finished_loading_request) {
+      loading_.erase(loading_.begin() + i);
+      delete loading_[i];
       break;
     }
   }

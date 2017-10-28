@@ -597,7 +597,8 @@ class WallpaperManager : public ash::mojom::WallpaperPicker,
   PendingWallpaper* GetPendingWallpaper();
 
   // This is called by PendingWallpaper when load is finished.
-  void RemovePendingWallpaperFromList(PendingWallpaper* pending);
+  void RemovePendingWallpaperFromList(
+      PendingWallpaper* finished_loading_request);
 
   // Set wallpaper to |user_image| controlled by policy.  (Takes a UserImage
   // because that's the callback interface provided by UserImageLoader.)
@@ -703,7 +704,7 @@ class WallpaperManager : public ash::mojom::WallpaperPicker,
   // Owns PendingWallpaper.
   // PendingWallpaper deletes itself from here on load complete.
   // All pending will be finally deleted on destroy.
-  typedef std::vector<scoped_refptr<PendingWallpaper>> PendingList;
+  typedef std::vector<PendingWallpaper*> PendingList;
   PendingList loading_;
 
   content::NotificationRegistrar registrar_;
