@@ -199,7 +199,9 @@ QuadList::Iterator DCLayerOverlayProcessor::ProcessRenderPassDrawQuad(
         punch_through.opacity * original_shared_quad_state->opacity;
     new_shared_quad_state->SetAll(new_transform, punch_through.rect,
                                   punch_through.rect, punch_through.rect, false,
-                                  true, new_opacity, SkBlendMode::kDstOut, 0);
+                                  true,
+                                  original_shared_quad_state->color_scales,
+                                  new_opacity, SkBlendMode::kDstOut, 0);
     auto* solid_quad = static_cast<SolidColorDrawQuad*>(*it);
     solid_quad->SetAll(new_shared_quad_state, punch_through.rect,
                        punch_through.rect, false, 0xff000000, true);
