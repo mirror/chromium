@@ -470,6 +470,7 @@ class WallpaperManager::PendingWallpaper
 
   // This method is called by callback, when load request is finished.
   void OnWallpaperSet() {
+    LOG(ERROR) << "reach here";
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
     // The only known case for this check to fail is global destruction during
