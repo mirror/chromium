@@ -83,6 +83,8 @@ class BrowserViewLayout::WebContentsModalDialogHostViews
     return gfx::Point(middle_x - size.width() / 2, top);
   }
 
+  bool ShouldActivateDialogs() const override { return false; }
+
   gfx::Size GetMaximumDialogSize() override {
     views::View* view = browser_view_layout_->contents_container_;
     gfx::Rect content_area = view->ConvertRectToWidget(view->GetLocalBounds());
