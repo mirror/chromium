@@ -401,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "98c34ce6_06e71dd6",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-28T18:30:23Z",
+      "side": 1,
+      "message": "Why do you need the AddCount function?  I believe that what you wrote is equivalent to\n\nUMA_HISTOGRAM_ENUMERATION(\"Memory.SwapThrashingLevelChanges\", level_change, UMA_SWAP_THRASHING_LEVEL_CHANGE_COUNT);",
+      "parentUuid": "68361395_eb4b8bbd",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 61
+      },
+      "revId": "7005d0d520cc797d2fae0202e7bdc0b9a800b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0a4faf5_a191c05f",
         "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
         "patchSetId": 10
