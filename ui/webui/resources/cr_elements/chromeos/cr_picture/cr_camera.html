@@ -38,19 +38,22 @@
         width: 100%;
       }
 
-      @-webkit-keyframes pulse {
-        0% { opacity: 0; }
-        50% { opacity: 1; }
+      #userImageStreamCrop.capture::after {
+        -webkit-mask-image: none;
+        opacity: 0;
+      }
+
+      @-webkit-keyframes flash {
+        0% { opacity: 0.67; }
         100% { opacity: 0; }
       }
 
-      #userImageStreamCrop.capture::after {
-        -webkit-mask-image: none;
-        animation: pulse linear 100ms normal forwards;
+      #userImageStreamCrop.flash::after {
+        animation: flash 100ms ease-out;
       }
 
-      :host([videomode]) #userImageStreamCrop.capture::after {
-        animation: pulse linear 50ms 20;
+      :host([videomode]) #userImageStreamCrop.flash::after {
+        animation: flash 100ms ease-out 0ms 10;
       }
 
       paper-spinner {

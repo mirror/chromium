@@ -99,15 +99,19 @@ Polymer({
     var capturedFrames = [];
     this.$.userImageStreamCrop.classList.add('capture');
     var interval = setInterval(() => {
+      /** Start flash animation. */
+      this.$.userImageStreamCrop.classList.add('flash');
+
       capturedFrames.push(this.captureFrame_(this.$.cameraVideo, frames.pop()));
 
       /** Stop capturing frames when all allocated frames have been consumed. */
       if (!frames.length) {
-        this.$.userImageStreamCrop.classList.remove('capture');
         clearInterval(interval);
         this.fire(
             'photo-taken',
             {photoDataUrl: this.convertFramesToPng_(capturedFrames)});
+        this.$.userImageStreamCrop.classList.remove('capture');
+        this.$.userImageStreamCrop.classList.remove('flash');
       }
     }, CAPTURE_INTERVAL_MS);
   },
