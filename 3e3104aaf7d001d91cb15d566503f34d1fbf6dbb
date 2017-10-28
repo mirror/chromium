@@ -54,6 +54,47 @@
     },
     {
       "key": {
+        "uuid": "520b422f_ee039095",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-28T03:30:04Z",
+      "side": 1,
+      "message": "In this case, I think it\u0027s safe, but there would be a danger of this causing a reference cycle if we change how InterfaceRegistry is kept live. It\u0027s probably better not to bind with a strong reference, generally speaking.",
+      "parentUuid": "f2bb6e52_babeeff5",
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff72f264_a7fca7a9",
+        "filename": "third_party/WebKit/Source/core/exported/DevToolsFrontendImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-28T03:30:04Z",
+      "side": 1,
+      "message": "Please use WrapUnique",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 68
+      },
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e994d267_1742c63b",
         "filename": "third_party/WebKit/Source/core/exported/DevToolsFrontendImpl.cpp",
         "patchSetId": 2
@@ -65,6 +106,29 @@
       "writtenOn": "2017-10-27T11:39:57Z",
       "side": 1,
       "message": "Once you make DevToolsFrontendImpl GarbageCollected, accessing devtools_host_ in a destructor is not safe. You need to use a pre-finalizer or find a place to explicitly call devtools_host_-\u003eDisconnectClient().",
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a64ff134_61d1b042",
+        "filename": "third_party/WebKit/Source/core/exported/DevToolsFrontendImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-28T03:30:04Z",
+      "side": 1,
+      "message": "Nit: nullptr",
+      "range": {
+        "startLine": 131,
+        "startChar": 31,
+        "endLine": 131,
+        "endChar": 70
+      },
       "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
