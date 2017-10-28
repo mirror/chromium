@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baf5c920_cd304527",
+        "filename": "net/test/embedded_test_server/default_handlers.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-28T14:01:58Z",
+      "side": 1,
+      "message": "Move this into the same statement with everything else - as is, it\u0027s harder to read.",
+      "range": {
+        "startLine": 173,
+        "startChar": 13,
+        "endLine": 173,
+        "endChar": 17
+      },
+      "revId": "3dce7d26873c514ad97e28c2d5b40b992a5de643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
