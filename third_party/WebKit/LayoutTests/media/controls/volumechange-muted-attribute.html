@@ -6,8 +6,6 @@
 <video controls></video>
 <script>
   var audio = document.querySelector('audio');
-  // TODO(mlamouri): per spec, this should do nothing but Blink will mute the
-  // media in this case, see https://crbug.com/350303
   audio.setAttribute('muted', true);
   audio.src = findMediaFile('audio', '../content/test');
 
