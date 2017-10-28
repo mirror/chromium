@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f4ac36bf_5f4ffe33",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-28T00:29:55Z",
+      "side": 1,
+      "message": "Well it makes a little bit of difference: we make assertions on the browser-side about the state that the object is in--and if we returned an object even on initialization failure, then it would be trivial to violate these dchecks, right?",
+      "parentUuid": "d615ba02_282989f6",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d2740ba_b06f0bac",
         "filename": "content/browser/media/cdm_storage_impl.cc",
         "patchSetId": 16
@@ -213,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "feca5364_ae0776a9",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-28T00:29:55Z",
+      "side": 1,
+      "message": "OK. Please do add a TODO to track this though.",
+      "parentUuid": "dbecf96f_f8dbfb61",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5431e568_11501f4d",
         "filename": "media/mojo/services/mojo_cdm_file_io.cc",
         "patchSetId": 16
@@ -242,6 +278,24 @@
       "side": 1,
       "message": "This is a CDM interface restriction. On the browser side we allow any valid file name (well whatever the file system allows).",
       "parentUuid": "5431e568_11501f4d",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fb66014_e99fc993",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-28T00:29:55Z",
+      "side": 1,
+      "message": "If the sending side can pass any basename it wants, is it possible for it to somehow access another origin\u0027s stored data?",
+      "parentUuid": "5604b1a4_07ce3dad",
       "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -330,6 +384,24 @@
     },
     {
       "key": {
+        "uuid": "4d1d2968_c08c9f34",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-28T00:29:55Z",
+      "side": 1,
+      "message": "OK, I\u0027ll think about this one some more (I was asking because we\u0027re actively trying to figure out what to do with ScopedCallbackRunner).",
+      "parentUuid": "6e01aded_42a961f6",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f2450e5_8a6d256f",
         "filename": "media/mojo/services/mojo_cdm_helper.cc",
         "patchSetId": 16
@@ -359,6 +431,24 @@
       "side": 1,
       "message": "This was done so the calls on the client don\u0027t just hang waiting for a response (as they get an error immediately). I guess if everything is going away it doesn\u0027t make any difference. However, what happens if CdmStorage was never registered (or registered incorrectly)?",
       "parentUuid": "9f2450e5_8a6d256f",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faaef5ca_e7978dcf",
+        "filename": "media/mojo/services/mojo_cdm_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-28T00:29:55Z",
+      "side": 1,
+      "message": "The client will get an error anyway if nothing in the receiver takes ownership, so the message pipe will be closed. The same thing will happen if the interface was never registered. In general, I think it\u0027s probably not necessary (or desirable) to check.",
+      "parentUuid": "fbd847a1_14418528",
       "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
