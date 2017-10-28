@@ -262,6 +262,9 @@ class CCSerializationPerfTest : public testing::Test {
     gfx::RectF arbitrary_rectf1(4.2f, -922.1f, 15.6f, 29.5f);
     gfx::PointF arbitrary_pointf1(31.4f, 15.9f);
     gfx::PointF arbitrary_pointf2(26.5f, -35.8f);
+    gfx::Vector3dF arbitrary_vector1(1.f, 0.7f, 1.f);
+    gfx::Vector3dF arbitrary_vector2(1.f, 0.3f, 0.2f);
+    gfx::Vector3dF arbitrary_vector3(0.5f, 0.2f, 0.9f);
     float arbitrary_float1 = 0.7f;
     float arbitrary_float2 = 0.3f;
     float arbitrary_float3 = 0.9f;
@@ -309,7 +312,7 @@ class CCSerializationPerfTest : public testing::Test {
           pass_in->CreateAndAppendSharedQuadState();
       shared_state1_in->SetAll(
           arbitrary_matrix1, arbitrary_rect1, arbitrary_rect1, arbitrary_rect2,
-          arbitrary_bool1, arbitrary_bool1, arbitrary_float1,
+          arbitrary_bool1, arbitrary_bool1, arbitrary_vector1, arbitrary_float1,
           arbitrary_blend_mode1, arbitrary_context_id1);
 
       auto* texture_in =
@@ -355,7 +358,7 @@ class CCSerializationPerfTest : public testing::Test {
           pass_in->CreateAndAppendSharedQuadState();
       shared_state2_in->SetAll(
           arbitrary_matrix2, arbitrary_rect2, arbitrary_rect2, arbitrary_rect3,
-          arbitrary_bool1, arbitrary_bool1, arbitrary_float2,
+          arbitrary_bool1, arbitrary_bool1, arbitrary_vector2, arbitrary_float2,
           arbitrary_blend_mode2, arbitrary_context_id2);
       for (uint32_t j = 0; j < 6; ++j) {
         auto* tile_in = pass_in->CreateAndAppendDrawQuad<viz::TileDrawQuad>();
@@ -372,7 +375,7 @@ class CCSerializationPerfTest : public testing::Test {
           pass_in->CreateAndAppendSharedQuadState();
       shared_state3_in->SetAll(
           arbitrary_matrix1, arbitrary_rect3, arbitrary_rect3, arbitrary_rect1,
-          arbitrary_bool1, arbitrary_bool1, arbitrary_float3,
+          arbitrary_bool1, arbitrary_bool1, arbitrary_vector3, arbitrary_float3,
           arbitrary_blend_mode3, arbitrary_context_id3);
       for (uint32_t j = 0; j < 5; ++j) {
         auto* solidcolor_in =
