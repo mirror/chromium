@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "219c68d8_895226d4",
+        "filename": "ios/web/interstitials/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-28T02:03:11Z",
+      "side": 1,
+      "message": "Sylvain, do you know why I\u0027m getting the following error despite using allow_circular_includes_from?\n\nERROR Dependency cycle:\n  //ios/web/web_state:web_state -\u003e\n  //ios/web/interstitials:interstitials -\u003e\n  //ios/web/web_state:web_state",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "b5775d4377682f2ef42b0b36275875ed0409cbe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
