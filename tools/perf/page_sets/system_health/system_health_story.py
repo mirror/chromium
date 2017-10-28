@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import logging
+
 from page_sets.system_health import platforms
 from page_sets.system_health import story_tags
 
@@ -25,6 +27,20 @@ class _SystemHealthSharedState(shared_page_state.SharedPageState):
     if story.TAGS and story_tags.WEBGL in story.TAGS:
       return browser_info.HasWebGLSupport()
     return True
+
+  def DumpStateUponFailure(self, page, results):
+    super(_SystemHealthSharedState, self).DumpStateUponFailure(page, results)
+    if self._browser:
+      logging.info('******************** STACK TRACE *********************')
+      try:
+        minidump_valid, stack_trace_message = self._browser.GetStackTrace()
+        logging.info(stack_trace_message)
+      except Exception: # pylint: disable=broad-except
+        logging.exception('Failed to get stack trace:')
+      logging.info('***************** END OF STACK TRACE ******************')
+    else:
+      logging.warning('Cannot dump stack trace: No browser.')
+
 
 
 class _MetaSystemHealthStory(type):
