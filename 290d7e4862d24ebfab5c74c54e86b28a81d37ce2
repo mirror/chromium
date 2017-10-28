@@ -34,6 +34,24 @@
       "revId": "290d7e4862d24ebfab5c74c54e86b28a81d37ce2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9990d723_e1812218",
+        "filename": "media/mojo/services/mojo_cdm_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-28T02:46:24Z",
+      "side": 1,
+      "message": "Can you help me understand what it means to own the CDM? Is the CDM code we write and control, or is this third party code? https://cs.chromium.org/chromium/src/media/cdm/cdm_adapter.cc?rcl\u003d325b25e0a0c8fc55907b697f75d5d9453b52bc00\u0026l\u003d1067 looks like it passes ownership to https://cs.chromium.org/chromium/src/media/cdm/cdm_file_adapter.cc?rcl\u003d325b25e0a0c8fc55907b697f75d5d9453b52bc00\u0026l\u003d33. I don\u0027t really know where it goes from there, so it\u0027s hard for me to tell that the objects are used correctly. Do these interfaces already have pre-existing requirements around lifetimes?",
+      "parentUuid": "aba44aa8_341a19c7",
+      "revId": "290d7e4862d24ebfab5c74c54e86b28a81d37ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
