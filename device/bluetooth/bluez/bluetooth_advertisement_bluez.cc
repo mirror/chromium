@@ -12,6 +12,7 @@
 #include "base/guid.h"
 #include "base/logging.h"
 #include "base/strings/string_util.h"
+#include "components/device_event_log/device_event_log.h"
 #include "dbus/bus.h"
 #include "device/bluetooth/bluez/bluetooth_adapter_bluez.h"
 #include "device/bluetooth/dbus/bluetooth_le_advertising_manager_client.h"
@@ -70,7 +71,9 @@ namespace bluez {
 BluetoothAdvertisementBlueZ::BluetoothAdvertisementBlueZ(
     std::unique_ptr<device::BluetoothAdvertisement::Data> data,
     scoped_refptr<BluetoothAdapterBlueZ> adapter)
-    : adapter_path_(adapter->object_path()) {
+    : adapter_path_(adapter->object_path()),
+      is_active_(true),
+      weak_ptr_factory_(this) {
   // Generate a new object path - make sure that we strip any -'s from the
   // generated GUID string since object paths can only contain alphanumeric
   // characters and _ characters.
@@ -78,6 +81,8 @@ BluetoothAdvertisementBlueZ::BluetoothAdvertisementBlueZ(
   base::RemoveChars(GuidString, "-", &GuidString);
   dbus::ObjectPath advertisement_object_path =
       dbus::ObjectPath("/org/chromium/bluetooth_advertisement/" + GuidString);
+
+  adapter->AddObserver(this);
 
   DCHECK(bluez::BluezDBusManager::Get());
   provider_ = bluez::BluetoothLEAdvertisementServiceProvider::Create(
@@ -117,13 +122,30 @@ void BluetoothAdvertisementBlueZ::Unregister(
     return;
   }
 
+  // If this advertisement has been deactivated, call success callback.
+  if (!is_active_) {
+    BLUETOOTH_LOG(DEBUG)
+        << "Advertisement is already inactive, unregister succeeds.";
+    OnUnregisterSuccess(success_callback);
+    return;
+  }
+
   DCHECK(bluez::BluezDBusManager::Get());
   bluez::BluezDBusManager::Get()
       ->GetBluetoothLEAdvertisingManagerClient()
       ->UnregisterAdvertisement(
-          adapter_path_, provider_->object_path(), success_callback,
+          adapter_path_, provider_->object_path(),
+          base::Bind(&BluetoothAdvertisementBlueZ::OnUnregisterSuccess,
+                     weak_ptr_factory_.GetWeakPtr(), success_callback),
           base::Bind(&UnregisterErrorCallbackConnector, error_callback));
-  provider_.reset();
+}
+
+void BluetoothAdvertisementBlueZ::AdapterPresentChanged(
+    device::BluetoothAdapter* adapter,
+    bool present) {
+  // If the adapter goes away, mark this advertisement as inactive.
+  if (!present)
+    is_active_ = false;
 }
 
 void BluetoothAdvertisementBlueZ::Released() {
@@ -131,6 +153,12 @@ void BluetoothAdvertisementBlueZ::Released() {
   provider_.reset();
   for (auto& observer : observers_)
     observer.AdvertisementReleased(this);
+}
+
+void BluetoothAdvertisementBlueZ::OnUnregisterSuccess(
+    const SuccessCallback& success_callback) {
+  provider_.reset();
+  success_callback.Run();
 }
 
 }  // namespace bluez
