@@ -748,6 +748,9 @@ void ArcSessionManager::MaybeStartTermsOfServiceNegotiation() {
     terms_of_service_negotiator_ =
         std::make_unique<ArcTermsOfServiceDefaultNegotiator>(
             profile_->GetPrefs(), support_host_.get());
+    // Start the mini-container here to save time starting the container if the
+    // user decides to opt-in.
+    arc_session_runner_->RequestStart(ArcInstanceMode::MINI_INSTANCE);
   }
 
   if (!terms_of_service_negotiator_) {
@@ -770,6 +773,8 @@ void ArcSessionManager::OnTermsOfServiceNegotiated(bool accepted) {
   terms_of_service_negotiator_.reset();
 
   if (!accepted) {
+    // Stop the mini-container
+    RequestDisable();
     // User does not accept the Terms of Service. Disable Google Play Store.
     MaybeUpdateOptInCancelUMA(support_host_.get());
     SetArcPlayStoreEnabledForProfile(profile_, false);
