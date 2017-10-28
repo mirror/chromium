@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd2fe2cd_bfda45b3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3668,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-28T21:44:55Z",
+      "side": 1,
+      "message": "Isn\u0027t there already a method somewhere which does something like this? How else\ndoes paint invalidation work in SPv1 when clip-path changes?",
+      "revId": "862cd737a7cae0d458e8f59992773b9ebf86cb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3ec178_0ccef064",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-28T21:44:55Z",
+      "side": 1,
+      "message": "Why isn\u0027t this already part of the visual rect, which was an input to\nrect?",
+      "revId": "862cd737a7cae0d458e8f59992773b9ebf86cb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
