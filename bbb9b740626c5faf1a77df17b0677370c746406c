@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0b88640e_0c9521b4",
+        "filename": "content/browser/media/cdm_file_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-28T01:17:23Z",
+      "side": 1,
+      "message": "Added a comment for Initialize() indicating that this object should not be used if Initialize() fails.\n\nEven though this is an internal contract with CdmStorageImpl, it could be that this object does get passed back even if Initialize() failed. Changed the DCHECKs in OpenFileForWriting() to fail the request if not met. This will allow writing a new file if the lock on |file_name_| was obtained but the file failed to open, but that is OK as we\u0027re creating a new version that will replace the original. CommitWrite() already verifies that it follows OpenFileForWriting().",
+      "parentUuid": "f4ac36bf_5f4ffe33",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d2740ba_b06f0bac",
         "filename": "content/browser/media/cdm_storage_impl.cc",
         "patchSetId": 16
@@ -249,6 +267,24 @@
     },
     {
       "key": {
+        "uuid": "5aadbc27_e2b15f3f",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-28T01:17:23Z",
+      "side": 1,
+      "message": "Added to cdm_file_impl.cc",
+      "parentUuid": "feca5364_ae0776a9",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5431e568_11501f4d",
         "filename": "media/mojo/services/mojo_cdm_file_io.cc",
         "patchSetId": 16
@@ -296,6 +332,24 @@
       "side": 1,
       "message": "If the sending side can pass any basename it wants, is it possible for it to somehow access another origin\u0027s stored data?",
       "parentUuid": "5604b1a4_07ce3dad",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5dc24ca6_14b8bd63",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-28T01:17:23Z",
+      "side": 1,
+      "message": "Nope. The browser side is the one that has the origin (and uses FrameServiceBase to track the lifetime).",
+      "parentUuid": "4fb66014_e99fc993",
       "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -470,6 +524,24 @@
       "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13cd4d4b_3165cf04",
+        "filename": "media/mojo/services/mojo_cdm_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-28T01:17:23Z",
+      "side": 1,
+      "message": "Removed the check.",
+      "parentUuid": "faaef5ca_e7978dcf",
+      "revId": "bbb9b740626c5faf1a77df17b0677370c746406c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
