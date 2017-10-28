@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22e0e672_9fbfae32",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 4332,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-28T00:48:20Z",
+      "side": 1,
+      "message": "Be specific in the description that this is the label for a checkbox",
+      "revId": "38ed436ab3a2c6cc93782cbc8f24e22fdd7b74d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a55049d_f12c870a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 4341,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-28T00:48:20Z",
+      "side": 1,
+      "message": "\"other extension\" -\u003e \"extension being uninstalled\"",
+      "range": {
+        "startLine": 4341,
+        "startChar": 186,
+        "endLine": 4341,
+        "endChar": 191
+      },
+      "revId": "38ed436ab3a2c6cc93782cbc8f24e22fdd7b74d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e185db_7c4cb0b9",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-28T00:48:20Z",
+      "side": 1,
+      "message": "Add a comment stating that it\u0027s okay if triggering_extension is null and what it means in that case.",
+      "range": {
+        "startLine": 71,
+        "startChar": 35,
+        "endLine": 71,
+        "endChar": 55
+      },
+      "revId": "38ed436ab3a2c6cc93782cbc8f24e22fdd7b74d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6909b0f6_1211da39",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-28T00:48:20Z",
+      "side": 1,
+      "message": "Change this to TEXT because final element in the dialog is a checkbox. I know that checkboxes are a control... but they have padding like text does, so we want that one. At least that means you don\u0027t have to switch this based on whether the checkbox is showing.",
+      "range": {
+        "startLine": 164,
+        "startChar": 69,
+        "endLine": 164,
+        "endChar": 76
+      },
+      "revId": "38ed436ab3a2c6cc93782cbc8f24e22fdd7b74d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46c9ea1_9fa0c363",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-28T00:48:20Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this DCHECK, it\u0027s pretty well understood that NONE won\u0027t be passed into this method.",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 8
+      },
+      "revId": "38ed436ab3a2c6cc93782cbc8f24e22fdd7b74d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae04314_fab9d4bc",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-28T00:48:20Z",
+      "side": 1,
+      "message": "Remove the old string if it\u0027s unused",
+      "range": {
+        "startLine": 231,
+        "startChar": 36,
+        "endLine": 231,
+        "endChar": 72
+      },
+      "revId": "38ed436ab3a2c6cc93782cbc8f24e22fdd7b74d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62691aa4_cbd50719",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-28T00:48:20Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 234,
+        "startChar": 23,
+        "endLine": 234,
+        "endChar": 37
+      },
+      "revId": "38ed436ab3a2c6cc93782cbc8f24e22fdd7b74d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21489d3_a1e5158d",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-28T00:48:20Z",
+      "side": 1,
+      "message": "I\u0027m surprised you don\u0027t need to call Show, too.",
+      "revId": "38ed436ab3a2c6cc93782cbc8f24e22fdd7b74d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
