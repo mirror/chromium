@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bfbe4aa_2648dc07",
+        "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-28T00:53:48Z",
+      "side": 1,
+      "message": "I only understand the \u0027_\u0027 \u0027\\\\)\u0027 portions of the expression after reading the code that this patches removes.  Standing alone, it\u0027s hard to understand why they are here.  Please comment with example string being matched, and explain the prefix/suffix. e.g.\n\n// Match an embedded MAC address in a device path.\n// e.g. BTHLEDEVICE\\{0000180F-0000-1000-8000-00805F9B34FB}_DEV_VID\u002601000A_PID\u0026\n//      014C_REV\u00260100_818B4B0BACE6\\8\u00264C387F7\u00260\u00260020\n// matches           _818B4B0BACE6\\\n// and the 12 hex digits are selected in a capture group.\n\nIt\u0027s unfortunate Raw strings use ()s as well... I almost wonder if a normal string and \\\\\\\\ is less confusing.",
+      "range": {
+        "startLine": 38,
+        "startChar": 27,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "4a1a85abdfc90f5f188e755e542aa319cba00cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19184715_8e7d4714",
+        "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-28T00:53:48Z",
+      "side": 1,
+      "message": "Is the case difference meaningful in \"A-f\"?  As far as I can tell, it\u0027s not, so let\u0027s use either upper or lower.",
+      "range": {
+        "startLine": 38,
+        "startChar": 35,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "4a1a85abdfc90f5f188e755e542aa319cba00cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3322fc16_1250135d",
+        "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-28T00:53:48Z",
+      "side": 1,
+      "message": "The RE string can be static, but not the class instantiation. https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables  A few ways to fix perhaps... a quick search shows e.g. src/extensions/browser/api/web_request/form_data_parser.cc",
+      "revId": "4a1a85abdfc90f5f188e755e542aa319cba00cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
