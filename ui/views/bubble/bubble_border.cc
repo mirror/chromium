@@ -297,6 +297,47 @@ gfx::Rect BubbleBorder::GetBounds(const gfx::Rect& anchor_rect,
   return gfx::Rect(x, y, size.width(), size.height());
 }
 
+gfx::Rect BubbleBorder::GetArrowRect(const gfx::Rect& bounds) const {
+  if (!has_arrow(arrow_) || arrow_paint_type_ != PAINT_NORMAL)
+    return gfx::Rect();
+
+  gfx::Point origin;
+  int offset = GetArrowOffset(bounds.size());
+  const int half_length = images_->arrow_width / 2;
+  const gfx::Insets insets = GetInsets();
+
+  if (is_arrow_on_horizontal(arrow_)) {
+    origin.set_x(is_arrow_on_left(arrow_) || is_arrow_at_center(arrow_)
+                     ? offset
+                     : bounds.width() - offset);
+    origin.Offset(-half_length, 0);
+    if (is_arrow_on_top(arrow_))
+      origin.set_y(insets.top() - images_->arrow_thickness);
+    else
+      origin.set_y(bounds.height() - insets.bottom());
+  } else {
+    origin.set_y(is_arrow_on_top(arrow_) || is_arrow_at_center(arrow_)
+                     ? offset
+                     : bounds.height() - offset);
+    origin.Offset(0, -half_length);
+    if (is_arrow_on_left(arrow_))
+      origin.set_x(insets.left() - images_->arrow_thickness);
+    else
+      origin.set_x(bounds.width() - insets.right());
+  }
+
+  if (shadow_ != NO_ASSETS)
+    return gfx::Rect(origin, GetArrowImage()->size());
+
+  // With no assets, return the size enclosing the path filled in DrawArrow().
+  DCHECK_EQ(2 * images_->arrow_interior_thickness, images_->arrow_width);
+  int width = images_->arrow_width;
+  int height = images_->arrow_interior_thickness;
+  if (!is_arrow_on_horizontal(arrow_))
+    std::swap(width, height);
+  return gfx::Rect(origin, gfx::Size(width, height));
+}
+
 int BubbleBorder::GetBorderThickness() const {
   // TODO(estade): this shouldn't be called in MD.
   return UseMd()
@@ -396,6 +437,17 @@ gfx::Size BubbleBorder::GetMinimumSize() const {
   return GetSizeForContentsSize(gfx::Size());
 }
 
+gfx::ImageSkia* BubbleBorder::GetArrowImage() const {
+  if (!has_arrow(arrow_))
+    return NULL;
+  if (is_arrow_on_horizontal(arrow_)) {
+    return is_arrow_on_top(arrow_) ? &images_->top_arrow
+                                   : &images_->bottom_arrow;
+  }
+  return is_arrow_on_left(arrow_) ? &images_->left_arrow
+                                  : &images_->right_arrow;
+}
+
 gfx::Size BubbleBorder::GetSizeForContentsSize(
     const gfx::Size& contents_size) const {
   // Enlarge the contents size by the thickness of the border images.
@@ -421,56 +473,6 @@ gfx::Size BubbleBorder::GetSizeForContentsSize(
   else
     size.SetToMax(gfx::Size(min_with_arrow_thickness, min_with_arrow_width));
   return size;
-}
-
-gfx::ImageSkia* BubbleBorder::GetArrowImage() const {
-  if (!has_arrow(arrow_))
-    return NULL;
-  if (is_arrow_on_horizontal(arrow_)) {
-    return is_arrow_on_top(arrow_) ?
-        &images_->top_arrow : &images_->bottom_arrow;
-  }
-  return is_arrow_on_left(arrow_) ?
-      &images_->left_arrow : &images_->right_arrow;
-}
-
-gfx::Rect BubbleBorder::GetArrowRect(const gfx::Rect& bounds) const {
-  if (!has_arrow(arrow_) || arrow_paint_type_ != PAINT_NORMAL)
-    return gfx::Rect();
-
-  gfx::Point origin;
-  int offset = GetArrowOffset(bounds.size());
-  const int half_length = images_->arrow_width / 2;
-  const gfx::Insets insets = GetInsets();
-
-  if (is_arrow_on_horizontal(arrow_)) {
-    origin.set_x(is_arrow_on_left(arrow_) || is_arrow_at_center(arrow_) ?
-        offset : bounds.width() - offset);
-    origin.Offset(-half_length, 0);
-    if (is_arrow_on_top(arrow_))
-      origin.set_y(insets.top() - images_->arrow_thickness);
-    else
-      origin.set_y(bounds.height() - insets.bottom());
-  } else {
-    origin.set_y(is_arrow_on_top(arrow_)  || is_arrow_at_center(arrow_) ?
-        offset : bounds.height() - offset);
-    origin.Offset(0, -half_length);
-    if (is_arrow_on_left(arrow_))
-      origin.set_x(insets.left() - images_->arrow_thickness);
-    else
-      origin.set_x(bounds.width() - insets.right());
-  }
-
-  if (shadow_ != NO_ASSETS)
-    return gfx::Rect(origin, GetArrowImage()->size());
-
-  // With no assets, return the size enclosing the path filled in DrawArrow().
-  DCHECK_EQ(2 * images_->arrow_interior_thickness, images_->arrow_width);
-  int width = images_->arrow_width;
-  int height = images_->arrow_interior_thickness;
-  if (!is_arrow_on_horizontal(arrow_))
-    std::swap(width, height);
-  return gfx::Rect(origin, gfx::Size(width, height));
 }
 
 void BubbleBorder::GetArrowPathFromArrowBounds(const gfx::Rect& arrow_bounds,
