@@ -81,6 +81,15 @@ LayoutRect PaintInvalidator::MapLocalRectToVisualRectInBacking(
     }
   }
 
+  // Unite visual rect with clip path bounding rect.
+  // It is done here because clip-path can be a reference to SVG, and clean
+  // layout is needed to compute its bounding box.
+  if (Optional<FloatRect> clip_path_bounding_box =
+          object.LocalClipPathBoundingBox()) {
+    Rect box(EnclosingIntRect(*clip_path_bounding_box));
+    rect.Unite(box);
+  }
+
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     // In SPv175, visual rects are in the space of their local transform node.
     // For SVG, the input rect is in local SVG coordinates in which paint
