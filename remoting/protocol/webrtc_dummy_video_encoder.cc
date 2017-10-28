@@ -15,6 +15,7 @@
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "remoting/base/constants.h"
 #include "remoting/protocol/video_channel_state_observer.h"
 
 #if defined(USE_H264_ENCODER)
@@ -124,9 +125,11 @@ int32_t WebrtcDummyVideoEncoder::SetChannelParameters(uint32_t packet_loss,
 
 int32_t WebrtcDummyVideoEncoder::SetRates(uint32_t bitrate,
                                           uint32_t framerate) {
+  // TODO(zijiehe): Respect the |framerate|.
   main_task_runner_->PostTask(
       FROM_HERE, base::Bind(&VideoChannelStateObserver::OnTargetBitrateChanged,
-                            video_channel_state_observer_, bitrate));
+                            video_channel_state_observer_,
+                            bitrate * framerate / kTargetFrameRate));
   // framerate is not expected to be valid given we never report captured
   // frames.
   return WEBRTC_VIDEO_CODEC_OK;
