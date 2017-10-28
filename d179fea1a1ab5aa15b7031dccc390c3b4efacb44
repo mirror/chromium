@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a0a5fd2_02f81e55",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-28T14:51:34Z",
+      "side": 1,
+      "message": "Add before this line: \n// static",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 3
+      },
+      "revId": "d179fea1a1ab5aa15b7031dccc390c3b4efacb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d7f7eac_2f22d9d9",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-28T14:51:34Z",
+      "side": 1,
+      "message": "const HRESULT hr \u003d ...",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 12
+      },
+      "revId": "d179fea1a1ab5aa15b7031dccc390c3b4efacb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e67b7968_e5eb31dd",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-28T14:51:34Z",
+      "side": 1,
+      "message": "Please order the methods in this file like you did \nin the header class (which should follow [1]).\n\n[1] https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 43
+      },
+      "revId": "d179fea1a1ab5aa15b7031dccc390c3b4efacb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e880edec_2852908b",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-28T14:51:34Z",
+      "side": 1,
+      "message": "DCHECK_EQ(expected, actual); so:\n\nDCHECK_EQ(kN32_SkColorType, bitmap.colorType());\n}",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 1
+      },
+      "revId": "d179fea1a1ab5aa15b7031dccc390c3b4efacb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3874e2f_fbf7704b",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-28T14:51:34Z",
+      "side": 1,
+      "message": "Do we need this guy? Doesn\u0027t seem to be used ATM.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "d179fea1a1ab5aa15b7031dccc390c3b4efacb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
