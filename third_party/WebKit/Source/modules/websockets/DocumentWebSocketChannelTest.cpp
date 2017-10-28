@@ -89,7 +89,7 @@ class MockWebSocketHandle : public WebSocketHandle {
   MOCK_METHOD7(Connect,
                void(const KURL&,
                     const Vector<String>&,
-                    SecurityOrigin*,
+                    const SecurityOrigin*,
                     const KURL&,
                     const String&,
                     WebSocketHandleClient*,
@@ -208,7 +208,7 @@ MATCHER_P(KURLEq,
 
 TEST_F(DocumentWebSocketChannelTest, connectSuccess) {
   Vector<String> protocols;
-  scoped_refptr<SecurityOrigin> origin;
+  scoped_refptr<const SecurityOrigin> origin;
 
   Checkpoint checkpoint;
   {
@@ -224,7 +224,7 @@ TEST_F(DocumentWebSocketChannelTest, connectSuccess) {
   }
 
   KURL page_url(NullURL(), "http://example.com/");
-  page_holder_->GetFrame().GetSecurityContext()->SetSecurityOrigin(
+  page_holder_->GetFrame().GetSecurityContext()->Set<const SecurityOrigin>(
       SecurityOrigin::Create(page_url));
   Document& document = page_holder_->GetDocument();
   document.SetURL(page_url);

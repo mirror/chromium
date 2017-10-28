@@ -107,15 +107,12 @@ class WebSecurityOrigin {
   // passwords stored in password manager.
   BLINK_PLATFORM_EXPORT bool CanAccessPasswordManager() const;
 
-  // Allows this WebSecurityOrigin access to local resources.
-  BLINK_PLATFORM_EXPORT void GrantLoadLocalResources() const;
-
 #if INSIDE_BLINK
-  BLINK_PLATFORM_EXPORT WebSecurityOrigin(WTF::RefPtr<SecurityOrigin>);
+  BLINK_PLATFORM_EXPORT WebSecurityOrigin(WTF::RefPtr<const SecurityOrigin>);
   BLINK_PLATFORM_EXPORT WebSecurityOrigin& operator=(
-      WTF::RefPtr<SecurityOrigin>);
-  BLINK_PLATFORM_EXPORT operator WTF::RefPtr<SecurityOrigin>() const;
-  BLINK_PLATFORM_EXPORT SecurityOrigin* Get() const;
+      WTF::RefPtr<const SecurityOrigin>);
+  BLINK_PLATFORM_EXPORT operator WTF::RefPtr<const SecurityOrigin>() const;
+  BLINK_PLATFORM_EXPORT const SecurityOrigin* Get() const;
 #else
   // TODO(mkwst): A number of properties don't survive a round-trip
   // ('document.domain', for instance).  We'll need to fix that for OOPI-enabled
@@ -150,7 +147,7 @@ class WebSecurityOrigin {
       int port,
       const WebString& suborigin);
 
-  WebPrivatePtr<SecurityOrigin> private_;
+  WebPrivatePtr<const SecurityOrigin> private_;
 };
 
 }  // namespace blink

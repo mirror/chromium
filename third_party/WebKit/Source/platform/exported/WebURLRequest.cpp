@@ -121,7 +121,7 @@ void WebURLRequest::SetSiteForCookies(const WebURL& site_for_cookies) {
 }
 
 WebSecurityOrigin WebURLRequest::RequestorOrigin() const {
-  return resource_request_->RequestorOrigin();
+  return WebSecurityOrigin(resource_request_->RequestorOrigin());
 }
 
 void WebURLRequest::SetRequestorOrigin(

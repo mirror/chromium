@@ -62,7 +62,7 @@ RefPtr<AudioDestination> AudioDestination::Create(
     AudioIOCallback& callback,
     unsigned number_of_output_channels,
     const WebAudioLatencyHint& latency_hint,
-    RefPtr<SecurityOrigin> security_origin) {
+    RefPtr<const SecurityOrigin> security_origin) {
   return WTF::AdoptRef(new AudioDestination(callback, number_of_output_channels,
                                             latency_hint,
                                             std::move(security_origin)));
@@ -71,7 +71,7 @@ RefPtr<AudioDestination> AudioDestination::Create(
 AudioDestination::AudioDestination(AudioIOCallback& callback,
                                    unsigned number_of_output_channels,
                                    const WebAudioLatencyHint& latency_hint,
-                                   RefPtr<SecurityOrigin> security_origin)
+                                   RefPtr<const SecurityOrigin> security_origin)
     : number_of_output_channels_(number_of_output_channels),
       is_playing_(false),
       fifo_(WTF::WrapUnique(
@@ -89,7 +89,7 @@ AudioDestination::AudioDestination(AudioIOCallback& callback,
   // of input channels.
   web_audio_device_ = Platform::Current()->CreateAudioDevice(
       0, number_of_output_channels, latency_hint, this, String(),
-      std::move(security_origin));
+      WebSecurityOrigin(std::move(security_origin)));
   DCHECK(web_audio_device_);
 
   callback_buffer_size_ = web_audio_device_->FramesPerBuffer();

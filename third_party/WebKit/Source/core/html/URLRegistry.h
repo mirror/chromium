@@ -51,7 +51,7 @@ class CORE_EXPORT URLRegistry {
 
  public:
   virtual ~URLRegistry() {}
-  virtual void RegisterURL(SecurityOrigin*, const KURL&, URLRegistrable*) = 0;
+  virtual void RegisterURL(const SecurityOrigin*, const KURL&, URLRegistrable*) = 0;
   virtual void UnregisterURL(const KURL&) = 0;
 
   // These are optional APIs

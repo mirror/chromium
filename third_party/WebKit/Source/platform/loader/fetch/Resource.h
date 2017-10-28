@@ -127,7 +127,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
 
   virtual void SetRevalidatingRequest(const ResourceRequest&);
 
-  void SetFetcherSecurityOrigin(SecurityOrigin* origin) {
+  void SetFetcherSecurityOrigin(const SecurityOrigin* origin) {
     fetcher_security_origin_ = origin;
   }
 
@@ -432,7 +432,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   CORSStatus cors_status_;
 
   Member<CachedMetadataHandlerImpl> cache_handler_;
-  scoped_refptr<SecurityOrigin> fetcher_security_origin_;
+  scoped_refptr<const SecurityOrigin> fetcher_security_origin_;
 
   ResourceError error_;
 

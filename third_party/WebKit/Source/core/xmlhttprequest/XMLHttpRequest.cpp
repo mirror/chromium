@@ -292,7 +292,7 @@ XMLHttpRequest::XMLHttpRequest(
     ExecutionContext* context,
     v8::Isolate* isolate,
     bool is_isolated_world,
-    scoped_refptr<SecurityOrigin> isolated_world_security_origin)
+    scoped_refptr<const SecurityOrigin> isolated_world_security_origin)
     : SuspendableObject(context),
       timeout_milliseconds_(0),
       state_(kUnsent),
@@ -330,7 +330,7 @@ Document* XMLHttpRequest::GetDocument() const {
   return ToDocument(GetExecutionContext());
 }
 
-SecurityOrigin* XMLHttpRequest::GetSecurityOrigin() const {
+const SecurityOrigin* XMLHttpRequest::GetSecurityOrigin() const {
   return isolated_world_security_origin_
              ? isolated_world_security_origin_.get()
              : GetExecutionContext()->GetSecurityOrigin();
@@ -384,7 +384,7 @@ void XMLHttpRequest::InitResponseDocument() {
     response_document_ = XMLDocument::Create(init);
 
   // FIXME: Set Last-Modified.
-  response_document_->SetSecurityOrigin(GetSecurityOrigin());
+  response_document_->SetSecurityOrigin(GetSecurityOrigin()->IsolatedCopy()); // FOXME
   response_document_->SetContextFeatures(GetDocument()->GetContextFeatures());
   response_document_->SetMimeType(FinalResponseMIMETypeWithFallback());
 }

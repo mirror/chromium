@@ -46,14 +46,14 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   WTF_MAKE_NONCOPYABLE(SecurityOrigin);
 
  public:
-  static RefPtr<SecurityOrigin> Create(const KURL&);
+  static RefPtr<const SecurityOrigin> Create(const KURL&);
   static RefPtr<SecurityOrigin> CreateUnique();
 
-  static RefPtr<SecurityOrigin> CreateFromString(const String&);
-  static RefPtr<SecurityOrigin> Create(const String& protocol,
+  static RefPtr<const SecurityOrigin> CreateFromString(const String&);
+  static RefPtr<const SecurityOrigin> Create(const String& protocol,
                                        const String& host,
                                        int port);
-  static RefPtr<SecurityOrigin> Create(const String& protocol,
+  static RefPtr<const SecurityOrigin> Create(const String& protocol,
                                        const String& host,
                                        int port,
                                        const String& suborigin);

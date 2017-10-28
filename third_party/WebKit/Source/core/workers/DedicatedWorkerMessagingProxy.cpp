@@ -30,7 +30,7 @@ namespace {
 
 service_manager::mojom::blink::InterfaceProviderPtrInfo
 ConnectToWorkerInterfaceProvider(Document* document,
-                                 scoped_refptr<SecurityOrigin> script_origin) {
+                                 scoped_refptr<const SecurityOrigin> script_origin) {
   mojom::blink::DedicatedWorkerFactoryPtr worker_factory;
   document->GetInterfaceProvider()->GetInterface(&worker_factory);
   service_manager::mojom::blink::InterfaceProviderPtrInfo
@@ -72,7 +72,7 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
   }
 
   Document* document = ToDocument(GetExecutionContext());
-  SecurityOrigin* starter_origin = document->GetSecurityOrigin();
+  const SecurityOrigin* starter_origin = document->GetSecurityOrigin();
 
   ContentSecurityPolicy* csp = document->GetContentSecurityPolicy();
   DCHECK(csp);

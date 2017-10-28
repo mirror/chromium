@@ -56,15 +56,10 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
 
   using InsecureNavigationsSet = HashSet<unsigned, WTF::AlreadyHashed>;
 
-  SecurityOrigin* GetSecurityOrigin() const { return security_origin_.get(); }
   ContentSecurityPolicy* GetContentSecurityPolicy() const {
     return content_security_policy_.Get();
   }
 
-  // Explicitly override the security origin for this security context.
-  // Note: It is dangerous to change the security origin of a script context
-  //       that already contains content.
-  void SetSecurityOrigin(scoped_refptr<SecurityOrigin>);
   virtual void DidUpdateSecurityOrigin() = 0;
 
   SandboxFlags GetSandboxFlags() const { return sandbox_flags_; }
@@ -92,15 +87,15 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
     return insecure_request_policy_;
   }
 
-  void EnforceSuborigin(const Suborigin&);
-
   WebFeaturePolicy* GetFeaturePolicy() const { return feature_policy_.get(); }
   void InitializeFeaturePolicy(const WebParsedFeaturePolicy& parsed_header,
                                const WebParsedFeaturePolicy& container_policy,
                                const WebFeaturePolicy* parent_feature_policy);
   void UpdateFeaturePolicyOrigin();
 
-  void ApplySandboxFlags(SandboxFlags mask);
+  virtual void ApplySandboxFlags(SandboxFlags mask) = 0;
+
+  virtual const SecurityOrigin* GetSecurityOrigin() const = 0;
 
  protected:
   SecurityContext();
@@ -109,16 +104,45 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
   void SetContentSecurityPolicy(ContentSecurityPolicy*);
 
  private:
-  scoped_refptr<SecurityOrigin> security_origin_;
   Member<ContentSecurityPolicy> content_security_policy_;
   std::unique_ptr<WebFeaturePolicy> feature_policy_;
 
+protected:
   SandboxFlags sandbox_flags_;
 
+private:
   WebAddressSpace address_space_;
   WebInsecureRequestPolicy insecure_request_policy_;
   InsecureNavigationsSet insecure_navigations_to_upgrade_;
   bool require_safe_types_;
+};
+
+class CORE_EXPORT ConstSecurityContext : public SecurityContext {
+ public:
+  const SecurityOrigin* GetSecurityOrigin() const final { return security_origin_.get(); }
+  // Explicitly override the security origin for this security context.
+  // Note: It is dangerous to change the security origin of a script context
+  //       that already contains content.
+  void SetSecurityOrigin(scoped_refptr<const SecurityOrigin>);
+  void ApplySandboxFlags(SandboxFlags mask) final;
+
+ private:
+  scoped_refptr<const SecurityOrigin> security_origin_;
+};
+
+class CORE_EXPORT MutableSecurityContext : public SecurityContext {
+ public:
+  void EnforceSuborigin(const Suborigin&);
+  const SecurityOrigin* GetSecurityOrigin() const final { return security_origin_.get(); }
+  SecurityOrigin* GetMutableSecurityOrigin() const { return security_origin_.get(); }
+  // Explicitly override the security origin for this security context.
+  // Note: It is dangerous to change the security origin of a script context
+  //       that already contains content.
+  void SetSecurityOrigin(scoped_refptr<SecurityOrigin>);
+  void ApplySandboxFlags(SandboxFlags mask) final;
+
+ private:
+  scoped_refptr<SecurityOrigin> security_origin_;
 };
 
 }  // namespace blink
