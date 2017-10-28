@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "a78ca9eb_fdd5332a",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-28T01:22:41Z",
+      "side": 1,
+      "message": "nit: std::make_unique\u003cmedia_router::NavigationPolicy\u003e()",
+      "range": {
+        "startLine": 108,
+        "startChar": 25,
+        "endLine": 108,
+        "endChar": 59
+      },
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdae2a38_88cdad13",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-28T01:22:41Z",
+      "side": 1,
+      "message": "nit:\nnavigation_policy_ \u003d std::make_unique\u003cmedia_router::PresentationNavigationPolicy\u003e();",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "453b09da_7732c247",
         "filename": "chrome/browser/media/router/presentation_navigation_policy.cc",
         "patchSetId": 1
@@ -76,6 +116,40 @@
       "writtenOn": "2017-10-28T00:24:38Z",
       "side": 1,
       "message": "Remove unrelated comment?",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d63cb7_42b4babc",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-28T01:22:41Z",
+      "side": 1,
+      "message": "On Linux and Mac at least it seems that the URL bar is read-only even without this code.",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff2a755_2c937424",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-28T01:22:41Z",
+      "side": 1,
+      "message": "How would you terminate a presentation? Will that be through some of Browser methods?",
       "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
