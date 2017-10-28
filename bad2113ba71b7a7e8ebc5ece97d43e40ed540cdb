@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86a57491_77dda76d",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-28T00:24:25Z",
+      "side": 1,
+      "message": "Could you please replace this with the URL of the multipage version?\n\nhttps://html.spec.whatwg.org/multipage/scripting.html#prepare-a-script",
+      "revId": "bad2113ba71b7a7e8ebc5ece97d43e40ed540cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec95793_8d756236",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-28T00:24:25Z",
+      "side": 1,
+      "message": "\"Step 1.\" to be consistent with L700? Up to you.",
+      "revId": "bad2113ba71b7a7e8ebc5ece97d43e40ed540cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
