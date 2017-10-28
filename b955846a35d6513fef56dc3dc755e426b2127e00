@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b57967cc_b413181c",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-28T02:52:00Z",
+      "side": 1,
+      "message": "The construction of this object in the old code took 5 lines.\n\nSince CertificateReportingServiceCertReporter is only used in this file, I figured I would move the CertificateReportingService construction straight into the CertificateReportingServiceCertReporter, so that the call sites (of which there are now 2) are ≈1 line.",
+      "revId": "b955846a35d6513fef56dc3dc755e426b2127e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d522293_ee04749d",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-28T02:52:00Z",
+      "side": 1,
+      "message": "SSLErrorNavigationThrottle::WillFailRequest() extracts the SSLInfo from a base::Optional() by value, on the stack.\n\nIf we pass a `net::SSLInfo` by reference all the way from WillFailRequest(), then the value will go out of scope (and destruct) before it is still needed by SSLErrorHandler code.\n\nAn earlier patch held on to ssl_info in SSLErrorNavigationThrottle as a member variable, but that felt a bit weird. This looks to me like the simplest approach, even if it creates an extra copy in the old code path.\n\nWhat do you think?",
+      "revId": "b955846a35d6513fef56dc3dc755e426b2127e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d32c3bc_5da4291d",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-28T02:52:00Z",
+      "side": 1,
+      "message": "Placing the implementation for this function in the throttle feels weird to me, because you always have to call SSLErrorTabHelper::CreateForWebContents() to make sure that a *subsequent* call to SSLErrorTabHelper::FromWebContents() gives you something – the throttle needs to know that it is creating the the helper \"on demand\".\n\nI think this static method abstraction makes the throttle code easier to understand, without being harder to implement.",
+      "revId": "b955846a35d6513fef56dc3dc755e426b2127e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
