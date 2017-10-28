@@ -12,6 +12,7 @@
 #include "core/layout/FragmentainerIterator.h"
 #include "core/layout/LayoutInline.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/svg/LayoutSVGResourceClipper.h"
 #include "core/layout/svg/LayoutSVGResourceMasker.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
 #include "core/layout/svg/SVGLayoutSupport.h"
@@ -508,10 +509,10 @@ void PaintPropertyTreeBuilder::UpdateTransform(
   }
 }
 
-static bool ComputeMaskParameters(IntRect& mask_clip,
-                                  ColorFilter& mask_color_filter,
-                                  const LayoutObject& object,
-                                  const LayoutPoint& paint_offset) {
+static bool ComputeBoundingClipRectForMask(const LayoutObject& object,
+                                           const LayoutPoint& paint_offset,
+                                           IntRect& mask_clip,
+                                           ColorFilter& mask_color_filter) {
   DCHECK(object.IsBoxModelObject() || object.IsSVGChild());
   const ComputedStyle& style = object.StyleRef();
 
@@ -599,6 +600,9 @@ static bool NeedsEffect(const LayoutObject& object) {
   if (object.StyleRef().HasMask())
     return true;
 
+  if (object.StyleRef().ClipPath())
+    return true;
+
   return false;
 }
 
@@ -628,20 +632,35 @@ void PaintPropertyTreeBuilder::UpdateEffect(
 
       IntRect mask_clip;
       ColorFilter mask_color_filter;
-      bool has_mask = ComputeMaskParameters(
-          mask_clip, mask_color_filter, object, context.current.paint_offset);
-      if (has_mask &&
+      bool has_mask = ComputeBoundingClipRectForMask(
+          object, context.current.paint_offset, mask_clip, mask_color_filter);
+
+      Optional<FloatRect> clip_path_bounding_box =
+          object.LocalClipPathBoundingBox();
+      if (clip_path_bounding_box) {
+        clip_path_bounding_box->MoveBy(
+            FloatPoint(context.current.paint_offset));
+      }
+      bool has_clip_path = clip_path_bounding_box.has_value();
+      IntRect clip_path_clip =
+          has_clip_path ? EnclosingIntRect(*clip_path_bounding_box) : IntRect();
+
+      if ((has_mask || has_clip_path) &&
           // TODO(crbug.com/768691): Remove the following condition after mask
           // clip doesn't fail fast/borders/inline-mask-overlay-image-outset-
           // vertical-rl.html.
           RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-        FloatRoundedRect rounded_mask_clip(mask_clip);
+        IntRect combined_clip = has_mask ? mask_clip : clip_path_clip;
+        if (has_mask && has_clip_path)
+          combined_clip.Intersect(clip_path_clip);
+
+        FloatRoundedRect rounded_combined_clip(combined_clip);
         if (properties.MaskClip() &&
-            rounded_mask_clip != properties.MaskClip()->ClipRect())
+            rounded_combined_clip != properties.MaskClip()->ClipRect())
           local_clip_changed = true;
         auto result = properties.UpdateMaskClip(context.current.clip,
                                                 context.current.transform,
-                                                FloatRoundedRect(mask_clip));
+                                                rounded_combined_clip);
         local_clip_added_or_removed |= result.NewNodeCreated();
         output_clip = properties.MaskClip();
       } else {
@@ -672,9 +691,22 @@ void PaintPropertyTreeBuilder::UpdateEffect(
       } else {
         force_subtree_update |= properties.ClearMask();
       }
+      if (has_clip_path) {
+        auto result = properties.UpdateClipPath(
+            properties.Effect(), context.current.transform, output_clip,
+            kColorFilterNone, CompositorFilterOperations(), 1.f,
+            SkBlendMode::kDstIn, kCompositingReasonNone,
+            CompositorElementIdFromUniqueObjectId(
+                object.UniqueId(),
+                CompositorElementIdNamespace::kEffectClipPath));
+        force_subtree_update |= result.NewNodeCreated();
+      } else {
+        force_subtree_update |= properties.ClearClipPath();
+      }
     } else {
       force_subtree_update |= properties.ClearEffect();
       force_subtree_update |= properties.ClearMask();
+      force_subtree_update |= properties.ClearClipPath();
       local_clip_added_or_removed |= properties.ClearMaskClip();
     }
     force_subtree_update |= local_clip_added_or_removed;
