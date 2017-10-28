@@ -45,6 +45,30 @@
       "revId": "70d145b409ca12765f15006f217bb5f1f5465cb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433a7fb5_cc8c6138",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-28T01:31:06Z",
+      "side": 1,
+      "message": "Do you means we should still put this check in onPostExecute while leave ApiCompatibilityUtils.getUriForImageCaptureFile in doInBackground? The getStateForApplication uses synchroized, is it always safe no matter whether it is on UI thread of not?",
+      "parentUuid": "8d97fdc1_1979a02f",
+      "range": {
+        "startLine": 400,
+        "startChar": 46,
+        "endLine": 400,
+        "endChar": 68
+      },
+      "revId": "70d145b409ca12765f15006f217bb5f1f5465cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
