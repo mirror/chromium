@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ebc697e7_5162f91f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-28T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "703dce88_85755d09",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff356c65_6fa99969",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94253a7f_4d5e53ca",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-28T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff356c65_6fa99969",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d35f9b53_8f1045f2",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-28T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c57711da_df8212f7",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 42
+      },
+      "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3d1004a_5e63e489",
         "filename": "components/previews/core/previews_logger.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b1ae44_16d3a2be",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-28T16:35:02Z",
+      "side": 1,
+      "message": "For override mocks in tests.",
+      "parentUuid": "c3d1004a_5e63e489",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 9
+      },
+      "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f2d5bd56_082a4daa",
+        "filename": "components/previews/core/previews_ui_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-28T16:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d380ad0_245712d6",
+      "range": {
+        "startLine": 65,
+        "startChar": 19,
+        "endLine": 65,
+        "endChar": 21
+      },
+      "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b000b245_02719711",
         "filename": "components/previews/core/previews_ui_service.h",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-10-28T01:03:25Z",
       "side": 1,
       "message": "I do not understand how this method differs from the method above.",
+      "range": {
+        "startLine": 70,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 53
+      },
+      "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8d95ab_97701b8e",
+        "filename": "components/previews/core/previews_ui_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-28T16:35:02Z",
+      "side": 1,
+      "message": "The method above is for the InterventionsInternalsPageHandler to tell PreviewsIOData to change the status to |ignored|. This method is for PreviewsIOData to communicate to PreviewsLogger that the status is changed to |ignored| so that PreviewsLogger can notify all the LoggerObservers (i.e. IIPageHandlers) so that multiple instances of the tab have the same status.",
+      "parentUuid": "b000b245_02719711",
       "range": {
         "startLine": 70,
         "startChar": 16,
