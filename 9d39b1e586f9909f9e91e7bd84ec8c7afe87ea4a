@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34b4a8f5_b1823fbd",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-28T00:09:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fd1ba59_8234876e",
+      "revId": "9d39b1e586f9909f9e91e7bd84ec8c7afe87ea4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b8f2864_25943b58",
         "filename": "chrome/browser/resources/md_extensions/sidebar.html",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "9d39b1e586f9909f9e91e7bd84ec8c7afe87ea4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18254c4d_d543f9f1",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-28T00:09:41Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. Filed bug https://bugs.chromium.org/p/chromium/issues/detail?id\u003d779282 to track this.",
+      "parentUuid": "6b8f2864_25943b58",
+      "revId": "9d39b1e586f9909f9e91e7bd84ec8c7afe87ea4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
