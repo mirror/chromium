@@ -69,6 +69,30 @@
       "revId": "70d145b409ca12765f15006f217bb5f1f5465cb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4554be2_e07dc623",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-28T04:58:00Z",
+      "side": 1,
+      "message": "Yeah, I think it won\u0027t crash, but it doesn\u0027t look like it locks on the data sources that determine the application state.  I think this is fine though.",
+      "parentUuid": "433a7fb5_cc8c6138",
+      "range": {
+        "startLine": 400,
+        "startChar": 46,
+        "endLine": 400,
+        "endChar": 68
+      },
+      "revId": "70d145b409ca12765f15006f217bb5f1f5465cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
