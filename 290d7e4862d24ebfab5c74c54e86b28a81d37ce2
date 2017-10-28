@@ -16,6 +16,24 @@
       "revId": "290d7e4862d24ebfab5c74c54e86b28a81d37ce2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba44aa8_341a19c7",
+        "filename": "media/mojo/services/mojo_cdm_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-28T01:55:35Z",
+      "side": 1,
+      "message": "CdmAdapter (https://cs.chromium.org/chromium/src/media/cdm/cdm_adapter.cc?l\u003d413) owns both the helper and the CDM (which requests MojoCdmFileIO when it needs to do IO).",
+      "parentUuid": "626053aa_c6d28354",
+      "revId": "290d7e4862d24ebfab5c74c54e86b28a81d37ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
