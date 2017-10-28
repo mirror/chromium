@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82f6bb38_e9177a52",
+        "filename": "chrome/browser/resources/print_preview/native_layer.js",
+        "patchSetId": 31
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-28T00:22:59Z",
+      "side": 1,
+      "message": "This is to replace the code that used to set them this way here: https://cs.chromium.org/chromium/src/components/printing/renderer/print_render_frame_helper.cc?l\u003d1810\nThe margins get accounted for when rendering the preview/generating PDF data, then the PDF data is sent to the printer with 0 margins so that the PDF page size matches the printer paper size. Having JS send the parameters this way to start with avoids the need to change them later in C++.",
+      "parentUuid": "1d1094ca_6de293c9",
+      "range": {
+        "startLine": 329,
+        "startChar": 67,
+        "endLine": 329,
+        "endChar": 77
+      },
+      "revId": "536b90caea6fdc2195f228caa2752571ee2c01a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62b80721_659fa397",
         "filename": "chrome/browser/resources/print_preview/print_preview.js",
         "patchSetId": 31
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-27T23:52:08Z",
       "side": 1,
       "message": "What is the difference of NativeLayer\u0027s hidePreview() and dialogClose()? The codepath for Mac \"Open in preview\" before called hidePreview(), and now it calls the latter.  Is that OK?",
+      "revId": "536b90caea6fdc2195f228caa2752571ee2c01a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cad29af_2bb4d774",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 31
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-28T00:22:59Z",
+      "side": 1,
+      "message": "All of the local printing, plus mac open in preview and windows print with system dialog, used to call hidePreview instead. hidePreview differs from closing the dialog in that the dialog web contents are handed off to the background printing manager before cleaning up the constrained web dialog etc: https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/print_preview/print_preview_ui.cc?l\u003d653\n\nThe purpose of this is to store the Print Preview web contents while still having the visual effect of the dialog disappearing. The reason for doing that here was to allow the renderer to access the plugin inside the preview dialog. In the current printing code the renderer is notified to print the contents of the plugin when the user prints to a local printer/Preview/system dialog so the plugin needs to stay alive until the print job is spooled. This CL is trying to change things so we instead tell the printing code to start a print job directly from the Handler with the PDF data that is stored in PrintPreviewDataStore. This is how all the other printer types already work.",
+      "parentUuid": "62b80721_659fa397",
       "revId": "536b90caea6fdc2195f228caa2752571ee2c01a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
