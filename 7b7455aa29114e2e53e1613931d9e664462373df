@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "453b09da_7732c247",
+        "filename": "chrome/browser/media/router/presentation_navigation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-28T00:24:38Z",
+      "side": 1,
+      "message": "\u003d default;, ditto for below.",
+      "range": {
+        "startLine": 12,
+        "startChar": 40,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e22812_eaaf5da9",
+        "filename": "chrome/browser/media/router/presentation_navigation_policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-28T00:24:38Z",
+      "side": 1,
+      "message": "nit: Maybe name this DefaultNavigationPolicy?",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d94c68_aaef6df5",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-28T00:24:38Z",
+      "side": 1,
+      "message": "Two questions:\n- What does it mean to have the Browser be based on the given profile, but the WebContents be based on the OTR profile? This seems allowed by the chrome::Navigate logic, but I am wondering what the behavior would be like, e.g. if the tab exited fullscreen would we be able to then merge it with the tab strip of the main profile\u0027s browser? I am guessing not since this is a popup window. Might be worth it to clarify which aspects are determined by which profile.\n- GetOffTheRecordProfile() (\"the\" OTR profile) is used as the profile of the WebContents, but CreateOffTheRecordProfile() (which are not related to \"the\" OTR profile) is used in the WebContents in OffscreenTab. Why is there a difference? Note that the latter implementation also assumes ownership of the created OTR profile.",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae85b616_d61f9ca6",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-28T00:24:38Z",
+      "side": 1,
+      "message": "Remove unrelated comment?",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab32466_3b471c0e",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-28T00:24:38Z",
+      "side": 1,
+      "message": "Make this method const?",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b886d4_d0f5077c",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-28T00:24:38Z",
+      "side": 1,
+      "message": "Who has ownership of PresentationReceiverWindow?",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef577be_4571dd8d",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-28T00:24:38Z",
+      "side": 1,
+      "message": "Time based waiting tends to be a source of flakiness on slower systems. Could you see if it can be replaced with base::RunLoop::Run/Quit (the latter to be invoked when observer is notified)?",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16553dc7_b4993680",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-28T00:24:38Z",
+      "side": 1,
+      "message": "This should already be true when MakeConnectionRequest() is called, right?",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "269349c5_cff23f54",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-28T00:24:38Z",
+      "side": 1,
+      "message": "ditto on base::RunLoop::Run/Quit.",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
