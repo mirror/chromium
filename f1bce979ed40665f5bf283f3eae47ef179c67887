@@ -16,6 +16,24 @@
       "revId": "f1bce979ed40665f5bf283f3eae47ef179c67887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9853a1ee_28c76097",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-28T00:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1438c3e3_91f0b6f5",
+      "revId": "f1bce979ed40665f5bf283f3eae47ef179c67887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
