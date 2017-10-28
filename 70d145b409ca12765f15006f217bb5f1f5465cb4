@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36ad4e73_f1a91bc5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-28T00:06:03Z",
+      "side": 1,
+      "message": "This should be on the same line as the } above",
+      "range": {
+        "startLine": 340,
+        "startChar": 16,
+        "endLine": 340,
+        "endChar": 23
+      },
+      "revId": "70d145b409ca12765f15006f217bb5f1f5465cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d97fdc1_1979a02f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-28T00:06:03Z",
+      "side": 1,
+      "message": "I would keep this in onPostExecute.  getStateForApplication is driven off of UI events (activity onCreate, onPause, etc... are all on the UI thread).  So I think this check is really only safe on the UI thread.",
+      "range": {
+        "startLine": 400,
+        "startChar": 46,
+        "endLine": 400,
+        "endChar": 68
+      },
+      "revId": "70d145b409ca12765f15006f217bb5f1f5465cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
