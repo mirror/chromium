@@ -9,8 +9,10 @@
 #include "core/frame/Settings.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/DocumentLoader.h"
+#include "core/loader/resource/ScriptResource.h"
 #include "core/probe/CoreProbes.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ScriptFetchOptions.h"
 #include "platform/network/NetworkStateNotifier.h"
 #include "platform/network/NetworkUtils.h"
 #include "public/platform/WebEffectiveConnectionType.h"
@@ -101,29 +103,28 @@ bool ShouldDisallowFetch(Settings* settings,
 
 }  // namespace
 
-FetchBlockedDocWriteScriptClient* MaybeDisallowFetchForDocWrittenScript(
-    FetchParameters& params,
-    Document& document) {
+bool MaybeDisallowFetchForDocWrittenScript(FetchParameters& params,
+                                           Document& document) {
   // Only scripts inserted via document.write are candidates for having their
   // fetch disallowed.
   if (!document.IsInDocumentWrite())
-    return nullptr;
+    return false;
 
   Settings* settings = document.GetSettings();
   if (!settings)
-    return nullptr;
+    return false;
 
   if (!document.GetFrame() || !document.GetFrame()->IsMainFrame())
-    return nullptr;
+    return false;
 
   // Only block synchronously loaded (parser blocking) scripts.
   if (params.Defer() != FetchParameters::kNoDefer)
-    return nullptr;
+    return false;
 
   probe::documentWriteFetchScript(&document);
 
   if (!params.Url().ProtocolIsInHTTPFamily())
-    return nullptr;
+    return false;
 
   // Avoid blocking same origin scripts, as they may be used to render main
   // page content, whereas cross-origin scripts inserted via document.write
@@ -159,7 +160,7 @@ FetchBlockedDocWriteScriptClient* MaybeDisallowFetchForDocWrittenScript(
           WebLoadingBehaviorFlag::
               kWebLoadingBehaviorDocumentWriteBlockDifferentScheme);
     }
-    return nullptr;
+    return false;
   }
 
   EmitWarningMayBeBlocked(params.Url().GetString(), document);
@@ -174,7 +175,7 @@ FetchBlockedDocWriteScriptClient* MaybeDisallowFetchForDocWrittenScript(
     document.Loader()->DidObserveLoadingBehavior(
         WebLoadingBehaviorFlag::kWebLoadingBehaviorDocumentWriteBlockReload);
     AddWarningHeader(&params);
-    return nullptr;
+    return false;
   }
 
   // Add the metadata that this page has scripts inserted via document.write
@@ -187,11 +188,8 @@ FetchBlockedDocWriteScriptClient* MaybeDisallowFetchForDocWrittenScript(
           settings, GetNetworkStateNotifier().ConnectionType(),
           document.GetFrame()->Client()->GetEffectiveConnectionType())) {
     AddWarningHeader(&params);
-    return nullptr;
+    return false;
   }
-
-  FetchBlockedDocWriteScriptClient* client =
-      new FetchBlockedDocWriteScriptClient(document, params);
 
   // Adding warning header after FetchBlockedDocWriteScriptClient is created, so
   // that the asynchronous fetch request sent when this request is blocked, does
@@ -202,29 +200,14 @@ FetchBlockedDocWriteScriptClient* MaybeDisallowFetchForDocWrittenScript(
   params.MutableResourceRequest().SetCacheMode(
       mojom::FetchCacheMode::kOnlyIfCached);
 
-  return client;
+  return true;
 }
 
-void FetchBlockedDocWriteScriptClient::Trace(Visitor* visitor) {
-  visitor->Trace(document_);
-  ResourceOwner<ScriptResource>::Trace(visitor);
-}
-
-void FetchBlockedDocWriteScriptClient::SetResource(ScriptResource* resource) {
-  keep_alive_ = this;
-  ResourceOwner<ScriptResource>::SetResource(resource);
-}
-
-void FetchBlockedDocWriteScriptClient::NotifyFinished(Resource* resource) {
-  DCHECK_EQ(GetResource(), resource);
-  ClearResource();
-  keep_alive_.Clear();
-  Document* document = document_;
-  if (!document)
-    return;
-
+void PossiblyFetchBlockedDocWriteScript(const Resource* resource,
+                                        Document& document,
+                                        const ScriptFetchOptions& options) {
   if (!resource->ErrorOccurred()) {
-    EmitWarningNotBlocked(params_.Url(), *document);
+    EmitWarningNotBlocked(resource->Url(), document);
     return;
   }
 
@@ -232,11 +215,16 @@ void FetchBlockedDocWriteScriptClient::NotifyFinished(Resource* resource) {
   // ERR_CACHE_MISS but other errors are rare with
   // mojom::FetchCacheMode::kOnlyIfCached.
 
-  EmitErrorBlocked(params_.Url(), *document);
+  EmitErrorBlocked(resource->Url(), document);
 
-  AddHeader(&params_);
-  params_.SetDefer(FetchParameters::kIdleLoad);
-  ScriptResource::Fetch(params_, document->Fetcher());
+  FetchParameters params = options.CreateFetchParameters(
+      resource->Url(), document.GetSecurityOrigin());
+  params.SetDefer(FetchParameters::kIdleLoad);
+  params.SetCharset(resource->Encoding());
+
+  AddHeader(&params);
+
+  ScriptResource::Fetch(params, document.Fetcher());
 }
 
 }  // namespace blink
