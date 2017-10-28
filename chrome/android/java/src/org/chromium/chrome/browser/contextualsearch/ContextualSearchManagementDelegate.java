@@ -64,4 +64,14 @@ public interface ContextualSearchManagementDelegate {
      * Log the current state of Contextual Search.
      */
     void logCurrentState();
+
+    /**
+     * Called when the Contextual Search panel is shown.
+     */
+    void onPanelShown();
+
+    /**
+     * Called when the Contextual Search panel is expanded or maximized.
+     */
+    void onPanelExpandedOrMaximized();
 }
