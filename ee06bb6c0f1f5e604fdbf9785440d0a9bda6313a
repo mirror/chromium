@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "844ce92f_b5feab72",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-28T17:19:29Z",
+      "side": 1,
+      "message": "s/RenderingTest/NGLayoutTest/ in case we override SetUp() in NGLayoutTest in the future. Ditto in other files.",
+      "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb1705e_a7e8b7e5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-28T17:19:29Z",
+      "side": 1,
+      "message": "Remove this override. Ditto in other files.",
+      "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462e0127_88f049c5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_base_layout_algorithm_test.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-28T17:19:29Z",
+      "side": 1,
+      "message": "Nit: optional, remove the constructor and destructor.",
+      "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82290a1_aeeabf9e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_child_iterator_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-28T17:19:29Z",
+      "side": 1,
+      "message": "Nit: optionally you can use the shorter form:\nusing NGBlockChildIterationTest \u003d NGLayoutTest;",
+      "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "887fa465_e9159ad6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_test.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-28T17:19:29Z",
+      "side": 1,
+      "message": "Please pass the \"LocalFrameClient* local_frame_client \u003d nullptr\" parameter to RenderingTest constructor, in case some NGLayout tests will need it in the future.",
+      "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b67fb92_3351d353",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-28T17:19:29Z",
+      "side": 1,
+      "message": "Please use the \"private ScopedXXXForTest\" pattern (for both ScopedLayoutNGForTest and ScopedLayoutNGPaintFragmentsForTest).\n\nScopedLayoutNGPaintFragmentsForTest will be automatically available after https://chromium-review.googlesource.com/c/chromium/src/+/740963.",
+      "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b801e49d_6241a628",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-28T17:19:29Z",
+      "side": 1,
+      "message": "Please also replace this class with ScopedLaoutNGPaintFragmentsForTest.",
+      "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
