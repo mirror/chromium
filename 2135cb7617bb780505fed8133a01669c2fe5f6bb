@@ -294,6 +294,30 @@
       "revId": "2135cb7617bb780505fed8133a01669c2fe5f6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f88764_1f5d8467",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-10-28T06:52:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0c37f265_7c3d8f96",
+      "range": {
+        "startLine": 813,
+        "startChar": 18,
+        "endLine": 813,
+        "endChar": 36
+      },
+      "revId": "2135cb7617bb780505fed8133a01669c2fe5f6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
