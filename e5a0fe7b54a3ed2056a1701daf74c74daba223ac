@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa8280d4_5fdbe627",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-29T10:45:49Z",
+      "side": 1,
+      "message": "nit: (not from this change, but) resued -\u003e reused",
+      "revId": "e5a0fe7b54a3ed2056a1701daf74c74daba223ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
