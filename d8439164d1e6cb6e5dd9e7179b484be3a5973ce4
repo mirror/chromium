@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a87ddb_8797dac5",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-29T23:58:05Z",
+      "side": 1,
+      "message": "Feel free to bikeshed on the wording.",
+      "revId": "d8439164d1e6cb6e5dd9e7179b484be3a5973ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
