@@ -93,7 +93,6 @@ class LayoutTestRunner(object):
         locked_shards, unlocked_shards = self._sharder.shard_tests(
             test_inputs,
             int(self._options.child_processes),
-            self._options.fully_parallel,
             self._options.run_singly or (self._options.batch_size == 1))
 
         # We don't have a good way to coordinate the workers so that they don't
@@ -361,7 +360,7 @@ class Sharder(object):
         self._split = test_split_fn
         self._max_locked_shards = max_locked_shards
 
-    def shard_tests(self, test_inputs, num_workers, fully_parallel, run_singly):
+    def shard_tests(self, test_inputs, num_workers):
         """Groups tests into batches.
         This helps ensure that tests that depend on each other (aka bad tests!)
         continue to run together as most cross-tests dependencies tend to
@@ -376,8 +375,6 @@ class Sharder(object):
         # in prepare_lists as well.
         if num_workers == 1:
             return self._shard_in_two(test_inputs)
-        elif fully_parallel:
-            return self._shard_every_file(test_inputs, run_singly)
         return self._shard_by_directory(test_inputs)
 
     def _shard_in_two(self, test_inputs):
