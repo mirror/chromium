@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "030bd560_27791e42",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-29T10:15:04Z",
+      "side": 1,
+      "message": "But it\u0027s unnecessary for CreateIBufferFromData[1].\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/729306/7/base/win/winrt_storage_util.cc#32",
+      "parentUuid": "99c82527_14fab027",
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0358332_bbd2f79a",
         "filename": "base/win/winrt_storage_util.cc",
         "patchSetId": 7
@@ -77,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "86e752ba_06e0fb7c",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-29T10:15:04Z",
+      "side": 1,
+      "message": "Robert@ suggest use pointer directly align with COM style.",
+      "parentUuid": "fc650452_9721ad20",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 44
+      },
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "156ae20f_a2820673",
         "filename": "base/win/winrt_storage_util.cc",
         "patchSetId": 7
@@ -91,6 +133,24 @@
       "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9635b3cf_176febd4",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-29T10:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "156ae20f_a2820673",
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "3256812d_fe173c9c",
+        "filename": "base/win/winrt_storage_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-29T10:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70d013ef_9d2d0308",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 41
+      },
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efc8e480_a2a941b9",
         "filename": "base/win/winrt_storage_util_unittest.cc",
         "patchSetId": 7
@@ -131,6 +215,24 @@
       "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30080e3_acac106e",
+        "filename": "base/win/winrt_storage_util_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-29T10:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efc8e480_a2a941b9",
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "20228a5d_8e95164e",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-29T10:15:04Z",
+      "side": 1,
+      "message": "Could you please provide some references on this code style that is uncommon with ComPtr parameter.",
+      "parentUuid": "7feabd72_f7b86ca2",
+      "range": {
+        "startLine": 45,
+        "startChar": 38,
+        "endLine": 45,
+        "endChar": 44
+      },
+      "revId": "63cabb144339a179728947aaa68ded4b80399471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bd1f67e_5a9969d8",
         "filename": "base/win/winrt_storage_util.h",
         "patchSetId": 5
