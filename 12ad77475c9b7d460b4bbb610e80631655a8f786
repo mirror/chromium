@@ -22,6 +22,30 @@
       "revId": "12ad77475c9b7d460b4bbb610e80631655a8f786",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e9516c_061f123a",
+        "filename": "ui/views/window/dialog_delegate_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-29T22:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf03fe12_9bff81b9",
+      "range": {
+        "startLine": 312,
+        "startChar": 5,
+        "endLine": 312,
+        "endChar": 30
+      },
+      "revId": "12ad77475c9b7d460b4bbb610e80631655a8f786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
