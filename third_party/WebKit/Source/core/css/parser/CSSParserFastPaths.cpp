@@ -992,10 +992,6 @@ static CSSValue* ParseKeywordValue(CSSPropertyID property_id,
         !EqualIgnoringASCIICase(string, "unset"))
       return nullptr;
 
-    // Parse initial/inherit/unset shorthands using the CSSPropertyParser.
-    if (shorthandForProperty(property_id).length())
-      return nullptr;
-
     // Descriptors do not support css wide keywords.
     if (!CSSPropertyAPI::Get(property_id).IsProperty())
       return nullptr;
@@ -1245,6 +1241,8 @@ CSSValue* CSSParserFastPaths::MaybeParseValue(CSSPropertyID property_id,
                                               const String& string,
                                               CSSParserMode parser_mode) {
   if (!IsFastPathPossibleForProperty(property_id))
+    return nullptr;
+  if (shorthandForProperty(property_id).length())
     return nullptr;
   if (CSSValue* length =
           ParseSimpleLengthValue(property_id, string, parser_mode))
