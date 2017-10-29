@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d5611ff6_a89d16ec",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-29T05:49:26Z",
+      "side": 1,
+      "message": "You\u0027ll need a wrapper around the cups functionality if you ever want to write unit tests for this class.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a7f410f_56340740",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
