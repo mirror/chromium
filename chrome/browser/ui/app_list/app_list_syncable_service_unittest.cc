@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/ui/app_list/app_list_syncable_service.h"
+#include "chrome/browser/ui/ash/app_list/app_list_syncable_service.h"
 #include "base/files/scoped_temp_dir.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/profiles/profile_manager.h"

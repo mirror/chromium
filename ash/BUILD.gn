@@ -63,6 +63,8 @@ component("ash") {
     # TODO(jamescook): Move parts of this into //ash/public/cpp
     "accessibility_types.h",
     "animation/animation_change_type.h",
+    "app_list/app_list_controller.cc",
+    "app_list/app_list_controller.h",
     "app_list/app_list_delegate_impl.cc",
     "app_list/app_list_delegate_impl.h",
     "app_list/app_list_presenter_delegate.cc",

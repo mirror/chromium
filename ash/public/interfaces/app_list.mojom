@@ -1,0 +1,33 @@
+// Copyright 2016 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module ash.mojom;
+
+import "mojo/common/string16.mojom";
+
+// The Shelf controller allows clients (eg. Chrome) to control the ash shelf.
+interface AppListController {
+  // Observers are immediately notified of the current shelf states when added.
+  SetObserver(associated AppListObserver observer);
+
+  // Adds |item| to the end of |app_list_items_|. Takes ownership of |item|.
+  // Triggers observers_.OnListItemAdded(). Returns a pointer to the added item
+  // that is safe to use (e.g. after releasing a scoped ptr).
+  // AddItem(string item_ptr) => (string name);
+
+  // Finds item matching |id| in |app_list_items_| (linear search) and deletes
+  // it. Triggers observers_.OnListItemRemoved() after removing the item from
+  // the list and before deleting it.
+  DeleteItem(string id);
+
+  // Removes the item with matching |id| in |app_list_items_| without deleting
+  // it. Returns a scoped pointer containing the removed item.
+  // RemoveItem(string id) => (string id);
+};
+
+// A Shelf observer, used to persist profile settings and cache a ShelfModel.
+interface AppListObserver {
+  OnDeleteItem(string id);
+};
+

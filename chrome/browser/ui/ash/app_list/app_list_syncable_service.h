@@ -10,6 +10,7 @@
 #include <map>
 #include <memory>
 
+#include "ash/public/interfaces/app_list.mojom.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
@@ -23,6 +24,7 @@
 #include "components/sync/model/sync_error_factory.h"
 #include "components/sync/model/syncable_service.h"
 #include "components/sync/protocol/app_list_specifics.pb.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 
 class ArcAppModelBuilder;
 class DriveAppProvider;
@@ -49,6 +51,7 @@ class AppListModel;
 // Keyed Service that owns, stores, and syncs an AppListModel for a profile.
 class AppListSyncableService : public syncer::SyncableService,
                                public KeyedService,
+                               private ash::mojom::AppListObserver,
                                public DriveAppUninstallSyncService {
  public:
   struct SyncItem {
@@ -261,6 +264,10 @@ class AppListSyncableService : public syncer::SyncableService,
   // releases http://crbug.com/722675.
   void MaybeImportLegacyPlayStorePosition(syncer::SyncChangeList* change_list);
 
+  bool ConnectToAppListController();
+
+  void OnDeleteItem(const std::string& id) override;
+
   Profile* profile_;
   extensions::ExtensionSystem* extension_system_;
   std::unique_ptr<AppListModel> model_;
@@ -274,6 +281,11 @@ class AppListSyncableService : public syncer::SyncableService,
   bool initial_sync_data_processed_;
   bool first_app_list_sync_;
   std::string oem_folder_name_;
+
+  // Ash's mojom::ShelfController used to change shelf state.
+  ash::mojom::AppListControllerPtr app_list_controller_;
+  // The binding this instance uses to implment mojom::ShelfObserver
+  mojo::AssociatedBinding<ash::mojom::AppListObserver> observer_binding_;
 
   // List of observers.
   base::ObserverList<Observer> observer_list_;

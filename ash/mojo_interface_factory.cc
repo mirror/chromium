@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "ash/accelerators/accelerator_controller.h"
+#include "ash/app_list/app_list_controller.h"
 #include "ash/cast_config_controller.h"
 #include "ash/display/ash_display_controller.h"
 #include "ash/highlighter/highlighter_controller.h"
@@ -44,6 +45,11 @@ base::LazyInstance<RegisterInterfacesCallback>::Leaky
 void BindAcceleratorControllerRequestOnMainThread(
     mojom::AcceleratorControllerRequest request) {
   Shell::Get()->accelerator_controller()->BindRequest(std::move(request));
+}
+
+void BindAppListControllerRequestOnMainThread(
+    mojom::AppListControllerRequest request) {
+  Shell::Get()->app_list_controller()->BindRequest(std::move(request));
 }
 
 void BindAppListRequestOnMainThread(
@@ -149,6 +155,8 @@ void RegisterInterfaces(
       base::Bind(&BindAcceleratorControllerRequestOnMainThread),
       main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindAppListRequestOnMainThread),
+                         main_thread_task_runner);
+  registry->AddInterface(base::Bind(&BindAppListControllerRequestOnMainThread),
                          main_thread_task_runner);
   registry->AddInterface(
       base::Bind(&BindAshDisplayControllerRequestOnMainThread),

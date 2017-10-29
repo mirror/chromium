@@ -16,6 +16,7 @@
 #include "ash/accelerators/spoken_feedback_toggler.h"
 #include "ash/accessibility/accessibility_controller.h"
 #include "ash/accessibility/accessibility_delegate.h"
+#include "ash/app_list/app_list_controller.h"
 #include "ash/app_list/app_list_delegate_impl.h"
 #include "ash/ash_constants.h"
 #include "ash/autoclick/autoclick_controller.h"
@@ -608,6 +609,7 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
              std::unique_ptr<ShellPort> shell_port)
     : shell_port_(std::move(shell_port)),
       ash_display_controller_(std::make_unique<AshDisplayController>()),
+      app_list_controller_(std::make_unique<AppListController>()),
       brightness_control_delegate_(
           std::make_unique<system::BrightnessControllerChromeos>()),
       cast_config_(std::make_unique<CastConfigController>()),
