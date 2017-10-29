@@ -340,6 +340,14 @@ FILE* CreateAndOpenTemporaryFileInDir(const FilePath& dir, FilePath* path) {
 
 bool CreateTemporaryFileInDir(const FilePath& dir, FilePath* temp_file) {
   AssertBlockingAllowed();
+  return CreateTemporaryFileWithPrefixInDir(dir, FilePath::StringType(),
+                                            temp_file);
+}
+
+bool CreateTemporaryFileWithPrefixInDir(const FilePath& dir,
+                                        const FilePath::StringType& prefix,
+                                        FilePath* temp_file) {
+  AssertBlockingAllowed();
 
   // Use GUID instead of ::GetTempFileName() to generate unique file names.
   // "Due to the algorithm used to generate file names, GetTempFileName can
@@ -354,7 +362,8 @@ bool CreateTemporaryFileInDir(const FilePath& dir, FilePath* temp_file) {
   // Although it is nearly impossible to get a duplicate name with GUID, we
   // still use a loop here in case it happens.
   for (int i = 0; i < 100; ++i) {
-    temp_name = dir.Append(ASCIIToUTF16(base::GenerateGUID()) + L".tmp");
+    temp_name =
+        dir.Append(prefix + ASCIIToUTF16(base::GenerateGUID()) + L".tmp");
     File file(temp_name,
               File::FLAG_CREATE | File::FLAG_READ | File::FLAG_WRITE);
     if (file.IsValid()) {
