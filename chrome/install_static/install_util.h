@@ -76,6 +76,10 @@ std::wstring GetUninstallRegistryPath();
 // a simple convenience wrapper around InstallDetails.
 const wchar_t* GetAppGuid();
 
+// Returns the toast activator CLSID with which Chrome is registered with the
+// the Windows OS.
+const wchar_t* GetToastActivatorClsid();
+
 // Returns the unsuffixed application name of this program. This is the base of
 // the name registered with Default Programs. IMPORTANT: This must only be
 // called by the installer.

@@ -90,6 +90,11 @@ struct InstallConstants {
   // mode never included a DelegateExecute verb handler.
   const wchar_t* legacy_command_execute_clsid;
 
+  // The CLSID of the COM object registered with the Widnows OS. This is for app
+  // activation via user interaction with a toast notification in the Action
+  // Center.
+  const wchar_t* toast_activator_clsid;
+
   // The default name for this mode's update channel.
   const wchar_t* default_channel_name;
 
