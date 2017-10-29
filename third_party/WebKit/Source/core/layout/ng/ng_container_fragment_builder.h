@@ -84,9 +84,15 @@ class CORE_EXPORT NGContainerFragmentBuilder : public NGBaseFragmentBuilder {
   // NGOutOfFlowLayoutPart(container_style, builder).Run();
   //
   // See layout part for builder interaction.
+  //
+  // @param override_direction: by default, child_offset
+  // coordinates are relative to fragment's logical coordinate plane.
+  // In inline layout, child logical coordinates are relative to
+  // its parent, which can be different from fragment.
   NGContainerFragmentBuilder& AddOutOfFlowChildCandidate(
       NGBlockNode,
-      const NGLogicalOffset&);
+      const NGLogicalOffset& child_offset,
+      bool is_inline_rtl = false);
 
   NGContainerFragmentBuilder& AddOutOfFlowDescendant(
       NGOutOfFlowPositionedDescendant);
@@ -112,7 +118,7 @@ class CORE_EXPORT NGContainerFragmentBuilder : public NGBaseFragmentBuilder {
   // physical size the fragment builder.
   struct NGOutOfFlowPositionedCandidate {
     NGOutOfFlowPositionedDescendant descendant;
-    NGLogicalOffset child_offset;
+    NGLogicalOffset child_offset;  // Logical offset of child's top left vertex.
   };
 
   NGContainerFragmentBuilder(scoped_refptr<const ComputedStyle>,
