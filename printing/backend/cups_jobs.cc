@@ -466,16 +466,19 @@ bool GetPrinterInfo(const std::string& address,
   return ParsePrinterInfo(response.get(), printer_info);
 }
 
-bool GetPrinterStatus(http_t* http,
-                      const std::string& printer_id,
-                      PrinterStatus* printer_status) {
+// Query the printer with the name |printer_uri| using connection |http| for
+// |printer_status|.  Returns true if the request was successful, false
+// otherwise. |printer_uri| can be empty if querying a printer directly instead
+// of a print server.
+bool GetPrinterStatusImpl(http_t* http,
+                          const std::string& queue_name,
+                          const std::string& rp,
+                          PrinterStatus* printer_status) {
   base::AssertBlockingAllowed();
 
   ipp_status_t status;
-  const std::string printer_uri = PrinterUriFromName(printer_id);
-
   ScopedIppPtr response =
-      GetPrinterAttributes(http, printer_uri, "/", kPrinterAttributes.size(),
+      GetPrinterAttributes(http, queue_name, rp, kPrinterAttributes.size(),
                            kPrinterAttributes.data(), &status);
 
   if (status != IPP_STATUS_OK)
@@ -484,6 +487,29 @@ bool GetPrinterStatus(http_t* http,
   ParsePrinterStatus(response.get(), printer_status);
 
   return true;
+}
+
+bool GetPrinterStatus(http_t* http,
+                      const std::string& printer_id,
+                      PrinterStatus* printer_status) {
+  const std::string printer_uri = PrinterUriFromName(printer_id);
+
+  return GetPrinterStatusImpl(http, printer_uri, printer_status);
+}
+
+bool GetPrinterStatus(const std::string& address,
+                      const int port,
+                      const std::string& resource,
+                      PrinterStatus* printer_status) {
+  base::ThreadRestrictions::AssertIOAllowed();
+
+  HttpPtr http =
+      HttpPtr(httpConnect2(address.data(), port, nullptr, AF_INET,
+                           HTTP_ENCRYPTION_IF_REQUESTED, 0, 200, nullptr));
+  if (!http)
+    return false;
+
+  return GetPrinterStatusImpl(http.get(), resource, printer_status);
 }
 
 bool GetCupsJobs(http_t* http,

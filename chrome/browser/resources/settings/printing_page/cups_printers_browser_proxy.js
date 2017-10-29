@@ -157,6 +157,12 @@ cr.define('settings', function() {
      * @param {!CupsPrinterInfo} newPrinter
      */
     cancelPrinterSetUp(newPrinter) {}
+
+    /**
+     * @param {!CupsPrinterInfo} newPrinter
+     * @return {!CupsPrinterStatus} newPrinter
+     */
+    getPrinterStatus(newPrinter) {}
   }
 
   /**
@@ -227,9 +233,15 @@ cr.define('settings', function() {
     cancelPrinterSetUp(newPrinter) {
       chrome.send('cancelPrinterSetUp', [newPrinter]);
     }
+
+    /** @override */
+    getPrinterStatus(newPrinter) {
+      return cr.sendWithPromise('getPrinterStatus', newPrinter);
+    }
   }
 
   cr.addSingletonGetter(CupsPrintersBrowserProxyImpl);
+
 
   return {
     CupsPrintersBrowserProxy: CupsPrintersBrowserProxy,

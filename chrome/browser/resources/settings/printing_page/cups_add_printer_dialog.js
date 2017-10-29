@@ -176,19 +176,92 @@ Polymer({
   },
 
   /** @private */
-  onAddressChanged_: function() {
-    // TODO(xdai): Check if the printer address exists and then show the
-    // corresponding message after the API is ready.
-    // The format of address is: ip-address-or-hostname:port-number.
+  startSearching_: function() {
+    this.$.searchInProgress.hidden = false;
+    this.$.searchFound.hidden = true;
+    this.$.searchNotFound.hidden = true;
+  },
+
+  /** @private */
+  notLooking_: function() {
+    this.$.searchInProgress.hidden = true;
+    this.$.searchFound.hidden = true;
+    this.$.searchNotFound.hidden = true;
+  },
+
+  showFoundMessage_: function(found) {
+    this.$.searchInProgress.hidden = true;
+    this.$.searchFound.hidden = !found;
+    this.$.searchNotFound.hidden = found;
+  },
+
+  /** @private */
+  printerFound_: function(success) {
+    // TODO(skau): Show a different message for a busy printer.
+    this.showFoundMessage_(true);
+  },
+
+  /** @private */
+  printerNotFound_: function(rejection) {
+    // TODO(skau): Report reason printer didn't respond.
+    this.showFoundMessage_(false);
+  },
+
+  /** @private */
+  queryPrinter_: function() {
+    var protocol = this.newPrinter.printerProtocol;
+    if (protocol == "ipp" || protocol == "ipps") {
+      this.startSearching_();
+      settings.CupsPrintersBrowserProxyImpl.getInstance().getPrinterStatus(
+          this.newPrinter).then(this.printerFound_.bind(this),
+            this.printerNotFound_.bind(this));
+    } else {
+      this.notLooking_();
+    }
   },
 
   /**
-   * @param {!Event} event
+   * @param {string} address
+   * @return {boolean}
    * @private
    */
-  onProtocolChange_: function(event) {
-    this.set('newPrinter.printerProtocol', event.target.value);
+  isValidAddress_: function(address) {
+    // Loose hostname + port regex. Matches hostnames and IP addresses that
+    // might be valid.  Allows many invalid strings.
+    var addressRegex = RegExp('^[a-zA-Z0-9-._:]+(:[0-9]+)?$');
+
+    return addressRegex.test(address);
   },
+
+  /**
+   * @param {string} printerName
+   * @param {string} printerAddress
+   * @return {boolean}
+   * @private
+   */
+  addPrinterAllowed_: function(printerName, printerAddress) {
+    return printerName && printerAddress &&
+           this.isValidAddress_(printerAddress);
+  },
+
+  /** @private */
+  onAddressChanged_: function(evt) {
+    this.set('newPrinter.printerAddress', evt.target.value);
+    this.queryPrinter_();
+  },
+
+  /** @private */
+  onProtocolChange_: function(evt) {
+    this.set('newPrinter.printerProtocol', evt.target.value);
+    this.queryPrinter_();
+  },
+
+  /** @private */
+  onQueueChanged_: function(evt) {
+    this.newPrinter.printerQueue = evt.target.value;
+    this.queryPrinter_();
+  },
+
 });
 
 Polymer({

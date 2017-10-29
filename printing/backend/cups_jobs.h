@@ -168,6 +168,14 @@ bool GetPrinterStatus(http_t* http,
                       const std::string& printer_id,
                       PrinterStatus* printer_status);
 
+// Attempts to retrieve printer status for the printer at |address| with |port|
+// and |resource|.  Returns true if succcssful and updates the fields in
+// |printer_status| as appropriate.  Returns false if the request failed.
+bool GetPrinterStatus(const std::string& address,
+                      const int port,
+                      const std::string& resource,
+                      PrinterStatus* printer_status);
+
 // Attempts to retrieve job information using connection |http| for the printer
 // named |printer_id|.  Retrieves at most |limit| jobs.  If |completed| then
 // completed jobs are retrieved.  Otherwise, jobs that are currently in progress
