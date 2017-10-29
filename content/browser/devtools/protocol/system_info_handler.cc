@@ -155,24 +155,32 @@ class SystemInfoHandlerGpuObserver : public content::GpuDataManagerObserver {
 
     GpuDataManagerImpl::GetInstance()->AddObserver(this);
     OnGpuInfoUpdate();
+    // TODO(zmo): We just need to make sure GPU process launches. Requesting
+    // complete GPU info is an overkill.
+    GpuDataManager::GetInstance()->RequestCompleteGpuInfoIfNeeded();
   }
 
   void OnGpuInfoUpdate() override {
+    fprintf(stderr, "OnGpuInfoUpdate()\n");
     if (GpuDataManagerImpl::GetInstance()->IsGpuFeatureInfoAvailable())
       UnregisterAndSendResponse();
   }
 
   void OnGpuProcessCrashed(base::TerminationStatus exit_code) override {
+    fprintf(stderr, "OnGpuProcessCrashed()\n");
     UnregisterAndSendResponse();
   }
 
   void ObserverWatchdogCallback() {
+    fprintf(stderr, "ObserverWatchdogCallback()\n");
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     UnregisterAndSendResponse();
   }
 
   void UnregisterAndSendResponse() {
+    fprintf(stderr, "UnregisterAndSendResponse()\n");
     GpuDataManagerImpl::GetInstance()->RemoveObserver(this);
+    DCHECK(GpuDataManagerImpl::GetInstance()->IsGpuFeatureInfoAvailable());
     SendGetInfoResponse(std::move(callback_));
     delete this;
   }
