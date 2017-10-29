@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b008659f_8a9a2122",
+        "filename": "chrome/browser/page_load_metrics/observers/OWNERS",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-10-29T14:26:39Z",
+      "side": 1,
+      "message": "there are probably a bunch of people in that owners who aren\u0027t as familiar with UKM privacy. i wonder if we should perhaps manually list the people who are well suited to review changes here, e.g.\n\nrkaplow, holte, asvitkine, bmcquade, engedy, msramek\n\notherwise i could imagine someone getting a LGTM for e.g. ukm.xml from someone else on metrics team, and that giving approval for this file as well my mistake, even if the ukm.xml reviewer did not understand the constraints for this directory.",
+      "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310b75bb_9f8b48c0",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter/ukm_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-10-29T14:26:39Z",
+      "side": 1,
+      "message": "just so i understand, his is an empty set for now, and thus no features are opted in, but we anticipate adding features to this in the future? maybe add a comment explaining this so anyone else who comes across the code understands this.",
+      "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d01b13e_2e1b915b",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter/ukm_features.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-10-29T14:26:39Z",
+      "side": 1,
+      "message": "interesting, features should only be tracked via UKM if they are not common? Is that a privacy requirement? Or is there some other motivation? Maybe explain why this is a requirement briefly in the comment.",
+      "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35d1d60_9528cdb5",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-10-29T14:26:39Z",
+      "side": 1,
+      "message": "the \u0027opt in\u0027 part of this name is sort of confusing to me. maybe just \u0027IsAllowedUKMFeature\u0027?",
+      "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddea602c_34edfd04",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-10-29T14:26:39Z",
+      "side": 1,
+      "message": "let\u0027s use singular \u0027Feature\u0027 here since we\u0027re logging one feature at a time",
+      "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7285ad8_9178bd55",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-10-29T14:26:39Z",
+      "side": 1,
+      "message": "instead of adding this SourceId, let\u0027s do something more general, either:\n1. implement OnCommit, and store the source id passed to oncommit in a member variable for later use in this method\n2. pass a const PageLoadExtraInfo\u0026 rather than a sourceid to this method. PageLoadExtraInfo has a sourceid member as well as other things that might be useful. we tend to pass it rather than specific values into callbacks.\n\n2 is probably slightly better - most other callbacks like this one get PageLoadExtraInfo",
+      "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
