@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "232339c2_8f699dcc",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-29T04:27:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7deb12d_635b7052",
+      "revId": "0d99450b50c95cf2cc7aad7ae8077a7223bbee0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afa14355_a9da5d4b",
         "filename": "content/renderer/media/media_factory.cc",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T19:50:19Z",
       "side": 1,
       "message": "This comment implies that this will change in the future.  I think we will always support single threaded compositing for tests at least.",
+      "revId": "0d99450b50c95cf2cc7aad7ae8077a7223bbee0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f52d71_a934507b",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-29T04:27:24Z",
+      "side": 1,
+      "message": "I don\u0027t know much about the comment, it was just sort of grandfathered in from that code segment, which I ripped from WebMediaPlayerImpl.",
+      "parentUuid": "afa14355_a9da5d4b",
       "revId": "0d99450b50c95cf2cc7aad7ae8077a7223bbee0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f96331aa_b6ef8ffb",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-29T04:27:24Z",
+      "side": 1,
+      "message": "Right.\nI guess it could be possible to destroy the VideoFrameCompositor, destroying VideoFrameSubmitter before this PostTask finishes. If I move the DCHECK in, would that be ok? (My lack of C++ knowledge)",
+      "parentUuid": "0f6a395f_115e5c8e",
+      "revId": "0d99450b50c95cf2cc7aad7ae8077a7223bbee0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f15b1e8a_bbb6a0ca",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 19
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "674a529f_7bc2c7e8",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-29T04:27:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f15b1e8a_bbb6a0ca",
+      "revId": "0d99450b50c95cf2cc7aad7ae8077a7223bbee0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bfd7714_e3f39432",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 19
@@ -84,6 +156,24 @@
       "revId": "0d99450b50c95cf2cc7aad7ae8077a7223bbee0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d89a16_cd73087b",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-29T04:27:24Z",
+      "side": 1,
+      "message": "It\u0027s due to PaintSingleFrame, which happens before renderering begins. I will comment as such.",
+      "parentUuid": "8bfd7714_e3f39432",
+      "revId": "0d99450b50c95cf2cc7aad7ae8077a7223bbee0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
