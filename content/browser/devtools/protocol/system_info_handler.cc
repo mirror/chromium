@@ -14,6 +14,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
+#include "content/browser/gpu/gpu_process_host.h"
 #include "gpu/config/gpu_feature_type.h"
 #include "gpu/config/gpu_info.h"
 #include "gpu/config/gpu_switches.h"
@@ -155,24 +156,32 @@ class SystemInfoHandlerGpuObserver : public content::GpuDataManagerObserver {
 
     GpuDataManagerImpl::GetInstance()->AddObserver(this);
     OnGpuInfoUpdate();
+    GpuProcessHost::CallOnIO(
+        GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED, true /* force_create */,
+        base::Bind([](GpuProcessHost* host) { (void)host; }));
   }
 
   void OnGpuInfoUpdate() override {
+    fprintf(stderr, "OnGpuInfoUpdate()\n");
     if (GpuDataManagerImpl::GetInstance()->IsGpuFeatureInfoAvailable())
       UnregisterAndSendResponse();
   }
 
   void OnGpuProcessCrashed(base::TerminationStatus exit_code) override {
+    fprintf(stderr, "OnGpuProcessCrashed()\n");
     UnregisterAndSendResponse();
   }
 
   void ObserverWatchdogCallback() {
+    fprintf(stderr, "ObserverWatchdogCallback()\n");
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     UnregisterAndSendResponse();
   }
 
   void UnregisterAndSendResponse() {
+    fprintf(stderr, "UnregisterAndSendResponse()\n");
     GpuDataManagerImpl::GetInstance()->RemoveObserver(this);
+    DCHECK(GpuDataManagerImpl::GetInstance()->IsGpuFeatureInfoAvailable());
     SendGetInfoResponse(std::move(callback_));
     delete this;
   }
