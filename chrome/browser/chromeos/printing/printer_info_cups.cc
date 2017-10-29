@@ -4,6 +4,8 @@
 
 #include "chrome/browser/chromeos/printing/printer_info.h"
 
+#include <cups/cups.h>
+
 #include <algorithm>
 #include <array>
 #include <string>
@@ -119,6 +121,30 @@ void OnPrinterQueried(const chromeos::PrinterInfoCallback& callback,
                IsAutoconf(*info));
 }
 
+std::unique_ptr<::printing::PrinterStatus> PrinterStatusImpl(
+    const std::string& host,
+    const int port,
+    const std::string& path) {
+  auto status = base::MakeUnique<::printing::PrinterStatus>();
+  if (!::printing::GetPrinterStatus(host, port, path, status.get())) {
+    LOG(ERROR) << "Could not retrieve printer status";
+    return nullptr;
+  }
+
+  return status;
+}
+
+void OnPrinterStatus(const chromeos::PrinterStatusCallback& callback,
+                     std::unique_ptr<::printing::PrinterStatus> status) {
+  if (!status) {
+    VLOG(1) << "Could not reach printer";
+    callback.Run(false, false);
+    return;
+  }
+
+  callback.Run(true, status->state != IPP_PRINTER_STOPPED);
+}
+
 }  // namespace
 
 namespace chromeos {
@@ -138,6 +164,19 @@ void QueryIppPrinter(const std::string& host,
       base::TaskTraits(base::TaskPriority::USER_VISIBLE, base::MayBlock()),
       base::Bind(&QueryPrinterImpl, host, port, path, encrypted),
       base::Bind(&OnPrinterQueried, callback));
+}
+
+void GetPrinterStatus(const std::string& host,
+                      const int port,
+                      const std::string& path,
+                      const PrinterStatusCallback& callback) {
+  DCHECK(!host.empty());
+
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE,
+      base::TaskTraits(base::TaskPriority::USER_VISIBLE, base::MayBlock()),
+      base::Bind(&PrinterStatusImpl, host, port, path),
+      base::Bind(&OnPrinterStatus, callback));
 }
 
 }  // namespace chromeos

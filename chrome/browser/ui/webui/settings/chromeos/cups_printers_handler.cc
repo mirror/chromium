@@ -15,6 +15,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
@@ -50,15 +51,33 @@ namespace {
 
 constexpr char kIppScheme[] = "ipp";
 constexpr char kIppsScheme[] = "ipps";
+constexpr char kHttpScheme[] = "http";
+constexpr char kHttpsScheme[] = "https";
+constexpr char kSocketScheme[] = "socket";
+constexpr char kUsbScheme[] = "usb";
 
 constexpr int kIppPort = 631;
 // IPPS commonly uses the HTTPS port despite the spec saying it should use the
 // IPP port.
 constexpr int kIppsPort = 443;
+constexpr int kHttpPort = 80;
+constexpr int kHttpsPort = 443;
+constexpr int kSocketPort = 9100;
+// USB doesn't use ports.
+constexpr int kUsbPort = url::SpecialPort::PORT_UNSPECIFIED;
 
 // These values are written to logs.  New enum values can be added, but existing
 // enums must never be renumbered or deleted and reused.
 enum PpdSourceForHistogram { kUser = 0, kScs = 1, kPpdSourceMax };
+
+const std::map<base::StringPiece, int>& GetSchemeToPortNumber() {
+  static const std::map<base::StringPiece, int>* kSchemeToPort =
+      new std::map<base::StringPiece, int>{
+          {kIppScheme, kIppPort},       {kIppsScheme, kIppsPort},
+          {kHttpScheme, kHttpPort},     {kHttpsScheme, kHttpsPort},
+          {kSocketScheme, kSocketPort}, {kUsbScheme, kUsbPort}};
+  return *kSchemeToPort;
+}
 
 // A parsed representation of a printer uri.
 struct PrinterUri {
@@ -67,6 +86,37 @@ struct PrinterUri {
   std::string host;
   int port = url::SpecialPort::PORT_INVALID;
   std::string path;
+
+  // Returns true if the port is specified.
+  bool SpecifiedPort() const {
+    return port != url::SpecialPort::PORT_UNSPECIFIED &&
+           port != url::SpecialPort::PORT_INVALID;
+  }
+
+  // Returns the standard port number for the |scheme|.
+  int ComputedPort() const {
+    const auto& port_map = GetSchemeToPortNumber();
+    auto found = port_map.find(scheme);
+    if (found == port_map.end()) {
+      NOTREACHED() << "Unrecognized scheme.  Port was not set.";
+      return 0;
+    }
+
+    return found->second;
+  }
+
+  // Returns the |host| and |port| as a string of the form host:port.  If |port|
+  // is specified, it is included.  Otherwise, |port| is omitted.
+  std::string HostAndPort() const {
+    if (!SpecifiedPort()) {
+      return host;
+    }
+
+    return base::StringPrintf("%s:%d", host.c_str(), port);
+  }
+
+  // Returns true if the uri is a usb uri.
+  bool IsUsb() const { return scheme == kUsbScheme; }
 };
 
 void RecordPpdSource(const PpdSourceForHistogram& source) {
@@ -118,6 +168,33 @@ bool ParseUri(const std::string& printer_uri, PrinterUri* uri) {
   uri->path = path.as_string();
 
   return true;
+}
+
+bool UriFromArgs(const base::DictionaryValue* printer_dict,
+                PrinterUri* parsed_uri) {
+  std::string printer_protocol;
+  if (!printer_dict->GetString("printerProtocol", &printer_protocol)) {
+    NOTREACHED() << "Protocol missing";
+    return false;
+  }
+
+  std::string printer_address;
+  if (!printer_dict->GetString("printerAddress", &printer_address)) {
+    NOTREACHED() << "Address missing";
+    return false;
+  }
+
+  std::string printer_queue;
+  printer_dict->GetString("printerQueue", &printer_queue);
+
+  if (printer_address.empty()) {
+    return false;
+  }
+
+  std::string printer_uri = printer_protocol + url::kStandardSchemeSeparator +
+                            printer_address + "/" + printer_queue;
+
+  return ParseUri(printer_uri, parsed_uri);
 }
 
 // Returns true if |printer_uri| is an IPP uri.
@@ -199,7 +276,7 @@ std::unique_ptr<base::DictionaryValue> GetPrinterInfo(const Printer& printer) {
     return nullptr;
   }
 
-  if (base::ToLowerASCII(uri.scheme) == "usb") {
+  if (uri.IsUsb()) {
     // USB has URI path (and, maybe, query) components that aren't really
     // associated with a queue -- the mapping between printing semantics and URI
     // semantics breaks down a bit here.  From the user's point of view, the
@@ -207,10 +284,10 @@ std::unique_ptr<base::DictionaryValue> GetPrinterInfo(const Printer& printer) {
     printer_info->SetString("printerAddress",
                             printer.uri().substr(strlen("usb://")));
   } else {
-    printer_info->SetString("printerAddress",
-                            PrinterAddress(uri.host, uri.port));
+    printer_info->SetString("printerAddress", uri.HostAndPort());
+
     if (!uri.path.empty()) {
-      printer_info->SetString("printerQueue", uri.path.substr(1));
+      printer_info->SetString("printerQueue",uri.path);
     }
   }
   printer_info->SetString("printerProtocol", base::ToLowerASCII(uri.scheme));
@@ -309,6 +386,10 @@ void CupsPrintersHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "getPrinterInfo", base::Bind(&CupsPrintersHandler::HandleGetPrinterInfo,
                                    base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "getPrinterStatus",
+      base::Bind(&CupsPrintersHandler::HandleGetPrinterStatus,
+                 base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
       "getCupsPrinterManufacturersList",
       base::Bind(&CupsPrintersHandler::HandleGetCupsPrinterManufacturers,
@@ -519,6 +600,53 @@ void CupsPrintersHandler::OnAutoconfQueried(const std::string& callback_id,
   info.SetString("model", model);
   info.SetString("makeAndModel", make_and_model);
   info.SetBoolean("autoconf", ipp_everywhere);
+  ResolveJavascriptCallback(base::Value(callback_id), info);
+}
+
+void CupsPrintersHandler::HandleGetPrinterStatus(const base::ListValue* args) {
+  DCHECK(args);
+  std::string callback_id;
+  if (!args->GetString(0, &callback_id)) {
+    NOTREACHED() << "Expected request for a promise";
+    return;
+  }
+
+  const base::DictionaryValue* printer_dict = nullptr;
+  if (!args->GetDictionary(1, &printer_dict)) {
+    NOTREACHED() << "Dictionary missing";
+    return;
+  }
+
+  AllowJavascript();
+
+  NonStandardUri parsed_uri;
+  if (!UriFromArgs(printer_dict, &parsed_uri)) {
+    OnPrinterStatus(callback_id, false, false);
+    return;
+  }
+
+  DCHECK(parsed_uri.scheme == kIppScheme || parsed_uri.scheme == kIppsScheme);
+  int port =
+      parsed_uri.SpecifiedPort() ? parsed_uri.port : parsed_uri.ComputedPort();
+
+  ::chromeos::GetPrinterStatus(
+      parsed_uri.host, port, parsed_uri.path,
+      base::Bind(&CupsPrintersHandler::OnPrinterStatus,
+                 weak_factory_.GetWeakPtr(), callback_id));
+}
+
+void CupsPrintersHandler::OnPrinterStatus(const std::string& callback_id,
+                                          bool success,
+                                          bool printer_ready) {
+  if (!success) {
+    base::DictionaryValue reject;
+    reject.SetString("message", "TODO: Report why it failed.");
+    RejectJavascriptCallback(base::Value(callback_id), reject);
+    return;
+  }
+
+  base::ListValue info;
+  info.AppendBoolean(printer_ready);
   ResolveJavascriptCallback(base::Value(callback_id), info);
 }
 

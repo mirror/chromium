@@ -23,6 +23,10 @@ using PrinterInfoCallback =
                         const std::string& make_and_model,
                         bool autoconf)>;
 
+// Callback for printer status.  |success| indicates if the request succeeded.
+// |ready| indicates if the printer is ready for a new print job.
+using PrinterStatusCallback = base::Callback<void(bool success, bool ready)>;
+
 // Dispatch an IPP request to |host| on |port| for |path| to obtain
 // basic printer information.
 void QueryIppPrinter(const std::string& host,
@@ -30,6 +34,13 @@ void QueryIppPrinter(const std::string& host,
                      const std::string& path,
                      bool encrypted,
                      const PrinterInfoCallback& callback);
+
+// Dispatch an IPP request to |host| on |port| for |path| to obtain
+// printer status.
+void GetPrinterStatus(const std::string& host,
+                      const int port,
+                      const std::string& path,
+                      const PrinterStatusCallback& callback);
 
 }  // namespace chromeos
 

@@ -77,6 +77,12 @@ class CupsPrintersHandler : public ::settings::SettingsPageUIHandler,
                                    const std::string& make_and_model,
                                    bool ipp_everywhere);
 
+  void HandleGetPrinterStatus(const base::ListValue* args);
+
+  void OnPrinterStatus(const std::string& callback_id,
+                       bool success,
+                       bool printer_ready);
+
   void HandleAddCupsPrinter(const base::ListValue* args);
 
   // Handles the result of adding a printer which the user specified the
