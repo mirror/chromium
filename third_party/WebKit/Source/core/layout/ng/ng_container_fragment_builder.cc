@@ -54,10 +54,40 @@ NGContainerFragmentBuilder& NGContainerFragmentBuilder::AddChild(
     scoped_refptr<NGLayoutResult> child,
     const NGLogicalOffset& child_offset) {
   // Collect the child's out of flow descendants.
+  // child_offset is offset of inline_start/block_start vertex.
+  // Candidates need offset of top/left vertex.
+  NGLogicalOffset top_left_offset;
+  NGPhysicalSize child_size = child->PhysicalFragment()->Size();
+  switch (WritingMode()) {
+    case kHorizontalTopBottom:
+      top_left_offset =
+          (IsRtl(Direction()))
+              ? NGLogicalOffset{child_offset.inline_offset + child_size.width,
+                                child_offset.block_offset}
+              : child_offset;
+      break;
+    case kVerticalRightLeft:
+    case kSidewaysRightLeft:
+      top_left_offset =
+          (IsRtl(Direction()))
+              ? NGLogicalOffset{child_offset.inline_offset + child_size.height,
+                                child_offset.block_offset + child_size.width}
+              : NGLogicalOffset{child_offset.inline_offset,
+                                child_offset.block_offset + child_size.width};
+      break;
+    case kVerticalLeftRight:
+    case kSidewaysLeftRight:
+      top_left_offset =
+          (IsRtl(Direction()))
+              ? NGLogicalOffset{child_offset.inline_offset + child_size.height,
+                                child_offset.block_offset}
+              : child_offset;
+      break;
+  }
   for (const NGOutOfFlowPositionedDescendant& descendant :
        child->OutOfFlowPositionedDescendants()) {
     oof_positioned_candidates_.push_back(
-        NGOutOfFlowPositionedCandidate{descendant, child_offset});
+        NGOutOfFlowPositionedCandidate{descendant, top_left_offset});
   }
 
   return AddChild(child->PhysicalFragment(), child_offset);
@@ -74,13 +104,16 @@ NGContainerFragmentBuilder& NGContainerFragmentBuilder::AddChild(
 NGContainerFragmentBuilder&
 NGContainerFragmentBuilder::AddOutOfFlowChildCandidate(
     NGBlockNode child,
-    const NGLogicalOffset& child_offset) {
+    const NGLogicalOffset& child_offset,
+    bool is_inline_rtl) {
   DCHECK(child);
 
   oof_positioned_candidates_.push_back(NGOutOfFlowPositionedCandidate{
       NGOutOfFlowPositionedDescendant{
-          child, NGStaticPosition::Create(WritingMode(), Direction(),
-                                          NGPhysicalOffset())},
+          child,
+          NGStaticPosition::Create(
+              WritingMode(), is_inline_rtl ? TextDirection::kRtl : Direction(),
+              NGPhysicalOffset())},
       child_offset});
 
   child.SaveStaticOffsetForLegacy(child_offset);

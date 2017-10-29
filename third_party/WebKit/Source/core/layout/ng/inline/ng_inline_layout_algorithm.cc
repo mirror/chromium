@@ -209,16 +209,10 @@ void NGInlineLayoutAlgorithm::PlaceItems(
       PlaceListMarker(item, &item_result, *line_info);
       DCHECK_GT(line_box_.size(), list_marker_index.value());
     } else if (item.Type() == NGInlineItem::kOutOfFlowPositioned) {
-      // TODO(layout-dev): Report the correct static position for the out of
-      // flow descendant. We can't do this here yet as it doesn't know the
-      // size of the line box.
-      container_builder_.AddOutOfFlowDescendant(
-          // Absolute positioning blockifies the box's display type.
-          // https://drafts.csswg.org/css-display/#transformations
-          {NGBlockNode(ToLayoutBox(item.GetLayoutObject())),
-           NGStaticPosition::Create(ConstraintSpace().WritingMode(),
-                                    ConstraintSpace().Direction(),
-                                    NGPhysicalOffset())});
+      NGBlockNode node(ToLayoutBox(item.GetLayoutObject()));
+      container_builder_.AddOutOfFlowChildCandidate(
+          node, NGLogicalOffset(position, LayoutUnit()),
+          IsRtl(box_states_->LineBoxState().style->Direction()));
       continue;
     } else {
       continue;
@@ -571,6 +565,11 @@ scoped_refptr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
   container_builder_.SwapPositionedFloats(&positioned_floats_);
   container_builder_.SetExclusionSpace(std::move(exclusion_space));
 
+  Vector<NGOutOfFlowPositionedDescendant> descendant_candidates;
+  container_builder_.GetAndClearOutOfFlowDescendantCandidates(
+      &descendant_candidates);
+  for (auto& descendant : descendant_candidates)
+    container_builder_.AddOutOfFlowDescendant(descendant);
   return container_builder_.ToLineBoxFragment();
 }
 
@@ -589,14 +588,10 @@ scoped_refptr<NGLayoutResult> NGInlineLayoutAlgorithm::LayoutEmptyInline() {
           ConstraintSpace().PercentageResolutionSize(), bfc_line_offset,
           bfc_line_offset, margins, node, /* break_token */ nullptr));
     } else if (item.Type() == NGInlineItem::kOutOfFlowPositioned) {
-      // TODO(layout-dev): Report the correct static position for the out of
-      // flow descendant. We can't do this here yet as it doesn't know the
-      // size of the line box.
       NGBlockNode node(ToLayoutBox(item.GetLayoutObject()));
-      container_builder_.AddOutOfFlowDescendant(
-          {node, NGStaticPosition::Create(ConstraintSpace().WritingMode(),
-                                          ConstraintSpace().Direction(),
-                                          NGPhysicalOffset())});
+      container_builder_.AddOutOfFlowChildCandidate(
+          node, NGLogicalOffset(),
+          IsRtl(box_states_->LineBoxState().style->Direction()));
     } else {
       DCHECK_NE(item.Type(), NGInlineItem::kAtomicInline);
       DCHECK_NE(item.Type(), NGInlineItem::kControl);
@@ -617,6 +612,11 @@ scoped_refptr<NGLayoutResult> NGInlineLayoutAlgorithm::LayoutEmptyInline() {
   container_builder_.SetEndMarginStrut(ConstraintSpace().MarginStrut());
   container_builder_.SetExclusionSpace(std::move(exclusion_space));
 
+  Vector<NGOutOfFlowPositionedDescendant> descendant_candidates;
+  container_builder_.GetAndClearOutOfFlowDescendantCandidates(
+      &descendant_candidates);
+  for (auto& descendant : descendant_candidates)
+    container_builder_.AddOutOfFlowDescendant(descendant);
   return container_builder_.ToLineBoxFragment();
 }
 
