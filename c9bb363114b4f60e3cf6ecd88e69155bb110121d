@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e17c4f4_461f810b",
+        "filename": "chrome/browser/data_saver/data_saver_webapis_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-29T02:46:49Z",
+      "side": 1,
+      "message": "nit: if every test needs this you can probably write this in SetUp() override (and call InProcessBrowserTest::SetUp() also there)",
+      "revId": "c9bb363114b4f60e3cf6ecd88e69155bb110121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106c6e55_6a663f7e",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-29T02:46:49Z",
+      "side": 1,
+      "message": "While this makes the entire plumbing a lot simpler (which is nice) I\u0027m worried that we always take a lock here, because it\u0027s relatively a hot path. How often could this \u0027save data\u0027 flag needs to be updated during the lifetime of a single page load?",
+      "revId": "c9bb363114b4f60e3cf6ecd88e69155bb110121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d2be25_62c1533b",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifierTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-29T02:46:49Z",
+      "side": 1,
+      "message": "nit: Let\u0027s use enum class, and kFoo namings for new code.\n\nI.e. enum class SaveData { kOff, kOn };",
+      "revId": "c9bb363114b4f60e3cf6ecd88e69155bb110121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
