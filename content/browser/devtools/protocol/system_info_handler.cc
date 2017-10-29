@@ -155,6 +155,9 @@ class SystemInfoHandlerGpuObserver : public content::GpuDataManagerObserver {
 
     GpuDataManagerImpl::GetInstance()->AddObserver(this);
     OnGpuInfoUpdate();
+    // TODO(zmo): We just need to make sure GPU process launches. Requesting
+    // complete GPU info is an overkill.
+    GpuDataManager::GetInstance()->RequestCompleteGpuInfoIfNeeded();
   }
 
   void OnGpuInfoUpdate() override {
