@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3ab6984a_5685a0e7",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-29T17:54:57Z",
+      "side": 1,
+      "message": "I mean literally adding // static: \n\n// static\nstd::unique_ptr\u003c...\u003e\n\n\nLike e.g. here: https://cs.chromium.org/chromium/src/content/browser/browser_thread_impl.cc?q\u003dbrowser_thread_impl.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d396",
+      "parentUuid": "dcbd3368_31b73a02",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 3
+      },
+      "revId": "d179fea1a1ab5aa15b7031dccc390c3b4efacb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d7f7eac_2f22d9d9",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 24
