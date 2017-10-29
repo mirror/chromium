@@ -155,6 +155,10 @@ class SystemInfoHandlerGpuObserver : public content::GpuDataManagerObserver {
 
     GpuDataManagerImpl::GetInstance()->AddObserver(this);
     OnGpuInfoUpdate();
+    // Make sure GPU process launches if it hasn't yet.
+    GpuProcessHost::CallOnIO(
+        GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED, true /* force_create */,
+        base::Bind([](GpuProcessHost* host) { (void)host; }));
   }
 
   void OnGpuInfoUpdate() override {
