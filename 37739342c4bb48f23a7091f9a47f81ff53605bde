@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "20427d84_44cc0351",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-29T23:44:00Z",
+      "side": 1,
+      "message": "ChromeOS immersive mode is different to F11 -- it engages all the logic in chrome/browser/ui/views/frame/immersive_mode_controller_ash* which is just a stub on other platforms. There\u0027s an old video at https://www.youtube.com/watch?v\u003dgVW9g51ntLA . There is no tab strip with F11 on Windows, but there is with fullscreen on ChromeOS.",
+      "parentUuid": "76afdc1c_6b061bd8",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "855dab6b_2c2db419",
         "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
         "patchSetId": 28
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "It\u0027d probably more clear if, instead of using |right_padding|, it used gfx::scrollbar_size(). The point is to not overlap the scrollbar regardless of whether it\u0027s on the right or the left.",
       "parentUuid": "9180dac8_6af0648c",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29c207b2_dfdf5a5f",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-29T23:44:00Z",
+      "side": 1,
+      "message": "It\u0027s more that, when anchoring to the omnibox, some of the checks don\u0027t make sense to me - they should be irrelevant (e.g. rtl). And vice-versa, when anchoring to contents, the widths of the top_container and contents_container should be identical. I\u0027m thinking something like.\n\n  bool anchor_to_omnibox \u003d has_location_bar;  // TODO: deal with CrOS fullscreen.\n  if (anchor_to_omnibox) {\n    // Cast a bounding box directly under the omnibox.\n    gfx::Rect bounding_box \u003d location_bar_view-\u003eConvertRectToWidget(\n        location_bar_view-\u003eGetLocalBounds());\n    bounding_box.Inset(0, location_bar_view-\u003eheight(), 0,\n                       -contents_container_-\u003eheight());\n    return bounding_box;\n  }\n\n  // Otherwise, subtract infobars and a detached bookmark bar from the top,\n  // and a scrollbar from the appropriate side.\n  gfx::Rect contents \u003d contents_container_-\u003eConvertRectToWidget(\n      contents_container_-\u003eGetLocalBounds());\n  if (base::i18n::IsRTL())\n    contents.Inset(gfx::scrollbar_size(), top_container_-\u003eheight(), 0, 0);\n  else\n    contents.Inset(0, top_container_-\u003eheight(), gfx::scrollbar_size(), 0);\n  return contents;",
+      "parentUuid": "5ec4ab19_057bf1ab",
       "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
