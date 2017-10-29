@@ -10,6 +10,7 @@
 #include "core/animation/Timing.h"
 #include "core/dom/Node.h"
 #include "core/dom/NodeComputedStyle.h"
+#include "core/layout/LayoutBox.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCompositorSupport.h"
@@ -45,6 +46,59 @@ bool ValidateTimeline(const DocumentTimelineOrScrollTimeline& timeline,
     }
   }
   return true;
+}
+
+CompositorElementId GetCompositorScrollElementId(const Element& element) {
+  DCHECK(element.GetLayoutObject());
+  DCHECK(element.GetLayoutObject()->HasLayer());
+  return CompositorElementIdFromUniqueObjectId(
+      element.GetLayoutObject()->UniqueId(),
+      CompositorElementIdNamespace::kScroll);
+}
+
+CompositorScrollTimeline::ScrollDirection ConvertOrientation(
+    ScrollTimeline::ScrollDirection orientation,
+    bool is_horizontal_writing_mode) {
+  switch (orientation) {
+    case ScrollTimeline::Block:
+      return is_horizontal_writing_mode ? CompositorScrollTimeline::Vertical
+                                        : CompositorScrollTimeline::Horizontal;
+    case ScrollTimeline::Inline:
+      return is_horizontal_writing_mode ? CompositorScrollTimeline::Horizontal
+                                        : CompositorScrollTimeline::Vertical;
+    default:
+      NOTREACHED();
+      return CompositorScrollTimeline::Vertical;
+  }
+}
+
+std::unique_ptr<CompositorScrollTimeline> ToCompositorScrollTimeline(
+    const DocumentTimelineOrScrollTimeline& timeline) {
+  if (!timeline.IsScrollTimeline())
+    return nullptr;
+
+  // TODO(smcgruer): We need to force the scrollSource to be composited.
+  ScrollTimeline* scroll_timeline = timeline.GetAsScrollTimeline();
+  CompositorElementId element_id =
+      GetCompositorScrollElementId(*scroll_timeline->scrollSource());
+
+  DoubleOrScrollTimelineAutoKeyword time_range;
+  scroll_timeline->timeRange(time_range);
+  // TODO(smcgruer): Handle 'auto' time range value.
+  DCHECK(time_range.IsDouble());
+
+  // cc/ does not know about the writing mode, so we have to convert the
+  // ScrollDirection depending on that.
+  //
+  // TODO(smcgruer): If the writing mode of a scroller changes, we have to
+  // update any related cc::ScrollTimeline somehow.
+  LayoutBox* box = scroll_timeline->scrollSource()->GetLayoutBox();
+  DCHECK(box);
+  CompositorScrollTimeline::ScrollDirection orientation = ConvertOrientation(
+      scroll_timeline->GetOrientation(), box->IsHorizontalWritingMode());
+
+  return std::make_unique<CompositorScrollTimeline>(element_id, orientation,
+                                                    time_range.GetAsDouble());
 }
 }  // namespace
 
@@ -93,8 +147,8 @@ WorkletAnimation::WorkletAnimation(
   DCHECK(Platform::Current()->IsThreadedAnimationEnabled());
   DCHECK(Platform::Current()->CompositorSupport());
 
-  compositor_player_ =
-      CompositorAnimationPlayer::CreateWorkletPlayer(animator_name_);
+  compositor_player_ = CompositorAnimationPlayer::CreateWorkletPlayer(
+      animator_name_, ToCompositorScrollTimeline(timeline_));
   compositor_player_->SetAnimationDelegate(this);
 }
 
