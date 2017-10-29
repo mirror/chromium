@@ -20,7 +20,8 @@ UkmInterface::~UkmInterface() = default;
 
 // static
 void UkmInterface::Create(UkmRecorder* ukm_recorder,
-                          mojom::UkmRecorderInterfaceRequest request) {
+                          mojom::UkmRecorderInterfaceRequest request,
+                          const service_manager::BindSourceInfo& source_info) {
   static base::AtomicSequenceNumber seq;
   mojo::MakeStrongBinding(
       base::MakeUnique<UkmInterface>(ukm_recorder,
@@ -29,6 +30,7 @@ void UkmInterface::Create(UkmRecorder* ukm_recorder,
 }
 
 void UkmInterface::AddEntry(mojom::UkmEntryPtr ukm_entry) {
+  LOG(ERROR) << "UkmInterface::AddEntry";
   ukm_entry->source_id =
       ConvertSourceIdFromInstance(instance_id_, ukm_entry->source_id);
   ukm_recorder_->AddEntry(std::move(ukm_entry));

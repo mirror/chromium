@@ -15,6 +15,7 @@ source_set("latency") {
 
   deps = [
     "//base",
+    "//services/metrics/public/cpp:metrics_cpp",
     "//ui/gfx",
   ]
 }

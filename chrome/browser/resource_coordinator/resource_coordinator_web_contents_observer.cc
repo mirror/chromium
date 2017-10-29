@@ -96,7 +96,8 @@ void ResourceCoordinatorWebContentsObserver::MaybeSetUkmRecorderInterface(
 
   ukm::mojom::UkmRecorderInterfacePtr ukm_recorder_interface;
   ukm::UkmInterface::Create(ukm::UkmRecorder::Get(),
-                            mojo::MakeRequest(&ukm_recorder_interface));
+                            mojo::MakeRequest(&ukm_recorder_interface),
+                            service_manager::BindSourceInfo());
 
   service_callbacks_->SetUkmRecorderInterface(
       std::move(ukm_recorder_interface));

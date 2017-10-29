@@ -148,6 +148,7 @@ void UkmRecorderImpl::UpdateSourceURL(ukm::SourceId source_id,
 }
 
 void UkmRecorderImpl::AddEntry(mojom::UkmEntryPtr entry) {
+  LOG(ERROR) << "UkmRecorderImpl::AddEntry";
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   if (!recording_enabled_) {

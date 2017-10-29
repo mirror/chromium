@@ -173,7 +173,7 @@
 #include "components/task_scheduler_util/browser/initialization.h"
 #include "components/task_scheduler_util/common/variations_util.h"
 #include "components/translate/core/common/translate_switches.h"
-#include "components/ukm/ukm_interface.h"
+//#include "components/ukm/ukm_interface.h"
 #include "components/url_formatter/url_fixer.h"
 #include "components/variations/variations_associated_data.h"
 #include "components/variations/variations_switches.h"
@@ -2934,9 +2934,9 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
       base::Bind(&rappor::RapporRecorderImpl::Create,
                  g_browser_process->rappor_service()),
       ui_task_runner);
-  registry->AddInterface(
-      base::Bind(&ukm::UkmInterface::Create, ukm::UkmRecorder::Get()),
-      ui_task_runner);
+//  registry->AddInterface(
+//      base::Bind(&ukm::UkmInterface::Create, ukm::UkmRecorder::Get()),
+//      ui_task_runner);
   if (NetBenchmarking::CheckBenchmarkingEnabled()) {
     Profile* profile =
         Profile::FromBrowserContext(render_process_host->GetBrowserContext());
