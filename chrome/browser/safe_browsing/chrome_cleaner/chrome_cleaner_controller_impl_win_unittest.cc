@@ -170,10 +170,9 @@ class ChromeCleanerControllerSimpleTest
 };
 
 SwReporterInvocation GetInvocationWithPromptTrigger() {
-  SwReporterInvocation invocation = {};
-  invocation.supported_behaviours |=
-      SwReporterInvocation::BEHAVIOUR_TRIGGER_PROMPT;
-  return invocation;
+  return SwReporterInvocation(base::CommandLine(base::CommandLine::NO_PROGRAM),
+                              SwReporterInvocation::Type::kPeriodicRun)
+      .WithSupportedBehaviours(SwReporterInvocation::BEHAVIOUR_TRIGGER_PROMPT);
 }
 
 TEST_P(ChromeCleanerControllerSimpleTest, FlagsPassedToCleanerProcess) {

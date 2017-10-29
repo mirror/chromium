@@ -53,6 +53,8 @@ constexpr char kSRTPromptGroup[] = "SRTGroup";
 // Parameters for this test:
 //  - bool in_browser_cleaner_ui_: indicates if InBrowserCleanerUI feature
 //    is enabled;
+//  - SwReporterInvocation::Type invocation_type_: identifies the type of
+//        invocation being tested.
 //
 //    We expect that the reporter's logic should remain unchanged even when the
 //    InBrowserCleanerUI feature is enabled with one exception: the reporter is
@@ -63,10 +65,14 @@ constexpr char kSRTPromptGroup[] = "SRTGroup";
 class ReporterRunnerTest : public InProcessBrowserTest,
                            public SwReporterTestingDelegate,
                            public ::testing::WithParamInterface<
-                               testing::tuple<bool, const char*, const char*>> {
+                               testing::tuple<bool,
+                                              SwReporterInvocation::Type,
+                                              const char*,
+                                              const char*>> {
  public:
   ReporterRunnerTest() {
-    std::tie(in_browser_cleaner_ui_, old_seed_, incoming_seed_) = GetParam();
+    std::tie(in_browser_cleaner_ui_, invocation_type_, old_seed_,
+             incoming_seed_) = GetParam();
   }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
@@ -141,11 +147,11 @@ class ReporterRunnerTest : public InProcessBrowserTest,
   void RunReporter(int exit_code_to_report,
                    const base::FilePath& exe_path = base::FilePath()) {
     exit_code_to_report_ = exit_code_to_report;
-    auto invocation = SwReporterInvocation::FromFilePath(exe_path);
-    invocation.supported_behaviours =
-        SwReporterInvocation::BEHAVIOUR_LOG_EXIT_CODE_TO_PREFS |
-        SwReporterInvocation::BEHAVIOUR_TRIGGER_PROMPT |
-        SwReporterInvocation::BEHAVIOUR_ALLOW_SEND_REPORTER_LOGS;
+    auto invocation =
+        SwReporterInvocation(base::CommandLine(exe_path), invocation_type_)
+            .WithSupportedBehaviours(
+                SwReporterInvocation::BEHAVIOUR_LOG_EXIT_CODE_TO_PREFS |
+                SwReporterInvocation::BEHAVIOUR_TRIGGER_PROMPT);
 
     SwReporterQueue invocations;
     invocations.push_back(invocation);
@@ -242,7 +248,7 @@ class ReporterRunnerTest : public InProcessBrowserTest,
                        i < reporter_launch_parameters_.size();
          ++i) {
       EXPECT_EQ(expected_launch_paths[i],
-                reporter_launch_parameters_[i].command_line.GetProgram());
+                reporter_launch_parameters_[i].command_line().GetProgram());
     }
   }
 
@@ -274,13 +280,41 @@ class ReporterRunnerTest : public InProcessBrowserTest,
         chrome_cleaner::kChromeChannelSwitch};
 
     const base::CommandLine::SwitchMap& invocation_switches =
-        invocation.command_line.GetSwitches();
+        invocation.command_line().GetSwitches();
     // Checks if switches that enable logging on the reporter are present on
     // the invocation if and only if logging is allowed.
     for (const std::string& logging_switch : logging_switches) {
       EXPECT_EQ(expect_switches, invocation_switches.find(logging_switch) !=
                                      invocation_switches.end());
     }
+  }
+
+  void ExpectReporterLoggingHappenedInTheLastHour(int invocation_index) {
+    ExpectLoggingSwitches(reporter_launch_parameters_[invocation_index], true);
+    ExpectLastReportSentInTheLastHour();
+  }
+
+  void ExpectNoReporterLoggingWithLastTimeSentReportNotSet(
+      int invocation_index) {
+    ExpectLoggingSwitches(reporter_launch_parameters_[invocation_index], false);
+    ExpectLastTimeSentReportNotSet();
+  }
+
+  void ExpectNoReporterLoggingWithLastTimeSentReportSet(
+      int invocation_index,
+      int64_t last_time_sent_logs) {
+    ExpectLoggingSwitches(reporter_launch_parameters_[invocation_index], false);
+    EXPECT_EQ(last_time_sent_logs, GetLastTimeSentReport());
+  }
+
+  bool LogsEnabledByUser() {
+    return invocation_type_ ==
+           SwReporterInvocation::Type::kUserInitiatedWithLogsAllowed;
+  }
+
+  bool LogsDisabledByUser() {
+    return invocation_type_ ==
+           SwReporterInvocation::Type::kUserInitiatedWithLogsDisallowed;
   }
 
   // A task runner with a mock clock.
@@ -292,6 +326,7 @@ class ReporterRunnerTest : public InProcessBrowserTest,
 
   // Test parameters.
   bool in_browser_cleaner_ui_;
+  SwReporterInvocation::Type invocation_type_;
   std::string old_seed_;
   std::string incoming_seed_;
 
@@ -518,8 +553,10 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, MultipleLaunches) {
   const base::FilePath path3(L"path3");
 
   SwReporterQueue invocations;
-  invocations.push_back(SwReporterInvocation::FromFilePath(path1));
-  invocations.push_back(SwReporterInvocation::FromFilePath(path2));
+  invocations.push_back(
+      SwReporterInvocation(base::CommandLine(path1), invocation_type_));
+  invocations.push_back(
+      SwReporterInvocation(base::CommandLine(path2), invocation_type_));
 
   {
     SCOPED_TRACE("Launch 2 times");
@@ -544,7 +581,8 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, MultipleLaunches) {
   // queue is running.
   {
     SCOPED_TRACE("Add third launch while running");
-    invocations.push_back(SwReporterInvocation::FromFilePath(path3));
+    invocations.push_back(
+        SwReporterInvocation(base::CommandLine(path3), invocation_type_));
     first_launch_callback_ = base::BindOnce(
         &ReporterRunnerTest::RunReporterQueue, base::Unretained(this),
         chrome_cleaner::kSwReporterNothingFound, invocations);
@@ -584,8 +622,11 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest,
                        ReporterLogging_NoSBExtendedReporting) {
   RunReporter(chrome_cleaner::kSwReporterNothingFound);
   ExpectReporterLaunches(0, 1, false);
-  ExpectLoggingSwitches(reporter_launch_parameters_.front(), false);
-  ExpectLastTimeSentReportNotSet();
+  if (LogsEnabledByUser()) {
+    ExpectReporterLoggingHappenedInTheLastHour(0);
+  } else {
+    ExpectNoReporterLoggingWithLastTimeSentReportNotSet(0);
+  }
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
@@ -596,8 +637,11 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, ReporterLogging_EnabledFirstRun) {
   // logs have been sent, so we should send logs in this run.
   RunReporter(chrome_cleaner::kSwReporterNothingFound);
   ExpectReporterLaunches(0, 1, false);
-  ExpectLoggingSwitches(reporter_launch_parameters_.front(), true);
-  ExpectLastReportSentInTheLastHour();
+  if (LogsDisabledByUser()) {
+    ExpectNoReporterLoggingWithLastTimeSentReportNotSet(0);
+  } else {
+    ExpectReporterLoggingHappenedInTheLastHour(0);
+  }
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
@@ -607,10 +651,14 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest,
   // |kDaysBetweenReporterLogsSent| day ago, so we should send logs in this run.
   EnableSBExtendedReporting();
   SetLastTimeSentReport(kDaysBetweenReporterLogsSent + 3);
+  int64_t last_time_sent_logs = GetLastTimeSentReport();
   RunReporter(chrome_cleaner::kSwReporterNothingFound);
   ExpectReporterLaunches(0, 1, false);
-  ExpectLoggingSwitches(reporter_launch_parameters_.front(), true);
-  ExpectLastReportSentInTheLastHour();
+  if (LogsDisabledByUser()) {
+    ExpectNoReporterLoggingWithLastTimeSentReportSet(0, last_time_sent_logs);
+  } else {
+    ExpectReporterLoggingHappenedInTheLastHour(0);
+  }
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
@@ -624,22 +672,25 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest,
   int64_t last_time_sent_logs = GetLastTimeSentReport();
   RunReporter(chrome_cleaner::kSwReporterNothingFound);
   ExpectReporterLaunches(0, 1, false);
-  ExpectLoggingSwitches(reporter_launch_parameters_.front(), false);
-  EXPECT_EQ(last_time_sent_logs, GetLastTimeSentReport());
+  if (LogsEnabledByUser()) {
+    ExpectReporterLoggingHappenedInTheLastHour(0);
+  } else {
+    ExpectNoReporterLoggingWithLastTimeSentReportSet(0, last_time_sent_logs);
+  }
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
 IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, ReporterLogging_MultipleLaunches) {
   EnableSBExtendedReporting();
   SetLastTimeSentReport(kDaysBetweenReporterLogsSent + 3);
+  int64_t last_time_sent_logs = GetLastTimeSentReport();
 
   const base::FilePath path1(L"path1");
   const base::FilePath path2(L"path2");
   SwReporterQueue invocations;
   for (const auto& path : {path1, path2}) {
-    auto invocation = SwReporterInvocation::FromFilePath(path);
-    invocation.supported_behaviours =
-        SwReporterInvocation::BEHAVIOUR_ALLOW_SEND_REPORTER_LOGS;
+    auto invocation =
+        SwReporterInvocation(base::CommandLine(path), invocation_type_);
     invocations.push_back(invocation);
   }
   RunReporterQueue(chrome_cleaner::kSwReporterNothingFound, invocations);
@@ -648,28 +699,49 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, ReporterLogging_MultipleLaunches) {
   // |kDaysBetweenReporterLogsSent| day ago, so we should send logs in this run.
   {
     SCOPED_TRACE("first launch");
-    first_launch_callback_ =
-        base::BindOnce(&ReporterRunnerTest::ExpectLastReportSentInTheLastHour,
-                       base::Unretained(this));
+    if (LogsDisabledByUser()) {
+      first_launch_callback_ = base::BindOnce(
+          &ReporterRunnerTest::ExpectNoReporterLoggingWithLastTimeSentReportSet,
+          base::Unretained(this), 0, last_time_sent_logs);
+    } else {
+      first_launch_callback_ = base::BindOnce(
+          &ReporterRunnerTest::ExpectReporterLoggingHappenedInTheLastHour,
+          base::Unretained(this), 0);
+    }
     ExpectReporterLaunches(0, {path1, path2}, false);
-    ExpectLoggingSwitches(reporter_launch_parameters_[0], true);
   }
 
   // Logs should also be sent for the next run, even though LastTimeSentReport
   // is now recent, because the run is part of the same set of invocations.
   {
     SCOPED_TRACE("second launch");
-    ExpectLoggingSwitches(reporter_launch_parameters_[1], true);
-    ExpectLastReportSentInTheLastHour();
+    if (LogsDisabledByUser()) {
+      ExpectNoReporterLoggingWithLastTimeSentReportSet(1, last_time_sent_logs);
+    } else {
+      ExpectReporterLoggingHappenedInTheLastHour(1);
+    }
   }
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
 INSTANTIATE_TEST_CASE_P(
-    WithInBrowserCleanerUIParam,
+    LegacyMode,
     ReporterRunnerTest,
     ::testing::Combine(
-        ::testing::Bool(),                          // in_browser_cleaner_ui_
+        ::testing::Values(false),  // in_browser_cleaner_ui_
+        ::testing::Values(SwReporterInvocation::Type::kPeriodicRun),
+        ::testing::Values("", "Seed1"),             // old_seed_
+        ::testing::Values("", "Seed1", "Seed2")));  // incoming_seed
+
+INSTANTIATE_TEST_CASE_P(
+    InBrowserCleanerUI,
+    ReporterRunnerTest,
+    ::testing::Combine(
+        ::testing::Values(true),  // in_browser_cleaner_ui_
+        ::testing::Values(
+            SwReporterInvocation::Type::kPeriodicRun,
+            SwReporterInvocation::Type::kUserInitiatedWithLogsDisallowed,
+            SwReporterInvocation::Type::kUserInitiatedWithLogsAllowed),
         ::testing::Values("", "Seed1"),             // old_seed_
         ::testing::Values("", "Seed1", "Seed2")));  // incoming_seed
 

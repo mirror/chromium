@@ -104,9 +104,11 @@ enum SwReporterUmaValue {
 // logs is enabled, or the reason why not.
 // Replicated in the histograms.xml file, so the order MUST NOT CHANGE.
 enum SwReporterLogsUploadsEnabled {
-  REPORTER_LOGS_UPLOADS_ENABLED = 0,
+  REPORTER_LOGS_UPLOADS_SBER_ENABLED = 0,
   REPORTER_LOGS_UPLOADS_SBER_DISABLED = 1,
   REPORTER_LOGS_UPLOADS_RECENTLY_SENT_LOGS = 2,
+  REPORTER_LOGS_UPLOADS_DISABLED_BY_USER = 3,
+  REPORTER_LOGS_UPLOADS_ENABLED_BY_USER = 4,
   REPORTER_LOGS_UPLOADS_MAX,
 };
 
@@ -561,11 +563,11 @@ int LaunchAndWaitForExitOnBackgroundThread(
   if (g_testing_delegate_)
     return g_testing_delegate_->LaunchReporter(invocation);
   base::Process reporter_process =
-      base::LaunchProcess(invocation.command_line, base::LaunchOptions());
+      base::LaunchProcess(invocation.command_line(), base::LaunchOptions());
   // This exit code is used to identify that a reporter run didn't happen, so
   // the result should be ignored and a rerun scheduled for the usual delay.
   int exit_code = kReporterNotLaunchedExitCode;
-  UMAHistogramReporter uma(invocation.suffix);
+  UMAHistogramReporter uma(invocation.suffix());
   if (reporter_process.IsValid()) {
     uma.RecordReporterStep(SW_REPORTER_START_EXECUTION);
     bool success = reporter_process.WaitForExit(&exit_code);
@@ -783,7 +785,7 @@ class ReporterRunner : public chrome::BrowserListObserver {
     if (exit_code == kReporterNotLaunchedExitCode)
       return;
 
-    UMAHistogramReporter uma(finished_invocation.suffix);
+    UMAHistogramReporter uma(finished_invocation.suffix());
     uma.ReportVersion(version);
     uma.ReportExitCode(exit_code);
     uma.ReportEngineErrorCode();
@@ -801,7 +803,7 @@ class ReporterRunner : public chrome::BrowserListObserver {
     uma.ReportRuntime(reporter_running_time);
     uma.ReportScanTimes();
     uma.ReportMemoryUsage();
-    if (finished_invocation.logs_upload_enabled)
+    if (finished_invocation.reporter_logs_upload_enabled())
       uma.RecordLogsUploadResult();
 
     if (!finished_invocation.BehaviourIsSupported(
@@ -915,19 +917,31 @@ class ReporterRunner : public chrome::BrowserListObserver {
   // Returns true if the experiment to send reporter logs is enabled, the user
   // opted into Safe Browsing extended reporting, and this queue of invocations
   // started during the logs upload interval.
-  bool ShouldSendReporterLogs(const std::string& suffix,
+  bool ShouldSendReporterLogs(const SwReporterInvocation& invocation,
                               const PrefService& local_state) {
-    UMAHistogramReporter uma(suffix);
-    if (!SafeBrowsingExtendedReportingEnabled()) {
-      uma.RecordLogsUploadEnabled(REPORTER_LOGS_UPLOADS_SBER_DISABLED);
-      return false;
+    UMAHistogramReporter uma(invocation.suffix());
+
+    switch (invocation.type()) {
+      case SwReporterInvocation::Type::kUserInitiatedWithLogsDisallowed:
+        uma.RecordLogsUploadEnabled(REPORTER_LOGS_UPLOADS_DISABLED_BY_USER);
+        return false;
+
+      case SwReporterInvocation::Type::kUserInitiatedWithLogsAllowed:
+        uma.RecordLogsUploadEnabled(REPORTER_LOGS_UPLOADS_ENABLED_BY_USER);
+        return true;
+
+      case SwReporterInvocation::Type::kPeriodicRun:
+        if (!SafeBrowsingExtendedReportingEnabled()) {
+          uma.RecordLogsUploadEnabled(REPORTER_LOGS_UPLOADS_SBER_DISABLED);
+          return false;
+        }
+        if (!in_logs_upload_period_) {
+          uma.RecordLogsUploadEnabled(REPORTER_LOGS_UPLOADS_RECENTLY_SENT_LOGS);
+          return false;
+        }
+        uma.RecordLogsUploadEnabled(REPORTER_LOGS_UPLOADS_SBER_ENABLED);
+        return true;
     }
-    if (!in_logs_upload_period_) {
-      uma.RecordLogsUploadEnabled(REPORTER_LOGS_UPLOADS_RECENTLY_SENT_LOGS);
-      return false;
-    }
-    uma.RecordLogsUploadEnabled(REPORTER_LOGS_UPLOADS_ENABLED);
-    return true;
   }
 
   // Appends switches to the next invocation that depend on the user current
@@ -940,11 +954,7 @@ class ReporterRunner : public chrome::BrowserListObserver {
   void AppendInvocationSpecificSwitches(SwReporterInvocation* next_invocation) {
     // Add switches for users who opted into extended Safe Browsing reporting.
     PrefService* local_state = g_browser_process->local_state();
-    if (next_invocation->BehaviourIsSupported(
-            SwReporterInvocation::BEHAVIOUR_ALLOW_SEND_REPORTER_LOGS) &&
-        local_state &&
-        ShouldSendReporterLogs(next_invocation->suffix, *local_state)) {
-      next_invocation->logs_upload_enabled = true;
+    if (local_state && ShouldSendReporterLogs(*next_invocation, *local_state)) {
       AddSwitchesForExtendedReportingUser(next_invocation);
       // Set the local state value before the first attempt to run the
       // reporter, because we only want to upload logs once in the window
@@ -956,13 +966,13 @@ class ReporterRunner : public chrome::BrowserListObserver {
     }
 
     if (ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled()) {
-      next_invocation->command_line.AppendSwitch(
+      next_invocation->mutable_command_line().AppendSwitch(
           chrome_cleaner::kEnableCrashReportingSwitch);
     }
 
     const std::string group_name = GetSRTFieldTrialGroupName();
     if (!group_name.empty()) {
-      next_invocation->command_line.AppendSwitchASCII(
+      next_invocation->mutable_command_line().AppendSwitchASCII(
           chrome_cleaner::kSRTPromptFieldTrialGroupNameSwitch, group_name);
     }
   }
@@ -970,11 +980,11 @@ class ReporterRunner : public chrome::BrowserListObserver {
   // Adds switches to be sent to the Software Reporter when the user opted into
   // extended Safe Browsing reporting and is not incognito.
   void AddSwitchesForExtendedReportingUser(SwReporterInvocation* invocation) {
-    invocation->command_line.AppendSwitch(
+    invocation->mutable_command_line().AppendSwitch(
         chrome_cleaner::kExtendedSafeBrowsingEnabledSwitch);
-    invocation->command_line.AppendSwitchASCII(
+    invocation->mutable_command_line().AppendSwitchASCII(
         chrome_cleaner::kChromeVersionSwitch, version_info::GetVersionNumber());
-    invocation->command_line.AppendSwitchNative(
+    invocation->mutable_command_line().AppendSwitchNative(
         chrome_cleaner::kChromeChannelSwitch,
         base::IntToString16(ChannelAsInt()));
   }
@@ -1015,33 +1025,65 @@ class ReporterRunner : public chrome::BrowserListObserver {
 
 ReporterRunner* ReporterRunner::instance_ = nullptr;
 
-SwReporterInvocation::SwReporterInvocation()
-    : command_line(base::CommandLine::NO_PROGRAM) {}
+SwReporterInvocation::SwReporterInvocation(
+    const base::CommandLine& command_line,
+    Type type)
+    : command_line_(command_line), type_(type) {}
 
-SwReporterInvocation SwReporterInvocation::FromFilePath(
-    const base::FilePath& exe_path) {
-  SwReporterInvocation invocation;
-  invocation.command_line = base::CommandLine(exe_path);
-  return invocation;
+SwReporterInvocation::SwReporterInvocation(const SwReporterInvocation& other)
+    : command_line_(other.command_line_),
+      suffix_(other.suffix_),
+      supported_behaviours_(other.supported_behaviours_),
+      type_(other.type_) {}
+
+SwReporterInvocation& SwReporterInvocation::WithSuffix(
+    const std::string& suffix) {
+  suffix_ = suffix;
+  return *this;
 }
 
-SwReporterInvocation SwReporterInvocation::FromCommandLine(
-    const base::CommandLine& command_line) {
-  SwReporterInvocation invocation;
-  invocation.command_line = command_line;
-  return invocation;
+SwReporterInvocation& SwReporterInvocation::WithSupportedBehaviours(
+    Behaviours supported_behaviours) {
+  supported_behaviours_ = supported_behaviours;
+  return *this;
 }
 
 bool SwReporterInvocation::operator==(const SwReporterInvocation& other) const {
-  return command_line.argv() == other.command_line.argv() &&
-         suffix == other.suffix &&
-         supported_behaviours == other.supported_behaviours &&
-         logs_upload_enabled == other.logs_upload_enabled;
+  return command_line_.argv() == other.command_line_.argv() &&
+         suffix_ == other.suffix_ &&
+         supported_behaviours_ == other.supported_behaviours_ &&
+         type_ == other.type_;
 }
 
 bool SwReporterInvocation::BehaviourIsSupported(
     SwReporterInvocation::Behaviours intended_behaviour) const {
-  return (supported_behaviours & intended_behaviour) != 0;
+  return (supported_behaviours_ & intended_behaviour) != 0;
+}
+
+const base::CommandLine& SwReporterInvocation::command_line() const {
+  return command_line_;
+}
+
+SwReporterInvocation::Type SwReporterInvocation::type() const {
+  return type_;
+}
+
+base::CommandLine& SwReporterInvocation::mutable_command_line() {
+  return command_line_;
+}
+
+std::string SwReporterInvocation::suffix() const {
+  return suffix_;
+}
+
+SwReporterInvocation::Behaviours SwReporterInvocation::supported_behaviours()
+    const {
+  return supported_behaviours_;
+}
+
+bool SwReporterInvocation::reporter_logs_upload_enabled() const {
+  return type_ == Type::kPeriodicRun ||
+         type_ == Type::kUserInitiatedWithLogsAllowed;
 }
 
 void RunSwReporters(const SwReporterQueue& invocations,

@@ -33,13 +33,38 @@ const int kDaysBetweenSwReporterRunsForPendingPrompt = 1;
 const int kDaysBetweenReporterLogsSent = 7;
 
 // Parameters used to invoke the sw_reporter component.
-struct SwReporterInvocation {
-  base::CommandLine command_line;
-
-  // Experimental versions of the reporter will write metrics to registry keys
-  // ending in |suffix|. Those metrics should be copied to UMA histograms also
-  // ending in |suffix|. For the canonical version, |suffix| will be empty.
-  std::string suffix;
+class SwReporterInvocation {
+ public:
+  // Identifies if an invocation was created during periodic reporter runs
+  // or because the user explicitly initiated a cleanup. The invocation type
+  // controls if a prompt dialog will be shown to the user and under what
+  // conditions logs may be uploaded to Google.
+  enum class Type {
+    // Periodic runs of the reporter are initiated by Chrome after startup.
+    // If removable unwanted software is found the user may be prompted to
+    // run the Chrome Cleanup tool. Logs from the software reporter will only
+    // be uploaded if the user has opted-into SBER2 and if they unwanted
+    // software is found on the system. The cleaner process in scanning mode
+    // will not upload logs.
+    kPeriodicRun,
+    // User-initiated runs in which the user has opted-out of sending details
+    // to Google. Those runs are intended to be completely driven from the
+    // Settings page, so a prompt dialog will not be shown to the user if
+    // removable unwanted software is found. Logs will not be uploaded from
+    // either the reporter nor the cleaner in scanning mode (which will only
+    // run if unwanted software is found by the reporter), regardless of
+    // any permissions the user may have previously opted into. More
+    // specifically, logs will not be uploaded from the reporter even if the
+    // user has opted into SBER2, and cleaner logs will not be uploaded.
+    kUserInitiatedWithLogsDisallowed,
+    // User-initiated runs in which the user has not opted-out of sending
+    // details to Google. Those runs are intended to be completely driven from
+    // the Settings page, so a prompt dialog will not be shown to the user if
+    // removable unwanted software is found. Logs may be uploaded from both
+    // the reporter and the cleaner in scanning mode (which will only run if
+    // unwanted software if found by the reporter).
+    kUserInitiatedWithLogsAllowed,
+  };
 
   // Flags to control behaviours the Software Reporter should support by
   // default. These flags are set in the Reporter installer, and experimental
@@ -49,22 +74,53 @@ struct SwReporterInvocation {
   enum : Behaviours {
     BEHAVIOUR_LOG_EXIT_CODE_TO_PREFS = 0x2,
     BEHAVIOUR_TRIGGER_PROMPT = 0x4,
-    BEHAVIOUR_ALLOW_SEND_REPORTER_LOGS = 0x8,
   };
-  Behaviours supported_behaviours = 0;
 
-  // Whether logs upload was enabled in this invocation.
-  bool logs_upload_enabled = false;
+  SwReporterInvocation(const base::CommandLine& command_line, Type type);
 
-  SwReporterInvocation();
+  SwReporterInvocation(const SwReporterInvocation& invocation);
 
-  static SwReporterInvocation FromFilePath(const base::FilePath& exe_path);
-  static SwReporterInvocation FromCommandLine(
-      const base::CommandLine& command_line);
+  // Fluent interface methods, intended to be used during initialization.
+  // Sample usage:
+  //   auto invocation = SwReporterInvocation(
+  //           command_line, SwReporterInvocation::Type::kPeriodicRun)
+  //       .WithSuffix("MySuffix")
+  //       .WithSupportedBehaviours(
+  //           SwReporterInvocation::Behaviours::BEHAVIOUR_TRIGGER_PROMPT);
+  SwReporterInvocation& WithSuffix(const std::string& suffix);
+  SwReporterInvocation& WithSupportedBehaviours(
+      Behaviours supported_behaviours);
 
   bool operator==(const SwReporterInvocation& other) const;
 
   bool BehaviourIsSupported(Behaviours intended_behaviour) const;
+
+  const base::CommandLine& command_line() const;
+  base::CommandLine& mutable_command_line();
+
+  Type type() const;
+
+  std::string suffix() const;
+
+  Behaviours supported_behaviours() const;
+
+  // Returns true if the invocation type allows logs from be uploaded by
+  // the reporter process.
+  bool reporter_logs_upload_enabled() const;
+
+ private:
+  base::CommandLine command_line_;
+
+  // Experimental versions of the reporter will write metrics to registry keys
+  // ending in |suffix_|. Those metrics should be copied to UMA histograms also
+  // ending in |suffix_|. For the canonical version, |suffix_| will be empty.
+  std::string suffix_;
+
+  Behaviours supported_behaviours_ = 0;
+
+  // If this invocation was started by the user as opposed to invocations
+  // started by Chrome after startup.
+  const Type type_ = Type::kPeriodicRun;
 };
 
 using SwReporterQueue = base::circular_deque<SwReporterInvocation>;
