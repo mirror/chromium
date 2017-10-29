@@ -3391,7 +3391,8 @@ void RenderFrameHostImpl::CommitNavigation(
     GetNavigationControl()->CommitNavigation(
         ResourceResponseHead(), GURL(), common_params, request_params,
         mojo::ScopedDataPipeConsumerHandle(),
-        /*default_subresource_url_loader_factory=*/nullptr);
+        /*default_subresource_url_loader_factory=*/nullptr,
+        /*controller_service_worker=*/nullptr);
     return;
   }
 
@@ -3412,16 +3413,21 @@ void RenderFrameHostImpl::CommitNavigation(
   const ResourceResponseHead head = response ?
       response->head : ResourceResponseHead();
   mojom::URLLoaderFactoryPtr default_subresource_url_loader_factory;
+  mojom::ControllerServiceWorkerPtr controller_service_worker;
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    if (subresource_loader_params &&
-        subresource_loader_params->loader_factory_info.is_valid()) {
-      default_subresource_url_loader_factory.Bind(
-          std::move(subresource_loader_params->loader_factory_info));
+    if (subresource_loader_params) {
+      if (subresource_loader_params->loader_factory_info.is_valid()) {
+        default_subresource_url_loader_factory.Bind(
+            std::move(subresource_loader_params->loader_factory_info));
+      }
+      controller_service_worker =
+          std::move(subresource_loader_params->controller_service_worker);
     }
   }
   GetNavigationControl()->CommitNavigation(
       head, body_url, common_params, request_params, std::move(handle),
-      std::move(default_subresource_url_loader_factory));
+      std::move(default_subresource_url_loader_factory),
+      std::move(controller_service_worker));
 
   // If a network request was made, update the Previews state.
   if (IsURLHandledByNetworkStack(common_params.url) &&
