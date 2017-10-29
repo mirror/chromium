@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af2c3635_bcd121ba",
+        "filename": "content/child/blink_platform_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-29T23:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4d89130_6712bd64",
+      "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33fc03f5_847c65ea",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2527c3c0_692d4dd6",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-29T23:46:20Z",
+      "side": 1,
+      "message": "reverted as no longer needed.",
+      "parentUuid": "33fc03f5_847c65ea",
+      "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "33f7d808_0a37a06d",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-29T23:46:20Z",
+      "side": 1,
+      "message": "Reverted as no longer needed. (We just call blink::RegisterInterfaces from here now).",
+      "parentUuid": "ff3a494b_b5d192f9",
+      "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50f7272f_f6962784",
         "filename": "third_party/WebKit/Source/modules/DEPS",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb73f37b_9aba3d49",
+        "filename": "third_party/WebKit/Source/modules/DEPS",
+        "patchSetId": 15
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-29T23:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50f7272f_f6962784",
+      "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "60e73d75_0d71af2a",
+        "filename": "third_party/WebKit/public/platform/InterfaceRegistry.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-29T23:46:20Z",
+      "side": 1,
+      "message": "No longer needed as change was reverted.",
+      "parentUuid": "ef4692f1_2dd5d346",
+      "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14e6d607_86cf15c8",
         "filename": "third_party/WebKit/public/platform/InterfaceRegistry.h",
         "patchSetId": 15
@@ -101,6 +191,24 @@
       "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2491fb0_02308930",
+        "filename": "third_party/WebKit/public/platform/InterfaceRegistry.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-29T23:46:20Z",
+      "side": 1,
+      "message": "So I can avoid implementing the same function two times just to support cross thread init.",
+      "parentUuid": "14e6d607_86cf15c8",
+      "revId": "096909e6e42ad4130f5e53e23a261c93680813e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
