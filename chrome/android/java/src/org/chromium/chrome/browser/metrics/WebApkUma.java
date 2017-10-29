@@ -162,6 +162,11 @@ public class WebApkUma {
                 TimeUnit.HOURS.toMillis(1), TimeUnit.DAYS.toMillis(30), TimeUnit.MILLISECONDS, 50);
     }
 
+    /** Records to UMA the count of old "WebAPK update request" files. */
+    public static void recordNumberOfStaleWebApkUpdateRequestFiles(int count) {
+        RecordHistogram.recordCountHistogram("WebApk.Update.NumStaleUpdateRequestFiles", count);
+    }
+
     // TODO(ranj): Remove this function after downstream is checked in.
     public static void logAvailableSpaceAboveLowSpaceLimitInUMA(boolean installSucceeded) {}
 
