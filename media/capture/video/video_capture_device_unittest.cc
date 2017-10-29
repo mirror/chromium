@@ -114,6 +114,13 @@ static bool IsDeviceUsableForTesting(
 };
 #endif
 
+enum VideoCaptureImplementationTweak {
+  NONE,
+#if defined(OS_WIN)
+  WIN_MEDIA_FOUNDATION
+#endif
+};
+
 class MockVideoCaptureClient : public VideoCaptureDevice::Client {
  public:
   MOCK_METHOD0(DoReserveOutputBuffer, void(void));
@@ -259,7 +266,9 @@ testing::Environment* const mojo_test_env =
 
 }  // namespace
 
-class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
+class VideoCaptureDeviceTest
+    : public testing::TestWithParam<
+          std::tuple<gfx::Size, VideoCaptureImplementationTweak>> {
  protected:
   typedef VideoCaptureDevice::Client Client;
 
@@ -287,6 +296,12 @@ class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
     static_cast<VideoCaptureDeviceFactoryAndroid*>(
         video_capture_device_factory_.get())
         ->ConfigureForTesting();
+#endif
+#if defined(OS_WIN)
+    static_cast<VideoCaptureDeviceFactoryWin*>(
+        video_capture_device_factory_.get())
+        ->use_media_foundation_ =
+        (std::get<1>(GetParam()) == WIN_MEDIA_FOUNDATION);
 #endif
     EXPECT_CALL(*video_capture_client_, DoReserveOutputBuffer()).Times(0);
     EXPECT_CALL(*video_capture_client_, DoOnIncomingCapturedBuffer()).Times(0);
@@ -399,7 +414,7 @@ class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
 #define MAYBE_OpenInvalidDevice OpenInvalidDevice
 #endif
 // Tries to allocate an invalid device and verifies it doesn't work.
-TEST_F(VideoCaptureDeviceTest, MAYBE_OpenInvalidDevice) {
+TEST_P(VideoCaptureDeviceTest, MAYBE_OpenInvalidDevice) {
   VideoCaptureDeviceDescriptor invalid_descriptor;
   invalid_descriptor.device_id = "jibberish";
   invalid_descriptor.display_name = "jibberish";
@@ -436,7 +451,7 @@ TEST_P(VideoCaptureDeviceTest, CaptureWithSize) {
   if (!descriptor)
     return;
 
-  const gfx::Size& size = GetParam();
+  const gfx::Size& size = std::get<0>(GetParam());
   if (!IsCaptureSizeSupported(*descriptor, size))
     return;
   const int width = size.width();
@@ -466,14 +481,22 @@ TEST_P(VideoCaptureDeviceTest, CaptureWithSize) {
 }
 
 const gfx::Size kCaptureSizes[] = {gfx::Size(640, 480), gfx::Size(1280, 720)};
+const VideoCaptureImplementationTweak kCaptureImplementationTweaks[] = {
+    NONE,
+#if defined(OS_WIN)
+    WIN_MEDIA_FOUNDATION
+#endif
+};
 
-INSTANTIATE_TEST_CASE_P(VideoCaptureDeviceTests,
-                        VideoCaptureDeviceTest,
-                        testing::ValuesIn(kCaptureSizes));
+INSTANTIATE_TEST_CASE_P(
+    VideoCaptureDeviceTests,
+    VideoCaptureDeviceTest,
+    testing::Combine(testing::ValuesIn(kCaptureSizes),
+                     testing::ValuesIn(kCaptureImplementationTweaks)));
 
 // Allocates a device with an uncommon resolution and verifies frames are
 // captured in a close, much more typical one.
-TEST_F(VideoCaptureDeviceTest, MAYBE_AllocateBadSize) {
+TEST_P(VideoCaptureDeviceTest, MAYBE_AllocateBadSize) {
   const auto descriptor = FindUsableDeviceDescriptor();
   if (!descriptor)
     return;
@@ -500,7 +523,7 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_AllocateBadSize) {
 }
 
 // Cause hangs on Windows, Linux. Fails Android. https://crbug.com/417824
-TEST_F(VideoCaptureDeviceTest, DISABLED_ReAllocateCamera) {
+TEST_P(VideoCaptureDeviceTest, DISABLED_ReAllocateCamera) {
   const auto descriptor = FindUsableDeviceDescriptor();
   if (!descriptor)
     return;
@@ -544,7 +567,7 @@ TEST_F(VideoCaptureDeviceTest, DISABLED_ReAllocateCamera) {
 }
 
 // Starts the camera in 720p to try and capture MJPEG format.
-TEST_F(VideoCaptureDeviceTest, MAYBE_CaptureMjpeg) {
+TEST_P(VideoCaptureDeviceTest, MAYBE_CaptureMjpeg) {
   std::unique_ptr<VideoCaptureDeviceDescriptor> device_descriptor =
       GetFirstDeviceDescriptorSupportingPixelFormat(PIXEL_FORMAT_MJPEG);
   if (!device_descriptor) {
@@ -581,7 +604,7 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_CaptureMjpeg) {
   device->StopAndDeAllocate();
 }
 
-TEST_F(VideoCaptureDeviceTest, NoCameraSupportsPixelFormatMax) {
+TEST_P(VideoCaptureDeviceTest, NoCameraSupportsPixelFormatMax) {
   // Use PIXEL_FORMAT_MAX to iterate all device names for testing
   // GetDeviceSupportedFormats().
   std::unique_ptr<VideoCaptureDeviceDescriptor> device_descriptor =
@@ -593,7 +616,7 @@ TEST_F(VideoCaptureDeviceTest, NoCameraSupportsPixelFormatMax) {
 
 // Starts the camera and verifies that a photo can be taken. The correctness of
 // the photo is enforced by MockImageCaptureClient.
-TEST_F(VideoCaptureDeviceTest, MAYBE_TakePhoto) {
+TEST_P(VideoCaptureDeviceTest, MAYBE_TakePhoto) {
   const auto descriptor = FindUsableDeviceDescriptor();
   if (!descriptor)
     return;
@@ -642,7 +665,7 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_TakePhoto) {
 }
 
 // Starts the camera and verifies that the photo capabilities can be retrieved.
-TEST_F(VideoCaptureDeviceTest, MAYBE_GetPhotoState) {
+TEST_P(VideoCaptureDeviceTest, MAYBE_GetPhotoState) {
   const auto descriptor = FindUsableDeviceDescriptor();
   if (!descriptor)
     return;
