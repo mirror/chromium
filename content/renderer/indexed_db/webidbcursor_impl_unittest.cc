@@ -123,7 +123,7 @@ class WebIDBCursorImplTest : public testing::Test {
     null_key_.AssignNull();
     indexed_db::mojom::CursorAssociatedPtr ptr;
     mock_cursor_ =
-        std::make_unique<MockCursorImpl>(mojo::MakeIsolatedRequest(&ptr));
+        std::make_unique<MockCursorImpl>(mojo::MakeRequestAssociatedWithDedicatedPipe(&ptr));
     cursor_ = std::make_unique<WebIDBCursorImpl>(
         ptr.PassInterface(), 1, base::ThreadTaskRunnerHandle::Get());
   }
