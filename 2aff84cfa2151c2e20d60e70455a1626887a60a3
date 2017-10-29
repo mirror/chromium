@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "f2983ce5_b0549876",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-29T19:59:53Z",
+      "side": 1,
+      "message": "Sure, please review on https://chromium-review.googlesource.com/c/chromium/src/+/743022",
+      "parentUuid": "837d3a7b_9912cb6c",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 76
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "464c0fa5_6ac8f35b",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 15
@@ -700,6 +724,30 @@
       "side": 1,
       "message": "It shouldn\u0027t be possible. kN32_SkColorType is always RGBA_8888 or BGRA_8888, and \nGLHelperReadbackSupport::GetReadbackConfig() never returns NOT_SUPPORTED for those. If a future code change ever breaks this assumption, your unit tests should catch it before it passes the CQ.",
       "parentUuid": "89f173a4_3f863c0d",
+      "range": {
+        "startLine": 373,
+        "startChar": 4,
+        "endLine": 373,
+        "endChar": 38
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ecf5ae_c2086877",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-29T19:59:53Z",
+      "side": 1,
+      "message": "Sounds good, safely removing the fallback and its corresponding unittest then.",
+      "parentUuid": "f3c16b0e_457c98c3",
       "range": {
         "startLine": 373,
         "startChar": 4,

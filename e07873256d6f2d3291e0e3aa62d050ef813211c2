@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a3360d6f_90150143",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-29T19:59:53Z",
+      "side": 1,
+      "message": "isOpaque() is pretty dumb unfortunately. Unless devs specify {alpha: false} when creating a canvas, we don\u0027t know if there is relevant content in alpha channel and isOpaque() is false. That is quite often, see my skia bug below for details.\nhttps://bugs.chromium.org/p/skia/issues/detail?id\u003d7085\n\nCreateReadbackPipelineYUV() is getting deprecated, right? I thought that\u0027s why you asked me to factor out into a smaller design in a new class in our email thread and I filed the bug below. As I said, I had the intention of landing this code quickly for unblocking the client we are in touch with, but this CL discussion seems to never ending. \nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d774297",
+      "parentUuid": "ba180590_46dd0cf3",
+      "range": {
+        "startLine": 238,
+        "startChar": 1,
+        "endLine": 239,
+        "endChar": 55
+      },
+      "revId": "e07873256d6f2d3291e0e3aa62d050ef813211c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1778edc_e060bb46",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 9
