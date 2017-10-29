@@ -20,5 +20,18 @@ def CheckChangeOnCommit(input_api, output_api):
 
 
 def _CommonChecks(input_api, output_api):
-  return input_api.canned_checks.CheckPatchFormatted(input_api, output_api,
-                                                     check_js=True)
+  results = []
+  results += input_api.canned_checks.CheckPatchFormatted(input_api, output_api,
+                                                         check_js=True)
+  try:
+    import sys
+    old_sys_path = sys.path[:]
+    cwd = input_api.PresubmitLocalPath()
+    sys.path += [input_api.os_path.join(cwd, '..', '..', 'tools')]
+    from web_dev_style import presubmit_support
+    BLACKLIST = []
+    file_filter = lambda f: f.LocalPath() not in BLACKLIST
+    results += presubmit_support.CheckStyle(input_api, output_api, file_filter)
+  finally:
+    sys.path = old_sys_path
+  return results
