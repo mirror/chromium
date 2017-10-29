@@ -9,14 +9,19 @@
 namespace ukm {
 
 MojoUkmRecorder::MojoUkmRecorder(mojom::UkmRecorderInterfacePtr interface)
-    : interface_(std::move(interface)) {}
+    : interface_(std::move(interface)), weak_factory_(this) {}
 MojoUkmRecorder::~MojoUkmRecorder() = default;
 
 void MojoUkmRecorder::UpdateSourceURL(SourceId source_id, const GURL& url) {
   interface_->UpdateSourceURL(source_id, url.spec());
 }
 
+base::WeakPtr<MojoUkmRecorder> MojoUkmRecorder::GetWeakPtr() {
+  return weak_factory_.GetWeakPtr();
+}
+
 void MojoUkmRecorder::AddEntry(mojom::UkmEntryPtr entry) {
+  LOG(ERROR) << "MojoUkmRecorder::AddEntry";
   interface_->AddEntry(std::move(entry));
 }
 
