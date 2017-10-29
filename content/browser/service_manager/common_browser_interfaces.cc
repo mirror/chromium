@@ -13,10 +13,12 @@
 #include "base/task_runner.h"
 #include "components/discardable_memory/service/discardable_shared_memory_manager.h"
 #include "content/browser/browser_main_loop.h"
+#include "components/ukm/ukm_interface.h"
 #include "content/public/common/connection_filter.h"
 #include "content/public/common/service_manager_connection.h"
 #include "device/geolocation/geolocation_config.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 
 namespace content {
@@ -28,7 +30,11 @@ class ConnectionFilterImpl : public ConnectionFilter {
   ConnectionFilterImpl()
       : main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
     RegisterMainThreadInterface(base::Bind(&device::GeolocationConfig::Create));
+    RegisterMainThreadInterface(
+        base::Bind(&ukm::UkmInterface::Create, ukm::UkmRecorder::Get()));
 
+//    registry_.AddInterface(
+//        base::Bind(&ukm::UkmInterface::Create, ukm::UkmRecorder::Get()));
     auto* browser_main_loop = BrowserMainLoop::GetInstance();
     if (browser_main_loop) {
       auto* manager = browser_main_loop->discardable_shared_memory_manager();

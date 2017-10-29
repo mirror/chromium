@@ -5,11 +5,14 @@
 #include "services/viz/service.h"
 
 #include "components/viz/service/main/viz_main_impl.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/service_context.h"
 #include "services/viz/privileged/interfaces/viz_main.mojom.h"
 
 namespace viz {
 
-Service::Service() = default;
+Service::Service(std::string ukm_service_name)
+    : ukm_service_name_(ukm_service_name) {}
 
 Service::~Service() = default;
 
@@ -20,6 +23,10 @@ void Service::OnStart() {
 
   VizMainImpl::ExternalDependencies deps;
   deps.create_display_compositor = true;
+  ukm::mojom::UkmRecorderInterfacePtr ukm_recorder_ptr;
+  context()->connector()->BindInterface(ukm_service_name_,
+                                        mojo::MakeRequest(&ukm_recorder_ptr));
+  deps.ukm_recorder_ptr_info = ukm_recorder_ptr.PassInterface();
   viz_main_ = std::make_unique<VizMainImpl>(nullptr, std::move(deps));
 }
 
