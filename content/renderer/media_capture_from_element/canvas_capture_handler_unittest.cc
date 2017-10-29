@@ -7,11 +7,16 @@
 #include "base/bind.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
+#include "cc/test/test_context_provider.h"
+#include "cc/test/test_in_process_context_provider.h"
 #include "content/child/child_process.h"
 #include "content/renderer/media/media_stream_video_capturer_source.h"
+#include "gpu/GLES2/gl2extchromium.h"
+#include "gpu/command_buffer/client/gles2_interface.h"
 #include "media/base/limits.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/WebGraphicsContext3DProvider.h"
 #include "third_party/WebKit/public/platform/WebMediaStreamSource.h"
 #include "third_party/WebKit/public/platform/WebMediaStreamTrack.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
@@ -45,14 +50,36 @@ ACTION_P(RunClosure, closure) {
 
 }  // namespace
 
+class FakeWebGraphicsContext3DProvider
+    : public blink::WebGraphicsContext3DProvider {
+ public:
+  bool BindToCurrentThread() override { return true; }
+  gpu::gles2::GLES2Interface* ContextGL() override { return nullptr; }
+  GrContext* GetGrContext() override { return nullptr; }
+  const gpu::Capabilities& GetCapabilities() const override { return caps; }
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override { return info; }
+  bool IsSoftwareRendering() const override { return true; }
+  void SetLostContextCallback(const base::Closure&) override {}
+  void SetErrorMessageCallback(
+      const base::Callback<void(const char*, int32_t)>&) override {}
+  void SignalQuery(uint32_t, const base::Closure&) override {}
+  gpu::Capabilities caps;
+  gpu::GpuFeatureInfo info;
+};
+
 class CanvasCaptureHandlerTest
-    : public TestWithParam<testing::tuple<bool, int, int>> {
+    : public TestWithParam<testing::tuple<bool /* opaque */,
+                                          int /* width */,
+                                          int /* height */>> {
  public:
   CanvasCaptureHandlerTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
 
   void SetUp() override {
+    context_provider_ = new cc::TestInProcessContextProvider(nullptr);
+    context_provider_->BindToCurrentThread();
+    web_context_provider_.reset(new FakeWebGraphicsContext3DProvider());
     canvas_capture_handler_ = CanvasCaptureHandler::CreateCanvasCaptureHandler(
         blink::WebSize(kTestCanvasCaptureWidth, kTestCanvasCaptureHeight),
         kTestCanvasCaptureFramesPerSecond,
@@ -80,11 +107,20 @@ class CanvasCaptureHandlerTest
   void OnRunning(bool state) { DoOnRunning(state); }
 
   // Verify returned frames.
-  static sk_sp<SkImage> GenerateTestImage(bool opaque, int width, int height) {
+  sk_sp<SkImage> GenerateTestImage(bool opaque,
+                                   int width,
+                                   int height,
+                                   bool texture_backed) {
     SkBitmap testBitmap;
     testBitmap.allocN32Pixels(width, height, opaque);
     testBitmap.eraseARGB(kTestAlphaValue, 30, 60, 200);
-    return SkImage::MakeFromBitmap(testBitmap);
+    sk_sp<SkImage> bitmap_image = SkImage::MakeFromBitmap(testBitmap);
+    if (!texture_backed)
+      return bitmap_image;
+
+    sk_sp<SkImage> tex_image =
+        bitmap_image->makeTextureImage(context_provider_->GrContext(), nullptr);
+    return tex_image;
   }
 
   void OnVerifyDeliveredFrame(
@@ -117,9 +153,13 @@ class CanvasCaptureHandlerTest
           video_frame->visible_data(media::VideoFrame::kAPlane);
       EXPECT_EQ(kTestAlphaValue, a_plane[0]);
     }
+
+    OnDeliverFrame(video_frame, estimated_capture_time);
   }
 
   blink::WebMediaStreamTrack track_;
+  scoped_refptr<cc::TestInProcessContextProvider> context_provider_;
+  std::unique_ptr<FakeWebGraphicsContext3DProvider> web_context_provider_;
   // The Class under test. Needs to be scoped_ptr to force its destruction.
   std::unique_ptr<CanvasCaptureHandler> canvas_capture_handler_;
 
@@ -185,14 +225,15 @@ TEST_P(CanvasCaptureHandlerTest, GetFormatsStartAndStop) {
       .Times(1)
       .WillOnce(RunClosure(quit_closure));
   source->StartCapture(
-      params, base::Bind(&CanvasCaptureHandlerTest::OnDeliverFrame,
-                         base::Unretained(this)),
+      params,
+      base::Bind(&CanvasCaptureHandlerTest::OnDeliverFrame,
+                 base::Unretained(this)),
       base::Bind(&CanvasCaptureHandlerTest::OnRunning, base::Unretained(this)));
   canvas_capture_handler_->SendNewFrame(
       GenerateTestImage(testing::get<0>(GetParam()),
                         testing::get<1>(GetParam()),
-                        testing::get<2>(GetParam()))
-          .get());
+                        testing::get<2>(GetParam()), false),
+      nullptr);
   run_loop.Run();
 
   source->StopCapture();
@@ -202,7 +243,7 @@ TEST_P(CanvasCaptureHandlerTest, GetFormatsStartAndStop) {
 TEST_P(CanvasCaptureHandlerTest, VerifyFrame) {
   const bool opaque_frame = testing::get<0>(GetParam());
   const bool width = testing::get<1>(GetParam());
-  const bool height = testing::get<1>(GetParam());
+  const bool height = testing::get<2>(GetParam());
   InSequence s;
   media::VideoCapturerSource* const source =
       GetVideoCapturerSource(static_cast<MediaStreamVideoCapturerSource*>(
@@ -210,14 +251,19 @@ TEST_P(CanvasCaptureHandlerTest, VerifyFrame) {
   EXPECT_TRUE(source != nullptr);
 
   base::RunLoop run_loop;
+  base::Closure quit_closure = run_loop.QuitClosure();
   EXPECT_CALL(*this, DoOnRunning(true)).Times(1);
+  EXPECT_CALL(*this, DoOnDeliverFrame(_, _))
+      .Times(1)
+      .WillOnce(RunClosure(quit_closure));
   media::VideoCaptureParams params;
   source->StartCapture(
-      params, base::Bind(&CanvasCaptureHandlerTest::OnVerifyDeliveredFrame,
-                         base::Unretained(this), opaque_frame, width, height),
+      params,
+      base::Bind(&CanvasCaptureHandlerTest::OnVerifyDeliveredFrame,
+                 base::Unretained(this), opaque_frame, width, height),
       base::Bind(&CanvasCaptureHandlerTest::OnRunning, base::Unretained(this)));
   canvas_capture_handler_->SendNewFrame(
-      GenerateTestImage(opaque_frame, width, height).get());
+      GenerateTestImage(opaque_frame, width, height, false), nullptr);
   run_loop.RunUntilIdle();
 }
 
@@ -231,6 +277,47 @@ TEST_F(CanvasCaptureHandlerTest, CheckNeedsNewFrame) {
   EXPECT_TRUE(canvas_capture_handler_->NeedsNewFrame());
   source->StopCapture();
   EXPECT_FALSE(canvas_capture_handler_->NeedsNewFrame());
+}
+
+// Verifies that we receive a callback in case of a context loss and
+// |gl_helper_| is reset.
+TEST_F(CanvasCaptureHandlerTest, HandlesContextLoss) {
+  InSequence s;
+  media::VideoCapturerSource* const source =
+      GetVideoCapturerSource(static_cast<MediaStreamVideoCapturerSource*>(
+          track_.Source().GetExtraData()));
+  EXPECT_TRUE(source != nullptr);
+  EXPECT_CALL(*this, DoOnRunning(true));
+  source->StartCapture(
+      media::VideoCaptureParams(),
+      base::Bind(&CanvasCaptureHandlerTest::OnDeliverFrame,
+                 base::Unretained(this)),
+      base::Bind(&CanvasCaptureHandlerTest::OnRunning, base::Unretained(this)));
+
+  // Use cc::TestContextProvider as it has SetLostContextCallback()
+  // implementation.
+  scoped_refptr<cc::TestContextProvider> test_provider =
+      cc::TestContextProvider::Create();
+  test_provider->BindToCurrentThread();
+  test_provider->AddObserver(canvas_capture_handler_.get());
+
+  // Send a frame and verify |gl_helper_| is set.
+  sk_sp<SkImage> image =
+      GenerateTestImage(true, kTestCanvasCaptureFrameEvenSize,
+                        kTestCanvasCaptureFrameEvenSize, true);
+  canvas_capture_handler_->SendNewFrameForTesting(
+      image, web_context_provider_.get(), test_provider.get());
+  EXPECT_TRUE(canvas_capture_handler_->gl_helper_ != nullptr);
+
+  // Force a context loss and check |gl_helper_| is reset.
+  base::RunLoop run_loop;
+  test_provider->ContextGL()->LoseContextCHROMIUM(
+      GL_GUILTY_CONTEXT_RESET_ARB, GL_INNOCENT_CONTEXT_RESET_ARB);
+  test_provider->ContextGL()->Flush();
+  run_loop.RunUntilIdle();
+  EXPECT_TRUE(canvas_capture_handler_->gl_helper_ == nullptr);
+
+  test_provider->RemoveObserver(canvas_capture_handler_.get());
 }
 
 INSTANTIATE_TEST_CASE_P(

@@ -11,24 +11,27 @@
 #include "base/macros.h"
 #include "base/rand_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/viz/common/gl_helper.h"
 #include "content/public/renderer/render_thread.h"
 #include "content/renderer/media/media_stream_video_capturer_source.h"
 #include "content/renderer/media/media_stream_video_source.h"
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/webrtc_uma_histograms.h"
 #include "content/renderer/render_thread_impl.h"
+#include "content/renderer/webgraphicscontext3d_provider_impl.h"
 #include "media/base/limits.h"
+#include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
+#include "skia/ext/texture_handle.h"
+#include "third_party/WebKit/public/platform/WebGraphicsContext3DProvider.h"
 #include "third_party/WebKit/public/platform/WebMediaStreamSource.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/libyuv/include/libyuv.h"
 #include "third_party/skia/include/core/SkImage.h"
 
-namespace {
-
 using media::VideoFrame;
 
+namespace {
 const size_t kArgbBytesPerPixel = 4;
-
 }  // namespace
 
 namespace content {
@@ -40,8 +43,10 @@ namespace content {
 class VideoCapturerSource : public media::VideoCapturerSource {
  public:
   VideoCapturerSource(base::WeakPtr<CanvasCaptureHandler> canvas_handler,
+                      const blink::WebSize& size,
                       double frame_rate)
-      : frame_rate_(static_cast<float>(
+      : size_(size),
+        frame_rate_(static_cast<float>(
             std::min(static_cast<double>(media::limits::kMaxFramesPerSecond),
                      frame_rate))),
         canvas_handler_(canvas_handler) {
@@ -51,13 +56,12 @@ class VideoCapturerSource : public media::VideoCapturerSource {
  protected:
   media::VideoCaptureFormats GetPreferredFormats() override {
     DCHECK(main_render_thread_checker_.CalledOnValidThread());
-    const blink::WebSize& size = canvas_handler_->GetSourceSize();
     media::VideoCaptureFormats formats;
     formats.push_back(
-        media::VideoCaptureFormat(gfx::Size(size.width, size.height),
+        media::VideoCaptureFormat(gfx::Size(size_.width, size_.height),
                                   frame_rate_, media::PIXEL_FORMAT_I420));
     formats.push_back(
-        media::VideoCaptureFormat(gfx::Size(size.width, size.height),
+        media::VideoCaptureFormat(gfx::Size(size_.width, size_.height),
                                   frame_rate_, media::PIXEL_FORMAT_YV12A));
     return formats;
   }
@@ -79,6 +83,7 @@ class VideoCapturerSource : public media::VideoCapturerSource {
   }
 
  private:
+  const blink::WebSize size_;
   const float frame_rate_;
   // Bound to Main Render thread.
   base::ThreadChecker main_render_thread_checker_;
@@ -91,17 +96,15 @@ class CanvasCaptureHandler::CanvasCaptureHandlerDelegate {
  public:
   explicit CanvasCaptureHandlerDelegate(
       media::VideoCapturerSource::VideoCaptureDeliverFrameCB new_frame_callback)
-      : new_frame_callback_(new_frame_callback),
-        weak_ptr_factory_(this) {
+      : new_frame_callback_(new_frame_callback), weak_ptr_factory_(this) {
     io_thread_checker_.DetachFromThread();
   }
   ~CanvasCaptureHandlerDelegate() {
     DCHECK(io_thread_checker_.CalledOnValidThread());
   }
 
-  void SendNewFrameOnIOThread(
-      const scoped_refptr<media::VideoFrame>& video_frame,
-      const base::TimeTicks& current_time) {
+  void SendNewFrameOnIOThread(const scoped_refptr<VideoFrame>& video_frame,
+                              const base::TimeTicks& current_time) {
     DCHECK(io_thread_checker_.CalledOnValidThread());
     new_frame_callback_.Run(video_frame, current_time);
   }
@@ -126,11 +129,11 @@ CanvasCaptureHandler::CanvasCaptureHandler(
     const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
     blink::WebMediaStreamTrack* track)
     : ask_for_new_frame_(false),
-      size_(size),
       io_task_runner_(io_task_runner),
       weak_ptr_factory_(this) {
   std::unique_ptr<media::VideoCapturerSource> video_source(
-      new VideoCapturerSource(weak_ptr_factory_.GetWeakPtr(), frame_rate));
+      new VideoCapturerSource(weak_ptr_factory_.GetWeakPtr(), size,
+                              frame_rate));
   AddVideoCapturerSourceToVideoTrack(std::move(video_source), track);
 }
 
@@ -155,14 +158,83 @@ CanvasCaptureHandler::CreateCanvasCaptureHandler(
       new CanvasCaptureHandler(size, frame_rate, io_task_runner, track));
 }
 
-void CanvasCaptureHandler::SendNewFrame(const SkImage* image) {
-  DCHECK(main_render_thread_checker_.CalledOnValidThread());
-  CreateNewFrame(image);
-}
-
 bool CanvasCaptureHandler::NeedsNewFrame() const {
   DCHECK(main_render_thread_checker_.CalledOnValidThread());
   return ask_for_new_frame_;
+}
+
+void CanvasCaptureHandler::SendNewFrame(
+    sk_sp<SkImage> image,
+    blink::WebGraphicsContext3DProvider* context_provider) {
+  DVLOG(4) << __func__;
+  DCHECK(main_render_thread_checker_.CalledOnValidThread());
+  DCHECK(image);
+  TRACE_EVENT0("webrtc", "CanvasCaptureHandler::DeliverNewFrame");
+
+  // Initially try accessing pixels directly if they are in memory.
+  SkPixmap pixmap;
+  if (image->peekPixels(&pixmap) &&
+      (pixmap.colorType() == kRGBA_8888_SkColorType ||
+       pixmap.colorType() == kBGRA_8888_SkColorType) &&
+      pixmap.alphaType() == kUnpremul_SkAlphaType) {
+    SendAsYUVFrame(image->isOpaque(), false,
+                   static_cast<const uint8*>(pixmap.addr(0, 0)),
+                   gfx::Size(pixmap.width(), pixmap.height()),
+                   pixmap.rowBytes(), pixmap.colorType());
+    return;
+  }
+
+  const gfx::Size image_size(image->width(), image->height());
+  // Allocate or reuse a temp ARGB frame to read texture info into.
+  // TODO(emircan): Currently only YUVPlanar frames are allowed in
+  // VideoFramePool. Replace this with allocation of an actual ARGB frame when
+  // http://crbug.com/555909 is resolved.
+  const gfx::Size argb_adjusted_size(kArgbBytesPerPixel * image_size.width(),
+                                     image_size.height());
+  scoped_refptr<VideoFrame> temp_argb_frame = frame_pool_.CreateFrame(
+      media::PIXEL_FORMAT_I420, argb_adjusted_size,
+      gfx::Rect(argb_adjusted_size), argb_adjusted_size, base::TimeDelta());
+  if (!temp_argb_frame) {
+    DLOG(ERROR) << "Couldn't allocate temp memory";
+    return;
+  }
+
+  // Try async reading SkImage if it is texture backed.
+  if (image->isTextureBacked()) {
+    if (context_provider) {
+      if (!gl_helper_) {
+        content::WebGraphicsContext3DProviderImpl* context_provider_impl =
+            static_cast<content::WebGraphicsContext3DProviderImpl*>(
+                context_provider);
+        DCHECK(context_provider_impl);
+        context_provider_impl->SetLostContextCallback(
+            base::Bind(&CanvasCaptureHandler::OnContextLost,
+                       weak_ptr_factory_.GetWeakPtr()));
+        DCHECK(context_provider_impl->context_provider());
+        gl_helper_.reset(new viz::GLHelper(
+            context_provider_impl->ContextGL(),
+            context_provider_impl->context_provider()->ContextSupport()));
+      }
+      GrSurfaceOrigin surface_origin = kTopLeft_GrSurfaceOrigin;
+      const GrGLTextureInfo* texture_info =
+          skia::GrBackendObjectToGrGLTextureInfo(
+              image->getTextureHandle(true, &surface_origin));
+      DCHECK(texture_info);
+      gl_helper_->ReadbackTextureAsync(
+          texture_info->fID, image_size,
+          temp_argb_frame->visible_data(VideoFrame::kYPlane), kN32_SkColorType,
+          base::Bind(&CanvasCaptureHandler::ReadPixelsAsync,
+                     weak_ptr_factory_.GetWeakPtr(), image, temp_argb_frame,
+                     surface_origin != kTopLeft_GrSurfaceOrigin));
+      return;
+    }
+    // |context_provider| being nullptr indicates a context loss.
+    gl_helper_.reset();
+  }
+
+  // Last resort, copy the pixels into memory synchronously. This call may
+  // block main render thread.
+  ReadPixelsSync(image, temp_argb_frame);
 }
 
 void CanvasCaptureHandler::StartVideoCapture(
@@ -201,89 +273,69 @@ void CanvasCaptureHandler::StopVideoCapture() {
   io_task_runner_->DeleteSoon(FROM_HERE, delegate_.release());
 }
 
-void CanvasCaptureHandler::CreateNewFrame(const SkImage* image) {
+void CanvasCaptureHandler::OnContextLost() {
+  DCHECK(main_render_thread_checker_.CalledOnValidThread());
+  gl_helper_.reset();
+}
+
+void CanvasCaptureHandler::SendAsYUVFrame(bool isOpaque,
+                                          bool flip,
+                                          const uint8_t* source_ptr,
+                                          const gfx::Size& image_size,
+                                          int stride,
+                                          SkColorType source_color_type) {
   DVLOG(4) << __func__;
   DCHECK(main_render_thread_checker_.CalledOnValidThread());
-  DCHECK(image);
-  TRACE_EVENT0("webrtc", "CanvasCaptureHandler::CreateNewFrame");
+  TRACE_EVENT0("webrtc", "CanvasCaptureHandler::DeliverAsYUVFrame");
 
-  const uint8_t* source_ptr = nullptr;
-  size_t source_length = 0;
-  size_t source_stride = 0;
-  gfx::Size image_size(image->width(), image->height());
-  SkColorType source_color_type = kUnknown_SkColorType;
+  // If this function is called asynchronously, |delegate_| might have been
+  // released already in StopVideoCapture().
+  if (!delegate_)
+    return;
 
-  // Initially try accessing pixels directly if they are in memory.
-  SkPixmap pixmap;
-  if (image->peekPixels(&pixmap) &&
-      (pixmap.colorType() == kRGBA_8888_SkColorType ||
-       pixmap.colorType() == kBGRA_8888_SkColorType) &&
-      pixmap.alphaType() == kUnpremul_SkAlphaType) {
-    source_ptr = static_cast<const uint8*>(pixmap.addr(0, 0));
-    source_length = pixmap.computeByteSize();
-    source_stride = pixmap.rowBytes();
-    image_size.set_width(pixmap.width());
-    image_size.set_height(pixmap.height());
-    source_color_type = pixmap.colorType();
-  }
-
-  // Copy the pixels into memory. This call may block main render thread.
-  if (!source_ptr) {
-    if (image_size != last_size) {
-      temp_data_stride_ = kArgbBytesPerPixel * image_size.width();
-      temp_data_.resize(temp_data_stride_ * image_size.height());
-      image_info_ = SkImageInfo::MakeN32(
-          image_size.width(), image_size.height(), kUnpremul_SkAlphaType);
-      last_size = image_size;
-    }
-    if (image->readPixels(image_info_, &temp_data_[0], temp_data_stride_, 0,
-                          0)) {
-      source_ptr = temp_data_.data();
-      source_length = temp_data_.size();
-      source_stride = temp_data_stride_;
-      source_color_type = kN32_SkColorType;
-    } else {
-      DLOG(ERROR) << "Couldn't read SkImage pixels";
-      return;
-    }
-  }
-
-  const bool isOpaque = image->isOpaque();
   const base::TimeTicks timestamp = base::TimeTicks::Now();
-  scoped_refptr<media::VideoFrame> video_frame = frame_pool_.CreateFrame(
+  scoped_refptr<VideoFrame> video_frame = frame_pool_.CreateFrame(
       isOpaque ? media::PIXEL_FORMAT_I420 : media::PIXEL_FORMAT_YV12A,
       image_size, gfx::Rect(image_size), image_size,
       timestamp - base::TimeTicks());
   DCHECK(video_frame);
-  libyuv::FourCC source_pixel_format = libyuv::FOURCC_ANY;
+
+  int (*ConvertToI420)(const uint8* src_argb, int src_stride_argb, uint8* dst_y,
+                       int dst_stride_y, uint8* dst_u, int dst_stride_u,
+                       uint8* dst_v, int dst_stride_v, int width, int height) =
+      nullptr;
   switch (source_color_type) {
     case kRGBA_8888_SkColorType:
-      source_pixel_format = libyuv::FOURCC_ABGR;
+      ConvertToI420 = libyuv::ABGRToI420;
       break;
     case kBGRA_8888_SkColorType:
-      source_pixel_format = libyuv::FOURCC_ARGB;
+      ConvertToI420 = libyuv::ARGBToI420;
       break;
     default:
-      NOTREACHED() << "Unexpected SkColorType.";
+      NOTIMPLEMENTED() << "Unexpected SkColorType.";
+      return;
   }
-  libyuv::ConvertToI420(source_ptr, source_length,
-                        video_frame->visible_data(media::VideoFrame::kYPlane),
-                        video_frame->stride(media::VideoFrame::kYPlane),
-                        video_frame->visible_data(media::VideoFrame::kUPlane),
-                        video_frame->stride(media::VideoFrame::kUPlane),
-                        video_frame->visible_data(media::VideoFrame::kVPlane),
-                        video_frame->stride(media::VideoFrame::kVPlane),
-                        0 /* crop_x */, 0 /* crop_y */, image_size.width(),
-                        image_size.height(), image_size.width(),
-                        image_size.height(), libyuv::kRotate0,
-                        source_pixel_format);
+
+  if (ConvertToI420(source_ptr, stride,
+                    video_frame->visible_data(media::VideoFrame::kYPlane),
+                    video_frame->stride(media::VideoFrame::kYPlane),
+                    video_frame->visible_data(media::VideoFrame::kUPlane),
+                    video_frame->stride(media::VideoFrame::kUPlane),
+                    video_frame->visible_data(media::VideoFrame::kVPlane),
+                    video_frame->stride(media::VideoFrame::kVPlane),
+                    image_size.width(),
+                    (flip ? -1 : 1) * image_size.height()) != 0) {
+    DLOG(ERROR) << "Couldn't convert to I420";
+    return;
+  }
   if (!isOpaque) {
     // It is ok to use ARGB function because alpha has the same alignment for
     // both ABGR and ARGB.
-    libyuv::ARGBExtractAlpha(source_ptr, source_stride,
-                             video_frame->visible_data(VideoFrame::kAPlane),
-                             video_frame->stride(VideoFrame::kAPlane),
-                             image_size.width(), image_size.height());
+    libyuv::ARGBExtractAlpha(
+        source_ptr, image_size.width() * kArgbBytesPerPixel,
+        video_frame->visible_data(VideoFrame::kAPlane),
+        video_frame->stride(VideoFrame::kAPlane), image_size.width(),
+        (flip ? -1 : 1) * image_size.height());
   }
 
   last_frame_ = video_frame;
@@ -293,6 +345,40 @@ void CanvasCaptureHandler::CreateNewFrame(const SkImage* image) {
                          SendNewFrameOnIOThread,
                      delegate_->GetWeakPtrForIOThread(), video_frame,
                      timestamp));
+}
+
+void CanvasCaptureHandler::ReadPixelsSync(
+    sk_sp<SkImage> image,
+    const scoped_refptr<media::VideoFrame> temp_frame) {
+  const gfx::Size image_size(image->width(), image->height());
+  SkImageInfo image_info = SkImageInfo::MakeN32(
+      image_size.width(), image_size.height(), kUnpremul_SkAlphaType);
+  const int stride = image_size.width() * kArgbBytesPerPixel;
+  if (!image->readPixels(image_info,
+                         temp_frame->visible_data(VideoFrame::kYPlane), stride,
+                         0 /*srcX*/, 0 /*srcY*/)) {
+    DLOG(ERROR) << "Couldn't read SkImage using readPixels()";
+    return;
+  }
+  SendAsYUVFrame(image->isOpaque(), false,
+                 temp_frame->visible_data(VideoFrame::kYPlane), image_size,
+                 stride, kN32_SkColorType);
+}
+
+void CanvasCaptureHandler::ReadPixelsAsync(
+    sk_sp<SkImage> image,
+    const scoped_refptr<VideoFrame> temp_frame,
+    bool flip,
+    bool success) {
+  DCHECK(main_render_thread_checker_.CalledOnValidThread());
+  if (!success) {
+    DLOG(ERROR) << "Couldn't read SkImage using async callback";
+    return;
+  }
+  SendAsYUVFrame(image->isOpaque(), flip,
+                 temp_frame->visible_data(VideoFrame::kYPlane),
+                 gfx::Size(image->width(), image->height()),
+                 image->width() * kArgbBytesPerPixel, kN32_SkColorType);
 }
 
 void CanvasCaptureHandler::AddVideoCapturerSourceToVideoTrack(
@@ -313,6 +399,18 @@ void CanvasCaptureHandler::AddVideoCapturerSourceToVideoTrack(
   web_track->SetTrackData(new MediaStreamVideoTrack(
       media_stream_source.release(),
       MediaStreamVideoSource::ConstraintsCallback(), true));
+}
+
+void CanvasCaptureHandler::SendNewFrameForTesting(
+    sk_sp<SkImage> image,
+    blink::WebGraphicsContext3DProvider* fake_impl,
+    viz::ContextProvider* test_provider) {
+  DCHECK(main_render_thread_checker_.CalledOnValidThread());
+  if (!gl_helper_) {
+    gl_helper_.reset(new viz::GLHelper(test_provider->ContextGL(),
+                                       test_provider->ContextSupport()));
+  }
+  SendNewFrame(image, fake_impl);
 }
 
 }  // namespace content
