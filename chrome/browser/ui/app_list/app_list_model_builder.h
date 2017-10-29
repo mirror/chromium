@@ -8,7 +8,7 @@
 #include <string>
 
 #include "base/macros.h"
-#include "chrome/browser/ui/app_list/app_list_syncable_service.h"
+#include "chrome/browser/ui/ash/app_list/app_list_syncable_service.h"
 #include "ui/app_list/app_list_item_list_observer.h"
 #include "ui/app_list/app_list_model.h"
 

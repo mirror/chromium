@@ -6,7 +6,7 @@
 
 #include <utility>
 
-#include "chrome/browser/ui/app_list/app_list_syncable_service.h"
+#include "chrome/browser/ui/ash/app_list/app_list_syncable_service.h"
 #include "ui/app_list/app_list_item.h"
 #include "ui/app_list/app_list_model.h"
 

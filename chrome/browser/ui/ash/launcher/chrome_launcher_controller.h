@@ -17,7 +17,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/ui/app_icon_loader_delegate.h"
-#include "chrome/browser/ui/app_list/app_list_syncable_service.h"
+#include "chrome/browser/ui/ash/app_list/app_list_syncable_service.h"
 #include "chrome/browser/ui/ash/app_sync_ui_state_observer.h"
 #include "chrome/browser/ui/ash/launcher/launcher_app_updater.h"
 #include "chrome/browser/ui/ash/launcher/settings_window_observer.h"
