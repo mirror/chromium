@@ -21,6 +21,9 @@
 #include "gpu/ipc/gpu_in_process_thread_service.h"
 #include "gpu/ipc/service/gpu_memory_buffer_factory.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
+#include "services/metrics/public/cpp/delegating_ukm_recorder.h"
+#include "services/metrics/public/cpp/mojo_ukm_recorder.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace {
 
@@ -68,6 +71,7 @@ VizMainImpl::VizMainImpl(Delegate* delegate,
                          ExternalDependencies dependencies,
                          std::unique_ptr<gpu::GpuInit> gpu_init)
     : delegate_(delegate),
+      ukm_recorder_ptr_info_(std::move(dependencies.ukm_recorder_ptr_info)),
       dependencies_(std::move(dependencies)),
       gpu_init_(std::move(gpu_init)),
       gpu_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
@@ -114,6 +118,8 @@ VizMainImpl::VizMainImpl(Delegate* delegate,
 
 VizMainImpl::~VizMainImpl() {
   DCHECK(gpu_thread_task_runner_->BelongsToCurrentThread());
+  if (ukm_recorder_)
+    ukm::DelegatingUkmRecorder::Get()->RemoveDelegate(ukm_recorder_.get());
   if (io_thread_)
     io_thread_->Stop();
 }
@@ -228,6 +234,7 @@ void VizMainImpl::CreateFrameSinkManagerInternal(
 void VizMainImpl::CreateFrameSinkManagerOnCompositorThread(
     mojom::FrameSinkManagerRequest request,
     mojom::FrameSinkManagerClientPtrInfo client_info) {
+  LOG(ERROR) << "VizMainImpl::CreateFrameSinkManagerOnCompositorThread";
   DCHECK(!frame_sink_manager_);
   mojom::FrameSinkManagerClientPtr client;
   client.Bind(std::move(client_info));
@@ -235,8 +242,28 @@ void VizMainImpl::CreateFrameSinkManagerOnCompositorThread(
   display_provider_ = base::MakeUnique<GpuDisplayProvider>(
       gpu_command_service_, gpu_service_->gpu_channel_manager());
 
+  if (!ukm_recorder_ && ukm_recorder_ptr_info_.is_valid()) {
+//    ukm::mojom::UkmRecorderInterfacePtrInfo ukm_recorder_ptr_info = ukm_recorder_ptr.PassInterface();
+    ukm::mojom::UkmRecorderInterfacePtr ukm_recorder_ptr;
+//    ukm::mojom::UkmRecorderInterfacePtrInfo ukm_recorder_ptr_info(
+//        dependencies_.ukm_recorder_ptr_info.PassHandle(),
+//        dependencies_.ukm_recorder_ptr_info.version());
+    //(std::move(dependencies_.ukm_recorder_ptr_info));
+    ukm_recorder_ptr.Bind(std::move(ukm_recorder_ptr_info_));
+//    connector_->BindInterface(
+//        content::mojom::kBrowserServiceName,
+//        mojo::MakeRequest(&ukm_recorder_ptr));
+    ukm_recorder_ = base::MakeUnique<ukm::MojoUkmRecorder>(
+        std::move(ukm_recorder_ptr));
+    LOG(ERROR) << "ukm_recorder_ created!";
+    ukm::DelegatingUkmRecorder::Get()->AddDelegate(ukm_recorder_->GetWeakPtr());
+    LOG(ERROR) << "DelegatingUkmRecorder initialized!";
+  } else {
+    LOG(ERROR) << "Not creating ukm_recorder";
+  }
+
   frame_sink_manager_ = base::MakeUnique<FrameSinkManagerImpl>(
-      SurfaceManager::LifetimeType::REFERENCES, display_provider_.get());
+    SurfaceManager::LifetimeType::REFERENCES, display_provider_.get());
   frame_sink_manager_->BindAndSetClient(std::move(request), nullptr,
                                         std::move(client));
 }

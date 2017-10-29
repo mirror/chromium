@@ -11,6 +11,7 @@
 #include "gpu/ipc/service/gpu_init.h"
 #include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 #include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
 #include "services/viz/privileged/interfaces/viz_main.mojom.h"
 
@@ -18,6 +19,10 @@ namespace gpu {
 class GpuMemoryBufferFactory;
 class SyncPointManager;
 }  // namespace gpu
+
+namespace ukm {
+class MojoUkmRecorder;
+}
 
 namespace viz {
 class DisplayProvider;
@@ -53,6 +58,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
     gpu::SyncPointManager* sync_point_manager = nullptr;
     base::WaitableEvent* shutdown_event = nullptr;
     scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner;
+    ukm::mojom::UkmRecorderInterfacePtrInfo ukm_recorder_ptr_info;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(ExternalDependencies);
@@ -104,6 +110,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
 
   Delegate* const delegate_;
 
+  ukm::mojom::UkmRecorderInterfacePtrInfo ukm_recorder_ptr_info_;
   const ExternalDependencies dependencies_;
 
   // The thread that handles IO events for Gpu (if one isn't already provided).
@@ -134,6 +141,9 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   std::unique_ptr<base::Thread> compositor_thread_;
   scoped_refptr<base::SingleThreadTaskRunner> compositor_thread_task_runner_;
 
+  // Should only be used on the compositor thread.
+//  ukm::mojom::UkmRecorderInterfacePtr ukm_recorder_ptr_;
+  std::unique_ptr<ukm::MojoUkmRecorder> ukm_recorder_;
   std::unique_ptr<base::PowerMonitor> power_monitor_;
   mojo::Binding<mojom::VizMain> binding_;
   mojo::AssociatedBinding<mojom::VizMain> associated_binding_;

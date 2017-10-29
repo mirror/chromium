@@ -7,6 +7,10 @@
 
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 
+namespace service_manager {
+struct BindSourceInfo;
+}
+
 namespace ukm {
 
 class UkmRecorder;
@@ -17,7 +21,8 @@ class UkmInterface : public mojom::UkmRecorderInterface {
   ~UkmInterface() override;
 
   static void Create(UkmRecorder* ukm_recorder,
-                     mojom::UkmRecorderInterfaceRequest request);
+                     mojom::UkmRecorderInterfaceRequest request,
+                     const service_manager::BindSourceInfo& source_info);
 
  private:
   // ukm::mojom::UkmRecorderInterface:
