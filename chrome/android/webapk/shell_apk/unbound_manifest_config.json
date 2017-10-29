@@ -1,4 +1,6 @@
 {
+  "short_name": "Unbound WebAPK",
+  "name": "Unbound WebAPK",
   "manifest_package": "org.chromium.arbitrarypackage",
   "scope_url": "https://pwa.rocks/",
   "intent_filters": {

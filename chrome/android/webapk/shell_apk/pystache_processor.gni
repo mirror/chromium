@@ -4,7 +4,7 @@
 
 import("//build/config/android/rules.gni")
 
-template("manifest_processor_template") {
+template("pystache_processor_template") {
   set_sources_assignment_filter([])
   forward_variables_from(invoker, [ "testonly" ])
 
@@ -21,7 +21,7 @@ template("manifest_processor_template") {
       invoker.config_file,
       invoker.input,
     ]
-    script = "//chrome/android/webapk/shell_apk/manifest_processor.py"
+    script = "//chrome/android/webapk/shell_apk/pystache_processor.py"
 
     outputs = [
       invoker.output,
