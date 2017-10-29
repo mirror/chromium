@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "677c7fa4_75e893fa",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-29T23:32:48Z",
+      "side": 1,
+      "message": "\u003e As I said, I had the intention of landing this code quickly for unblocking the client we are in touch with, but this CL discussion seems to never ending.\n\nWhat client is this? If you are being pressured into short-cutting the engineering process, I would be happy to speak to them on your behalf. It seems this change was originally perceived to be a quick-fix; but the new elements are not fitting quite right, and so it\u0027s taking time to figure things out.\n\nThe discussion on this particular CL is lengthy because there were/are several very difficult issues to consider and resolve (https://www.chromium.org/developers/core-principles):\n\n1. Speed: This CL is about making things faster. Was this the fastest possible solution? We all know it is not. So, then we needed to understand whether making the current trade-off was the right decision. It was prudent to explore more options before \"settling.\"\n\n2. Security: You\u0027re doing something new here in the render process (GPU readback). Could a compromised renderer sandbox allow malicious code to readback textures it shouldn\u0027t? Yes. Actually, I\u0027m not sure we have completely figured this one out. This is why I encouraged you to include a security reviewer several days ago.\n\n3. Stability: Who owns GLHelper and what do we do when a GL context is lost? This happens quite frequently in-the-wild, as GPU drivers are very buggy. Chromium developers have spent lots of time adding infrastructure in the browser to deal with this exact problem. Unfortunately, that infrastructure doesn\u0027t seem to easily integrate with the new thing you\u0027re doing here (being in the render process). So, we\u0027ve yet to figure out how to resolve that.\n\n4. Simplicity: The \"pretend the Y plane of a YUV VideoFrame is really ARGB data\" thing, the technical debt this incurs, and other tangibles. It took some discussion to figure out how to leverage the existing VideoFrame memory pooling without having to do that.",
+      "parentUuid": "a3360d6f_90150143",
+      "range": {
+        "startLine": 238,
+        "startChar": 1,
+        "endLine": 239,
+        "endChar": 55
+      },
+      "revId": "e07873256d6f2d3291e0e3aa62d050ef813211c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1778edc_e060bb46",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 9
