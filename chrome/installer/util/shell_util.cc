@@ -9,10 +9,10 @@
 
 #include "chrome/installer/util/shell_util.h"
 
-#include <windows.h>
 #include <objbase.h>
 #include <shlobj.h>
 #include <shobjidl.h>
+#include <windows.h>
 #include <wrl/client.h>
 
 #include <algorithm>
@@ -1090,6 +1090,12 @@ base::win::ShortcutProperties TranslateShortcutProperties(
 
   if (properties.has_app_id())
     shortcut_properties.set_app_id(properties.app_id);
+
+  if (properties.has_toast_activator_clsid()) {
+    CLSID clsid;
+    CLSIDFromString(properties.toast_activator_clsid.c_str(), &clsid);
+    shortcut_properties.set_toast_activator_clsid(clsid);
+  }
 
   return shortcut_properties;
 }
