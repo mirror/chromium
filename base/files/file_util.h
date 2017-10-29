@@ -254,6 +254,13 @@ BASE_EXPORT bool CreateTemporaryFile(FilePath* path);
 BASE_EXPORT bool CreateTemporaryFileInDir(const FilePath& dir,
                                           FilePath* temp_file);
 
+// Same as CreateTemporaryFileInDir but the file is created in |dir| with a name
+// that starts with |prefix|.
+BASE_EXPORT bool CreateTemporaryFileWithPrefixInDir(
+    const FilePath& dir,
+    const FilePath::StringType& prefix,
+    FilePath* temp_file);
+
 // Create and open a temporary file.  File is opened for read/write.
 // The full path is placed in |path|.
 // Returns a handle to the opened file or NULL if an error occurred.
