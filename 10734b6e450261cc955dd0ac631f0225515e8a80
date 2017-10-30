@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a7aba885_dbc165bf",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T16:35:53Z",
+      "side": 1,
+      "message": "This is not a sufficient condition. IsGpuCompositingEnabled() \u0026\u0026 IsTextureBacked() does not guarantee that |image| was not rendered with swiftshader.  If we try to mailbox a swiftshader texture, it will fail to composite (not sure if it crashes or draws blank, but it won\u0027t work). Today this scenario is highly unlikely, but soon swiftshader will support WebGL2.  When that happens, there will be a bunch of GPUs that are not blacklisted for GPU compositing which will fall back to swiftshader for WebGL2.",
+      "range": {
+        "startLine": 186,
+        "startChar": 26,
+        "endLine": 186,
+        "endChar": 49
+      },
+      "revId": "10734b6e450261cc955dd0ac631f0225515e8a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b277ab33_cf830382",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/SharedGpuContext.cpp",
         "patchSetId": 5
