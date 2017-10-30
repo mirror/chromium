@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb0dd716_849d46ff",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-30T14:08:48Z",
+      "side": 1,
+      "message": "tiny nit: please add braces or collapse these to a single \u0027if\u0027.",
+      "range": {
+        "startLine": 1265,
+        "startChar": 8,
+        "endLine": 1265,
+        "endChar": 44
+      },
+      "revId": "3c02a2d19fc02c062c7f50973b76558bd4f48250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
