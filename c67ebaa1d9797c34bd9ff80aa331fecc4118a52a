@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e153df89_b6a57cdb",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-30T16:55:40Z",
+      "side": 1,
+      "message": "Forgot to check RTL. Done.",
+      "parentUuid": "e32e0677_a921770e",
+      "revId": "c67ebaa1d9797c34bd9ff80aa331fecc4118a52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cfa1273_12f4955f",
         "filename": "ui/views/bubble/bubble_border.cc",
         "patchSetId": 3
@@ -50,6 +68,24 @@
       "revId": "c67ebaa1d9797c34bd9ff80aa331fecc4118a52a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d15cb10_14f4c37d",
+        "filename": "ui/views/bubble/bubble_border.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-30T16:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e07e574_ab6e7844",
+      "revId": "c67ebaa1d9797c34bd9ff80aa331fecc4118a52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
