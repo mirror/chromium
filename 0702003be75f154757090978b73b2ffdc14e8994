@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "af294a1c_aa4145c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/ImpressionTracker.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-30T23:48:39Z",
+      "side": 1,
+      "message": "Are there any major pitfalls in enabling listener change on-the-fly? At first glance it seems that this method would work fine.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9013d403_22f6e4b5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/OneShotImpressionTracker.java",
         "patchSetId": 13
@@ -36,6 +59,30 @@
       "writtenOn": "2017-10-30T19:04:29Z",
       "side": 1,
       "message": "nit: Name feels weird - it\u0027s Tracker that is passed as a Listener to another Tracker...",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e851946_65bfb3bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/OneShotImpressionTracker.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-30T23:48:39Z",
+      "side": 1,
+      "message": "Second this. It feels especially weird in SigninPromoController, because it has two fields with similar names, but different semantics.",
+      "parentUuid": "9013d403_22f6e4b5",
       "range": {
         "startLine": 13,
         "startChar": 30,
@@ -87,6 +134,29 @@
         "startChar": 45,
         "endLine": 73,
         "endChar": 46
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd8e207_1d9bb5f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-30T23:48:39Z",
+      "side": 1,
+      "message": "I see two issues in this assert:\n1. It assumes parity between onViewRecycled an onBindViewHolder calls, which is not obvious from the documentation I\u0027ve seen so far.\n2. It assumes that Views bound to Preference objects will not get recycled. SignInPreference.onPreferenceFragmentDestroyed is invoked only when MainPreferences fragment is destroyed, so SigninPromoController.detach() won\u0027t be called if the promo is hidden by scrolling/navigating to Settings subscreen.\nIt looks like both cases may trigger this assert.\nThis being said, I have to admit that my knowledge about RecyclerView/Preferences is pretty limited. Am I missing something?",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 42
       },
       "revId": "0702003be75f154757090978b73b2ffdc14e8994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
