@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a0417d5e_8c7f2a98",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T16:42:15Z",
+      "side": 1,
+      "message": "Why wouldn\u0027t we want similar logic if other code DEFERs the load?",
+      "parentUuid": "f3a4f118_bf191a91",
+      "range": {
+        "startLine": 1186,
+        "startChar": 0,
+        "endLine": 1186,
+        "endChar": 72
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d0de6ee_4e8140e2",
         "filename": "chrome/browser/ui/tab_ui_helper.cc",
         "patchSetId": 8
