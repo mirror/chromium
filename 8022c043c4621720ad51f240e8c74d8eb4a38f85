@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eb4cd39_b4541e43",
+        "filename": "content/renderer/media/media_stream_renderer_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-30T16:31:30Z",
+      "side": 1,
+      "message": "From what I can tell, this can (and will quite often) happen in benign cases, i.e. every time we load a video-only stream in a video tag.",
+      "revId": "8022c043c4621720ad51f240e8c74d8eb4a38f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77581d2_52009578",
+        "filename": "content/renderer/media/webmediaplayer_ms.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-30T16:31:30Z",
+      "side": 1,
+      "message": "Like with the message above, this one gets logged regardless of if this is an error or not.\n\nI see see your later CL added an IsAudioElement() method. Perhaps we should only log this if we\u0027re unable to create an audio renderer for an audio tag?",
+      "revId": "8022c043c4621720ad51f240e8c74d8eb4a38f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
