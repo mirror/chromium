@@ -789,8 +789,24 @@ void PageInfoBubbleView::SetIdentityInfo(const IdentityInfo& identity_info) {
       identity_info.GetSecurityDescription();
 
   summary_text_ = security_description->summary;
-  static_cast<views::Label*>(GetBubbleFrameView()->title())
-      ->SetText(GetWindowTitle());
+  views::Label* title_label =
+      static_cast<views::Label*>(GetBubbleFrameView()->title());
+  title_label->SetText(GetWindowTitle());
+  if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+    int title_style = views::style::STYLE_PRIMARY;
+    switch (security_description->state) {
+      case OverallSecurityState::kSecure:
+        title_style = STYLE_GREEN;
+        break;
+      case OverallSecurityState::kInsecure:
+        title_style = STYLE_RED;
+        break;
+      default:
+        break;
+    }
+    title_label->SetEnabledColor(views::style::GetColor(
+        views::style::CONTEXT_DIALOG_TITLE, title_style, GetNativeTheme()));
+  }
 
   if (identity_info.certificate) {
     certificate_ = identity_info.certificate;
