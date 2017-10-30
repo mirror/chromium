@@ -22,6 +22,30 @@
       "revId": "e2cc5c390ac88666b28887da8467e8be7eab3543",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0cac48_f21ef528",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CSSPlugin.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-10-30T22:19:35Z",
+      "side": 0,
+      "message": "The plugin is created after onTextEditorContentSet",
+      "parentUuid": "95ee9542_7f245c06",
+      "range": {
+        "startLine": 288,
+        "startChar": 2,
+        "endLine": 288,
+        "endChar": 24
+      },
+      "revId": "e2cc5c390ac88666b28887da8467e8be7eab3543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

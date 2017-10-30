@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bcb354b0_5b2ccc92",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CSSPlugin.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-10-30T22:19:35Z",
+      "side": 1,
+      "message": "UISourceCode isn\u0027t used, so I just pass in TextEditor for now.",
+      "parentUuid": "8bbd8409_6cf18682",
+      "range": {
+        "startLine": 39,
+        "startChar": 14,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "1a996eb7ff70a99ab09a3eab0ba4955f99425e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "122cb054_f892cf14",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/CSSPlugin.js",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "85e700e8_25e99682",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CSSPlugin.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-10-30T22:19:35Z",
+      "side": 1,
+      "message": "Makes it a pain to uninstall the event listener in that case.",
+      "parentUuid": "122cb054_f892cf14",
+      "range": {
+        "startLine": 307,
+        "startChar": 11,
+        "endLine": 307,
+        "endChar": 26
+      },
+      "revId": "1a996eb7ff70a99ab09a3eab0ba4955f99425e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1941de9c_892c91c7",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/UISourceCodeFrame.js",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-26T22:49:31Z",
       "side": 1,
       "message": "why do you need this? This should be handled in onTextEditorContentSet",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 20
+      },
+      "revId": "1a996eb7ff70a99ab09a3eab0ba4955f99425e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3941eb_53806014",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/UISourceCodeFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-10-30T22:19:35Z",
+      "side": 1,
+      "message": "This gets called when the uiSourceCode mimetype changes, from _recreateSourceFrameIfNeeded.",
+      "parentUuid": "1941de9c_892c91c7",
       "range": {
         "startLine": 156,
         "startChar": 2,
