@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e909d8c1_51fa92d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-10-30T09:16:41Z",
+      "side": 1,
+      "message": "It would be great to include the mesa commit here.",
+      "revId": "c5c4aae7440b9576cd3f8a935ca462506630ea6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
