@@ -17,7 +17,6 @@
 #include "ios/web_view/internal/signin/web_view_signin_client_factory.h"
 #include "ios/web_view/internal/signin/web_view_signin_error_controller_factory.h"
 #include "ios/web_view/internal/web_view_browser_state.h"
-#import "ios/web_view/public/cwv_web_view_configuration+sync.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -56,13 +55,14 @@ WebViewOAuth2TokenServiceFactory::BuildServiceInstanceFor(
     web::BrowserState* context) const {
   WebViewBrowserState* browser_state =
       WebViewBrowserState::FromBrowserState(context);
-  CWVWebViewConfiguration* web_view_configuration =
-      [CWVWebViewConfiguration defaultConfiguration];
-  DCHECK_EQ(web_view_configuration.browserState, browser_state);
+
+  auto token_service_provider =
+      base::MakeUnique<WebViewProfileOAuth2TokenServiceIOSProviderImpl>();
+  IOSWebViewSigninClient* signin_client = static_cast<IOSWebViewSigninClient*>(
+      WebViewSigninClientFactory::GetForBrowserState(browser_state));
+  signin_client->SetTokenServiceProvider(token_service_provider.get());
   auto delegate = base::MakeUnique<ProfileOAuth2TokenServiceIOSDelegate>(
-      WebViewSigninClientFactory::GetForBrowserState(browser_state),
-      base::MakeUnique<WebViewProfileOAuth2TokenServiceIOSProviderImpl>(
-          web_view_configuration.authenticationController),
+      signin_client, std::move(token_service_provider),
       WebViewAccountTrackerServiceFactory::GetForBrowserState(browser_state),
       WebViewSigninErrorControllerFactory::GetForBrowserState(browser_state));
   return base::MakeUnique<ProfileOAuth2TokenService>(std::move(delegate));
