@@ -367,6 +367,12 @@ public class ChromeTabbedActivity
                     mDelayedInitialTabBehaviorDuringUiInit =
                             () -> getBottomSheet().displayNewTabUi(mIsIncognito);
                 } else {
+                    // Close bottom sheet if switching between standard and incognito mode
+                    // when creating new tabs. This prevents tabbed mode of bottom sheet contents
+                    // from being out of date.
+                    if (mIsIncognito != getCurrentTabModel().isIncognito()) {
+                        getBottomSheet().setSheetState(BottomSheet.SHEET_STATE_PEEK, false);
+                    }
                     getBottomSheet().displayNewTabUi(mIsIncognito);
                 }
                 return true;
