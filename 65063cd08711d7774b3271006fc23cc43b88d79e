@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "2702dc2e_c19580b1",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-30T22:03:15Z",
+      "side": 1,
+      "message": "I feel like having really clear ownership would be simplest, which I think would mean having something like AllDone() be guaranteed to be called.  It\u0027s a sort of \"Delete me now\" call (Or \"delete me soon\" if it needs a thread hop). That way you have precisely one place where the ThreatDetails d\u0027tor gets called.\n\nThe AllDone() func could pass a ptr to *this if web_contents is no good (since it could be null), and TriggerManager could have a set of those ptrs just for ownership.\n\nYou know this code better than I, so feel free to discount my ideas with reality.",
+      "parentUuid": "63f9ff09_0a664d77",
+      "revId": "65063cd08711d7774b3271006fc23cc43b88d79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2ab066b_73296d7b",
         "filename": "components/safe_browsing/triggers/trigger_manager.cc",
         "patchSetId": 7
