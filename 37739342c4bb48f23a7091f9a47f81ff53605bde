@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "741cf7d2_e43955cd",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-30T01:57:50Z",
+      "side": 1,
+      "message": "I patched this in on a linux chromeos build. It\u0027s not terrible - the find bar slides off screen during the animation, but comes back at the end of the animation (note I\u0027m not sure how it comes back, or if it\u0027s save to rely on that behavior). However, it\u0027s always anchored vertically below the omnibox. I think it should move to the side of the screen in fullscreen on ChromeOS unless the tab strip is fully revealed.",
+      "parentUuid": "20427d84_44cc0351",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "855dab6b_2c2db419",
         "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
         "patchSetId": 28
@@ -87,6 +105,41 @@
       "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d87ff310_a1174f7a",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-30T01:57:50Z",
+      "side": 1,
+      "message": "Yeah - I think top_container and contents_container can overlap, which is why this logic looked out of place to me :/",
+      "parentUuid": "359c7116_1fcbb6e1",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb769634_68e60a12",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-30T01:57:50Z",
+      "side": 1,
+      "message": "note gfx::Size::set_width(..) is `width_ \u003d width \u003c 0 ? 0 : width`, so this std::max isn\u0027t doing anything here",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
