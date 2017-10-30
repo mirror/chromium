@@ -18,6 +18,13 @@
 // callbacks when the monitor detects near-OOM situation.
 class NearOomMonitor {
  public:
+  // NearOomMonitor is only available on low-end devices with |kOomIntervention|
+  // feature. Returns true when NearOomMonitor can be obtained from
+  // GetInstance().
+  static bool IsEnabled();
+
+  static NearOomMonitor* GetInstance();
+
   NearOomMonitor();
   virtual ~NearOomMonitor();
 
