@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "31bbe100_68b3c75e",
+        "filename": "extensions/browser/api/declarative_net_request/rules_monitor_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-30T22:57:43Z",
+      "side": 1,
+      "message": "Yes. I was thinking that using scoped_refptr param in this case is natural in this case, but sure.",
+      "parentUuid": "9c371d7c_82f2f73c",
+      "range": {
+        "startLine": 74,
+        "startChar": 34,
+        "endLine": 74,
+        "endChar": 71
+      },
+      "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35fe7b30_463b728b",
         "filename": "extensions/browser/api/declarative_net_request/rules_monitor_service.cc",
         "patchSetId": 7
@@ -93,6 +117,30 @@
       "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d247289_a0d03b98",
+        "filename": "extensions/browser/api/declarative_net_request/rules_monitor_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-30T22:57:43Z",
+      "side": 1,
+      "message": "Sure",
+      "parentUuid": "13cb48e2_6245021b",
+      "range": {
+        "startLine": 76,
+        "startChar": 35,
+        "endLine": 76,
+        "endChar": 50
+      },
+      "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -458,6 +506,24 @@
       "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3616de64_b89a59f3",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-30T22:57:43Z",
+      "side": 1,
+      "message": "Cool, I was thinking whether we should even return anything from GetRulesetManager when DNR is not enabled.",
+      "parentUuid": "cfb9c1e5_6768e302",
+      "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
