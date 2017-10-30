@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7562e368_9c410145",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-30T12:02:08Z",
+      "side": 0,
+      "message": "We have\u0027t put new_url info in this string, and it wasn\u0027t consistent to another code path in the DTL. I\u0027ll make this show the same format string.",
+      "range": {
+        "startLine": 259,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 60
+      },
+      "revId": "70875fdbcfa084948aab6914a7ec5eb1fc9d6f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
