@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "187ed49d_19c3eeb9",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-toDataURL-jpeg-maximum-quality.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "\u003e hahahahahahahahahahahahahaha.\n\nYaya... Gonna use setTimeout instead to cleanly trigger finalizeFrame.",
+      "parentUuid": "917b4a39_a9e2c1d7",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "327ea079_3a4f2e5e",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-toDataURL-webp.html",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-25T21:05:06Z",
       "side": 1,
       "message": "https://i.imgur.com/c4jt321.png",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "621b750a_b4cff1cb",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-toDataURL-webp.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "327ea079_3a4f2e5e",
       "range": {
         "startLine": 22,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "59d1c1a5_dbfd1a98",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/script-tests/canvas-lost-gpu-context.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e58eafcc_55588734",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4f0058e_04f5d559",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas/script-tests/canvas-toBlob-toDataURL-race.js",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c4722c1a_49819977",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/script-tests/canvas-toBlob-toDataURL-race.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "This one is makes less sense to setTimeout-ify.  Because this is called in a loop, using setTimeout will make the flow harder to debug.  I want to leave this one as-is.",
+      "parentUuid": "b4f0058e_04f5d559",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 14
+      },
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc790aad_a081e9fa",
         "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
         "patchSetId": 3
@@ -108,6 +204,24 @@
       "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "155d5d3d_b4a54854",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc790aad_a081e9fa",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "46c82357_7a8a5baf",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "\u003e Do you feel like writing some comments here? 😎\n\nNot sure what you have in mind. An explainer?",
+      "parentUuid": "9ab6727e_616999d5",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d5b1c91_0b39a9d6",
         "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.h",
         "patchSetId": 3
@@ -139,6 +271,30 @@
       "writtenOn": "2017-10-26T19:27:03Z",
       "side": 1,
       "message": "There\u0027re a lot of context_provider_wrapper_ references. I saw that this one is only used as \"SharedGpuContext::ContextProviderWrapper()\" in constructor and restore(). Is there a necessity to keep it. How is different from the resource_provider_\u0027s context_provider_wrapper?",
+      "range": {
+        "startLine": 177,
+        "startChar": 9,
+        "endLine": 177,
+        "endChar": 13
+      },
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd51a1d_9d5fe06a",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "Excellent observation. Done.",
+      "parentUuid": "2d5b1c91_0b39a9d6",
       "range": {
         "startLine": 177,
         "startChar": 9,
@@ -171,6 +327,30 @@
       "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ee606e_74f3cce1",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2c67097_156a1e3c",
+      "range": {
+        "startLine": 192,
+        "startChar": 26,
+        "endLine": 192,
+        "endChar": 48
+      },
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -221,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "48c83ce9_27e17d9b",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "Done.  Did header + cpp",
+      "parentUuid": "c53f1f29_3797f2eb",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb4e4e8b_d5c6f17a",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
         "patchSetId": 3
@@ -244,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "1d30d020_f37ab453",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb4e4e8b_d5c6f17a",
+      "range": {
+        "startLine": 102,
+        "startChar": 17,
+        "endLine": 102,
+        "endChar": 36
+      },
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4b99fee_1ab3f7dc",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
         "patchSetId": 3
@@ -258,6 +486,24 @@
       "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90284eba_5080672e",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4b99fee_1ab3f7dc",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +524,24 @@
     },
     {
       "key": {
+        "uuid": "c010b7c3_d97a3cc4",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22aee065_a18f4ef9",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46c81a47_c2f2f6fa",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
         "patchSetId": 3
@@ -289,6 +553,24 @@
       "writtenOn": "2017-10-26T19:27:03Z",
       "side": 1,
       "message": "Again, mark this subclass as final. Do the same to other subclasses.",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa0f006_a0bb13d4",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "Actually, this one is not final. It is inherited by CanvasResourceProvider_Texture_GpuMemoryBuffer.  Will mark the others as final though.\n\nDone.",
+      "parentUuid": "46c81a47_c2f2f6fa",
       "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -318,6 +600,30 @@
     },
     {
       "key": {
+        "uuid": "cd7a6178_43e28510",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c5c7f32_9c37936b",
+      "range": {
+        "startLine": 358,
+        "startChar": 5,
+        "endLine": 358,
+        "endChar": 12
+      },
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69f08899_56d1c147",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
         "patchSetId": 3
@@ -335,6 +641,24 @@
     },
     {
       "key": {
+        "uuid": "c2701f6e_75b88bfb",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69f08899_56d1c147",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05ee6700_937f215c",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
         "patchSetId": 3
@@ -346,6 +670,24 @@
       "writtenOn": "2017-10-25T21:05:06Z",
       "side": 1,
       "message": "is there reason why we do it like that as opposed to just make PrepareTextureMailbox a no-op on cases where it doesn\u0027t make sense?",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e0d586_c5198ab4",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "This is for debuggability.\nNo-op -\u003e OMG, screen is balck and I don\u0027t know why.\nDCHECK -\u003e Boom! Here\u0027s what you did wrong.",
+      "parentUuid": "05ee6700_937f215c",
       "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -369,6 +711,24 @@
     },
     {
       "key": {
+        "uuid": "dbf8663c_7a78a470",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "To feel the breeze ;-)   Done.",
+      "parentUuid": "b4b6c707_ec843160",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f14083c5_4f449741",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.h",
         "patchSetId": 3
@@ -383,6 +743,24 @@
       "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4fce8c_be017ccf",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-30T18:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f14083c5_4f449741",
+      "revId": "f71da5b4ca0ed8653cfe13400d389222d7720f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
