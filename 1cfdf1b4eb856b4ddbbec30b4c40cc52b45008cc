@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "9b15c364_413eaaa2",
+        "filename": "tools/perf/page_sets/tough_video_cases.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-30T19:02:03Z",
+      "side": 1,
+      "message": "(this is a nit :) )",
+      "parentUuid": "96f08736_80197199",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d74d0475_19221413",
         "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
         "patchSetId": 7
