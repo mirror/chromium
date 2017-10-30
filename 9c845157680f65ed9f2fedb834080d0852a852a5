@@ -449,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "d29f456b_0962be4e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-30T18:31:28Z",
+      "side": 1,
+      "message": "Using android monitor, it doesn\u0027t appear that the TextBubble widget has padding below it, but in looking at the code, there is some logic to determine the paddingY. You could add some debug statements to find out if the mY in TextBubble.java around like 375 matches what you expect based on the Rect passed in.",
+      "parentUuid": "247d26cb_d0662db2",
+      "range": {
+        "startLine": 85,
+        "startChar": 24,
+        "endLine": 85,
+        "endChar": 55
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3078e850_827b0ca3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 9
@@ -484,6 +508,30 @@
       "side": 1,
       "message": "The bubble for CONTEXTUAL_SEARCH_FEATURE should be shown after the panel\u0027s animation is finished and it is shown, so #showContextualSearch() is not the best place for invoking it. Also if ContextualSearchPanel#getPanelRect() is called before it is drawn, OverlayBasePanel#getOffsetY() returns 0 and the bubble is drawn on the top of the page.\nSo the bubble for CONTEXTUAL_SEARCH_FEATURE should be called after the panel is drawn.\n\nAs for CONTEXTUAL_SEARCH_TAP_FEATURE, the decision for showing it should be made before ContextualSearchPanel#requestPanelShow() is called, because the UI for this feature is the Bar Banner and it\u0027s part of the panel.\n\nAnd CONTEXTUAL_SEARCH_PANEL_FEATURE should be shown only after entity data is received, which could take a while after the panel is shown.\n\nI like the idea of moving these to ContextualSearchIPH, but I think I should create other methods as well as ContextualSearchIPH#onPanelShow, like ContextualSearchIPH#beforePanelShow (for Bar Banner) and ContextualSearchIPH#onEntityDataReceived. Does that make sense?",
       "parentUuid": "3078e850_827b0ca3",
+      "range": {
+        "startLine": 1256,
+        "startChar": 3,
+        "endLine": 1261,
+        "endChar": 5
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca1660f_d8568bf3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-30T18:31:28Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation. I think those methods make sense. As a small nit, I would make #onPanelShow() something like #onPanelFinishedShowing() so that it\u0027s obvious we\u0027re waiting for the animation to finish.",
+      "parentUuid": "36fc912a_1c7e52f3",
       "range": {
         "startLine": 1256,
         "startChar": 3,

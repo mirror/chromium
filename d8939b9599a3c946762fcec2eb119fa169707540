@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2642a40d_bd181e59",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanelMetrics.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-30T18:31:28Z",
+      "side": 1,
+      "message": "This event and the one below should only be notified if mWasSearchContentViewSeen is true. isEndingSearch means that contextual search was dismissed; the panel may or may not have been opened.",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 79
+      },
+      "revId": "d8939b9599a3c946762fcec2eb119fa169707540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9faca7a8_59a4485c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanelMetrics.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-30T18:31:28Z",
+      "side": 1,
+      "message": "This should probably be called with the other notifyEvent calls that are conditional on mWasSearchContentViewShown. isStartingSearch means that the contextual search bar just started showing.",
+      "range": {
+        "startLine": 190,
+        "startChar": 13,
+        "endLine": 194,
+        "endChar": 0
+      },
+      "revId": "d8939b9599a3c946762fcec2eb119fa169707540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
