@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ba0374be_afd92c27",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T06:18:51Z",
+      "side": 1,
+      "message": "As I wrote in another place, this is not an equivalent replacement.",
+      "revId": "85634b6cf576cb65264ae6fda64f7a46c9d405a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b492e8ff_80a01577",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.cpp",
         "patchSetId": 2
@@ -13,6 +30,40 @@
       "writtenOn": "2017-10-30T01:43:10Z",
       "side": 1,
       "message": "If we don\u0027t want introduce this branch, we need a non-null dummy data in taking a snapshot.\n(the dummy data doesn\u0027t need to be an instance of HTMLDocument.)",
+      "revId": "85634b6cf576cb65264ae6fda64f7a46c9d405a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5809f55_6876d383",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T06:18:51Z",
+      "side": 1,
+      "message": "script_wrappable-\u003eTraceWrappers(swvisitor) is NOT equivalent to swvisitor-\u003eMarkAndTraceWrappers(script_wrappable).  I think that this replacement is not safe, at least I\u0027m not sure that this is safe.",
+      "revId": "85634b6cf576cb65264ae6fda64f7a46c9d405a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8962c41_55943536",
+        "filename": "third_party/WebKit/Source/platform/bindings/WrapperTypeInfo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T06:18:51Z",
+      "side": 1,
+      "message": "We no longer need TraceFunction and TraceWrappersFunction.",
       "revId": "85634b6cf576cb65264ae6fda64f7a46c9d405a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
