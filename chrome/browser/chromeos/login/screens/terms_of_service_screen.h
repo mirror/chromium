@@ -55,7 +55,7 @@ class TermsOfServiceScreen : public BaseScreen,
 
   TermsOfServiceScreenView* view_;
 
-  std::unique_ptr<net::URLFetcher> terms_of_service_fetcher_;
+  std::unique_ptr<content::SimpleURLLoader> terms_of_service_loader_;
 
   // Timer that enforces a custom (shorter) timeout on the attempt to download
   // the Terms of Service.
