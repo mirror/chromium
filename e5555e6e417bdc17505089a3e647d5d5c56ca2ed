@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc54f4ca_5bc5f0b2",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-30T23:17:24Z",
+      "side": 1,
+      "message": "Is this the line that ensures we don\u0027t issue a delete notification for things that never had favicons? I see this value getting set in OnFaviconDataForInitialURLFromFaviconService which I assume comes from the history. But I don\u0027t see what guarantees that the history results are in before this check happens. Can you clarify for me?",
+      "revId": "e5555e6e417bdc17505089a3e647d5d5c56ca2ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
