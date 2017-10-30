@@ -65,6 +65,29 @@
     },
     {
       "key": {
+        "uuid": "c358e84d_f6a3d0b7",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-30T19:53:17Z",
+      "side": 1,
+      "message": "nit: UMA_HISTOGRAM_* macros expand to a fair bit of code, so it\u0027s best to help the compiler reduce duplication by creating a small wrapper function, e.g. RecordNearOomMonitoringEndReason(NearOomMonitoringEndReason::RENDERER_GONE);",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "042340f4_54a6336d",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 3
@@ -167,6 +190,52 @@
       "writtenOn": "2017-10-30T12:08:26Z",
       "side": 1,
       "message": "Remove \"Also ...\". It\u0027s saying the same thing as \"if it\u0027s not started\".",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517c2478_8bd9ecb8",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27774,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-30T19:53:17Z",
+      "side": 1,
+      "message": "Optional nit: I\u0027d omit this summary.  It\u0027s only shown on hover, and it doesn\u0027t add much info beyond what the user would already expect.",
+      "range": {
+        "startLine": 27772,
+        "startChar": 0,
+        "endLine": 27774,
+        "endChar": 12
+      },
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e27b8f_da10051d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 35662,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-30T19:53:17Z",
+      "side": 1,
+      "message": "should there be an enum associated with this histogram?",
+      "range": {
+        "startLine": 35662,
+        "startChar": 79,
+        "endLine": 35662,
+        "endChar": 80
+      },
       "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
