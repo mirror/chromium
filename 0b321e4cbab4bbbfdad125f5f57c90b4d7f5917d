@@ -954,6 +954,30 @@
     },
     {
       "key": {
+        "uuid": "262ad250_7ec64409",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-30T15:23:40Z",
+      "side": 1,
+      "message": "Yes, you can return false and the Mojo connection will be closed.",
+      "parentUuid": "9bd547ce_1b632f1c",
+      "range": {
+        "startLine": 347,
+        "startChar": 0,
+        "endLine": 384,
+        "endChar": 1
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f9867de_a998ecb6",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -1597,6 +1621,30 @@
       "side": 1,
       "message": "This was to avoid name collision.",
       "parentUuid": "88e8e966_28210c28",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 10
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2bb0a9_fa138825",
+        "filename": "components/arc/common/print.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-30T15:23:40Z",
+      "side": 1,
+      "message": "Where is this colliding? In case of collision, it might be better to use the fully-qualified name instead of making the qualification by hand.",
+      "parentUuid": "10ba4dab_d281d9a7",
       "range": {
         "startLine": 55,
         "startChar": 7,
