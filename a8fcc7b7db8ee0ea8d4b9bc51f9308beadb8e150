@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96bf3c61_c127b105",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-30T16:23:30Z",
+      "side": 1,
+      "message": "On my machines, everything seems to work fine without --disable-gpu, but on the bots it mostly fails.",
+      "range": {
+        "startLine": 125,
+        "startChar": 54,
+        "endLine": 125,
+        "endChar": 0
+      },
+      "revId": "a8fcc7b7db8ee0ea8d4b9bc51f9308beadb8e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50b98074_1d1958e4",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-30T16:23:30Z",
+      "side": 1,
+      "message": "Unfortunately ControllableHttpResponse doesn\u0027t work with ui_test_utils::NavigateToURL, hence the custom nav_observer stuff.",
+      "revId": "a8fcc7b7db8ee0ea8d4b9bc51f9308beadb8e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

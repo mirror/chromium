@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7887745c_0cced0dd",
+        "filename": "chrome/browser/thumbnails/thumbnailing_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-30T16:23:30Z",
+      "side": 0,
+      "message": "Unrelated cleanup: This was all unused.",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "72edd19978df7993565290aa22a668ce5d79d389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
