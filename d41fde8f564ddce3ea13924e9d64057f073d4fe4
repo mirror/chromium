@@ -34,6 +34,24 @@
       "revId": "d41fde8f564ddce3ea13924e9d64057f073d4fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8c7e08_16c15b02",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2017-10-30T21:07:01Z",
+      "side": 1,
+      "message": "Gwendal had fixed 3.14 -- I think it\u0027s just 3.10 and 3.8 that are currently broken",
+      "parentUuid": "df8c9347_4085ffc6",
+      "revId": "d41fde8f564ddce3ea13924e9d64057f073d4fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
