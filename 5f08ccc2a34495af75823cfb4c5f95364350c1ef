@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "df92d8df_2fc45ca1",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-30T17:31:50Z",
+      "side": 1,
+      "message": "There are different use cases. I don\u0027t think updating favicon/title apply to all of them.\n\nOne example that I can find is password protection, where it defers the navigation when there is on-going sync password reuse ping. I don\u0027t think they want to change the favicon/title. See https://cs.chromium.org/chromium/src/components/safe_browsing/password_protection/password_protection_navigation_throttle.h",
+      "parentUuid": "a0417d5e_8c7f2a98",
+      "range": {
+        "startLine": 1186,
+        "startChar": 0,
+        "endLine": 1186,
+        "endChar": 72
+      },
+      "revId": "5f08ccc2a34495af75823cfb4c5f95364350c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d0de6ee_4e8140e2",
         "filename": "chrome/browser/ui/tab_ui_helper.cc",
         "patchSetId": 8
