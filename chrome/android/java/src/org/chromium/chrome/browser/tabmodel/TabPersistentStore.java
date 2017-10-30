@@ -826,6 +826,7 @@ public class TabPersistentStore extends TabPersister {
             incognitoInfo.ids.add(incognitoModel.getTabAt(i).getId());
             incognitoInfo.urls.add(incognitoModel.getTabAt(i).getUrl());
         }
+        addDetachedTabToMetadata(incognitoModel, incognitoInfo);
 
         TabModel normalModel = selector.getModel(false);
         TabModelMetadata normalInfo = new TabModelMetadata(normalModel.index());
@@ -833,18 +834,35 @@ public class TabPersistentStore extends TabPersister {
             normalInfo.ids.add(normalModel.getTabAt(i).getId());
             normalInfo.urls.add(normalModel.getTabAt(i).getUrl());
         }
+        addDetachedTabToMetadata(normalModel, normalInfo);
 
         // Cache the active tab id to be pre-loaded next launch.
         int activeTabId = Tab.INVALID_TAB_ID;
         int activeIndex = normalModel.index();
-        if (activeIndex != TabList.INVALID_TAB_INDEX) {
+        if (normalModel.getDetachedTab() != null) {
+            activeTabId = normalModel.getDetachedTab().getId();
+        } else if (activeIndex != TabList.INVALID_TAB_INDEX) {
             activeTabId = normalModel.getTabAt(activeIndex).getId();
         }
+
         // Always override the existing value in case there is no active tab.
         ContextUtils.getAppSharedPreferences().edit().putInt(
                 PREF_ACTIVE_TAB_ID, activeTabId).apply();
 
         return serializeMetadata(normalInfo, incognitoInfo, tabsBeingRestored);
+    }
+
+    private static void addDetachedTabToMetadata(TabModel model, TabModelMetadata info) {
+        Tab tab = model.getDetachedTab();
+        if (tab == null) return;
+
+        // In the fullscreen and VR cases, the Tab order shouldn't have changed since the Tab
+        // was detached. We should place it back in the right position and set it as the
+        // active Tab.
+        int index = Math.min(model.getDetachedTabIndex(), info.ids.size());
+
+        info.ids.add(index, tab.getId());
+        info.urls.add(index, tab.getUrl());
     }
 
     /**

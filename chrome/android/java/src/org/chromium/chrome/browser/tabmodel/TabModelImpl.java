@@ -451,6 +451,33 @@ public class TabModelImpl extends TabModelJniBridge {
         return retVal == -1 ? INVALID_TAB_INDEX : retVal;
     }
 
+    private Tab mDetachedTab;
+    private int mDetachedTabIndex = INVALID_TAB_INDEX;
+
+    /**
+     * Removes the Tab from the TabModel, but saves it as a special "detached" Tab. This Tab will be
+     * saved as the active Tab when the Tab state is saved.
+     */
+    public void detachTab(Tab tab) {
+        // The detached Tab will be set as the active Tab when the state is saved, therefore we can
+        // only have one.
+        assert mDetachedTab == null;
+        int index = indexOf(tab);
+        assert index != INVALID_TAB_INDEX;
+
+        mDetachedTab = tab;
+        mDetachedTabIndex = index;
+        removeTab(tab);
+    }
+
+    public Tab getDetachedTab() {
+        return mDetachedTab;
+    }
+
+    public int getDetachedTabIndex() {
+        return mDetachedTabIndex;
+    }
+
     /**
      * @return true if this is the current model according to the model selector
      */

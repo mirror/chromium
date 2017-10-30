@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.tabmodel;
 
+import android.support.annotation.Nullable;
+
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.tab.Tab;
 
@@ -236,4 +238,29 @@ public interface TabModel extends TabList {
      * @param observer The observer to be unsubscribed.
      */
     void removeObserver(TabModelObserver observer);
+
+    /**
+     * Detaches the Tab from this model. In simpler implementations this will just remove the Tab.
+     * @param tab The Tab to be detached.
+     */
+    default void detachTab(Tab tab) {
+        removeTab(tab);
+    }
+
+    /**
+     * Returns the detached Tab for this model, if any. A detached Tab is not managed by the model
+     * but will be saved and become part of the model when the model is reloaded.
+     * @return The detached Tab, if any.
+     */
+    @Nullable default Tab getDetachedTab() {
+        return null;
+    }
+
+    /**
+     * Gets the index of the detached Tab at the time it was detached.
+     * @return The index of the detached Tab or INVALID_TAB_INDEX if none.
+     */
+    default int getDetachedTabIndex() {
+        return INVALID_TAB_INDEX;
+    };
 }

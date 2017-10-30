@@ -231,8 +231,26 @@ public class IncognitoTabModel implements TabModel {
     }
 
     @Override
+    public Tab getDetachedTab() {
+        return mDelegateModel.getDetachedTab();
+    }
+
+    @Override
+    public int getDetachedTabIndex() {
+        return mDelegateModel.getDetachedTabIndex();
+    }
+
+    @Override
     public void removeTab(Tab tab) {
         mDelegateModel.removeTab(tab);
+        // Call destroyIncognitoIfNecessary() in case the last incognito tab in this model is
+        // reparented to a different activity. See crbug.com/611806.
+        destroyIncognitoIfNecessary();
+    }
+
+    @Override
+    public void detachTab(Tab tab) {
+        mDelegateModel.detachTab(tab);
         // Call destroyIncognitoIfNecessary() in case the last incognito tab in this model is
         // reparented to a different activity. See crbug.com/611806.
         destroyIncognitoIfNecessary();
