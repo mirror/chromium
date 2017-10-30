@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6d7dbb1_94e5189b",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T20:33:26Z",
+      "side": 1,
+      "message": "Should this be called FULLSCREEN_LOCKED or LOCKED_FULLSCREEN, since this is a fullscreen feature? I see other constants with names like that.\n\nShould it be PINNED? That seems to be how this is implemented in ash.",
+      "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a616f6_bc87c843",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T20:33:26Z",
+      "side": 1,
+      "message": "I don\u0027t think src/ui OWNERS are going to let you do this. They have historically been pretty resistant to adding new show_state types, especially ones that only exist on a single platform.\n\nInstead I would look into using ash/public/interfaces/window_state_type.mojom which contains ash-only types.",
+      "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfddd998_6240732f",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T20:33:26Z",
+      "side": 1,
+      "message": "For go/mustash we are pulling code in //ash into a separate process, which means that in-process calls into ash like this won\u0027t work. See //chrome/browser/extensions/DEPS for the bug link.\n\nInstead, I think you can just set the ash::kWindowPinTypeKey on the window (which uses code in //ash/public, which is OK.). See https://cs.chromium.org/chromium/src/components/exo/shell_surface.cc?sq\u003dpackage:chromium\u0026l\u003d469",
+      "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac3dbfd_ebf10d28",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T20:33:26Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e93c7b07_96f971b2",
         "filename": "chrome/browser/extensions/window_controller.cc",
         "patchSetId": 13
