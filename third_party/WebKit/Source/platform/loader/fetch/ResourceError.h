@@ -38,7 +38,6 @@
 
 namespace blink {
 
-class WebURL;
 enum class ResourceRequestBlockedReason;
 
 class PLATFORM_EXPORT ResourceError final {
@@ -110,12 +109,9 @@ class PLATFORM_EXPORT ResourceError final {
   }
   bool ShouldCollapseInitiator() const { return should_collapse_initiator_; }
 
-  static bool Compare(const ResourceError&, const ResourceError&);
+  void InitializeLocalizedDescription();
 
-  static void InitializeWebURLError(WebURLError*,
-                                    const WebURL&,
-                                    bool stale_copy_in_cache,
-                                    int reason);
+  static bool Compare(const ResourceError&, const ResourceError&);
 
  private:
   Domain domain_ = Domain::kEmpty;
