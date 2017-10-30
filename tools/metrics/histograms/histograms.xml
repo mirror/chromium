@@ -13415,6 +13415,26 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram base="true" name="DataUse.UserTraffic.ResourceType"
+    enum="ContentResourceType2">
+  <owner>rajendrant@chromium.org</owner>
+  <owner>bengr@chromium.org</owner>
+  <summary>
+    Data use of user traffic by different resource types. Recorded when network
+    bytes are received by Chrome. Records a count for each byte received.
+  </summary>
+</histogram>
+
+<histogram base="true" name="DataUse.UserTrafficKB.ResourceType"
+    enum="ContentResourceType2">
+  <owner>rajendrant@chromium.org</owner>
+  <owner>bengr@chromium.org</owner>
+  <summary>
+    Data use of user traffic by different resource types. Recorded when network
+    bytes are received by Chrome. Records a count for each byte received.
+  </summary>
+</histogram>
+
 <histogram name="DefaultBrowser.ActivateSettings.ErrorHresult" enum="Hresult">
   <owner>pmonette@chromium.org</owner>
   <owner>grt@chromium.org</owner>
@@ -97775,6 +97795,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Downstream.AppForeground.TabBackground"/>
   <suffix name="Downstream.AppForeground.TabForeground"/>
   <affected-histogram name="DataUse.AppTabState"/>
+  <affected-histogram name="DataUse.UserTraffic.ResourceType"/>
+  <affected-histogram name="DataUse.UserTrafficKB.ResourceType"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="DataUse.Bytes" separator=".">

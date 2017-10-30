@@ -37,6 +37,13 @@ class URLRequestClassifier {
 
   // Returns true if |request| is fetching a favicon.
   virtual bool IsFavIconRequest(const net::URLRequest& request) const = 0;
+
+  // Records the resource type of the user traffic.
+  virtual void RecordUserTrafficResourceTypeUMA(const net::URLRequest& request,
+                                                bool is_downstream,
+                                                bool is_app_visible,
+                                                bool is_tab_visible,
+                                                int64_t bytes) = 0;
 };
 
 }  // namespace data_use_measurement

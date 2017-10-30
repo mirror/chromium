@@ -262,6 +262,10 @@ void DataUseMeasurement::ReportDataUseUMA(const net::URLRequest& request,
       is_tab_visible = recorder->is_visible();
       RecordTabStateHistogram(dir, new_app_state, recorder->is_visible(),
                               bytes);
+      url_request_classifier_->RecordUserTrafficResourceTypeUMA(
+          request, dir == DOWNSTREAM,
+          new_app_state != DataUseUserData::BACKGROUND, recorder->is_visible(),
+          bytes);
     }
   }
   if (attached_service_data && dir == DOWNSTREAM &&

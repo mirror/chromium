@@ -60,6 +60,12 @@ class TestURLRequestClassifier : public base::SupportsUserData::Data,
   void RecordPageTransitionUMA(uint64_t page_transition,
                                int64_t received_bytes) const override {}
 
+  void RecordUserTrafficResourceTypeUMA(const net::URLRequest& request,
+                                        bool is_downstream,
+                                        bool is_app_visible,
+                                        bool is_tab_visible,
+                                        int64_t bytes) override {}
+
   bool IsFavIconRequest(const net::URLRequest& request) const override {
     return false;
   }
@@ -81,8 +87,7 @@ class TestDataUseAscriber : public DataUseAscriber {
     return &recorder_;
   }
 
-  std::unique_ptr<URLRequestClassifier> CreateURLRequestClassifier()
-      const override {
+  std::unique_ptr<URLRequestClassifier> CreateURLRequestClassifier() override {
     return nullptr;
   }
 

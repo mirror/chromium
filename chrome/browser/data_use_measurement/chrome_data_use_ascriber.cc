@@ -479,7 +479,7 @@ void ChromeDataUseAscriber::NotifyDataUseCompleted(DataUseRecorderEntry entry) {
 }
 
 std::unique_ptr<URLRequestClassifier>
-ChromeDataUseAscriber::CreateURLRequestClassifier() const {
+ChromeDataUseAscriber::CreateURLRequestClassifier() {
   return base::MakeUnique<ContentURLRequestClassifier>();
 }
 

@@ -42,6 +42,11 @@ enum DataUsePageTransition {
 
 namespace data_use_measurement {
 
+ContentURLRequestClassifier::ContentURLRequestClassifier() {
+  memset(user_traffic_resource_type_bytes_, 0,
+         sizeof(user_traffic_resource_type_bytes_));
+}
+
 bool IsUserRequest(const net::URLRequest& request) {
   // The presence of ResourecRequestInfo in |request| implies that this request
   // was created for a content::WebContents. For now we could add a condition to
@@ -162,6 +167,51 @@ bool ContentURLRequestClassifier::IsFavIconRequest(
       content::ResourceRequestInfo::ForRequest(&request);
   return request_info && request_info->GetResourceType() ==
                              content::ResourceType::RESOURCE_TYPE_FAVICON;
+}
+
+void ContentURLRequestClassifier::RecordUserTrafficResourceTypeUMA(
+    const net::URLRequest& request,
+    bool is_downstream,
+    bool is_app_visible,
+    bool is_tab_visible,
+    int64_t bytes) {
+  DCHECK(IsUserRequest(request));
+  const content::ResourceRequestInfo* request_info =
+      content::ResourceRequestInfo::ForRequest(&request);
+  if (!request_info)
+    return;
+  std::string histogram_name;
+  AppTabState app_tab_state = AppTabState::MAX;
+  content::ResourceType resource_type = request_info->GetResourceType();
+  histogram_name.append(is_downstream
+                            ? "DataUse.UserTrafficKB.ResourceType.Downstream."
+                            : "DataUse.UserTraffic.ResourceType.Upstream.");
+
+  if (!is_app_visible) {
+    histogram_name.append("AppBackground");
+    app_tab_state = AppTabState::APPBACKGROUND;
+  } else if (is_tab_visible) {
+    histogram_name.append("AppForeground.TabForeground");
+    app_tab_state = AppTabState::APPFOREGROUND_TABFOREGROUND;
+  } else {
+    histogram_name.append("AppForeground.TabBackground");
+    app_tab_state = AppTabState::APPFOREGROUND_TABBACKGROUND;
+  }
+
+  base::HistogramBase* histogram = base::LinearHistogram::FactoryGet(
+      histogram_name, 1, content::RESOURCE_TYPE_LAST_TYPE,
+      content::RESOURCE_TYPE_LAST_TYPE + 1,
+      base::HistogramBase::kUmaTargetedHistogramFlag);
+  if (is_downstream) {
+    // Record the bytes in increments of KB and save the remaining bytes.
+    DCHECK_NE(app_tab_state, AppTabState::MAX);
+    bytes += user_traffic_resource_type_bytes_[app_tab_state][resource_type];
+    histogram->AddCount(resource_type, bytes / 1024);
+    user_traffic_resource_type_bytes_[app_tab_state][resource_type] =
+        bytes % 1024;
+  } else {
+    histogram->AddCount(resource_type, bytes);
+  }
 }
 
 }  // namespace data_use_measurement

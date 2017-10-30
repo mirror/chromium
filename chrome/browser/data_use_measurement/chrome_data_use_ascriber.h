@@ -62,8 +62,7 @@ class ChromeDataUseAscriber : public DataUseAscriber {
   void OnUrlRequestCompleted(const net::URLRequest& request,
                              bool started) override;
   void OnUrlRequestDestroyed(net::URLRequest* request) override;
-  std::unique_ptr<URLRequestClassifier> CreateURLRequestClassifier()
-      const override;
+  std::unique_ptr<URLRequestClassifier> CreateURLRequestClassifier() override;
 
   // Called when a render frame host is created. When the render frame is a main
   // frame, |main_render_process_id| and |main_render_frame_id| should be -1.

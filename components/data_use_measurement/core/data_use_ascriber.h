@@ -74,8 +74,8 @@ class DataUseAscriber {
 
   // Returns a URLRequestClassifier that can classify requests for metrics
   // recording.
-  virtual std::unique_ptr<URLRequestClassifier> CreateURLRequestClassifier()
-      const = 0;
+  virtual std::unique_ptr<URLRequestClassifier>
+  CreateURLRequestClassifier() = 0;
 
   // Observers should be added or removed in IO thread. The notifications will
   // be called in the same thread.
