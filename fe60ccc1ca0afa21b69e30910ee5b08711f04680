@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db2d58be_c9bd1ca4",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionAdjuster.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-30T04:02:34Z",
+      "side": 1,
+      "message": "+1\n\nAlso, we should avoid to use |bool| parameter.",
+      "parentUuid": "41425949_8aba57a9",
+      "range": {
+        "startLine": 205,
+        "startChar": 9,
+        "endLine": 205,
+        "endChar": 22
+      },
+      "revId": "fe60ccc1ca0afa21b69e30910ee5b08711f04680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8622d1c_058f5b42",
         "filename": "third_party/WebKit/Source/core/editing/SelectionAdjuster.h",
         "patchSetId": 2
