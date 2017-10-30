@@ -19,6 +19,7 @@
 
 #if defined(OS_ANDROID)
 #include "base/debug/debugger.h"
+#include "ui/android/view_android.h"
 #endif
 
 #if defined(OS_POSIX) && !defined(OS_ANDROID)
@@ -115,6 +116,9 @@ bool IsUseZoomForDSFEnabled() {
        use_zoom_for_dsf_enabled_by_default) &&
       command_line->GetSwitchValueASCII(
           switches::kEnableUseZoomForDSF) != "false";
+#if defined(OS_ANDROID)
+  ui::ViewAndroid::SetIsUseZoomForDSFEnabled(enabled);
+#endif
 
   return enabled;
 }
