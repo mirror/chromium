@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8f1843e1_a1e2645c",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-30T23:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89f16905_91221c4f",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2251a491_c41bde34",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb7fa9d_3e3aae11",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-30T23:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2251a491_c41bde34",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 9
+      },
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "10d3db30_01fc50ac",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-30T23:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a81b0eaf_6b74ba34",
+      "range": {
+        "startLine": 57,
+        "startChar": 10,
+        "endLine": 57,
+        "endChar": 22
+      },
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c358e84d_f6a3d0b7",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 3
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "5018ff53_4cb34e92",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-30T23:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c358e84d_f6a3d0b7",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "042340f4_54a6336d",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 3
@@ -99,6 +189,24 @@
       "writtenOn": "2017-10-30T12:08:26Z",
       "side": 1,
       "message": "What is this check for?",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488fb1e8_62134507",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-30T23:38:42Z",
+      "side": 1,
+      "message": "Added comment",
+      "parentUuid": "042340f4_54a6336d",
       "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "80c97eb0_45dccc91",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-30T23:38:42Z",
+      "side": 1,
+      "message": "To filter out the first navigation",
+      "parentUuid": "410e5f44_e0974b04",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbf6bbde_90f602cb",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 3
@@ -133,6 +259,24 @@
       "writtenOn": "2017-10-30T12:08:26Z",
       "side": 1,
       "message": "Shouldn\u0027t this be \u0027if\u0027 rather than \u0027else if\u0027?\n\nAlso add a comment to each branch and mention when it happens.",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a084139_1476e1fd",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-30T23:38:42Z",
+      "side": 1,
+      "message": "Why do you think it should be \"if\"?\n\nAdded comments but these looks redundant to me.",
+      "parentUuid": "bbf6bbde_90f602cb",
       "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "25d87aac_e7e57d13",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-30T23:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cf9549f_29f91acc",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05c94a7d_47387a2c",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 3
@@ -167,6 +329,30 @@
       "writtenOn": "2017-10-30T18:02:49Z",
       "side": 1,
       "message": "Why do we reset the subscription on near oom detection?",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 15
+      },
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80abd47f_e56b4d57",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-30T23:38:42Z",
+      "side": 1,
+      "message": "One detection is enough for our current purpose.",
+      "parentUuid": "05c94a7d_47387a2c",
       "range": {
         "startLine": 132,
         "startChar": 2,
@@ -196,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "e22cb612_f3bc6bef",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-30T23:38:42Z",
+      "side": 1,
+      "message": "It\u0027s different (not-started and already detected). Removed as I don\u0027t have strong opinion here.",
+      "parentUuid": "5019187e_eb4110bc",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "517c2478_8bd9ecb8",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
@@ -219,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "65d8d969_bdbb8dbe",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27774,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-30T23:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "517c2478_8bd9ecb8",
+      "range": {
+        "startLine": 27772,
+        "startChar": 0,
+        "endLine": 27774,
+        "endChar": 12
+      },
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24e27b8f_da10051d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -239,6 +467,30 @@
       "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ea2441_1b59daf3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 35662,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-30T23:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24e27b8f_da10051d",
+      "range": {
+        "startLine": 35662,
+        "startChar": 79,
+        "endLine": 35662,
+        "endChar": 80
+      },
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
