@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4684c70a_a18c8b2c",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/history.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-30T18:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d974b81_f4684593",
+      "revId": "bdcb415fa509502211046d507e644e067fddf909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4be83c7c_8e3447ec",
         "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "bdcb415fa509502211046d507e644e067fddf909",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9bf6b8c_25e27fb5",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-30T18:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4be83c7c_8e3447ec",
+      "revId": "bdcb415fa509502211046d507e644e067fddf909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "040d9292_aa55a61f",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-30T18:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa486030_9045d740",
+      "revId": "bdcb415fa509502211046d507e644e067fddf909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "147007e1_eed714b1",
         "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-27T19:47:04Z",
       "side": 1,
       "message": "Nice!  I think this looks a lot cleaner. :)",
+      "revId": "bdcb415fa509502211046d507e644e067fddf909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea1b1f1_73994cf9",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-30T18:30:02Z",
+      "side": 1,
+      "message": "Thanks! Working on my indentation and semi colon game - promise!",
+      "parentUuid": "147007e1_eed714b1",
       "revId": "bdcb415fa509502211046d507e644e067fddf909",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -90,6 +162,30 @@
       "revId": "bdcb415fa509502211046d507e644e067fddf909",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb08d6c_94e08380",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-30T18:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0d377ea_f44a2dcd",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "bdcb415fa509502211046d507e644e067fddf909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
