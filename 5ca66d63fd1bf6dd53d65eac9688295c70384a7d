@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6558665c_7c5bd5f4",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-30T10:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d4041ee_bec023d3",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82dc55a7_b31b9f76",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6897fc_92345ba7",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-30T10:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82dc55a7_b31b9f76",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d00b6734_826b6e73",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-30T10:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3794aa2_a23f29b5",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a296b8e_d2aafe32",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4103b42c_816c3546",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-30T10:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a296b8e_d2aafe32",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f27e7e49_f6f1f829",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-30T08:26:29Z",
       "side": 1,
       "message": "Are we going to remove creation_task_runner_ sometime? It\u0027d be nice for the messages to be handled on the correct thread automatically.",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ef38a2_599b4f84",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-30T10:10:05Z",
+      "side": 1,
+      "message": "Eh, once we solved the TODO at https://cs.chromium.org/chromium/src/content/renderer/service_worker/web_service_worker_registration_impl.h?rcl\u003d72edd19978df7993565290aa22a668ce5d79d389\u0026l\u003d259, we\u0027d remove this |creation_task_runner_|.",
+      "parentUuid": "f27e7e49_f6f1f829",
       "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "eda6c0af_02965171",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-30T10:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38232052_83c46081",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c55ad914_7b939661",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 8
@@ -118,6 +226,24 @@
       "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40367c7_4c5e634c",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-30T10:10:05Z",
+      "side": 1,
+      "message": "Ack. Added a TODO for this.",
+      "parentUuid": "c55ad914_7b939661",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
