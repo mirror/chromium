@@ -25133,6 +25133,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Firefox.PasswordImporter.NumberOfImportedPasswords">
+  <owner>hurims@gmail.com</owner>
+  <summary>
+    The number of passwords that are imported from Firefox. This is recorded
+    when importing a profile of Firefox with the password checkbox checked.
+  </summary>
+</histogram>
+
+<histogram name="Firefox.PasswordImporter.SelectedByUser" enum="BooleanChecked">
+  <owner>hurims@gmail.com</owner>
+  <summary>
+    Whether or not the password checkbox is checked when importing a profile of
+    Firefox.
+  </summary>
+</histogram>
+
 <histogram base="true" name="FirstUserAction.BackgroundTime.MainIntent"
     units="minutes">
   <owner>tedchoc@chromium.org</owner>
