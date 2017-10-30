@@ -697,12 +697,29 @@ def get_swarming_dimension(dimension, device_id):
   return complete_dimension
 
 
+def generate_cplusplus_isolate_script_entry(
+    dimension, name, shard, test_args, isolate_name):
+  return generate_isolate_script_entry(
+      [get_swarming_dimension(dimension, shard)], test_args, isolate_name,
+         name, ignore_task_failure=False)
+
+
 def generate_cplusplus_isolate_script_test(dimension):
   return [
-    generate_isolate_script_entry(
-        [get_swarming_dimension(dimension, shard)], [], name,
-        name, ignore_task_failure=False)
+    generate_cplusplus_isolate_script_entry(
+        dimension, name, shard, [], name)
     for name, shard in dimension['perf_tests']
+  ]
+
+# This method processes tests defined by 'perf_tests_with_args'
+# It expects a tuple of 4 elements: (name, shard, test_args, isolate_name)
+# 'test_args' is a list of strings pass via the test's command line.
+def generate_cplusplus_isolate_script_test_with_args(dimension):
+  return [
+    generate_cplusplus_isolate_script_entry(
+        dimension, name, shard, test_args, isolate_name)
+    for name, shard, test_args, isolate_name
+        in dimension['perf_tests_with_args']
   ]
 
 
@@ -907,6 +924,9 @@ def generate_all_tests(waterfall):
     # Generate swarmed non-telemetry tests if present
     if config['swarming_dimensions'][0].get('perf_tests', False):
       isolated_scripts += generate_cplusplus_isolate_script_test(
+        config['swarming_dimensions'][0])
+    if config['swarming_dimensions'][0].get('perf_tests_with_args', False):
+      isolated_scripts += generate_cplusplus_isolate_script_test_with_args(
         config['swarming_dimensions'][0])
 
     isolated_scripts, devices_to_test_skipped = remove_blacklisted_device_tests(
