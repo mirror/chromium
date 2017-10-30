@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad389cd5_50aad7bc",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3299,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-30T23:10:20Z",
+      "side": 1,
+      "message": "Can you mention that the static case is tested in RenderFrameHostManagerTest.RestoreSubframeFileAccessForHistoryNavigation?",
+      "revId": "b0ff4190f69db046c5f3a2afdf60c6ad1bc5e131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9083e9_27833b16",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-30T23:10:20Z",
+      "side": 1,
+      "message": "nit: Let\u0027s just start a new sentence here.",
+      "range": {
+        "startLine": 140,
+        "startChar": 67,
+        "endLine": 140,
+        "endChar": 70
+      },
+      "revId": "b0ff4190f69db046c5f3a2afdf60c6ad1bc5e131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "730975c1_ba0d0b6d",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-30T23:10:20Z",
+      "side": 1,
+      "message": "nit: Same here.",
+      "range": {
+        "startLine": 153,
+        "startChar": 48,
+        "endLine": 153,
+        "endChar": 49
+      },
+      "revId": "b0ff4190f69db046c5f3a2afdf60c6ad1bc5e131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a385173d_0f0c3e2a",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-30T23:10:20Z",
+      "side": 1,
+      "message": "Thanks, that helps.\n\nI know we\u0027ve considered freezing the unique name in general, right?  (And that there were some cases where pages changed the name between creation and commit?)  Just wondering if it\u0027s helpful to include a TODO that we always want to do this, or instead explain why we don\u0027t freeze it for most frames.",
+      "revId": "b0ff4190f69db046c5f3a2afdf60c6ad1bc5e131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978e76d8_b9d0cd78",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-30T23:10:20Z",
+      "side": 1,
+      "message": "nit: Let\u0027s mention that this is not enabled by default because it would make unique names longer, and thus affect memory use.",
+      "revId": "b0ff4190f69db046c5f3a2afdf60c6ad1bc5e131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

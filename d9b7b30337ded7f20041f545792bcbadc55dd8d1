@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "588d236f_323b4723",
+        "filename": "chrome/browser/task_manager/task_manager_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-30T23:10:20Z",
+      "side": 0,
+      "message": "Sure, let\u0027s file a low priority bug, and we can do it when it becomes a blocking issue for a test.",
+      "parentUuid": "f462d4e2_f8ec44ba",
+      "range": {
+        "startLine": 950,
+        "startChar": 10,
+        "endLine": 950,
+        "endChar": 29
+      },
+      "revId": "d9b7b30337ded7f20041f545792bcbadc55dd8d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07bd1f37_cace774a",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 18
@@ -102,6 +126,24 @@
       "side": 0,
       "message": "\u003e Wasn\u0027t this part of the intention of the test?\n\nYes :-/  This CL means that we will not restore recreated dynamic frames.  This also means forms and/or file access.\n\nSo - what I have done in the latest patchset is (sorry for not catching the need for these changes earlier):\n- I changed the comments describing the test intent\n- I reintroduced the opposite of the removed assertions (copy\u0026pasted from FrameNavigationEntry_RecreatedInjectedBlankSubframe).\n\nFWIW, I\u0027ve verified that RenderFrameHostManagerTest.RestoreSubframeFileAccessForHistoryNavigation still passes.  I do note that the srcdoc iframe in that test is static (i.e. not injected via javascript).\n\nIf we agree that dynamic frames should not be restored when recreated, then I don\u0027t think we can avoid removing/reversing the affected test assertions, right?\n\n\u003e I\u0027m very nervous about any changes in behavior here, since this test relates to https://crbug.com/657896, which is about breaking ads on back/forward.  We need to be very careful not to regress that.\n\nI have manually run (after this CL) the repro steps from https://crbug.com/657896 and verified that the ad still shows up after coming back to the page.  This is probably not unexpected, since after the CL newly created dynamic frames do not participate in session history, so the ad just goes through a fresh load.\n\n\nPS. Is there something else you think we should be doing to verify no regressions around this area?",
       "parentUuid": "07bd1f37_cace774a",
+      "revId": "d9b7b30337ded7f20041f545792bcbadc55dd8d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3651fb7_d5e21728",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3280,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-30T23:10:20Z",
+      "side": 0,
+      "message": "Thanks for the detailed response!  It does look like this was more of an incidental part of the test (discovered in an early version of the fix at https://codereview.chromium.org/2437173002/) and not about the ads regression (which I confirmed at the time did not affect srcdoc).\n\nI also agree the change in behavior is kind of fundamental with what we\u0027ve proposed here, and that the new behavior should be safe if the ad goes through a fresh load.",
+      "parentUuid": "00c6a6c2_0cc2a32a",
       "revId": "d9b7b30337ded7f20041f545792bcbadc55dd8d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
