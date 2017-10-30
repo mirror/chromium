@@ -16,6 +16,29 @@
       "revId": "5790a5acced852d33dd2ec6b8a762adab3b454dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7194517d_2a673f87",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-30T14:38:48Z",
+      "side": 1,
+      "message": "Can a comment be added describing when this is used. If it\u0027s not public, non-test API, is there a better header/category for it?",
+      "range": {
+        "startLine": 21,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 73
+      },
+      "revId": "5790a5acced852d33dd2ec6b8a762adab3b454dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
