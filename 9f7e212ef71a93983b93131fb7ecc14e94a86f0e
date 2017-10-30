@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63559aaa_0945c90f",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-30T17:13:18Z",
+      "side": 1,
+      "message": "+jamescook@, +estade@ - Are either of you familiar with multiple pref registries and PrefRegistry::PUBLIC ? Do we need to call RegisterForeignPref in settings_private/prefs_util.cc in order to receive update notifications for the pref so that the Settings reflects the current pref value?",
+      "revId": "9f7e212ef71a93983b93131fb7ecc14e94a86f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
