@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c39c16cc_f5a2b311",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5156,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-30T16:45:26Z",
+      "side": 1,
+      "message": "Is the same transition used on Android and Desktop?",
+      "range": {
+        "startLine": 5156,
+        "startChar": 34,
+        "endLine": 5156,
+        "endChar": 55
+      },
+      "revId": "51948c14e24e2ed281ca7416cc5354c558398484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
