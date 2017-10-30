@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5dd117c_a45990a6",
+        "filename": "ui/file_manager/PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-30T03:46:19Z",
+      "side": 1,
+      "message": "Is this BLACKLIST needed?",
+      "revId": "47a63f15c36345351f6c0152c437730ad0e600df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
