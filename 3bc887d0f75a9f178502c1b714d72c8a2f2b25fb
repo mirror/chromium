@@ -22,6 +22,30 @@
       "revId": "3bc887d0f75a9f178502c1b714d72c8a2f2b25fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ad495a_92026211",
+        "filename": "components/language/ios/browser/ios_language_detection_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-30T21:26:15Z",
+      "side": 1,
+      "message": "Ok, good point - I\u0027ll rename this and the non-iOS version (https://cs.chromium.org/chromium/src/chrome/browser/language/chrome_language_detection_client.h). Is {Chrome,IOS}LanguageDetectionHelper (i.e. tab helper) idiomatic?\n\nWhile I have you: could you please confirm the difference between \"Client\" and \"Driver\" classes? Is it \"injected by embedders\" vs \"injected by content-level libraries\"?",
+      "parentUuid": "3cdd7063_1afcef72",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 32
+      },
+      "revId": "3bc887d0f75a9f178502c1b714d72c8a2f2b25fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
