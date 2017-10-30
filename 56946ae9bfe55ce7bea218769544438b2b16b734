@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ca40377_35ce444f",
+        "filename": "content/browser/notifications/notification_message_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-10-30T18:28:40Z",
+      "side": 0,
+      "message": "Aside: somewhat surprising there are no unit tests for this method, but I guess the way the code is architected right now it doesn\u0027t exactly lend itself to unit testing :/",
+      "revId": "56946ae9bfe55ce7bea218769544438b2b16b734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

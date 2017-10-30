@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5addc307_68c74322",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-10-30T18:28:40Z",
+      "side": 1,
+      "message": "Given DisplayNotification and DisplayPersistentNotification both exist, I would prefer to see CloseNotification and ClosePersistentNotification as separate methods for api consistency.",
+      "revId": "109451655ac0bdaa0b341435f165599aa3e4446e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
