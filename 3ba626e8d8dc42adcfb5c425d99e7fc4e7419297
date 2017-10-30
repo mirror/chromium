@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "06af14cb_8502a9b5",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-30T23:17:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8d96802_b7bf2a25",
+      "range": {
+        "startLine": 88,
+        "startChar": 60,
+        "endLine": 88,
+        "endChar": 71
+      },
+      "revId": "3ba626e8d8dc42adcfb5c425d99e7fc4e7419297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e4b824d_38a86a2c",
         "filename": "chrome/test/data/webui/extensions/extension_manager_test.js",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fc6ec86c_c78468e3",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_test.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-30T23:17:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e4b824d_38a86a2c",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "3ba626e8d8dc42adcfb5c425d99e7fc4e7419297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f4b3102_38a2b4f6",
         "filename": "chrome/test/data/webui/extensions/extension_manager_test.js",
         "patchSetId": 15
@@ -68,6 +116,30 @@
       "revId": "3ba626e8d8dc42adcfb5c425d99e7fc4e7419297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16312903_aa1ab4df",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_test.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-30T23:17:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f4b3102_38a2b4f6",
+      "range": {
+        "startLine": 28,
+        "startChar": 23,
+        "endLine": 28,
+        "endChar": 69
+      },
+      "revId": "3ba626e8d8dc42adcfb5c425d99e7fc4e7419297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
