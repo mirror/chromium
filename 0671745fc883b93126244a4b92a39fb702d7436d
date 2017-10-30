@@ -22,6 +22,30 @@
       "revId": "0671745fc883b93126244a4b92a39fb702d7436d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973df48b_655cfd85",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-30T20:46:14Z",
+      "side": 1,
+      "message": "Good call! Done. (Re-used VRView::kEyeLeft and VRView::kEyeRight)",
+      "parentUuid": "372660ce_8fe03a56",
+      "range": {
+        "startLine": 218,
+        "startChar": 41,
+        "endLine": 218,
+        "endChar": 42
+      },
+      "revId": "0671745fc883b93126244a4b92a39fb702d7436d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
