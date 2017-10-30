@@ -147,7 +147,11 @@ public class ContextualSearchPanelMetrics {
 
             // Reset writing to Ranker so whatever interactions occurred are recorded as a
             // complete record.
-            if (mRankerLogger != null) mRankerLogger.writeLogAndReset();
+            if (mRankerLogger != null) {
+                ContextualSearchUma.logRankerInference(
+                        mWasSearchContentViewSeen, mRankerLogger.wasUiSuppressionInfered());
+                mRankerLogger.writeLogAndReset();
+            }
             mRankerLogger = null;
         }
 

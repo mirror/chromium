@@ -4,7 +4,9 @@
 
 package org.chromium.chrome.browser.contextualsearch;
 
-import java.net.URL;
+import android.support.annotation.Nullable;
+
+import org.chromium.content_public.browser.WebContents;
 
 /**
  * An interface for logging to UMA via Ranker.
@@ -32,15 +34,15 @@ public interface ContextualSearchRankerLogger {
         IS_LONG_WORD,
         IS_WORD_EDGE,
         IS_ENTITY,
-        TAP_DURATION
+        TAP_DURATION_MS
     }
 
     /**
-     * Sets up logging for the page with the given URL.
+     * Sets up logging for the base page which is identified by the given {@link WebContents}.
      * This method must be called before calling {@link #logFeature} or {@link #logOutcome}.
-     * @param basePageUrl The URL of the base page to log with Ranker.
+     * @param basePageWebContents The {@link WebContents} of the base page to log with Ranker.
      */
-    void setupLoggingForPage(URL basePageUrl);
+    void setupLoggingForPage(@Nullable WebContents basePageWebContents);
 
     /**
      * Logs a particular feature at inference time as a key/value pair.

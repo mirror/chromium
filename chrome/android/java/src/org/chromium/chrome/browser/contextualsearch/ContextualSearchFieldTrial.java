@@ -88,6 +88,11 @@ public class ContextualSearchFieldTrial {
     private static final String DISABLE_PAGE_CONTENT_NOTIFICATION =
             "disable_page_content_notification";
 
+    // --------------------------------------
+    // Params that also exist in native code.
+    // --------------------------------------
+    private static final String ENABLE_RANKER_INTEGRATION = "enable_ranker_integration";
+
     // Cached values to avoid repeated and redundant JNI operations.
     // TODO(donnd): consider creating a single Map to cache these static values.
     private static Boolean sEnabled;
@@ -108,10 +113,10 @@ public class ContextualSearchFieldTrial {
     private static Integer sMinimumSelectionLength;
     private static Boolean sIsOnlineDetectionDisabled;
     private static Boolean sIsAmpAsSeparateTabDisabled;
-    private static Boolean sContextualSearchSingleActionsEnabled;
+    private static Boolean sContextualSearchTapSuppressionEnabled;
+    private static Boolean sIsRankerIntegrationEnabled;
     private static Boolean sIsSendHomeCountryDisabled;
     private static Boolean sIsPageContentNotificationDisabled;
-    private static Boolean sContextualSearchUrlActionsEnabled;
     private static Boolean sIsRankerLoggingDisabled;
     private static Boolean sIsSmartSelectionDisabled;
     private static Boolean sIsSuppressForSmartSelectionDisabled;
@@ -409,6 +414,23 @@ public class ContextualSearchFieldTrial {
     }
 
     /**
+     * Whether Ranker integration is enabled or not, to do machine intelligence for Tap gestures.
+     * This controls whether we call the Ranker logic to produce an inference or not, and
+     * may have no user-visible effect.  There's a similar user-visible flag for whether
+     * Tap suppression is enabled or not, and it forces this flag to return that it's enabled.
+     * @return Whether Ranker will be used or not in this session, even for internal ranking.
+     */
+    static boolean isRankerIntegrationEnabled() {
+        // If the user-visible flag for Tap suppression is enabled, we need Ranker.
+        if (isContextualSearchTapSuppressionEnabled()) return true;
+
+        if (sIsRankerIntegrationEnabled == null) {
+            sIsRankerIntegrationEnabled = getBooleanParam(ENABLE_RANKER_INTEGRATION);
+        }
+        return sIsRankerIntegrationEnabled;
+    }
+
+    /**
      * Gets an amount to delay after a Tap gesture is recognized, in case some user gesture
      * immediately follows that would prevent the UI from showing.
      * The classic example is a scroll, which might be a signal that the previous tap was
@@ -451,27 +473,15 @@ public class ContextualSearchFieldTrial {
     // ---------------------------
 
     /**
-     * @return Whether or not single actions based on Contextual Cards is enabled.
+     * @return Whether or not Tap suppression based on Ranker is enabled.
      */
-    static boolean isContextualSearchSingleActionsEnabled() {
-        if (sContextualSearchSingleActionsEnabled == null) {
-            sContextualSearchSingleActionsEnabled =
-                    ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SEARCH_SINGLE_ACTIONS);
+    static boolean isContextualSearchTapSuppressionEnabled() {
+        if (sContextualSearchTapSuppressionEnabled == null) {
+            sContextualSearchTapSuppressionEnabled = ChromeFeatureList.isEnabled(
+                    ChromeFeatureList.CONTEXTUAL_SEARCH_TAP_SUPPRESSION);
         }
 
-        return sContextualSearchSingleActionsEnabled;
-    }
-
-    /**
-     * @return Whether or not URL actions based on Contextual Cards is enabled.
-     */
-    static boolean isContextualSearchUrlActionsEnabled() {
-        if (sContextualSearchUrlActionsEnabled == null) {
-            sContextualSearchUrlActionsEnabled =
-                    ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SEARCH_URL_ACTIONS);
-        }
-
-        return sContextualSearchUrlActionsEnabled;
+        return sContextualSearchTapSuppressionEnabled;
     }
 
     // --------------------------------------------------------------------------------------------

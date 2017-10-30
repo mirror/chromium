@@ -1330,6 +1330,22 @@ public class ContextualSearchUma {
     }
 
     /**
+     * Logs Ranker's prediction and whether the panel was actually seen when not suppressed.
+     * @param wasPanelSeen Whether the panel was seen.
+     * @param wasUiSuppressionInfered Whether Ranker predicted that this is a good time to suppress
+     *        triggering because the likelihood of opening the panel is relatively low.
+     */
+    public static void logRankerInference(boolean wasPanelSeen, boolean wasUiSuppressionInfered) {
+        RecordHistogram.recordBooleanHistogram(
+                "Search.ContextualSearchRankerSuppressed", wasUiSuppressionInfered);
+        if (!wasUiSuppressionInfered) {
+            RecordHistogram.recordEnumeratedHistogram(
+                    "Search.ContextualSearchRankerNotSuppressed.ResultsSeen",
+                    wasPanelSeen ? RESULTS_SEEN : RESULTS_NOT_SEEN, RESULTS_SEEN_BOUNDARY);
+        }
+    }
+
+    /**
      * Gets the state-change code for the given parameters by doing a lookup in the given map.
      * @param state The panel state.
      * @param reason The reason the state changed.
