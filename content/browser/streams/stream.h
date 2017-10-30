@@ -22,6 +22,7 @@ namespace content {
 
 class StreamHandle;
 class StreamHandleImpl;
+class StreamMetadata;
 class StreamReadObserver;
 class StreamRegistry;
 class StreamWriteObserver;
@@ -99,6 +100,9 @@ class CONTENT_EXPORT Stream : public base::RefCountedThreadSafe<Stream> {
     return last_total_buffered_bytes_;
   }
 
+  void set_metadata(std::unique_ptr<StreamMetadata> metadata);
+  StreamMetadata* metadata() const { return metadata_.get(); }
+
  private:
   friend class base::RefCountedThreadSafe<Stream>;
 
@@ -135,6 +139,7 @@ class CONTENT_EXPORT Stream : public base::RefCountedThreadSafe<Stream> {
   StreamWriteObserver* write_observer_;
 
   StreamHandleImpl* stream_handle_;
+  std::unique_ptr<StreamMetadata> metadata_;
 
   base::WeakPtrFactory<Stream> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(Stream);

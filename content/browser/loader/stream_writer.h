@@ -19,6 +19,7 @@ class IOBuffer;
 namespace content {
 
 class Stream;
+class StreamMetadata;
 class StreamRegistry;
 
 // StreamWriter is a helper class for ResourceHandlers which route their output
@@ -36,6 +37,9 @@ class StreamWriter : public StreamWriteObserver {
   // When immediate mode is enabled, the |stream_| is flushed every time new
   // data is made available by calls to OnReadCompleted.
   void set_immediate_mode(bool enabled) { immediate_mode_ = enabled; }
+
+  // Sets metadata associated with HTTP request delivered by the stream.
+  void set_metadata(std::unique_ptr<StreamMetadata> metadata);
 
   // Initializes the writer with a new Stream in |registry|. |origin| will be
   // used to construct the URL for the Stream. See WebCore::BlobURL and and
