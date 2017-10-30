@@ -325,7 +325,17 @@ void Surface::SetSubSurfacePosition(Surface* sub_surface,
   DCHECK(it != pending_sub_surfaces_.end());
   if (it->second == position)
     return;
+  // Damage the origianal area of the |sub_surface|.
+  pending_damage_.op(SkIRect::MakeXYWH(it->second.x(), it->second.y(),
+                                       sub_surface->content_size().width(),
+                                       sub_surface->content_size().height()),
+                     SkRegion::kUnion_Op);
   it->second = position;
+  // Full damage the |sub_surface|.
+  sub_surface->pending_damage_.op(
+      SkIRect::MakeWH(sub_surface->content_size().width(),
+                      sub_surface->content_size().height()),
+      SkRegion::kUnion_Op);
   sub_surfaces_changed_ = true;
 }
 
