@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5f8a730_16dfac12",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/TabbedModeFirstRunActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-30T21:30:44Z",
+      "side": 1,
+      "message": "\"this\" is a context, so why use getContext() here?",
+      "range": {
+        "startLine": 32,
+        "startChar": 38,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "11b4cba9cf55d2fc9b463c199e41177511c59695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4764740_0c516392",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/TabbedModeFirstRunActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-30T21:30:44Z",
+      "side": 1,
+      "message": "private for all these?",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 18
+      },
+      "revId": "11b4cba9cf55d2fc9b463c199e41177511c59695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fafa6bd_c9ced7c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/TabbedModeFirstRunActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-30T21:30:44Z",
+      "side": 1,
+      "message": "this differs slightly from the support library version in that it will remeasure at the end if needed.  I feel we should try to copy it completely and leave it unchanged, or simplify this even more (we know that it will not be exactly since it\u0027s only used by this class, we know the typedvalue type as well since it\u0027s in our XML).",
+      "range": {
+        "startLine": 82,
+        "startChar": 23,
+        "endLine": 82,
+        "endChar": 32
+      },
+      "revId": "11b4cba9cf55d2fc9b463c199e41177511c59695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
