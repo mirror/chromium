@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ddbab821_6423ea40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-30T23:52:12Z",
+      "side": 1,
+      "message": "I\u0027ll create a bug for this. this involves more work than moving the strings bc the metrics and prompt strings are also specific to chrome home.",
+      "parentUuid": "f6c59e10_9a75c0e0",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 98
+      },
+      "revId": "a347396e2ffffdfaea46bb2812f1e04d0cf9343c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83a7ae6c_0b9048c6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-27T23:11:07Z",
       "side": 1,
       "message": "Should we be using PrefServiceBridge here?",
+      "range": {
+        "startLine": 95,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 75
+      },
+      "revId": "a347396e2ffffdfaea46bb2812f1e04d0cf9343c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe82430_246180c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-30T23:52:12Z",
+      "side": 1,
+      "message": "talked offline. Keeping as is.",
+      "parentUuid": "83a7ae6c_0b9048c6",
       "range": {
         "startLine": 95,
         "startChar": 8,
