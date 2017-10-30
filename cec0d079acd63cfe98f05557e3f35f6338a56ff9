@@ -34,6 +34,24 @@
       "revId": "cec0d079acd63cfe98f05557e3f35f6338a56ff9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40bf4ead_13b6f653",
+        "filename": "chrome/browser/ui/ash/multi_user/user_switch_animator_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-30T17:51:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7d7cfb55_d081fb21",
+      "revId": "cec0d079acd63cfe98f05557e3f35f6338a56ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
