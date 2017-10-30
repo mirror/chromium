@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bacd583d_cf755b42",
+        "filename": "ios/chrome/browser/ui/webui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-30T21:10:33Z",
+      "side": 1,
+      "message": "No, I can move them out of that directory.",
+      "parentUuid": "b18cc4ea_19618e5e",
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2682f593_8e6e5394",
         "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46bc6131_096550d6",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-30T21:10:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2682f593_8e6e5394",
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "590aaf85_fefa23b7",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-30T21:10:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b72734c_f845d82a",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf944768_31ac03c8",
         "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8e5893_29a6a16a",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-30T21:10:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf944768_31ac03c8",
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "ceb860c7_45faf902",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-30T21:10:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "308eb1c5_387d57a0",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "603ab4ff_2a8bdd2d",
         "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
         "patchSetId": 2
@@ -119,6 +221,30 @@
       "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd80e26_c5002146",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-30T21:10:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "603ab4ff_2a8bdd2d",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 46
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "e4e8befc_727bca09",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-30T21:10:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0479ad08_000fe514",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbec339c_263f52e6",
         "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
         "patchSetId": 2
@@ -159,6 +309,24 @@
       "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497f9b81_5794f720",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-30T21:10:33Z",
+      "side": 1,
+      "message": "I\u0027ve updated comment and var name to improve readability.",
+      "parentUuid": "dbec339c_263f52e6",
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "58cc61a2_b0526580",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-30T21:10:33Z",
+      "side": 1,
+      "message": "I added comments to both of these bool flags which I think help to explain it a little. I will elaborate below where I return the constant \"/captiveportal\" string on ln 130 about why it\u0027s necessary. (I won\u0027t explain now because I want to make sure the comments make sense to someone not familiar with the reasoning.)",
+      "parentUuid": "b80c233c_55aad88e",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0ec4b1c_143fef70",
         "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
         "patchSetId": 2
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "51bcc275_7cdfd6de",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-30T21:10:33Z",
+      "side": 1,
+      "message": "Sorry, copy/paste issue. Done.",
+      "parentUuid": "a0ec4b1c_143fef70",
+      "range": {
+        "startLine": 121,
+        "startChar": 36,
+        "endLine": 121,
+        "endChar": 38
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "882c0c68_02ea0d12",
         "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
         "patchSetId": 2
@@ -222,6 +438,24 @@
       "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8579039_8d47c121",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-30T21:10:33Z",
+      "side": 1,
+      "message": "Good idea, I used url_without_query to match existing path_without_query.",
+      "parentUuid": "882c0c68_02ea0d12",
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -245,6 +479,30 @@
       "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff2f872_d1a6b916",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-30T21:10:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2216e5a_0fdf4004",
+      "range": {
+        "startLine": 151,
+        "startChar": 18,
+        "endLine": 151,
+        "endChar": 33
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
