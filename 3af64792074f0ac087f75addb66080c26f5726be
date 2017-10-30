@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6a48fea_80987cff",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-30T08:13:16Z",
+      "side": 1,
+      "message": "Do we have the other case? How about?\n\nDCHECK(shm_handle.OwnershipPassesToIPC());\nshm_handle.Close();",
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de189a4d_4b5bf7a0",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-30T08:13:16Z",
+      "side": 1,
+      "message": "nit: unintentional change?",
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c417c63_b978a07d",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-30T08:13:16Z",
+      "side": 1,
+      "message": "nit: using std::make_unique\n\nauto protected_shmem \u003d std::make_unique\u003cProtectedSharedMemory(std::move(dummyhandle));\n\nSame for l. 192.",
+      "range": {
+        "startLine": 130,
+        "startChar": 18,
+        "endLine": 130,
+        "endChar": 39
+      },
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c59b237_220d3d40",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surface_factory.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-30T08:13:16Z",
+      "side": 1,
+      "message": "unintentional change at l.187 and l.179?",
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d75dcb_596ecf83",
+        "filename": "ui/ozone/public/surface_factory_ozone.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-30T08:13:16Z",
+      "side": 1,
+      "message": "Sounds like we should have a bug to remove the temporary solution.",
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
