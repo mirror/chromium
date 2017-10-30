@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "493b1180_dbe865c9",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-30T06:26:45Z",
+      "side": 1,
+      "message": "When is it possible for the thumb to be bigger than the track bounds? It feels like that might be hiding a different bug :/\n\nUpdateScrollbarThickness() should always be setting the correct track bounds. This should just do\n\n  gfx::Rect CocoaScrollBar::GetTrackBounds() const {\n    // The thumb can slide almost anywhere within a Cocoa ScrollBar. Just use a constant\n    // padding at the ends that is similar to the side padding.\n    gfx::Rect bounds \u003d GetLocalBounds();\n    if (IsHorizontal())\n      bounds.Inset(kScrollbarThumbInset, 0);\n    else\n      bounds.Inset(0, kScrollbarThumbInset);\n    return bounds;\n  }\n\n\nI think it\u0027s misleading to inset the side edges of the bounds here as well as the ends. BaseScrollBarThumb::SetPosition() won\u0027t use it.",
+      "revId": "b1721ec076bf37d093f5475a7efbff8c4ac7ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6b5651_2db2e8b2",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-30T06:26:45Z",
+      "side": 1,
+      "message": "I think this creates an ordering dependency. Now CocoaScrollBar::Layout() must be called before CocoaScrollBarThumb::CalculatePreferredSize() for it to return the correct result, but I don\u0027t think we can make any guarantee that that\u0027s going to occur.",
+      "revId": "b1721ec076bf37d093f5475a7efbff8c4ac7ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e715082e_49899237",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-30T06:26:45Z",
+      "side": 1,
+      "message": "Can we do a \n\nint CocoaScrollBar::ThumbInset() const {\n  if (!is_expanded_)\n    return kScrollbarThumbInset;\n\n  return thickness_animation_.CurrentValueBetween(kScrollbarThumbInset,\n                                                  kExpandedScrollbarThumbInset);\n}\n\nput it down near ::ScrollbarThickness(), below.\n\nThen I think UpdateScrollbarThickness(), here, is what should be what\u0027s calling set_thickness, not Layout().\n\ni.e.\n  GetCocoaScrollBarThumb()-\u003eset_thickness(thickness - 2 * ThumbInset());\n\n\nIn fact..... I think things may be simpler (and more correct) if we ignore ThumbInset until the thumb is actually painted. Just always have it the same width as the track. Currently, I think it\u0027s a bug that it is not the same width -- hovering the mouse in the track in this \"inset\" area, next to the thumb, doesn\u0027t reliably trigger the hover effect. However, on a native scrollbar, it does.\n\nIf that works, I would get rid of set_thickness, and just have the thumb ask its cooca_scroll_bar() how thick its is with (IsHorizontal() ? height() : width())\n\nThen we can get rid of kMinScrollbarThumbThickness as well!",
+      "revId": "b1721ec076bf37d093f5475a7efbff8c4ac7ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32cd3761_47efb784",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-30T06:26:45Z",
+      "side": 1,
+      "message": "revert this?",
+      "revId": "b1721ec076bf37d093f5475a7efbff8c4ac7ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
