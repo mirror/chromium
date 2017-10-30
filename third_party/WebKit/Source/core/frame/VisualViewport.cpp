@@ -40,6 +40,7 @@
 #include "core/frame/RootFrameViewport.h"
 #include "core/frame/Settings.h"
 #include "core/fullscreen/Fullscreen.h"
+#include "core/layout/AdjustForAbsoluteZoom.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
@@ -198,8 +199,8 @@ double VisualViewport::OffsetLeft() const {
 
   UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  return AdjustScrollForAbsoluteZoom(VisibleRect().X(),
-                                     MainFrame()->PageZoomFactor());
+  return AdjustForAbsoluteZoom::AdjustScroll(VisibleRect().X(),
+                                             MainFrame()->PageZoomFactor());
 }
 
 double VisualViewport::OffsetTop() const {
@@ -208,8 +209,8 @@ double VisualViewport::OffsetTop() const {
 
   UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  return AdjustScrollForAbsoluteZoom(VisibleRect().Y(),
-                                     MainFrame()->PageZoomFactor());
+  return AdjustForAbsoluteZoom::AdjustScroll(VisibleRect().Y(),
+                                             MainFrame()->PageZoomFactor());
 }
 
 double VisualViewport::Width() const {
@@ -237,7 +238,8 @@ double VisualViewport::VisibleWidthCSSPx() const {
     return 0;
 
   float zoom = MainFrame()->PageZoomFactor();
-  float width_css_px = AdjustScrollForAbsoluteZoom(VisibleSize().Width(), zoom);
+  float width_css_px =
+      AdjustForAbsoluteZoom::AdjustScroll(VisibleSize().Width(), zoom);
   auto* scrollable_area = MainFrame()->View()->LayoutViewportScrollableArea();
   float scrollbar_thickness_css_px =
       scrollable_area->VerticalScrollbarWidth() / (zoom * scale_);
@@ -250,7 +252,7 @@ double VisualViewport::VisibleHeightCSSPx() const {
 
   float zoom = MainFrame()->PageZoomFactor();
   float height_css_px =
-      AdjustScrollForAbsoluteZoom(VisibleSize().Height(), zoom);
+      AdjustForAbsoluteZoom::AdjustScroll(VisibleSize().Height(), zoom);
   auto* scrollable_area = MainFrame()->View()->LayoutViewportScrollableArea();
   float scrollbar_thickness_css_px =
       scrollable_area->HorizontalScrollbarHeight() / (zoom * scale_);
