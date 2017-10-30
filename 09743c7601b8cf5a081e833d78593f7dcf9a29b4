@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2f5586c5_a306db30",
+        "filename": "chrome/browser/resources/settings/settings_menu/settings_menu.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-30T21:43:18Z",
+      "side": 1,
+      "message": "Putting in on the cr-dialog would cause the separator line to stop short of the edge(s). So we don\u0027t what the padding on the cr-dialog.\n\nOn the pixel width, either way may be ok. Though this isn\u0027t an official UX margin. The UX specifies the width of the side nav with normal sized fonts. The intention of this padding is to prove *some* padding in the presence of large fonts or long labels.",
+      "parentUuid": "8d66f1c9_dd938121",
+      "revId": "09743c7601b8cf5a081e833d78593f7dcf9a29b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb71a38d_56387f57",
         "filename": "ui/webui/resources/cr_elements/cr_drawer/cr_drawer.html",
         "patchSetId": 3
