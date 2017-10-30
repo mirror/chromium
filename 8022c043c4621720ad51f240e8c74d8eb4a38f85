@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9caf0886_648189f4",
+        "filename": "content/renderer/media/media_stream_renderer_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-30T19:06:22Z",
+      "side": 1,
+      "message": "In that case, let\u0027s remove it",
+      "parentUuid": "9eb4cd39_b4541e43",
+      "revId": "8022c043c4621720ad51f240e8c74d8eb4a38f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e77581d2_52009578",
         "filename": "content/renderer/media/webmediaplayer_ms.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-30T16:31:30Z",
       "side": 1,
       "message": "Like with the message above, this one gets logged regardless of if this is an error or not.\n\nI see see your later CL added an IsAudioElement() method. Perhaps we should only log this if we\u0027re unable to create an audio renderer for an audio tag?",
+      "revId": "8022c043c4621720ad51f240e8c74d8eb4a38f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870c0407_8dd33534",
+        "filename": "content/renderer/media/webmediaplayer_ms.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-30T19:06:22Z",
+      "side": 1,
+      "message": "I think it\u0027s fine to remove this now as well. When I made the change, it was unclear what exact causes we were looking at for a particular problem, so I erred on the side of \u0027too much info\u0027 vs \u0027too little\u0027.  I think we should just remove this line as well.",
+      "parentUuid": "e77581d2_52009578",
       "revId": "8022c043c4621720ad51f240e8c74d8eb4a38f85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
