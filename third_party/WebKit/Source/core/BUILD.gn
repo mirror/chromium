@@ -1563,6 +1563,7 @@ jumbo_source_set("unit_tests") {
     "imagebitmap/ImageBitmapTest.cpp",
     "input/EventHandlerTest.cpp",
     "input/ImeOnFocusTest.cpp",
+    "input/PointerEventManagerTest.cpp",
     "input/ScrollBoundaryBehaviorTest.cpp",
     "input/TouchActionTest.cpp",
     "input/TouchEventManagerTest.cpp",
