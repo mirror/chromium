@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5ab2b3d_2a56b9e4",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-10-30T09:35:12Z",
+      "side": 1,
+      "message": "Reverted the change after adopting your suggestion below.",
+      "parentUuid": "3dd0727c_d1dcd076",
+      "range": {
+        "startLine": 1039,
+        "startChar": 34,
+        "endLine": 1041,
+        "endChar": 46
+      },
+      "revId": "7dbb63325560b125dfbbef4a2df919a7843d5229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1771ae4_0988c53b",
         "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "7dbb63325560b125dfbbef4a2df919a7843d5229",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e2dacd_6125c060",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-10-30T09:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1771ae4_0988c53b",
+      "revId": "7dbb63325560b125dfbbef4a2df919a7843d5229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
