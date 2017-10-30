@@ -93,6 +93,30 @@
       "revId": "91ef3bad45e192dcfd9951222d1deb7f5acfccf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2624b97e_cdde3837",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-30T12:37:27Z",
+      "side": 1,
+      "message": "Oh, I\u0027ve been looking only at RendererSchedulerImplTest, my bad. It seems that we should be able to replace it with accessing task queue directly in those tests.\n\nAlso I\u0027d like to suggest splitting creating a web task runner and ensuring that task queue is initialized. I mean changing *TaskRunner to *TaskQueue and leaving task queue initialization logic there and move WebTaskRunnerImpl::Create call into GetTaskRunner method.",
+      "parentUuid": "c5ca70f4_1339e9ca",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 48
+      },
+      "revId": "91ef3bad45e192dcfd9951222d1deb7f5acfccf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
