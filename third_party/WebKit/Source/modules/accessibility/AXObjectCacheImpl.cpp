@@ -1248,7 +1248,6 @@ void AXObjectCacheImpl::AddPermissionStatusListener() {
   permission_service_->AddPermissionObserver(
       CreatePermissionDescriptor(
           mojom::blink::PermissionName::ACCESSIBILITY_EVENTS),
-      document_->GetExecutionContext()->GetSecurityOrigin(),
       accessibility_event_permission_, std::move(observer));
 }
 
@@ -1271,7 +1270,6 @@ void AXObjectCacheImpl::RequestAOMEventListenerPermission() {
   permission_service_->RequestPermission(
       CreatePermissionDescriptor(
           mojom::blink::PermissionName::ACCESSIBILITY_EVENTS),
-      document_->GetExecutionContext()->GetSecurityOrigin(),
       Frame::HasTransientUserActivation(document_->GetFrame()),
       ConvertToBaseCallback(WTF::Bind(
           &AXObjectCacheImpl::OnPermissionStatusChange, WrapPersistent(this))));
