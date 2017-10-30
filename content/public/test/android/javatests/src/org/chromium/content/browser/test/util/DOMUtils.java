@@ -466,9 +466,10 @@ public class DOMUtils {
         int browserControlsLayoutHeight = viewCore.doBrowserControlsShrinkBlinkSize()
                 ? viewCore.getTopControlsHeightPix()
                 : 0;
-        int clickX = (int) viewCore.getRenderCoordinates().fromLocalCssToPix(bounds.exactCenterX());
-        int clickY = (int) viewCore.getRenderCoordinates().fromLocalCssToPix(bounds.exactCenterY())
-                + browserControlsLayoutHeight;
+        Coordinates coord = Coordinates.createFor(viewCore.getWebContents());
+        int clickX = (int) coord.fromLocalCssToPix(bounds.exactCenterX());
+        int clickY =
+                (int) coord.fromLocalCssToPix(bounds.exactCenterY()) + browserControlsLayoutHeight;
         return new int[] { clickX, clickY };
     }
 
