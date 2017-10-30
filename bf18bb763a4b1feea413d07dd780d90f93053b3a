@@ -16,6 +16,24 @@
       "revId": "bf18bb763a4b1feea413d07dd780d90f93053b3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc3309f_bdffc1ff",
+        "filename": "ios/web/web_state/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-30T17:33:02Z",
+      "side": 1,
+      "message": "This is here because web_state_impl.h participates in almost every circular dependency. F.e. web controller and web_state_impl depend on each other. Same goes for navigation_manager, interstitial and a few other classes. I think these circular dependencies are indication of design flaws inside ios/web where classes depend on WebStateImpl instead of depending on delegates, but that\u0027s a bigger problem which can be solved when we start writing real unit tests for ios/web.",
+      "parentUuid": "c88cf26e_f270fbda",
+      "revId": "bf18bb763a4b1feea413d07dd780d90f93053b3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
