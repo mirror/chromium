@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7a350df_9fb8fb11",
+        "filename": "components/viz/service/display_embedder/compositing_mode_reporter_impl.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-30T13:40:42Z",
+      "side": 1,
+      "message": "This is a little late (sorry) but there is the equivalent data structure to BindingSet\u003c\u003e to use here, InterfacePtrSet\u003c\u003e, that handles removing dead pointers automatically in the same way.",
+      "revId": "33bb6c6ac24c6054a6f36f31a0fc3234fbc93c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
