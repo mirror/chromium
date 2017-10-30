@@ -164,6 +164,30 @@
       "revId": "9ea8c31e4be99f92f263e087b5d0b37467355d79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe383b7_04324986",
+        "filename": "testing/libfuzzer/fuzzers/zlib_deflate_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-30T20:51:27Z",
+      "side": 1,
+      "message": "I think that is a very good idea.\n\nThat would mean we don\u0027t need a separate fuzzer for inflate() (which I started here: https://chromium-review.googlesource.com/c/chromium/src/+/744338 ). It also means we don\u0027t need a seed. The fuzzer would create its own seeds.\n\nIt would also be a good place to cover other APIs like inflateFast() since we already have that deflated data. And it gives us a chance to confirm that inflate() and inflateFast() produce the same output, even in awkward edge cases.",
+      "parentUuid": "90d91b7a_051fd9aa",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 10
+      },
+      "revId": "9ea8c31e4be99f92f263e087b5d0b37467355d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
