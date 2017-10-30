@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1326ba67_887da862",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-30T21:29:54Z",
+      "side": 1,
+      "message": "Could we *embolden* or _emphasize_ the label names as the exiting doc does with colors?",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "16e679ce2498e2c9e7ba4354b898840bea610d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
