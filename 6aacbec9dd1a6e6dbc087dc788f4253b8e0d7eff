@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "d316929f_2011e259",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl_mock.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-30T17:17:59Z",
+      "side": 1,
+      "message": "After rebasing this change isn\u0027t included in this CL, right?",
+      "revId": "6aacbec9dd1a6e6dbc087dc788f4253b8e0d7eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f604611_625f261c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-30T17:17:59Z",
+      "side": 1,
+      "message": "I would lean towards putting more documentation in the linked doc or a separate markdown file rather than here -- this will have to be updated in the future.\n\nFor example, you might keep a short usage description here and move the rest to the \"for more information\" doc linked above.",
+      "revId": "6aacbec9dd1a6e6dbc087dc788f4253b8e0d7eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9deb48bf_e6e736ce",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
         "patchSetId": 6
@@ -13,6 +47,104 @@
       "writtenOn": "2017-10-27T16:57:02Z",
       "side": 1,
       "message": "This is a different set of builders than \"webkit-patch rebaseline-cl\" uses (I think rebaseline-cl is using builders.json when is_try_builder\u003dtrue). Can try-flag trigger use the same set of builders as either rebaseline-cl or the CQ?",
+      "revId": "6aacbec9dd1a6e6dbc087dc788f4253b8e0d7eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3c2073_417d9076",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-30T17:17:59Z",
+      "side": 1,
+      "message": "It could, but this way is a bit simpler for now, I think.\n\nAlso: Adding CQ try bots (possibly with master names) to webkitpy/config/builders.json may be a good idea, but if that change is made as-is now, it would make rebaseline-cl and wpt import always trigger the CQ bots as well. Some logic needs to be added for those tools to behave properly with CQ try bots.\n\nI would be OK with using these builders like this, and considering using the tryserver.blink bots later.",
+      "parentUuid": "9deb48bf_e6e736ce",
+      "revId": "6aacbec9dd1a6e6dbc087dc788f4253b8e0d7eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a613c3d7_2e13750c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-30T17:17:59Z",
+      "side": 1,
+      "message": "Optional equivalent:\n\n    path \u003d finder.path_from_layout_test(FLAG_FILE)\n\nSame below.",
+      "range": {
+        "startLine": 100,
+        "startChar": 15,
+        "endLine": 100,
+        "endChar": 79
+      },
+      "revId": "6aacbec9dd1a6e6dbc087dc788f4253b8e0d7eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323471ad_5468bc9b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-30T17:17:59Z",
+      "side": 1,
+      "message": "Optionally, if you want --help to print out the docstring at the top:\n\nparser \u003d argparse.ArgumentParser(\n    description\u003d__doc__,\n    formatter_class\u003dargparse.RawDescriptionHelpFormatter)",
+      "revId": "6aacbec9dd1a6e6dbc087dc788f4253b8e0d7eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305087cc_b5dae454",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-30T17:17:59Z",
+      "side": 1,
+      "message": "To make it a little easier to change things when Blink is moved, it would be good to avoid literal paths. This could be:\n\n    finder \u003d PathFinder(host.filesystem)\n    flag_file \u003d finder.path_from_layout_tests(\u0027additional-driver-flag.setting\u0027)\n    flag_expectations_file \u003d finder.path_from_layout_tests(\u0027FlagExpectations\u0027, \u0027foo\u0027)\n\nThis requires `from webkitpy.common.path_finder import PathFinder`.",
+      "revId": "6aacbec9dd1a6e6dbc087dc788f4253b8e0d7eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d826f7d_067f7fd9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-30T17:17:59Z",
+      "side": 1,
+      "message": "Alternate syntax with curly braces: {flag_file}",
+      "range": {
+        "startLine": 36,
+        "startChar": 31,
+        "endLine": 36,
+        "endChar": 47
+      },
       "revId": "6aacbec9dd1a6e6dbc087dc788f4253b8e0d7eff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
