@@ -257,6 +257,7 @@ int LaunchChildTestProcessWithOptions(
     int flags,
     TimeDelta timeout,
     const TestLauncher::GTestProcessLaunchedCallback& launched_callback,
+    const TestLauncher::GTestProcessTimedOutCallback& timed_out_callback,
     bool* was_timeout) {
   TimeTicks start_time(TimeTicks::Now());
 #if defined(OS_FUCHSIA)  // TODO(scottmg): https://crbug.com/755282
@@ -352,6 +353,9 @@ int LaunchChildTestProcessWithOptions(
 
   int exit_code = 0;
   if (!process.WaitForExitWithTimeout(timeout, &exit_code)) {
+    if (timed_out_callback)
+      timed_out_callback.Run(command_line);
+
     *was_timeout = true;
     exit_code = -1;  // Set a non-zero exit code to signal a failure.
 
@@ -417,7 +421,8 @@ void DoLaunchChildTestProcess(
     bool redirect_stdio,
     SingleThreadTaskRunner* task_runner,
     const TestLauncher::GTestProcessCompletedCallback& completed_callback,
-    const TestLauncher::GTestProcessLaunchedCallback& launched_callback) {
+    const TestLauncher::GTestProcessLaunchedCallback& launched_callback,
+    const TestLauncher::GTestProcessTimedOutCallback& timed_out_callback) {
   TimeTicks start_time = TimeTicks::Now();
 
   ScopedFILE output_file;
@@ -467,7 +472,7 @@ void DoLaunchChildTestProcess(
   bool was_timeout = false;
   int exit_code = LaunchChildTestProcessWithOptions(
       command_line, options, test_launch_options.flags, timeout,
-      launched_callback, &was_timeout);
+      launched_callback, timed_out_callback, &was_timeout);
 
   std::string output_file_contents;
   if (redirect_stdio) {
@@ -579,7 +584,8 @@ void TestLauncher::LaunchChildGTestProcess(
     TimeDelta timeout,
     const LaunchOptions& options,
     const GTestProcessCompletedCallback& completed_callback,
-    const GTestProcessLaunchedCallback& launched_callback) {
+    const GTestProcessLaunchedCallback& launched_callback,
+    const GTestProcessTimedOutCallback& timed_out_callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   // Record the exact command line used to launch the child.
@@ -597,7 +603,7 @@ void TestLauncher::LaunchChildGTestProcess(
                redirect_stdio, RetainedRef(ThreadTaskRunnerHandle::Get()),
                Bind(&TestLauncher::OnLaunchTestProcessFinished,
                     Unretained(this), completed_callback),
-               launched_callback));
+               launched_callback, timed_out_callback));
 }
 
 void TestLauncher::OnTestFinished(const TestResult& original_result) {
