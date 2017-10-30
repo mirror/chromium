@@ -12,6 +12,7 @@ source_set("net") {
     "//ios/web/navigation:core",
     "//ios/web/public",
     "//ios/web/web_state:wk_web_view_security_util",
+    "//ios/web/web_state/ui:wk_web_view_configuration_provider",
     "//net",
   ]
 
@@ -34,6 +35,8 @@ source_set("net") {
     "request_tracker_impl.mm",
     "web_http_protocol_handler_delegate.h",
     "web_http_protocol_handler_delegate.mm",
+    "wk_cookie_util.h",
+    "wk_cookie_util.mm",
   ]
 
   configs += [ "//build/config/compiler:enable_arc" ]
