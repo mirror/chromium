@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "831d70a5_df40e9d2",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-30T12:15:51Z",
+      "side": 1,
+      "message": "This\u0027ll have to be generated when we start writing the pending requests to the database, right?",
+      "revId": "d42eba3994c87ade7a7438fb83e111cfaa7c1277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e3e0b1d_f59b89a4",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-30T12:15:51Z",
+      "side": 1,
+      "message": "No comma. (Dito on line 43.)",
+      "range": {
+        "startLine": 38,
+        "startChar": 72,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "d42eba3994c87ade7a7438fb83e111cfaa7c1277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
