@@ -251,7 +251,7 @@ void MediaStreamVideoSource::DoStopSource() {
   track_adapter_->StopFrameMonitoring();
   StopSourceImpl();
   state_ = ENDED;
-  SetReadyState(blink::WebMediaStreamSource::kReadyStateEnded);
+  SetState(blink::WebMediaStreamSource::kStateEnded);
 }
 
 void MediaStreamVideoSource::OnStartDone(MediaStreamRequestResult result) {
@@ -263,7 +263,7 @@ void MediaStreamVideoSource::OnStartDone(MediaStreamRequestResult result) {
   if (result == MEDIA_DEVICE_OK) {
     DCHECK_EQ(STARTING, state_);
     state_ = STARTED;
-    SetReadyState(blink::WebMediaStreamSource::kReadyStateLive);
+    SetState(blink::WebMediaStreamSource::kStateLive);
     StartFrameMonitoring();
   } else {
     StopSource();
@@ -306,24 +306,20 @@ void MediaStreamVideoSource::StartFrameMonitoring() {
                              weak_factory_.GetWeakPtr()));
 }
 
-void MediaStreamVideoSource::SetReadyState(
-    blink::WebMediaStreamSource::ReadyState state) {
-  DVLOG(3) << "MediaStreamVideoSource::SetReadyState state " << state;
+void MediaStreamVideoSource::SetState(
+    blink::WebMediaStreamSource::State state) {
+  DVLOG(3) << "MediaStreamVideoSource::SetState state " << state;
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!Owner().IsNull())
-    Owner().SetReadyState(state);
+    Owner().SetState(state);
   for (auto* track : tracks_)
-    track->OnReadyStateChanged(state);
+    track->OnSourceStateChanged(state);
 }
 
 void MediaStreamVideoSource::SetMutedState(bool muted_state) {
   DVLOG(3) << "MediaStreamVideoSource::SetMutedState state=" << muted_state;
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (!Owner().IsNull()) {
-    Owner().SetReadyState(muted_state
-                              ? blink::WebMediaStreamSource::kReadyStateMuted
-                              : blink::WebMediaStreamSource::kReadyStateLive);
-  }
+  MediaStreamSource::SetSourceMuted(muted_state);
 }
 
 void MediaStreamVideoSource::UpdateTrackSettings(

@@ -92,6 +92,11 @@ bool WebMediaStreamTrack::IsMuted() const {
   return private_->Muted();
 }
 
+bool WebMediaStreamTrack::IsEnded() const {
+  DCHECK(!private_.IsNull());
+  return private_->IsEnded();
+}
+
 WebMediaStreamTrack::ContentHintType WebMediaStreamTrack::ContentHint() const {
   DCHECK(!private_.IsNull());
   return private_->ContentHint();
