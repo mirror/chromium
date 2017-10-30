@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85540405_a4167635",
+        "filename": "chrome/browser/resources/chromeos/internet_config_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-30T19:44:37Z",
+      "side": 1,
+      "message": "nit: end sentences with period",
+      "revId": "29bfbdc8813e2c080617e302de238c5e6ec0b2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f2fbdf_a0871604",
+        "filename": "chrome/browser/ui/webui/chromeos/internet_config_dialog.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-30T19:44:37Z",
+      "side": 1,
+      "message": "nit: prefer constexpr when possible, others have been suggesting this to me (http://google.github.io/styleguide/cppguide.html#Use_of_constexpr)",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 6
+      },
+      "revId": "29bfbdc8813e2c080617e302de238c5e6ec0b2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12116dc9_e9692af3",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-30T19:44:37Z",
+      "side": 1,
+      "message": "nit: keep alphabetical?",
+      "range": {
+        "startLine": 902,
+        "startChar": 8,
+        "endLine": 902,
+        "endChar": 24
+      },
+      "revId": "29bfbdc8813e2c080617e302de238c5e6ec0b2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b65610_dc25d356",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-30T19:44:37Z",
+      "side": 1,
+      "message": "nit: period",
+      "range": {
+        "startLine": 14,
+        "startChar": 69,
+        "endLine": 14,
+        "endChar": 70
+      },
+      "revId": "29bfbdc8813e2c080617e302de238c5e6ec0b2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf11d809_06d746f0",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-30T19:44:37Z",
+      "side": 1,
+      "message": "4-space indent",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 10
+      },
+      "revId": "29bfbdc8813e2c080617e302de238c5e6ec0b2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed4eef6_f99c32ce",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config_select.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-30T19:44:37Z",
+      "side": 1,
+      "message": "can this be a \u003clabel\u003e? do we need the id?",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "29bfbdc8813e2c080617e302de238c5e6ec0b2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
