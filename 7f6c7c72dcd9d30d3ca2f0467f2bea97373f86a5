@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0722715_d2f58844",
+        "filename": "chrome/renderer/extensions/tabs_hooks_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-30T15:08:28Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "7f6c7c72dcd9d30d3ca2f0467f2bea97373f86a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb53b1d3_fc09185d",
+        "filename": "chrome/renderer/extensions/tabs_hooks_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-30T15:08:28Z",
+      "side": 1,
+      "message": "Does this work with -0? It\u0027s not an Int32 in the V8 sense, but the argument validation logic lets it through. (here and below)",
+      "revId": "7f6c7c72dcd9d30d3ca2f0467f2bea97373f86a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a1533f_747d3bee",
+        "filename": "chrome/renderer/extensions/tabs_hooks_delegate_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-30T15:08:28Z",
+      "side": 1,
+      "message": "nit: probably fine here, but in general %s and StringPiece don\u0027t go together (because StringPiece is not guaranteed to be null-terminated). You could probably just pass \"const char*\".",
+      "revId": "7f6c7c72dcd9d30d3ca2f0467f2bea97373f86a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca50bc0_c35dcf08",
+        "filename": "extensions/renderer/messaging_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-30T15:08:28Z",
+      "side": 1,
+      "message": "ditto: do you care about -0 here?",
+      "revId": "7f6c7c72dcd9d30d3ca2f0467f2bea97373f86a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e87c4a7_93dfb282",
+        "filename": "extensions/renderer/send_message_tester.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-30T15:08:28Z",
+      "side": 1,
+      "message": "nit: might as well make this a const char*, since all you do with it is pass it to StringPrintf, which wants one anyhow?",
+      "revId": "7f6c7c72dcd9d30d3ca2f0467f2bea97373f86a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
