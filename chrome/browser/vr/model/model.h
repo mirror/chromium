@@ -5,6 +5,10 @@
 #ifndef CHROME_BROWSER_VR_MODEL_MODEL_H_
 #define CHROME_BROWSER_VR_MODEL_MODEL_H_
 
+#include "chrome/browser/vr/ui_input_manager.h"
+#include "ui/gfx/geometry/point3_f.h"
+#include "ui/gfx/transform.h"
+
 namespace vr {
 
 // As we wait for WebVR frames, we may pass through the following states.
@@ -29,6 +33,24 @@ struct Model {
 
   WebVrTimeoutState web_vr_timeout_state = kWebVrNoTimeoutPending;
   bool started_for_autopresentation = false;
+
+  struct {
+    gfx::Transform transform;
+    // TODO(vollick): switch this to an offset in local space.
+    gfx::Vector3dF laser_direction;
+    gfx::Point3F laser_origin;
+    // TODO(vollick): convert to boolean "pressed" values.
+    UiInputManager::ButtonState touchpad_button_state = UiInputManager::UP;
+    UiInputManager::ButtonState app_button_state = UiInputManager::UP;
+    UiInputManager::ButtonState home_button_state = UiInputManager::UP;
+    float opacity = 1.0f;
+  } controller;
+
+  struct {
+    gfx::Point3F target_point;
+    gfx::PointF target_local_point;
+    int target_element_id = -1;
+  } reticle;
 };
 
 }  // namespace vr
