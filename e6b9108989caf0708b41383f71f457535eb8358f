@@ -69,6 +69,30 @@
       "revId": "e6b9108989caf0708b41383f71f457535eb8358f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf4633a_a4aa0eaf",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-30T15:33:03Z",
+      "side": 1,
+      "message": "Sorry for vague comment. Steps to clear visited links:\n1.) Search in google for puppies (kittens also work)\n2.) Tap on the first link\n3.) Go back\n4.) Open Settings\n5.) Tap Privacy\n6.) Tap Clear Browsing Data\n7.) Tap Clear Browsing Data\n\nExpected result:\nPreviously clicked link is blue, not purple\n\n\u003e\u003e (1) destroy the WKWebView when it\u0027s not needed to avoid playing audio and whatnot\nNo, SetWebUsageEnabled(false) is not called during native view load\n\n\u003e\u003e (2) force clearing browsing data\nYes, SetWebUsageEnabled(false) is called to clear visited link.\n\n\u003e\u003e What I\u0027m trying to change is (1) here.\nAre you sure this is the right place? |removeWebView| call is already hidden behind IsSlimNavigationManagerEnabled() check and SetWebUsageEnabled(false) is not called during native view load.\n\n\u003e\u003e Would it make sense to create a separate API for (2) to preserve its functionality? Would this be feasible?\nIt would make sense to remove SetWebUsageEnabled API and replace it with API, which sole purpose is clearing visited links. But I don\u0027t know how that API will help with native view load.",
+      "parentUuid": "51d3743f_4dfe3634",
+      "range": {
+        "startLine": 1091,
+        "startChar": 16,
+        "endLine": 1091,
+        "endChar": 28
+      },
+      "revId": "e6b9108989caf0708b41383f71f457535eb8358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
