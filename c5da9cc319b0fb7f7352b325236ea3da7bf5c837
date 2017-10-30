@@ -84,6 +84,91 @@
       "revId": "c5da9cc319b0fb7f7352b325236ea3da7bf5c837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc344d4_c782693d",
+        "filename": "ui/message_center/mojo/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T21:39:42Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "c5da9cc319b0fb7f7352b325236ea3da7bf5c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1828a01_1685348c",
+        "filename": "ui/message_center/mojo/notifier_settings.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T21:39:42Z",
+      "side": 1,
+      "message": "Do you think other notifier settings will go into this file? If not, should it be notifier_id.mojom?",
+      "revId": "c5da9cc319b0fb7f7352b325236ea3da7bf5c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f849ee4e_7ab95bea",
+        "filename": "ui/message_center/mojo/notifier_settings.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T21:39:42Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "c5da9cc319b0fb7f7352b325236ea3da7bf5c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8485d9b4_05fd0e6d",
+        "filename": "ui/message_center/mojo/notifier_settings.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T21:39:42Z",
+      "side": 1,
+      "message": "I would add the used-in-UMA warning comment here too.",
+      "revId": "c5da9cc319b0fb7f7352b325236ea3da7bf5c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25c6065_ddd24752",
+        "filename": "ui/message_center/mojo/notifier_settings_struct_traits.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T21:39:42Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c5da9cc319b0fb7f7352b325236ea3da7bf5c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
