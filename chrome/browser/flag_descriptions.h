@@ -1020,6 +1020,7 @@ extern const char kChromeHomePromoDescription[];
 extern const char kChromeHomeSwipeLogicName[];
 extern const char kChromeHomeSwipeLogicDescription[];
 extern const char kChromeHomeSwipeLogicRestrictArea[];
+extern const char kChromeHomeSwipeLogicMariaModel[];
 
 extern const char kChromeHomeName[];
 extern const char kChromeHomeDescription[];

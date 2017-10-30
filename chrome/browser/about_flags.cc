@@ -371,6 +371,8 @@ const FeatureEntry::Choice kChromeHomeSwipeLogicChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
     {flag_descriptions::kChromeHomeSwipeLogicRestrictArea,
      switches::kChromeHomeSwipeLogicType, "restrict-area"},
+    {flag_descriptions::kChromeHomeSwipeLogicMariaModel,
+     switches::kChromeHomeSwipeLogicType, "maria-model"},
 };
 
 #endif  // OS_ANDROID

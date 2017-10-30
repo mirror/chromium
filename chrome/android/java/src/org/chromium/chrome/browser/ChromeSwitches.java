@@ -183,8 +183,11 @@ public abstract class ChromeSwitches {
     /** Switch for enabling "restricted area" swipe logic for Chrome Home. */
     public static final String CHROME_HOME_SWIPE_LOGIC_RESTRICT_AREA = "restrict-area";
 
-    /** Switch for enabling "button only" swipe logic for Chrome Home. */
-    public static final String CHROME_HOME_SWIPE_LOGIC_BUTTON_ONLY = "button-only";
+    /**
+     * Switch for enabling the "maria suppression" swipe logic for Chrome Home. This means that
+     * flings will not open the sheet; the user must momentarily hold before dragging up.
+     */
+    public static final String CHROME_HOME_SWIPE_LOGIC_MARIA_MODEL = "maria-model";
 
     // Prevent instantiation.
     private ChromeSwitches() {}
