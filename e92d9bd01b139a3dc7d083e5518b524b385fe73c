@@ -33,6 +33,24 @@
       "revId": "e92d9bd01b139a3dc7d083e5518b524b385fe73c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc02df7_e271c09f",
+        "filename": "gpu/command_buffer/tests/fuzzer_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-10-30T22:05:48Z",
+      "side": 1,
+      "message": "OK.  The way this is set up, adding more extensions will also need the same process.\nHave you considered adding a static config size with some extra bits to grow, and CHECK that the consumed size doesn\u0027t exceed?",
+      "parentUuid": "95042fb5_858f0671",
+      "revId": "e92d9bd01b139a3dc7d083e5518b524b385fe73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
