@@ -64,19 +64,19 @@ class FaviconServiceImpl : public FaviconService {
       base::CancelableTaskTracker* tracker) override;
   base::CancelableTaskTracker::TaskId GetRawFaviconForPageURL(
       const GURL& page_url,
-      int icon_types,
+      const favicon_base::IconTypeSet& icon_types,
       int desired_size_in_pixel,
       const favicon_base::FaviconRawBitmapCallback& callback,
       base::CancelableTaskTracker* tracker) override;
   base::CancelableTaskTracker::TaskId GetLargestRawFaviconForPageURL(
       const GURL& page_url,
-      const std::vector<int>& icon_types,
+      const std::vector<favicon_base::IconTypeSet>& icon_types,
       int minimum_size_in_pixels,
       const favicon_base::FaviconRawBitmapCallback& callback,
       base::CancelableTaskTracker* tracker) override;
   base::CancelableTaskTracker::TaskId GetFaviconForPageURL(
       const GURL& page_url,
-      int icon_types,
+      const favicon_base::IconTypeSet& icon_types,
       int desired_size_in_dip,
       const favicon_base::FaviconResultsCallback& callback,
       base::CancelableTaskTracker* tracker) override;
@@ -124,7 +124,7 @@ class FaviconServiceImpl : public FaviconService {
   // and GetFaviconForPageURL().
   base::CancelableTaskTracker::TaskId GetFaviconForPageURLImpl(
       const GURL& page_url,
-      int icon_types,
+      const favicon_base::IconTypeSet& icon_types,
       const std::vector<int>& desired_sizes_in_pixel,
       const favicon_base::FaviconResultsCallback& callback,
       base::CancelableTaskTracker* tracker);
