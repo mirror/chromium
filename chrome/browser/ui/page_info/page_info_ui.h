@@ -47,12 +47,16 @@ class PageInfoUI {
     NUM_TAB_IDS,
   };
 
-  // The security summary is styled depending on the security state. At the
-  // moment, the only styling we apply is color, but it could also include e.g.
-  // bolding.
-  enum SecuritySummaryStyle { STYLE_UNSTYLED = 0, STYLE_COLOR = 1 << 1 };
+  enum class OverallSecurityState {
+    kInsecure,
+    kSecure,
+    kNeutral,
+  };
 
   struct SecurityDescription {
+    // The overall security state of the page. Used to provide an opinionated
+    // guide to the user, currently in the form of a colored |summary|.
+    OverallSecurityState state;
     // A one-line summary of the security state.
     base::string16 summary;
     // A short paragraph with more details about the state, and how
