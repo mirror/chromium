@@ -60,6 +60,7 @@ class ASH_EXPORT PaletteWelcomeBubble : public SessionObserver,
 
  private:
   friend class PaletteWelcomeBubbleTest;
+  class CustomBubbleBorder;
   class WelcomeBubbleView;
 
   void Show(bool shown_by_stylus);

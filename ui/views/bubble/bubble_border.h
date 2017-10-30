@@ -202,6 +202,7 @@ class VIEWS_EXPORT BubbleBorder : public Border {
   // and bubble content size; calculated from shadow and arrow image dimensions.
   virtual gfx::Rect GetBounds(const gfx::Rect& anchor_rect,
                               const gfx::Size& contents_size) const;
+  virtual gfx::Rect GetArrowRect(const gfx::Rect& bounds) const;
 
   // Get the border exterior thickness, including stroke and shadow, in pixels.
   int GetBorderThickness() const;
@@ -228,6 +229,9 @@ class VIEWS_EXPORT BubbleBorder : public Border {
   gfx::Insets GetInsets() const override;
   gfx::Size GetMinimumSize() const override;
 
+ protected:
+  gfx::ImageSkia* GetArrowImage() const;
+
  private:
   FRIEND_TEST_ALL_PREFIXES(BubbleBorderTest, GetSizeForContentsSizeTest);
   FRIEND_TEST_ALL_PREFIXES(BubbleBorderTest, GetBoundsOriginTest);
@@ -237,8 +241,6 @@ class VIEWS_EXPORT BubbleBorder : public Border {
   static const int kStroke;
 
   gfx::Size GetSizeForContentsSize(const gfx::Size& contents_size) const;
-  gfx::ImageSkia* GetArrowImage() const;
-  gfx::Rect GetArrowRect(const gfx::Rect& bounds) const;
   void GetArrowPathFromArrowBounds(const gfx::Rect& arrow_bounds,
                                    SkPath* path) const;
   void DrawArrow(gfx::Canvas* canvas, const gfx::Rect& arrow_bounds) const;
