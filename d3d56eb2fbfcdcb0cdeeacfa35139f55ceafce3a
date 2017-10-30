@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c736577_20367de0",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_unittest_context_lost.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-30T17:14:50Z",
+      "side": 1,
+      "message": "It\u0027s fine to do it that way. FYI, the reason it gets removed from the FBO when doing DeleteTextures is that the FBO is still bound, but if you unbind the FBO (i.e. bind 0), it shouldn\u0027t happen.",
+      "revId": "d3d56eb2fbfcdcb0cdeeacfa35139f55ceafce3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
