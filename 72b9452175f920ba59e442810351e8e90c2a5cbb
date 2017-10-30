@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9456d61_74006ef5",
+        "filename": "third_party/WebKit/Source/platform/ScopedVirtualTimePauser.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-30T14:38:03Z",
+      "side": 1,
+      "message": "Also mention that virtual time is initially unpaused and simply creating a ScopedVirtualTimePauser doesn\u0027t cause it to pause.",
+      "range": {
+        "startLine": 34,
+        "startChar": 25,
+        "endLine": 34,
+        "endChar": 26
+      },
+      "revId": "72b9452175f920ba59e442810351e8e90c2a5cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db27072d_86530778",
+        "filename": "third_party/WebKit/Source/platform/ScopedVirtualTimePauser.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-30T14:38:03Z",
+      "side": 1,
+      "message": "nit: Doesn\u0027t match the guard in the beginning.",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 94
+      },
+      "revId": "72b9452175f920ba59e442810351e8e90c2a5cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
