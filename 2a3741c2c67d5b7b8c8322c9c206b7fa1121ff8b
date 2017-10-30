@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e1bb96_adf6f2d9",
+        "filename": "testing/buildbot/chromium.android.fyi.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 3559,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-30T21:49:09Z",
+      "side": 1,
+      "message": "nit: just chrome_public_test_apk",
+      "revId": "2a3741c2c67d5b7b8c8322c9c206b7fa1121ff8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f43a9f25_e2e0a3b4",
+        "filename": "testing/buildbot/chromium.android.fyi.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 3574,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-30T21:49:09Z",
+      "side": 1,
+      "message": "nit: all swarming bots are single-device now, so this is unnecessary.",
+      "revId": "2a3741c2c67d5b7b8c8322c9c206b7fa1121ff8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
