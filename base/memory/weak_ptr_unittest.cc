@@ -384,68 +384,6 @@ TEST(WeakPtrTest, WeakPtrInitiateAndUseOnDifferentThreads) {
   EXPECT_EQ(&target, arrow->target.get());
 }
 
-TEST(WeakPtrTest, MoveOwnershipImplicitly) {
-  // Move object ownership to another thread by releasing all weak pointers
-  // on the original thread first, and then establish WeakPtr on a different
-  // thread.
-  BackgroundThread background;
-  background.Start();
-
-  Target* target = new Target();
-  {
-    WeakPtr<Target> weak_ptr = target->AsWeakPtr();
-    // Main thread deletes the WeakPtr, then the thread ownership of the
-    // object can be implicitly moved.
-  }
-  Arrow* arrow;
-
-  // Background thread creates WeakPtr(and implicitly owns the object).
-  background.CreateArrowFromTarget(&arrow, target);
-  EXPECT_EQ(background.DeRef(arrow), target);
-
-  {
-    // Main thread creates another WeakPtr, but this does not trigger implicitly
-    // thread ownership move.
-    Arrow arrow;
-    arrow.target = target->AsWeakPtr();
-
-    // The new WeakPtr is owned by background thread.
-    EXPECT_EQ(target, background.DeRef(&arrow));
-  }
-
-  // Target can only be deleted on background thread.
-  background.DeleteTarget(target);
-  background.DeleteArrow(arrow);
-}
-
-TEST(WeakPtrTest, MoveOwnershipOfUnreferencedObject) {
-  BackgroundThread background;
-  background.Start();
-
-  Arrow* arrow;
-  {
-    Target target;
-    // Background thread creates WeakPtr.
-    background.CreateArrowFromTarget(&arrow, &target);
-
-    // Bind to background thread.
-    EXPECT_EQ(&target, background.DeRef(arrow));
-
-    // Release the only WeakPtr.
-    arrow->target.reset();
-
-    // Now we should be able to create a new reference from this thread.
-    arrow->target = target.AsWeakPtr();
-
-    // Re-bind to main thread.
-    EXPECT_EQ(&target, arrow->target.get());
-
-    // And the main thread can now delete the target.
-  }
-
-  delete arrow;
-}
-
 TEST(WeakPtrTest, MoveOwnershipAfterInvalidate) {
   BackgroundThread background;
   background.Start();
