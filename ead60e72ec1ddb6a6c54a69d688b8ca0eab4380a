@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "d72ae463_c4047270",
+        "filename": "components/autofill/core/common/form_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-30T17:56:08Z",
+      "side": 1,
+      "message": "this change presumes that fields never changes after initialization. Plz validate that there are no non-const refs to FormData other than the initialization code.\n\nAlternatively, make fields a const method and make the underlying data private. Then add the initialization function to this class or make it a friend?",
+      "revId": "ead60e72ec1ddb6a6c54a69d688b8ca0eab4380a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dce69372_8612559c",
         "filename": "components/autofill/core/common/form_data.h",
         "patchSetId": 1
