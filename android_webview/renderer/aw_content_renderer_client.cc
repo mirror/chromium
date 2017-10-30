@@ -24,6 +24,8 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/error_page/common/error.h"
+#include "components/error_page/common/localized_error.h"
 #include "components/printing/renderer/print_render_frame_helper.h"
 #include "components/safe_browsing/renderer/renderer_url_loader_throttle.h"
 #include "components/safe_browsing/renderer/websocket_sb_handshake_throttle.h"
@@ -206,12 +208,14 @@ void AwContentRendererClient::GetNavigationErrorStrings(
     const blink::WebURLError& error,
     std::string* error_html,
     base::string16* error_description) {
-  if (error_description) {
-    if (error.localized_description.IsEmpty())
-      *error_description = base::ASCIIToUTF16(net::ErrorToString(error.reason));
-    else
-      *error_description = error.localized_description.Utf16();
-  }
+  const bool is_post = failed_request.HttpMethod().Ascii() == "POST";
+  error_page::Error error_page_error = error_page::Error::NetError(
+      error.unreachable_url, error.reason, error.stale_copy_in_cache);
+  const base::string16 err = error_page::LocalizedError::GetErrorDetails(
+      error_page_error.domain(), error_page_error.reason(), is_post);
+  const std::string err_utf8 = base::UTF16ToUTF8(err);
+  if (error_description)
+    *error_description = err;
 
   if (!error_html)
     return;
@@ -246,10 +250,7 @@ void AwContentRendererClient::GetNavigationErrorStrings(
     }
   }
 
-  std::string err = error.localized_description.Utf8(
-      blink::WebString::UTF8ConversionMode::kStrictReplacingErrorsWithFFFD);
-
-  if (err.empty())
+  if (err_utf8.empty())
     reason_id = IDS_AW_WEBPAGE_TEMPORARILY_DOWN;
 
   std::string escaped_url = net::EscapeForHTML(url_string);
@@ -266,7 +267,7 @@ void AwContentRendererClient::GetNavigationErrorStrings(
     replacements.push_back(
         l10n_util::GetStringUTF8(IDS_AW_WEBPAGE_TEMPORARILY_DOWN_SUGGESTIONS));
   } else {
-    replacements.push_back(err);
+    replacements.push_back(err_utf8);
   }
   if (base::i18n::IsRTL())
     replacements.push_back("direction: rtl;");
