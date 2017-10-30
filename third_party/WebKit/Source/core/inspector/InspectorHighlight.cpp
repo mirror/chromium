@@ -7,6 +7,7 @@
 #include "core/dom/PseudoElement.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/geometry/DOMRect.h"
+#include "core/layout/AdjustForAbsoluteZoom.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutGrid.h"
 #include "core/layout/LayoutInline.h"
@@ -454,23 +455,24 @@ bool InspectorHighlight::GetBoxModel(
       layout_object->IsBoxModelObject() ? ToLayoutBoxModelObject(layout_object)
                                         : nullptr;
 
-  *model =
-      protocol::DOM::BoxModel::create()
-          .setContent(BuildArrayForQuad(content))
-          .setPadding(BuildArrayForQuad(padding))
-          .setBorder(BuildArrayForQuad(border))
-          .setMargin(BuildArrayForQuad(margin))
-          .setWidth(model_object ? AdjustForAbsoluteZoom(
-                                       model_object->PixelSnappedOffsetWidth(
-                                           model_object->OffsetParent()),
-                                       model_object)
-                                 : bounding_box.Width())
-          .setHeight(model_object ? AdjustForAbsoluteZoom(
-                                        model_object->PixelSnappedOffsetHeight(
-                                            model_object->OffsetParent()),
-                                        model_object)
-                                  : bounding_box.Height())
-          .build();
+  *model = protocol::DOM::BoxModel::create()
+               .setContent(BuildArrayForQuad(content))
+               .setPadding(BuildArrayForQuad(padding))
+               .setBorder(BuildArrayForQuad(border))
+               .setMargin(BuildArrayForQuad(margin))
+               .setWidth(model_object
+                             ? AdjustForAbsoluteZoom::AdjustIntForAbsoluteZoom(
+                                   model_object->PixelSnappedOffsetWidth(
+                                       model_object->OffsetParent()),
+                                   model_object)
+                             : bounding_box.Width())
+               .setHeight(model_object
+                              ? AdjustForAbsoluteZoom::AdjustIntForAbsoluteZoom(
+                                    model_object->PixelSnappedOffsetHeight(
+                                        model_object->OffsetParent()),
+                                    model_object)
+                              : bounding_box.Height())
+               .build();
 
   Shape::DisplayPaths paths;
   FloatQuad bounds_quad;

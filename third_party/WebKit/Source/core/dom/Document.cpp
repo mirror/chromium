@@ -174,6 +174,7 @@
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/inspector/MainThreadDebugger.h"
 #include "core/intersection_observer/IntersectionObserverController.h"
+#include "core/layout/AdjustForAbsoluteZoom.h"
 #include "core/layout/HitTestCanvasResult.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutEmbeddedContent.h"
@@ -6655,7 +6656,8 @@ void Document::AdjustFloatQuadsForScrollAndAbsoluteZoom(
   for (size_t i = 0; i < quads.size(); ++i) {
     quads[i].Move(-FloatSize(visible_content_rect.X().ToFloat(),
                              visible_content_rect.Y().ToFloat()));
-    AdjustFloatQuadForAbsoluteZoom(quads[i], layout_object);
+    AdjustForAbsoluteZoom::AdjustFloatQuadForAbsoluteZoom(quads[i],
+                                                          layout_object);
   }
 }
 
@@ -6668,7 +6670,7 @@ void Document::AdjustFloatRectForScrollAndAbsoluteZoom(
   LayoutRect visible_content_rect(View()->VisibleContentRect());
   rect.Move(-FloatSize(visible_content_rect.X().ToFloat(),
                        visible_content_rect.Y().ToFloat()));
-  AdjustFloatRectForAbsoluteZoom(rect, layout_object);
+  AdjustForAbsoluteZoom::AdjustFloatRectForAbsoluteZoom(rect, layout_object);
 }
 
 void Document::SetThreadedParsingEnabledForTesting(bool enabled) {

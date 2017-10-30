@@ -6,6 +6,7 @@
 #define zoomAdjustedPixelValue_h
 
 #include "core/css/CSSPrimitiveValue.h"
+#include "core/layout/AdjustForAbsoluteZoom.h"
 #include "core/style/ComputedStyle.h"
 
 namespace blink {
@@ -13,8 +14,9 @@ class ComputedStyle;
 
 inline CSSPrimitiveValue* ZoomAdjustedPixelValue(double value,
                                                  const ComputedStyle& style) {
-  return CSSPrimitiveValue::Create(AdjustFloatForAbsoluteZoom(value, style),
-                                   CSSPrimitiveValue::UnitType::kPixels);
+  return CSSPrimitiveValue::Create(
+      AdjustForAbsoluteZoom::AdjustFloatForAbsoluteZoom(value, style),
+      CSSPrimitiveValue::UnitType::kPixels);
 }
 }
 #endif  // zoomAdjustedPixelValue_h

@@ -62,6 +62,7 @@
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/intersection_observer/IntersectionObserverController.h"
 #include "core/intersection_observer/IntersectionObserverInit.h"
+#include "core/layout/AdjustForAbsoluteZoom.h"
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutCounter.h"
 #include "core/layout/LayoutEmbeddedContent.h"
@@ -5107,7 +5108,8 @@ void LocalFrameView::Hide() {
 
 int LocalFrameView::ViewportWidth() const {
   int viewport_width = GetLayoutSize(kIncludeScrollbars).Width();
-  return AdjustForAbsoluteZoom(viewport_width, GetLayoutView());
+  return AdjustForAbsoluteZoom::AdjustIntForAbsoluteZoom(viewport_width,
+                                                         GetLayoutView());
 }
 
 ScrollableArea* LocalFrameView::GetScrollableArea() {

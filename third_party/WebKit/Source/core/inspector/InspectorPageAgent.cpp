@@ -54,6 +54,7 @@
 #include "core/inspector/InspectorCSSAgent.h"
 #include "core/inspector/InspectorResourceContentLoader.h"
 #include "core/inspector/V8InspectorString.h"
+#include "core/layout/AdjustForAbsoluteZoom.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/ScheduledNavigation.h"
@@ -979,11 +980,14 @@ Response InspectorPageAgent::getLayoutMetrics(
 
   *out_visual_viewport =
       protocol::Page::VisualViewport::create()
-          .setOffsetX(AdjustScrollForAbsoluteZoom(visible_rect.X(), page_zoom))
-          .setOffsetY(AdjustScrollForAbsoluteZoom(visible_rect.Y(), page_zoom))
-          .setPageX(AdjustScrollForAbsoluteZoom(page_offset.Width(), page_zoom))
-          .setPageY(
-              AdjustScrollForAbsoluteZoom(page_offset.Height(), page_zoom))
+          .setOffsetX(AdjustForAbsoluteZoom::AdjustScrollForAbsoluteZoom(
+              visible_rect.X(), page_zoom))
+          .setOffsetY(AdjustForAbsoluteZoom::AdjustScrollForAbsoluteZoom(
+              visible_rect.Y(), page_zoom))
+          .setPageX(AdjustForAbsoluteZoom::AdjustScrollForAbsoluteZoom(
+              page_offset.Width(), page_zoom))
+          .setPageY(AdjustForAbsoluteZoom::AdjustScrollForAbsoluteZoom(
+              page_offset.Height(), page_zoom))
           .setClientWidth(visible_rect.Width() - scrollbar_width)
           .setClientHeight(visible_rect.Height() - scrollbar_height)
           .setScale(scale)
