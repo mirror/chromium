@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39b897fb_c8757cfe",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-30T20:45:59Z",
+      "side": 1,
+      "message": "Generally we prefer no \"else\" after a return, so just remove this line and un-dent the next one.",
+      "revId": "9db2921fd0515510c4af6905ee58eab4a44e7201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
