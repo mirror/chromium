@@ -151,6 +151,9 @@ class MESSAGE_CENTER_EXPORT MessageCenter {
       const std::string& id,
       const DisplaySource source) = 0;
 
+  // FIXME
+  virtual void FullscreenStateChanged() = 0;
+
   // Setter/getter of notifier settings provider. The getter may return null
   // for tests, and will always be null on non-ChromeOS.
   virtual void SetNotifierSettingsProvider(

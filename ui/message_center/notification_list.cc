@@ -242,6 +242,13 @@ void NotificationList::MarkSinglePopupAsDisplayed(const std::string& id) {
     (*iter)->set_is_read(true);
 }
 
+void NotificationList::FullscreenStateChanged() {
+  for (auto& notification : notifications_) {
+    if (notification->fullscreen_visibility() == FullscreenVisibility::ONCE)
+      notification->set_fullscreen_visibility(FullscreenVisibility::NONE);
+  }
+}
+
 NotificationDelegate* NotificationList::GetNotificationDelegate(
     const std::string& id) {
   auto iter = GetNotification(id);

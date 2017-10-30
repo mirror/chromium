@@ -8,13 +8,6 @@
 #include "base/feature_list.h"
 #include "url/gurl.h"
 
-namespace features {
-
-// TODO(miguelg) We can probably get rid of this altogether.
-extern const base::Feature kAllowFullscreenWebNotificationsFeature;
-
-}  // namespace features
-
 namespace content {
 class BrowserContext;
 }  // namespace content
@@ -58,10 +51,6 @@ class NotificationCommon {
   // is updated.
   static void OpenNotificationSettings(
       content::BrowserContext* browser_context);
-
-  // Whether a web notification should be displayed when chrome is in full
-  // screen mode.
-  static bool ShouldDisplayOnFullScreen(Profile* profile, const GURL& origin);
 };
 
 // Metadata for PERSISTENT notifications.

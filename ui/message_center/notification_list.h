@@ -125,6 +125,8 @@ class MESSAGE_CENTER_EXPORT NotificationList {
   // Marks a specific popup item as displayed.
   void MarkSinglePopupAsDisplayed(const std::string& id);
 
+  void FullscreenStateChanged();
+
   NotificationDelegate* GetNotificationDelegate(const std::string& id);
 
   bool quiet_mode() const { return quiet_mode_; }
