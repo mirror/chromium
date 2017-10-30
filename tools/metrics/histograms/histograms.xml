@@ -51362,6 +51362,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Notifications.Display" enum="NotifierType">
+  <obsolete>
+    Deprecated October 2017 (fullscreen notifications feature enabled by
+    default).
+  </obsolete>
   <owner>bmalcolm@chromium.org</owner>
   <summary>
     Counts the number of times a notification was shown for the various types of
@@ -102377,6 +102381,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram_suffixes>
 
 <histogram_suffixes name="NotificationDisplayExperiment" separator="_">
+  <obsolete>
+    Deprecated October 2017 (feature enabled by default).
+  </obsolete>
   <suffix name="Fullscreen.Shown"
       label="A notification sent by a fullscreen app or webpage that is
              displayed."/>
