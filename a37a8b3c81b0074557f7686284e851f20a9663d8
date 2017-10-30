@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5416c96_6513ea46",
+        "filename": "chrome/browser/ui/tab_ui_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T20:30:24Z",
+      "side": 1,
+      "message": "MakeUnique",
+      "range": {
+        "startLine": 55,
+        "startChar": 21,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "a37a8b3c81b0074557f7686284e851f20a9663d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a012df42_d4db2b26",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T20:30:24Z",
+      "side": 1,
+      "message": "appropriate",
+      "range": {
+        "startLine": 33,
+        "startChar": 41,
+        "endLine": 33,
+        "endChar": 54
+      },
+      "revId": "a37a8b3c81b0074557f7686284e851f20a9663d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167f0f09_2b83e944",
+        "filename": "chrome/browser/ui/tab_ui_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T20:30:24Z",
+      "side": 1,
+      "message": "Please add a description of this. In particular that it\u0027s non-null only during initial navigation...",
+      "range": {
+        "startLine": 84,
+        "startChar": 29,
+        "endLine": 84,
+        "endChar": 41
+      },
+      "revId": "a37a8b3c81b0074557f7686284e851f20a9663d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b08d23_4ff1f020",
+        "filename": "chrome/browser/ui/views/tabs/tab_renderer_data.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T20:30:24Z",
+      "side": 1,
+      "message": "Does TabRendererData really need all this? Can it instead have a boolean as to whether to show the throbber?",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "a37a8b3c81b0074557f7686284e851f20a9663d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
