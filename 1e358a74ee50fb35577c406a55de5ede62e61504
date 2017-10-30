@@ -67,6 +67,23 @@
       "revId": "1e358a74ee50fb35577c406a55de5ede62e61504",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6438b46_14c7ccac",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-30T22:13:54Z",
+      "side": 1,
+      "message": "You should switch to the generated ukm builder API. See docs here:\n\nhttps://chromium.googlesource.com/chromium/src/+/441e128149625f1f7d86a32faa2ca9cf93d5810e/services/metrics/ukm_api.md",
+      "revId": "1e358a74ee50fb35577c406a55de5ede62e61504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
