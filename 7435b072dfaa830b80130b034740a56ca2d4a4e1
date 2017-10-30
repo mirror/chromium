@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bdb867a_60dc62cd",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-30T20:42:34Z",
+      "side": 1,
+      "message": "... whenever VR device SDK(s) are supported and on Windows for testing.",
+      "range": {
+        "startLine": 16,
+        "startChar": 29,
+        "endLine": 16,
+        "endChar": 62
+      },
+      "revId": "7435b072dfaa830b80130b034740a56ca2d4a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1700f88f_3fd643f0",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-30T20:42:34Z",
+      "side": 1,
+      "message": "|| enable_openvr\n\nWe want to enable_vr whenever VR devices are supported.",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "7435b072dfaa830b80130b034740a56ca2d4a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
