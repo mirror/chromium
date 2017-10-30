@@ -101,8 +101,7 @@ class VideoEncoderShim::EncoderImpl {
                   const gfx::Size& input_visible_size,
                   media::VideoCodecProfile output_profile,
                   uint32_t initial_bitrate);
-  void Encode(const scoped_refptr<media::VideoFrame>& frame,
-              bool force_keyframe);
+  void Encode(scoped_refptr<media::VideoFrame> frame, bool force_keyframe);
   void UseOutputBitstreamBuffer(const media::BitstreamBuffer& buffer,
                                 uint8_t* mem);
   void RequestEncodingParametersChange(uint32_t bitrate, uint32_t framerate);
@@ -110,8 +109,7 @@ class VideoEncoderShim::EncoderImpl {
 
  private:
   struct PendingEncode {
-    PendingEncode(const scoped_refptr<media::VideoFrame>& frame,
-                  bool force_keyframe)
+    PendingEncode(scoped_refptr<media::VideoFrame> frame, bool force_keyframe)
         : frame(frame), force_keyframe(force_keyframe) {}
     ~PendingEncode() {}
 
@@ -245,7 +243,7 @@ void VideoEncoderShim::EncoderImpl::Initialize(
 }
 
 void VideoEncoderShim::EncoderImpl::Encode(
-    const scoped_refptr<media::VideoFrame>& frame,
+    scoped_refptr<media::VideoFrame> frame,
     bool force_keyframe) {
   frames_.push_back(PendingEncode(frame, force_keyframe));
   DoEncode();
@@ -432,7 +430,7 @@ bool VideoEncoderShim::Initialize(
   return true;
 }
 
-void VideoEncoderShim::Encode(const scoped_refptr<media::VideoFrame>& frame,
+void VideoEncoderShim::Encode(scoped_refptr<media::VideoFrame> frame,
                               bool force_keyframe) {
   DCHECK(RenderThreadImpl::current());
 

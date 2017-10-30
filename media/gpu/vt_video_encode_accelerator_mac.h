@@ -37,8 +37,7 @@ class MEDIA_GPU_EXPORT VTVideoEncodeAccelerator
                   VideoCodecProfile output_profile,
                   uint32_t initial_bitrate,
                   Client* client) override;
-  void Encode(const scoped_refptr<VideoFrame>& frame,
-              bool force_keyframe) override;
+  void Encode(scoped_refptr<VideoFrame> frame, bool force_keyframe) override;
   void UseOutputBitstreamBuffer(const BitstreamBuffer& buffer) override;
   void RequestEncodingParametersChange(uint32_t bitrate,
                                        uint32_t framerate) override;
@@ -55,7 +54,7 @@ class MEDIA_GPU_EXPORT VTVideoEncodeAccelerator
   struct BitstreamBufferRef;
 
   // Encoding tasks to be run on |encoder_thread_|.
-  void EncodeTask(const scoped_refptr<VideoFrame>& frame, bool force_keyframe);
+  void EncodeTask(scoped_refptr<VideoFrame> frame, bool force_keyframe);
   void UseOutputBitstreamBufferTask(
       std::unique_ptr<BitstreamBufferRef> buffer_ref);
   void RequestEncodingParametersChangeTask(uint32_t bitrate,
@@ -118,7 +117,7 @@ class MEDIA_GPU_EXPORT VTVideoEncodeAccelerator
   base::circular_deque<std::unique_ptr<EncodeOutput>> encoder_output_queue_;
 
   // Our original calling task runner for the child thread.
-  const scoped_refptr<base::SingleThreadTaskRunner> client_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> client_task_runner_;
 
   // To expose client callbacks from VideoEncodeAccelerator.
   // NOTE: all calls to this object *MUST* be executed on

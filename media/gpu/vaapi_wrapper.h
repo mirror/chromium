@@ -118,7 +118,7 @@ class MEDIA_GPU_EXPORT VaapiWrapper
   // transferred to the caller. It differs from surfaces created using
   // CreateSurfaces(), where VaapiWrapper is the owner of the surfaces.
   scoped_refptr<VASurface> CreateVASurfaceForPixmap(
-      const scoped_refptr<gfx::NativePixmap>& pixmap);
+      scoped_refptr<gfx::NativePixmap> pixmap);
 #endif
 
   // Submit parameters or slice data of |va_buffer_type|, copying them from
@@ -173,7 +173,7 @@ class MEDIA_GPU_EXPORT VaapiWrapper
   void ReturnVaImage(VAImage* image);
 
   // Upload contents of |frame| into |va_surface_id| for encode.
-  bool UploadVideoFrameToSurface(const scoped_refptr<VideoFrame>& frame,
+  bool UploadVideoFrameToSurface(scoped_refptr<VideoFrame> frame,
                                  VASurfaceID va_surface_id);
 
   // Create a buffer of |size| bytes to be used as encode output.
@@ -197,8 +197,8 @@ class MEDIA_GPU_EXPORT VaapiWrapper
   // Blits a VASurface |va_surface_src| into another VASurface
   // |va_surface_dest| applying pixel format conversion and scaling
   // if needed.
-  bool BlitSurface(const scoped_refptr<VASurface>& va_surface_src,
-                   const scoped_refptr<VASurface>& va_surface_dest);
+  bool BlitSurface(scoped_refptr<VASurface> va_surface_src,
+                   scoped_refptr<VASurface> va_surface_dest);
 
   // Initialize static data before sandbox is enabled.
   static void PreSandboxInitialization();

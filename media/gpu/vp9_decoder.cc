@@ -159,7 +159,7 @@ VP9Decoder::DecodeResult VP9Decoder::Decode() {
   }
 }
 
-void VP9Decoder::RefreshReferenceFrames(const scoped_refptr<VP9Picture>& pic) {
+void VP9Decoder::RefreshReferenceFrames(scoped_refptr<VP9Picture> pic) {
   for (size_t i = 0; i < kVp9NumRefFrames; ++i) {
     DCHECK(!pic->frame_hdr->IsKeyframe() || pic->frame_hdr->RefreshFlag(i));
     if (pic->frame_hdr->RefreshFlag(i))
@@ -168,7 +168,7 @@ void VP9Decoder::RefreshReferenceFrames(const scoped_refptr<VP9Picture>& pic) {
 }
 
 void VP9Decoder::UpdateFrameContext(
-    const scoped_refptr<VP9Picture>& pic,
+    scoped_refptr<VP9Picture> pic,
     const base::Callback<void(const Vp9FrameContext&)>& context_refresh_cb) {
   DCHECK(!context_refresh_cb.is_null());
   Vp9FrameContext frame_ctx;

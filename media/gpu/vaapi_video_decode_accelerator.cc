@@ -79,8 +79,7 @@ static void ReportToUMA(VAVDADecoderFailure failure) {
 class VaapiVideoDecodeAccelerator::VaapiDecodeSurface
     : public base::RefCountedThreadSafe<VaapiDecodeSurface> {
  public:
-  VaapiDecodeSurface(int32_t bitstream_id,
-                     const scoped_refptr<VASurface>& va_surface);
+  VaapiDecodeSurface(int32_t bitstream_id, scoped_refptr<VASurface> va_surface);
 
   int32_t bitstream_id() const { return bitstream_id_; }
   scoped_refptr<VASurface> va_surface() { return va_surface_; }
@@ -101,7 +100,7 @@ class VaapiVideoDecodeAccelerator::VaapiDecodeSurface
 
 VaapiVideoDecodeAccelerator::VaapiDecodeSurface::VaapiDecodeSurface(
     int32_t bitstream_id,
-    const scoped_refptr<VASurface>& va_surface)
+    scoped_refptr<VASurface> va_surface)
     : bitstream_id_(bitstream_id), va_surface_(va_surface) {}
 
 VaapiVideoDecodeAccelerator::VaapiDecodeSurface::~VaapiDecodeSurface() {}
@@ -109,7 +108,7 @@ VaapiVideoDecodeAccelerator::VaapiDecodeSurface::~VaapiDecodeSurface() {}
 class VaapiH264Picture : public H264Picture {
  public:
   VaapiH264Picture(
-      const scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>&
+      scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>
           dec_surface);
 
   VaapiH264Picture* AsVaapiH264Picture() override { return this; }
@@ -126,8 +125,7 @@ class VaapiH264Picture : public H264Picture {
 };
 
 VaapiH264Picture::VaapiH264Picture(
-    const scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>&
-        dec_surface)
+    scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface> dec_surface)
     : dec_surface_(dec_surface) {}
 
 VaapiH264Picture::~VaapiH264Picture() {}
@@ -148,24 +146,24 @@ class VaapiVideoDecodeAccelerator::VaapiH264Accelerator
                            const H264Picture::Vector& ref_pic_listp0,
                            const H264Picture::Vector& ref_pic_listb0,
                            const H264Picture::Vector& ref_pic_listb1,
-                           const scoped_refptr<H264Picture>& pic) override;
+                           scoped_refptr<H264Picture> pic) override;
 
   bool SubmitSlice(const H264PPS* pps,
                    const H264SliceHeader* slice_hdr,
                    const H264Picture::Vector& ref_pic_list0,
                    const H264Picture::Vector& ref_pic_list1,
-                   const scoped_refptr<H264Picture>& pic,
+                   scoped_refptr<H264Picture> pic,
                    const uint8_t* data,
                    size_t size) override;
 
-  bool SubmitDecode(const scoped_refptr<H264Picture>& pic) override;
-  bool OutputPicture(const scoped_refptr<H264Picture>& pic) override;
+  bool SubmitDecode(scoped_refptr<H264Picture> pic) override;
+  bool OutputPicture(scoped_refptr<H264Picture> pic) override;
 
   void Reset() override;
 
  private:
   scoped_refptr<VaapiDecodeSurface> H264PictureToVaapiDecodeSurface(
-      const scoped_refptr<H264Picture>& pic);
+      scoped_refptr<H264Picture> pic);
 
   void FillVAPicture(VAPictureH264* va_pic, scoped_refptr<H264Picture> pic);
   int FillVARefFramesFromDPB(const H264DPB& dpb,
@@ -180,9 +178,8 @@ class VaapiVideoDecodeAccelerator::VaapiH264Accelerator
 
 class VaapiVP8Picture : public VP8Picture {
  public:
-  VaapiVP8Picture(
-      const scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>&
-          dec_surface);
+  VaapiVP8Picture(scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>
+                      dec_surface);
 
   VaapiVP8Picture* AsVaapiVP8Picture() override { return this; }
   scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface> dec_surface() {
@@ -198,8 +195,7 @@ class VaapiVP8Picture : public VP8Picture {
 };
 
 VaapiVP8Picture::VaapiVP8Picture(
-    const scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>&
-        dec_surface)
+    scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface> dec_surface)
     : dec_surface_(dec_surface) {}
 
 VaapiVP8Picture::~VaapiVP8Picture() {}
@@ -214,17 +210,17 @@ class VaapiVideoDecodeAccelerator::VaapiVP8Accelerator
   // VP8Decoder::VP8Accelerator implementation.
   scoped_refptr<VP8Picture> CreateVP8Picture() override;
 
-  bool SubmitDecode(const scoped_refptr<VP8Picture>& pic,
+  bool SubmitDecode(scoped_refptr<VP8Picture> pic,
                     const Vp8FrameHeader* frame_hdr,
-                    const scoped_refptr<VP8Picture>& last_frame,
-                    const scoped_refptr<VP8Picture>& golden_frame,
-                    const scoped_refptr<VP8Picture>& alt_frame) override;
+                    scoped_refptr<VP8Picture> last_frame,
+                    scoped_refptr<VP8Picture> golden_frame,
+                    scoped_refptr<VP8Picture> alt_frame) override;
 
-  bool OutputPicture(const scoped_refptr<VP8Picture>& pic) override;
+  bool OutputPicture(scoped_refptr<VP8Picture> pic) override;
 
  private:
   scoped_refptr<VaapiDecodeSurface> VP8PictureToVaapiDecodeSurface(
-      const scoped_refptr<VP8Picture>& pic);
+      scoped_refptr<VP8Picture> pic);
 
   VaapiWrapper* vaapi_wrapper_;
   VaapiVideoDecodeAccelerator* vaapi_dec_;
@@ -234,9 +230,8 @@ class VaapiVideoDecodeAccelerator::VaapiVP8Accelerator
 
 class VaapiVP9Picture : public VP9Picture {
  public:
-  VaapiVP9Picture(
-      const scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>&
-          dec_surface);
+  VaapiVP9Picture(scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>
+                      dec_surface);
 
   VaapiVP9Picture* AsVaapiVP9Picture() override { return this; }
   scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface> dec_surface() {
@@ -252,8 +247,7 @@ class VaapiVP9Picture : public VP9Picture {
 };
 
 VaapiVP9Picture::VaapiVP9Picture(
-    const scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>&
-        dec_surface)
+    scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface> dec_surface)
     : dec_surface_(dec_surface) {}
 
 VaapiVP9Picture::~VaapiVP9Picture() {}
@@ -268,22 +262,22 @@ class VaapiVideoDecodeAccelerator::VaapiVP9Accelerator
   // VP9Decoder::VP9Accelerator implementation.
   scoped_refptr<VP9Picture> CreateVP9Picture() override;
 
-  bool SubmitDecode(const scoped_refptr<VP9Picture>& pic,
+  bool SubmitDecode(scoped_refptr<VP9Picture> pic,
                     const Vp9SegmentationParams& seg,
                     const Vp9LoopFilterParams& lf,
-                    const std::vector<scoped_refptr<VP9Picture>>& ref_pictures,
+                    std::vector<scoped_refptr<VP9Picture>> ref_pictures,
                     const base::Closure& done_cb) override;
 
-  bool OutputPicture(const scoped_refptr<VP9Picture>& pic) override;
+  bool OutputPicture(scoped_refptr<VP9Picture> pic) override;
 
   bool IsFrameContextRequired() const override { return false; }
 
-  bool GetFrameContext(const scoped_refptr<VP9Picture>& pic,
+  bool GetFrameContext(scoped_refptr<VP9Picture> pic,
                        Vp9FrameContext* frame_ctx) override;
 
  private:
   scoped_refptr<VaapiDecodeSurface> VP9PictureToVaapiDecodeSurface(
-      const scoped_refptr<VP9Picture>& pic);
+      scoped_refptr<VP9Picture> pic);
 
   VaapiWrapper* vaapi_wrapper_;
   VaapiVideoDecodeAccelerator* vaapi_dec_;
@@ -430,7 +424,7 @@ bool VaapiVideoDecodeAccelerator::Initialize(const Config& config,
 }
 
 void VaapiVideoDecodeAccelerator::OutputPicture(
-    const scoped_refptr<VASurface>& va_surface,
+    scoped_refptr<VASurface> va_surface,
     int32_t input_id,
     gfx::Rect visible_rect,
     VaapiPicture* picture) {
@@ -1134,12 +1128,12 @@ void VaapiVideoDecodeAccelerator::Destroy() {
 
 bool VaapiVideoDecodeAccelerator::TryToSetupDecodeOnSeparateThread(
     const base::WeakPtr<Client>& decode_client,
-    const scoped_refptr<base::SingleThreadTaskRunner>& decode_task_runner) {
+    scoped_refptr<base::SingleThreadTaskRunner> decode_task_runner) {
   return false;
 }
 
 bool VaapiVideoDecodeAccelerator::DecodeSurface(
-    const scoped_refptr<VaapiDecodeSurface>& dec_surface) {
+    scoped_refptr<VaapiDecodeSurface> dec_surface) {
   if (!vaapi_wrapper_->ExecuteAndDestroyPendingBuffers(
           dec_surface->va_surface()->id())) {
     VLOGF(1) << "Failed decoding picture";
@@ -1150,7 +1144,7 @@ bool VaapiVideoDecodeAccelerator::DecodeSurface(
 }
 
 void VaapiVideoDecodeAccelerator::SurfaceReady(
-    const scoped_refptr<VaapiDecodeSurface>& dec_surface) {
+    scoped_refptr<VaapiDecodeSurface> dec_surface) {
   if (!task_runner_->BelongsToCurrentThread()) {
     task_runner_->PostTask(
         FROM_HERE, base::Bind(&VaapiVideoDecodeAccelerator::SurfaceReady,
@@ -1228,7 +1222,7 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitFrameMetadata(
     const H264Picture::Vector& ref_pic_listp0,
     const H264Picture::Vector& ref_pic_listb0,
     const H264Picture::Vector& ref_pic_listb1,
-    const scoped_refptr<H264Picture>& pic) {
+    scoped_refptr<H264Picture> pic) {
   VAPictureParameterBufferH264 pic_param;
   memset(&pic_param, 0, sizeof(pic_param));
 
@@ -1343,7 +1337,7 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitSlice(
     const H264SliceHeader* slice_hdr,
     const H264Picture::Vector& ref_pic_list0,
     const H264Picture::Vector& ref_pic_list1,
-    const scoped_refptr<H264Picture>& pic,
+    scoped_refptr<H264Picture> pic,
     const uint8_t* data,
     size_t size) {
   VASliceParameterBufferH264 slice_param;
@@ -1445,7 +1439,7 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitSlice(
 }
 
 bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitDecode(
-    const scoped_refptr<H264Picture>& pic) {
+    scoped_refptr<H264Picture> pic) {
   VLOGF(4) << "Decoding POC " << pic->pic_order_cnt;
   scoped_refptr<VaapiDecodeSurface> dec_surface =
       H264PictureToVaapiDecodeSurface(pic);
@@ -1454,7 +1448,7 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitDecode(
 }
 
 bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::OutputPicture(
-    const scoped_refptr<H264Picture>& pic) {
+    scoped_refptr<H264Picture> pic) {
   scoped_refptr<VaapiDecodeSurface> dec_surface =
       H264PictureToVaapiDecodeSurface(pic);
   dec_surface->set_visible_rect(pic->visible_rect);
@@ -1469,7 +1463,7 @@ void VaapiVideoDecodeAccelerator::VaapiH264Accelerator::Reset() {
 
 scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>
 VaapiVideoDecodeAccelerator::VaapiH264Accelerator::
-    H264PictureToVaapiDecodeSurface(const scoped_refptr<H264Picture>& pic) {
+    H264PictureToVaapiDecodeSurface(scoped_refptr<H264Picture> pic) {
   VaapiH264Picture* vaapi_pic = pic->AsVaapiH264Picture();
   CHECK(vaapi_pic);
   return vaapi_pic->dec_surface();
@@ -1555,11 +1549,11 @@ VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::CreateVP8Picture() {
   } while (0)
 
 bool VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::SubmitDecode(
-    const scoped_refptr<VP8Picture>& pic,
+    scoped_refptr<VP8Picture> pic,
     const Vp8FrameHeader* frame_hdr,
-    const scoped_refptr<VP8Picture>& last_frame,
-    const scoped_refptr<VP8Picture>& golden_frame,
-    const scoped_refptr<VP8Picture>& alt_frame) {
+    scoped_refptr<VP8Picture> last_frame,
+    scoped_refptr<VP8Picture> golden_frame,
+    scoped_refptr<VP8Picture> alt_frame) {
   VAIQMatrixBufferVP8 iq_matrix_buf;
   memset(&iq_matrix_buf, 0, sizeof(VAIQMatrixBufferVP8));
 
@@ -1741,7 +1735,7 @@ bool VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::SubmitDecode(
 }
 
 bool VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::OutputPicture(
-    const scoped_refptr<VP8Picture>& pic) {
+    scoped_refptr<VP8Picture> pic) {
   scoped_refptr<VaapiDecodeSurface> dec_surface =
       VP8PictureToVaapiDecodeSurface(pic);
   dec_surface->set_visible_rect(pic->visible_rect);
@@ -1751,7 +1745,7 @@ bool VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::OutputPicture(
 
 scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>
 VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::
-    VP8PictureToVaapiDecodeSurface(const scoped_refptr<VP8Picture>& pic) {
+    VP8PictureToVaapiDecodeSurface(scoped_refptr<VP8Picture> pic) {
   VaapiVP8Picture* vaapi_pic = pic->AsVaapiVP8Picture();
   CHECK(vaapi_pic);
   return vaapi_pic->dec_surface();
@@ -1777,7 +1771,7 @@ VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::CreateVP9Picture() {
 }
 
 bool VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::SubmitDecode(
-    const scoped_refptr<VP9Picture>& pic,
+    scoped_refptr<VP9Picture> pic,
     const Vp9SegmentationParams& seg,
     const Vp9LoopFilterParams& lf,
     const std::vector<scoped_refptr<VP9Picture>>& ref_pictures,
@@ -1905,7 +1899,7 @@ bool VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::SubmitDecode(
 }
 
 bool VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::OutputPicture(
-    const scoped_refptr<VP9Picture>& pic) {
+    scoped_refptr<VP9Picture> pic) {
   scoped_refptr<VaapiDecodeSurface> dec_surface =
       VP9PictureToVaapiDecodeSurface(pic);
   dec_surface->set_visible_rect(pic->visible_rect);
@@ -1914,7 +1908,7 @@ bool VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::OutputPicture(
 }
 
 bool VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::GetFrameContext(
-    const scoped_refptr<VP9Picture>& pic,
+    scoped_refptr<VP9Picture> pic,
     Vp9FrameContext* frame_ctx) {
   NOTIMPLEMENTED() << "Frame context update not supported";
   return false;
@@ -1922,7 +1916,7 @@ bool VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::GetFrameContext(
 
 scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>
 VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::
-    VP9PictureToVaapiDecodeSurface(const scoped_refptr<VP9Picture>& pic) {
+    VP9PictureToVaapiDecodeSurface(scoped_refptr<VP9Picture> pic) {
   VaapiVP9Picture* vaapi_pic = pic->AsVaapiVP9Picture();
   CHECK(vaapi_pic);
   return vaapi_pic->dec_surface();

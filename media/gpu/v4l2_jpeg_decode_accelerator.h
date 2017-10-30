@@ -31,14 +31,14 @@ class MEDIA_GPU_EXPORT V4L2JpegDecodeAccelerator
     : public JpegDecodeAccelerator {
  public:
   V4L2JpegDecodeAccelerator(
-      const scoped_refptr<V4L2Device>& device,
-      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner);
+      scoped_refptr<V4L2Device> device,
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
   ~V4L2JpegDecodeAccelerator() override;
 
   // JpegDecodeAccelerator implementation.
   bool Initialize(Client* client) override;
   void Decode(const BitstreamBuffer& bitstream_buffer,
-              const scoped_refptr<VideoFrame>& video_frame) override;
+              scoped_refptr<VideoFrame> video_frame) override;
   bool IsSupported() override;
 
  private:
@@ -88,7 +88,7 @@ class MEDIA_GPU_EXPORT V4L2JpegDecodeAccelerator
   //   - V4L2_PIX_FMT_YUV_420M
   //   - V4L2_PIX_FMT_YUV_422M
   bool ConvertOutputImage(const BufferRecord& output_buffer,
-                          const scoped_refptr<VideoFrame>& dst_frame);
+                          scoped_refptr<VideoFrame> dst_frame);
 
   // Return the number of input/output buffers enqueued to the device.
   size_t InputBufferQueuedCount();

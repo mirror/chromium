@@ -132,8 +132,7 @@ class MEDIA_EXPORT VideoEncodeAccelerator {
   // Parameters:
   //  |frame| is the VideoFrame that is to be encoded.
   //  |force_keyframe| forces the encoding of a keyframe for this frame.
-  virtual void Encode(const scoped_refptr<VideoFrame>& frame,
-                      bool force_keyframe) = 0;
+  virtual void Encode(scoped_refptr<VideoFrame> frame, bool force_keyframe) = 0;
 
   // Send a bitstream buffer to the encoder to be used for storing future
   // encoded output.  Each call here with a given |buffer| will cause the buffer
@@ -181,7 +180,7 @@ class MEDIA_EXPORT VideoEncodeAccelerator {
   // reduce latency and jitter by avoiding the wait.
   virtual bool TryToSetupEncodeOnSeparateThread(
       const base::WeakPtr<Client>& encode_client,
-      const scoped_refptr<base::SingleThreadTaskRunner>& encode_task_runner);
+      scoped_refptr<base::SingleThreadTaskRunner> encode_task_runner);
 
  protected:
   // Do not delete directly; use Destroy() or own it with a scoped_ptr, which

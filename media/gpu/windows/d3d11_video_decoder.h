@@ -41,7 +41,7 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoder : public VideoDecoder {
                   CdmContext* cdm_context,
                   const InitCB& init_cb,
                   const OutputCB& output_cb) override;
-  void Decode(const scoped_refptr<DecoderBuffer>& buffer,
+  void Decode(scoped_refptr<DecoderBuffer> buffer,
               const DecodeCB& decode_cb) override;
   void Reset(const base::Closure& closure) override;
   bool NeedsBitstreamConversion() const override;
@@ -54,7 +54,7 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoder : public VideoDecoder {
   void OutputWithThreadHoppingRelease(
       OutputWithReleaseMailboxCB output_cb,
       VideoFrame::ReleaseMailboxCB impl_thread_cb,
-      const scoped_refptr<VideoFrame>& video_frame);
+      scoped_refptr<VideoFrame> video_frame);
 
   // ReleaseCB that's run on our thread, but posts it to the impl thread.
   void OnMailboxReleased(VideoFrame::ReleaseMailboxCB impl_thread_cb,

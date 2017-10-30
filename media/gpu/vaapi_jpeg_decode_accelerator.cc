@@ -83,7 +83,7 @@ static unsigned int VaSurfaceFormatForJpeg(
 VaapiJpegDecodeAccelerator::DecodeRequest::DecodeRequest(
     int32_t bitstream_buffer_id,
     std::unique_ptr<SharedMemoryRegion> shm,
-    const scoped_refptr<VideoFrame>& video_frame)
+    scoped_refptr<VideoFrame> video_frame)
     : bitstream_buffer_id(bitstream_buffer_id),
       shm(std::move(shm)),
       video_frame(video_frame) {}
@@ -113,7 +113,7 @@ void VaapiJpegDecodeAccelerator::VideoFrameReady(int32_t bitstream_buffer_id) {
 }
 
 VaapiJpegDecodeAccelerator::VaapiJpegDecodeAccelerator(
-    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
     : task_runner_(base::ThreadTaskRunnerHandle::Get()),
       io_task_runner_(io_task_runner),
       decoder_thread_("VaapiJpegDecoderThread"),
@@ -157,7 +157,7 @@ bool VaapiJpegDecodeAccelerator::Initialize(Client* client) {
 bool VaapiJpegDecodeAccelerator::OutputPicture(
     VASurfaceID va_surface_id,
     int32_t input_buffer_id,
-    const scoped_refptr<VideoFrame>& video_frame) {
+    scoped_refptr<VideoFrame> video_frame) {
   DCHECK(decoder_task_runner_->BelongsToCurrentThread());
 
   TRACE_EVENT1("jpeg", "VaapiJpegDecodeAccelerator::OutputPicture",
@@ -285,9 +285,8 @@ void VaapiJpegDecodeAccelerator::DecodeTask(
   }
 }
 
-void VaapiJpegDecodeAccelerator::Decode(
-    const BitstreamBuffer& bitstream_buffer,
-    const scoped_refptr<VideoFrame>& video_frame) {
+void VaapiJpegDecodeAccelerator::Decode(const BitstreamBuffer& bitstream_buffer,
+                                        scoped_refptr<VideoFrame> video_frame) {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
   TRACE_EVENT1("jpeg", "Decode", "input_id", bitstream_buffer.id());
 

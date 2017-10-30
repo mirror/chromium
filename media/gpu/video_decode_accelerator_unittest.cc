@@ -558,7 +558,7 @@ static bool DoNothingReturnTrue() {
 
 static bool DummyBindImage(uint32_t client_texture_id,
                            uint32_t texture_target,
-                           const scoped_refptr<gl::GLImage>& image,
+                           scoped_refptr<gl::GLImage> image,
                            bool can_bind_to_sampler) {
   return true;
 }

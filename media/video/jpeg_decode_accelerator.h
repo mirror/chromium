@@ -116,7 +116,7 @@ class MEDIA_EXPORT JpegDecodeAccelerator {
   //  VideoFrameReady or NotifyError() is invoked for given id of
   //  |bitstream_buffer|, or destructor returns.
   virtual void Decode(const BitstreamBuffer& bitstream_buffer,
-                      const scoped_refptr<media::VideoFrame>& video_frame) = 0;
+                      scoped_refptr<media::VideoFrame> video_frame) = 0;
 
   // Returns true when the JPEG decoder is supported. This can be called before
   // Initialize().

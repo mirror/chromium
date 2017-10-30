@@ -95,9 +95,9 @@ static void ReportToUMA(VAVEAEncoderFailure failure) {
 }
 
 struct VaapiVideoEncodeAccelerator::InputFrameRef {
-  InputFrameRef(const scoped_refptr<VideoFrame>& frame, bool force_keyframe)
+  InputFrameRef(scoped_refptr<VideoFrame> frame, bool force_keyframe)
       : frame(frame), force_keyframe(force_keyframe) {}
-  const scoped_refptr<VideoFrame> frame;
+  scoped_refptr<VideoFrame> frame;
   const bool force_keyframe;
 };
 
@@ -522,8 +522,7 @@ bool VaapiVideoEncodeAccelerator::ExecuteEncode() {
       current_encode_job_->input_surface->id());
 }
 
-bool VaapiVideoEncodeAccelerator::UploadFrame(
-    const scoped_refptr<VideoFrame>& frame) {
+bool VaapiVideoEncodeAccelerator::UploadFrame(scoped_refptr<VideoFrame> frame) {
   return vaapi_wrapper_->UploadVideoFrameToSurface(
       frame, current_encode_job_->input_surface->id());
 }
@@ -575,7 +574,7 @@ void VaapiVideoEncodeAccelerator::TryToReturnBitstreamBuffer() {
   }
 }
 
-void VaapiVideoEncodeAccelerator::Encode(const scoped_refptr<VideoFrame>& frame,
+void VaapiVideoEncodeAccelerator::Encode(scoped_refptr<VideoFrame> frame,
                                          bool force_keyframe) {
   DVLOGF(4) << "Frame timestamp: " << frame->timestamp().InMilliseconds()
             << " force_keyframe: " << force_keyframe;
@@ -619,9 +618,8 @@ bool VaapiVideoEncodeAccelerator::PrepareNextJob(base::TimeDelta timestamp) {
   return true;
 }
 
-void VaapiVideoEncodeAccelerator::EncodeTask(
-    const scoped_refptr<VideoFrame>& frame,
-    bool force_keyframe) {
+void VaapiVideoEncodeAccelerator::EncodeTask(scoped_refptr<VideoFrame> frame,
+                                             bool force_keyframe) {
   DCHECK(encoder_thread_task_runner_->BelongsToCurrentThread());
   DCHECK_NE(state_, kUninitialized);
 

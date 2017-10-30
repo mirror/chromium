@@ -17,9 +17,8 @@
 
 namespace media {
 
-AVDACodecImage::AVDACodecImage(
-    const scoped_refptr<AVDASharedState>& shared_state,
-    MediaCodecBridge* codec)
+AVDACodecImage::AVDACodecImage(scoped_refptr<AVDASharedState> shared_state,
+                               MediaCodecBridge* codec)
     : shared_state_(shared_state),
       codec_buffer_index_(kInvalidCodecBufferIndex),
       media_codec_(codec),

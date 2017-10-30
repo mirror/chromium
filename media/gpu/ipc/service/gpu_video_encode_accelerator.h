@@ -41,7 +41,7 @@ class GpuVideoEncodeAccelerator
   GpuVideoEncodeAccelerator(
       int32_t host_route_id,
       gpu::GpuCommandBufferStub* stub,
-      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner);
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
   ~GpuVideoEncodeAccelerator() override;
 
   // Initialize this accelerator with the given parameters and send
@@ -106,7 +106,7 @@ class GpuVideoEncodeAccelerator
   // Completes encode tasks with the received |frame|.
   void OnEncodeFrameCreated(int32_t frame_id,
                             bool force_keyframe,
-                            const scoped_refptr<media::VideoFrame>& frame);
+                            scoped_refptr<media::VideoFrame> frame);
 
   // Notifies renderer that |frame_id| can be reused as input for encode is
   // completed.
@@ -148,10 +148,10 @@ class GpuVideoEncodeAccelerator
   scoped_refptr<base::SingleThreadTaskRunner> encoder_worker_task_runner_;
 
   // GPU main thread task runner.
-  const scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
 
   // GPU IO thread task runner.
-  const scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
   // Task runner used for posting encode tasks. If
   // TryToSetupEncodeOnSeperateThread() is true, |io_task_runner_| is used,

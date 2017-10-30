@@ -57,8 +57,7 @@ class VTVideoDecodeAccelerator : public VideoDecodeAccelerator,
   void Destroy() override;
   bool TryToSetupDecodeOnSeparateThread(
       const base::WeakPtr<Client>& decode_client,
-      const scoped_refptr<base::SingleThreadTaskRunner>& decode_task_runner)
-      override;
+      scoped_refptr<base::SingleThreadTaskRunner> decode_task_runner) override;
 
   // MemoryDumpProvider implementation.
   bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,

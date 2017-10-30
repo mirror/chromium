@@ -40,8 +40,7 @@ class MEDIA_GPU_EXPORT VaapiVideoEncodeAccelerator
                   VideoCodecProfile output_profile,
                   uint32_t initial_bitrate,
                   Client* client) override;
-  void Encode(const scoped_refptr<VideoFrame>& frame,
-              bool force_keyframe) override;
+  void Encode(scoped_refptr<VideoFrame> frame, bool force_keyframe) override;
   void UseOutputBitstreamBuffer(const BitstreamBuffer& buffer) override;
   void RequestEncodingParametersChange(uint32_t bitrate,
                                        uint32_t framerate) override;
@@ -95,7 +94,7 @@ class MEDIA_GPU_EXPORT VaapiVideoEncodeAccelerator
   // Tasks for each of the VEA interface calls to be executed on the
   // encoder thread.
   void InitializeTask();
-  void EncodeTask(const scoped_refptr<VideoFrame>& frame, bool force_keyframe);
+  void EncodeTask(scoped_refptr<VideoFrame> frame, bool force_keyframe);
   void UseOutputBitstreamBufferTask(
       std::unique_ptr<BitstreamBufferRef> buffer_ref);
   void RequestEncodingParametersChangeTask(uint32_t bitrate,
@@ -136,7 +135,7 @@ class MEDIA_GPU_EXPORT VaapiVideoEncodeAccelerator
   bool SubmitHeadersIfNeeded();
 
   // Upload image data from |frame| to the input surface for current job.
-  bool UploadFrame(const scoped_refptr<VideoFrame>& frame);
+  bool UploadFrame(scoped_refptr<VideoFrame> frame);
 
   // Execute encode in hardware. This does not block and will return before
   // the job is finished.
@@ -248,7 +247,7 @@ class MEDIA_GPU_EXPORT VaapiVideoEncodeAccelerator
   base::Thread encoder_thread_;
   scoped_refptr<base::SingleThreadTaskRunner> encoder_thread_task_runner_;
 
-  const scoped_refptr<base::SingleThreadTaskRunner> child_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> child_task_runner_;
 
   // To expose client callbacks from VideoEncodeAccelerator.
   // NOTE: all calls to these objects *MUST* be executed on

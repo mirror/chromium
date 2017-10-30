@@ -92,7 +92,7 @@ class GpuVideoEncodeAccelerator::MessageFilter : public IPC::MessageFilter {
 GpuVideoEncodeAccelerator::GpuVideoEncodeAccelerator(
     int32_t host_route_id,
     gpu::GpuCommandBufferStub* stub,
-    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
     : host_route_id_(host_route_id),
       stub_(stub),
       input_format_(PIXEL_FORMAT_UNKNOWN),
@@ -410,7 +410,7 @@ void GpuVideoEncodeAccelerator::DestroyOnEncoderWorker() {
 void GpuVideoEncodeAccelerator::OnEncodeFrameCreated(
     int32_t frame_id,
     bool force_keyframe,
-    const scoped_refptr<media::VideoFrame>& frame) {
+    scoped_refptr<media::VideoFrame> frame) {
   DVLOG(3) << __func__;
   DCHECK(CheckIfCalledOnCorrectThread());
 

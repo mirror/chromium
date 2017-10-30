@@ -37,8 +37,7 @@ class MEDIA_GPU_EXPORT FakeVideoDecodeAccelerator
   void Destroy() override;
   bool TryToSetupDecodeOnSeparateThread(
       const base::WeakPtr<Client>& decode_client,
-      const scoped_refptr<base::SingleThreadTaskRunner>& decode_task_runner)
-      override;
+      scoped_refptr<base::SingleThreadTaskRunner> decode_task_runner) override;
 
  private:
   void DoPictureReady();
@@ -46,7 +45,7 @@ class MEDIA_GPU_EXPORT FakeVideoDecodeAccelerator
   // The message loop that created the class. Used for all callbacks. This
   // class expects all calls to this class to be on this message loop (not
   // checked).
-  const scoped_refptr<base::SingleThreadTaskRunner> child_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> child_task_runner_;
 
   Client* client_;
 

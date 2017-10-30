@@ -57,7 +57,7 @@ V4L2ImageProcessor::JobRecord::JobRecord() : output_buffer_index(-1) {}
 
 V4L2ImageProcessor::JobRecord::~JobRecord() {}
 
-V4L2ImageProcessor::V4L2ImageProcessor(const scoped_refptr<V4L2Device>& device)
+V4L2ImageProcessor::V4L2ImageProcessor(scoped_refptr<V4L2Device> device)
     : input_format_(PIXEL_FORMAT_UNKNOWN),
       output_format_(PIXEL_FORMAT_UNKNOWN),
       input_memory_type_(V4L2_MEMORY_USERPTR),
@@ -249,7 +249,7 @@ bool V4L2ImageProcessor::TryOutputFormat(uint32_t input_pixelformat,
   return true;
 }
 
-bool V4L2ImageProcessor::Process(const scoped_refptr<VideoFrame>& frame,
+bool V4L2ImageProcessor::Process(scoped_refptr<VideoFrame> frame,
                                  int output_buffer_index,
                                  std::vector<base::ScopedFD> output_dmabuf_fds,
                                  const FrameReadyCB& cb) {

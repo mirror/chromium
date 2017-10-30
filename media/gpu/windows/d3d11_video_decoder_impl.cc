@@ -152,7 +152,7 @@ void D3D11VideoDecoderImpl::Initialize(const VideoDecoderConfig& config,
   init_cb.Run(true);
 }
 
-void D3D11VideoDecoderImpl::Decode(const scoped_refptr<DecoderBuffer>& buffer,
+void D3D11VideoDecoderImpl::Decode(scoped_refptr<DecoderBuffer> buffer,
                                    const DecodeCB& decode_cb) {
   input_buffer_queue_.push_back(std::make_pair(buffer, decode_cb));
   // TODO(liberato): Why post?

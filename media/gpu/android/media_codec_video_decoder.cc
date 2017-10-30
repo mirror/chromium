@@ -337,7 +337,7 @@ void MediaCodecVideoDecoder::OnCodecConfigured(
   StartTimer();
 }
 
-void MediaCodecVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
+void MediaCodecVideoDecoder::Decode(scoped_refptr<DecoderBuffer> buffer,
                                     const DecodeCB& decode_cb) {
   DVLOG(2) << __func__ << ": " << buffer->AsHumanReadableString();
   if (state_ == State::kError) {
@@ -560,7 +560,7 @@ void MediaCodecVideoDecoder::RunEosDecodeCb(int reset_generation) {
 void MediaCodecVideoDecoder::ForwardVideoFrame(
     int reset_generation,
     VideoFrameFactory::ReleaseMailboxCB release_cb,
-    const scoped_refptr<VideoFrame>& frame) {
+    scoped_refptr<VideoFrame> frame) {
   if (reset_generation == reset_generation_)
     output_cb_.Run(std::move(release_cb), frame);
 }

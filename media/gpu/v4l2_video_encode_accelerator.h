@@ -42,7 +42,7 @@ namespace media {
 class MEDIA_GPU_EXPORT V4L2VideoEncodeAccelerator
     : public VideoEncodeAccelerator {
  public:
-  explicit V4L2VideoEncodeAccelerator(const scoped_refptr<V4L2Device>& device);
+  explicit V4L2VideoEncodeAccelerator(scoped_refptr<V4L2Device> device);
   ~V4L2VideoEncodeAccelerator() override;
 
   // VideoEncodeAccelerator implementation.
@@ -52,8 +52,7 @@ class MEDIA_GPU_EXPORT V4L2VideoEncodeAccelerator
                   VideoCodecProfile output_profile,
                   uint32_t initial_bitrate,
                   Client* client) override;
-  void Encode(const scoped_refptr<VideoFrame>& frame,
-              bool force_keyframe) override;
+  void Encode(scoped_refptr<VideoFrame> frame, bool force_keyframe) override;
   void UseOutputBitstreamBuffer(const BitstreamBuffer& buffer) override;
   void RequestEncodingParametersChange(uint32_t bitrate,
                                        uint32_t framerate) override;
@@ -122,7 +121,7 @@ class MEDIA_GPU_EXPORT V4L2VideoEncodeAccelerator
   // Encoding tasks, to be run on encode_thread_.
   //
 
-  void EncodeTask(const scoped_refptr<VideoFrame>& frame, bool force_keyframe);
+  void EncodeTask(scoped_refptr<VideoFrame> frame, bool force_keyframe);
 
   // Add a BitstreamBuffer to the queue of buffers ready to be used for encoder
   // output.
@@ -216,7 +215,7 @@ class MEDIA_GPU_EXPORT V4L2VideoEncodeAccelerator
                               std::unique_ptr<BitstreamBufferRef> buffer_ref);
 
   // Our original calling task runner for the child thread.
-  const scoped_refptr<base::SingleThreadTaskRunner> child_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> child_task_runner_;
 
   gfx::Size visible_size_;
   // Input allocated size required by the device.

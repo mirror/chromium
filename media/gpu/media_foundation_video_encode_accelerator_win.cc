@@ -268,7 +268,7 @@ bool MediaFoundationVideoEncodeAccelerator::Initialize(
 }
 
 void MediaFoundationVideoEncodeAccelerator::Encode(
-    const scoped_refptr<VideoFrame>& frame,
+    scoped_refptr<VideoFrame> frame,
     bool force_keyframe) {
   DVLOG(3) << __func__;
   DCHECK(encode_client_task_runner_->BelongsToCurrentThread());
@@ -342,7 +342,7 @@ void MediaFoundationVideoEncodeAccelerator::Destroy() {
 
 bool MediaFoundationVideoEncodeAccelerator::TryToSetupEncodeOnSeparateThread(
     const base::WeakPtr<Client>& encode_client,
-    const scoped_refptr<base::SingleThreadTaskRunner>& encode_task_runner) {
+    scoped_refptr<base::SingleThreadTaskRunner> encode_task_runner) {
   DVLOG(3) << __func__;
   DCHECK(main_client_task_runner_->BelongsToCurrentThread());
   encode_client_ = encode_client;

@@ -25,7 +25,7 @@ class MediaCodecBridge;
 // needed in order to draw them.
 class AVDACodecImage : public gpu::gles2::GLStreamTextureImage {
  public:
-  AVDACodecImage(const scoped_refptr<AVDASharedState>& shared_state,
+  AVDACodecImage(scoped_refptr<AVDASharedState> shared_state,
                  MediaCodecBridge* codec);
 
   // gl::GLImage implementation

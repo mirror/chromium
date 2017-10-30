@@ -15,7 +15,7 @@ namespace media {
 // Please do not use this.
 using OutputWithReleaseMailboxCB =
     base::Callback<void(VideoFrame::ReleaseMailboxCB,
-                        const scoped_refptr<VideoFrame>&)>;
+                        scoped_refptr<VideoFrame>)>;
 
 }  // namespace media
 
