@@ -8,6 +8,7 @@
 
 #include "base/macros.h"
 #include "chrome/browser/vr/elements/ui_element.h"
+#include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/ui_scene.h"
 // TODO(tiborg): Remove include once we use a generic type to pass scroll/fling
 // gestures.
@@ -70,15 +71,12 @@ bool GetTargetLocalPoint(const gfx::Vector3dF& eye_to_target,
 }
 
 void HitTestElements(UiElement* element,
+                     Model* model,
                      gfx::Vector3dF* out_eye_to_target,
-                     float* out_closest_element_distance,
-                     gfx::Point3F* out_target_point,
-                     UiElement** out_target_element,
-                     gfx::PointF* out_target_local_point) {
+                     float* out_closest_element_distance) {
   for (auto& child : element->children()) {
-    HitTestElements(child.get(), out_eye_to_target,
-                    out_closest_element_distance, out_target_point,
-                    out_target_element, out_target_local_point);
+    HitTestElements(child.get(), model, out_eye_to_target,
+                    out_closest_element_distance);
   }
 
   if (!element->IsHitTestable()) {
@@ -98,9 +96,9 @@ void HitTestElements(UiElement* element,
   }
 
   *out_closest_element_distance = distance_to_plane;
-  *out_target_point = plane_intersection_point;
-  *out_target_element = element;
-  *out_target_local_point = local_point;
+  model->reticle.target_point = plane_intersection_point;
+  model->reticle.target_element_id = element->id();
+  model->reticle.target_local_point = local_point;
 }
 
 }  // namespace
@@ -109,18 +107,11 @@ UiInputManager::UiInputManager(UiScene* scene) : scene_(scene) {}
 
 UiInputManager::~UiInputManager() {}
 
-void UiInputManager::HandleInput(const gfx::Vector3dF& laser_direction,
-                                 const gfx::Point3F& laser_origin,
-                                 ButtonState button_state,
-                                 GestureList* gesture_list,
-                                 gfx::Point3F* out_target_point,
-                                 UiElement** out_reticle_render_target) {
-  gfx::PointF target_local_point(kInvalidTargetPoint);
+void UiInputManager::HandleInput(Model* model, GestureList* gesture_list) {
   gfx::Vector3dF eye_to_target;
-  *out_reticle_render_target = nullptr;
-  GetVisualTargetElement(laser_direction, laser_origin, &eye_to_target,
-                         out_target_point, out_reticle_render_target,
-                         &target_local_point);
+  model->reticle.target_element_id = 0;
+  model->reticle.target_local_point = kInvalidTargetPoint;
+  GetVisualTargetElement(model, &eye_to_target);
 
   UiElement* target_element = nullptr;
   // TODO(vollick): this should be replaced with a formal notion of input
@@ -132,16 +123,16 @@ void UiInputManager::HandleInput(const gfx::Vector3dF& laser_direction,
       float distance_to_plane;
       if (!GetTargetLocalPoint(eye_to_target, *target_element,
                                2 * scene_->background_distance(),
-                               &target_local_point, &plane_intersection_point,
-                               &distance_to_plane)) {
-        target_local_point = kInvalidTargetPoint;
+                               &model->reticle.target_local_point,
+                               &plane_intersection_point, &distance_to_plane)) {
+        model->reticle.target_local_point = kInvalidTargetPoint;
       }
     }
   } else if (!in_scroll_ && !in_click_) {
     // TODO(vollick): support multiple dispatch. We may want to, for example,
     // dispatch raw events to several elements we hit (imagine nested horizontal
     // and vertical scrollers). Currently, we only dispatch to one "winner".
-    target_element = *out_reticle_render_target;
+    target_element = scene_->GetUiElementById(model->reticle.target_element_id);
     if (target_element && IsScrollEvent(*gesture_list)) {
       UiElement* ancestor = target_element;
       while (!ancestor->scrollable() && ancestor->parent()) {
@@ -153,12 +144,14 @@ void UiInputManager::HandleInput(const gfx::Vector3dF& laser_direction,
     }
   }
 
-  SendFlingCancel(gesture_list, target_local_point);
+  SendFlingCancel(gesture_list, model->reticle.target_local_point);
   // For simplicity, don't allow scrolling while clicking until we need to.
   if (!in_click_) {
-    SendScrollEnd(gesture_list, target_local_point, button_state);
-    if (!SendScrollBegin(target_element, gesture_list, target_local_point)) {
-      SendScrollUpdate(gesture_list, target_local_point);
+    SendScrollEnd(gesture_list, model->reticle.target_local_point,
+                  model->controller.touchpad_button_state);
+    if (!SendScrollBegin(target_element, gesture_list,
+                         model->reticle.target_local_point)) {
+      SendScrollUpdate(gesture_list, model->reticle.target_local_point);
     }
   }
 
@@ -168,18 +161,22 @@ void UiInputManager::HandleInput(const gfx::Vector3dF& laser_direction,
     return;
   }
   SendHoverLeave(target_element);
-  if (!SendHoverEnter(target_element, target_local_point)) {
-    SendHoverMove(target_local_point);
+  if (!SendHoverEnter(target_element, model->reticle.target_local_point)) {
+    SendHoverMove(model->reticle.target_local_point);
   }
-  SendButtonDown(target_element, target_local_point, button_state);
-  if (SendButtonUp(target_element, target_local_point, button_state)) {
-    target_element = *out_reticle_render_target;
+  SendButtonDown(target_element, model->reticle.target_local_point,
+                 model->controller.touchpad_button_state);
+  if (SendButtonUp(target_element, model->reticle.target_local_point,
+                   model->controller.touchpad_button_state)) {
+    target_element = scene_->GetUiElementById(model->reticle.target_element_id);
     SendHoverLeave(target_element);
-    SendHoverEnter(target_element, target_local_point);
+    SendHoverEnter(target_element, model->reticle.target_local_point);
   }
 
   previous_button_state_ =
-      (button_state == ButtonState::CLICKED) ? ButtonState::UP : button_state;
+      (model->controller.touchpad_button_state == ButtonState::CLICKED)
+          ? ButtonState::UP
+          : model->controller.touchpad_button_state;
 }
 
 void UiInputManager::SendFlingCancel(GestureList* gesture_list,
@@ -374,12 +371,8 @@ bool UiInputManager::SendButtonUp(UiElement* target,
 }
 
 void UiInputManager::GetVisualTargetElement(
-    const gfx::Vector3dF& laser_direction,
-    const gfx::Point3F& laser_origin,
-    gfx::Vector3dF* out_eye_to_target,
-    gfx::Point3F* out_target_point,
-    UiElement** out_target_element,
-    gfx::PointF* out_target_local_point) const {
+    Model* model,
+    gfx::Vector3dF* out_eye_to_target) const {
   // If we place the reticle based on elements intersecting the controller beam,
   // we can end up with the reticle hiding behind elements, or jumping laterally
   // in the field of view. This is physically correct, but hard to use. For
@@ -395,17 +388,19 @@ void UiInputManager::GetVisualTargetElement(
   // that the sphere is centered at the controller, rather than the eye, for
   // simplicity.
   float distance = scene_->background_distance();
-  *out_target_point = GetRayPoint(laser_origin, laser_direction, distance);
-  *out_eye_to_target = *out_target_point - kOrigin;
+  model->reticle.target_point =
+      GetRayPoint(model->controller.laser_origin,
+                  model->controller.laser_direction, distance);
+  *out_eye_to_target = model->reticle.target_point - kOrigin;
   out_eye_to_target->GetNormalized(out_eye_to_target);
 
   // Determine which UI element (if any) intersects the line between the eyes
   // and the controller target position.
-  float closest_element_distance = (*out_target_point - kOrigin).Length();
+  float closest_element_distance =
+      (model->reticle.target_point - kOrigin).Length();
 
-  HitTestElements(&scene_->root_element(), out_eye_to_target,
-                  &closest_element_distance, out_target_point,
-                  out_target_element, out_target_local_point);
+  HitTestElements(&scene_->root_element(), model, out_eye_to_target,
+                  &closest_element_distance);
 }
 
 }  // namespace vr

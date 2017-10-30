@@ -11,6 +11,7 @@
 #include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/elements/rect.h"
 #include "chrome/browser/vr/elements/ui_element.h"
+#include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/test/constants.h"
 #include "chrome/browser/vr/test/mock_content_input_delegate.h"
@@ -66,10 +67,11 @@ class UiInputManagerTest : public testing::Test {
   void HandleInput(const gfx::Vector3dF& laser_direction,
                    UiInputManager::ButtonState button_state) {
     GestureList gesture_list;
-    gfx::Point3F target_point;
-    UiElement* target_element;
-    input_manager_->HandleInput(laser_direction, {0, 0, 0}, button_state,
-                                &gesture_list, &target_point, &target_element);
+    Model model;
+    model.controller.laser_direction = laser_direction;
+    model.controller.laser_origin = {0, 0, 0};
+    model.controller.touchpad_button_state = button_state;
+    input_manager_->HandleInput(&model, &gesture_list);
   }
 
  protected:
@@ -100,17 +102,18 @@ TEST_F(UiInputManagerTest, ReticleRenderTarget) {
   scene_->OnBeginFrame(base::TimeTicks(), kForwardVector);
 
   GestureList gesture_list;
-  gfx::Point3F target_point;
-  UiElement* target;
+  Model model;
+  model.controller.laser_direction = kBackwardVector;
+  model.controller.laser_origin = {0, 0, 0};
+  model.controller.touchpad_button_state = kUp;
 
-  input_manager_->HandleInput(kBackwardVector, {0, 0, 0}, kUp, &gesture_list,
-                              &target_point, &target);
-  EXPECT_EQ(target, nullptr);
+  input_manager_->HandleInput(&model, &gesture_list);
+  EXPECT_EQ(0, model.reticle.target_element_id);
 
-  input_manager_->HandleInput(kForwardVector, {0, 0, 0}, kUp, &gesture_list,
-                              &target_point, &target);
-  EXPECT_EQ(target, p_element);
-  EXPECT_NEAR(target_point.z(), -1.0, kEpsilon);
+  model.controller.laser_direction = kForwardVector;
+  input_manager_->HandleInput(&model, &gesture_list);
+  EXPECT_EQ(p_element->id(), model.reticle.target_element_id);
+  EXPECT_NEAR(-1.0, model.reticle.target_point.z(), kEpsilon);
 }
 
 // Test hover and click by toggling button state, and directing the controller
@@ -231,24 +234,23 @@ TEST_F(UiInputManagerContentTest, NoMouseMovesDuringClick) {
   content_quad->world_space_transform().TransformPoint(&content_quad_center);
   gfx::Point3F origin;
   GestureList gesture_list;
-  gfx::Point3F out_target_point;
-  UiElement* out_reticle_render_target;
-  input_manager_->HandleInput(content_quad_center - origin, origin,
-                              UiInputManager::ButtonState::DOWN, &gesture_list,
-                              &out_target_point, &out_reticle_render_target);
+
+  Model model;
+  model.controller.laser_direction = content_quad_center - origin;
+  model.controller.laser_origin = origin;
+  model.controller.touchpad_button_state = UiInputManager::ButtonState::DOWN;
+  input_manager_->HandleInput(&model, &gesture_list);
 
   // We should have hit the content quad if our math was correct.
-  ASSERT_NE(nullptr, out_reticle_render_target);
-  EXPECT_EQ(UiElementName::kContentQuad, out_reticle_render_target->name());
+  ASSERT_NE(0, model.reticle.target_element_id);
+  EXPECT_EQ(content_quad->id(), model.reticle.target_element_id);
 
   // Unless we suppress content move events during clicks, this will cause us to
   // call OnContentMove on the delegate. We should do this suppression, so we
   // set the expected number of calls to zero.
   EXPECT_CALL(*content_input_delegate_, OnContentMove(testing::_)).Times(0);
 
-  input_manager_->HandleInput(content_quad_center - origin, origin,
-                              UiInputManager::ButtonState::DOWN, &gesture_list,
-                              &out_target_point, &out_reticle_render_target);
+  input_manager_->HandleInput(&model, &gesture_list);
 }
 
 }  // namespace vr
