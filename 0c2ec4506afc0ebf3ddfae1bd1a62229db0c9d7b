@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ea54902_58e503b8",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-30T18:52:39Z",
+      "side": 1,
+      "message": "The order of the events should be opposite.",
+      "revId": "0c2ec4506afc0ebf3ddfae1bd1a62229db0c9d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
