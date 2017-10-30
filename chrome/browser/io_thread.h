@@ -98,6 +98,10 @@ namespace policy {
 class PolicyService;
 }  // namespace policy
 
+namespace previews {
+class PreviewsOptimizationGuide;
+}  // namespace previews
+
 namespace test {
 class IOThreadPeer;
 }  // namespace test
@@ -178,6 +182,8 @@ class IOThread : public content::BrowserThreadDelegate {
   void SetGlobalsForTesting(Globals* globals);
 
   net_log::ChromeNetLog* net_log();
+
+  previews::PreviewsOptimizationGuide* previews_optimization_guide();
 
   // Handles changing to On The Record mode, discarding confidential data.
   void ChangedToOnTheRecord();
@@ -332,6 +338,9 @@ class IOThread : public content::BrowserThreadDelegate {
   std::unique_ptr<net::ProxyConfigService> system_proxy_config_service_;
 
   std::unique_ptr<PrefProxyConfigTracker> pref_proxy_config_tracker_;
+
+  std::unique_ptr<previews::PreviewsOptimizationGuide>
+      previews_optimization_guide_;
 
   scoped_refptr<net::URLRequestContextGetter>
       system_url_request_context_getter_;

@@ -87,6 +87,8 @@ bool IsClientLoFiEnabled();
 bool IsAMPRedirectionPreviewEnabled();
 bool IsNoScriptPreviewsEnabled();
 
+bool AreOptimizationHintsEnabled();
+
 // The blacklist version for each preview type.
 int OfflinePreviewsVersion();
 int ClientLoFiVersion();

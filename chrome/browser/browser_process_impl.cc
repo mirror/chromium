@@ -61,6 +61,7 @@
 #include "chrome/browser/net/system_network_context_manager.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
+#include "chrome/browser/optimization_guide/optimization_guide_service.h"
 #include "chrome/browser/plugins/chrome_plugin_service_filter.h"
 #include "chrome/browser/plugins/plugin_finder.h"
 #include "chrome/browser/prefs/browser_prefs.h"
@@ -101,6 +102,7 @@
 #include "components/prefs/json_pref_store.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
+#include "components/previews/core/previews_features.h"
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/rappor_service_impl.h"
 #include "components/signin/core/browser/profile_management_switches.h"
@@ -215,6 +217,7 @@ BrowserProcessImpl::BrowserProcessImpl(
       created_icon_manager_(false),
       created_notification_ui_manager_(false),
       created_notification_bridge_(false),
+      created_optimization_guide_service_(false),
       created_safe_browsing_service_(false),
       created_subresource_filter_ruleset_service_(false),
       shutting_down_(false),
@@ -910,6 +913,14 @@ StatusTray* BrowserProcessImpl::status_tray() {
   return status_tray_.get();
 }
 
+optimization_guide::OptimizationGuideService*
+BrowserProcessImpl::optimization_guide_service() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  if (!created_optimization_guide_service_)
+    CreateOptimizationGuideService();
+  return optimization_guide_service_.get();
+}
+
 safe_browsing::SafeBrowsingService*
 BrowserProcessImpl::safe_browsing_service() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -1192,6 +1203,23 @@ void BrowserProcessImpl::CreateBackgroundPrintingManager() {
 #else
   NOTIMPLEMENTED();
 #endif
+}
+
+void BrowserProcessImpl::CreateOptimizationGuideService() {
+  DCHECK(!optimization_guide_service_);
+  created_optimization_guide_service_ = true;
+
+  if (!base::FeatureList::IsEnabled(previews::features::kOptimizationHints)) {
+    return;
+  }
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner(
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND}));
+  optimization_guide_service_ =
+      base::MakeUnique<optimization_guide::OptimizationGuideService>(
+          background_task_runner,
+          content::BrowserThread::GetTaskRunnerForThread(
+              content::BrowserThread::IO));
 }
 
 void BrowserProcessImpl::CreateSafeBrowsingService() {

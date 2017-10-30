@@ -55,6 +55,7 @@
 #include "components/policy/policy_constants.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
+#include "components/previews/core/previews_optimization_guide.h"
 #include "components/proxy_config/pref_proxy_config_tracker.h"
 #include "components/variations/variations_associated_data.h"
 #include "components/version_info/version_info.h"
@@ -416,6 +417,15 @@ void IOThread::SetGlobalsForTesting(Globals* globals) {
 
 net_log::ChromeNetLog* IOThread::net_log() {
   return net_log_;
+}
+
+previews::PreviewsOptimizationGuide* IOThread::previews_optimization_guide() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (!previews_optimization_guide_.get()) {
+    previews_optimization_guide_ =
+        std::make_unique<previews::PreviewsOptimizationGuide>();
+  }
+  return previews_optimization_guide_.get();
 }
 
 void IOThread::ChangedToOnTheRecord() {

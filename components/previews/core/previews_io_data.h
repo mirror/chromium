@@ -30,6 +30,7 @@ class URLRequest;
 
 namespace previews {
 class PreviewsOptOutStore;
+class PreviewsOptimizationGuide;
 class PreviewsUIService;
 
 typedef base::Callback<bool(PreviewsType)> PreviewsIsEnabledCallback;
@@ -42,7 +43,8 @@ class PreviewsIOData : public PreviewsDecider,
  public:
   PreviewsIOData(
       const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner,
-      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner);
+      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
+      PreviewsOptimizationGuide* previews_optimization_guide);
   ~PreviewsIOData() override;
 
   // PreviewsBlacklistDelegate:
@@ -111,6 +113,8 @@ class PreviewsIOData : public PreviewsDecider,
   // happening on the IO thread.
   scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
+
+  PreviewsOptimizationGuide* previews_optimization_guide_;
 
   // Whether the preview is enabled. Valid after Initialize() is called.
   PreviewsIsEnabledCallback is_enabled_callback_;

@@ -23,6 +23,8 @@ static_library("core") {
     "previews_opt_out_store.h",
     "previews_opt_out_store_sql.cc",
     "previews_opt_out_store_sql.h",
+    "previews_optimization_guide.cc",
+    "previews_optimization_guide.h",
     "previews_ui_service.cc",
     "previews_ui_service.h",
   ]
@@ -30,6 +32,7 @@ static_library("core") {
   deps = [
     "//base",
     "//components/variations",
+    "//content/public/browser",
     "//net:net",
     "//sql",
     "//third_party/re2",

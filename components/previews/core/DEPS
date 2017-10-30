@@ -1,5 +1,6 @@
 include_rules = [
   "+components/variations",
+  "+content/public/browser",
   "+net",
   "+sql",
   "+third_party/re2"

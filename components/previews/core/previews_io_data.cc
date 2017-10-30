@@ -17,6 +17,7 @@
 #include "base/time/default_clock.h"
 #include "components/previews/core/previews_experiments.h"
 #include "components/previews/core/previews_opt_out_store.h"
+#include "components/previews/core/previews_optimization_guide.h"
 #include "components/previews/core/previews_ui_service.h"
 #include "net/base/load_flags.h"
 #include "net/nqe/network_quality_estimator.h"
@@ -62,9 +63,11 @@ bool AllowedOnReload(PreviewsType type) {
 
 PreviewsIOData::PreviewsIOData(
     const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner,
-    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
+    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
+    PreviewsOptimizationGuide* previews_optimization_guide)
     : ui_task_runner_(ui_task_runner),
       io_task_runner_(io_task_runner),
+      previews_optimization_guide_(previews_optimization_guide),
       weak_factory_(this) {}
 
 PreviewsIOData::~PreviewsIOData() {}
@@ -228,6 +231,14 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
         PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER, request.url(),
         base::Time::Now(), type);
     return false;
+  }
+
+  if (params::AreOptimizationHintsEnabled()) {
+    if (type == PreviewsType::NOSCRIPT) {
+      if (!previews_optimization_guide_->IsWhitelisted(request, type)) {
+        return false;
+      }
+    }
   }
 
   LogPreviewDecisionMade(PreviewsEligibilityReason::ALLOWED, request.url(),

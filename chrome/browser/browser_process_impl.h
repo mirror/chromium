@@ -132,6 +132,8 @@ class BrowserProcessImpl : public BrowserProcess,
   void set_background_mode_manager_for_test(
       std::unique_ptr<BackgroundModeManager> manager) override;
   StatusTray* status_tray() override;
+  optimization_guide::OptimizationGuideService* optimization_guide_service()
+      override;
   safe_browsing::SafeBrowsingService* safe_browsing_service() override;
   safe_browsing::ClientSideDetectionService* safe_browsing_detection_service()
       override;
@@ -176,6 +178,7 @@ class BrowserProcessImpl : public BrowserProcess,
   void CreateStatusTrayManager();
   void CreatePrintPreviewDialogController();
   void CreateBackgroundPrintingManager();
+  void CreateOptimizationGuideService();
   void CreateSafeBrowsingService();
   void CreateSafeBrowsingDetectionService();
   void CreateSubresourceFilterRulesetService();
@@ -260,6 +263,10 @@ class BrowserProcessImpl : public BrowserProcess,
 #if BUILDFLAG(ENABLE_BACKGROUND)
   std::unique_ptr<BackgroundModeManager> background_mode_manager_;
 #endif
+
+  bool created_optimization_guide_service_;
+  std::unique_ptr<optimization_guide::OptimizationGuideService>
+      optimization_guide_service_;
 
   bool created_safe_browsing_service_;
   scoped_refptr<safe_browsing::SafeBrowsingService> safe_browsing_service_;
