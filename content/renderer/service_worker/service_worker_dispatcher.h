@@ -43,7 +43,6 @@ class ServiceWorkerProviderContext;
 class ThreadSafeSender;
 class WebServiceWorkerImpl;
 class WebServiceWorkerRegistrationImpl;
-struct ServiceWorkerVersionAttributes;
 
 // This class manages communication with the browser process about
 // registration of the service worker, exposed to renderer and worker
@@ -165,10 +164,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   void OnServiceWorkerStateChanged(int thread_id,
                                    int handle_id,
                                    blink::mojom::ServiceWorkerState state);
-  void OnSetVersionAttributes(int thread_id,
-                              int registration_handle_id,
-                              int changed_mask,
-                              const ServiceWorkerVersionAttributes& attributes);
   void OnUpdateFound(int thread_id,
                      int registration_handle_id);
   void OnPostMessage(const ServiceWorkerMsg_MessageToDocument_Params& params);
