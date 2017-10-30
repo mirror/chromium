@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2175af7c_943f9079",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-features\u003dNetworkService",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-30T13:02:17Z",
+      "side": 1,
+      "message": "Note that this was already flaky without this change. This change seems to make this flake a little more consistent. (And this looks to be caused by the ordering issue with SetController)\n\nhttps://test-results.appspot.com/dashboards/flakiness_dashboard.html#testType\u003dwebkit_layout_tests\u0026tests\u003dexternal%2Fwpt%2Fservice-workers%2Fservice-worker%2FServiceWorkerGlobalScope%2Funregister.https.html",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 100
+      },
+      "revId": "de8b5514fa8765c671e2e5c4399dff89fabb0d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
