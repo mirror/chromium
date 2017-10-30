@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64523543_2a21f985",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2558,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-30T18:44:26Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "20f8b2df_6840955e",
+      "range": {
+        "startLine": 2558,
+        "startChar": 2,
+        "endLine": 2558,
+        "endChar": 56
+      },
+      "revId": "e8d30602d9c0408531c3f3d4150c7550227ad553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d9f370b_e0b7bafd",
         "filename": "net/http/http_vary_data.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-27T19:02:37Z",
       "side": 1,
       "message": "s/not/don\u0027t/",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "e8d30602d9c0408531c3f3d4150c7550227ad553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2ae6f1_cf3a93f0",
+        "filename": "net/http/http_vary_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-30T18:44:26Z",
+      "side": 1,
+      "message": "Done. Also updated the spec ref.",
+      "parentUuid": "3d9f370b_e0b7bafd",
       "range": {
         "startLine": 32,
         "startChar": 9,
