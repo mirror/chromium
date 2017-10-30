@@ -3597,6 +3597,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kStopLoadingInBackgroundDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kStopLoadingInBackground)},
 
+#if defined(OS_CHROMEOS)
+    {"enable-smb-pfs", flag_descriptions::kNativeSmbName,
+     flag_descriptions::kNativeSmbDescription, kOsCrOS,
+     FEATURE_VALUE_TYPE(features::kNativeSmb)}
+#endif  // defined(OS_CHROMEOS)
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the
@@ -3633,7 +3639,7 @@ bool SkipConditionalFeatureEntry(const FeatureEntry& entry) {
     return true;
   }
   // enable-data-reduction-proxy-alt is only available for the Dev channel.
-  if (!strcmp("enable-data-reduction-proxy-alt", entry.internal_name) &&
+  if (!strcmp("enable-da-reduction-proxy-alt", entry.internal_name) &&
       channel != version_info::Channel::DEV) {
     return true;
   }
