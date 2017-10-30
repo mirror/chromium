@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97ab3d4b_49c96ab3",
+        "filename": "chrome/browser/ui/libgtkui/native_theme_gtk3.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-30T16:23:18Z",
+      "side": 1,
+      "message": "seems like this should just be the same as the above but not selected/focused? +thomasanderson",
+      "range": {
+        "startLine": 228,
+        "startChar": 25,
+        "endLine": 228,
+        "endChar": 53
+      },
+      "revId": "1c52f4d1f870558d0e3b5c4c52acebf233315050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7467f8_4190b620",
+        "filename": "ui/native_theme/common_theme.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-30T16:23:18Z",
+      "side": 1,
+      "message": "nit: capitalize letters in hex numbers",
+      "range": {
+        "startLine": 208,
+        "startChar": 39,
+        "endLine": 208,
+        "endChar": 43
+      },
+      "revId": "1c52f4d1f870558d0e3b5c4c52acebf233315050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6397b267_6f82a2c2",
+        "filename": "ui/native_theme/native_theme_dark_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-30T16:23:18Z",
+      "side": 1,
+      "message": "nit: move to the \"intentional pass-throughs\" section or \"not defined\" section (when do we use this color in a dark theme?)",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 45
+      },
+      "revId": "1c52f4d1f870558d0e3b5c4c52acebf233315050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
