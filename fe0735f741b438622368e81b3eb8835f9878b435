@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ec77610_551b2f07",
+        "filename": "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-30T20:53:28Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed. Subframes also use the main thread to do computation, right? The main frame check is already done in TabSignalGeneratorImpl::OnFramePropertyChanged.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 19
+      },
+      "revId": "fe0735f741b438622368e81b3eb8835f9878b435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad202237_2ca26f72",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-30T20:53:28Z",
+      "side": 1,
+      "message": "nit: Maybe remove this extra \"Low\"?",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "fe0735f741b438622368e81b3eb8835f9878b435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
