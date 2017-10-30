@@ -1499,8 +1499,8 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
       GetMediaThreadTaskRunner();
   const bool enable_video_accelerator =
       !cmd_line->HasSwitch(switches::kDisableAcceleratedVideoDecode);
+  DCHECK(!is_gpu_compositing_disabled_);
   const bool enable_gpu_memory_buffer_video_frames =
-      !is_gpu_compositing_disabled_ &&
 #if defined(OS_MACOSX) || defined(OS_LINUX)
       !cmd_line->HasSwitch(switches::kDisableGpuMemoryBufferVideoFrames);
 #elif defined(OS_WIN)
@@ -1982,8 +1982,14 @@ scoped_refptr<gpu::GpuChannelHost> RenderThreadImpl::EstablishGpuChannelSync() {
   }
 
   gpu_channel_ = gpu_->EstablishGpuChannelSync();
-  if (gpu_channel_)
+  if (gpu_channel_) {
     GetContentClient()->SetGpuInfo(gpu_channel_->gpu_info());
+    if (gpu_channel_->gpu_feature_info()
+            .status_values[gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING] !=
+        gpu::kGpuFeatureStatusEnabled) {
+      CompositingModeFallbackToSoftware();
+    }
+  }
   return gpu_channel_;
 }
 
@@ -2050,6 +2056,10 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
     }
   }
 
+  scoped_refptr<gpu::GpuChannelHost> gpu_channel_host;
+  if (!is_gpu_compositing_disabled_) {
+    gpu_channel_host = EstablishGpuChannelSync();
+  }
   if (is_gpu_compositing_disabled_) {
     DCHECK(!layout_test_mode());
     frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
@@ -2060,8 +2070,6 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
     return;
   }
 
-  scoped_refptr<gpu::GpuChannelHost> gpu_channel_host =
-      EstablishGpuChannelSync();
   if (!gpu_channel_host) {
     // Wait and try again. We may hear that the compositing mode has switched
     // to software in the meantime.
