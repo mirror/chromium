@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "3dbe55b1_06a136dd",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/WebDatabaseImpl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-30T16:37:24Z",
+      "side": 1,
+      "message": "There were a lot of discussion on this in the past (mojo-dev?). The consensus then was to not use impl, which is why mojo generated types are in the mojom namespace. However I think this is one of those things that isn\u0027t a formalized rule, so people pick whatever name they want. I personally don\u0027t care either way.",
+      "parentUuid": "4f7f48ca_21b57a8a",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 21
+      },
+      "revId": "4041d54f829153bbfaa367b693715f725a9b88cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "846ee6e3_f9fbf775",
         "filename": "third_party/WebKit/Source/modules/webdatabase/WebDatabaseImpl.h",
         "patchSetId": 16
@@ -170,6 +194,30 @@
       "side": 1,
       "message": "Ah sorry for missing that.\n\nHowever, from codesearch, it seems like there\u0027s only 6 calls. I don\u0027t think we need to do it in this CL, but I think it\u0027s still worth: the cost is making the tests a bit more complex, but making the actual non-test code a bit simpler (by reducing a branch) and reducing the differences between test and non-test code.",
       "parentUuid": "32943e50_2b7237d4",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 57
+      },
+      "revId": "4041d54f829153bbfaa367b693715f725a9b88cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09aebfcb_b7144d18",
+        "filename": "third_party/WebKit/public/web/WebKit.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-30T16:37:24Z",
+      "side": 1,
+      "message": "+1 to Daniel\u0027s suggestion",
+      "parentUuid": "a6624478_d19901ff",
       "range": {
         "startLine": 49,
         "startChar": 0,
