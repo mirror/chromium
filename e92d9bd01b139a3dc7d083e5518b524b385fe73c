@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "608ed222_bc394d89",
+        "filename": "gpu/command_buffer/tests/fuzzer_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-30T21:41:15Z",
+      "side": 1,
+      "message": "Note, this is important to not regress performance of the fuzzer, but we\u0027re essentially leaking them. They are pooled, so the same config will reuse the same translator, but we\u0027ll keep around as many as we create - there is a finite set (only a few extensions matter), and I didn\u0027t run out of memory in my local tests, but there is a possibility that this gets too big on ClusterFuzz, at which point we\u0027ll need to add a LRU cache or something.",
+      "revId": "e92d9bd01b139a3dc7d083e5518b524b385fe73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95042fb5_858f0671",
+        "filename": "gpu/command_buffer/tests/fuzzer_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-30T21:41:15Z",
+      "side": 1,
+      "message": "Note, because we consume some bits, the existing corpus loses a lot of coverage. I have a script to restore the identical configuration (by inserting the right prefix), that I will run on the corpus(es) when this lands.",
+      "revId": "e92d9bd01b139a3dc7d083e5518b524b385fe73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
