@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03de3bab_a29dc822",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116089
+      },
+      "writtenOn": "2017-10-30T21:19:02Z",
+      "side": 1,
+      "message": "No, they cannot be in one block:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/740687/1/device/vr/features/features.gni#20",
+      "parentUuid": "44cf63e0_f9cf3fdd",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 16
+      },
+      "revId": "7435b072dfaa830b80130b034740a56ca2d4a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bdb867a_60dc62cd",
         "filename": "device/vr/features/features.gni",
         "patchSetId": 2
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I meant to insert this additional condition (into the highlighted space):\n`enable_vr \u003d enable_gvr_services || enable_openvr || is_win`\n\nDoes that address your concern? I\u0027m not proposing any change in effective logic from what we have today.\n\nThis would mean that if someone wanted to set `enable_openvr\u003dtrue` on Linux or Mac that the value of `enable_vr` would change, but that is what we want. (This may not compile, but that\u0027s a different issue.)",
       "parentUuid": "c36bb48b_9591e87a",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "7435b072dfaa830b80130b034740a56ca2d4a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66530ce0_cbae0e90",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116089
+      },
+      "writtenOn": "2017-10-30T21:19:02Z",
+      "side": 1,
+      "message": "Yes, sure.\nSorry, it was momentary brain blackout ;)\nWhen I managed to read your 1st correction everything became clear.",
+      "parentUuid": "c5e87e65_efc32f3e",
       "range": {
         "startLine": 17,
         "startChar": 33,
