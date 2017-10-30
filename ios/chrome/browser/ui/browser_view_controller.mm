@@ -4798,6 +4798,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 }
 
+- (id<ToolbarSnapshotProviding>)snapshotProvider {
+  return _toolbarCoordinator;
+}
+
 #pragma mark - TabModelObserver methods
 
 // Observer method, tab inserted.
