@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c2348fd_07af6be1",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-30T14:56:59Z",
+      "side": 1,
+      "message": "i think that proto2 fields are always supposed to be optional. :-) protocol buffers have well-defined rules for what\u0027s returned for missing optional fields, and powerd sets this field unconditionally in any case.",
+      "parentUuid": "6105324e_d5cb6fe5",
+      "revId": "c005e704c70f50cc661e9f8908efcac303c2f051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed437b96_cf4e7858",
         "filename": "components/arc/power/arc_power_bridge.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-30T06:07:24Z",
       "side": 1,
       "message": "Could you add;\n#include \"chromeos/dbus/power_manager/suspend.pb.h\"\n\n(ditto for other classes using new SuspendImminent::Reason).",
+      "revId": "c005e704c70f50cc661e9f8908efcac303c2f051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79487f66_434b75ea",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-30T14:56:59Z",
+      "side": 1,
+      "message": "the SuspendImminent::Reason use is limited to a method signature from the PowerManagerClient::Observer interface, and power_manager_client.h already must include this header. i\u0027ll add it if you feel strongly, but i\u0027m not sure whether it\u0027s required by our include-what-you-use rules. (this feels similar to the case where an interface header forward-declares a class that it uses, and the implementation doesn\u0027t need to dereference that class.)",
+      "parentUuid": "ed437b96_cf4e7858",
       "revId": "c005e704c70f50cc661e9f8908efcac303c2f051",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
