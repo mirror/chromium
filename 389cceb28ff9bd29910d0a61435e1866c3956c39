@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ee1dee5a_cc6cfd55",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-30T17:00:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "362e1ef5_5df0079a",
+      "range": {
+        "startLine": 9,
+        "startChar": 56,
+        "endLine": 9,
+        "endChar": 64
+      },
+      "revId": "389cceb28ff9bd29910d0a61435e1866c3956c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9d5e2d1_7fba9ea4",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowTestUtils.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "389cceb28ff9bd29910d0a61435e1866c3956c39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51c9d2b_b64236bd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowTestUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-30T17:00:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9d5e2d1_7fba9ea4",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "389cceb28ff9bd29910d0a61435e1866c3956c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
