@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66d5a7fb_044bc1f3",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T13:55:48Z",
+      "side": 1,
+      "message": "I added this line to follow the spec, although this is a behavioral change.\n\nI\u0027m happy to remove this if reviewers prefer not adding this in this patch.",
+      "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
