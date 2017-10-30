@@ -16,6 +16,24 @@
       "revId": "2dcb865dbbf933166621d88236804def0651ab04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a124c4_eff54b33",
+        "filename": "chrome/profiling/json_exporter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-30T17:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b5403de_c752e9b0",
+      "revId": "2dcb865dbbf933166621d88236804def0651ab04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
