@@ -550,7 +550,8 @@ void RunUnitTestsSerially(
       cmd_line, platform_delegate->GetWrapperForChildGTestProcess(),
       TestTimeouts::test_launcher_timeout(), launch_options,
       Bind(&SerialGTestCallback, callback_state, new_test_names),
-      TestLauncher::GTestProcessLaunchedCallback());
+      TestLauncher::GTestProcessLaunchedCallback(),
+      TestLauncher::GTestProcessTimedOutCallback());
 }
 
 void RunUnitTestsBatch(
@@ -591,7 +592,8 @@ void RunUnitTestsBatch(
   test_launcher->LaunchChildGTestProcess(
       cmd_line, platform_delegate->GetWrapperForChildGTestProcess(), timeout,
       options, Bind(&GTestCallback, callback_state),
-      TestLauncher::GTestProcessLaunchedCallback());
+      TestLauncher::GTestProcessLaunchedCallback(),
+      TestLauncher::GTestProcessTimedOutCallback());
 }
 
 UnitTestLauncherDelegate::UnitTestLauncherDelegate(

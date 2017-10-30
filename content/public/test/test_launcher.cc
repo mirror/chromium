@@ -405,7 +405,9 @@ void WrapperTestLauncherDelegate::DoRunTests(
       base::Bind(&WrapperTestLauncherDelegate::GTestCallback,
                  base::Unretained(this), test_launcher, test_names_copy,
                  test_name, output_file, base::Passed(&test_state_ptr)),
-      base::Bind(&CallChildProcessLaunched, base::Unretained(test_state)));
+      base::Bind(&CallChildProcessLaunched, base::Unretained(test_state)),
+      base::Bind(&content::TestLauncherDelegate::OnTestTimedOut,
+                 base::Unretained(launcher_delegate_)));
 }
 
 void WrapperTestLauncherDelegate::RunDependentTest(
