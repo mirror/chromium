@@ -16,27 +16,17 @@ void CompositingModeReporterImpl::BindRequest(
 }
 
 void CompositingModeReporterImpl::SetUsingSoftwareCompositing() {
-  CleanUpWatchers();
   gpu_ = false;
-  for (auto& watcher : watchers_)
+  watchers_.ForAllPtrs([](mojom::CompositingModeWatcher* watcher) {
     watcher->CompositingModeFallbackToSoftware();
+  });
 }
 
 void CompositingModeReporterImpl::AddCompositingModeWatcher(
     mojom::CompositingModeWatcherPtr watcher) {
-  CleanUpWatchers();
   if (!gpu_)
     watcher->CompositingModeFallbackToSoftware();
-  watchers_.push_back(std::move(watcher));
-}
-
-void CompositingModeReporterImpl::CleanUpWatchers() {
-  for (auto it = watchers_.begin(); it != watchers_.end();) {
-    if (it->encountered_error())
-      it = watchers_.erase(it);
-    else
-      ++it;
-  }
+  watchers_.AddPtr(std::move(watcher));
 }
 
 }  // namespace viz

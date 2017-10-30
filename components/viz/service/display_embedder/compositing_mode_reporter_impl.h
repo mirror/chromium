@@ -5,8 +5,10 @@
 #ifndef COMPONENTS_VIZ_SERVICE_DISPLAY_EMBEDDER_COMPOSITING_MODE_REPORTER_IMPL_H_
 #define COMPONENTS_VIZ_SERVICE_DISPLAY_EMBEDDER_COMPOSITING_MODE_REPORTER_IMPL_H_
 
+#include "base/macros.h"
 #include "components/viz/service/viz_service_export.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "mojo/public/cpp/bindings/interface_ptr_set.h"
 #include "services/viz/public/interfaces/compositing/compositing_mode_watcher.mojom.h"
 
 namespace viz {
@@ -33,11 +35,11 @@ class VIZ_SERVICE_EXPORT CompositingModeReporterImpl
       mojom::CompositingModeWatcherPtr watcher) override;
 
  private:
-  void CleanUpWatchers();
-
   bool gpu_ = true;
   mojo::BindingSet<mojom::CompositingModeReporter> bindings_;
-  std::vector<mojom::CompositingModeWatcherPtr> watchers_;
+  mojo::InterfacePtrSet<mojom::CompositingModeWatcher> watchers_;
+
+  DISALLOW_COPY_AND_ASSIGN(CompositingModeReporterImpl);
 };
 
 }  // namespace viz
