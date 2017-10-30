@@ -53,7 +53,6 @@
 #include "modules/webdatabase/sqlite/SQLiteTransaction.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
-#include "platform/heap/SafePoint.h"
 #include "platform/wtf/Atomics.h"
 #include "platform/wtf/CurrentTime.h"
 #include "public/platform/Platform.h"

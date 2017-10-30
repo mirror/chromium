@@ -1526,7 +1526,7 @@ function ListCell() {
 
 ListCell.prototype = Object.create(View.prototype);
 
-ListCell.DefaultRecycleBinLimit = 64;
+ListCell.DefaultRecycleBinLimit = 0;
 ListCell.ClassNameListCell = 'list-cell';
 ListCell.ClassNameHidden = 'hidden';
 

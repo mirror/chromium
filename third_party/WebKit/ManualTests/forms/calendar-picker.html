@@ -131,7 +131,7 @@ function initializeConfig() {
         $("config_locale").appendChild(option);
     }
     
-    config.locale = getParam("locale") || "en_US";
+    config.locale = getParam("locale") || "en-US";
     config.isLocaleRTL = getParam("locale_rtl") === "true";
     config.weekStartDay = parseInt(getParam("weekStartDay") || "0", 10);
     config.type = getParam("type") || "date";
@@ -151,7 +151,7 @@ function initializeConfig() {
 };
 
 var locale_data = {
-    "en_US": {
+    "en-US": {
         "displayName": "English (United States)",
         "shortMonthLabels": [
         "Jan",

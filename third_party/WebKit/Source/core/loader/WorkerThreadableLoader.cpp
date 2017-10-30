@@ -39,7 +39,6 @@
 #include "core/workers/WorkerThread.h"
 #include "core/workers/WorkerThreadLifecycleContext.h"
 #include "platform/CrossThreadFunctional.h"
-#include "platform/heap/SafePoint.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
