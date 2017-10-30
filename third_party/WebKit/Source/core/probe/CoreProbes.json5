@@ -137,6 +137,7 @@
         "frameClearedScheduledNavigation",
         "frameDetachedFromParent",
         "frameScheduledNavigation",
+        "frameHistoryNavigation",
         "frameStartedLoading",
         "frameStoppedLoading",
         "lifecycleEvent",

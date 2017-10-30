@@ -768,6 +768,12 @@ void InspectorPageAgent::FrameScheduledNavigation(
       scheduled_navigation->Url().GetString());
 }
 
+void InspectorPageAgent::FrameHistoryNavigation(LocalFrame* frame,
+                                                const String& target_url) {
+  GetFrontend()->frameHistoryNavigation(IdentifiersFactory::FrameId(frame),
+                                        target_url);
+}
+
 void InspectorPageAgent::FrameClearedScheduledNavigation(LocalFrame* frame) {
   GetFrontend()->frameClearedScheduledNavigation(
       IdentifiersFactory::FrameId(frame));

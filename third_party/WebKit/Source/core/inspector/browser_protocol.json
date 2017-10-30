@@ -705,6 +705,15 @@
                 "experimental": true
             },
             {
+                "name": "frameHistoryNavigation",
+                "description": "Fired when navigation is triggered by history API.",
+                "parameters": [
+                    { "name": "frameId", "$ref": "FrameId", "description": "Id of the frame that has scheduled a navigation." },
+                    { "name":"targetUrl", "type":"string", "description": "Target url for history navigation."}
+                ],
+                "experimental": true
+            },
+            {
                 "name": "frameClearedScheduledNavigation",
                 "description": "Fired when frame no longer has a scheduled navigation.",
                 "parameters": [

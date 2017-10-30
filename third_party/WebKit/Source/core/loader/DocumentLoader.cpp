@@ -304,6 +304,7 @@ void DocumentLoader::UpdateForSameDocumentNavigation(
   if (same_document_navigation_source == kSameDocumentNavigationHistoryApi) {
     request_.SetHTTPMethod(HTTPNames::GET);
     request_.SetHTTPBody(nullptr);
+    probe::frameHistoryNavigation(frame_, new_url.GetString());
   }
   ClearRedirectChain();
   if (is_client_redirect_)
