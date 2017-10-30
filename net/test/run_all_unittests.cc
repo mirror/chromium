@@ -20,6 +20,11 @@ using net::internal::ClientSocketPoolBaseHelper;
 namespace {
 
 bool VerifyBuildIsTimely() {
+#if defined(OS_FUCHSIA) && defined(ARCH_CPU_ARM_FAMILY)
+  // TODO(779668): Remove this workaround when Fuchsia can handle RTCs w/ARM.
+  LOG(WARNING) << "*** Build timestamp check DISABLED under ARM.";
+  return true;
+#else
   // This lines up with various //net security features, like Certificate
   // Transparency or HPKP, in that they require the build time be less than 70
   // days old. Moreover, operating on the assumption that tests are run against
@@ -45,6 +50,7 @@ bool VerifyBuildIsTimely() {
       << build_time.ToInternalValue() << ")\n";
 
   return false;
+#endif
 }
 
 }  // namespace
