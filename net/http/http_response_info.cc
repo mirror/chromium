@@ -36,6 +36,12 @@ X509Certificate::PickleType GetPickleTypeForVersion(int version) {
   }
 }
 
+HttpVaryData::PickleType GetVaryDataPickleTypeForVersion(int version) {
+  if (version < 4)
+    return HttpVaryData::PICKLETYPE_HISTORICAL;
+  return HttpVaryData::PICKLETYPE_V4;
+}
+
 bool KeyExchangeGroupIsValid(int ssl_connection_status) {
   // TLS 1.3 and later always treat the field correctly.
   if (SSLConnectionStatusToVersion(ssl_connection_status) >=
@@ -55,7 +61,7 @@ bool KeyExchangeGroupIsValid(int ssl_connection_status) {
 // serialized HttpResponseInfo.
 enum {
   // The version of the response info used when persisting response info.
-  RESPONSE_INFO_VERSION = 3,
+  RESPONSE_INFO_VERSION = 4,
 
   // The minimum version supported for deserializing response info.
   RESPONSE_INFO_MINIMUM_VERSION = 1,
@@ -268,7 +274,8 @@ bool HttpResponseInfo::InitFromPickle(const base::Pickle& pickle,
 
   // Read vary-data
   if (flags & RESPONSE_INFO_HAS_VARY_DATA) {
-    if (!vary_data.InitFromPickle(&iter))
+    if (!vary_data.InitFromPickle(&iter,
+                                  GetVaryDataPickleTypeForVersion(version)))
       return false;
   }
 
@@ -348,7 +355,7 @@ void HttpResponseInfo::Persist(base::Pickle* pickle,
     if (ssl_info.connection_status != 0)
       flags |= RESPONSE_INFO_HAS_SSL_CONNECTION_STATUS;
   }
-  if (vary_data.is_valid())
+  if (vary_data.vary_status() != HttpVaryData::VARY_NONE)
     flags |= RESPONSE_INFO_HAS_VARY_DATA;
   if (response_truncated)
     flags |= RESPONSE_INFO_TRUNCATED;
@@ -407,7 +414,7 @@ void HttpResponseInfo::Persist(base::Pickle* pickle,
     }
   }
 
-  if (vary_data.is_valid())
+  if (vary_data.vary_status() != HttpVaryData::VARY_NONE)
     vary_data.Persist(pickle);
 
   pickle->WriteString(socket_address.host());
