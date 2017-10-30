@@ -444,6 +444,13 @@ Emulation.DeviceModeToolbar = class {
     var device = this._model.device();
     var model = this._model;
 
+    if (model.type() === Emulation.DeviceModeModel.Type.Responsive) {
+      var appliedSize = model.appliedDeviceSize();
+      model.setWidthAndScaleToFit(appliedSize.height);
+      model.setHeightAndScaleToFit(appliedSize.width);
+      return;
+    }
+
     if (device.modes.length === 2 && device.modes[0].orientation !== device.modes[1].orientation) {
       model.emulate(model.type(), model.device(), model.mode() === device.modes[0] ? device.modes[1] : device.modes[0]);
       return;
@@ -538,11 +545,13 @@ Emulation.DeviceModeToolbar = class {
 
     if (this._model.device() !== this._cachedModelDevice) {
       var device = this._model.device();
-      this._modeButton.setVisible(!!device);
       if (device) {
         var modeCount = device ? device.modes.length : 0;
         this._modeButton.setEnabled(modeCount >= 2);
         this._modeButton.setTitle(modeCount === 2 ? Common.UIString('Rotate') : Common.UIString('Screen options'));
+      } else if (this._model.type() === Emulation.DeviceModeModel.Type.Responsive) {
+        this._modeButton.setEnabled(true);
+        this._modeButton.setTitle(Common.UIString('Rotate'));
       }
       this._cachedModelDevice = device;
     }
