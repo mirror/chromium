@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "390ec1b1_effb236b",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-30T20:23:48Z",
+      "side": 1,
+      "message": "Just list this as \"\"//components/url_formatter\"",
+      "revId": "09fc0c33adabbbe7a72b78b49d86ed6193e48b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3672d5_ff925b5b",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-30T20:23:48Z",
+      "side": 1,
+      "message": "Can you pass std::string() as the 2nd argument? This is slightly more efficient than implicitly constructing a string object with an empty constant.",
+      "revId": "09fc0c33adabbbe7a72b78b49d86ed6193e48b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
