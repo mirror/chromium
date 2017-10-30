@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2603a1e3_ae2bafa4",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-30T23:41:23Z",
+      "side": 1,
+      "message": "Done\n\n- I don\u0027t think it\u0027s possible for it to be bigger than the tracks. I removed that part.\n- Fixed the insets",
+      "parentUuid": "493b1180_dbe865c9",
+      "revId": "b1721ec076bf37d093f5475a7efbff8c4ac7ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e6b5651_2db2e8b2",
         "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-30T06:26:45Z",
       "side": 1,
       "message": "I think this creates an ordering dependency. Now CocoaScrollBar::Layout() must be called before CocoaScrollBarThumb::CalculatePreferredSize() for it to return the correct result, but I don\u0027t think we can make any guarantee that that\u0027s going to occur.",
+      "revId": "b1721ec076bf37d093f5475a7efbff8c4ac7ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c6abd5_f70916c4",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-30T23:41:23Z",
+      "side": 1,
+      "message": "Good point, I modified the CL according to the comment below",
+      "parentUuid": "2e6b5651_2db2e8b2",
       "revId": "b1721ec076bf37d093f5475a7efbff8c4ac7ad7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a9211c7d_35090fe1",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-30T23:41:23Z",
+      "side": 1,
+      "message": "Sounds good, I made the changes so that thumb will query for the thickness and will calculate its width/height based on the inset.",
+      "parentUuid": "e715082e_49899237",
+      "revId": "b1721ec076bf37d093f5475a7efbff8c4ac7ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32cd3761_47efb784",
         "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "b1721ec076bf37d093f5475a7efbff8c4ac7ad7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b96450b_44ba7e9a",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-30T23:41:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32cd3761_47efb784",
+      "revId": "b1721ec076bf37d093f5475a7efbff8c4ac7ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
