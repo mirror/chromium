@@ -167,12 +167,6 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer {
     traceable.TraceWrappers(this);
   }
 
-  // Only called from automatically generated bindings code.
-  template <typename T>
-  void TraceWrappersFromGeneratedCode(const T* traceable) const {
-    MarkAndTraceWrappers(traceable);
-  }
-
   // Require all users of manual write barriers to make this explicit in their
   // |TraceWrappers| definition. Be sure to add
   // |ScriptWrappableVisitor::WriteBarrier(new_value)| after all assignments to

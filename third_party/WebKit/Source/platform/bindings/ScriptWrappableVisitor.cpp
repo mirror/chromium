@@ -170,8 +170,8 @@ void ScriptWrappableVisitor::RegisterV8Reference(
 
   ScriptWrappable* script_wrappable =
       reinterpret_cast<ScriptWrappable*>(internal_fields.second);
-
-  wrapper_type_info->TraceWrappers(this, script_wrappable);
+  if (script_wrappable)
+    script_wrappable->TraceWrappers(this);
 }
 
 void ScriptWrappableVisitor::RegisterV8References(

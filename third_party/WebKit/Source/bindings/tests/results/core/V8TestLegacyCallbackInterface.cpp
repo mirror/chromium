@@ -28,8 +28,6 @@ const WrapperTypeInfo V8TestLegacyCallbackInterface::wrapperTypeInfo = {
     gin::kEmbedderBlink,
     V8TestLegacyCallbackInterface::DomTemplate,
     nullptr,
-    nullptr,
-    nullptr,
     "TestLegacyCallbackInterface",
     nullptr,
     WrapperTypeInfo::kWrapperTypeNoPrototype,
