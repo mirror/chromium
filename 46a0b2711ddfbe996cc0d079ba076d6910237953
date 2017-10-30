@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "3ea261a5_bd6eefee",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-30T14:21:14Z",
+      "side": 1,
+      "message": "Could we keep this as a FrameType if we used base::optional to signify the lack of a known type?",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 13
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d4d3e3_ca391bf5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-30T14:21:14Z",
+      "side": 1,
+      "message": "Could this return const char* to avoid string construction?",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 11
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97369256_5bb60265",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
         "patchSetId": 3
