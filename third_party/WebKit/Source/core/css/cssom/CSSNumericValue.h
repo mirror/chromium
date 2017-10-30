@@ -19,6 +19,8 @@ class ExceptionState;
 
 using CSSNumberish = DoubleOrCSSNumericValue;
 
+CSSNumericValue* Rectify(const CSSNumberish& value);
+
 class CORE_EXPORT CSSNumericValue : public CSSStyleValue {
   WTF_MAKE_NONCOPYABLE(CSSNumericValue);
   DEFINE_WRAPPERTYPEINFO();

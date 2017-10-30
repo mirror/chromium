@@ -10,6 +10,14 @@
 
 namespace blink {
 
+CSSNumericValue* Rectify(const CSSNumberish& value) {
+  if (value.IsDouble()) {
+    return CSSUnitValue::Create(value.GetAsDouble(),
+                                CSSPrimitiveValue::UnitType::kNumber);
+  }
+  return value.GetAsCSSNumericValue();
+}
+
 bool CSSNumericValue::IsValidUnit(CSSPrimitiveValue::UnitType unit) {
   // UserUnits returns true for CSSPrimitiveValue::IsLength below.
   if (unit == CSSPrimitiveValue::UnitType::kUserUnits)
