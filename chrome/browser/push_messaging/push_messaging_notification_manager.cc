@@ -180,8 +180,9 @@ void PushMessagingNotificationManager::DidGetNotificationsFromDatabase(
       // First close the notification for the user's point of view, and then
       // manually tell the service that the notification has been closed in
       // order to avoid duplicating the thread-jump logic.
-      platform_notification_service->ClosePersistentNotification(
-          profile_, notification_database_data.notification_id);
+      platform_notification_service->CloseNotification(
+          profile_, notification_database_data.notification_id,
+          true /* is_persistent */);
       platform_notification_service->OnPersistentNotificationClose(
           profile_, notification_database_data.notification_id,
           notification_database_data.origin, false /* by_user */);

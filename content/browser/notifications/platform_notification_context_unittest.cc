@@ -32,7 +32,8 @@ const int64_t kFakeServiceWorkerRegistrationId = 42;
 class NotificationBrowserClient : public TestContentBrowserClient {
  public:
   NotificationBrowserClient()
-      : platform_notification_service_(new MockPlatformNotificationService()) {}
+      : platform_notification_service_(
+            std::make_unique<MockPlatformNotificationService>()) {}
 
   PlatformNotificationService* GetPlatformNotificationService() override {
     return platform_notification_service_.get();
@@ -546,7 +547,8 @@ TEST_F(PlatformNotificationContextTest, SynchronizeNotifications) {
 
   // Delete the notification from the display service without removing it from
   // the database. It should automatically synchronize on the next read.
-  service->ClosePersistentNotification(browser_context(), notification_id());
+  service->CloseNotification(browser_context(), notification_id(),
+                             true /* is_persistent */);
   context->ReadAllNotificationDataForServiceWorkerRegistration(
       origin, kFakeServiceWorkerRegistrationId,
       base::Bind(&PlatformNotificationContextTest::DidReadAllNotificationDatas,
