@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "cfb75753_d3154681",
+        "filename": "media/gpu/va_surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-30T03:39:59Z",
+      "side": 1,
+      "message": "Overlays are a special case where YUV is used.",
+      "parentUuid": "6e9df1a8_350e7ae5",
+      "revId": "1b0743b082bb2e1658dfd40beaaf224866f09a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e665616e_1140ad24",
         "filename": "media/gpu/va_surface.h",
         "patchSetId": 6
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "Ended up not doing this change because it needed changes in \nctor sites and it spread this CL too much. We\u0027ll do that \nany other time.",
       "parentUuid": "3fb998e3_806647a4",
+      "revId": "1b0743b082bb2e1658dfd40beaaf224866f09a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1bfc2bed_ed1ce3dd",
+        "filename": "media/gpu/va_surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-30T03:39:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6817f83d_8e9c6bb4",
       "revId": "1b0743b082bb2e1658dfd40beaaf224866f09a15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
