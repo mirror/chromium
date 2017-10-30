@@ -76,6 +76,7 @@ PATCHES = [
     'libxml2-2.9.4-security-CVE-2017-7376-nanohttp-out-of-bounds-write.patch',
     'libxml2-2.9.4-security-xpath-nodetab-uaf.patch',
     'chromium-issue-708434.patch',
+    'control-flow-integrity-indirect-call.patch',
 ]
 
 

@@ -1,0 +1,46 @@
+Control Flow Integrity [1] indirect call checking verifies that function
+pointers actually point to functions of a given type at run-time. xmlNop and
+xmlStrdup are both used with mismatched type signatures, fix xmlNop to match
+the type signature of xmlInputReadCallback and use strdup for xmlMemStrdup since
+it correctl ymatches the xmlStrdupFunc type signature.
+
+https://crbug.com/779808
+https://bugzilla.gnome.org/show_bug.cgi?id=786134
+
+[1] https://www.chromium.org/developers/testing/control-flow-integrity
+
+--- a/globals.c
++++ b/globals.c
+@@ -131,7 +131,7 @@ xmlReallocFunc xmlRealloc = (xmlReallocFunc) realloc;
+  *
+  * Returns the copy of the string or NULL in case of error
+  */
+-xmlStrdupFunc xmlMemStrdup = (xmlStrdupFunc) xmlStrdup;
++xmlStrdupFunc xmlMemStrdup = (xmlStrdupFunc) strdup;
+ #endif /* DEBUG_MEMORY_LOCATION || DEBUG_MEMORY */
+ 
+ #include <libxml/threads.h>
+--- a/libxml.h
++++ b/libxml.h
+@@ -96,7 +96,7 @@ int __xmlRandom(void);
+ #endif
+ 
+ XMLPUBFUN xmlChar * XMLCALL xmlEscapeFormatString(xmlChar **msg);
+-int xmlNop(void);
++int xmlNop(void *context, char *buffer, int len);
+ 
+ #ifdef IN_LIBXML
+ #ifdef __GNUC__
+diff --git a/xmlIO.c b/xmlIO.c
+index c699d52c..c7797e9f 100644
+--- a/xmlIO.c
++++ b/xmlIO.c
+@@ -808,7 +808,7 @@ xmlCheckFilename (const char *path)
+  * Returns zero
+  */
+ int
+-xmlNop(void) {
++xmlNop(void *context, char *buffer, int len) {
+     return(0);
+ }
+ 

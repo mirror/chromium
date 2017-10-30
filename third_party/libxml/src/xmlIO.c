@@ -808,7 +808,7 @@ xmlCheckFilename (const char *path)
  * Returns zero
  */
 int
-xmlNop(void) {
+xmlNop(void *context, char *buffer, int len) {
     return(0);
 }
 
