@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d82a39ec_e523ce62",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-30T17:19:04Z",
+      "side": 1,
+      "message": "Can we define some CSS vars for this file:\n\n:root {\n  --camera-stream-crop-size: 406px;\n  --camera-stream-preview-size: 280px;\n}\n\nOr whatnot. That should help make this CSS a bit more readable I think.",
+      "revId": "29f9b53ad3c8902305a9f5068229e0187fa0e094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
