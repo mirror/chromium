@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "736e88f2_7a55098f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-30T23:43:59Z",
+      "side": 1,
+      "message": "I prefer not to close the sheet if we know we\u0027re going to immediately re-open it. We could try to add some logic to BottomSheetContentController#onSheetContentChanged()  to destroy the other sheet contents (history, etc.) if we detect the tab model has switched.",
+      "range": {
+        "startLine": 373,
+        "startChar": 20,
+        "endLine": 375,
+        "endChar": 21
+      },
+      "revId": "dc7e6378a1713233c03cfb1497253b0c3a66e538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
