@@ -65,7 +65,8 @@ class CORE_EXPORT HTMLAreaElement final : public HTMLAnchorElement {
   bool IsKeyboardFocusable() const override;
   bool IsMouseFocusable() const override;
   bool LayoutObjectIsFocusable() const override;
-  void UpdateFocusAppearance(SelectionBehaviorOnFocus) override;
+  void UpdateFocusAppearance(SelectionBehaviorOnFocus,
+                             const FocusOptions& = FocusOptions()) override;
   void SetFocused(bool, WebFocusType) override;
 
   enum Shape { kDefault, kPoly, kRect, kCircle };
