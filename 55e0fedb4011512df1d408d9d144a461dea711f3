@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f015eb3c_bbdf0131",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DOMStorageItemsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-30T21:39:26Z",
+      "side": 1,
+      "message": "Should we also return here?",
+      "revId": "55e0fedb4011512df1d408d9d144a461dea711f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c53520_f1ac49a4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DOMStorageItemsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-30T21:39:26Z",
+      "side": 1,
+      "message": "So the only async part there is requesting content, which we know we have. How about we provide a synchronous interface to create preview from string and ditch the content provider here?",
+      "revId": "55e0fedb4011512df1d408d9d144a461dea711f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
