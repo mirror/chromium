@@ -16,6 +16,24 @@
       "revId": "e290f176907c293600367f527f936edb186cf4a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675be9aa_eda40a27",
+        "filename": "tools/blink_rename_merge_helper/data/idl_blocklist.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1242628
+      },
+      "writtenOn": "2017-10-30T15:37:10Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "a2f24101_468ef06b",
+      "revId": "e290f176907c293600367f527f936edb186cf4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
