@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b4622a9_2588a9a2",
+        "filename": "testing/buildbot/chromium.android.fyi.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 3554,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-10-30T19:05:10Z",
+      "side": 1,
+      "message": "Do we need it here given that this information is also set in slave?",
+      "revId": "1115e2a78120e0473c88d6aa8e1baf769f314e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
