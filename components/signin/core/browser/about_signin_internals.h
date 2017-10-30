@@ -24,6 +24,8 @@ namespace user_prefs {
 class PrefRegistrySyncable;
 }
 
+namespace signin {
+
 class AccountTrackerService;
 class ProfileOAuth2TokenService;
 class SigninClient;
@@ -227,5 +229,7 @@ class AboutSigninInternals
 
   DISALLOW_COPY_AND_ASSIGN(AboutSigninInternals);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_ABOUT_SIGNIN_INTERNALS_H_

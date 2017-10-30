@@ -35,10 +35,10 @@ class Profile;
 // supervised user experience, fetch information about the parent(s)).
 class ChildAccountService : public KeyedService,
                             public FamilyInfoFetcher::Consumer,
-                            public AccountTrackerService::Observer,
+                            public signin::AccountTrackerService::Observer,
                             public syncer::SyncServiceObserver,
                             public SupervisedUserService::Delegate,
-                            public GaiaCookieManagerService::Observer {
+                            public signin::GaiaCookieManagerService::Observer {
  public:
   ~ChildAccountService() override;
 
@@ -81,8 +81,8 @@ class ChildAccountService : public KeyedService,
   void SetIsChildAccount(bool is_child_account);
 
   // AccountTrackerService::Observer implementation.
-  void OnAccountUpdated(const AccountInfo& info) override;
-  void OnAccountRemoved(const AccountInfo& info) override;
+  void OnAccountUpdated(const signin::AccountInfo& info) override;
+  void OnAccountRemoved(const signin::AccountInfo& info) override;
 
   // FamilyInfoFetcher::Consumer implementation.
   void OnGetFamilyMembersSuccess(
@@ -123,7 +123,7 @@ class ChildAccountService : public KeyedService,
   ScopedObserver<syncer::SyncService, syncer::SyncServiceObserver>
       sync_service_observer_;
 
-  GaiaCookieManagerService* gaia_cookie_manager_;
+  signin::GaiaCookieManagerService* gaia_cookie_manager_;
 
   base::CallbackList<void(bool)> google_auth_state_observers_;
 

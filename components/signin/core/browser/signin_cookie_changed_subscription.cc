@@ -10,6 +10,8 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
+namespace signin {
+
 SigninCookieChangedSubscription::SubscriptionHolder::SubscriptionHolder() {
 }
 
@@ -102,3 +104,5 @@ void SigninCookieChangedSubscription::OnCookieChanged(
     callback_.Run(cookie, cause);
   }
 }
+
+}  // namespace signin

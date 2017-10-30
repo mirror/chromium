@@ -16,6 +16,8 @@ namespace net {
 class URLRequestContextGetter;
 }
 
+namespace signin {
+
 class AccountFetcherService;
 
 // An account information fetcher that gets an OAuth token of appropriate
@@ -59,5 +61,7 @@ class AccountInfoFetcher : public OAuth2TokenService::Consumer,
 
   DISALLOW_COPY_AND_ASSIGN(AccountInfoFetcher);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_ACCOUNT_INFO_FETCHER_H_

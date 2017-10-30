@@ -7,6 +7,8 @@
 
 #include <string>
 
+namespace signin {
+
 // Information about a specific account.
 struct AccountInfo {
   AccountInfo();
@@ -28,5 +30,7 @@ struct AccountInfo {
   // one field was updated.
   bool UpdateWith(const AccountInfo& other);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_ACCOUNT_INFO_H_

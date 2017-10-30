@@ -47,12 +47,12 @@ void ChromeSigninStatusMetricsProviderDelegate::Initialize() {
     factory->AddObserver(this);
 }
 
-AccountsStatus
+signin::AccountsStatus
 ChromeSigninStatusMetricsProviderDelegate::GetStatusOfAllAccounts() {
   ProfileManager* profile_manager = g_browser_process->profile_manager();
   std::vector<Profile*> profile_list = profile_manager->GetLoadedProfiles();
 
-  AccountsStatus accounts_status;
+  signin::AccountsStatus accounts_status;
   accounts_status.num_accounts = profile_list.size();
   for (Profile* profile : profile_list) {
 #if !defined(OS_ANDROID)
@@ -63,7 +63,7 @@ ChromeSigninStatusMetricsProviderDelegate::GetStatusOfAllAccounts() {
 #endif
     accounts_status.num_opened_accounts++;
 
-    SigninManager* manager =
+    signin::SigninManager* manager =
         SigninManagerFactory::GetForProfile(profile->GetOriginalProfile());
     if (manager && manager->IsAuthenticated())
       accounts_status.num_signed_in_accounts++;
@@ -72,14 +72,14 @@ ChromeSigninStatusMetricsProviderDelegate::GetStatusOfAllAccounts() {
   return accounts_status;
 }
 
-std::vector<SigninManager*>
+std::vector<signin::SigninManager*>
 ChromeSigninStatusMetricsProviderDelegate::GetSigninManagersForAllAccounts() {
   ProfileManager* profile_manager = g_browser_process->profile_manager();
   std::vector<Profile*> profiles = profile_manager->GetLoadedProfiles();
 
-  std::vector<SigninManager*> managers;
+  std::vector<signin::SigninManager*> managers;
   for (Profile* profile : profiles) {
-    SigninManager* manager =
+    signin::SigninManager* manager =
         SigninManagerFactory::GetForProfileIfExists(profile);
     if (manager)
       managers.push_back(manager);
@@ -90,7 +90,7 @@ ChromeSigninStatusMetricsProviderDelegate::GetSigninManagersForAllAccounts() {
 
 void ChromeSigninStatusMetricsProviderDelegate::OnBrowserAdded(
     Browser* browser) {
-  SigninManager* manager =
+  signin::SigninManager* manager =
       SigninManagerFactory::GetForProfile(browser->profile());
 
   // Nothing will change if the opened browser is in incognito mode.
@@ -102,30 +102,33 @@ void ChromeSigninStatusMetricsProviderDelegate::OnBrowserAdded(
 }
 
 void ChromeSigninStatusMetricsProviderDelegate::SigninManagerCreated(
-    SigninManagerBase* manager) {
+    signin::SigninManagerBase* manager) {
   owner()->OnSigninManagerCreated(manager);
 }
 
 void ChromeSigninStatusMetricsProviderDelegate::SigninManagerShutdown(
-    SigninManagerBase* manager) {
+    signin::SigninManagerBase* manager) {
   owner()->OnSigninManagerShutdown(manager);
 }
 
 void ChromeSigninStatusMetricsProviderDelegate::UpdateStatusWhenBrowserAdded(
     bool signed_in) {
 #if !defined(OS_ANDROID)
-  SigninStatusMetricsProviderBase::SigninStatus status =
+  signin::SigninStatusMetricsProviderBase::SigninStatus status =
       owner()->signin_status();
 
   // NOTE: If |status| is MIXED_SIGNIN_STATUS, this method
   // intentionally does not update it.
-  if ((status == SigninStatusMetricsProviderBase::ALL_PROFILES_NOT_SIGNED_IN &&
+  if ((status == signin::SigninStatusMetricsProviderBase::
+                     ALL_PROFILES_NOT_SIGNED_IN &&
        signed_in) ||
-      (status == SigninStatusMetricsProviderBase::ALL_PROFILES_SIGNED_IN &&
+      (status ==
+           signin::SigninStatusMetricsProviderBase::ALL_PROFILES_SIGNED_IN &&
        !signed_in)) {
     owner()->UpdateSigninStatus(
-        SigninStatusMetricsProviderBase::MIXED_SIGNIN_STATUS);
-  } else if (status == SigninStatusMetricsProviderBase::UNKNOWN_SIGNIN_STATUS) {
+        signin::SigninStatusMetricsProviderBase::MIXED_SIGNIN_STATUS);
+  } else if (status ==
+             signin::SigninStatusMetricsProviderBase::UNKNOWN_SIGNIN_STATUS) {
     // If when function ProvideCurrentSessionData() is called, Chrome is
     // running in the background with no browser window opened, |signin_status_|
     // will be reset to |UNKNOWN_SIGNIN_STATUS|. Then this newly added browser
@@ -133,8 +136,9 @@ void ChromeSigninStatusMetricsProviderDelegate::UpdateStatusWhenBrowserAdded(
     // the whole status.
     owner()->UpdateSigninStatus(
         signed_in
-            ? SigninStatusMetricsProviderBase::ALL_PROFILES_SIGNED_IN
-            : SigninStatusMetricsProviderBase::ALL_PROFILES_NOT_SIGNED_IN);
+            ? signin::SigninStatusMetricsProviderBase::ALL_PROFILES_SIGNED_IN
+            : signin::SigninStatusMetricsProviderBase::
+                  ALL_PROFILES_NOT_SIGNED_IN);
   }
 #endif
 }

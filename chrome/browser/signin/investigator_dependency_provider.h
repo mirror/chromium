@@ -12,7 +12,7 @@
 // This version should work for anything with a profile object, like desktop and
 // Android.
 class InvestigatorDependencyProvider
-    : public SigninInvestigator::DependencyProvider {
+    : public signin::SigninInvestigator::DependencyProvider {
  public:
   explicit InvestigatorDependencyProvider(Profile* profile);
   ~InvestigatorDependencyProvider() override;

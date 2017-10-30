@@ -45,13 +45,12 @@ struct EnumTraits<signin::mojom::AccountType, AccountType> {
   }
 };
 
-
 template <>
-struct StructTraits<signin::mojom::AccountIdDataView, AccountId> {
+struct StructTraits<signin::mojom::AccountIdDataView, signin::AccountId> {
   static AccountType account_type(const AccountId& r) {
     return r.GetAccountType();
   }
-  static std::string id(const AccountId& r) {
+  static std::string id(const signin::AccountId& r) {
     switch (r.GetAccountType()) {
       case AccountType::GOOGLE:
         return r.GetGaiaId();
@@ -66,11 +65,12 @@ struct StructTraits<signin::mojom::AccountIdDataView, AccountId> {
     NOTREACHED();
     return std::string();
   }
-  static std::string user_email(const AccountId& r) {
+  static std::string user_email(const signin::AccountId& r) {
     return r.GetUserEmail();
   }
 
-  static bool Read(signin::mojom::AccountIdDataView data, AccountId* out) {
+  static bool Read(signin::mojom::AccountIdDataView data,
+                   signin::AccountId* out) {
     AccountType account_type;
     std::string id;
     std::string user_email;
@@ -82,10 +82,10 @@ struct StructTraits<signin::mojom::AccountIdDataView, AccountId> {
 
     switch (account_type) {
       case AccountType::GOOGLE:
-        *out = AccountId::FromUserEmailGaiaId(user_email, id);
+        *out = signin::AccountId::FromUserEmailGaiaId(user_email, id);
         break;
       case AccountType::ACTIVE_DIRECTORY:
-        *out = AccountId::AdFromUserEmailObjGuid(user_email, id);
+        *out = signin::AccountId::AdFromUserEmailObjGuid(user_email, id);
         break;
       case AccountType::UNKNOWN:
         // UNKNOWN type is used for users that have only email (e.g. in tests
@@ -94,16 +94,20 @@ struct StructTraits<signin::mojom::AccountIdDataView, AccountId> {
         if (user_email.empty())
           return false;
 
-        *out = AccountId::FromUserEmail(user_email);
+        *out = signin::AccountId::FromUserEmail(user_email);
         break;
     }
 
     return out->is_valid();
   }
 
-  static bool IsNull(const AccountId& input) { return !input.is_valid(); }
+  static bool IsNull(const signin::AccountId& input) {
+    return !input.is_valid();
+  }
 
-  static void SetToNull(AccountId* output) { *output = EmptyAccountId(); }
+  static void SetToNull(signin::AccountId* output) {
+    *output = EmptyAccountId();
+  }
 };
 
 }  // namespace mojo

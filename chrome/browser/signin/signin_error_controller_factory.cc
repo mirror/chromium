@@ -15,9 +15,9 @@ SigninErrorControllerFactory::SigninErrorControllerFactory()
 SigninErrorControllerFactory::~SigninErrorControllerFactory() {}
 
 // static
-SigninErrorController* SigninErrorControllerFactory::GetForProfile(
+signin::SigninErrorController* SigninErrorControllerFactory::GetForProfile(
     Profile* profile) {
-  return static_cast<SigninErrorController*>(
+  return static_cast<signin::SigninErrorController*>(
       GetInstance()->GetServiceForBrowserContext(profile, true));
 }
 
@@ -28,5 +28,5 @@ SigninErrorControllerFactory* SigninErrorControllerFactory::GetInstance() {
 
 KeyedService* SigninErrorControllerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
-  return new SigninErrorController();
+  return new signin::SigninErrorController();
 }

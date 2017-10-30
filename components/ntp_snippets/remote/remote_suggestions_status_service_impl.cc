@@ -17,7 +17,7 @@
 namespace ntp_snippets {
 
 RemoteSuggestionsStatusServiceImpl::RemoteSuggestionsStatusServiceImpl(
-    SigninManagerBase* signin_manager,
+    signin::SigninManagerBase* signin_manager,
     PrefService* pref_service,
     const std::string& additional_toggle_pref)
     : status_(RemoteSuggestionsStatus::EXPLICITLY_DISABLED),

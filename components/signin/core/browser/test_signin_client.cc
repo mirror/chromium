@@ -12,6 +12,8 @@
 #include "components/webdata/common/web_database_service.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+namespace signin {
+
 TestSigninClient::TestSigninClient(PrefService* pref_service)
     : pref_service_(pref_service), are_signin_cookies_allowed_(true) {}
 
@@ -115,3 +117,5 @@ void TestSigninClient::PreGaiaLogout(base::OnceClosure callback) {
     std::move(callback).Run();
   }
 }
+
+}  // namespace signin

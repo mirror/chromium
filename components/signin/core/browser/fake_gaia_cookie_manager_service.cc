@@ -10,6 +10,8 @@
 #include "google_apis/gaia/gaia_constants.h"
 #include "google_apis/gaia/gaia_urls.h"
 
+namespace signin {
+
 FakeGaiaCookieManagerService::FakeGaiaCookieManagerService(
     OAuth2TokenService* token_service,
     const std::string& source,
@@ -122,3 +124,5 @@ std::string FakeGaiaCookieManagerService::GetDefaultSourceForRequest() {
   // be able to find the URLs.
   return GaiaConstants::kChromeSource;
 }
+
+}  // namespace signin

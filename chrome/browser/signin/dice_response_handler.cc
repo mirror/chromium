@@ -133,8 +133,8 @@ DiceResponseHandler::DiceTokenFetcher::DiceTokenFetcher(
     const std::string& gaia_id,
     const std::string& email,
     const std::string& authorization_code,
-    SigninClient* signin_client,
-    AccountReconcilor* account_reconcilor,
+    signin::SigninClient* signin_client,
+    signin::AccountReconcilor* account_reconcilor,
     std::unique_ptr<ProcessDiceHeaderObserver> observer,
     DiceResponseHandler* dice_response_handler)
     : gaia_id_(gaia_id),
@@ -148,7 +148,7 @@ DiceResponseHandler::DiceTokenFetcher::DiceTokenFetcher(
   DCHECK(dice_response_handler_);
   if (signin::IsDiceMigrationEnabled()) {
     account_reconcilor_lock_ =
-        base::MakeUnique<AccountReconcilor::Lock>(account_reconcilor);
+        base::MakeUnique<signin::AccountReconcilor::Lock>(account_reconcilor);
   }
   gaia_auth_fetcher_ = signin_client->CreateGaiaAuthFetcher(
       this, GaiaConstants::kChromeSource,
@@ -200,11 +200,11 @@ DiceResponseHandler* DiceResponseHandler::GetForProfile(Profile* profile) {
 }
 
 DiceResponseHandler::DiceResponseHandler(
-    SigninClient* signin_client,
-    SigninManager* signin_manager,
-    ProfileOAuth2TokenService* profile_oauth2_token_service,
-    AccountTrackerService* account_tracker_service,
-    AccountReconcilor* account_reconcilor)
+    signin::SigninClient* signin_client,
+    signin::SigninManager* signin_manager,
+    signin::ProfileOAuth2TokenService* profile_oauth2_token_service,
+    signin::AccountTrackerService* account_tracker_service,
+    signin::AccountReconcilor* account_reconcilor)
     : signin_manager_(signin_manager),
       signin_client_(signin_client),
       token_service_(profile_oauth2_token_service),

@@ -20,8 +20,11 @@ class InvalidationService;
 namespace net {
 class URLRequestContextGetter;
 }
-class AccountFetcherService;
 class OAuth2TokenService;
+
+namespace signin {
+
+class AccountFetcherService;
 
 class ChildAccountInfoFetcher {
  public:
@@ -37,5 +40,7 @@ class ChildAccountInfoFetcher {
 
   static void InitializeForTests();
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_CHILD_ACCOUNT_INFO_FETCHER_H_

@@ -419,7 +419,7 @@ PersonalDataManager::PersonalDataManager(const std::string& app_locale)
 void PersonalDataManager::Init(scoped_refptr<AutofillWebDataService> database,
                                PrefService* pref_service,
                                AccountTrackerService* account_tracker,
-                               SigninManagerBase* signin_manager,
+                               signin::SigninManagerBase* signin_manager,
                                bool is_off_the_record) {
   CountryNames::SetLocaleString(app_locale_);
 

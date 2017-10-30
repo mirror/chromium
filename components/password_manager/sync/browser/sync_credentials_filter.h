@@ -24,7 +24,7 @@ class SyncCredentialsFilter : public CredentialsFilter {
  public:
   typedef base::Callback<const syncer::SyncService*(void)>
       SyncServiceFactoryFunction;
-  typedef base::Callback<const SigninManagerBase*(void)>
+  typedef base::Callback<const signin::SigninManagerBase*(void)>
       SigninManagerFactoryFunction;
 
   // Implements protection of sync credentials. Uses |client| to get the last

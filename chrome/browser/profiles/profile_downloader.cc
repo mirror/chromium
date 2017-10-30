@@ -82,7 +82,7 @@ void ProfileDownloader::StartForAccount(const std::string& account_id) {
     return;
   }
 
-  SigninManagerBase* signin_manager =
+  signin::SigninManagerBase* signin_manager =
       SigninManagerFactory::GetForProfile(delegate_->GetBrowserProfile());
   account_id_ =
       account_id.empty() ?
@@ -313,7 +313,7 @@ void ProfileDownloader::OnGetTokenFailure(
       this, ProfileDownloaderDelegate::TOKEN_ERROR);
 }
 
-void ProfileDownloader::OnAccountUpdated(const AccountInfo& info) {
+void ProfileDownloader::OnAccountUpdated(const signin::AccountInfo& info) {
   if (info.account_id == account_id_ && info.IsValid()) {
     account_info_ = info;
 

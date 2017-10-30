@@ -23,7 +23,7 @@ class ProfileDownloader;
 // The results are saved in the profile info cache.
 class GAIAInfoUpdateService : public KeyedService,
                               public ProfileDownloaderDelegate,
-                              public SigninManagerBase::Observer {
+                              public signin::SigninManagerBase::Observer {
  public:
   explicit GAIAInfoUpdateService(Profile* profile);
   ~GAIAInfoUpdateService() override;

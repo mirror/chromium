@@ -11,6 +11,8 @@
 #include "components/signin/core/browser/gaia_cookie_manager_service.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 
+namespace signin {
+
 class FakeGaiaCookieManagerService : public GaiaCookieManagerService {
  public:
   FakeGaiaCookieManagerService(OAuth2TokenService* token_service,
@@ -48,5 +50,7 @@ class FakeGaiaCookieManagerService : public GaiaCookieManagerService {
 
   DISALLOW_COPY_AND_ASSIGN(FakeGaiaCookieManagerService);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_FAKE_GAIA_COOKIE_MANAGER_SERVICE_H_

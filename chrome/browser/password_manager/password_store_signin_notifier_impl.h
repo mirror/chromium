@@ -16,8 +16,9 @@ namespace password_manager {
 
 // Responsible for subscribing to Chrome sign-in events and passing them to
 // PasswordStore.
-class PasswordStoreSigninNotifierImpl : public PasswordStoreSigninNotifier,
-                                        public SigninManagerBase::Observer {
+class PasswordStoreSigninNotifierImpl
+    : public PasswordStoreSigninNotifier,
+      public signin::SigninManagerBase::Observer {
  public:
   explicit PasswordStoreSigninNotifierImpl(Profile* profile);
   ~PasswordStoreSigninNotifierImpl() override;

@@ -104,28 +104,28 @@ bool AccountConsistencyHandler::ShouldAllowResponse(NSURLResponse* response,
   if (!manage_accounts_header)
     return true;
 
-  signin::ManageAccountsParams params = signin::BuildManageAccountsParams(
+  ManageAccountsParams params = BuildManageAccountsParams(
       base::SysNSStringToUTF8(manage_accounts_header));
 
   account_reconcilor_->OnReceivedManageAccountsResponse(params.service_type);
   switch (params.service_type) {
-    case signin::GAIA_SERVICE_TYPE_INCOGNITO: {
+    case GAIA_SERVICE_TYPE_INCOGNITO: {
       GURL continue_url = GURL(params.continue_url);
       DLOG_IF(ERROR, !params.continue_url.empty() && !continue_url.is_valid())
           << "Invalid continuation URL: \"" << continue_url << "\"";
       [delegate_ onGoIncognito:continue_url];
       break;
     }
-    case signin::GAIA_SERVICE_TYPE_SIGNUP:
-    case signin::GAIA_SERVICE_TYPE_ADDSESSION:
+    case GAIA_SERVICE_TYPE_SIGNUP:
+    case GAIA_SERVICE_TYPE_ADDSESSION:
       [delegate_ onAddAccount];
       break;
-    case signin::GAIA_SERVICE_TYPE_SIGNOUT:
-    case signin::GAIA_SERVICE_TYPE_REAUTH:
-    case signin::GAIA_SERVICE_TYPE_DEFAULT:
+    case GAIA_SERVICE_TYPE_SIGNOUT:
+    case GAIA_SERVICE_TYPE_REAUTH:
+    case GAIA_SERVICE_TYPE_DEFAULT:
       [delegate_ onManageAccounts];
       break;
-    case signin::GAIA_SERVICE_TYPE_NONE:
+    case GAIA_SERVICE_TYPE_NONE:
       NOTREACHED();
       break;
   }
@@ -362,9 +362,9 @@ void AccountConsistencyService::ApplyCookieRequests() {
   double expiration_date = 0;
   switch (cookie_requests_.front().request_type) {
     case ADD_CHROME_CONNECTED_COOKIE:
-      cookie_value = signin::BuildMirrorRequestCookieIfPossible(
+      cookie_value = BuildMirrorRequestCookieIfPossible(
           url, signin_manager_->GetAuthenticatedAccountInfo().gaia,
-          cookie_settings_.get(), signin::PROFILE_MODE_DEFAULT);
+          cookie_settings_.get(), PROFILE_MODE_DEFAULT);
       if (cookie_value.empty()) {
         // Don't add the cookie. Tentatively correct |last_cookie_update_map_|.
         last_cookie_update_map_.erase(cookie_requests_.front().domain);

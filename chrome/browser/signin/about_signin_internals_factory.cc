@@ -30,9 +30,9 @@ AboutSigninInternalsFactory::AboutSigninInternalsFactory()
 AboutSigninInternalsFactory::~AboutSigninInternalsFactory() {}
 
 // static
-AboutSigninInternals* AboutSigninInternalsFactory::GetForProfile(
+signin::AboutSigninInternals* AboutSigninInternalsFactory::GetForProfile(
     Profile* profile) {
-  return static_cast<AboutSigninInternals*>(
+  return static_cast<signin::AboutSigninInternals*>(
       GetInstance()->GetServiceForBrowserContext(profile, true));
 }
 
@@ -43,13 +43,13 @@ AboutSigninInternalsFactory* AboutSigninInternalsFactory::GetInstance() {
 
 void AboutSigninInternalsFactory::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* user_prefs) {
-  AboutSigninInternals::RegisterPrefs(user_prefs);
+  signin::AboutSigninInternals::RegisterPrefs(user_prefs);
 }
 
 KeyedService* AboutSigninInternalsFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
   Profile* profile = Profile::FromBrowserContext(context);
-  AboutSigninInternals* service = new AboutSigninInternals(
+  signin::AboutSigninInternals* service = new signin::AboutSigninInternals(
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
       AccountTrackerServiceFactory::GetForProfile(profile),
       SigninManagerFactory::GetForProfile(profile),

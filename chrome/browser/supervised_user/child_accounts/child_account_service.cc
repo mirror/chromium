@@ -82,7 +82,7 @@ ChildAccountService::ChildAccountService(Profile* profile)
       family_fetch_backoff_(&kBackoffPolicy),
       sync_service_observer_(this),
       gaia_cookie_manager_(
-          GaiaCookieManagerServiceFactory::GetForProfile(profile)),
+          signin::GaiaCookieManagerServiceFactory::GetForProfile(profile)),
       weak_ptr_factory_(this) {
   gaia_cookie_manager_->AddObserver(this);
 }
@@ -117,7 +117,8 @@ void ChildAccountService::Init() {
 
   // If we're already signed in, check the account immediately just to be sure.
   // (We might have missed an update before registering as an observer.)
-  SigninManagerBase* signin = SigninManagerFactory::GetForProfile(profile_);
+  signin::SigninManagerBase* signin =
+      SigninManagerFactory::GetForProfile(profile_);
   if (signin->IsAuthenticated()) {
     OnAccountUpdated(
         AccountTrackerServiceFactory::GetForProfile(profile_)->GetAccountInfo(
@@ -261,7 +262,7 @@ void ChildAccountService::SetIsChildAccount(bool is_child_account) {
   status_received_callback_list_.clear();
 }
 
-void ChildAccountService::OnAccountUpdated(const AccountInfo& info) {
+void ChildAccountService::OnAccountUpdated(const signin::AccountInfo& info) {
   // This method may get called when the account info isn't complete yet.
   // We deliberately don't check for that, as we are only interested in the
   // child account status.
@@ -279,7 +280,7 @@ void ChildAccountService::OnAccountUpdated(const AccountInfo& info) {
   SetIsChildAccount(info.is_child_account);
 }
 
-void ChildAccountService::OnAccountRemoved(const AccountInfo& info) {
+void ChildAccountService::OnAccountRemoved(const signin::AccountInfo& info) {
   SetIsChildAccount(false);
 }
 

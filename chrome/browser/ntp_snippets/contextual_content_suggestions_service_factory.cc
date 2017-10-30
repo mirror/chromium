@@ -90,7 +90,7 @@ ContextualContentSuggestionsServiceFactory::BuildServiceInstanceFor(
   }
 
   PrefService* pref_service = profile->GetPrefs();
-  SigninManagerBase* signin_manager =
+  signin::SigninManagerBase* signin_manager =
       SigninManagerFactory::GetForProfile(profile);
   OAuth2TokenService* token_service =
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile);

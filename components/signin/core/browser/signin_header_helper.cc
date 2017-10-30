@@ -64,7 +64,7 @@ std::string BuildMirrorRequestCookieIfPossible(
     const std::string& account_id,
     const content_settings::CookieSettings* cookie_settings,
     int profile_mode_mask) {
-  return signin::ChromeConnectedHeaderHelper::BuildRequestCookieIfPossible(
+  return ChromeConnectedHeaderHelper::BuildRequestCookieIfPossible(
       url, account_id, cookie_settings, profile_mode_mask);
 }
 

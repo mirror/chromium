@@ -13,8 +13,11 @@
 class Browser;
 class PrefRegistrySimple;
 class Profile;
-class SigninErrorController;
 namespace base { class FilePath; }
+
+namespace signin {
+class SigninErrorController;
+}
 
 namespace profiles {
 
@@ -81,7 +84,7 @@ void UpdateGaiaProfileInfoIfNeeded(Profile* profile);
 // Returns the sign-in error controller for the given profile.  Some profiles,
 // like guest profiles, may not have a controller so this function may return
 // NULL.
-SigninErrorController* GetSigninErrorController(Profile* profile);
+signin::SigninErrorController* GetSigninErrorController(Profile* profile);
 
 // If the current active profile (given by prefs::kProfileLastUsed) is locked,
 // changes the active profile to the Guest profile. Returns true if the active

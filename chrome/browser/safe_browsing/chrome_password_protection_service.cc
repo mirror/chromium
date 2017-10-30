@@ -442,7 +442,7 @@ void ChromePasswordProtectionService::LogPasswordReuseDialogInteraction(
 
 PasswordProtectionService::SyncAccountType
 ChromePasswordProtectionService::GetSyncAccountType() {
-  const AccountInfo account_info = GetAccountInfo();
+  const signin::AccountInfo account_info = GetAccountInfo();
   if (account_info.account_id.empty() || account_info.hosted_domain.empty()) {
     return LoginReputationClientRequest::PasswordReuseEvent::NOT_SIGNED_IN;
   }
@@ -638,16 +638,16 @@ bool ChromePasswordProtectionService::UserClickedThroughSBInterstitial(
          current_threat_type == SB_THREAT_TYPE_URL_CLIENT_SIDE_MALWARE;
 }
 
-AccountInfo ChromePasswordProtectionService::GetAccountInfo() {
+signin::AccountInfo ChromePasswordProtectionService::GetAccountInfo() {
   SigninManagerBase* signin_manager =
       SigninManagerFactory::GetForProfileIfExists(profile_);
 
   return signin_manager ? signin_manager->GetAuthenticatedAccountInfo()
-                        : AccountInfo();
+                        : signin::AccountInfo();
 }
 
 GURL ChromePasswordProtectionService::GetChangePasswordURL() {
-  const AccountInfo account_info = GetAccountInfo();
+  const signin::AccountInfo account_info = GetAccountInfo();
   std::string account_email = account_info.email;
   // This page will prompt for re-auth and then will prompt for a new password.
   std::string account_url =

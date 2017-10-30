@@ -46,6 +46,8 @@ bool IsRefreshTokenDeviceIdExperimentEnabled() {
 
 }
 
+namespace signin {
+
 // This pref used to be in the AccountTrackerService, hence its string value.
 const char AccountFetcherService::kLastUpdatePref[] =
     "account_tracker_service_last_update";
@@ -339,3 +341,5 @@ void AccountFetcherService::OnRefreshTokensLoaded() {
   refresh_tokens_loaded_ = true;
   MaybeEnableNetworkFetches();
 }
+
+}  // namespace signin

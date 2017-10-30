@@ -6,11 +6,14 @@
 #define COMPONENTS_SIGNIN_CORE_BROWSER_SIGNIN_ERROR_CONTROLLER_H_
 
 #include <set>
+
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "google_apis/gaia/google_service_auth_error.h"
+
+namespace signin {
 
 // Keep track of auth errors and expose them to observers in the UI. Services
 // that wish to expose auth errors to the user should register an
@@ -76,5 +79,7 @@ class SigninErrorController : public KeyedService {
 
   DISALLOW_COPY_AND_ASSIGN(SigninErrorController);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_SIGNIN_ERROR_CONTROLLER_H_

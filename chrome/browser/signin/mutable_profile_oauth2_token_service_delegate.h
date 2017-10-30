@@ -25,9 +25,9 @@ class MutableProfileOAuth2TokenServiceDelegate
       public net::NetworkChangeNotifier::NetworkChangeObserver {
  public:
   MutableProfileOAuth2TokenServiceDelegate(
-      SigninClient* client,
-      SigninErrorController* signin_error_controller,
-      AccountTrackerService* account_tracker_service);
+      signin::SigninClient* client,
+      signin::SigninErrorController* signin_error_controller,
+      signin::AccountTrackerService* account_tracker_service);
   ~MutableProfileOAuth2TokenServiceDelegate() override;
 
   // OAuth2TokenServiceDelegate overrides.
@@ -173,9 +173,9 @@ class MutableProfileOAuth2TokenServiceDelegate
   net::BackoffEntry backoff_entry_;
   GoogleServiceAuthError backoff_error_;
 
-  SigninClient* client_;
-  SigninErrorController* signin_error_controller_;
-  AccountTrackerService* account_tracker_service_;
+  signin::SigninClient* client_;
+  signin::SigninErrorController* signin_error_controller_;
+  signin::AccountTrackerService* account_tracker_service_;
 
   DISALLOW_COPY_AND_ASSIGN(MutableProfileOAuth2TokenServiceDelegate);
 };

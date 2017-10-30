@@ -10,6 +10,8 @@
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/signin_metrics.h"
 
+namespace signin {
+
 FakeSigninManagerBase::FakeSigninManagerBase(
     SigninClient* client,
     AccountTrackerService* account_tracker_service)
@@ -100,5 +102,7 @@ void FakeSigninManager::DoSignOut(
   for (auto& observer : observer_list_)
     observer.GoogleSignedOut(account_id, username);
 }
+
+}  // namespace signin
 
 #endif  // !defined (OS_CHROMEOS)

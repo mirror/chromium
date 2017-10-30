@@ -11,6 +11,10 @@
 
 class Profile;
 
+namespace signin {
+class SigninClient;
+}
+
 // Singleton that owns all ChromeSigninClients and associates them with
 // Profiles.
 class ChromeSigninClientFactory : public BrowserContextKeyedServiceFactory {
@@ -18,7 +22,7 @@ class ChromeSigninClientFactory : public BrowserContextKeyedServiceFactory {
   // Returns the instance of SigninClient associated with this profile
   // (creating one if none exists). Returns NULL if this profile cannot have an
   // SigninClient (for example, if |profile| is incognito).
-  static SigninClient* GetForProfile(Profile* profile);
+  static signin::SigninClient* GetForProfile(Profile* profile);
 
   // Returns an instance of the factory singleton.
   static ChromeSigninClientFactory* GetInstance();

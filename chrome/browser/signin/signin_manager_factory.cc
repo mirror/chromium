@@ -46,31 +46,32 @@ const SigninManagerBase* SigninManagerFactory::GetForProfileIfExists(
 }
 
 // static
-SigninManagerBase* SigninManagerFactory::GetForProfile(
+signin::SigninManagerBase* SigninManagerFactory::GetForProfile(
     Profile* profile) {
-  return static_cast<SigninManagerBase*>(
+  return static_cast<signin::SigninManagerBase*>(
       GetInstance()->GetServiceForBrowserContext(profile, true));
 }
 
 #else
 // static
-SigninManager* SigninManagerFactory::GetForProfile(Profile* profile) {
-  return static_cast<SigninManager*>(
+signin::SigninManager* SigninManagerFactory::GetForProfile(Profile* profile) {
+  return static_cast<signin::SigninManager*>(
       GetInstance()->GetServiceForBrowserContext(profile, true));
 }
 
 // static
-SigninManager* SigninManagerFactory::GetForProfileIfExists(Profile* profile) {
-  return static_cast<SigninManager*>(
+signin::SigninManager* SigninManagerFactory::GetForProfileIfExists(
+    Profile* profile) {
+  return static_cast<signin::SigninManager*>(
       GetInstance()->GetServiceForBrowserContext(profile, false));
 }
 
 // static
-const SigninManager* SigninManagerFactory::GetForProfileIfExists(
+const signin::SigninManager* SigninManagerFactory::GetForProfileIfExists(
     const Profile* profile) {
-  return static_cast<const SigninManager*>(
-      GetInstance()->GetServiceForBrowserContext(
-          const_cast<Profile*>(profile), false));
+  return static_cast<const signin::SigninManager*>(
+      GetInstance()->GetServiceForBrowserContext(const_cast<Profile*>(profile),
+                                                 false));
 }
 #endif
 
@@ -81,13 +82,13 @@ SigninManagerFactory* SigninManagerFactory::GetInstance() {
 
 void SigninManagerFactory::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
-  SigninManagerBase::RegisterProfilePrefs(registry);
+  signin::SigninManagerBase::RegisterProfilePrefs(registry);
   LocalAuth::RegisterLocalAuthPrefs(registry);
 }
 
 // static
 void SigninManagerFactory::RegisterPrefs(PrefRegistrySimple* registry) {
-  SigninManagerBase::RegisterPrefs(registry);
+  signin::SigninManagerBase::RegisterPrefs(registry);
 }
 
 void SigninManagerFactory::AddObserver(Observer* observer) {
@@ -99,25 +100,24 @@ void SigninManagerFactory::RemoveObserver(Observer* observer) {
 }
 
 void SigninManagerFactory::NotifyObserversOfSigninManagerCreationForTesting(
-    SigninManagerBase* manager) {
+    signin::SigninManagerBase* manager) {
   for (Observer& observer : observer_list_)
     observer.SigninManagerCreated(manager);
 }
 
 KeyedService* SigninManagerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
-  SigninManagerBase* service = NULL;
+  signin::SigninManagerBase* service = NULL;
   Profile* profile = static_cast<Profile*>(context);
-  SigninClient* client =
+  signin::SigninClient* client =
       ChromeSigninClientFactory::GetInstance()->GetForProfile(profile);
 #if defined(OS_CHROMEOS)
   service = new SigninManagerBase(
       client,
       AccountTrackerServiceFactory::GetForProfile(profile));
 #else
-  service = new SigninManager(
-      client,
-      ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
+  service = new signin::SigninManager(
+      client, ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
       AccountTrackerServiceFactory::GetForProfile(profile),
       GaiaCookieManagerServiceFactory::GetForProfile(profile));
   AccountFetcherServiceFactory::GetForProfile(profile);
@@ -130,7 +130,7 @@ KeyedService* SigninManagerFactory::BuildServiceInstanceFor(
 
 void SigninManagerFactory::BrowserContextShutdown(
     content::BrowserContext* context) {
-  SigninManagerBase* manager = static_cast<SigninManagerBase*>(
+  signin::SigninManagerBase* manager = static_cast<signin::SigninManagerBase*>(
       GetServiceForBrowserContext(context, false));
   if (manager) {
     for (Observer& observer : observer_list_)

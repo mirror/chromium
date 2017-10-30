@@ -13,6 +13,8 @@
 using signin_metrics::AccountEquality;
 using signin_metrics::LogAccountEquality;
 
+namespace signin {
+
 namespace {
 void LogSigninScenario(InvestigatedScenario scenario) {
   UMA_HISTOGRAM_ENUMERATION(
@@ -78,3 +80,5 @@ bool SigninInvestigator::IsUpgradeHighRisk() {
   // TODO(skym): Add logic to make this decision, crbug.com/572754.
   return false;
 }
+
+}  // namespace signin

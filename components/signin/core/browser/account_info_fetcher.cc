@@ -10,6 +10,8 @@
 #include "components/signin/core/browser/account_fetcher_service.h"
 #include "google_apis/gaia/gaia_constants.h"
 
+namespace signin {
+
 AccountInfoFetcher::AccountInfoFetcher(
     OAuth2TokenService* token_service,
     net::URLRequestContextGetter* request_context_getter,
@@ -82,3 +84,5 @@ void AccountInfoFetcher::OnNetworkError(int response_code) {
   LOG(ERROR) << "OnNetworkError " << response_code;
   service_->OnUserInfoFetchFailure(account_id_);
 }
+
+}  // namespace signin

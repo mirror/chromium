@@ -30,7 +30,7 @@ class PrefService;
 class Profile;
 
 class SupervisedUserSyncService : public KeyedService,
-                                  public SigninManagerBase::Observer,
+                                  public signin::SigninManagerBase::Observer,
                                   public syncer::SyncableService {
  public:
   // For use with GetSupervisedUsersAsync() below.

@@ -87,10 +87,12 @@ KeyedService* GCMProfileServiceFactory::BuildServiceInstanceFor(
       profile->GetPrefs(), profile->GetPath(), profile->GetRequestContext(),
       chrome::GetChannel(),
       gcm::GetProductCategoryForSubtypes(profile->GetPrefs()),
-      std::unique_ptr<ProfileIdentityProvider>(new ProfileIdentityProvider(
-          SigninManagerFactory::GetForProfile(profile),
-          ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
-          LoginUIServiceFactory::GetShowLoginPopupCallbackForProfile(profile))),
+      std::unique_ptr<signin::ProfileIdentityProvider>(
+          new signin::ProfileIdentityProvider(
+              SigninManagerFactory::GetForProfile(profile),
+              ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
+              LoginUIServiceFactory::GetShowLoginPopupCallbackForProfile(
+                  profile))),
       std::unique_ptr<GCMClientFactory>(new GCMClientFactory),
       content::BrowserThread::GetTaskRunnerForThread(
           content::BrowserThread::UI),

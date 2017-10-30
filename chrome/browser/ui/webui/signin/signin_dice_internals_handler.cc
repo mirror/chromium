@@ -42,9 +42,9 @@ void SigninDiceInternalsHandler::HandleEnableSync(const base::ListValue* args) {
     return;
   }
 
-  AccountTrackerService* tracker =
+  signin::AccountTrackerService* tracker =
       AccountTrackerServiceFactory::GetForProfile(profile_);
-  ProfileOAuth2TokenService* token_service =
+  signin::ProfileOAuth2TokenService* token_service =
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile_);
   std::vector<std::string> account_ids = token_service->GetAccounts();
   if (account_ids.empty()) {
@@ -68,7 +68,8 @@ void SigninDiceInternalsHandler::HandleEnableSync(const base::ListValue* args) {
 
 void SigninDiceInternalsHandler::HandleDisableSync(
     const base::ListValue* args) {
-  SigninManager* signin_manager = SigninManagerFactory::GetForProfile(profile_);
+  signin::SigninManager* signin_manager =
+      SigninManagerFactory::GetForProfile(profile_);
   if (!signin_manager->IsAuthenticated()) {
     VLOG(2) << "[Dice] Cannot disable sync as profile is not authenticated";
     return;

@@ -8,7 +8,10 @@
 #include "base/memory/singleton.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 
+namespace signin {
 class GaiaCookieManagerService;
+}
+
 class Profile;
 
 // Singleton that owns the GaiaCookieManagerService(s) and associates them with
@@ -19,7 +22,7 @@ class GaiaCookieManagerServiceFactory :
   // Returns the instance of GaiaCookieManagerService associated with this
   // profile (creating one if none exists). Returns NULL if this profile cannot
   // have an GaiaCookieManagerService (for example, if |profile| is incognito).
-  static GaiaCookieManagerService* GetForProfile(Profile* profile);
+  static signin::GaiaCookieManagerService* GetForProfile(Profile* profile);
 
   // Returns an instance of the factory singleton.
   static GaiaCookieManagerServiceFactory* GetInstance();

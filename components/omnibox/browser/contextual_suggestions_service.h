@@ -14,8 +14,11 @@
 #include "url/gurl.h"
 
 class OAuth2TokenService;
-class SigninManagerBase;
 class TemplateURLService;
+
+namespace signin {
+class SigninManagerBase;
+}
 
 // A service to fetch suggestions from a remote endpoint given a URL.
 class ContextualSuggestionsService : public KeyedService {
@@ -23,7 +26,7 @@ class ContextualSuggestionsService : public KeyedService {
   // |signin_manager| and |token_service| may be null but only unauthenticated
   // requests will issued.
   // |request_context|  may be null, but some services may be disabled.
-  ContextualSuggestionsService(SigninManagerBase* signin_manager,
+  ContextualSuggestionsService(signin::SigninManagerBase* signin_manager,
                                OAuth2TokenService* token_service,
                                net::URLRequestContextGetter* request_context);
 
@@ -123,12 +126,12 @@ class ContextualSuggestionsService : public KeyedService {
                             const std::string& access_token);
 
   net::URLRequestContextGetter* request_context_;
-  SigninManagerBase* signin_manager_;
+  signin::SigninManagerBase* signin_manager_;
   OAuth2TokenService* token_service_;
 
   // Helper for fetching OAuth2 access tokens. This is non-null when an access
   // token request is currently in progress.
-  std::unique_ptr<AccessTokenFetcher> token_fetcher_;
+  std::unique_ptr<signin::AccessTokenFetcher> token_fetcher_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextualSuggestionsService);
 };

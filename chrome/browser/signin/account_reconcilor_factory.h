@@ -18,7 +18,7 @@ class AccountReconcilorFactory : public BrowserContextKeyedServiceFactory {
   // Returns the instance of AccountReconcilor associated with this profile
   // (creating one if none exists). Returns NULL if this profile cannot have an
   // AccountReconcilor (for example, if |profile| is incognito).
-  static AccountReconcilor* GetForProfile(Profile* profile);
+  static signin::AccountReconcilor* GetForProfile(Profile* profile);
 
   // Returns an instance of the factory singleton.
   static AccountReconcilorFactory* GetInstance();

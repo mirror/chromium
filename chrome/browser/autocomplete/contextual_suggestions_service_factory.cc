@@ -30,9 +30,9 @@ ContextualSuggestionsServiceFactory::GetInstance() {
 KeyedService* ContextualSuggestionsServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
   Profile* profile = Profile::FromBrowserContext(context);
-  SigninManagerBase* signin_manager =
+  signin::SigninManagerBase* signin_manager =
       SigninManagerFactory::GetForProfile(profile);
-  ProfileOAuth2TokenService* token_service =
+  signin::ProfileOAuth2TokenService* token_service =
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile);
   return new ContextualSuggestionsService(signin_manager, token_service,
                                           profile->GetRequestContext());

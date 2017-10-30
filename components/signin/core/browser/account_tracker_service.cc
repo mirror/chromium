@@ -20,6 +20,8 @@
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_pref_names.h"
 
+namespace signin {
+
 namespace {
 
 const char kAccountKeyPath[] = "account_id";
@@ -509,3 +511,5 @@ std::string AccountTrackerService::SeedAccountInfo(AccountInfo info) {
 void AccountTrackerService::RemoveAccount(const std::string& account_id) {
   StopTrackingAccount(account_id);
 }
+
+}  // namespace signin

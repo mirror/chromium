@@ -22,9 +22,9 @@ AccountTrackerServiceFactory::~AccountTrackerServiceFactory() {
 }
 
 // static
-AccountTrackerService*
-AccountTrackerServiceFactory::GetForProfile(Profile* profile) {
-  return static_cast<AccountTrackerService*>(
+signin::AccountTrackerService* AccountTrackerServiceFactory::GetForProfile(
+    Profile* profile) {
+  return static_cast<signin::AccountTrackerService*>(
       GetInstance()->GetServiceForBrowserContext(profile, true));
 }
 
@@ -35,13 +35,13 @@ AccountTrackerServiceFactory* AccountTrackerServiceFactory::GetInstance() {
 
 void AccountTrackerServiceFactory::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
-  AccountTrackerService::RegisterPrefs(registry);
+  signin::AccountTrackerService::RegisterPrefs(registry);
 }
 
 KeyedService* AccountTrackerServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
   Profile* profile = static_cast<Profile*>(context);
-  AccountTrackerService* service = new AccountTrackerService();
+  signin::AccountTrackerService* service = new signin::AccountTrackerService();
   service->Initialize(ChromeSigninClientFactory::GetForProfile(profile));
   return service;
 }

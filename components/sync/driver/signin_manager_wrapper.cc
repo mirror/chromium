@@ -7,12 +7,12 @@
 #include "components/signin/core/browser/signin_manager_base.h"
 #include "google_apis/gaia/gaia_constants.h"
 
-SigninManagerWrapper::SigninManagerWrapper(SigninManagerBase* original)
+SigninManagerWrapper::SigninManagerWrapper(signin::SigninManagerBase* original)
     : original_(original) {}
 
 SigninManagerWrapper::~SigninManagerWrapper() {}
 
-SigninManagerBase* SigninManagerWrapper::GetOriginal() {
+signin::SigninManagerBase* SigninManagerWrapper::GetOriginal() {
   return original_;
 }
 

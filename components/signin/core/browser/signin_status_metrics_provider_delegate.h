@@ -12,6 +12,8 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 
+namespace signin {
+
 class SigninManager;
 class SigninStatusMetricsProvider;
 
@@ -55,5 +57,7 @@ class SigninStatusMetricsProviderDelegate {
 
   DISALLOW_COPY_AND_ASSIGN(SigninStatusMetricsProviderDelegate);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_SIGNIN_STATUS_METRICS_PROVIDER_DELEGATE_H_

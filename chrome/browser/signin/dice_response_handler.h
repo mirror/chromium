@@ -16,15 +16,15 @@
 #include "google_apis/gaia/gaia_auth_consumer.h"
 
 namespace signin {
-struct DiceResponseParams;
-}
-
 class AccountTrackerService;
-class GaiaAuthFetcher;
-class GoogleServiceAuthError;
+struct DiceResponseParams;
+class ProfileOAuth2TokenService;
 class SigninClient;
 class SigninManager;
-class ProfileOAuth2TokenService;
+}
+
+class GaiaAuthFetcher;
+class GoogleServiceAuthError;
 class Profile;
 
 // Exposed for testing.
@@ -51,11 +51,12 @@ class DiceResponseHandler : public KeyedService {
   // May return nullptr if there is none (e.g. in incognito).
   static DiceResponseHandler* GetForProfile(Profile* profile);
 
-  DiceResponseHandler(SigninClient* signin_client,
-                      SigninManager* signin_manager,
-                      ProfileOAuth2TokenService* profile_oauth2_token_service,
-                      AccountTrackerService* account_tracker_service,
-                      AccountReconcilor* account_reconcilor);
+  DiceResponseHandler(
+      signin::SigninClient* signin_client,
+      signin::SigninManager* signin_manager,
+      signin::ProfileOAuth2TokenService* profile_oauth2_token_service,
+      signin::AccountTrackerService* account_tracker_service,
+      signin::AccountReconcilor* account_reconcilor);
   ~DiceResponseHandler() override;
 
   // Must be called when receiving a Dice response header.
@@ -94,7 +95,7 @@ class DiceResponseHandler : public KeyedService {
     void OnClientOAuthFailure(const GoogleServiceAuthError& error) override;
 
     // Lock the account reconcilor while tokens are being fetched.
-    std::unique_ptr<AccountReconcilor::Lock> account_reconcilor_lock_;
+    std::unique_ptr<signin::AccountReconcilor::Lock> account_reconcilor_lock_;
 
     std::string gaia_id_;
     std::string email_;
@@ -137,11 +138,11 @@ class DiceResponseHandler : public KeyedService {
   void OnTokenExchangeFailure(DiceTokenFetcher* token_fetcher,
                               const GoogleServiceAuthError& error);
 
-  SigninManager* signin_manager_;
-  SigninClient* signin_client_;
-  ProfileOAuth2TokenService* token_service_;
-  AccountTrackerService* account_tracker_service_;
-  AccountReconcilor* account_reconcilor_;
+  signin::SigninManager* signin_manager_;
+  signin::SigninClient* signin_client_;
+  signin::ProfileOAuth2TokenService* token_service_;
+  signin::AccountTrackerService* account_tracker_service_;
+  signin::AccountReconcilor* account_reconcilor_;
   std::vector<std::unique_ptr<DiceTokenFetcher>> token_fetchers_;
 
   DISALLOW_COPY_AND_ASSIGN(DiceResponseHandler);

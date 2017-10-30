@@ -113,7 +113,7 @@ void MutableProfileOAuth2TokenServiceDelegate::RevokeServerRefreshToken::
 }
 
 MutableProfileOAuth2TokenServiceDelegate::AccountStatus::AccountStatus(
-    SigninErrorController* signin_error_controller,
+    signin::SigninErrorController* signin_error_controller,
     const std::string& account_id,
     const std::string& refresh_token)
     : signin_error_controller_(signin_error_controller),
@@ -149,9 +149,9 @@ MutableProfileOAuth2TokenServiceDelegate::AccountStatus::GetAuthStatus() const {
 
 MutableProfileOAuth2TokenServiceDelegate::
     MutableProfileOAuth2TokenServiceDelegate(
-        SigninClient* client,
-        SigninErrorController* signin_error_controller,
-        AccountTrackerService* account_tracker_service)
+        signin::SigninClient* client,
+        signin::SigninErrorController* signin_error_controller,
+        signin::AccountTrackerService* account_tracker_service)
     : web_data_service_request_(0),
       load_credentials_state_(LOAD_CREDENTIALS_NOT_STARTED),
       backoff_entry_(&backoff_policy_),

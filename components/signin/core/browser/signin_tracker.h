@@ -12,6 +12,8 @@
 #include "components/signin/core/browser/signin_manager.h"
 #include "google_apis/gaia/google_service_auth_error.h"
 
+namespace signin {
+
 class ProfileOAuth2TokenService;
 
 // The signin flow logic is spread across several classes with varying
@@ -107,5 +109,7 @@ class SigninTracker : public SigninManagerBase::Observer,
 
   DISALLOW_COPY_AND_ASSIGN(SigninTracker);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_SIGNIN_TRACKER_H_

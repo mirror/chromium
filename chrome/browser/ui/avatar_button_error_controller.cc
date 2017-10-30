@@ -41,14 +41,14 @@ AvatarButtonErrorController::SigninErrorObserver::SigninErrorObserver(
     AvatarButtonErrorController* avatar_button_error_controller)
     : profile_(profile),
       avatar_button_error_controller_(avatar_button_error_controller) {
-  SigninErrorController* signin_error_controller =
+  signin::SigninErrorController* signin_error_controller =
       profiles::GetSigninErrorController(profile_);
   if (signin_error_controller)
     signin_error_controller->AddObserver(this);
 }
 
 AvatarButtonErrorController::SigninErrorObserver::~SigninErrorObserver() {
-  SigninErrorController* signin_error_controller =
+  signin::SigninErrorController* signin_error_controller =
       profiles::GetSigninErrorController(profile_);
   if (signin_error_controller)
     signin_error_controller->RemoveObserver(this);
@@ -59,7 +59,7 @@ void AvatarButtonErrorController::SigninErrorObserver::OnErrorChanged() {
 }
 
 bool AvatarButtonErrorController::SigninErrorObserver::HasSigninError() {
-  const SigninErrorController* signin_error_controller =
+  const signin::SigninErrorController* signin_error_controller =
       profiles::GetSigninErrorController(profile_);
   return signin_error_controller && signin_error_controller->HasError();
 }

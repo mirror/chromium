@@ -7,6 +7,8 @@
 
 #include "components/signin/core/browser/signin_error_controller.h"
 
+namespace signin {
+
 // Helper class that reports auth errors to SigninErrorController. Automatically
 // registers and de-registers itself as an AuthStatusProvider in the
 // constructor and destructor.
@@ -34,5 +36,7 @@ class FakeAuthStatusProvider
   std::string account_id_;
   GoogleServiceAuthError auth_error_;
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_FAKE_AUTH_STATUS_PROVIDER_H_

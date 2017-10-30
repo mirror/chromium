@@ -29,12 +29,15 @@ namespace net {
 class URLRequestContextGetter;
 }
 
+namespace signin {
+class SigninManagerBase;
+}
+
 namespace version_info {
 enum class Channel;
 }
 
 class OAuth2TokenService;
-class SigninManagerBase;
 
 namespace history {
 
@@ -97,7 +100,7 @@ class WebHistoryService : public KeyedService {
 
   WebHistoryService(
       OAuth2TokenService* token_service,
-      SigninManagerBase* signin_manager,
+      signin::SigninManagerBase* signin_manager,
       const scoped_refptr<net::URLRequestContextGetter>& request_context);
   ~WebHistoryService() override;
 
@@ -221,7 +224,7 @@ class WebHistoryService : public KeyedService {
   // Stores pointer to OAuth2TokenService and SigninManagerBase instance. They
   // must outlive the WebHistoryService and can be null during tests.
   OAuth2TokenService* token_service_;
-  SigninManagerBase* signin_manager_;
+  signin::SigninManagerBase* signin_manager_;
 
   // Request context getter to use.
   scoped_refptr<net::URLRequestContextGetter> request_context_;

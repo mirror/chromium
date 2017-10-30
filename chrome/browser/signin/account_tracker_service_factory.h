@@ -9,8 +9,11 @@
 #include "base/memory/singleton.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 
-class AccountTrackerService;
 class Profile;
+
+namespace signin {
+class AccountTrackerService;
+}
 
 // Singleton that owns all AccountTrackerServices and associates them with
 // Profiles. Listens for the Profile's destruction notification and cleans up
@@ -22,7 +25,7 @@ class AccountTrackerServiceFactory
   // profile (creating one if none exists). Returns NULL if this profile
   // cannot have a AccountTrackerService (for example, if |profile| is
   // incognito).
-  static AccountTrackerService* GetForProfile(Profile* profile);
+  static signin::AccountTrackerService* GetForProfile(Profile* profile);
 
   // Returns an instance of the AccountTrackerServiceFactory singleton.
   static AccountTrackerServiceFactory* GetInstance();

@@ -8,6 +8,8 @@
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "google_apis/gaia/gaia_constants.h"
 
+namespace signin {
+
 SigninTracker::SigninTracker(ProfileOAuth2TokenService* token_service,
                              SigninManagerBase* signin_manager,
                              GaiaCookieManagerService* cookie_manager_service,
@@ -58,3 +60,5 @@ void SigninTracker::OnAddAccountToCookieCompleted(
     const GoogleServiceAuthError& error) {
   observer_->AccountAddedToCookie(error);
 }
+
+}  // namespace signin

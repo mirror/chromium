@@ -9,8 +9,11 @@
 #include "base/memory/singleton.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 
-class ProfileOAuth2TokenService;
 class Profile;
+
+namespace signin {
+class ProfileOAuth2TokenService;
+}
 
 // Singleton that owns all ProfileOAuth2TokenServices and associates them with
 // Profiles. Listens for the Profile's destruction notification and cleans up
@@ -22,7 +25,7 @@ class ProfileOAuth2TokenServiceFactory
   // profile (creating one if none exists). Returns NULL if this profile
   // cannot have a ProfileOAuth2TokenService (for example, if |profile| is
   // incognito).
-  static ProfileOAuth2TokenService* GetForProfile(Profile* profile);
+  static signin::ProfileOAuth2TokenService* GetForProfile(Profile* profile);
 
   // Returns an instance of the ProfileOAuth2TokenServiceFactory singleton.
   static ProfileOAuth2TokenServiceFactory* GetInstance();

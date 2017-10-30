@@ -87,7 +87,7 @@ class RequestImpl : public WebHistoryService::Request,
 
   RequestImpl(
       OAuth2TokenService* token_service,
-      SigninManagerBase* signin_manager,
+      signin::SigninManagerBase* signin_manager,
       const scoped_refptr<net::URLRequestContextGetter>& request_context,
       const GURL& url,
       const WebHistoryService::CompletionCallback& callback,
@@ -234,7 +234,7 @@ class RequestImpl : public WebHistoryService::Request,
   }
 
   OAuth2TokenService* token_service_;
-  SigninManagerBase* signin_manager_;
+  signin::SigninManagerBase* signin_manager_;
   scoped_refptr<net::URLRequestContextGetter> request_context_;
 
   // The URL of the API endpoint.
@@ -357,13 +357,12 @@ WebHistoryService::Request::~Request() {
 
 WebHistoryService::WebHistoryService(
     OAuth2TokenService* token_service,
-    SigninManagerBase* signin_manager,
+    signin::SigninManagerBase* signin_manager,
     const scoped_refptr<net::URLRequestContextGetter>& request_context)
     : token_service_(token_service),
       signin_manager_(signin_manager),
       request_context_(request_context),
-      weak_ptr_factory_(this) {
-}
+      weak_ptr_factory_(this) {}
 
 WebHistoryService::~WebHistoryService() {
 }

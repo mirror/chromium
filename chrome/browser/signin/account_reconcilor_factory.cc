@@ -24,9 +24,9 @@ AccountReconcilorFactory::AccountReconcilorFactory()
 AccountReconcilorFactory::~AccountReconcilorFactory() {}
 
 // static
-AccountReconcilor* AccountReconcilorFactory::GetForProfile(
+signin::AccountReconcilor* AccountReconcilorFactory::GetForProfile(
     Profile* profile) {
-  return static_cast<AccountReconcilor*>(
+  return static_cast<signin::AccountReconcilor*>(
       GetInstance()->GetServiceForBrowserContext(profile, true));
 }
 
@@ -38,7 +38,7 @@ AccountReconcilorFactory* AccountReconcilorFactory::GetInstance() {
 KeyedService* AccountReconcilorFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
   Profile* profile = Profile::FromBrowserContext(context);
-  AccountReconcilor* reconcilor = new AccountReconcilor(
+  signin::AccountReconcilor* reconcilor = new signin::AccountReconcilor(
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
       SigninManagerFactory::GetForProfile(profile),
       ChromeSigninClientFactory::GetForProfile(profile),

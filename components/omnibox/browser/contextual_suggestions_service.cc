@@ -82,7 +82,7 @@ std::string FormatRequestBodyExperimentalService(
 }  // namespace
 
 ContextualSuggestionsService::ContextualSuggestionsService(
-    SigninManagerBase* signin_manager,
+    signin::SigninManagerBase* signin_manager,
     OAuth2TokenService* token_service,
     net::URLRequestContextGetter* request_context)
     : request_context_(request_context),
@@ -108,7 +108,7 @@ void ContextualSuggestionsService::CreateContextualSuggestionsRequest(
 }
 
 void ContextualSuggestionsService::StopCreatingContextualSuggestionsRequest() {
-  std::unique_ptr<AccessTokenFetcher> token_fetcher_deleter(
+  std::unique_ptr<signin::AccessTokenFetcher> token_fetcher_deleter(
       std::move(token_fetcher_));
 }
 
@@ -296,7 +296,7 @@ void ContextualSuggestionsService::CreateExperimentalRequest(
   // Create the oauth2 token fetcher.
   const OAuth2TokenService::ScopeSet scopes{
       "https://www.googleapis.com/auth/cusco-chrome-extension"};
-  token_fetcher_ = base::MakeUnique<AccessTokenFetcher>(
+  token_fetcher_ = base::MakeUnique<signin::AccessTokenFetcher>(
       "contextual_suggestions_service", signin_manager_, token_service_, scopes,
       base::BindOnce(&ContextualSuggestionsService::AccessTokenAvailable,
                      base::Unretained(this), std::move(fetcher),
@@ -309,7 +309,7 @@ void ContextualSuggestionsService::AccessTokenAvailable(
     const GoogleServiceAuthError& error,
     const std::string& access_token) {
   DCHECK(token_fetcher_);
-  std::unique_ptr<AccessTokenFetcher> token_fetcher_deleter(
+  std::unique_ptr<qignin::AccessTokenFetcher> token_fetcher_deleter(
       std::move(token_fetcher_));
 
   // If there were no errors obtaining the access token, append it to the

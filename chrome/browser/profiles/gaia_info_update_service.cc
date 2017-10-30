@@ -38,7 +38,7 @@ const int kMinUpdateIntervalSeconds = 5;
 
 GAIAInfoUpdateService::GAIAInfoUpdateService(Profile* profile)
     : profile_(profile) {
-  SigninManagerBase* signin_manager =
+  signin::SigninManagerBase* signin_manager =
       SigninManagerFactory::GetForProfile(profile_);
   signin_manager->AddObserver(this);
 
@@ -54,7 +54,7 @@ GAIAInfoUpdateService::~GAIAInfoUpdateService() {
 
 void GAIAInfoUpdateService::Update() {
   // The user must be logged in.
-  SigninManagerBase* signin_manager =
+  signin::SigninManagerBase* signin_manager =
       SigninManagerFactory::GetForProfile(profile_);
   if (!signin_manager->IsAuthenticated())
     return;
@@ -171,7 +171,7 @@ void GAIAInfoUpdateService::OnUsernameChanged(const std::string& username) {
 void GAIAInfoUpdateService::Shutdown() {
   timer_.Stop();
   profile_image_downloader_.reset();
-  SigninManagerBase* signin_manager =
+  signin::SigninManagerBase* signin_manager =
       SigninManagerFactory::GetForProfile(profile_);
   signin_manager->RemoveObserver(this);
 

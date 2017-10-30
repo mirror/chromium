@@ -57,17 +57,18 @@ void IdentityManager::AccessTokenRequest::OnRequestCompleted(
 
 // static
 void IdentityManager::Create(mojom::IdentityManagerRequest request,
-                             AccountTrackerService* account_tracker,
-                             SigninManagerBase* signin_manager,
-                             ProfileOAuth2TokenService* token_service) {
+                             signin::AccountTrackerService* account_tracker,
+                             signin::SigninManagerBase* signin_manager,
+                             signin::ProfileOAuth2TokenService* token_service) {
   new IdentityManager(std::move(request), account_tracker, signin_manager,
                       token_service);
 }
 
-IdentityManager::IdentityManager(mojom::IdentityManagerRequest request,
-                                 AccountTrackerService* account_tracker,
-                                 SigninManagerBase* signin_manager,
-                                 ProfileOAuth2TokenService* token_service)
+IdentityManager::IdentityManager(
+    mojom::IdentityManagerRequest request,
+    signin::AccountTrackerService* account_tracker,
+    signin::SigninManagerBase* signin_manager,
+    signin::ProfileOAuth2TokenService* token_service)
     : binding_(this, std::move(request)),
       account_tracker_(account_tracker),
       signin_manager_(signin_manager),
@@ -95,14 +96,16 @@ void IdentityManager::GetPrimaryAccountInfo(
   // directly returns the authenticated GAIA ID. We can of course get it from
   // the AccountInfo but once we have the AccountInfo we ... have the
   // AccountInfo.
-  AccountInfo account_info = signin_manager_->GetAuthenticatedAccountInfo();
+  signin::AccountInfo account_info =
+      signin_manager_->GetAuthenticatedAccountInfo();
   AccountState account_state = GetStateOfAccount(account_info);
   std::move(callback).Run(account_info, account_state);
 }
 
 void IdentityManager::GetPrimaryAccountWhenAvailable(
     GetPrimaryAccountWhenAvailableCallback callback) {
-  AccountInfo account_info = signin_manager_->GetAuthenticatedAccountInfo();
+  signin::AccountInfo account_info =
+      signin_manager_->GetAuthenticatedAccountInfo();
   AccountState account_state = GetStateOfAccount(account_info);
 
   if (!account_state.has_refresh_token ||
@@ -120,7 +123,8 @@ void IdentityManager::GetPrimaryAccountWhenAvailable(
 void IdentityManager::GetAccountInfoFromGaiaId(
     const std::string& gaia_id,
     GetAccountInfoFromGaiaIdCallback callback) {
-  AccountInfo account_info = account_tracker_->FindAccountInfoByGaiaId(gaia_id);
+  signin::AccountInfo account_info =
+      account_tracker_->FindAccountInfoByGaiaId(gaia_id);
   AccountState account_state = GetStateOfAccount(account_info);
   std::move(callback).Run(account_info, account_state);
 }
@@ -129,7 +133,8 @@ void IdentityManager::GetAccounts(GetAccountsCallback callback) {
   std::vector<mojom::AccountPtr> accounts;
 
   for (const std::string& account_id : token_service_->GetAccounts()) {
-    AccountInfo account_info = account_tracker_->GetAccountInfo(account_id);
+    signin::AccountInfo account_info =
+        account_tracker_->GetAccountInfo(account_id);
     AccountState account_state = GetStateOfAccount(account_info);
 
     mojom::AccountPtr account =
@@ -168,7 +173,8 @@ void IdentityManager::GoogleSigninSucceeded(const std::string& account_id,
 }
 
 void IdentityManager::OnAccountStateChange(const std::string& account_id) {
-  AccountInfo account_info = account_tracker_->GetAccountInfo(account_id);
+  signin::AccountInfo account_info =
+      account_tracker_->GetAccountInfo(account_id);
   AccountState account_state = GetStateOfAccount(account_info);
 
   // Check whether the primary account is available and notify any waiting
@@ -191,7 +197,7 @@ void IdentityManager::AccessTokenRequestCompleted(AccessTokenRequest* request) {
 }
 
 AccountState IdentityManager::GetStateOfAccount(
-    const AccountInfo& account_info) {
+    const signin::AccountInfo& account_info) {
   AccountState account_state;
   account_state.has_refresh_token =
       token_service_->RefreshTokenIsAvailable(account_info.account_id);

@@ -16,12 +16,7 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "google_apis/gaia/oauth2_token_service.h"
 
-class AccountInfoFetcher;
-class AccountTrackerService;
-class ChildAccountInfoFetcher;
 class OAuth2TokenService;
-class RefreshTokenAnnotationRequest;
-class SigninClient;
 
 namespace invalidation {
 class InvalidationService;
@@ -30,6 +25,14 @@ class InvalidationService;
 namespace user_prefs {
 class PrefRegistrySyncable;
 }
+
+namespace signin {
+
+class AccountInfoFetcher;
+class AccountTrackerService;
+class ChildAccountInfoFetcher;
+class RefreshTokenAnnotationRequest;
+class SigninClient;
 
 class AccountFetcherService : public KeyedService,
                               public OAuth2TokenService::Observer {
@@ -142,5 +145,7 @@ class AccountFetcherService : public KeyedService,
 
   DISALLOW_COPY_AND_ASSIGN(AccountFetcherService);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_ACCOUNT_FETCHER_SERVICE_H_

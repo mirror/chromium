@@ -38,10 +38,8 @@
 #include "components/signin/core/browser/signin_internals_util.h"
 #include "google_apis/gaia/google_service_auth_error.h"
 
-class AccountTrackerService;
 class PrefRegistrySimple;
 class PrefService;
-class SigninClient;
 
 namespace password_manager {
 class PasswordStoreSigninNotifierImpl;
@@ -50,6 +48,11 @@ class PasswordStoreSigninNotifierImpl;
 namespace user_prefs {
 class PrefRegistrySyncable;
 }
+
+namespace signin {
+
+class AccountTrackerService;
+class SigninClient;
 
 class SigninManagerBase : public KeyedService {
  public:
@@ -219,5 +222,7 @@ class SigninManagerBase : public KeyedService {
 
   DISALLOW_COPY_AND_ASSIGN(SigninManagerBase);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_SIGNIN_MANAGER_BASE_H_

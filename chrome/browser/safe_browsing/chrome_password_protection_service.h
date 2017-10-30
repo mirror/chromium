@@ -15,7 +15,6 @@
 #include "ui/base/ui_features.h"
 #include "url/origin.h"
 
-struct AccountInfo;
 class PrefChangeRegistrar;
 class PrefService;
 class PrefChangeRegistrar;
@@ -23,6 +22,10 @@ class Profile;
 
 namespace content {
 class WebContents;
+}
+
+namespace signin {
+struct AccountInfo;
 }
 
 namespace safe_browsing {
@@ -159,7 +162,7 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
                            content::WebContents* web_contents) override;
 
   // Gets |account_info_| based on |profile_|.
-  AccountInfo GetAccountInfo();
+  signin::AccountInfo GetAccountInfo();
 
   // Gets change password URl based on |account_info_|.
   GURL GetChangePasswordURL();

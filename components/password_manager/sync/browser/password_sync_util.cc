@@ -25,7 +25,7 @@ namespace sync_util {
 
 std::string GetSyncUsernameIfSyncingPasswords(
     const syncer::SyncService* sync_service,
-    const SigninManagerBase* signin_manager) {
+    const signin::SigninManagerBase* signin_manager) {
   if (!signin_manager)
     return std::string();
 
@@ -40,7 +40,7 @@ std::string GetSyncUsernameIfSyncingPasswords(
 
 bool IsSyncAccountCredential(const autofill::PasswordForm& form,
                              const syncer::SyncService* sync_service,
-                             const SigninManagerBase* signin_manager) {
+                             const signin::SigninManagerBase* signin_manager) {
   const Origin gaia_origin =
       Origin::Create(GaiaUrls::GetInstance()->gaia_url().GetOrigin());
   if (!Origin::Create(GURL(form.signon_realm)).IsSameOriginWith(gaia_origin) &&

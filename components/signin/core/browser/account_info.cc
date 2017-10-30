@@ -19,7 +19,10 @@ bool UpdateField(bool* field, bool new_value) {
     *field = new_value;
   return should_update;
 }
-}
+
+}  // namespace
+
+namespace signin {
 
 AccountInfo::AccountInfo()
     : account_id(),
@@ -57,3 +60,5 @@ bool AccountInfo::UpdateWith(const AccountInfo& other) {
 
   return modified;
 }
+
+}  // namespace signin

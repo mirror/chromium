@@ -10,6 +10,8 @@
 #include "base/macros.h"
 #include "components/prefs/pref_service.h"
 
+namespace signin {
+
 // A Java counterpart will be generated for this enum.
 // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.signin
 // Broad categorization of signin type from investigation.
@@ -78,5 +80,7 @@ class SigninInvestigator {
 
   DISALLOW_COPY_AND_ASSIGN(SigninInvestigator);
 };
+
+}  // namespace signin
 
 #endif  // COMPONENTS_SIGNIN_CORE_BROWSER_SIGNIN_INVESTIGATOR_H_

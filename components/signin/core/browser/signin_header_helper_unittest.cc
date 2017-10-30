@@ -34,14 +34,14 @@ class SigninHeaderHelperTest : public testing::Test {
   void SetUp() override {
     content_settings::CookieSettings::RegisterProfilePrefs(prefs_.registry());
     HostContentSettingsMap::RegisterProfilePrefs(prefs_.registry());
-    signin::RegisterAccountConsistencyProfilePrefs(prefs_.registry());
+    RegisterAccountConsistencyProfilePrefs(prefs_.registry());
 
     settings_map_ = new HostContentSettingsMap(
         &prefs_, false /* incognito_profile */, false /* guest_profile */,
         false /* store_last_modified */);
     cookie_settings_ =
         new content_settings::CookieSettings(settings_map_.get(), &prefs_, "");
-    dice_enabled_pref_member_ = signin::CreateDicePrefMember(&prefs_);
+    dice_enabled_pref_member_ = CreateDicePrefMember(&prefs_);
   }
 
   void TearDown() override { settings_map_->ShutdownOnUIThread(); }

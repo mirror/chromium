@@ -13,6 +13,8 @@ namespace {
 const char kEphemeralUserDeviceIDPrefix[] = "t_";
 }
 
+namespace signin {
+
 // static
 std::string SigninClient::GenerateSigninScopedDeviceID(bool for_ephemeral) {
   std::string guid = base::GenerateGUID();
@@ -46,3 +48,5 @@ void SigninClient::SignOut() {
   GetPrefs()->ClearPref(prefs::kGoogleServicesSigninScopedDeviceId);
   OnSignedOut();
 }
+
+}  // namespace signin

@@ -50,7 +50,7 @@ class RemoteSuggestionsProvider;
 // them grouped into categories. There can be at most one provider per category.
 class ContentSuggestionsService : public KeyedService,
                                   public ContentSuggestionsProvider::Observer,
-                                  public SigninManagerBase::Observer,
+                                  public signin::SigninManagerBase::Observer,
                                   public history::HistoryServiceObserver {
  public:
   class Observer {
@@ -99,7 +99,8 @@ class ContentSuggestionsService : public KeyedService,
 
   ContentSuggestionsService(
       State state,
-      SigninManagerBase* signin_manager,         // Can be nullptr in unittests.
+      signin::SigninManagerBase*
+          signin_manager,                        // Can be nullptr in unittests.
       history::HistoryService* history_service,  // Can be nullptr in unittests.
       // Can be nullptr in unittests.
       favicon::LargeIconService* large_icon_service,
@@ -288,7 +289,7 @@ class ContentSuggestionsService : public KeyedService,
       ContentSuggestionsProvider* provider,
       const ContentSuggestion::ID& suggestion_id) override;
 
-  // SigninManagerBase::Observer implementation
+  // signin::SigninManagerBase::Observer implementation
   void GoogleSigninSucceeded(const std::string& account_id,
                              const std::string& username) override;
   void GoogleSignedOut(const std::string& account_id,
@@ -391,7 +392,7 @@ class ContentSuggestionsService : public KeyedService,
 
   // Observer for the SigninManager. All observers are notified when the signin
   // state changes so that they can refresh their list of suggestions.
-  ScopedObserver<SigninManagerBase, SigninManagerBase::Observer>
+  ScopedObserver<signin::SigninManagerBase, signin::SigninManagerBase::Observer>
       signin_observer_;
 
   // Observer for the HistoryService. All providers are notified when history is

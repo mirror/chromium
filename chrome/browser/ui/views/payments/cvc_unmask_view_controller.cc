@@ -48,7 +48,7 @@ IdentityProvider* CreateIdentityProviderForWebContents(
     content::WebContents* web_contents) {
   Profile* profile =
       Profile::FromBrowserContext(web_contents->GetBrowserContext());
-  return new ProfileIdentityProvider(
+  return new signin::ProfileIdentityProvider(
       SigninManagerFactory::GetForProfile(profile),
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
       base::Closure());

@@ -27,14 +27,14 @@ class AvatarButtonErrorController {
 
   // Observes signin errors and updates the error controller for the avatar
   // button accordingly.
-  class SigninErrorObserver : public SigninErrorController::Observer {
+  class SigninErrorObserver : public signin::SigninErrorController::Observer {
    public:
     SigninErrorObserver(
         Profile* profile,
         AvatarButtonErrorController* avatar_button_error_controller);
     ~SigninErrorObserver() override;
 
-    // SigninErrorController::Observer:
+    // signin::SigninErrorController::Observer:
     void OnErrorChanged() override;
 
     bool HasSigninError();

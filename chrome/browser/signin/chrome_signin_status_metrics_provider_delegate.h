@@ -12,7 +12,7 @@
 #include "components/signin/core/browser/signin_status_metrics_provider_delegate.h"
 
 class ChromeSigninStatusMetricsProviderDelegate
-    : public SigninStatusMetricsProviderDelegate,
+    : public signin::SigninStatusMetricsProviderDelegate,
       public chrome::BrowserListObserver,
       public SigninManagerFactory::Observer {
  public:
@@ -25,15 +25,16 @@ class ChromeSigninStatusMetricsProviderDelegate
 
   // SigninStatusMetricsProviderDelegate:
   void Initialize() override;
-  AccountsStatus GetStatusOfAllAccounts() override;
-  std::vector<SigninManager*> GetSigninManagersForAllAccounts() override;
+  signin::AccountsStatus GetStatusOfAllAccounts() override;
+  std::vector<signin::SigninManager*> GetSigninManagersForAllAccounts()
+      override;
 
   // chrome::BrowserListObserver:
   void OnBrowserAdded(Browser* browser) override;
 
   // SigninManagerFactoryObserver:
-  void SigninManagerCreated(SigninManagerBase* manager) override;
-  void SigninManagerShutdown(SigninManagerBase* manager) override;
+  void SigninManagerCreated(signin::SigninManagerBase* manager) override;
+  void SigninManagerShutdown(signin::SigninManagerBase* manager) override;
 
   // Updates the sign-in status right after a new browser is opened.
   void UpdateStatusWhenBrowserAdded(bool signed_in);

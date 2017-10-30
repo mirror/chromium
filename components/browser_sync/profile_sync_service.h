@@ -170,8 +170,8 @@ class ProfileSyncService : public syncer::SyncServiceBase,
                            public syncer::UnrecoverableErrorHandler,
                            public OAuth2TokenService::Consumer,
                            public OAuth2TokenService::Observer,
-                           public SigninManagerBase::Observer,
-                           public GaiaCookieManagerService::Observer {
+                           public signin::SigninManagerBase::Observer,
+                           public signin::GaiaCookieManagerService::Observer {
  public:
   using Status = syncer::SyncEngine::Status;
   using PlatformSyncAllowedProvider = base::Callback<bool(void)>;
@@ -230,7 +230,7 @@ class ProfileSyncService : public syncer::SyncServiceBase,
     std::unique_ptr<syncer::SyncClient> sync_client;
     std::unique_ptr<SigninManagerWrapper> signin_wrapper;
     ProfileOAuth2TokenService* oauth2_token_service = nullptr;
-    GaiaCookieManagerService* gaia_cookie_manager_service = nullptr;
+    signin::GaiaCookieManagerService* gaia_cookie_manager_service = nullptr;
     StartBehavior start_behavior = MANUAL_START;
     syncer::NetworkTimeUpdateCallback network_time_update_callback;
     base::FilePath base_directory;
@@ -377,13 +377,13 @@ class ProfileSyncService : public syncer::SyncServiceBase,
   bool IsPassphraseRequired() const override;
   syncer::ModelTypeSet GetEncryptedDataTypes() const override;
 
-  // SigninManagerBase::Observer implementation.
+  // signin::SigninManagerBase::Observer implementation.
   void GoogleSigninSucceeded(const std::string& account_id,
                              const std::string& username) override;
   void GoogleSignedOut(const std::string& account_id,
                        const std::string& username) override;
 
-  // GaiaCookieManagerService::Observer implementation.
+  // signin::GaiaCookieManagerService::Observer implementation.
   void OnGaiaAccountsInCookieUpdated(
       const std::vector<gaia::ListedAccount>& accounts,
       const std::vector<gaia::ListedAccount>& signed_out_accounts,
@@ -854,7 +854,7 @@ class ProfileSyncService : public syncer::SyncServiceBase,
 
   // The gaia cookie manager. Used for monitoring cookie jar changes to detect
   // when the user signs out of the content area.
-  GaiaCookieManagerService* const gaia_cookie_manager_service_;
+  signin::GaiaCookieManagerService* const gaia_cookie_manager_service_;
 
   std::unique_ptr<syncer::LocalDeviceInfoProvider> local_device_;
 

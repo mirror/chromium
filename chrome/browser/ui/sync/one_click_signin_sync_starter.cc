@@ -263,7 +263,7 @@ void OneClickSigninSyncStarter::SigninDialogDelegate::OnSigninWithNewProfile() {
 
 void OneClickSigninSyncStarter::OnRegisteredForPolicy(
     const std::string& dm_token, const std::string& client_id) {
-  SigninManager* signin = SigninManagerFactory::GetForProfile(profile_);
+  signin::SigninManager* signin = SigninManagerFactory::GetForProfile(profile_);
   // If there's no token for the user (policy registration did not succeed) just
   // finish signing in.
   if (dm_token.empty()) {
@@ -305,7 +305,7 @@ void OneClickSigninSyncStarter::OnRegisteredForPolicy(
 void OneClickSigninSyncStarter::LoadPolicyWithCachedCredentials() {
   DCHECK(!dm_token_.empty());
   DCHECK(!client_id_.empty());
-  SigninManager* signin = SigninManagerFactory::GetForProfile(profile_);
+  signin::SigninManager* signin = SigninManagerFactory::GetForProfile(profile_);
   policy::UserPolicySigninService* policy_service =
       policy::UserPolicySigninServiceFactory::GetForProfile(profile_);
   policy_service->FetchPolicyForSignedInUser(
@@ -330,7 +330,7 @@ void OneClickSigninSyncStarter::OnPolicyFetchComplete(bool success) {
 }
 
 void OneClickSigninSyncStarter::CreateNewSignedInProfile() {
-  SigninManager* signin = SigninManagerFactory::GetForProfile(profile_);
+  signin::SigninManager* signin = SigninManagerFactory::GetForProfile(profile_);
   DCHECK(!signin->GetUsernameForAuthInProgress().empty());
 
   // Create a new profile and have it call back when done so we can inject our
@@ -363,9 +363,9 @@ void OneClickSigninSyncStarter::CompleteInitForNewProfile(
     }
     case Profile::CREATE_STATUS_INITIALIZED: {
       // Wait until the profile is initialized before we transfer credentials.
-      SigninManager* old_signin_manager =
+      signin::SigninManager* old_signin_manager =
           SigninManagerFactory::GetForProfile(profile_);
-      SigninManager* new_signin_manager =
+      signin::SigninManager* new_signin_manager =
           SigninManagerFactory::GetForProfile(new_profile);
       DCHECK(!old_signin_manager->GetUsernameForAuthInProgress().empty());
       DCHECK(!old_signin_manager->IsAuthenticated());
@@ -426,7 +426,7 @@ void OneClickSigninSyncStarter::CancelSigninAndDelete() {
 }
 
 void OneClickSigninSyncStarter::ConfirmAndSignin() {
-  SigninManager* signin = SigninManagerFactory::GetForProfile(profile_);
+  signin::SigninManager* signin = SigninManagerFactory::GetForProfile(profile_);
   if (confirmation_required_ == CONFIRM_UNTRUSTED_SIGNIN) {
     browser_ = EnsureBrowser(browser_, profile_);
     base::RecordAction(
@@ -461,7 +461,8 @@ void OneClickSigninSyncStarter::UntrustedSigninConfirmed(
     else if (start_mode_ == CONFIRM_SYNC_SETTINGS_FIRST)
       start_mode_ = SYNC_WITH_DEFAULT_SETTINGS;
 
-    SigninManager* signin = SigninManagerFactory::GetForProfile(profile_);
+    signin::SigninManager* signin =
+        SigninManagerFactory::GetForProfile(profile_);
     signin->CompletePendingSignin();
   }
 }

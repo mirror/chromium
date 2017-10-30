@@ -25,6 +25,8 @@ using gaia::ListedAccount;
 using signin_metrics::AccountRelation;
 using signin_metrics::ReportingType;
 
+namespace signin {
+
 namespace {
 
 // Prefixed used when calculating cookie jar hash to differentiate between
@@ -260,3 +262,5 @@ void AccountInvestigator::SignedInAccountRelationReport(
                       signed_in_accounts, signed_out_accounts),
       type);
 }
+
+}  // namespace signin

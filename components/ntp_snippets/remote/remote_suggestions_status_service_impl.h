@@ -13,14 +13,17 @@
 
 class PrefRegistrySimple;
 class PrefService;
+
+namespace signin {
 class SigninManagerBase;
+}
 
 namespace ntp_snippets {
 
 class RemoteSuggestionsStatusServiceImpl
     : public RemoteSuggestionsStatusService {
  public:
-  RemoteSuggestionsStatusServiceImpl(SigninManagerBase* signin_manager,
+  RemoteSuggestionsStatusServiceImpl(signin::SigninManagerBase* signin_manager,
                                      PrefService* pref_service,
                                      const std::string& additional_toggle_pref);
 
@@ -62,7 +65,7 @@ class RemoteSuggestionsStatusServiceImpl
   // remote suggestions provider.
   std::string additional_toggle_pref_;
 
-  SigninManagerBase* signin_manager_;
+  signin::SigninManagerBase* signin_manager_;
   PrefService* pref_service_;
 
   PrefChangeRegistrar pref_change_registrar_;

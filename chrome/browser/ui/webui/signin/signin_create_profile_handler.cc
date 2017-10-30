@@ -637,14 +637,14 @@ void SigninCreateProfileHandler::LoadCustodianProfileCallback(
 
 bool SigninCreateProfileHandler::IsAccountConnected(Profile* profile)
     const {
-  SigninManagerBase* signin_manager =
+  signin::SigninManagerBase* signin_manager =
       SigninManagerFactory::GetForProfile(profile);
   return signin_manager && signin_manager->IsAuthenticated();
 }
 
 bool SigninCreateProfileHandler::HasAuthError(Profile* profile)
     const {
-  SigninErrorController* error_controller =
+  signin::SigninErrorController* error_controller =
       SigninErrorControllerFactory::GetForProfile(profile);
   if (!error_controller)
     return true;

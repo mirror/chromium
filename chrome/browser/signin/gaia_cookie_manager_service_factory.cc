@@ -23,9 +23,9 @@ GaiaCookieManagerServiceFactory::GaiaCookieManagerServiceFactory()
 GaiaCookieManagerServiceFactory::~GaiaCookieManagerServiceFactory() {}
 
 // static
-GaiaCookieManagerService* GaiaCookieManagerServiceFactory::GetForProfile(
-    Profile* profile) {
-  return static_cast<GaiaCookieManagerService*>(
+signin::GaiaCookieManagerService*
+GaiaCookieManagerServiceFactory::GetForProfile(Profile* profile) {
+  return static_cast<signin::GaiaCookieManagerService*>(
       GetInstance()->GetServiceForBrowserContext(profile, true));
 }
 
@@ -38,10 +38,11 @@ GaiaCookieManagerServiceFactory::GetInstance() {
 KeyedService* GaiaCookieManagerServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
   Profile* profile = Profile::FromBrowserContext(context);
-  GaiaCookieManagerService* cookie_service = new GaiaCookieManagerService(
-      ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
-      GaiaConstants::kChromeSource,
-      ChromeSigninClientFactory::GetForProfile(profile));
+  signin::GaiaCookieManagerService* cookie_service =
+      new signin::GaiaCookieManagerService(
+          ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
+          GaiaConstants::kChromeSource,
+          ChromeSigninClientFactory::GetForProfile(profile));
   return cookie_service;
 }
 

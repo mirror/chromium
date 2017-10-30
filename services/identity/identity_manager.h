@@ -14,23 +14,25 @@
 #include "services/identity/public/cpp/scope_set.h"
 #include "services/identity/public/interfaces/identity_manager.mojom.h"
 
+namespace signin {
 class AccountTrackerService;
+}
 
 namespace identity {
 
 class IdentityManager : public mojom::IdentityManager,
                         public OAuth2TokenService::Observer,
-                        public SigninManagerBase::Observer {
+                        public signin::SigninManagerBase::Observer {
  public:
   static void Create(mojom::IdentityManagerRequest request,
-                     AccountTrackerService* account_tracker,
-                     SigninManagerBase* signin_manager,
-                     ProfileOAuth2TokenService* token_service);
+                     signin::AccountTrackerService* account_tracker,
+                     signin::SigninManagerBase* signin_manager,
+                     signin::ProfileOAuth2TokenService* token_service);
 
   IdentityManager(mojom::IdentityManagerRequest request,
-                  AccountTrackerService* account_tracker,
-                  SigninManagerBase* signin_manager,
-                  ProfileOAuth2TokenService* token_service);
+                  signin::AccountTrackerService* account_tracker,
+                  signin::SigninManagerBase* signin_manager,
+                  signin::ProfileOAuth2TokenService* token_service);
   ~IdentityManager() override;
 
  private:
@@ -42,7 +44,7 @@ class IdentityManager : public mojom::IdentityManager,
                        const ScopeSet& scopes,
                        const std::string& consumer_id,
                        GetAccessTokenCallback consumer_callback,
-                       ProfileOAuth2TokenService* token_service,
+                       signin::ProfileOAuth2TokenService* token_service,
                        IdentityManager* manager);
     ~AccessTokenRequest() override;
 
@@ -60,7 +62,7 @@ class IdentityManager : public mojom::IdentityManager,
                             base::Time expiration_time,
                             const GoogleServiceAuthError& error);
 
-    ProfileOAuth2TokenService* token_service_;
+    signin::ProfileOAuth2TokenService* token_service_;
     std::unique_ptr<OAuth2TokenService::Request> token_service_request_;
     GetAccessTokenCallback consumer_callback_;
     IdentityManager* manager_;
@@ -96,7 +98,7 @@ class IdentityManager : public mojom::IdentityManager,
   void AccessTokenRequestCompleted(AccessTokenRequest* request);
 
   // Gets the current state of the account represented by |account_info|.
-  AccountState GetStateOfAccount(const AccountInfo& account_info);
+  AccountState GetStateOfAccount(const signin::AccountInfo& account_info);
 
   // Called when |signin_manager_| is shutting down. Destroys this instance,
   // since this instance can't outlive the signin classes that it is depending
@@ -109,9 +111,9 @@ class IdentityManager : public mojom::IdentityManager,
   void OnConnectionError();
 
   mojo::Binding<mojom::IdentityManager> binding_;
-  AccountTrackerService* account_tracker_;
-  SigninManagerBase* signin_manager_;
-  ProfileOAuth2TokenService* token_service_;
+  signin::AccountTrackerService* account_tracker_;
+  signin::SigninManagerBase* signin_manager_;
+  signin::ProfileOAuth2TokenService* token_service_;
 
   std::unique_ptr<base::CallbackList<void()>::Subscription>
       signin_manager_shutdown_subscription_;

@@ -36,9 +36,9 @@ ProfileOAuth2TokenServiceFactory::ProfileOAuth2TokenServiceFactory()
 ProfileOAuth2TokenServiceFactory::~ProfileOAuth2TokenServiceFactory() {
 }
 
-ProfileOAuth2TokenService*
+signin::ProfileOAuth2TokenService*
 ProfileOAuth2TokenServiceFactory::GetForProfile(Profile* profile) {
-  return static_cast<ProfileOAuth2TokenService*>(
+  return static_cast<signin::ProfileOAuth2TokenService*>(
       GetInstance()->GetServiceForBrowserContext(profile, true));
 }
 
@@ -50,7 +50,7 @@ ProfileOAuth2TokenServiceFactory*
 
 void ProfileOAuth2TokenServiceFactory::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
-  ProfileOAuth2TokenService::RegisterProfilePrefs(registry);
+  signin::ProfileOAuth2TokenService::RegisterProfilePrefs(registry);
 }
 
 KeyedService* ProfileOAuth2TokenServiceFactory::BuildServiceInstanceFor(
@@ -65,7 +65,7 @@ KeyedService* ProfileOAuth2TokenServiceFactory::BuildServiceInstanceFor(
       SigninErrorControllerFactory::GetInstance()->GetForProfile(profile),
       AccountTrackerServiceFactory::GetInstance()->GetForProfile(profile));
 #endif
-  ProfileOAuth2TokenService* service =
-      new ProfileOAuth2TokenService(std::move(delegate));
+  signin::ProfileOAuth2TokenService* service =
+      new signin::ProfileOAuth2TokenService(std::move(delegate));
   return service;
 }

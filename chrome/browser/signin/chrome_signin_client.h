@@ -23,16 +23,17 @@ class ForceSigninVerifier;
 class Profile;
 
 class ChromeSigninClient
-    : public SigninClient,
+    : public signin::SigninClient,
 #if !defined(OS_CHROMEOS)
       public net::NetworkChangeNotifier::NetworkChangeObserver,
 #endif
-      public SigninErrorController::Observer,
+      public signin::SigninErrorController::Observer,
       public gaia::GaiaOAuthClient::Delegate,
       public OAuth2TokenService::Consumer {
  public:
   explicit ChromeSigninClient(
-      Profile* profile, SigninErrorController* signin_error_controller);
+      Profile* profile,
+      signin::SigninErrorController* signin_error_controller);
   ~ChromeSigninClient() override;
   void Shutdown() override;
   void DoFinalInit() override;
@@ -119,7 +120,7 @@ class ChromeSigninClient
 
   Profile* profile_;
 
-  SigninErrorController* signin_error_controller_;
+  signin::SigninErrorController* signin_error_controller_;
 #if !defined(OS_CHROMEOS)
   std::list<base::Closure> delayed_callbacks_;
 #endif
