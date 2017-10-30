@@ -191,6 +191,8 @@ class CORE_EXPORT WebSettingsImpl final : public WebSettings {
   void SetV8CacheOptions(V8CacheOptions) override;
   void SetV8CacheStrategiesForCacheStorage(
       V8CacheStrategiesForCacheStorage) override;
+  void SetServiceWorkerCodeCacheInstall(
+      ServiceWorkerCodeCacheInstallOptions) override;
   void SetValidationMessageTimerMagnification(int) override;
   void SetViewportEnabled(bool) override;
   void SetViewportMetaEnabled(bool) override;
