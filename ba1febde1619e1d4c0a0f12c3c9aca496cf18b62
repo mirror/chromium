@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f386def6_0b04248e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2018,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-30T17:35:11Z",
+      "side": 1,
+      "message": "What are alternatives to using NSNotificationCenter?",
+      "range": {
+        "startLine": 2018,
+        "startChar": 3,
+        "endLine": 2018,
+        "endChar": 39
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772b0932_81447c7e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 4257,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-30T17:35:11Z",
+      "side": 1,
+      "message": "Pragma mark this section.",
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b351d9b8_5a305644",
+        "filename": "ios/chrome/browser/ui/fullscreen/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-30T17:35:11Z",
+      "side": 1,
+      "message": "Seems like we need to add a dependency just for the notification constant. Could we find a solution around this?",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3262979_647d7a49",
+        "filename": "ios/chrome/browser/ui/popup_menu/popup_menu_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-30T17:35:11Z",
+      "side": 1,
+      "message": "Use ProceduralBlock from base/ios/block_types.h",
+      "range": {
+        "startLine": 73,
+        "startChar": 31,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9491fc_f6e92a62",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller_private.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-30T17:35:11Z",
+      "side": 1,
+      "message": "Make strong explicit.",
+      "range": {
+        "startLine": 103,
+        "startChar": 10,
+        "endLine": 103,
+        "endChar": 29
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24167cbf_465c3d47",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-30T17:35:11Z",
+      "side": 1,
+      "message": "Extract to separate file since many of the includes of this file were simply for these constants.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 58
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82afbb70_d18ba0c9",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-30T17:35:11Z",
+      "side": 1,
+      "message": "Extract to separate file. Seems like this belongs in requirements folder. Please also comment the protocol and methods. Also for PresentationProvider above.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 4
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d6af13_bc82c79f",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-30T17:35:11Z",
+      "side": 1,
+      "message": "Please comment this class.",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 10
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a763d44c_95596215",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-30T17:35:11Z",
+      "side": 1,
+      "message": "I feel the naming is inconsistent in this component. Should the folder name be \"tools_popup\"?",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
