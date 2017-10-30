@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2f943219_b60ac1b1",
+        "filename": "chrome/browser/ui/libgtkui/native_theme_gtk3.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-30T19:34:37Z",
+      "side": 1,
+      "message": "still no dice :(\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d610428#c68",
+      "parentUuid": "bb103e00_1b35fd50",
+      "range": {
+        "startLine": 228,
+        "startChar": 25,
+        "endLine": 228,
+        "endChar": 53
+      },
+      "revId": "1c52f4d1f870558d0e3b5c4c52acebf233315050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb7467f8_4190b620",
         "filename": "ui/native_theme/common_theme.cc",
         "patchSetId": 2
