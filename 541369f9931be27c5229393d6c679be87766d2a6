@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06dbc70f_5145c7a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T15:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2b0bab5_60cd234d",
+      "revId": "541369f9931be27c5229393d6c679be87766d2a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04a2d155_802968cc",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 4
