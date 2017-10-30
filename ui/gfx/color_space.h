@@ -11,6 +11,7 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "third_party/skia/include/core/SkColorSpace.h"
 #include "ui/gfx/color_space_export.h"
@@ -23,7 +24,7 @@ struct ParamTraits;
 namespace gfx {
 
 class ICCProfile;
-class ICCProfileCache;
+class ICCProfileInternals;
 
 // Used to represet a color space for the purpose of color conversion.
 // This is designed to be safe and compact enough to send over IPC
@@ -53,7 +54,9 @@ class COLOR_SPACE_EXPORT ColorSpace {
     CUSTOM,
     // For color spaces defined by an ICC profile which cannot be represented
     // parametrically. Any ColorTransform using this color space will use the
-    // ICC profile directly to compute a transform LUT.
+    // ICC profile directly to compute a transform LUT. The primaries of an
+    // attempted parametric approximation of these primaries is stored in
+    // |custom_primary_matrix_|.
     ICC_BASED,
     LAST = ICC_BASED,
   };
@@ -89,7 +92,8 @@ class COLOR_SPACE_EXPORT ColorSpace {
     LINEAR_HDR,
     // A parametric transfer function defined by |custom_transfer_params_|.
     CUSTOM,
-    // See PrimaryID::ICC_BASED.
+    // See PrimaryID::ICC_BASED. A parametric approximation of the transfer
+    // function is stored in |custom_transfer_params_|.
     ICC_BASED,
     LAST = ICC_BASED,
   };
@@ -197,7 +201,7 @@ class COLOR_SPACE_EXPORT ColorSpace {
   // Populate |icc_profile| with an ICC profile that represents this color
   // space. Returns false if this space is not representable.
   bool GetICCProfile(ICCProfile* icc_profile) const;
-  bool GetICCProfileData(std::vector<char>* data) const;
+  bool GetICCProfileData(std::vector<uint8_t>* data) const;
 
   void GetPrimaryMatrix(SkMatrix44* to_XYZD50) const;
   bool GetTransferFunction(SkColorSpaceTransferFn* fn) const;
@@ -208,6 +212,7 @@ class COLOR_SPACE_EXPORT ColorSpace {
   void GetRangeAdjustMatrix(SkMatrix44* matrix) const;
 
  private:
+  void SetCustomPrimaries(const SkMatrix44& to_XYZD50);
   void SetCustomTransferFunction(const SkColorSpaceTransferFn& fn);
 
   // Returns true if the transfer function is defined by an
@@ -219,21 +224,21 @@ class COLOR_SPACE_EXPORT ColorSpace {
   MatrixID matrix_ = MatrixID::INVALID;
   RangeID range_ = RangeID::INVALID;
 
-  // Only used if primaries_ is PrimaryID::CUSTOM.
+  // Only used if primaries_ is PrimaryID::CUSTOM or PrimaryID::ICC_BASED.
   float custom_primary_matrix_[9] = {0, 0, 0, 0, 0, 0, 0, 0};
 
-  // Only used if transfer_ is TransferID::CUSTOM. This array consists of the A
-  // through G entries of the SkColorSpaceTransferFn structure in alphabetical
-  // order.
+  // Only used if transfer_ is TransferID::CUSTOM or PrimaryID::ICC_BASED.
+  // This array consists of the A through G entries of the
+  // SkColorSpaceTransferFn structure in alphabetical order.
   float custom_transfer_params_[7] = {0, 0, 0, 0, 0, 0, 0};
 
   // This is used to look up the ICCProfile from which this ColorSpace was
-  // created, if possible.
-  uint64_t icc_profile_id_ = 0;
-  sk_sp<SkColorSpace> icc_profile_sk_color_space_;
+  // created, if possible. This data is not transmitted through IPC by
+  // default.
+  scoped_refptr<ICCProfileInternals> icc_profile_;
 
   friend class ICCProfile;
-  friend class ICCProfileCache;
+  friend class ICCProfileInternals;
   friend class ColorTransform;
   friend class ColorTransformInternal;
   friend class ColorSpaceWin;

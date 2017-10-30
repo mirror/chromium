@@ -135,13 +135,28 @@ TEST(ICCProfile, GarbageData) {
   ICCProfile garbage_profile =
       ICCProfile::FromData(bad_data.data(), bad_data.size());
   EXPECT_FALSE(garbage_profile.IsValid());
-  EXPECT_FALSE(garbage_profile.GetColorSpace().IsValid());
+  gfx::ColorSpace garbage_color_space = garbage_profile.GetColorSpace();
+  EXPECT_FALSE(garbage_color_space.IsValid());
+  EXPECT_EQ(garbage_color_space, ColorSpace());
   EXPECT_FALSE(garbage_profile.GetParametricColorSpace().IsValid());
+
+  ICCProfile profile_from_garbage;
+  EXPECT_FALSE(garbage_color_space.GetICCProfile(&profile_from_garbage));
 
   ICCProfile default_ctor_profile;
   EXPECT_FALSE(default_ctor_profile.IsValid());
   EXPECT_FALSE(default_ctor_profile.GetColorSpace().IsValid());
   EXPECT_FALSE(default_ctor_profile.GetParametricColorSpace().IsValid());
+
+  // Despite both being invalid, the garbage data profile and default ctor
+  // profile should be tracked separately.
+  EXPECT_NE(garbage_profile, default_ctor_profile);
+
+  // Same goes for a profile with no data.
+  ICCProfile no_data_profile = ICCProfile::FromData(nullptr, 0);
+  EXPECT_FALSE(no_data_profile.IsValid());
+  EXPECT_NE(no_data_profile, default_ctor_profile);
+  EXPECT_NE(no_data_profile, garbage_profile);
 }
 
 TEST(ICCProfile, GenericRGB) {
@@ -161,10 +176,9 @@ TEST(ICCProfile, GenericRGB) {
   EXPECT_TRUE(SkMatrixIsApproximatelyIdentity(eye));
 }
 
-// This tests the ICCProfile MRU cache. This cache is sloppy and should be
-// rewritten, now that some of the original design constraints have been lifted.
-// This test exists only to ensure that we are aware of behavior changes, not to
-// enforce that behavior does not change.
+// This originally tested the ICCProfile MRU cache. This cache is sloppy and is
+// being rewritten. This test exists only to ensure that we are aware of
+// behavior changes, not to enforce that behavior does not change.
 // https://crbug.com/766736
 TEST(ICCProfile, ExhaustCache) {
   // Get an ICCProfile that can't be parametrically approximated.
@@ -188,8 +202,7 @@ TEST(ICCProfile, ExhaustCache) {
   ColorSpace identical_color_space_0 = identical_0.GetColorSpace();
   EXPECT_EQ(identical_color_space_0, original_color_space_0);
 
-  // Create 128 distinct ICC profiles. This will destroy the cached
-  // ICCProfile<->ColorSpace mapping.
+  // Create 128 distinct ICC profiles.
   for (size_t i = 0; i < 128; ++i) {
     SkMatrix44 toXYZD50;
     ColorSpace::CreateSRGB().GetPrimaryMatrix(&toXYZD50);
@@ -206,28 +219,25 @@ TEST(ICCProfile, ExhaustCache) {
     color_space.GetICCProfile(&icc_profile);
   }
 
-  // Recover the original ICCProfile from its GetColorSpace. Recovery should
-  // fail, because it has been pushed out of the cache.
+  // Recover the original ICCProfile from its GetColorSpace.
   ICCProfile recovered_1;
-  EXPECT_FALSE(original_color_space_0.GetICCProfile(&recovered_1));
-  EXPECT_NE(original, recovered_1);
+  EXPECT_TRUE(original_color_space_0.GetICCProfile(&recovered_1));
+  EXPECT_EQ(original, recovered_1);
 
   // Create an identical ICCProfile to the original. It should equal the
   // original, because the comparison is based on data.
   ICCProfile identical_1 = ICCProfileForTestingNoAnalyticTrFn();
   EXPECT_EQ(original, identical_1);
 
-  // The identical ICCProfile's GetColorSpace will not match, because the
-  // original points to the now-uncached version.
+  // The identical ICCProfile's GetColorSpace will match.
   ColorSpace identical_1_color_space = identical_1.GetColorSpace();
-  EXPECT_NE(identical_1_color_space, original_color_space_0);
+  EXPECT_EQ(identical_1_color_space, original_color_space_0);
 
-  // The original ICCProfile is now orphaned because there exists a new entry
-  // with the same data.
+  // The original ICCProfile is now still accessible.
   ColorSpace original_color_space_2 = original.GetColorSpace();
   ICCProfile recovered_2;
-  EXPECT_FALSE(original_color_space_2.GetICCProfile(&recovered_2));
-  EXPECT_NE(original, recovered_2);
+  EXPECT_TRUE(original_color_space_2.GetICCProfile(&recovered_2));
+  EXPECT_EQ(original, recovered_2);
 
   // Blow away the cache one more time.
   for (size_t i = 0; i < 128; ++i) {
@@ -246,8 +256,7 @@ TEST(ICCProfile, ExhaustCache) {
     color_space.GetICCProfile(&icc_profile);
   }
 
-  // Now the original ICCProfile can re-insert itself into the cache, with its
-  // original id.
+  // The original ICCProfile is still available.
   ColorSpace original_color_space_3 = original.GetColorSpace();
   ICCProfile recovered_3;
   EXPECT_TRUE(original_color_space_3.GetICCProfile(&recovered_3));
