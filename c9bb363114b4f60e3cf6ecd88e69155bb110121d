@@ -19,6 +19,98 @@
     },
     {
       "key": {
+        "uuid": "877297b8_9830859c",
+        "filename": "chrome/browser/data_saver/data_saver_webapis_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-10-30T22:25:31Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 5
+      },
+      "revId": "c9bb363114b4f60e3cf6ecd88e69155bb110121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d150eaab_7f612268",
+        "filename": "third_party/WebKit/Source/core/exported/SharedWorkerRepositoryClientImpl.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-10-30T22:25:31Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this anymore.",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 29
+      },
+      "revId": "c9bb363114b4f60e3cf6ecd88e69155bb110121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd7400c_d39bc24e",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayUmaHelper.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-10-30T22:25:31Z",
+      "side": 1,
+      "message": "Not sure this is needed.",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "c9bb363114b4f60e3cf6ecd88e69155bb110121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69534e4_66049aeb",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayUmaHelper.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-10-30T22:25:31Z",
+      "side": 1,
+      "message": "Why do you need to check this?",
+      "range": {
+        "startLine": 171,
+        "startChar": 54,
+        "endLine": 171,
+        "endChar": 65
+      },
+      "revId": "c9bb363114b4f60e3cf6ecd88e69155bb110121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "106c6e55_6a663f7e",
         "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
         "patchSetId": 17
@@ -30,6 +122,52 @@
       "writtenOn": "2017-10-29T02:46:49Z",
       "side": 1,
       "message": "While this makes the entire plumbing a lot simpler (which is nice) I\u0027m worried that we always take a lock here, because it\u0027s relatively a hot path. How often could this \u0027save data\u0027 flag needs to be updated during the lifetime of a single page load?",
+      "revId": "c9bb363114b4f60e3cf6ecd88e69155bb110121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e29a10e_7765df03",
+        "filename": "third_party/WebKit/Source/core/testing/Internals.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-10-30T22:25:31Z",
+      "side": 1,
+      "message": "I think we should remove the term \"Data Saver\" from Blink and should always use \"Save Data.\" E.g., this should be called setSaveDataEnabled(bool).",
+      "range": {
+        "startLine": 513,
+        "startChar": 7,
+        "endLine": 513,
+        "endChar": 26
+      },
+      "revId": "c9bb363114b4f60e3cf6ecd88e69155bb110121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f644672_947093d3",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-10-30T22:25:31Z",
+      "side": 1,
+      "message": "+1 to Kinuko\u0027s comment about this being used on a hot path.",
+      "range": {
+        "startLine": 157,
+        "startChar": 7,
+        "endLine": 157,
+        "endChar": 15
+      },
       "revId": "c9bb363114b4f60e3cf6ecd88e69155bb110121d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
