@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "36f795ff_91292947",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1826,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-30T21:12:21Z",
+      "side": 1,
+      "message": "Yes and with the comment you\u0027ve solved my followup request.",
+      "parentUuid": "7ce0c269_9ae5a8b4",
+      "revId": "a0987a00a91f70e9927f9f214106b2cc856e19ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e2fa3d_349f9535",
         "filename": "third_party/WebKit/Source/core/layout/LayoutImage.cpp",
         "patchSetId": 4
