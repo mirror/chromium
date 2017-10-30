@@ -937,7 +937,7 @@ TEST_F(CanvasRenderingContext2DTest, MAYBE_GetImageDataDisablesAcceleration) {
   CreateContext(kNonOpaque);
   IntSize size(300, 300);
   std::unique_ptr<Canvas2DLayerBridge> bridge =
-      MakeBridge(size, Canvas2DLayerBridge::kEnableAcceleration);
+      MakeBridge(size, Canvas2DLayerBridge::kForceAccelerationForTesting);
   CanvasElement().CreateImageBufferUsingSurfaceForTesting(std::move(bridge));
 
   EXPECT_TRUE(CanvasElement().GetImageBuffer()->IsAccelerated());
@@ -1394,7 +1394,9 @@ TEST_F(CanvasRenderingContext2DTestWithTestingPlatform,
   CanvasElement().CreateImageBufferUsingSurfaceForTesting(std::move(bridge));
 
   EXPECT_TRUE(CanvasElement().GetImageBuffer()->IsAccelerated());
-
+  // Take a snapshot to trigger lazy resource provider creation
+  CanvasElement().GetImageBuffer()->NewImageSnapshot(kPreferAcceleration,
+                                                     kSnapshotReasonUnknown);
   EXPECT_TRUE(CanvasElement().GetLayoutBoxModelObject());
   PaintLayer* layer = CanvasElement().GetLayoutBoxModelObject()->Layer();
   EXPECT_TRUE(layer);
@@ -1417,6 +1419,31 @@ TEST_F(CanvasRenderingContext2DTestWithTestingPlatform,
   EXPECT_EQ(!!CANVAS2D_HIBERNATION_ENABLED,
             layer->NeedsCompositingInputsUpdate());
   RunUntilIdle();  // Clear task queue.
+}
+
+TEST_F(CanvasRenderingContext2DTestWithTestingPlatform,
+       NoHibernationIfNoResourceProvider) {
+  CreateContext(kNonOpaque);
+  IntSize size(300, 300);
+  std::unique_ptr<Canvas2DLayerBridge> bridge =
+      MakeBridge(size, Canvas2DLayerBridge::kEnableAcceleration);
+  // Force hibernatation to occur in an immediate task.
+  bridge->DontUseIdleSchedulingForTesting();
+  CanvasElement().CreateImageBufferUsingSurfaceForTesting(std::move(bridge));
+
+  EXPECT_TRUE(CanvasElement().GetImageBuffer()->IsAccelerated());
+
+  EXPECT_TRUE(CanvasElement().GetLayoutBoxModelObject());
+  PaintLayer* layer = CanvasElement().GetLayoutBoxModelObject()->Layer();
+  EXPECT_TRUE(layer);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Hide element to trigger hibernation (if enabled).
+  GetDocument().GetPage()->SetVisibilityState(kPageVisibilityStateHidden,
+                                              false);
+  RunUntilIdle();  // Run hibernation task.
+  // Never hibernate a canvas with no resource provider
+  EXPECT_FALSE(layer->NeedsCompositingInputsUpdate());
 }
 
 }  // namespace blink
