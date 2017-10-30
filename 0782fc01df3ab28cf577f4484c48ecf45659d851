@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e35ab2eb_3d77cd01",
+        "filename": "content/browser/gpu/browser_gpu_channel_host_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-30T21:02:04Z",
+      "side": 1,
+      "message": "nit: can you add a DCHECK(IsMainThread()) ?",
+      "revId": "0782fc01df3ab28cf577f4484c48ecf45659d851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
