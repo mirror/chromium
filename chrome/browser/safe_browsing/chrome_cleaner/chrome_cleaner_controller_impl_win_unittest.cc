@@ -13,7 +13,6 @@
 #include "base/run_loop.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/test/multiprocess_test.h"
-#include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/profiles/profile.h"
@@ -109,7 +108,6 @@ class ChromeCleanerControllerSimpleTest
     SetChromeCleanerRunnerTestDelegateForTesting(this);
     ChromeCleanerControllerImpl::ResetInstanceForTesting();
     ChromeCleanerControllerImpl::GetInstance()->SetDelegateForTesting(this);
-    scoped_feature_list_.InitAndEnableFeature(kInBrowserCleanerUIFeature);
   }
 
   void TearDown() override {
@@ -161,7 +159,6 @@ class ChromeCleanerControllerSimpleTest
   // bundle should be the first member of the class so that it will be destroyed
   // last.
   content::TestBrowserThreadBundle thread_bundle_;
-  base::test::ScopedFeatureList scoped_feature_list_;
 
   bool metrics_enabled_;
   base::CommandLine command_line_;
@@ -255,7 +252,6 @@ class ChromeCleanerControllerTest
     controller_ = ChromeCleanerControllerImpl::GetInstance();
     ASSERT_TRUE(controller_);
 
-    scoped_feature_list_.InitAndEnableFeature(kInBrowserCleanerUIFeature);
     SetChromeCleanerRunnerTestDelegateForTesting(this);
     controller_->SetDelegateForTesting(this);
   }
@@ -419,7 +415,6 @@ class ChromeCleanerControllerTest
   // bundle should be the first member of the class so that it will be destroyed
   // last.
   content::TestBrowserThreadBundle thread_bundle_;
-  base::test::ScopedFeatureList scoped_feature_list_;
 
   CleanerProcessStatus process_status_;
   MockChromeCleanerProcess::CrashPoint crash_point_;
