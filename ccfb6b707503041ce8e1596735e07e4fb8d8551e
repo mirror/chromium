@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5c2c743_be848a3f",
+        "filename": "content/browser/file_url_loader_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-30T15:53:30Z",
+      "side": 1,
+      "message": "nit: to avoid duplicating this logic with ChromeNetworkDelegate::OnCanAccessFile(, and also having content know about chrome\u0027s implementation, can we move this to ChromeNetworkDelegate::IsAccessAllowed and move the body of IsAccessAllowed to IsAccessAllowedInternal?",
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a3495e_0dc1e8b9",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3435,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-30T15:53:30Z",
+      "side": 1,
+      "message": "curious why this and webui on 3408 aren\u0027t handled the same way, i.e. why isn\u0027t webui using the subresource_loader_factories (too many schemes i think per our chat last week?) or why doesn\u0027t this code use default_factory?",
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b3cff9_c445c6dc",
+        "filename": "content/public/common/simple_url_loader_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-30T15:53:30Z",
+      "side": 1,
+      "message": "this class seems like it just wraps mojo::BindingSet? i think the small benefit may not be worth the usage of implementation inheritance which is discouraged in the style guide.",
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229266ae_3e82e7b9",
+        "filename": "content/public/common/url_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-30T15:53:30Z",
+      "side": 1,
+      "message": "would the possible confusion with the above function be cleared up if it\u0027s called\nIsHandledByNetworkService?",
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b084ffb2_64d143a6",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-30T15:53:30Z",
+      "side": 1,
+      "message": "nit: please add tests in the companion unittest file",
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
