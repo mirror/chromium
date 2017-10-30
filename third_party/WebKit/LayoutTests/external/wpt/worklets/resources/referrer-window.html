@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Worklet: Referrer</title>
+  <script src="/common/get-host-info.sub.js"></script>
+  <script src="/resources/testharness.js"></script>
+  <script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<script>
+// Remove unnecessary parts of the search params.
+let params = (new URLSearchParams(location.search))
+params.delete('pipe');
+params.append('source_origin', get_host_info().HTTP_ORIGIN);
+
+window.onmessage = () => {
+  let script_url = 'referrer.py?' + params;
+  if (params.get('cors')) {
+    script_url = get_host_info().HTTP_REMOTE_ORIGIN +
+                 '/worklets/resources/' + script_url;
+  }
+  // TODO(nhiroki): WorkletTypes[type]
+  CSS.paintWorklet.addModule(script_url)
+      .then(() => window.opener.postMessage('RESOLVED', '*'))
+      .catch(e => window.opener.postMessage(e.message, '*'));
+};
+
+window.opener.postMessage('LOADED', '*');
+</script></body>
+</html>
