@@ -22,6 +22,30 @@
       "revId": "7041e941b36e3321df1e8d456f83eaee03bb7c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c1e05c_b4ef21c4",
+        "filename": "chrome/android/webapk/libs/client/junit/src/org/chromium/webapk/lib/client/WebApkValidatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1248123
+      },
+      "writtenOn": "2017-10-30T14:49:04Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the point, I want it to fail.",
+      "parentUuid": "ce69a76a_485d50b4",
+      "range": {
+        "startLine": 268,
+        "startChar": 16,
+        "endLine": 268,
+        "endChar": 34
+      },
+      "revId": "7041e941b36e3321df1e8d456f83eaee03bb7c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
