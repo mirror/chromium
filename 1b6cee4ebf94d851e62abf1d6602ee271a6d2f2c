@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eeade36_98ce7531",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-30T18:07:15Z",
+      "side": 0,
+      "message": "Does this get initialized anywhere else? If not could we do the following:\n\nsetMenuBackgroundColor(mTabModelSelector !\u003d null ? mTabModelSelector.isIncognitoSelected() : false);",
+      "range": {
+        "startLine": 352,
+        "startChar": 8,
+        "endLine": 352,
+        "endChar": 72
+      },
+      "revId": "1b6cee4ebf94d851e62abf1d6602ee271a6d2f2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
