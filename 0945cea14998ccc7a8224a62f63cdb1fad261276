@@ -175,6 +175,30 @@
       "revId": "0945cea14998ccc7a8224a62f63cdb1fad261276",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71b9670e_3fffbee7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-30T23:09:56Z",
+      "side": 1,
+      "message": "D\u0027oh...it\u0027s actually final that this wouldn\u0027t work for as it has to be set a single time.\n\nNevermind me...",
+      "parentUuid": "7e89a568_63ae6cdb",
+      "range": {
+        "startLine": 79,
+        "startChar": 46,
+        "endLine": 79,
+        "endChar": 51
+      },
+      "revId": "0945cea14998ccc7a8224a62f63cdb1fad261276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

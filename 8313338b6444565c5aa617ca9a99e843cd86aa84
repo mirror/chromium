@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fc9bbcb_511d3a8f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-30T23:09:56Z",
+      "side": 1,
+      "message": "I\u0027m actually wondering if this could be:\n\nboolean isCustomTabIntent \u003d\n        (!mIsVrIntent \u0026\u0026 isCustomTabIntent(intent))\n        || (mIsVrIntent \u0026\u0026 VrIntentUtils.isCustomTabVrIntent(mIntent));\n\nMy thinking is then we could potentially get rid of dispatchVrIntent entirely and just rely on the existing dispatch call since internally it just calls launchCustomTabActivity || dispatchToTabbedActivity",
+      "range": {
+        "startLine": 150,
+        "startChar": 36,
+        "endLine": 150,
+        "endChar": 53
+      },
+      "revId": "8313338b6444565c5aa617ca9a99e843cd86aa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d146f8_ee974a2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-30T23:09:56Z",
+      "side": 1,
+      "message": "can this be mIsVrIntent?",
+      "range": {
+        "startLine": 168,
+        "startChar": 36,
+        "endLine": 168,
+        "endChar": 37
+      },
+      "revId": "8313338b6444565c5aa617ca9a99e843cd86aa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
