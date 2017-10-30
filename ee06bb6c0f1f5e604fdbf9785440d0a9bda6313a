@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "8b6d64cb_ee3f7baa",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_test.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-10-30T05:06:56Z",
+      "side": 1,
+      "message": "I applied this one to new patchset. Please check it again.",
+      "parentUuid": "0e53a754_d4f35afa",
+      "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b67fb92_3351d353",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter_test.cc",
         "patchSetId": 7
@@ -212,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "841446cd_c9e3193d",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-10-30T05:06:56Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment correctly. If this is also to apply ScopedLayoutNGPaintFragmentForTest, can I change it in a following CL?",
+      "parentUuid": "7be3f1dc_cab29835",
+      "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b801e49d_6241a628",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter_test.cc",
         "patchSetId": 7
@@ -241,6 +277,24 @@
       "side": 1,
       "message": "How about this?",
       "parentUuid": "b801e49d_6241a628",
+      "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79587e7_75604c0a",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-10-30T05:06:56Z",
+      "side": 1,
+      "message": "Ah, I planned to replace the SetLayoutNGPaintFragmentsEnabled after landing this CL. Can I change it in following CL ?",
+      "parentUuid": "2ca52f44_28cd6236",
       "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
