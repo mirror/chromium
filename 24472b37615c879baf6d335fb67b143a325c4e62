@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "53575b48_5ffc1efa",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T15:08:44Z",
+      "side": 1,
+      "message": "https://dev.w3.org/html5/webdatabase/#sqlstatementcallback\nWeb SQL Database spec says:\n\n  interface SQLStatementCallback {\n    void handleEvent(in SQLTransaction transaction, in SQLResultSet resultSet);\n  };\n\nand I followed it.  So now the return type is void, not v8::Maybe\u003cvoid\u003e (v8::Maybe\u003cvoid\u003e is invalid by the way).  So v8::TryCatch is necessary to detect an exception.",
+      "parentUuid": "012157a9_8ecb8702",
+      "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8634b9be_12a088e5",
         "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
         "patchSetId": 6
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-30T14:43:30Z",
       "side": 1,
       "message": "Ditto. Can we just use the returned Maybe of callback-\u003ehandleEvent()?",
+      "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74693bae_d0582e43",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T15:08:44Z",
+      "side": 1,
+      "message": "The same reason.\n\nIntroducing the return type v8::Maybe\u003cvoid\u003e is quite hard.  I gave it a try and gave up.\n\na) v8::Maybe\u003cvoid\u003e is not defined because |void value;| is invalid.  We can define a substitute, though.\n\n    struct MyVoid {};\n    v8::Maybe\u003cMyVoid\u003e;  // OK\n\nOr if V8 agrees, we can define a specialized version for v8::Maybe\u003cvoid\u003e.\n\nb) PostTask takes a Closure (\u003d void(*)() ), so when it\u0027s used as:\n\n    PostTask(Bind(callback, ...));\n\nThe bound function\u0027s return type needs to be void.  If |callback|\u0027s return type is v8::Maybe\u003cMyVoid\u003e, then we need to convert its type defining a helper function.\n\n    void helper(callback, args...) { (void)callback-\u003ecall(args...); }\n\nWe need this kind of helper function for each type of callback because the arguments\u0027 types differ.  Since there are so many void-returning callbacks and so many use cases of PostTask \u0026 Bind, I gave up this way.  Despite of a lot of effort, the codebase does not become clean, even worse than the current one.  I abandoned this version of the patch.",
+      "parentUuid": "8634b9be_12a088e5",
       "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

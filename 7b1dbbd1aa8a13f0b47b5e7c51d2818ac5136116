@@ -342,6 +342,24 @@
     },
     {
       "key": {
+        "uuid": "18eb7a4f_5c4c836d",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T15:08:44Z",
+      "side": 1,
+      "message": "Web IDL says to return an abrupt completion (except for promise type), i.e. to throw an exception.  Except for promise type, the behavior doesn\u0027t change depending on the return type.\n\nDOM, HTML, and many other specs (should) define how to treat an exception for each case.  It depends on invoker-side.  It\u0027s okay to let it go.  Also it\u0027s okay to capture it.",
+      "parentUuid": "593d59cd_4931bff5",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92fc900b_3502ef1e",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.h.tmpl",
         "patchSetId": 4
