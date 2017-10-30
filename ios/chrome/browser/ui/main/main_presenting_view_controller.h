@@ -18,6 +18,8 @@
 
 @property(nonatomic, readonly, weak) UIViewController<TabSwitcher>* tabSwitcher;
 
+@property(nonatomic, readwrite, assign) BOOL animationsDisabledForTesting;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_MAIN_MAIN_PRESENTING_VIEW_CONTROLLER_H_
