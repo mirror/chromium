@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c14fcfa_e6c09c15",
+        "filename": "services/resource_coordinator/public/interfaces/signals.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-30T17:14:30Z",
+      "side": 1,
+      "message": "Instead of storing whether we have low main thread load, can we directly store the main thread load number in GRC? Then GRC can decide if it is low or use it for whatever else.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "f53125d36768b79fba0948e9f60dfd4f66215928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

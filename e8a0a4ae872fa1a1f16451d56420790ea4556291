@@ -81,6 +81,24 @@
       "revId": "e8a0a4ae872fa1a1f16451d56420790ea4556291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f602466d_da690297",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-30T17:14:30Z",
+      "side": 1,
+      "message": "Ah, I see the other patch doesn\u0027t change the property propagation logic. SGTM.",
+      "parentUuid": "53ecdafd_8d08f769",
+      "revId": "e8a0a4ae872fa1a1f16451d56420790ea4556291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
