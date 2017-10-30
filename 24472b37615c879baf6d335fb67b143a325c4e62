@@ -86,6 +86,24 @@
       "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6315668_6952fe26",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-30T17:47:18Z",
+      "side": 1,
+      "message": "Thanks, I understand the situation.\n\nWould it be a terrible idea to change the signature of the callback method to:\n\n  bool handleEvent(..., bool\u0026 result);  // boolean case\n  bool handleEvent(...);  // void case\n\nwhere the returned bool always means whether the callback threw an exception or not?",
+      "parentUuid": "74693bae_d0582e43",
+      "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
