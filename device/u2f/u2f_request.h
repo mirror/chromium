@@ -45,10 +45,24 @@ class U2fRequest : public U2fDiscovery::Delegate {
     COMPLETE,
   };
 
+  // Bogus application parameter and challenge to be used to verify user
+  // presence.
+  const std::vector<uint8_t> kBogusAppParam = {
+      0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41,
+      0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41,
+      0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41, 0x41};
+  const std::vector<uint8_t> kBogusChallenge = {
+      0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42,
+      0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42,
+      0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42, 0x42};
+
   void Transition();
   virtual void TryDevice() = 0;
 
   std::unique_ptr<U2fDevice> current_device_;
+  std::list<std::unique_ptr<U2fDevice>> devices_;
+  std::list<std::unique_ptr<U2fDevice>> attempted_devices_;
+
   State state_;
   std::vector<std::unique_ptr<U2fDiscovery>> discoveries_;
   ResponseCallback cb_;
@@ -66,8 +80,6 @@ class U2fRequest : public U2fDiscovery::Delegate {
   void IterateDevice();
   void OnWaitComplete();
 
-  std::list<std::unique_ptr<U2fDevice>> devices_;
-  std::list<std::unique_ptr<U2fDevice>> attempted_devices_;
   base::CancelableClosure delay_callback_;
   size_t started_count_ = 0;
 
