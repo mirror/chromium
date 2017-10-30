@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89f16905_91221c4f",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-30T12:08:26Z",
+      "side": 1,
+      "message": "Do we really need both IsEnabled and IsRunning?",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042340f4_54a6336d",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-30T12:08:26Z",
+      "side": 1,
+      "message": "What is this check for?",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410e5f44_e0974b04",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-30T12:08:26Z",
+      "side": 1,
+      "message": "Would you help me understand why this flag is needed?\n\nThe flag never goes to false. Is that expected?",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf6bbde_90f602cb",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-30T12:08:26Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \u0027if\u0027 rather than \u0027else if\u0027?\n\nAlso add a comment to each branch and mention when it happens.",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf9549f_29f91acc",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-30T12:08:26Z",
+      "side": 1,
+      "message": "Don\u0027t we need to check if we\u0027re on a foreground tab or not? Navigation may happen on a background tab.",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5019187e_eb4110bc",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-30T12:08:26Z",
+      "side": 1,
+      "message": "Remove \"Also ...\". It\u0027s saying the same thing as \"if it\u0027s not started\".",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
