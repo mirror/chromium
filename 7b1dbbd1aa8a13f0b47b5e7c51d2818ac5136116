@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "d434011b_bbe3cce8",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/GeneratedCodeHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-30T14:43:30Z",
+      "side": 1,
+      "message": "ExecutionContext::IsContextDestroyed() and ScriptState::ContextIsValid() are already mostly the same. However, I\u0027m okay with keeping it if the existing code has the check.\n\nOnce we move ScriptState to Oilpan, we can make the two checks equivalent, at which point we can confidently remove one of the checks.",
+      "parentUuid": "02a0195a_ae0052af",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b8027ae_fc22ea2e",
         "filename": "third_party/WebKit/Source/bindings/core/v8/GeneratedCodeHelper.cpp",
         "patchSetId": 4
@@ -300,6 +318,24 @@
       "side": 1,
       "message": "I wrote some explanation in https://chromium-review.googlesource.com/c/chromium/src/+/732872/12/third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl#44\nSee the comment from line 44.\n\nMost of callback invokers are not interested in handling an exception, and the invokers currently let an exception go as is expecting that it\u0027s reported to DevTool\u0027s console.\n\nIf this function takes an ExceptionState as the last argument, then every invoker needs to prepare an ExceptionState and handle it correctly on their own responsibility.  Who guarantees that the invokers correctly manage exceptions?  Every invokers need to write:\n\n    v8::Isolate* isolate \u003d ... needs to get an isolate somehow ...\n    v8::TryCatch tryCatch(isolate);\n    tryCatch.SetVerbose(true);\n    ExceptionState exception_state(... needs class name / method name ...);\n\nIt\u0027s a burden, isn\u0027t it?\n\nAlso note that some of usage of the callbacks are:\n\n    PostTask(Bind(callback, ...arguments...));\n\nThis usage works because there is no need to prepare an ExceptionState.  If it\u0027s mandatory to prepare an ExceptionState, we need to define a helper function for |callback| here.\n\nThese are why I don\u0027t want to introduce ExceptionState in case of callbacks.",
       "parentUuid": "babcf959_7da92470",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593d59cd_4931bff5",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-30T14:43:30Z",
+      "side": 1,
+      "message": "What is the spec saying about how to handle the exception? (e.g., void case vs. boolean case)",
+      "parentUuid": "618f1827_a63c4ce4",
       "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

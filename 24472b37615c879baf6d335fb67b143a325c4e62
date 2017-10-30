@@ -16,6 +16,40 @@
       "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012157a9_8ecb8702",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-30T14:43:30Z",
+      "side": 1,
+      "message": "Why do we need to use v8::TryCatch?\n\nIsn\u0027t it sufficient to just check the returned Maybe of callback-\u003ehandleEvent?",
+      "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8634b9be_12a088e5",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-30T14:43:30Z",
+      "side": 1,
+      "message": "Ditto. Can we just use the returned Maybe of callback-\u003ehandleEvent()?",
+      "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
