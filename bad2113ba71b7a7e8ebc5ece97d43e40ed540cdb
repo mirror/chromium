@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9a8cd21_6cbeb02e",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-30T17:29:29Z",
+      "side": 1,
+      "message": "There are single-page spec URLs in many places, so I\u0027ll replace them in a separate CL (later when there\u0027re fewer changes in the related code).",
+      "parentUuid": "86a57491_77dda76d",
+      "revId": "bad2113ba71b7a7e8ebc5ece97d43e40ed540cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bec95793_8d756236",
         "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "bad2113ba71b7a7e8ebc5ece97d43e40ed540cdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e478f5_14354bc3",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-30T17:29:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bec95793_8d756236",
+      "revId": "bad2113ba71b7a7e8ebc5ece97d43e40ed540cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
