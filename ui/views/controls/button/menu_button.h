@@ -102,12 +102,6 @@ class VIEWS_EXPORT MenuButton : public LabelButton {
   void NotifyClick(const ui::Event& event) override;
   void PaintButtonContents(gfx::Canvas* canvas) override;
 
-  // Offset of the associated menu position.
-  gfx::Point menu_offset_;
-
- private:
-  friend class PressedLock;
-
   // Increment/decrement the number of "pressed" locks this button has, and
   // set the state accordingly. The ink drop is snapped to the final ACTIVATED
   // state if |snap_ink_drop_to_activated| is true, otherwise the ink drop will
@@ -116,6 +110,12 @@ class VIEWS_EXPORT MenuButton : public LabelButton {
   void IncrementPressedLocked(bool snap_ink_drop_to_activated,
                               const ui::LocatedEvent* event);
   void DecrementPressedLocked();
+
+  // Offset of the associated menu position.
+  gfx::Point menu_offset_;
+
+ private:
+  friend class PressedLock;
 
   // Compute the maximum X coordinate for the current screen. MenuButtons
   // use this to make sure a menu is never shown off screen.

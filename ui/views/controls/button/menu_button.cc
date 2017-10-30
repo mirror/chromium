@@ -203,6 +203,7 @@ bool MenuButton::OnMousePressed(const ui::MouseEvent& event) {
   if (state() != STATE_DISABLED && HitTestPoint(event.location()) &&
       IsTriggerableEventType(event)) {
     if (IsTriggerableEvent(event))
+      NotifyClick(event);
       return Activate(&event);
   }
   return true;
