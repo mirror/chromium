@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aacad2ea_b466450f",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T13:28:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9a87f29_59097335",
+      "revId": "f44ffa8aefb36117619f84a103aedc05d0f6d159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59e359ac_d3a89da3",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "f44ffa8aefb36117619f84a103aedc05d0f6d159",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1bff00f_5dbe6930",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T13:28:15Z",
+      "side": 1,
+      "message": "Since we allow a non-tail default match anywhere, it is no longer necessary to find the best; the first found will do.\n\nI\u0027ve added tests for the new cases.",
+      "parentUuid": "59e359ac_d3a89da3",
+      "revId": "f44ffa8aefb36117619f84a103aedc05d0f6d159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5ee3ac50_17966a5e",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T13:28:15Z",
+      "side": 1,
+      "message": "Yes, this is the catastrophic version of my comment in the bug. The code has been updated, and I added this test.\n\nThere\u0027s no more |would_be| but I added a more general comment.",
+      "parentUuid": "9fe82e01_442672ed",
+      "revId": "f44ffa8aefb36117619f84a103aedc05d0f6d159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b76b5ef4_60a482f6",
         "filename": "components/omnibox/browser/autocomplete_result.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "f44ffa8aefb36117619f84a103aedc05d0f6d159",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad68c407_06a8473d",
+        "filename": "components/omnibox/browser/autocomplete_result.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T13:28:15Z",
+      "side": 1,
+      "message": "Done, and re-ordered another.",
+      "parentUuid": "b76b5ef4_60a482f6",
+      "revId": "f44ffa8aefb36117619f84a103aedc05d0f6d159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -532,6 +532,24 @@
       "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8894fc_59f8011d",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T13:28:15Z",
+      "side": 1,
+      "message": "To make sure that I\u0027m on the same page: Expire calls UpdateResults, UpdateResults recalls tail suggestions, we display tail suggestions. So it\u0027s a visual issue, ya?\n\nThis sounds a little like that other issue, where we quickly update the display after receiving a late-ish result. I guess you\u0027re more concerned since, because they\u0027re tail suggestions, it\u0027s a bigger visual change? I would probably be disappointed if we made this distinction. We\u0027ll see, but I\u0027m happy to consider a solution.",
+      "parentUuid": "f73685fb_8f95a829",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
