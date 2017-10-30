@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e194811b_5d19a314",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-30T21:34:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4cc338f8_9566952c",
+      "range": {
+        "startLine": 318,
+        "startChar": 29,
+        "endLine": 318,
+        "endChar": 39
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e5f1c08_e541a783",
         "filename": "ash/display/mirror_window_controller.h",
         "patchSetId": 5
@@ -187,6 +211,30 @@
       "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca29b4c_a0b5a31e",
+        "filename": "ash/system/screen_layout_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-30T21:34:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a727ddd_58c7aad3",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -284,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "27f55f13_d96dba75",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-30T21:34:22Z",
+      "side": 1,
+      "message": "Sorry, I think I was looking at it the wrong way. Please ignore my comment.",
+      "parentUuid": "b0bb9b95_15ac2c1b",
+      "range": {
+        "startLine": 690,
+        "startChar": 10,
+        "endLine": 690,
+        "endChar": 53
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25cf3b72_ddfef3d7",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 5
@@ -328,6 +400,30 @@
       "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba4b966_9e5a6f24",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-30T21:34:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a07666b_7e2d83e0",
+      "range": {
+        "startLine": 696,
+        "startChar": 6,
+        "endLine": 696,
+        "endChar": 74
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -516,6 +612,30 @@
       "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca67b7e_5e5f1a48",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-30T21:34:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4d42409a_c4b194d5",
+      "range": {
+        "startLine": 1511,
+        "startChar": 2,
+        "endLine": 1511,
+        "endChar": 33
+      },
+      "revId": "cf23f7e0d3820797a0421faee3836d66ae4a5e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
