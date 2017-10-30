@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9082337_cedad44a",
+        "filename": "testing/buildbot/chromium.android.fyi.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 3563,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-30T23:30:07Z",
+      "side": 1,
+      "message": "woops, forgot to send earlier: add shards",
+      "revId": "f0537dcd8f45b3136f85cdcff5ca7424291d8493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
