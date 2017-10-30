@@ -46,6 +46,30 @@
       "revId": "07e56b8dbf7825526c0d09b33e5991389a8f63b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d543b2ae_3587f00c",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-30T13:33:29Z",
+      "side": 1,
+      "message": "Looks like -setUpForTestingWithCompletionHandler: from MainController is what used to cause this notification to be sent but the method is never invoked. I think this can be removed now (in a followup CL), no need to wait until LegacyFullscreenController is removed.",
+      "parentUuid": "8fd7cc62_c1325503",
+      "range": {
+        "startLine": 120,
+        "startChar": 42,
+        "endLine": 120,
+        "endChar": 70
+      },
+      "revId": "07e56b8dbf7825526c0d09b33e5991389a8f63b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
