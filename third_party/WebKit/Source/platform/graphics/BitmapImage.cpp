@@ -428,20 +428,7 @@ scoped_refptr<Image> BitmapImage::ImageForDefaultFrame() {
 }
 
 bool BitmapImage::FrameHasAlphaAtIndex(size_t index) {
-  if (frames_.size() <= index)
-    return true;
-
-  if (frames_[index].have_metadata_ && !frames_[index].has_alpha_)
-    return false;
-
-  // has_alpha may change after have_metadata_ is set to true, so always ask
-  // |decoder_| for the value if the cached value is the default value.
-  bool has_alpha = !decoder_ || decoder_->FrameHasAlphaAtIndex(index);
-
-  if (frames_[index].have_metadata_)
-    frames_[index].has_alpha_ = has_alpha;
-
-  return has_alpha;
+  return false;
 }
 
 bool BitmapImage::CurrentFrameKnownToBeOpaque(MetadataMode metadata_mode) {
@@ -451,7 +438,9 @@ bool BitmapImage::CurrentFrameKnownToBeOpaque(MetadataMode metadata_mode) {
     // metadata.
     FrameAtIndex(current_frame_index_);
   }
-  return !FrameHasAlphaAtIndex(current_frame_index_);
+  bool opaque = !FrameHasAlphaAtIndex(current_frame_index_);
+  CHECK(opaque);
+  return opaque;
 }
 
 bool BitmapImage::CurrentFrameIsComplete() {

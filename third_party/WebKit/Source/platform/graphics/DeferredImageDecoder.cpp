@@ -115,9 +115,7 @@ sk_sp<PaintImageGenerator> DeferredImageDecoder::CreateGenerator(size_t index) {
 
   // ImageFrameGenerator has the latest known alpha state. There will be a
   // performance boost if this frame is opaque.
-  SkAlphaType alpha_type = frame_generator_->HasAlpha(index)
-                               ? kPremul_SkAlphaType
-                               : kOpaque_SkAlphaType;
+  SkAlphaType alpha_type = kOpaque_SkAlphaType;
   SkImageInfo info =
       SkImageInfo::MakeN32(decoded_size.width(), decoded_size.height(),
                            alpha_type, color_space_for_sk_images_);
@@ -214,11 +212,7 @@ void DeferredImageDecoder::ClearCacheExceptFrame(size_t clear_except_frame) {
 }
 
 bool DeferredImageDecoder::FrameHasAlphaAtIndex(size_t index) const {
-  if (metadata_decoder_)
-    return metadata_decoder_->FrameHasAlphaAtIndex(index);
-  if (!frame_generator_->IsMultiFrame())
-    return frame_generator_->HasAlpha(index);
-  return true;
+  return false;
 }
 
 bool DeferredImageDecoder::FrameIsReceivedAtIndex(size_t index) const {
