@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/sequence_checker.h"
 #include "media/gpu/vaapi_picture.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/geometry/size.h"
