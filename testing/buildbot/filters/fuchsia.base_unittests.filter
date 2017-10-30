@@ -58,3 +58,6 @@
 
 # https://crbug.com/752368.
 -FieldTrialListTest.ClearParamsFromSharedMemory
+
+# Fails on ARM due to lack of RTC offset in kernel. https://crbug.com/779668.
+-BuildTime.InThePast
