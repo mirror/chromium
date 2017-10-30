@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4189703_43275759",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/focus/processing-model/preventScroll-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-30T14:33:32Z",
+      "side": 0,
+      "message": "Do you know why this was FAIL before?",
+      "revId": "99bdde86af770feceef84a4a54aa0e6869bcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
