@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aff16173_6e808a0a",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_unittest_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-30T18:53:22Z",
+      "side": 1,
+      "message": "nit: copyright year.\n\nSomething looks odd in gerrit wrt line lengths maybe (or crlf?) - double-check / run git cl format?",
+      "revId": "d47847350e7f85f04b49bee4fe00d2b19a7835f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
