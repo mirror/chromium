@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e071803c_d889afbe",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3425,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-30T06:35:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8c05c8d_62f0ad1b",
+      "range": {
+        "startLine": 3425,
+        "startChar": 32,
+        "endLine": 3425,
+        "endChar": 36
+      },
+      "revId": "3683130bdd56f92d5b3ef5ec69dcde4c6f5b7760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "156e8a44_f80a9f31",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "c39d1f1f_595f0e08",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3438,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-30T06:35:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "156e8a44_f80a9f31",
+      "revId": "3683130bdd56f92d5b3ef5ec69dcde4c6f5b7760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dffaa9f0_1ecd345b",
         "filename": "content/common/url_loader_factory_bundle.cc",
         "patchSetId": 6
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-30T05:13:07Z",
       "side": 1,
       "message": "Nit: prefer emplace over insert + std::make_pair",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "3683130bdd56f92d5b3ef5ec69dcde4c6f5b7760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb8e33a_9c702600",
+        "filename": "content/common/url_loader_factory_bundle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-30T06:35:11Z",
+      "side": 1,
+      "message": "Yeah so I always do prefer emplace, but here it failed to build on some (chromeos and android) bots, which triggered a vague \"probably unsupported emplace with map with move-only types\" heuristic in my mind. In retrospect, it was probably just choking on an implicit conversion from base::StringPiece to std::string, so let\u0027s see if this compiles now. :)",
+      "parentUuid": "dffaa9f0_1ecd345b",
       "range": {
         "startLine": 55,
         "startChar": 27,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "6813c54c_bc2ba47e",
+        "filename": "content/common/url_loader_factory_bundle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-30T06:35:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f79b3cb_6d8191d1",
+      "range": {
+        "startLine": 73,
+        "startChar": 19,
+        "endLine": 74,
+        "endChar": 23
+      },
+      "revId": "3683130bdd56f92d5b3ef5ec69dcde4c6f5b7760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21c86933_ef79b427",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 6
@@ -108,6 +198,30 @@
       "revId": "3683130bdd56f92d5b3ef5ec69dcde4c6f5b7760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6821eb18_0803e4b9",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6233,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-30T06:35:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21c86933_ef79b427",
+      "range": {
+        "startLine": 6233,
+        "startChar": 67,
+        "endLine": 6233,
+        "endChar": 70
+      },
+      "revId": "3683130bdd56f92d5b3ef5ec69dcde4c6f5b7760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
