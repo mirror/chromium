@@ -16,6 +16,24 @@
       "revId": "de84a236f0957f39b9139b6d2678df3390ecf713",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2982d1_6fb1828f",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-30T16:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf548508_894b7f62",
+      "revId": "de84a236f0957f39b9139b6d2678df3390ecf713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
