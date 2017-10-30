@@ -52,6 +52,24 @@
       "revId": "d9ae583ebb1c73fc1240ece7fd933e0e61376caa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb0f5f3d_9b582b2b",
+        "filename": "components/ukm/ukm_interface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-30T21:08:55Z",
+      "side": 1,
+      "message": "would at least mention this in a comment as the implementation is surprising",
+      "parentUuid": "30c0e20f_c7fef5e1",
+      "revId": "d9ae583ebb1c73fc1240ece7fd933e0e61376caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
