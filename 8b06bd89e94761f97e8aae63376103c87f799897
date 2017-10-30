@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a2df93f_a1c532f2",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-30T23:55:34Z",
+      "side": 1,
+      "message": "At this point, why even need a list like this?",
+      "revId": "8b06bd89e94761f97e8aae63376103c87f799897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
