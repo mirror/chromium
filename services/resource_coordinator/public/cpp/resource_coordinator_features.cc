@@ -15,6 +15,8 @@ const char* kUkmPageLoadCPUUsageProfilingTrialName =
     "UkmPageLoadCPUUsageProfiling";
 const char* kIntervalInMsParameterName = "intervalInMs";
 const char* kDurationInMsParameterName = "durationInMs";
+const char* kLowMainThreadLowThresholdParameterName =
+    "lowMainThreadLoadThreshold";
 
 int64_t GetIntegerFieldTrialParam(const std::string& trial_name,
                                   const std::string& parameter_name,
@@ -43,6 +45,9 @@ const base::Feature kGlobalResourceCoordinator{
 const base::Feature kGRCRenderProcessCPUProfiling{
     "GRCRenderProcessCPUProfiling", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kPageAlmostIdle{"PageAlmostIdle",
+                                    base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace features
 
 namespace resource_coordinator {
@@ -63,6 +68,23 @@ int64_t GetGRCRenderProcessCPUProfilingDurationInMs() {
 int64_t GetGRCRenderProcessCPUProfilingIntervalInMs() {
   return GetIntegerFieldTrialParam(kUkmPageLoadCPUUsageProfilingTrialName,
                                    kIntervalInMsParameterName, -1);
+}
+
+bool IsPageAlmostIdleSignalEnabled() {
+  return base::FeatureList::IsEnabled(features::kPageAlmostIdle);
+}
+
+int GetLowMainThreadLoadThreshold() {
+  static int kDefaultThreshold = 30;
+
+  std::string value_str = base::GetFieldTrialParamValueByFeature(
+      features::kPageAlmostIdle, kLowMainThreadLowThresholdParameterName);
+  int low_main_thread_threshold;
+  if (value_str.empty() ||
+      !base::StringToInt(value_str, &low_main_thread_threshold)) {
+    return kDefaultThreshold;
+  }
+  return low_main_thread_threshold;
 }
 
 }  // namespace resource_coordinator

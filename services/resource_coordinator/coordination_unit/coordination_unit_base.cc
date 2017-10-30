@@ -36,6 +36,13 @@ const FrameCoordinationUnitImpl* CoordinationUnitBase::ToFrameCoordinationUnit(
 }
 
 // static
+FrameCoordinationUnitImpl* CoordinationUnitBase::ToFrameCoordinationUnit(
+    CoordinationUnitBase* coordination_unit) {
+  DCHECK(coordination_unit->id().type == CoordinationUnitType::kFrame);
+  return static_cast<FrameCoordinationUnitImpl*>(coordination_unit);
+}
+
+// static
 PageCoordinationUnitImpl* CoordinationUnitBase::ToPageCoordinationUnit(
     CoordinationUnitBase* coordination_unit) {
   DCHECK(coordination_unit->id().type == CoordinationUnitType::kPage);
@@ -47,6 +54,13 @@ const PageCoordinationUnitImpl* CoordinationUnitBase::ToPageCoordinationUnit(
     const CoordinationUnitBase* cu) {
   DCHECK(cu->id().type == CoordinationUnitType::kPage);
   return static_cast<const PageCoordinationUnitImpl*>(cu);
+}
+
+// static
+ProcessCoordinationUnitImpl* CoordinationUnitBase::ToProcessCoordinationUnit(
+    CoordinationUnitBase* cu) {
+  DCHECK(cu->id().type == CoordinationUnitType::kProcess);
+  return static_cast<ProcessCoordinationUnitImpl*>(cu);
 }
 
 // static

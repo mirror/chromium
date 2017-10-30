@@ -93,6 +93,16 @@ void ProcessCoordinationUnitImpl::PropagateProperty(
       }
       break;
     }
+    case mojom::PropertyType::kMainThreadLoad: {
+      for (auto* cu :
+           GetAssociatedCoordinationUnitsOfType(CoordinationUnitType::kFrame)) {
+        FrameCoordinationUnitImpl* frame_cu = ToFrameCoordinationUnit(cu);
+        if (!frame_cu->IsMainFrame())
+          continue;
+        frame_cu->RecalculateProperty(mojom::PropertyType::kMainThreadLoad);
+      }
+      break;
+    }
     default:
       break;
   }

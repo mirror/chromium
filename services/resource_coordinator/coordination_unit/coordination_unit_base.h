@@ -25,6 +25,7 @@ namespace resource_coordinator {
 class CoordinationUnitGraphObserver;
 class FrameCoordinationUnitImpl;
 class PageCoordinationUnitImpl;
+class ProcessCoordinationUnitImpl;
 
 // CoordinationUnitBase implements shared functionality among different types of
 // coordination units. A specific type of coordination unit will derive from
@@ -39,10 +40,14 @@ class CoordinationUnitBase : public mojom::CoordinationUnit {
 
   static const FrameCoordinationUnitImpl* ToFrameCoordinationUnit(
       const CoordinationUnitBase* coordination_unit);
+  static FrameCoordinationUnitImpl* ToFrameCoordinationUnit(
+      CoordinationUnitBase* coordination_unit);
   static PageCoordinationUnitImpl* ToPageCoordinationUnit(
       CoordinationUnitBase* coordination_unit);
   static const PageCoordinationUnitImpl* ToPageCoordinationUnit(
       const CoordinationUnitBase* coordination_unit);
+  static ProcessCoordinationUnitImpl* ToProcessCoordinationUnit(
+      CoordinationUnitBase* coordination_unit);
 
   static std::vector<CoordinationUnitBase*> GetCoordinationUnitsOfType(
       CoordinationUnitType type);

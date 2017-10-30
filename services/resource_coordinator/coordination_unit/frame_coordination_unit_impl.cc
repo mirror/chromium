@@ -5,6 +5,7 @@
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 
 #include "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.h"
 #include "services/resource_coordinator/observers/coordination_unit_graph_observer.h"
 
 namespace resource_coordinator {
@@ -60,6 +61,17 @@ FrameCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
   }
 }
 
+void FrameCoordinationUnitImpl::RecalculateProperty(
+    const mojom::PropertyType property_type) {
+  if (property_type == mojom::PropertyType::kMainThreadLoad) {
+    int64_t main_thread_load;
+    if (GetProcessCoordinationUnit()->GetProperty(
+            mojom::PropertyType::kMainThreadLoad, &main_thread_load)) {
+      SetProperty(mojom::PropertyType::kMainThreadLoad, main_thread_load);
+    }
+  }
+}
+
 void FrameCoordinationUnitImpl::SetAudibility(bool audible) {
   SetProperty(mojom::PropertyType::kAudible, audible);
 }
@@ -82,6 +94,16 @@ PageCoordinationUnitImpl* FrameCoordinationUnitImpl::GetPageCoordinationUnit()
     if (parent->id().type != CoordinationUnitType::kPage)
       continue;
     return CoordinationUnitBase::ToPageCoordinationUnit(parent);
+  }
+  return nullptr;
+}
+
+ProcessCoordinationUnitImpl*
+FrameCoordinationUnitImpl::GetProcessCoordinationUnit() const {
+  for (auto* parent : parents_) {
+    if (parent->id().type != CoordinationUnitType::kProcess)
+      continue;
+    return CoordinationUnitBase::ToProcessCoordinationUnit(parent);
   }
   return nullptr;
 }
