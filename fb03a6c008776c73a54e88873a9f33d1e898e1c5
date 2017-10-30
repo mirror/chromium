@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75bedeb5_566b5e91",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-30T17:21:48Z",
+      "side": 1,
+      "message": "This line is too long. The first line of the commit message shouldn\u0027t exceed about 72 characters or so. You can omit any details to shorten the line, for example, \"ChromeLoggingCapabilityTest\" isn\u0027t necessary. After the first line, the second line should be blank, and then put additional details starting on line 3.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 113
+      },
+      "revId": "fb03a6c008776c73a54e88873a9f33d1e898e1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
