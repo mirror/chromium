@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a0dff8f_82079dc8",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T13:27:15Z",
+      "side": 1,
+      "message": "Feel free to ignore: maybe consider swapping the element and the boolean as the element is the important piece here.",
+      "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5484d1c0_2488b5f8",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T13:27:15Z",
+      "side": 1,
+      "message": "This could probably move into the `IsHTMLVideoElement()` below so we don\u0027t allocate for audio elements.",
+      "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3f77bd_3bcf12a7",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T13:27:15Z",
+      "side": 1,
+      "message": "Feel free to ignore: you could have one high level `if (overflow_wanted)` in which the rest of the code would leave. It\u0027s a bit more wrapping but help glazing through the code.",
+      "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95dc75d5_ceb5dda6",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T13:27:15Z",
+      "side": 1,
+      "message": "random note: I\u0027m not sure why ceil over floor/round. I usually pick round unless there is a good reason. Feel free to keep ceil but I wanted to point out.",
+      "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e8d221_3c0e85b2",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T13:27:15Z",
+      "side": 1,
+      "message": "s/36px/kDefaultButtonSize/",
+      "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a41035_0acd4913",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T13:27:15Z",
+      "side": 1,
+      "message": "style: use `override` instead of `virtual`",
+      "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
