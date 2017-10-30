@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ce0c269_9ae5a8b4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1826,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-30T20:59:57Z",
+      "side": 1,
+      "message": "CanDeferInvalidation::kYes is just a hint, it can be ignored. CanDeferInvalidation::kNo must be enforced to do the invalidation immediately. I updated the comments on the class to make it clear. I\u0027m assuming that was causing the confusion?",
+      "parentUuid": "c5145221_ae393968",
+      "revId": "a0987a00a91f70e9927f9f214106b2cc856e19ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e2fa3d_349f9535",
         "filename": "third_party/WebKit/Source/core/layout/LayoutImage.cpp",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9c65f43b_7310ec6f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutImage.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-30T20:59:57Z",
+      "side": 1,
+      "message": "InvalidatePaintAndMarkForLayoutIfNeeded will take care of whether it is actually deferred if the image is animated. This is just a veto to the logic in that method, and in this case we don\u0027t need to veto.",
+      "parentUuid": "77e2fa3d_349f9535",
+      "revId": "a0987a00a91f70e9927f9f214106b2cc856e19ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b0e2134_b225ad01",
         "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGImage.cpp",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "a0987a00a91f70e9927f9f214106b2cc856e19ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb04141_ad80c993",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGImage.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-30T20:59:57Z",
+      "side": 1,
+      "message": "If it boils down to figuring out the visibility of this object, then it should be possible to replicate that here as well...right? Though once we make image animations default in cc, then this should naturally be handled there, so we can let it be for now.",
+      "parentUuid": "6b0e2134_b225ad01",
+      "revId": "a0987a00a91f70e9927f9f214106b2cc856e19ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

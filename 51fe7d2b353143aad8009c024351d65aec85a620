@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "2f43043c_37835ba9",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-30T20:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "998831f5_237337e5",
+      "revId": "51fe7d2b353143aad8009c024351d65aec85a620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "670f0773_7bb9bd1f",
         "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceObserver.h",
         "patchSetId": 3
