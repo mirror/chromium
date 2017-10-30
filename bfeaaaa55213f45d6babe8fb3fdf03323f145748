@@ -22,6 +22,30 @@
       "revId": "bfeaaaa55213f45d6babe8fb3fdf03323f145748",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6c06f7_0a084473",
+        "filename": "content/test/gpu/gpu_tests/pixel_expectations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-10-30T18:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69c124c1_f0d2aa39",
+      "range": {
+        "startLine": 71,
+        "startChar": 10,
+        "endLine": 71,
+        "endChar": 13
+      },
+      "revId": "bfeaaaa55213f45d6babe8fb3fdf03323f145748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
