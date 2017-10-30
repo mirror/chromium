@@ -41,7 +41,7 @@ class MEDIA_GPU_EXPORT V4L2SliceVideoDecodeAccelerator
   class V4L2DecodeSurface;
 
   V4L2SliceVideoDecodeAccelerator(
-      const scoped_refptr<V4L2Device>& device,
+      scoped_refptr<V4L2Device> device,
       EGLDisplay egl_display,
       const BindGLImageCallback& bind_image_cb,
       const MakeGLContextCurrentCallback& make_context_current_cb);
@@ -60,7 +60,7 @@ class MEDIA_GPU_EXPORT V4L2SliceVideoDecodeAccelerator
   void Destroy() override;
   bool TryToSetupDecodeOnSeparateThread(
       const base::WeakPtr<Client>& decode_client,
-      const scoped_refptr<base::SingleThreadTaskRunner>& decode_task_runner)
+      scoped_refptr<base::SingleThreadTaskRunner> decode_task_runner)
       override;
 
   static VideoDecodeAccelerator::SupportedProfiles GetSupportedProfiles();
@@ -125,7 +125,7 @@ class MEDIA_GPU_EXPORT V4L2SliceVideoDecodeAccelerator
 
   // Decode of |dec_surface| is ready to be submitted and all codec-specific
   // settings are set in hardware.
-  void DecodeSurface(const scoped_refptr<V4L2DecodeSurface>& dec_surface);
+  void DecodeSurface(scoped_refptr<V4L2DecodeSurface> dec_surface);
 
   // |dec_surface| is ready to be outputted once decode is finished.
   // This can be called before decode is actually done in hardware, and this
@@ -133,7 +133,7 @@ class MEDIA_GPU_EXPORT V4L2SliceVideoDecodeAccelerator
   // be outputted in the same order as SurfaceReady calls. To do so, the
   // surfaces are put on decoder_display_queue_ and sent to output in that
   // order once all preceding surfaces are sent.
-  void SurfaceReady(const scoped_refptr<V4L2DecodeSurface>& dec_surface);
+  void SurfaceReady(scoped_refptr<V4L2DecodeSurface> dec_surface);
 
   //
   // Internal methods of this class.
@@ -145,7 +145,7 @@ class MEDIA_GPU_EXPORT V4L2SliceVideoDecodeAccelerator
   void ReuseOutputBuffer(int index);
 
   // Queue a |dec_surface| to device for decoding.
-  void Enqueue(const scoped_refptr<V4L2DecodeSurface>& dec_surface);
+  void Enqueue(scoped_refptr<V4L2DecodeSurface> dec_surface);
 
   // Dequeue any V4L2 buffers available and process.
   void Dequeue();
@@ -340,7 +340,7 @@ class MEDIA_GPU_EXPORT V4L2SliceVideoDecodeAccelerator
 
   // Called to actually send |dec_surface| to the client, after it is decoded
   // preserving the order in which it was scheduled via SurfaceReady().
-  void OutputSurface(const scoped_refptr<V4L2DecodeSurface>& dec_surface);
+  void OutputSurface(scoped_refptr<V4L2DecodeSurface> dec_surface);
 
   // Goes over the |decoder_display_queue_| and sends all buffers from the
   // front of the queue that are already decoded to the client, in order.
@@ -359,7 +359,7 @@ class MEDIA_GPU_EXPORT V4L2SliceVideoDecodeAccelerator
   size_t output_planes_count_;
 
   // GPU Child thread task runner.
-  const scoped_refptr<base::SingleThreadTaskRunner> child_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> child_task_runner_;
 
   // Task runner Decode() and PictureReady() run on.
   scoped_refptr<base::SingleThreadTaskRunner> decode_task_runner_;

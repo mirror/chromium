@@ -32,7 +32,7 @@ class VaapiPicture {
   // If provided, bind it to |texture_id|, as well as to |client_texture_id|
   // using |bind_image_cb|.
   static linked_ptr<VaapiPicture> CreatePicture(
-      const scoped_refptr<VaapiWrapper>& vaapi_wrapper,
+      scoped_refptr<VaapiWrapper> vaapi_wrapper,
       const MakeGLContextCurrentCallback& make_context_current_cb,
       const BindGLImageCallback& bind_image_cb,
       int32_t picture_buffer_id,
@@ -60,14 +60,14 @@ class VaapiPicture {
   // Downloads the |va_surface| into the picture, potentially scaling
   // it if needed.
   virtual bool DownloadFromSurface(
-      const scoped_refptr<VASurface>& va_surface) = 0;
+      scoped_refptr<VASurface> va_surface) = 0;
 
   // Get the texture target used to bind EGLImages (either
   // GL_TEXTURE_2D on X11 or GL_TEXTURE_EXTERNAL_OES on DRM).
   static uint32_t GetGLTextureTarget();
 
  protected:
-  VaapiPicture(const scoped_refptr<VaapiWrapper>& vaapi_wrapper,
+  VaapiPicture(scoped_refptr<VaapiWrapper> vaapi_wrapper,
                const MakeGLContextCurrentCallback& make_context_current_cb,
                const BindGLImageCallback& bind_image_cb,
                int32_t picture_buffer_id,

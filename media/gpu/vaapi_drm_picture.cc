@@ -18,7 +18,7 @@
 namespace media {
 
 VaapiDrmPicture::VaapiDrmPicture(
-    const scoped_refptr<VaapiWrapper>& vaapi_wrapper,
+    scoped_refptr<VaapiWrapper> vaapi_wrapper,
     const MakeGLContextCurrentCallback& make_context_current_cb,
     const BindGLImageCallback& bind_image_cb,
     int32_t picture_buffer_id,
@@ -130,7 +130,7 @@ bool VaapiDrmPicture::ImportGpuMemoryBufferHandle(
 }
 
 bool VaapiDrmPicture::DownloadFromSurface(
-    const scoped_refptr<VASurface>& va_surface) {
+    scoped_refptr<VASurface> va_surface) {
   return vaapi_wrapper_->BlitSurface(va_surface, va_surface_);
 }
 

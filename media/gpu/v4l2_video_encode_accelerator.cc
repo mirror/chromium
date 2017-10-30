@@ -106,7 +106,7 @@ V4L2VideoEncodeAccelerator::ImageProcessorInputRecord::
     ~ImageProcessorInputRecord() {}
 
 V4L2VideoEncodeAccelerator::V4L2VideoEncodeAccelerator(
-    const scoped_refptr<V4L2Device>& device)
+    scoped_refptr<V4L2Device> device)
     : child_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       output_buffer_byte_size_(0),
       device_input_format_(PIXEL_FORMAT_UNKNOWN),
@@ -266,7 +266,7 @@ void V4L2VideoEncodeAccelerator::ImageProcessorError() {
   NOTIFY_ERROR(kPlatformFailureError);
 }
 
-void V4L2VideoEncodeAccelerator::Encode(const scoped_refptr<VideoFrame>& frame,
+void V4L2VideoEncodeAccelerator::Encode(scoped_refptr<VideoFrame> frame,
                                         bool force_keyframe) {
   DVLOG(3) << "Encode(): force_keyframe=" << force_keyframe;
   DCHECK(child_task_runner_->BelongsToCurrentThread());
@@ -491,7 +491,7 @@ size_t V4L2VideoEncodeAccelerator::CopyIntoOutputBuffer(
 }
 
 void V4L2VideoEncodeAccelerator::EncodeTask(
-    const scoped_refptr<VideoFrame>& frame,
+    scoped_refptr<VideoFrame> frame,
     bool force_keyframe) {
   DVLOG(3) << "EncodeTask(): force_keyframe=" << force_keyframe;
   DCHECK(encoder_thread_.task_runner()->BelongsToCurrentThread());

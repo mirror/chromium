@@ -18,7 +18,7 @@ namespace media {
 namespace {
 
 // Does nothing but keeping |frame| alive.
-void KeepVideoFrameAlive(const scoped_refptr<VideoFrame>& frame) {}
+void KeepVideoFrameAlive(scoped_refptr<VideoFrame> frame) {}
 
 // File-static mojom::VideoEncodeAcceleratorClient implementation to trampoline
 // method calls to its |client_|. Note that this class is thread hostile when
@@ -126,7 +126,7 @@ bool MojoVideoEncodeAccelerator::Initialize(VideoPixelFormat input_format,
   return result;
 }
 
-void MojoVideoEncodeAccelerator::Encode(const scoped_refptr<VideoFrame>& frame,
+void MojoVideoEncodeAccelerator::Encode(scoped_refptr<VideoFrame> frame,
                                         bool force_keyframe) {
   DVLOG(2) << __func__ << " tstamp=" << frame->timestamp();
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);

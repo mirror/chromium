@@ -70,7 +70,7 @@ class MEDIA_GPU_EXPORT AndroidVideoDecodeAccelerator
   void Destroy() override;
   bool TryToSetupDecodeOnSeparateThread(
       const base::WeakPtr<Client>& decode_client,
-      const scoped_refptr<base::SingleThreadTaskRunner>& decode_task_runner)
+      scoped_refptr<base::SingleThreadTaskRunner> decode_task_runner)
       override;
 
   // AVDAStateProvider implementation:

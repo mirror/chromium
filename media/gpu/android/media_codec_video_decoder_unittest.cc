@@ -32,10 +32,10 @@ using testing::_;
 namespace media {
 namespace {
 
-void OutputCb(const scoped_refptr<VideoFrame>&) {}
+void OutputCb(scoped_refptr<VideoFrame>) {}
 
 void OutputWithReleaseMailboxCb(VideoFrameFactory::ReleaseMailboxCB,
-                                const scoped_refptr<VideoFrame>&) {}
+                                scoped_refptr<VideoFrame>) {}
 
 std::unique_ptr<AndroidOverlay> CreateAndroidOverlayCb(
     std::unique_ptr<service_manager::ServiceContextRef>,

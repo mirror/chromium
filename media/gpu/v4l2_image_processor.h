@@ -28,7 +28,7 @@ namespace media {
 // hardware accelerators (see V4L2VideoDecodeAccelerator) for more details.
 class MEDIA_GPU_EXPORT V4L2ImageProcessor {
  public:
-  explicit V4L2ImageProcessor(const scoped_refptr<V4L2Device>& device);
+  explicit V4L2ImageProcessor(scoped_refptr<V4L2Device> device);
   virtual ~V4L2ImageProcessor();
 
   // Initializes the processor to convert from |input_format| to |output_format|
@@ -91,7 +91,7 @@ class MEDIA_GPU_EXPORT V4L2ImageProcessor {
   // should pass non-empty |output_dmabuf_fds| and the processed frame will be
   // stored in those buffers. If the number of |output_dmabuf_fds| is not
   // expected, this function will return false.
-  bool Process(const scoped_refptr<VideoFrame>& frame,
+  bool Process(scoped_refptr<VideoFrame> frame,
                int output_buffer_index,
                std::vector<base::ScopedFD> output_dmabuf_fds,
                const FrameReadyCB& cb);
@@ -186,7 +186,7 @@ class MEDIA_GPU_EXPORT V4L2ImageProcessor {
   size_t output_planes_count_;
 
   // Our original calling task runner for the child thread.
-  const scoped_refptr<base::SingleThreadTaskRunner> child_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> child_task_runner_;
 
   // V4L2 device in use.
   scoped_refptr<V4L2Device> device_;

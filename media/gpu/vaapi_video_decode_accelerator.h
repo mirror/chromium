@@ -78,7 +78,7 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   void Destroy() override;
   bool TryToSetupDecodeOnSeparateThread(
       const base::WeakPtr<Client>& decode_client,
-      const scoped_refptr<base::SingleThreadTaskRunner>& decode_task_runner)
+      scoped_refptr<base::SingleThreadTaskRunner> decode_task_runner)
       override;
 
   static VideoDecodeAccelerator::SupportedProfiles GetSupportedProfiles();
@@ -148,7 +148,7 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // Puts contents of |va_surface| into given |picture|, releases the surface
   // and passes the resulting picture to client to output the given
   // |visible_rect| part of it.
-  void OutputPicture(const scoped_refptr<VASurface>& va_surface,
+  void OutputPicture(scoped_refptr<VASurface> va_surface,
                      int32_t input_id,
                      gfx::Rect visible_rect,
                      VaapiPicture* picture);
@@ -173,7 +173,7 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   //
   // Decode of |dec_surface| is ready to be submitted and all codec-specific
   // settings are set in hardware.
-  bool DecodeSurface(const scoped_refptr<VaapiDecodeSurface>& dec_surface);
+  bool DecodeSurface(scoped_refptr<VaapiDecodeSurface> dec_surface);
 
   // |dec_surface| is ready to be outputted once decode is finished.
   // This can be called before decode is actually done in hardware, and this
@@ -183,7 +183,7 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // driver will maintain ordering, as well as dependencies, and will process
   // each submitted command in order, and run each command only if its
   // dependencies are ready.
-  void SurfaceReady(const scoped_refptr<VaapiDecodeSurface>& dec_surface);
+  void SurfaceReady(scoped_refptr<VaapiDecodeSurface> dec_surface);
 
   // Return a new VaapiDecodeSurface for decoding into, or nullptr if not
   // available.
