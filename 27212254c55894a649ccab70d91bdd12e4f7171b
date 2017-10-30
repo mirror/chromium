@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "a1dcd3b3_3b7dc28d",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-30T20:04:20Z",
+      "side": 1,
+      "message": "It will indeed be called for redirects, so this should be safe, in terms of being called for every value of URLRequest::url() before it\u0027s used to issue a request.",
+      "parentUuid": "bd2fdb23_f41d3cf1",
+      "range": {
+        "startLine": 646,
+        "startChar": 7,
+        "endLine": 646,
+        "endChar": 75
+      },
+      "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c83cdf5_6bddd7d5",
         "filename": "extensions/browser/api/web_request/web_request_api.cc",
         "patchSetId": 7
