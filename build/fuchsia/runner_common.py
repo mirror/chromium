@@ -512,6 +512,7 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
         '-kernel', kernel_path,
         '-initrd', bootfs_data.bootfs,
         '-smp', '4',
+        '-rtc', 'base=localtime,clock=vm',
 
         # Configure virtual network. It is used in the tests to connect to
         # testserver running on the host.
