@@ -82,7 +82,8 @@ class TrampolineHelper {
 }  // namespace internal
 
 template <typename... Args>
-inline base::RepeatingCallback<void(Args...)> BindToCurrentLoop(
+inline base::RepeatingCallback<void(Args...)> BindToLoop(
+    scoped_refptr<base::SequencedTaskRunner> loop,
     base::RepeatingCallback<void(Args...)> cb) {
   using CallbackType = base::RepeatingCallback<void(Args...)>;
   using Helper = internal::TrampolineHelper<CallbackType>;
@@ -90,12 +91,18 @@ inline base::RepeatingCallback<void(Args...)> BindToCurrentLoop(
   RunnerType run = &Helper::Run;
   // TODO(tzik): Propagate FROM_HERE from the caller.
   return base::BindRepeating(
-      run, base::MakeUnique<Helper>(
-               FROM_HERE, base::ThreadTaskRunnerHandle::Get(), std::move(cb)));
+      run, base::MakeUnique<Helper>(FROM_HERE, std::move(loop), std::move(cb)));
 }
 
 template <typename... Args>
-inline base::OnceCallback<void(Args...)> BindToCurrentLoop(
+inline base::RepeatingCallback<void(Args...)> BindToCurrentLoop(
+    base::RepeatingCallback<void(Args...)> cb) {
+  return BindToLoop(base::ThreadTaskRunnerHandle::Get(), std::move(cb));
+}
+
+template <typename... Args>
+inline base::OnceCallback<void(Args...)> BindToLoop(
+    scoped_refptr<base::SequencedTaskRunner> loop,
     base::OnceCallback<void(Args...)> cb) {
   using CallbackType = base::OnceCallback<void(Args...)>;
   using Helper = internal::TrampolineHelper<CallbackType>;
@@ -103,8 +110,13 @@ inline base::OnceCallback<void(Args...)> BindToCurrentLoop(
   RunnerType run = &Helper::Run;
   // TODO(tzik): Propagate FROM_HERE from the caller.
   return base::BindOnce(
-      run, base::MakeUnique<Helper>(
-               FROM_HERE, base::ThreadTaskRunnerHandle::Get(), std::move(cb)));
+      run, base::MakeUnique<Helper>(FROM_HERE, std::move(loop), std::move(cb)));
+}
+
+template <typename... Args>
+inline base::OnceCallback<void(Args...)> BindToCurrentLoop(
+    base::OnceCallback<void(Args...)> cb) {
+  return BindToLoop(base::ThreadTaskRunnerHandle::Get(), std::move(cb));
 }
 
 }  // namespace media
