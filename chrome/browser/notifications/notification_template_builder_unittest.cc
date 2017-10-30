@@ -10,9 +10,12 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
+#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/message_center/notification.h"
+#include "ui/strings/grit/ui_strings.h"
 
 using message_center::Notification;
 using message_center::NotifierId;
@@ -72,6 +75,30 @@ class NotificationTemplateBuilderTest : public ::testing::Test {
     *xml_template = template_->GetNotificationTemplate();
   }
 
+  base::string16 GetExpectedXml(const wchar_t* actions) {
+    const wchar_t kExpectedTemplate[] =
+        LR"(<toast launch="notification_id">
+ <visual>
+  <binding template="ToastGeneric">
+   <text>My Title</text>
+   <text>My Message</text>
+   <text placement="attribution">example.com</text>
+  </binding>
+ </visual>
+ <actions>%ls
+  <action content="%ls" placement="contextMenu" activationType="foreground" arguments="disableNotifications"/>
+  <action content="%ls" placement="contextMenu" activationType="foreground" arguments="notificationSettings"/>
+ </actions>
+</toast>
+)";
+    base::string16 disable_msg = l10n_util::GetStringFUTF16(
+        IDS_MESSAGE_CENTER_NOTIFIER_DISABLE, L"example.com");
+    base::string16 settings_msg = l10n_util::GetStringUTF16(
+        IDS_MESSAGE_NOTIFICATION_SETTINGS_BUTTON_ACCESSIBLE_NAME);
+    return base::StringPrintf(kExpectedTemplate, actions, disable_msg.c_str(),
+                              settings_msg.c_str());
+  }
+
  protected:
   std::unique_ptr<NotificationTemplateBuilder> template_;
 
@@ -87,19 +114,7 @@ TEST_F(NotificationTemplateBuilderTest, SimpleToast) {
   ASSERT_NO_FATAL_FAILURE(
       BuildTemplate(notification_data, buttons, &xml_template));
 
-  const wchar_t kExpectedXml[] =
-      LR"(<toast launch="notification_id">
- <visual>
-  <binding template="ToastGeneric">
-   <text>My Title</text>
-   <text>My Message</text>
-   <text placement="attribution">example.com</text>
-  </binding>
- </visual>
-</toast>
-)";
-
-  EXPECT_EQ(xml_template, kExpectedXml);
+  EXPECT_EQ(xml_template, GetExpectedXml(L""));
 }
 
 TEST_F(NotificationTemplateBuilderTest, Buttons) {
@@ -113,23 +128,12 @@ TEST_F(NotificationTemplateBuilderTest, Buttons) {
   ASSERT_NO_FATAL_FAILURE(
       BuildTemplate(notification_data, buttons, &xml_template));
 
-  const wchar_t kExpectedXml[] =
-      LR"(<toast launch="notification_id">
- <visual>
-  <binding template="ToastGeneric">
-   <text>My Title</text>
-   <text>My Message</text>
-   <text placement="attribution">example.com</text>
-  </binding>
- </visual>
- <actions>
+  const wchar_t kExpectedActions[] =
+      LR"(
   <action activationType="foreground" content="Button1" arguments="buttonIndex=0"/>
-  <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>
- </actions>
-</toast>
-)";
+  <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>)";
 
-  EXPECT_EQ(xml_template, kExpectedXml);
+  EXPECT_EQ(xml_template, GetExpectedXml(kExpectedActions));
 }
 
 TEST_F(NotificationTemplateBuilderTest, InlineReplies) {
@@ -146,24 +150,13 @@ TEST_F(NotificationTemplateBuilderTest, InlineReplies) {
   ASSERT_NO_FATAL_FAILURE(
       BuildTemplate(notification_data, buttons, &xml_template));
 
-  const wchar_t kExpectedXml[] =
-      LR"(<toast launch="notification_id">
- <visual>
-  <binding template="ToastGeneric">
-   <text>My Title</text>
-   <text>My Message</text>
-   <text placement="attribution">example.com</text>
-  </binding>
- </visual>
- <actions>
+  const wchar_t kExpectedActions[] =
+      LR"(
   <input id="userResponse" type="text" placeHolderContent="Reply here"/>
   <action activationType="foreground" content="Button1" arguments="buttonIndex=0"/>
-  <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>
- </actions>
-</toast>
-)";
+  <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>)";
 
-  EXPECT_EQ(xml_template, kExpectedXml);
+  EXPECT_EQ(xml_template, GetExpectedXml(kExpectedActions));
 }
 
 TEST_F(NotificationTemplateBuilderTest, InlineRepliesDoubleInput) {
@@ -183,24 +176,13 @@ TEST_F(NotificationTemplateBuilderTest, InlineRepliesDoubleInput) {
   ASSERT_NO_FATAL_FAILURE(
       BuildTemplate(notification_data, buttons, &xml_template));
 
-  const wchar_t kExpectedXml[] =
-      LR"(<toast launch="notification_id">
- <visual>
-  <binding template="ToastGeneric">
-   <text>My Title</text>
-   <text>My Message</text>
-   <text placement="attribution">example.com</text>
-  </binding>
- </visual>
- <actions>
+  const wchar_t kExpectedActions[] =
+      LR"(
   <input id="userResponse" type="text" placeHolderContent="Reply here"/>
   <action activationType="foreground" content="Button1" arguments="buttonIndex=0"/>
-  <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>
- </actions>
-</toast>
-)";
+  <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>)";
 
-  EXPECT_EQ(xml_template, kExpectedXml);
+  EXPECT_EQ(xml_template, GetExpectedXml(kExpectedActions));
 }
 
 TEST_F(NotificationTemplateBuilderTest, InlineRepliesTextTypeNotFirst) {
@@ -217,22 +199,11 @@ TEST_F(NotificationTemplateBuilderTest, InlineRepliesTextTypeNotFirst) {
   ASSERT_NO_FATAL_FAILURE(
       BuildTemplate(notification_data, buttons, &xml_template));
 
-  const wchar_t kExpectedXml[] =
-      LR"(<toast launch="notification_id">
- <visual>
-  <binding template="ToastGeneric">
-   <text>My Title</text>
-   <text>My Message</text>
-   <text placement="attribution">example.com</text>
-  </binding>
- </visual>
- <actions>
+  const wchar_t kExpectedActions[] =
+      LR"(
   <input id="userResponse" type="text" placeHolderContent="Reply here"/>
   <action activationType="foreground" content="Button1" arguments="buttonIndex=0"/>
-  <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>
- </actions>
-</toast>
-)";
+  <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>)";
 
-  EXPECT_EQ(xml_template, kExpectedXml);
+  EXPECT_EQ(xml_template, GetExpectedXml(kExpectedActions));
 }
