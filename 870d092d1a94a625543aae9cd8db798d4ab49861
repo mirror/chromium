@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96b7afd9_a3dc750d",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-30T22:27:20Z",
+      "side": 1,
+      "message": "Top level Q first. Do we really want ArcAppListPrefs owns and knows about VpnProviderManager?\nProbably we may want to do it as service that depends on ArcAppListPrefs and observes required changes. WDYT?",
+      "revId": "870d092d1a94a625543aae9cd8db798d4ab49861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
