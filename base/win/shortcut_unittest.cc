@@ -20,7 +20,6 @@
 namespace base {
 namespace win {
 
-namespace {
 
 static const char kFileContents[] = "This is a target.";
 static const char kFileContents2[] = "This is another target.";
