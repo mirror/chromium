@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "aee3f366_de030e5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-30T17:05:43Z",
+      "side": 1,
+      "message": "nit: Maybe a short summary of how it does this ?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c2c743_be848a3f",
         "filename": "content/browser/file_url_loader_factory.cc",
         "patchSetId": 2
@@ -36,6 +59,29 @@
     },
     {
       "key": {
+        "uuid": "661dd09d_ad035a19",
+        "filename": "content/public/browser/content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-30T17:05:43Z",
+      "side": 1,
+      "message": "so, if we\u0027re just building content shell,or we\u0027re some other embedder of chrome, all get file access by default?",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 8
+      },
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79b3cff9_c445c6dc",
         "filename": "content/public/common/simple_url_loader_factory.cc",
         "patchSetId": 2
@@ -64,6 +110,29 @@
       "writtenOn": "2017-10-30T15:53:30Z",
       "side": 1,
       "message": "would the possible confusion with the above function be cleared up if it\u0027s called\nIsHandledByNetworkService?",
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7228358_854562d9",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-30T17:05:43Z",
+      "side": 1,
+      "message": "It may be safer to define an api where 0 means no-op, in case we\u0027re calling this in a loop with some weird boundary error.  Do you actively call this case anywhere?  If it\u0027s a hard-coded 0 at the call site, maybe just call above?  Or pass alternatively pass std::numeric_limits\u003csize_t\u003e::Max() \nto get the same effect without any special-casing.\n\nHow does this behave if we have a 32bit platform that supports large files (e.g. 32 bit size_t but 64-bit \"off_t\" or equivalent).  Are there files that are too big for to process fully?  What did the old code do?\n\nThis is one place (file size vs. C++) where there is always a giant pain to be endured since \"off_t\" isn\u0027t part of the standards.",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 25
+      },
       "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
