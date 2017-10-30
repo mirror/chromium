@@ -10,7 +10,7 @@ import "signals.mojom";
 
 // Event signal scoped to a tab.
 enum TabEvent {
-  kDoneLoading,
+  kAlmostIdle,
 };
 
 // A TabSignalObserver implementation receives tab-scoped signal from
