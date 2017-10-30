@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69b57f0e_73c7cb6f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3668,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-30T21:51:02Z",
+      "side": 1,
+      "message": "This is partially copy \u0026 pasted from ClipPathClipper, where it computes the bounds for canvas-\u003esaveLayer(). The one in CPC is currently a bit intertwined to the actual paint code. I plan to remove it when I refactor the class to do mask-based only.\n\nIn SPv1 I believe it issues a full layer invalidation, therefore the bounds were not needed.\nAlso the rendering glitch does reproduces SPv1 due to incorrect cull rect used by the RTree.",
+      "parentUuid": "fd2fe2cd_bfda45b3",
+      "revId": "862cd737a7cae0d458e8f59992773b9ebf86cb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c3ec178_0ccef064",
         "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-28T21:44:55Z",
       "side": 1,
       "message": "Why isn\u0027t this already part of the visual rect, which was an input to\nrect?",
+      "revId": "862cd737a7cae0d458e8f59992773b9ebf86cb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186a2310_c808b5de",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-30T21:51:02Z",
+      "side": 1,
+      "message": "I tried to do that instead, but it was too problematic for a couple of reasons:\n\n1. Having to override different function in different classes: LayoutBox::AddSelfVisualOverflow(), LayoutInline::VisualOverflowRect(), SVGLayoutSupport::LocalVisualRect().\n\n2. Clip path can reference SVG, which could potentially cross document boundary. Doing it late to ensure all document reached post-layout lifecycle.",
+      "parentUuid": "8c3ec178_0ccef064",
       "revId": "862cd737a7cae0d458e8f59992773b9ebf86cb89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
