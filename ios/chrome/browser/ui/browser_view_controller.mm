@@ -5312,7 +5312,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   signin_metrics::LogAccountReconcilorStateOnGaiaResponse(
       ios::AccountReconcilorFactory::GetForBrowserState(self.browserState)
           ->GetState());
-  [self.dispatcher showAccountsSettings];
+  [self.dispatcher showAccountsSettingsFromViewController:self];
 }
 
 - (void)onAddAccount {
