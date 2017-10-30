@@ -62,16 +62,11 @@ class DnsRequest {
   static void WaitForRequestComplete(
       base::FuzzedDataProvider* data_provider,
       std::vector<std::unique_ptr<DnsRequest>>* dns_requests) {
-    if (dns_requests->empty())
-      return;
-    uint32_t index =
-        data_provider->ConsumeUint32InRange(0, dns_requests->size() - 1);
-
     // Remove the request from the list before waiting on it - this prevents one
     // of the other callbacks from deleting the callback being waited on.
-    std::unique_ptr<DnsRequest> request = std::move((*dns_requests)[index]);
-    dns_requests->erase(dns_requests->begin() + index);
-    request->WaitUntilDone();
+    auto request = RemoveRandomRequest(data_provider, dns_requests);
+    if (request)
+      request->WaitUntilDone();
   }
 
   // If |dns_requests| is non-empty, attempts to cancel a randomly chosen one of
@@ -81,16 +76,27 @@ class DnsRequest {
       net::HostResolver* host_resolver,
       base::FuzzedDataProvider* data_provider,
       std::vector<std::unique_ptr<DnsRequest>>* dns_requests) {
-    if (dns_requests->empty())
-      return;
-    uint32_t index =
-        data_provider->ConsumeUint32InRange(0, dns_requests->size() - 1);
-    auto request = dns_requests->begin() + index;
-    (*request)->Cancel();
-    dns_requests->erase(request);
+    auto request = RemoveRandomRequest(data_provider, dns_requests);
+    if (request)
+      request->Cancel();
   }
 
  private:
+  static std::unique_ptr<DnsRequest> RemoveRandomRequest(
+      base::FuzzedDataProvider* data_provider,
+      std::vector<std::unique_ptr<DnsRequest>>* dns_requests) {
+    if (dns_requests->empty())
+      return nullptr;
+
+    const uint32_t index =
+        data_provider->ConsumeUint32InRange(0, dns_requests->size() - 1);
+
+    auto request_it = dns_requests->begin() + index;
+    std::unique_ptr<DnsRequest> request = std::move(*request_it);
+    dns_requests->erase(request_it);
+    return request;
+  }
+
   void OnCallback(int result) {
     CHECK_NE(net::ERR_IO_PENDING, result);
 
@@ -110,8 +116,8 @@ class DnsRequest {
       break;
     }
 
-    while (true) {
-      bool done = false;
+    bool done = false;
+    while (!done) {
       switch (data_provider_->ConsumeInt32InRange(0, 2)) {
         case 0:
           // Quit on 0, or when no data is left.
@@ -124,9 +130,6 @@ class DnsRequest {
           CancelRequest(host_resolver_, data_provider_, dns_requests_);
           break;
       }
-
-      if (done)
-        break;
     }
 
     if (run_loop_)
