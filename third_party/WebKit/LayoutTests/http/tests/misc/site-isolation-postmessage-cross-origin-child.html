@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<body>
+<script src=/resources/testharness.js></script>
+<script src=/resources/testharnessreport.js></script>
+<script>
+// Uncommenting the commented lines makes the test pass with
+// --additional-drt-flag=--site-per-process.
+// setTimeout(function() {
+window.parent.postMessage('childmessage', '*');
+// }, 100);
+</script>
+</body>

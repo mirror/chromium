@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<body>
+<script src=/resources/testharness.js></script>
+<script src=/resources/testharnessreport.js></script>
+<script>
+'use strict';
+
+function run_test(test) {
+  const frame = document.createElement('iframe');
+  frame.src = location.protocol + '//localhost:' + location.port + '/misc/site-isolation-postmessage-cross-origin-child.html';
+  document.body.appendChild(frame);
+
+  window.addEventListener('message', test.step_func(evt => {
+      assert_equals(evt.data, 'childmessage');
+      document.body.removeChild(frame);
+      test.done();
+  }));
+
+
+}
+
+async_test(run_test, 'Received child message.');
+
+</script>
+</body>
