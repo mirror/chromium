@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "725033a2_dd73ce8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-30T16:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44c844bb_f14b19df",
+      "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cb4bd41_71ebbe3c",
         "filename": "third_party/errorprone/BUILD.gn",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8835e639_8dbc6561",
+        "filename": "third_party/errorprone/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-30T16:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cb4bd41_71ebbe3c",
+      "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "4c90d446_de188299",
+        "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-30T16:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7cd63b6_340a53e6",
+      "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbfee2ea_d617cd8d",
         "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
         "patchSetId": 2
@@ -84,6 +138,24 @@
       "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477e17d1_21fc59ca",
+        "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-30T16:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbfee2ea_d617cd8d",
+      "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +182,30 @@
     },
     {
       "key": {
+        "uuid": "628c0257_0cb1181e",
+        "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-30T16:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "728049d6_29f3b9dc",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 12
+      },
+      "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7edafa5_d762ba24",
         "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
         "patchSetId": 2
@@ -130,6 +226,30 @@
       "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b5a0b1_05f89768",
+        "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-30T16:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7edafa5_d762ba24",
+      "range": {
+        "startLine": 49,
+        "startChar": 55,
+        "endLine": 49,
+        "endChar": 61
+      },
+      "revId": "c4462bc840b7c69ef5d5a034d8191172c5b70734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
