@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f27ba30b_0116d64e",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-30T15:20:29Z",
+      "side": 1,
+      "message": "Can you mention in the comments which phone rationalization should be called first?",
+      "range": {
+        "startLine": 271,
+        "startChar": 19,
+        "endLine": 271,
+        "endChar": 26
+      },
+      "revId": "088b97c60991fc528326b64b8d8ce03ddd99cecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd00d970_02937d2a",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4760,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-30T15:20:29Z",
+      "side": 1,
+      "message": "Capitalize. Also can you expand on this?",
+      "range": {
+        "startLine": 4760,
+        "startChar": 5,
+        "endLine": 4760,
+        "endChar": 11
+      },
+      "revId": "088b97c60991fc528326b64b8d8ce03ddd99cecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
