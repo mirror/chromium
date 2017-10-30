@@ -34,6 +34,24 @@
       "revId": "3cdd00ec50035a13e190e1d2c63bb0595f180061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbc1ad2_bdf63bc8",
+        "filename": "ios/web_view/public/cwv_web_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-30T15:27:54Z",
+      "side": 1,
+      "message": "I don\u0027t think a private initializer will work because we actually need the client to create the web view in response to the delegate callback. What about adding an initializer that takes configuration and a navigation action? It can then set the opener property from |userInitiated |, and I suppose it could start the load of |request| immediately?\n\nhttps://cs.chromium.org/chromium/src/ios/web_view/shell/shell_view_controller.m?rcl\u003d8bffda4cd007e678135806ec0861f046cb378e02\u0026l\u003d301",
+      "parentUuid": "343e98a2_1273a465",
+      "revId": "3cdd00ec50035a13e190e1d2c63bb0595f180061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
