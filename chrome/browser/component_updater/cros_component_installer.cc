@@ -9,6 +9,7 @@
 #include "base/files/file_util.h"
 #include "base/optional.h"
 #include "base/path_service.h"
+#include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/component_updater/component_installer_errors.h"
@@ -238,6 +239,23 @@ void CrOSComponent::InstallComponent(
 void CrOSComponent::LoadComponent(
     const std::string& name,
     base::OnceCallback<void(const std::string&)> load_callback) {
+  // Block component updater for kernel 3.14
+  // Since this file is only compiled for Chrome OS and this API is only
+  // availble to be called on Chrome OS. The version returned by
+  // OperatingSystemVersion is Chrome OS version:
+  //
+  //        3.18.0-16235-ge6545a7cd77b
+  //
+  // The first part (delimited by -) is extracted as kernel version:
+  //
+  //        3.18.0-16235-ge6545a7cd77b -> 3.18.0
+  //        3.14.0                     -> 3.14.0
+  std::string os_version = base::SysInfo::OperatingSystemVersion();
+  os_version = os_version.substr(0, os_version.find('-'));
+  if (os_version == "3.14.0") {
+    return;
+  }
+
   if (!g_browser_process->platform_part()->IsCompatibleCrOSComponent(name)) {
     // A compatible component is not installed, start installation process.
     auto* const cus = g_browser_process->component_updater();
