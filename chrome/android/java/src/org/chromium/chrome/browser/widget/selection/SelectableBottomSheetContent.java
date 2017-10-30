@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import org.chromium.base.CollectionUtil;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
@@ -57,6 +58,7 @@ public abstract class SelectableBottomSheetContent<E> implements BottomSheetCont
 
     private SelectableBottomSheetContentManager<E> mManager;
     private SelectableListToolbar<E> mToolbarView;
+    private View mContentView;
 
     /**
      * Initialize the {@link SelectableBottomSheetContent}.
@@ -66,6 +68,10 @@ public abstract class SelectableBottomSheetContent<E> implements BottomSheetCont
     public void initialize(
             final ChromeActivity activity, SelectableBottomSheetContentManager<E> manager) {
         mManager = manager;
+
+        // TODO(twellington): Remove cached ContentView once root cause of crbug.com/779470 is
+        //                    tracked down.
+        mContentView = mManager.getView();
 
         mToolbarView = manager.detachToolbarView();
         mToolbarView.setActionBarDelegate(activity.getBottomSheet().getActionBarDelegate());
@@ -90,7 +96,13 @@ public abstract class SelectableBottomSheetContent<E> implements BottomSheetCont
 
     @Override
     public View getContentView() {
-        return mManager.getView();
+        if (ChromeVersionInfo.isLocalBuild()) {
+            // If the manager is null, that indicates the content is being used after it has been
+            // destroyed. Please update crbug.com/779470 with the local stack trace and details
+            // of how you hit the crash.
+            assert mManager != null;
+        }
+        return mContentView;
     }
 
     @Override
