@@ -14,6 +14,10 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.StrictModeContext;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
+import org.chromium.chrome.browser.infobar.InfoBar;
+import org.chromium.chrome.browser.infobar.InfoBarContainer;
+import org.chromium.chrome.browser.infobar.InfoBarContainer.InfoBarContainerObserver;
+import org.chromium.chrome.browser.infobar.InfoBarIdentifier;
 import org.chromium.chrome.browser.infobar.SurveyInfoBar;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.preferences.privacy.PrivacyPreferencesManager;
@@ -80,10 +84,10 @@ public class ChromeHomeSurveyController {
     }
 
     private boolean doesUserQualifyForSurvey() {
-        if (!isUMAEnabled()) return false;
         if (CommandLine.getInstance().hasSwitch(ChromeSwitches.CHROME_HOME_FORCE_ENABLE_SURVEY)) {
             return true;
         }
+        if (!isUMAEnabled()) return false;
         if (AccessibilityUtil.isAccessibilityEnabled()) return false;
         if (hasInfoBarBeenDisplayed()) return false;
         if (!FeatureUtilities.isChromeHomeEnabled()) return true;
@@ -110,18 +114,20 @@ public class ChromeHomeSurveyController {
     }
 
     private void showSurveyInfoBar(Tab tab, String siteId) {
+        tab.getInfoBarContainer().addObserver(getObserver());
         WebContents webContents = tab.getWebContents();
         if (webContents.isLoading()) {
             webContents.addObserver(new WebContentsObserver() {
                 @Override
                 public void didFinishLoad(long frameId, String validatedUrl, boolean isMainFrame) {
                     if (!isMainFrame) return;
-                    showSurveyInfoBar(webContents, siteId);
+                    SurveyInfoBar.showSurveyInfoBar(
+                            webContents, siteId, true, R.drawable.chrome_sync_logo);
                     webContents.removeObserver(this);
                 }
             });
         } else {
-            showSurveyInfoBar(webContents, siteId);
+            SurveyInfoBar.showSurveyInfoBar(webContents, siteId, true, R.drawable.chrome_sync_logo);
         }
     }
 
@@ -132,18 +138,44 @@ public class ChromeHomeSurveyController {
         }
     }
 
-    private void showSurveyInfoBar(WebContents webContents, String siteId) {
-        SurveyInfoBar.showSurveyInfoBar(webContents, siteId, true, R.drawable.chrome_sync_logo);
-        SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
-        sharedPreferences.edit().putBoolean(SURVEY_INFO_BAR_DISPLAYED, true).apply();
-    }
-
     @VisibleForTesting
     boolean hasInfoBarBeenDisplayed() {
         try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
             SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
-            return sharedPreferences.getBoolean(SURVEY_INFO_BAR_DISPLAYED, false);
+            boolean wasInfoBarDisplayed =
+                    sharedPreferences.getBoolean(SurveyInfoBar.SURVEY_INFO_BAR_DISPLAYED, false);
+            boolean wasInfoBarDismissed =
+                    sharedPreferences.getBoolean(SurveyInfoBar.SURVEY_INFOBAR_DISMISSED, false);
+            return wasInfoBarDisplayed || wasInfoBarDismissed;
         }
+    }
+
+    private InfoBarContainerObserver getObserver() {
+        return new InfoBarContainerObserver() {
+
+            @Override
+            public void onRemoveInfoBar(
+                    InfoBarContainer container, InfoBar infoBar, boolean isLast) {}
+
+            @Override
+            public void onInfoBarContainerShownRatioChanged(
+                    InfoBarContainer container, float shownRatio) {}
+
+            @Override
+            public void onInfoBarContainerAttachedToWindow(boolean hasInfobars) {}
+
+            @Override
+            public void onAddInfoBar(InfoBarContainer container, InfoBar infoBar, boolean isFirst) {
+                if (!isFirst) return;
+                if (infoBar.getInfoBarIdentifier() != InfoBarIdentifier.SURVEY_INFOBAR_ANDROID)
+                    return;
+                SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
+                sharedPreferences.edit()
+                        .putBoolean(SurveyInfoBar.SURVEY_INFO_BAR_DISPLAYED, true)
+                        .apply();
+                container.removeObserver(this);
+            }
+        };
     }
 
     @VisibleForTesting
