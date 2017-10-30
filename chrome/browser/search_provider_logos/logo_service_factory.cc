@@ -14,16 +14,8 @@
 #include "components/search_provider_logos/logo_service_impl.h"
 #include "net/url_request/url_request_context_getter.h"
 
-#if defined(OS_ANDROID)
-#include "chrome/browser/android/feature_utilities.h"
-#endif
-
 using search_provider_logos::LogoService;
 using search_provider_logos::LogoServiceImpl;
-
-#if defined(OS_ANDROID)
-using chrome::android::GetIsChromeHomeEnabled;
-#endif  // defined(OS_ANDROID)
 
 namespace {
 
@@ -56,11 +48,9 @@ KeyedService* LogoServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
   Profile* profile = static_cast<Profile*>(context);
   DCHECK(!profile->IsOffTheRecord());
-#if defined(OS_ANDROID)
-  bool use_gray_background = !GetIsChromeHomeEnabled();
-#else
+
+  // TODO(https://crbug.com/776725): Request the latest value, don't cache it.
   bool use_gray_background = false;
-#endif
   return new LogoServiceImpl(profile->GetPath().Append(kCachedLogoDirectory),
                              TemplateURLServiceFactory::GetForProfile(profile),
                              base::MakeUnique<suggestions::ImageDecoderImpl>(),
