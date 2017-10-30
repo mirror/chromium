@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "079e050a_33328b15",
+        "filename": "chrome/browser/ui/views/feature_promos/bookmark_promo_bubble_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T16:07:15Z",
+      "side": 1,
+      "message": "You have two options for the last one:\n1. Don\u0027t have FeaturePromoBubbleView.\n2. Have FeaturePromoBubbleView manage it\u0027s own lifetime. In this case you\u0027ll likely need an explicit Close() function.",
+      "parentUuid": "d98b968f_24a1952d",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "a11095ae8e07929cb349221760366c19c7f319d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9647b124_8715fc6e",
         "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.cc",
         "patchSetId": 10
