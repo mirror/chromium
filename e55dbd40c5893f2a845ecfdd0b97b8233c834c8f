@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8682ea50_4df76967",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-30T15:22:30Z",
+      "side": 1,
+      "message": "Maybe say \"double buffered\" instead of more useful?",
+      "revId": "e55dbd40c5893f2a845ecfdd0b97b8233c834c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c63166d_58773665",
         "filename": "components/exo/wayland/clients/simple.cc",
         "patchSetId": 1
