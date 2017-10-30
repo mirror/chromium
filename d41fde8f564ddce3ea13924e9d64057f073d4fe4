@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f8a7003_665e5bc8",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-10-30T19:03:59Z",
+      "side": 1,
+      "message": "It can actually affect versions 3.8 and 3.10 too. Sonny, can you confirm which kernel versions are safe for component updates? Thanks.",
+      "revId": "d41fde8f564ddce3ea13924e9d64057f073d4fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
