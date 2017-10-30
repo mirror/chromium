@@ -356,6 +356,51 @@ LanguageSettingsPrivateSetEnableTranslationForLanguageFunction::Run() {
   return RespondNow(NoArguments());
 }
 
+LanguageSettingsPrivateMoveLanguageFunction::
+    LanguageSettingsPrivateMoveLanguageFunction()
+    : chrome_details_(this) {}
+
+LanguageSettingsPrivateMoveLanguageFunction::
+    ~LanguageSettingsPrivateMoveLanguageFunction() {}
+
+ExtensionFunction::ResponseAction
+LanguageSettingsPrivateMoveLanguageFunction::Run() {
+  const std::unique_ptr<language_settings_private::MoveLanguage::Params>
+      parameters =
+          language_settings_private::MoveLanguage::Params::Create(*args_);
+  EXTENSION_FUNCTION_VALIDATE(parameters.get());
+  const std::string& language_code = parameters->language_code;
+  const std::string& list_str = parameters->language_list;
+  const language_settings_private::MoveType& move_type = parameters->move_type;
+
+  std::unique_ptr<translate::TranslatePrefs> translate_prefs =
+      ChromeTranslateClient::CreateTranslatePrefs(
+          chrome_details_.GetProfile()->GetPrefs());
+
+  switch (move_type) {
+    case language_settings_private::MOVE_TYPE_TOP:
+      translate_prefs->RearrangeLanguage(
+          language_code, translate::TranslatePrefs::TOP, list_str);
+      break;
+
+    case language_settings_private::MOVE_TYPE_UP:
+      translate_prefs->RearrangeLanguage(
+          language_code, translate::TranslatePrefs::UP, list_str);
+      break;
+
+    case language_settings_private::MOVE_TYPE_DOWN:
+      translate_prefs->RearrangeLanguage(
+          language_code, translate::TranslatePrefs::DOWN, list_str);
+      break;
+
+    default:
+      NOTREACHED();
+      break;
+  }
+
+  return RespondNow(NoArguments());
+}
+
 LanguageSettingsPrivateGetSpellcheckDictionaryStatusesFunction::
     LanguageSettingsPrivateGetSpellcheckDictionaryStatusesFunction() {
 }
