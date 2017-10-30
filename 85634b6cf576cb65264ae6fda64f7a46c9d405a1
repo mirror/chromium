@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b492e8ff_80a01577",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-30T01:43:10Z",
+      "side": 1,
+      "message": "If we don\u0027t want introduce this branch, we need a non-null dummy data in taking a snapshot.\n(the dummy data doesn\u0027t need to be an instance of HTMLDocument.)",
+      "revId": "85634b6cf576cb65264ae6fda64f7a46c9d405a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
