@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76ca7e75_c298e706",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-30T10:47:33Z",
+      "side": 1,
+      "message": "What does it mean if this returns false? Should we DCHECK against it in GetInstance()?",
+      "range": {
+        "startLine": 21,
+        "startChar": 14,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "3215519f21df60321ff7e9f375198cf255ef5d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9afffd0e_68797533",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-30T10:47:33Z",
+      "side": 1,
+      "message": "Wrap this in an anonymous namespace?",
+      "revId": "3215519f21df60321ff7e9f375198cf255ef5d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116323ca_6e62936d",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-30T10:47:33Z",
+      "side": 1,
+      "message": "I think the constructor can be private if this is used via WebContentsUserData.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "3215519f21df60321ff7e9f375198cf255ef5d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
