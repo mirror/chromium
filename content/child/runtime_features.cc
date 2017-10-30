@@ -285,6 +285,10 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnablePaymentRequest(
       base::FeatureList::IsEnabled(features::kWebPayments));
 
+  WebRuntimeFeatures::EnableServiceWorkerFullCodeCacheInstall(
+      base::FeatureList::IsEnabled(
+          features::kServiceWorkerFullCodeCacheInstall));
+
   if (base::FeatureList::IsEnabled(features::kServiceWorkerPaymentApps))
     WebRuntimeFeatures::EnablePaymentApp(true);
 

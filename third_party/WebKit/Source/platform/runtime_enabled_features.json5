@@ -922,6 +922,9 @@
       status: "experimental",
     },
     {
+      name: "ServiceWorkerFullCodeCacheInstall",
+    },
+    {
       name: "ServiceWorkerScriptStreaming",
     },
     {

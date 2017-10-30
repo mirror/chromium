@@ -1184,6 +1184,11 @@ const char kSecondaryUiMdDescription[] =
     "etc.). On Mac, this enables MacViews, which uses toolkit-views for native "
     "browser dialogs.";
 
+const char kServiceWorkerFullCodeCacheInstallName[] =
+    "ServiceWorkerFullCodeCacheInstall";
+const char kServiceWorkerFullCodeCacheInstallDescription[] =
+    "ServiceWorkerFullCodeCacheInstall";
+
 const char kServiceWorkerNavigationPreloadName[] =
     "Service worker navigation preload.";
 const char kServiceWorkerNavigationPreloadDescription[] =
