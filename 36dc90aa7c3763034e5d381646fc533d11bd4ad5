@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "348068fb_6196c34a",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-30T23:42:12Z",
+      "side": 1,
+      "message": "Added comments to the best of my understanding.",
+      "parentUuid": "ba65cffa_e950671e",
+      "range": {
+        "startLine": 410,
+        "startChar": 7,
+        "endLine": 410,
+        "endChar": 40
+      },
+      "revId": "36dc90aa7c3763034e5d381646fc533d11bd4ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "290ac475_1cadaa5b",
         "filename": "components/autofill/core/browser/credit_card_save_manager.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "36dc90aa7c3763034e5d381646fc533d11bd4ad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902b473c_e76c9846",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-30T23:42:12Z",
+      "side": 1,
+      "message": "SGTM, done.",
+      "parentUuid": "290ac475_1cadaa5b",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 17
+      },
+      "revId": "36dc90aa7c3763034e5d381646fc533d11bd4ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
