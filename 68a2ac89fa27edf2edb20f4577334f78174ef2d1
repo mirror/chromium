@@ -22,6 +22,30 @@
       "revId": "68a2ac89fa27edf2edb20f4577334f78174ef2d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b405d797_35f376fc",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-30T18:41:08Z",
+      "side": 1,
+      "message": "The reason ScopedCOMInitializer and ScopedWinrtInitializer extend from ScopedWindowsThreadEnvironment is to provide for the use case here where no extra state is required to remember which API call is used to uninitialize the thread. If an enum is used, now the class needs to track which API call was used to initialize the thread. Both ScopedCOMInitializer and ScopedWinrtInitializer hold a single HRESULT to determine if the uninitialization should take place. If the enum approach is used, it also needs to track and correctly call the corresponding initializer. This seemed to make the ScopedCOMInitializer needlessly complex. \n\nThere was a brief discussion on the chrome-windows chatroom where I brought this up:\n\u003e I\u0027m adding WinRT initialization support (aka COM + some extra stuff) into Chrome. Would you prefer that...\n\u003e 1) ScopedCOMInitializer was extended to handle this\n\u003e Pro: Easy and keeps ScopedCOMInitializer a one-stop-shop\n\u003e Con: ScopedCOMInitializer is now polluted with WinRT and needs special handling for downlevel\n\n\u003e 2) Introduce something like ScopedWinRTInitializer\n\u003e Pro: This works fine on its own, and should coexist fine with ScopedCOMInitializer\n\u003e Con: It\u0027s a new class\n\nThe consensus here was that WinRT is just different enough that lumping it together with COM didn\u0027t really make sense.\n\nWith regards to heap allocs, I agree that if you\u0027re doing a lot of them on the UI thread, you should work to minimize them. Here, we\u0027re in thread creation, so there\u0027s going to be a natural amount of lag between thread startup and when the thread starts processing work. One heap alloc here is going to be dwarfed by the COM initialization step (which may have heap allocs of its own as it initializes its own TLS state), so optimizing out the heap alloc here doesn\u0027t seem like it will save that much.",
+      "parentUuid": "5dea8620_77196baa",
+      "range": {
+        "startLine": 354,
+        "startChar": 2,
+        "endLine": 359,
+        "endChar": 3
+      },
+      "revId": "68a2ac89fa27edf2edb20f4577334f78174ef2d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
