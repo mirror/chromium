@@ -108,7 +108,7 @@ std::unique_ptr<service_manager::Service> CreateDataDecoderService() {
 }
 
 std::unique_ptr<service_manager::Service> CreateVizService() {
-  return std::make_unique<viz::Service>();
+  return std::make_unique<viz::Service>(content::mojom::kBrowserServiceName);
 }
 
 }  // namespace

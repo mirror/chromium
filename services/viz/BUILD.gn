@@ -29,6 +29,8 @@ source_set("lib") {
     "//components/viz/service",
     "//components/viz/service/main",
     "//mojo/common:common_base",
+    "//services/metrics/public/cpp:metrics_cpp",
+    "//services/metrics/public/interfaces",
     "//services/service_manager/public/cpp",
     "//services/viz/privileged/interfaces",
   ]

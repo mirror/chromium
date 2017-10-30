@@ -21,6 +21,8 @@
 #include "gpu/ipc/gpu_in_process_thread_service.h"
 #include "gpu/ipc/service/gpu_memory_buffer_factory.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
+#include "services/metrics/public/cpp/delegating_ukm_recorder.h"
+#include "services/metrics/public/cpp/mojo_ukm_recorder.h"
 
 namespace {
 
@@ -68,6 +70,7 @@ VizMainImpl::VizMainImpl(Delegate* delegate,
                          ExternalDependencies dependencies,
                          std::unique_ptr<gpu::GpuInit> gpu_init)
     : delegate_(delegate),
+      ukm_recorder_ptr_info_(std::move(dependencies.ukm_recorder_ptr_info)),
       dependencies_(std::move(dependencies)),
       gpu_init_(std::move(gpu_init)),
       gpu_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
@@ -114,6 +117,8 @@ VizMainImpl::VizMainImpl(Delegate* delegate,
 
 VizMainImpl::~VizMainImpl() {
   DCHECK(gpu_thread_task_runner_->BelongsToCurrentThread());
+  if (ukm_recorder_)
+    ukm::DelegatingUkmRecorder::Get()->RemoveDelegate(ukm_recorder_.get());
   if (io_thread_)
     io_thread_->Stop();
 }
@@ -235,10 +240,28 @@ void VizMainImpl::CreateFrameSinkManagerOnCompositorThread(
   display_provider_ = base::MakeUnique<GpuDisplayProvider>(
       gpu_command_service_, gpu_service_->gpu_channel_manager());
 
+  // Initialize UkmRecorder on the compositor thread, because this is where.
+  // UKM metrics are going to be logged from. Even though it is thread-safe,
+  // it's cheaper to use it from the thread it's initialized on.
+  CreateUkmRecorderIfNeeded();
+
   frame_sink_manager_ = base::MakeUnique<FrameSinkManagerImpl>(
       SurfaceManager::LifetimeType::REFERENCES, display_provider_.get());
   frame_sink_manager_->BindAndSetClient(std::move(request), nullptr,
                                         std::move(client));
+}
+
+void VizMainImpl::CreateUkmRecorderIfNeeded() {
+  // If GPU is running in the browser process, we can use browser's UKMRecorder.
+  if (ukm_recorder_ || gpu_service()->gpu_info().in_process_gpu)
+    return;
+  DCHECK(ukm_recorder_ptr_info_.is_valid());
+
+  ukm::mojom::UkmRecorderInterfacePtr ukm_recorder_ptr;
+  ukm_recorder_ptr.Bind(std::move(ukm_recorder_ptr_info_));
+  ukm_recorder_ =
+      base::MakeUnique<ukm::MojoUkmRecorder>(std::move(ukm_recorder_ptr));
+  ukm::DelegatingUkmRecorder::Get()->AddDelegate(ukm_recorder_->GetWeakPtr());
 }
 
 void VizMainImpl::CloseVizMainBindingOnGpuThread(base::WaitableEvent* wait) {

@@ -5,6 +5,7 @@
 #ifndef SERVICES_METRICS_PUBLIC_CPP_MOJO_UKM_RECORDER_H_
 #define SERVICES_METRICS_PUBLIC_CPP_MOJO_UKM_RECORDER_H_
 
+#include "base/memory/weak_ptr.h"
 #include "services/metrics/public/cpp/metrics_export.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
@@ -33,11 +34,15 @@ class METRICS_EXPORT MojoUkmRecorder : public UkmRecorder {
   // UkmRecorder:
   void UpdateSourceURL(SourceId source_id, const GURL& url) override;
 
+  base::WeakPtr<MojoUkmRecorder> GetWeakPtr();
+
  private:
   // UkmRecorder:
   void AddEntry(mojom::UkmEntryPtr entry) override;
 
   mojom::UkmRecorderInterfacePtr interface_;
+
+  base::WeakPtrFactory<MojoUkmRecorder> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MojoUkmRecorder);
 };
