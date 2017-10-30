@@ -69,16 +69,18 @@ void TabDialogsViews::ShowManagePasswordsBubble(bool user_action) {
     // and open for |web_contents_|.
     ManagePasswordsBubbleView::CloseCurrentBubble();
   }
-  ManagePasswordsBubbleView::ShowBubble(
+  manage_passwords_bubble_ = ManagePasswordsBubbleView::ShowBubble(
       web_contents_, user_action ? ManagePasswordsBubbleView::USER_GESTURE
                                  : ManagePasswordsBubbleView::AUTOMATIC);
 }
 
 void TabDialogsViews::HideManagePasswordsBubble() {
-  if (!ManagePasswordsBubbleView::manage_password_bubble())
+  LocationBarBubbleDelegateView* view =
+      ManagePasswordsBubbleView::manage_password_bubble();
+  if (!view)
     return;
-  content::WebContents* bubble_web_contents =
-      ManagePasswordsBubbleView::manage_password_bubble()->web_contents();
-  if (web_contents_ == bubble_web_contents)
+  if (view == manage_passwords_bubble_) {
     ManagePasswordsBubbleView::CloseCurrentBubble();
+    manage_passwords_bubble_ = nullptr;
+  }
 }
