@@ -72,6 +72,13 @@ const NSInteger CWVTranslationErrorScriptLoadError =
   _webState = webState;
 
   ios_web_view::WebViewTranslateClient::CreateForWebState(_webState);
+  language::IOSLanguageDetectionClient::CreateForWebState(
+      _webState,
+      ios_web_view::WebViewTranslateClient::FromWebState(_webState)
+          ->GetTranslateDriver()
+          ->CreateLanguageDetectionCallback(),
+      ios_web_view::WebViewUrlLanguageHistogramFactory::GetForBrowserState(WebViewBrowserState::FromBrowserState(_webState->GetBrowserState()));
+
   _translateClient =
       ios_web_view::WebViewTranslateClient::FromWebState(_webState);
   _translateClient->set_translation_controller(self);
