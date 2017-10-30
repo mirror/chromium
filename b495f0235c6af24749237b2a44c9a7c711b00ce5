@@ -660,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "11d56cf6_7270c707",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-30T23:40:58Z",
+      "side": 1,
+      "message": "That\u0027s fair, added AddUndoRow(layout) and AddPasswordRow(layout).",
+      "parentUuid": "10490e56_cf570b9c",
+      "range": {
+        "startLine": 410,
+        "startChar": 4,
+        "endLine": 410,
+        "endChar": 10
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "790be575_fc809915",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 1
