@@ -196,6 +196,48 @@ static ComPtr<IMMDeviceEnumerator> CreateDeviceEnumeratorInternal(
   return device_enumerator;
 }
 
+static ChannelLayout GetChannelLayout(const WAVEFORMATPCMEX& mix_format) {
+  // Get the integer mask which corresponds to the channel layout the
+  // audio engine uses for its internal processing/mixing of shared-mode
+  // streams. This mask indicates which channels are present in the multi-
+  // channel stream. The least significant bit corresponds with the Front Left
+  // speaker, the next least significant bit corresponds to the Front Right
+  // speaker, and so on, continuing in the order defined in KsMedia.h.
+  // See http://msdn.microsoft.com/en-us/library/windows/hardware/ff537083.aspx
+  // for more details.
+  ChannelConfig channel_config = mix_format.dwChannelMask;
+
+  // Convert Microsoft's channel configuration to genric ChannelLayout.
+  ChannelLayout channel_layout = ChannelConfigToChannelLayout(channel_config);
+
+  // Some devices don't appear to set a valid channel layout, so guess based on
+  // the number of channels.  See http://crbug.com/311906.
+  if (channel_layout == CHANNEL_LAYOUT_UNSUPPORTED) {
+    DVLOG(1) << "Unsupported channel config: " << std::hex << channel_config
+             << ".  Guessing layout by channel count: " << std::dec
+             << mix_format.Format.nChannels;
+    channel_layout = GuessChannelLayout(mix_format.Format.nChannels);
+  }
+
+  return channel_layout;
+}
+
+static ComPtr<IMMDevice> CreateDeviceInternal(const std::string& device_id,
+                                              bool is_output_device) {
+  EDataFlow data_flow = is_output_device ? eRender : eCapture;
+  if (device_id == AudioDeviceDescription::kDefaultDeviceId) {
+    return CoreAudioUtil::CreateDefaultDevice(data_flow, eConsole);
+  } else if (device_id == AudioDeviceDescription::kLoopbackInputDeviceId ||
+             device_id == AudioDeviceDescription::kLoopbackWithMuteDeviceId) {
+    DCHECK(!is_output_device);
+    return CoreAudioUtil::CreateDefaultDevice(eRender, eConsole);
+  } else if (device_id == AudioDeviceDescription::kCommunicationsDeviceId) {
+    return CoreAudioUtil::CreateDefaultDevice(data_flow, eCommunications);
+  } else {
+    return CoreAudioUtil::CreateDevice(device_id);
+  }
+}
+
 static bool IsSupportedInternal() {
   // It is possible to force usage of WaveXxx APIs by using a command line flag.
   const base::CommandLine* cmd_line = base::CommandLine::ForCurrentProcess();
@@ -234,7 +276,7 @@ bool CoreAudioUtil::IsSupported() {
   return g_is_supported;
 }
 
-base::TimeDelta CoreAudioUtil::RefererenceTimeToTimeDelta(REFERENCE_TIME time) {
+base::TimeDelta CoreAudioUtil::ReferenceTimeToTimeDelta(REFERENCE_TIME time) {
   // Each unit of reference time is 100 nanoseconds <=> 0.1 microsecond.
   return base::TimeDelta::FromMicroseconds(0.1 * time + 0.5);
 }
@@ -626,7 +668,7 @@ HRESULT CoreAudioUtil::GetDevicePeriod(IAudioClient* client,
   *device_period = (share_mode == AUDCLNT_SHAREMODE_SHARED) ? default_period :
       minimum_period;
   DVLOG(2) << "device_period: "
-           << RefererenceTimeToTimeDelta(*device_period).InMillisecondsF()
+           << ReferenceTimeToTimeDelta(*device_period).InMillisecondsF()
            << " [ms]";
   return hr;
 }
@@ -643,28 +685,7 @@ HRESULT CoreAudioUtil::GetPreferredAudioParameters(
   if (FAILED(hr))
     return hr;
 
-  // Get the integer mask which corresponds to the channel layout the
-  // audio engine uses for its internal processing/mixing of shared-mode
-  // streams. This mask indicates which channels are present in the multi-
-  // channel stream. The least significant bit corresponds with the Front Left
-  // speaker, the next least significant bit corresponds to the Front Right
-  // speaker, and so on, continuing in the order defined in KsMedia.h.
-  // See http://msdn.microsoft.com/en-us/library/windows/hardware/ff537083.aspx
-  // for more details.
-  ChannelConfig channel_config = mix_format.dwChannelMask;
-
-  // Convert Microsoft's channel configuration to genric ChannelLayout.
-  ChannelLayout channel_layout = ChannelConfigToChannelLayout(channel_config);
-
-  // Some devices don't appear to set a valid channel layout, so guess based on
-  // the number of channels.  See http://crbug.com/311906.
-  if (channel_layout == CHANNEL_LAYOUT_UNSUPPORTED) {
-    DVLOG(1) << "Unsupported channel config: "
-             << std::hex << channel_config
-             << ".  Guessing layout by channel count: "
-             << std::dec << mix_format.Format.nChannels;
-    channel_layout = GuessChannelLayout(mix_format.Format.nChannels);
-  }
+  ChannelLayout channel_layout = GetChannelLayout(mix_format);
 
   // Preferred sample rate.
   int sample_rate = mix_format.Format.nSamplesPerSec;
@@ -678,8 +699,9 @@ HRESULT CoreAudioUtil::GetPreferredAudioParameters(
   // buffer size in shared mode. Note that the actual endpoint buffer will be
   // larger than this size but it will be possible to fill it up in two calls.
   // TODO(henrika): ensure that this scheme works for capturing as well.
-  int frames_per_buffer = static_cast<int>(sample_rate *
-      RefererenceTimeToTimeDelta(default_period).InSecondsF() + 0.5);
+  int frames_per_buffer = static_cast<int>(
+      sample_rate * ReferenceTimeToTimeDelta(default_period).InSecondsF() +
+      0.5);
 
   DVLOG(1) << "channel_layout   : " << channel_layout;
   DVLOG(1) << "sample_rate      : " << sample_rate;
@@ -699,21 +721,7 @@ HRESULT CoreAudioUtil::GetPreferredAudioParameters(
 HRESULT CoreAudioUtil::GetPreferredAudioParameters(const std::string& device_id,
                                                    bool is_output_device,
                                                    AudioParameters* params) {
-  ComPtr<IMMDevice> device;
-  if (device_id == AudioDeviceDescription::kDefaultDeviceId) {
-    device = CoreAudioUtil::CreateDefaultDevice(
-        is_output_device ? eRender : eCapture, eConsole);
-  } else if (device_id == AudioDeviceDescription::kLoopbackInputDeviceId ||
-      device_id == AudioDeviceDescription::kLoopbackWithMuteDeviceId) {
-    DCHECK(!is_output_device);
-    device = CoreAudioUtil::CreateDefaultDevice(eRender, eConsole);
-  } else if (device_id == AudioDeviceDescription::kCommunicationsDeviceId) {
-    device = CoreAudioUtil::CreateDefaultDevice(
-        is_output_device ? eRender : eCapture, eCommunications);
-  } else {
-    device = CreateDevice(device_id);
-  }
-
+  ComPtr<IMMDevice> device = CreateDeviceInternal(device_id, is_output_device);
   if (!device.Get()) {
     // Map NULL-pointer to new error code which can be different from the
     // actual error code. The exact value is not important here.
@@ -812,7 +820,7 @@ HRESULT CoreAudioUtil::SharedModeInitialize(IAudioClient* client,
   REFERENCE_TIME  latency = 0;
   hr = client->GetStreamLatency(&latency);
   DVLOG(2) << "stream latency: "
-           << RefererenceTimeToTimeDelta(latency).InMillisecondsF() << " [ms]";
+           << ReferenceTimeToTimeDelta(latency).InMillisecondsF() << " [ms]";
   return hr;
 }
 
