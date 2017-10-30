@@ -215,8 +215,9 @@ class Surface final : public ui::PropertyHandler {
   // Enables 'stylus-only' mode for the associated window.
   void SetStylusOnly();
 
-  // Notify surface that resources and subsurfaces' resources have been lost.
-  void SurfaceHierarchyResourcesLost();
+  // Full damage the surface and subsurfaces. If |needs_update_resource| is
+  // true, will force update resource for the next frame.
+  void FullDamageSurfaceHierarchy(bool needs_update_resource);
 
   // Returns true if the surface's bounds should be filled opaquely.
   bool FillsBoundsOpaquely() const;

@@ -291,6 +291,9 @@ void Surface::AddSubSurface(Surface* sub_surface) {
   DCHECK(!ListContainsEntry(pending_sub_surfaces_, sub_surface));
   pending_sub_surfaces_.push_back(std::make_pair(sub_surface, gfx::Point()));
   sub_surfaces_.push_back(std::make_pair(sub_surface, gfx::Point()));
+  // Do not need set the |pending_damage_| for |sub_surface| area, because the
+  // floating |sub_surface| has a full damage. See |RemoveSubSurface| for
+  // detail.
 }
 
 void Surface::RemoveSubSurface(Surface* sub_surface) {
@@ -312,8 +315,9 @@ void Surface::RemoveSubSurface(Surface* sub_surface) {
                                        sub_surface->content_size().height()),
                      SkRegion::kUnion_Op);
   sub_surfaces_.erase(it);
-  // Force recreating resources when the surface is added to a tree again.
-  sub_surface->SurfaceHierarchyResourcesLost();
+  // Force recreating resources and a full damage when the surface is added to
+  // a tree again.
+  sub_surface->FullDamageSurfaceHierarchy(true /* needs_update_resource */);
 }
 
 void Surface::SetSubSurfacePosition(Surface* sub_surface,
@@ -325,6 +329,13 @@ void Surface::SetSubSurfacePosition(Surface* sub_surface,
   DCHECK(it != pending_sub_surfaces_.end());
   if (it->second == position)
     return;
+  // Damage the origional |sub_surface| aura.
+  pending_damage_.op(SkIRect::MakeXYWH(it->second.x(), it->second.y(),
+                                       sub_surface->content_size().width(),
+                                       sub_surface->content_size().height()),
+                     SkRegion::kUnion_Op);
+  // Full damage subsurface hierarchy.
+  sub_surface->FullDamageSurfaceHierarchy(false /* needs_update_resource */);
   it->second = position;
   sub_surfaces_changed_ = true;
 }
@@ -357,6 +368,9 @@ void Surface::PlaceSubSurfaceAbove(Surface* sub_surface, Surface* reference) {
   auto it = FindListEntry(pending_sub_surfaces_, sub_surface);
   if (it == position_it)
     return;
+
+  // Full damage |sub_surface|'s hierarchy which will be moved to above.
+  sub_surface->FullDamageSurfaceHierarchy(false /* needs_update_resource */);
   pending_sub_surfaces_.splice(position_it, pending_sub_surfaces_, it);
   sub_surfaces_changed_ = true;
 }
@@ -382,6 +396,12 @@ void Surface::PlaceSubSurfaceBelow(Surface* sub_surface, Surface* sibling) {
   auto it = FindListEntry(pending_sub_surfaces_, sub_surface);
   if (it == sibling_it)
     return;
+  // Full all surface hierarchies which will be moved above the |sub_surface|.
+  for (auto damage_sibling_it = sibling_it; damage_sibling_it != it;
+       damage_sibling_it++) {
+    damage_sibling_it->first->FullDamageSurfaceHierarchy(
+        false /* needs_update_resource */);
+  }
   pending_sub_surfaces_.splice(sibling_it, pending_sub_surfaces_, it);
   sub_surfaces_changed_ = true;
 }
@@ -518,7 +538,6 @@ gfx::Rect Surface::CommitSurfaceHierarchy(
     } else {
       // pending_damage_ is in Surface coordinates.
       damage_.set(pending_damage_);
-      damage_.intersects(output_rect);
     }
     pending_damage_.setEmpty();
   }
@@ -657,13 +676,13 @@ void Surface::SetStylusOnly() {
   window_->SetProperty(kStylusOnlyKey, true);
 }
 
-void Surface::SurfaceHierarchyResourcesLost() {
+void Surface::FullDamageSurfaceHierarchy(bool needs_update_resource) {
   // Update resource and full damage are needed for next frame.
-  needs_update_resource_ = true;
-  damage_.setRect(
+  needs_update_resource_ |= needs_update_resource;
+  pending_damage_.setRect(
       SkIRect::MakeWH(content_size_.width(), content_size_.height()));
   for (const auto& sub_surface : sub_surfaces_)
-    sub_surface.first->SurfaceHierarchyResourcesLost();
+    sub_surface.first->FullDamageSurfaceHierarchy(needs_update_resource);
 }
 
 bool Surface::FillsBoundsOpaquely() const {

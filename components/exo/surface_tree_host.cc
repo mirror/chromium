@@ -113,7 +113,7 @@ void SurfaceTreeHost::SetRootSurface(Surface* root_surface) {
         gfx::Rect(host_window_->bounds().origin(), gfx::Size()));
     root_surface_->SetSurfaceDelegate(nullptr);
     // Force recreating resources when the surface is added to a tree again.
-    root_surface_->SurfaceHierarchyResourcesLost();
+    root_surface_->FullDamageSurfaceHierarchy(true /* needs_update_resource */);
     root_surface_ = nullptr;
 
     active_frame_callbacks_.splice(active_frame_callbacks_.end(),
@@ -258,7 +258,7 @@ bool SurfaceTreeHost::OnBeginFrameDerivedImpl(const viz::BeginFrameArgs& args) {
 void SurfaceTreeHost::OnLostResources() {
   if (!host_window_->GetSurfaceId().is_valid() || !root_surface_)
     return;
-  root_surface_->SurfaceHierarchyResourcesLost();
+  root_surface_->FullDamageSurfaceHierarchy(true /* needs_update_resource */);
   SubmitCompositorFrame();
 }
 
