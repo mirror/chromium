@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee67b33d_590121ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-30T19:36:18Z",
+      "side": 0,
+      "message": "Awesome refactor!",
+      "range": {
+        "startLine": 932,
+        "startChar": 5,
+        "endLine": 959,
+        "endChar": 9
+      },
+      "revId": "ad2696b90b4ba472f534475e99c46c7bee9687fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
