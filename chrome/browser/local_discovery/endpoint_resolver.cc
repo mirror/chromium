@@ -21,37 +21,36 @@ EndpointResolver::EndpointResolver() {
 EndpointResolver::~EndpointResolver() {}
 
 void EndpointResolver::Start(const std::string& service_name,
-                             ResultCallback callback) {
+                             const ResultCallback& callback) {
   service_resolver_ = service_discovery_client_->CreateServiceResolver(
-      service_name,
-      base::BindOnce(&EndpointResolver::ServiceResolveComplete,
-                     base::Unretained(this), std::move(callback)));
+      service_name, base::Bind(&EndpointResolver::ServiceResolveComplete,
+                               base::Unretained(this), callback));
   service_resolver_->StartResolving();
 }
 
 void EndpointResolver::ServiceResolveComplete(
-    ResultCallback callback,
+    const ResultCallback& callback,
     ServiceResolver::RequestStatus result,
     const ServiceDescription& description) {
   if (result != ServiceResolver::STATUS_SUCCESS)
-    return std::move(callback).Run(net::IPEndPoint());
+    return callback.Run(net::IPEndPoint());
 
-  Start(description.address, std::move(callback));
+  Start(description.address, callback);
 }
 
 void EndpointResolver::Start(const net::HostPortPair& address,
-                             ResultCallback callback) {
+                             const ResultCallback& callback) {
 #if defined(OS_MACOSX)
   net::IPAddress ip_address;
   if (!ip_address.AssignFromIPLiteral(address.host())) {
     NOTREACHED() << address.ToString();
     // Unexpected, but could be a reason for crbug.com/513505
     base::debug::DumpWithoutCrashing();
-    return std::move(callback).Run(net::IPEndPoint());
+    return callback.Run(net::IPEndPoint());
   }
 
   // OSX already has IP there.
-  std::move(callback).Run(net::IPEndPoint(ip_address, address.port()));
+  callback.Run(net::IPEndPoint(ip_address, address.port()));
 #else   // OS_MACOSX
   net::AddressFamily address_family = net::ADDRESS_FAMILY_UNSPECIFIED;
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -61,21 +60,20 @@ void EndpointResolver::Start(const net::HostPortPair& address,
 
   domain_resolver_ = service_discovery_client_->CreateLocalDomainResolver(
       address.host(), address_family,
-      base::BindOnce(&EndpointResolver::DomainResolveComplete,
-                     base::Unretained(this), address.port(),
-                     std::move(callback)));
+      base::Bind(&EndpointResolver::DomainResolveComplete,
+                 base::Unretained(this), address.port(), callback));
   domain_resolver_->Start();
 #endif  // OS_MACOSX
 }
 
 void EndpointResolver::DomainResolveComplete(
     uint16_t port,
-    ResultCallback callback,
+    const ResultCallback& callback,
     bool success,
     const net::IPAddress& address_ipv4,
     const net::IPAddress& address_ipv6) {
   if (!success)
-    return std::move(callback).Run(net::IPEndPoint());
+    return callback.Run(net::IPEndPoint());
 
   net::IPAddress address = address_ipv4;
   if (!address.IsValid())
@@ -83,7 +81,7 @@ void EndpointResolver::DomainResolveComplete(
 
   DCHECK(address.IsValid());
 
-  std::move(callback).Run(net::IPEndPoint(address, port));
+  callback.Run(net::IPEndPoint(address, port));
 }
 
 }  // namespace local_discovery

@@ -41,18 +41,18 @@ TestServiceDiscoveryClient::CreateServiceWatcher(
 std::unique_ptr<ServiceResolver>
 TestServiceDiscoveryClient::CreateServiceResolver(
     const std::string& service_name,
-    ServiceResolver::ResolveCompleteCallback callback) {
-  return service_discovery_client_impl_->CreateServiceResolver(
-      service_name, std::move(callback));
+    const ServiceResolver::ResolveCompleteCallback& callback) {
+  return service_discovery_client_impl_->CreateServiceResolver(service_name,
+                                                              callback);
 }
 
 std::unique_ptr<LocalDomainResolver>
 TestServiceDiscoveryClient::CreateLocalDomainResolver(
     const std::string& domain,
     net::AddressFamily address_family,
-    LocalDomainResolver::IPAddressCallback callback) {
+    const LocalDomainResolver::IPAddressCallback& callback) {
   return service_discovery_client_impl_->CreateLocalDomainResolver(
-      domain, address_family, std::move(callback));
+      domain, address_family, callback);
 }
 
 void TestServiceDiscoveryClient::SimulateReceive(const uint8_t* packet,

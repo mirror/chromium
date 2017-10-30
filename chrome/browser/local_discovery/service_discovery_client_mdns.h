@@ -33,11 +33,11 @@ class ServiceDiscoveryClientMdns
       const ServiceWatcher::UpdatedCallback& callback) override;
   std::unique_ptr<ServiceResolver> CreateServiceResolver(
       const std::string& service_name,
-      ServiceResolver::ResolveCompleteCallback callback) override;
+      const ServiceResolver::ResolveCompleteCallback& callback) override;
   std::unique_ptr<LocalDomainResolver> CreateLocalDomainResolver(
       const std::string& domain,
       net::AddressFamily address_family,
-      LocalDomainResolver::IPAddressCallback callback) override;
+      const LocalDomainResolver::IPAddressCallback& callback) override;
 
   // net::NetworkChangeNotifier::NetworkChangeObserver:
   void OnNetworkChanged(

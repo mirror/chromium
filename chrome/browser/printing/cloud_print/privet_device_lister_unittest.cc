@@ -77,12 +77,11 @@ class MockServiceWatcher : public ServiceWatcher {
 class MockServiceResolver : public ServiceResolver {
  public:
   MockServiceResolver(const std::string& service_name,
-                      ServiceResolver::ResolveCompleteCallback callback,
+                      const ServiceResolver::ResolveCompleteCallback& callback,
                       ServiceDiscoveryMockDelegate* mock_delegate)
-      : started_resolving_(false),
-        service_name_(service_name),
-        callback_(std::move(callback)),
-        mock_delegate_(mock_delegate) {}
+      : started_resolving_(false), service_name_(service_name),
+        callback_(callback), mock_delegate_(mock_delegate) {
+  }
 
   ~MockServiceResolver() override {}
 
@@ -97,7 +96,8 @@ class MockServiceResolver : public ServiceResolver {
 
   std::string GetName() const override { return service_name_; }
 
-  ServiceResolver::ResolveCompleteCallback* callback() { return &callback_; }
+  const ServiceResolver::ResolveCompleteCallback& callback() {
+    return callback_; }
 
  private:
   bool started_resolving_;
@@ -128,16 +128,16 @@ class MockServiceDiscoveryClient : public ServiceDiscoveryClient {
   // for the service called |service_name|.
   std::unique_ptr<ServiceResolver> CreateServiceResolver(
       const std::string& service_name,
-      ServiceResolver::ResolveCompleteCallback callback) override {
-    return base::MakeUnique<MockServiceResolver>(
-        service_name, std::move(callback), mock_delegate_);
+      const ServiceResolver::ResolveCompleteCallback& callback) override {
+    return base::MakeUnique<MockServiceResolver>(service_name, callback,
+                                                 mock_delegate_);
   }
 
   // Not used in this test.
   std::unique_ptr<LocalDomainResolver> CreateLocalDomainResolver(
       const std::string& domain,
       net::AddressFamily address_family,
-      LocalDomainResolver::IPAddressCallback callback) override {
+      const LocalDomainResolver::IPAddressCallback& callback) override {
     NOTREACHED();
     return std::unique_ptr<LocalDomainResolver>();
   }
@@ -219,8 +219,8 @@ TEST_F(PrivetDeviceListerTest, SimpleUpdateTest) {
   EXPECT_CALL(delegate_, DeviceChanged("myprinter._privet._tcp.local", _))
       .WillOnce(SaveArg<1>(&outgoing_description));
 
-  std::move(*service_resolver->callback())
-      .Run(ServiceResolver::STATUS_SUCCESS, service_description_);
+  service_resolver->callback().Run(ServiceResolver::STATUS_SUCCESS,
+                                   service_description_);
 
   EXPECT_EQ(service_description_.address.host(),
             outgoing_description.address.host());
@@ -256,8 +256,8 @@ TEST_F(PrivetDeviceListerTest, MultipleUpdatesPostResolve) {
   testing::Mock::VerifyAndClear(&mock_delegate_);
 
   EXPECT_CALL(delegate_, DeviceChanged("myprinter._privet._tcp.local", _));
-  std::move(*service_resolver->callback())
-      .Run(ServiceResolver::STATUS_SUCCESS, service_description_);
+  service_resolver->callback().Run(ServiceResolver::STATUS_SUCCESS,
+                                   service_description_);
 
   EXPECT_CALL(mock_delegate_,
               ServiceResolverStarted("myprinter._privet._tcp.local", _));
