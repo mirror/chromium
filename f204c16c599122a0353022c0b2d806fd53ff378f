@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff9c2c62_9c3553a6",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-30T23:43:15Z",
+      "side": 1,
+      "message": "nit: Could you rename this to |can_defer_invalidation|?",
+      "range": {
+        "startLine": 238,
+        "startChar": 25,
+        "endLine": 238,
+        "endChar": 30
+      },
+      "revId": "f204c16c599122a0353022c0b2d806fd53ff378f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f87630_96b0c19c",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-30T23:43:15Z",
+      "side": 1,
+      "message": "Could you set a valid URL?\ni.e.\n\n\u003e KURL test_url(kTestURL);\n\u003e ... CreateForTest(test_url);\n\nThis doesn\u0027t affect this test currently, but in non-test cases we don\u0027t expect NullURL() in a successful load.",
+      "range": {
+        "startLine": 1928,
+        "startChar": 63,
+        "endLine": 1928,
+        "endChar": 72
+      },
+      "revId": "f204c16c599122a0353022c0b2d806fd53ff378f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b39ea7d_0ab0e54f",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1929,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-30T23:43:15Z",
+      "side": 1,
+      "message": "nit: I prefer the name |observer|.\n\nhttps://google.github.io/styleguide/cppguide.html#General_Naming_Rules\n\u003e avoid abbreviation.",
+      "range": {
+        "startLine": 1929,
+        "startChar": 45,
+        "endLine": 1929,
+        "endChar": 48
+      },
+      "revId": "f204c16c599122a0353022c0b2d806fd53ff378f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f5ef6a_846cae37",
+        "filename": "third_party/WebKit/Source/core/loader/resource/MockImageResourceObserver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-30T23:43:15Z",
+      "side": 1,
+      "message": "nit: Could you rename |Defer()| to something less ambiguous?\n(e.g. GetCanDeferInvalidation()?)\n\nThere is already FetchParameters::DeferOption that is named Defer().\nhttps://codesearch.chromium.org/chromium/src/third_party/WebKit/Source/platform/loader/fetch/FetchParameters.h?type\u003dcs\u0026q\u003dResourceRequest+Defer\u0026l\u003d119",
+      "range": {
+        "startLine": 39,
+        "startChar": 23,
+        "endLine": 39,
+        "endChar": 28
+      },
+      "revId": "f204c16c599122a0353022c0b2d806fd53ff378f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1345055_e3ee5998",
+        "filename": "third_party/WebKit/Source/core/loader/resource/MockImageResourceObserver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-30T23:43:15Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 53,
+        "startChar": 23,
+        "endLine": 53,
+        "endChar": 29
+      },
+      "revId": "f204c16c599122a0353022c0b2d806fd53ff378f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
