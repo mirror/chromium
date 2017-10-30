@@ -53,7 +53,7 @@ class PLATFORM_EXPORT BlobRegistry {
   static void RegisterBlobData(const String& uuid, std::unique_ptr<BlobData>);
   static void AddBlobDataRef(const String& uuid);
   static void RemoveBlobDataRef(const String& uuid);
-  static void RegisterPublicBlobURL(SecurityOrigin*,
+  static void RegisterPublicBlobURL(const SecurityOrigin*,
                                     const KURL&,
                                     scoped_refptr<BlobDataHandle>);
   static void RevokePublicBlobURL(const KURL&);
