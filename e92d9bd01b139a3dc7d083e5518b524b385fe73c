@@ -51,6 +51,24 @@
       "revId": "e92d9bd01b139a3dc7d083e5518b524b385fe73c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aac5522_38e8e320",
+        "filename": "gpu/command_buffer/tests/fuzzer_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-30T22:13:49Z",
+      "side": 1,
+      "message": "We have a bit of leeway right now, because of alignment (we\u0027re using 29 bytes out of 32), so adding a bit here or there wouldn\u0027t cause a ton of issues. It would cause a bit more in the future when we run out of those 32 bytes (i.e. \"eats\" the first command in the corpus). I kind of chalk it up to the similar problems we have when adding/removing commands which renumbers command ids - it temporarily reduces coverage, and it grows back up again after a few days.\nIt\u0027s a question of how much maintenance we want to spend on the fuzzer. E.g. do we want to burden whoever adds a new workaround to have to deal with this.\nMy opinion is no - I\u0027d be doing a one-time thing here because I want to be able to track coverage and make sure I didn\u0027t blow things up, but normally I wouldn\u0027t say it requires this level of care.",
+      "parentUuid": "1cc02df7_e271c09f",
+      "revId": "e92d9bd01b139a3dc7d083e5518b524b385fe73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
