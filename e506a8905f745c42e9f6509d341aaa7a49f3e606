@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7568381_1dff786f",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-10-30T11:35:04Z",
+      "side": 1,
+      "message": "This should only count the non-generic handlers, based on the test.\nhttps://cs.chromium.org/chromium/src/ui/file_manager/integration_tests/file_manager/tasks.js?type\u003dcs\u0026q\u003dgenericAndNonGenericTasksAreMixed\u0026sq\u003dpackage:chromium\u0026l\u003d244",
+      "range": {
+        "startLine": 485,
+        "startChar": 40,
+        "endLine": 485,
+        "endChar": 63
+      },
+      "revId": "e506a8905f745c42e9f6509d341aaa7a49f3e606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
