@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c1a83f1_f4d2e451",
+        "filename": "testing/libfuzzer/fuzzers/zlib_deflate_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-30T19:31:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "36f12009_523b2646",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "9ea8c31e4be99f92f263e087b5d0b37467355d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de381fd2_c8f2c6bc",
         "filename": "testing/libfuzzer/fuzzers/zlib_deflate_fuzzer.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-30T19:05:12Z",
       "side": 1,
       "message": "The deflate function is how zlib compresses. Any input contents should be valid and thus I don\u0027t think a seed would provide much value. Let me know if I am incorrect thought. :D",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 21
+      },
+      "revId": "9ea8c31e4be99f92f263e087b5d0b37467355d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "faa1470c_bc5a893c",
+        "filename": "testing/libfuzzer/fuzzers/zlib_deflate_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-30T19:31:11Z",
+      "side": 1,
+      "message": "You\u0027re correct. This is fine, plus you are going to improve it with some valid seed corpus :)",
+      "parentUuid": "de381fd2_c8f2c6bc",
       "range": {
         "startLine": 37,
         "startChar": 14,
