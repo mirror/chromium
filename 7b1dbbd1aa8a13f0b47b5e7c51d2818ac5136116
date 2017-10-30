@@ -89,6 +89,40 @@
     },
     {
       "key": {
+        "uuid": "d913994f_f4ef3500",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_callback_interface.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-30T03:28:05Z",
+      "side": 1,
+      "message": "Does legacy callback interfaces need this?",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd5be13_d9249d1f",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-30T03:28:05Z",
+      "side": 1,
+      "message": "Can we define |maybe_call_result| in {%if%} branch in #59-77? Then we don\u0027t need ALLOW_UNUSED_LOCAL().",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e6e3ba2_8f8bd708",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
         "patchSetId": 4
@@ -151,6 +185,23 @@
       "writtenOn": "2017-10-27T16:38:08Z",
       "side": 1,
       "message": "So... considering the void case, would it be better to use ExceptionState?",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57ca9a5_aaaa66d4",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.h.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-30T03:28:05Z",
+      "side": 1,
+      "message": "Is it better to use {% set is_single_oepration \u003d ... %} ?",
       "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -299,6 +350,40 @@
     },
     {
       "key": {
+        "uuid": "cad442c3_2465ffca",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatementCallback.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-30T03:28:05Z",
+      "side": 1,
+      "message": "This #include looks not needed.",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a39b6fe_b6849e1f",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatementErrorCallback.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-30T03:28:05Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d7075d1_c6c477d9",
         "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
         "patchSetId": 4
@@ -310,6 +395,40 @@
       "writtenOn": "2017-10-27T16:38:08Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f23a09b_59fcc29b",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransactionCallback.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-30T03:28:05Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717c2ad5_f859a13d",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransactionErrorCallback.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-30T03:28:05Z",
+      "side": 1,
+      "message": "ditto.",
       "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -333,6 +452,23 @@
     },
     {
       "key": {
+        "uuid": "3596e597_99f26664",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackInterfaceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-30T03:28:05Z",
+      "side": 1,
+      "message": "Can we set this in the initializer list?",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf8f11a1_a118bdc4",
         "filename": "third_party/WebKit/Source/platform/bindings/CallbackInterfaceBase.cpp",
         "patchSetId": 4
@@ -344,6 +480,24 @@
       "writtenOn": "2017-10-27T16:38:08Z",
       "side": 1,
       "message": "single_op_or_not \u003d\u003d (kSingleOperation \u0026\u0026 callback_object-\u003eIsCallable())",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5747975_50eae913",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackInterfaceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-30T03:28:05Z",
+      "side": 1,
+      "message": "(single_op_or_not \u003d\u003d kSingleOperation) \u0026\u0026 callback_object-\u003eIsCallable()",
+      "parentUuid": "cf8f11a1_a118bdc4",
       "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
