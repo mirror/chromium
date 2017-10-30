@@ -10,6 +10,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "content/browser/streams/stream_handle_impl.h"
+#include "content/browser/streams/stream_metadata.h"
 #include "content/browser/streams/stream_read_observer.h"
 #include "content/browser/streams/stream_registry.h"
 #include "content/browser/streams/stream_write_observer.h"
@@ -189,6 +190,10 @@ void Stream::CloseHandle() {
 
 int Stream::GetStatus() {
   return reader_->GetStatus();
+}
+
+void Stream::set_metadata(std::unique_ptr<StreamMetadata> metadata) {
+  metadata_ = std::move(metadata);
 }
 
 void Stream::OnSpaceAvailable() {
