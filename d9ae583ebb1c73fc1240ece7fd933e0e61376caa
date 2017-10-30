@@ -16,6 +16,24 @@
       "revId": "d9ae583ebb1c73fc1240ece7fd933e0e61376caa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9adaed04_3a412840",
+        "filename": "components/ukm/ukm_interface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-10-30T17:33:21Z",
+      "side": 1,
+      "message": "This is just so that we can use RegisterMainThreadInterface() with it (in common_browser_interfaces.cc). We are not using this parameter, but I assumed it was okay to add it, since we do this in other places (e.g. GeolocationConfig::Create doesn\u0027t use the source_info either).",
+      "parentUuid": "8b847ebe_0f35374f",
+      "revId": "d9ae583ebb1c73fc1240ece7fd933e0e61376caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
