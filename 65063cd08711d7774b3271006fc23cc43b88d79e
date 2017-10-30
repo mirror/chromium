@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "63f9ff09_0a664d77",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-30T20:42:18Z",
+      "side": 1,
+      "message": "a bit more on this: one issue is that a WebContents may be destroyed prior to ThreatDetails being destroyed since ThreatDetails is not bound to the lifetime of a WebContents. This means that the done_callback may be invoked with a NULL WebContents, which means that TriggerManager can\u0027t find the right entry to clean up in its map.\n\nI guess there are two ways to address things. 1) tighten things up (make sure AllDone is always called, and all objects live long enough for that call to finish) or 2) loosen things up (make each step cancellable, let things disappear independently and be resilient to that).\n\nTightening-up seems tricky with all the thread hopping ThreatDetails currently does, which is why i\u0027m leaning towards loosening up these relationships. Would love everyone\u0027s thoughts on this.",
+      "parentUuid": "a5ea1278_aef05670",
+      "revId": "65063cd08711d7774b3271006fc23cc43b88d79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2ab066b_73296d7b",
         "filename": "components/safe_browsing/triggers/trigger_manager.cc",
         "patchSetId": 7
