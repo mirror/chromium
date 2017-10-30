@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c371d7c_82f2f73c",
+        "filename": "extensions/browser/api/declarative_net_request/rules_monitor_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-30T18:48:59Z",
+      "side": 1,
+      "message": "IIUC, this should help prevent a redundant AddRef/ReleaseRef. See https://chromium.googlesource.com/chromium/src/+/lkcr/docs/callback.md. The callback will retain a reference but pass a raw pointer when the actual task is run, hence preventing a redundant AddRef/ReleaseRef.",
+      "parentUuid": "6c84f596_fe1a6cf0",
+      "range": {
+        "startLine": 74,
+        "startChar": 34,
+        "endLine": 74,
+        "endChar": 71
+      },
+      "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35fe7b30_463b728b",
         "filename": "extensions/browser/api/declarative_net_request/rules_monitor_service.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-30T17:56:35Z",
       "side": 1,
       "message": "nit: inline base::BindOnce directly here?",
+      "range": {
+        "startLine": 76,
+        "startChar": 35,
+        "endLine": 76,
+        "endChar": 50
+      },
+      "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13cb48e2_6245021b",
+        "filename": "extensions/browser/api/declarative_net_request/rules_monitor_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-30T18:48:59Z",
+      "side": 1,
+      "message": "Ok if I keep this? This seems clearer to me.",
+      "parentUuid": "35fe7b30_463b728b",
       "range": {
         "startLine": 76,
         "startChar": 35,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9f51df8c_36ae84c0",
+        "filename": "extensions/browser/api/declarative_net_request/rules_monitor_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-30T18:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "285a7870_84078b6c",
+      "range": {
+        "startLine": 134,
+        "startChar": 45,
+        "endLine": 134,
+        "endChar": 61
+      },
+      "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8937f910_7ba960c3",
         "filename": "extensions/browser/api/declarative_net_request/rules_monitor_service.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3fc38c7_f8be0db4",
+        "filename": "extensions/browser/api/declarative_net_request/rules_monitor_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-30T18:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8937f910_7ba960c3",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 11
+      },
+      "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4c57a972_3e9dc838",
+        "filename": "extensions/browser/api/declarative_net_request/rules_monitor_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-30T18:48:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "add8c354_3b5716be",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 56
+      },
+      "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f36d3ab_b0085cf3",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "115e9874_836c4848",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-30T18:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f36d3ab_b0085cf3",
+      "range": {
+        "startLine": 146,
+        "startChar": 6,
+        "endLine": 146,
+        "endChar": 15
+      },
+      "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7c5ddcc3_d7d1ced4",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-30T18:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5bed91d_0a8f193a",
+      "range": {
+        "startLine": 61,
+        "startChar": 18,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbd10e11_710e903d",
         "filename": "extensions/browser/api/web_request/web_request_api.cc",
         "patchSetId": 7
@@ -174,6 +342,30 @@
       "writtenOn": "2017-10-30T17:56:35Z",
       "side": 1,
       "message": "You probably want to loop in folks who are knowledgeable about this.",
+      "range": {
+        "startLine": 646,
+        "startChar": 7,
+        "endLine": 646,
+        "endChar": 75
+      },
+      "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2fdb23_f41d3cf1",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-30T18:48:59Z",
+      "side": 1,
+      "message": "ccing: rdsmith@ who owns net/. \n\nSome context: This is implementing the Declarative Net Request API i.e. declarative(blocking for now) rules which extensions can use to intercept network requests. We reach here via \nChromeNetworkDelegate::OnBeforeURLRequest -\u003e ChromeExtensionsNetworkDelegate:OnBeforeURLRequest -\u003e ExtensionWebRequestEventRouter::OnBeforeRequest.\n\nThe blocking of network requests by this extension depends on parameters of requests like - url, initiator, resource type, whether the request is first or third party. Wanted to confirm if any of these can change between the different network request stages (as defined by the NetworkDelegate interface). My understanding is that the request url would change for a redirect, but that should cause a new OnBeforeRequest to be issued. Hence checking these declarative rules in only the OnBeforeRequest stage should be fine?",
+      "parentUuid": "cbd10e11_710e903d",
       "range": {
         "startLine": 646,
         "startChar": 7,
@@ -200,6 +392,24 @@
       "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb9c1e5_6768e302",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-30T18:48:59Z",
+      "side": 1,
+      "message": "1. Yeah that\u0027s expected.\n2. Have added an early return to RulesetManager::ShouldBlockRequest when the API is not available.",
+      "parentUuid": "5c83cdf5_6bddd7d5",
+      "revId": "27212254c55894a649ccab70d91bdd12e4f7171b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
