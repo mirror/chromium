@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "0a13ce2f_ab5791a1",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T08:10:28Z",
+      "side": 1,
+      "message": "Remove \"Allows\" as the function is actually posting the message, not just enabling it.\nRemove \"a client\" as the client is this interface. Would recommend:\n\n// Sends |message| from the service worker |source| to this service worker client.",
+      "revId": "b8e1792989e56cf802ab715e8172af429e1550c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b251824_c81259ec",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T08:10:28Z",
+      "side": 1,
+      "message": "|controller| should be |source|.",
+      "revId": "b8e1792989e56cf802ab715e8172af429e1550c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f6f639b_edee0363",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 2
@@ -83,6 +117,74 @@
         "endLine": 306,
         "endChar": 52
       },
+      "revId": "b8e1792989e56cf802ab715e8172af429e1550c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74556df1_1716135e",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T08:10:28Z",
+      "side": 1,
+      "message": "it\u0027s not necessarily the controller, as non-controller workers can postMessage. Maybe web_service_worker_impl, or just call CreateHandle() here too and call it handle.",
+      "revId": "b8e1792989e56cf802ab715e8172af429e1550c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0cc3d7_dbc15a6a",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T08:10:28Z",
+      "side": 1,
+      "message": "don\u0027t think we need this blank line",
+      "revId": "b8e1792989e56cf802ab715e8172af429e1550c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e64f0f2_8d30ee06",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T08:10:28Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s accurate because we don\u0027t create Provider for Workers yet. Maybe:\n\n// Posts a message to the ServiceWorkerContainer for this provider. Corresponds to Client#postMessage().",
+      "revId": "b8e1792989e56cf802ab715e8172af429e1550c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ad9ed8_2347a76d",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T08:10:28Z",
+      "side": 1,
+      "message": "Prefer |source| over |info| as this is MessageEvent.source.",
       "revId": "b8e1792989e56cf802ab715e8172af429e1550c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
