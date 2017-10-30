@@ -65,6 +65,17 @@ bool IsLeftWindowOnTopOrLeftOfScreen(
              blink::kWebScreenOrientationLockPortraitSecondary;
 }
 
+// Flips the x/y and width/height of the |rect|.
+void FlipRect(gfx::Rect* rect) {
+  int old_x = rect->x();
+  rect->set_x(rect->y());
+  rect->set_y(old_x);
+
+  int old_width = rect->width();
+  rect->set_width(rect->height());
+  rect->set_height(old_width);
+}
+
 }  // namespace
 
 SplitViewController::SplitViewController() {
@@ -235,6 +246,14 @@ gfx::Rect SplitViewController::GetSnappedWindowBoundsInScreen(
             IsCurrentScreenOrientationLandscape(), &left_or_top_rect,
             &right_or_bottom_rect);
 
+  // Only need to adjust the bounds for |left_or_top_rect| since the origin of
+  // the left or top snapped window's bounds is always the origin of the work
+  // area's bounds. It can not be moved to outside of the work area when the
+  // window's minimum size is larger than current acquired window bounds, which
+  // will lead to the divider pass over the window. This is no need for
+  // |right_or_bottom_rect| since its origin of the bounds is flexible.
+  AdjustLeftOrTopSnappedWindowBoundsDuringResizing(&left_or_top_rect);
+
   if (IsLeftWindowOnTopOrLeftOfScreen(screen_orientation_))
     return (snap_position == LEFT) ? left_or_top_rect : right_or_bottom_rect;
   else
@@ -274,12 +293,8 @@ void SplitViewController::Resize(const gfx::Point& location_in_screen) {
       GetBoundedPosition(location_in_screen, work_area_bounds);
 
   // Update |divider_position_|.
-  const int previous_divider_position = divider_position_;
   UpdateDividerPosition(modified_location_in_screen);
   NotifyDividerPositionChanged();
-
-  // Restack windows order if necessary.
-  RestackWindows(previous_divider_position, divider_position_);
 
   // Update the black scrim layer's bounds and opacity.
   UpdateBlackScrim(modified_location_in_screen);
@@ -580,29 +595,6 @@ void SplitViewController::UpdateBlackScrim(
   black_scrim_layer_->SetOpacity(opacity);
 }
 
-void SplitViewController::RestackWindows(const int previous_divider_position,
-                                         const int current_divider_position) {
-  if (!left_window_ || !right_window_)
-    return;
-  DCHECK(IsSplitViewModeActive());
-  DCHECK_EQ(left_window_->parent(), right_window_->parent());
-
-  const int mid_position = GetDefaultDividerPosition(GetDefaultSnappedWindow());
-  if (std::signbit(previous_divider_position - mid_position) ==
-      std::signbit(current_divider_position - mid_position)) {
-    // No need to restack windows if the divider position doesn't pass over the
-    // middle position.
-    return;
-  }
-
-  if ((current_divider_position < mid_position) ==
-      IsLeftWindowOnTopOrLeftOfScreen(screen_orientation_)) {
-    left_window_->parent()->StackChildAbove(right_window_, left_window_);
-  } else {
-    left_window_->parent()->StackChildAbove(left_window_, right_window_);
-  }
-}
-
 void SplitViewController::UpdateSnappedWindowsAndDividerBounds() {
   DCHECK(IsSplitViewModeActive());
 
@@ -774,6 +766,36 @@ void SplitViewController::OnSnappedWindowMinimizedOrDestroyed(
     NotifySplitViewStateChanged(previous_state, state_);
     Shell::Get()->window_selector_controller()->ToggleOverview();
   }
+}
+
+void SplitViewController::AdjustLeftOrTopSnappedWindowBoundsDuringResizing(
+    gfx::Rect* left_or_top_rect) {
+  if (!is_resizing_)
+    return;
+
+  gfx::Size left_or_top_minimum_size;
+  if (IsLeftWindowOnTopOrLeftOfScreen(screen_orientation_)) {
+    if (left_window_ && left_window_->delegate())
+      left_or_top_minimum_size = left_window_->delegate()->GetMinimumSize();
+  } else {
+    if (right_window_ && right_window_->delegate())
+      left_or_top_minimum_size = right_window_->delegate()->GetMinimumSize();
+  }
+
+  bool is_landscape = IsCurrentScreenOrientationLandscape();
+  if (!is_landscape) {
+    FlipRect(left_or_top_rect);
+    left_or_top_minimum_size.SetSize(left_or_top_minimum_size.height(),
+                                     left_or_top_minimum_size.width());
+  }
+  if (left_or_top_rect->width() < left_or_top_minimum_size.width()) {
+    left_or_top_rect->set_x(
+        left_or_top_rect->x() -
+        (left_or_top_minimum_size.width() - left_or_top_rect->width()));
+    left_or_top_rect->set_width(left_or_top_minimum_size.width());
+  }
+  if (!is_landscape)
+    FlipRect(left_or_top_rect);
 }
 
 }  // namespace ash
