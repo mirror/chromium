@@ -46,6 +46,30 @@
       "revId": "7041e941b36e3321df1e8d456f83eaee03bb7c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5274f82_5439832d",
+        "filename": "chrome/android/webapk/libs/client/junit/src/org/chromium/webapk/lib/client/WebApkValidatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-10-30T14:55:43Z",
+      "side": 1,
+      "message": "The point is the failure doesn\u0027t come from the place that you want to test. If I understand correctly, you want to test if the package name doesn\u0027t match the one for maps lite, the it returns false. However, the real failure comes from PackageManager can\u0027t find the package.",
+      "parentUuid": "12c1e05c_b4ef21c4",
+      "range": {
+        "startLine": 268,
+        "startChar": 16,
+        "endLine": 268,
+        "endChar": 34
+      },
+      "revId": "7041e941b36e3321df1e8d456f83eaee03bb7c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
