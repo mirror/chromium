@@ -30,8 +30,7 @@ namespace blink {
 
 bool FormDataElement::IsSafeToSendToAnotherThread() const {
   return filename_.IsSafeToSendToAnotherThread() &&
-         blob_uuid_.IsSafeToSendToAnotherThread() &&
-         file_system_url_.IsSafeToSendToAnotherThread();
+         blob_uuid_.IsSafeToSendToAnotherThread();
 }
 
 inline EncodedFormData::EncodedFormData()
@@ -95,11 +94,6 @@ RefPtr<EncodedFormData> EncodedFormData::DeepCopy() const {
         form_data->elements_.UncheckedAppend(FormDataElement(
             e.blob_uuid_.IsolatedCopy(), e.optional_blob_data_handle_));
         break;
-      case FormDataElement::kEncodedFileSystemURL:
-        form_data->elements_.UncheckedAppend(FormDataElement(
-            e.file_system_url_.Copy(), e.file_start_, e.file_length_,
-            e.expected_file_modification_time_));
-        break;
     }
   }
   return form_data;
@@ -130,20 +124,6 @@ void EncodedFormData::AppendFileRange(const String& filename,
 void EncodedFormData::AppendBlob(const String& uuid,
                                  RefPtr<BlobDataHandle> optional_handle) {
   elements_.push_back(FormDataElement(uuid, std::move(optional_handle)));
-}
-
-void EncodedFormData::AppendFileSystemURL(const KURL& url) {
-  elements_.push_back(
-      FormDataElement(url, 0, BlobDataItem::kToEndOfFile, InvalidFileTime()));
-}
-
-void EncodedFormData::AppendFileSystemURLRange(
-    const KURL& url,
-    long long start,
-    long long length,
-    double expected_modification_time) {
-  elements_.push_back(
-      FormDataElement(url, start, length, expected_modification_time));
 }
 
 void EncodedFormData::Flatten(Vector<char>& data) const {
@@ -179,9 +159,6 @@ unsigned long long EncodedFormData::SizeInBytes() const {
       case FormDataElement::kEncodedBlob:
         if (e.optional_blob_data_handle_)
           size += e.optional_blob_data_handle_->size();
-        break;
-      case FormDataElement::kEncodedFileSystemURL:
-        size += e.file_length_ - e.file_start_;
         break;
     }
   }
