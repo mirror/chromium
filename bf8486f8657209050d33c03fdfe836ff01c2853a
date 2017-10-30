@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2f2e56c7_43f613d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBar.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-30T22:09:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "340d19d1_5daf5226",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 57
+      },
+      "revId": "bf8486f8657209050d33c03fdfe836ff01c2853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d724d630_95f50286",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
         "patchSetId": 6
@@ -222,6 +246,24 @@
       "revId": "bf8486f8657209050d33c03fdfe836ff01c2853a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c88e6b_8793bdd0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-30T22:09:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89e79761_0d054755",
+      "revId": "bf8486f8657209050d33c03fdfe836ff01c2853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -410,6 +452,30 @@
       "revId": "bf8486f8657209050d33c03fdfe836ff01c2853a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3f79f2_1a8b6942",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-30T22:09:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dbaab12e_dabbb62b",
+      "range": {
+        "startLine": 430,
+        "startChar": 7,
+        "endLine": 430,
+        "endChar": 34
+      },
+      "revId": "bf8486f8657209050d33c03fdfe836ff01c2853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
