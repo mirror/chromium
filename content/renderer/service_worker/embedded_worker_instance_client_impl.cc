@@ -24,6 +24,27 @@
 
 namespace content {
 
+namespace {
+
+blink::WebSettings::ServiceWorkerCodeCacheInstallOptions
+GetServiceWorkerCodeCacheInstallOptions() {
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+  std::string option = command_line.GetSwitchValueASCII(
+      switches::kServiceWorkerCodeCacheInstall);
+  if (base::StartsWith(option, "none", base::CompareCase::SENSITIVE)) {
+    return blink::WebSettings::ServiceWorkerCodeCacheInstallOptions::kNone;
+  } else if (base::StartsWith(option, "normal", base::CompareCase::SENSITIVE)) {
+    return blink::WebSettings::ServiceWorkerCodeCacheInstallOptions::kNormal;
+  } else if (base::StartsWith(option, "full", base::CompareCase::SENSITIVE)) {
+    return blink::WebSettings::ServiceWorkerCodeCacheInstallOptions::kFull;
+  } else {
+    return blink::WebSettings::ServiceWorkerCodeCacheInstallOptions::kNone;
+  }
+}
+
+}  // namespace
+
 EmbeddedWorkerInstanceClientImpl::WorkerWrapper::WorkerWrapper(
     std::unique_ptr<blink::WebEmbeddedWorker> worker,
     int devtools_agent_route_id)
@@ -165,6 +186,8 @@ EmbeddedWorkerInstanceClientImpl::StartWorkerContext(
       params.pause_after_download
           ? blink::WebEmbeddedWorkerStartData::kPauseAfterDownload
           : blink::WebEmbeddedWorkerStartData::kDontPauseAfterDownload;
+  start_data.code_cache_install_options =
+      GetServiceWorkerCodeCacheInstallOptions();
 
   wrapper->worker()->StartWorkerContext(start_data);
   return wrapper;

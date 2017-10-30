@@ -702,6 +702,12 @@ void WebSettingsImpl::SetV8CacheStrategiesForCacheStorage(
       static_cast<blink::V8CacheStrategiesForCacheStorage>(strategies));
 }
 
+void WebSettingsImpl::SetServiceWorkerCodeCacheInstall(
+    ServiceWorkerCodeCacheInstallOptions options) {
+  settings_->SetServiceWorkerCodeCacheInstall(
+      static_cast<blink::V8ServiceWorkerCodeCacheInstallOptions>(options));
+}
+
 void WebSettingsImpl::SetViewportStyle(WebViewportStyle style) {
   dev_tools_emulator_->SetViewportStyle(style);
 }

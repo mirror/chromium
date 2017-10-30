@@ -790,6 +790,9 @@ const char kSandboxIPCProcess[]             = "sandbox-ipc";
 const char kSavePreviousDocumentResources[] =
     "save-previous-document-resources";
 
+const char kServiceWorkerCodeCacheInstall[] =
+    "service-worker-code-cache-install";
+
 // Visibly render a border around paint rects in the web page to help debug
 // and study painting behavior.
 const char kShowPaintRects[]                = "show-paint-rects";
