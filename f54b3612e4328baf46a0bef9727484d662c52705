@@ -22,6 +22,30 @@
       "revId": "f54b3612e4328baf46a0bef9727484d662c52705",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82ec946_fe4b554d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/HomeSheetUiCaptureTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-30T17:24:42Z",
+      "side": 1,
+      "message": "I\u0027d say this is better for consistency with existing tests here. The parameterized tests in this class require to handle manually setting the preference anyway. I need to make a new pass on the ChromeHome annotation and make it work with parameterized tests etc. Then I\u0027ll update the rest of the tests.",
+      "parentUuid": "f9a05953_e95d9900",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 50
+      },
+      "revId": "f54b3612e4328baf46a0bef9727484d662c52705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
