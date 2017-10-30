@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "05671a3e_52c1f65a",
+        "filename": "net/android/java/src/org/chromium/net/NetworkChangeNotifier.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-30T19:08:32Z",
+      "side": 1,
+      "message": "Thanks for the clarification both here and offline.",
+      "parentUuid": "1d0eff91_cb0a26f5",
+      "revId": "656f1a2a31f6a40643c2e31a56649f8d665b63d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e13cfb8_d80c60c4",
         "filename": "net/quic/chromium/quic_stream_factory.cc",
         "patchSetId": 8
@@ -81,6 +99,30 @@
       "revId": "656f1a2a31f6a40643c2e31a56649f8d665b63d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6285ae98_b278cc8b",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-30T19:08:32Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "63089675_59b314d0",
+      "range": {
+        "startLine": 742,
+        "startChar": 63,
+        "endLine": 742,
+        "endChar": 0
+      },
+      "revId": "656f1a2a31f6a40643c2e31a56649f8d665b63d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
