@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "76cc741d_4077f4a6",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-30T02:57:50Z",
+      "side": 1,
+      "message": "As you can see, if we just destroy |info|(actually |info-\u003erequest|) before line774, the response of Unregister() can get back correctly. I guess the root cause resides in Mojo, for which I\u0027d like to investigate deeply later and proceed this CL for now.",
+      "range": {
+        "startLine": 772,
+        "startChar": 2,
+        "endLine": 772,
+        "endChar": 3
+      },
+      "revId": "e5a0fe7b54a3ed2056a1701daf74c74daba223ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa8280d4_5fdbe627",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 6
