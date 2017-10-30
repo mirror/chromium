@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce69a76a_485d50b4",
+        "filename": "chrome/android/webapk/libs/client/junit/src/org/chromium/webapk/lib/client/WebApkValidatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-10-30T14:23:41Z",
+      "side": 1,
+      "message": "You need to add package MAPSLITE_PACKAGE_NAME + \".other\" to the |mPackageManager| before doing the assert. Otherwises, |isValidWebApk| return false because it can\u0027t find the package.",
+      "range": {
+        "startLine": 268,
+        "startChar": 16,
+        "endLine": 268,
+        "endChar": 34
+      },
+      "revId": "7041e941b36e3321df1e8d456f83eaee03bb7c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
