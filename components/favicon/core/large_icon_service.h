@@ -97,6 +97,26 @@ class LargeIconService : public KeyedService {
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       const favicon_base::GoogleFaviconServerCallback& callback);
 
+  // Fetches the best large icon for the page at |page_url| from a Google
+  // favicon server, similar to
+  // GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache().
+  //
+  // Unlike GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache(),
+  // this function has no interaction with the local favicon database, and will
+  // attempt to retrieve the favicon ignoring whether or not the favicon already
+  // exists there.
+  //
+  // To get the resulting image from the request, an additional parameter for
+  // an ImageFetcherCallback is used.
+  void GetLargeIconOrFallbackStyleDataFromGoogleServer(
+      const GURL& page_url,
+      int min_source_size_in_pixel,
+      int desired_size_in_pixel,
+      bool may_page_url_be_private,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
+      const image_fetcher::ImageFetcher::ImageFetcherCallback& image_callback,
+      const favicon_base::GoogleFaviconServerCallback& server_callback);
+
   // Update the time that the icon at |icon_url| was requested. This should be
   // called after obtaining the icon by GetLargeIcon*OrFallbackStyle() for any
   // icon that _may_ originate from the Google favicon server (i.e. if the
