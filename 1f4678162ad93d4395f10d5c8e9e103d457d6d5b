@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "03f5e65e_127e6335",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-poster-frame.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28bc0b02_d3903b79",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9feed585_74d3fc62",
         "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-poster-frame.html",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73be3fed_15525dc1",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-poster-frame.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9feed585_74d3fc62",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "cf048996_9fb560e5",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-poster-image.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f6109db_dcddee15",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fd0b70a_3c1f5842",
         "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-poster-image.html",
         "patchSetId": 1
@@ -84,6 +138,24 @@
       "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01df477b_1252420d",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-poster-image.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fd0b70a_3c1f5842",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "5fc15350_390663ca",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-without-poster.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00ff8d65_499374da",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcc755a4_02d128a3",
         "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-without-poster.html",
         "patchSetId": 1
@@ -115,6 +205,24 @@
       "writtenOn": "2017-10-30T11:52:36Z",
       "side": 1,
       "message": "I\u0027m surprised we have no video frames at this point.",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2512c9df_19695dc0",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-without-poster.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T16:25:13Z",
+      "side": 1,
+      "message": "We only want to load metadata so we stop before we load video data.",
+      "parentUuid": "dcc755a4_02d128a3",
       "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "8f0b0b1c_cb2fe4b4",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1398dcf_0fc4a0e9",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44eebfdc_ec67a255",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 1
@@ -149,6 +275,24 @@
       "writtenOn": "2017-10-30T11:52:36Z",
       "side": 1,
       "message": "I wonder if we could speed things up here by using DOMTokenList instead of creating our space separated string.",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3399b1c9_6cc3cbb4",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T16:25:13Z",
+      "side": 1,
+      "message": "There are no setters/getters that use DOMTokenList so you would still need to create a space separated string.",
+      "parentUuid": "44eebfdc_ec67a255",
       "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "758c1225_434df78b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc2d2e7a_6466ad2d",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98d2956d_30cb889d",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.h",
         "patchSetId": 1
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "e25224e6_2ef911c9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98d2956d_30cb889d",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5d46e13_3ee7365f",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
         "patchSetId": 1
@@ -203,6 +383,24 @@
       "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "861645f3_9403358f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T16:25:13Z",
+      "side": 1,
+      "message": "It is a gradient, but the panel that sits on top of it provides the gradient.",
+      "parentUuid": "e5d46e13_3ee7365f",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
