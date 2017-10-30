@@ -2,11 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-var db_name = 'db';
 var obj_store = 'store';
 var module_key = 'my_module';
 
-function createAndSaveToIndexedDB() {
+function createAndSaveToIndexedDB(db_name) {
   return new Promise((resolve, reject) => {
     createWasmModule()
       .then(mod => {
@@ -15,22 +14,27 @@ function createAndSaveToIndexedDB() {
           var open_request = indexedDB.open(db_name);
           open_request.onupgradeneeded = function() {
             var db = open_request.result;
+            console.log("recreated object store in db: " + db_name);
             db.createObjectStore(obj_store);
           };
           open_request.onsuccess = function() {
             var db = open_request.result;
             var tx = db.transaction(obj_store, 'readwrite');
+            console.log("opened tx in db: " + db_name);
             var store = tx.objectStore(obj_store);
             try {
               store.put(mod, module_key);
             } catch(e) {
+              console.log("put tx failed: " + e);
               reject(e);
               return;
             }
             tx.oncomplete = function() {
+              console.log("put tx succeeded in db: " + db_name);
               resolve();
             };
             tx.onabort = function() {
+              console.log("put tx aborted in db: " + db_name);
               reject(transaction.error);
             };
           };
@@ -40,7 +44,7 @@ function createAndSaveToIndexedDB() {
   });
 }
 
-function loadFromIndexedDB(prev) {
+function loadFromIndexedDB(prev, db_name) {
   return new Promise((resolve, reject) => {
     prev.then(() => {
       var open_request = indexedDB.open(db_name);
@@ -50,6 +54,7 @@ function loadFromIndexedDB(prev) {
         var store = tx.objectStore(obj_store);
         var get_request = store.get(module_key);
         get_request.onsuccess = function() {
+          console.log("db load succeeded in db: " + db_name);
           var mod = get_request.result;
           assert_true(mod instanceof WebAssembly.Module);
           try {
@@ -61,18 +66,31 @@ function loadFromIndexedDB(prev) {
           resolve(instance.exports.increment(1));
         };
       };
+      open_request.onerror = function(e) {
+        console.log("error opening for load db: " + db_name + " :  " + e);
+        reject(e);
+      };
+      open_request.onupgradeneeded = function() {
+        console.log("unexpected onupgradeneeded when opening " + db_name);
+        reject();
+      };
+      open_request.onblocked = function() {
+        console.log("load blocked for " + db_name);
+      };
     });
   });
 }
 
 function TestIndexedDBLoadStoreSecure() {
-  return loadFromIndexedDB(createAndSaveToIndexedDB())
+  var db_name = "db_wasm_test";
+  return loadFromIndexedDB(createAndSaveToIndexedDB(db_name), db_name)
     .then(res => assert_equals(res, 2),
           error => assert_unreached(error));
 }
 
 function TestIndexedDBLoadStoreInsecure() {
-  return createAndSaveToIndexedDB()
+  var db_name = "db_wasm_test";
+  return createAndSaveToIndexedDB(db_name)
     .then(assert_unreached,
           error => {
             assert_true(error instanceof DOMException);
