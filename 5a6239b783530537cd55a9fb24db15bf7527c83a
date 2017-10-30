@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b5d82fb_71594f15",
+        "filename": "content/renderer/loader/cors_url_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-30T13:16:03Z",
+      "side": 1,
+      "message": "Should this be saved and then updated in FollowRedirect?",
+      "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a3f737_8d69f67e",
+        "filename": "content/renderer/loader/cors_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-30T13:16:03Z",
+      "side": 1,
+      "message": "nit: \u0027if redirects happen\u0027\n\nresponse_url_ is what\u0027s used in some other places, or last_response_url_ maybe? (\u0027final\u0027 sounds like the final one, while this gets updated on every redirect)",
+      "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
