@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fe454e5_c06670c1",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionAdjuster.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-30T18:28:01Z",
+      "side": 1,
+      "message": "I prefer kAdjustEnd and kAdjustStart for simplicity.",
+      "range": {
+        "startLine": 20,
+        "startChar": 28,
+        "endLine": 20,
+        "endChar": 52
+      },
+      "revId": "0aba448e222a8c13f9cd9c63d0d895b1433b9e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
