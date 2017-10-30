@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59c7eb67_de200d1b",
+        "filename": "chrome/android/webapk/shell_apk/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-10-30T15:25:24Z",
+      "side": 1,
+      "message": "Maybe I am wrong, but I think it should be \"javatest_manifest_config.json\".",
+      "range": {
+        "startLine": 209,
+        "startChar": 17,
+        "endLine": 209,
+        "endChar": 38
+      },
+      "revId": "247de9b0116b21573d7e19cb0ba362dd034b671d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
