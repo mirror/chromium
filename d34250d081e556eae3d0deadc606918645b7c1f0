@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d28844e_2546492b",
+        "filename": "third_party/polymer/v1_0/css_strip_prefixes_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-30T20:04:18Z",
+      "side": 1,
+      "message": "Can we add a test for valid CSS lines that shouldn\u0027t be removed?\n\n  border-width: 1px;\n  -webkit-box-reflect: initial;\n\n(the last one is an example of a prefix we shouldn\u0027t strip)",
+      "revId": "d34250d081e556eae3d0deadc606918645b7c1f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
