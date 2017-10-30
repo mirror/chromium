@@ -193,7 +193,10 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
     {"slim-navigation-manager", flag_descriptions::kSlimNavigationManagerName,
      flag_descriptions::kSlimNavigationManagerDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(web::features::kSlimNavigationManager)},
-};
+    {"property-animations-toolbar",
+     flag_descriptions::kPropertyAnimationsToolbarName,
+     flag_descriptions::kPropertyAnimationsToolbarDescription, flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(kPropertyAnimationsToolbar)}};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
