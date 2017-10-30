@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6bc67e7_1631ad58",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-30T21:47:45Z",
+      "side": 1,
+      "message": "Should this be GetMeshState()?",
+      "range": {
+        "startLine": 71,
+        "startChar": 28,
+        "endLine": 71,
+        "endChar": 41
+      },
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9d4eac_46b4ef0c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-30T21:47:45Z",
+      "side": 1,
+      "message": "Looks like mesh and model terms are now used interchangeably in a bunch of spots.  Is this intentional?",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f44def_54e5d7c3",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-30T21:47:45Z",
+      "side": 1,
+      "message": "Heh, why is the touchpad called the \"click button\"?  LOL.",
+      "range": {
+        "startLine": 595,
+        "startChar": 36,
+        "endLine": 595,
+        "endChar": 58
+      },
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0f38c4_e2b6d514",
+        "filename": "chrome/browser/vr/controller_mesh.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-30T21:47:45Z",
+      "side": 1,
+      "message": "This is odd.  Does MakeFromBitmap not grab the color type from the bitmap?  This code looks a little bit like TexturedElement\u0027s passing of color type to GL.  Maybe this should work the same way?  It seems crazy to have to swap bytes.",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd44f9a_9f354ef1",
+        "filename": "chrome/browser/vr/elements/ui_element_name.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-30T21:47:45Z",
+      "side": 1,
+      "message": "Return a std::string instead to minimize the C string exposure?",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42fc7803_9fd2f7ab",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-30T21:47:45Z",
+      "side": 1,
+      "message": "Why not do this now?  UiInputManager::CLICKED explicitly makes no sense in the model, and the logic populating the model should make sure it never makes it in here.",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0bb099f_f38e6ee1",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-30T21:47:45Z",
+      "side": 1,
+      "message": "0 is a better invalid element id.  -\u003e if (target_element_id) {",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b250af3_1263cf34",
+        "filename": "chrome/browser/vr/testapp/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-30T21:47:45Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be a public dep of vr_common lib rather than brought in here?",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f828d02_134d1c84",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-30T21:47:45Z",
+      "side": 1,
+      "message": "Does this comment apply in the testapp??",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "613108c0_7d647d00",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-30T21:47:45Z",
+      "side": 1,
+      "message": "For this type of element, the constructor should configure name, visibility, hit testability, etc.  Maybe not draw phase.",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
