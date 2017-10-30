@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69c124c1_f0d2aa39",
+        "filename": "content/test/gpu/gpu_tests/pixel_expectations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-30T18:28:52Z",
+      "side": 1,
+      "message": "It\u0027s not necessary to name the operating systems. Just:\n\n  self.Fail(\u0027Pixel_CSS3DBlueBox\u0027, bug\u003d774354)",
+      "range": {
+        "startLine": 71,
+        "startChar": 10,
+        "endLine": 71,
+        "endChar": 13
+      },
+      "revId": "bfeaaaa55213f45d6babe8fb3fdf03323f145748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
