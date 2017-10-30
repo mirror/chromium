@@ -22,6 +22,30 @@
       "revId": "30dbfa7ecf3a05272b6f0342d9e6a87bd2a9dad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4373961_f517b742",
+        "filename": "content/test/gpu/gpu_tests/pixel_expectations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-30T18:30:35Z",
+      "side": 0,
+      "message": "Ah, never mind, didn\u0027t realize these were associated with this bug. If you think these will start passing then don\u0027t worry about uncommenting them.",
+      "parentUuid": "23e71064_e701a5ed",
+      "range": {
+        "startLine": 73,
+        "startChar": 6,
+        "endLine": 73,
+        "endChar": 7
+      },
+      "revId": "30dbfa7ecf3a05272b6f0342d9e6a87bd2a9dad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
