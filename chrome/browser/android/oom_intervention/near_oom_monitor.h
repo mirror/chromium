@@ -18,6 +18,9 @@
 // callbacks when the monitor detects near-OOM situation.
 class NearOomMonitor {
  public:
+  static bool IsEnabled();
+  static NearOomMonitor* GetInstance();
+
   NearOomMonitor();
   virtual ~NearOomMonitor();
 
