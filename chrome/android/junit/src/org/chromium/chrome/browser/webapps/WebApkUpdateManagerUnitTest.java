@@ -46,7 +46,7 @@ import java.util.Map;
  */
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-public class WebApkUpdateManagerTest {
+public class WebApkUpdateManagerUnitTest {
     @Rule
     public DisableHistogramsRule mDisableHistogramsRule = new DisableHistogramsRule();
 
@@ -216,8 +216,7 @@ public class WebApkUpdateManagerTest {
     private void registerWebApk(
             String packageName, ManifestData manifestData, int shellApkVersionCode) {
         Bundle metaData = new Bundle();
-        metaData.putInt(
-                WebApkMetaDataKeys.SHELL_APK_VERSION, shellApkVersionCode);
+        metaData.putInt(WebApkMetaDataKeys.SHELL_APK_VERSION, shellApkVersionCode);
         metaData.putString(WebApkMetaDataKeys.START_URL, manifestData.startUrl);
         metaData.putString(WebApkMetaDataKeys.SCOPE, manifestData.scopeUrl);
         metaData.putString(WebApkMetaDataKeys.NAME, manifestData.name);
@@ -235,8 +234,8 @@ public class WebApkUpdateManagerTest {
             iconUrlsAndIconMurmur2Hashes += " " + mapEntry.getKey() + " " + murmur2Hash;
         }
         iconUrlsAndIconMurmur2Hashes = iconUrlsAndIconMurmur2Hashes.trim();
-        metaData.putString(WebApkMetaDataKeys.ICON_URLS_AND_ICON_MURMUR2_HASHES,
-                iconUrlsAndIconMurmur2Hashes);
+        metaData.putString(
+                WebApkMetaDataKeys.ICON_URLS_AND_ICON_MURMUR2_HASHES, iconUrlsAndIconMurmur2Hashes);
 
         WebApkTestHelper.registerWebApkWithMetaData(packageName, metaData);
     }
@@ -281,7 +280,7 @@ public class WebApkUpdateManagerTest {
      * @param color The bitmap color.
      */
     private static Bitmap createBitmap(int color) {
-        int colors[] = { color };
+        int colors[] = {color};
         return ShadowBitmap.createBitmap(colors, 1, 1, Bitmap.Config.ALPHA_8);
     }
 
@@ -304,8 +303,8 @@ public class WebApkUpdateManagerTest {
         onGotManifestData(updateManager, defaultManifestData());
     }
 
-    private static void onGotManifestData(WebApkUpdateManager updateManager,
-            ManifestData fetchedManifestData) {
+    private static void onGotManifestData(
+            WebApkUpdateManager updateManager, ManifestData fetchedManifestData) {
         String primaryIconUrl = randomIconUrl(fetchedManifestData);
         String badgeIconUrl = randomIconUrl(fetchedManifestData);
         updateManager.onGotManifestData(
@@ -625,8 +624,7 @@ public class WebApkUpdateManagerTest {
         ManifestData oldData = defaultManifestData();
         oldData.startUrl = "/fancy/scope/special/snowflake.html";
         oldData.scopeUrl = "/fancy/scope/";
-        assertTrue(
-                !oldData.scopeUrl.equals(ShortcutHelper.getScopeFromUrl(oldData.startUrl)));
+        assertTrue(!oldData.scopeUrl.equals(ShortcutHelper.getScopeFromUrl(oldData.startUrl)));
         ManifestData fetchedData = defaultManifestData();
         fetchedData.startUrl = "/fancy/scope/special/snowflake.html";
         fetchedData.scopeUrl = "";
