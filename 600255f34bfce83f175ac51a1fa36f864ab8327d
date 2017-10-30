@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed54018d_6ce6e7c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-30T13:14:31Z",
+      "side": 1,
+      "message": "M63 :)",
+      "range": {
+        "startLine": 13,
+        "startChar": 28,
+        "endLine": 13,
+        "endChar": 32
+      },
+      "revId": "600255f34bfce83f175ac51a1fa36f864ab8327d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28717d56_c7e439a2",
+        "filename": "chrome/browser/search_provider_logos/logo_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-30T13:14:31Z",
+      "side": 1,
+      "message": "nit: This comment is quite generic, and if I didn\u0027t already know exactly what this is about, it probably wouldn\u0027t help me. Could you expand it a bit, maybe mention that this is about Android and ChromeHome, and that the NTP has a gray background while ChromeHome is white?",
+      "range": {
+        "startLine": 52,
+        "startChar": 78,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "600255f34bfce83f175ac51a1fa36f864ab8327d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c17c24_ada2676b",
+        "filename": "chrome/browser/search_provider_logos/logo_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-30T13:14:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be always true on Android now?",
+      "range": {
+        "startLine": 53,
+        "startChar": 35,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "600255f34bfce83f175ac51a1fa36f864ab8327d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
