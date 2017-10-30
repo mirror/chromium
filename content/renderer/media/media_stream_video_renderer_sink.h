@@ -70,8 +70,7 @@ class CONTENT_EXPORT MediaStreamVideoRendererSink
   };
 
   // MediaStreamVideoSink implementation. Called on the main thread.
-  void OnReadyStateChanged(
-      blink::WebMediaStreamSource::ReadyState state) override;
+  void OnSourceStateChanged(blink::WebMediaStreamSource::State state) override;
 
   // Helper methods used for testing.
   State GetStateForTesting();

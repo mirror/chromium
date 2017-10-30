@@ -354,7 +354,7 @@ void MediaStreamVideoTrack::Stop() {
     source_->RemoveTrack(this);
     source_ = NULL;
   }
-  OnReadyStateChanged(blink::WebMediaStreamSource::kReadyStateEnded);
+  OnSourceStateChanged(blink::WebMediaStreamSource::kStateEnded);
 }
 
 void MediaStreamVideoTrack::GetSettings(
@@ -422,11 +422,11 @@ blink::WebMediaStreamTrack::FacingMode MediaStreamVideoTrack::FacingMode()
   }
 }
 
-void MediaStreamVideoTrack::OnReadyStateChanged(
-    blink::WebMediaStreamSource::ReadyState state) {
+void MediaStreamVideoTrack::OnSourceStateChanged(
+    blink::WebMediaStreamSource::State state) {
   DCHECK(main_render_thread_checker_.CalledOnValidThread());
   for (auto* sink : sinks_)
-    sink->OnReadyStateChanged(state);
+    sink->OnSourceStateChanged(state);
 }
 
 }  // namespace content

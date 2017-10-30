@@ -127,14 +127,14 @@ bool WebMediaStreamSource::Remote() const {
   return private_.Get()->Remote();
 }
 
-void WebMediaStreamSource::SetReadyState(ReadyState state) {
+void WebMediaStreamSource::SetState(State state) {
   DCHECK(!private_.IsNull());
-  private_->SetReadyState(static_cast<MediaStreamSource::ReadyState>(state));
+  private_->SetState(static_cast<MediaStreamSource::State>(state));
 }
 
-WebMediaStreamSource::ReadyState WebMediaStreamSource::GetReadyState() const {
+WebMediaStreamSource::State WebMediaStreamSource::GetState() const {
   DCHECK(!private_.IsNull());
-  return static_cast<ReadyState>(private_->GetReadyState());
+  return static_cast<State>(private_->GetState());
 }
 
 WebMediaStreamSource::ExtraData* WebMediaStreamSource::GetExtraData() const {
