@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "49b7d104_90ce3014",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T08:22:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18ca20cf_0ecf3693",
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e1f50e9_9ede63ae",
         "filename": "docs/security/mojo.md",
         "patchSetId": 7
@@ -119,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "81ecc6d9_b93c74cf",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T08:22:14Z",
+      "side": 1,
+      "message": "I\u0027ve clarified this, so hopefully it makes more sense now.",
+      "parentUuid": "cc0f5d39_6d5887ee",
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5c7ecb1_c27108ae",
         "filename": "docs/security/mojo.md",
         "patchSetId": 7
@@ -142,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "b266d29f_d83add15",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T08:22:14Z",
+      "side": 1,
+      "message": "Done. I\u0027ve reworded this a bit.",
+      "parentUuid": "e5c7ecb1_c27108ae",
+      "range": {
+        "startLine": 187,
+        "startChar": 51,
+        "endLine": 187,
+        "endChar": 52
+      },
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f085e8f1_f2ed5f3d",
         "filename": "docs/security/mojo.md",
         "patchSetId": 7
@@ -159,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "a8e2b66e_b6d6d248",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T08:22:14Z",
+      "side": 1,
+      "message": "Done. Also moved the out-of-lining section a bit closer and reworded it slightly.",
+      "parentUuid": "f085e8f1_f2ed5f3d",
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "551eb03d_da950065",
         "filename": "docs/security/mojo.md",
         "patchSetId": 7
@@ -173,6 +251,24 @@
       "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7b1b11_87f2a47a",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T08:22:14Z",
+      "side": 1,
+      "message": "Done.\n\nThough I\u0027m personally of the opinion that we should just allow them in Chrome \u003dP",
+      "parentUuid": "551eb03d_da950065",
+      "revId": "a530a83b4b4e8da603055ede087cc8976e23b65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
