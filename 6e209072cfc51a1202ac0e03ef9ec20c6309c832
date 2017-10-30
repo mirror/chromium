@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df96bf40_2fb4cafe",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManagerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-30T20:25:56Z",
+      "side": 1,
+      "message": "Empty line between functions.",
+      "revId": "6e209072cfc51a1202ac0e03ef9ec20c6309c832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b533f6a_e1d36150",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManagerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-30T20:25:56Z",
+      "side": 1,
+      "message": "Nit: C++11 allows these in declaration (\"default member initializer\").",
+      "revId": "6e209072cfc51a1202ac0e03ef9ec20c6309c832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65bc7649_957cb214",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManagerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-30T20:25:56Z",
+      "side": 1,
+      "message": "Question: since the load request here is effectively unused, can\u0027t we avoid hardcoding an URL here?",
+      "revId": "6e209072cfc51a1202ac0e03ef9ec20c6309c832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1803aea_a22adf52",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManagerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-30T20:25:56Z",
+      "side": 1,
+      "message": "Nit: May skip the braces when not creating a new local variable.",
+      "revId": "6e209072cfc51a1202ac0e03ef9ec20c6309c832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a39308_4140be59",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManagerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-30T20:25:56Z",
+      "side": 1,
+      "message": "Can we move this to right before the first ASSERT block, to make sure all pointer types are active at that moment?",
+      "revId": "6e209072cfc51a1202ac0e03ef9ec20c6309c832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
