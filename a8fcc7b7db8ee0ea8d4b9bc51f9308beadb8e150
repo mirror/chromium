@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "dc138e51_3fbd6ca4",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-30T20:42:09Z",
+      "side": 1,
+      "message": "This all looks good but I\u0027m wondering whether it could be simplified: have you tried the simpler alternative of adding something like this in the \u003chead\u003e?\n\u003cscript src\u003d\"/slow?1\"\u003e\u003c/script\u003e\n\nThat should slow down the loading of the page by 1 second.",
+      "range": {
+        "startLine": 166,
+        "startChar": 62,
+        "endLine": 166,
+        "endChar": 0
+      },
+      "revId": "a8fcc7b7db8ee0ea8d4b9bc51f9308beadb8e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50b98074_1d1958e4",
         "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
         "patchSetId": 9
@@ -39,6 +62,29 @@
       "revId": "a8fcc7b7db8ee0ea8d4b9bc51f9308beadb8e150",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2468f09_3dc0a2c1",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-30T20:42:09Z",
+      "side": 1,
+      "message": "Would it work if, instead of introducing the bool, you use a CancelableCallback and cancel on those two events?",
+      "range": {
+        "startLine": 247,
+        "startChar": 30,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "a8fcc7b7db8ee0ea8d4b9bc51f9308beadb8e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
