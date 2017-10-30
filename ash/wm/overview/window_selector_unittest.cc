@@ -2582,15 +2582,49 @@ TEST_F(SplitViewWindowSelectorTest, SelectUnsnappableWindowInSplitView) {
   const int grid_index = 0;
   WindowSelectorItem* selector_item =
       GetWindowItemForWindow(grid_index, unsnappable_window.get());
-  GetEventGenerator().set_current_location(
-      selector_item->target_bounds().CenterPoint());
-  GetEventGenerator().ClickLeftButton();
+  const gfx::Point click_location =
+      selector_item->GetTargetBoundsInScreen().CenterPoint();
+  window_selector()->InitiateDrag(selector_item, click_location);
+  window_selector()->CompleteDrag(selector_item, click_location);
 
   // Verify that we are out of split view and overview mode, and that the active
   // window is the unsnappable window.
   EXPECT_FALSE(split_view_controller()->IsSplitViewModeActive());
   EXPECT_FALSE(window_selector_controller()->IsSelecting());
   EXPECT_EQ(unsnappable_window.get(), wm::GetActiveWindow());
+}
+
+// Verify that when in overview mode, the selector items unsnappable indicator
+// shows up when expected.
+TEST_F(SplitViewWindowSelectorTest, OverviewUnsnappableIndicatorVisibility) {
+  // Create three windows; two normal and one unsnappable, so that when after
+  // snapping |window1| to enter split view we can test the state of each normal
+  // and unsnappable windows.
+  std::unique_ptr<aura::Window> window1(CreateTestWindow());
+  std::unique_ptr<aura::Window> window2(CreateTestWindow());
+  std::unique_ptr<aura::Window> unsnappable_window = CreateUnsnappableWindow();
+
+  ToggleOverview();
+  ASSERT_TRUE(window_selector_controller()->IsSelecting());
+
+  const int grid_index = 0;
+  WindowSelectorItem* snappable_selector_item =
+      GetWindowItemForWindow(grid_index, window2.get());
+  WindowSelectorItem* unsnappable_selector_item =
+      GetWindowItemForWindow(grid_index, unsnappable_window.get());
+
+  // Note: Using IsDrawn() instead of visible() because
+  // |cannot_snap_label_view_|'s parent (which handles the padding and rounded
+  // corners) is actually the item whose visibility gets altered.
+  EXPECT_FALSE(snappable_selector_item->cannot_snap_label_view_->IsDrawn());
+  EXPECT_FALSE(unsnappable_selector_item->cannot_snap_label_view_->IsDrawn());
+
+  // Snap the extra snappable window to enter split view mode.
+  split_view_controller()->SnapWindow(window1.get(), SplitViewController::LEFT);
+  ASSERT_TRUE(split_view_controller()->IsSplitViewModeActive());
+
+  EXPECT_FALSE(snappable_selector_item->cannot_snap_label_view_->IsDrawn());
+  EXPECT_TRUE(unsnappable_selector_item->cannot_snap_label_view_->IsDrawn());
 }
 
 }  // namespace ash
