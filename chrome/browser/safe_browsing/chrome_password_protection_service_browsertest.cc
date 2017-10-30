@@ -320,6 +320,32 @@ IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
+                       VerifyCheckGaiaPasswordChange) {
+  ChromePasswordProtectionService* service = GetService();
+  service->SetGaiaPasswordHashForTesting("password_hash_1");
+  ui_test_utils::NavigateToURL(browser(), embedded_test_server()->GetURL("/"));
+  ASSERT_TRUE(service->unhandled_password_reuses().empty());
+
+  // Shows modal dialog on current web_contents.
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  service->ShowModalWarning(web_contents, "unused_token");
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1u, service->unhandled_password_reuses().size());
+
+  // Save the same password will not trigger OnGaiaPasswordChanged(), thus no
+  // change to size of unhandled_password_reuses().
+  SimulateSaveGaiaPassword("password_hash_1");
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1u, service->unhandled_password_reuses().size());
+
+  // Save a different password will clear unhandled_password_reuses().
+  SimulateSaveGaiaPassword("password_hash_2");
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(0u, service->unhandled_password_reuses().size());
+}
+
+IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
                        VerifyShouldShowChangePasswordSettingUI) {
   Profile* profile = browser()->profile();
   EXPECT_FALSE(
