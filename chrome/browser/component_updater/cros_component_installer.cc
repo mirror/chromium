@@ -8,6 +8,7 @@
 
 #include "base/files/file_util.h"
 #include "base/path_service.h"
+#include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/component_updater/component_installer_errors.h"
@@ -248,6 +249,16 @@ void CrOSComponent::InstallComponent(
 void CrOSComponent::LoadComponent(
     const std::string& name,
     const base::Callback<void(const std::string&)>& load_callback) {
+  // Block component updater for kernel 3.10 and 3.8
+  // Since this file is only compiled for Chrome OS and this API is only
+  // availble to be called on Chrome OS.
+  int32_t major_version, minor_version;
+  base::SysInfo::OperatingSystemVersionNumbers(&major_version, &minor_version,
+                                               NULL);
+  if (major_version == 3 && (minor_version == 10 || minor_version == 8)) {
+    return;
+  }
+
   if (!g_browser_process->platform_part()->IsCompatibleCrOSComponent(name)) {
     // A compatible component is not installed, start installation process.
     auto* const cus = g_browser_process->component_updater();
