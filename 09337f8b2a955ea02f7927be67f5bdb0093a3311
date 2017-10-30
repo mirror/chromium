@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2e518e3_6aeaf6a0",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-30T19:42:39Z",
+      "side": 1,
+      "message": "just !guid.empty()",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 22
+      },
+      "revId": "09337f8b2a955ea02f7927be67f5bdb0093a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ea1a6b_390bb4dd",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-30T19:42:39Z",
+      "side": 1,
+      "message": "There is no need for Optional, MADGuid has already a  zero value. See  .empty().",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 66
+      },
+      "revId": "09337f8b2a955ea02f7927be67f5bdb0093a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f63d8a_10003708",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-30T19:42:39Z",
+      "side": 1,
+      "message": "is this like a fallback?\nmaybe this should be more \nif (auto node \u003d process-\u003eFindNode(\"winheap\"))\n  AssignTracingOverhead(node, ...)\nelse if (auto node \u003d process-\u003eFindNode(\"malloc\"))\n  AssignTracingOverhead(node, ...)",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 54
+      },
+      "revId": "09337f8b2a955ea02f7927be67f5bdb0093a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c73d25f_9ad3b769",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-30T19:42:39Z",
+      "side": 1,
+      "message": "is this a thing that happens for real? if not should be just a dcheck",
+      "range": {
+        "startLine": 279,
+        "startChar": 23,
+        "endLine": 279,
+        "endChar": 48
+      },
+      "revId": "09337f8b2a955ea02f7927be67f5bdb0093a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
