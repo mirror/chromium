@@ -98,6 +98,8 @@ class ShellUtilShortcutTest : public testing::Test {
     test_properties_.set_description(L"Makes polar bears dance.");
     test_properties_.set_icon(icon_path, 7);
     test_properties_.set_app_id(L"Polar.Bear");
+    test_properties_.set_toast_activator_clsid(
+        L"{b2a1d927-acd1-484a-8282-d5fc6656264b}");
   }
 
   // Returns the expected path of a test shortcut. Returns an empty FilePath on
@@ -183,6 +185,13 @@ class ShellUtilShortcutTest : public testing::Test {
     } else {
       // Tests are always seen as user-level installs in ShellUtil.
       expected_properties.set_app_id(ShellUtil::GetBrowserModelId(true));
+    }
+
+    if (properties.has_toast_activator_clsid()) {
+      expected_properties.set_toast_activator_clsid(
+          properties.toast_activator_clsid);
+    } else {
+      expected_properties.set_toast_activator_clsid(GUID_NULL);
     }
 
     base::win::ValidateShortcut(expected_path, expected_properties);
