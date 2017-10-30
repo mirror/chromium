@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ec3036d_6ef97ae2",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-30T10:30:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0712094_4e5af2c6",
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "988578f1_75e78e2b",
         "filename": "chrome/common/extensions/api/language_settings_private.idl",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a49346be_0e7b1da5",
+        "filename": "chrome/common/extensions/api/language_settings_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-30T10:30:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "988578f1_75e78e2b",
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e51f421b_db8f650f",
         "filename": "chrome/common/extensions/api/language_settings_private.idl",
         "patchSetId": 6
@@ -47,6 +83,30 @@
       "writtenOn": "2017-10-27T16:10:03Z",
       "side": 1,
       "message": "Do we need to pass the languageList here?  It seems like the browser should have that information.  (I\u0027m not familiar with language settings code, so I could be wrong, but it seems a bit odd)",
+      "range": {
+        "startLine": 95,
+        "startChar": 61,
+        "endLine": 96,
+        "endChar": 16
+      },
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f966282c_720ca577",
+        "filename": "chrome/common/extensions/api/language_settings_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-30T10:30:57Z",
+      "side": 1,
+      "message": "Maybe we don\u0027t need it. I will investigate this tomorrow and reply here.",
+      "parentUuid": "e51f421b_db8f650f",
       "range": {
         "startLine": 95,
         "startChar": 61,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "0255c2c1_6429e6b1",
+        "filename": "chrome/test/data/webui/settings/fake_language_settings_private.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-30T10:30:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff45fcd5_4d8b98db",
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e7bb695_b40b3262",
         "filename": "chrome/test/data/webui/settings/fake_language_settings_private.js",
         "patchSetId": 6
@@ -90,6 +168,24 @@
       "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5d0270_c1ec8f3d",
+        "filename": "chrome/test/data/webui/settings/fake_language_settings_private.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-30T10:30:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6e7bb695_b40b3262",
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "98ba8312_6ca77a1c",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-30T10:30:57Z",
+      "side": 1,
+      "message": "The scenario you describe is still okay, because disabled languages are not visible in the UI. So moving up 3 in your first case will not be allowed by the UI: the user already sees 3 as the top language. If by mistake it is called anyway, then doing nothing is the best course of action.\n\nNote that if the same situation happens below with the \"TOP\" case, then we move the language all the way to the top, regardless of disabled languages.",
+      "parentUuid": "aac23737_c7cb09c2",
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8d47a26_9cda3808",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 6
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "8b45b75c_666d2afa",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-30T10:30:57Z",
+      "side": 1,
+      "message": "Similar to the case above, the UI doesn\u0027t allow the DOWN operation in this case, because 1 is already at the bottom of the visible list.",
+      "parentUuid": "f8d47a26_9cda3808",
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19d7261b_bd0ae8f9",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 6
@@ -141,6 +273,24 @@
       "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5806bc7e_bee81e6f",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-30T10:30:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19d7261b_bd0ae8f9",
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
