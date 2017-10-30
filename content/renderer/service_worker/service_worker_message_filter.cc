@@ -59,26 +59,9 @@ void ServiceWorkerMessageFilter::OnStaleMessageReceived(
   // Specifically handle some messages in case we failed to post task
   // to the thread (meaning that the context on the thread is now gone).
   IPC_BEGIN_MESSAGE_MAP(ServiceWorkerMessageFilter, msg)
-    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_SetVersionAttributes,
-                        OnStaleSetVersionAttributes)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_MessageToDocument,
                         OnStaleMessageToDocument)
   IPC_END_MESSAGE_MAP()
-}
-
-void ServiceWorkerMessageFilter::OnStaleSetVersionAttributes(
-    int thread_id,
-    int registration_handle_id,
-    int changed_mask,
-    const ServiceWorkerVersionAttributes& attrs) {
-  SendServiceWorkerObjectDestroyed(thread_safe_sender(),
-                                   attrs.installing.handle_id);
-  SendServiceWorkerObjectDestroyed(thread_safe_sender(),
-                                   attrs.waiting.handle_id);
-  SendServiceWorkerObjectDestroyed(thread_safe_sender(),
-                                   attrs.active.handle_id);
-  // Don't have to decrement registration refcount because the sender of the
-  // SetVersionAttributes message doesn't increment it.
 }
 
 void ServiceWorkerMessageFilter::OnStaleMessageToDocument(

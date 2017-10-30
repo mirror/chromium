@@ -16,8 +16,6 @@ struct ServiceWorkerMsg_MessageToDocument_Params;
 
 namespace content {
 
-struct ServiceWorkerVersionAttributes;
-
 class CONTENT_EXPORT ServiceWorkerMessageFilter
     : public WorkerThreadMessageFilter {
  public:
@@ -37,11 +35,6 @@ class CONTENT_EXPORT ServiceWorkerMessageFilter
   void OnStaleMessageReceived(const IPC::Message& msg) override;
 
   // Message handlers for stale messages.
-  void OnStaleSetVersionAttributes(
-      int thread_id,
-      int registration_handle_id,
-      int changed_mask,
-      const ServiceWorkerVersionAttributes& attrs);
   void OnStaleMessageToDocument(
       const ServiceWorkerMsg_MessageToDocument_Params& params);
 
