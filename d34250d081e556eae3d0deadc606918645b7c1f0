@@ -16,6 +16,24 @@
       "revId": "d34250d081e556eae3d0deadc606918645b7c1f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f3dffb_2af7216d",
+        "filename": "third_party/polymer/v1_0/css_strip_prefixes_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-30T20:42:03Z",
+      "side": 1,
+      "message": "Done (added a test case for a few more prefixed properties that should be kept).",
+      "parentUuid": "3d28844e_2546492b",
+      "revId": "d34250d081e556eae3d0deadc606918645b7c1f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
