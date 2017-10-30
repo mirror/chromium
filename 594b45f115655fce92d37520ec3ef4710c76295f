@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "64f97253_7e6e1e74",
+        "filename": "chrome/browser/shell_integration_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T21:12:32Z",
+      "side": 1,
+      "message": "Thanks for the details. Please include a comment to this effect.",
+      "parentUuid": "8bc8d502_b75b3613",
+      "range": {
+        "startLine": 476,
+        "startChar": 2,
+        "endLine": 476,
+        "endChar": 56
+      },
+      "revId": "594b45f115655fce92d37520ec3ef4710c76295f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72d3cd2d_594fa9bc",
         "filename": "chrome/services/chrome_win_util/BUILD.gn",
         "patchSetId": 11
