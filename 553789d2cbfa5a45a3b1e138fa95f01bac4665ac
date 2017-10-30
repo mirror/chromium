@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "591de204_6708ccc3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-30T23:17:29Z",
+      "side": 1,
+      "message": "Drive by: If you are doing this, then don\u0027t add more \"TODO(johnme)\" lines in this CL. Maybe file a bug to keep track of the UMA work instead of having TODOs for any particular person.",
+      "revId": "553789d2cbfa5a45a3b1e138fa95f01bac4665ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
