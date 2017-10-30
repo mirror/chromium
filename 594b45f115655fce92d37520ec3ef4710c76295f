@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8bc8d502_b75b3613",
+        "filename": "chrome/browser/shell_integration_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-30T19:30:54Z",
+      "side": 1,
+      "message": "The connector returned by content::ServiceManagerConnection::GetForProcess()-\u003eGetConnector() must be used on the UI thread. This code is called on a background thread:\nhttps://cs.chromium.org/chromium/src/chrome/browser/metrics/chrome_browser_main_extra_parts_metrics.cc?rcl\u003d26dbb961917a50cfaa27751c208705db40f1e911\u0026l\u003d551\nso we need a fresh cloned connector.",
+      "parentUuid": "db598053_be51288f",
+      "range": {
+        "startLine": 476,
+        "startChar": 2,
+        "endLine": 476,
+        "endChar": 56
+      },
+      "revId": "594b45f115655fce92d37520ec3ef4710c76295f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72d3cd2d_594fa9bc",
         "filename": "chrome/services/chrome_win_util/BUILD.gn",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "594b45f115655fce92d37520ec3ef4710c76295f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aad5010_3a0f0210",
+        "filename": "chrome/services/chrome_win_util/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-30T19:30:54Z",
+      "side": 1,
+      "message": "Went with util_win.",
+      "parentUuid": "72d3cd2d_594fa9bc",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "594b45f115655fce92d37520ec3ef4710c76295f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c7301226_86736543",
+        "filename": "chrome/services/chrome_win_util/chrome_win_util_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-30T19:30:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db777792_3d712cb1",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 66
+      },
+      "revId": "594b45f115655fce92d37520ec3ef4710c76295f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52c39739_35b19d9d",
         "filename": "chrome/services/chrome_win_util/chrome_win_util_service.h",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9c492301_228021a3",
+        "filename": "chrome/services/chrome_win_util/chrome_win_util_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-30T19:30:54Z",
+      "side": 1,
+      "message": "Done (I had to change from std::make_unique to std::wrap_unique in the cc file as a result).",
+      "parentUuid": "52c39739_35b19d9d",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 67
+      },
+      "revId": "594b45f115655fce92d37520ec3ef4710c76295f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f2212a1_943cb105",
         "filename": "chrome/services/chrome_win_util/public/interfaces/win_shell_util.mojom",
         "patchSetId": 11
@@ -114,6 +210,30 @@
       "revId": "594b45f115655fce92d37520ec3ef4710c76295f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4025eaf_0e78dd4d",
+        "filename": "chrome/services/chrome_win_util/public/interfaces/win_shell_util.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-30T19:30:54Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8f2212a1_943cb105",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "594b45f115655fce92d37520ec3ef4710c76295f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
