@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "06aad3e0_f0e1eb37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-30T17:49:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36ad4e73_f1a91bc5",
+      "range": {
+        "startLine": 340,
+        "startChar": 16,
+        "endLine": 340,
+        "endChar": 23
+      },
+      "revId": "70d145b409ca12765f15006f217bb5f1f5465cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d97fdc1_1979a02f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareHelper.java",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "70d145b409ca12765f15006f217bb5f1f5465cb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79716149_0fc3a165",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-30T17:49:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4554be2_e07dc623",
+      "range": {
+        "startLine": 400,
+        "startChar": 46,
+        "endLine": 400,
+        "endChar": 68
+      },
+      "revId": "70d145b409ca12765f15006f217bb5f1f5465cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
