@@ -16,6 +16,24 @@
       "revId": "d41fde8f564ddce3ea13924e9d64057f073d4fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8c9347_4085ffc6",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-10-30T19:56:49Z",
+      "side": 1,
+      "message": "It would be very helpful if we can get \u0027cat /proc/sys/kernel/osrelease\u0027 for each device we would like to block.",
+      "parentUuid": "0f8a7003_665e5bc8",
+      "revId": "d41fde8f564ddce3ea13924e9d64057f073d4fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
