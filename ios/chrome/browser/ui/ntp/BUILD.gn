@@ -48,6 +48,7 @@ source_set("ntp_controller") {
     "new_tab_page_controller.mm",
   ]
   deps = [
+    ":modal_ntp",
     ":ntp",
     ":ntp_internal",
     "//base",
@@ -89,8 +90,6 @@ source_set("ntp_internal") {
     "incognito_view_controller.mm",
     "metrics.h",
     "metrics.mm",
-    "modal_ntp.h",
-    "modal_ntp.mm",
     "most_visited_cell.h",
     "most_visited_cell.mm",
     "most_visited_layout.h",
@@ -115,6 +114,7 @@ source_set("ntp_internal") {
     ":ntp_header",
   ]
   deps = [
+    ":modal_ntp",
     ":ntp",
     ":ntp_tile",
     "resources:bookmarks_bar_bg",
@@ -220,6 +220,14 @@ source_set("ntp_tile") {
   ]
 }
 
+source_set("modal_ntp") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  sources = [
+    "modal_ntp.h",
+    "modal_ntp.mm",
+  ]
+}
+
 source_set("unit_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
@@ -233,6 +241,7 @@ source_set("unit_tests") {
     "ntp_tile_saver_unittest.mm",
   ]
   deps = [
+    ":modal_ntp",
     ":ntp",
     ":ntp_controller",
     ":ntp_internal",
