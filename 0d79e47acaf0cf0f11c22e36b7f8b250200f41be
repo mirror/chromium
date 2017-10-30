@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ea1f53ae_aa285d80",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-30T13:55:23Z",
+      "side": 1,
+      "message": "true, but it is necessary for the one caller outside of this class. it seems like a more safe api to me to give the caller a pointer to memory and the size of the memory.",
+      "parentUuid": "030bd560_27791e42",
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0358332_bbd2f79a",
         "filename": "base/win/winrt_storage_util.cc",
         "patchSetId": 7
@@ -69,6 +87,24 @@
       "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1a1234_26b24394",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-30T13:55:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "303f9b3d_5fa452b8",
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +143,30 @@
       "side": 1,
       "message": "Robert@ suggest use pointer directly align with COM style.",
       "parentUuid": "fc650452_9721ad20",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 44
+      },
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4908a646_c571859d",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-30T13:55:23Z",
+      "side": 1,
+      "message": "ugh. i think this is counter to chromium style. we\u0027re not restricted to a pure C api, so let\u0027s make the function more safe by requiring use of a smart pointer. rob: how can i convince you that this is better than adhering to some COM style?",
+      "parentUuid": "86e752ba_06e0fb7c",
       "range": {
         "startLine": 35,
         "startChar": 4,
