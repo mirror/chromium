@@ -229,6 +229,10 @@ extern const base::Feature kSiteDetails;
 extern const base::Feature kSiteNotificationChannels;
 #endif
 
+#if defined(OS_CHROMEOS)
+extern const base::Feature kNativeSmb;
+#endif
+
 extern const base::Feature kSoundContentSetting;
 
 #if !defined(OS_ANDROID)
