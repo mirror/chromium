@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f1d8bb6_89577221",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-30T23:54:46Z",
+      "side": 1,
+      "message": "You can\u0027t go this way, you need to start with loader.",
+      "revId": "ef13c45022508bc8ca01dad7665b8581635dbcdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
