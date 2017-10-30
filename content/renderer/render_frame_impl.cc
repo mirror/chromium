@@ -3395,8 +3395,14 @@ void RenderFrameImpl::FrameFocused() {
 }
 
 void RenderFrameImpl::WillCommitProvisionalLoad() {
+  DocumentState* document_state =
+      DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
+  NavigationStateImpl* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
+  bool is_same_document_navigation = navigation_state->WasWithinSameDocument();
+
   for (auto& observer : observers_)
-    observer.WillCommitProvisionalLoad();
+    observer.WillCommitProvisionalLoad(is_same_document_navigation);
 }
 
 void RenderFrameImpl::DidChangeName(const blink::WebString& name) {
@@ -3897,13 +3903,6 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
     }
   }
 
-  for (auto& observer : render_view_->observers_)
-    observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
-  for (auto& observer : observers_) {
-    observer.DidCommitProvisionalLoad(
-        is_new_navigation, navigation_state->WasWithinSameDocument());
-  }
-
   // Notify the MediaPermissionDispatcher that its connection will be closed
   // due to a navigation to a different document.
   if (media_permission_dispatcher_ &&
@@ -3928,6 +3927,14 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   navigation_state->set_request_committed(true);
 
   SendDidCommitProvisionalLoad(frame_, commit_type);
+
+  // Tell observers that we *Did*CommitProvisionalLoad *after* sending the IPC.
+  for (auto& observer : render_view_->observers_)
+    observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
+  for (auto& observer : observers_) {
+    observer.DidCommitProvisionalLoad(
+        is_new_navigation, navigation_state->WasWithinSameDocument());
+  }
 
   // Check whether we have new encoding name.
   UpdateEncoding(frame_, frame_->View()->PageEncoding().Utf8());
