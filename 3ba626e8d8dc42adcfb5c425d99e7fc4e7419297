@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8d96802_b7bf2a25",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-30T21:58:13Z",
+      "side": 1,
+      "message": "Should this be on extensions-keyboard-shortcuts instead of here? This is the case for extensions-detail-view and extensions-error-page.",
+      "range": {
+        "startLine": 88,
+        "startChar": 60,
+        "endLine": 88,
+        "endChar": 71
+      },
+      "revId": "3ba626e8d8dc42adcfb5c425d99e7fc4e7419297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e4b824d_38a86a2c",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_test.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-30T21:58:13Z",
+      "side": 1,
+      "message": "The current naming is more often used on a function that returns boolean (and does not throw any errors). Maybe rename to assertViewActive instead?",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "3ba626e8d8dc42adcfb5c425d99e7fc4e7419297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4b3102_38a2b4f6",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_test.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-30T21:58:13Z",
+      "side": 1,
+      "message": "Nit: Since you are already passing the type of the element as |viewElement|, there is no need to use |is|.\n\nexpectTrue(!!manager.$.viewManager.querySelector(`${viewElement}.active`));",
+      "range": {
+        "startLine": 28,
+        "startChar": 23,
+        "endLine": 28,
+        "endChar": 69
+      },
+      "revId": "3ba626e8d8dc42adcfb5c425d99e7fc4e7419297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
