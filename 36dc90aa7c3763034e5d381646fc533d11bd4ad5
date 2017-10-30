@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65cffa_e950671e",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-30T16:08:08Z",
+      "side": 1,
+      "message": "Can you add a comment explaining the interaction between this method and OnDidGetUploadRiskData",
+      "range": {
+        "startLine": 410,
+        "startChar": 7,
+        "endLine": 410,
+        "endChar": 40
+      },
+      "revId": "36dc90aa7c3763034e5d381646fc533d11bd4ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290ac475_1cadaa5b",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-30T16:08:08Z",
+      "side": 1,
+      "message": "Consider more specific name. Perhaps SendUploadCardRequest",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 17
+      },
+      "revId": "36dc90aa7c3763034e5d381646fc533d11bd4ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
