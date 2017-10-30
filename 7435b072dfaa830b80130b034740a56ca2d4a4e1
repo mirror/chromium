@@ -93,6 +93,30 @@
       "revId": "7435b072dfaa830b80130b034740a56ca2d4a4e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e87e65_efc32f3e",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-30T20:58:12Z",
+      "side": 1,
+      "message": "I meant to insert this additional condition (into the highlighted space):\n`enable_vr \u003d enable_gvr_services || enable_openvr || is_win`\n\nDoes that address your concern? I\u0027m not proposing any change in effective logic from what we have today.\n\nThis would mean that if someone wanted to set `enable_openvr\u003dtrue` on Linux or Mac that the value of `enable_vr` would change, but that is what we want. (This may not compile, but that\u0027s a different issue.)",
+      "parentUuid": "c36bb48b_9591e87a",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "7435b072dfaa830b80130b034740a56ca2d4a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
