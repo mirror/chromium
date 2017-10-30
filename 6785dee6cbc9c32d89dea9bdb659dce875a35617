@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d443dd2_06236cf4",
+        "filename": "base/test/launcher/test_launcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T17:33:11Z",
+      "side": 1,
+      "message": "I like a callback for a single function, but once you start having multiple callbacks like this a real interface is a better fit. Could you convert to a real interface?",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 60
+      },
+      "revId": "6785dee6cbc9c32d89dea9bdb659dce875a35617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
