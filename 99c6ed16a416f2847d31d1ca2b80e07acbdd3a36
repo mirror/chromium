@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5fa935c_29d610ab",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-10-30T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51bc2b52_acda9976",
+      "revId": "99c6ed16a416f2847d31d1ca2b80e07acbdd3a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "472cfad7_b90c93a4",
         "filename": "base/android/java/src/org/chromium/base/ResourceExtractor.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "99c6ed16a416f2847d31d1ca2b80e07acbdd3a36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025320a0_3d1bea4b",
+        "filename": "base/android/java/src/org/chromium/base/ResourceExtractor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-10-30T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "472cfad7_b90c93a4",
+      "revId": "99c6ed16a416f2847d31d1ca2b80e07acbdd3a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
