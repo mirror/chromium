@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e8cfa02_dd89fa90",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-30T18:42:02Z",
+      "side": 1,
+      "message": "What about making this function accept a base::DictionaryValue instance and return a TouchAssociationMap instance?\n\nThen it will be a bit more obvious what it does, as it will be easier to tell at the call site how the deserialized data is being used.\n\nUp to you, as it looks like this follows the existing pattern in the file.",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be30e446_718e52b4",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-30T18:42:02Z",
+      "side": 1,
+      "message": "Add high-level block comment?",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b11a79_a2f5a6a1",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-30T18:42:02Z",
+      "side": 1,
+      "message": "I think this would a bit easier to read with a helper method that converts to/from the serialized state (so that setting global variables and serialization is clearly separated).\n\nUp to you, as it looks like this follows the existing pattern in the file.",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9cadc1_b729e0b2",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-30T18:42:02Z",
+      "side": 1,
+      "message": "I suspect (but did not verify) that map1 is a more common style than map_1. Either way is fine, though.",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0458418_452c8b68",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-30T18:42:02Z",
+      "side": 1,
+      "message": "Unless the auto\u0026 type is very long it\u0027d be good to be explicit",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 17
+      },
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652aaf85_53923467",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-30T18:42:02Z",
+      "side": 1,
+      "message": "It\u0027d be good to be explicit if auto type is not super long.",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb690ecd_50a339d8",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-30T18:42:02Z",
+      "side": 1,
+      "message": "You can use touch_associations_[identifier] instead of touch_associations_.at(identifier), it will automatically insert the default value if not present (if you do this add a comment noting that you want the add-by-default behavior).",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80b76b2_68a342bc",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-30T18:42:02Z",
+      "side": 1,
+      "message": "I think using stl_util.h ContainsKey/ContainsValue will be more clear/direct when reading than using count(identifier).",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980d7100_5cc8c645",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-30T18:42:02Z",
+      "side": 1,
+      "message": "What about using an \u0026\u0026 to simplify the code?\n\n  return ContainsKey(active_touch_associations_, identifier) \u0026\u0026\n      active_touch_associations_[identifier] \u003d\u003d display_id;\n\nUp to you.",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c1396c1_009e1a2d",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-30T18:42:02Z",
+      "side": 1,
+      "message": "nit: updates",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04885d37_93127009",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-30T18:42:02Z",
+      "side": 1,
+      "message": "Is there a DisplayId type instead of int64_t?",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f8ab27b_7e0acf51",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-30T18:42:02Z",
+      "side": 1,
+      "message": ":)",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
