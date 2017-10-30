@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec53f0ab_c30fc27f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-30T17:43:48Z",
+      "side": 1,
+      "message": "This renumbering will cause all images previously serialized to IndexedDB to be misinterpreted (e.g. SRGB images will now be read as Rec2020, and so on). Unless we have never shipped this to users (my understanding is that we have), we should try to support decoding of images from previous releases.",
+      "revId": "f77a59b4ce251e99a7698b2d4a1025e93cca6e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9051fdc_8b5abea6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-30T17:43:48Z",
+      "side": 1,
+      "message": "These tests are here precisely to assure that values previously written decode correctly indefinitely.",
+      "revId": "f77a59b4ce251e99a7698b2d4a1025e93cca6e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
