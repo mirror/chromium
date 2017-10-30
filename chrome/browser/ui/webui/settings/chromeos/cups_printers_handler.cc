@@ -34,6 +34,7 @@
 #include "chromeos/dbus/debug_daemon_client.h"
 #include "chromeos/printing/ppd_cache.h"
 #include "chromeos/printing/ppd_provider.h"
+#include "components/version_info/version_info.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_ui.h"
@@ -548,7 +549,7 @@ void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
     bool found = false;
     for (const auto& resolved_printer : resolved_printers_[ppd_manufacturer]) {
       if (resolved_printer.first == ppd_model) {
-        *printer.mutable_ppd_reference() = resolved_printer.second;
+        *printer.mutable_ppd_reference() = resolved_printer.second.second;
         found = true;
         break;
       }
@@ -724,8 +725,23 @@ void CupsPrintersHandler::ResolvePrintersDone(
   auto printers_value = base::MakeUnique<base::ListValue>();
   if (result_code == PpdProvider::SUCCESS) {
     resolved_printers_[manufacturer] = printers;
+    base::Version current_version =
+        base::Version(version_info::GetVersionNumber());
     for (const auto& printer : printers) {
-      printers_value->AppendString(printer.first);
+      PpdProvider::Restrictions printer_restrictions = printer.second.first;
+      if (printer_restrictions.unstable ||
+          ((printer_restrictions.min_milestone.CompareTo(
+                base::Version("0.0")) != 0 &&
+            printer_restrictions.min_milestone.CompareTo(current_version) ==
+                1) ||
+           (printer_restrictions.max_milestone.CompareTo(
+                base::Version("0.0")) != 0 &&
+            printer_restrictions.max_milestone.CompareTo(current_version) ==
+                -1))) {
+        LOG(ERROR) << "Limitations exclude this model: " << printer.first;
+      } else {
+        printers_value->AppendString(printer.first);
+      }
     }
   }
   base::DictionaryValue response;

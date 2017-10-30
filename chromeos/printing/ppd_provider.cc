@@ -186,7 +186,10 @@ struct ManufacturerMetadata {
 
   // Map from localized printer name to canonical-make-and-model string for
   // the given printer.  Populated on demand.
-  std::unique_ptr<std::unordered_map<std::string, std::string>> printers;
+  std::unique_ptr<
+      std::unordered_map<std::string,
+                         std::pair<std::string, PpdProvider::Restrictions>>>
+      printers;
 };
 
 // A queued request to download printer information for a manufacturer.
@@ -199,6 +202,18 @@ struct PrinterResolutionQueueEntry {
 
   // User callback on completion.
   PpdProvider::ResolvePrintersCallback cb;
+};
+
+// The result fields from a metadata_v2 resolve printers request
+struct ResolvePrintersResponse {
+  // The name of the model of printer or printer line
+  std::string name;
+
+  // Cannonical name of this printer
+  std::string effective_make_and_model;
+
+  // The limitations on this model
+  PpdProvider::Restrictions restrictions;
 };
 
 class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
@@ -487,7 +502,7 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   // Return the URL used to get a list of printers from the manufacturer |ref|.
   GURL GetPrintersURL(const std::string& ref) {
     return GURL(base::StringPrintf(
-        "%s/metadata/%s", options_.ppd_server_root.c_str(), ref.c_str()));
+        "%s/metadata_v2/%s", options_.ppd_server_root.c_str(), ref.c_str()));
   }
 
   // Return the URL used to get a ppd with the given filename.
@@ -650,9 +665,11 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   void OnPrintersFetchComplete() {
     CHECK(cached_metadata_.get() != nullptr);
     DCHECK(!printers_resolution_queue_.empty());
-    std::vector<std::pair<std::string, std::string>> contents;
+    std::vector<ResolvePrintersResponse> contents;
+
     PpdProvider::CallbackResultCode code =
-        ValidateAndParseJSONResponse(&contents);
+        ValidateAndParsePrintersJSON(&contents);
+
     if (code != PpdProvider::SUCCESS) {
       base::SequencedTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(printers_resolution_queue_.front().cb, code,
@@ -672,12 +689,15 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
       // Create the printer map in the cache, and populate it.
       auto& manufacturer_metadata = it->second;
       CHECK(manufacturer_metadata.printers.get() == nullptr);
-      manufacturer_metadata.printers =
-          base::MakeUnique<std::unordered_map<std::string, std::string>>();
+      manufacturer_metadata.printers = base::MakeUnique<std::unordered_map<
+          std::string, std::pair<std::string, PpdProvider::Restrictions>>>();
 
       for (const auto& entry : contents) {
-        manufacturer_metadata.printers->insert({entry.first, entry.second});
+        manufacturer_metadata.printers->insert(
+            {entry.name, std::make_pair(entry.effective_make_and_model,
+                                        entry.restrictions)});
       }
+
       base::SequencedTaskRunnerHandle::Get()->PostTask(
           FROM_HERE,
           base::Bind(printers_resolution_queue_.front().cb,
@@ -969,6 +989,62 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
     return PpdProvider::SUCCESS;
   }
 
+  PpdProvider::CallbackResultCode ValidateAndParsePrintersJSON(
+      std::vector<ResolvePrintersResponse>* contents) {
+    DCHECK(contents != NULL);
+    contents->clear();
+    std::string buffer;
+    auto fetch_result = ValidateAndGetResponseAsString(&buffer);
+    if (fetch_result != PpdProvider::SUCCESS) {
+      return fetch_result;
+    }
+    auto top_list = base::ListValue::From(base::JSONReader::Read(buffer));
+    if (top_list.get() == nullptr) {
+      return PpdProvider::INTERNAL_ERROR;
+    }
+    // Fetched data should be in form [[name], [cannonical name],
+    // {restrictions}]
+    for (const auto& entry : *top_list) {
+      if (!entry.is_list()) {
+        LOG(WARNING) << "Retrieved data in unexpected format. Data should be "
+                        "in list format";
+        return PpdProvider::INTERNAL_ERROR;
+      }
+      const base::Value::ListStorage& list = entry.GetList();
+      if (list.size() < 2 || !list[0].is_string() || !list[1].is_string()) {
+        LOG(ERROR) << "Retrived data in unexpected format. Expecting List of "
+                      "2 strings, followed by a dictionary";
+        return PpdProvider::INTERNAL_ERROR;
+      }
+      ResolvePrintersResponse rpr_entry;
+      rpr_entry.name = list[0].GetString();
+      rpr_entry.effective_make_and_model = list[1].GetString();
+
+      Restrictions restrictions;
+
+      if (list.size() > 2 && list[2].is_dict()) {
+        const base::Value* min_milestone = list[2].FindPathOfType(
+            {"min_milestone"}, base::Value::Type::DOUBLE);
+        const base::Value* max_milestone = list[2].FindPathOfType(
+            {"max_milestone"}, base::Value::Type::DOUBLE);
+        const base::Value* unstable =
+            list[2].FindPathOfType({"unstable"}, base::Value::Type::BOOLEAN);
+
+        if (min_milestone)
+          restrictions.min_milestone =
+              base::Version(base::DoubleToString(min_milestone->GetDouble()));
+        if (max_milestone)
+          restrictions.max_milestone =
+              base::Version(base::DoubleToString(max_milestone->GetDouble()));
+        if (unstable)
+          restrictions.unstable = unstable->GetBool();
+      }
+      rpr_entry.restrictions = restrictions;
+      contents->push_back(rpr_entry);
+    }
+    return PpdProvider::SUCCESS;
+  }
+
   // Create the list of manufacturers from |cached_metadata_|.  Requires that
   // the manufacturer list has already been resolved.
   std::vector<std::string> GetManufacturerList() const {
@@ -992,15 +1068,16 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
     ret.reserve(meta.printers->size());
     for (const auto& entry : *meta.printers) {
       Printer::PpdReference ppd_ref;
-      ppd_ref.effective_make_and_model = entry.second;
-      ret.push_back({entry.first, ppd_ref});
+      ppd_ref.effective_make_and_model = entry.second.first;
+      ret.push_back({entry.first, {entry.second.second, ppd_ref}});
     }
     // TODO(justincarlson) -- this should be a localization-aware sort.
     sort(ret.begin(), ret.end(),
-         [](const std::pair<std::string, Printer::PpdReference>& a,
-            const std::pair<std::string, Printer::PpdReference>& b) -> bool {
-           return a.first < b.first;
-         });
+         [](const std::pair<std::string,
+                            std::pair<Restrictions, Printer::PpdReference>>& a,
+            const std::pair<std::string,
+                            std::pair<Restrictions, Printer::PpdReference>>& b)
+             -> bool { return a.first < b.first; });
     return ret;
   }
 
@@ -1021,14 +1098,14 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
                      CallbackResultCode printers_result,
                      const ResolvedPrintersList& printer_list) {
     if (printers_result == PpdProvider::SUCCESS) {
-      auto found =
-          std::find_if(printer_list.begin(), printer_list.end(),
-                       [effective_make_and_model](
-                           const std::pair<std::string, Printer::PpdReference>&
-                               printer_listing) {
-                         return effective_make_and_model ==
-                                printer_listing.second.effective_make_and_model;
-                       });
+      auto found = std::find_if(
+          printer_list.begin(), printer_list.end(),
+          [effective_make_and_model](
+              const std::pair<std::string,
+                              std::pair<Restrictions, Printer::PpdReference>>&
+                  printer_listing) {
+            return effective_make_and_model == printer_listing.first;
+          });
       if (found != printer_list.end()) {
         // We found it.  Done now!
         base::SequencedTaskRunnerHandle::Get()->PostTask(

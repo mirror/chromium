@@ -13,6 +13,7 @@
 
 #include "base/callback.h"
 #include "base/files/file_path.h"
+#include "base/version.h"
 #include "chromeos/chromeos_export.h"
 #include "chromeos/printing/printer_configuration.h"
 
@@ -78,6 +79,18 @@ class CHROMEOS_EXPORT PpdProvider : public base::RefCounted<PpdProvider> {
     int usb_product_id = 0;
   };
 
+  // Defines the limitations on when we show a particular PPD
+  struct Restrictions {
+    // Minimum milestone for ChromeOS build
+    base::Version min_milestone = base::Version("0.0");
+
+    // Maximum milestone for ChomeOS build
+    base::Version max_milestone = base::Version("0.0");
+
+    // Whether or not htis build is stable
+    bool unstable = false;
+  };
+
   // Result of a ResolvePpd() call.
   // If the result code is SUCCESS, then:
   //    string holds the contents of a PPD (that may or may not be gzipped).
@@ -96,8 +109,8 @@ class CHROMEOS_EXPORT PpdProvider : public base::RefCounted<PpdProvider> {
 
   // A list of printer names paired with the PpdReference that should be used
   // for that printer.
-  using ResolvedPrintersList =
-      std::vector<std::pair<std::string, Printer::PpdReference>>;
+  using ResolvedPrintersList = std::vector<
+      std::pair<std::string, std::pair<Restrictions, Printer::PpdReference>>>;
 
   // Result of a ResolvePrinters() call.  If the result code is SUCCESS, then
   // the vector contains a sorted list <model_name, PpdReference> tuples of all
