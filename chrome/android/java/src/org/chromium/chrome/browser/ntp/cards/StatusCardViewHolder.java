@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.metrics.ImpressionTracker;
+import org.chromium.chrome.browser.metrics.ImpressionTracker.Listener;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.suggestions.SuggestionsMetrics;
 import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
@@ -25,6 +27,7 @@ public class StatusCardViewHolder extends CardViewHolder {
     private final TextView mTitleView;
     private final TextView mBodyView;
     private final Button mActionView;
+    private final ImpressionTracker mImpressionTracker;
 
     public StatusCardViewHolder(SuggestionsRecyclerView parent,
             ContextMenuManager contextMenuManager, UiConfig config) {
@@ -32,6 +35,7 @@ public class StatusCardViewHolder extends CardViewHolder {
         mTitleView = itemView.findViewById(R.id.status_title);
         mBodyView = itemView.findViewById(R.id.status_body);
         mActionView = itemView.findViewById(R.id.status_action_button);
+        mImpressionTracker = new ImpressionTracker(itemView);
     }
 
     /**
@@ -63,7 +67,7 @@ public class StatusCardViewHolder extends CardViewHolder {
         void performAction(Context context);
     }
 
-    public void onBindViewHolder(final DataSource item) {
+    public void onBindViewHolder(final DataSource item, Listener listener) {
         super.onBindViewHolder();
 
         mTitleView.setText(item.getHeader());
@@ -81,6 +85,14 @@ public class StatusCardViewHolder extends CardViewHolder {
         } else {
             mActionView.setVisibility(View.GONE);
         }
+
+        mImpressionTracker.setListener(listener);
+    }
+
+    @Override
+    public void recycle() {
+        mImpressionTracker.setListener(null);
+        super.recycle();
     }
 
     @LayoutRes

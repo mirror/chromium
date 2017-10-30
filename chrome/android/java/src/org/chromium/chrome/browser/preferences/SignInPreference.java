@@ -101,7 +101,7 @@ public class SignInPreference
      */
     void onPreferenceFragmentDestroyed() {
         if (mSigninPromoController != null) {
-            mSigninPromoController.onPromoDestroyed();
+            mSigninPromoController.detach();
         }
     }
 
