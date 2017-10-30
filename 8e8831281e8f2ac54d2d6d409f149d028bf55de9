@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31b8758b_7329f757",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1573,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-30T21:13:57Z",
+      "side": 1,
+      "message": "Below, you\u0027re checking against the feature list, but here we\u0027re checking against the property.  Let\u0027s be consistent about how we handle that.  Additionally, below we\u0027re only doing stuff to the transition toolbar if the feature is disabled, whereas we\u0027re still calling |-reverseTransitionAnimations| on the toolbar controller here.",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2f5e5e_a8f14c53",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-30T21:13:57Z",
+      "side": 1,
+      "message": "We don\u0027t need to remove the animations since we\u0027re already removing the snapshot from the superview.  I think we should be handling this the same way as we do for the dummy toolbar background view (i.e. remove from superview, nil out property).",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26bb57bb_80019de3",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2041,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-30T21:13:57Z",
+      "side": 1,
+      "message": "How does this animation handle the background color animation?  When entering/exiting the stack view while the NTP is displayed, the background color of the toolbar is animated from white to gray.  Previously, this was accomplished using the dummy toolbar background view (which also performs the corner radius animation to the curve of the card view tab).  In the old implementation, we just had an opacity animation from 0.0 to 0.0 to hide the transition toolbar\u0027s background view in the presentation layer tree during the animation so that the dummy version can be seen instead.  Do the provided snapshots have transparent backgrounds?",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f51acdd_d4e5af13",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2052,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-30T21:13:57Z",
+      "side": 1,
+      "message": "Creating an image and setting it as the content is unnecessary.  This could be accomplished with less work by just creating a CALayer and settings its backgroundColor to any color with alpha\u003d1.0.  I\u0027m pretty sure that this will also be more performant, for the renderer, as inspecting a UIImage for the masking alpha is likely more costly than using the background color on a content-less mask layer.",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6723739e_2d69dcce",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2060,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-30T21:13:57Z",
+      "side": 1,
+      "message": "We should convert it form the toolbar controller\u0027s view\u0027s superview.  That is guaranteed to always be correct, but this current implementation might create bugs as we change the toolbar reparenting around.",
+      "range": {
+        "startLine": 2060,
+        "startChar": 46,
+        "endLine": 2060,
+        "endChar": 55
+      },
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2484cac9_a3b670c3",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2061,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-30T21:13:57Z",
+      "side": 1,
+      "message": "Why will there be a height difference?  Shouldn\u0027t the snapshot have the same bounds size as the actual toolbar view?  If not, can you add comments explaining why this is necessary?",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08881d0_d7277194",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2075,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-30T21:13:57Z",
+      "side": 1,
+      "message": "Can you be more specific about what the animations are doing?  It\u0027d be nice to separate the construction of each animation into its own chunk of code with comments explaining visually what will happen as the result of each animation (frame, mask, opacity).",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c19afb2_1e5437f1",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2095,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-30T21:13:57Z",
+      "side": 1,
+      "message": "I don\u0027t really get what the mask is doing here; can you elaborate with comments?",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9fb5e9_90ffe968",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2097,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-30T21:13:57Z",
+      "side": 1,
+      "message": "Using |endFrame| here is a red flag, as this should be specific to the card layout (and chosen as beginning or end in your ternary operator statements below).  I\u0027m not really clear about what this masking is accomplishing though, so maybe this will make more sense when commented.",
+      "range": {
+        "startLine": 2097,
+        "startChar": 53,
+        "endLine": 2097,
+        "endChar": 61
+      },
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
