@@ -384,7 +384,7 @@ WorkerGlobalScope::WorkerGlobalScope(
       InstanceCounters::kWorkerGlobalScopeCounter);
   SetSecurityOrigin(SecurityOrigin::Create(url_));
   if (creation_params->starter_origin) {
-    GetSecurityOrigin()->TransferPrivilegesFrom(
+    TransferPrivilegesFrom(
         creation_params->starter_origin->CreatePrivilegeData());
   }
   ApplyContentSecurityPolicyFromVector(
