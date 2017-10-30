@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<title>document selectedStylesheetSet UseCounters</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<style>
+</style>
+<script>
+test(function() {
+  const DocumentGetSelectedStylesheetSet = 2195; // From enums.xml
+  const DocumentSetSelectedStylesheetSet = 2196; // From enums.xml
+  assert_false(internals.isUseCounted(document, DocumentGetSelectedStylesheetSet));
+  document.selectedStylesheetSet;
+  assert_true(internals.isUseCounted(document, DocumentGetSelectedStylesheetSet));
+
+  assert_false(internals.isUseCounted(document, DocumentSetSelectedStylesheetSet));
+  document.selectedStylesheetSet = '';
+  assert_true(internals.isUseCounted(document, DocumentSetSelectedStylesheetSet));
+}, 'document.selectedStylesheetSet is use counted');
+</script>
