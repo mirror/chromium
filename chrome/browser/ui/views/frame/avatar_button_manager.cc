@@ -43,14 +43,15 @@ void AvatarButtonManager::Update(AvatarButtonStyle style) {
   }
 }
 
-void AvatarButtonManager::ButtonPressed(views::Button* sender,
-                                        const ui::Event& event) {
+void AvatarButtonManager::OnMenuButtonClicked(views::MenuButton* sender,
+                                              const gfx::Point& point,
+                                              const ui::Event* event) {
   DCHECK_EQ(view_, sender);
   BrowserWindow::AvatarBubbleMode mode =
       BrowserWindow::AVATAR_BUBBLE_MODE_DEFAULT;
-  if ((event.IsMouseEvent() &&
-       static_cast<const ui::MouseEvent&>(event).IsRightMouseButton()) ||
-      (event.type() == ui::ET_GESTURE_LONG_PRESS)) {
+  if ((event->IsMouseEvent() &&
+       static_cast<const ui::MouseEvent*>(event)->IsRightMouseButton()) ||
+      (event->type() == ui::ET_GESTURE_LONG_PRESS)) {
     return;
   }
   frame_view_->browser_view()->ShowAvatarBubbleFromAvatarButton(

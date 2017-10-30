@@ -7,19 +7,21 @@
 
 #include "chrome/browser/ui/views/profiles/avatar_button_style.h"
 #include "ui/views/controls/button/button.h"
+#include "ui/views/controls/button/menu_button_listener.h"
 #include "ui/views/features.h"
 
-#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
 namespace views {
+class MenuButton;
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
 class NavButtonProvider;
-}
 #endif
+}  // namespace views
 
 class BrowserNonClientFrameView;
 
 // Manages an avatar button displayed in a browser frame. The button displays
 // the name of the active or guest profile, and may be null.
-class AvatarButtonManager : public views::ButtonListener {
+class AvatarButtonManager : public views::MenuButtonListener {
  public:
   explicit AvatarButtonManager(BrowserNonClientFrameView* frame_view);
 
@@ -30,8 +32,10 @@ class AvatarButtonManager : public views::ButtonListener {
   // Gets the avatar button as a view::View.
   views::View* view() const { return view_; }
 
-  // views::ButtonListener:
-  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+  // views::MenuButtonListener:
+  void OnMenuButtonClicked(views::MenuButton* source,
+                           const gfx::Point& point,
+                           const ui::Event* event) override;
 
 #if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
   views::NavButtonProvider* get_nav_button_provider() {
