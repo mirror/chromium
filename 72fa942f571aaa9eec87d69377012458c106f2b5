@@ -22,6 +22,30 @@
       "revId": "72fa942f571aaa9eec87d69377012458c106f2b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a45778_63cbe415",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-30T21:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bd17dca_0a43b3dd",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 30
+      },
+      "revId": "72fa942f571aaa9eec87d69377012458c106f2b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
