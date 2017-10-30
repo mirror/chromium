@@ -39,7 +39,6 @@
 #include "platform/heap/HeapCompact.h"
 #include "platform/heap/PageMemory.h"
 #include "platform/heap/PagePool.h"
-#include "platform/heap/SafePoint.h"
 #include "platform/heap/ThreadState.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/web_memory_allocator_dump.h"
@@ -156,6 +155,7 @@ ThreadHeap::ThreadHeap(ThreadState* thread_state)
       post_marking_callback_stack_(CallbackStack::Create()),
       weak_callback_stack_(CallbackStack::Create()),
       ephemeron_stack_(CallbackStack::Create()),
+      stack_roots_(this),
       vector_backing_arena_index_(BlinkGC::kVector1ArenaIndex),
       current_arena_ages_(0),
       should_flush_heap_does_not_contain_cache_(false) {
@@ -537,7 +537,7 @@ void ThreadHeap::VisitPersistentRoots(Visitor* visitor) {
 void ThreadHeap::VisitStackRoots(Visitor* visitor) {
   DCHECK(thread_state_->IsInGC());
   TRACE_EVENT0("blink_gc", "ThreadHeap::visitStackRoots");
-  thread_state_->VisitStack(visitor);
+  stack_roots_.Visit(visitor);
 }
 
 BasePage* ThreadHeap::LookupPageForAddress(Address address) {
