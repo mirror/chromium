@@ -34,6 +34,7 @@
 #include "content/public/browser/indexed_db_context.h"
 #include "content/public/browser/local_storage_usage_info.h"
 #include "content/public/browser/session_storage_usage_info.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
@@ -259,6 +260,7 @@ class StoragePartitionImpl::NetworkContextOwner {
 
   void Initialize(mojom::NetworkContextRequest network_context_request,
                   scoped_refptr<net::URLRequestContextGetter> context_getter) {
+    DCHECK(context_getter);
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     context_getter_ = std::move(context_getter);
     network_context_ = std::make_unique<NetworkContext>(
@@ -549,7 +551,8 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
       GetContentClient()->browser()->CreateNetworkContext(
           context, in_memory, relative_partition_path);
 
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (base::FeatureList::IsEnabled(features::kNetworkService) ||
+      IsNavigationMojoResponseEnabled()) {
     BlobURLLoaderFactory::BlobContextGetter blob_getter =
         base::BindOnce(&BlobStorageContextGetter, blob_context);
     partition->blob_url_loader_factory_ = BlobURLLoaderFactory::Create(
