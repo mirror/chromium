@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cd499df_8ab06067",
+        "filename": "chrome/browser/safe_browsing/trigger_creator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-30T18:07:37Z",
+      "side": 1,
+      "message": "q: What\u0027s the side effect of this? It creates a TM helper and associates it with this TM?",
+      "revId": "65063cd08711d7774b3271006fc23cc43b88d79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc97a628_dfc0b918",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-30T18:07:37Z",
+      "side": 1,
+      "message": "Do you want to guarantee that AllDone will be called before this ThreatDetails\u0027s destructor? You could state that guarantee in the .h comments for this callback, and then DCHECK that it was calledin th d\u0027tor.",
+      "revId": "65063cd08711d7774b3271006fc23cc43b88d79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ab066b_73296d7b",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-30T18:07:37Z",
+      "side": 1,
+      "message": "This will create the key/val pair if it doesn\u0027t already exist. Is that ok?\n\nGeneral question: what\u0027s the expected semantics of _existance_ of a key vs null/not-null?  You could add a comment to that effect in the .h file on this map",
+      "revId": "65063cd08711d7774b3271006fc23cc43b88d79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "720a7d6a_6568a0a7",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-30T18:07:37Z",
+      "side": 1,
+      "message": "nit: Add a comment about who owns the created object.",
+      "revId": "65063cd08711d7774b3271006fc23cc43b88d79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
