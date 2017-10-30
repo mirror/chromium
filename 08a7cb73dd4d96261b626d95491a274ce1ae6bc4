@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a335f379_82fa2c8f",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-10-30T22:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2fe7fe5_50c0483e",
+      "revId": "08a7cb73dd4d96261b626d95491a274ce1ae6bc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce55b094_f98ccf3b",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-30T19:45:49Z",
       "side": 1,
       "message": "how about flip x/y axis, compute, then flip the rect back?",
+      "revId": "08a7cb73dd4d96261b626d95491a274ce1ae6bc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4155a7b_8035db43",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-10-30T22:35:20Z",
+      "side": 1,
+      "message": "I added an anonymous function named FlipRect to switch the x/y and width/height of the given rectangle. Since we need to compare or setting the x/y or width/height here. Does that what you recommend here? Or which one do you prefer? Please check the new patch set.Thanks.",
+      "parentUuid": "ce55b094_f98ccf3b",
       "revId": "08a7cb73dd4d96261b626d95491a274ce1ae6bc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
