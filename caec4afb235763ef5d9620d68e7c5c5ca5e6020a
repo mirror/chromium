@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4809ed6_5722b6c5",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-30T19:26:54Z",
+      "side": 1,
+      "message": "Can you add documentation about \"\u0027perf_tests_with_args\u0027\" will expect a tuple of 4 elements (name, shard, test_args, isolate_name)  \u0026 test_args is a list of string, each string is a commandline flag?",
+      "revId": "caec4afb235763ef5d9620d68e7c5c5ca5e6020a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
