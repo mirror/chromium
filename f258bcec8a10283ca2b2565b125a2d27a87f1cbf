@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "23a539f3_ab53bf35",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-30T17:10:25Z",
+      "side": 1,
+      "message": "Good point!",
+      "parentUuid": "9db9e997_23834d13",
+      "revId": "f258bcec8a10283ca2b2565b125a2d27a87f1cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa1171af_b2a6304d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
