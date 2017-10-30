@@ -1606,7 +1606,8 @@ NSString* const kTransitionToolbarAnimationKey =
       [card.view cleanUpAnimations];
   }
   // Clean up toolbar animations.
-  if (base::FeatureList::IsEnabled(kToolbarSnapshotAnimation)) {
+  if (self.transitionToolbarSnapshot &&
+      base::FeatureList::IsEnabled(kToolbarSnapshotAnimation)) {
     [self.transitionToolbarSnapshot removeFromSuperview];
     RemoveAnimationForKeyFromLayers(kTransitionToolbarAnimationKey, @[
       self.transitionToolbarSnapshot.layer,
@@ -2043,8 +2044,8 @@ NSString* const kTransitionToolbarAnimationKey =
                                                           transitionStyle {
   // Add the snapshot and update its frame.
   self.transitionToolbarSnapshot =
-      [self.transitionToolbarOwner
-              .toolbarSnapshotProvider snapshotForStackView];
+      [self.transitionToolbarOwner.toolbarSnapshotProvider
+          snapshotForStackViewWithFrame:self.view.frame];
   CGFloat toolbarHeight = self.transitionToolbarSnapshot.frame.size.height;
 
   UIImage* maskImage = ImageWithColor([UIColor blackColor]);
