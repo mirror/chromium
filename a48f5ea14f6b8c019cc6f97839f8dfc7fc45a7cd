@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afbdc449_5bfec53e",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 19
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-30T16:02:24Z",
+      "side": 1,
+      "message": "The ones below are already failing on main suite right?  Please move those lines to right after the original failure lines (i.e. cluster by bug#).",
+      "revId": "a48f5ea14f6b8c019cc6f97839f8dfc7fc45a7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1688c2c9_efc1b526",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-30T16:02:24Z",
+      "side": 1,
+      "message": "Please add an empty line between functions.",
+      "revId": "a48f5ea14f6b8c019cc6f97839f8dfc7fc45a7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0630e818_db2c4679",
+        "filename": "third_party/WebKit/Source/core/events/PointerEvent.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-30T16:02:24Z",
+      "side": 1,
+      "message": "Nit: s/getter/getters/",
+      "range": {
+        "startLine": 42,
+        "startChar": 56,
+        "endLine": 42,
+        "endChar": 62
+      },
+      "revId": "a48f5ea14f6b8c019cc6f97839f8dfc7fc45a7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e797614_4233584a",
+        "filename": "third_party/WebKit/Source/core/events/PointerEvent.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-30T16:02:24Z",
+      "side": 1,
+      "message": "May be move these function bodies to .cpp, they now seem too big for the header.",
+      "revId": "a48f5ea14f6b8c019cc6f97839f8dfc7fc45a7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
