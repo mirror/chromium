@@ -16,6 +16,24 @@
       "revId": "9db2921fd0515510c4af6905ee58eab4a44e7201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78393f96_1543f770",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-30T20:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39b897fb_c8757cfe",
+      "revId": "9db2921fd0515510c4af6905ee58eab4a44e7201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
