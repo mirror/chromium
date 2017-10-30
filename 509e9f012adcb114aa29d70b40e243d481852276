@@ -22,6 +22,30 @@
       "revId": "509e9f012adcb114aa29d70b40e243d481852276",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96bdc634_f0e7294b",
+        "filename": "ash/host/ash_window_tree_host_mirroring_unified.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-30T23:56:06Z",
+      "side": 1,
+      "message": "GetRootTransform() returns a transform that takes a point from the *unified* host coordinates to the mirroring host\u0027s pixel coordinates.\n\nConvertDIPToPixels() and ConvertDIPToScreenInPixels() are called on local points in the *mirroring* host\u0027s root window, not on points in the unified host\u0027s. That\u0027s why we use the GetRootTransformForLocalEventCoordinates() defined above, which only scales those local points to the right size, and leaves the translation to be done by the MirroringScreenPositionClient functions: https://cs.chromium.org/chromium/src/ash/display/mirror_window_controller.cc?q\u003dMirroringScreenPositionClient\u0026sq\u003dpackage:chromium\u0026l\u003d46",
+      "parentUuid": "82cbfdb3_97700f56",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 42
+      },
+      "revId": "509e9f012adcb114aa29d70b40e243d481852276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
