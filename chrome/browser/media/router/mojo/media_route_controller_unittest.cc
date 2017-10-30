@@ -102,6 +102,22 @@ class HangoutsMediaRouteControllerTest : public MediaRouteControllerTest {
   }
 };
 
+class MirroringMediaRouteControllerTest : public MediaRouteControllerTest {
+ public:
+  ~MirroringMediaRouteControllerTest() override {}
+
+  void SetUp() override {
+    MediaRouteControllerTest::SetUp();
+    EXPECT_CALL(mock_media_controller_, ConnectMirroringMediaRouteController());
+    base::RunLoop().RunUntilIdle();
+  }
+
+  scoped_refptr<MediaRouteController> CreateMediaRouteController() override {
+    return base::MakeRefCounted<MirroringMediaRouteController>(kRouteId,
+                                                               &profile_);
+  }
+};
+
 // Test that when Mojo connections are ready, calls to the Mojo controller go
 // through immediately.
 TEST_F(MediaRouteControllerTest, ForwardControllerCommands) {
@@ -213,6 +229,18 @@ TEST_F(HangoutsMediaRouteControllerTest, HangoutsCommands) {
 
   EXPECT_CALL(mock_media_controller_, SetLocalPresent(true));
   hangouts_controller->SetLocalPresent(true);
+
+  base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(MirroringMediaRouteControllerTest, MirroringCommands) {
+  auto controller = GetController();
+  auto* mirroring_controller =
+      MirroringMediaRouteController::From(controller.get());
+  ASSERT_TRUE(mirroring_controller);
+
+  EXPECT_CALL(mock_media_controller_, SetMediaRemotingEnabled(true));
+  mirroring_controller->SetMediaRemotingEnabled(true);
 
   base::RunLoop().RunUntilIdle();
 }

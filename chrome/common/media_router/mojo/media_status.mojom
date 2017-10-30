@@ -59,11 +59,19 @@ struct MediaStatus {
 
   // Only set for Hangouts routes.
   HangoutsMediaStatusExtraData? hangouts_extra_data;
+
+  // Only set for Mirroring routes.
+  MirroringStatusExtraData? mirroring_extra_data;
 };
 
 struct HangoutsMediaStatusExtraData {
   // Whether local present mode (aka "smooth motion") is on.
   bool local_present;
+};
+
+struct MirroringStatusExtraData {
+  // Whether Media Remoting is enabled.
+  bool media_remoting_enabled;
 };
 
 // Interface for being notified whenever the MediaStatus of a media changes.

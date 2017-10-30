@@ -11,6 +11,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "chrome/common/media_router/media_route.h"
+#include "chrome/common/media_router/media_status.h"
 #include "chrome/common/media_router/mojo/media_controller.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
@@ -220,6 +221,34 @@ class HangoutsMediaRouteController : public MediaRouteController {
   mojom::HangoutsMediaRouteControllerPtr mojo_hangouts_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(HangoutsMediaRouteController);
+};
+
+class MirroringMediaRouteController : public MediaRouteController {
+ public:
+  // Casts |controller| to a MirroringMediaRouteController if its
+  // RouteControllerType is MIRRORING. Returns nullptr otherwise.
+  static MirroringMediaRouteController* From(MediaRouteController* controller);
+
+  MirroringMediaRouteController(const MediaRoute::Id& route_id,
+                                content::BrowserContext* context);
+
+  // MediaRouteController
+  RouteControllerType GetType() const override;
+
+  void SetMediaRemotingEnabled(bool enabled);
+
+ protected:
+  ~MirroringMediaRouteController() override;
+
+ private:
+  // MediaRouteController
+  void InitAdditionalMojoConnections() override;
+  void OnMojoConnectionError() override;
+  void InvalidateInternal() override;
+
+  mojom::MirroringMediaRouteControllerPtr mojo_mirroring_controller_;
+
+  DISALLOW_COPY_AND_ASSIGN(MirroringMediaRouteController);
 };
 
 }  // namespace media_router

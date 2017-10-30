@@ -42,6 +42,9 @@ bool StructTraits<media_router::mojom::MediaStatusDataView,
   if (!data.ReadHangoutsExtraData(&out->hangouts_extra_data))
     return false;
 
+  if (!data.ReadMirroringExtraData(&out->mirroring_extra_data))
+    return false;
+
   return true;
 }
 
@@ -50,6 +53,14 @@ bool StructTraits<media_router::mojom::HangoutsMediaStatusExtraDataDataView,
     Read(media_router::mojom::HangoutsMediaStatusExtraDataDataView data,
          media_router::HangoutsMediaStatusExtraData* out) {
   out->local_present = data.local_present();
+  return true;
+}
+
+bool StructTraits<media_router::mojom::MirroringStatusExtraDataDataView,
+                  media_router::MirroringStatusExtraData>::
+    Read(media_router::mojom::MirroringStatusExtraDataDataView data,
+         media_router::MirroringStatusExtraData* out) {
+  out->media_remoting_enabled = data.media_remoting_enabled();
   return true;
 }
 

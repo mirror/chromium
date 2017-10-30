@@ -104,6 +104,11 @@ struct StructTraits<media_router::mojom::MediaStatusDataView,
   hangouts_extra_data(const media_router::MediaStatus& status) {
     return status.hangouts_extra_data;
   }
+
+  static const base::Optional<media_router::MirroringStatusExtraData>&
+  mirroring_extra_data(const media_router::MediaStatus& status) {
+    return status.mirroring_extra_data;
+  }
 };
 
 template <>
@@ -116,6 +121,18 @@ struct StructTraits<media_router::mojom::HangoutsMediaStatusExtraDataDataView,
   static bool local_present(
       const media_router::HangoutsMediaStatusExtraData& data) {
     return data.local_present;
+  }
+};
+
+template <>
+struct StructTraits<media_router::mojom::MirroringStatusExtraDataDataView,
+                    media_router::MirroringStatusExtraData> {
+  static bool Read(media_router::mojom::MirroringStatusExtraDataDataView data,
+                   media_router::MirroringStatusExtraData* out);
+
+  static bool media_remoting_enabled(
+      const media_router::MirroringStatusExtraData& data) {
+    return data.media_remoting_enabled;
   }
 };
 

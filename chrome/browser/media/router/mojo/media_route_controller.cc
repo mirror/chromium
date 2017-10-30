@@ -202,4 +202,54 @@ void HangoutsMediaRouteController::InvalidateInternal() {
   mojo_hangouts_controller_.reset();
 }
 
+// static
+MirroringMediaRouteController* MirroringMediaRouteController::From(
+    MediaRouteController* controller) {
+  if (!controller || controller->GetType() != RouteControllerType::kMirroring)
+    return nullptr;
+
+  return static_cast<MirroringMediaRouteController*>(controller);
+}
+
+MirroringMediaRouteController::MirroringMediaRouteController(
+    const MediaRoute::Id& route_id,
+    content::BrowserContext* context)
+    : MediaRouteController(route_id, context) {}
+
+MirroringMediaRouteController::~MirroringMediaRouteController() {}
+
+RouteControllerType MirroringMediaRouteController::GetType() const {
+  return RouteControllerType::kMirroring;
+}
+
+void MirroringMediaRouteController::SetMediaRemotingEnabled(bool enabled) {
+  if (request_manager()->mojo_connections_ready()) {
+    DCHECK(mojo_mirroring_controller_);
+    mojo_mirroring_controller_->SetMediaRemotingEnabled(enabled);
+    return;
+  }
+  request_manager()->RunOrDefer(
+      base::BindOnce(&MirroringMediaRouteController::SetMediaRemotingEnabled,
+                     base::AsWeakPtr(this), enabled),
+      MediaRouteProviderWakeReason::ROUTE_CONTROLLER_COMMAND);
+}
+
+void MirroringMediaRouteController::InitAdditionalMojoConnections() {
+  auto request = mojo::MakeRequest(&mojo_mirroring_controller_);
+  mojo_mirroring_controller_.set_connection_error_handler(
+      base::BindOnce(&MirroringMediaRouteController::OnMojoConnectionError,
+                     base::Unretained(this)));
+  mojo_media_controller()->ConnectMirroringMediaRouteController(
+      std::move(request));
+}
+
+void MirroringMediaRouteController::OnMojoConnectionError() {
+  mojo_mirroring_controller_.reset();
+  MediaRouteController::OnMojoConnectionError();
+}
+
+void MirroringMediaRouteController::InvalidateInternal() {
+  mojo_mirroring_controller_.reset();
+}
+
 }  // namespace media_router

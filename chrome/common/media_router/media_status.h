@@ -18,6 +18,11 @@ struct HangoutsMediaStatusExtraData {
   bool local_present = false;
 };
 
+struct MirroringStatusExtraData {
+  // True if Media Remoting is enabled.
+  bool media_remoting_enabled = true;
+};
+
 // Represents the current state of a media content.
 struct MediaStatus {
  public:
@@ -68,6 +73,9 @@ struct MediaStatus {
 
   // Only set for Hangouts routes.
   base::Optional<HangoutsMediaStatusExtraData> hangouts_extra_data;
+
+  // Only set for Cast routes.
+  base::Optional<MirroringStatusExtraData> mirroring_extra_data;
 };
 
 }  // namespace media_router
