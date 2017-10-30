@@ -22,14 +22,42 @@ class AnimatedIcon;
 
   // Used for animating and drawing the icon.
   std::unique_ptr<AnimatedIcon> animatedIcon_;
+
+  // Value of the kAnimatedAppMenuIcon feature's |has_delay| param.
+  BOOL is_delay_enabled_;
+
+  // Used to delay the animation. Not used if |is_delay_enabled|
+  // is false.
+  NSTimer* animationDelayTimer_;
+
+  // Set true if the timer should be disabled for testing. The timer
+  // will still be created, but it will not be added in the runloop.
+  BOOL disable_timer_for_testing_;
 }
 
 - (void)setSeverity:(AppMenuIconController::Severity)severity
            iconType:(AppMenuIconController::IconType)iconType
       shouldAnimate:(BOOL)shouldAnimate;
 
-- (void)animateIfPossible;
+// Animates the icon if possible. If |is_delay_enabled_| and |delay|
+// is true, then set |animationDelayTimer_| if it's not already set.
+- (void)animateIfPossibleWithDelay:(BOOL)delay;
 
+@end
+
+@interface AppToolbarButton (ExposedForTesting)
+
+// Returns |animatedIcon_|.get().
+- (AnimatedIcon*)animatedIcon;
+
+// Returns |animationDelayTimer_|.
+- (NSTimer*)animationDelayTimer;
+
+// Sets |aniamtedIcon_|.
+- (void)setAnimatedIcon:(AnimatedIcon*)icon;
+
+// Sets |disable_timer_for_testing_|.
+- (void)setDisableTimerForTest:(BOOL)disable;
 @end
 
 #endif  // CHROME_BROWSER_UI_COCOA_TOOLBAR_APP_TOOLBAR_BUTTON_H_
