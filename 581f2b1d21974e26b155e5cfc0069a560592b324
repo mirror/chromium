@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d0ea01c_37cb9926",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123509
+      },
+      "writtenOn": "2017-10-30T22:50:38Z",
+      "side": 1,
+      "message": "We no longer use None.",
+      "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399726a0_b1208aa9",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123509
+      },
+      "writtenOn": "2017-10-30T22:50:38Z",
+      "side": 1,
+      "message": "This is no longer correct. No need for any special mention of RB with respect to priority.",
+      "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07671d54_05e77e34",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1123509
+      },
+      "writtenOn": "2017-10-30T22:50:38Z",
+      "side": 1,
+      "message": "This is now out of date as well. We only apply the earliest impact label, so stable in this case.",
+      "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75218742_e31caa42",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1123509
+      },
+      "writtenOn": "2017-10-30T22:50:38Z",
+      "side": 1,
+      "message": "We can get rid of this distinction. The panel doesn\u0027t necessarily reward lows, but we\u0027ve been reviewing them lately and rewarding small amounts in some cases.",
+      "range": {
+        "startLine": 76,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 27
+      },
+      "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37844be0_9dd6f5af",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1123509
+      },
+      "writtenOn": "2017-10-30T22:50:38Z",
+      "side": 1,
+      "message": "Sheriffbot here and below.",
+      "range": {
+        "startLine": 81,
+        "startChar": 67,
+        "endLine": 81,
+        "endChar": 75
+      },
+      "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9c9f43_f7212aa8",
+        "filename": "docs/security/sheriff.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123509
+      },
+      "writtenOn": "2017-10-30T22:50:38Z",
+      "side": 1,
+      "message": "Nit: whitespace",
+      "range": {
+        "startLine": 50,
+        "startChar": 47,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c872bfc9_5b48f3dc",
+        "filename": "docs/security/sheriff.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1123509
+      },
+      "writtenOn": "2017-10-30T22:50:38Z",
+      "side": 1,
+      "message": "Probably better not to enumrate these here. This list is out of date.",
+      "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
