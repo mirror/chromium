@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5ab87fe_7096ea6f",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsersTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-10-30T15:58:32Z",
+      "side": 1,
+      "message": "I\u0027d love some tests that do totally crazy stuff that doesn\u0027t fit into the ABNF mold (JSON as the metric name, `metric\u003dbla` as the metric name, etc) and seeing that we do something reasonable in those cases",
+      "range": {
+        "startLine": 602,
+        "startChar": 32,
+        "endLine": 602,
+        "endChar": 33
+      },
+      "revId": "03acdeadae04c45e80b350887f99f175eda792cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89626224_06a5d8bb",
+        "filename": "third_party/WebKit/Source/platform/network/ServerTimingHeader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-10-30T15:58:32Z",
+      "side": 1,
+      "message": "That\u0027s a case sensitive comparison. I know you\u0027re lower casing at the call site, but that\u0027s more fragile.\nI\u0027d prefer to lower case the String here (or do an insensitive comparison here instead).\nIf you want to keep the external lower casing, a DCHECK here is in order, to make sure the input is lowercased.",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 23
+      },
+      "revId": "03acdeadae04c45e80b350887f99f175eda792cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
