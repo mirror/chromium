@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3b30e5b6_369868d8",
+        "filename": "chrome/browser/resources/print_preview/native_layer.js",
+        "patchSetId": 31
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-30T19:30:58Z",
+      "side": 1,
+      "message": "1) Done\n2) With this CL we don\u0027t actually go through PrintRenderFrameHelper any more for this path, but I added a DCHECK in printer_capabilities.cc which is what sets up the settings for the printer query now.",
+      "parentUuid": "7c055a27_be5b59e7",
+      "range": {
+        "startLine": 329,
+        "startChar": 67,
+        "endLine": 329,
+        "endChar": 77
+      },
+      "revId": "536b90caea6fdc2195f228caa2752571ee2c01a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62b80721_659fa397",
         "filename": "chrome/browser/resources/print_preview/print_preview.js",
         "patchSetId": 31
@@ -120,6 +144,24 @@
       "side": 1,
       "message": "Ok. So IIUC, once the backend changes are finished, there will not exist a need anymore to keep the plugin around even if it is not shown to the user, and therefore no need for hidePreview?",
       "parentUuid": "3cad29af_2bb4d774",
+      "revId": "536b90caea6fdc2195f228caa2752571ee2c01a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150ce1a5_d4fff441",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 31
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-30T19:30:58Z",
+      "side": 1,
+      "message": "There is another case where we do this, which when if the user presses \"Print\" before the preview is done generating (again, for local printers only). In this case we have to keep the preview dialog around until the preview is fully rendered because the data for the PrintPreviewDataStore doesn\u0027t exist yet. Once the preview is rendered the hidden preview dialog sends the print request and is then closed.\n\nWe have been discussing changing this behavior in order to get rid of both hidePreview in Print Preview and the BackgroundPrintingManager on the printing side, as the user cannot really do much with the page or open a new preview while the renderer is still generating the PDF. However we would need to figure out what to do with the kiosk printing case.",
+      "parentUuid": "ad5dfad4_90ad4981",
       "revId": "536b90caea6fdc2195f228caa2752571ee2c01a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
