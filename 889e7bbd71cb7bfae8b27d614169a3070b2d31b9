@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3be2535_2bc1c56c",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2041,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-30T11:36:09Z",
+      "side": 1,
+      "message": "This function is already huge and is likely to expand as I am taking into account some special case/refining the animation.\nI put it here because it is the pendant of animateTransitionToolbarWithCardFrame:transitionStyle:, but I think there might be a better place. CardSet? StackCard? Maybe an helper on the side?",
+      "range": {
+        "startLine": 2041,
+        "startChar": 8,
+        "endLine": 2041,
+        "endChar": 53
+      },
+      "revId": "889e7bbd71cb7bfae8b27d614169a3070b2d31b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
