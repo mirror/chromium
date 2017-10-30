@@ -266,6 +266,12 @@ class FormStructure {
   // as fill-only-when-user-highlight.
   void RationalizePhoneNumberFieldPredictions();
 
+  // Helping function that rationalizes phone numbers fields in the given
+  // vector of fields. The vector of fields are expected to have all fields
+  // for a certain section.
+  void RationalizePhoneNumberFieldPredictionsBySections(
+      std::vector<AutofillField*>& fields_in_section);
+
   // A helper function to review the predictions and do appropriate adjustments
   // when it considers neccessary.
   void RationalizeFieldTypePredictions();

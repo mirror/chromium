@@ -1201,6 +1201,18 @@ void FormStructure::RationalizeCreditCardFieldPredictions() {
 }
 
 void FormStructure::RationalizePhoneNumberFieldPredictions() {
+  auto section_to_fields_map =
+      std::map<std::string, std::vector<AutofillField*>>();
+  for (const auto& field : fields_) {
+    section_to_fields_map[field->section()].push_back(field.get());
+  }
+  for (auto& it : section_to_fields_map) {
+    RationalizePhoneNumberFieldPredictionsBySections(it.second);
+  }
+}
+
+void FormStructure::RationalizePhoneNumberFieldPredictionsBySections(
+    std::vector<AutofillField*>& fields_in_section) {
   AutofillField* found_number_field = nullptr;
   AutofillField* found_number_field_second = nullptr;
   AutofillField* found_city_code_field = nullptr;
@@ -1209,16 +1221,16 @@ void FormStructure::RationalizePhoneNumberFieldPredictions() {
   AutofillField* found_whole_number_field = nullptr;
   bool phone_number_found = false;
   bool phone_number_separate_fields = false;
-  // Iterate through all fields. Iteration stops when it first finds a valid
-  // set of fields that can compose a whole number. The |found_*| pointers
+  // Iterate through all given fields. Iteration stops when it first finds a
+  // valid set of fields that can compose a whole number. The |found_*| pointers
   // will be set to that set of fields when iteration finishes.
-  for (const auto& field : fields_) {
+  for (AutofillField* field : fields_in_section) {
     ServerFieldType current_field_type = field->Type().GetStorableType();
     switch (current_field_type) {
       case PHONE_HOME_NUMBER:
       case PHONE_BILLING_NUMBER:
         if (!found_number_field) {
-          found_number_field = field.get();
+          found_number_field = field;
           if (field->max_length < 5) {
             phone_number_separate_fields = true;
           } else {
@@ -1232,29 +1244,29 @@ void FormStructure::RationalizePhoneNumberFieldPredictions() {
         // exchange and subscriber number.
         DCHECK(phone_number_separate_fields);
         DCHECK(!found_number_field_second);
-        found_number_field_second = field.get();
+        found_number_field_second = field;
         phone_number_found = true;
         break;
       case PHONE_HOME_CITY_CODE:
       case PHONE_BILLING_CITY_CODE:
         if (!found_city_code_field)
-          found_city_code_field = field.get();
+          found_city_code_field = field;
         break;
       case PHONE_HOME_COUNTRY_CODE:
       case PHONE_BILLING_COUNTRY_CODE:
         if (!found_country_code_field)
-          found_country_code_field = field.get();
+          found_country_code_field = field;
         break;
       case PHONE_HOME_CITY_AND_NUMBER:
       case PHONE_BILLING_CITY_AND_NUMBER:
         DCHECK(!phone_number_found && !found_city_and_number_field);
-        found_city_and_number_field = field.get();
+        found_city_and_number_field = field;
         phone_number_found = true;
         break;
       case PHONE_HOME_WHOLE_NUMBER:
       case PHONE_BILLING_WHOLE_NUMBER:
         DCHECK(!phone_number_found && !found_whole_number_field);
-        found_whole_number_field = field.get();
+        found_whole_number_field = field;
         phone_number_found = true;
         break;
       default:
@@ -1303,34 +1315,34 @@ void FormStructure::RationalizePhoneNumberFieldPredictions() {
   // For all above cases, in the update pass, if one field is phone
   // number related but not one of the found fields from first pass, set their
   // |only_fill_when_focused| field to true.
-  for (auto it = fields_.begin(); it != fields_.end(); ++it) {
-    auto& field = *it;
+  for (auto it = fields_in_section.begin(); it != fields_in_section.end();
+       ++it) {
+    AutofillField* field = *it;
     ServerFieldType current_field_type = field->Type().GetStorableType();
     switch (current_field_type) {
       case PHONE_HOME_NUMBER:
       case PHONE_BILLING_NUMBER:
-        if (field.get() != found_number_field &&
-            field.get() != found_number_field_second)
+        if (field != found_number_field && field != found_number_field_second)
           field->set_only_fill_when_focused(true);
         break;
       case PHONE_HOME_CITY_CODE:
       case PHONE_BILLING_CITY_CODE:
-        if (field.get() != found_city_code_field)
+        if (field != found_city_code_field)
           field->set_only_fill_when_focused(true);
         break;
       case PHONE_HOME_COUNTRY_CODE:
       case PHONE_BILLING_COUNTRY_CODE:
-        if (field.get() != found_country_code_field)
+        if (field != found_country_code_field)
           field->set_only_fill_when_focused(true);
         break;
       case PHONE_HOME_CITY_AND_NUMBER:
       case PHONE_BILLING_CITY_AND_NUMBER:
-        if (field.get() != found_city_and_number_field)
+        if (field != found_city_and_number_field)
           field->set_only_fill_when_focused(true);
         break;
       case PHONE_HOME_WHOLE_NUMBER:
       case PHONE_BILLING_WHOLE_NUMBER:
-        if (field.get() != found_whole_number_field)
+        if (field != found_whole_number_field)
           field->set_only_fill_when_focused(true);
         break;
       default:
