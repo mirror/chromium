@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b80f3916_378bd907",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-30T20:48:27Z",
+      "side": 1,
+      "message": "If this returns nullptr, std::string won\u0027t be very happy.",
+      "revId": "cd794e1e13bfe69582ca30ab90c19007452211d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
