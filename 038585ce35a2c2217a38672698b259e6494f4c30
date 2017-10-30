@@ -46,6 +46,30 @@
       "revId": "038585ce35a2c2217a38672698b259e6494f4c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aaec2b9_a7a51dd1",
+        "filename": "chrome/services/chrome_win_util/manifest.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-30T15:51:20Z",
+      "side": 1,
+      "message": "Marking resolved",
+      "parentUuid": "57e44d51_81da26a0",
+      "range": {
+        "startLine": 4,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 25
+      },
+      "revId": "038585ce35a2c2217a38672698b259e6494f4c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
