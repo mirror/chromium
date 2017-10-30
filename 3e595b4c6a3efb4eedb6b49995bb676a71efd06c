@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f2c2fcc_a1fb53f8",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-30T08:51:54Z",
+      "side": 1,
+      "message": "Does the focus ring still look okay with the changed size?",
+      "range": {
+        "startLine": 314,
+        "startChar": 14,
+        "endLine": 314,
+        "endChar": 0
+      },
+      "revId": "3e595b4c6a3efb4eedb6b49995bb676a71efd06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
