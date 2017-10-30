@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0493b6bc_e69a7661",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-30T06:23:56Z",
+      "side": 1,
+      "message": "Seems like there is some state for particular requests being stored on this thing. Could be instead bind it in to the callbacks so it is a lot more obvious which request this belongs to?",
+      "revId": "452f6a429bc1cddbcacc4ae4b23cd8fc5ad5738e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9479d17_c86b65ce",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-30T06:23:56Z",
+      "side": 1,
+      "message": "Is this change orthogonal?",
+      "revId": "452f6a429bc1cddbcacc4ae4b23cd8fc5ad5738e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
