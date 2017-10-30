@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef zoomAdjustedPixelValue_h
-#define zoomAdjustedPixelValue_h
+#ifndef ZoomAdjustedPixelValue_h
+#define ZoomAdjustedPixelValue_h
 
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/style/ComputedStyle.h"
@@ -16,5 +16,5 @@ inline CSSPrimitiveValue* ZoomAdjustedPixelValue(double value,
   return CSSPrimitiveValue::Create(AdjustFloatForAbsoluteZoom(value, style),
                                    CSSPrimitiveValue::UnitType::kPixels);
 }
-}
-#endif  // zoomAdjustedPixelValue_h
+}  // namespace blink
+#endif  // ZoomAdjustedPixelValue_h
