@@ -131,6 +131,30 @@
       "revId": "29bfbdc8813e2c080617e302de238c5e6ec0b2be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4639778e_ca7dceb1",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config_select.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-30T19:50:20Z",
+      "side": 1,
+      "message": "The id is just used for CSS, but other than substituting a unique node type for a unique ID, is there another reason to use \u003clabel\u003e here? I associate \u003clabel\u003e with a \u0027for\u0027 relationship, which doesn\u0027t really exist here.",
+      "parentUuid": "4ed4eef6_f99c32ce",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "29bfbdc8813e2c080617e302de238c5e6ec0b2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
