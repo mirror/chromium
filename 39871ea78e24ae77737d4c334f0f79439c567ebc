@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63f608ce_00010227",
+        "filename": "ui/wm/core/window_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-30T18:47:49Z",
+      "side": 1,
+      "message": "Should this DCHECK that the window is minimized?",
+      "revId": "39871ea78e24ae77737d4c334f0f79439c567ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
