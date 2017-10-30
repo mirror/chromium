@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9a05953_e95d9900",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/HomeSheetUiCaptureTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-30T17:15:44Z",
+      "side": 1,
+      "message": "Can you use @ChromeHome instead? +dgn",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 50
+      },
+      "revId": "f54b3612e4328baf46a0bef9727484d662c52705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
