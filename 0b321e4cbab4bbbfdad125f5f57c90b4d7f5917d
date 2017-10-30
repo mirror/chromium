@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "2e85583c_f34f3bbf",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T07:29:49Z",
+      "side": 1,
+      "message": "TODO(...) is the canonical format, where ... is someone\u0027s name or a link to the tracking bug.\nCould you run git cl lint always before uploading your CL? It helps you to find it by yourself.",
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71ee7f14_87a5056a",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -180,6 +197,40 @@
     },
     {
       "key": {
+        "uuid": "2186d049_98e7130c",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T07:29:49Z",
+      "side": 1,
+      "message": "In new code, could you use OnceCallback whenever possible in ARC?\nDitto for all Callback() and Bind() in this CL.",
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27d720e_b73341b6",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T07:29:49Z",
+      "side": 1,
+      "message": "Callers cannot handle errors if any? Could you fix and/or document explicitly?",
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a6efafc_08287927",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -243,6 +294,23 @@
         "endLine": 104,
         "endChar": 44
       },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141cc718_93b357de",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T07:29:49Z",
+      "side": 1,
+      "message": "Leaks if failed?\nTODO is ok as for no-op, but please keep away from bugs (incl. memory leaks) even in the mid of implementation, if you\u0027d land the CL.",
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -364,6 +432,80 @@
     },
     {
       "key": {
+        "uuid": "da3301b9_15f574b4",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T07:29:49Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN.",
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51598a36_7b1f3c61",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T07:29:49Z",
+      "side": 1,
+      "message": "nit: I think you can remove this.",
+      "range": {
+        "startLine": 165,
+        "startChar": 6,
+        "endLine": 165,
+        "endChar": 33
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72719388_92ba442b",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T07:29:49Z",
+      "side": 1,
+      "message": "Could you use base::StringPrintf instead?",
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6f6d9a_5048ef9c",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T07:29:49Z",
+      "side": 1,
+      "message": "TODO for ... what?",
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25d58299_ab2a7b1e",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -404,6 +546,23 @@
         "endLine": 384,
         "endChar": 1
       },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9867de_a998ecb6",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T07:29:49Z",
+      "side": 1,
+      "message": "nit: could you move this above to be consistent with the arg\u0027s order? (i.e., moving the member declaration order, too).",
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -473,6 +632,47 @@
         "endLine": 459,
         "endChar": 21
       },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b8c78c_02d0c2fb",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T07:29:49Z",
+      "side": 1,
+      "message": "Or, instead, could you let ArcPrintService manage the lifetime of tasks?",
+      "parentUuid": "275bbe8b_d0555b79",
+      "range": {
+        "startLine": 459,
+        "startChar": 6,
+        "endLine": 459,
+        "endChar": 21
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31265682_b0d0653e",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T07:29:49Z",
+      "side": 1,
+      "message": "The Callback looks like to notify the completion. So, should be called at the end.",
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -634,6 +834,23 @@
     },
     {
       "key": {
+        "uuid": "2eaa8205_e1b0da2e",
+        "filename": "components/arc/common/print.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T07:29:49Z",
+      "side": 1,
+      "message": "Could you document if start,end are inclusive or exclusive?",
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ca5c116_249a029d",
         "filename": "components/arc/common/print.mojom",
         "patchSetId": 13
@@ -765,6 +982,29 @@
         "startChar": 2,
         "endLine": 67,
         "endChar": 7
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605cf505_0e8bee97",
+        "filename": "components/arc/common/print.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T07:29:49Z",
+      "side": 1,
+      "message": "6?",
+      "range": {
+        "startLine": 103,
+        "startChar": 19,
+        "endLine": 103,
+        "endChar": 20
       },
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
