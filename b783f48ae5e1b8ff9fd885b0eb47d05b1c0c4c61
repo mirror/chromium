@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbf776b5_fac54121",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/Coordinates.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-30T21:29:02Z",
+      "side": 1,
+      "message": "class seems a little redundant now? or maybe just have a function that takes WebContents and returns RenderCoordinates?",
+      "revId": "b783f48ae5e1b8ff9fd885b0eb47d05b1c0c4c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
