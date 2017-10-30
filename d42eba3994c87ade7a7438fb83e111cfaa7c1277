@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0d8eca2_ed3b007a",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-30T12:23:23Z",
+      "side": 1,
+      "message": "No. You don\u0027t need to generate a GUID until the request is about to become active.\n\nThis way we can be more conservative of the limited supply of GUIDs and not exhaust them unnecessarily:)",
+      "parentUuid": "831d70a5_df40e9d2",
+      "revId": "d42eba3994c87ade7a7438fb83e111cfaa7c1277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e3e0b1d_f59b89a4",
         "filename": "content/browser/background_fetch/background_fetch_request_info.h",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "d42eba3994c87ade7a7438fb83e111cfaa7c1277",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97389ec4_1eddd1ec",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-30T12:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e3e0b1d_f59b89a4",
+      "range": {
+        "startLine": 38,
+        "startChar": 72,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "d42eba3994c87ade7a7438fb83e111cfaa7c1277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
