@@ -69,6 +69,24 @@
       "revId": "e92d9bd01b139a3dc7d083e5518b524b385fe73c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c051cc_0bfcdbc6",
+        "filename": "gpu/command_buffer/tests/fuzzer_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-10-30T23:52:34Z",
+      "side": 1,
+      "message": "Ok, sounds good.",
+      "parentUuid": "8aac5522_38e8e320",
+      "revId": "e92d9bd01b139a3dc7d083e5518b524b385fe73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
