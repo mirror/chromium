@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "520d763f_86f190f8",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1774,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-30T14:47:07Z",
+      "side": 1,
+      "message": "I think this might not be the right navigation item to update for the same reason that we changed line 1764. Would it make sense to store a pointer to the navigation item in CRWPlaceholderNavigationInfo instead of the URL?",
+      "range": {
+        "startLine": 1774,
+        "startChar": 58,
+        "endLine": 1774,
+        "endChar": 0
+      },
+      "revId": "5f09a54aee2366361e8f01bf80c61944d205641b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
