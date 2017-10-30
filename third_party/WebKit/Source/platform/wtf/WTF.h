@@ -31,6 +31,7 @@
 #ifndef WTF_h
 #define WTF_h
 
+#include "build/build_config.h"
 #include "platform/wtf/Compiler.h"
 #include "platform/wtf/WTFExport.h"
 
@@ -38,10 +39,18 @@ namespace WTF {
 
 typedef void MainThreadFunction(void*);
 
+#if defined(COMPONENT_BUILD) || defined(OS_MACOSX)
+WTF_EXPORT bool IsMainThread();
+#else  // defined(COMPONENT_BUILD)
+extern thread_local bool g_is_main_thread;
+inline bool IsMainThread() {
+  return g_is_main_thread;
+}
+#endif
+
 // This function must be called exactly once from the main thread before using
 // anything else in WTF.
 WTF_EXPORT void Initialize(void (*)(MainThreadFunction, void*));
-WTF_EXPORT bool IsMainThread();
 
 namespace internal {
 void CallOnMainThread(MainThreadFunction*, void* context);
