@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "018a7d38_924b5370",
+        "filename": "ios/web_view/internal/web_view_browser_state.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-30T21:03:51Z",
+      "side": 1,
+      "message": "nit: Do you need this local variable?",
+      "revId": "a54e257497d165e50bf7eeabf50a52828c39ffc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
