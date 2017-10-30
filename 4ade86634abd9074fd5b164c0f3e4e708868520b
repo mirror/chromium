@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d8f0448_f6b23cc7",
+        "filename": "android_webview/renderer/aw_render_view_ext.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-30T21:44:03Z",
+      "side": 1,
+      "message": "this is just render_view(), right? I guess you can\u0027t access RenderViewImpl directly here. It\u0027s not ok to use WebWidgetClient outside of blink. That interface is meant to be implemented by blink embedder and used by blink only.\n\nCan just duplicate the logic instead? All the necessary info is exposed from RenderView already",
+      "revId": "4ade86634abd9074fd5b164c0f3e4e708868520b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
