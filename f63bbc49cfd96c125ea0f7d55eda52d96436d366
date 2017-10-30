@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ee62551_dfc0ddff",
+        "filename": "third_party/autoservice/README.chromium",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-30T18:19:22Z",
+      "side": 1,
+      "message": "Should be able to set this as NOT_SHIPPED, since it\u0027s used only by tools.",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "f63bbc49cfd96c125ea0f7d55eda52d96436d366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14bba54_aab2fd85",
+        "filename": "third_party/errorprone/README.chromium",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-30T18:19:22Z",
+      "side": 1,
+      "message": "NOT_SHIPPED",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "f63bbc49cfd96c125ea0f7d55eda52d96436d366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
