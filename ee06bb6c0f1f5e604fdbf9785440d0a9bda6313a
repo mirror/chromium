@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "f84ba80c_f7b054b2",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-30T15:49:32Z",
+      "side": 1,
+      "message": "Every NGTextFragmentPainterTest case (though for now only one) will need LayoutNG and LayoutNGPaintFragments, so they should not be set per test case, but should be set for NGTextFragmentPainterTest instead like:\n\nclass NGTextFragmentPainterTest : public PaintControllerPaintTest,\n                                  private ScopedLayoutNGForTest,\n                                  ... {\n};\n\nIt\u0027s OK to replace SetLayoutNGPaintFragmentsEnabled in the next CL.",
+      "parentUuid": "841446cd_c9e3193d",
+      "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b801e49d_6241a628",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter_test.cc",
         "patchSetId": 7
@@ -298,6 +316,24 @@
       "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e1404f_b643abb7",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-30T15:49:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c79587e7_75604c0a",
+      "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
