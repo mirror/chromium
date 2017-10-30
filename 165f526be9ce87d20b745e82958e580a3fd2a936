@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03a49091_ec69842f",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-30T12:19:11Z",
+      "side": 1,
+      "message": "Helper functions like this are usually put in an unnamed namespace, but since the rest of this file uses \"static\", this is fine.",
+      "revId": "165f526be9ce87d20b745e82958e580a3fd2a936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
