@@ -70,6 +70,30 @@
       "revId": "6383d7ca7604669b8d08522ee84b8a23a4d08089",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb712787_0371d0fa",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-30T20:19:04Z",
+      "side": 1,
+      "message": "From discussion with Caleb and Dale today: it seems this ID was expected to be globally unique, which is not the case; the MediaLog::id is only unique within a single renderer process.\n\nProposal: Generate a base::UnguessableToken in MediaFactory::CreateMediaPlayer(), and pass it into the MediaLog. We can call it |player_token| or |player_id|. It\u0027s also okay if in the first version this is just generated in the MediaLog constructor, it\u0027s just slightly more clear if it\u0027s passed in that it\u0027s a property of the player and not of the log.\n\nYou can use UnguessableToken::ToString to convert the token for use in keying, assuming that you can key events on a std::string.",
+      "parentUuid": "2c8422d8_a81ce74a",
+      "range": {
+        "startLine": 507,
+        "startChar": 0,
+        "endLine": 507,
+        "endChar": 78
+      },
+      "revId": "6383d7ca7604669b8d08522ee84b8a23a4d08089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
