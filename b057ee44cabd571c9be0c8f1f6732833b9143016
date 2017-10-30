@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b80da97_776afc9f",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_browser_tests.filter",
+        "patchSetId": 6
+      },
+      "lineNbr": 2444,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-30T16:59:54Z",
+      "side": 1,
+      "message": "style nit: Please make the description a sentence (with capitalized initial character and a trailing \u0027.\u0027)",
+      "revId": "b057ee44cabd571c9be0c8f1f6732833b9143016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
