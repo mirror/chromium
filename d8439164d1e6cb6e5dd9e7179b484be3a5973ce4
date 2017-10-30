@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "81e96dfe_7ce9b6a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-30T00:13:48Z",
+      "side": 1,
+      "message": "Perhaps:\n\n\"Log a console message when a devtools-triggered app banner is suppressed\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "d8439164d1e6cb6e5dd9e7179b484be3a5973ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5528b646_5373b469",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-30T00:13:48Z",
+      "side": 1,
+      "message": "Could add at the start:\n\nDevelopers using devtools to simulate add to home screen currently receive no feedback if the site they are testing on suppresses the app banner. This can make it seem like the devtools functionality is flaky.",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "d8439164d1e6cb6e5dd9e7179b484be3a5973ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14cb52f1_7d75f868",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-30T00:13:48Z",
+      "side": 1,
+      "message": "Let\u0027s put this under 739344",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 12,
+        "endChar": 4
+      },
+      "revId": "d8439164d1e6cb6e5dd9e7179b484be3a5973ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70a87ddb_8797dac5",
         "filename": "chrome/browser/banners/app_banner_manager.cc",
         "patchSetId": 1
@@ -13,6 +82,24 @@
       "writtenOn": "2017-10-29T23:58:05Z",
       "side": 1,
       "message": "Feel free to bikeshed on the wording.",
+      "revId": "d8439164d1e6cb6e5dd9e7179b484be3a5973ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606f6f12_dd639971",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-30T00:13:48Z",
+      "side": 1,
+      "message": "What about:\n\n\"Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner\".",
+      "parentUuid": "70a87ddb_8797dac5",
       "revId": "d8439164d1e6cb6e5dd9e7179b484be3a5973ce4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
