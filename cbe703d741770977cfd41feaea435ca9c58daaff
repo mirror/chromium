@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8265fabd_9ebecf88",
+        "filename": "ios/chrome/browser/ui/ntp/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-30T08:12:06Z",
+      "side": 1,
+      "message": "Add a // TODO(crbug.com/768817): Remove this once new bookmarks are enabled by default.",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 223,
+        "endChar": 25
+      },
+      "revId": "cbe703d741770977cfd41feaea435ca9c58daaff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
