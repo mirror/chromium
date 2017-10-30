@@ -325,9 +325,13 @@ void RenderWidgetHostViewEventHandler::OnMouseEvent(ui::MouseEvent* event) {
       (event->type() == ui::ET_MOUSE_ENTERED ||
        event->type() == ui::ET_MOUSE_EXITED ||
        event->type() == ui::ET_MOUSE_MOVED)) {
+    LOG(ERROR)
+        << "RenderWidgetHostViewEventHandler::OnMouseEvent stop propagation";
     event->StopPropagation();
     return;
   }
+
+  LOG(ERROR) << "RenderWidgetHostViewEventHandler::OnMouseEvent continue";
 
   if (event->type() == ui::ET_MOUSEWHEEL) {
 #if defined(OS_WIN)
