@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e22c9b8_c9ac763b",
+        "filename": "components/dom_distiller/ios/distiller_page_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-30T16:22:34Z",
+      "side": 1,
+      "message": "I understand that change is not related to your CL, but I\u0027m confused by this code.\n\nDo you know why web_state-\u003eIsLoading() can not be used here?\nAnd do you know why this check exists in the first place?\n\nI\u0027m worrying that this CL will make harder to find the original author of the code who could explain the logic behind the check. Maybe gambard@ knows why the code was written in this way?",
+      "range": {
+        "startLine": 201,
+        "startChar": 7,
+        "endLine": 201,
+        "endChar": 15
+      },
+      "revId": "744ea1922c78f9a7eb93238b0add1b204ad79d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
