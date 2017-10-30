@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeb05d51_d3feb524",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-30T17:32:07Z",
+      "side": 1,
+      "message": "Would you update ScopedRestoreICUDefaultLocale to take an optional ctor string argument to set a temporary locale? That would simplify things for a lot of tests:\n\nScopedRestoreICUDefaultLocale(const std::string\u0026 locale \u003d std::string());\n...\nScopedRestoreICUDefaultLocale::ScopedRestoreICUDefaultLocale(const std::string\u0026 locale)\n    : default_locale_(uloc_getDefault()) {\n  if (!locale.empty())\n    i18n::SetICUDefaultLocale(locale.data());\n}\n\nThen test classes with a member can just do:\n  ShelfViewTextDirectionTest() scoped_locale_(GetParam() ? \"he\" : \"\") {}\nAnd test fixtures with a local can just do:\n  base::test::ScopedRestoreICUDefaultLocale scoped_locale(\"he\");\n(instead of always having separate restore objects and set function calls)\n\nYou\u0027ll need review from phajdan.jr@chromium.org, CC\u0027ed for any early thoughts.",
+      "revId": "ef07213918d780a50994004a91155cfbfdacb4f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee85fb41_908a91b6",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-30T17:32:07Z",
+      "side": 1,
+      "message": "If this class does wind up setting a temp locale, I prefer the name |scoped_locale_| here and elsewhere.",
+      "revId": "ef07213918d780a50994004a91155cfbfdacb4f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
