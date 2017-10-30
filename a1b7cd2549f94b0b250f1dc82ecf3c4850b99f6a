@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "086c62fc_04998b87",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/site-isolation-postmessage-cross-origin.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-30T01:47:58Z",
+      "side": 1,
+      "message": "Removing this line also causes the test to pass",
+      "revId": "a1b7cd2549f94b0b250f1dc82ecf3c4850b99f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
