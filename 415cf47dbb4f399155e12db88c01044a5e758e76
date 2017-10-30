@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7c13b1e_c37764e4",
+        "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialFunctions.h.tmpl",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-30T23:24:40Z",
+      "side": 1,
+      "message": "These static methods don\u0027t have any logical link to ComputedStyle, which stores the computed values of each property for a single element. Am I correct in thinking that these methods actually return the computed values (*actually resolved values*) of the \u0027initial\u0027 value of the properties? If so I think \u0027values\u0027 should be in the name. I suggest something like \"StyleInitialComputedValues\" or \"InitialComputedStyleValues\" (If not for consistency with the rest of the code base I would like to suggest \u0027resolved\u0027 instead of \u0027computed\u0027 but legacy).",
+      "revId": "415cf47dbb4f399155e12db88c01044a5e758e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b284db5f_8291c7f9",
+        "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialFunctions.h.tmpl",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-30T23:24:40Z",
+      "side": 1,
+      "message": "Please add class level documentation",
+      "revId": "415cf47dbb4f399155e12db88c01044a5e758e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab13cdb_c2ca6cbd",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-30T23:24:40Z",
+      "side": 1,
+      "message": "nit: is \"Initial\" required in the function names? they will always be prefixed with ComputedStyleInitialFunctions:: (or whatever prefix you end up going with which already contains the word \u0027initial\u0027), which reads as rudundant",
+      "revId": "415cf47dbb4f399155e12db88c01044a5e758e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24eded7_b8362f6d",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-30T23:24:40Z",
+      "side": 1,
+      "message": "this documentation will need to be updated",
+      "revId": "415cf47dbb4f399155e12db88c01044a5e758e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
