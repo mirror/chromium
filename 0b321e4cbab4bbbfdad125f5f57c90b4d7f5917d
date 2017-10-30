@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "2ac2f00a_36762f24",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7f410f_56340740",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 5
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "823c29e9_0bb9119d",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -68,6 +92,30 @@
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc816c39_8dfc61bc",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "823c29e9_0bb9119d",
+      "range": {
+        "startLine": 55,
+        "startChar": 43,
+        "endLine": 55,
+        "endChar": 67
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "40ed8ef3_f9cd2d34",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71ee7f14_87a5056a",
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f32c557_13d5a619",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -125,6 +191,30 @@
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e12cc0e_90fc7449",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f32c557_13d5a619",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 55
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +241,30 @@
     },
     {
       "key": {
+        "uuid": "9e105d0b_cee8324e",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4fa4646_91a5e034",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 51
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0288138_7f3e0700",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -174,6 +288,30 @@
     },
     {
       "key": {
+        "uuid": "8e021719_93cb8b92",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0288138_7f3e0700",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 49
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a768779d_d8ecea00",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -194,6 +332,30 @@
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c065a815_033a7d59",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a768779d_d8ecea00",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +416,30 @@
     },
     {
       "key": {
+        "uuid": "d5ad953b_4dc08385",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a6efafc_08287927",
+      "range": {
+        "startLine": 99,
+        "startChar": 53,
+        "endLine": 99,
+        "endChar": 75
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e83a5e1d_4059cec3",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -277,6 +463,30 @@
     },
     {
       "key": {
+        "uuid": "364e0649_196f0971",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "No. SetSettingsOnIOThread doesn\u0027t reply synchronously.",
+      "parentUuid": "e83a5e1d_4059cec3",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 37
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02cccadb_23bf6573",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -297,6 +507,30 @@
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986a560b_e25704f2",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02cccadb_23bf6573",
+      "range": {
+        "startLine": 104,
+        "startChar": 40,
+        "endLine": 104,
+        "endChar": 44
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -337,6 +571,30 @@
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc915c7_d1680bb2",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f83b7cdd_1ac1e87b",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 22
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -386,6 +644,54 @@
     },
     {
       "key": {
+        "uuid": "a0d2f839_e1d1d87d",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b93e6a31_7fdcf296",
+      "range": {
+        "startLine": 129,
+        "startChar": 52,
+        "endLine": 129,
+        "endChar": 53
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e36c8f6_0a4bbab5",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b47ddfdb_65a15105",
+      "range": {
+        "startLine": 129,
+        "startChar": 34,
+        "endLine": 129,
+        "endChar": 50
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8adf82f_85070058",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -409,6 +715,30 @@
     },
     {
       "key": {
+        "uuid": "c6b6123c_8c00f3bc",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8adf82f_85070058",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 28
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0310ec7a_60ad7e23",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -429,6 +759,30 @@
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b04c97_de5779be",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0310ec7a_60ad7e23",
+      "range": {
+        "startLine": 138,
+        "startChar": 24,
+        "endLine": 138,
+        "endChar": 25
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -529,6 +883,30 @@
     },
     {
       "key": {
+        "uuid": "ceed6124_a85f98a8",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25d58299_ab2a7b1e",
+      "range": {
+        "startLine": 301,
+        "startChar": 10,
+        "endLine": 301,
+        "endChar": 15
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f342e325_001c0351",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -540,6 +918,30 @@
       "writtenOn": "2017-10-26T16:56:19Z",
       "side": 1,
       "message": "These should be typemaps.",
+      "range": {
+        "startLine": 347,
+        "startChar": 0,
+        "endLine": 384,
+        "endChar": 1
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd547ce_1b632f1c",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Can I use NOTREACHED in typemap transformations that I won\u0027t use?",
+      "parentUuid": "f342e325_001c0351",
       "range": {
         "startLine": 347,
         "startChar": 0,
@@ -592,6 +994,30 @@
     },
     {
       "key": {
+        "uuid": "743d5113_3d5a1679",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Removed. This is leftover from when I was trying to get rid of spurious error messages in logcat.",
+      "parentUuid": "68311178_81bc192b",
+      "range": {
+        "startLine": 406,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 0
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fd80b0d_6cec7728",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -612,6 +1038,30 @@
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32cb0b30_26f4337d",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fd80b0d_6cec7728",
+      "range": {
+        "startLine": 439,
+        "startChar": 18,
+        "endLine": 439,
+        "endChar": 25
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -662,6 +1112,30 @@
     },
     {
       "key": {
+        "uuid": "b5a0d257_9c31c31a",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "275bbe8b_d0555b79",
+      "range": {
+        "startLine": 459,
+        "startChar": 6,
+        "endLine": 459,
+        "endChar": 21
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31265682_b0d0653e",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -702,6 +1176,30 @@
     },
     {
       "key": {
+        "uuid": "dc38c4a0_54c2ef0a",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "StrongBinding seems to solve this.",
+      "parentUuid": "e7e31b29_5aa39f7b",
+      "range": {
+        "startLine": 477,
+        "startChar": 6,
+        "endLine": 477,
+        "endChar": 22
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2315a6d_dd61c73d",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.h",
         "patchSetId": 13
@@ -725,6 +1223,30 @@
     },
     {
       "key": {
+        "uuid": "7ee26b4b_5beea4cb",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2315a6d_dd61c73d",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "092bdc0a_89fec7ab",
         "filename": "chrome/browser/printing/print_job_worker.h",
         "patchSetId": 13
@@ -736,6 +1258,30 @@
       "writtenOn": "2017-10-26T16:56:19Z",
       "side": 1,
       "message": "Can we choose a better name? Or fix the issue with base::Bind. It shouldn\u0027t be choosing the other implementation.",
+      "range": {
+        "startLine": 60,
+        "startChar": 18,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9b0cc0_73d6c1d2",
+        "filename": "chrome/browser/printing/print_job_worker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "I\u0027d rather change the old method to SetSettingsFromDictionary.\nI could take a shot at base::Bind but this doesn\u0027t look obvious.",
+      "parentUuid": "092bdc0a_89fec7ab",
       "range": {
         "startLine": 60,
         "startChar": 18,
@@ -771,6 +1317,30 @@
     },
     {
       "key": {
+        "uuid": "357d0833_3852d268",
+        "filename": "chrome/browser/printing/print_job_worker_owner.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "The comment only refers to the constructor.\n\"Single-threaded context\" is a named thread (e.g. UI or IO) as opposed to a thread from a thread pool. At least, that\u0027s the term that\u0027s used in ThreadTaskRunnerHandle::Get\nhttps://cs.chromium.org/chromium/src/base/threading/thread_task_runner_handle.cc?l\u003d29\nwhich is called from this constructor.",
+      "parentUuid": "fd5b7cc9_7cd3b13d",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 51
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff459149_22c8ed8a",
         "filename": "chrome/browser/printing/printer_query.cc",
         "patchSetId": 13
@@ -794,6 +1364,30 @@
     },
     {
       "key": {
+        "uuid": "47b4cc7b_fa9f1982",
+        "filename": "chrome/browser/printing/printer_query.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff459149_22c8ed8a",
+      "range": {
+        "startLine": 106,
+        "startChar": 37,
+        "endLine": 106,
+        "endChar": 41
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e75b3d09_451913ac",
         "filename": "chrome/browser/printing/printer_query.h",
         "patchSetId": 13
@@ -814,6 +1408,30 @@
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5996786_58fa4e0f",
+        "filename": "chrome/browser/printing/printer_query.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e75b3d09_451913ac",
+      "range": {
+        "startLine": 33,
+        "startChar": 24,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -862,6 +1480,30 @@
       "writtenOn": "2017-10-26T16:56:19Z",
       "side": 1,
       "message": "Are we going to use these? Otherwise I suggest just making this a gfx::Size.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 15
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "018daec1_e2f225bc",
+        "filename": "components/arc/common/print.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "we really should. CUPS has a human-readable localized label and Android requests it. The Chrome stack in-between drops it somewhere currently.",
+      "parentUuid": "5ca5c116_249a029d",
       "range": {
         "startLine": 15,
         "startChar": 0,
@@ -943,6 +1585,30 @@
     },
     {
       "key": {
+        "uuid": "10ba4dab_d281d9a7",
+        "filename": "components/arc/common/print.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "This was to avoid name collision.",
+      "parentUuid": "88e8e966_28210c28",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 10
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2981d7a4_3a7ab290",
         "filename": "components/arc/common/print.mojom",
         "patchSetId": 13
@@ -966,6 +1632,30 @@
     },
     {
       "key": {
+        "uuid": "9e96726f_46ce805a",
+        "filename": "components/arc/common/print.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Android just calls this PrintJob:\nhttps://developer.android.com/reference/android/printservice/PrintJob.html",
+      "parentUuid": "2981d7a4_3a7ab290",
+      "range": {
+        "startLine": 63,
+        "startChar": 7,
+        "endLine": 63,
+        "endChar": 18
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd83aa73_78c6a0ec",
         "filename": "components/arc/common/print.mojom",
         "patchSetId": 13
@@ -977,6 +1667,30 @@
       "writtenOn": "2017-10-26T16:56:19Z",
       "side": 1,
       "message": "Can this be https://cs.chromium.org/chromium/src/mojo/common/time.mojom?q\u003dtime+mojom\u0026sq\u003dpackage:chromium\u0026l\u003d7 ?",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 7
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744e0a38_eb49ed55",
+        "filename": "components/arc/common/print.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "I can\u0027t seem to find this inside container, though.",
+      "parentUuid": "bd83aa73_78c6a0ec",
       "range": {
         "startLine": 67,
         "startChar": 2,
@@ -1035,6 +1749,30 @@
     },
     {
       "key": {
+        "uuid": "bb875c17_a9274a85",
+        "filename": "components/arc/common/print.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "I think so.",
+      "parentUuid": "b80bcfa9_57fd23ff",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 74
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "977cf993_79732b33",
         "filename": "printing/backend/cups_ipp_util.cc",
         "patchSetId": 13
@@ -1081,6 +1819,30 @@
     },
     {
       "key": {
+        "uuid": "890169d0_e4d51864",
+        "filename": "printing/backend/cups_ipp_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29312cfd_01580162",
+      "range": {
+        "startLine": 224,
+        "startChar": 13,
+        "endLine": 224,
+        "endChar": 14
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68bb316c_7774c6ba",
         "filename": "printing/backend/cups_ipp_util.cc",
         "patchSetId": 13
@@ -1104,6 +1866,30 @@
     },
     {
       "key": {
+        "uuid": "1ac0973b_69c678e5",
+        "filename": "printing/backend/cups_ipp_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68bb316c_7774c6ba",
+      "range": {
+        "startLine": 229,
+        "startChar": 2,
+        "endLine": 229,
+        "endChar": 39
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0eccef3_0797b12c",
         "filename": "printing/printing_context.cc",
         "patchSetId": 13
@@ -1124,6 +1910,30 @@
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf0cff9_1231b52f",
+        "filename": "printing/printing_context.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-30T14:34:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0eccef3_0797b12c",
+      "range": {
+        "startLine": 149,
+        "startChar": 31,
+        "endLine": 149,
+        "endChar": 53
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
