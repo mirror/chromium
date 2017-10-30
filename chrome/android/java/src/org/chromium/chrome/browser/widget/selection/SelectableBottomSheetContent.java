@@ -57,6 +57,7 @@ public abstract class SelectableBottomSheetContent<E> implements BottomSheetCont
 
     private SelectableBottomSheetContentManager<E> mManager;
     private SelectableListToolbar<E> mToolbarView;
+    private View mContentView;
 
     /**
      * Initialize the {@link SelectableBottomSheetContent}.
@@ -66,6 +67,10 @@ public abstract class SelectableBottomSheetContent<E> implements BottomSheetCont
     public void initialize(
             final ChromeActivity activity, SelectableBottomSheetContentManager<E> manager) {
         mManager = manager;
+
+        // TODO(twellington): Remove cached ContentView once root cause of crbug.com/779470 is
+        //                    tracked down.
+        mContentView = mManager.getView();
 
         mToolbarView = manager.detachToolbarView();
         mToolbarView.setActionBarDelegate(activity.getBottomSheet().getActionBarDelegate());
@@ -90,7 +95,7 @@ public abstract class SelectableBottomSheetContent<E> implements BottomSheetCont
 
     @Override
     public View getContentView() {
-        return mManager.getView();
+        return mContentView;
     }
 
     @Override
