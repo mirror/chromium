@@ -117,6 +117,53 @@
       "revId": "9ea8c31e4be99f92f263e087b5d0b37467355d79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ca95c79_a74592e1",
+        "filename": "testing/libfuzzer/fuzzers/zlib_deflate_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-30T19:47:14Z",
+      "side": 1,
+      "message": "Ah, reading is hard :D, sorry about that. Yes, I think it would be fine to proceed without any seed corpus!",
+      "parentUuid": "af1a7561_9f00601f",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 21
+      },
+      "revId": "9ea8c31e4be99f92f263e087b5d0b37467355d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90d91b7a_051fd9aa",
+        "filename": "testing/libfuzzer/fuzzers/zlib_deflate_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-30T19:47:14Z",
+      "side": 1,
+      "message": "Let\u0027s call inflate() function after successful compression and then assert (input \u003d\u003d inflate(deflate(input)) ?\n\nHere is an example: https://cs.chromium.org/chromium/src/base/base64_encode_fuzzer.cc?l\u003d18",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 10
+      },
+      "revId": "9ea8c31e4be99f92f263e087b5d0b37467355d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
