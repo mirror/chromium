@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "821ecc1f_b223348e",
+        "filename": "services/video_capture/test/device_factory_provider_connectortest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-10-30T22:45:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b0c3c6e8_4ed02f34",
+      "revId": "2d0423cb39d907e243b54941f23c24f49baa9f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23ece01d_e9c07a0f",
         "filename": "services/video_capture/test/device_factory_provider_connectortest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "2d0423cb39d907e243b54941f23c24f49baa9f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db5617a_d625f98e",
+        "filename": "services/video_capture/test/device_factory_provider_connectortest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-10-30T22:45:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "23ece01d_e9c07a0f",
+      "revId": "2d0423cb39d907e243b54941f23c24f49baa9f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d062b805_e6611d99",
+        "filename": "services/video_capture/test/device_factory_provider_connectortest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-10-30T22:45:23Z",
+      "side": 1,
+      "message": "Will remove this one.",
+      "parentUuid": "000a5453_9aa65e14",
+      "revId": "2d0423cb39d907e243b54941f23c24f49baa9f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "327c001a_935a29e4",
         "filename": "services/video_capture/test/device_factory_provider_connectortest.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "2d0423cb39d907e243b54941f23c24f49baa9f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ed5a36_3c31ec59",
+        "filename": "services/video_capture/test/device_factory_provider_connectortest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-10-30T22:45:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "327c001a_935a29e4",
+      "revId": "2d0423cb39d907e243b54941f23c24f49baa9f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
