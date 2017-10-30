@@ -1227,6 +1227,24 @@
     },
     {
       "key": {
+        "uuid": "c61a9130_93a446fc",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T17:14:45Z",
+      "side": 1,
+      "message": "To clarify here: any Mojo callee that returns a value does so by callback. However, the caller may receive it by out-param (for sync calls) or via callback (for async calls).",
+      "parentUuid": "d7d6ea13_2c0e28d2",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b03f227c_66c5e436",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 10
