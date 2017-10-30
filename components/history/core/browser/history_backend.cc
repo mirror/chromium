@@ -1463,7 +1463,7 @@ void HistoryBackend::GetFavicon(
 
 void HistoryBackend::GetLargestFaviconForURL(
     const GURL& page_url,
-    const std::vector<int>& icon_types,
+    const std::vector<favicon_base::IconTypeSet>& icon_types_list,
     int minimum_size_in_pixels,
     favicon_base::FaviconRawBitmapResult* favicon_bitmap_result) {
   DCHECK(favicon_bitmap_result);
@@ -1478,18 +1478,16 @@ void HistoryBackend::GetLargestFaviconForURL(
       icon_mappings.empty())
     return;
 
-  int required_icon_types = 0;
-  for (std::vector<int>::const_iterator i = icon_types.begin();
-       i != icon_types.end(); ++i) {
-    required_icon_types |= *i;
-  }
+  favicon_base::IconTypeSet required_icon_types;
+  for (const favicon_base::IconTypeSet& icon_types : icon_types_list)
+    required_icon_types.insert(icon_types.begin(), icon_types.end());
 
   // Find the largest bitmap for each IconType placing in
   // |largest_favicon_bitmaps|.
   std::map<favicon_base::IconType, FaviconBitmap> largest_favicon_bitmaps;
   for (std::vector<IconMapping>::const_iterator i = icon_mappings.begin();
        i != icon_mappings.end(); ++i) {
-    if (!(i->icon_type & required_icon_types))
+    if (required_icon_types.count(i->icon_type) == 0)
       continue;
     std::vector<FaviconBitmapIDSize> bitmap_id_sizes;
     thumbnail_db_->GetFaviconBitmapIDSizes(i->icon_id, &bitmap_id_sizes);
@@ -1512,12 +1510,11 @@ void HistoryBackend::GetLargestFaviconForURL(
   // Find an icon which is larger than minimum_size_in_pixels in the order of
   // icon_types.
   FaviconBitmap largest_icon;
-  for (std::vector<int>::const_iterator t = icon_types.begin();
-       t != icon_types.end(); ++t) {
+  for (const favicon_base::IconTypeSet& icon_types : icon_types_list) {
     for (std::map<favicon_base::IconType, FaviconBitmap>::const_iterator f =
              largest_favicon_bitmaps.begin();
          f != largest_favicon_bitmaps.end(); ++f) {
-      if (f->first & *t &&
+      if (icon_types.count(f->first) != 0 &&
           (largest_icon.bitmap_id == 0 ||
            (largest_icon.pixel_size.height() < f->second.pixel_size.height() &&
             largest_icon.pixel_size.width() < f->second.pixel_size.width()))) {
@@ -1559,7 +1556,7 @@ void HistoryBackend::GetLargestFaviconForURL(
 
 void HistoryBackend::GetFaviconsForURL(
     const GURL& page_url,
-    int icon_types,
+    const favicon_base::IconTypeSet& icon_types,
     const std::vector<int>& desired_sizes,
     std::vector<favicon_base::FaviconRawBitmapResult>* bitmap_results) {
   TRACE_EVENT0("browser", "HistoryBackend::GetFaviconsForURL");
@@ -1700,7 +1697,8 @@ void HistoryBackend::MergeFavicon(
   //               modified.
 
   std::vector<IconMapping> icon_mappings;
-  thumbnail_db_->GetIconMappingsForPageURL(page_url, icon_type, &icon_mappings);
+  thumbnail_db_->GetIconMappingsForPageURL(page_url, {icon_type},
+                                           &icon_mappings);
 
   // Copy the favicon bitmaps mapped to |page_url| to the favicon at |icon_url|
   // till the limit of |kMaxFaviconBitmapsPerIconURL| is reached.
@@ -1767,7 +1765,7 @@ void HistoryBackend::SetFavicons(const base::flat_set<GURL>& page_urls,
 
 void HistoryBackend::CloneFaviconMappingsForPages(
     const GURL& page_url_to_read,
-    int icon_types,
+    const favicon_base::IconTypeSet& icon_types,
     const base::flat_set<GURL>& page_urls_to_write) {
   if (!db_ || !thumbnail_db_)
     return;
@@ -1859,13 +1857,13 @@ void HistoryBackend::SetImportedFavicons(
 
   for (size_t i = 0; i < favicon_usage.size(); i++) {
     favicon_base::FaviconID favicon_id =
-        thumbnail_db_->GetFaviconIDForFaviconURL(favicon_usage[i].favicon_url,
-                                                 favicon_base::FAVICON);
+        thumbnail_db_->GetFaviconIDForFaviconURL(
+            favicon_usage[i].favicon_url, favicon_base::IconType::kFavicon);
     if (!favicon_id) {
       // This favicon doesn't exist yet, so we create it using the given data.
       // TODO(pkotwicz): Pass in real pixel size.
       favicon_id = thumbnail_db_->AddFavicon(
-          favicon_usage[i].favicon_url, favicon_base::FAVICON,
+          favicon_usage[i].favicon_url, favicon_base::IconType::kFavicon,
           new base::RefCountedBytes(favicon_usage[i].png_data),
           FaviconBitmapType::ON_VISIT, now, gfx::Size());
     }
@@ -1892,7 +1890,7 @@ void HistoryBackend::SetImportedFavicons(
         }
       } else {
         if (!thumbnail_db_->GetIconMappingsForPageURL(
-                *url, favicon_base::FAVICON, nullptr)) {
+                *url, {favicon_base::IconType::kFavicon}, nullptr)) {
           // URL is present in history, update the favicon *only* if it is not
           // set already.
           thumbnail_db_->AddIconMapping(*url, favicon_id);
@@ -2059,7 +2057,7 @@ bool HistoryBackend::IsFaviconBitmapDataEqual(
 
 bool HistoryBackend::GetFaviconsFromDB(
     const GURL& page_url,
-    int icon_types,
+    const favicon_base::IconTypeSet& icon_types,
     const std::vector<int>& desired_sizes,
     std::vector<favicon_base::FaviconRawBitmapResult>* favicon_bitmap_results) {
   DCHECK(favicon_bitmap_results);
@@ -2211,9 +2209,10 @@ bool HistoryBackend::SetFaviconMappingsForPage(
 
   // Two icon types are considered 'equivalent' if both types are one of
   // TOUCH_ICON, TOUCH_PRECOMPOSED_ICON or WEB_MANIFEST_ICON.
-  const int equivalent_types = favicon_base::TOUCH_ICON |
-                               favicon_base::TOUCH_PRECOMPOSED_ICON |
-                               favicon_base::WEB_MANIFEST_ICON;
+  const favicon_base::IconTypeSet equivalent_types{
+      favicon_base::IconType::kTouchIcon,
+      favicon_base::IconType::kTouchPrecomposedIcon,
+      favicon_base::IconType::kWebManifestIcon};
 
   // Sets the icon mappings from |page_url| for |icon_type| to the favicon
   // with |icon_id|. Mappings for |page_url| to favicons of type |icon_type|
@@ -2234,8 +2233,9 @@ bool HistoryBackend::SetFaviconMappingsForPage(
       continue;
     }
 
-    if (icon_type == m->icon_type || ((icon_type & equivalent_types) != 0 &&
-                                      (m->icon_type & equivalent_types) != 0)) {
+    if (icon_type == m->icon_type ||
+        (equivalent_types.count(icon_type) != 0 &&
+         equivalent_types.count(m->icon_type) != 0)) {
       thumbnail_db_->DeleteIconMapping(m->mapping_id);
 
       // Removing the icon mapping may have orphaned the associated favicon so
