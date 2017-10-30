@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2f24101_468ef06b",
+        "filename": "tools/blink_rename_merge_helper/data/idl_blocklist.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T14:56:57Z",
+      "side": 0,
+      "message": "Please revert the changes from this file.",
+      "revId": "e290f176907c293600367f527f936edb186cf4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
