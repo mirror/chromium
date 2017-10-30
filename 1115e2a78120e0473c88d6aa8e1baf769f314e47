@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "3322a0cf_6a49fcfe",
+        "filename": "testing/buildbot/chromium.android.fyi.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 3552,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-30T19:22:04Z",
+      "side": 1,
+      "message": "This, somewhat unintuitively, should be gtest_tests.",
+      "revId": "1115e2a78120e0473c88d6aa8e1baf769f314e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51daca63_e0038d72",
+        "filename": "testing/buildbot/chromium.android.fyi.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 3553,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-30T19:22:04Z",
+      "side": 1,
+      "message": "Include a merge spec w/ this.",
+      "revId": "1115e2a78120e0473c88d6aa8e1baf769f314e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b4622a9_2588a9a2",
         "filename": "testing/buildbot/chromium.android.fyi.json",
         "patchSetId": 6
@@ -13,6 +47,41 @@
       "writtenOn": "2017-10-30T19:05:10Z",
       "side": 1,
       "message": "Do we need it here given that this information is also set in slave?",
+      "revId": "1115e2a78120e0473c88d6aa8e1baf769f314e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e36d15_8531b91b",
+        "filename": "testing/buildbot/chromium.android.fyi.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 3554,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-30T19:22:04Z",
+      "side": 1,
+      "message": "Nope.",
+      "parentUuid": "2b4622a9_2588a9a2",
+      "revId": "1115e2a78120e0473c88d6aa8e1baf769f314e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f4b92a_a0f0f986",
+        "filename": "testing/buildbot/chromium.android.fyi.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 3555,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-30T19:22:04Z",
+      "side": 1,
+      "message": "I think we\u0027ll need at least the logdog cipd section.",
       "revId": "1115e2a78120e0473c88d6aa8e1baf769f314e47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
