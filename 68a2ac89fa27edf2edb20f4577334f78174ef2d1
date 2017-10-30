@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dea8620_77196baa",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-30T17:26:43Z",
+      "side": 1,
+      "message": "Since \"it is redundant to use ScopedComInitializer in conjunction with ScopedWinrtInitializer\", I would have created one class whose constructor takes as argument an enum that specifies which environment to initialize. Having one class would allow us to use a base::Optional and avoid the heap allocation here. Reducing the number of heap allocations is worthwhile https://groups.google.com/a/chromium.org/d/msg/chromium-dev/EUqoIz2iFU4/hQUvt6kQQD8J",
+      "range": {
+        "startLine": 354,
+        "startChar": 2,
+        "endLine": 359,
+        "endChar": 3
+      },
+      "revId": "68a2ac89fa27edf2edb20f4577334f78174ef2d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
