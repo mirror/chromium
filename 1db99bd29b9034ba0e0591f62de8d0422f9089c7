@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bb15a789_a8973740",
+        "filename": "cc/paint/paint_font.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-30T20:43:46Z",
+      "side": 1,
+      "message": "Okeedoke.",
+      "parentUuid": "003292ed_994a2785",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93f1c57a_dc947316",
         "filename": "cc/paint/paint_op_buffer.h",
         "patchSetId": 15
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "We still need the array for the member, since we can\u0027t store a vector there, but other than that done.",
       "parentUuid": "93f1c57a_dc947316",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16368815_5af4f5b1",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-30T20:43:46Z",
+      "side": 1,
+      "message": "Can the array be stored directly on PaintTextBlob and the PaintTextBlob stored on the op directly so that it doesn\u0027t need to be reallocated and stored separately?",
+      "parentUuid": "bf469f68_c38abe57",
       "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "3ddcbc9c_59af3e70",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-30T20:43:46Z",
+      "side": 1,
+      "message": "To reiterate offline discussion, null typeface is a \"valid\" paint op for now but won\u0027t draw?",
+      "parentUuid": "2003ca53_1155cfe7",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d1743e2_46b4607f",
         "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
         "patchSetId": 15
@@ -136,6 +190,24 @@
       "side": 1,
       "message": "Can you please clarify? Do you mean to add it to PaintFlags and then pass PaintFlags instead of SkPaint to this function and then do paint_flags.getTextBlobIntercepts?\n\nOr am I misunderstanding?",
       "parentUuid": "3d1743e2_46b4607f",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ef7c1e_a5c065ff",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-30T20:43:46Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s what I was proposing.  Some desire to avoid the \"ToSkPaint\" conversion just to get text blob intercepts at some point in the future.\n\nAlthough maybe it\u0027s really PaintFont (or PaintTextBlob?) that needs getTextBlobIntercepts if we remove those things from PaintFlags?\n\nMaybe I\u0027m thinking too far ahead.  Feel free to ignore this.  I just see ToSkPaint and ToSkTextBlob stuff and wonder if it\u0027s unnecessary.",
+      "parentUuid": "b07917f5_9ef1f567",
       "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
