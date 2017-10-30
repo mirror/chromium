@@ -361,22 +361,13 @@ bool ClassicPendingScript::StartStreamingIfPossible(
                        ? TaskType::kNetworking
                        : TaskType::kNetworkingControl;
 
-  DCHECK_EQ(ready_state_ == kReady, GetResource()->IsLoaded());
   DCHECK(!streamer_);
   DCHECK(!IsCurrentlyStreaming());
   DCHECK(!streamer_done_);
-  bool success = false;
-  if (ready_state_ == kReady) {
-    ScriptStreamer::StartStreamingLoadedScript(
-        this, streamer_type, document->GetFrame()->GetSettings(), script_state,
-        TaskRunnerHelper::Get(task_type, document));
-    success = streamer_ && !streamer_->IsStreamingFinished();
-  } else {
-    ScriptStreamer::StartStreaming(
-        this, streamer_type, document->GetFrame()->GetSettings(), script_state,
-        TaskRunnerHelper::Get(task_type, document));
-    success = streamer_;
-  }
+  ScriptStreamer::StartStreaming(
+      this, streamer_type, document->GetFrame()->GetSettings(), script_state,
+      TaskRunnerHelper::Get(task_type, document));
+  bool success = streamer_ && (!streamer_->IsStreamingFinished() || !IsReady());
 
   // If we have successfully started streaming, we are required to call the
   // callback.
