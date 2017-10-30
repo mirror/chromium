@@ -33,6 +33,7 @@
 #include "platform/FileMetadata.h"
 #include "platform/SharedBuffer.h"
 #include "platform/network/EncodedFormData.h"
+#include "platform/network/FormDataEncoder.h"
 
 namespace blink {
 
@@ -65,6 +66,7 @@ bool WebHTTPBody::ElementAt(size_t index, Element& result) const {
   result.file_path.Reset();
   result.file_start = 0;
   result.file_length = 0;
+  result.blob_length = 0;
   result.modification_time = InvalidFileTime();
   result.blob_uuid.Reset();
 
@@ -80,10 +82,14 @@ bool WebHTTPBody::ElementAt(size_t index, Element& result) const {
       result.file_length = element.file_length_;
       result.modification_time = element.expected_file_modification_time_;
       break;
-    case FormDataElement::kEncodedBlob:
+    case FormDataElement::kEncodedBlob: {
       result.type = Element::kTypeBlob;
       result.blob_uuid = element.blob_uuid_;
-      break;
+      const scoped_refptr<BlobDataHandle>& handle =
+          element.optional_blob_data_handle_;
+      result.blob_length =
+          (handle && handle->size() != UINT64_MAX) ? handle->size() : -1;
+    } break;
     case FormDataElement::kEncodedFileSystemURL:
       result.type = Element::kTypeFileSystemURL;
       result.file_system_url = element.file_system_url_;
@@ -134,9 +140,12 @@ void WebHTTPBody::AppendFileSystemURLRange(const WebURL& url,
   private_->AppendFileSystemURLRange(url, start, length, modification_time);
 }
 
-void WebHTTPBody::AppendBlob(const WebString& uuid) {
+void WebHTTPBody::AppendBlob(const WebString& uuid, long long length) {
   EnsureMutable();
-  private_->AppendBlob(uuid, nullptr);
+  scoped_refptr<BlobDataHandle> handle;
+  if (length != -1)
+    handle = BlobDataHandle::Create(uuid, String(), length);
+  private_->AppendBlob(uuid, handle);
 }
 
 long long WebHTTPBody::Identifier() const {
@@ -147,6 +156,16 @@ long long WebHTTPBody::Identifier() const {
 void WebHTTPBody::SetIdentifier(long long identifier) {
   EnsureMutable();
   return private_->SetIdentifier(identifier);
+}
+
+WebVector<char> WebHTTPBody::Boundary() const {
+  DCHECK(!IsNull());
+  return private_->Boundary();
+}
+
+void WebHTTPBody::SetUniqueBoundary() {
+  EnsureMutable();
+  private_->SetBoundary(FormDataEncoder::GenerateUniqueBoundaryString());
 }
 
 bool WebHTTPBody::ContainsPasswordData() const {

@@ -36,6 +36,7 @@
 #include "content/renderer/loader/request_extra_data.h"
 #include "content/renderer/loader/web_data_consumer_handle_impl.h"
 #include "content/renderer/loader/web_url_loader_impl.h"
+#include "content/renderer/loader/web_url_request_util.h"
 #include "content/renderer/notifications/notification_data_conversions.h"
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/renderer_blink_platform_impl.h"
@@ -190,6 +191,53 @@ ToWebServiceWorkerClientInfo(const ServiceWorkerClientInfo& client_info) {
   web_client_info.client_type = client_info.client_type;
 
   return web_client_info;
+}
+
+void ToWebServiceWorkerRequest(const ResourceRequest& request,
+                               mojom::FetchEventInfoPtr fetch_event_info,
+                               blink::WebServiceWorkerRequest* web_request) {
+  DCHECK(web_request);
+  web_request->SetURL(blink::WebURL(request.url));
+  web_request->SetMethod(blink::WebString::FromUTF8(request.method));
+  if (!request.headers.IsEmpty()) {
+    for (net::HttpRequestHeaders::Iterator it(request.headers); it.GetNext();) {
+      web_request->SetHeader(blink::WebString::FromUTF8(it.name()),
+                             blink::WebString::FromUTF8(it.value()));
+    }
+  }
+  // XXX teach GetWebHTTPBody about data pipe.
+  if (request.request_body) {
+    const std::vector<ResourceRequestBody::Element>* elems =
+        request.request_body->elements();
+    for (size_t i = 0; i < elems->size(); ++i) {
+      LOG(ERROR) << "x: type=" << elems->at(i).type()
+                 << ", len=" << elems->at(i).length();
+    }
+    blink::WebHTTPBody body =
+        GetWebHTTPBodyForRequestBody(request.request_body);
+    body.SetUniqueBoundary();
+    web_request->SetBody(body);
+  }
+  web_request->SetReferrer(blink::WebString::FromUTF8(request.referrer.spec()),
+                           request.referrer_policy);
+  web_request->SetMode(request.fetch_request_mode);
+  web_request->SetIsMainResourceLoad(
+      ServiceWorkerUtils::IsMainResourceType(request.resource_type));
+  web_request->SetCredentialsMode(
+      GetBlinkFetchCredentialsMode(request.fetch_credentials_mode));
+  web_request->SetCacheMode(
+      ServiceWorkerFetchRequest::GetCacheModeFromLoadFlags(request.load_flags));
+  web_request->SetRedirectMode(
+      GetBlinkFetchRedirectMode(request.fetch_redirect_mode));
+  web_request->SetRequestContext(
+      GetBlinkRequestContext(request.fetch_request_context_type));
+  web_request->SetFrameType(GetBlinkFrameType(request.fetch_frame_type));
+  web_request->SetClientId(
+      blink::WebString::FromUTF8(fetch_event_info->client_id));
+  web_request->SetIsReload(ui::PageTransitionCoreTypeIs(
+      request.transition_type, ui::PAGE_TRANSITION_RELOAD));
+  web_request->SetIntegrity(
+      blink::WebString::FromUTF8(request.fetch_integrity));
 }
 
 // Converts the |request| to its equivalent type in the Blink API.
@@ -1529,7 +1577,8 @@ void ServiceWorkerContextClient::DispatchExtendableMessageEvent(
 }
 
 void ServiceWorkerContextClient::DispatchFetchEvent(
-    const ServiceWorkerFetchRequest& request,
+    const ResourceRequest& request,
+    mojom::FetchEventInfoPtr fetch_event_info,
     mojom::FetchEventPreloadHandlePtr preload_handle,
     mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
     DispatchFetchEventCallback callback) {
@@ -1558,9 +1607,11 @@ void ServiceWorkerContextClient::DispatchFetchEvent(
   }
 
   // Dispatch the event to the service worker execution context.
+  const bool foreign_fetch =
+      fetch_event_info->fetch_type == ServiceWorkerFetchType::FOREIGN_FETCH;
   blink::WebServiceWorkerRequest web_request;
-  ToWebServiceWorkerRequest(request, &web_request);
-  if (request.fetch_type == ServiceWorkerFetchType::FOREIGN_FETCH) {
+  ToWebServiceWorkerRequest(request, std::move(fetch_event_info), &web_request);
+  if (foreign_fetch) {
     proxy_->DispatchForeignFetchEvent(fetch_event_id, web_request);
   } else {
     proxy_->DispatchFetchEvent(fetch_event_id, web_request,

@@ -108,7 +108,8 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
 
   // mojom::ControllerServiceWorker:
   void DispatchFetchEvent(
-      const ServiceWorkerFetchRequest& request,
+      const ResourceRequest& request,
+      mojom::FetchEventInfoPtr fetch_event_info,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       DispatchFetchEventCallback callback) override {
     fetch_event_count_++;
@@ -195,7 +196,7 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
   }
 
   int fetch_event_count() const { return fetch_event_count_; }
-  const ServiceWorkerFetchRequest& fetch_event_request() const {
+  const ResourceRequest& fetch_event_request() const {
     return fetch_event_request_;
   }
 
@@ -212,7 +213,7 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
   ResponseMode response_mode_ = ResponseMode::kDefault;
 
   int fetch_event_count_ = 0;
-  ServiceWorkerFetchRequest fetch_event_request_;
+  ResourceRequest fetch_event_request_;
   base::OnceClosure fetch_event_callback_;
   mojo::BindingSet<mojom::ControllerServiceWorker> bindings_;
 

@@ -36,6 +36,7 @@
 #include "WebNonCopyable.h"
 #include "WebString.h"
 #include "WebURL.h"
+#include "WebVector.h"
 
 #if INSIDE_BLINK
 #include "platform/wtf/RefPtr.h"
@@ -56,6 +57,7 @@ class WebHTTPBody {
     double modification_time;
     WebURL file_system_url;
     WebString blob_uuid;
+    long long blob_length;  // -1 means size is unknown.
   };
 
   ~WebHTTPBody() { Reset(); }
@@ -83,18 +85,25 @@ class WebHTTPBody {
   // Append to the list of elements.
   BLINK_PLATFORM_EXPORT void AppendData(const WebData&);
   BLINK_PLATFORM_EXPORT void AppendFile(const WebString&);
-  // Passing -1 to fileLength means to the end of the file.
+  // Passing -1 to |file_length| means to the end of the file.
   BLINK_PLATFORM_EXPORT void AppendFileRange(const WebString&,
                                              long long file_start,
                                              long long file_length,
                                              double modification_time);
-  BLINK_PLATFORM_EXPORT void AppendBlob(const WebString& uuid);
+  // Passing -1 to |length| means the size is unknown. The Blob won't
+  // be fully functional (a BlobDataHandle is not attached to it, so
+  // FormDataBytesConsumer can't read it).
+  BLINK_PLATFORM_EXPORT void AppendBlob(const WebString& uuid,
+                                        long long length);
 
   // Append a resource which is identified by the FileSystem URL.
   BLINK_PLATFORM_EXPORT void AppendFileSystemURLRange(const WebURL&,
                                                       long long start,
                                                       long long length,
                                                       double modification_time);
+
+  BLINK_PLATFORM_EXPORT WebVector<char> Boundary() const;
+  BLINK_PLATFORM_EXPORT void SetUniqueBoundary();
 
   // Identifies a particular form submission instance. A value of 0 is
   // used to indicate an unspecified identifier.

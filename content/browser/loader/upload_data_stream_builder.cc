@@ -109,7 +109,6 @@ std::unique_ptr<net::UploadDataStream> UploadDataStreamBuilder::Build(
                 element.length(), element.expected_modification_time()));
         break;
       case ResourceRequestBody::Element::TYPE_BLOB: {
-        DCHECK_EQ(std::numeric_limits<uint64_t>::max(), element.length());
         DCHECK_EQ(0ul, element.offset());
         std::unique_ptr<storage::BlobDataHandle> handle =
             blob_context->GetBlobDataFromUUID(element.blob_uuid());

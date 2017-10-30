@@ -36,6 +36,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/service_worker_context.h"
+#include "content/public/common/appcache_info.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/resource_request_body.h"
@@ -555,48 +556,46 @@ void ServiceWorkerURLRequestJob::StartRequest() {
   NOTREACHED();
 }
 
-std::unique_ptr<ServiceWorkerFetchRequest>
+std::unique_ptr<ResourceRequest>
 ServiceWorkerURLRequestJob::CreateFetchRequest() {
   std::string blob_uuid;
-  uint64_t blob_size = 0;
-  if (HasRequestBody())
-    CreateRequestBodyBlob(&blob_uuid, &blob_size);
-  auto request = std::make_unique<ServiceWorkerFetchRequest>();
-  request->mode = request_mode_;
-  request->is_main_resource_load = IsMainResourceLoad();
-  request->request_context_type = request_context_type_;
-  request->frame_type = frame_type_;
-  request->url = request_->url();
+  auto request = std::make_unique<ResourceRequest>();
   request->method = request_->method();
-  const net::HttpRequestHeaders& headers = request_->extra_request_headers();
-  for (net::HttpRequestHeaders::Iterator it(headers); it.GetNext();) {
-    if (ServiceWorkerContext::IsExcludedHeaderNameForFetchEvent(it.name()))
-      continue;
-    request->headers[it.name()] = it.value();
-  }
-  request->blob_uuid = blob_uuid;
-  request->blob_size = blob_size;
-  request->blob = request_body_blob_handle_;
-  request->credentials_mode = credentials_mode_;
-  request->cache_mode = ServiceWorkerFetchRequest::GetCacheModeFromLoadFlags(
-      request_->load_flags());
-  request->redirect_mode = redirect_mode_;
-  request->integrity = integrity_;
-  request->client_id = client_id_;
+  request->url = request_->url();
+  // TODO(falken): Set site_for_cookies and request_intitiator?
+  request->referrer = GURL(request_->referrer());
+
   const ResourceRequestInfo* info = ResourceRequestInfo::ForRequest(request_);
   if (info) {
-    request->is_reload = ui::PageTransitionCoreTypeIs(
-        info->GetPageTransition(), ui::PAGE_TRANSITION_RELOAD);
-    request->referrer =
-        Referrer(GURL(request_->referrer()), info->GetReferrerPolicy());
+    request->transition_type = info->GetPageTransition();
+    request->referrer_policy = info->GetReferrerPolicy();
   } else {
     CHECK(
         request_->referrer_policy() ==
         net::URLRequest::CLEAR_REFERRER_ON_TRANSITION_FROM_SECURE_TO_INSECURE);
-    request->referrer =
-        Referrer(GURL(request_->referrer()), blink::kWebReferrerPolicyDefault);
+    request->referrer_policy = blink::kWebReferrerPolicyDefault;
   }
-  request->fetch_type = fetch_type_;
+  // TODO(falken): Set visibility_state?
+  request->headers.CopyFrom(request_->extra_request_headers());
+  request->load_flags = request_->load_flags();
+  // TODO(falken): Set origin_pid?
+  request->resource_type = resource_type_;
+  // TODO(falken): Set priority?
+  // TODO(falken): Set request_context?
+  request->appcache_host_id = kAppCacheNoHostId;
+  // TODO(falken): Set service_worker_provider_id?
+  request->originated_from_service_worker = false;
+  request->fetch_request_mode = request_mode_;
+  request->fetch_credentials_mode = credentials_mode_;
+  request->fetch_redirect_mode = redirect_mode_;
+  request->fetch_integrity = integrity_;
+  request->fetch_request_context_type = request_context_type_;
+  // TODO(falken): Set fetch_mixed_content_context_type?
+  request->fetch_frame_type = frame_type_;
+  if (HasRequestBody())
+    request->request_body = body_;
+  // request->client_id = client_id_;
+  // request->fetch_type = fetch_type_;
   return request;
 }
 
@@ -997,8 +996,8 @@ void ServiceWorkerURLRequestJob::RequestBodyFileSizesResolved(bool success) {
 
   DCHECK(!fetch_dispatcher_);
   fetch_dispatcher_.reset(new ServiceWorkerFetchDispatcher(
-      CreateFetchRequest(), active_worker, resource_type_, timeout_,
-      request()->net_log(),
+      CreateFetchRequest(), mojom::FetchEventInfo::New(client_id_, fetch_type_),
+      active_worker, resource_type_, timeout_, request()->net_log(),
       base::Bind(&ServiceWorkerURLRequestJob::DidPrepareFetchEvent,
                  weak_factory_.GetWeakPtr(),
                  base::WrapRefCounted(active_worker)),

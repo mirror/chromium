@@ -157,7 +157,7 @@ class CONTENT_EXPORT ServiceWorkerURLRequestJob : public net::URLRequestJob {
   void StartRequest();
 
   // Creates ServiceWorkerFetchRequest from |request_| and |body_|.
-  std::unique_ptr<ServiceWorkerFetchRequest> CreateFetchRequest();
+  std::unique_ptr<ResourceRequest> CreateFetchRequest();
 
   // Creates BlobDataHandle of the request body from |body_|. This handle
   // |request_body_blob_data_handle_| will be deleted when
