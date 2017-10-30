@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "762f849a_309f18cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-30T15:04:04Z",
+      "side": 1,
+      "message": "This line seems to have no effect - it does get called but when the TabModel is loaded up the previously detached Tab is not the active Tab.",
+      "range": {
+        "startLine": 843,
+        "startChar": 12,
+        "endLine": 843,
+        "endChar": 62
+      },
+      "revId": "f1ad22e8664788a35423b68ed0a92342c5927ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
