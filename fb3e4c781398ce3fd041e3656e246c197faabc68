@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bb1ab1e_2a137697",
+        "filename": "components/content_settings/core/browser/content_settings_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-30T03:10:03Z",
+      "side": 1,
+      "message": "geolocation or...",
+      "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0edf82_425bec56",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-30T03:10:03Z",
+      "side": 1,
+      "message": "Could this be inherited? I don\u0027t think there are privacy issues.",
+      "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccaaa4b9_f792f736",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-30T03:10:03Z",
+      "side": 1,
+      "message": "I think conceptually this could be inherited, I wonder if we should change it? I think the comment is out of date also.",
+      "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1978caee_513384fa",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-30T03:10:03Z",
+      "side": 1,
+      "message": "Even if this won\u0027t affect incognito, I think this can conceptually be inherited so I\u0027d be in favour of changing it.",
+      "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1266ac66_e246ddb8",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-30T03:10:03Z",
+      "side": 1,
+      "message": "I think this can be inherited.",
+      "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61148d4_b6d3fb2f",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-30T03:10:03Z",
+      "side": 1,
+      "message": "I think this can be inherited.",
+      "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98334380_1845634a",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-30T03:10:03Z",
+      "side": 1,
+      "message": "This can be inherited now too I think.",
+      "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
