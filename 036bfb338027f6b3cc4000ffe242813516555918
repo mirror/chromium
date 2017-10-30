@@ -46,6 +46,30 @@
       "revId": "036bfb338027f6b3cc4000ffe242813516555918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4b551e_a4e08947",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-30T22:44:19Z",
+      "side": 1,
+      "message": "Probably not, if we look at a context menu invocation from embedder\u0027s perspective, it might be mis-classified. A quick way to test this might be selecting some text in a \u003cwebview\u003e and right-click copy-pasting it into a a textbox. I\u0027m not confident though that it would be a comprehensive test case.",
+      "parentUuid": "cdf1b3fa_04269823",
+      "range": {
+        "startLine": 1787,
+        "startChar": 10,
+        "endLine": 1787,
+        "endChar": 42
+      },
+      "revId": "036bfb338027f6b3cc4000ffe242813516555918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
