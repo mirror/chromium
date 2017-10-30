@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "platform/graphics/paint/PaintCanvas.h"
+#include "platform/graphics/paint/PaintTextBlob.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "third_party/skia/include/core/SkMetaData.h"
 
@@ -87,7 +88,7 @@ class MockPaintCanvas : public PaintCanvas {
                     const SkPoint pos[],
                     const PaintFlags& flags));
   MOCK_METHOD4(drawTextBlob,
-               void(sk_sp<SkTextBlob> blob,
+               void(const PaintTextBlob&,
                     SkScalar x,
                     SkScalar y,
                     const PaintFlags& flags));
