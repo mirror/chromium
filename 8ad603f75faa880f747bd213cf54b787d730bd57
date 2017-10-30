@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a0edf46_fdbe9468",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_suggestion_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-30T21:08:26Z",
+      "side": 1,
+      "message": "EXPECT_NSEQ takes first argument as expected value and second as actual value. Could you please flip them.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 13
+      },
+      "revId": "8ad603f75faa880f747bd213cf54b787d730bd57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5ace66_8e316c12",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_suggestion_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-30T21:08:26Z",
+      "side": 1,
+      "message": "Do do want to add |EXPECT_EQ(formSuggestion, suggestion.suggestion);|?",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "8ad603f75faa880f747bd213cf54b787d730bd57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
