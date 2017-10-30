@@ -1474,7 +1474,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   SelectionState GetSelectionState() const {
     return bitfields_.GetSelectionState();
   }
-  virtual void SetSelectionState(SelectionState state) {
+  void SetSelectionState(SelectionState state) {
     bitfields_.SetSelectionState(state);
   }
   inline void SetSelectionStateIfNeeded(SelectionState);
@@ -1489,9 +1489,6 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   LayoutRect SelectionRectInViewCoordinates() const;
 
   bool CanBeSelectionLeaf() const;
-  bool HasSelectedChildren() const {
-    return GetSelectionState() != SelectionState::kNone;
-  }
 
   bool IsSelectable() const;
 
