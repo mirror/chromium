@@ -16,6 +16,24 @@
       "revId": "9f7e212ef71a93983b93131fb7ecc14e94a86f0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d03f88_432b1bd3",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T20:40:12Z",
+      "side": 1,
+      "message": "Yeah, in general if you have a pref used across multiple services (like browser vs. ash with --mash), one side needs to register it as PUBLIC and the other side needs to register it as foreign.\n\nIt just happens to work without the foreign part in classic ash, I think because the mojo pref service is handled in the browser, so it\u0027s not \"foreign\". I\u0027m not sure, though.\n\nFor an example of how pref permissions go in the other direction, see ash::prefs::kAccessibilityLargeCursorEnabled\n\nOr see //services/preferences/README.md\n\nBut yeah, I think code in //chrome/browser should probably be registering this pref as foreign.",
+      "parentUuid": "63559aaa_0945c90f",
+      "revId": "9f7e212ef71a93983b93131fb7ecc14e94a86f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
