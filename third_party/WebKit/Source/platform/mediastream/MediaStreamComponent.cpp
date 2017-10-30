@@ -65,7 +65,8 @@ MediaStreamComponent::MediaStreamComponent(const String& id,
     : MediaStreamComponent(id,
                            source,
                            true,
-                           false,
+                           source->GetState() == MediaStreamSource::kStateMuted,
+                           source->GetState() == MediaStreamSource::kStateEnded,
                            WebMediaStreamTrack::ContentHintType::kNone) {}
 
 MediaStreamComponent::MediaStreamComponent(
@@ -73,20 +74,23 @@ MediaStreamComponent::MediaStreamComponent(
     MediaStreamSource* source,
     bool enabled,
     bool muted,
+    bool is_ended,
     WebMediaStreamTrack::ContentHintType content_hint)
     : source_(source),
       id_(id),
       unique_id_(GenerateUniqueId()),
       enabled_(enabled),
       muted_(muted),
+      is_ended_(is_ended),
       content_hint_(content_hint),
       constraints_() {
   DCHECK(id_.length());
 }
 
 MediaStreamComponent* MediaStreamComponent::Clone() const {
-  MediaStreamComponent* cloned_component = new MediaStreamComponent(
-      CreateCanonicalUUIDString(), Source(), enabled_, muted_, content_hint_);
+  MediaStreamComponent* cloned_component =
+      new MediaStreamComponent(CreateCanonicalUUIDString(), Source(), enabled_,
+                               muted_, is_ended_, content_hint_);
   // TODO(pbos): Clone |m_trackData| as well.
   // TODO(pbos): Move properties from MediaStreamTrack here so that they are
   // also cloned. Part of crbug:669212 since stopped is currently not carried
