@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1622097_20dbedc2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-30T19:55:39Z",
+      "side": 1,
+      "message": "nit: a short comment explaining the decision here (with a bug link if necessary) might be helpful to the next person to look at this code. Something like \"Legacy SRGB; no longer supported as of M[release number]. Mapped to SRGB because [brief justification].\"",
+      "revId": "7e0a99f8ce8b6c2f8214fd8afa0fa000673efe5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
