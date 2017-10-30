@@ -70,6 +70,30 @@
       "revId": "89fa276f418277ecbe5e6565f5d6bd44a75e191d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2daa3bb_8a633846",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-30T17:41:20Z",
+      "side": 1,
+      "message": "+1 to consistent naming.\n\nI have no objection to renaming NameForAutofill to be consistent with this (or vice versa), but let\u0027s just use one name for these plz.",
+      "parentUuid": "f83c72da_8cc9aec0",
+      "range": {
+        "startLine": 439,
+        "startChar": 9,
+        "endLine": 439,
+        "endChar": 43
+      },
+      "revId": "89fa276f418277ecbe5e6565f5d6bd44a75e191d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
