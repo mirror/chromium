@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e32e0677_a921770e",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T15:31:38Z",
+      "side": 1,
+      "message": "Does the bubble work correctly in RTL languages? (I usually test with Hebrew.) It might, I just can\u0027t remember when we do horizontal flipping automatically and when you have to handle it manually.",
+      "revId": "c67ebaa1d9797c34bd9ff80aa331fecc4118a52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cfa1273_12f4955f",
         "filename": "ui/views/bubble/bubble_border.cc",
         "patchSetId": 3
@@ -13,6 +30,23 @@
       "writtenOn": "2017-10-28T01:40:49Z",
       "side": 1,
       "message": "This block and the block below haven\u0027t been touched. They just been moved to be next to other virtual/protected impls.",
+      "revId": "c67ebaa1d9797c34bd9ff80aa331fecc4118a52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e07e574_ab6e7844",
+        "filename": "ui/views/bubble/bubble_border.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T15:31:38Z",
+      "side": 1,
+      "message": "nit: nullptr since you\u0027re touching the line",
       "revId": "c67ebaa1d9797c34bd9ff80aa331fecc4118a52a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
