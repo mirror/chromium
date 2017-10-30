@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55f68da8_806bb757",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/ImpressionTracker.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-30T19:04:29Z",
+      "side": 1,
+      "message": "Slightly offtopic, but WDYT about https://chromium-review.googlesource.com/c/chromium/src/+/726083? Should we let the \"visibility\" definition be up to the caller?",
+      "range": {
+        "startLine": 20,
+        "startChar": 87,
+        "endLine": 20,
+        "endChar": 90
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9013d403_22f6e4b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/OneShotImpressionTracker.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-30T19:04:29Z",
+      "side": 1,
+      "message": "nit: Name feels weird - it\u0027s Tracker that is passed as a Listener to another Tracker...",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1308deb_aeb50d93",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItem.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-30T19:04:29Z",
+      "side": 1,
+      "message": "How about making ImpressionTracker part of NewTabPageViewHolder? If we don\u0027t set a listener it\u0027s only a reference to the view, like the viewholder already is, right? Would that reduce setup overhead? recycle() would not need to be overriden everywhere at least.",
+      "range": {
+        "startLine": 63,
+        "startChar": 40,
+        "endLine": 63,
+        "endChar": 58
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e5dfbb_1dc6c4e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-30T19:04:29Z",
+      "side": 1,
+      "message": "nit: space",
+      "range": {
+        "startLine": 73,
+        "startChar": 45,
+        "endLine": 73,
+        "endChar": 46
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
