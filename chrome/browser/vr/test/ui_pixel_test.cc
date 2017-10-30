@@ -7,6 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/vr/browser_ui_interface.h"
+#include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/test/constants.h"
 #include "chrome/browser/vr/ui_browser_interface.h"
 #include "chrome/browser/vr/ui_input_manager.h"
@@ -69,13 +70,13 @@ void UiPixelTest::DrawUi(const gfx::Vector3dF& laser_direction,
                          const gfx::Transform& controller_transform,
                          const gfx::Transform& view_matrix,
                          const gfx::Transform& proj_matrix) {
-  ControllerInfo controller_info;
-  controller_info.transform = controller_transform;
-  controller_info.opacity = controller_opacity;
-  controller_info.laser_origin = laser_origin;
-  controller_info.touchpad_button_state = button_state;
-  controller_info.app_button_state = UiInputManager::ButtonState::UP;
-  controller_info.home_button_state = UiInputManager::ButtonState::UP;
+  ui_->model()->controller.laser_direction = kForwardVector;
+  ui_->model()->controller.transform = controller_transform;
+  ui_->model()->controller.opacity = controller_opacity;
+  ui_->model()->controller.laser_origin = laser_origin;
+  ui_->model()->controller.touchpad_button_state = button_state;
+  ui_->model()->controller.app_button_state = UiInputManager::ButtonState::UP;
+  ui_->model()->controller.home_button_state = UiInputManager::ButtonState::UP;
   RenderInfo render_info;
   render_info.head_pose = view_matrix;
   render_info.left_eye_info.view_matrix = view_matrix;
@@ -93,12 +94,8 @@ void UiPixelTest::DrawUi(const gfx::Vector3dF& laser_direction,
       gfx::Vector3dF(-render_info.head_pose.matrix().get(2, 0),
                      -render_info.head_pose.matrix().get(2, 1),
                      -render_info.head_pose.matrix().get(2, 2))));
-  ui_->input_manager()->HandleInput(
-      gfx::Vector3dF(0.0f, 0.0f, -1.0f), controller_info.laser_origin,
-      controller_info.touchpad_button_state, &gesture_list,
-      &controller_info.target_point, &controller_info.reticle_render_target);
-
-  ui_->ui_renderer()->Draw(render_info, controller_info);
+  ui_->input_manager()->HandleInput(ui_->model(), &gesture_list);
+  ui_->ui_renderer()->Draw(render_info);
 
   // We produce GL errors while rendering. Clear them all so that we can check
   // for errors of subsequent calls.
