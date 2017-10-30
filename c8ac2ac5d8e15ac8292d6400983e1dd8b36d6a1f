@@ -1,0 +1,317 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23ead4a4_b0d484ad",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/__init__.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "Do we need this?\nSeems like there is only one client: generate_web_idl_collection.py, if so, generate_web_idl_collection.py should do this, I think.\n\nUpcoming 2nd phase processor wouldn\u0027t be interested in Collector but Collection already built.",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "203168d1_22241047",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "nit: they are necessary for bindings code generators.",
+      "range": {
+        "startLine": 36,
+        "startChar": 46,
+        "endLine": 36,
+        "endChar": 85
+      },
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54372a64_d444c051",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "As we have find_non_partial_definition, why these are not |find_partial_definition|?",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed06dbb7_650d79bd",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "Do we want to expose Metadata to public?\n\nI think that it\u0027s better to define this class inside Collection as a nested class.  I like the way of |find_filepath| because it hides its implementation details, e.g. how the data are stored.",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48af0db7_9b5caacc",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "As I wrote before, |load| makes me imagine that this function simply \"loads\" some data from a file and wouldn\u0027t do much things such as processing the loaded data.\n\nActually this function does a lot more things than \"load\".\n\nWhat about \"collect_from_idl_files\" for example?",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa2c198_3aa990f9",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "Why the constructor doesn\u0027t take |parser| and these functions take |parser|?  Is it expected that the parser changes so often?",
+      "range": {
+        "startLine": 26,
+        "startChar": 40,
+        "endLine": 26,
+        "endChar": 80
+      },
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e1a993_22a6ddb3",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "The API looks confusing to me.  I\u0027d recommend to return nothing.\n\nIt\u0027s difficult for me to explain why confusing, so let me show some cases.\n\n    input \u003d 5\n    output1 \u003d func(input)  # returns 10\n    output2 \u003d func(input)  # returns 20\n    # It\u0027s a surprise that output1 !\u003d output2 because func has a side effect.\n\n    input \u003d 5\n    obj.make_side_effect(input)  # returns void, remembers 10 in obj\n    obj.make_side_effect(input)  # returns void, remembers 20 in obj\n    output \u003d obj.get_result  # returns 20\n\nKey points here are 1) method name reminds us of \"side effect\", 2) we need another call to get the result, which reminds us that |obj| has internal states.",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85acb8a8_c602c518",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "What about |collect_from_ast|?\n\nI\u0027m fine with making this private, but I don\u0027t see a strong reason to make this private because this has well-defined good API (even better than collect_from_idl_files or collect_from_text).",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe020ed2_48fe846a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "I\u0027m not clear on this point, who is responsible for what.\n\nIt looks like that WebIdlBuilder generally takes care of any conversions from |Node| to |Definition|, however, now Collector takes care of Node\u0027s class (i.e. dispatching by node\u0027s class).\n\nIf WebIdlBuilder knows everything about Node, why WebIdlBuilder is not responsible for dispatching?  It\u0027s possible that \u0027Interface\u0027 node will be represented as web_idl.Interface but partial \u0027Interface\u0027 node will be represented as web_idl.PartialInterface.  Then, the dispatch should be taken care by WebIdlBuilder, I think?\n\n    # I don\u0027t know what |node| is, but WebIdlBuilder knows.\n    definition, filepath \u003d WebIdlBuilder.create(node)\n    if type(definition) \u003d\u003d Interface:\n      collection.register_definition(definition, filepath)\n\nI understand that we\u0027ll need two dispatching, but this looks a kind of layer violation to me.",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7eba338_7bd53636",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/constant.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "We can move this definition into Constant class as this is specific to Constant class rather than specific to this file.",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74be05b0_bc1c65d0",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "Could you clarify what \"all type classes\" are?\n\nFor example, Interface doesn\u0027t inherit from TypeBase.  What is the definition of \"type\" here?",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17cc51b0_be56b96c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "I\u0027m a bit uneasy to place TypeReference inbetween ObjectType and SequenceType, as this looks quite Blink-specific (or this-program-specific) concept, and being not well-mapped to the spec.",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05ff951c_874e1111",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "It\u0027s better to explain why we need this with examples.",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d08172_3ba213f1",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/operation.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "We can move this definition into Operation class.",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd94dd8_4cade891",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/out_spec_types.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "s/out_spec_types/out_of_spec_types/\n\nBy the way, Web IDL is not only the standard as you know, ECMAScript is also a standard (yes, it\u0027s not JavaScript, it\u0027s ECMAScript).  Given that the bindings code generator mainly supports ECMAScript bindings, at least we should change the description and filename.  E.g. ecmascript_types.py.",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5918256c_05eac6f2",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/typedef.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "Question: Is this different from the default __eq__ operator?  Or Python doesn\u0027t define __eq__ for a class by default?",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6e8e48_b76b5345",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/web_idl_builder.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-30T08:22:44Z",
+      "side": 1,
+      "message": "Following your wording, this sounds like \"IdlDefinitionBuilder\", although the methods are not |build| but |create|.",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
