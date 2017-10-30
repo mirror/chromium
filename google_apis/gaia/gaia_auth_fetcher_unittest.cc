@@ -96,16 +96,16 @@ void MockFetcher::Start() {
 class GaiaAuthFetcherTest : public testing::Test {
  protected:
   GaiaAuthFetcherTest()
-      : issue_auth_token_source_(GaiaUrls::GetInstance()
-                                     ->issue_auth_token_url()),
-        client_login_to_oauth2_source_(GaiaUrls::GetInstance()
-                                           ->client_login_to_oauth2_url()),
+      : issue_auth_token_source_(
+            GaiaUrls::GetInstance()->issue_auth_token_url()),
+        client_login_to_oauth2_source_(
+            GaiaUrls::GetInstance()->deprecated_client_login_to_oauth2_url()),
         oauth2_token_source_(GaiaUrls::GetInstance()->oauth2_token_url()),
         token_auth_source_(GaiaUrls::GetInstance()->token_auth_url()),
         merge_session_source_(GaiaUrls::GetInstance()->merge_session_url()),
-        uberauth_token_source_(GaiaUrls::GetInstance()
-                                   ->oauth1_login_url()
-                                   .Resolve("?source=&issueuberauth=1")),
+        uberauth_token_source_(
+            GaiaUrls::GetInstance()->oauth1_login_url().Resolve(
+                "?source=&issueuberauth=1")),
         oauth_login_gurl_(GaiaUrls::GetInstance()->oauth1_login_url()) {}
 
   void RunParsingTest(const std::string& data,
