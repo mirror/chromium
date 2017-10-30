@@ -16,6 +16,24 @@
       "revId": "99bdde86af770feceef84a4a54aa0e6869bcbc36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a51aca2_f7473577",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/focus/processing-model/preventScroll-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-30T14:43:57Z",
+      "side": 0,
+      "message": "This is test for preventScroll ability, we didn\u0027t have preventScroll before.",
+      "parentUuid": "f4189703_43275759",
+      "revId": "99bdde86af770feceef84a4a54aa0e6869bcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
