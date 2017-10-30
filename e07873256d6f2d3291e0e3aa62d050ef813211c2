@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "61a7afb9_ccf04cdc",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-30T17:56:52Z",
+      "side": 1,
+      "message": "Not to short-circuit the review process, but one point: this CL doesn\u0027t change the security model of the canvas capture code, at least not to the best of my understanding. The current code does a GPU-\u003eCPU readback synchronously. Emircan\u0027s CL attempts to use existing mechanisms to do the readback asynchronously. Checks like whether the canvas is tainted and therefore ineligible for readback (and presumably capture) are already delegated to the renderer-side canvas code.",
+      "parentUuid": "677c7fa4_75e893fa",
+      "range": {
+        "startLine": 238,
+        "startChar": 1,
+        "endLine": 239,
+        "endChar": 55
+      },
+      "revId": "e07873256d6f2d3291e0e3aa62d050ef813211c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1778edc_e060bb46",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 9
