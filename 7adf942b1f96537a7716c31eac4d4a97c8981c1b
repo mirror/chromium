@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "343bf207_33e15342",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-30T22:30:03Z",
+      "side": 1,
+      "message": "nit: braces",
+      "revId": "7adf942b1f96537a7716c31eac4d4a97c8981c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71859a73_0900bbac",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-30T22:30:03Z",
+      "side": 1,
+      "message": "Check ARIA row index like above?",
+      "revId": "7adf942b1f96537a7716c31eac4d4a97c8981c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257caa3b_cfa8eef7",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1662,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-30T22:30:03Z",
+      "side": 1,
+      "message": "Check for missing / invalid rowspan like above?",
+      "revId": "7adf942b1f96537a7716c31eac4d4a97c8981c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "837d880e_05738a4b",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-30T22:30:03Z",
+      "side": 1,
+      "message": "Need more error checking here, what if this is missing?",
+      "revId": "7adf942b1f96537a7716c31eac4d4a97c8981c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
