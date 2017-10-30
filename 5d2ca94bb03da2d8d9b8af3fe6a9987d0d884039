@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80808322_113bfc5b",
+        "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-10-30T19:51:36Z",
+      "side": 1,
+      "message": "In the case of managed pref, and where none of the preferences need to be set by the user, the OOBE screen isn\u0027t shown, so UpdateArcSessionManager would be called even if we didn\u0027t check is_play_store_enabled. The only case is_play_store_enabled is needed is when some prefs aren\u0027t managed, but kArcEnabled is (and is enabled).",
+      "parentUuid": "30da092a_cd190f5c",
+      "range": {
+        "startLine": 58,
+        "startChar": 56,
+        "endLine": 60,
+        "endChar": 66
+      },
+      "revId": "5d2ca94bb03da2d8d9b8af3fe6a9987d0d884039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5570af3_6c6b6335",
         "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "5d2ca94bb03da2d8d9b8af3fe6a9987d0d884039",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fcf2da5_d3c7bb55",
+        "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-10-30T19:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5570af3_6c6b6335",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 43
+      },
+      "revId": "5d2ca94bb03da2d8d9b8af3fe6a9987d0d884039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "26ceb3ac_f0376d19",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-10-30T19:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad4f7379_9fa786e7",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2202a9f9_90104212",
         "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
         "patchSetId": 1
@@ -369,6 +387,24 @@
       "side": 1,
       "message": "\u003e The call to RequestDisable in SetArcPlayStoreEnabledForProfile(*,false) is inside an \"if (IsArcPlayStoreEnabledPreferenceManagedForProfile(profile))\" block. IsArcPlayStoreEnabledPreferenceManagedForProfile returns PrefService::IsManagedPreference(prefs::kArcEnabled). This means it\u0027s only true if kArcEnabled is managed. Am I misunderstanding something?\n\nIn unmanaged case, it will set kArcEnabled pref to false. Then ArcPlayStoreEnabledHandler::OnPreferenceChanged should be called, and in that function, RequestDisable() should be called, IIUC.\n\nAs for managed case, if this is called, accept should be always true, as you said.\n\nIn either case, we don\u0027t need RequestDisable() explicitly here?",
       "parentUuid": "2d37a85f_9a806e12",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8af719_bd59aa0f",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-10-30T19:51:36Z",
+      "side": 1,
+      "message": "You convinced me of what you were saying, so I tried removing the explicit call and tried it. It didn\u0027t work: the mini-container was still running after the terms were rejected. I looked at the code again, at I think I know what\u0027s going on. OnPreferenceChanged is only called when the value CHANGES; if it\u0027s set to a value that\u0027s the same as what it was before, OnPreferenceChanged doesn\u0027t get called. To see this logic, we need to dig deep into the preference component: https://cs.chromium.org/chromium/src/components/prefs/pref_value_map.cc?gsn\u003dPrefObserver\u0026l\u003d48\n\nSince kArcEnabled starts as false when it\u0027s first registered: https://cs.chromium.org/chromium/src/components/arc/arc_prefs.cc?gsn\u003dpref_change_registrar_\u0026l\u003d93, calling SetArcPlayStoreEnabledForProfile(*,false) afterwards won\u0027t cause OnPreferenceChanged to be called.",
+      "parentUuid": "87a6e45e_57adeb98",
       "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
