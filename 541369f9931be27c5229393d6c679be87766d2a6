@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2b0bab5_60cd234d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T13:06:34Z",
+      "side": 1,
+      "message": "Looks like the commit message needs some updating :)",
+      "revId": "541369f9931be27c5229393d6c679be87766d2a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a2d155_802968cc",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T13:06:34Z",
+      "side": 1,
+      "message": "To summarise the offline discussion, this could be changed later to use the overflow button as an anchor instead of the media controls which would solve the problem in a more generic way.",
+      "revId": "541369f9931be27c5229393d6c679be87766d2a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8070d211_4ae013cc",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTextTrackListElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T13:06:34Z",
+      "side": 1,
+      "message": "To summarise the offline conversation, it might be good to explain that this is only for the back button as it wasn\u0027t clear to me.",
+      "revId": "541369f9931be27c5229393d6c679be87766d2a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
