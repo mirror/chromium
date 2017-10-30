@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e052f641_689fbe96",
+        "filename": "chrome/browser/ui/page_info/permission_menu_model_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-30T21:35:40Z",
+      "side": 1,
+      "message": "nit: any reason for the extra newlines in this test vs the others?",
+      "revId": "90132d2e05e1b5c2504165f703ffdc494230bab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
