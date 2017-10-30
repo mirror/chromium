@@ -96,10 +96,18 @@ public interface LocationBar extends UrlBarDelegate {
     void initializeControls(WindowDelegate windowDelegate, WindowAndroid windowAndroid);
 
     /**
-     * Sets the URL focus change listener that will be notified when the URL gains or loses focus.
+     * Adds a URL focus change listener that will be notified when the URL gains or loses focus.
+     * A listener should not be added more than once.
      * @param listener The listener to be registered.
      */
-    void setUrlFocusChangeListener(UrlFocusChangeListener listener);
+    default void addUrlFocusChangeListener(UrlFocusChangeListener listener) {}
+
+    /**
+     * Removes a URL focus change listener that was previously added. A listener should be removed
+     * exactly once.
+     * @param listener The listener to be removed.
+     */
+    default void removeUrlFocusChangeListener(UrlFocusChangeListener listener) {}
 
     /**
      * Signal a {@link UrlBar} focus change request.
