@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2435a077_b5e8e840",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 25
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-30T23:33:16Z",
+      "side": 1,
+      "message": "This is still a bit hard to read. Please try asking a local team member to work with you in person to clear this up.",
+      "revId": "222f5c583baf8ed03143f0f21e4c27bbc26be916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5e61ef_90a16f75",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 25
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-30T23:33:16Z",
+      "side": 1,
+      "message": "nit: Trailing spaces.",
+      "range": {
+        "startLine": 20,
+        "startChar": 76,
+        "endLine": 20,
+        "endChar": 77
+      },
+      "revId": "222f5c583baf8ed03143f0f21e4c27bbc26be916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
