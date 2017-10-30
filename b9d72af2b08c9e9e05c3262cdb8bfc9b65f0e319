@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21a7fc67_443adbb2",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-30T17:00:07Z",
+      "side": 1,
+      "message": "nit: retturn here and remove else. (Makes it a bit more clear that \u0027this.setPrefValue\u0027 is the expected code to be executed here).",
+      "revId": "b9d72af2b08c9e9e05c3262cdb8bfc9b65f0e319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
