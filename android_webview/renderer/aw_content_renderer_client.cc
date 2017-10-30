@@ -24,6 +24,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/error_page/common/localized_error.h"
 #include "components/printing/renderer/print_render_frame_helper.h"
 #include "components/safe_browsing/renderer/renderer_url_loader_throttle.h"
 #include "components/safe_browsing/renderer/websocket_sb_handshake_throttle.h"
@@ -206,12 +207,11 @@ void AwContentRendererClient::GetNavigationErrorStrings(
     const blink::WebURLError& error,
     std::string* error_html,
     base::string16* error_description) {
-  if (error_description) {
-    if (error.localized_description.IsEmpty())
-      *error_description = base::ASCIIToUTF16(net::ErrorToString(error.reason));
-    else
-      *error_description = error.localized_description.Utf16();
-  }
+  const bool is_post = failed_request.HttpMethod().Ascii() == "POST";
+  std::string err = error_page::LocalizedError::GetErrorDetails(
+      error.domain(), error.reason(), is_post);
+  if (error_description)
+    *error_description = err;
 
   if (!error_html)
     return;
@@ -245,9 +245,6 @@ void AwContentRendererClient::GetNavigationErrorStrings(
         reason_id = IDS_AW_WEBPAGE_PARENTAL_PERMISSION_NEEDED;
     }
   }
-
-  std::string err = error.localized_description.Utf8(
-      blink::WebString::UTF8ConversionMode::kStrictReplacingErrorsWithFFFD);
 
   if (err.empty())
     reason_id = IDS_AW_WEBPAGE_TEMPORARILY_DOWN;
