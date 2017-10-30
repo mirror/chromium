@@ -28,22 +28,19 @@ INSTANTIATE_TEST_CASE_P(All,
 class EnableLayoutNGForScope {
  public:
   EnableLayoutNGForScope() {
-    layout_ng_ = RuntimeEnabledFeatures::LayoutNGEnabled();
     paint_fragments_ = RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled();
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(true);
     RuntimeEnabledFeatures::SetLayoutNGPaintFragmentsEnabled(true);
   }
   ~EnableLayoutNGForScope() {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(layout_ng_);
     RuntimeEnabledFeatures::SetLayoutNGPaintFragmentsEnabled(paint_fragments_);
   }
 
  private:
-  bool layout_ng_;
   bool paint_fragments_;
 };
 
 TEST_P(NGTextFragmentPainterTest, TestTextStyle) {
+  ScopedLayoutNGForTest layout_ng(true);
   EnableLayoutNGForScope enable_layout_ng;
 
   SetBodyInnerHTML(R"HTML(
