@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48b1e9bd_4ad48349",
+        "filename": "chrome/browser/page_load_metrics/observers/OWNERS",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-30T17:20:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b008659f_8a9a2122",
+      "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "310b75bb_9f8b48c0",
         "filename": "chrome/browser/page_load_metrics/observers/use_counter/ukm_features.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94bbefc7_69c1e159",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter/ukm_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-30T17:20:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "310b75bb_9f8b48c0",
+      "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7a2f03ef_908ddad4",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter/ukm_features.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-30T17:20:14Z",
+      "side": 1,
+      "message": "Yea. I think if the usage is high we don\u0027t really need more specific pages to reason about breaking changes.\nBut yea I added a bit more comments.",
+      "parentUuid": "1d01b13e_2e1b915b",
+      "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b35d1d60_9528cdb5",
         "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6599e1_fbabdd58",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-30T17:20:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b35d1d60_9528cdb5",
+      "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9f0961d3_41cb3317",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-30T17:20:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddea602c_34edfd04",
+      "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7285ad8_9178bd55",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_observer.h",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50074aa8_725ef475",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-30T17:20:14Z",
+      "side": 1,
+      "message": "Yea. I thought about passing PageLoadExtraInfo before but then realized that I only needed source_id for ukm logging. But I guess passing a reference has no performance difference to passing an int, so may as well pass the whole thing to allow flexibility in the future :)",
+      "parentUuid": "f7285ad8_9178bd55",
+      "revId": "88395886dc22be6f3f56c23dce2bfe2a40a072d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
