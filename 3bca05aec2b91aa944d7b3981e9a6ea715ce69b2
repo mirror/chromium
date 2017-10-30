@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "5175f517_32270f58",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-30T02:23:23Z",
+      "side": 1,
+      "message": "I think DIV@0 and \"foo\"@0 should be equivalent. \u003c!--|--\u003e are syntax for\nrepresenting OffsetInContainer position.\n\nFor \u003cdiv\u003e\u003cspan id\u003done\u003eone\u003c/span\u003e\u003cspan id\u003dtwo\u003etwo\u003c/span\u003e\u003c/div\u003e,\n- DIV@0 \u003d\u003d Before One \u003d\u003d BeforeChildren DIV\n- DIV@1 \u003d\u003d After One \u003d\u003d Before Two\n- DIV@2 \u003d\u003d After Two \u003d\u003d AfterChildren DIV\n\nWhen \"one\" and \"two\" are Text node, this is same case of DIV@0 \u003d\u003d \"one\"@0.\n\nI think we should use RangeBoundaryPoint instead of Position[1] to\nuse one representation for one DOM position. Note: We need to have\nconstructor function to handle DIV@0 \u003d\u003d \"one\"@0 case.\n\nNote: FirstPositionInNode() and LastPositionNode() create OffsetInAnchor\nfor Text nodes instead of Before/AfterChildren.\n\nOnce we change Position::{Before,After}Node() to return OffsetInAnchor\nfor Text node, we can mitigate DIV@0 \u003d\u003d \"one\"@0. But, we still need to\nhandle this when DIV.insertBefore(\"one\", DIV.firstChild).\n\nBTW, RangeBoundaryPoint is essentially AfterNode position with offset in\ncontainer cache. \n\n[1] http://crbug.com/751387 Unify Position and RangeBoundaryPoint",
+      "parentUuid": "91fa7b01_6740455c",
+      "revId": "3bca05aec2b91aa944d7b3981e9a6ea715ce69b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b5d66b2_73ce15ac",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 4
