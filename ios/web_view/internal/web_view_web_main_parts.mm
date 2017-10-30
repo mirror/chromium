@@ -63,6 +63,8 @@ void WebViewWebMainParts::PreMainMessageLoopRun() {
   WebViewSigninClientFactory::GetInstance();
   WebViewSigninErrorControllerFactory::GetInstance();
   WebViewSigninManagerFactory::GetInstance();
+  WebViewTranslateRankerFactory::GetInstance();
+  WebViewUrlLanguageHistogramFactory::GetInstance();
 
   ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
       /*schemes=*/nullptr, 0);
