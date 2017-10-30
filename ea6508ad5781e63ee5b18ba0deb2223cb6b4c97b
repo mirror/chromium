@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b09bfe49_c404b496",
+        "filename": "chrome/browser/ui/tabs/tab_features.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T19:09:18Z",
+      "side": 1,
+      "message": "Did you intend to leave this commented out?",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 11
+      },
+      "revId": "ea6508ad5781e63ee5b18ba0deb2223cb6b4c97b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
