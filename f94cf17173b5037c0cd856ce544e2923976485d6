@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98447332_53d9a64a",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-30T13:49:30Z",
+      "side": 1,
+      "message": "There is still unsynchronized access to the dictionary (here and on lines 102 and 124). To avoid adding extra synchronization blocks, you can assign the semaphore to temporary local variables inside the existing @synchronized blocks.",
+      "range": {
+        "startLine": 105,
+        "startChar": 35,
+        "endLine": 105,
+        "endChar": 52
+      },
+      "revId": "f94cf17173b5037c0cd856ce544e2923976485d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
