@@ -22,6 +22,30 @@
       "revId": "2c2b0415c6b045e7c68df4ebcab5d1b550068f1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23841c06_a90fc73e",
+        "filename": "third_party/WebKit/Source/core/editing/EphemeralRange.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-30T02:18:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ec5aada_44b61477",
+      "range": {
+        "startLine": 172,
+        "startChar": 11,
+        "endLine": 172,
+        "endChar": 47
+      },
+      "revId": "2c2b0415c6b045e7c68df4ebcab5d1b550068f1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
