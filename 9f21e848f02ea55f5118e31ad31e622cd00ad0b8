@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5af25ca6_731390a7",
+        "filename": "content/public/test/test_frame_sink_manager_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-10-30T14:47:41Z",
+      "side": 1,
+      "message": "This is just ported from browser_tests_utils::WaitForChildFrameSurfaceReady.\n\nHowever the tests could be incorrectly using this as a signal, as this is looking for the root not the OOPIF itself.",
+      "parentUuid": "ab1929d6_cfcbb605",
+      "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b177280_baa1c882",
         "filename": "content/public/test/test_frame_sink_manager_observer.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-28T14:02:40Z",
       "side": 1,
       "message": "Every RenderWidgetHostView has a GetFrameSinkId(). You can always use that, even for OOPIFs. The plumbing isn\u0027t quite right for Mus but maybe we can fix that.",
+      "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7900fe04_59fe4721",
+        "filename": "content/public/test/test_frame_sink_manager_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-10-30T14:47:41Z",
+      "side": 1,
+      "message": "Yeah updating the piping would probably be a more correct solution.",
+      "parentUuid": "0b177280_baa1c882",
       "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "e9e56347_6b1b5b61",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-10-30T14:47:41Z",
+      "side": 1,
+      "message": "Rebased offline, will upload after we sync on details",
+      "parentUuid": "5f8fc12c_2871c824",
+      "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1e9b269_f8900404",
         "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
         "patchSetId": 1
@@ -121,6 +175,24 @@
     },
     {
       "key": {
+        "uuid": "4262b18c_f0e60b35",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-10-30T14:47:41Z",
+      "side": 1,
+      "message": "Yeah, good idea",
+      "parentUuid": "d1e9b269_f8900404",
+      "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a659977_72b766da",
         "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
         "patchSetId": 1
@@ -132,6 +204,24 @@
       "writtenOn": "2017-10-30T13:45:43Z",
       "side": 1,
       "message": "OnFirstSurfaceActivation() isn\u0027t necessarily the right signal, receiving a CompositorFrame doesn\u0027t mean the Surface will activate. You might (also?) want something like OnCompositorFrameReceived(SurfaceId) to match the existing content_unittests expectations?",
+      "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee23b5f_21cd9205",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-10-30T14:47:41Z",
+      "side": 1,
+      "message": "Yeah, there are other test utils/watcher patterns which will need something like a OnCompositorFrameReceived to subscribe to each update. I was just getting the piping in place in a smaller scope first.\n\nHowever Fady has raised concerns with how OOPIFs are even using this pattern. So we may not use the surface activation going forward.",
+      "parentUuid": "9a659977_72b766da",
       "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
