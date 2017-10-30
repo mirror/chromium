@@ -58,9 +58,6 @@ static const int kV8PrototypeInternalFieldcount = 1;
 
 typedef v8::Local<v8::FunctionTemplate> (
     *DomTemplateFunction)(v8::Isolate*, const DOMWrapperWorld&);
-typedef void (*TraceFunction)(Visitor*, ScriptWrappable*);
-typedef void (*TraceWrappersFunction)(ScriptWrappableVisitor*,
-                                      ScriptWrappable*);
 typedef ActiveScriptWrappableBase* (*ToActiveScriptWrappableFunction)(
     v8::Local<v8::Object>);
 typedef void (*ResolveWrapperReachabilityFunction)(
@@ -140,17 +137,6 @@ struct WrapperTypeInfo {
     return dom_template_function(isolate, world);
   }
 
-  void Trace(Visitor* visitor, ScriptWrappable* script_wrappable) const {
-    DCHECK(trace_function);
-    return trace_function(visitor, script_wrappable);
-  }
-
-  void TraceWrappers(ScriptWrappableVisitor* visitor,
-                     ScriptWrappable* script_wrappable) const {
-    DCHECK(trace_wrappers_function);
-    return trace_wrappers_function(visitor, script_wrappable);
-  }
-
   void PreparePrototypeAndInterfaceObject(
       v8::Local<v8::Context> context,
       const DOMWrapperWorld& world,
@@ -174,8 +160,6 @@ struct WrapperTypeInfo {
   const gin::GinEmbedder gin_embedder;
 
   DomTemplateFunction dom_template_function;
-  const TraceFunction trace_function;
-  const TraceWrappersFunction trace_wrappers_function;
   PreparePrototypeAndInterfaceObjectFunction
       prepare_prototype_and_interface_object_function;
   const char* const interface_name;
