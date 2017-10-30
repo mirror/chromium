@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c102a305_f84581af",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-30T01:29:13Z",
+      "side": 1,
+      "message": "Get it, thanks.",
+      "parentUuid": "3ab6984a_5685a0e7",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 3
+      },
+      "revId": "d179fea1a1ab5aa15b7031dccc390c3b4efacb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d7f7eac_2f22d9d9",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 24
