@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5dcfe55_d76e0565",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-30T12:43:47Z",
+      "side": 1,
+      "message": "Not thrilled about exposing this.  I think I\u0027m going to have a followup CL that adds an |animated| argument to the calls that show VCs, so that callers can decide whether or not to animate.  That might also clean up the logic in MainController a bit, but I have to figure out the details first.",
+      "revId": "5790a5acced852d33dd2ec6b8a762adab3b454dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
