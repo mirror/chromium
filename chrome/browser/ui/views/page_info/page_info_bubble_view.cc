@@ -881,6 +881,10 @@ void PageInfoBubbleView::HandleLinkClickedAsync(views::Link* source) {
   }
 }
 
+PageInfoBubbleView* PageInfoBubbleView::GetPageInfoBubbleViewForTesting() {
+  return static_cast<PageInfoBubbleView*>(g_page_info_bubble);
+}
+
 void PageInfoBubbleView::StyledLabelLinkClicked(views::StyledLabel* label,
                                                 const gfx::Range& range,
                                                 int event_flags) {
