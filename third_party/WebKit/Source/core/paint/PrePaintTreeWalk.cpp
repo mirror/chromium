@@ -10,8 +10,10 @@
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutMultiColumnSpannerPlaceholder.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/compositing/CompositingLayerPropertyUpdater.h"
+#include "core/paint/ng/ng_paint_fragment.h"
 #include "platform/graphics/paint/GeometryMapper.h"
 
 namespace blink {
@@ -234,6 +236,30 @@ void PrePaintTreeWalk::Walk(const LayoutObject& object,
       Walk(*frame_view, context);
     }
     // TODO(pdr): Investigate RemoteFrameView (crbug.com/579281).
+  }
+
+  if (RuntimeEnabledFeatures::LayoutNGEnabled() &&
+      object.IsLayoutNGBlockFlow()) {
+    // If the LayoutObject has a paint framgnet, it means this LayoutObject and
+    // its descendants are painted by NG painter.
+    // In the inline NG paint phase, this is a block flow with inline children.
+    // Update NGPaintFragment::VisualRect() from LayoutObject::VisualRect(),
+    // which was just updated by PaintInvalidator.
+    //
+    // Note, when there is a block layout root in its inline descendants; e.g.,
+    // inline block, it may not be be painted by NG painters. For this case,
+    // copying VisualRect is done after all its children are updated.
+    if (NGPaintFragment* paint_fragment =
+            ToLayoutNGBlockFlow(object).PaintFragment()) {
+      // At this point, PaintInvalidator has updated VisualRect of the
+      // LayoutObject and its descendants. Update NGPaintFragment from the
+      // LayoutObject.
+      //
+      // TODO(kojii): When we have NGPaintFragment, we should walk
+      // NGPaintFragment tree instead, computes VisualRect from fragments in
+      // PaintInvalidator, and update LayoutObject from it if needed for compat.
+      paint_fragment->UpdateVisualRectFromLayoutObject();
+    }
   }
 
   object.GetMutableForPainting().ClearPaintFlags();
