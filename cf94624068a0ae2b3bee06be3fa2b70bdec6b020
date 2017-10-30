@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1514d159_31979221",
+        "filename": "chrome/browser/sync/test/integration/two_client_typed_urls_sync_test.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-30T21:43:57Z",
+      "side": 1,
+      "message": "Why do you need sync_driver_switches.h in this file?",
+      "revId": "cf94624068a0ae2b3bee06be3fa2b70bdec6b020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97acbf73_49b82b82",
+        "filename": "chrome/browser/sync/test/integration/two_client_typed_urls_sync_test.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-30T21:43:57Z",
+      "side": 1,
+      "message": "}  // namespace",
+      "revId": "cf94624068a0ae2b3bee06be3fa2b70bdec6b020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f64fa6_d0749813",
+        "filename": "chrome/browser/sync/test/integration/two_client_typed_urls_sync_test.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-30T21:43:57Z",
+      "side": 1,
+      "message": "You are checking metadata from client 0, is this correct?\n\nAlso you just received urls from client 1, you could check their contents to ensure only kDummyUrl is present.",
+      "revId": "cf94624068a0ae2b3bee06be3fa2b70bdec6b020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "125fab96_93a47bda",
+        "filename": "chrome/browser/sync/test/integration/typed_urls_helper.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-30T21:43:57Z",
+      "side": 1,
+      "message": "I think you can derive from SingleClientStatusChangeChecker instead of StatusChangeChecker. This way you won\u0027t need to observe HistoryBackend events, waiting will be driven by sync cycle events. Could you consider?",
+      "revId": "cf94624068a0ae2b3bee06be3fa2b70bdec6b020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73fbf951_0e92d99f",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/sync/SyncTestUtil.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-30T21:43:57Z",
+      "side": 1,
+      "message": "You make this function understand the difference between JSON format of Directory vs. USS entity. This change is fragile, it relies on assumptions that are not enforced (for USS specifics will be in the key matching datatype name). It forces all tests that call this function to hardcode and pass in typeNotificationString. It introduces additional place in code that knows the difference between USS and Directory.\n\nWhat if instead you made USS entities format to JSON in a way similar to Directory? What if JSON contained SPECIFICS dictionary with type specifics (e.g. \"typed_url\") nested in it? In this case you wouldn\u0027t need to modify this function and pass in typeNotificationString from java tests.\n\nThe same applies to retrieving id.",
+      "revId": "cf94624068a0ae2b3bee06be3fa2b70bdec6b020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf63e1c_325ab64e",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-30T21:43:57Z",
+      "side": 1,
+      "message": "You shouldn\u0027t befriend some external test function, you essentially give that function full access to your internal state. Instead create member function that exposes just HistoryBackend* for test.\n\nhttps://codereview.chromium.org/2901093009/diff/60001/components/history/core/browser/history_backend.h#newcode581",
+      "revId": "cf94624068a0ae2b3bee06be3fa2b70bdec6b020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
