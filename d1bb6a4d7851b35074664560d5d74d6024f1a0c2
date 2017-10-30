@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61973371_a60c83dc",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-30T18:05:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "416b9c37_73e0e0c6",
+      "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28c6592_d4c3b935",
         "filename": "ash/login/ui/login_bubble.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f488734_6ed4d384",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-30T18:05:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a28c6592_d4c3b935",
+      "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1d2bad00_d2758111",
+        "filename": "ash/login/ui/login_bubble_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-30T18:05:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92035221_61e6b1a8",
+      "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aeb8269_3b736e17",
         "filename": "ash/login/ui/login_bubble_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9ef7de_395e3890",
+        "filename": "ash/login/ui/login_bubble_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-30T18:05:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aeb8269_3b736e17",
+      "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "0e612b84_db979d29",
+        "filename": "ash/login/ui/login_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-30T18:05:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "930d78f2_fdec2f64",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73dc9e37_d360170a",
         "filename": "ash/login/ui/login_password_view.cc",
         "patchSetId": 2
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "7d727a83_ea31b551",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-30T18:05:10Z",
+      "side": 1,
+      "message": "For the dropdown button, highlight should stay after a click(has_ink_drop_action_on_click \u003d\u003d false). The default setting is false right now, and submit button and pin button set it to true for their specific case. I\u0027m fine with setting the default to true, consider that we probably won\u0027t have a lot of menu buttons in the future.",
+      "parentUuid": "73dc9e37_d360170a",
+      "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "288a4597_de1fc586",
         "filename": "ash/login/ui/login_pin_view.cc",
         "patchSetId": 2
@@ -121,6 +235,24 @@
       "writtenOn": "2017-10-27T21:51:46Z",
       "side": 1,
       "message": "Nice cleanup",
+      "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df27c9e8_9bfed6c5",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-30T18:05:10Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "288a4597_de1fc586",
       "revId": "d1bb6a4d7851b35074664560d5d74d6024f1a0c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
