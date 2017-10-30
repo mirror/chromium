@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c041c05_34ae25d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-30T17:43:57Z",
+      "side": 1,
+      "message": "This might not be always the case. Wallpaper Picker App has a direct call to reset the default wallpaper, see https://cs.chromium.org/chromium/src/chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js?rcl\u003d5aad0df3b1f9e508f77bc6011fe7e82b2643c598\u0026l\u003d622",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9211b18a_f2cc7c40",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-30T17:43:57Z",
+      "side": 1,
+      "message": "Looks like this is another cause that the client wants to set a default wallpaper directly.",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba34502_52b746ad",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-30T17:43:57Z",
+      "side": 1,
+      "message": "I suggest not change the order of the previous function in this CL to avoid the possible regression... In previous function, it updates cache first and then set wallpaper. It does look inconsistent with SetCustomWallpaper(). If you think it\u0027s safe, you can ignore this comment. But if you\u0027re not very sure, I would suggest do it in a following small CL.",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27954aa3_d120047a",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-30T17:43:57Z",
+      "side": 1,
+      "message": "It seems this function can be easily integrated to ShowUserWallpaper()? Why do we need a separate function?",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4bf23c_83ba0010",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-30T17:43:57Z",
+      "side": 1,
+      "message": "why this change?",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d01bbd7_d88a7261",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-30T17:43:57Z",
+      "side": 1,
+      "message": "It\u0027s weird that DeleteWallpaper() does things more than just deleting wallpaper, but also set another wallpaper.",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065bae2e_e1c6f388",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-30T17:43:57Z",
+      "side": 1,
+      "message": "Seems the comments is outdated. Could you remove the sentence \"Note if the device policy....\"? Thanks!",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
