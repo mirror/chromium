@@ -139,6 +139,30 @@
     },
     {
       "key": {
+        "uuid": "63c80749_f1adc9ce",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-30T19:53:16Z",
+      "side": 1,
+      "message": "[I think base::file, for example, gets around this by using file sizes and offsets as int64_t\u0027s, probably the right thing to do here]",
+      "parentUuid": "b7228358_854562d9",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b084ffb2_64d143a6",
         "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
         "patchSetId": 2
