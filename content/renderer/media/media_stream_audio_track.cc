@@ -45,7 +45,7 @@ void MediaStreamAudioTrack::AddSink(MediaStreamAudioSink* sink) {
   // If the track has already stopped, just notify the sink of this fact without
   // adding it.
   if (stop_callback_.is_null()) {
-    sink->OnReadyStateChanged(blink::WebMediaStreamSource::kReadyStateEnded);
+    sink->OnSourceStateChanged(blink::WebMediaStreamSource::kStateEnded);
     return;
   }
 
@@ -113,7 +113,7 @@ void MediaStreamAudioTrack::Stop() {
   deliverer_.GetConsumerList(&sinks_to_end);
   for (MediaStreamAudioSink* sink : sinks_to_end) {
     deliverer_.RemoveConsumer(sink);
-    sink->OnReadyStateChanged(blink::WebMediaStreamSource::kReadyStateEnded);
+    sink->OnSourceStateChanged(blink::WebMediaStreamSource::kStateEnded);
   }
 
   weak_factory_.InvalidateWeakPtrs();
