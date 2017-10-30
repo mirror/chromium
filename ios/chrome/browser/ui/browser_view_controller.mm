@@ -4756,6 +4756,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
   if (_isToolbarControllerRelinquished)
     return nil;
 
+  return [_toolbarCoordinator toolbarController];
+
   ToolbarController* relinquishedToolbarController = nil;
   if ([_toolbarCoordinator view].hidden) {
     Tab* currentTab = [_model currentTab];
@@ -4796,6 +4798,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
     }
     _isToolbarControllerRelinquished = NO;
   }
+}
+
+- (id<ToolbarSnapshotProviding>)snapshotProvider {
+  return _toolbarCoordinator;
 }
 
 #pragma mark - TabModelObserver methods

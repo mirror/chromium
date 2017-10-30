@@ -10,4 +10,6 @@
 // Feature to choose whether the toolbar respects the safe area.
 extern const base::Feature kSafeAreaCompatibleToolbar;
 
+extern const base::Feature kToolbarSnapshotAnimation;
+
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_TOOLBAR_CONTROLLER_BASE_FEATURE_H_
