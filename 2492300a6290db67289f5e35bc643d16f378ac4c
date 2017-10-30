@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84ebc10d_b8154568",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_header_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-30T13:59:43Z",
+      "side": 1,
+      "message": "MAX → std::max\u003cCGFloat\u003e(0, screenWidth - safeAreaInsets.left - safeAreaInsets.right);",
+      "range": {
+        "startLine": 152,
+        "startChar": 6,
+        "endLine": 152,
+        "endChar": 9
+      },
+      "revId": "2492300a6290db67289f5e35bc643d16f378ac4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
