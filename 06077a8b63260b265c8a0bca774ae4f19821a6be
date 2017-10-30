@@ -34,6 +34,64 @@
       "revId": "06077a8b63260b265c8a0bca774ae4f19821a6be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0250e59a_fdbf428f",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-30T20:29:46Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not quite sure, without this the new label won\u0027t show up.\n\u003e \n\u003e oshima@ - any ideas?\n\nNOT_DRAWN is invisible layer/window. The reason why label_view_ is visible now is that RoundedContainerView has layer. If this is what you want, you can remove that, or you can also enable laner on the rounded rect view.",
+      "parentUuid": "9b11e17e_a11b178d",
+      "revId": "06077a8b63260b265c8a0bca774ae4f19821a6be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b40f525e_48f52dad",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2632,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-30T20:29:46Z",
+      "side": 1,
+      "message": "you don\u0027t need this anymore?",
+      "revId": "06077a8b63260b265c8a0bca774ae4f19821a6be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd560cfb_fb430c1e",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-30T20:29:46Z",
+      "side": 1,
+      "message": "DurationMs",
+      "range": {
+        "startLine": 44,
+        "startChar": 41,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "06077a8b63260b265c8a0bca774ae4f19821a6be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
