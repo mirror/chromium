@@ -306,8 +306,10 @@ void DocumentLoader::UpdateForSameDocumentNavigation(
     request_.SetHTTPBody(nullptr);
   }
   ClearRedirectChain();
-  if (is_client_redirect_)
+  if (is_client_redirect_) {
     AppendRedirect(old_url);
+    probe::frameHistoryNavigation(frame_, new_url.GetString());
+  }
   AppendRedirect(new_url);
 
   SetHistoryItemStateForCommit(
