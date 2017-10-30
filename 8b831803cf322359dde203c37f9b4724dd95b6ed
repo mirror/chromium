@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30c44021_92d900e4",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-30T16:06:36Z",
+      "side": 1,
+      "message": "nit: EXPECT",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 11
+      },
+      "revId": "8b831803cf322359dde203c37f9b4724dd95b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6457bac5_8ef64cfb",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-30T16:06:36Z",
+      "side": 1,
+      "message": "nit: base::string16()",
+      "range": {
+        "startLine": 120,
+        "startChar": 25,
+        "endLine": 120,
+        "endChar": 43
+      },
+      "revId": "8b831803cf322359dde203c37f9b4724dd95b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5803228a_7bcde663",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-30T16:06:36Z",
+      "side": 1,
+      "message": "nit:\nEXPECT_EQ(0u, ...)",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 44
+      },
+      "revId": "8b831803cf322359dde203c37f9b4724dd95b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166020db_19bf4db6",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-30T16:06:36Z",
+      "side": 1,
+      "message": "nit: you may extract this out of this loop as const base::string16 ...",
+      "range": {
+        "startLine": 129,
+        "startChar": 27,
+        "endLine": 129,
+        "endChar": 52
+      },
+      "revId": "8b831803cf322359dde203c37f9b4724dd95b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ae932a_57cd8e3c",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-30T16:06:36Z",
+      "side": 1,
+      "message": "nit: EXPECT",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 13
+      },
+      "revId": "8b831803cf322359dde203c37f9b4724dd95b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691e378e_06676dbb",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-30T16:06:36Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ(0u, ...)",
+      "revId": "8b831803cf322359dde203c37f9b4724dd95b6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
