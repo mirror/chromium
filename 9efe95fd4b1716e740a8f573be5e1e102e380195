@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f089b7f4_fc9ba3f7",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-30T19:23:08Z",
+      "side": 1,
+      "message": "I guess it\u0027s OK to include this diff in the patch?  Probably a no-op?",
+      "range": {
+        "startLine": 879,
+        "startChar": 15,
+        "endLine": 879,
+        "endChar": 21
+      },
+      "revId": "9efe95fd4b1716e740a8f573be5e1e102e380195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
