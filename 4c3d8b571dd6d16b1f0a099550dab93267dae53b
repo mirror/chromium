@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ad4d8ad_4ccc0f49",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-30T14:26:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9010117e_4ff74cd5",
+      "revId": "4c3d8b571dd6d16b1f0a099550dab93267dae53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ef2e62e_d2a1d3c7",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cce0e6f7_3d10ad03",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2197,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-30T14:26:57Z",
+      "side": 1,
+      "message": "I personally prefer the explicit comparison, the style guide allows both, and locally I find two similar occurrences, evenly split. So I\u0027ll let brett insist on this :-)",
+      "parentUuid": "8ef2e62e_d2a1d3c7",
+      "revId": "4c3d8b571dd6d16b1f0a099550dab93267dae53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf506229_e05fd257",
         "filename": "components/history/core/browser/thumbnail_database.cc",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "4c3d8b571dd6d16b1f0a099550dab93267dae53b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "757d748c_e7d6e3ee",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-30T14:26:57Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "bf506229_e05fd257",
+      "revId": "4c3d8b571dd6d16b1f0a099550dab93267dae53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
