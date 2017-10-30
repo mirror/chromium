@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab4cd47f_3b204a6a",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T14:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a0dff8f_82079dc8",
+      "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5484d1c0_2488b5f8",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7c8231_f4117774",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T14:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5484d1c0_2488b5f8",
+      "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "60ab4501_633dc210",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T14:56:58Z",
+      "side": 1,
+      "message": "The problem is that lines 957 and 969 need to be called either way.",
+      "parentUuid": "0e3f77bd_3bcf12a7",
+      "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95dc75d5_ceb5dda6",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.cpp",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27db5e4_de4b56d9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T14:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95dc75d5_ceb5dda6",
+      "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "83716606_54b30fba",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T14:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15e8d221_3c0e85b2",
+      "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90a41035_0acd4913",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.h",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d5b2b2_5f3d85a8",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-30T14:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90a41035_0acd4913",
+      "revId": "6878305ec012fca829b85316d581bf0603c5e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
