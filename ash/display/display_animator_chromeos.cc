@@ -26,70 +26,25 @@ namespace {
 const int kFadingAnimationDurationInMS = 200;
 const int kFadingTimeoutDurationInSeconds = 10;
 
-// CallbackRunningObserver accepts multiple layer animations and
-// runs the specified |callback| when all of the animations have finished.
-class CallbackRunningObserver {
+// CallbackRunningObserver runs the specified |callback| when all animations
+// that it observes are complete.
+class CallbackRunningObserver : public ui::ImplicitAnimationObserver {
  public:
-  CallbackRunningObserver(base::Closure callback)
-      : completed_counter_(0), animation_aborted_(false), callback_(callback) {}
-
-  void AddNewAnimator(ui::LayerAnimator* animator) {
-    auto observer = std::make_unique<Observer>(animator, this);
-    animator->AddObserver(observer.get());
-    observer_list_.push_back(std::move(observer));
-  }
+  CallbackRunningObserver(base::OnceClosure callback)
+      : callback_(std::move(callback)) {}
 
  private:
-  void OnSingleTaskCompleted() {
-    completed_counter_++;
-    if (completed_counter_ >= observer_list_.size()) {
-      base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
-      if (!animation_aborted_)
-        base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback_);
+  void OnImplicitAnimationsCompleted() override {
+    if (WasAnimationAbortedForProperty(ui::LayerAnimationElement::OPACITY) ||
+        WasAnimationAbortedForProperty(ui::LayerAnimationElement::VISIBILITY)) {
+      return;
     }
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  std::move(callback_));
+    delete this;
   }
 
-  void OnSingleTaskAborted() {
-    animation_aborted_ = true;
-    OnSingleTaskCompleted();
-  }
-
-  // The actual observer to listen each animation completion.
-  class Observer : public ui::LayerAnimationObserver {
-   public:
-    Observer(ui::LayerAnimator* animator, CallbackRunningObserver* observer)
-        : animator_(animator), observer_(observer) {}
-
-   protected:
-    // ui::LayerAnimationObserver overrides:
-    void OnLayerAnimationEnded(ui::LayerAnimationSequence* sequence) override {
-      animator_->RemoveObserver(this);
-      observer_->OnSingleTaskCompleted();
-    }
-    void OnLayerAnimationAborted(
-        ui::LayerAnimationSequence* sequence) override {
-      animator_->RemoveObserver(this);
-      observer_->OnSingleTaskAborted();
-    }
-    void OnLayerAnimationScheduled(
-        ui::LayerAnimationSequence* sequence) override {}
-    bool RequiresNotificationWhenAnimatorDestroyed() const override {
-      return true;
-    }
-
-   private:
-    ui::LayerAnimator* animator_;
-    CallbackRunningObserver* observer_;
-
-    DISALLOW_COPY_AND_ASSIGN(Observer);
-  };
-
-  size_t completed_counter_;
-  bool animation_aborted_;
-  std::vector<std::unique_ptr<Observer>> observer_list_;
-  base::Closure callback_;
-
-  DISALLOW_COPY_AND_ASSIGN(CallbackRunningObserver);
+  base::OnceClosure callback_;
 };
 
 }  // namespace
@@ -126,7 +81,7 @@ void DisplayAnimatorChromeOS::StartFadeOutAnimation(base::Closure callback) {
     ui::ScopedLayerAnimationSettings settings(hiding_layer->GetAnimator());
     settings.SetTransitionDuration(
         base::TimeDelta::FromMilliseconds(kFadingAnimationDurationInMS));
-    observer->AddNewAnimator(hiding_layer->GetAnimator());
+    settings.AddObserver(observer);
     hiding_layer->SetOpacity(1.0f);
     hiding_layer->SetVisible(true);
     hiding_layers_[root_window] = std::move(hiding_layer);
@@ -185,7 +140,7 @@ void DisplayAnimatorChromeOS::StartFadeInAnimation() {
     ui::ScopedLayerAnimationSettings settings(hiding_layer->GetAnimator());
     settings.SetTransitionDuration(
         base::TimeDelta::FromMilliseconds(kFadingAnimationDurationInMS));
-    observer->AddNewAnimator(hiding_layer->GetAnimator());
+    settings.AddObserver(observer);
     hiding_layer->SetOpacity(0.0f);
     hiding_layer->SetVisible(false);
   }
