@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8c05c8d_62f0ad1b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3425,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T05:13:07Z",
+      "side": 1,
+      "message": "Nit: call this \u0027cross-document\u0027, as it\u0027s a bit more consistent with existing terminology.",
+      "range": {
+        "startLine": 3425,
+        "startChar": 32,
+        "endLine": 3425,
+        "endChar": 36
+      },
+      "revId": "3683130bdd56f92d5b3ef5ec69dcde4c6f5b7760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156e8a44_f80a9f31",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3438,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T05:13:07Z",
+      "side": 1,
+      "message": "It\u0027s a bit sad that this requires allocating a new vector each time... though given all the *other* work that\u0027s happening, I guess it really doesn\u0027t matter \u003d)",
+      "revId": "3683130bdd56f92d5b3ef5ec69dcde4c6f5b7760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dffaa9f0_1ecd345b",
+        "filename": "content/common/url_loader_factory_bundle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T05:13:07Z",
+      "side": 1,
+      "message": "Nit: prefer emplace over insert + std::make_pair",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "3683130bdd56f92d5b3ef5ec69dcde4c6f5b7760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f79b3cb_6d8191d1",
+        "filename": "content/common/url_loader_factory_bundle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T05:13:07Z",
+      "side": 1,
+      "message": "Nit: prefer emplace over insert + std::make_pair",
+      "range": {
+        "startLine": 73,
+        "startChar": 19,
+        "endLine": 74,
+        "endChar": 23
+      },
+      "revId": "3683130bdd56f92d5b3ef5ec69dcde4c6f5b7760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c86933_ef79b427",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6233,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T05:13:07Z",
+      "side": 1,
+      "message": "Nit: call this \u0027cross-document\u0027, as it\u0027s a bit more consistent with existing terminology.",
+      "range": {
+        "startLine": 6233,
+        "startChar": 67,
+        "endLine": 6233,
+        "endChar": 70
+      },
+      "revId": "3683130bdd56f92d5b3ef5ec69dcde4c6f5b7760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
