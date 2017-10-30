@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37fd84b2_07a9b681",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-30T18:28:22Z",
+      "side": 1,
+      "message": "I don\u0027t understand this math.  GpuMemoryUsageInBytes is all tiles from all tilings.  saved_texture_ratio is the ratio between the visible layer rect scaled by the max tiling scale and the total texture size of tiles that are visible.  This maybe makes sense for masks which only have one tiling, but does not make sense for general picture layers.\n\nI think \"pixels saved by tiling\" for a multi-texture mask should be \"bytes used if this were single texture mask minus bytes used for this multi texture mask\".  I think that\u0027s only_tiling-\u003etiling_data-\u003emax_texture_size() * bytes_per_pixel - (sum of texture sizes of *all* textures in tiling).  The max_texture_size is the texture size that *would* have been used had it been a single texture mask.  The sum of all texture sizes I think is tiling-\u003eGpuMemoryUsageInBytes.  I think no ratio is needed; this should just be a subtraction?\n\nI also am not that keen on this member variable being used as a temporary.  I think this data flow would be better if you stored GPUMemoryUsageInBytesSavedByTilingForMasks as a variable on AppendQuadsData directly (like num_incomplete_tiles etc) and then asked about it in LayerTreeHostImpl.",
+      "revId": "422918b918b9653d5848cc7577534a06851a1844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
