@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40add090_629c8685",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-30T15:17:35Z",
+      "side": 1,
+      "message": "\u003e When would this conditional return false? (Perhaps there is a good\nreason, partly trying to understand NG better.)\n\nThis is non-null when this is a block flow with inline children. Added more comments, your understanding is really appreciated and critical, thank you for asking.\n\n\u003e Is there a reason why you needed things from children?\n\nOnly LayoutNGBlockFlow has a pointer to NGPaintFragment, InlineBox and LayoutInline/LayoutText don\u0027t. So when we traverse LayoutObject tree, we need to process all inline children at LayoutBlockFlow until we traverse NGPaintFragment. NGPaintFragment has a pointer to LayoutInline/LayoutText though.\n\nTo update inline children of NGPaintFragment, the current code relies on:\n* For text/inline boxes, it uses PaintOffset() from LayoutText/LayoutInline. I\u0027m not confident this is correct when line wraps though.\n* For inline block, it copies from LayoutObject.\n\nAdded more comments that when we change to walk fragment tree, this should move to PaintInvalidator.\n\n...well, my understanding on PaintInvalidator and tree walk is still very rough, if any of what I wrote didn\u0027t make sense, appreciate to be pointed out.",
+      "parentUuid": "a6845dc9_2a564f97",
+      "revId": "7fbdf45483b37b1c8053a69efb1a6106f690b259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41be0e83_8ec88d33",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
         "patchSetId": 30
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-25T17:35:13Z",
       "side": 1,
       "message": "This doesn\u0027t seem like the right time to be creating the children and attaching them.\nThe NGPaintFragments for non-inline text is already populated before the pre-paint tree\nwalk, why not also inline text runs?",
+      "revId": "7fbdf45483b37b1c8053a69efb1a6106f690b259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4cf3283_ff9dc271",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-30T15:17:35Z",
+      "side": 1,
+      "message": "Agreed 100% after understanding more. Changed to populate descendants on creation (layout phase), and update VisualRect in pre-paint.",
+      "parentUuid": "41be0e83_8ec88d33",
       "revId": "7fbdf45483b37b1c8053a69efb1a6106f690b259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
