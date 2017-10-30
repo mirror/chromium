@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "126b3adb_91460b02",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-30T19:09:12Z",
+      "side": 1,
+      "message": "I need to use this from the implementation, so I don\u0027t think it can move to a category in the test file.  I could make a separate +testing.h header, but I expect to remove this property in a future CL.",
+      "parentUuid": "e9286321_b6b48180",
+      "range": {
+        "startLine": 23,
+        "startChar": 23,
+        "endLine": 24,
+        "endChar": 74
+      },
+      "revId": "eb28a7104b4d48563d3509bf17ef43279a68e837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e4abd51_b8d463b0",
         "filename": "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.mm",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6bd5ac24_a93b7333",
+        "filename": "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-30T19:09:12Z",
+      "side": 1,
+      "message": "Added a comment.  This is not temporary -- it is an error if this delegate method is called, because this animator should not exist during a dismissal animation.",
+      "parentUuid": "4e4abd51_b8d463b0",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 15
+      },
+      "revId": "eb28a7104b4d48563d3509bf17ef43279a68e837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "110d4dd7_10a2fae8",
         "filename": "ios/chrome/browser/ui/main/transitions/tab_switcher_to_bvc_container_animator.mm",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-30T18:53:55Z",
       "side": 1,
       "message": "This is not clear to me. What happens in this code if lines 79-82 are not executed?",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "eb28a7104b4d48563d3509bf17ef43279a68e837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1244e3d7_6d05eaf4",
+        "filename": "ios/chrome/browser/ui/main/transitions/tab_switcher_to_bvc_container_animator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-30T19:09:12Z",
+      "side": 1,
+      "message": "I was getting zombie crashes when accessing |self|, implying that this object had been deallocated by the call to completionTransition.  I\u0027ve updated the comment to be more specific.",
+      "parentUuid": "110d4dd7_10a2fae8",
       "range": {
         "startLine": 77,
         "startChar": 2,
