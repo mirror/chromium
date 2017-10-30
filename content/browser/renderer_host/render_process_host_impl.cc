@@ -1744,10 +1744,12 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   channel_->AddFilter(new FontCacheDispatcher());
 #endif
 
+#if 1
   scoped_refptr<CacheStorageDispatcherHost> cache_storage_filter =
       new CacheStorageDispatcherHost();
   cache_storage_filter->Init(storage_partition_impl_->GetCacheStorageContext());
   AddFilter(cache_storage_filter.get());
+#endif
 
   scoped_refptr<ServiceWorkerDispatcherHost> service_worker_filter =
       new ServiceWorkerDispatcherHost(GetID(), resource_context);
@@ -1957,6 +1959,11 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
         base::Bind(&BlobRegistryWrapper::Bind,
                    storage_partition_impl_->GetBlobRegistry(), GetID()));
   }
+#if 0
+  channel_->AddAssociatedInterfaceForIOThread(
+      base::Bind(&CacheStorageDispatcherHost::AddBinding,
+                 base::Unretained(indexed_db_factory_.get())));
+#endif
 
   ServiceManagerConnection* service_manager_connection =
       BrowserContext::GetServiceManagerConnectionFor(browser_context_);

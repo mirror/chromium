@@ -1,0 +1,47 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module blink.mojom;
+
+import "mojo/common/time.mojom";
+import "services/network/public/interfaces/fetch_api.mojom";
+import "url/mojo/url.mojom";
+
+
+// This enum is used in UMA histograms, so don't change the order or remove
+// entries.
+// TODO(cmumford): Either move this enum, or rename it to FetchAPIResponseError.
+enum ServiceWorkerResponseError {
+  Unknown = 0,
+  PromiseRejected = 1,
+  DefaultPrevented = 2,
+  NoV8Instance = 3,
+  ResponseTypeError = 4,
+  ResponseTypeOpaque = 5,
+  ResponseTypeNotBasicOrDefault = 6,
+  BodyUsed = 7,
+  ResponseTypeOpaqueForClientRequest = 8,
+  ResponseTypeOpaqueRedirect = 9,
+  BodyLocked = 10,
+  NoForeignFetchResponse = 11,
+  ForeignFetchHeadersWithoutOrigin = 12,
+  ForeignFetchMismatchedOrigin = 13,
+  RedirectedResponseForNotFollowRequest = 14,
+  DataPipeCreationFailed = 15,
+  kLast
+};
+
+struct FetchAPIResponse {
+  array<url.mojom.Url> url_list;
+  int32 status_code;
+  string? status_text;
+  network.mojom.FetchResponseType response_type;
+  map<string, string> headers;
+  string? blob_uuid;
+  uint64 blob_size;
+  ServiceWorkerResponseError error;
+  mojo.common.mojom.Time response_time;
+  string? cache_storage_cache_name;
+  array<string> cors_exposed_header_names;
+};
