@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "14cba556_affa63d7",
+        "filename": "ui/webui/resources/cr_elements/cr_drawer/cr_drawer.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-30T23:47:40Z",
+      "side": 1,
+      "message": "It turns out that it doesn\u0027t work like we\u0027d want. \ndpapad@ points out that this is 100% of the screen, not the drawer.\nAt full animation speed I didn\u0027t notice that the animation had changed (this makes a delay before the drawer starts sliding in, then it comes in too fast). This is much easier to see at 10% animation speed.",
+      "parentUuid": "32e96fb7_e6193c6a",
+      "revId": "09743c7601b8cf5a081e833d78593f7dcf9a29b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e09f93b_438c53b0",
         "filename": "ui/webui/resources/cr_elements/cr_drawer/cr_drawer.html",
         "patchSetId": 3
