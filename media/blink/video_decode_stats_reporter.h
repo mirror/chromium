@@ -104,10 +104,12 @@ class MEDIA_BLINK_EXPORT VideoDecodeStatsReporter {
   void RunStatsTimerAtInterval(base::TimeDelta interval);
 
   // Called to begin a new report following changes to stream metadata (e.g.
-  // natural size). Arguments used to update |freames_decoded_offset_| and
-  // |frames_dropped_offset_| so that frame counts for this report begin at 0.
+  // natural size). Arguments used to update |frames_decoded_offset_|,
+  // |frames_dropped_offset_|, and |frames_decoded_power_efficient_offset| so
+  // that frame counts for this report begin at 0.
   void StartNewRecord(uint32_t frames_decoded_offset,
-                      uint32_t frames_dropped_offset);
+                      uint32_t frames_dropped_offset,
+                      uint32_t frames_decoded_power_efficient_offset);
 
   // Reset frame rate tracking state to force a fresh attempt at detection. When
   // a stable frame rate is successfully detected, UpdateStats() will begin a
@@ -207,6 +209,11 @@ class MEDIA_BLINK_EXPORT VideoDecodeStatsReporter {
   // configuration (profile, resolution, fps). Should be subtracted from
   // pipeline frames dropped stats before sending to recorder.
   uint32_t frames_dropped_offset_ = 0;
+
+  // Notes the number of power efficiently decoded frames at the start of the
+  // current video configuration (profile, resolution, fps). Should be
+  // subtracted from pipeline frames decoded stats before sending to recorder.
+  uint32_t frames_decoded_power_efficient_offset_ = 0;
 
   // Set true by OnPlaying(), false by OnPaused(). We should not run the
   // |stats_cb_timer_| when not playing.
