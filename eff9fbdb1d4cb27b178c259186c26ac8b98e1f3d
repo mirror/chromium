@@ -424,6 +424,30 @@
       "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b8efbd_b29c0a88",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-10-30T10:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac8de37a_da6c3eb2",
+      "range": {
+        "startLine": 134,
+        "startChar": 5,
+        "endLine": 134,
+        "endChar": 27
+      },
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
