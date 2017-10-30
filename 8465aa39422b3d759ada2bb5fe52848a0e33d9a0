@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23e2b8ef_7a2d61ac",
+        "filename": "chrome/browser/chromeos/login/screens/terms_of_service_screen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-30T19:46:56Z",
+      "side": 1,
+      "message": "nit:  Don\u0027t need the \"\u003d content::ResourceRequest()\" to invoke the default constructor.",
+      "range": {
+        "startLine": 118,
+        "startChar": 27,
+        "endLine": 118,
+        "endChar": 44
+      },
+      "revId": "8465aa39422b3d759ada2bb5fe52848a0e33d9a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d698cad7_e92a21c8",
+        "filename": "chrome/browser/chromeos/login/screens/terms_of_service_screen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-30T19:46:56Z",
+      "side": 1,
+      "message": "Bug:  On error, ResponseInfo() may be nullptr (And response_body may also be null).\n\nSo this should be:\n\nif (!response_body || loader-\u003eResponseInfo()-\u003emime_type !\u003d \"text/plain\") {\n  ...",
+      "range": {
+        "startLine": 157,
+        "startChar": 14,
+        "endLine": 157,
+        "endChar": 26
+      },
+      "revId": "8465aa39422b3d759ada2bb5fe52848a0e33d9a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
