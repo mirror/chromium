@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61981255_4ba4c315",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-30T22:09:20Z",
+      "side": 1,
+      "message": "I think it was done in a bit complicated way. How about this:\n\n- Don\u0027t change the logic in SplitViewController::MoveDividerToClosestFixedPosition()\n- Make FindClosestFixedPositionRatio() a class function\n- Change FindClosestFixedPositionRatio() to\nfloat SplitViewController::FindClosestFixedPositionRatio() {\n  float current_ratio \u003d divider_distance / work_area_long_length;\n  float closest_ratio \u003d 0.f;\n  for (float ratio : kFixedPositionRatios) {\n    if (current_left_window_distance \u003c left_window_min_distance ||\n        current_right_window_distance \u003c right_window_min_distance) {\n      continue;\n    } \n\n    if (std::abs(current_ratio - ratio) \u003c\n        std::abs(current_ratio - closest_ratio)) {\n      closest_ratio \u003d ratio;\n    }\n  }\n  return closest_ratio;\n}",
+      "revId": "aa63af191e2dd51b93fa33806989c55434429ec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
