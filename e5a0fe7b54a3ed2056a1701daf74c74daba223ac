@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c04fc021_bf4e786f",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-30T05:57:25Z",
+      "side": 1,
+      "message": "I investigate it a bit. You\u0027ve added SetVersionAttribute in this patch, and the pipe for the message is also associated with the pipe for ServiceWorkerContainerHost. That enforces the order between SetVersionAttributes and the callback of Unregister(), but the receiver of Unregister() doesn\u0027t exist yet. I assume that\u0027s why the unregistration blocks.\nI think it\u0027d be better to explicitly discard the |info-\u003erequest| with a comment like \"Ignore the messages to the registration object, otherwise the callbacks issued from |registration_host_ptr| may wait for receiving the messages to |info-\u003erequest|.\".",
+      "parentUuid": "76cc741d_4077f4a6",
+      "range": {
+        "startLine": 772,
+        "startChar": 2,
+        "endLine": 772,
+        "endChar": 3
+      },
+      "revId": "e5a0fe7b54a3ed2056a1701daf74c74daba223ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa8280d4_5fdbe627",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 6
