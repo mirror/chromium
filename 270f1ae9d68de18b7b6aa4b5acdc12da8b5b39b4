@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6e69351_7c72bfe4",
+        "filename": "chrome/browser/browser_process_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-30T17:30:23Z",
+      "side": 1,
+      "message": "Matt, I am not sure how to write a \"integration-y\" test for having a NetworkConnectionTracker in BrowserProcessImpl. If NetworkService is running, we don\u0027t have access to its NCN for test purpose.  The only way that I see is to have a test-only mojo APIs, but you said previously that might not be a good idea. \n\nIs there a way to get the net::NCN from NetworkService and modify it in testing?\n\n(I can also mock out NetworkConnectionTracker, but that won\u0027t give us integration test for NetworkService\u0027s case)\nThanks!",
+      "revId": "270f1ae9d68de18b7b6aa4b5acdc12da8b5b39b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
