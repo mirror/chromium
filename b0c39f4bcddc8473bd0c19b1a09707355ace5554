@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "639730ea_15bdeff1",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_model_delegate_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-30T13:24:32Z",
+      "side": 1,
+      "message": "nit: to avoid an allocation, you can use host_piece() that returns a base::StringPiece; this supports comparisons with const char*, so no need to change the code below\n\n  base::StringPiece host \u003d url.host_piece();\n  ...",
+      "revId": "b0c39f4bcddc8473bd0c19b1a09707355ace5554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
