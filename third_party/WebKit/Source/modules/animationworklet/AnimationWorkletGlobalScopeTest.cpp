@@ -187,7 +187,7 @@ class AnimationWorkletGlobalScopeTest : public ::testing::Test {
     state.animations = {test_animation_state};
 
     std::unique_ptr<CompositorMutatorOutputState> output =
-        global_scope->Mutate(state);
+        global_scope->MutateInternal(state);
     EXPECT_TRUE(output);
 
     ScriptValue constructed_after =
@@ -238,7 +238,7 @@ class AnimationWorkletGlobalScopeTest : public ::testing::Test {
     state.animations = {test_animation_state};
 
     std::unique_ptr<CompositorMutatorOutputState> output =
-        global_scope->Mutate(state);
+        global_scope->MutateInternal(state);
     EXPECT_TRUE(output);
 
     EXPECT_EQ(output->animations.size(), 1ul);
@@ -248,7 +248,7 @@ class AnimationWorkletGlobalScopeTest : public ::testing::Test {
     // Passing a new empty input state should cause the worklet to remove the
     // previously constructed animator.
     CompositorMutatorInputState empty_state;
-    output = global_scope->Mutate(empty_state);
+    output = global_scope->MutateInternal(empty_state);
     EXPECT_TRUE(output);
     EXPECT_EQ(output->animations.size(), 0ul);
     EXPECT_EQ(global_scope->GetAnimatorsSizeForTest(), 0u);
