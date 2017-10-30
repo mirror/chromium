@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d7c9693_b746e4b2",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T02:27:20Z",
+      "side": 1,
+      "message": "According to the modern style guide:\nconst scoped_refptr\u0026 -\u003e  scoped_refptr\n\n(lots of legacy code doesn\u0027t follow this)",
+      "revId": "1c6031398894334c738b675f4e291e84e5a3debb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb8c261_ab80648c",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T02:27:20Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "1c6031398894334c738b675f4e291e84e5a3debb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856e5e2c_44deeb3e",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T02:27:20Z",
+      "side": 1,
+      "message": "I think these can just be ASSERT_TRUE(sync_fired_callback_)",
+      "revId": "1c6031398894334c738b675f4e291e84e5a3debb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
