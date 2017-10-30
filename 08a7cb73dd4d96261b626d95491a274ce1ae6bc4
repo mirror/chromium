@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2fe7fe5_50c0483e",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-30T19:45:49Z",
+      "side": 1,
+      "message": "looks like we only use one of left/right min size. Can you assign the value after IsLeftWindowOnTopOrLeftOfScreen check?",
+      "revId": "08a7cb73dd4d96261b626d95491a274ce1ae6bc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce55b094_f98ccf3b",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-30T19:45:49Z",
+      "side": 1,
+      "message": "how about flip x/y axis, compute, then flip the rect back?",
+      "revId": "08a7cb73dd4d96261b626d95491a274ce1ae6bc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
