@@ -157,6 +157,24 @@
       "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3588e044_cb9fb95b",
+        "filename": "net/dns/host_resolver_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1838,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-10-30T12:03:54Z",
+      "side": 1,
+      "message": "It wasn\u0027t quite that easy: if the request had already started when the DNS config change occurred, then it failed with ERR_NETWORK_CHANGED. It instead had to be queued, but not actually started, so I\u0027ve put it in its own test case that arranges for this to happen.",
+      "parentUuid": "23c5f2a6_4340366c",
+      "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
