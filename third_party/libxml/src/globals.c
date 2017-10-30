@@ -131,7 +131,7 @@ xmlReallocFunc xmlRealloc = (xmlReallocFunc) realloc;
  *
  * Returns the copy of the string or NULL in case of error
  */
-xmlStrdupFunc xmlMemStrdup = (xmlStrdupFunc) xmlStrdup;
+xmlStrdupFunc xmlMemStrdup = (xmlStrdupFunc) strdup;
 #endif /* DEBUG_MEMORY_LOCATION || DEBUG_MEMORY */
 
 #include <libxml/threads.h>

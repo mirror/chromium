@@ -196,7 +196,6 @@ src:*third_party/freetype/*
 src:*third_party/harfbuzz-ng/*
 src:*third_party/libsrtp/*
 src:*third_party/libvpx/*
-src:*third_party/libxml/*
 src:*third_party/pdfium/third_party/lcms/*
 src:*third_party/mesa/*
 src:*third_party/sqlite/*
