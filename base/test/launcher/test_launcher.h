@@ -127,18 +127,27 @@ class TestLauncher {
   // owns the ProcessHandle.
   using GTestProcessLaunchedCallback = Callback<void(ProcessHandle, ProcessId)>;
 
+  // A callback run when a test process exceeds its runtime, immediately before
+  // it is terminated.
+  using GTestProcessTimedOutCallback =
+      Callback<void(const CommandLine& command_line)>;
+
   // Launches a child process (assumed to be gtest-based binary) using
   // |command_line|. If |wrapper| is not empty, it is prepended to the final
-  // command line. If the child process is still running after |timeout|, it
-  // is terminated. After the child process finishes |callback| is called
-  // on the same thread this method was called.
+  // command line. |launched_callback|, if not null, is run on a background
+  // thread after the child process is successfully launched. If the child
+  // process is still running after |timeout|, |timed_out_callback| is run on a
+  // background thread and the process is terminated. After the child process
+  // finishes |completed_callback| is called on the same thread this method was
+  // called.
   void LaunchChildGTestProcess(
       const CommandLine& command_line,
       const std::string& wrapper,
       base::TimeDelta timeout,
       const LaunchOptions& options,
       const GTestProcessCompletedCallback& completed_callback,
-      const GTestProcessLaunchedCallback& launched_callback);
+      const GTestProcessLaunchedCallback& launched_callback,
+      const GTestProcessTimedOutCallback& timed_out_callback);
 
   // Called when a test has finished running.
   void OnTestFinished(const TestResult& result);
