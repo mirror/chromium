@@ -10,6 +10,7 @@
 
 #include "base/callback.h"
 #include "base/time/time.h"
+#include "media/base/media_export.h"
 #include "media/base/timestamp_constants.h"
 
 namespace media {
@@ -56,11 +57,22 @@ enum PipelineStatus {
 
 typedef base::Callback<void(PipelineStatus)> PipelineStatusCB;
 
-struct PipelineStatistics {
+struct MEDIA_EXPORT PipelineStatistics {
+  PipelineStatistics();
+  PipelineStatistics(const PipelineStatistics&);
+
   uint64_t audio_bytes_decoded = 0;
   uint64_t video_bytes_decoded = 0;
   uint32_t video_frames_decoded = 0;
   uint32_t video_frames_dropped = 0;
+
+  uint32_t video_frames_decoded_power_efficient = 0;
+#ifdef ARCH_CPU_64_BITS
+  // This field is added here because some tests do memory comparison which
+  // does not work well when there is some padding.
+  uint32_t padding_field_for_tests = 0;
+#endif  // ARCH_CPU_64_BITS
+
   int64_t audio_memory_usage = 0;
   int64_t video_memory_usage = 0;
   base::TimeDelta video_keyframe_distance_average = kNoTimestamp;

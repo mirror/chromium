@@ -348,6 +348,14 @@ void ConvertProtoToPipelineStatistics(
   // media::blink::WebMediaPlayerImpl.
   stats->video_keyframe_distance_average = base::TimeDelta::Max();
 
+  // This field is not used by the rpc field.
+  stats->video_frames_decoded_power_efficient = 0;
+
+#ifdef ARCH_CPU_64_BITS
+  // This field allows tests to not break.
+  stats->padding_field_for_tests = 0;
+#endif  // ARCH_CPU_64_BITS
+
   // This field was added after the initial message definition. Check that
   // sender provided the value.
   if (stats_message.has_video_frame_duration_average_usec()) {
