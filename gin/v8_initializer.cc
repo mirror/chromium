@@ -242,6 +242,7 @@ void V8Initializer::LoadV8Natives() {
   if (g_mapped_natives)
     return;
 
+  LOG(ERROR) << "Load V8 Snapshot";
   LoadV8FileResult result = MapOpenedFile(GetOpenedFile(kNativesFileName),
                                           &g_mapped_natives);
   if (result != V8_LOAD_SUCCESS) {
@@ -260,6 +261,7 @@ void V8Initializer::LoadV8SnapshotFromFD(base::PlatformFile snapshot_pf,
   if (snapshot_pf == base::kInvalidPlatformFile)
     return;
 
+  LOG(ERROR) << "Load V8 Snapshot from FD";
   base::MemoryMappedFile::Region snapshot_region =
       base::MemoryMappedFile::Region::kWholeFile;
   if (snapshot_size != 0 || snapshot_offset != 0) {
@@ -360,7 +362,13 @@ void V8Initializer::Initialize(IsolateHolder::ScriptMode mode,
 void V8Initializer::GetV8ExternalSnapshotData(v8::StartupData* natives,
                                               v8::StartupData* snapshot) {
   GetMappedFileData(g_mapped_natives, natives);
-  GetMappedFileData(g_mapped_snapshot, snapshot);
+  if (g_mapped_v8_context_snapshot) {
+    LOG(ERROR) << "Use Context Snapshot";
+    GetMappedFileData(g_mapped_v8_context_snapshot, snapshot);
+  } else {
+    LOG(ERROR) << "Use V8 Snapshot";
+    GetMappedFileData(g_mapped_snapshot, snapshot);
+  }
 }
 
 // static
@@ -381,6 +389,7 @@ void V8Initializer::GetV8ExternalSnapshotData(const char** natives_data_out,
 void V8Initializer::LoadV8ContextSnapshot() {
   if (g_mapped_v8_context_snapshot)
     return;
+  LOG(ERROR) << "Load Context Snapshot";
 
   MapOpenedFile(GetOpenedFile(kV8ContextSnapshotFileName),
                 &g_mapped_v8_context_snapshot);
@@ -394,6 +403,7 @@ void V8Initializer::LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_pf,
                                                 int64_t snapshot_size) {
   if (g_mapped_v8_context_snapshot)
     return;
+  LOG(ERROR) << "Load Context Snapshot from FD";
   CHECK_NE(base::kInvalidPlatformFile, snapshot_pf);
 
   base::MemoryMappedFile::Region snapshot_region =
