@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "efe5d8eb_d8c73ebb",
+        "filename": "chrome/browser/ui/libgtkui/native_theme_gtk3.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-30T18:23:39Z",
+      "side": 1,
+      "message": "that\u0027s better, but GTK also has colors for inactive and active tab text, and I think you should use those.  I can figure out the selectors you need, but I can\u0027t seem to view the colors when applying this patch (I didn\u0027t launch with any flags, and I just opened the cookies window).  How do I test this?",
+      "parentUuid": "97ab3d4b_49c96ab3",
+      "range": {
+        "startLine": 228,
+        "startChar": 25,
+        "endLine": 228,
+        "endChar": 53
+      },
+      "revId": "1c52f4d1f870558d0e3b5c4c52acebf233315050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb7467f8_4190b620",
         "filename": "ui/native_theme/common_theme.cc",
         "patchSetId": 2
