@@ -486,6 +486,7 @@ int main(int argc, char* argv[]) {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
 
   exo::wayland::clients::ClientBase::InitParams params;
+  params.num_buffers = 8;  // Allow up to 8 buffers by default.
   if (!params.FromCommandLine(*command_line))
     return 1;
 

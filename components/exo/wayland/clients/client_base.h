@@ -43,7 +43,7 @@ class ClientBase {
     bool FromCommandLine(const base::CommandLine& command_line);
 
     std::string title = "Wayland Client";
-    size_t num_buffers = 8;
+    size_t num_buffers = 2;
     size_t width = 256;
     size_t height = 256;
     int scale = 1;

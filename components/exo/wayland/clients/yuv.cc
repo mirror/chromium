@@ -133,6 +133,7 @@ int main(int argc, char* argv[]) {
 
   exo::wayland::clients::ClientBase::InitParams params;
   params.use_drm = true;
+  params.num_buffers = 8;  // Allow up to 8 buffers by default.
   if (!params.FromCommandLine(*command_line))
     return 1;
 

@@ -34,11 +34,19 @@ void Simple::Run(int frames) {
     if (callback_pending)
       continue;
 
+    auto buffer_it =
+        std::find_if(buffers_.begin(), buffers_.end(),
+                     [](const std::unique_ptr<ClientBase::Buffer>& buffer) {
+                       return !buffer->busy;
+                     });
+    if (buffer_it == buffers_.end())
+      continue;
+
     if (frame_count == frames)
       break;
 
     callback_pending = true;
-    Buffer* buffer = buffers_.front().get();
+    Buffer* buffer = buffer_it->get();
     SkCanvas* canvas = buffer->sk_surface->getCanvas();
 
     static const SkColor kColors[] = {SK_ColorRED, SK_ColorBLACK};
@@ -48,6 +56,7 @@ void Simple::Run(int frames) {
       gr_context_->flush();
       glFinish();
     }
+    buffer->busy = true;
     wl_surface_set_buffer_scale(surface_.get(), scale_);
     wl_surface_set_buffer_transform(surface_.get(), transform_);
     wl_surface_damage(surface_.get(), 0, 0, surface_size_.width(),
