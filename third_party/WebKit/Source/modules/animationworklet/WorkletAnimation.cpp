@@ -10,6 +10,7 @@
 #include "core/animation/Timing.h"
 #include "core/dom/Node.h"
 #include "core/dom/NodeComputedStyle.h"
+#include "core/layout/LayoutBox.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCompositorSupport.h"
@@ -45,6 +46,74 @@ bool ValidateTimeline(const DocumentTimelineOrScrollTimeline& timeline,
     }
   }
   return true;
+}
+
+CompositorElementId GetCompositorScrollElementId(const Element& element) {
+  DCHECK(element.GetLayoutObject());
+  DCHECK(element.GetLayoutObject()->HasLayer());
+  return CompositorElementIdFromUniqueObjectId(
+      element.GetLayoutObject()->UniqueId(),
+      CompositorElementIdNamespace::kScroll);
+}
+
+// Convert the blink concept of a ScrollTimeline orientation into the cc one.
+//
+// The compositor does not know about writing modes, so we have to convert the
+// web concepts of 'block' and 'inline' direction into absolute vertical or
+// horizontal directions.
+//
+// TODO(smcgruer): If the writing mode of a scroller changes, we have to update
+// any related cc::ScrollTimeline somehow.
+CompositorScrollTimeline::ScrollDirection ConvertOrientation(
+    ScrollTimeline::ScrollDirection orientation,
+    bool is_horizontal_writing_mode) {
+  switch (orientation) {
+    case ScrollTimeline::Block:
+      return is_horizontal_writing_mode ? CompositorScrollTimeline::Vertical
+                                        : CompositorScrollTimeline::Horizontal;
+    case ScrollTimeline::Inline:
+      return is_horizontal_writing_mode ? CompositorScrollTimeline::Horizontal
+                                        : CompositorScrollTimeline::Vertical;
+    default:
+      NOTREACHED();
+      return CompositorScrollTimeline::Vertical;
+  }
+}
+
+// Converts a blink::ScrollTimeline into a cc::ScrollTimeline.
+//
+// If the timeline cannot be converted, returns nullptr.
+std::unique_ptr<CompositorScrollTimeline> ToCompositorScrollTimeline(
+    const DocumentTimelineOrScrollTimeline& timeline) {
+  if (!timeline.IsScrollTimeline())
+    return nullptr;
+
+  ScrollTimeline* scroll_timeline = timeline.GetAsScrollTimeline();
+
+  // Make sure that layout is clean so that we know whether or not the
+  // scrollSource has a layout box.
+  //
+  // TODO(smcgruer): This is probably the wrong approach. The ScrollTimeline
+  // spec allows for the scrollSource to 'not currently have a CSS layout box',
+  // so the compositor should be able to handle that case (and somehow update it
+  // later once a layout box is created).
+  Element* scroll_source = scroll_timeline->scrollSource();
+  scroll_source->GetDocument()
+      .UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(scroll_source);
+  CompositorElementId element_id = GetCompositorScrollElementId(*scroll_source);
+
+  DoubleOrScrollTimelineAutoKeyword time_range;
+  scroll_timeline->timeRange(time_range);
+  // TODO(smcgruer): Handle 'auto' time range value.
+  DCHECK(time_range.IsDouble());
+
+  LayoutBox* box = scroll_source->GetLayoutBox();
+  DCHECK(box);
+  CompositorScrollTimeline::ScrollDirection orientation = ConvertOrientation(
+      scroll_timeline->GetOrientation(), box->IsHorizontalWritingMode());
+
+  return std::make_unique<CompositorScrollTimeline>(element_id, orientation,
+                                                    time_range.GetAsDouble());
 }
 }  // namespace
 
@@ -93,8 +162,8 @@ WorkletAnimation::WorkletAnimation(
   DCHECK(Platform::Current()->IsThreadedAnimationEnabled());
   DCHECK(Platform::Current()->CompositorSupport());
 
-  compositor_player_ =
-      CompositorAnimationPlayer::CreateWorkletPlayer(animator_name_);
+  compositor_player_ = CompositorAnimationPlayer::CreateWorkletPlayer(
+      animator_name_, ToCompositorScrollTimeline(timeline_));
   compositor_player_->SetAnimationDelegate(this);
 }
 
