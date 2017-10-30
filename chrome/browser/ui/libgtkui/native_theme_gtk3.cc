@@ -219,6 +219,16 @@ SkColor SkColorFromColorId(ui::NativeTheme::ColorId color_id) {
           "GtkTreeView#treeview.view "
           "GtkTreeView#treeview.view.cell:selected:focus GtkLabel");
 
+    // TabbedPane
+    case ui::NativeTheme::kColorId_TabTitleColorActive:
+      return GetFgColor(
+          "GtkTreeView#treeview.view "
+          "GtkTreeView#treeview.view.cell:selected:focus GtkLabel");
+    case ui::NativeTheme::kColorId_TabTitleColorInactive:
+      return GetFgColor("GtkButton#button.text-button GtkLabel");
+    case ui::NativeTheme::kColorId_TabBottomBorder:
+      return GetBorderColor("GtkEntry#entry");
+
     // Textfield
     case ui::NativeTheme::kColorId_TextfieldDefaultColor:
       return GetFgColor(GtkVersionCheck(3, 20)
