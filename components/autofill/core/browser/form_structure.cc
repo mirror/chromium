@@ -319,7 +319,7 @@ FormStructure::FormStructure(const FormData& form)
       has_password_field_(false),
       is_form_tag_(form.is_form_tag),
       is_formless_checkout_(form.is_formless_checkout),
-      all_fields_are_passwords_(true),
+      all_fields_are_passwords_(!form.fields.empty()),
       is_signin_upload_(false) {
   // Copy the form fields.
   std::map<base::string16, size_t> unique_names;
@@ -359,7 +359,7 @@ void FormStructure::DetermineHeuristicTypes(ukm::UkmRecorder* ukm_recorder) {
   // Then if there are enough active fields, and if we are dealing with either a
   // proper <form> or a <form>-less checkout, run the heuristics and server
   // prediction routines.
-  if (active_field_count() >= kRequiredFieldsForPredictionRoutines &&
+  if (active_field_count() >= MinRequiredFieldsForPrediction() &&
       (is_form_tag_ || is_formless_checkout_)) {
     const FieldCandidatesMap field_type_map =
         FormField::ParseFormFields(fields_, is_form_tag_);
@@ -407,7 +407,7 @@ bool FormStructure::EncodeUploadRequest(
     const std::string& login_form_signature,
     bool observed_submission,
     AutofillUploadContents* upload) const {
-  DCHECK(ShouldBeCrowdsourced());
+  DCHECK(ShouldBeUploaded());
   DCHECK(AllTypesCaptured(*this, available_field_types));
 
   upload->set_submission(observed_submission);
@@ -599,7 +599,7 @@ std::string FormStructure::FormSignatureAsStr() const {
 }
 
 bool FormStructure::IsAutofillable() const {
-  if (autofill_count() < kRequiredFieldsForPredictionRoutines)
+  if (autofill_count() < MinRequiredFieldsForPrediction())
     return false;
 
   return ShouldBeParsed();
@@ -630,7 +630,9 @@ void FormStructure::UpdateAutofillCount() {
 }
 
 bool FormStructure::ShouldBeParsed() const {
-  if (active_field_count() < kRequiredFieldsForPredictionRoutines &&
+  const size_t min_required_fields =
+      std::min(MinRequiredFieldsForPrediction(), MinRequiredFieldsForUpload());
+  if (active_field_count() < min_required_fields &&
       (!all_fields_are_passwords() ||
        active_field_count() < kRequiredFieldsForFormsWithOnlyPasswordFields) &&
       !is_signin_upload_ && !has_author_specified_types_) {
@@ -651,10 +653,15 @@ bool FormStructure::ShouldBeParsed() const {
   return has_text_field;
 }
 
-bool FormStructure::ShouldBeCrowdsourced() const {
+bool FormStructure::ShouldBeQueried() const {
   return (has_password_field_ ||
-          active_field_count() >= kRequiredFieldsForPredictionRoutines) &&
+          active_field_count() >= MinRequiredFieldsForPrediction()) &&
          ShouldBeParsed();
+}
+
+bool FormStructure::ShouldBeUploaded() const {
+  return ShouldBeParsed() &&
+         active_field_count() >= MinRequiredFieldsForUpload();
 }
 
 void FormStructure::UpdateFromCache(const FormStructure& cached_form,
@@ -767,7 +774,7 @@ void FormStructure::LogQualityMetrics(
   // submission event.
   if (observed_submission) {
     AutofillMetrics::AutofillFormSubmittedState state;
-    if (num_detected_field_types < kRequiredFieldsForPredictionRoutines) {
+    if (num_detected_field_types < MinRequiredFieldsForPrediction()) {
       state = AutofillMetrics::NON_FILLABLE_FORM_OR_NEW_DATA;
     } else {
       if (did_autofill_all_possible_fields) {

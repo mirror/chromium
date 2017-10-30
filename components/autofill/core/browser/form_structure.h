@@ -114,7 +114,12 @@ class FormStructure {
   // intent and crowdsourced data should not be used to override this. Password
   // fields are different because there is no way to specify password generation
   // directly.
-  bool ShouldBeCrowdsourced() const;
+  bool ShouldBeQueried() const;
+
+  // Returns true if we should upload votes for this form to the crowdsourcing
+  // server to determine this
+  // form's field types.
+  bool ShouldBeUploaded() const;
 
   // Sets the field types to be those set for |cached_form|.
   void UpdateFromCache(const FormStructure& cached_form,
