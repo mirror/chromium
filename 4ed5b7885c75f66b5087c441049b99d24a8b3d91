@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "ea1de679_794b1374",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T05:53:00Z",
+      "side": 1,
+      "message": "Thanks. Then let\u0027s work on it in another CL.",
+      "parentUuid": "f9e03f7f_a4d7e768",
+      "revId": "4ed5b7885c75f66b5087c441049b99d24a8b3d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a62bb3b9_e9ecaede",
         "filename": "components/arc/power/arc_power_bridge.cc",
         "patchSetId": 2
