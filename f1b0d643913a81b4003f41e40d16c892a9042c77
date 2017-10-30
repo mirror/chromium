@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6847a52_37b1c83b",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-30T23:43:10Z",
+      "side": 1,
+      "message": "Are you doing this here because the GetVersionNumber() is not accessible in //chromeos/printing/ \n?  It seems like these checks belong in that library if they can live there.",
+      "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cab438be_24dcca76",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 1
@@ -71,6 +88,23 @@
     },
     {
       "key": {
+        "uuid": "ba3f4add_24722d46",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-30T23:43:10Z",
+      "side": 1,
+      "message": "You can use initializer lists for pairs:\n\nstd::make_pair(foo, bar) \u003d\u003e {foo, bar}\n\n(unless you like the make_pair as a form of documenting what\u0027s being constructed).",
+      "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e94a923b_df27025d",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 1
@@ -87,6 +121,52 @@
         "startChar": 34,
         "endLine": 992,
         "endChar": 62
+      },
+      "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2420d18_78cebfe8",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-30T23:43:10Z",
+      "side": 1,
+      "message": "canonical",
+      "range": {
+        "startLine": 1005,
+        "startChar": 48,
+        "endLine": 1005,
+        "endChar": 58
+      },
+      "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "becc1e18_d231d12c",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-30T23:43:10Z",
+      "side": 1,
+      "message": "s/followed/optionally followed/",
+      "range": {
+        "startLine": 1016,
+        "startChar": 34,
+        "endLine": 1016,
+        "endChar": 42
       },
       "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -111,6 +191,46 @@
         "endLine": 1025,
         "endChar": 25
       },
+      "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c576163c_f4162bd2",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-30T23:43:10Z",
+      "side": 1,
+      "message": "Arguably, if list[2] exists but is not a dictionary, that should be INTERNAL_ERROR instead of just skipping the entry.",
+      "range": {
+        "startLine": 1025,
+        "startChar": 29,
+        "endLine": 1025,
+        "endChar": 44
+      },
+      "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899b474e_002f1193",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-30T23:43:10Z",
+      "side": 1,
+      "message": "Suggest factoring out the \"convert from JSON to struct\" code into a small function, just to pull some complexity out of this function.",
       "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
