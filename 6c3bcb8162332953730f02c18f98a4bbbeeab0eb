@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83fbed89_4461d0b8",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-10-30T14:37:24Z",
+      "side": 1,
+      "message": "Done. see http://crrev.com/c/743683",
+      "parentUuid": "f2de0921_13a6ed3a",
+      "revId": "6c3bcb8162332953730f02c18f98a4bbbeeab0eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc7097c7_e4060f4e",
         "filename": "tools/perf/core/perf_data_generator.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-30T14:05:23Z",
       "side": 1,
       "message": "Why can\u0027t these two buffer_perftests be merged into 1?",
+      "revId": "6c3bcb8162332953730f02c18f98a4bbbeeab0eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20bbbdc_f83898e2",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-10-30T14:37:24Z",
+      "side": 1,
+      "message": "It\u0027s very convenient for us this way. I updated the CL description to describe why we chose this design. I felt like adding command line parameters to perf tests was reasonable.",
+      "parentUuid": "cc7097c7_e4060f4e",
       "revId": "6c3bcb8162332953730f02c18f98a4bbbeeab0eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
