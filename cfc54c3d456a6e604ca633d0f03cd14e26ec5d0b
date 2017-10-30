@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad655f4_cca0825d",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 30
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-30T15:14:57Z",
+      "side": 1,
+      "message": "You don\u0027t need the underscore in front of local variables; but I think you can get rid of this line all together.",
+      "range": {
+        "startLine": 91,
+        "startChar": 23,
+        "endLine": 91,
+        "endChar": 24
+      },
+      "revId": "cfc54c3d456a6e604ca633d0f03cd14e26ec5d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2b439c_a20ffe43",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 30
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-30T15:14:57Z",
+      "side": 1,
+      "message": "Can it be replaced by \"return _semaphores[task];\"?",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 35
+      },
+      "revId": "cfc54c3d456a6e604ca633d0f03cd14e26ec5d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395ba754_d35bb766",
+        "filename": "components/cronet/ios/test/cronet_test_base.mm",
+        "patchSetId": 30
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-30T15:14:57Z",
+      "side": 1,
+      "message": "Replace with |timeout_ns|",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 12
+      },
+      "revId": "cfc54c3d456a6e604ca633d0f03cd14e26ec5d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
