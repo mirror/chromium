@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "478cb557_28afa503",
+        "filename": "ash/message_center/message_center_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-30T20:50:18Z",
+      "side": 1,
+      "message": "nit:s/the |enabled|/|enabled|/",
+      "revId": "c5da9cc319b0fb7f7352b325236ea3da7bf5c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed67bbb5_f724ecac",
+        "filename": "chrome/browser/notifications/chrome_ash_message_center_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-30T20:50:18Z",
+      "side": 1,
+      "message": "Is there a TODO here, or will the entire method be removed from the API and is not expected to be called? Either way, please add or update the comment.",
+      "revId": "c5da9cc319b0fb7f7352b325236ea3da7bf5c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a1dac8_653a77b4",
+        "filename": "chrome/browser/notifications/chrome_ash_message_center_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-30T20:50:18Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c5da9cc319b0fb7f7352b325236ea3da7bf5c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be3d502_926f5827",
+        "filename": "chrome/browser/notifications/chrome_ash_message_center_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-30T20:50:18Z",
+      "side": 1,
+      "message": "Does this need to be a member?",
+      "revId": "c5da9cc319b0fb7f7352b325236ea3da7bf5c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa33244_9eb4f707",
+        "filename": "chrome/browser/notifications/chrome_ash_message_center_client_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-30T20:50:18Z",
+      "side": 1,
+      "message": "I think this might be more clear using a function object ([]) since currently SetNotifierUiData takes the output as the first input which is backwards for functions.",
+      "revId": "c5da9cc319b0fb7f7352b325236ea3da7bf5c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
