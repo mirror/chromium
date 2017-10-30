@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6105324e_d5cb6fe5",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T06:07:24Z",
+      "side": 1,
+      "message": "Clarification: the field is optional. Is it ok to skip \"has_reason()\" check here?",
+      "revId": "c005e704c70f50cc661e9f8908efcac303c2f051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed437b96_cf4e7858",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T06:07:24Z",
+      "side": 1,
+      "message": "Could you add;\n#include \"chromeos/dbus/power_manager/suspend.pb.h\"\n\n(ditto for other classes using new SuspendImminent::Reason).",
+      "revId": "c005e704c70f50cc661e9f8908efcac303c2f051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
