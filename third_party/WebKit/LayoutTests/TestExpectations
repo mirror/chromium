@@ -302,7 +302,9 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-002-left-table.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-002-right-table.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-003-left-overflow.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-003-left-table.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-003-right-overflow.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-003-right-table.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-004.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-006.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-top-below-inline-001l.xht [ Failure ]
@@ -460,6 +462,7 @@ crbug.com/635619 virtual/layout_ng/fast/block/basic/020.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/basic/fieldset-stretch-to-legend.html [ Failure Crash ]
 crbug.com/635619 virtual/layout_ng/fast/block/basic/quirk-height.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/basic/quirk-percent-height-grandchild.html [ Failure ]
+crbug.com/635619 virtual/layout_ng/fast/block/basic/quirk-percent-height-table-cell.html [ Failure ]
 crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/basic/text-indent-rtl.html [ Failure ]
 crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/basic/truncation-rtl.html [ Failure ]
 
@@ -529,6 +532,7 @@ crbug.com/635619 virtual/layout_ng/fast/block/float/rubybase-children-moved-cras
 crbug.com/635619 virtual/layout_ng/fast/block/float/rubybase-children-moved-crash.html [ Crash Pass ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/shrink-to-avoid-float-complexity.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/trailing-float-with-columns.html [ Crash Failure ]
+crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/float/width-update-after-clear.html [ Failure ]
 
 ### virtual/layout_ng/fast/block/margin-collapse
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/032.html [ Failure ]
