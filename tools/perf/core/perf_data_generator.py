@@ -455,7 +455,15 @@ def get_waterfall_config():
          ('load_library_perf_tests', 'build94-m1'),
          # crbug.com/735679
          # ('performance_browser_tests', 'build94-m1'),
-         ('media_perftests', 'build95-m1')]
+         ('media_perftests', 'build95-m1')
+        ],
+        'perf_tests_with_args': [
+         ('passthrough_command_buffer_perftests', 'build94-m1',
+          ['--use-cmd-decoder=passthrough', '--use-angle=gl-null'],
+          'command_buffer_perftests'),
+         ('validating_command_buffer_perftests', 'build94-m1',
+          ['--use-cmd-decoder=validating', '--use-stub'],
+          'command_buffer_perftests')]
       }
     ])
 
@@ -717,6 +725,14 @@ def generate_cplusplus_isolate_script_test(dimension):
     generate_cplusplus_isolate_script_entry(
         dimension, name, shard, [], name)
     for name, shard in dimension['perf_tests']
+  ]
+
+def generate_cplusplus_isolate_script_test_with_args(dimension):
+  return [
+    generate_cplusplus_isolate_script_entry(
+        dimension, name, shard, test_args, isolate_name)
+    for name, shard, test_args, isolate_name
+        in dimension['perf_tests_with_args']
   ]
 
 
@@ -1027,10 +1043,20 @@ def update_all_tests(waterfalls):
 BenchmarkMetadata = collections.namedtuple(
     'BenchmarkMetadata', 'emails component not_scheduled')
 NON_TELEMETRY_BENCHMARKS = {
-    'angle_perftests': BenchmarkMetadata('jmadill@chromium.org', None, False),
+    'angle_perftests': BenchmarkMetadata(
+        'jmadill@chromium.org, chrome-gpu-perf-owners@chromium.org',
+        'Internals>GPU>ANGLE', False),
+    'validating_command_buffer_perftests': BenchmarkMetadata(
+        'piman@chromium.org, chrome-gpu-perf-owners@chromium.org',
+        'Internals>GPU', False),
+    'passthrough_command_buffer_perftests': BenchmarkMetadata(
+        'piman@chromium.org, chrome-gpu-perf-owners@chromium.org',
+        'Internals>GPU>ANGLE', False),
     'net_perftests': BenchmarkMetadata('xunjieli@chromium.org', None, False),
     'cc_perftests': BenchmarkMetadata('enne@chromium.org', None, False),
-    'gpu_perftests': BenchmarkMetadata('reveman@chromium.org', None, False),
+    'gpu_perftests': BenchmarkMetadata(
+        'reveman@chromium.org, chrome-gpu-perf-owners@chromium.org',
+        'Internals>GPU', False),
     'tracing_perftests': BenchmarkMetadata(
         'kkraynov@chromium.org, primiano@chromium.org', None, False),
     'load_library_perf_tests': BenchmarkMetadata(None, None, False),
