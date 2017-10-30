@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6039923_b71cd41e",
+        "filename": "chrome/browser/safe_browsing/trigger_creator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-30T20:16:26Z",
+      "side": 1,
+      "message": "Basically - it creates a TMHelper and \"attaches\" it to the WebContents (so the TMHelper is owned by the WebContents and lives for the same length of time). The association from TMHelper to TM is just so TMHelper can forward the events along.",
+      "parentUuid": "3cd499df_8ab06067",
+      "revId": "65063cd08711d7774b3271006fc23cc43b88d79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc97a628_dfc0b918",
         "filename": "components/safe_browsing/browser/threat_details.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "65063cd08711d7774b3271006fc23cc43b88d79e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ea1278_aef05670",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-30T20:16:26Z",
+      "side": 1,
+      "message": "No, I don\u0027t think I want that guarantee. There are definitely cases where a ThreatDetails is created but doesn\u0027t call AllDone (eg: interstitial where user is opted-out). You might say AllDone is expected only after FinishCollection is called - but even then, there may be cases where it gets dropped on the floor (eg: shutdown before collection finishes).",
+      "parentUuid": "fc97a628_dfc0b918",
+      "revId": "65063cd08711d7774b3271006fc23cc43b88d79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "36543195_c811b027",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-30T20:16:26Z",
+      "side": 1,
+      "message": "yes, the creation is intentional, clarified. Also updated the comment on the map to clarify when things are added and removed.",
+      "parentUuid": "a2ab066b_73296d7b",
+      "revId": "65063cd08711d7774b3271006fc23cc43b88d79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "720a7d6a_6568a0a7",
         "filename": "components/safe_browsing/triggers/trigger_manager.h",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "65063cd08711d7774b3271006fc23cc43b88d79e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bebf3c7b_49c9dd81",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-30T20:16:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "720a7d6a_6568a0a7",
+      "revId": "65063cd08711d7774b3271006fc23cc43b88d79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
