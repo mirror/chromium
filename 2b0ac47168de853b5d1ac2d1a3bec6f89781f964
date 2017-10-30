@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bb80db6_507c4d37",
+        "filename": "ui/strings/ui_strings.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-10-30T22:21:44Z",
+      "side": 1,
+      "message": "Please correct to \"star\" rating. Localization caught this in translation and filed a bug.",
+      "range": {
+        "startLine": 737,
+        "startChar": 93,
+        "endLine": 737,
+        "endChar": 98
+      },
+      "revId": "2b0ac47168de853b5d1ac2d1a3bec6f89781f964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
