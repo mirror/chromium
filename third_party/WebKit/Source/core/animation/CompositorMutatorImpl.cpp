@@ -57,12 +57,14 @@ CompositorMutatorImpl* CompositorMutatorImpl::Create() {
 void CompositorMutatorImpl::Mutate(
     std::unique_ptr<CompositorMutatorInputState> state) {
   TRACE_EVENT0("cc", "CompositorMutatorImpl::mutate");
+  MutexLocker stable(animators_lock_);
   for (CompositorAnimator* animator : animators_) {
     animator->Mutate(*state);
   }
 }
 
 bool CompositorMutatorImpl::HasAnimators() {
+  MutexLocker stable(animators_lock_);
   return !animators_.IsEmpty();
 }
 
@@ -70,12 +72,14 @@ void CompositorMutatorImpl::RegisterCompositorAnimator(
     CompositorAnimator* animator) {
   DCHECK(!IsMainThread());
   TRACE_EVENT0("cc", "CompositorMutatorImpl::registerCompositorAnimator");
+  MutexLocker stable(animators_lock_);
   DCHECK(!animators_.Contains(animator));
   animators_.insert(animator);
 }
 
 void CompositorMutatorImpl::UnregisterCompositorAnimator(
     CompositorAnimator* animator) {
+  MutexLocker stable(animators_lock_);
   DCHECK(animators_.Contains(animator));
   animators_.erase(animator);
 }
