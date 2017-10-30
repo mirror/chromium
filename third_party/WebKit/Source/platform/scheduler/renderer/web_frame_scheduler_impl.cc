@@ -217,12 +217,12 @@ scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::GetTaskRunner(
   // TODO(haraken): Optimize the mapping from TaskTypes to task runners.
   switch (type) {
     case TaskType::kJavascriptTimer:
-      return ThrottleableTaskRunner();
+      return ThrottleableTaskRunner(type);
     case TaskType::kUnspecedLoading:
     case TaskType::kNetworking:
-      return LoadingTaskRunner();
+      return LoadingTaskRunner(type);
     case TaskType::kNetworkingControl:
-      return LoadingControlTaskRunner();
+      return LoadingControlTaskRunner(type);
     // Throttling following tasks may break existing web pages, so tentatively
     // these are unthrottled.
     // TODO(nhiroki): Throttle them again after we're convinced that it's safe
@@ -246,7 +246,7 @@ scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::GetTaskRunner(
     case TaskType::kUnspecedTimer:
     case TaskType::kMiscPlatformAPI:
       // TODO(altimin): Move appropriate tasks to throttleable task queue.
-      return DeferrableTaskRunner();
+      return DeferrableTaskRunner(type);
     // PostedMessage can be used for navigation, so we shouldn't defer it
     // when expecting a user gesture.
     case TaskType::kPostedMessage:
@@ -255,15 +255,16 @@ scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::GetTaskRunner(
     // Media events should not be deferred to ensure that media playback is
     // smooth.
     case TaskType::kMediaElementEvent:
-      return PausableTaskRunner();
+      return PausableTaskRunner(type);
     case TaskType::kUnthrottled:
-      return UnpausableTaskRunner();
+      return UnpausableTaskRunner(type);
   }
   NOTREACHED();
   return nullptr;
 }
 
-scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingTaskRunner() {
+scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingTaskRunner(
+    base::Optional<TaskType> task_type) {
   DCHECK(parent_web_view_scheduler_);
   if (!loading_task_queue_) {
     loading_task_queue_ = renderer_scheduler_->NewLoadingTaskQueue(
@@ -274,11 +275,12 @@ scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingTaskRunner() {
         loading_task_queue_->CreateQueueEnabledVoter();
     loading_queue_enabled_voter_->SetQueueEnabled(!frame_paused_);
   }
-  return WebTaskRunnerImpl::Create(loading_task_queue_);
+  return WebTaskRunnerImpl::Create(loading_task_queue_, task_type);
 }
 
 scoped_refptr<blink::WebTaskRunner>
-WebFrameSchedulerImpl::LoadingControlTaskRunner() {
+WebFrameSchedulerImpl::LoadingControlTaskRunner(
+    base::Optional<TaskType> task_type) {
   DCHECK(parent_web_view_scheduler_);
   if (!loading_control_task_queue_) {
     loading_control_task_queue_ = renderer_scheduler_->NewLoadingTaskQueue(
@@ -289,11 +291,12 @@ WebFrameSchedulerImpl::LoadingControlTaskRunner() {
         loading_control_task_queue_->CreateQueueEnabledVoter();
     loading_control_queue_enabled_voter_->SetQueueEnabled(!frame_paused_);
   }
-  return WebTaskRunnerImpl::Create(loading_control_task_queue_);
+  return WebTaskRunnerImpl::Create(loading_control_task_queue_, task_type);
 }
 
 scoped_refptr<blink::WebTaskRunner>
-WebFrameSchedulerImpl::ThrottleableTaskRunner() {
+WebFrameSchedulerImpl::ThrottleableTaskRunner(
+    base::Optional<TaskType> task_type) {
   DCHECK(parent_web_view_scheduler_);
   if (!throttleable_task_queue_) {
     throttleable_task_queue_ = renderer_scheduler_->NewTaskQueue(
@@ -322,11 +325,11 @@ WebFrameSchedulerImpl::ThrottleableTaskRunner() {
           throttleable_task_queue_.get());
     }
   }
-  return WebTaskRunnerImpl::Create(throttleable_task_queue_);
+  return WebTaskRunnerImpl::Create(throttleable_task_queue_, task_type);
 }
 
-scoped_refptr<blink::WebTaskRunner>
-WebFrameSchedulerImpl::DeferrableTaskRunner() {
+scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::DeferrableTaskRunner(
+    base::Optional<TaskType> task_type) {
   DCHECK(parent_web_view_scheduler_);
   if (!deferrable_task_queue_) {
     deferrable_task_queue_ = renderer_scheduler_->NewTaskQueue(
@@ -341,11 +344,11 @@ WebFrameSchedulerImpl::DeferrableTaskRunner() {
         deferrable_task_queue_->CreateQueueEnabledVoter();
     deferrable_queue_enabled_voter_->SetQueueEnabled(!frame_paused_);
   }
-  return WebTaskRunnerImpl::Create(deferrable_task_queue_);
+  return WebTaskRunnerImpl::Create(deferrable_task_queue_, task_type);
 }
 
-scoped_refptr<blink::WebTaskRunner>
-WebFrameSchedulerImpl::PausableTaskRunner() {
+scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::PausableTaskRunner(
+    base::Optional<TaskType> task_type) {
   DCHECK(parent_web_view_scheduler_);
   if (!pausable_task_queue_) {
     pausable_task_queue_ = renderer_scheduler_->NewTaskQueue(
@@ -359,11 +362,11 @@ WebFrameSchedulerImpl::PausableTaskRunner() {
         pausable_task_queue_->CreateQueueEnabledVoter();
     pausable_queue_enabled_voter_->SetQueueEnabled(!frame_paused_);
   }
-  return WebTaskRunnerImpl::Create(pausable_task_queue_);
+  return WebTaskRunnerImpl::Create(pausable_task_queue_, task_type);
 }
 
-scoped_refptr<blink::WebTaskRunner>
-WebFrameSchedulerImpl::UnpausableTaskRunner() {
+scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::UnpausableTaskRunner(
+    base::Optional<TaskType> task_type) {
   DCHECK(parent_web_view_scheduler_);
   if (!unpausable_task_queue_) {
     unpausable_task_queue_ = renderer_scheduler_->NewTaskQueue(
@@ -372,7 +375,7 @@ WebFrameSchedulerImpl::UnpausableTaskRunner() {
     unpausable_task_queue_->SetBlameContext(blame_context_);
     unpausable_task_queue_->SetFrameScheduler(this);
   }
-  return WebTaskRunnerImpl::Create(unpausable_task_queue_);
+  return WebTaskRunnerImpl::Create(unpausable_task_queue_, task_type);
 }
 
 blink::WebViewScheduler* WebFrameSchedulerImpl::GetWebViewScheduler() {

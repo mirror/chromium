@@ -124,11 +124,12 @@ TEST_F(WebFrameSchedulerImplTest, RepeatingTimer_PageInForeground) {
       timer_throttling_for_hidden_frames(true);
 
   int run_count = 0;
-  web_frame_scheduler_->ThrottleableTaskRunner()->PostDelayedTask(
-      BLINK_FROM_HERE,
-      MakeRepeatingTask(web_frame_scheduler_->ThrottleableTaskRunner(),
-                        &run_count),
-      TimeDelta::FromMilliseconds(1));
+  web_frame_scheduler_->GetTaskRunner(TaskType::kJavascriptTimer)
+      ->PostDelayedTask(BLINK_FROM_HERE,
+                        MakeRepeatingTask(web_frame_scheduler_->GetTaskRunner(
+                                              TaskType::kJavascriptTimer),
+                                          &run_count),
+                        TimeDelta::FromMilliseconds(1));
 
   mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
   EXPECT_EQ(1000, run_count);
@@ -140,11 +141,12 @@ TEST_F(WebFrameSchedulerImplTest, RepeatingTimer_PageInBackground) {
   web_view_scheduler_->SetPageVisible(false);
 
   int run_count = 0;
-  web_frame_scheduler_->ThrottleableTaskRunner()->PostDelayedTask(
-      BLINK_FROM_HERE,
-      MakeRepeatingTask(web_frame_scheduler_->ThrottleableTaskRunner(),
-                        &run_count),
-      TimeDelta::FromMilliseconds(1));
+  web_frame_scheduler_->GetTaskRunner(TaskType::kJavascriptTimer)
+      ->PostDelayedTask(BLINK_FROM_HERE,
+                        MakeRepeatingTask(web_frame_scheduler_->GetTaskRunner(
+                                              TaskType::kJavascriptTimer),
+                                          &run_count),
+                        TimeDelta::FromMilliseconds(1));
 
   mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
   EXPECT_EQ(1, run_count);
@@ -156,11 +158,12 @@ TEST_F(WebFrameSchedulerImplTest, RepeatingTimer_FrameHidden_SameOrigin) {
   web_frame_scheduler_->SetFrameVisible(false);
 
   int run_count = 0;
-  web_frame_scheduler_->ThrottleableTaskRunner()->PostDelayedTask(
-      BLINK_FROM_HERE,
-      MakeRepeatingTask(web_frame_scheduler_->ThrottleableTaskRunner(),
-                        &run_count),
-      TimeDelta::FromMilliseconds(1));
+  web_frame_scheduler_->GetTaskRunner(TaskType::kJavascriptTimer)
+      ->PostDelayedTask(BLINK_FROM_HERE,
+                        MakeRepeatingTask(web_frame_scheduler_->GetTaskRunner(
+                                              TaskType::kJavascriptTimer),
+                                          &run_count),
+                        TimeDelta::FromMilliseconds(1));
 
   mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
   EXPECT_EQ(1000, run_count);
@@ -173,11 +176,12 @@ TEST_F(WebFrameSchedulerImplTest, RepeatingTimer_FrameVisible_CrossOrigin) {
   web_frame_scheduler_->SetCrossOrigin(true);
 
   int run_count = 0;
-  web_frame_scheduler_->ThrottleableTaskRunner()->PostDelayedTask(
-      BLINK_FROM_HERE,
-      MakeRepeatingTask(web_frame_scheduler_->ThrottleableTaskRunner(),
-                        &run_count),
-      TimeDelta::FromMilliseconds(1));
+  web_frame_scheduler_->GetTaskRunner(TaskType::kJavascriptTimer)
+      ->PostDelayedTask(BLINK_FROM_HERE,
+                        MakeRepeatingTask(web_frame_scheduler_->GetTaskRunner(
+                                              TaskType::kJavascriptTimer),
+                                          &run_count),
+                        TimeDelta::FromMilliseconds(1));
 
   mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
   EXPECT_EQ(1000, run_count);
@@ -190,11 +194,12 @@ TEST_F(WebFrameSchedulerImplTest, RepeatingTimer_FrameHidden_CrossOrigin) {
   web_frame_scheduler_->SetCrossOrigin(true);
 
   int run_count = 0;
-  web_frame_scheduler_->ThrottleableTaskRunner()->PostDelayedTask(
-      BLINK_FROM_HERE,
-      MakeRepeatingTask(web_frame_scheduler_->ThrottleableTaskRunner(),
-                        &run_count),
-      TimeDelta::FromMilliseconds(1));
+  web_frame_scheduler_->GetTaskRunner(TaskType::kJavascriptTimer)
+      ->PostDelayedTask(BLINK_FROM_HERE,
+                        MakeRepeatingTask(web_frame_scheduler_->GetTaskRunner(
+                                              TaskType::kJavascriptTimer),
+                                          &run_count),
+                        TimeDelta::FromMilliseconds(1));
 
   mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
   EXPECT_EQ(1, run_count);
@@ -206,11 +211,12 @@ TEST_F(WebFrameSchedulerImplTest, PageInBackground_ThrottlingDisabled) {
   web_view_scheduler_->SetPageVisible(false);
 
   int run_count = 0;
-  web_frame_scheduler_->ThrottleableTaskRunner()->PostDelayedTask(
-      BLINK_FROM_HERE,
-      MakeRepeatingTask(web_frame_scheduler_->ThrottleableTaskRunner(),
-                        &run_count),
-      TimeDelta::FromMilliseconds(1));
+  web_frame_scheduler_->GetTaskRunner(TaskType::kJavascriptTimer)
+      ->PostDelayedTask(BLINK_FROM_HERE,
+                        MakeRepeatingTask(web_frame_scheduler_->GetTaskRunner(
+                                              TaskType::kJavascriptTimer),
+                                          &run_count),
+                        TimeDelta::FromMilliseconds(1));
 
   mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
   EXPECT_EQ(1, run_count);
@@ -224,11 +230,12 @@ TEST_F(WebFrameSchedulerImplTest,
   web_frame_scheduler_->SetCrossOrigin(true);
 
   int run_count = 0;
-  web_frame_scheduler_->ThrottleableTaskRunner()->PostDelayedTask(
-      BLINK_FROM_HERE,
-      MakeRepeatingTask(web_frame_scheduler_->ThrottleableTaskRunner(),
-                        &run_count),
-      TimeDelta::FromMilliseconds(1));
+  web_frame_scheduler_->GetTaskRunner(TaskType::kJavascriptTimer)
+      ->PostDelayedTask(BLINK_FROM_HERE,
+                        MakeRepeatingTask(web_frame_scheduler_->GetTaskRunner(
+                                              TaskType::kJavascriptTimer),
+                                          &run_count),
+                        TimeDelta::FromMilliseconds(1));
 
   mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
   EXPECT_EQ(1000, run_count);
@@ -236,16 +243,21 @@ TEST_F(WebFrameSchedulerImplTest,
 
 TEST_F(WebFrameSchedulerImplTest, PauseAndResume) {
   int counter = 0;
-  web_frame_scheduler_->LoadingTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&IncrementCounter, WTF::Unretained(&counter)));
-  web_frame_scheduler_->ThrottleableTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&IncrementCounter, WTF::Unretained(&counter)));
-  web_frame_scheduler_->DeferrableTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&IncrementCounter, WTF::Unretained(&counter)));
-  web_frame_scheduler_->PausableTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&IncrementCounter, WTF::Unretained(&counter)));
-  web_frame_scheduler_->UnpausableTaskRunner()->PostTask(
-      BLINK_FROM_HERE, WTF::Bind(&IncrementCounter, WTF::Unretained(&counter)));
+  web_frame_scheduler_->GetTaskRunner(TaskType::kUnspecedLoading)
+      ->PostTask(BLINK_FROM_HERE,
+                 WTF::Bind(&IncrementCounter, WTF::Unretained(&counter)));
+  web_frame_scheduler_->GetTaskRunner(TaskType::kJavascriptTimer)
+      ->PostTask(BLINK_FROM_HERE,
+                 WTF::Bind(&IncrementCounter, WTF::Unretained(&counter)));
+  web_frame_scheduler_->GetTaskRunner(TaskType::kUnspecedTimer)
+      ->PostTask(BLINK_FROM_HERE,
+                 WTF::Bind(&IncrementCounter, WTF::Unretained(&counter)));
+  web_frame_scheduler_->GetTaskRunner(TaskType::kMediaElementEvent)
+      ->PostTask(BLINK_FROM_HERE,
+                 WTF::Bind(&IncrementCounter, WTF::Unretained(&counter)));
+  web_frame_scheduler_->GetTaskRunner(TaskType::kUnthrottled)
+      ->PostTask(BLINK_FROM_HERE,
+                 WTF::Bind(&IncrementCounter, WTF::Unretained(&counter)));
 
   web_frame_scheduler_->SetPaused(true);
 

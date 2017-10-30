@@ -3829,7 +3829,7 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTimeAfterThrottling) {
           nullptr, WebFrameScheduler::FrameType::kSubframe);
 
   scoped_refptr<WebTaskRunner> timer_wtr =
-      web_frame_scheduler->ThrottleableTaskRunner();
+      web_frame_scheduler->GetTaskRunner(TaskType::kJavascriptTimer);
   TaskQueue* timer_tq =
       static_cast<WebTaskRunnerImpl*>(timer_wtr.get())->GetTaskQueue();
 
@@ -3892,7 +3892,7 @@ TEST_F(RendererSchedulerImplTest, Tracing) {
 
   scheduler_->TimerTaskQueue()->PostTask(FROM_HERE, base::Bind(NullTask));
 
-  web_frame_scheduler->LoadingTaskRunner()
+  web_frame_scheduler->GetTaskRunner(TaskType::kUnspecedLoading)
       ->ToSingleThreadTaskRunner()
       ->PostDelayedTask(FROM_HERE, base::Bind(NullTask),
                         TimeDelta::FromMilliseconds(10));
