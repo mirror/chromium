@@ -22,6 +22,30 @@
       "revId": "b5775d4377682f2ef42b0b36275875ed0409cbe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063e9995_6dad0ded",
+        "filename": "ios/web/interstitials/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-30T15:53:05Z",
+      "side": 1,
+      "message": "I did not like the idea of using allow_circular_includes_from so I split BUILD files into smaller targets. And then got this big CL. Is the size if CL ok for you to review?",
+      "parentUuid": "219c68d8_895226d4",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "b5775d4377682f2ef42b0b36275875ed0409cbe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
