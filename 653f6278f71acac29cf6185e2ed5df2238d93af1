@@ -48,6 +48,137 @@
     },
     {
       "key": {
+        "uuid": "de83bebb_aa4d9c4c",
+        "filename": "content/browser/permissions/permission_service_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Should this be including feature_policy_feature.h instead?",
+      "range": {
+        "startLine": 20,
+        "startChar": 51,
+        "endLine": 20,
+        "endChar": 65
+      },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fbbf781_5c0f9788",
+        "filename": "content/browser/permissions/permission_service_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Again, probably don\u0027t need to do this if we\u0027re going to undo it soon.",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c7f7117_49f47924",
+        "filename": "content/common/DEPS",
+        "patchSetId": 29
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Can you sort this line to near the top?",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5a62d8_4ca7f26e",
+        "filename": "content/common/frame_policy.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Not for this CL, but this file looks like a good next target for moving to third_party/WebKit/common now that it only holds blink types",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc32c56_5f5d50c2",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Is this a new dependency? Or just something missed earlier?",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cfa60f1_52e2234b",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Unrelated change?",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d57203_cdb23b62",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Should be \"third_party/WebKit/common/...\" I think",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ece9b61c_94a1d731",
         "filename": "third_party/WebKit/Source/core/html/HTMLFrameElement.cpp",
         "patchSetId": 29
@@ -76,6 +207,63 @@
       "writtenOn": "2017-10-30T09:34:58Z",
       "side": 1,
       "message": "Ditto about omitting this (same elsewhere in this CL)",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479cee46_437333af",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElementTest.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "I think that the normal usage of the EXPECT_* macros is\nEXPECT_EQ(expected value, actual value)\nThe error message makes more sense that way :) (That should apply to all of the EXPECT_EQ in this file)",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1181901_63997e56",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "If dcheng@ is right in the other cases, we can probably remove this line, too",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2776ddaf_666590b4",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "\"third_party/WebKit/common/...\"",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 16
+      },
       "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -185,6 +373,30 @@
     },
     {
       "key": {
+        "uuid": "83966b49_71863990",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Moving this to SecurityOrigin makes sense -- it\u0027s in Source/platform, so it should be able to use url::Origin. I was a bit hesitant to suggest changing anything in WebSecurityOrigin because of the very explicit #if(INSIDE_BLINK) guards in that file.",
+      "parentUuid": "a56c2e49_1230ec2c",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 28
+      },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f32e84b_5ef1280d",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
         "patchSetId": 29
@@ -208,6 +420,103 @@
     },
     {
       "key": {
+        "uuid": "7da0e4d2_ea052503",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Unrelated?",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f242b7_e94ee4f5",
+        "filename": "third_party/WebKit/common/feature_policy/README.md",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Good catch!",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd2e2d3f_14e85f9b",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "nit: \u0027each feature\u0027",
+      "range": {
+        "startLine": 203,
+        "startChar": 8,
+        "endLine": 203,
+        "endChar": 16
+      },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82105b27_542f5e95",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Declared in feature_policy_feature.h now",
+      "range": {
+        "startLine": 38,
+        "startChar": 41,
+        "endLine": 38,
+        "endChar": 59
+      },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dec62d9_9e2307ef",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Comment is probably not needed, the build system will actually enforce that it is only used for tests, I think.",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e31720b5_6075df5f",
         "filename": "third_party/WebKit/common/feature_policy/feature_policy.h",
         "patchSetId": 29
@@ -225,6 +534,57 @@
         "endLine": 179,
         "endChar": 13
       },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "402bb06c_20bcb730",
+        "filename": "third_party/WebKit/public/platform/WebSecurityOrigin.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Was this your change? Is it needed now?",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4498bb01_a0a7ed17",
+        "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "Same -- is this change related?",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf96836_47cedc2c",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T14:57:14Z",
+      "side": 1,
+      "message": "This file should probably be including feature_policy.h, or at least forward-declaring ParsedFeaturePolicy",
       "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
