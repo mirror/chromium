@@ -16,6 +16,24 @@
       "revId": "4fa9abb21536d2587d4400ef00c19beea814d375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3f98f3_fbbebda0",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-30T14:49:45Z",
+      "side": 1,
+      "message": "Either is fine. This change doesn\u0027t rely on an iOS 11 features. Would it be more customary to use 11.0?",
+      "parentUuid": "6652a3f0_8b628e06",
+      "revId": "4fa9abb21536d2587d4400ef00c19beea814d375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
