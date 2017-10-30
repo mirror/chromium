@@ -130,7 +130,7 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
         if (mSigninPromoController != null) {
             AccountManagerFacade.get().removeObserver(this);
             mProfileDataCache.removeObserver(this);
-            mSigninPromoController.onPromoDestroyed();
+            mSigninPromoController.detach();
         }
 
         mSignInManager.removeSignInStateObserver(this);
@@ -194,6 +194,13 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
         }
         SigninPromoController.OnDismissListener listener = this::setPersonalizedSigninPromoDeclined;
         mSigninPromoController.setupPromoView(mContext, view, profileData, listener);
+    }
+
+    /**
+     * XXX
+     */
+    void detachView() {
+        mSigninPromoController.detach();
     }
 
     /**
