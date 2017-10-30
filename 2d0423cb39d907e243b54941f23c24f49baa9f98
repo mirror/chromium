@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0c3c6e8_4ed02f34",
+        "filename": "services/video_capture/test/device_factory_provider_connectortest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-10-30T22:40:44Z",
+      "side": 1,
+      "message": "Oh, looks like change [1] has landed and now TestConnectorFactory expects a std::unique_ptr\u003c\u003e instead of a raw pointer.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/738642",
+      "revId": "2d0423cb39d907e243b54941f23c24f49baa9f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ece01d_e9c07a0f",
+        "filename": "services/video_capture/test/device_factory_provider_connectortest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-10-30T22:40:44Z",
+      "side": 1,
+      "message": "Also, with [1], TestConnectorFactory now seems to invoke OnStart() by itself, so we probably need to delete this line.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/738642",
+      "revId": "2d0423cb39d907e243b54941f23c24f49baa9f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "000a5453_9aa65e14",
+        "filename": "services/video_capture/test/device_factory_provider_connectortest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-10-30T22:40:44Z",
+      "side": 1,
+      "message": "This test case is duplicate with the same named one in device_factory_provider_unittest.cc (I added this one just as an example to check if the fixture works). We should either remove this one or the other one.",
+      "revId": "2d0423cb39d907e243b54941f23c24f49baa9f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327c001a_935a29e4",
+        "filename": "services/video_capture/test/device_factory_provider_connectortest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-10-30T22:40:44Z",
+      "side": 1,
+      "message": "We may be able to use wait_loop.QuitClosure() here instead of binding a lambda.",
+      "revId": "2d0423cb39d907e243b54941f23c24f49baa9f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
