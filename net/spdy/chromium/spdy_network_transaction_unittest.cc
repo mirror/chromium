@@ -3150,31 +3150,31 @@ TEST_F(SpdyNetworkTransactionTest, ResponseHeaders) {
 TEST_F(SpdyNetworkTransactionTest, ResponseHeadersVary) {
   // Modify the following data to change/add test cases:
   struct ResponseTests {
-    bool vary_matches;
+    HttpVaryData::VaryStatus vary_status;
     int num_headers[2];
     const char* extra_headers[2][16];
   } test_cases[] = {
       // Test the case of a multi-valued cookie.  When the value is delimited
       // with NUL characters, it needs to be unfolded into multiple headers.
-      {true,
+      {HttpVaryData::VARY_SPECIFIC,
        {1, 3},
        {{"cookie", "val1,val2", nullptr},
         {kHttp2StatusHeader, "200", kHttp2PathHeader, "/index.php", "vary",
          "cookie", nullptr}}},
       {// Multiple vary fields.
-       true,
+       HttpVaryData::VARY_SPECIFIC,
        {2, 4},
        {{"friend", "barney", "enemy", "snaggletooth", nullptr},
         {kHttp2StatusHeader, "200", kHttp2PathHeader, "/index.php", "vary",
          "friend", "vary", "enemy", nullptr}}},
       {// Test a '*' vary field.
-       false,
+       HttpVaryData::VARY_STAR,
        {1, 3},
        {{"cookie", "val1,val2", nullptr},
         {kHttp2StatusHeader, "200", kHttp2PathHeader, "/index.php", "vary", "*",
          nullptr}}},
       {// Multiple comma-separated vary fields.
-       true,
+       HttpVaryData::VARY_SPECIFIC,
        {2, 3},
        {{"friend", "barney", "enemy", "snaggletooth", nullptr},
         {kHttp2StatusHeader, "200", kHttp2PathHeader, "/index.php", "vary",
@@ -3236,8 +3236,9 @@ TEST_F(SpdyNetworkTransactionTest, ResponseHeadersVary) {
     EXPECT_EQ("hello!", out.response_data) << i;
 
     // Test the response information.
-    EXPECT_EQ(out.response_info.vary_data.is_valid(),
-              test_cases[i].vary_matches) << i;
+    EXPECT_EQ(out.response_info.vary_data.vary_status(),
+              test_cases[i].vary_status)
+        << i;
 
     // Check the headers.
     scoped_refptr<HttpResponseHeaders> headers = out.response_info.headers;
