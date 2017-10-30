@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc246ef_3dd0fac3",
+        "filename": "net/cert/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-30T21:55:42Z",
+      "side": 1,
+      "message": "Add rsleevi",
+      "revId": "7d3b15f821004c963eda8b28ee6e13ff65668c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
