@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19e287e8_21ae5683",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-30T23:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d0ea01c_37cb9926",
+      "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "399726a0_b1208aa9",
         "filename": "docs/security/security-labels.md",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "92e907d8_0ac97139",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-30T23:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "399726a0_b1208aa9",
+      "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07671d54_05e77e34",
         "filename": "docs/security/security-labels.md",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b31c23cc_964a8648",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-30T23:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07671d54_05e77e34",
+      "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "ac9eca60_dd11c035",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-30T23:23:03Z",
+      "side": 1,
+      "message": "Done, and noted that Sheriffbot does this.",
+      "parentUuid": "75218742_e31caa42",
+      "range": {
+        "startLine": 76,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 27
+      },
+      "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37844be0_9dd6f5af",
         "filename": "docs/security/security-labels.md",
         "patchSetId": 3
@@ -96,6 +174,30 @@
       "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ebe5c68_ac59cf6e",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-30T23:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37844be0_9dd6f5af",
+      "range": {
+        "startLine": 81,
+        "startChar": 67,
+        "endLine": 81,
+        "endChar": 75
+      },
+      "revId": "581f2b1d21974e26b155e5cfc0069a560592b324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
