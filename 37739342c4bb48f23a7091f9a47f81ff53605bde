@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "51dec4fa_21356fdc",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-30T13:26:05Z",
+      "side": 1,
+      "message": "Ah, I think I see. So the full immersive mode is specific to CrOS? If the find bar is visible when the tab strip is pulled down, does it get pushed down as well?\n\nOn Linux and Windows, the find bar slides down from the top and to the right of the screen, minus the scroll bar width. In those cases, has_location_bar is false. Under CrOS, it\u0027s still true. In that case (I\u0027m assuming based on the previous code), i_m_c_-\u003eIsEnabled() is true and i_m_c_-\u003eIsRevealed() is false.\n\nEvery day is a learning experience :). This information is really helpful. Thanks.",
+      "parentUuid": "741cf7d2_e43955cd",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "855dab6b_2c2db419",
         "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
         "patchSetId": 28
@@ -143,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "bcd359cb_990cdcbb",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-30T13:26:05Z",
+      "side": 1,
+      "message": "Good catch. Didn\u0027t realize that set_width() had that code. Same for Size::set_height above.",
+      "parentUuid": "cb769634_68e60a12",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9180dac8_6af0648c",
         "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
         "patchSetId": 28
@@ -190,6 +226,24 @@
       "side": 1,
       "message": "It\u0027s more that, when anchoring to the omnibox, some of the checks don\u0027t make sense to me - they should be irrelevant (e.g. rtl). And vice-versa, when anchoring to contents, the widths of the top_container and contents_container should be identical. I\u0027m thinking something like.\n\n  bool anchor_to_omnibox \u003d has_location_bar;  // TODO: deal with CrOS fullscreen.\n  if (anchor_to_omnibox) {\n    // Cast a bounding box directly under the omnibox.\n    gfx::Rect bounding_box \u003d location_bar_view-\u003eConvertRectToWidget(\n        location_bar_view-\u003eGetLocalBounds());\n    bounding_box.Inset(0, location_bar_view-\u003eheight(), 0,\n                       -contents_container_-\u003eheight());\n    return bounding_box;\n  }\n\n  // Otherwise, subtract infobars and a detached bookmark bar from the top,\n  // and a scrollbar from the appropriate side.\n  gfx::Rect contents \u003d contents_container_-\u003eConvertRectToWidget(\n      contents_container_-\u003eGetLocalBounds());\n  if (base::i18n::IsRTL())\n    contents.Inset(gfx::scrollbar_size(), top_container_-\u003eheight(), 0, 0);\n  else\n    contents.Inset(0, top_container_-\u003eheight(), gfx::scrollbar_size(), 0);\n  return contents;",
       "parentUuid": "5ec4ab19_057bf1ab",
+      "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a88925c_814727a8",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-30T13:26:05Z",
+      "side": 1,
+      "message": "Even though it\u0027s a little more code, this is more clear. I\u0027ll rework it similar to this and cover the immersive mode case.",
+      "parentUuid": "29c207b2_dfdf5a5f",
       "revId": "37739342c4bb48f23a7091f9a47f81ff53605bde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
