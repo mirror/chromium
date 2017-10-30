@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf548508_894b7f62",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-30T16:19:32Z",
+      "side": 1,
+      "message": "nit: \"window\u0027s\" here and below. Maybe explain what a 0 inset means or why it matters: \"inset is 0 (the top of the window is visible)\" and ditto below.",
+      "revId": "de84a236f0957f39b9139b6d2678df3390ecf713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
