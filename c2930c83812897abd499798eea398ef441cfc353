@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c01ae8b_577087e4",
+        "filename": "chrome/browser/android/webapk/webapk_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-10-30T14:12:55Z",
+      "side": 1,
+      "message": "Nit: \"webapk_types\" is a little bit generic for this file, how about simply using \"webapk_update_reason\"?",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 53
+      },
+      "revId": "c2930c83812897abd499798eea398ef441cfc353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
