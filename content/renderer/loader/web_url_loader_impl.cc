@@ -754,11 +754,6 @@ void WebURLLoaderImpl::Context::OnReceivedResponse(
   // received on the browser side, and has been passed down to the renderer.
   if (stream_override_) {
     CHECK(IsBrowserSideNavigationEnabled());
-    // Compute the delta between the response sizes so that the accurate
-    // transfer size can be reported at the end of the request.
-    stream_override_->total_transfer_size_delta =
-        stream_override_->response.encoded_data_length -
-        initial_info.encoded_data_length;
     info = stream_override_->response;
 
     // Replay the redirects that happened during navigation.
@@ -850,13 +845,6 @@ void WebURLLoaderImpl::Context::OnReceivedData(
   if (!client_)
     return;
 
-  if (stream_override_ && stream_override_->stream_url.is_empty()) {
-    // Since ResourceDispatcher::ContinueForNavigation called OnComplete
-    // immediately, it didn't have the size of the resource immediately. So as
-    // data is read off the data pipe, keep track of how much we're reading.
-    stream_override_->total_transferred += data_length;
-  }
-
   TRACE_EVENT_WITH_FLOW0(
       "loading", "WebURLLoaderImpl::Context::OnReceivedData",
       this, TRACE_EVENT_FLAG_FLOW_IN | TRACE_EVENT_FLAG_FLOW_OUT);
@@ -900,12 +888,6 @@ void WebURLLoaderImpl::Context::OnCompletedRequest(
     int64_t total_transfer_size,
     int64_t encoded_body_size,
     int64_t decoded_body_size) {
-  if (stream_override_ && stream_override_->stream_url.is_empty()) {
-    // TODO(kinuko|scottmg|jam): This is wrong. https://crbug.com/705744.
-    total_transfer_size = stream_override_->total_transferred;
-    encoded_body_size = stream_override_->total_transferred;
-  }
-
   if (ftp_listing_delegate_) {
     ftp_listing_delegate_->OnCompletedRequest();
     ftp_listing_delegate_.reset(NULL);
@@ -925,12 +907,6 @@ void WebURLLoaderImpl::Context::OnCompletedRequest(
       client_->DidFail(error, total_transfer_size, encoded_body_size,
                        decoded_body_size);
     } else {
-      // PlzNavigate: compute the accurate transfer size for navigations.
-      if (stream_override_) {
-        DCHECK(IsBrowserSideNavigationEnabled());
-        total_transfer_size += stream_override_->total_transfer_size_delta;
-      }
-
       client_->DidFinishLoading((completion_time - TimeTicks()).InSecondsF(),
                                 total_transfer_size, encoded_body_size,
                                 decoded_body_size);

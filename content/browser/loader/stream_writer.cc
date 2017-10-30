@@ -8,6 +8,7 @@
 #include "base/guid.h"
 #include "content/browser/loader/resource_controller.h"
 #include "content/browser/streams/stream.h"
+#include "content/browser/streams/stream_metadata.h"
 #include "content/browser/streams/stream_registry.h"
 #include "net/base/io_buffer.h"
 #include "url/gurl.h"
@@ -18,8 +19,7 @@ namespace content {
 StreamWriter::StreamWriter() : immediate_mode_(false) {}
 
 StreamWriter::~StreamWriter() {
-  if (stream_.get())
-    Finalize(0);
+  DCHECK(!stream_);
 }
 
 void StreamWriter::InitializeStream(StreamRegistry* registry,
@@ -33,6 +33,10 @@ void StreamWriter::InitializeStream(StreamRegistry* registry,
   GURL url(std::string(url::kBlobScheme) + ":" + origin.spec() +
            base::GenerateGUID());
   stream_ = new Stream(registry, this, url);
+}
+
+void StreamWriter::set_metadata(std::unique_ptr<StreamMetadata> metadata) {
+  stream_->set_metadata(std::move(metadata));
 }
 
 void StreamWriter::OnWillRead(scoped_refptr<net::IOBuffer>* buf,

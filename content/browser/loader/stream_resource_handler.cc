@@ -7,7 +7,9 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "content/browser/loader/resource_controller.h"
-#include "net/url_request/url_request_status.h"
+#include "content/browser/streams/stream.h"
+#include "content/browser/streams/stream_metadata.h"
+#include "net/url_request/url_request.h"
 
 namespace content {
 
@@ -36,6 +38,8 @@ void StreamResourceHandler::OnRequestRedirected(
 void StreamResourceHandler::OnResponseStarted(
     ResourceResponse* resp,
     std::unique_ptr<ResourceController> controller) {
+  auto metadata = std::make_unique<StreamMetadata>(request()->response_info());
+  writer_.set_metadata(std::move(metadata));
   controller->Resume();
 }
 
@@ -50,12 +54,18 @@ void StreamResourceHandler::OnWillRead(
     int* buf_size,
     std::unique_ptr<ResourceController> controller) {
   writer_.OnWillRead(buf, buf_size, -1);
+
   controller->Resume();
 }
 
 void StreamResourceHandler::OnReadCompleted(
     int bytes_read,
     std::unique_ptr<ResourceController> controller) {
+  int64_t total_bytes_read = request()->GetTotalReceivedBytes();
+  writer_.stream()->metadata()->set_total_received_bytes(total_bytes_read);
+
+  int64_t raw_body_bytes = request()->GetRawBodyBytes();
+  writer_.stream()->metadata()->set_raw_body_bytes(raw_body_bytes);
   writer_.OnReadCompleted(bytes_read,
                           base::Bind(&ResourceController::Resume,
                                      base::Passed(std::move(controller))));
