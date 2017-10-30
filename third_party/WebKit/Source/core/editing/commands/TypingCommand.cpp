@@ -681,7 +681,7 @@ void TypingCommand::InsertTextRunWithoutNewlines(const String& text,
             : InsertTextCommand::kRebalanceAllWhitespaces);
   }
 
-  ApplyCommandToComposite(command, EndingSelection(), editing_state);
+  ApplyCommandToComposite(command, editing_state);
   if (editing_state->IsAborted())
     return;
 
