@@ -261,9 +261,14 @@ TEST_F(FormStructureTest, ShouldBeParsed) {
   checkable_field.form_control_type = "checkbox";
   form.fields.push_back(checkable_field);
 
-  // We have only one text field, should not be parsed.
+  // We have only one text field.
   form_structure.reset(new FormStructure(form));
-  EXPECT_FALSE(form_structure->ShouldBeParsed());
+  EXPECT_TRUE(form_structure->ShouldBeParsed());
+  {
+    base::test::ScopedFeatureList features;
+    features.InitAndEnableFeature(kAutofillEnforceMinRequiredFieldsForUpload);
+    EXPECT_FALSE(form_structure->ShouldBeParsed());
+  }
 
   // We now have three text fields, though only two are auto-fillable.
   field.label = ASCIIToUTF16("First Name");
@@ -328,7 +333,12 @@ TEST_F(FormStructureTest, ShouldBeParsed) {
   field.form_control_type = "password";
   form.fields.push_back(field);
   form_structure.reset(new FormStructure(form));
-  EXPECT_FALSE(form_structure->ShouldBeParsed());
+  EXPECT_TRUE(form_structure->ShouldBeParsed());
+  {
+    base::test::ScopedFeatureList features;
+    features.InitAndEnableFeature(kAutofillEnforceMinRequiredFieldsForUpload);
+    EXPECT_FALSE(form_structure->ShouldBeParsed());
+  }
 
   // We have two fields, which are passwords, should be parsed.
   field.label = ASCIIToUTF16("New password");
@@ -823,7 +833,7 @@ TEST_F(FormStructureTest,
   form_structure.reset(new FormStructure(form));
   form_structure->DetermineHeuristicTypes(nullptr /* ukm_service */);
   EXPECT_TRUE(form_structure->IsAutofillable());
-  EXPECT_TRUE(form_structure->ShouldBeCrowdsourced());
+  EXPECT_TRUE(form_structure->ShouldBeQueried());
 
   ASSERT_EQ(3U, form_structure->field_count());
   ASSERT_EQ(3U, form_structure->autofill_count());
@@ -861,7 +871,7 @@ TEST_F(FormStructureTest,
   form_structure.reset(new FormStructure(form));
   form_structure->DetermineHeuristicTypes(nullptr /* ukm_service */);
   EXPECT_TRUE(form_structure->IsAutofillable());
-  EXPECT_TRUE(form_structure->ShouldBeCrowdsourced());
+  EXPECT_TRUE(form_structure->ShouldBeQueried());
 
   ASSERT_EQ(3U, form_structure->field_count());
   ASSERT_EQ(3U, form_structure->autofill_count());
@@ -904,7 +914,7 @@ TEST_F(FormStructureTest,
   form_structure.reset(new FormStructure(form));
   form_structure->DetermineHeuristicTypes(nullptr /* ukm_service */);
   EXPECT_TRUE(form_structure->IsAutofillable());
-  EXPECT_TRUE(form_structure->ShouldBeCrowdsourced());
+  EXPECT_TRUE(form_structure->ShouldBeQueried());
 
   ASSERT_EQ(4U, form_structure->field_count());
   ASSERT_EQ(3U, form_structure->autofill_count());
@@ -936,7 +946,7 @@ TEST_F(FormStructureTest,
   form_structure.reset(new FormStructure(form));
   form_structure->DetermineHeuristicTypes(nullptr /* ukm_service */);
   EXPECT_FALSE(form_structure->IsAutofillable());
-  EXPECT_FALSE(form_structure->ShouldBeCrowdsourced());
+  EXPECT_FALSE(form_structure->ShouldBeQueried());
 
   ASSERT_EQ(2U, form_structure->field_count());
   ASSERT_EQ(0U, form_structure->autofill_count());
@@ -971,7 +981,7 @@ TEST_F(FormStructureTest,
   form_structure.reset(new FormStructure(form));
   form_structure->DetermineHeuristicTypes(nullptr /* ukm_service */);
   EXPECT_FALSE(form_structure->IsAutofillable());
-  EXPECT_FALSE(form_structure->ShouldBeCrowdsourced());
+  EXPECT_FALSE(form_structure->ShouldBeQueried());
 
   ASSERT_EQ(2U, form_structure->field_count());
   ASSERT_EQ(1U, form_structure->autofill_count());
@@ -982,11 +992,11 @@ TEST_F(FormStructureTest,
   EXPECT_EQ(NO_SERVER_DATA, form_structure->field(1)->overall_server_type());
 }
 
-// Even with an 'autocomplete' attribute set, ShouldBeCrowdsourced() should
+// Even with an 'autocomplete' attribute set, ShouldBeQueried() should
 // return true if the structure contains a password field, since there are
 // no local heuristics to depend upon in this case. Fields will still not be
 // considered autofillable though.
-TEST_F(FormStructureTest, PasswordFormShouldBeCrowdsourced) {
+TEST_F(FormStructureTest, PasswordFormShouldBeQueried) {
   FormData form;
 
   // Start with a regular contact form.
@@ -1013,7 +1023,7 @@ TEST_F(FormStructureTest, PasswordFormShouldBeCrowdsourced) {
 
   FormStructure form_structure(form);
   form_structure.DetermineHeuristicTypes(nullptr /* ukm_service */);
-  EXPECT_TRUE(form_structure.ShouldBeCrowdsourced());
+  EXPECT_TRUE(form_structure.ShouldBeQueried());
 }
 
 // Verify that we can correctly process sections listed in the |autocomplete|
