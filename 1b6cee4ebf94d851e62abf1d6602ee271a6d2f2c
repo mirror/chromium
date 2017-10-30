@@ -22,6 +22,30 @@
       "revId": "1b6cee4ebf94d851e62abf1d6602ee271a6d2f2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "092849ba_6cec3f91",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-30T23:34:17Z",
+      "side": 0,
+      "message": "This gets set in #updateVisuals, which is called from #init and the tab model selector observer\u0027s #onTabModelSelected.",
+      "parentUuid": "6eeade36_98ce7531",
+      "range": {
+        "startLine": 352,
+        "startChar": 8,
+        "endLine": 352,
+        "endChar": 72
+      },
+      "revId": "1b6cee4ebf94d851e62abf1d6602ee271a6d2f2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
