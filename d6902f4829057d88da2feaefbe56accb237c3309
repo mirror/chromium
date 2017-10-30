@@ -34,6 +34,24 @@
       "revId": "d6902f4829057d88da2feaefbe56accb237c3309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "898081b4_708236ae",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-30T18:16:08Z",
+      "side": 0,
+      "message": "Fair enough. Can you pull this into a separate change? There\u0027s a non-trivial chance that this will break webrtc\u0027s use of this script (since I think they\u0027re using --split-projects). Might be worth separating out and just changing the condition to: if args.all or not args.split_projects.",
+      "parentUuid": "fa3f10ca_0bb34614",
+      "revId": "d6902f4829057d88da2feaefbe56accb237c3309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
