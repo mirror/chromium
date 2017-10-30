@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfcd40eb_97ea11e8",
+        "filename": "content/browser/geolocation/geolocation_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-30T06:35:31Z",
+      "side": 1,
+      "message": "This line is longer than 80, but \u0027git cl format\u0027 omit it.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 93
+      },
+      "revId": "76ce035e3fa4569e7e077fdd756f3ab2775158c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
