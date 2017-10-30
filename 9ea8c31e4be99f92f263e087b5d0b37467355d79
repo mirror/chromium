@@ -93,6 +93,30 @@
       "revId": "9ea8c31e4be99f92f263e087b5d0b37467355d79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af1a7561_9f00601f",
+        "filename": "testing/libfuzzer/fuzzers/zlib_deflate_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-30T19:35:50Z",
+      "side": 1,
+      "message": "Well, I\u0027ll create a valid seed corpus for the inflate() / uncompress() functions. Those need to have valid inputs.\n\nBut when compressing (deflate is compress), any input is valid. So I don\u0027t think a seed would help?",
+      "parentUuid": "faa1470c_bc5a893c",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 21
+      },
+      "revId": "9ea8c31e4be99f92f263e087b5d0b37467355d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
