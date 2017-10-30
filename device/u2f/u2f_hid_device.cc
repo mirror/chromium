@@ -20,6 +20,10 @@ namespace device {
 namespace switches {
 static constexpr char kEnableU2fHidTest[] = "enable-u2f-hid-tests";
 }  // namespace switches
+namespace {
+// The report_id of HID interface is supported here, so specify it to 0.
+static constexpr uint8_t kReportId = 0x00;
+}  // namespace
 
 U2fHidDevice::U2fHidDevice(device::mojom::HidDeviceInfoPtr device_info,
                            device::mojom::HidManager* hid_manager)
@@ -173,11 +177,11 @@ void U2fHidDevice::WriteMessage(std::unique_ptr<U2fMessage> message,
   }
 
   scoped_refptr<net::IOBufferWithSize> io_buffer = message->PopNextPacket();
-  std::vector<uint8_t> buffer(io_buffer->data() + 1,
+  std::vector<uint8_t> buffer(io_buffer->data(),
                               io_buffer->data() + io_buffer->size());
 
   connection_->Write(
-      0 /* report_id */, buffer,
+      kReportId, buffer,
       base::BindOnce(&U2fHidDevice::PacketWritten, weak_factory_.GetWeakPtr(),
                      std::move(message), true, std::move(callback)));
 }
