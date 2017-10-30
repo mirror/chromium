@@ -94,6 +94,30 @@
       "revId": "6383d7ca7604669b8d08522ee84b8a23a4d08089",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8d7b65_5b731292",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-30T20:33:34Z",
+      "side": 1,
+      "message": "It would also be useful to let Blink HTMLMediaElement know the ID. Specifically, the TRACE events I\u0027ll be augmenting for sourceopen and asynch parser latency improvements this quarter will be done from the Blink side.\n\nNote also that if the ID is generated on WMPI creation, it\u0027s not per element, it\u0027s per load+playback (of which there could be multiple sequentially done on the same element). A little pedantic, I know, but those scenarios I mention might benefit from unique load+playback IDs for the same element (to optimize performance of related tests on the bots, for example).",
+      "parentUuid": "bb712787_0371d0fa",
+      "range": {
+        "startLine": 507,
+        "startChar": 0,
+        "endLine": 507,
+        "endChar": 78
+      },
+      "revId": "6383d7ca7604669b8d08522ee84b8a23a4d08089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
