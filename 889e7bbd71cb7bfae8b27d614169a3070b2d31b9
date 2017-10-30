@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "89ff542c_04ed4d2d",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1609,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-30T12:30:54Z",
+      "side": 1,
+      "message": "prefer to switch the ordering so the condition doesn\u0027t need to be negated:\n\nif (foo) {B} else {A}\n\ninstead of \n\nif (!foo) {A} else {B}",
+      "range": {
+        "startLine": 1609,
+        "startChar": 7,
+        "endLine": 1609,
+        "endChar": 11
+      },
+      "revId": "889e7bbd71cb7bfae8b27d614169a3070b2d31b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3be2535_2bc1c56c",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 3
@@ -13,6 +36,30 @@
       "writtenOn": "2017-10-30T11:36:09Z",
       "side": 1,
       "message": "This function is already huge and is likely to expand as I am taking into account some special case/refining the animation.\nI put it here because it is the pendant of animateTransitionToolbarWithCardFrame:transitionStyle:, but I think there might be a better place. CardSet? StackCard? Maybe an helper on the side?",
+      "range": {
+        "startLine": 2041,
+        "startChar": 8,
+        "endLine": 2041,
+        "endChar": 53
+      },
+      "revId": "889e7bbd71cb7bfae8b27d614169a3070b2d31b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e823c09c_85f6db35",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2041,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-30T12:30:54Z",
+      "side": 1,
+      "message": "Since this mutates _activeCardSet.displayView\u0027s view hierarchy, it should probably stay in this class. I\u0027m not too worried about StackViewController getting bloated as long as it doesn\u0027t create associated complexity elsewhere.",
+      "parentUuid": "b3be2535_2bc1c56c",
       "range": {
         "startLine": 2041,
         "startChar": 8,
