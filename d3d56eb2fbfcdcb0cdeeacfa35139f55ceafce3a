@@ -16,6 +16,24 @@
       "revId": "d3d56eb2fbfcdcb0cdeeacfa35139f55ceafce3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210b85d7_2dad85b8",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_unittest_context_lost.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-30T20:15:27Z",
+      "side": 1,
+      "message": "Oh cool! I have updated the test to actually unbind + delete the texture. Thanks!",
+      "parentUuid": "5c736577_20367de0",
+      "revId": "d3d56eb2fbfcdcb0cdeeacfa35139f55ceafce3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
