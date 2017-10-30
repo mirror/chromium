@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d678d28_a418ef02",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-10-30T15:40:36Z",
+      "side": 1,
+      "message": "On the previous CL, this line began was\n\n    std::generate_n(sources_[0], sizeof(sources_) / sizeof(sources_[0][0]),\n\nwhich resulted in the std::generate_n to receive a one-dimensional array reference. On Windows debug builds that triggered a debug check that the count (in this case the total number of elements in a multi-dimensional array) is less than or equal to the number of elements in that one-dimensional array which is never true.\n\nThis new line results in the std::generate_n to receive a pointer and cannot thus trigger that (in this case) erroneous array boundary check.",
+      "revId": "46355b8a0683604f077010ea99d21f5dab2a373e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
