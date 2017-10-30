@@ -627,7 +627,7 @@ SoftwareImageDecodeCache::GetSubrectImageDecode(const ImageKey& key,
   ImageKey exact_size_key =
       ImageKey::FromDrawImage(exact_size_draw_image, color_type_);
 
-  // Sanity checks.
+// Sanity checks.
 #if DCHECK_IS_ON()
   SkISize exact_target_size =
       SkISize::Make(exact_size_key.target_size().width(),
@@ -701,7 +701,7 @@ SoftwareImageDecodeCache::GetScaledImageDecode(const ImageKey& key,
   ImageKey exact_size_key =
       ImageKey::FromDrawImage(exact_size_draw_image, color_type_);
 
-  // Sanity checks.
+// Sanity checks.
 #if DCHECK_IS_ON()
   SkISize exact_target_size =
       SkISize::Make(exact_size_key.target_size().width(),
