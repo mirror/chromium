@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a8a3d8b7_97ad5db3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 29
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-30T15:01:35Z",
+      "side": 1,
+      "message": "This doc isn\u0027t public, BTW -- I can make a new one @chromium.org, if you want something to reference here, or you can delete it and let the commit message stand on its own.",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b523f11e_424cbb91",
         "filename": "/COMMIT_MSG",
         "patchSetId": 29
