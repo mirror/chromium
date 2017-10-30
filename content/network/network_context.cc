@@ -14,6 +14,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "build/build_config.h"
+#include "components/network_error_logging/network_error_logging_service.h"
 #include "components/network_session_configurator/browser/network_session_configurator.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "components/prefs/json_pref_store.h"
@@ -319,6 +320,9 @@ void NetworkContext::ApplyContextParamsToBuilder(
                          -> std::unique_ptr<net::HttpTransactionFactory> {
         return std::make_unique<ThrottlingNetworkTransactionFactory>(session);
       }));
+
+  builder->set_network_error_logging_delegate(
+      network_error_logging::NetworkErrorLoggingService::Create());
 }
 
 void NetworkContext::ClearNetworkingHistorySince(
