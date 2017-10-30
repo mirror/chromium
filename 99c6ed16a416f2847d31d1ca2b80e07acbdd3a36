@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51bc2b52_acda9976",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-30T14:22:50Z",
+      "side": 1,
+      "message": "Can you also add a note that it should be used only to access files within assets/",
+      "revId": "99c6ed16a416f2847d31d1ca2b80e07acbdd3a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472cfad7_b90c93a4",
+        "filename": "base/android/java/src/org/chromium/base/ResourceExtractor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-30T14:22:50Z",
+      "side": 1,
+      "message": "nit: Since it\u0027s a bit non-trivial, acna you store AssetManager as a variable outside of the loop?",
+      "revId": "99c6ed16a416f2847d31d1ca2b80e07acbdd3a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
