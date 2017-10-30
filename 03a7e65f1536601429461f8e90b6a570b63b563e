@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01ddacf9_7d597f46",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T23:31:00Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "03a7e65f1536601429461f8e90b6a570b63b563e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8c243c_39aebda4",
+        "filename": "ash/shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T23:31:00Z",
+      "side": 1,
+      "message": "nit: \u003d std::make_unique\u003cVoiceInteractionController\u003e()",
+      "revId": "03a7e65f1536601429461f8e90b6a570b63b563e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d2ee1c_137e3ee8",
+        "filename": "ash/voice_interaction/voice_interaction_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T23:31:00Z",
+      "side": 1,
+      "message": "Instead of doing this, forward declare the enum class. (mojom generated headers can be quite large)",
+      "revId": "03a7e65f1536601429461f8e90b6a570b63b563e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f95cc98_3e9d0b9a",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T23:31:00Z",
+      "side": 1,
+      "message": "Make this a helper function in an anonymous namespace above.\n\nAlso, use a switch statement, which will make it easier to see the mapping and what happens if an unknown value is encountered.",
+      "revId": "03a7e65f1536601429461f8e90b6a570b63b563e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8ef660_3ab93795",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T23:31:00Z",
+      "side": 1,
+      "message": "super-nit: end with \":\"",
+      "revId": "03a7e65f1536601429461f8e90b6a570b63b563e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

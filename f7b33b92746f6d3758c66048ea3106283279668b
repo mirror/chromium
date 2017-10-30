@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bddbc9b_37b016a9",
+        "filename": "components/arc/common/voice_interaction_framework.typemap",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T23:31:00Z",
+      "side": 0,
+      "message": "Hooray, fewer typemaps!",
+      "revId": "f7b33b92746f6d3758c66048ea3106283279668b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbcbe250_75f0c613",
+        "filename": "components/arc/voice_interaction/voice_interaction_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T23:31:00Z",
+      "side": 0,
+      "message": "Hooray, fewer structtraits!",
+      "revId": "f7b33b92746f6d3758c66048ea3106283279668b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
