@@ -16,6 +16,24 @@
       "revId": "eca7f1025af7932217006c73e5e3ae2aab6661f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62026c4_e13d94f3",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIterator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-30T03:47:02Z",
+      "side": 1,
+      "message": "|emits_original_text_| is not initialized from |TextIteratorBehavior| and\nit always |false|. Another patch will get rid of it.",
+      "parentUuid": "a2eefc75_0c02c6f2",
+      "revId": "eca7f1025af7932217006c73e5e3ae2aab6661f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
