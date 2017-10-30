@@ -193,7 +193,9 @@ void OmniboxViewViews::OnTabChanged(const content::WebContents* web_contents) {
   UpdateSecurityLevel();
   const OmniboxState* state = static_cast<OmniboxState*>(
       web_contents->GetUserData(&OmniboxState::kKey));
-  model()->RestoreState(state ? &state->model_state : NULL);
+  model()->RestoreState(
+      controller()->GetToolbarModel()->GetFormattedURL(nullptr),
+      state ? &state->model_state : NULL);
   if (state) {
     // This assumes that the omnibox has already been focused or blurred as
     // appropriate; otherwise, a subsequent OnFocus() or OnBlur() call could
@@ -214,7 +216,8 @@ void OmniboxViewViews::ResetTabState(content::WebContents* web_contents) {
 void OmniboxViewViews::Update() {
   const security_state::SecurityLevel old_security_level = security_level_;
   UpdateSecurityLevel();
-  if (model()->UpdatePermanentText()) {
+  if (model()->SetPermanentText(
+          controller()->GetToolbarModel()->GetFormattedURL(nullptr))) {
     RevertAll();
 
     // Only select all when we have focus.  If we don't have focus, selecting
