@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91c7f22b_db686982",
+        "filename": "chrome/browser/first_run/first_run_dialog.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-30T14:08:54Z",
+      "side": 1,
+      "message": "nit: unused",
+      "revId": "030f1bf114502e83973a6e6af2b1a94eb6b07abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee6341a_b2204761",
+        "filename": "chrome/browser/first_run/first_run_internal_posix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-30T14:08:54Z",
+      "side": 1,
+      "message": "what\u0027s the argument against declaring this in the .h? we do this all the time (https://cs.chromium.org/search/?q\u003dForTesting+file:%5C.h$\u0026p\u003d7\u0026sq\u003dpackage:chromium\u0026type\u003dcs).",
+      "revId": "030f1bf114502e83973a6e6af2b1a94eb6b07abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fff94e6_bacb7b28",
+        "filename": "chrome/browser/first_run/first_run_internal_posix_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-30T14:08:54Z",
+      "side": 1,
+      "message": "is it worth explicitly clearing the callback in a TearDown() override in case it isn\u0027t run for some reason (which would result in test failure, right)? this would prevent a bogus callback lingering beyond the lifetime of this test.",
+      "revId": "030f1bf114502e83973a6e6af2b1a94eb6b07abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eac4a0c_4210ea40",
+        "filename": "chrome/browser/ui/cocoa/first_run_dialog.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-30T14:08:54Z",
+      "side": 1,
+      "message": "cool! i\u0027d hoped that there was a way to do this.",
+      "revId": "030f1bf114502e83973a6e6af2b1a94eb6b07abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
