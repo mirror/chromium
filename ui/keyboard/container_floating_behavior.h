@@ -11,6 +11,7 @@
 #include "ui/keyboard/container_behavior.h"
 #include "ui/keyboard/container_type.h"
 #include "ui/keyboard/drag_descriptor.h"
+#include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_export.h"
 #include "ui/wm/core/window_animations.h"
 
@@ -23,7 +24,7 @@ constexpr int kDefaultDistanceFromScreenRight = 20;
 
 class KEYBOARD_EXPORT ContainerFloatingBehavior : public ContainerBehavior {
  public:
-  ContainerFloatingBehavior();
+  ContainerFloatingBehavior(KeyboardController* controller);
   ~ContainerFloatingBehavior() override;
 
   // ContainerBehavior overrides
