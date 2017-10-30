@@ -181,7 +181,6 @@ class WebUIMojoTest : public WebIntTest {
 TEST_F(WebUIMojoTest, MessageExchange) {
   @autoreleasepool {
     web_state()->SetWebUsageEnabled(true);
-    web_state()->GetView();  // WebState won't load URL without view.
     GURL url(url::SchemeHostPort(kTestWebUIScheme, kTestWebUIURLHost, 0)
                  .Serialize());
     NavigationManager::WebLoadParams load_params(url);
