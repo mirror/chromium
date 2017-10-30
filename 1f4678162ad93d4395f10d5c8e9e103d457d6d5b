@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbfd6457_38de6ca6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T11:52:36Z",
+      "side": 1,
+      "message": "The \"then\" here is slightly confusing to me. I first thought it meant that the controls would only hide if we show the \"default poster\" but looking at the code, it seems like those are unrelated.",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28bc0b02_d3903b79",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-poster-frame.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T11:52:36Z",
+      "side": 1,
+      "message": "We should probably specify preload\u003dauto as preload\u003dmetadata is the new default.",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9feed585_74d3fc62",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-poster-frame.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T11:52:36Z",
+      "side": 1,
+      "message": "Same as below (sorry, reviewed from bottom to top)",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f6109db_dcddee15",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-poster-image.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T11:52:36Z",
+      "side": 1,
+      "message": "We should probably specify preload\u003dauto as preload\u003dmetadata is the new default.",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd0b70a_3c1f5842",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-poster-image.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T11:52:36Z",
+      "side": 1,
+      "message": "Looks like this isn\u0027t used.",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ff8d65_499374da",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-without-poster.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T11:52:36Z",
+      "side": 1,
+      "message": "Looks like this isn\u0027t used.",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc755a4_02d128a3",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-without-poster.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T11:52:36Z",
+      "side": 1,
+      "message": "I\u0027m surprised we have no video frames at this point.",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1398dcf_0fc4a0e9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T11:52:36Z",
+      "side": 1,
+      "message": "const char kShowDefaultPosterCSSClas[]",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44eebfdc_ec67a255",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T11:52:36Z",
+      "side": 1,
+      "message": "I wonder if we could speed things up here by using DOMTokenList instead of creating our space separated string.",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2d2e7a_6466ad2d",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T11:52:36Z",
+      "side": 1,
+      "message": "I assume that this is meant to be the event to update the kShowDefaultPosterCSSClass state? I wonder if `canplay` wouldn\u0027t be a bit late. We could do the check on `loadedmetadata` nowadays (which I guess most likely already happens). To be safe, we can also check when `loadeddata` is fired as the first frames should be loaded at that point. `canplay` is fired when there are enough frames loaded to play.",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d2956d_30cb889d",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T11:52:36Z",
+      "side": 1,
+      "message": "For situations like this where there is a pre-condition, it\u0027s good practice to mention it in the header so people will not have to read the implementation to know if it\u0027s expected for the callers to check if the MediaElement() is a VideoElement().",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d46e13_3ee7365f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-30T11:52:36Z",
+      "side": 1,
+      "message": "FWIW, I thought this was a gradient based on an email. Either way, we can change this later :)",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
