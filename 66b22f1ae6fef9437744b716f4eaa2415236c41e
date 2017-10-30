@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c38363a_a3e74471",
+        "filename": "tools/android/native_lib_memory/extract_symbols.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-10-30T09:40:33Z",
+      "side": 1,
+      "message": "Nit: is there a policy for not mutating parameters? I always prefer just doing something like reached_sybmol_names\u003dset(reached_symbol_names): it reduces my cognitive load by not increasing the number of names floating around, and also seems more pythonic as the type of the reached_sybmol_names doesn\u0027t actually have to be a list in the first place, and python generally seems to prefer dropping the overhead of tracking what the exact type of an object is. For example, most of the lists that are being passed about in all these scripts really just need to be iterables.",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 26
+      },
+      "revId": "66b22f1ae6fef9437744b716f4eaa2415236c41e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca37b73_480cd982",
+        "filename": "tools/android/native_lib_memory/extract_symbols.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-10-30T09:40:33Z",
+      "side": 1,
+      "message": "Remind us where the list of reached symbols comes from (tools/cygprofile/quelquechose.py?)",
+      "range": {
+        "startLine": 208,
+        "startChar": 45,
+        "endLine": 208,
+        "endChar": 47
+      },
+      "revId": "66b22f1ae6fef9437744b716f4eaa2415236c41e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb71fc2_cab25930",
+        "filename": "tools/android/native_lib_memory/extract_symbols.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-10-30T09:40:33Z",
+      "side": 1,
+      "message": "Nit: it will probably be nice to make this optional, in the cases that one wants to look at a file without having run a full profiling cycle. The visualization and such should just work if nothing is marked as reached, right?",
+      "range": {
+        "startLine": 243,
+        "startChar": 49,
+        "endLine": 243,
+        "endChar": 69
+      },
+      "revId": "66b22f1ae6fef9437744b716f4eaa2415236c41e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
