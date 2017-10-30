@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24d900ee_e363bab5",
+        "filename": "base/win/shortcut.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-30T13:45:15Z",
+      "side": 1,
+      "message": "DO_NOT_COMMIT! :-)",
+      "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b57993f_0bea77c8",
+        "filename": "chrome/install_static/install_constants.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-30T13:45:15Z",
+      "side": 1,
+      "message": "InstallModes.VerifyModes should be updated to test this. perhaps a new test in InstallStaticUtilTest would be useful, too.",
+      "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65dd284e_8fe6f636",
+        "filename": "chrome/installer/setup/install.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-30T13:45:15Z",
+      "side": 1,
+      "message": "DO_NOT_COMMIT :-)",
+      "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61ec9500_09995faa",
+        "filename": "chrome/installer/setup/install.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-30T13:45:15Z",
+      "side": 1,
+      "message": "consider only calling the setter if GetToastActivatorClsid returns a non-null and non-empty string. this opens the door for modes to not support the action center integration.",
+      "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432c5cd8_f876b4b8",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-30T13:45:15Z",
+      "side": 1,
+      "message": "windows.h must be included before other headers. please move it back where it was and add a blank line between it and objbase.h so that the formatter doesn\u0027t move it down here.",
+      "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ce9e07_17b9ddcf",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-30T13:45:15Z",
+      "side": 1,
+      "message": "check return value?",
+      "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
