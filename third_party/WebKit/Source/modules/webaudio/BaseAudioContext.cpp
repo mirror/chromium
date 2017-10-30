@@ -1028,7 +1028,7 @@ void BaseAudioContext::TraceWrappers(
   }
 }
 
-SecurityOrigin* BaseAudioContext::GetSecurityOrigin() const {
+const SecurityOrigin* BaseAudioContext::GetSecurityOrigin() const {
   if (GetExecutionContext())
     return GetExecutionContext()->GetSecurityOrigin();
 
