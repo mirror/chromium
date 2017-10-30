@@ -7,16 +7,13 @@
 namespace blink {
 
 SerializedColorParams::SerializedColorParams()
-    : color_space_(SerializedColorSpace::kLegacy),
+    : color_space_(SerializedColorSpace::kSRGB),
       pixel_format_(SerializedPixelFormat::kRGBA8),
       opacity_mode_(SerializedOpacityMode::kNonOpaque),
       storage_format_(SerializedImageDataStorageFormat::kUint8Clamped) {}
 
 SerializedColorParams::SerializedColorParams(CanvasColorParams color_params) {
   switch (color_params.ColorSpace()) {
-    case kLegacyCanvasColorSpace:
-      color_space_ = SerializedColorSpace::kLegacy;
-      break;
     case kSRGBCanvasColorSpace:
       color_space_ = SerializedColorSpace::kSRGB;
       break;
@@ -74,21 +71,11 @@ SerializedColorParams::SerializedColorParams(
 }
 
 CanvasColorParams SerializedColorParams::GetCanvasColorParams() const {
-  CanvasColorSpace color_space = kLegacyCanvasColorSpace;
-  switch (color_space_) {
-    case SerializedColorSpace::kLegacy:
-      color_space = kLegacyCanvasColorSpace;
-      break;
-    case SerializedColorSpace::kSRGB:
-      color_space = kSRGBCanvasColorSpace;
-      break;
-    case SerializedColorSpace::kRec2020:
-      color_space = kRec2020CanvasColorSpace;
-      break;
-    case SerializedColorSpace::kP3:
-      color_space = kP3CanvasColorSpace;
-      break;
-  }
+  CanvasColorSpace color_space = kSRGBCanvasColorSpace;
+  if (color_space_ == SerializedColorSpace::kRec2020)
+    color_space = kRec2020CanvasColorSpace;
+  else if (color_space_ == SerializedColorSpace::kP3)
+    color_space = kP3CanvasColorSpace;
 
   CanvasPixelFormat pixel_format = kRGBA8CanvasPixelFormat;
   if (pixel_format_ == SerializedPixelFormat::kF16)

@@ -33,10 +33,9 @@ enum class ImageSerializationTag : uint32_t {
 
 // This enumeration specifies the values used to serialize CanvasColorSpace.
 enum class SerializedColorSpace : uint32_t {
-  kLegacy = 0,
-  kSRGB = 1,
-  kRec2020 = 2,
-  kP3 = 3,
+  kSRGB = 0,
+  kRec2020 = 1,
+  kP3 = 2,
   kLast = kP3,
 };
 

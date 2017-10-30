@@ -209,6 +209,7 @@ TEST_F(ImageDataTest, TestGetImageDataInCanvasColorSettings) {
     color_settings.setColorSpace(
         ImageData::CanvasColorSpaceName(image_data_color_spaces[i]));
 
+    int bytes_per_data = 1;
     for (unsigned j = 0; j < num_image_data_storage_formats; j++) {
       switch (image_data_storage_formats[j]) {
         case kUint8ClampedArrayStorageFormat:
@@ -218,10 +219,12 @@ TEST_F(ImageDataTest, TestGetImageDataInCanvasColorSettings) {
         case kUint16ArrayStorageFormat:
           data_array = static_cast<DOMArrayBufferView*>(data_u16);
           color_settings.setStorageFormat(kUint16ArrayStorageFormatName);
+          bytes_per_data = 2;
           break;
         case kFloat32ArrayStorageFormat:
           data_array = static_cast<DOMArrayBufferView*>(data_f32);
           color_settings.setStorageFormat(kFloat32ArrayStorageFormatName);
+          bytes_per_data = 4;
           break;
         default:
           NOTREACHED();
