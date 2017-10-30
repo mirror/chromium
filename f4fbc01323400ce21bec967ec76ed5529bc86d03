@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07695223_63b6ef57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-30T19:06:02Z",
+      "side": 1,
+      "message": "Although there seem to be many use cases of setting default wallpaper directly, if we look deeper, none of them really need that. The name of \u0027set default wallpaper\u0027 is misused multiple times.\n\nNote that there are three functions in wallpaper_manager:\n\n1) SetDefaultWallpaper (called twice, one of them is the link you provided, the other place is in arc_wallpaper_service.cc)\n\n2) SetDefaultWallpaperNow (only called internally)\n\n3) SetDefaultWallpaperDelayed (called only once publicly, which is from LoadSigninWallpaper)\n\nI combined 2) and 3) in another CL. But after combination it\u0027s still unclear what their difference with 1) is based on the names.\n\nThe actual difference is: in 1) it deletes the custom user wallpaper first, and may/may not set a default wallpaper (one caller does, the other does not).\n\nIn 2), it only sets the default wallpaper once for this user, and does not touch the user\u0027s wallpaper info. It\u0027s just a one-time thing.\n\nSo I think it makes sense to distinguish these two, although both of them is named as \u0027set default wallpaper\u0027, their use cases are different. \u0027SetDefaultWallpaper\u0027 may not be a proper name in the first place.\n\nFor 1) it should be renamed to something like \u0027delete wallpaper\u0027 as that\u0027s the main thing this function is doing.\n\nFor 2) we should realize that the only place that it\u0027s used publicly (i.e. when client actually needs to set the default wallpaper for one time) is the sign-in wallpaper (See https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/ui/webui_login_display.cc?type\u003dcs\u0026q\u003dloadsigninwallpaper\u0026sq\u003dpackage:chromium\u0026l\u003d232)\n\nAs we\u0027ve discussed, it can be replaced by SetUserWallpaper or SetSigninWallpaper. Anyways, it should not contain \u0027default\u0027 anymore because it also contains the device policy logic.\n\nSo that\u0027s why we can remove the use cases of setting default wallpaper.",
+      "parentUuid": "2c041c05_34ae25d6",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9211b18a_f2cc7c40",
         "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-30T17:43:57Z",
       "side": 1,
       "message": "Looks like this is another cause that the client wants to set a default wallpaper directly.",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9646d90b_6e78fc80",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-30T19:06:02Z",
+      "side": 1,
+      "message": "IMO this needs to be renamed too, as detailed in the other comment, it\u0027s unclear from this name that whether it needs to set the default wallpaper only once, or deletes the user custom wallpaper. Actually it\u0027s doing the latter.",
+      "parentUuid": "9211b18a_f2cc7c40",
       "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "1704d058_3f2497d6",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-30T19:06:02Z",
+      "side": 1,
+      "message": "I tried calling ShowUserWallpaper(user_manager::SignInAccountId()) but it\u0027s not changing the wallpaper to default. I\u0027m still investigating.",
+      "parentUuid": "27954aa3_d120047a",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be4bf23c_83ba0010",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 9
@@ -98,6 +152,24 @@
       "writtenOn": "2017-10-30T17:43:57Z",
       "side": 1,
       "message": "It\u0027s weird that DeleteWallpaper() does things more than just deleting wallpaper, but also set another wallpaper.",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b80d5c_6ddaaee7",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-30T19:06:02Z",
+      "side": 1,
+      "message": "We can rename this, but as in the other comment explained we should still emphasize \u0027delete\u0027 or \u0027remove\u0027.\n\nAnd personally I think the name is OK, because after deleting wallpaper file, one may wonder: what to do with the current wallpaper? Then |show_default_wallpaper| provides an answer.\n\nI think we can also improve this by checking user.is_active for the caller, currently the caller does it (https://cs.chromium.org/chromium/src/chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d237)\n\nSo DeleteWallpaper will only take one parameter. I think it\u0027s understandable that we continue to set the default wallpaper after the deletion, because everyone knows that we must have a wallpaper instead of the black screen. \n\nI think this is consistent with the goal that makes default wallpaper internal, because it\u0027s up to the WallpaperManager to fall back to the default wallpaper if we don\u0027t have other choices. The client should not worry about it.",
+      "parentUuid": "9d01bbd7_d88a7261",
       "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
