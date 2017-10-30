@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50e7d06e_44f30d4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T21:28:48Z",
+      "side": 1,
+      "message": "Just curious, how is this bug related? Did this debugging problem come up while investigating that bug?",
+      "revId": "512255be922a11da7295ccfa3e646ccc4e550166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc3e068_93d1b599",
+        "filename": "ash/sticky_keys/sticky_keys_overlay.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T21:28:48Z",
+      "side": 1,
+      "message": "Is this still needed? Do we need to stop implicit animations? (I\u0027m not too familiar with the animations system.)",
+      "revId": "512255be922a11da7295ccfa3e646ccc4e550166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0c379d_f1d89b9c",
+        "filename": "ash/sticky_keys/sticky_keys_overlay.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T21:28:48Z",
+      "side": 1,
+      "message": "I assume this type of observer doesn\u0027t need to be manually removed?",
+      "revId": "512255be922a11da7295ccfa3e646ccc4e550166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
