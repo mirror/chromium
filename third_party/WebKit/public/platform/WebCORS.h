@@ -46,12 +46,12 @@ namespace WebCORS {
 
 // Perform a CORS access check on the response parameters.
 // Use |AccessControlErrorString()| to construct a user-friendly error message.
-BLINK_PLATFORM_EXPORT base::Optional<network::mojom::CORSAccessError>
-CheckAccess(const WebURL,
-            const int response_status_code,
-            const WebHTTPHeaderMap&,
-            network::mojom::FetchCredentialsMode,
-            const WebSecurityOrigin&);
+BLINK_PLATFORM_EXPORT base::Optional<network::mojom::CORSError> CheckAccess(
+    const WebURL,
+    const int response_status_code,
+    const WebHTTPHeaderMap&,
+    network::mojom::FetchCredentialsMode,
+    const WebSecurityOrigin&);
 
 // Given a redirected-to URL, check if the location is allowed
 // according to CORS. That is:
@@ -59,19 +59,19 @@ CheckAccess(const WebURL,
 // - the URL does not contain the userinfo production.
 //
 // Use |RedirectErrorString()| to construct a user-friendly error message.
-BLINK_PLATFORM_EXPORT base::Optional<network::mojom::CORSRedirectError>
+BLINK_PLATFORM_EXPORT base::Optional<network::mojom::CORSError>
 CheckRedirectLocation(const WebURL&);
 
 // Perform the required CORS checks on the response to a preflight request.
 // Returns |kPreflightSuccess| if preflight response was successful.
 // Use |PreflightErrorString()| to construct a user-friendly error message.
-BLINK_PLATFORM_EXPORT base::Optional<network::mojom::CORSPreflightError>
-CheckPreflight(const int preflight_response_status_code);
+BLINK_PLATFORM_EXPORT base::Optional<network::mojom::CORSError> CheckPreflight(
+    const int preflight_response_status_code);
 
 // Error checking for the currently experimental
 // "Access-Control-Allow-External:" header. Shares error conditions with
 // standard preflight checking.
-BLINK_PLATFORM_EXPORT base::Optional<network::mojom::CORSPreflightError>
+BLINK_PLATFORM_EXPORT base::Optional<network::mojom::CORSError>
 CheckExternalPreflight(const WebHTTPHeaderMap&);
 
 BLINK_PLATFORM_EXPORT WebURLRequest
@@ -90,23 +90,15 @@ BLINK_PLATFORM_EXPORT bool HandleRedirect(
     ResourceLoaderOptions&,
     WebString&);
 
-// Stringify errors from CORS access checks, preflight or redirect checks.
+// Stringify CORSError.
 BLINK_PLATFORM_EXPORT WebString
-AccessControlErrorString(const network::mojom::CORSAccessError,
-                         const int response_status_code,
-                         const WebHTTPHeaderMap&,
-                         const WebSecurityOrigin&,
-                         const WebURLRequest::RequestContext);
-
-BLINK_PLATFORM_EXPORT WebString
-PreflightErrorString(const network::mojom::CORSPreflightError,
-                     const WebHTTPHeaderMap&,
-                     const int preflight_response_status_code);
-
-BLINK_PLATFORM_EXPORT WebString
-RedirectErrorString(const network::mojom::CORSRedirectError,
-                    const WebURL& request_url,
-                    const WebURL& redirect_url);
+GetErrorString(const network::mojom::CORSError,
+               const WebURL& request_url,
+               const WebURL& redirect_url,
+               const int response_status_code,
+               const WebHTTPHeaderMap&,
+               const WebSecurityOrigin&,
+               const WebURLRequest::RequestContext);
 
 BLINK_PLATFORM_EXPORT void ParseAccessControlExposeHeadersAllowList(
     const WebString&,

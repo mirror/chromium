@@ -468,7 +468,7 @@ CORSStatus ResourceLoader::DetermineCORSStatus(const ResourceResponse& response,
           ? resource_->GetResponse()
           : response;
 
-  base::Optional<network::mojom::CORSAccessError> cors_error =
+  base::Optional<network::mojom::CORSError> cors_error =
       WebCORS::CheckAccess(response_for_access_control.Url(),
                            response_for_access_control.HttpStatusCode(),
                            response_for_access_control.HttpHeaderFields(),
@@ -487,8 +487,9 @@ CORSStatus ResourceLoader::DetermineCORSStatus(const ResourceResponse& response,
   error_msg.Append("' from origin '");
   error_msg.Append(source_origin->ToString());
   error_msg.Append("' has been blocked by CORS policy: ");
-  error_msg.Append(WebCORS::AccessControlErrorString(
-      *cors_error, response_for_access_control.HttpStatusCode(),
+  error_msg.Append(WebCORS::GetErrorString(
+      *cors_error, initial_request.Url(), response.Url(),
+      response_for_access_control.HttpStatusCode(),
       response_for_access_control.HttpHeaderFields(),
       WebSecurityOrigin(source_origin), initial_request.GetRequestContext()));
 
