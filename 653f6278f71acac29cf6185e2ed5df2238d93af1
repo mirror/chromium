@@ -1,0 +1,233 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b523f11e_424cbb91",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 29
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T09:34:58Z",
+      "side": 1,
+      "message": "Nit: WebKit, since some platforms and search tools are case sensitive.",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 26
+      },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0accba10_29827c47",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 29
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T09:34:58Z",
+      "side": 1,
+      "message": "Nit: WebKit/common",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece9b61c_94a1d731",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameElement.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T09:34:58Z",
+      "side": 1,
+      "message": "Perhaps this can be removed? This is what the default ctor should do, unless I\u0027ve misunderstood this.",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553baa18_1092b3ad",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T09:34:58Z",
+      "side": 1,
+      "message": "Ditto about omitting this (same elsewhere in this CL)",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67dc371c_8c0d66d5",
+        "filename": "third_party/WebKit/Source/devtools/devtools-node-modules",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T09:34:58Z",
+      "side": 1,
+      "message": "Is this an artifact from rebasing?",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d704eb9_86adbb5d",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T09:34:58Z",
+      "side": 1,
+      "message": "Nit: const url::Origin\u0026",
+      "range": {
+        "startLine": 59,
+        "startChar": 40,
+        "endLine": 59,
+        "endChar": 51
+      },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ce09a5_6f81bf48",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T09:34:58Z",
+      "side": 1,
+      "message": "Nit: whitelist.origins \u003d {origin};\n\nshould work.",
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb19a696_e5ab1b3b",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T09:34:58Z",
+      "side": 1,
+      "message": "Nit: std::string() is more efficient than implicit construction from \"\".\n\nBut I think we can just change url::Origin::CreateFromNormalizedTupleWithSuborigin() to take StringPieces, and then we don\u0027t need to call as_string() so much here.",
+      "range": {
+        "startLine": 95,
+        "startChar": 12,
+        "endLine": 95,
+        "endChar": 14
+      },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56c2e49_1230ec2c",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T09:34:58Z",
+      "side": 1,
+      "message": "+mkwst\n\nI think we should probably just add a ToUrlOrigin() / FromUrlOrigin() conversion helper directly to blink::SecurityOrigin, and also change WebSecurityOrigin to use it. It seems like the current path of sharing code between Blink and Chrome is going to lead to more places that will need to do this conversion.\n\nIn the long run we might be able to use url::Origin everywhere, but that\u0027s still some time away.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 28
+      },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f32e84b_5ef1280d",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T09:34:58Z",
+      "side": 1,
+      "message": "Unfortunately, this violates style guide naming. It\u0027s also a bit confusing to have two very similarly named fields with different types. Is it possible to only use one or the other?",
+      "range": {
+        "startLine": 69,
+        "startChar": 14,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31720b5_6075df5f",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-30T09:34:58Z",
+      "side": 1,
+      "message": "Nit: const url::Origin\u0026 to reduce the number of copies",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 13
+      },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
