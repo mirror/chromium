@@ -187,7 +187,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     /** Builds proto to send to the WebAPK server. */
     protected void buildUpdateRequestAndSchedule(final WebApkInfo info, String primaryIconUrl,
             String badgeIconUrl, boolean isManifestStale) {
-        int versionCode = readVersionCodeFromAndroidManifest(info.webApkPackageName());
+        int versionCode = readVersionCodeFromAndroidManifest(info.apkPackageName());
         int size = info.iconUrlToMurmur2HashMap().size();
         String[] iconUrls = new String[size];
         String[] iconHashes = new String[size];
@@ -211,8 +211,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
                 info.scopeUri().toString(), info.name(), info.shortName(), primaryIconUrl,
                 info.icon(), badgeIconUrl, info.badgeIcon(), iconUrls, iconHashes,
                 info.displayMode(), info.orientation(), info.themeColor(), info.backgroundColor(),
-                info.manifestUrl(), info.webApkPackageName(), versionCode, isManifestStale,
-                callback);
+                info.manifestUrl(), info.apkPackageName(), versionCode, isManifestStale, callback);
     }
 
     /**
@@ -307,7 +306,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
             return true;
         }
 
-        if (!info.webApkPackageName().startsWith(WEBAPK_PACKAGE_PREFIX)) {
+        if (!info.apkPackageName().startsWith(WEBAPK_PACKAGE_PREFIX)) {
             return false;
         }
 
