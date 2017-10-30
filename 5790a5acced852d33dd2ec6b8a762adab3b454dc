@@ -39,6 +39,30 @@
       "revId": "5790a5acced852d33dd2ec6b8a762adab3b454dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a44727_700cc4fa",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-30T15:04:49Z",
+      "side": 1,
+      "message": "Added a comment saying this should only be used by unittests.  I think long-term I will remove this property and let callers decide whether or not to animate on a call-by-call basis.",
+      "parentUuid": "7194517d_2a673f87",
+      "range": {
+        "startLine": 21,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 73
+      },
+      "revId": "5790a5acced852d33dd2ec6b8a762adab3b454dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
