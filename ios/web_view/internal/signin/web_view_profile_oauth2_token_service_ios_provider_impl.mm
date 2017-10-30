@@ -15,9 +15,7 @@
 #endif
 
 WebViewProfileOAuth2TokenServiceIOSProviderImpl::
-    WebViewProfileOAuth2TokenServiceIOSProviderImpl(
-        CWVAuthenticationController* controller)
-    : controller_(controller) {}
+    WebViewProfileOAuth2TokenServiceIOSProviderImpl() = default;
 
 WebViewProfileOAuth2TokenServiceIOSProviderImpl::
     ~WebViewProfileOAuth2TokenServiceIOSProviderImpl() = default;

@@ -18,8 +18,7 @@
 class WebViewProfileOAuth2TokenServiceIOSProviderImpl
     : public ProfileOAuth2TokenServiceIOSProvider {
  public:
-  WebViewProfileOAuth2TokenServiceIOSProviderImpl(
-      CWVAuthenticationController* controller);
+  WebViewProfileOAuth2TokenServiceIOSProviderImpl();
   ~WebViewProfileOAuth2TokenServiceIOSProviderImpl() override;
 
   // ios::ProfileOAuth2TokenServiceIOSProvider
@@ -32,6 +31,10 @@ class WebViewProfileOAuth2TokenServiceIOSProviderImpl
   AuthenticationErrorCategory GetAuthenticationErrorCategory(
       const std::string& gaia_id,
       NSError* error) const override;
+
+  void SetAuthenticationController(CWVAuthenticationController* controller) {
+    controller_.reset(controller);
+  }
 
  private:
   base::WeakNSObject<CWVAuthenticationController> controller_;

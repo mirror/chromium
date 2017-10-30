@@ -7,6 +7,8 @@
 
 #include "components/signin/ios/browser/ios_signin_client.h"
 
+class WebViewProfileOAuth2TokenServiceIOSProviderImpl;
+
 // iOS WebView specific signin client.
 class IOSWebViewSigninClient : public IOSSigninClient {
  public:
@@ -26,7 +28,18 @@ class IOSWebViewSigninClient : public IOSSigninClient {
   // SigninErrorController::Observer implementation.
   void OnErrorChanged() override;
 
+  void SetTokenServiceProvider(
+      WebViewProfileOAuth2TokenServiceIOSProviderImpl* token_service_provider) {
+    token_service_provider_ = token_service_provider;
+  }
+
+  WebViewProfileOAuth2TokenServiceIOSProviderImpl* GetTokenServiceProvider() {
+    return token_service_provider_;
+  }
+
  private:
+  WebViewProfileOAuth2TokenServiceIOSProviderImpl* token_service_provider_;
+
   DISALLOW_COPY_AND_ASSIGN(IOSWebViewSigninClient);
 };
 
