@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e5ccf7d_e17ade18",
+        "filename": "chrome/browser/page_load_metrics/observers/OWNERS",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-30T21:32:19Z",
+      "side": 1,
+      "message": "nit, alpha names",
+      "revId": "1e358a74ee50fb35577c406a55de5ede62e61504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04dd944_f5303bb1",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter/ukm_features.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-30T21:32:19Z",
+      "side": 1,
+      "message": "nit, current main source is go/ukm",
+      "revId": "1e358a74ee50fb35577c406a55de5ede62e61504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06db285_3f1b046e",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter/ukm_features.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-30T21:32:19Z",
+      "side": 1,
+      "message": "nit ukm-\u003eUKM for consistency",
+      "revId": "1e358a74ee50fb35577c406a55de5ede62e61504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04fb96f3_9d72059e",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-30T21:32:19Z",
+      "side": 1,
+      "message": "very minor but in function names we call it Ukm and not UKM",
+      "revId": "1e358a74ee50fb35577c406a55de5ede62e61504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
