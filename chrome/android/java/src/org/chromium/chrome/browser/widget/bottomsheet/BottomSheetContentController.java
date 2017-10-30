@@ -181,8 +181,12 @@ public class BottomSheetContentController
                 return;
             }
 
-            if (mBottomSheet.getSheetState() == BottomSheet.SHEET_STATE_PEEK) {
-                clearBottomSheetContents(mBottomSheet.getCurrentSheetContent() == null);
+            // If the home content is showing and the sheet is closed, destroy sheet contents that
+            // are no longer needed.
+            if (mBottomSheet.getSheetState() == BottomSheet.SHEET_STATE_PEEK
+                    && (newContent == null
+                               || newContent == mBottomSheetContents.get(R.id.action_home))) {
+                clearBottomSheetContents(newContent == null);
             }
         }
     };
