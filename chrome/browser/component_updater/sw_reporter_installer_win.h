@@ -48,8 +48,10 @@ using SwReporterRunner =
 
 class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
  public:
-  SwReporterInstallerPolicy(const SwReporterRunner& reporter_runner,
-                            bool is_experimental_engine_supported);
+  SwReporterInstallerPolicy(
+      const SwReporterRunner& reporter_runner,
+      bool is_experimental_engine_supported,
+      safe_browsing::SwReporterInvocation::Type invocation_type);
   ~SwReporterInstallerPolicy() override;
 
   // ComponentInstallerPolicy implementation.
@@ -79,12 +81,21 @@ class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
   SwReporterRunner reporter_runner_;
   const bool is_experimental_engine_supported_;
 
+  const safe_browsing::SwReporterInvocation::Type invocation_type_;
+
   DISALLOW_COPY_AND_ASSIGN(SwReporterInstallerPolicy);
 };
 
 // Call once during startup to make the component update service aware of the
-// SwReporter.
+// SwReporter. Once ready, this may trigger a periodic run of the reporter.
 void RegisterSwReporterComponent(ComponentUpdateService* cus);
+
+// Installs the SwReporter component and runs the reporter once it's available.
+// Once ready, this may trigger either a periodic or a user-initiated run of
+// the reporter, depending on |invocation_type|.
+void RegisterSwReporterComponentWithType(
+    ComponentUpdateService* cus,
+    safe_browsing::SwReporterInvocation::Type invocation_type);
 
 // Register local state preferences related to the SwReporter.
 void RegisterPrefsForSwReporter(PrefRegistrySimple* registry);
