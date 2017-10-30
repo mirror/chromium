@@ -59,7 +59,7 @@ class MOJO_SYSTEM_IMPL_EXPORT DataPipeProducerDispatcher final
                       uint32_t* num_handles) override;
   bool EndSerialize(void* destination,
                     ports::PortName* ports,
-                    PlatformHandle* handles) override;
+                    ScopedPlatformHandle* handles) override;
   bool BeginTransit() override;
   void CompleteTransitAndClose() override;
   void CancelTransit() override;
@@ -69,7 +69,7 @@ class MOJO_SYSTEM_IMPL_EXPORT DataPipeProducerDispatcher final
       size_t num_bytes,
       const ports::PortName* ports,
       size_t num_ports,
-      PlatformHandle* handles,
+      ScopedPlatformHandle* handles,
       size_t num_handles);
 
  private:
@@ -108,7 +108,6 @@ class MOJO_SYSTEM_IMPL_EXPORT DataPipeProducerDispatcher final
 
   scoped_refptr<PlatformSharedBuffer> shared_ring_buffer_;
   std::unique_ptr<PlatformSharedBufferMapping> ring_buffer_mapping_;
-  ScopedPlatformHandle buffer_handle_for_transit_;
 
   bool in_transit_ = false;
   bool is_closed_ = false;

@@ -5,29 +5,16 @@
 #ifndef MOJO_EDK_EMBEDDER_PLATFORM_HANDLE_VECTOR_H_
 #define MOJO_EDK_EMBEDDER_PLATFORM_HANDLE_VECTOR_H_
 
-#include <memory>
 #include <vector>
 
 #include "mojo/edk/embedder/platform_handle.h"
-#include "mojo/edk/embedder/platform_handle_utils.h"
-#include "mojo/edk/system/system_impl_export.h"
+#include "mojo/edk/embedder/scoped_platform_handle.h"
 
 namespace mojo {
 namespace edk {
 
 using PlatformHandleVector = std::vector<PlatformHandle>;
-
-// A deleter (for use with |scoped_ptr|) which closes all handles and then
-// |delete|s the |PlatformHandleVector|.
-struct MOJO_SYSTEM_IMPL_EXPORT PlatformHandleVectorDeleter {
-  void operator()(PlatformHandleVector* platform_handles) const {
-    CloseAllPlatformHandles(platform_handles);
-    delete platform_handles;
-  }
-};
-
-using ScopedPlatformHandleVectorPtr =
-    std::unique_ptr<PlatformHandleVector, PlatformHandleVectorDeleter>;
+using ScopedPlatformHandleVectorPtr = std::vector<ScopedPlatformHandle>;
 
 }  // namespace edk
 }  // namespace mojo

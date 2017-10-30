@@ -39,7 +39,7 @@ class BrokerHost : public Channel::Delegate,
  private:
   ~BrokerHost() override;
 
-  bool PrepareHandlesForClient(PlatformHandleVector* handles);
+  bool PrepareHandlesForClient(ScopedPlatformHandleVectorPtr* handles);
 
   // Channel::Delegate:
   void OnChannelMessage(const void* payload,

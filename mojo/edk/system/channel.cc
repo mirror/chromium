@@ -370,26 +370,26 @@ void Channel::Message::SetHandles(ScopedPlatformHandleVectorPtr new_handles) {
   if (is_legacy_message()) {
     // Old semantics for ChromeOS and Android
     if (legacy_header()->num_handles == 0) {
-      CHECK(!new_handles || new_handles->size() == 0);
+      CHECK(new_handles.empty());
       return;
     }
-    CHECK(new_handles && new_handles->size() == legacy_header()->num_handles);
+    CHECK_EQ(new_handles.size(), legacy_header()->num_handles);
     std::swap(handle_vector_, new_handles);
     return;
   }
 
   if (max_handles_ == 0) {
-    CHECK(!new_handles || new_handles->size() == 0);
+    CHECK(new_handles.empty());
     return;
   }
 
-  CHECK(new_handles && new_handles->size() <= max_handles_);
-  header()->num_handles = static_cast<uint16_t>(new_handles->size());
+  CHECK_LE(new_handles.size(), max_handles_);
+  header()->num_handles = static_cast<uint16_t>(new_handles.size());
   std::swap(handle_vector_, new_handles);
 #if defined(OS_WIN)
   memset(handles_, 0, extra_header_size());
-  for (size_t i = 0; i < handle_vector_->size(); i++)
-    handles_[i].handle = base::win::HandleToUint32((*handle_vector_)[i].handle);
+  for (size_t i = 0; i < handle_vector_.size(); i++)
+    handles_[i].handle = base::win::HandleToUint32(handle_vector_[i].handle);
 #endif  // defined(OS_WIN)
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
@@ -400,9 +400,9 @@ void Channel::Message::SetHandles(ScopedPlatformHandleVectorPtr new_handles) {
           {0, static_cast<uint32_t>(MACH_PORT_NULL)};
     }
     for (size_t i = 0; i < handle_vector_->size(); i++) {
-      if ((*handle_vector_)[i].type == PlatformHandle::Type::MACH ||
-          (*handle_vector_)[i].type == PlatformHandle::Type::MACH_NAME) {
-        mach_port_t port = (*handle_vector_)[i].port;
+      if (handle_vector_[i].type == PlatformHandle::Type::MACH ||
+          handle_vector_[i].type == PlatformHandle::Type::MACH_NAME) {
+        mach_port_t port = handle_vector_[i].port;
         mach_ports_header_->entries[mach_port_index].index = i;
         mach_ports_header_->entries[mach_port_index].mach_port = port;
         mach_port_index++;
@@ -702,7 +702,7 @@ bool Channel::OnReadComplete(size_t bytes_read, size_t *next_read_size_hint) {
         return false;
       }
 
-      if (!handles) {
+      if (handles.empty()) {
         // Not enough handles available for this message.
         break;
       }

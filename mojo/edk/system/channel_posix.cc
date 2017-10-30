@@ -94,10 +94,6 @@ class ChannelPosix : public Channel,
         self_(this),
         handle_(connection_params.TakeChannelHandle()),
         io_task_runner_(io_task_runner)
-#if defined(OS_MACOSX)
-        ,
-        handles_to_close_(new PlatformHandleVector)
-#endif
   {
     CHECK(handle_.is_valid());
   }
@@ -164,40 +160,36 @@ class ChannelPosix : public Channel,
     size_t num_mach_ports = mach_ports_header->num_ports;
     if (num_mach_ports > num_handles)
       return false;
-    if (incoming_platform_handles_.size() + num_mach_ports < num_handles) {
-      handles->reset();
+    if (incoming_platform_handles_.size() + num_mach_ports < num_handles)
       return true;
-    }
 
-    handles->reset(new PlatformHandleVector(num_handles));
+    handles->resize(num_handles);
     const MachPortsEntry* mach_ports = mach_ports_header->entries;
     for (size_t i = 0, mach_port_index = 0; i < num_handles; ++i) {
       if (mach_port_index < num_mach_ports &&
           mach_ports[mach_port_index].index == i) {
-        (*handles)->at(i) = PlatformHandle(
+        handles->at(i) = PlatformHandle(
             static_cast<mach_port_t>(mach_ports[mach_port_index].mach_port));
-        if ((*handles)->at(i).type != PlatformHandle::Type::MACH)
+        if (handles.at(i).type != PlatformHandle::Type::MACH)
           return false;
         // These are actually just Mach port names until they're resolved from
         // the remote process.
-        (*handles)->at(i).type = PlatformHandle::Type::MACH_NAME;
+        handles->at(i).type = PlatformHandle::Type::MACH_NAME;
         mach_port_index++;
       } else {
         if (incoming_platform_handles_.empty())
           return false;
-        (*handles)->at(i) = incoming_platform_handles_.front();
+        handles->at(i) = std::move(incoming_platform_handles_.front());
         incoming_platform_handles_.pop_front();
       }
     }
 #else
-    if (incoming_platform_handles_.size() < num_handles) {
-      handles->reset();
+    if (incoming_platform_handles_.size() < num_handles)
       return true;
-    }
 
-    handles->reset(new PlatformHandleVector(num_handles));
+    handles->resize(num_handles);
     for (size_t i = 0; i < num_handles; ++i) {
-      (*handles)->at(i) = incoming_platform_handles_.front();
+      handles->at(i) = std::move(incoming_platform_handles_.front());
       incoming_platform_handles_.pop_front();
     }
 #endif
@@ -209,8 +201,6 @@ class ChannelPosix : public Channel,
   ~ChannelPosix() override {
     DCHECK(!read_watcher_);
     DCHECK(!write_watcher_);
-    for (auto handle : incoming_platform_handles_)
-      handle.CloseIfNecessary();
   }
 
   void StartOnIOThread() {
@@ -264,7 +254,7 @@ class ChannelPosix : public Channel,
       ignore_result(handle_.release());
     handle_.reset();
 #if defined(OS_MACOSX)
-    handles_to_close_.reset();
+    handles_to_close_.clear();
 #endif
 
     // May destroy the |this| if it was the last reference.
@@ -287,7 +277,7 @@ class ChannelPosix : public Channel,
       base::MessageLoop::current()->RemoveDestructionObserver(this);
 
       ScopedPlatformHandle accept_fd;
-      ServerAcceptConnection(handle_.get(), &accept_fd);
+      ServerAcceptConnection(handle_, &accept_fd);
       if (!accept_fd.is_valid()) {
         OnError(Error::kConnectionFailed);
         return;
@@ -312,7 +302,7 @@ class ChannelPosix : public Channel,
       DCHECK_GT(buffer_capacity, 0u);
 
       ssize_t read_result = PlatformChannelRecvmsg(
-          handle_.get(), buffer, buffer_capacity, &incoming_platform_handles_);
+          handle_, buffer, buffer_capacity, &incoming_platform_handles_);
 
       if (read_result > 0) {
         bytes_read = static_cast<size_t>(read_result);
@@ -365,12 +355,11 @@ class ChannelPosix : public Channel,
 
       ssize_t result;
       ScopedPlatformHandleVectorPtr handles = message_view.TakeHandles();
-      if (handles && handles->size()) {
+      if (!handles.empty()) {
         iovec iov = {const_cast<void*>(message_view.data()),
                      message_view.data_num_bytes()};
         // TODO: Handle lots of handles.
-        result = PlatformChannelSendmsgWithHandles(
-            handle_.get(), &iov, 1, handles->data(), handles->size());
+        result = PlatformChannelSendmsgWithHandles(handle_, &iov, 1, handles);
         if (result >= 0) {
 #if defined(OS_MACOSX)
           // There is a bug on OSX which makes it dangerous to close
@@ -386,8 +375,9 @@ class ChannelPosix : public Channel,
             fds.push_back(handle.handle);
           {
             base::AutoLock l(handles_to_close_lock_);
+            // TODO(wez): Is there a more direct move-append?
             for (auto& handle : *handles)
-              handles_to_close_->push_back(handle);
+              handles_to_close_.push_back(std::move(handle));
           }
           MessagePtr fds_message(
               new Channel::Message(sizeof(fds[0]) * fds.size(), 0,
@@ -395,13 +385,11 @@ class ChannelPosix : public Channel,
           memcpy(fds_message->mutable_payload(), fds.data(),
                  sizeof(fds[0]) * fds.size());
           outgoing_messages_.emplace_back(std::move(fds_message), 0);
-          handles->clear();
-#else
-          handles.reset();
 #endif  // defined(OS_MACOSX)
+          handles.clear();
         }
       } else {
-        result = PlatformChannelWrite(handle_.get(), message_view.data(),
+        result = PlatformChannelWrite(handle_, message_view.data(),
                                       message_view.data_num_bytes());
       }
 
@@ -543,7 +531,7 @@ class ChannelPosix : public Channel,
   std::unique_ptr<base::MessageLoopForIO::FileDescriptorWatcher> read_watcher_;
   std::unique_ptr<base::MessageLoopForIO::FileDescriptorWatcher> write_watcher_;
 
-  base::circular_deque<PlatformHandle> incoming_platform_handles_;
+  base::circular_deque<ScopedPlatformHandle> incoming_platform_handles_;
 
   // Protects |pending_write_| and |outgoing_messages_|.
   base::Lock write_lock_;
