@@ -5,14 +5,18 @@
 import("//build/config/chromecast_build.gni")
 
 declare_args() {
-  # Enable VR device support by default on Android and Windows
   # TODO(733935): Enable for other Android architectures too. Currently we only
   # support arm and arm64.
-  enable_vr = (is_android && (current_cpu == "arm" || current_cpu == "arm64") &&
-               !is_chromecast) || is_win
+  enable_gvr_services = is_android && !is_chromecast &&
+                        (current_cpu == "arm" || current_cpu == "arm64")
   enable_openvr = false
-  enable_daydream = is_android && (current_cpu == "arm" || current_cpu == "arm64")
+}
+
+declare_args() {
+  # Enable VR device support by default on Android and Windows
+  enable_vr = enable_gvr_services || is_win
 
   # Whether to include VR extras like test APKs in non-VR-specific targets
   include_vr_data = false
 }
+
