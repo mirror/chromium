@@ -12,7 +12,7 @@ MockMediaStreamVideoSink::MockMediaStreamVideoSink()
     : number_of_frames_(0),
       enabled_(true),
       format_(media::PIXEL_FORMAT_UNKNOWN),
-      state_(blink::WebMediaStreamSource::kReadyStateLive),
+      state_(blink::WebMediaStreamSource::kStateLive),
       weak_factory_(this) {}
 
 MockMediaStreamVideoSink::~MockMediaStreamVideoSink() {
@@ -36,8 +36,8 @@ void MockMediaStreamVideoSink::DeliverVideoFrame(
   OnVideoFrame();
 }
 
-void MockMediaStreamVideoSink::OnReadyStateChanged(
-    blink::WebMediaStreamSource::ReadyState state) {
+void MockMediaStreamVideoSink::OnSourceStateChanged(
+    blink::WebMediaStreamSource::State state) {
   state_ = state;
 }
 

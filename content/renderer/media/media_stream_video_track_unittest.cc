@@ -231,10 +231,10 @@ TEST_F(MediaStreamVideoTrackTest, SourceStopped) {
   MockMediaStreamVideoSink sink;
   blink::WebMediaStreamTrack track = CreateTrack();
   sink.ConnectToTrack(track);
-  EXPECT_EQ(blink::WebMediaStreamSource::kReadyStateLive, sink.state());
+  EXPECT_EQ(blink::WebMediaStreamSource::kStateLive, sink.state());
 
   mock_source()->StopSource();
-  EXPECT_EQ(blink::WebMediaStreamSource::kReadyStateEnded, sink.state());
+  EXPECT_EQ(blink::WebMediaStreamSource::kStateEnded, sink.state());
   sink.DisconnectFromTrack();
 }
 
@@ -243,30 +243,28 @@ TEST_F(MediaStreamVideoTrackTest, StopLastTrack) {
   MockMediaStreamVideoSink sink1;
   blink::WebMediaStreamTrack track1 = CreateTrack();
   sink1.ConnectToTrack(track1);
-  EXPECT_EQ(blink::WebMediaStreamSource::kReadyStateLive, sink1.state());
+  EXPECT_EQ(blink::WebMediaStreamSource::kStateLive, sink1.state());
 
-  EXPECT_EQ(blink::WebMediaStreamSource::kReadyStateLive,
-            blink_source().GetReadyState());
+  EXPECT_EQ(blink::WebMediaStreamSource::kStateLive, blink_source().GetState());
 
   MockMediaStreamVideoSink sink2;
   blink::WebMediaStreamTrack track2 = CreateTrack();
   sink2.ConnectToTrack(track2);
-  EXPECT_EQ(blink::WebMediaStreamSource::kReadyStateLive, sink2.state());
+  EXPECT_EQ(blink::WebMediaStreamSource::kStateLive, sink2.state());
 
   MediaStreamVideoTrack* const native_track1 =
       MediaStreamVideoTrack::GetVideoTrack(track1);
   native_track1->Stop();
-  EXPECT_EQ(blink::WebMediaStreamSource::kReadyStateEnded, sink1.state());
-  EXPECT_EQ(blink::WebMediaStreamSource::kReadyStateLive,
-            blink_source().GetReadyState());
+  EXPECT_EQ(blink::WebMediaStreamSource::kStateEnded, sink1.state());
+  EXPECT_EQ(blink::WebMediaStreamSource::kStateLive, blink_source().GetState());
   sink1.DisconnectFromTrack();
 
   MediaStreamVideoTrack* const native_track2 =
         MediaStreamVideoTrack::GetVideoTrack(track2);
   native_track2->Stop();
-  EXPECT_EQ(blink::WebMediaStreamSource::kReadyStateEnded, sink2.state());
-  EXPECT_EQ(blink::WebMediaStreamSource::kReadyStateEnded,
-            blink_source().GetReadyState());
+  EXPECT_EQ(blink::WebMediaStreamSource::kStateEnded, sink2.state());
+  EXPECT_EQ(blink::WebMediaStreamSource::kStateEnded,
+            blink_source().GetState());
   sink2.DisconnectFromTrack();
 }
 

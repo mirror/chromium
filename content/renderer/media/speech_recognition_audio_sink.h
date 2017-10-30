@@ -53,8 +53,7 @@ class CONTENT_EXPORT SpeechRecognitionAudioSink
 
  private:
   // content::MediaStreamAudioSink implementation.
-  void OnReadyStateChanged(
-      blink::WebMediaStreamSource::ReadyState state) override;
+  void OnSourceStateChanged(blink::WebMediaStreamSource::State state) override;
 
   void OnData(const media::AudioBus& audio_bus,
               base::TimeTicks estimated_capture_time) override;
