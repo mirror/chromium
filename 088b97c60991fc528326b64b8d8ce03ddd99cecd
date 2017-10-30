@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf0d9953_a2ce80d5",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-10-30T15:54:08Z",
+      "side": 1,
+      "message": "helper function removed from header.",
+      "parentUuid": "f27ba30b_0116d64e",
+      "range": {
+        "startLine": 271,
+        "startChar": 19,
+        "endLine": 271,
+        "endChar": 26
+      },
+      "revId": "088b97c60991fc528326b64b8d8ce03ddd99cecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d45887_88a56115",
         "filename": "components/autofill/core/browser/form_structure.h",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "0b815766_6fcc4d6e",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-10-30T15:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34d45887_88a56115",
+      "revId": "088b97c60991fc528326b64b8d8ce03ddd99cecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbabd9ec_17103603",
         "filename": "components/autofill/core/browser/form_structure.h",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "088b97c60991fc528326b64b8d8ce03ddd99cecd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2f8e18_4a1bcf76",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-10-30T15:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbabd9ec_17103603",
+      "revId": "088b97c60991fc528326b64b8d8ce03ddd99cecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "088b97c60991fc528326b64b8d8ce03ddd99cecd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9cb947c_800f7764",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4760,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-10-30T15:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd00d970_02937d2a",
+      "range": {
+        "startLine": 4760,
+        "startChar": 5,
+        "endLine": 4760,
+        "endChar": 11
+      },
+      "revId": "088b97c60991fc528326b64b8d8ce03ddd99cecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
