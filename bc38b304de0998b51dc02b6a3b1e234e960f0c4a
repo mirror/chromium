@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "ad4f7379_9fa786e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T08:07:33Z",
+      "side": 1,
+      "message": "(optional): I still want to have unittest for this feature.\nIf you think it is necessary to refactor, working it on another CL works for me, but could you leave TODO somewhere?\n\nAs for IsOobeOptInActive() function, you can find some example for its tests in arc_session_manager_unittest.cc.",
+      "parentUuid": "f20ce4d0_4a594ad1",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2202a9f9_90104212",
         "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
         "patchSetId": 1
@@ -333,6 +351,24 @@
       "side": 1,
       "message": "The call to RequestDisable in SetArcPlayStoreEnabledForProfile(*,false) is inside an \"if (IsArcPlayStoreEnabledPreferenceManagedForProfile(profile))\" block. IsArcPlayStoreEnabledPreferenceManagedForProfile returns PrefService::IsManagedPreference(prefs::kArcEnabled). This means it\u0027s only true if kArcEnabled is managed. Am I misunderstanding something?\n\n\u003e In case of managed pref, we always expect \"accept \u003d true\" here (i.e. on UI, there\u0027s no way to skip by a user)?\n\nThere are several cases with managed prefs. In the case where it\u0027s managed, and enabled, AND opt-in preferences are ignorable, then yes, it will always be accept\u003dtrue. In other cases where the prefs are managed, this function isn\u0027t called at all.",
       "parentUuid": "ee11d1e9_4430b2ab",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a6e45e_57adeb98",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-30T08:07:33Z",
+      "side": 1,
+      "message": "\u003e The call to RequestDisable in SetArcPlayStoreEnabledForProfile(*,false) is inside an \"if (IsArcPlayStoreEnabledPreferenceManagedForProfile(profile))\" block. IsArcPlayStoreEnabledPreferenceManagedForProfile returns PrefService::IsManagedPreference(prefs::kArcEnabled). This means it\u0027s only true if kArcEnabled is managed. Am I misunderstanding something?\n\nIn unmanaged case, it will set kArcEnabled pref to false. Then ArcPlayStoreEnabledHandler::OnPreferenceChanged should be called, and in that function, RequestDisable() should be called, IIUC.\n\nAs for managed case, if this is called, accept should be always true, as you said.\n\nIn either case, we don\u0027t need RequestDisable() explicitly here?",
+      "parentUuid": "2d37a85f_9a806e12",
       "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
