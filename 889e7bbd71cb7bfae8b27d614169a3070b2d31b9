@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd174279_3b9c8474",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1609,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-30T14:21:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89ff542c_04ed4d2d",
+      "range": {
+        "startLine": 1609,
+        "startChar": 7,
+        "endLine": 1609,
+        "endChar": 11
+      },
+      "revId": "889e7bbd71cb7bfae8b27d614169a3070b2d31b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3be2535_2bc1c56c",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 3
@@ -69,6 +93,30 @@
       "revId": "889e7bbd71cb7bfae8b27d614169a3070b2d31b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab55a60d_efa86e45",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2041,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-30T14:21:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e823c09c_85f6db35",
+      "range": {
+        "startLine": 2041,
+        "startChar": 8,
+        "endLine": 2041,
+        "endChar": 53
+      },
+      "revId": "889e7bbd71cb7bfae8b27d614169a3070b2d31b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
