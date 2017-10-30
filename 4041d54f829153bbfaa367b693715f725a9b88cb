@@ -131,6 +131,30 @@
       "revId": "4041d54f829153bbfaa367b693715f725a9b88cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32943e50_2b7237d4",
+        "filename": "third_party/WebKit/public/web/WebKit.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-30T08:46:00Z",
+      "side": 1,
+      "message": "That\u0027s what I suggested in the above. Stuart tried it but found out that we need to introduce a Initialize(..., GetMockBlinkInterfaceRegistry()) pattern to many unittests. So we decided to go with RegisterInterfaces().",
+      "parentUuid": "893f1a87_e340502c",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 57
+      },
+      "revId": "4041d54f829153bbfaa367b693715f725a9b88cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
