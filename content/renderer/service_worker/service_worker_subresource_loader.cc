@@ -189,8 +189,7 @@ void ServiceWorkerSubresourceLoader::StartRequest(
   // TODO(kinuko): Implement request.request_body handling.
   DCHECK(!resource_request.request_body);
   DCHECK(!inflight_fetch_request_);
-  inflight_fetch_request_ =
-      ServiceWorkerLoaderHelpers::CreateFetchRequest(resource_request);
+  inflight_fetch_request_ = std::make_unique<ResourceRequest>(resource_request);
   DCHECK_EQ(Status::kNotStarted, status_);
   status_ = Status::kStarted;
   controller_connector_->AddObserver(this);
@@ -219,10 +218,15 @@ void ServiceWorkerSubresourceLoader::DispatchFetchEvent() {
     return;
   }
 
+  // TODO(falken): Set |client_id| in |info|. We have to plumb it from the
+  // provider host to subresource loader somehow.
+  auto info = mojom::FetchEventInfo::New();
+
   // TODO(kinuko): Implement request timeout and ask the browser to kill
   // the controller if it takes too long. (crbug.com/774374)
   controller->DispatchFetchEvent(
-      *inflight_fetch_request_, std::move(response_callback_ptr),
+      *inflight_fetch_request_, std::move(info),
+      std::move(response_callback_ptr),
       base::BindOnce(&ServiceWorkerSubresourceLoader::OnFetchEventFinished,
                      weak_factory_.GetWeakPtr()));
 }

@@ -54,9 +54,9 @@ void ResourceRequestBody::AppendFileRange(
                                       expected_modification_time);
 }
 
-void ResourceRequestBody::AppendBlob(const std::string& uuid) {
+void ResourceRequestBody::AppendBlob(const std::string& uuid, uint64_t length) {
   elements_.push_back(Element());
-  elements_.back().SetToBlob(uuid);
+  elements_.back().SetToBlobRange(uuid, 0, length);
 }
 
 void ResourceRequestBody::AppendFileSystemFileRange(

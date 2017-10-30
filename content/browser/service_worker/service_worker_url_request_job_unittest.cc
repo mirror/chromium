@@ -528,7 +528,8 @@ class DelayHelper : public EmbeddedWorkerTestHelper {
 
   void OnFetchEvent(
       int embedded_worker_id,
-      const ServiceWorkerFetchRequest& /* request */,
+      const ResourceRequest& /* request */,
+      mojom::FetchEventInfoPtr /* fetch_event_info */,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
@@ -723,7 +724,8 @@ class ProviderDeleteHelper : public EmbeddedWorkerTestHelper {
  protected:
   void OnFetchEvent(
       int /* embedded_worker_id */,
-      const ServiceWorkerFetchRequest& /* request */,
+      const ResourceRequest& /* request */,
+      mojom::FetchEventInfoPtr /* fetch_event_info */,
       mojom::FetchEventPreloadHandlePtr /* preload_handle */,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
@@ -814,7 +816,8 @@ class BlobResponder : public EmbeddedWorkerTestHelper {
  protected:
   void OnFetchEvent(
       int /* embedded_worker_id */,
-      const ServiceWorkerFetchRequest& /* request */,
+      const ResourceRequest& /* request */,
+      mojom::FetchEventInfoPtr /* fetch_event_info */,
       mojom::FetchEventPreloadHandlePtr /* preload_handle */,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
@@ -915,7 +918,8 @@ class StreamResponder : public EmbeddedWorkerTestHelper {
  protected:
   void OnFetchEvent(
       int /* embedded_worker_id */,
-      const ServiceWorkerFetchRequest& /* request */,
+      const ResourceRequest& /* request */,
+      mojom::FetchEventInfoPtr /* fetch_event_info */,
       mojom::FetchEventPreloadHandlePtr /* preload_handle */,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
@@ -1304,7 +1308,8 @@ class FailFetchHelper : public EmbeddedWorkerTestHelper {
  protected:
   void OnFetchEvent(
       int embedded_worker_id,
-      const ServiceWorkerFetchRequest& /* request */,
+      const ResourceRequest& /* request */,
+      mojom::FetchEventInfoPtr /* fetch_event_info */,
       mojom::FetchEventPreloadHandlePtr /* preload_handle */,
       mojom::ServiceWorkerFetchResponseCallbackPtr /* response_callback */,
       mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
@@ -1397,7 +1402,8 @@ class EarlyResponseHelper : public EmbeddedWorkerTestHelper {
  protected:
   void OnFetchEvent(
       int /* embedded_worker_id */,
-      const ServiceWorkerFetchRequest& /* request */,
+      const ResourceRequest& /* request */,
+      mojom::FetchEventInfoPtr /* fetch_event_info */,
       mojom::FetchEventPreloadHandlePtr /* preload_handle */,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback

@@ -372,7 +372,7 @@ WebHTTPBody GetWebHTTPBodyForRequestBody(
       case ResourceRequestBody::Element::TYPE_FILE:
         http_body.AppendFileRange(
             blink::FilePathToWebString(element.path()), element.offset(),
-            (element.length() != std::numeric_limits<uint64_t>::max())
+            (element.length() != ResourceRequestBody::Element::kUnknownSize)
                 ? element.length()
                 : -1,
             element.expected_modification_time().ToDoubleT());
@@ -380,13 +380,17 @@ WebHTTPBody GetWebHTTPBodyForRequestBody(
       case ResourceRequestBody::Element::TYPE_FILE_FILESYSTEM:
         http_body.AppendFileSystemURLRange(
             element.filesystem_url(), element.offset(),
-            (element.length() != std::numeric_limits<uint64_t>::max())
+            (element.length() != ResourceRequestBody::Element::kUnknownSize)
                 ? element.length()
                 : -1,
             element.expected_modification_time().ToDoubleT());
         break;
       case ResourceRequestBody::Element::TYPE_BLOB:
-        http_body.AppendBlob(WebString::FromASCII(element.blob_uuid()));
+        http_body.AppendBlob(
+            WebString::FromASCII(element.blob_uuid()),
+            (element.length() != ResourceRequestBody::Element::kUnknownSize)
+                ? element.length()
+                : -1);
         break;
       case ResourceRequestBody::Element::TYPE_BYTES_DESCRIPTION:
       case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:
@@ -439,7 +443,7 @@ scoped_refptr<ResourceRequestBody> GetRequestBodyForWebHTTPBody(
         if (element.file_length == -1) {
           request_body->AppendFileRange(
               blink::WebStringToFilePath(element.file_path), 0,
-              std::numeric_limits<uint64_t>::max(), base::Time());
+              ResourceRequestBody::Element::kUnknownSize, base::Time());
         } else {
           request_body->AppendFileRange(
               blink::WebStringToFilePath(element.file_path),
@@ -491,7 +495,10 @@ scoped_refptr<ResourceRequestBody> GetRequestBodyForWebHTTPBody(
           blob_ptr->ReadAll(std::move(data_pipe.producer_handle),
                             std::move(blob_reader_client_ptr));
         } else {
-          request_body->AppendBlob(element.blob_uuid.Utf8());
+          uint64_t length = (element.blob_length == -1)
+                                ? ResourceRequestBody::Element::kUnknownSize
+                                : static_cast<uint64_t>(element.blob_length);
+          request_body->AppendBlob(element.blob_uuid.Utf8(), length);
         }
         break;
       }

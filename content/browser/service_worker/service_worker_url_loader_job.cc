@@ -156,20 +156,13 @@ void ServiceWorkerURLLoaderJob::StartRequest() {
     return;
   }
 
-  // Create the URL request to pass to the fetch event.
-  std::unique_ptr<ServiceWorkerFetchRequest> fetch_request =
-      ServiceWorkerLoaderHelpers::CreateFetchRequest(resource_request_);
-  // TODO(emim): We should create an error when no blob_storage_context_, but
-  // for consistency with StartResponse(), just ignore for now.
-  if (resource_request_.request_body.get() && blob_storage_context_) {
-    DCHECK(features::IsMojoBlobsEnabled());
-    fetch_request->blob = CreateRequestBodyBlob();
-  }
-
   // Dispatch the fetch event.
+  // XXX set FetchEventInfo.
   fetch_dispatcher_ = std::make_unique<ServiceWorkerFetchDispatcher>(
-      std::move(fetch_request), active_worker, resource_request_.resource_type,
-      base::nullopt, net::NetLogWithSource() /* TODO(scottmg): net log? */,
+      std::make_unique<ResourceRequest>(resource_request_),
+      mojom::FetchEventInfo::New(), active_worker,
+      resource_request_.resource_type, base::nullopt,
+      net::NetLogWithSource() /* TODO(scottmg): net log? */,
       base::Bind(&ServiceWorkerURLLoaderJob::DidPrepareFetchEvent,
                  weak_factory_.GetWeakPtr(),
                  base::WrapRefCounted(active_worker)),

@@ -270,30 +270,32 @@ class Helper : public EmbeddedWorkerTestHelper {
   }
 
   void ReadRequestBody(std::string* out_string) {
-    ASSERT_TRUE(request_body_blob_);
-
-    mojo::DataPipe pipe;
-    (*request_body_blob_)->ReadAll(std::move(pipe.producer_handle), nullptr);
-    base::RunLoop().RunUntilIdle();
-
-    EXPECT_TRUE(mojo::common::BlockingCopyToString(
-        std::move(pipe.consumer_handle), out_string));
+    ASSERT_TRUE(request_body_);
+    const std::vector<ResourceRequestBody::Element>* elements =
+        request_body_->elements();
+    // So far this test expects a single bytes element.
+    ASSERT_EQ(1u, elements->size());
+    const ResourceRequestBody::Element& element = elements->front();
+    ASSERT_EQ(ResourceRequestBody::Element::TYPE_BYTES, element.type());
+    *out_string = std::string(element.bytes(), element.length());
   }
 
  protected:
   void OnFetchEvent(
       int embedded_worker_id,
-      const ServiceWorkerFetchRequest& request,
+      const ResourceRequest& request,
+      mojom::FetchEventInfoPtr fetch_event_info,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
           finish_callback) override {
-    request_body_blob_ = request.blob;
+    request_body_ = request.request_body;
     switch (response_mode_) {
       case ResponseMode::kDefault:
         EmbeddedWorkerTestHelper::OnFetchEvent(
-            embedded_worker_id, request, std::move(preload_handle),
-            std::move(response_callback), std::move(finish_callback));
+            embedded_worker_id, request, std::move(fetch_event_info),
+            std::move(preload_handle), std::move(response_callback),
+            std::move(finish_callback));
         return;
       case ResponseMode::kBlob:
         response_callback->OnResponse(
@@ -427,7 +429,7 @@ class Helper : public EmbeddedWorkerTestHelper {
   };
 
   ResponseMode response_mode_ = ResponseMode::kDefault;
-  scoped_refptr<storage::BlobHandle> request_body_blob_;
+  scoped_refptr<ResourceRequestBody> request_body_;
 
   // For ResponseMode::kBlob.
   std::string blob_uuid_;

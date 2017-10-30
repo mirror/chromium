@@ -469,7 +469,8 @@ class ServiceWorkerFetchDispatcher::URLLoaderAssets
 };
 
 ServiceWorkerFetchDispatcher::ServiceWorkerFetchDispatcher(
-    std::unique_ptr<ServiceWorkerFetchRequest> request,
+    std::unique_ptr<ResourceRequest> request,
+    mojom::FetchEventInfoPtr fetch_event_info,
     ServiceWorkerVersion* version,
     ResourceType resource_type,
     const base::Optional<base::TimeDelta>& timeout,
@@ -481,6 +482,7 @@ ServiceWorkerFetchDispatcher::ServiceWorkerFetchDispatcher(
       prepare_callback_(prepare_callback),
       fetch_callback_(fetch_callback),
       request_(std::move(request)),
+      fetch_event_info_(std::move(fetch_event_info)),
       resource_type_(resource_type),
       timeout_(timeout),
       did_complete_(false),
@@ -577,7 +579,7 @@ void ServiceWorkerFetchDispatcher::DispatchFetchEvent() {
                        std::move(response_callback)),
         *timeout_, ServiceWorkerVersion::CONTINUE_ON_TIMEOUT);
     event_finish_id = version_->StartRequestWithCustomTimeout(
-        FetchTypeToWaitUntilEventType(request_->fetch_type),
+        FetchTypeToWaitUntilEventType(fetch_event_info_->fetch_type),
         base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback), *timeout_,
         ServiceWorkerVersion::CONTINUE_ON_TIMEOUT);
   } else {
@@ -587,7 +589,7 @@ void ServiceWorkerFetchDispatcher::DispatchFetchEvent() {
                        weak_factory_.GetWeakPtr(),
                        std::move(response_callback)));
     event_finish_id = version_->StartRequest(
-        FetchTypeToWaitUntilEventType(request_->fetch_type),
+        FetchTypeToWaitUntilEventType(fetch_event_info_->fetch_type),
         base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   }
 
@@ -606,7 +608,7 @@ void ServiceWorkerFetchDispatcher::DispatchFetchEvent() {
   // Pass |url_loader_assets_| to the callback to keep the URL loader related
   // assets alive while the FetchEvent is ongoing in the service worker.
   version_->event_dispatcher()->DispatchFetchEvent(
-      *request_, std::move(preload_handle_),
+      *request_, std::move(fetch_event_info_), std::move(preload_handle_),
       std::move(mojo_response_callback_ptr),
       base::BindOnce(&ServiceWorkerFetchDispatcher::OnFetchEventFinished,
                      base::Unretained(version_.get()), event_finish_id,
@@ -668,7 +670,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreload(
   if (!version_->navigation_preload_state().enabled)
     return false;
   // TODO(horo): Currently NavigationPreload doesn't support request body.
-  if (!request_->blob_uuid.empty())
+  if (request_->request_body)
     return false;
 
   ResourceRequestInfoImpl* original_info =
@@ -762,7 +764,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreloadWithURLLoader(
   if (!version_->navigation_preload_state().enabled)
     return false;
   // TODO(horo): Currently NavigationPreload doesn't support request body.
-  if (!request_->blob_uuid.empty())
+  if (request_->request_body)
     return false;
 
   ResourceRequest resource_request(original_request);
@@ -824,7 +826,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreloadWithURLLoader(
 
 ServiceWorkerMetrics::EventType ServiceWorkerFetchDispatcher::GetEventType()
     const {
-  if (request_->fetch_type == ServiceWorkerFetchType::FOREIGN_FETCH)
+  if (fetch_event_info_->fetch_type == ServiceWorkerFetchType::FOREIGN_FETCH)
     return ServiceWorkerMetrics::EventType::FOREIGN_FETCH;
   return ResourceTypeToEventType(resource_type_);
 }

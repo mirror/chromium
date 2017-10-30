@@ -54,8 +54,7 @@ class CONTENT_EXPORT ResourceRequestBody
                        uint64_t offset,
                        uint64_t length,
                        const base::Time& expected_modification_time);
-
-  void AppendBlob(const std::string& uuid);
+  void AppendBlob(const std::string& uuid, uint64_t length);
   void AppendFileSystemFileRange(const GURL& url,
                                  uint64_t offset,
                                  uint64_t length,

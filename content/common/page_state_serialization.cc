@@ -63,7 +63,7 @@ void AppendURLRangeToRequestBody(
 void AppendBlobToRequestBody(
     const scoped_refptr<ResourceRequestBody>& request_body,
     const std::string& uuid) {
-  request_body->AppendBlob(uuid);
+  request_body->AppendBlob(uuid, ResourceRequestBody::Element::kUnknownSize);
 }
 
 //----------------------------------------------------------------------------

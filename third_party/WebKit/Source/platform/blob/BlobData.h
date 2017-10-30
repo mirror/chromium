@@ -254,6 +254,7 @@ class PLATFORM_EXPORT BlobDataHandle
 
   String Uuid() const { return uuid_.IsolatedCopy(); }
   String GetType() const { return type_.IsolatedCopy(); }
+  // UINT64_MAX indicates unknown size (if -1 was passed to Create()).
   unsigned long long size() const { return size_; }
 
   bool IsSingleUnknownSizeFile() const { return is_single_unknown_size_file_; }

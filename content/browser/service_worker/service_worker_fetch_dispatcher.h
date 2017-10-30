@@ -46,14 +46,14 @@ class CONTENT_EXPORT ServiceWorkerFetchDispatcher {
                           blink::mojom::BlobPtr,
                           const scoped_refptr<ServiceWorkerVersion>&)>;
 
-  ServiceWorkerFetchDispatcher(
-      std::unique_ptr<ServiceWorkerFetchRequest> request,
-      ServiceWorkerVersion* version,
-      ResourceType resource_type,
-      const base::Optional<base::TimeDelta>& timeout,
-      const net::NetLogWithSource& net_log,
-      const base::Closure& prepare_callback,
-      const FetchCallback& fetch_callback);
+  ServiceWorkerFetchDispatcher(std::unique_ptr<ResourceRequest> request,
+                               mojom::FetchEventInfoPtr info,
+                               ServiceWorkerVersion* version,
+                               ResourceType resource_type,
+                               const base::Optional<base::TimeDelta>& timeout,
+                               const net::NetLogWithSource& net_log,
+                               const base::Closure& prepare_callback,
+                               const FetchCallback& fetch_callback);
   ~ServiceWorkerFetchDispatcher();
 
   // If appropriate, starts the navigation preload request and creates
@@ -110,7 +110,8 @@ class CONTENT_EXPORT ServiceWorkerFetchDispatcher {
   net::NetLogWithSource net_log_;
   base::Closure prepare_callback_;
   FetchCallback fetch_callback_;
-  std::unique_ptr<ServiceWorkerFetchRequest> request_;
+  std::unique_ptr<ResourceRequest> request_;
+  mojom::FetchEventInfoPtr fetch_event_info_;
   ResourceType resource_type_;
   base::Optional<base::TimeDelta> timeout_;
   bool did_complete_;

@@ -218,13 +218,15 @@ class EmbeddedWorkerTestHelper::MockServiceWorkerEventDispatcher
   }
 
   void DispatchFetchEvent(
-      const ServiceWorkerFetchRequest& request,
+      const ResourceRequest& request,
+      mojom::FetchEventInfoPtr fetch_event_info,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       DispatchFetchEventCallback callback) override {
     if (!helper_)
       return;
-    helper_->OnFetchEventStub(thread_id_, request, std::move(preload_handle),
+    helper_->OnFetchEventStub(thread_id_, request, std::move(fetch_event_info),
+                              std::move(preload_handle),
                               std::move(response_callback),
                               std::move(callback));
   }
@@ -613,7 +615,8 @@ void EmbeddedWorkerTestHelper::OnInstallEvent(
 
 void EmbeddedWorkerTestHelper::OnFetchEvent(
     int /* embedded_worker_id */,
-    const ServiceWorkerFetchRequest& /* request */,
+    const ResourceRequest& /* request */,
+    mojom::FetchEventInfoPtr /* fetch_event_info */,
     mojom::FetchEventPreloadHandlePtr /* preload_handle */,
     mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
     mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
@@ -919,7 +922,8 @@ void EmbeddedWorkerTestHelper::OnInstallEventStub(
 
 void EmbeddedWorkerTestHelper::OnFetchEventStub(
     int thread_id,
-    const ServiceWorkerFetchRequest& request,
+    const ResourceRequest& request,
+    mojom::FetchEventInfoPtr fetch_event_info,
     mojom::FetchEventPreloadHandlePtr preload_handle,
     mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
     mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
@@ -928,9 +932,8 @@ void EmbeddedWorkerTestHelper::OnFetchEventStub(
       FROM_HERE,
       base::BindOnce(&EmbeddedWorkerTestHelper::OnFetchEvent, AsWeakPtr(),
                      thread_id_embedded_worker_id_map_[thread_id], request,
-                     base::Passed(&preload_handle),
-                     base::Passed(&response_callback),
-                     base::Passed(&finish_callback)));
+                     std::move(fetch_event_info), std::move(preload_handle),
+                     std::move(response_callback), std::move(finish_callback)));
 }
 
 void EmbeddedWorkerTestHelper::OnNotificationClickEventStub(
