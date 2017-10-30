@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "94c543b2_8b1e4a46",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-30T23:41:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05f33dd8_246a3c78",
+      "range": {
+        "startLine": 140,
+        "startChar": 20,
+        "endLine": 140,
+        "endChar": 33
+      },
+      "revId": "a347396e2ffffdfaea46bb2812f1e04d0cf9343c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbe4543b_504fa077",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 3
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "db3600b0_8dd0f8aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-30T23:41:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbe4543b_504fa077",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 21
+      },
+      "revId": "a347396e2ffffdfaea46bb2812f1e04d0cf9343c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ace6ec6c_81aeee0b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 3
@@ -105,6 +153,30 @@
       "writtenOn": "2017-10-27T23:11:07Z",
       "side": 1,
       "message": "I\u0027m guessing you need the new infobar event to do this right? Right now we\u0027ll only count it as seen if it is the first one visible.",
+      "range": {
+        "startLine": 163,
+        "startChar": 16,
+        "endLine": 163,
+        "endChar": 37
+      },
+      "revId": "a347396e2ffffdfaea46bb2812f1e04d0cf9343c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8c5ec3_963ae97a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-30T23:41:11Z",
+      "side": 1,
+      "message": "Yes it should be only counted as visible if it\u0027s the first one. \n\nThe new infobar event should be in onRemoveInfobar to track if the next infobar in line to be removed is on top.",
+      "parentUuid": "ace6ec6c_81aeee0b",
       "range": {
         "startLine": 163,
         "startChar": 16,
