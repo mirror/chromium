@@ -105,6 +105,7 @@ class ShellUtil {
       PROPERTIES_APP_ID = 1 << 4,
       PROPERTIES_SHORTCUT_NAME = 1 << 5,
       PROPERTIES_DUAL_MODE = 1 << 6,
+      PROPERTIES_TOAST_ACTIVATOR_CLSID = 1 << 7,
     };
 
     explicit ShortcutProperties(ShellChange level_in);
@@ -161,6 +162,12 @@ class ShellUtil {
       options |= PROPERTIES_SHORTCUT_NAME;
     }
 
+    void set_toast_activator_clsid(
+        const base::string16& toast_activator_clsid_in) {
+      toast_activator_clsid = toast_activator_clsid_in;
+      options |= PROPERTIES_TOAST_ACTIVATOR_CLSID;
+    }
+
     // Sets whether to pin this shortcut to the taskbar after creating it
     // (ignored if the shortcut is only being updated).
     // Note: This property doesn't have a mask in |options|.
@@ -192,6 +199,10 @@ class ShellUtil {
       return (options & PROPERTIES_SHORTCUT_NAME) != 0;
     }
 
+    bool has_toast_activator_clsid() const {
+      return (options & PROPERTIES_TOAST_ACTIVATOR_CLSID) != 0;
+    }
+
     // The level to install this shortcut at (CURRENT_USER for a per-user
     // shortcut and SYSTEM_LEVEL for an all-users shortcut).
     ShellChange level;
@@ -203,6 +214,7 @@ class ShellUtil {
     int icon_index;
     base::string16 app_id;
     base::string16 shortcut_name;
+    base::string16 toast_activator_clsid;
     bool pin_to_taskbar;
     // Bitfield made of IndividualProperties. Properties set in |options| will
     // be used to create/update the shortcut, others will be ignored on update
