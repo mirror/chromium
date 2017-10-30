@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26c31ea7_f3d37501",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T13:16:48Z",
+      "side": 1,
+      "message": "style guide: data members should be private, even in mock classes. These should be exposed in getter functions or if we just test existence functions like bool has_installing()",
+      "revId": "2eae2b46be99cea5c7a7cf7447ef513ebfeda629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e738460a_0cd11fd4",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T13:16:48Z",
+      "side": 1,
+      "message": "Can you comment why base::Unretained(this) is safe?",
+      "revId": "2eae2b46be99cea5c7a7cf7447ef513ebfeda629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4895c97b_3719dbba",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T13:16:48Z",
+      "side": 1,
+      "message": "I\u0027d just delete this comment since what this function does is already documented.",
+      "revId": "2eae2b46be99cea5c7a7cf7447ef513ebfeda629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
