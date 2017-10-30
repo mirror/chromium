@@ -71,6 +71,7 @@ ThumbnailTabHelper::ThumbnailTabHelper(content::WebContents* contents)
           features::kCaptureThumbnailOnNavigatingAway)),
       page_transition_(ui::PAGE_TRANSITION_LINK),
       load_interrupted_(false),
+      waiting_for_capture_(false),
       weak_factory_(this) {
   // Even though we deal in RenderWidgetHosts, we only care about its
   // subclass, RenderViewHost when it is in a tab. We don't make thumbnails
@@ -122,6 +123,7 @@ void ThumbnailTabHelper::DidStartNavigation(
       navigation_handle->IsSameDocument()) {
     return;
   }
+  LOG(ERROR) << "DidStartNavigation " << navigation_handle->GetURL();
   if (capture_on_navigating_away_) {
     // At this point, the new navigation has just been started, but the
     // WebContents still shows the previous page. Grab a thumbnail before it
@@ -141,7 +143,28 @@ void ThumbnailTabHelper::DidFinishNavigation(
       navigation_handle->IsSameDocument()) {
     return;
   }
+  LOG(ERROR) << "DidFinishNavigation " << navigation_handle->GetURL();
   page_transition_ = navigation_handle->GetPageTransition();
+}
+
+void ThumbnailTabHelper::DocumentAvailableInMainFrame() {
+  LOG(ERROR) << "DocumentAvailableInMainFrame capturing:"
+      << waiting_for_capture_;
+  // If there's currently a screen capture going on, ignore its result.
+  // Otherwise there's a risk that we'll get a picture of the wrong page.
+  // Note: It *looks* like WebContentsObserver::DidFirstVisuallyNonEmptyPaint
+  // would be a better signal for this, but it uses a weird heuristic to detect
+  // "visually non empty" paints, so it might not be entirely safe.
+  waiting_for_capture_ = false;
+}
+
+void ThumbnailTabHelper::DocumentOnLoadCompletedInMainFrame() {
+  LOG(ERROR) << "DocumentOnLoadCompletedInMainFrame capturing:"
+      << waiting_for_capture_;
+  // Usually, DocumentAvailableInMainFrame always gets called first, so this one
+  // shouldn't be necessary. However, DocumentAvailableInMainFrame is not fired
+  // for empty documents (i.e. about:blank), which are thus handled here.
+  waiting_for_capture_ = false;
 }
 
 void ThumbnailTabHelper::DidStartLoading() {
@@ -227,6 +250,8 @@ void ThumbnailTabHelper::AsyncProcessThumbnail(
       gfx::Size(kThumbnailWidth, kThumbnailHeight), &copy_rect,
       &thumbnailing_context_->requested_copy_size);
   copy_from_surface_start_time_ = base::TimeTicks::Now();
+  LOG(ERROR) << "Thumbnailing " << thumbnailing_context_->url;
+  waiting_for_capture_ = true;
   view->CopyFromSurface(copy_rect, thumbnailing_context_->requested_copy_size,
                         base::Bind(&ThumbnailTabHelper::ProcessCapturedBitmap,
                                    weak_factory_.GetWeakPtr()),
@@ -236,11 +261,18 @@ void ThumbnailTabHelper::AsyncProcessThumbnail(
 void ThumbnailTabHelper::ProcessCapturedBitmap(
     const SkBitmap& bitmap,
     content::ReadbackResponse response) {
+  // If |waiting_for_capture_| is false, that means something happened in the
+  // meantime which makes the captured image unsafe to use.
+  bool was_canceled = !waiting_for_capture_;
+  waiting_for_capture_ = false;
+
+  LOG(ERROR) << "ProcessCapturedBitmap " << thumbnailing_context_->url
+      << " success:" << (response == content::READBACK_SUCCESS);
   base::TimeDelta copy_from_surface_time =
       base::TimeTicks::Now() - copy_from_surface_start_time_;
   UMA_HISTOGRAM_TIMES("Thumbnails.CopyFromSurfaceTime", copy_from_surface_time);
 
-  if (response == content::READBACK_SUCCESS) {
+  if (response == content::READBACK_SUCCESS && !was_canceled) {
     // On success, we must be on the UI thread.
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
     base::PostTaskWithTraitsAndReply(
