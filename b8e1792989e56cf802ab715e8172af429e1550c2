@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f6f639b_edee0363",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-30T03:44:40Z",
+      "side": 1,
+      "message": "I think we can just use string here. Using String16 in legacy IPC was to obey the old WebKit convention.",
+      "range": {
+        "startLine": 96,
+        "startChar": 14,
+        "endLine": 96,
+        "endChar": 40
+      },
+      "revId": "b8e1792989e56cf802ab715e8172af429e1550c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
