@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d9aa1f2_8c6c6169",
+        "filename": "components/omnibox/browser/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-30T23:21:13Z",
+      "side": 1,
+      "message": "What is the APK size increase with including this?  That is my main concern.  components/vector_icons is 168K and components/omnibox/browser/vector_icons/ is 52K.  I suspect that compresses nicely and wouldn\u0027t be nearly that size, but build a release APK before and after and see what the size difference is.\n\nI do wonder long term if Android ships vector versions of these assets as well, should we find a path to converging to avoid duplication, but that is a tangential discussion IMO.",
+      "range": {
+        "startLine": 189,
+        "startChar": 20,
+        "endLine": 189,
+        "endChar": 32
+      },
+      "revId": "2c21e538f5a88dd8c6dbf5d4079de73964410e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
