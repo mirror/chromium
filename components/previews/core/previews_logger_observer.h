@@ -30,6 +30,9 @@ class PreviewsLoggerObserver {
   // Notifies this observer that the blacklist is cleared at |time|.
   virtual void OnBlacklistCleared(base::Time time) = 0;
 
+  // Notify this observer that PreviewsBlackList decisions is ignored or not.
+  virtual void OnIgnoreBlacklistDecisionStatusChanged(bool ignored) = 0;
+
  protected:
   PreviewsLoggerObserver() {}
   virtual ~PreviewsLoggerObserver() {}
