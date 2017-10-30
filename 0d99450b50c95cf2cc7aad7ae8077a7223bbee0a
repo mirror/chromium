@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7cb5520c_8dea75d0",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-30T17:28:49Z",
+      "side": 1,
+      "message": "That\u0027s fair.  I\u0027d say just drop the comment, as I think it\u0027s more confusing than helpful.",
+      "parentUuid": "82f52d71_a934507b",
+      "revId": "0d99450b50c95cf2cc7aad7ae8077a7223bbee0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f6a395f_115e5c8e",
         "filename": "media/blink/video_frame_compositor.cc",
         "patchSetId": 19

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "529c72b0_1e02a7bf",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-30T17:28:49Z",
+      "side": 1,
+      "message": "Does StartRendering and StartSubmitting (and others) also need a thread check?\n\nIt\u0027s still hard to follow what\u0027s being called on what thread here.  Can every function get a DCHECK? (Or do we need two thread checkers?)  Or more comments?",
+      "revId": "cf3f3ac1a260051bff5511b4e7fabaaba9e8d6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
