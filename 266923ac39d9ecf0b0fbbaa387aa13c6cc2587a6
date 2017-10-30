@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7aca91c_26dcd279",
+        "filename": "content/browser/devtools/protocol/system_info_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-30T01:55:48Z",
+      "side": 1,
+      "message": "The original code is GpuDataManagerImpl::RequestCompleteGpuInfoIfNeeded(), but I feel that\u0027s an overkill.",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 12
+      },
+      "revId": "266923ac39d9ecf0b0fbbaa387aa13c6cc2587a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb41cc2_15b3cbd0",
+        "filename": "content/test/gpu/gpu_tests/gpu_process_expectations.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-30T01:55:48Z",
+      "side": 1,
+      "message": "I think we should delete this test.",
+      "range": {
+        "startLine": 17,
+        "startChar": 15,
+        "endLine": 17,
+        "endChar": 40
+      },
+      "revId": "266923ac39d9ecf0b0fbbaa387aa13c6cc2587a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
