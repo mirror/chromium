@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "372660ce_8fe03a56",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-30T14:13:41Z",
+      "side": 1,
+      "message": "nit: use constants like kLeftView and kRightView?",
+      "range": {
+        "startLine": 218,
+        "startChar": 41,
+        "endLine": 218,
+        "endChar": 42
+      },
+      "revId": "0671745fc883b93126244a4b92a39fb702d7436d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
