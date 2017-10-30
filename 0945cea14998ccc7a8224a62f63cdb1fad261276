@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12ea7799_cae498fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-10-30T22:19:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "287ab4c8_a6dd8891",
+      "range": {
+        "startLine": 935,
+        "startChar": 8,
+        "endLine": 935,
+        "endChar": 23
+      },
+      "revId": "0945cea14998ccc7a8224a62f63cdb1fad261276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba6563b0_fd3151db",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2415340d_5dacc5c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-10-30T22:19:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba6563b0_fd3151db",
+      "range": {
+        "startLine": 100,
+        "startChar": 19,
+        "endLine": 100,
+        "endChar": 48
+      },
+      "revId": "0945cea14998ccc7a8224a62f63cdb1fad261276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2be72b5_b90e5f92",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
         "patchSetId": 9
@@ -62,6 +110,24 @@
       "revId": "0945cea14998ccc7a8224a62f63cdb1fad261276",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab02888_bfb17d4b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-10-30T22:19:46Z",
+      "side": 1,
+      "message": "I like this. Done.",
+      "parentUuid": "b2be72b5_b90e5f92",
+      "revId": "0945cea14998ccc7a8224a62f63cdb1fad261276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "0945cea14998ccc7a8224a62f63cdb1fad261276",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e89a568_63ae6cdb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-10-30T22:19:46Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to work for static variables.",
+      "parentUuid": "58a9810f_fb6b6705",
+      "range": {
+        "startLine": 79,
+        "startChar": 46,
+        "endLine": 79,
+        "endChar": 51
+      },
+      "revId": "0945cea14998ccc7a8224a62f63cdb1fad261276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
