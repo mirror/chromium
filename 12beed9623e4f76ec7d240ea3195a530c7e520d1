@@ -34,6 +34,24 @@
       "revId": "12beed9623e4f76ec7d240ea3195a530c7e520d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a332e6c3_7e4dbdb5",
+        "filename": "ash/public/cpp/voice_interaction_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-30T15:13:43Z",
+      "side": 1,
+      "message": "I don\u0027t think you need typemaps for that. Just write a function that converts one to the other.",
+      "parentUuid": "d53111c0_eae64038",
+      "revId": "12beed9623e4f76ec7d240ea3195a530c7e520d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
