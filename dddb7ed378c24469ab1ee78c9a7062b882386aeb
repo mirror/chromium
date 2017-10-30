@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cd7a3b8_1c1ec243",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-30T09:12:40Z",
+      "side": 1,
+      "message": "Could we clarify what spec text we\u0027re against?  I discard tasks because it\u0027s spec\u0027ed, we don\u0027t accept any further tasks because it\u0027s spec\u0027ed, and we continue killing the worker because we resume the \u0027run-a-worker\u0027 step after step 29 (though maybe not in the same precise step)?",
+      "revId": "dddb7ed378c24469ab1ee78c9a7062b882386aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
