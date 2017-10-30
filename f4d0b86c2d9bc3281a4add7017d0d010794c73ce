@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f716e64_7444427f",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-10-30T23:03:18Z",
+      "side": 1,
+      "message": "\u003e Please use Network.getCookies or Network.getAllCookies instead.",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a9a005_d0ff8f3b",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-10-30T23:03:18Z",
+      "side": 1,
+      "message": "\u003e Please use Network.deleteCookies instead.",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1beb6099_f322f521",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-10-30T23:03:18Z",
+      "side": 1,
+      "message": "\u003e Use Emulation.setGeolocationOverride instead.",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

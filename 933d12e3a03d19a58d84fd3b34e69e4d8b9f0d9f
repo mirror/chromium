@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa6facf0_a710bb52",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-10-30T23:03:18Z",
+      "side": 0,
+      "message": "Thanks. This fixes https://github.com/ChromeDevTools/devtools-protocol/issues/4",
+      "range": {
+        "startLine": 1143,
+        "startChar": 6,
+        "endLine": 1143,
+        "endChar": 7
+      },
+      "revId": "933d12e3a03d19a58d84fd3b34e69e4d8b9f0d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76623cef_93467dd5",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 5075,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-10-30T23:03:18Z",
+      "side": 0,
+      "message": "And this fixes https://github.com/ChromeDevTools/devtools-protocol/issues/5 !  lg!",
+      "range": {
+        "startLine": 5075,
+        "startChar": 9,
+        "endLine": 5075,
+        "endChar": 21
+      },
+      "revId": "933d12e3a03d19a58d84fd3b34e69e4d8b9f0d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
