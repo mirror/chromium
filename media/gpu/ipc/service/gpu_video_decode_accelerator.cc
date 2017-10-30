@@ -61,7 +61,7 @@ static bool MakeDecoderContextCurrent(
 static bool BindImage(const base::WeakPtr<gpu::GpuCommandBufferStub>& stub,
                       uint32_t client_texture_id,
                       uint32_t texture_target,
-                      const scoped_refptr<gl::GLImage>& image,
+                      scoped_refptr<gl::GLImage> image,
                       bool can_bind_to_sampler) {
   if (!stub) {
     DLOG(ERROR) << "Stub is gone; won't BindImage().";
@@ -146,7 +146,7 @@ class GpuVideoDecodeAccelerator::MessageFilter : public IPC::MessageFilter {
 GpuVideoDecodeAccelerator::GpuVideoDecodeAccelerator(
     int32_t host_route_id,
     gpu::GpuCommandBufferStub* stub,
-    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
     const AndroidOverlayMojoFactoryCB& overlay_factory_cb)
     : host_route_id_(host_route_id),
       stub_(stub),

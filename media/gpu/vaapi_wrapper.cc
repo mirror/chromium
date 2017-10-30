@@ -612,7 +612,7 @@ scoped_refptr<VASurface> VaapiWrapper::CreateUnownedSurface(
 
 #if defined(USE_OZONE)
 scoped_refptr<VASurface> VaapiWrapper::CreateVASurfaceForPixmap(
-    const scoped_refptr<gfx::NativePixmap>& pixmap) {
+    scoped_refptr<gfx::NativePixmap> pixmap) {
   // Create a VASurface for a NativePixmap by importing the underlying dmabufs.
   VASurfaceAttribExternalBuffers va_attrib_extbuf;
   memset(&va_attrib_extbuf, 0, sizeof(va_attrib_extbuf));
@@ -919,7 +919,7 @@ static void DestroyVAImage(VADisplay va_display, VAImage image) {
 }
 
 bool VaapiWrapper::UploadVideoFrameToSurface(
-    const scoped_refptr<VideoFrame>& frame,
+    scoped_refptr<VideoFrame> frame,
     VASurfaceID va_surface_id) {
   base::AutoLock auto_lock(*va_lock_);
 
@@ -1014,8 +1014,8 @@ bool VaapiWrapper::DownloadAndDestroyCodedBuffer(VABufferID buffer_id,
 }
 
 bool VaapiWrapper::BlitSurface(
-    const scoped_refptr<VASurface>& va_surface_src,
-    const scoped_refptr<VASurface>& va_surface_dest) {
+    scoped_refptr<VASurface> va_surface_src,
+    scoped_refptr<VASurface> va_surface_dest) {
   base::AutoLock auto_lock(*va_lock_);
 
   // Initialize the post processing engine if not already done.

@@ -91,7 +91,7 @@ class GpuJpegDecodeAccelerator::Client : public JpegDecodeAccelerator::Client {
   }
 
   void Decode(const BitstreamBuffer& bitstream_buffer,
-              const scoped_refptr<VideoFrame>& video_frame) {
+              scoped_refptr<VideoFrame> video_frame) {
     DCHECK(io_task_runner_->BelongsToCurrentThread());
     DCHECK(accelerator_);
     accelerator_->Decode(bitstream_buffer, video_frame);
@@ -106,7 +106,7 @@ class GpuJpegDecodeAccelerator::Client : public JpegDecodeAccelerator::Client {
   base::ThreadChecker thread_checker_;
   base::WeakPtr<GpuJpegDecodeAccelerator> owner_;
   const int32_t route_id_;
-  const scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
   std::unique_ptr<JpegDecodeAccelerator> accelerator_;
 };
 

@@ -35,7 +35,7 @@ class MEDIA_GPU_EXPORT VideoFrameFactory {
   // These mirror types from MojoVideoDecoderService.
   using ReleaseMailboxCB = base::OnceCallback<void(const gpu::SyncToken&)>;
   using OutputWithReleaseMailboxCB =
-      base::Callback<void(ReleaseMailboxCB, const scoped_refptr<VideoFrame>&)>;
+      base::Callback<void(ReleaseMailboxCB, scoped_refptr<VideoFrame>)>;
 
   VideoFrameFactory() = default;
   virtual ~VideoFrameFactory() = default;

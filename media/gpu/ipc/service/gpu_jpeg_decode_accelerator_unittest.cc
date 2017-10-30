@@ -35,7 +35,7 @@ class MockJpegDecodeAccelerator : public media::JpegDecodeAccelerator {
   MOCK_METHOD1(Initialize, bool(Client*));
   MOCK_METHOD2(Decode,
                void(const BitstreamBuffer&,
-                    const scoped_refptr<media::VideoFrame>&));
+                    scoped_refptr<media::VideoFrame>));
   MOCK_METHOD0(IsSupported, bool());
 };
 

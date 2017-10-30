@@ -78,7 +78,7 @@ struct V4L2VideoDecodeAccelerator::BitstreamBufferRef {
       int32_t input_id);
   ~BitstreamBufferRef();
   const base::WeakPtr<Client> client;
-  const scoped_refptr<base::SingleThreadTaskRunner> client_task_runner;
+  scoped_refptr<base::SingleThreadTaskRunner> client_task_runner;
   const std::unique_ptr<SharedMemoryRegion> shm;
   size_t bytes_used;
   const int32_t input_id;
@@ -147,7 +147,7 @@ V4L2VideoDecodeAccelerator::V4L2VideoDecodeAccelerator(
     EGLDisplay egl_display,
     const GetGLContextCallback& get_gl_context_cb,
     const MakeGLContextCurrentCallback& make_context_current_cb,
-    const scoped_refptr<V4L2Device>& device)
+    scoped_refptr<V4L2Device> device)
     : child_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       decoder_thread_("V4L2DecoderThread"),
       decoder_state_(kUninitialized),
@@ -726,7 +726,7 @@ void V4L2VideoDecodeAccelerator::Destroy() {
 
 bool V4L2VideoDecodeAccelerator::TryToSetupDecodeOnSeparateThread(
     const base::WeakPtr<Client>& decode_client,
-    const scoped_refptr<base::SingleThreadTaskRunner>& decode_task_runner) {
+    scoped_refptr<base::SingleThreadTaskRunner> decode_task_runner) {
   VLOGF(2);
   decode_client_ = decode_client;
   decode_task_runner_ = decode_task_runner;

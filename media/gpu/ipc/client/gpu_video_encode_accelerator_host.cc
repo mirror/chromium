@@ -115,7 +115,7 @@ bool GpuVideoEncodeAcceleratorHost::Initialize(
 }
 
 void GpuVideoEncodeAcceleratorHost::Encode(
-    const scoped_refptr<VideoFrame>& frame,
+    scoped_refptr<VideoFrame> frame,
     bool force_keyframe) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK_EQ(PIXEL_FORMAT_I420, frame->format());
@@ -189,7 +189,7 @@ void GpuVideoEncodeAcceleratorHost::OnWillDeleteImpl() {
 }
 
 void GpuVideoEncodeAcceleratorHost::EncodeSharedMemoryFrame(
-    const scoped_refptr<VideoFrame>& frame,
+    scoped_refptr<VideoFrame> frame,
     bool force_keyframe) {
   if (!base::SharedMemory::IsHandleValid(frame->shared_memory_handle())) {
     PostNotifyError(FROM_HERE, kPlatformFailureError,
