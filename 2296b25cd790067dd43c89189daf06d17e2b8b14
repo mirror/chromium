@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47b246a3_152f1f5d",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "What guarantees that the controller has been set before the delegate calls this API?",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a525433f_af4b0329",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "Similar question here.",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf663ad_45adaea5",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "Thanks for fixing our layout tests :-)",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7a86bfd_03c99fa3",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "This method and the one below don\u0027t seem to add much value.  Maybe just inline the calls to |presentation_service_|?  Or are these methods here to simplify testing?",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a862f7d_86bb89c9",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "Can this be a switch statement to ensure all cases are covered?",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f9fed5_a2dfaf83",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "Does blink allow use of something like base::SmallMap to make this lookup easier?",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d734ab_8925dc31",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "Should this be a method on ListeningStatus?",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479c7446_d573f165",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "I don\u0027t think this quite belongs here, but instead should be in GetPresentationService().",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a2fddca_a26af678",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "These methods all just pass through to PresentationAvailabilityState.  Can the caller just use it directly after calling GetAvailabilityState()?",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f587103_b9a94e44",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "Could this ever be empty?",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9f7ba4_0afaa8da",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "Binding of controller_binding_ can only happen below, when presentation_service_ is not set, so maybe this will never happen.",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de2c861_c4218534",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "If there isn\u0027t a crbug filed for this, do you mind filing one and adding a TODO(crbug.com/XXX) here?",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ff40e8_ba2153a1",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "Tiny nit: lowercase \"presentation\" throughout comments.  In the API, \"Presentation\" is just an interface and doesn\u0027t represent a specific presentation request/connection.",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

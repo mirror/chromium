@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3f3d24a0_48196201",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a1b46e63_6ec939e6",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6638659_5b343e7b",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityObserver.h",
         "patchSetId": 10
@@ -104,6 +122,24 @@
       "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "276c6716_45133f06",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7fb2d89b_e1f133a9",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -352,6 +388,24 @@
     },
     {
       "key": {
+        "uuid": "2e8397ba_a92b4191",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "Hm, I thought we had fixed these objects to retain the Promise/Availability objects as members to meet the spec requirements.  This might explain some of the existing WPT failures. \n\nI\u0027ll file an issue to look into this.",
+      "parentUuid": "3814124c_e13225df",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "489b1b6c_258b2afd",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
         "patchSetId": 10
@@ -384,6 +438,24 @@
       "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc63097_aa3defcc",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c8164d33_2f3b7e01",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -486,6 +558,24 @@
       "side": 1,
       "message": "Yeah we will split this interface into controller / receiver interfaces (similarly for PresentationServiceImpl -- there\u0027s a TODO there)",
       "parentUuid": "6028a223_20a0f391",
+      "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae345170_1a88f457",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-30T23:06:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4a96b138_5a199fa7",
       "revId": "f070fec1a9c03697a99d6db356e5d437ff84ced0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
