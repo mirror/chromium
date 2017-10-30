@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50d22bdc_0cf200ca",
+        "filename": "chrome/browser/chromeos/login/bluetooth_host_pairing_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-30T19:19:18Z",
+      "side": 1,
+      "message": "nit: std::make_unqiue\nSince you\u0027re working on it, could you also modify all the calling sites of base::MakeUnique to std::make_unique?",
+      "revId": "ca15379228d6092b50bb495dc6688eaca2521310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c29b297_59413390",
+        "filename": "chrome/browser/chromeos/login/hid_detection_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-30T19:19:18Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ca15379228d6092b50bb495dc6688eaca2521310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e26135a_197a7949",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-30T19:19:18Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ca15379228d6092b50bb495dc6688eaca2521310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3758dc8_e3d7784c",
+        "filename": "components/pairing/bluetooth_host_pairing_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-30T19:19:18Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ca15379228d6092b50bb495dc6688eaca2521310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
