@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca146040_12e382c6",
+        "filename": "base/trace_event/heap_profiler_allocation_context_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-30T04:58:54Z",
+      "side": 1,
+      "message": "You are right, this should not work with trace_event_end macros at all. I removed this dcheck.",
+      "parentUuid": "23f61d66_fd07916d",
+      "revId": "b5a83525c6a4e604ca7dde285c6179dee0f7bf0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0645e51a_3ed5e1a1",
         "filename": "base/trace_event/heap_profiler_allocation_context_tracker_unittest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "b5a83525c6a4e604ca7dde285c6179dee0f7bf0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6175722d_309ad917",
+        "filename": "base/trace_event/heap_profiler_allocation_context_tracker_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-30T04:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0645e51a_3ed5e1a1",
+      "revId": "b5a83525c6a4e604ca7dde285c6179dee0f7bf0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
