@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "d842e5d4_824c57bb",
+        "filename": "ios/web_view/internal/cwv_preferences_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-30T15:06:01Z",
+      "side": 1,
+      "message": "nit: s/public/protected",
+      "revId": "23636a2c7a6e6e34e4ea6c2a081823a63d5c7019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f20eef_98892110",
+        "filename": "ios/web_view/internal/cwv_preferences_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-30T15:06:01Z",
+      "side": 1,
+      "message": "Is it possible to have this code in constructor instead of SetUp? The problem of SetUp is that it\u0027s easy to forget about PlatformTest::SetUp call. SetUp is unavoidable if you want to call virtual methods, but this is not the case.",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 12
+      },
+      "revId": "23636a2c7a6e6e34e4ea6c2a081823a63d5c7019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51e7d8cc_1c0b6691",
         "filename": "ios/web_view/internal/cwv_preferences_unittest.mm",
         "patchSetId": 5
@@ -18,6 +58,29 @@
         "startChar": 0,
         "endLine": 32,
         "endChar": 70
+      },
+      "revId": "23636a2c7a6e6e34e4ea6c2a081823a63d5c7019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b933117e_6d18c777",
+        "filename": "ios/web_view/internal/cwv_preferences_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-30T15:06:01Z",
+      "side": 1,
+      "message": "nit: s/ASSERT/EXPECT\n\nASSERT is for preconditions and assert immediately fails the test. EXPECT is for expected results verification and allows to continue the test.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 14
       },
       "revId": "23636a2c7a6e6e34e4ea6c2a081823a63d5c7019",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
