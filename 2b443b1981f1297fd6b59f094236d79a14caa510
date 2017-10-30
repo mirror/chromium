@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e6e1d9_b02d44fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/OneShotImpressionTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-30T17:18:38Z",
+      "side": 1,
+      "message": "Better suggestions for the name welcomed :)\n\nOne option would be to name this something even more generic, given that it doesn\u0027t even directly depend on ImpressionTracker and the Listener interface is isomorphic to Runnable...",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "2b443b1981f1297fd6b59f094236d79a14caa510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
