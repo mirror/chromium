@@ -93,6 +93,10 @@ struct UiInitialState;
 //           kWebVrTimeoutMessageText
 //           kWebVrTimeoutMessageButton
 //             kWebVrTimeoutMessageButtonText
+//   kControllerGroup
+//     kLaser
+//     kController
+//     kReticle
 //
 // TODO(vollick): The above hierarchy is complex, brittle, and would be easier
 // to manage if it were specified in a declarative format.
@@ -133,8 +137,12 @@ class UiSceneManager {
   void OnSecurityIconClickedForTesting();
   void OnExitPromptChoiceForTesting(bool chose_exit);
 
-  // TODO(vollick): this should move to the model.
+  // TODO(vollick): these should move to the model.
   const ColorScheme& color_scheme() const;
+  bool web_vr_mode() const { return web_vr_mode_; }
+  bool showing_web_vr_splash_screen() const {
+    return showing_web_vr_splash_screen_;
+  }
 
  private:
   void Create2dBrowsingSubtreeRoots(Model* model);
@@ -153,6 +161,7 @@ class UiSceneManager {
   void CreateExitPrompt();
   void CreateToasts(Model* model);
   void CreateVoiceSearchUiGroup(Model* model);
+  void CreateController(Model* model);
 
   void ConfigureScene();
   void ConfigureExclusiveScreenToast();

@@ -19,6 +19,10 @@ enum UiElementName {
   kWebVrRoot,
   kWebVrViewportAwareRoot,
   kContentQuad,
+  kControllerGroup,
+  kLaser,
+  kController,
+  kReticle,
   kBackplane,
   kCeiling,
   kFloor,
@@ -68,7 +72,12 @@ enum UiElementName {
   kSpeechRecognitionPromptInnerCircle,
   kSpeechRecognitionPromptMicrophoneIcon,
   kSpeechRecognitionPromptBackplane,
+
+  // This must be last.
+  kNumUiElementNames,
 };
+
+const char* UiElementNameToString(UiElementName name);
 
 }  // namespace vr
 

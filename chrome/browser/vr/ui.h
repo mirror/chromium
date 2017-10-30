@@ -47,6 +47,7 @@ class Ui : public BrowserUiInterface, public UiInterface {
   VrShellRenderer* vr_shell_renderer() { return vr_shell_renderer_.get(); }
   UiRenderer* ui_renderer() { return ui_renderer_.get(); }
   UiInputManager* input_manager() { return input_manager_.get(); }
+  Model* model() { return model_.get(); }
 
   base::WeakPtr<vr::BrowserUiInterface> GetBrowserUiWeakPtr();
 
