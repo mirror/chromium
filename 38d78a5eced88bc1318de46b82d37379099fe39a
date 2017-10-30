@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1ec636a_9b7a9e23",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 20431,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-30T19:48:25Z",
+      "side": 1,
+      "message": "Optional: There\u0027s no particular need to mark \u003cenum\u003e entries as obsolete; they\u0027re implicitly obsolete if the only histograms that use them are obsolete.",
+      "range": {
+        "startLine": 20429,
+        "startChar": 0,
+        "endLine": 20431,
+        "endChar": 13
+      },
+      "revId": "38d78a5eced88bc1318de46b82d37379099fe39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
