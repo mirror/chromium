@@ -4,13 +4,20 @@
 
 #include "content/browser/leveldb_wrapper_impl.h"
 
+#include "base/barrier_closure.h"
+#include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/test/test_simple_task_runner.h"
+#include "base/threading/thread.h"
 #include "components/leveldb/public/cpp/util.h"
+#include "components/leveldb/public/interfaces/leveldb.mojom.h"
 #include "content/public/test/test_browser_thread_bundle.h"
-#include "content/test/mock_leveldb_database.h"
+#include "content/test/fake_leveldb_database.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using leveldb::StdStringToUint8Vector;
@@ -21,6 +28,11 @@ namespace content {
 namespace {
 
 const char* kTestPrefix = "abc";
+const char* kTestKey1 = "def";
+const char* kTestValue1 = "defdata";
+const char* kTestKey2 = "123";
+const char* kTestValue2 = "123data";
+// const char* kTestCopyPrefix = "zzz";
 const char* kTestSource = "source";
 const size_t kTestSizeLimit = 512;
 
@@ -28,25 +40,26 @@ class GetAllCallback : public mojom::LevelDBWrapperGetAllCallback {
  public:
   static mojom::LevelDBWrapperGetAllCallbackAssociatedPtrInfo CreateAndBind(
       bool* result,
-      const base::Closure& callback) {
+      base::OnceClosure closure) {
     mojom::LevelDBWrapperGetAllCallbackAssociatedPtrInfo ptr_info;
     auto request = mojo::MakeRequest(&ptr_info);
     mojo::MakeStrongAssociatedBinding(
-        base::WrapUnique(new GetAllCallback(result, callback)),
+        base::WrapUnique(new GetAllCallback(result, std::move(closure))),
         std::move(request));
     return ptr_info;
   }
 
  private:
-  GetAllCallback(bool* result, const base::Closure& callback)
-      : m_result(result), m_callback(callback) {}
+  GetAllCallback(bool* result, base::OnceClosure closure)
+      : result_(result), closure_(std::move(closure)) {}
   void Complete(bool success) override {
-    *m_result = success;
-    m_callback.Run();
+    LOG(ERROR) << "got callback";
+    *result_ = success;
+    std::move(closure_).Run();
   }
 
-  bool* m_result;
-  base::Closure m_callback;
+  bool* result_;
+  base::OnceClosure closure_;
 };
 
 class MockDelegate : public LevelDBWrapperImpl::Delegate {
@@ -55,7 +68,11 @@ class MockDelegate : public LevelDBWrapperImpl::Delegate {
   std::vector<leveldb::mojom::BatchedOperationPtr> PrepareToCommit() override {
     return std::vector<leveldb::mojom::BatchedOperationPtr>();
   }
-  void DidCommit(leveldb::mojom::DatabaseError error) override {}
+  void DidCommit(leveldb::mojom::DatabaseError error) override {
+    LOG(ERROR) << "got commit";
+    if (committed_)
+      std::move(committed_).Run();
+  }
   void OnMapLoaded(leveldb::mojom::DatabaseError error) override {
     map_load_count_++;
   }
@@ -69,26 +86,31 @@ class MockDelegate : public LevelDBWrapperImpl::Delegate {
     mock_changes_ = std::move(changes);
   }
 
+  void SetDidCommitCallback(base::OnceClosure committed) {
+    committed_ = std::move(committed);
+  }
+
  private:
   int map_load_count_ = 0;
   std::vector<LevelDBWrapperImpl::Change> mock_changes_;
+  base::OnceClosure committed_;
 };
 
-void GetCallback(const base::Closure& callback,
+void GetCallback(base::OnceClosure closure,
                  bool* success_out,
                  std::vector<uint8_t>* value_out,
                  bool success,
                  const std::vector<uint8_t>& value) {
   *success_out = success;
   *value_out = value;
-  callback.Run();
+  std::move(closure).Run();
 }
 
-void SuccessCallback(const base::Closure& callback,
+void SuccessCallback(base::OnceClosure closure,
                      bool* success_out,
                      bool success) {
   *success_out = success;
-  callback.Run();
+  std::move(closure).Run();
 }
 
 void NoOpSuccessCallback(bool success) {}
@@ -106,24 +128,40 @@ class LevelDBWrapperImplTest : public testing::Test,
     std::string source;
   };
 
-  LevelDBWrapperImplTest()
-      : db_(&mock_data_),
-        level_db_wrapper_(&db_,
-                          kTestPrefix,
-                          kTestSizeLimit,
-                          base::TimeDelta::FromSeconds(5),
-                          10 * 1024 * 1024 /* max_bytes_per_hour */,
-                          60 /* max_commits_per_hour */,
-                          &delegate_),
-        observer_binding_(this) {
-    set_mock_data(std::string(kTestPrefix) + "def", "defdata");
-    set_mock_data(std::string(kTestPrefix) + "123", "123data");
+  LevelDBWrapperImplTest() : db_thread_("DBThread"), observer_binding_(this) {
+    LOG(ERROR) << "startin1";
+    db_thread_.Start();
+    CHECK(db_thread_.task_runner());
+    LOG(ERROR) << "startin2";
+    db_ = new FakeLevelDBDatabase(&mock_data_);
+    LOG(ERROR) << "startin2.5";
+    auto request =
+        mojo::MakeRequest(&level_db_database_ptr_, db_thread_.task_runner());
+    LOG(ERROR) << "startin2.7";
+    database_binding_ =
+        mojo::MakeStrongBinding(base::WrapUnique(db_), std::move(request));
+    LOG(ERROR) << "startin3";
+    level_db_wrapper_.reset(
+        new LevelDBWrapperImpl(level_db_database_ptr_.get(), kTestPrefix,
+                               kTestSizeLimit, base::TimeDelta::FromSeconds(5),
+                               10 * 1024 * 1024 /* max_bytes_per_hour */,
+                               60 /* max_commits_per_hour */, &delegate_));
+
+    set_mock_data(std::string(kTestPrefix) + kTestKey1, kTestValue1);
+    set_mock_data(std::string(kTestPrefix) + kTestKey2, kTestValue2);
     set_mock_data("123", "baddata");
 
-    level_db_wrapper_.Bind(mojo::MakeRequest(&level_db_wrapper_ptr_));
+    LOG(ERROR) << "startin4";
+    level_db_wrapper_->Bind(mojo::MakeRequest(&level_db_wrapper_ptr_));
     mojom::LevelDBObserverAssociatedPtrInfo ptr_info;
     observer_binding_.Bind(mojo::MakeRequest(&ptr_info));
     level_db_wrapper_ptr_->AddObserver(std::move(ptr_info));
+
+    LOG(ERROR) << "starting";
+  }
+
+  ~LevelDBWrapperImplTest() override {
+    //    database_binding_.Close();
   }
 
   void set_mock_data(const std::string& key, const std::string& value) {
@@ -148,14 +186,49 @@ class LevelDBWrapperImplTest : public testing::Test,
   void clear_mock_data() { mock_data_.clear(); }
 
   mojom::LevelDBWrapper* wrapper() { return level_db_wrapper_ptr_.get(); }
-  LevelDBWrapperImpl* wrapper_impl() { return &level_db_wrapper_; }
+  LevelDBWrapperImpl* wrapper_impl() { return level_db_wrapper_.get(); }
+
+  leveldb::mojom::LevelDBDatabase* database() {
+    return level_db_database_ptr_.get();
+  }
+
+  void Get(const std::vector<uint8_t>& key,
+           bool* success,
+           std::vector<uint8_t>* result,
+           base::OnceClosure done) {
+    wrapper()->Get(
+        key, base::BindOnce(&GetCallback, std::move(done), success, result));
+  }
+
+  void Put(const std::vector<uint8_t>& key,
+           const std::vector<uint8_t>& value,
+           const base::Optional<std::vector<uint8_t>>& client_old_value,
+           bool* success,
+           base::OnceClosure done,
+           std::string source = kTestSource) {
+    wrapper()->Put(key, value, client_old_value, source,
+                   base::BindOnce(&SuccessCallback, std::move(done), success));
+  }
+
+  void Delete(const std::vector<uint8_t>& key,
+              const base::Optional<std::vector<uint8_t>>& client_old_value,
+              bool* success,
+              base::OnceClosure done) {
+    wrapper()->Delete(
+        key, client_old_value, kTestSource,
+        base::BindOnce(&SuccessCallback, std::move(done), success));
+  }
+
+  void DeleteAll(bool* success, base::OnceClosure done) {
+    wrapper()->DeleteAll(kTestSource, base::BindOnce(&SuccessCallback,
+                                                     std::move(done), success));
+  }
 
   bool GetSync(const std::vector<uint8_t>& key, std::vector<uint8_t>* result) {
-    base::RunLoop run_loop;
     bool success = false;
-    wrapper()->Get(key, base::BindOnce(&GetCallback, run_loop.QuitClosure(),
-                                       &success, result));
-    run_loop.Run();
+    base::RunLoop loop;
+    Get(key, &success, result, loop.QuitClosure());
+    loop.Run();
     return success;
   }
 
@@ -163,38 +236,39 @@ class LevelDBWrapperImplTest : public testing::Test,
                const std::vector<uint8_t>& value,
                const base::Optional<std::vector<uint8_t>>& client_old_value,
                std::string source = kTestSource) {
-    base::RunLoop run_loop;
     bool success = false;
-    wrapper()->Put(
-        key, value, client_old_value, source,
-        base::BindOnce(&SuccessCallback, run_loop.QuitClosure(), &success));
-    run_loop.Run();
+    base::RunLoop loop;
+    Put(key, value, client_old_value, &success, loop.QuitClosure(), source);
+    loop.Run();
     return success;
   }
 
   bool DeleteSync(
       const std::vector<uint8_t>& key,
       const base::Optional<std::vector<uint8_t>>& client_old_value) {
-    base::RunLoop run_loop;
     bool success = false;
-    wrapper()->Delete(
-        key, client_old_value, kTestSource,
-        base::BindOnce(&SuccessCallback, run_loop.QuitClosure(), &success));
-    run_loop.Run();
+    base::RunLoop loop;
+    Delete(key, client_old_value, &success, loop.QuitClosure());
+    loop.Run();
     return success;
   }
 
   bool DeleteAllSync() {
-    base::RunLoop run_loop;
     bool success = false;
-    wrapper()->DeleteAll(
-        kTestSource,
-        base::BindOnce(&SuccessCallback, run_loop.QuitClosure(), &success));
-    run_loop.Run();
+    base::RunLoop loop;
+    DeleteAll(&success, loop.QuitClosure());
+    loop.Run();
     return success;
   }
 
-  void CommitChanges() { level_db_wrapper_.ScheduleImmediateCommit(); }
+  void EnsureDBTasksAndRunLoop(base::RunLoop* loop) { loop->Run(); }
+
+  void CommitChanges() {
+    base::RunLoop loop;
+    delegate_.SetDidCommitCallback(loop.QuitClosure());
+    level_db_wrapper_->ScheduleImmediateCommit();
+    loop.Run();
+  }
 
   const std::vector<Observation>& observations() { return observations_; }
 
@@ -228,10 +302,13 @@ class LevelDBWrapperImplTest : public testing::Test,
   void ShouldSendOldValueOnMutations(bool value) override {}
 
   TestBrowserThreadBundle thread_bundle_;
+  base::Thread db_thread_;
   std::map<std::vector<uint8_t>, std::vector<uint8_t>> mock_data_;
-  MockLevelDBDatabase db_;
+  mojo::StrongBindingPtr<leveldb::mojom::LevelDBDatabase> database_binding_;
+  FakeLevelDBDatabase* db_;
+  leveldb::mojom::LevelDBDatabasePtr level_db_database_ptr_;
   MockDelegate delegate_;
-  LevelDBWrapperImpl level_db_wrapper_;
+  std::unique_ptr<LevelDBWrapperImpl> level_db_wrapper_;
   mojom::LevelDBWrapperPtr level_db_wrapper_ptr_;
   mojo::AssociatedBinding<mojom::LevelDBObserver> observer_binding_;
   std::vector<Observation> observations_;
@@ -249,10 +326,19 @@ TEST_F(LevelDBWrapperImplTest, GetFromPutOverwrite) {
   std::vector<uint8_t> key = StdStringToUint8Vector("123");
   std::vector<uint8_t> value = StdStringToUint8Vector("foo");
 
-  EXPECT_TRUE(PutSync(key, value, StdStringToUint8Vector("123data")));
+  base::RunLoop loop;
+  bool put_success = false;
+  base::RepeatingClosure barrier = base::BarrierClosure(2, loop.QuitClosure());
+  Put(key, value, StdStringToUint8Vector("123data"), &put_success, barrier);
 
   std::vector<uint8_t> result;
-  EXPECT_TRUE(GetSync(key, &result));
+  bool get_success = false;
+  Get(key, &get_success, &result, barrier);
+
+  loop.Run();
+  EXPECT_TRUE(put_success);
+  EXPECT_TRUE(get_success);
+
   EXPECT_EQ(value, result);
 }
 
@@ -267,18 +353,36 @@ TEST_F(LevelDBWrapperImplTest, GetFromPutNewKey) {
   EXPECT_EQ(value, result);
 }
 
+// void TestGetPrefixedz(base::OnceClosure done,
+//                      leveldb::mojom::DatabaseError e,
+//                      std::vector<leveldb::mojom::KeyValuePtr> vs) {
+//  LOG(ERROR) << "TestGetPrefixedz: got prefixed";
+//  std::move(done).Run();
+//}
+
 TEST_F(LevelDBWrapperImplTest, GetAll) {
   leveldb::mojom::DatabaseError status;
   std::vector<mojom::KeyValuePtr> data;
-  base::RunLoop run_loop;
   bool result = false;
-  EXPECT_TRUE(wrapper()->GetAll(
-      GetAllCallback::CreateAndBind(&result, run_loop.QuitClosure()), &status,
-      &data));
+  //  {
+  //    LOG(ERROR) << database();
+  //    base::RunLoop loop;
+  //    database()->GetPrefixed(
+  //        StdStringToUint8Vector(kTestPrefix),
+  //        base::BindOnce(&TestGetPrefixedz, loop.QuitClosure()));
+  //    loop.Run();
+  //
+  //    // Note: This works.
+  //  }
+
+  base::RunLoop loop;
+  wrapper()->GetAll(GetAllCallback::CreateAndBind(&result, loop.QuitClosure()),
+                    &status, &data);
+  LOG(ERROR) << "before run";  // This is never called.
+  loop.Run();
+  LOG(ERROR) << "after run";
   EXPECT_EQ(leveldb::mojom::DatabaseError::OK, status);
   EXPECT_EQ(2u, data.size());
-  EXPECT_FALSE(result);
-  run_loop.Run();
   EXPECT_TRUE(result);
 }
 
@@ -573,5 +677,59 @@ TEST_F(LevelDBWrapperImplTest, FixUpData) {
   EXPECT_EQ("foo", get_mock_data(kTestPrefix + std::string("def")));
   EXPECT_EQ("bla", get_mock_data(kTestPrefix + std::string("abc")));
 }
+//
+// TEST_F(LevelDBWrapperImplTest, CopyToNewPrefix) {
+//  std::string key1 = kTestKey2;
+//  std::string value1 = "foo";
+//  std::string key2 = "abc";
+//  std::string value2 = "data abc";
+//
+//  EXPECT_TRUE(PutSync(StdStringToUint8Vector(key1),
+//                      StdStringToUint8Vector(value1),
+//                      StdStringToUint8Vector("123data")));
+//  EXPECT_TRUE(PutSync(StdStringToUint8Vector(key2),
+//                      StdStringToUint8Vector("old value"), base::nullopt));
+//  EXPECT_TRUE(PutSync(StdStringToUint8Vector(key2),
+//                      StdStringToUint8Vector(value2),
+//                      StdStringToUint8Vector("old value")));
+//
+//  CommitChanges();
+//
+//  const std::string kTestPrefixStr = std::string(kTestPrefix);
+//  // Check to see if we still have old data.
+//  EXPECT_TRUE(has_mock_data(kTestPrefixStr + kTestKey1));
+//  EXPECT_EQ(kTestValue1, get_mock_data(kTestPrefixStr + kTestKey1));
+//  EXPECT_TRUE(has_mock_data(kTestPrefixStr + kTestKey2));
+//  EXPECT_EQ(kTestValue2, get_mock_data(kTestPrefixStr + kTestKey2));
+//
+//  const std::string kTestCopyPrefixStr = std::string(kTestCopyPrefix);
+//  // Check to see if new data exists.
+//  EXPECT_TRUE(has_mock_data(kTestCopyPrefixStr + key1));
+//  EXPECT_EQ(value1, get_mock_data(kTestCopyPrefixStr + key1));
+//  EXPECT_TRUE(has_mock_data(kTestCopyPrefixStr + key2));
+//  EXPECT_EQ(value2, get_mock_data(kTestCopyPrefixStr + key2));
+//
+//  // Check to see if prefix changed.
+//  leveldb::mojom::DatabaseError status;
+//  std::vector<mojom::KeyValuePtr> data;
+//  base::RunLoop run_loop;
+//  bool result = false;
+//  EXPECT_TRUE(wrapper()->GetAll(FixUpData
+//      GetAllCallback::CreateAndBind(&result, run_loop.QuitClosure()), &status,
+//      &data));
+//  EXPECT_EQ(leveldb::mojom::DatabaseError::OK, status);
+//  EXPECT_EQ(3u, data.size());
+//  EXPECT_FALSE(result);
+//  run_loop.Run();
+//  EXPECT_TRUE(result);
+//
+//  std::vector<uint8_t> value_result;
+//  EXPECT_TRUE(GetSync(StdStringToUint8Vector(kTestKey1), &value_result));
+//  EXPECT_EQ(StdStringToUint8Vector(kTestValue1), value_result);
+//  EXPECT_TRUE(GetSync(StdStringToUint8Vector(key1), &value_result));
+//  EXPECT_EQ(StdStringToUint8Vector(value1), value_result);
+//  EXPECT_TRUE(GetSync(StdStringToUint8Vector(key2), &value_result));
+//  EXPECT_EQ(StdStringToUint8Vector(value2), value_result);
+//}
 
 }  // namespace content
