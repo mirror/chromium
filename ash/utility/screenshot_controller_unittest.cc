@@ -37,19 +37,17 @@ class ScreenshotControllerTest : public AshTestBase {
   }
 
   void StartPartialScreenshotSession() {
-    screenshot_controller()->StartPartialScreenshotSession(
-        GetScreenshotDelegate(), true);
+    screenshot_controller()->StartPartialScreenshotSession(true);
   }
 
   void StartWindowScreenshotSession() {
-    screenshot_controller()->StartWindowScreenshotSession(
-        GetScreenshotDelegate());
+    screenshot_controller()->StartWindowScreenshotSession();
   }
 
   void Cancel() { screenshot_controller()->CancelScreenshotSession(); }
 
   bool IsActive() {
-    return screenshot_controller()->screenshot_delegate_ != nullptr;
+    return screenshot_controller()->in_screenshot_session_;
   }
 
   const gfx::Point& GetStartPosition() const {

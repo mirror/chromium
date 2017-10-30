@@ -11,7 +11,7 @@
 #include <utility>
 #include <vector>
 
-#include "ash/accelerators/accelerator_controller_delegate_classic.h"
+// #include "ash/accelerators/accelerator_controller_delegate_classic.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback.h"
@@ -209,7 +209,7 @@
 #include "ash/accessibility_types.h"
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/shell.h"
-#include "ash/shell_port_classic.h"
+// #include "ash/shell_port_classic.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
 #include "chrome/browser/chromeos/accessibility/magnification_manager.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
@@ -680,27 +680,27 @@ class PolicyTest : public InProcessBrowserTest {
   };
 
   void TestScreenshotFile(bool enabled) {
-    // AddObserver is an ash-specific method, so just replace the screenshot
-    // grabber with one we've created here.
-    std::unique_ptr<ChromeScreenshotGrabber> chrome_screenshot_grabber(
-        new ChromeScreenshotGrabber);
+    // // AddObserver is an ash-specific method, so just replace the screenshot
+    // // grabber with one we've created here.
+    // std::unique_ptr<ChromeScreenshotGrabber> chrome_screenshot_grabber(
+    //     new ChromeScreenshotGrabber);
     // ScreenshotGrabber doesn't own this observer, so the observer's lifetime
     // is tied to the test instead.
-    chrome_screenshot_grabber->screenshot_grabber()->AddObserver(&observer_);
-    ash::ShellPortClassic::Get()
-        ->accelerator_controller_delegate()
-        ->SetScreenshotDelegate(std::move(chrome_screenshot_grabber));
+    ChromeScreenshotGrabber::Get()->screenshot_grabber()->AddObserver(&observer_);
+    // ash::ShellPortClassic::Get()
+    //     ->accelerator_controller_delegate()
+    //     ->SetScreenshotDelegate(std::move(chrome_screenshot_grabber));
 
     SetScreenshotPolicy(enabled);
     ash::Shell::Get()->accelerator_controller()->PerformActionIfEnabled(
         ash::TAKE_SCREENSHOT);
 
     content::RunMessageLoop();
-    static_cast<ChromeScreenshotGrabber*>(
-        ash::ShellPortClassic::Get()
-            ->accelerator_controller_delegate()
-            ->screenshot_delegate())
-        ->screenshot_grabber()
+    // static_cast<ChromeScreenshotGrabber*>(
+    //     ash::ShellPortClassic::Get()
+    //         ->accelerator_controller_delegate()
+    //         ->screenshot_delegate())
+    ChromeScreenshotGrabber::Get()        ->screenshot_grabber()
         ->RemoveObserver(&observer_);
   }
 #endif

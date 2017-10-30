@@ -58,6 +58,7 @@
 #include "ash/public/cpp/shelf_model.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
+#include "ash/screenshot_delegate.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_controller.h"
@@ -432,6 +433,10 @@ ShelfModel* Shell::shelf_model() {
 ::wm::ActivationClient* Shell::activation_client() {
   return focus_controller_.get();
 }
+
+// void Shell::SetScreenshotDelegate(std::unique_ptr<ScreenshotDelegate> delegate) {
+//   screenshot_delegate_ = std::move(delegate);
+// }
 
 void Shell::UpdateShelfVisibility() {
   for (aura::Window* root : GetAllRootWindows())
@@ -1056,7 +1061,8 @@ void Shell::Init(const ShellInitParams& init_params) {
   // pre-target handler) at this point, because |mouse_cursor_filter_| needs to
   // process mouse events prior to screenshot session.
   // See http://crbug.com/459214
-  screenshot_controller_.reset(new ScreenshotController());
+  screenshot_controller_ = std::make_unique<ScreenshotController>(
+      shell_delegate_->CreateScreenshotDelegate());
   mouse_cursor_filter_ = std::make_unique<MouseCursorEventFilter>();
   PrependPreTargetHandler(mouse_cursor_filter_.get());
 

@@ -33,10 +33,6 @@ class ScreenshotToolTest : public AshTestBase {
     palette_tool_delegate_ = std::make_unique<MockPaletteToolDelegate>();
   }
 
-  TestScreenshotDelegate* test_screenshot_delegate() {
-    return ash_test_helper()->test_screenshot_delegate();
-  }
-
  protected:
   std::unique_ptr<MockPaletteToolDelegate> palette_tool_delegate_;
 
@@ -76,9 +72,9 @@ TEST_F(ScreenshotToolTest, EnablingCaptureRegionCallsDelegateAndDisablesTool) {
 
   EXPECT_FALSE(IsPartialScreenshotActive());
   EXPECT_EQ(1,
-            test_screenshot_delegate()->handle_take_partial_screenshot_count());
+            GetScreenshotDelegate()->handle_take_partial_screenshot_count());
   EXPECT_EQ(selection.ToString(),
-            test_screenshot_delegate()->last_rect().ToString());
+            GetScreenshotDelegate()->last_rect().ToString());
   testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
 
   // Enable the tool again
@@ -101,7 +97,7 @@ TEST_F(ScreenshotToolTest, EnablingCaptureScreenCallsDelegateAndDisablesTool) {
               DisableTool(PaletteToolId::CAPTURE_SCREEN));
   EXPECT_CALL(*palette_tool_delegate_.get(), HidePaletteImmediately());
   tool->OnEnable();
-  EXPECT_EQ(1, test_screenshot_delegate()->handle_take_screenshot_count());
+  EXPECT_EQ(1, GetScreenshotDelegate()->handle_take_screenshot_count());
 }
 
 }  // namespace ash
