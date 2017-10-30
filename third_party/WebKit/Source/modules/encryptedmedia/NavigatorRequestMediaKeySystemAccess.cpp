@@ -116,7 +116,7 @@ class MediaKeySystemAccessInitializer final : public EncryptedMediaRequest {
       const override {
     return supported_configurations_;
   }
-  SecurityOrigin* GetSecurityOrigin() const override;
+  const SecurityOrigin* GetSecurityOrigin() const override;
   void RequestSucceeded(WebContentDecryptionModuleAccess*) override;
   void RequestNotSupported(const WebString& error_message) override;
 
@@ -193,7 +193,8 @@ MediaKeySystemAccessInitializer::MediaKeySystemAccessInitializer(
   CheckVideoCapabilityRobustness();
 }
 
-SecurityOrigin* MediaKeySystemAccessInitializer::GetSecurityOrigin() const {
+const SecurityOrigin* MediaKeySystemAccessInitializer::GetSecurityOrigin()
+    const {
   return IsExecutionContextValid()
              ? resolver_->GetExecutionContext()->GetSecurityOrigin()
              : nullptr;
