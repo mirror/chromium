@@ -1559,7 +1559,7 @@ public class ContextualSearchManager
                 // Ranker will handle the suppression, but our legacy implementation uses
                 // TapSuppressionHeuristics (run from the ContextualSearchSelectionController).
                 // Usage includes tap-far-from-previous suppression.
-                mTapSuppressionRankerLogger.setupLoggingForPage(getBasePageUrl());
+                mTapSuppressionRankerLogger.setupLoggingForPage(getBaseWebContents());
 
                 // TODO(donnd): Move handleShouldSuppressTap out of the Selection Controller.
                 mSelectionController.handleShouldSuppressTap(mContext, mTapSuppressionRankerLogger);

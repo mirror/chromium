@@ -379,14 +379,17 @@ public class ContextualSearchSelectionController {
         }
 
         // If we're suppressing based on heuristics then Ranker doesn't need to know about it.
+        @MachineIntelligencePrediction
+        int tapPrediction = MachineIntelligencePrediction.UNAVAILABLE;
         if (!shouldSuppressTapBasedOnHeuristics
                 && ContextualSearchFieldTrial.isRankerIntegrationOrMlTapSuppressionEnabled()) {
             tapHeuristics.logRankerTapSuppression(rankerLogger);
             logNonHeuristicFeatures(rankerLogger);
+            tapPrediction = rankerLogger.runPredictionForTapSuppression();
         }
 
         // Make the suppression decision and act upon it.
-        boolean shouldSuppressTapBasedOnRanker = rankerLogger.inferUiSuppression()
+        boolean shouldSuppressTapBasedOnRanker = (tapPrediction == MachineIntelligencePrediction.NO)
                 && ContextualSearchFieldTrial.isContextualSearchMlTapSuppressionEnabled();
         if (shouldSuppressTapBasedOnHeuristics || shouldSuppressTapBasedOnRanker) {
             mHandler.handleSuppressedTap();
