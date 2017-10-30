@@ -16,6 +16,24 @@
       "revId": "01e4f48fa4e999af6d1a5973aba4744348be709b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537e2463_6a768deb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1125499
+      },
+      "writtenOn": "2017-10-30T16:34:47Z",
+      "side": 1,
+      "message": "When I tested it, the new menu would always be modal and centered. It would animate to the center from the click position. In either case, it wasn\u0027t very desktop-like. The goal as I understood it is to look more like desktop.\n\nI\u0027m okay if we want to change this later. Especially because we are missing the link destination being displayed when hovered.",
+      "parentUuid": "dae1f9f9_6765bec8",
+      "revId": "01e4f48fa4e999af6d1a5973aba4744348be709b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
