@@ -12,8 +12,6 @@
 #include "base/sequenced_task_runner.h"
 #include "base/test/scoped_feature_list.h"
 #include "chrome/browser/feature_engagement/feature_tracker.h"
-#include "chrome/browser/feature_engagement/session_duration_updater.h"
-#include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/pref_names.h"
@@ -33,9 +31,9 @@ namespace feature_engagement {
 
 namespace {
 
-const char kIncognitoWindowTrialName[] = "IncognitoWindowTrial";
-const char kGroupName[] = "Enabled";
-const char kTestProfileName[] = "test-profile";
+constexpr char kIncognitoWindowTrialName[] = "IncognitoWindowTrial";
+constexpr char kGroupName[] = "Enabled";
+constexpr char kTestProfileName[] = "test-profile";
 
 class MockTracker : public Tracker {
  public:
@@ -52,18 +50,17 @@ class MockTracker : public Tracker {
 class FakeIncognitoWindowTracker : public IncognitoWindowTracker {
  public:
   FakeIncognitoWindowTracker(Tracker* feature_tracker, Profile* profile)
-      : IncognitoWindowTracker(
-            feature_engagement::SessionDurationUpdaterFactory::GetInstance()
-                ->GetForProfile(profile)),
+      : IncognitoWindowTracker(profile),
         feature_tracker_(feature_tracker),
         pref_service_(
             base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>()) {
-    SessionDurationUpdater::RegisterProfilePrefs(pref_service_->registry());
+    pref_service_->registry()->RegisterDictionaryPref(
+        prefs::kObservedSessionTime);
   }
 
   PrefService* GetPrefs() { return pref_service_.get(); }
 
-  // feature_engagement::NewTabTracker:
+  // feature_engagement::IncognitoWindowTracker:
   Tracker* GetTracker() const override { return feature_tracker_; }
 
  private:
@@ -91,9 +88,9 @@ class IncognitoWindowTrackerEventTest : public testing::Test {
 
   void TearDown() override {
     incognito_window_tracker_->RemoveSessionDurationObserver();
-    metrics::DesktopSessionDurationTracker::CleanupForTesting();
     // Need to invoke the reset method as TearDown is on the UI thread.
     testing_profile_manager_.reset();
+    metrics::DesktopSessionDurationTracker::CleanupForTesting();
   }
 
  protected:
