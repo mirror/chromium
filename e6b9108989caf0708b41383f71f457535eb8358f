@@ -45,6 +45,30 @@
       "revId": "e6b9108989caf0708b41383f71f457535eb8358f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d3743f_4dfe3634",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-30T15:00:58Z",
+      "side": 1,
+      "message": "Can you give me a bit more context on visited link and clearing browsing data? Which code path triggers this functionality?\n\nIIUC, there seems to be two use cases for SetWebUsageEnabled(false):\n(1) destroy the WKWebView when it\u0027s not needed to avoid playing audio and whatnot\n(2) force clearing browsing data\n\nWhat I\u0027m trying to change is (1) here. Would it make sense to create a separate API for (2) to preserve its functionality? Would this be feasible?",
+      "parentUuid": "a119547b_0f200cb8",
+      "range": {
+        "startLine": 1091,
+        "startChar": 16,
+        "endLine": 1091,
+        "endChar": 28
+      },
+      "revId": "e6b9108989caf0708b41383f71f457535eb8358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
