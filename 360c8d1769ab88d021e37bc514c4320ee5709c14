@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc3606e9_8481dc2d",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-30T16:31:56Z",
+      "side": 1,
+      "message": "We have to add font_cache_dirty_ here to make sure ApplyRuleSetChanges is called even if only the font cache needs to be refreshed.",
+      "revId": "360c8d1769ab88d021e37bc514c4320ee5709c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d96bd6c_8a730166",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-30T16:31:56Z",
+      "side": 1,
+      "message": "This is called for author style sheets. If the font cache is dirty (because fonts changed in user style sheets), we have to refresh the font cache and re-add all the new author style sheets so we can get everything in the correct order.",
+      "revId": "360c8d1769ab88d021e37bc514c4320ee5709c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba8f78e_d5510b4e",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-30T16:31:56Z",
+      "side": 1,
+      "message": "Note: even if only new fonts have been added to user style sheets, we refresh the cache. The append-only optimization only works for author style sheets.",
+      "revId": "360c8d1769ab88d021e37bc514c4320ee5709c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4730347_4712ee3f",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-30T16:31:56Z",
+      "side": 1,
+      "message": "This block was further below, I have just moved it up.",
+      "revId": "360c8d1769ab88d021e37bc514c4320ee5709c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14fa0bf_ec26d1da",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-30T16:31:56Z",
+      "side": 1,
+      "message": "Added these two DCHECKs here to make the assumptions clear.",
+      "revId": "360c8d1769ab88d021e37bc514c4320ee5709c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d2c969_4b97a3d8",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-30T16:31:56Z",
+      "side": 1,
+      "message": "This is copied from ScopedStyleResolver with appropriate modifications since we have direct access to our private members.",
+      "revId": "360c8d1769ab88d021e37bc514c4320ee5709c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c03e0b9_75cbd67e",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngineTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-30T16:31:56Z",
+      "side": 1,
+      "message": "t4 is now t5 and the new t4 is for @font-face",
+      "revId": "360c8d1769ab88d021e37bc514c4320ee5709c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
