@@ -281,6 +281,30 @@
       "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8580aaf8_3d0f2f96",
+        "filename": "components/previews/core/previews_ui_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-30T20:06:13Z",
+      "side": 1,
+      "message": "Can you add some of this context to the method comments. Specifically, to distinguish when should the first method be called vs. the second one?",
+      "parentUuid": "ec8d95ab_97701b8e",
+      "range": {
+        "startLine": 70,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 53
+      },
+      "revId": "8a877a0f501bff9a3ea2fa9e3b8122787e4079ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
