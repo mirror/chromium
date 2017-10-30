@@ -32,6 +32,7 @@ source_set("web") {
     "//components/url_formatter",
     "//ios/net",
     "//ios/third_party/blink:html_tokenizer",
+    "//ios/web/net",
     "//ios/web/public",
     "//mojo/public/cpp/system",
     "//mojo/public/js",
@@ -311,6 +312,7 @@ test("ios_web_unittests") {
     ":ios_web_web_state_unittests",
     ":ios_web_webui_unittests",
     "//ios/testing:http_server_bundle_data",
+    "//ios/web/net:net_unittests",
   ]
 
   assert_no_deps = ios_assert_no_deps
