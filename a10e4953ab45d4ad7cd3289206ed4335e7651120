@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7676ed6_ddf59f6d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-30T16:02:10Z",
+      "side": 1,
+      "message": "This can be updated to say that it returns a username for code review -- which may be an email address or a @chromium.org username.",
+      "range": {
+        "startLine": 491,
+        "startChar": 0,
+        "endLine": 494,
+        "endChar": 40
+      },
+      "revId": "a10e4953ab45d4ad7cd3289206ed4335e7651120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ca5ddc_c7527ecb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-30T16:02:10Z",
+      "side": 1,
+      "message": "Optional rephrasing:\n\n       username \u003d \u0027qyearsley\u0027  # Fallback\n       try:\n            username \u003d self._fetch_ecosystem_infra_sheriff_username()\n       except (IOError, KeyError, ValueError) as error:\n            _log.error(\u0027Exception while fetching current sheriff: %s\u0027, error)\n       return username",
+      "range": {
+        "startLine": 496,
+        "startChar": 0,
+        "endLine": 503,
+        "endChar": 23
+      },
+      "revId": "a10e4953ab45d4ad7cd3289206ed4335e7651120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
