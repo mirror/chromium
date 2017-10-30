@@ -15,6 +15,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/metrics/histogram_macros.h"
 #include "build/build_config.h"
 #include "chrome/common/importer/firefox_importer_utils.h"
 #include "chrome/common/importer/imported_bookmark_entry.h"
@@ -347,6 +348,7 @@ void FirefoxImporter::ImportBookmarks() {
 }
 
 void FirefoxImporter::ImportPasswords() {
+  UMA_HISTOGRAM_BOOLEAN("Firefox.PasswordImporter.SelectedByUser", true);
   // Initializes NSS3.
   NSSDecryptor decryptor;
   if (!decryptor.Init(source_path_, source_path_) &&
@@ -374,6 +376,8 @@ void FirefoxImporter::ImportPasswords() {
   }
 
   if (!cancelled()) {
+    UMA_HISTOGRAM_COUNTS_10000(
+        "Firefox.PasswordImporter.NumberOfImportedPasswords", forms.size());
     for (size_t i = 0; i < forms.size(); ++i) {
       if (!forms[i].username_value.empty() ||
           !forms[i].password_value.empty() ||
