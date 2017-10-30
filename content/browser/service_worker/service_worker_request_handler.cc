@@ -131,7 +131,8 @@ ServiceWorkerRequestHandler::InitializeForNavigationNetworkService(
     bool is_parent_frame_secure,
     scoped_refptr<ResourceRequestBody> body,
     const base::Callback<WebContents*(void)>& web_contents_getter) {
-  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
+  DCHECK(ServiceWorkerUtils::IsServicificationEnabled() ||
+         IsNavigationMojoResponseEnabled());
   DCHECK(navigation_handle_core);
 
   // Create the handler even for insecure HTTP since it's used in the

@@ -35,6 +35,8 @@
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/browser/stream_handle.h"
+#include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -247,6 +249,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
     mojom::URLLoaderFactory* factory = nullptr;
     DCHECK_EQ(handlers_.size(), handler_index_);
+    DCHECK(default_url_loader_factory_getter_);
     if (resource_request_->url.SchemeIs(url::kBlobScheme)) {
       factory = default_url_loader_factory_getter_->GetBlobFactory()->get();
     } else {
