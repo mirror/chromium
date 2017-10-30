@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2993febd_b5669f1d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-30T08:09:29Z",
+      "side": 1,
+      "message": "Here |line_.position| isn\u0027t always accurate, if after rewind. For this reason, ApplyJustfy() computes the line width by summing NGInlineItemResult::InlineSize().\n\nIf we always need it, Rewind() needs to re-compute the position after the rewind.",
+      "revId": "186dc9ee21e0cf3c20afd1647998e29bda85765c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
