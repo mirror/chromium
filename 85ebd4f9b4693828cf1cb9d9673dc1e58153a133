@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "104e69a5_c8d203a1",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/stylevalue-objects/parse-parseAll-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-30T02:04:35Z",
+      "side": 1,
+      "message": "\\o/",
+      "revId": "85ebd4f9b4693828cf1cb9d9673dc1e58153a133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
