@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96dc1465_76be3988",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/web_task_runner_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-30T11:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8820409_dc46cf7f",
+      "range": {
+        "startLine": 27,
+        "startChar": 42,
+        "endLine": 27,
+        "endChar": 69
+      },
+      "revId": "91ef3bad45e192dcfd9951222d1deb7f5acfccf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6965df6b_5afd616a",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-30T10:31:08Z",
       "side": 1,
       "message": "It looks like that there is only handful of those usages in tests. Let\u0027s use GetTaskRunner(task_type) directly in the tests and make these private.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 48
+      },
+      "revId": "91ef3bad45e192dcfd9951222d1deb7f5acfccf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ca70f4_1339e9ca",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-30T11:05:23Z",
+      "side": 1,
+      "message": "Done, but I feel like the test became less readable...",
+      "parentUuid": "6965df6b_5afd616a",
       "range": {
         "startLine": 80,
         "startChar": 2,
