@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c88cf26e_f270fbda",
+        "filename": "ios/web/web_state/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-30T16:57:58Z",
+      "side": 1,
+      "message": "If this target is there just to make the header private, you can use \"public\" and \"sources\" in the \"web_state\" target to control what is public and what is private:\n\n  source_set(\"web_state\") {\n    # This is private ...\n    sources \u003d [\n      \"web_state_impl.h\",\n    ]\n    # This is public ...\n    public \u003d [\n      \"global_web_state_event_tracker.h\",\n      ...\n    ]\n  }\n\nBy default, if a \"source_set\" only define \"sources\", then everything is public, but if it defines both \"sources\" and \"public\" only the files in \"public\" are public, the rest are private.",
+      "revId": "bf18bb763a4b1feea413d07dd780d90f93053b3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
