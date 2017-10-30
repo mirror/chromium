@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83947291_95b76252",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-30T15:59:42Z",
+      "side": 1,
+      "message": "nit: maybe have the comment also specify this is called for dedicated/shared/service workers?",
+      "revId": "510def76554ee275f94d08e8aa820b3799fe8f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
