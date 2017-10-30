@@ -19,6 +19,11 @@ namespace password_manager {
 
 namespace {
 
+uint64_t AssignNewId() {
+  static base::AtomicSequenceNumber seq;
+  return seq.GetNext() + 1;
+}
+
 PasswordFormMetricsRecorder::BubbleDismissalReason GetBubbleDismissalReason(
     metrics_util::UIDismissalReason ui_dismissal_reason) {
   using BubbleDismissalReason =
@@ -68,6 +73,7 @@ PasswordFormMetricsRecorder::PasswordFormMetricsRecorder(
       ukm_recorder_(ukm_recorder),
       source_id_(source_id),
       main_frame_url_(main_frame_url),
+      recorder_id_(AssignNewId()),
       ukm_entry_builder_(source_id) {}
 
 PasswordFormMetricsRecorder::~PasswordFormMetricsRecorder() {
@@ -110,9 +116,14 @@ PasswordFormMetricsRecorder::~PasswordFormMetricsRecorder() {
   ukm_entry_builder_.SetSaving_Prompt_Shown(save_prompt_shown_);
 
   // TODO(crbug/755407): This shouldn't depend on UKM keeping repeated metrics.
-  for (const DetailedUserAction& action : one_time_report_user_actions_)
-    ukm_entry_builder_.SetUser_Action(static_cast<int64_t>(action));
+  for (const DetailedUserAction& action : one_time_report_user_actions_) {
+    ukm::builders::PasswordForm_UserAction(source_id_)
+        .AddFormId(recorder_id_)
+        .AddActionType(static_cast<int64_t>(action))
+        .Record(ukm_recorder_);
+  }
 
+  ukm_entry_builder_.SetFormId(recorder_id_);
   ukm_entry_builder_.Record(ukm_recorder_);
 
   // Bind |main_frame_url_| to |source_id_| directly before sending the content

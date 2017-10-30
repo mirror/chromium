@@ -320,6 +320,9 @@ class PasswordFormMetricsRecorder
   // they all bind it to the same URL.
   ukm::SourceId source_id_;
 
+  // A unique ID for this object.
+  uint64_t recorder_id_;
+
   // URL for which UKMs are reported.
   GURL main_frame_url_;
 
