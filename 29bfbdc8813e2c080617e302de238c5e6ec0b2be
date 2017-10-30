@@ -182,6 +182,30 @@
     },
     {
       "key": {
+        "uuid": "fe3a2171_45b3b591",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config_select.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-30T21:51:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a483dc68_69bfe3cc",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "29bfbdc8813e2c080617e302de238c5e6ec0b2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f1c8264_8a5c4e28",
         "filename": "ui/webui/resources/cr_components/chromeos/network/network_config_select.html",
         "patchSetId": 7
@@ -193,6 +217,30 @@
       "writtenOn": "2017-10-30T21:33:20Z",
       "side": 1,
       "message": "unrelated question: why not use aria-labelledby\u003d\"label\"? that removes a polymer binding, but also seems -- to me -- less redundant.",
+      "range": {
+        "startLine": 25,
+        "startChar": 38,
+        "endLine": 25,
+        "endChar": 61
+      },
+      "revId": "29bfbdc8813e2c080617e302de238c5e6ec0b2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1562e02d_8516a2cb",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config_select.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-30T21:51:13Z",
+      "side": 1,
+      "message": "Per dbeam@ email: \"If there happens to be a node with an id\u003d\"\" that contains only primary text, feel free to use aria-labelledby, but please don\u0027t add IDs just for this.\"\n\nNot sure if that made it into a style guide anywhere, but because of that guideline I\u0027ve favored just using aria-label directly since ids tend to come and go (and I believe that has become the standard, we have ~40 aria-lebelledby in Settings and ~130 aria-label).",
+      "parentUuid": "8f1c8264_8a5c4e28",
       "range": {
         "startLine": 25,
         "startChar": 38,
