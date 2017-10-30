@@ -16,6 +16,24 @@
       "revId": "98438f896ce3a549a3ff3574ead53cd0cb063ad3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f774d9d_5cf4ddb0",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-30T13:50:58Z",
+      "side": 1,
+      "message": "I am moving it to the ToolbarOwner protocol in a following CL.",
+      "parentUuid": "5e13b554_42522c2d",
+      "revId": "98438f896ce3a549a3ff3574ead53cd0cb063ad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
