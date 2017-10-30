@@ -164,6 +164,7 @@ class CORE_EXPORT InspectorPageAgent final
   void FrameStartedLoading(LocalFrame*, FrameLoadType);
   void FrameStoppedLoading(LocalFrame*);
   void FrameScheduledNavigation(LocalFrame*, ScheduledNavigation*);
+  void FrameHistoryNavigation(LocalFrame*, const String&);
   void FrameClearedScheduledNavigation(LocalFrame*);
   void WillRunJavaScriptDialog();
   void DidRunJavaScriptDialog();
