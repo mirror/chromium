@@ -1143,6 +1143,8 @@ void DrawRectOp::RasterWithFlags(const DrawRectOp* op,
                                  const PaintFlags* flags,
                                  SkCanvas* canvas,
                                  const PlaybackParams& params) {
+  fprintf(stderr, "raster: %f %f %f %f %p\n", op->rect.fLeft,
+          op->rect.fRight, op->rect.fTop, op->rect.fBottom, op);
   SkPaint paint = flags->ToSkPaint();
   canvas->drawRect(op->rect, paint);
 }
@@ -1463,6 +1465,11 @@ AnnotateOp::AnnotateOp(PaintCanvas::AnnotationType annotation_type,
                        sk_sp<SkData> data)
     : annotation_type(annotation_type), rect(rect), data(std::move(data)) {}
 
+AnnotateOp::AnnotateOp(const AnnotateOp& other)
+    : annotation_type(other.annotation_type),
+      rect(other.rect),
+      data(std::move(other.data)) {}
+
 AnnotateOp::~AnnotateOp() = default;
 
 DrawImageOp::DrawImageOp(const PaintImage& image,
@@ -1506,6 +1513,9 @@ DrawRecordOp::DrawRecordOp() = default;
 DrawRecordOp::DrawRecordOp(sk_sp<const PaintRecord> record)
     : record(std::move(record)) {}
 
+DrawRecordOp::DrawRecordOp(const DrawRecordOp& other)
+    : record(std::move(other.record)) {}
+
 DrawRecordOp::~DrawRecordOp() = default;
 
 size_t DrawRecordOp::AdditionalBytesUsed() const {
@@ -1523,6 +1533,9 @@ DrawTextBlobOp::DrawTextBlobOp(sk_sp<SkTextBlob> blob,
                                SkScalar y,
                                const PaintFlags& flags)
     : PaintOpWithFlags(flags), blob(std::move(blob)), x(x), y(y) {}
+
+DrawTextBlobOp::DrawTextBlobOp(const DrawTextBlobOp& other)
+    : blob(std::move(other.blob)), x(other.x), y(other.y) {}
 
 DrawTextBlobOp::~DrawTextBlobOp() = default;
 

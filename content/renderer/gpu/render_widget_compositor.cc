@@ -588,6 +588,8 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
   settings.enable_image_animations =
       cmd.HasSwitch(switches::kEnableCompositorImageAnimations);
 
+  settings.should_squash_picture_layer = true;
+
   return settings;
 }
 
