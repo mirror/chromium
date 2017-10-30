@@ -22,6 +22,30 @@
       "revId": "036bfb338027f6b3cc4000ffe242813516555918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf1b3fa_04269823",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T16:02:18Z",
+      "side": 1,
+      "message": "Good catch. It looks like platform_view_delegate_view_ is used in only one place, for showing the context menu. Is it ok to route that to the embedder_web_contents?",
+      "parentUuid": "9f8925f1_54e06ba8",
+      "range": {
+        "startLine": 1787,
+        "startChar": 10,
+        "endLine": 1787,
+        "endChar": 42
+      },
+      "revId": "036bfb338027f6b3cc4000ffe242813516555918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
