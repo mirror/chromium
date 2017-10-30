@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b618a79_0a8de22a",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-30T23:12:07Z",
+      "side": 1,
+      "message": "When submitting this patch, our pre-submit tools saw this was formatted in a way it didn\u0027t approve of. So I just let it format.",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 1
+      },
+      "revId": "e29a7ee3b94fc1d3fac489b8f64fda47f4671d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5415c4c_28b5a1e4",
+        "filename": "third_party/zlib/contrib/tests/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-30T23:12:07Z",
+      "side": 1,
+      "message": "Some day we\u0027ll be adding unit tests in addition to the fuzzers.\nNotice, zlib asks changes to into zlib/contrib/. So I created zlib/contrib/tests/ to house it all.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 19
+      },
+      "revId": "e29a7ee3b94fc1d3fac489b8f64fda47f4671d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "560b5181_8ab7cf49",
+        "filename": "third_party/zlib/contrib/tests/zlib_uncompress_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-30T23:12:07Z",
+      "side": 1,
+      "message": "These changes were also part of the pre-submit formatting checker.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 75
+      },
+      "revId": "e29a7ee3b94fc1d3fac489b8f64fda47f4671d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
