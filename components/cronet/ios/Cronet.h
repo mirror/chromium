@@ -196,3 +196,29 @@ GRPC_SUPPORT_EXPORT
 + (void)enableTestCertVerifierForTesting;
 
 @end
+
+FOUNDATION_EXPORT GRPC_SUPPORT_EXPORT NS_AVAILABLE_IOS(10.0)
+    @interface CronetMetrics : NSURLSessionTaskTransactionMetrics
+
+                               @property(copy, readwrite) NSURLRequest* request;
+@property(copy, readwrite) NSURLResponse* response;
+
+@property(copy, readwrite) NSDate* fetchStartDate;
+@property(copy, readwrite) NSDate* domainLookupStartDate;
+@property(copy, readwrite) NSDate* domainLookupEndDate;
+@property(copy, readwrite) NSDate* connectStartDate;
+@property(copy, readwrite) NSDate* secureConnectionStartDate;
+@property(copy, readwrite) NSDate* secureConnectionEndDate;
+@property(copy, readwrite) NSDate* connectEndDate;
+@property(copy, readwrite) NSDate* requestStartDate;
+@property(copy, readwrite) NSDate* requestEndDate;
+@property(copy, readwrite) NSDate* responseStartDate;
+@property(copy, readwrite) NSDate* responseEndDate;
+
+@property(copy, readwrite) NSString* networkProtocolName;
+@property(assign, readwrite, getter=isProxyConnection) BOOL proxyConnection;
+@property(assign, readwrite, getter=isReusedConnection) BOOL reusedConnection;
+@property(assign, readwrite)
+    NSURLSessionTaskMetricsResourceFetchType resourceFetchType;
+
+@end
