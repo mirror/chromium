@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 
 @class ToolbarController;
+@protocol ToolbarSnapshotProviding;
 
 @protocol ToolbarOwner<NSObject>
 
@@ -23,6 +24,9 @@
 @optional
 // Returns the height of the toolbar owned by the implementing class.
 - (CGFloat)toolbarHeight;
+
+// Returns a snapshot provider for this toolbar.
+- (id<ToolbarSnapshotProviding>)snapshotProvider;
 
 @end
 

@@ -52,6 +52,7 @@
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller_base_feature.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller_constants.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_owner.h"
+#import "ios/chrome/browser/ui/toolbar/toolbar_snapshot_providing.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_utils.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_view_item.h"
@@ -124,6 +125,8 @@ const CGFloat kCardBottomPadding = 29.0;
 // Animation key used for the dummy toolbar background view animation.
 NSString* const kDummyToolbarBackgroundViewAnimationKey =
     @"DummyToolbarBackgroundViewAnimationKey";
+NSString* const kTransitionToolbarAnimationKey =
+    @"TransitionToolbarAnimationKey";
 }  // anonymous namespace
 
 // Container for the state associated with gesture-related events.
@@ -512,6 +515,7 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
 @synthesize transitionToolbarController = _transitionToolbarController;
 @synthesize transitionToolbarFrame = _transitionToolbarFrame;
 @synthesize transitionToolbarOwner = _transitionToolbarOwner;
+@synthesize transitionToolbarSnapshot = _transitionToolbarSnapshot;
 @synthesize transitionWasCancelled = _transitionWasCancelled;
 
 - (instancetype)initWithMainCardSet:(CardSet*)mainCardSet
@@ -1557,6 +1561,12 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   [self reverseTransitionAnimationsForCardSet:_activeCardSet];
   [self reverseTransitionAnimationsForCardSet:[self inactiveCardSet]];
   [self.transitionToolbarController reverseTransitionAnimations];
+  if (self.transitionToolbarSnapshot) {
+    ReverseAnimationsForKeyForLayers(kTransitionToolbarAnimationKey, @[
+      self.transitionToolbarSnapshot.layer,
+      self.transitionToolbarSnapshot.layer.mask
+    ]);
+  }
   // Commit the transaction.  Since the animations added for the previous
   // transition are all removed, this commit will call the previous
   // animation's completion block.
@@ -1587,8 +1597,16 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
       [card.view cleanUpAnimations];
   }
   // Clean up toolbar animations.
-  [self.transitionToolbarController.view removeFromSuperview];
-  [self.transitionToolbarOwner reparentToolbarController];
+  if (!base::FeatureList::IsEnabled(kToolbarSnapshotAnimation)) {
+    [self.transitionToolbarController.view removeFromSuperview];
+    [self.transitionToolbarOwner reparentToolbarController];
+  } else {
+    [self.transitionToolbarSnapshot removeFromSuperview];
+    RemoveAnimationForKeyFromLayers(kTransitionToolbarAnimationKey, @[
+      self.transitionToolbarSnapshot.layer,
+      self.transitionToolbarSnapshot.layer.mask
+    ]);
+  }
   [self.transitionToolbarController cleanUpTransitionAnimations];
   self.transitionToolbarController.view.animatingTransition = NO;
   [self.transitionToolbarController view].frame = self.transitionToolbarFrame;
@@ -1647,8 +1665,10 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
 
   // Get reference to toolbar for transition.
   self.transitionToolbarOwner = [_delegate tabSwitcherTransitionToolbarOwner];
-  self.transitionToolbarController =
-      [self.transitionToolbarOwner relinquishedToolbarController];
+  if (!base::FeatureList::IsEnabled(kToolbarSnapshotAnimation)) {
+    self.transitionToolbarController =
+        [self.transitionToolbarOwner relinquishedToolbarController];
+  }
   self.transitionToolbarController.view.animatingTransition = YES;
   self.transitionToolbarFrame = self.transitionToolbarController.view.frame;
 
@@ -1686,9 +1706,15 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   [self animateDummyToolbarForCardFrame:currentCardFrame
                         transitionStyle:transitionStyle];
 
-  // Animate the transition toolbar.
-  [self animateTransitionToolbarWithCardFrame:currentCardFrame
-                              transitionStyle:transitionStyle];
+  //  // Animate the transition toolbar.
+  if (base::FeatureList::IsEnabled(kToolbarSnapshotAnimation)) {
+    [self animateTransitionToolbarSnapshotWithCardFrame:currentCardFrame
+                                        transitionStyle:transitionStyle];
+
+  } else {
+    [self animateTransitionToolbarWithCardFrame:currentCardFrame
+                                transitionStyle:transitionStyle];
+  }
 
   // Update the order of the view hierarchy.
   [self reorderSubviewsForTransition];
@@ -2001,6 +2027,85 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   [self.transitionToolbarController animateTransitionWithBeginFrame:beginFrame
                                                            endFrame:endFrame
                                                     transitionStyle:style];
+}
+
+- (void)animateTransitionToolbarSnapshotWithCardFrame:(CGRect)cardFrame
+                                      transitionStyle:(StackTransitionStyle)
+                                                          transitionStyle {
+  // Add the transition toolbar and update its frame.
+  self.transitionToolbarSnapshot =
+      [[self.transitionToolbarOwner snapshotProvider] snapshotForStackView];
+  CGFloat toolbarHeight = self.transitionToolbarSnapshot.frame.size.height;
+
+  UIImage* maskImage = ImageWithColor([UIColor blackColor]);
+  CALayer* mask = [CALayer layer];
+  mask.contents = (id)[maskImage CGImage];
+  mask.frame = self.transitionToolbarSnapshot.frame;
+
+  self.transitionToolbarSnapshot.layer.mask = mask;
+  [_activeCardSet.displayView insertSubview:self.transitionToolbarSnapshot
+                               aboveSubview:_activeCardSet.currentCard.view];
+  CGRect toolbarFrame =
+      [_activeCardSet.displayView convertRect:[_toolbarController view].frame
+                                     fromView:self.view];
+  CGFloat heightDifference = toolbarFrame.size.height - toolbarHeight;
+  toolbarFrame.origin.y += heightDifference;
+  toolbarFrame.size.height -= heightDifference;
+  self.transitionToolbarSnapshot.frame = toolbarFrame;
+
+  // The toolbar should animate such that its frame interpolates between the
+  // normal toolbar frame at the top of the screen and the frame of the current
+  // card's tab view.
+  CGRect screenToolbarFrame = self.transitionToolbarSnapshot.frame;
+  CGFloat cardTabHeight = kCardImageInsets.top - kCardFrameInset;
+  CGRect cardToolbarFrame =
+      CGRectInset(cardFrame, kCardFrameInset, kCardFrameInset);
+  cardToolbarFrame.size.height = cardTabHeight;
+
+  // Add animations.
+  BOOL isPresentingStackView =
+      (transitionStyle == STACK_TRANSITION_STYLE_PRESENTING);
+  CGRect beginFrame =
+      isPresentingStackView ? screenToolbarFrame : cardToolbarFrame;
+  CGRect endFrame =
+      isPresentingStackView ? cardToolbarFrame : screenToolbarFrame;
+
+  CGRect toolbarFrameAnim =
+      CGRectMake(endFrame.origin.x,
+                 endFrame.origin.y -
+                     (screenToolbarFrame.size.height - endFrame.size.height),
+                 endFrame.size.width, screenToolbarFrame.size.height);
+
+  CAAnimation* frameAnimation = FrameAnimationMake(
+      self.transitionToolbarSnapshot.layer, beginFrame, toolbarFrameAnim);
+  frameAnimation.duration = ios::material::kDuration1;
+  frameAnimation.timingFunction = TimingFunction(ios::material::CurveEaseInOut);
+
+  CGRect toolbarMask = CGRectMake(0, 0, screenToolbarFrame.size.width,
+                                  screenToolbarFrame.size.height);
+  CGRect cardMask =
+      CGRectMake(0, screenToolbarFrame.size.height - endFrame.size.height,
+                 endFrame.size.width, endFrame.size.height);
+
+  CGRect beginMask = isPresentingStackView ? toolbarMask : cardMask;
+  CGRect endMask = isPresentingStackView ? cardMask : toolbarMask;
+  CGFloat beginOpacity = isPresentingStackView ? 1 : 0;
+  CGFloat endOpacity = isPresentingStackView ? 0 : 1;
+
+  CAAnimation* revealAnimation = FrameAnimationMake(mask, beginMask, endMask);
+  revealAnimation.duration = ios::material::kDuration1;
+  revealAnimation.timingFunction =
+      TimingFunction(ios::material::CurveEaseInOut);
+  mask.frame = endFrame;
+  [mask addAnimation:revealAnimation forKey:kTransitionToolbarAnimationKey];
+
+  CAAnimation* fadeAnimation = OpacityAnimationMake(beginOpacity, endOpacity);
+  fadeAnimation.timingFunction = TimingFunction(ios::material::CurveEaseIn);
+  fadeAnimation.duration = ios::material::kDuration6;
+
+  [self.transitionToolbarSnapshot.layer
+      addAnimation:AnimationGroupMake(@[ frameAnimation, fadeAnimation ])
+            forKey:kTransitionToolbarAnimationKey];
 }
 
 - (void)dismissWithSelectedTabAnimation {

@@ -189,6 +189,10 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kHistoryBatchUpdatesFilterName,
      flag_descriptions::kHistoryBatchUpdatesFilterDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(kHistoryBatchUpdatesFilter)},
+    {"toolbar-snapshot-animation",
+     flag_descriptions::kToolbarSnapshotAnimationName,
+     flag_descriptions::kToolbarSnapshotAnimationDescription, flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(kToolbarSnapshotAnimation)},
 };
 
 // Add all switches from experimental flags to |command_line|.

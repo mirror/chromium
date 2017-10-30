@@ -6,3 +6,6 @@
 
 const base::Feature kSafeAreaCompatibleToolbar{
     "SafeAreaCompatibleToolbar", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kToolbarSnapshotAnimation{
+    "ToolbarSnapshotAnimation", base::FEATURE_DISABLED_BY_DEFAULT};
