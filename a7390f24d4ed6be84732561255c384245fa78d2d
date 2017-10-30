@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "2251a491_c41bde34",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-10-30T18:02:49Z",
+      "side": 1,
+      "message": "Similar to Kentaro\u0027s comment, I think it\u0027s confusing that IsEnabled() concept here corresponds to IsRunning() in the monitor. And also it calls getInstance() without checking IsEnabled first even though there\u0027s a DCHECK there.",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 9
+      },
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81b0eaf_6b74ba34",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-10-30T18:02:49Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of recording the time to background renderer death?",
+      "range": {
+        "startLine": 57,
+        "startChar": 10,
+        "endLine": 57,
+        "endChar": 22
+      },
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "042340f4_54a6336d",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 3
@@ -81,6 +127,29 @@
       "writtenOn": "2017-10-30T12:08:26Z",
       "side": 1,
       "message": "Don\u0027t we need to check if we\u0027re on a foreground tab or not? Navigation may happen on a background tab.",
+      "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c94a7d_47387a2c",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-10-30T18:02:49Z",
+      "side": 1,
+      "message": "Why do we reset the subscription on near oom detection?",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 15
+      },
       "revId": "a7390f24d4ed6be84732561255c384245fa78d2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
