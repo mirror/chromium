@@ -162,6 +162,24 @@
       "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5268a6cf_a3c7366c",
+        "filename": "third_party/WebKit/Source/core/loader/WorkletScriptLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-30T09:06:48Z",
+      "side": 1,
+      "message": "Is it possible to ResourceClient::NotifyAdded(Resource*) and call ResourceOwner\u003cT\u003e::SetResource(Resource*) in it?",
+      "parentUuid": "9eb88ea8_43fe64f5",
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

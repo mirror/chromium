@@ -16,6 +16,23 @@
       "revId": "467e9b416149c2bbc023fcde8e89acfbc893c093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82ab793_b06252f2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceOwner.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-30T09:06:48Z",
+      "side": 1,
+      "message": "This can be unconditional.",
+      "revId": "467e9b416149c2bbc023fcde8e89acfbc893c093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
