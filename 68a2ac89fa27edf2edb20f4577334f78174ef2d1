@@ -46,6 +46,30 @@
       "revId": "68a2ac89fa27edf2edb20f4577334f78174ef2d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3329b0a_7de91e5c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-30T19:14:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b405d797_35f376fc",
+      "range": {
+        "startLine": 354,
+        "startChar": 2,
+        "endLine": 359,
+        "endChar": 3
+      },
+      "revId": "68a2ac89fa27edf2edb20f4577334f78174ef2d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
