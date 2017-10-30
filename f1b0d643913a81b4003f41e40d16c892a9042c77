@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cab438be_24dcca76",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-30T21:33:11Z",
+      "side": 1,
+      "message": "Can you make this a method that takes a printer and printer_restriction then returns a boolean?  This is pretty tough to read.",
+      "range": {
+        "startLine": 732,
+        "startChar": 10,
+        "endLine": 740,
+        "endChar": 20
+      },
+      "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6055dd9c_1536aaf2",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-30T21:33:11Z",
+      "side": 1,
+      "message": "This condition is expected so we shouldn\u0027t log it normally.  You can log it at VLOG(1).",
+      "range": {
+        "startLine": 741,
+        "startChar": 12,
+        "endLine": 741,
+        "endChar": 17
+      },
+      "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794fcd69_be22b641",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-30T21:33:11Z",
+      "side": 1,
+      "message": "Could this be a ResolvePrintersResponse?",
+      "range": {
+        "startLine": 191,
+        "startChar": 25,
+        "endLine": 191,
+        "endChar": 74
+      },
+      "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94a923b_df27025d",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-30T21:33:11Z",
+      "side": 1,
+      "message": "Please provide a comment detailing what this is doing.",
+      "range": {
+        "startLine": 992,
+        "startChar": 34,
+        "endLine": 992,
+        "endChar": 62
+      },
+      "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19e080b_ef72986f",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-30T21:33:11Z",
+      "side": 1,
+      "message": "nit: \u003e\u003d 3 since we\u0027re checking the third element.",
+      "range": {
+        "startLine": 1025,
+        "startChar": 10,
+        "endLine": 1025,
+        "endChar": 25
+      },
+      "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2cd7f2_2c11eb77",
+        "filename": "chromeos/printing/ppd_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-30T21:33:11Z",
+      "side": 1,
+      "message": "Would you mind making this a struct and giving the fields names?  Otherwise readers have to lookup what foo.second.second refers to.",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 113,
+        "endChar": 75
+      },
+      "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83fc0179_82486714",
+        "filename": "chromeos/printing/ppd_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-30T21:33:11Z",
+      "side": 1,
+      "message": "nit: It would be nice to test different restrictions e.g. just a max_milestone, missing unstable value etc.",
+      "range": {
+        "startLine": 134,
+        "startChar": 13,
+        "endLine": 134,
+        "endChar": 56
+      },
+      "revId": "f1b0d643913a81b4003f41e40d16c892a9042c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
