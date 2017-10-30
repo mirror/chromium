@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72c579f1_610b032e",
+        "filename": "chromeos/network/network_configuration_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-30T22:47:49Z",
+      "side": 1,
+      "message": "The constants are the same, but this should be using the shill constant; using the ONC constant here caused me some initial confusion.",
+      "revId": "76a85db546715e7ff98b7817912391c88d193d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
