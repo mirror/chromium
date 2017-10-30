@@ -19,7 +19,6 @@
 @protocol ApplicationCommands;
 @class AutofillController;
 @protocol BrowserCommands;
-@protocol IOSCaptivePortalBlockingPageDelegate;
 @class CastController;
 @class ExternalAppLauncher;
 @class FormInputAccessoryViewController;
@@ -127,8 +126,6 @@ extern NSString* const kProxyPassthroughHeaderValue;
 // Whether or not desktop user agent is used for the currently visible page.
 @property(nonatomic, readonly) BOOL usesDesktopUserAgent;
 
-@property(nonatomic, weak) id<IOSCaptivePortalBlockingPageDelegate>
-    iOSCaptivePortalBlockingPageDelegate;
 @property(nonatomic, weak) id<FullScreenControllerDelegate>
     fullScreenControllerDelegate;
 @property(nonatomic, readonly)
