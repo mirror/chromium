@@ -32,8 +32,7 @@ class MockMediaStreamVideoSink : public MediaStreamVideoSink {
     MediaStreamVideoSink::DisconnectFromTrack();
   }
 
-  void OnReadyStateChanged(
-      blink::WebMediaStreamSource::ReadyState state) override;
+  void OnSourceStateChanged(blink::WebMediaStreamSource::State state) override;
   void OnEnabledChanged(bool enabled) override;
 
   // Triggered when OnVideoFrame(const scoped_refptr<media::VideoFrame>& frame)
@@ -48,7 +47,7 @@ class MockMediaStreamVideoSink : public MediaStreamVideoSink {
   scoped_refptr<media::VideoFrame> last_frame() const { return last_frame_; };
 
   bool enabled() const { return enabled_; }
-  blink::WebMediaStreamSource::ReadyState state() const { return state_; }
+  blink::WebMediaStreamSource::State state() const { return state_; }
 
  private:
   void DeliverVideoFrame(const scoped_refptr<media::VideoFrame>& frame,
@@ -57,7 +56,7 @@ class MockMediaStreamVideoSink : public MediaStreamVideoSink {
   int number_of_frames_;
   bool enabled_;
   media::VideoPixelFormat format_;
-  blink::WebMediaStreamSource::ReadyState state_;
+  blink::WebMediaStreamSource::State state_;
   gfx::Size frame_size_;
   scoped_refptr<media::VideoFrame> last_frame_;
   base::WeakPtrFactory<MockMediaStreamVideoSink> weak_factory_;
