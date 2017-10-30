@@ -137,6 +137,8 @@ static_library("protocol") {
     "pseudotcp_adapter.h",
     "pseudotcp_channel_factory.cc",
     "pseudotcp_channel_factory.h",
+    "reliable_bandwidth_estimator.cc",
+    "reliable_bandwidth_estimator.h",
     "rejecting_authenticator.cc",
     "rejecting_authenticator.h",
     "sdp_message.cc",
