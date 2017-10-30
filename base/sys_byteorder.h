@@ -11,9 +11,9 @@
 #ifndef BASE_SYS_BYTEORDER_H_
 #define BASE_SYS_BYTEORDER_H_
 
+#include <assert.h>
 #include <stdint.h>
 
-#include "base/logging.h"
 #include "build/build_config.h"
 
 #if defined(COMPILER_MSVC)
@@ -58,7 +58,7 @@ inline uintptr_t ByteSwapUintPtrT(uintptr_t x) {
   } else if (sizeof(uintptr_t) == 8) {
     return ByteSwap(static_cast<uint64_t>(x));
   } else {
-    NOTREACHED();
+    assert(false);
   }
 }
 
