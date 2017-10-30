@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59fc1a7f_0c3457f0",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-30T20:23:29Z",
+      "side": 1,
+      "message": "Sorry, this is far too magical.  No zero ref count raw new auto deletions, please.\n\nCan this just be on the stack in its own scope?",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809a19a6_eb82967b",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-30T20:23:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand all this take/create + cache/delete stuff.  It seems a little awkward to my eyes? It seems like it\u0027d be clearer to just have a CacheEntry to pass around which is either in the cache_ or just on the stack temporarily, and then you could create Optional scalers and converters on that cache entry as needed instead of needing to check for_source in all these helpers and they\u0027d all behave more consistently.\n\nThis is just a drive by function design side-eye.  Feel free to ignore this comment, as I don\u0027t think this patch makes this any different than what\u0027s been there beforehand.",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
