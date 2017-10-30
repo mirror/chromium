@@ -16,6 +16,24 @@
       "revId": "d47847350e7f85f04b49bee4fe00d2b19a7835f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d507a2c_78af786a",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_unittest_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-10-30T19:39:48Z",
+      "side": 1,
+      "message": "Done.  Not sure what\u0027s wrong with the diff though, the file looks fine locally but gerrit can\u0027t seem to format it well.",
+      "parentUuid": "aff16173_6e808a0a",
+      "revId": "d47847350e7f85f04b49bee4fe00d2b19a7835f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
