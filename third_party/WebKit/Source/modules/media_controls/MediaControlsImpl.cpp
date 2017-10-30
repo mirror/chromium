@@ -1306,7 +1306,7 @@ void MediaControlsImpl::PositionPopupMenu(Element* popup_menu) {
   DCHECK(GetDocument().domWindow());
   DCHECK(GetDocument().domWindow()->visualViewport());
 
-  DOMRect* bounding_client_rect = MediaElement().getBoundingClientRect();
+  DOMRect* bounding_client_rect = overflow_menu_->getBoundingClientRect();
   DOMVisualViewport* viewport = GetDocument().domWindow()->visualViewport();
 
   WTF::String bottom_str_value = WTF::String::Number(
