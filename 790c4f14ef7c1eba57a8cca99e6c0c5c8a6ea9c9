@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22b4f592_92414af4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnercustomizations/PartnerBrowserCustomizations.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-30T22:13:29Z",
+      "side": 1,
+      "message": "I was thinking that it might be easier to write tests if we pass ContentResolver this way. With roboelectric, we might not need to do that. Will do.",
+      "parentUuid": "342ba8fd_b2646615",
+      "range": {
+        "startLine": 64,
+        "startChar": 34,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "790c4f14ef7c1eba57a8cca99e6c0c5c8a6ea9c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "badfa01c_60549bdf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnercustomizations/PartnerBrowserCustomizations.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-30T20:23:31Z",
       "side": 1,
       "message": "should we move this to the provider as well?  Seems like it would be good to be consistent.",
+      "range": {
+        "startLine": 181,
+        "startChar": 42,
+        "endLine": 181,
+        "endChar": 77
+      },
+      "revId": "790c4f14ef7c1eba57a8cca99e6c0c5c8a6ea9c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abaae252_6873ffeb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnercustomizations/PartnerBrowserCustomizations.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-30T22:13:29Z",
+      "side": 1,
+      "message": "Will do. There\u0027s no downstream counterpart for this feature though.",
+      "parentUuid": "badfa01c_60549bdf",
       "range": {
         "startLine": 181,
         "startChar": 42,
