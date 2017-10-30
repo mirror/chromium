@@ -101,6 +101,40 @@
       "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e9b269_f8900404",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-30T13:45:43Z",
+      "side": 1,
+      "message": "The test interfaces should probably be in a separate mojom file guarded by DEPS so it can\u0027t be included outside of where it\u0027s implemented and then tests.",
+      "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a659977_72b766da",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-30T13:45:43Z",
+      "side": 1,
+      "message": "OnFirstSurfaceActivation() isn\u0027t necessarily the right signal, receiving a CompositorFrame doesn\u0027t mean the Surface will activate. You might (also?) want something like OnCompositorFrameReceived(SurfaceId) to match the existing content_unittests expectations?",
+      "revId": "9f21e848f02ea55f5118e31ad31e622cd00ad0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
