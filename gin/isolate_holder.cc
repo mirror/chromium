@@ -68,6 +68,8 @@ IsolateHolder::IsolateHolder(
       params.snapshot_blob = startup_data;
     }
   }
+  LOG(ERROR) << "Startup data: " << (void*)startup_data;
+  LOG(ERROR) << "blob: " << (void*)(params.snapshot_blob);
   isolate_ = v8::Isolate::New(params);
 
   SetUp(std::move(task_runner));

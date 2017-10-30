@@ -208,10 +208,7 @@ template("generate_mini_installer") {
     }
 
     if (v8_use_external_startup_data) {
-      inputs += [
-        "$root_out_dir/natives_blob.bin",
-        "$root_out_dir/snapshot_blob.bin",
-      ]
+      inputs += [ "$root_out_dir/natives_blob.bin" ]
       deps += [ "//v8" ]
     }
 
