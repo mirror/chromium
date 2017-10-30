@@ -125,6 +125,7 @@ interface CoreProbes {
   void frameScheduledNavigation([Keep] LocalFrame*, ScheduledNavigation*);
   void frameClearedScheduledNavigation([Keep] LocalFrame*);
   void frameScheduledClientNavigation([Keep] LocalFrame*);
+  void frameHistoryNavigation([Keep] LocalFrame*, const String& targetUrl);
   void frameClearedScheduledClientNavigation([Keep] LocalFrame*);
   void didStartWorker(ExecutionContext*, WorkerInspectorProxy* proxy, bool waitingForDebugger);
   void workerTerminated(ExecutionContext*, WorkerInspectorProxy* proxy);
