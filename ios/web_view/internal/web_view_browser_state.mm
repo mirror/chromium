@@ -81,6 +81,10 @@ WebViewBrowserState::WebViewBrowserState(bool off_the_record)
 WebViewBrowserState::~WebViewBrowserState() {
   BrowserStateDependencyManager::GetInstance()->DestroyBrowserStateServices(
       this);
+
+  ActiveStateManager* active_state_manager =
+      ActiveStateManager::FromBrowserState(this);
+  active_state_manager->SetActive(false);
 }
 
 PrefService* WebViewBrowserState::GetPrefs() {
