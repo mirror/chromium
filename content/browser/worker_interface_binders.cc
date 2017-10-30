@@ -7,8 +7,11 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "content/browser/payments/payment_manager.h"
 #include "content/browser/permissions/permission_service_context.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
+#include "content/browser/storage_partition_impl.h"
+#include "content/browser/websockets/websocket_manager.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
@@ -76,6 +79,19 @@ void WorkerInterfaceBinders::InitializeParameterizedBinderRegistry() {
                  shape_detection::mojom::kServiceName));
   parameterized_binder_registry_.AddInterface(
       base::Bind(&PermissionServiceContext::CreateServiceForWorker));
+  parameterized_binder_registry_.AddInterface(
+      base::Bind([](blink::mojom::WebSocketRequest request,
+                    RenderProcessHost* host, const url::Origin& origin) {
+        WebSocketManager::CreateWebSocket(host->GetID(), MSG_ROUTING_NONE,
+                                          std::move(request));
+      }));
+  parameterized_binder_registry_.AddInterface(
+      base::Bind([](payments::mojom::PaymentManagerRequest request,
+                    RenderProcessHost* host, const url::Origin& origin) {
+        static_cast<StoragePartitionImpl*>(host->GetStoragePartition())
+            ->GetPaymentAppContext()
+            ->CreatePaymentManager(std::move(request));
+      }));
 }
 
 }  // namespace
