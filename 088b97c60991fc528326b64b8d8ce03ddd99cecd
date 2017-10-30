@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "34d45887_88a56115",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-30T15:30:54Z",
+      "side": 1,
+      "message": "Rename the end from BySections to InSection\n\nThis doesn\u0027t look like it needs to be a member. Maybe move if to the anonymous namespace in the .cc file?",
+      "revId": "088b97c60991fc528326b64b8d8ce03ddd99cecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbabd9ec_17103603",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-30T15:30:54Z",
+      "side": 1,
+      "message": "Take non-const object by pointer, not ref (coding convention).",
+      "revId": "088b97c60991fc528326b64b8d8ce03ddd99cecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd00d970_02937d2a",
         "filename": "components/autofill/core/browser/form_structure_unittest.cc",
         "patchSetId": 1
