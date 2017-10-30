@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25b241dc_2e17371a",
+        "filename": "tools/cygprofile/section_to_symbol_orderfile.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-30T12:55:30Z",
+      "side": 1,
+      "message": "This will not work with GCC. GCC inserts suffixes, so for function \u0027foo\u0027 there may potentially be additional symbols like: foo.isra.12.constprop.34 with \u0027magic parts\u0027 of foo. I don\u0027t think we will ever switch to GCC, using it just as an illustration of how brittle it is to rely on not seeing \u0027.\u0027 in symbols.\n\nTwo options I can see:\n\n1. [less work, more slow] tweak _ExpandSection in patch_orderfile.py and produce/upload/verify two orderfiles in orderfile_generator.\n\n2. [more work? maybe later?] If we are worried about this extra unnecessary uploading (the func names are more compact than section names - because of these suffixes), then we can make the new func orderfile authoritative, and expand it in runhooks to the full orderfile, we\u0027d factor out and reuse patch_orderfile._PREFIXES presumably.\n\nI\u0027d vote for (1) in short term ..",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "7c17a377a38a280d3387efd77db2e4a0224f8d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
