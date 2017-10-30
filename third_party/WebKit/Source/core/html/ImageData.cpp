@@ -241,9 +241,6 @@ ImageData* ImageData::Create(const IntSize& size,
                              ImageDataStorageFormat storage_format) {
   ImageDataColorSettings color_settings;
   switch (color_space) {
-    case kLegacyCanvasColorSpace:
-      color_settings.setColorSpace(kLegacyCanvasColorSpaceName);
-      break;
     case kSRGBCanvasColorSpace:
       color_settings.setColorSpace(kSRGBCanvasColorSpaceName);
       break;
@@ -497,8 +494,6 @@ DOMUint8ClampedArray* ImageData::data() {
 
 CanvasColorSpace ImageData::GetCanvasColorSpace(
     const String& color_space_name) {
-  if (color_space_name == kLegacyCanvasColorSpaceName)
-    return kLegacyCanvasColorSpace;
   if (color_space_name == kSRGBCanvasColorSpaceName)
     return kSRGBCanvasColorSpace;
   if (color_space_name == kRec2020CanvasColorSpaceName)
