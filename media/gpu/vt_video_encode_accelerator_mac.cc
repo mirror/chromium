@@ -162,7 +162,7 @@ bool VTVideoEncodeAccelerator::Initialize(VideoPixelFormat format,
   return true;
 }
 
-void VTVideoEncodeAccelerator::Encode(const scoped_refptr<VideoFrame>& frame,
+void VTVideoEncodeAccelerator::Encode(scoped_refptr<VideoFrame> frame,
                                       bool force_keyframe) {
   DVLOG(3) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -234,7 +234,7 @@ void VTVideoEncodeAccelerator::Destroy() {
 }
 
 void VTVideoEncodeAccelerator::EncodeTask(
-    const scoped_refptr<VideoFrame>& frame,
+    scoped_refptr<VideoFrame> frame,
     bool force_keyframe) {
   DCHECK(encoder_thread_task_runner_->BelongsToCurrentThread());
   DCHECK(compression_session_);

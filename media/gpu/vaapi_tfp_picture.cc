@@ -16,7 +16,7 @@
 namespace media {
 
 VaapiTFPPicture::VaapiTFPPicture(
-    const scoped_refptr<VaapiWrapper>& vaapi_wrapper,
+    scoped_refptr<VaapiWrapper> vaapi_wrapper,
     const MakeGLContextCurrentCallback& make_context_current_cb,
     const BindGLImageCallback& bind_image_cb,
     int32_t picture_buffer_id,
@@ -97,7 +97,7 @@ bool VaapiTFPPicture::ImportGpuMemoryBufferHandle(
 }
 
 bool VaapiTFPPicture::DownloadFromSurface(
-    const scoped_refptr<VASurface>& va_surface) {
+    scoped_refptr<VASurface> va_surface) {
   return vaapi_wrapper_->PutSurfaceIntoPixmap(va_surface->id(), x_pixmap_,
                                               va_surface->size());
 }

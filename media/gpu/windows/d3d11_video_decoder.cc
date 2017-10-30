@@ -94,7 +94,7 @@ void D3D11VideoDecoder::Initialize(const VideoDecoderConfig& config,
           BindToCurrentThreadIfWeakPtr(weak_factory_.GetWeakPtr(), output_cb)));
 }
 
-void D3D11VideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
+void D3D11VideoDecoder::Decode(scoped_refptr<DecoderBuffer> buffer,
                                const DecodeCB& decode_cb) {
   impl_task_runner_->PostTask(
       FROM_HERE, base::BindOnce(&VideoDecoder::Decode, impl_weak_, buffer,
@@ -127,7 +127,7 @@ int D3D11VideoDecoder::GetMaxDecodeRequests() const {
 void D3D11VideoDecoder::OutputWithThreadHoppingRelease(
     OutputWithReleaseMailboxCB output_cb,
     VideoFrame::ReleaseMailboxCB impl_thread_cb,
-    const scoped_refptr<VideoFrame>& video_frame) {
+    scoped_refptr<VideoFrame> video_frame) {
   // Called on our thread to output a video frame.  Modify the release cb so
   // that it jumps back to the impl thread.
   output_cb.Run(

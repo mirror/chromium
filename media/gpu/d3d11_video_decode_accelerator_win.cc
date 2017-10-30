@@ -234,7 +234,7 @@ void D3D11VideoDecodeAccelerator::Destroy() {}
 
 bool D3D11VideoDecodeAccelerator::TryToSetupDecodeOnSeparateThread(
     const base::WeakPtr<Client>& decode_client,
-    const scoped_refptr<base::SingleThreadTaskRunner>& decode_task_runner) {
+    scoped_refptr<base::SingleThreadTaskRunner> decode_task_runner) {
   return false;
 }
 

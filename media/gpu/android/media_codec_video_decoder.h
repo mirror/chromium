@@ -71,7 +71,7 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
                   CdmContext* cdm_context,
                   const InitCB& init_cb,
                   const OutputCB& output_cb) override;
-  void Decode(const scoped_refptr<DecoderBuffer>& buffer,
+  void Decode(scoped_refptr<DecoderBuffer> buffer,
               const DecodeCB& decode_cb) override;
   void Reset(const base::Closure& closure) override;
   bool NeedsBitstreamConversion() const override;
@@ -158,7 +158,7 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   // |reset_generation_|.
   void ForwardVideoFrame(int reset_generation,
                          VideoFrameFactory::ReleaseMailboxCB release_cb,
-                         const scoped_refptr<VideoFrame>& frame);
+                         scoped_refptr<VideoFrame> frame);
 
   // Starts draining the codec by queuing an EOS if required. It skips the drain
   // if possible.

@@ -261,7 +261,7 @@ class MEDIA_GPU_EXPORT AVDACodecAllocator {
   // Task runner on which we do all our work.  All members should be accessed
   // only from this task runner.  |task_runner_| itself may be referenced from
   // any thread (hence const).
-  const scoped_refptr<base::SequencedTaskRunner> task_runner_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   // All registered AVDAs.
   std::set<AVDACodecAllocatorClient*> clients_;

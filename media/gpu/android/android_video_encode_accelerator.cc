@@ -235,7 +235,7 @@ void AndroidVideoEncodeAccelerator::MaybeStopIOTimer() {
 }
 
 void AndroidVideoEncodeAccelerator::Encode(
-    const scoped_refptr<VideoFrame>& frame,
+    scoped_refptr<VideoFrame> frame,
     bool force_keyframe) {
   DVLOG(3) << __PRETTY_FUNCTION__ << ": " << force_keyframe;
   DCHECK(thread_checker_.CalledOnValidThread());

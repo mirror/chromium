@@ -44,7 +44,7 @@ class VideoEncoderShim : public media::VideoEncodeAccelerator {
                   media::VideoCodecProfile output_profile,
                   uint32_t initial_bitrate,
                   media::VideoEncodeAccelerator::Client* client) override;
-  void Encode(const scoped_refptr<media::VideoFrame>& frame,
+  void Encode(scoped_refptr<media::VideoFrame> frame,
               bool force_keyframe) override;
   void UseOutputBitstreamBuffer(const media::BitstreamBuffer& buffer) override;
   void RequestEncodingParametersChange(uint32_t bitrate,

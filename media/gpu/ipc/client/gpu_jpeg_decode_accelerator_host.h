@@ -38,7 +38,7 @@ class GpuJpegDecodeAcceleratorHost : public JpegDecodeAccelerator {
   GpuJpegDecodeAcceleratorHost(
       scoped_refptr<gpu::GpuChannelHost> channel,
       int32_t route_id,
-      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner);
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
   ~GpuJpegDecodeAcceleratorHost() override;
 
   // JpegDecodeAccelerator implementation.
@@ -47,7 +47,7 @@ class GpuJpegDecodeAcceleratorHost : public JpegDecodeAccelerator {
   bool Initialize(Client* client) override;
   void InitializeAsync(Client* client, InitCB init_cb) override;
   void Decode(const BitstreamBuffer& bitstream_buffer,
-              const scoped_refptr<VideoFrame>& video_frame) override;
+              scoped_refptr<VideoFrame> video_frame) override;
   bool IsSupported() override;
 
   base::WeakPtr<IPC::Listener> GetReceiver();

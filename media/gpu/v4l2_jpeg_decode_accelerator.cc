@@ -136,8 +136,8 @@ V4L2JpegDecodeAccelerator::JobRecord::JobRecord(
 V4L2JpegDecodeAccelerator::JobRecord::~JobRecord() {}
 
 V4L2JpegDecodeAccelerator::V4L2JpegDecodeAccelerator(
-    const scoped_refptr<V4L2Device>& device,
-    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
+    scoped_refptr<V4L2Device> device,
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
     : output_buffer_pixelformat_(0),
       output_buffer_num_planes_(0),
       child_task_runner_(base::ThreadTaskRunnerHandle::Get()),
@@ -247,7 +247,7 @@ bool V4L2JpegDecodeAccelerator::Initialize(Client* client) {
 
 void V4L2JpegDecodeAccelerator::Decode(
     const BitstreamBuffer& bitstream_buffer,
-    const scoped_refptr<VideoFrame>& video_frame) {
+    scoped_refptr<VideoFrame> video_frame) {
   DVLOG(1) << "Decode(): input_id=" << bitstream_buffer.id()
            << ", size=" << bitstream_buffer.size();
   DCHECK(io_task_runner_->BelongsToCurrentThread());
@@ -672,7 +672,7 @@ void V4L2JpegDecodeAccelerator::EnqueueOutput() {
 
 bool V4L2JpegDecodeAccelerator::ConvertOutputImage(
     const BufferRecord& output_buffer,
-    const scoped_refptr<VideoFrame>& dst_frame) {
+    scoped_refptr<VideoFrame> dst_frame) {
   uint8_t* dst_y = dst_frame->data(VideoFrame::kYPlane);
   uint8_t* dst_u = dst_frame->data(VideoFrame::kUPlane);
   uint8_t* dst_v = dst_frame->data(VideoFrame::kVPlane);

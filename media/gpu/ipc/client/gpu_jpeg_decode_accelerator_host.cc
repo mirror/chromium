@@ -27,7 +27,7 @@ namespace media {
 class GpuJpegDecodeAcceleratorHost::Receiver : public IPC::Listener {
  public:
   Receiver(Client* client,
-           const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
+           scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
       : client_(client),
         io_task_runner_(io_task_runner),
         weak_factory_for_io_(
@@ -107,7 +107,7 @@ class GpuJpegDecodeAcceleratorHost::Receiver : public IPC::Listener {
 GpuJpegDecodeAcceleratorHost::GpuJpegDecodeAcceleratorHost(
     scoped_refptr<gpu::GpuChannelHost> channel,
     int32_t route_id,
-    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
     : channel_(std::move(channel)),
       decoder_route_id_(route_id),
       io_task_runner_(io_task_runner) {
@@ -164,7 +164,7 @@ void GpuJpegDecodeAcceleratorHost::InitializeAsync(Client* client,
 
 void GpuJpegDecodeAcceleratorHost::Decode(
     const BitstreamBuffer& bitstream_buffer,
-    const scoped_refptr<VideoFrame>& video_frame) {
+    scoped_refptr<VideoFrame> video_frame) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   DCHECK(

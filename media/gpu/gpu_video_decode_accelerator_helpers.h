@@ -44,7 +44,7 @@ using MakeGLContextCurrentCallback = base::Callback<bool(void)>;
 using BindGLImageCallback =
     base::Callback<bool(uint32_t client_texture_id,
                         uint32_t texture_target,
-                        const scoped_refptr<gl::GLImage>& image,
+                        scoped_refptr<gl::GLImage> image,
                         bool can_bind_to_sampler)>;
 
 // Return a WeakPtr to a GLES2Decoder, if one is available.

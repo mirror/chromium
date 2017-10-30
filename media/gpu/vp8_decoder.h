@@ -45,11 +45,11 @@ class MEDIA_GPU_EXPORT VP8Decoder : public AcceleratedVideoDecoder {
     // |golden_frame| and |alt_frame| as references, as per VP8 specification.
     // Note that this runs the decode in hardware.
     // Return true if successful.
-    virtual bool SubmitDecode(const scoped_refptr<VP8Picture>& pic,
+    virtual bool SubmitDecode(scoped_refptr<VP8Picture> pic,
                               const Vp8FrameHeader* frame_hdr,
-                              const scoped_refptr<VP8Picture>& last_frame,
-                              const scoped_refptr<VP8Picture>& golden_frame,
-                              const scoped_refptr<VP8Picture>& alt_frame) = 0;
+                              scoped_refptr<VP8Picture> last_frame,
+                              scoped_refptr<VP8Picture> golden_frame,
+                              scoped_refptr<VP8Picture> alt_frame) = 0;
 
     // Schedule output (display) of |pic|. Note that returning from this
     // method does not mean that |pic| has already been outputted (displayed),
@@ -57,7 +57,7 @@ class MEDIA_GPU_EXPORT VP8Decoder : public AcceleratedVideoDecoder {
     // as this method was called for them. Decoder may drop its reference
     // to |pic| after calling this method.
     // Return true if successful.
-    virtual bool OutputPicture(const scoped_refptr<VP8Picture>& pic) = 0;
+    virtual bool OutputPicture(scoped_refptr<VP8Picture> pic) = 0;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(VP8Accelerator);

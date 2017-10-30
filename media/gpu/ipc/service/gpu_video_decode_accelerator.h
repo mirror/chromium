@@ -45,7 +45,7 @@ class GpuVideoDecodeAccelerator
   GpuVideoDecodeAccelerator(
       int32_t host_route_id,
       gpu::GpuCommandBufferStub* stub,
-      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
       const AndroidOverlayMojoFactoryCB& factory);
 
   // Static query for the capabilities, which includes the supported profiles.
@@ -151,10 +151,10 @@ class GpuVideoDecodeAccelerator
   base::WaitableEvent filter_removed_;
 
   // GPU child thread task runner.
-  const scoped_refptr<base::SingleThreadTaskRunner> child_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> child_task_runner_;
 
   // GPU IO thread task runner.
-  const scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
   // Optional factory for mojo-based android overlays.
   AndroidOverlayMojoFactoryCB overlay_factory_cb_;

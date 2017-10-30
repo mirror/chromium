@@ -12,7 +12,7 @@
 namespace media {
 
 FakeJpegDecodeAccelerator::FakeJpegDecodeAccelerator(
-    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
     : client_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       io_task_runner_(std::move(io_task_runner)),
       decoder_thread_("FakeJpegDecoderThread"),
@@ -38,7 +38,7 @@ bool FakeJpegDecodeAccelerator::Initialize(
 
 void FakeJpegDecodeAccelerator::Decode(
     const BitstreamBuffer& bitstream_buffer,
-    const scoped_refptr<VideoFrame>& video_frame) {
+    scoped_refptr<VideoFrame> video_frame) {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
 
   // SharedMemoryRegion will take over the |bitstream_buffer.handle()|.
@@ -59,7 +59,7 @@ void FakeJpegDecodeAccelerator::Decode(
 
 void FakeJpegDecodeAccelerator::DecodeOnDecoderThread(
     const BitstreamBuffer& bitstream_buffer,
-    const scoped_refptr<VideoFrame>& video_frame,
+    scoped_refptr<VideoFrame> video_frame,
     std::unique_ptr<SharedMemoryRegion> src_shm) {
   DCHECK(decoder_task_runner_->BelongsToCurrentThread());
 

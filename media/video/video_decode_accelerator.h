@@ -356,7 +356,7 @@ class MEDIA_EXPORT VideoDecodeAccelerator {
   // offloads the GPU Child thread.
   virtual bool TryToSetupDecodeOnSeparateThread(
       const base::WeakPtr<Client>& decode_client,
-      const scoped_refptr<base::SingleThreadTaskRunner>& decode_task_runner);
+      scoped_refptr<base::SingleThreadTaskRunner> decode_task_runner);
 
   // Windows creates a BGRA texture.
   // TODO(dshwang): after moving to D3D11, remove this. crbug.com/438691
