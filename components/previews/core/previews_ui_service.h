@@ -47,7 +47,8 @@ class PreviewsUIService {
   void AddPreviewNavigation(const GURL& url, PreviewsType type, bool opt_out);
 
   // Clears the history of the black list between |begin_time| and |end_time|.
-  void ClearBlackList(base::Time begin_time, base::Time end_time);
+  // Virtualized in testing.
+  virtual void ClearBlackList(base::Time begin_time, base::Time end_time);
 
   // Notifies |logger_| that |host| has been blacklisted at |time|. Virtualized
   // in testing.

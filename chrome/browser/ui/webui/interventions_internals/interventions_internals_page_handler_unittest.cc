@@ -157,13 +157,25 @@ class TestPreviewsUIService : public previews::PreviewsUIService {
   void SetIgnorePreviewsBlacklistDecision(bool ignored) override {
     blacklist_ignored_ = ignored;
   }
+  void ClearBlackList(base::Time begin, base::Time end) override {
+    clear_begin_time_ = begin;
+    clear_end_time_ = end;
+  }
 
   // Exposed blacklist ignored state.
   bool blacklist_ignored() const { return blacklist_ignored_; }
 
+  // Exposed blacklist clear time interval.
+  base::Time clear_begin_time() const { return clear_begin_time_; }
+  base::Time clear_end_time() const { return clear_end_time_; }
+
  private:
   // Whether the blacklist decisions are ignored or not.
   bool blacklist_ignored_;
+
+  // The begin and end time of blacklist cleared.
+  base::Time clear_begin_time_;
+  base::Time clear_end_time_;
 };
 
 class InterventionsInternalsPageHandlerTest : public testing::Test {
@@ -389,6 +401,15 @@ TEST_F(InterventionsInternalsPageHandlerTest,
   page_handler_->OnIgnoreBlacklistDecisionStatusChanged(false /* ignored */);
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(page_->blacklist_ignored());
+}
+
+TEST_F(InterventionsInternalsPageHandlerTest,
+       ClearBlacklistRemovesEverythingSinceEpoch) {
+  base::Time now = base::Time::Now();
+  page_handler_->ClearBlacklist();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(base::Time::UnixEpoch(), previews_ui_service_->clear_begin_time());
+  EXPECT_LE(now, previews_ui_service_->clear_end_time());
 }
 
 }  // namespace

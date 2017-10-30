@@ -35,6 +35,11 @@ interface InterventionsInternalsPageHandler {
   // Inject the client side page object.
   SetClientPage(InterventionsInternalsPage page);
 
+  // Clear all blacklisted hosts in the SQLite database. This method is called
+  // by the Javascript side of the mojo pipeline when the user click the "Clear
+  // Blacklist" button.
+  ClearBlacklist();
+
   // Change the status of ignoring blacklist to |ignored|. |ignored| will
   // indicate whether the blacklist decision would be ignored when deciding if a
   // preview should be shown or not.

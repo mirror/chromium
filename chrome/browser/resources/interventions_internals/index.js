@@ -240,12 +240,18 @@ cr.define('interventions_internals', () => {
     pageHandler = handler;
     getPreviewsEnabled();
 
+    // Initialize 'Ignore Blacklist' button.
     let ignoreButton = $('ignore-blacklist-button');
     ignoreButton.addEventListener('click', () => {
       // Whether the blacklist is currently ignored.
       let ignored = (ignoreButton.textContent == ENABLE_BLACKLIST_BUTTON);
       // Try to reverse the ignore status.
       pageHandler.setIgnorePreviewsBlacklistDecision(!ignored);
+    });
+
+    // Initialize 'Clear Blacklist' button.
+    $('clear-blacklist-button').addEventListener('click', () => {
+      pageHandler.clearBlacklist();
     });
   }
 

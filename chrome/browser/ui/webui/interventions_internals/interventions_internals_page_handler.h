@@ -35,6 +35,7 @@ class InterventionsInternalsPageHandler
   // previews::PreviewsLoggerObserver:
   void OnNewMessageLogAdded(
       const previews::PreviewsLogger::MessageLog& message) override;
+  void ClearBlacklist() override;
   void OnNewBlacklistedHost(const std::string& host, base::Time time) override;
   void OnUserBlacklistedStatusChange(bool blacklisted) override;
   void OnBlacklistCleared(base::Time time) override;

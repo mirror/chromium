@@ -6,6 +6,7 @@
 
 #include <unordered_map>
 
+#include "base/time/time.h"
 #include "components/previews/core/previews_experiments.h"
 
 namespace {
@@ -82,6 +83,11 @@ void InterventionsInternalsPageHandler::OnNewBlacklistedHost(
     const std::string& host,
     base::Time time) {
   page_->OnBlacklistedHost(host, time.ToJavaTime());
+}
+
+void InterventionsInternalsPageHandler::ClearBlacklist() {
+  previews_ui_service_->ClearBlackList(base::Time::UnixEpoch(),
+                                       base::Time::Now());
 }
 
 void InterventionsInternalsPageHandler::OnUserBlacklistedStatusChange(
