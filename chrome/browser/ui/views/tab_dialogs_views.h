@@ -8,6 +8,8 @@
 #include "base/macros.h"
 #include "chrome/browser/ui/tab_dialogs.h"
 
+class LocationBarBubbleDelegateView;
+
 // Views implementation of TabDialogs interface.
 class TabDialogsViews : public TabDialogs {
  public:
@@ -30,7 +32,9 @@ class TabDialogsViews : public TabDialogs {
 
  private:
   content::WebContents* web_contents_;  // Weak. Owns this.
-
+  // Handle to manage-passwords bubble, used to make sure that we close the
+  // correct dialog when hiding.
+  LocationBarBubbleDelegateView* manage_passwords_bubble_ = nullptr;
   DISALLOW_COPY_AND_ASSIGN(TabDialogsViews);
 };
 
