@@ -377,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "72ca34d7_a321249c",
+        "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-30T21:24:47Z",
+      "side": 1,
+      "message": "Thank you for sticking to code comments and not trying to explain here. Now I think I understand almost everything. Still have one question however, which I asked in the comments.",
+      "parentUuid": "58cc61a2_b0526580",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "57374e54f94eb59300dfda9c81eeefca524c86c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0ec4b1c_143fef70",
         "filename": "ios/chrome/browser/ui/webui/interstitials/interstitial_ui.mm",
         "patchSetId": 2
