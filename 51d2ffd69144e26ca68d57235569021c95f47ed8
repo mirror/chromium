@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca9028eb_a9ca120d",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-30T21:56:41Z",
+      "side": 1,
+      "message": "Lets keep the pattern this file is following.",
+      "parentUuid": "6e8cfa02_dd89fa90",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be30e446_718e52b4",
         "filename": "chrome/browser/chromeos/display/display_preferences.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55174b6_42986ecf",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-30T21:56:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be30e446_718e52b4",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "096cd97c_7a6ec5bf",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-30T21:56:41Z",
+      "side": 1,
+      "message": "I will add step by step comments to make it more understandable.",
+      "parentUuid": "84b11a79_a2f5a6a1",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e9cadc1_b729e0b2",
         "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ca1844_c774b281",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-30T21:56:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3e9cadc1_b729e0b2",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "b3707360_9443753e",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-30T21:56:41Z",
+      "side": 1,
+      "message": "Its quite long due to its namespace\nstd::pair\u003cdisplay::TouchDeviceIdentifier, display::TouchDeviceManager::TouchAssociationMap\u003e\nAdding comments so readers can easily map the values while also keeping the code short and clean.",
+      "parentUuid": "f0458418_452c8b68",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 17
+      },
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "652aaf85_53923467",
         "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
         "patchSetId": 5
@@ -107,6 +203,24 @@
       "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43995315_2f045d43",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-30T21:56:41Z",
+      "side": 1,
+      "message": "ditto\n\nconst display::TouchDeviceManager::TouchAssociationMap\u0026",
+      "parentUuid": "652aaf85_53923467",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "5503498d_cce6b51a",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-30T21:56:41Z",
+      "side": 1,
+      "message": "emplace() is now preferred when adding new values to a map. I am not sure if this was because of efficiency.",
+      "parentUuid": "eb690ecd_50a339d8",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c80b76b2_68a342bc",
         "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
         "patchSetId": 5
@@ -141,6 +273,24 @@
       "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18fe920_d0360d78",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-30T21:56:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c80b76b2_68a342bc",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "78c240ad_27fef2ae",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-30T21:56:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "980d7100_5cc8c645",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c1396c1_009e1a2d",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 5
@@ -175,6 +343,24 @@
       "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd17960_a16c7d26",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-30T21:56:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c1396c1_009e1a2d",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "f64373c2_18dbd4a4",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-30T21:56:41Z",
+      "side": 1,
+      "message": "No. I thought of defining a \u0027using\u0027 but keeping it to only migration for now.",
+      "parentUuid": "04885d37_93127009",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f8ab27b_7e0acf51",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 5
@@ -209,6 +413,24 @@
       "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f2e7cab_28765bdb",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-30T21:56:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f8ab27b_7e0acf51",
+      "revId": "51d2ffd69144e26ca68d57235569021c95f47ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
