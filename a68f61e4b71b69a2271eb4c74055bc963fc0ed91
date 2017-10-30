@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb1d872a_cd291cc7",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-10-30T19:13:17Z",
+      "side": 1,
+      "message": "nit: Can you move this comment right before SCREEN_LOCKED so that it\u0027s easier to see?",
+      "range": {
+        "startLine": 132,
+        "startChar": 11,
+        "endLine": 132,
+        "endChar": 24
+      },
+      "revId": "a68f61e4b71b69a2271eb4c74055bc963fc0ed91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
