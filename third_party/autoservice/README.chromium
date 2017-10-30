@@ -1,0 +1,17 @@
+Name: Auto Service
+Short Name: autoservice
+URL: https://github.com/google/auto/tree/master/service
+Version: 1.0-rc3
+Date: October 30, 2017
+License: Apache 2.0
+License File: NOT_SHIPPED
+Security Critical: no
+
+Description:
+* Used for custom plugins in //tools/android/errorprone_plugin.
+* Download the latest version from the maven repository:
+  * https://repo1.maven.org/maven2/com/google/auto/service/auto-service/
+* Replace old jar file and update BUILD.gn.
+
+Local Modifications:
+* Add BUILD.gn.
