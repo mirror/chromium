@@ -38,7 +38,8 @@ void TaskSendUninstallPing::Run() {
 
   update_engine_->SendUninstallPing(
       id_, version_, reason_,
-      base::Bind(&TaskSendUninstallPing::TaskComplete, base::Unretained(this)));
+      base::BindOnce(&TaskSendUninstallPing::TaskComplete,
+                     base::Unretained(this)));
 }
 
 void TaskSendUninstallPing::Cancel() {

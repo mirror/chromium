@@ -79,7 +79,7 @@ class ComponentUnpackerTest : public testing::Test {
   const scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_ =
       base::ThreadTaskRunnerHandle::Get();
   base::RunLoop runloop_;
-  const base::Closure quit_closure_ = runloop_.QuitClosure();
+  base::OnceClosure quit_closure_ = runloop_.QuitClosure();
 
   ComponentUnpacker::Result result_;
 };
@@ -95,7 +95,7 @@ void ComponentUnpackerTest::RunThreads() {
 void ComponentUnpackerTest::UnpackComplete(
     const ComponentUnpacker::Result& result) {
   result_ = result;
-  main_thread_task_runner_->PostTask(FROM_HERE, quit_closure_);
+  main_thread_task_runner_->PostTask(FROM_HERE, std::move(quit_closure_));
 }
 
 TEST_F(ComponentUnpackerTest, UnpackFullCrx) {
@@ -103,8 +103,8 @@ TEST_F(ComponentUnpackerTest, UnpackFullCrx) {
       base::MakeRefCounted<ComponentUnpacker>(
           std::vector<uint8_t>(std::begin(jebg_hash), std::end(jebg_hash)),
           test_file("jebgalgnebhfojomionfpkfelancnnkf.crx"), nullptr, nullptr);
-  component_unpacker->Unpack(base::Bind(&ComponentUnpackerTest::UnpackComplete,
-                                        base::Unretained(this)));
+  component_unpacker->Unpack(base::BindOnce(
+      &ComponentUnpackerTest::UnpackComplete, base::Unretained(this)));
   RunThreads();
 
   EXPECT_EQ(UnpackerError::kNone, result_.error);
@@ -134,8 +134,8 @@ TEST_F(ComponentUnpackerTest, UnpackFileNotFound) {
       base::MakeRefCounted<ComponentUnpacker>(
           std::vector<uint8_t>(std::begin(jebg_hash), std::end(jebg_hash)),
           test_file("file-not-found.crx"), nullptr, nullptr);
-  component_unpacker->Unpack(base::Bind(&ComponentUnpackerTest::UnpackComplete,
-                                        base::Unretained(this)));
+  component_unpacker->Unpack(base::BindOnce(
+      &ComponentUnpackerTest::UnpackComplete, base::Unretained(this)));
   RunThreads();
 
   EXPECT_EQ(UnpackerError::kInvalidFile, result_.error);
@@ -151,8 +151,8 @@ TEST_F(ComponentUnpackerTest, UnpackFileHashMismatch) {
       base::MakeRefCounted<ComponentUnpacker>(
           std::vector<uint8_t>(std::begin(abag_hash), std::end(abag_hash)),
           test_file("jebgalgnebhfojomionfpkfelancnnkf.crx"), nullptr, nullptr);
-  component_unpacker->Unpack(base::Bind(&ComponentUnpackerTest::UnpackComplete,
-                                        base::Unretained(this)));
+  component_unpacker->Unpack(base::BindOnce(
+      &ComponentUnpackerTest::UnpackComplete, base::Unretained(this)));
   RunThreads();
 
   EXPECT_EQ(UnpackerError::kInvalidFile, result_.error);

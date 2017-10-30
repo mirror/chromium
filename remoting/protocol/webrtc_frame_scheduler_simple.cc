@@ -301,7 +301,8 @@ void WebrtcFrameSchedulerSimple::ScheduleNextFrame() {
   base::TimeTicks target_capture_time;
   if (!last_capture_started_time_.is_null()) {
     // We won't start sending the frame until last one has been sent.
-    target_capture_time = pacing_bucket_.GetEmptyTime() -
+    target_capture_time =
+        pacing_bucket_.GetEmptyTime() -
         processing_time_estimator_.EstimatedProcessingTime(key_frame_request_);
 
     // We also try to ensure the next frame will reach the client
@@ -315,10 +316,9 @@ void WebrtcFrameSchedulerSimple::ScheduleNextFrame() {
     base::TimeDelta estimated_next_frame_cost =
         processing_time_estimator_.EstimatedProcessingTime(key_frame_request_) +
         processing_time_estimator_.EstimatedTransitTime(key_frame_request_);
-    base::TimeTicks ideal_capture_time =
-        estimated_last_frame_reach_time +
-        kTargetFrameInterval -
-        estimated_next_frame_cost;
+    base::TimeTicks ideal_capture_time = estimated_last_frame_reach_time +
+                                         kTargetFrameInterval -
+                                         estimated_next_frame_cost;
     target_capture_time = std::max(target_capture_time, ideal_capture_time);
   }
 
