@@ -463,6 +463,7 @@ IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest,
       blink::WebGestureEvent::ScrollUnits::kPrecisePixels;
   gesture_scroll_begin.data.scroll_begin.delta_x_hint = 0.f;
   gesture_scroll_begin.data.scroll_begin.delta_y_hint = 0.f;
+  LOG(ERROR) << "send first event";
   GetRenderWidgetHost()->ForwardGestureEvent(gesture_scroll_begin);
 
   blink::WebGestureEvent gesture_scroll_update(
@@ -476,6 +477,7 @@ IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest,
   float horiz_threshold =
       GetOverscrollConfig(OVERSCROLL_CONFIG_HORIZ_THRESHOLD_START_TOUCHSCREEN);
   gesture_scroll_update.data.scroll_update.delta_x = horiz_threshold + 1;
+  LOG(ERROR) << "send second event";
   GetRenderWidgetHost()->ForwardGestureEvent(gesture_scroll_update);
 
   // Wait for the overscroll gesture to start and then allow some time for the
@@ -484,10 +486,12 @@ IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest,
   // happening after the timeout, which would cause the test to succeed
   // incorrectly. That said, the event we're worried about happens almost
   // instantly after the start of the overscroll gesture.
+  LOG(ERROR) << "run_loop before";
   base::RunLoop run_loop;
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(), TestTimeouts::tiny_timeout());
   run_loop.Run();
+  LOG(ERROR) << "run_loop after";
 
   // Check that the overscroll gesture was not reset.
   OverscrollController* overscroll_controller =

@@ -62,8 +62,7 @@ void RecordNavigationOverscrollCancelled(NavigationDirection direction,
 }  // namespace
 
 // Responsible for fading out and deleting the layer of the overlay window.
-class OverlayDismissAnimator
-    : public ui::LayerAnimationObserver {
+class OverlayDismissAnimator : public ui::ImplicitAnimationObserver {
  public:
   // Takes ownership of the layer.
   explicit OverlayDismissAnimator(std::unique_ptr<ui::Layer> layer)
@@ -75,29 +74,21 @@ class OverlayDismissAnimator
   // the object deletes itself along with the layer.
   void Animate() {
     DCHECK(layer_.get());
-    ui::LayerAnimator* animator = layer_->GetAnimator();
+    LOG(ERROR) << "OverlayDismissAnimator::Animate";
     // This makes SetOpacity() animate with default duration (which could be
     // zero, e.g. when running tests).
-    ui::ScopedLayerAnimationSettings settings(animator);
-    animator->AddObserver(this);
+    ui::ScopedLayerAnimationSettings settings(layer_->GetAnimator());
+    settings.AddObserver(this);
     layer_->SetOpacity(0);
   }
 
-  // Overridden from ui::LayerAnimationObserver
-  void OnLayerAnimationEnded(ui::LayerAnimationSequence* sequence) override {
+  // ui::ImplicitAnimationObserver:
+  void OnImplicitAnimationsCompleted() override {
+    LOG(ERROR) << "OverlayDismissAnimator::OnImplicitAnimationsCompleted";
     delete this;
   }
-
-  void OnLayerAnimationAborted(ui::LayerAnimationSequence* sequence) override {
-    delete this;
-  }
-
-  void OnLayerAnimationScheduled(
-      ui::LayerAnimationSequence* sequence) override {}
 
  private:
-  ~OverlayDismissAnimator() override {}
-
   std::unique_ptr<ui::Layer> layer_;
 
   DISALLOW_COPY_AND_ASSIGN(OverlayDismissAnimator);
@@ -146,6 +137,7 @@ void OverscrollNavigationOverlay::StopObservingIfDone() {
 
   // OverlayDismissAnimator deletes the dismiss layer and itself when the
   // animation completes.
+  LOG(ERROR) << "OverscrollNavigationOverlay::StopObservingIfDone";
   std::unique_ptr<ui::Layer> dismiss_layer = window_->AcquireLayer();
   window_.reset();
   (new OverlayDismissAnimator(std::move(dismiss_layer)))->Animate();
@@ -156,6 +148,7 @@ void OverscrollNavigationOverlay::StopObservingIfDone() {
 
 std::unique_ptr<aura::Window> OverscrollNavigationOverlay::CreateOverlayWindow(
     const gfx::Rect& bounds) {
+  LOG(ERROR) << "OverscrollNavigationOverlay::CreateOverlayWindow";
   UMA_HISTOGRAM_ENUMERATION(
       "Overscroll.Started3",
       GetUmaNavigationType(direction_, owa_->overscroll_source()),
@@ -231,6 +224,7 @@ void OverscrollNavigationOverlay::OnOverscrollCompleting() {
 
 void OverscrollNavigationOverlay::OnOverscrollCompleted(
     std::unique_ptr<aura::Window> window) {
+  LOG(ERROR) << "OverscrollNavigationOverlay::OnOverscrollCompleted";
   DCHECK_NE(direction_, NavigationDirection::NONE);
   aura::Window* main_window = GetMainWindow();
   if (!main_window) {
@@ -282,6 +276,7 @@ void OverscrollNavigationOverlay::OnOverscrollCompleted(
 }
 
 void OverscrollNavigationOverlay::OnOverscrollCancelled() {
+  LOG(ERROR) << "OverscrollNavigationOverlay::OnOverscrollCancelled";
   RecordNavigationOverscrollCancelled(direction_, owa_->overscroll_source());
   aura::Window* main_window = GetMainWindow();
   if (!main_window)
