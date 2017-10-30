@@ -16,6 +16,24 @@
       "revId": "fe1288e7fe98a9f69eccc20fa3bda2497bcada88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cbb69b9_efd23772",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/referrer.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-30T08:47:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c46afe99_9f61dbfa",
+      "revId": "fe1288e7fe98a9f69eccc20fa3bda2497bcada88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
