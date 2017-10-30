@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "44cf63e0_f9cf3fdd",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-30T20:59:12Z",
+      "side": 1,
+      "message": "why have separate declare_args()  Can they all be in one block?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 16
+      },
+      "revId": "7435b072dfaa830b80130b034740a56ca2d4a4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bdb867a_60dc62cd",
         "filename": "device/vr/features/features.gni",
         "patchSetId": 2
