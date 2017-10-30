@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c173ae0a_17140c2c",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-30T19:04:47Z",
+      "side": 1,
+      "message": "hm, I\u0027m not sure this should be causing damage. there should be damage as a result of surface being inserted and not be cause the resource having to be recreated.",
+      "revId": "3e5f2f739c3da984a2e39b5267a21967e1cbb3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
