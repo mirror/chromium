@@ -4,10 +4,10 @@
 
 module device.mojom;
 
+import "mojo/common/time.mojom";
+
 // A Geoposition represents a position fix. It was originally derived from:
 // http://gears.googlecode.com/svn/trunk/gears/geolocation/geolocation.h
-// TODO(blundell): Investigate killing content::Geoposition in favor of using
-// this struct everywhere.
 struct Geoposition {
   // These values follow the W3C geolocation specification and can be returned
   // to JavaScript without the need for a conversion.
@@ -38,14 +38,10 @@ struct Geoposition {
   double heading;
   // Horizontal component of device velocity in meters per second.
   double speed;
-  // TODO(blundell): If I need to represent this differently to use this
-  // struct to replace content::Geolocation, I'll need to convert
-  // correctly into seconds-since-epoch when using this in
-  // GeolocationDispatcher::OnLocationUpdate().
   // Time of position measurement in seconds since Epoch in UTC time. This is
   // taken from the host computer's system clock (i.e. from Time::Now(), not the
   // source device's clock).
-  double timestamp;
+  mojo.common.mojom.Time timestamp;
 
   // Error code, see enum above.
   ErrorCode error_code;

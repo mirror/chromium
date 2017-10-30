@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "device/geolocation/location_provider_android.h"
 #include "jni/LocationProviderAdapter_jni.h"
 
@@ -90,7 +91,7 @@ void LocationApiAdapterAndroid::OnNewLocationAvailable(double latitude,
                                                        double heading,
                                                        bool has_speed,
                                                        double speed) {
-  Geoposition position;
+  mojom::Geoposition position;
   position.latitude = latitude;
   position.longitude = longitude;
   position.timestamp = base::Time::FromDoubleT(time_stamp);
@@ -112,8 +113,9 @@ void LocationApiAdapterAndroid::OnNewLocationAvailable(double latitude,
 // static
 void LocationApiAdapterAndroid::OnNewErrorAvailable(JNIEnv* env,
                                                     jstring message) {
-  Geoposition position_error;
-  position_error.error_code = Geoposition::ERROR_CODE_POSITION_UNAVAILABLE;
+  mojom::Geoposition position_error;
+  position_error.error_code =
+      mojom::Geoposition::ErrorCode::POSITION_UNAVAILABLE;
   position_error.error_message =
       base::android::ConvertJavaStringToUTF8(env, message);
 
@@ -136,7 +138,7 @@ LocationApiAdapterAndroid::~LocationApiAdapterAndroid() {
 }
 
 void LocationApiAdapterAndroid::NotifyNewGeoposition(
-    const Geoposition& geoposition) {
+    const mojom::Geoposition& geoposition) {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (on_geoposition_callback_)
     on_geoposition_callback_.Run(geoposition);

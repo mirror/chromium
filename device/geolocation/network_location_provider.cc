@@ -12,6 +12,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "device/geolocation/public/cpp/geoposition.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context_getter.h"
 
@@ -31,7 +32,7 @@ NetworkLocationProvider::PositionCache::~PositionCache() {}
 
 bool NetworkLocationProvider::PositionCache::CachePosition(
     const WifiData& wifi_data,
-    const Geoposition& position) {
+    const mojom::Geoposition& position) {
   // Check that we can generate a valid key for the wifi data.
   base::string16 key;
   if (!MakeKey(wifi_data, &key)) {
@@ -61,7 +62,7 @@ bool NetworkLocationProvider::PositionCache::CachePosition(
 
 // Searches for a cached position response for the current WiFi data. Returns
 // the cached position if available, nullptr otherwise.
-const Geoposition* NetworkLocationProvider::PositionCache::FindPosition(
+const mojom::Geoposition* NetworkLocationProvider::PositionCache::FindPosition(
     const WifiData& wifi_data) {
   base::string16 key;
   if (!MakeKey(wifi_data, &key)) {
@@ -144,13 +145,13 @@ void NetworkLocationProvider::OnWifiDataUpdate() {
 }
 
 void NetworkLocationProvider::OnLocationResponse(
-    const Geoposition& position,
+    const mojom::Geoposition& position,
     bool server_error,
     const WifiData& wifi_data) {
   DCHECK(thread_checker_.CalledOnValidThread());
   // Record the position and update our cache.
   position_ = position;
-  if (position.Validate())
+  if (ValidateGeoposition(position))
     position_cache_->CachePosition(wifi_data, position);
 
   // Let listeners know that we now have a position available.
@@ -185,7 +186,7 @@ void NetworkLocationProvider::StopProvider() {
   weak_factory_.InvalidateWeakPtrs();
 }
 
-const Geoposition& NetworkLocationProvider::GetPosition() {
+const mojom::Geoposition& NetworkLocationProvider::GetPosition() {
   return position_;
 }
 
@@ -197,10 +198,10 @@ void NetworkLocationProvider::RequestPosition() {
   DCHECK(!wifi_timestamp_.is_null())
       << "|wifi_timestamp_| must be set before looking up position";
 
-  const Geoposition* cached_position =
+  const mojom::Geoposition* cached_position =
       position_cache_->FindPosition(wifi_data_);
   if (cached_position) {
-    DCHECK(cached_position->Validate());
+    DCHECK(ValidateGeoposition(*cached_position));
     // Record the position and update its timestamp.
     position_ = *cached_position;
 
