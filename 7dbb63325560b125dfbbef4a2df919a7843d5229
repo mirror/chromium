@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dd0727c_d1dcd076",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-30T05:37:44Z",
+      "side": 1,
+      "message": "This comment does not look right.\nEven when there are multiple non generic handlers, we should open a handler by double-click the item if at least one item has been executed.",
+      "range": {
+        "startLine": 1039,
+        "startChar": 34,
+        "endLine": 1041,
+        "endChar": 46
+      },
+      "revId": "7dbb63325560b125dfbbef4a2df919a7843d5229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1771ae4_0988c53b",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-30T05:37:44Z",
+      "side": 1,
+      "message": "I think we don\u0027t change the behavior of FileTasks.getDefaultTask().\n\nI guess we can implement the expected behavior by checking following conditions in executeDefaultInternal_().\n1) this.tasks_.length \u003e\u003d 2\n2) !defaultTask.isDefault\n3) !this.taskHistory_.getLastExecutedTime(defaultTask.taskId)",
+      "revId": "7dbb63325560b125dfbbef4a2df919a7843d5229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
