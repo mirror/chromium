@@ -8,7 +8,7 @@
 #include <memory>
 #include <set>
 
-#include "ash/accelerators/accelerator_controller_delegate_classic.h"
+// #include "ash/accelerators/accelerator_controller_delegate_classic.h"
 #include "ash/display/display_configuration_controller_test_api.h"
 #include "ash/mus/bridge/shell_port_mash.h"
 #include "ash/mus/shell_port_mus.h"
@@ -23,8 +23,9 @@
 #include "ash/system/screen_layout_observer.h"
 #include "ash/test/ash_test_environment.h"
 #include "ash/test/ash_test_views_delegate.h"
-#include "ash/test_screenshot_delegate.h"
+// #include "ash/test_screenshot_delegate.h"
 #include "ash/test_shell_delegate.h"
+// #include "ash/utility/screenshot_controller.h"
 #include "base/run_loop.h"
 #include "base/strings/string_split.h"
 #include "base/test/sequenced_worker_pool_owner.h"
@@ -66,7 +67,7 @@ Config AshTestHelper::config_ = Config::CLASSIC;
 AshTestHelper::AshTestHelper(AshTestEnvironment* ash_test_environment)
     : ash_test_environment_(ash_test_environment),
       test_shell_delegate_(nullptr),
-      test_screenshot_delegate_(nullptr),
+      // test_screenshot_delegate_(nullptr),
       dbus_thread_manager_initialized_(false),
       bluez_dbus_manager_initialized_(false) {
   ui::test::EnableTestConfigForPlatformWindows();
@@ -188,36 +189,46 @@ void AshTestHelper::SetUp(bool start_session, bool provide_local_state) {
       shell->display_configuration_controller())
       .DisableDisplayAnimator();
 
-  if (config_ == Config::CLASSIC) {
-    // TODO: disabled for mash as AcceleratorControllerDelegateClassic isn't
-    // created in mash http://crbug.com/632111.
-    test_screenshot_delegate_ = new TestScreenshotDelegate();
-    ShellPortClassic::Get()
-        ->accelerator_controller_delegate()
-        ->SetScreenshotDelegate(
-            std::unique_ptr<ScreenshotDelegate>(test_screenshot_delegate_));
-  } else if (config_ == Config::MUS) {
-    test_screenshot_delegate_ = new TestScreenshotDelegate();
-    mus::ShellPortMus::Get()
-        ->accelerator_controller_delegate()
-        ->SetScreenshotDelegate(
-            std::unique_ptr<ScreenshotDelegate>(test_screenshot_delegate_));
-  }
+  // test_screenshot_delegate_ = static_cast<TestScreenshotDelegate*>(shell->
+  // shell->screenshot_controller()->SetDelegate(base::WrapUnique(test_screenshot_delegate_));
+  // switch (config_) {
+  //   case Config::CLASSIC:
+  //     ShellPortClassic::Get()
+  //         ->accelerator_controller_delegate()
+  //         ->SetScreenshotDelegate(base::WrapUnique(test_screenshot_delegate_));
+  //     break;
+  //   case Config::MUS:
+  //     mus::ShellPortMus::Get()
+  //         ->accelerator_controller_delegate()
+  //         ->SetScreenshotDelegate(base::WrapUnique(test_screenshot_delegate_));
+  //     break;
+  //   case Config::MASH:
+  //   //JAMES dang it, this won't work.
+  //     // mus::ShellPortMash::Get()
+  //     //     ->accelerator_controller_delegate_mus()
+  //     //     ->SetScreenshotDelegate(base::WrapUnique(test_screenshot_delegate_));
+  //     break;
+  // }
 }
 
 void AshTestHelper::TearDown() {
-  window_manager_app_.reset();
+  // test_screenshot_delegate_ = nullptr;
 
   // WindowManger owns the Shell in mash.
   if (config_ == Config::CLASSIC)
     Shell::DeleteInstance();
+  else
+    window_manager_app_.reset();
 
   // Suspend the tear down until all resources are returned via
   // CompositorFrameSinkClient::ReclaimResources()
   RunAllPendingInMessageLoop();
   ash_test_environment_->TearDown();
 
-  test_screenshot_delegate_ = NULL;
+  //HACK
+  // if (config_ == Config::MASH)
+  //   delete test_screenshot_delegate_;
+  // test_screenshot_delegate_ = NULL;
 
   if (config_ == Config::CLASSIC) {
     // Remove global message center state.

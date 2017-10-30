@@ -22,6 +22,8 @@ specific_include_rules = {
     "+ash/mus/shell_port_mus.h",
     # TODO(mash): Screenshot support. http://crbug.com/557397
     "+ash/screenshot_delegate.h",
+    "+ash/shell.h",
     "+ash/shell_port_classic.h",
+    "+ash/utility/screenshot_controller.h",
   ]
 }

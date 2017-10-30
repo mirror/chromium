@@ -16,6 +16,8 @@ class Connector;
 
 namespace ash {
 
+// The ShellDelegate for Config::MASH (not Config::MUS).
+// TODO(jamescook): Rename to ShellDelegateMash.
 class ShellDelegateMus : public ShellDelegate {
  public:
   explicit ShellDelegateMus(service_manager::Connector* connector);
@@ -31,6 +33,7 @@ class ShellDelegateMus : public ShellDelegate {
   std::unique_ptr<keyboard::KeyboardUI> CreateKeyboardUI() override;
   void OpenUrlFromArc(const GURL& url) override;
   NetworkingConfigDelegate* GetNetworkingConfigDelegate() override;
+  std::unique_ptr<ScreenshotDelegate> CreateScreenshotDelegate() override;
   std::unique_ptr<WallpaperDelegate> CreateWallpaperDelegate() override;
   AccessibilityDelegate* CreateAccessibilityDelegate() override;
   GPUSupport* CreateGPUSupport() override;
