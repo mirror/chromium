@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e25f775d_f2479bfc",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-10-30T19:01:02Z",
+      "side": 1,
+      "message": "You mean the \u0027decoding\u0027 of the blob? I feel like that\u0027s a bit overkill. For something like decoding EDID, that makes sense since there\u0027s a lot more internal structure there. The IN_FORMATS blobs is really just a struct and two arrays and there\u0027s not a whole lot of decoding we need to do.",
+      "parentUuid": "79d84d60_21560e66",
+      "revId": "8aefc437358f47ab2115e7cf970cb89bd5dedddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01d57551_973436e4",
         "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "604127a5_e95b6b84",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-10-30T19:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01d57551_973436e4",
+      "revId": "8aefc437358f47ab2115e7cf970cb89bd5dedddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1031c78_e4086452",
         "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "8aefc437358f47ab2115e7cf970cb89bd5dedddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2342d3be_cfb30ce4",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-10-30T19:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1031c78_e4086452",
+      "revId": "8aefc437358f47ab2115e7cf970cb89bd5dedddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
