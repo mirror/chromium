@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "521c438a_8c710767",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 3056,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "I think it\u0027s better than \"tab switch\". \"tab switch suggestions\" ?",
+      "parentUuid": "e44b96bd_685d6b82",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db063619_9a3c9864",
         "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
         "patchSetId": 23
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3e6e9a66_23575af1",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db063619_9a3c9864",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae7838ca_e657dc45",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
         "patchSetId": 23
@@ -47,6 +83,30 @@
       "writtenOn": "2017-10-27T18:44:51Z",
       "side": 1,
       "message": "I know we used to do things like this in the code base.  But a code search shows that these have been removed.  Is there a new right way to do this?",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 65
+      },
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad2f683_ed3d43d8",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "Perhaps you\u0027re thinking of the other direction? There\u0027s Profile::FromBrowserContext() for downcasting, but Profile is-a content::BrowserContext.\n\nNote permission_decision_auto_blocker.cc#174. eek",
+      "parentUuid": "ae7838ca_e657dc45",
       "range": {
         "startLine": 45,
         "startChar": 8,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "fc510f70_164b9a1d",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c09c794b_176929da",
+      "range": {
+        "startLine": 50,
+        "startChar": 30,
+        "endLine": 50,
+        "endChar": 36
+      },
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e9ae7a0_412f43d4",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.h",
         "patchSetId": 23
@@ -96,6 +180,24 @@
       "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c608740e_4a773f44",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "The current recommendation is to leave public methods public. Since \u0027SwitchToTabWithURL()\u0027 is public, Justin wanted the others consistent as well.",
+      "parentUuid": "3e9ae7a0_412f43d4",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "2ec1dfe5_26ffabb1",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "Done. Yes, I know it will have to be tweaked.",
+      "parentUuid": "93e1b0da_db820c95",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44e9523b_1be3a90d",
         "filename": "components/omnibox/browser/autocomplete_provider.h",
         "patchSetId": 23
@@ -130,6 +250,24 @@
       "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef3d2ad_f6de64f3",
+        "filename": "components/omnibox/browser/autocomplete_provider.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "Ok. git cl format seems to still want to fix it, so I decided to help out the next person.",
+      "parentUuid": "44e9523b_1be3a90d",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "de354300_fe297fc0",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "855d29ec_635790a1",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cf3fae6_e998e57f",
         "filename": "components/omnibox/browser/history_quick_provider.cc",
         "patchSetId": 23
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "d019f2b1_95c00545",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "I know when I\u0027m debugging, I still like to rule out possibilities locally, and I think the performance hit is negligible sitting next to that tab search. But I can understand if it looks confusing. Removed.",
+      "parentUuid": "6cf3fae6_e998e57f",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a172f22_2996a916",
         "filename": "components/omnibox/browser/history_quick_provider.cc",
         "patchSetId": 23
@@ -181,6 +355,24 @@
       "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbcd2018_82f0c61c",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a172f22_2996a916",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +399,30 @@
     },
     {
       "key": {
+        "uuid": "bb82fd00_53d7f40d",
+        "filename": "components/omnibox/browser/history_quick_provider.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "It used to bump the relevance. Corrected.",
+      "parentUuid": "872694cb_77bdd81f",
+      "range": {
+        "startLine": 50,
+        "startChar": 25,
+        "endLine": 50,
+        "endChar": 37
+      },
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fde7f3f_a94fe7de",
         "filename": "components/omnibox/browser/omnibox_edit_controller.h",
         "patchSetId": 23
@@ -221,6 +437,24 @@
       "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1095c4bf_f119a42b",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0fde7f3f_a94fe7de",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -247,6 +481,30 @@
     },
     {
       "key": {
+        "uuid": "38f1bbac_847949e0",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4b430d0_02eec87e",
+      "range": {
+        "startLine": 701,
+        "startChar": 40,
+        "endLine": 701,
+        "endChar": 63
+      },
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8855124c_c1d10874",
         "filename": "components/omnibox/browser/omnibox_field_trial.cc",
         "patchSetId": 23
@@ -270,6 +528,30 @@
     },
     {
       "key": {
+        "uuid": "12b196d0_b0ba50ca",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "Again, not quite accurate, but see if you like the new version.",
+      "parentUuid": "8855124c_c1d10874",
+      "range": {
+        "startLine": 55,
+        "startChar": 30,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f0e5d79_43726bfd",
         "filename": "components/omnibox/browser/omnibox_metrics_provider.cc",
         "patchSetId": 23
@@ -284,6 +566,24 @@
       "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4470295_75cbc81e",
+        "filename": "components/omnibox/browser/omnibox_metrics_provider.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f0e5d79_43726bfd",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0757d391_d00f572e",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "It sounds like we were looking at different patch sets.",
+      "parentUuid": "8f685f6c_49f332f6",
+      "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4390cc93_32976a48",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
         "patchSetId": 12
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "\u003e I\u0027m not sure what your recommendation is, so I made it preserve the address. I don\u0027t think it hurts to (re)activate the contents.\n\nOkay, as long as you thought it and decided re-activation is probably okay.  (I\u0027m not sure what gets triggered on \"activation\".)",
       "parentUuid": "151bc9f9_0e4eb445",
+      "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b434ba28_0fdeae67",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-30T14:16:39Z",
+      "side": 1,
+      "message": "From my own experience as a user, it will unhide an iconized window, switch to the tab in question and restore it to whatever state it (namely the focus) was in.",
+      "parentUuid": "46d4b008_d2d2b32d",
       "revId": "56e8900d51dcfe627d2aed2fc486b371bc79fbb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
