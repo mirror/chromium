@@ -204,6 +204,15 @@ fuzzer_test("gfx_png_image_fuzzer") {
   seed_corpuses = libpng_seed_corpuses
 }
 
+fuzzer_test("zlib_inflate_fuzzer") {
+  sources = [
+    "zlib_inflate_fuzzer.cc",
+  ]
+  deps = [
+    "//third_party/zlib",
+  ]
+}
+
 fuzzer_test("zlib_uncompress_fuzzer") {
   sources = [
     "zlib_uncompress_fuzzer.cc",
