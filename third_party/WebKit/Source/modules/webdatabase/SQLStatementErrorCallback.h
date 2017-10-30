@@ -41,7 +41,7 @@ class SQLStatementErrorCallback
  public:
   virtual ~SQLStatementErrorCallback() {}
   virtual void Trace(blink::Visitor* visitor) {}
-  virtual bool handleEvent(SQLTransaction*, SQLError*) = 0;
+  virtual v8::Maybe<bool> handleEvent(SQLTransaction*, SQLError*) = 0;
 };
 
 }  // namespace blink

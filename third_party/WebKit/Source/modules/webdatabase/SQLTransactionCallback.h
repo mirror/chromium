@@ -40,7 +40,7 @@ class SQLTransactionCallback
  public:
   virtual ~SQLTransactionCallback() {}
   virtual void Trace(blink::Visitor* visitor) {}
-  virtual bool handleEvent(SQLTransaction*) = 0;
+  virtual void handleEvent(SQLTransaction*) = 0;
 };
 
 }  // namespace blink

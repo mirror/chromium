@@ -28,6 +28,7 @@
 
 #include "modules/webdatabase/SQLStatement.h"
 
+#include "bindings/modules/v8/V8SQLStatementCallback.h"
 #include "core/probe/CoreProbes.h"
 #include "modules/webdatabase/Database.h"
 #include "modules/webdatabase/DatabaseManager.h"
@@ -95,12 +96,32 @@ bool SQLStatement::PerformCallback(SQLTransaction* transaction) {
   // Call the appropriate statement callback and track if it resulted in an
   // error, because then we need to jump to the transaction error callback.
   if (error) {
-    if (error_callback)
-      callback_error =
-          error_callback->handleEvent(transaction, SQLError::Create(*error));
+    // 4.3.2 Processing model
+    // https://dev.w3.org/html5/webdatabase/#processing-model
+    // In case of error (or more specifically, if the above substeps say to jump
+    // to the "in case of error" steps), run the following substeps:
+    if (error_callback) {
+      // step 6.2. If the error callback returns false, then move on to the next
+      //   statement, if any, or onto the next overall step otherwise.
+      bool result;
+      if (error_callback->handleEvent(transaction, SQLError::Create(*error))
+              .To(&result)) {
+        callback_error = result;
+      } else {
+        callback_error = true;
+      }
+    } else {
+      // step 6.3. Otherwise, the error callback did not return false, or there
+      //   was no error callback. Jump to the last step in the overall steps.
+      callback_error = true;
+    }
   } else if (callback) {
-    callback_error =
-        !callback->handleEvent(transaction, backend_->SqlResultSet());
+    // step 5. If the callback raised an exception, jump to the last step.
+    v8::TryCatch tryCatch(
+        static_cast<V8SQLStatementCallback*>(callback)->GetIsolate());
+    tryCatch.SetVerbose(true);
+    callback->handleEvent(transaction, backend_->SqlResultSet());
+    callback_error = tryCatch.HasCaught();
   }
 
   return callback_error;
