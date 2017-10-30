@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bed4b384_468c2e5f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-30T17:47:34Z",
+      "side": 0,
+      "message": "Bernhard, was this restriction not working?",
+      "range": {
+        "startLine": 360,
+        "startChar": 15,
+        "endLine": 361,
+        "endChar": 56
+      },
+      "revId": "4d65140968ffb077148ec7fa4e522b9d502f4a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
