@@ -2954,8 +2954,7 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
       GetProcess()->GetBrowserContext()->GetPermissionManager();
 
   if (delegate_) {
-    device::GeolocationContext* geolocation_context =
-        delegate_->GetGeolocationContext();
+    auto* geolocation_context = delegate_->GetGeolocationContext();
     if (geolocation_context && permission_manager) {
       geolocation_service_.reset(new GeolocationServiceImpl(
           geolocation_context, permission_manager, this));
