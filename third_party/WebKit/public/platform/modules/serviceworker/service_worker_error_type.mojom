@@ -25,3 +25,26 @@ enum ServiceWorkerErrorType {
   // Add a new type in alphabetical order, and update kLast if needed.
   kLast = kUnknown,
 };
+
+// This enum is used in UMA histograms, so don't change the order or remove
+// entries.
+enum ServiceWorkerResponseError {
+  Unknown = 0,
+  PromiseRejected = 1,
+  DefaultPrevented = 2,
+  NoV8Instance = 3,
+  ResponseTypeError = 4,
+  ResponseTypeOpaque = 5,
+  ResponseTypeNotBasicOrDefault = 6,
+  BodyUsed = 7,
+  ResponseTypeOpaqueForClientRequest = 8,
+  ResponseTypeOpaqueRedirect = 9,
+  BodyLocked = 10,
+  NoForeignFetchResponse = 11,
+  ForeignFetchHeadersWithoutOrigin = 12,
+  ForeignFetchMismatchedOrigin = 13,
+  RedirectedResponseForNotFollowRequest = 14,
+  DataPipeCreationFailed = 15,
+  kLast
+};
+

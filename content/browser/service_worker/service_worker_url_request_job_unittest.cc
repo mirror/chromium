@@ -491,8 +491,9 @@ class DelayHelper : public EmbeddedWorkerTestHelper {
             std::make_unique<std::vector<GURL>>(), 200, "OK",
             network::mojom::FetchResponseType::kDefault,
             std::make_unique<ServiceWorkerHeaderMap>(), std::string(), 0,
-            nullptr /* blob */, blink::kWebServiceWorkerResponseErrorUnknown,
-            base::Time(), false /* response_is_in_cache_storage */,
+            nullptr /* blob */,
+            blink::mojom::ServiceWorkerResponseError::Unknown, base::Time(),
+            false /* response_is_in_cache_storage */,
             std::string() /* response_cache_storage_cache_name */,
             std::make_unique<
                 ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
@@ -735,8 +736,9 @@ class ProviderDeleteHelper : public EmbeddedWorkerTestHelper {
             std::make_unique<std::vector<GURL>>(), 200, "OK",
             network::mojom::FetchResponseType::kDefault,
             std::make_unique<ServiceWorkerHeaderMap>(), std::string(), 0,
-            nullptr /* blob */, blink::kWebServiceWorkerResponseErrorUnknown,
-            base::Time(), false /* response_is_in_cache_storage */,
+            nullptr /* blob */,
+            blink::mojom::ServiceWorkerResponseError::Unknown, base::Time(),
+            false /* response_is_in_cache_storage */,
             std::string() /* response_cache_storage_cache_name */,
             std::make_unique<
                 ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
@@ -825,7 +827,7 @@ class BlobResponder : public EmbeddedWorkerTestHelper {
             std::make_unique<std::vector<GURL>>(), 200, "OK",
             network::mojom::FetchResponseType::kDefault, MakeHeaders(),
             blob_uuid_, blob_size_, nullptr /* blob */,
-            blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
+            blink::mojom::ServiceWorkerResponseError::Unknown, base::Time(),
             false /* response_is_in_cache_storage */,
             std::string() /* response_cache_storage_cache_name */,
             std::make_unique<
@@ -926,8 +928,9 @@ class StreamResponder : public EmbeddedWorkerTestHelper {
         ServiceWorkerResponse(
             std::make_unique<std::vector<GURL>>(), 200, "OK",
             network::mojom::FetchResponseType::kDefault, MakeHeaders(), "", 0,
-            nullptr /* blob */, blink::kWebServiceWorkerResponseErrorUnknown,
-            base::Time(), false /* response_is_in_cache_storage */,
+            nullptr /* blob */,
+            blink::mojom::ServiceWorkerResponseError::Unknown, base::Time(),
+            false /* response_is_in_cache_storage */,
             std::string() /* response_cache_storage_cache_name */,
             std::make_unique<
                 ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
@@ -1409,8 +1412,9 @@ class EarlyResponseHelper : public EmbeddedWorkerTestHelper {
             std::make_unique<std::vector<GURL>>(), 200, "OK",
             network::mojom::FetchResponseType::kDefault,
             std::make_unique<ServiceWorkerHeaderMap>(), std::string(), 0,
-            nullptr /* blob */, blink::kWebServiceWorkerResponseErrorUnknown,
-            base::Time(), false /* response_is_in_cache_storage */,
+            nullptr /* blob */,
+            blink::mojom::ServiceWorkerResponseError::Unknown, base::Time(),
+            false /* response_is_in_cache_storage */,
             std::string() /* response_cache_storage_cache_name */,
             std::make_unique<
                 ServiceWorkerHeaderList>() /* cors_exposed_header_names */),

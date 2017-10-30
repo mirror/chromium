@@ -5,9 +5,9 @@
 #ifndef AbortPaymentRespondWithObserver_h
 #define AbortPaymentRespondWithObserver_h
 
+#include "content/common/service_worker/service_worker.mojom-shared.h"
 #include "modules/ModulesExport.h"
 #include "modules/serviceworkers/RespondWithObserver.h"
-#include "public/platform/modules/serviceworker/WebServiceWorkerResponseError.h"
 
 namespace blink {
 
@@ -25,7 +25,7 @@ class MODULES_EXPORT AbortPaymentRespondWithObserver final
                                   WaitUntilObserver*);
   ~AbortPaymentRespondWithObserver() override = default;
 
-  void OnResponseRejected(WebServiceWorkerResponseError) override;
+  void OnResponseRejected(mojom::ServiceWorkerResponseError) override;
   void OnResponseFulfilled(const ScriptValue&) override;
   void OnNoResponse() override;
 
