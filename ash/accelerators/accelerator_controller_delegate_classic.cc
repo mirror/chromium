@@ -18,7 +18,7 @@
 #include "ash/magnifier/magnification_controller.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
-#include "ash/screenshot_delegate.h"
+// #include "ash/screenshot_delegate.h"
 #include "ash/shell.h"
 #include "ash/system/power/power_button_controller.h"
 #include "ash/system/system_notifier.h"
@@ -61,25 +61,29 @@ void HandleMagnifyScreen(int delta_index) {
   }
 }
 
-void HandleTakeWindowScreenshot(ScreenshotDelegate* screenshot_delegate) {
+void HandleTakeWindowScreenshot() {
   base::RecordAction(UserMetricsAction("Accel_Take_Window_Screenshot"));
-  DCHECK(screenshot_delegate);
-  Shell::Get()->screenshot_controller()->StartWindowScreenshotSession(
-      screenshot_delegate);
+  // ScreenshotDelegate* screenshot_delegate = Shell::Get()->screenshot_delegate();
+  // DCHECK(screenshot_delegate);
+  Shell::Get()->screenshot_controller()->StartWindowScreenshotSession();
 }
 
-void HandleTakePartialScreenshot(ScreenshotDelegate* screenshot_delegate) {
+void HandleTakePartialScreenshot() {
   base::RecordAction(UserMetricsAction("Accel_Take_Partial_Screenshot"));
-  DCHECK(screenshot_delegate);
+  // ScreenshotDelegate* screenshot_delegate = Shell::Get()->screenshot_delegate();
+  // DCHECK(screenshot_delegate);
   Shell::Get()->screenshot_controller()->StartPartialScreenshotSession(
-      screenshot_delegate, true /* draw_overlay_immediately */);
+      true /* draw_overlay_immediately */);
 }
 
-void HandleTakeScreenshot(ScreenshotDelegate* screenshot_delegate) {
+void HandleTakeScreenshot() {
   base::RecordAction(UserMetricsAction("Accel_Take_Screenshot"));
-  DCHECK(screenshot_delegate);
-  if (screenshot_delegate->CanTakeScreenshot())
-    screenshot_delegate->HandleTakeScreenshotForAllRootWindows();
+  // ScreenshotDelegate* screenshot_delegate = Shell::Get()->screenshot_delegate();
+  // DCHECK(screenshot_delegate);
+  Shell::Get()->screenshot_controller()->TakeScreenshotForAllRootWindows();
+  //     true /* draw_overlay_immediately */);
+  // if (screenshot_delegate->CanTakeScreenshot())
+  //   screenshot_delegate->HandleTakeScreenshotForAllRootWindows();
 }
 
 bool CanHandleUnpin() {
@@ -110,10 +114,10 @@ AcceleratorControllerDelegateClassic::AcceleratorControllerDelegateClassic() {}
 
 AcceleratorControllerDelegateClassic::~AcceleratorControllerDelegateClassic() {}
 
-void AcceleratorControllerDelegateClassic::SetScreenshotDelegate(
-    std::unique_ptr<ScreenshotDelegate> screenshot_delegate) {
-  screenshot_delegate_ = std::move(screenshot_delegate);
-}
+// void AcceleratorControllerDelegateClassic::SetScreenshotDelegate(
+//     std::unique_ptr<ScreenshotDelegate> screenshot_delegate) {
+//   screenshot_delegate_ = std::move(screenshot_delegate);
+// }
 
 bool AcceleratorControllerDelegateClassic::HandlesAction(
     AcceleratorAction action) {
@@ -226,13 +230,13 @@ void AcceleratorControllerDelegateClassic::PerformAction(
       // passed to apps -- see http://crbug.com/146609.
       break;
     case TAKE_PARTIAL_SCREENSHOT:
-      HandleTakePartialScreenshot(screenshot_delegate_.get());
+      HandleTakePartialScreenshot();
       break;
     case TAKE_SCREENSHOT:
-      HandleTakeScreenshot(screenshot_delegate_.get());
+      HandleTakeScreenshot();
       break;
     case TAKE_WINDOW_SCREENSHOT:
-      HandleTakeWindowScreenshot(screenshot_delegate_.get());
+      HandleTakeWindowScreenshot();
       break;
     case TOUCH_HUD_CLEAR:
       HandleTouchHudClear();

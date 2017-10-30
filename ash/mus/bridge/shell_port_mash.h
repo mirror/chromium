@@ -36,6 +36,11 @@ class ShellPortMash : public ShellPortMus {
 
   static ShellPortMash* Get();
 
+  //JAMES provide a ShellPort method for this
+  AcceleratorControllerDelegateMus* accelerator_controller_delegate_mus() {
+    return mash_state_->accelerator_controller_delegate.get();
+  }
+
   // Called when the window server has changed the mouse enabled state.
   void OnCursorTouchVisibleChanged(bool enabled);
 

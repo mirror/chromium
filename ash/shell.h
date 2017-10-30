@@ -136,6 +136,7 @@ class ShellPort;
 class ScreenLayoutObserver;
 class ScreenOrientationController;
 class ScreenshotController;
+class ScreenshotDelegate;
 class ScreenPinningController;
 class ScreenPositionController;
 class SessionController;
@@ -405,6 +406,9 @@ class ASH_EXPORT Shell : public SessionObserver,
   ScreenshotController* screenshot_controller() {
     return screenshot_controller_.get();
   }
+  // ScreenshotDelegate* screenshot_delegate() {
+  //   return screenshot_delegate_.get();
+  // }
   ScreenLayoutObserver* screen_layout_observer() {
     return screen_layout_observer_.get();
   }
@@ -470,6 +474,9 @@ class ASH_EXPORT Shell : public SessionObserver,
   WindowTreeHostManager* window_tree_host_manager() {
     return window_tree_host_manager_.get();
   }
+
+  // // TODO(jamescook): Replace with mojo-style ScreenshotClient.
+  // void SetScreenshotDelegate(std::unique_ptr<ScreenshotDelegate> delegate);
 
   // Force the shelf to query for it's current visibility state.
   // TODO(jamescook): Move to Shelf.
@@ -717,6 +724,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<::wm::FocusController> focus_controller_;
 
   std::unique_ptr<ScreenshotController> screenshot_controller_;
+  // std::unique_ptr<ScreenshotDelegate> screenshot_delegate_;
 
   std::unique_ptr<MouseCursorEventFilter> mouse_cursor_filter_;
   std::unique_ptr<ScreenPositionController> screen_position_controller_;
