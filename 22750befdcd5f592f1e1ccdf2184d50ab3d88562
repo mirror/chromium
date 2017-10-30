@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c025bc4_981188a0",
+        "filename": "chrome/browser/download/download_danger_prompt_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-30T20:56:23Z",
+      "side": 1,
+      "message": "consider using an enum instead of a bool (https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Prefer-enums-to-bools-for-function-parameters), or insert /*from_download_api\u003d*/ in front of true/false at call sites below",
+      "revId": "22750befdcd5f592f1e1ccdf2184d50ab3d88562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
