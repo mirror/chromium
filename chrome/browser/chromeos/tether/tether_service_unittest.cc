@@ -25,10 +25,8 @@
 #include "chromeos/components/tether/tether_component_impl.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_power_manager_client.h"
-#include "chromeos/dbus/fake_session_manager_client.h"
 #include "chromeos/dbus/fake_shill_manager_client.h"
 #include "chromeos/dbus/power_manager_client.h"
-#include "chromeos/dbus/session_manager_client.h"
 #include "chromeos/dbus/shill_device_client.h"
 #include "chromeos/network/network_connect.h"
 #include "chromeos/network/network_handler.h"
@@ -52,19 +50,6 @@ using testing::NiceMock;
 using testing::Return;
 
 namespace {
-
-class ExtendedFakeSessionManagerClient
-    : public chromeos::FakeSessionManagerClient {
- public:
-  bool IsScreenLocked() const override { return is_screen_locked_; }
-
-  void set_is_screen_locked(bool is_screen_locked) {
-    is_screen_locked_ = is_screen_locked;
-  }
-
- private:
-  bool is_screen_locked_ = false;
-};
 
 class MockCryptAuthDeviceManager : public cryptauth::CryptAuthDeviceManager {
  public:
@@ -104,12 +89,10 @@ class TestTetherService : public TetherService {
  public:
   TestTetherService(Profile* profile,
                     chromeos::PowerManagerClient* power_manager_client,
-                    chromeos::SessionManagerClient* session_manager_client,
                     cryptauth::CryptAuthService* cryptauth_service,
                     chromeos::NetworkStateHandler* network_state_handler)
       : TetherService(profile,
                       power_manager_client,
-                      session_manager_client,
                       cryptauth_service,
                       network_state_handler) {}
   ~TestTetherService() override {}
@@ -198,8 +181,6 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
 
     fake_power_manager_client_ =
         base::MakeUnique<chromeos::FakePowerManagerClient>();
-    fake_session_manager_client_ =
-        base::MakeUnique<ExtendedFakeSessionManagerClient>();
 
     std::vector<cryptauth::ExternalDeviceInfo> test_device_infos;
     test_device_infos.push_back(cryptauth::ExternalDeviceInfo());
@@ -244,8 +225,7 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
   void CreateTetherService() {
     tether_service_ = base::WrapUnique(new TestTetherService(
         profile_.get(), fake_power_manager_client_.get(),
-        fake_session_manager_client_.get(), fake_cryptauth_service_.get(),
-        network_state_handler()));
+        fake_cryptauth_service_.get(), network_state_handler()));
 
     fake_notification_presenter_ =
         new chromeos::tether::FakeNotificationPresenter();
@@ -270,14 +250,6 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
   void ShutdownTetherService() {
     if (tether_service_)
       tether_service_->Shutdown();
-  }
-
-  void SetIsScreenLocked(bool is_screen_locked) {
-    fake_session_manager_client_->set_is_screen_locked(is_screen_locked);
-    if (is_screen_locked)
-      tether_service_->ScreenIsLocked();
-    else
-      tether_service_->ScreenIsUnlocked();
   }
 
   void SetTetherTechnologyStateEnabled(bool enabled) {
@@ -340,8 +312,6 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
 
   std::unique_ptr<TestingProfile> profile_;
   std::unique_ptr<chromeos::FakePowerManagerClient> fake_power_manager_client_;
-  std::unique_ptr<ExtendedFakeSessionManagerClient>
-      fake_session_manager_client_;
   std::unique_ptr<TestingPrefServiceSimple> test_pref_service_;
   std::unique_ptr<NiceMock<MockCryptAuthDeviceManager>>
       mock_cryptauth_device_manager_;
