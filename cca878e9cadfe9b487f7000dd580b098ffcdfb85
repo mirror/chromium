@@ -22,6 +22,30 @@
       "revId": "cca878e9cadfe9b487f7000dd580b098ffcdfb85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d7901e_1afbfdbd",
+        "filename": "components/data_reduction_proxy/core/browser/network_property.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-30T20:09:12Z",
+      "side": 1,
+      "message": "It would be used for more than serializing/deserializing. I am planning to remove the variables |is_captive_portal_|, |secure_proxy_allowed_| from config.cc, and instead use these structs.",
+      "parentUuid": "6c2fdce5_356dc33c",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "cca878e9cadfe9b487f7000dd580b098ffcdfb85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
