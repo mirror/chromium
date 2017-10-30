@@ -55,13 +55,9 @@ WebViewOAuth2TokenServiceFactory::BuildServiceInstanceFor(
     web::BrowserState* context) const {
   WebViewBrowserState* browser_state =
       WebViewBrowserState::FromBrowserState(context);
-  CWVWebViewConfiguration* web_view_configuration =
-      [CWVWebViewConfiguration defaultConfiguration];
-  DCHECK_EQ(web_view_configuration.browserState, browser_state);
   auto delegate = base::MakeUnique<ProfileOAuth2TokenServiceIOSDelegate>(
       WebViewSigninClientFactory::GetForBrowserState(browser_state),
-      base::MakeUnique<WebViewProfileOAuth2TokenServiceIOSProviderImpl>(
-          web_view_configuration.authenticationController),
+      base::MakeUnique<WebViewProfileOAuth2TokenServiceIOSProviderImpl>(nil),
       WebViewAccountTrackerServiceFactory::GetForBrowserState(browser_state),
       WebViewSigninErrorControllerFactory::GetForBrowserState(browser_state));
   return base::MakeUnique<ProfileOAuth2TokenService>(std::move(delegate));
