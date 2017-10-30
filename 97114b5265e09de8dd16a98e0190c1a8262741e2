@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b3351da7_e81e91b6",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "or source_url.SchemeIsHttpOrHttps()",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4193ad5b_2a3abec2",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 14
@@ -19,6 +36,131 @@
         "endLine": 35,
         "endChar": 31
       },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aadbb56_c8ca8bea",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "\"top-left corner\" part is redundant?",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b4b646_34d33419",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "DCHECK(!base::ContainsKey(...))",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30bb0634_3ec8f2d8",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "Suggest creating a MediaRoute local variable for this so we don\u0027t have to repeatedly invoke operator[].",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe407d0_cff29cf0",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "Hmm... longer term (once Cast/Cloud MRPs are also in-browser) I wonder if it makes more sense for the MRP to handle reconnect for 1-UA presentations. PSDImpl then does not have to care about whether the presentation is \"offscreen\" or not and always forwards the reconnect to the MRP. No action required in this patch.",
+      "range": {
+        "startLine": 118,
+        "startChar": 64,
+        "endLine": 118,
+        "endChar": 0
+      },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb3c046e_47ca635f",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "Add TODO here?",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdaa113e_6e20f977",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "NOTREACHED() here and below?",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce032a6_dc14510f",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "Is this call necessary if media_source is not supported by the MRP?",
       "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -48,6 +190,47 @@
     },
     {
       "key": {
+        "uuid": "ae0e7934_cf18d1c1",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "Agreed with Brandon; this doesn\u0027t need to be implemented. This method really ought to be named for what it actually does, which is to manually add a sink that is not discovered by the MRP on its own. Typically you wouldn\u0027t need to search a sink from MRP anyway.",
+      "parentUuid": "c63f949e_8b91429d",
+      "range": {
+        "startLine": 214,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 35
+      },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc1bd39_abef1299",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "Is this computation expensive? Have you considered storing a cached sink list in the MRP?",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c6df5c2_d41e560c",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 14
@@ -65,6 +248,91 @@
         "endLine": 308,
         "endChar": 0
       },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "412f409b_ad5a7591",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "This is already implied by !display.IsInternal() above?",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d74cfec_004f0dac",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "The last one is a fairly specific requirement. I am not sure what is its purpose. Why not just \"have a browser window\", or just do away with this requirement entirely?",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3fa7a4_8cb8fce4",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "Can a simpler data structure (e.g. std::vector\u003cstd::pair\u003c\u003e\u003e) be used here?",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1276038_c71536b6",
+        "filename": "chrome/browser/media/router/offscreen_presentation_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "base::ContainsKey",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4dfa75f_9c1383d4",
+        "filename": "chrome/browser/media/router/presentation_service_delegate_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-30T22:26:18Z",
+      "side": 1,
+      "message": "A couple of thoughts:\n\n- There are more ways a window can become host to a presentation controller than just StartPresentation(), for example reconnect and browser menu. This won\u0027t catch all cases if the requirement is to ignore screens who is \"about to become a presentation controller\", which seemed a bit arbitrary to be anyway.\n- The requirement seems to have nothing to do with 1-ua presentations, so LocalPresentationManager doesn\u0027t seem like a good place for it. Maybe MediaRouterUIService is a better place for it. It\u0027s still iffy though since they are both per-profile (not global) objects.\n\nI would prefer to implement something simpler if possible and that may mean changing the requirements a bit.",
       "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
