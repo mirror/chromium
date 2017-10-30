@@ -22,6 +22,30 @@
       "revId": "c44a2e01d8053585dde897581a25ad2dc0ca302b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9181c8d7_d0c06f66",
+        "filename": "third_party/polymer/v1_0/css_strip_prefixes_test.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-30T21:43:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd7ac11f_ed163607",
+      "range": {
+        "startLine": 37,
+        "startChar": 36,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "c44a2e01d8053585dde897581a25ad2dc0ca302b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
