@@ -22,6 +22,30 @@
       "revId": "34a52b9a34763b32bcaf9ce9af6915449b8ad0d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79e32e8_67b74fd6",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2070,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-30T18:04:04Z",
+      "side": 1,
+      "message": "This is matching the insets used for GetLocalBounds() just below this diff, I\u0027m not sure why that is originally in place, but I figure the same should be used for both rects.",
+      "parentUuid": "8994d6a2_b6ebca76",
+      "range": {
+        "startLine": 2070,
+        "startChar": 31,
+        "endLine": 2070,
+        "endChar": 41
+      },
+      "revId": "34a52b9a34763b32bcaf9ce9af6915449b8ad0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
