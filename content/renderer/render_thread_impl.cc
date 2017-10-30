@@ -1495,6 +1495,11 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
   if (result != gpu::ContextResult::kSuccess)
     return nullptr;
 
+  bool gpu_compositing_enabled =
+      gpu_channel_host->gpu_feature_info()
+          .status_values[gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING] ==
+      gpu::kGpuFeatureStatusEnabled;
+
   scoped_refptr<base::SingleThreadTaskRunner> media_task_runner =
       GetMediaThreadTaskRunner();
   const bool enable_video_accelerator =
@@ -2017,16 +2022,9 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       callback.Run(nullptr);
       return;
     }
-    scoped_refptr<gpu::GpuChannelHost> channel = EstablishGpuChannelSync();
-    // If the channel could not be established correctly, then return null. This
-    // would cause the compositor to wait and try again at a later time.
-    if (!channel) {
-      callback.Run(nullptr);
-      return;
-    }
     RendererWindowTreeClient::Get(routing_id)
         ->RequestLayerTreeFrameSink(
-            gpu_->CreateContextProvider(std::move(channel)),
+            gpu_->CreateContextProvider(std::move(gpu_channel_host)),
             GetGpuMemoryBufferManager(), callback);
     return;
   }

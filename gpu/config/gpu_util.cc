@@ -328,6 +328,14 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
       GetAcceleratedVideoDecodeFeatureStatus(
           blacklisted_features, use_swift_shader, use_swift_shader_for_webgl);
 
+#if defined(USE_AURA)
+  if (gpu_feature_info.status_values[GPU_FEATURE_TYPE_GPU_COMPOSITING] !=
+      kGpuFeatureStatusEnabled) {
+    gpu_feature_info.status_values[GPU_FEATURE_TYPE_ACCELERATED_2D_CANVAS] =
+        kGpuFeatureStatusSoftware;
+  }
+#endif
+
   std::set<base::StringPiece> all_disabled_extensions;
   std::string disabled_gl_extensions_value =
       command_line->GetSwitchValueASCII(switches::kDisableGLExtensions);
