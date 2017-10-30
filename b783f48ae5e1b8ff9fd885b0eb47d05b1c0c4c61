@@ -34,6 +34,24 @@
       "revId": "b783f48ae5e1b8ff9fd885b0eb47d05b1c0c4c61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5d59ce_03138716",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/Coordinates.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-30T22:41:48Z",
+      "side": 1,
+      "message": "\u003e That would likely require that RenderCoordinates be put back to DEPS exception. I prefer the opposite, going towards eliminating all the exceptions. Are you okay with tests in embedders having them, as long as it\u0027s not for products?\n\ndon\u0027t understand.. this class itself is not part of the public interface, so can only be used by content tests, but then content tests can already access RenderCoordinates, so then what\u0027s the problem?\n\nI didn\u0027t look at chrome since I don\u0027t own that code, but looks like chrome tests are importing this class without DEPS violation? how\u0027s that possible?",
+      "parentUuid": "07cb01b5_cf57eb18",
+      "revId": "b783f48ae5e1b8ff9fd885b0eb47d05b1c0c4c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
