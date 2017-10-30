@@ -46,6 +46,30 @@
       "revId": "89fa276f418277ecbe5e6565f5d6bd44a75e191d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83c72da_8cc9aec0",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-30T14:32:25Z",
+      "side": 1,
+      "message": "The logic is the same as getFormIdentifier below which is also autofill.\nSo I think one of the two method should be renamed.\nAs this file is common.js and the method can be used for other usages than autofill, I opted to\nchange in this direction.\nBut I have no strong feeling on not renaming it, or rename the other way.",
+      "parentUuid": "e828fc86_ef10618f",
+      "range": {
+        "startLine": 439,
+        "startChar": 9,
+        "endLine": 439,
+        "endChar": 43
+      },
+      "revId": "89fa276f418277ecbe5e6565f5d6bd44a75e191d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
