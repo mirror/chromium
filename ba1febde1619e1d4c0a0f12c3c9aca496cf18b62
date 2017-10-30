@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8e51a2f9_0e75c2e7",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2009,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-30T22:29:43Z",
+      "side": 1,
+      "message": "The coordinator listens for dispatcher calls, so it needs to be instantiated before. Unless we want BVC to listen to those and init the coordinator then. I personally think that the more code we get out of Toolbar and BVC the better.",
+      "parentUuid": "2ca05e5c_7f75f091",
+      "range": {
+        "startLine": 2009,
+        "startChar": 0,
+        "endLine": 2009,
+        "endChar": 70
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f386def6_0b04248e",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
@@ -42,6 +66,23 @@
         "endLine": 2018,
         "endChar": 39
       },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2e91eb_07c6da38",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-30T22:29:43Z",
+      "side": 1,
+      "message": "Same thing with Toolbar, I think the coordinator should let the configurationProvider know a certain event has happened. It will help us make things cleaner, or at least tuck them away behind the Coordinator.",
       "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -226,6 +267,98 @@
     },
     {
       "key": {
+        "uuid": "b6969617_31b89ef4",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-30T22:29:43Z",
+      "side": 1,
+      "message": "Toolbar shouldn\u0027t own the ToolsMenuCoordinator or have a reference to it. I think we can extract most of the Coordinator related logic into the actual coordinator, and only call certain delegate actions to the Toolbar via the PresentationProvider or some sort of UIUpdater provider.",
+      "range": {
+        "startLine": 47,
+        "startChar": 1,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68f58ec_93d7b64f",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-30T22:29:43Z",
+      "side": 1,
+      "message": "nit: If no comment please delete the above space. Though I realize we might get rid of this entirely.",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 23
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03cdb8e5_39ad343b",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-30T22:29:43Z",
+      "side": 1,
+      "message": "ToolbarCoordinator should listen to these notifications and then tell the delegate (toolbar) a certain event has happened.",
+      "range": {
+        "startLine": 292,
+        "startChar": 5,
+        "endLine": 292,
+        "endChar": 22
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229de1e2_60fe4cd3",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-30T22:29:43Z",
+      "side": 1,
+      "message": "I guess we can keep track if the Menu was displayed or not instead of asking the Coordinator (especially since toolbar_controller knows when it was presented and dismissed). Its not the best solution but it could probably work for now, in order to remove the Coordinator property.",
+      "range": {
+        "startLine": 655,
+        "startChar": 11,
+        "endLine": 655,
+        "endChar": 33
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24167cbf_465c3d47",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h",
         "patchSetId": 5
@@ -310,6 +443,70 @@
         "startLine": 44,
         "startChar": 11,
         "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07aafb2e_96dc0a17",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-30T22:29:43Z",
+      "side": 1,
+      "message": "I think using ToolsMenuPopupXXXX overall would be clearer for everyone, especially for people that are not that exposed to our codebase. At least for me, the ToolsMenu part is the most important to quickly relate this coordinator to the Menu.",
+      "parentUuid": "a763d44c_95596215",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b111a9_5c68245f",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-30T22:29:43Z",
+      "side": 1,
+      "message": "Does this also update the UI of the Controller as a side effect? If it does, it might be worth adding that to the method name or the comments.",
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94bceb6d_8ed87811",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-30T22:29:43Z",
+      "side": 1,
+      "message": "Should we remove the double !! ?",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
         "endChar": 32
       },
       "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
