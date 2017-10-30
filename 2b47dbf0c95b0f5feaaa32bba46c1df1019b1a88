@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f364d937_6ae23113",
+        "filename": "third_party/WebKit/Source/core/page/CreateWindow.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-30T23:41:49Z",
+      "side": 1,
+      "message": "Aren\u0027t we getting dupe events now in some cases?",
+      "revId": "2b47dbf0c95b0f5feaaa32bba46c1df1019b1a88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
