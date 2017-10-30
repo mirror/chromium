@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d4041ee_bec023d3",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T08:26:29Z",
+      "side": 1,
+      "message": "Can you annotate this like:\n\n// Set an active worker.",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82dc55a7_b31b9f76",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T08:26:29Z",
+      "side": 1,
+      "message": "// Set an installing worker.",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3794aa2_a23f29b5",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T08:26:29Z",
+      "side": 1,
+      "message": "// Promote the installing worker to waiting.",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a296b8e_d2aafe32",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T08:26:29Z",
+      "side": 1,
+      "message": "// Remove the waiting worker.",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27e7e49_f6f1f829",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T08:26:29Z",
+      "side": 1,
+      "message": "Are we going to remove creation_task_runner_ sometime? It\u0027d be nice for the messages to be handled on the correct thread automatically.",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38232052_83c46081",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T08:26:29Z",
+      "side": 1,
+      "message": "See ChangedVersionAttributesMask in service_worker_types.h for details.",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55ad914_7b939661",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-30T08:26:29Z",
+      "side": 1,
+      "message": "It\u0027d be nice to mojofy the mask too, so we can just use ChangedVersionAttributesMask directly here. But it can be follow up work.",
+      "revId": "5ca66d63fd1bf6dd53d65eac9688295c70384a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
