@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db598053_be51288f",
+        "filename": "chrome/browser/shell_integration_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T17:27:40Z",
+      "side": 1,
+      "message": "Why does this need a new connector instead of content::ServiceManagerConnection::GetForProcess()-\u003eGetConnector() ?",
+      "range": {
+        "startLine": 476,
+        "startChar": 2,
+        "endLine": 476,
+        "endChar": 56
+      },
+      "revId": "594b45f115655fce92d37520ec3ef4710c76295f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d3cd2d_594fa9bc",
+        "filename": "chrome/services/chrome_win_util/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T17:27:40Z",
+      "side": 1,
+      "message": "I would expect the directory name to match the service name (shell_util_win (see justification below for why I think ending in \u0027win\u0027 is better)). If you envision this directory getting more stuff, then maybe \u0027util_win\u0027 (the chrome prefix is redundant with the root directory name).",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "594b45f115655fce92d37520ec3ef4710c76295f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db777792_3d712cb1",
+        "filename": "chrome/services/chrome_win_util/chrome_win_util_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T17:27:40Z",
+      "side": 1,
+      "message": "MakeUnique.",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 66
+      },
+      "revId": "594b45f115655fce92d37520ec3ef4710c76295f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52c39739_35b19d9d",
+        "filename": "chrome/services/chrome_win_util/chrome_win_util_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T17:27:40Z",
+      "side": 1,
+      "message": "If you\u0027re going to have a factory, should the constructor be private?",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 67
+      },
+      "revId": "594b45f115655fce92d37520ec3ef4710c76295f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2212a1_943cb105",
+        "filename": "chrome/services/chrome_win_util/public/interfaces/win_shell_util.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-30T17:27:40Z",
+      "side": 1,
+      "message": "optional: ShellUtilWin is consistent with the other mojom we have with \u0027win\u0027 in the name (ModuleEventSink).",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "594b45f115655fce92d37520ec3ef4710c76295f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
