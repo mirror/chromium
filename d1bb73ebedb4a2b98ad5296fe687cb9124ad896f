@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afdf2ccb_a9d8a245",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-30T21:09:12Z",
+      "side": 1,
+      "message": "Nit: Am I correct that Complete() should never be called with callback_ null? If so you should delete the check as it would mask a failure.",
+      "revId": "d1bb73ebedb4a2b98ad5296fe687cb9124ad896f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50166c35_c9118e42",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-30T21:09:12Z",
+      "side": 1,
+      "message": "Nit: no need for comma.",
+      "revId": "d1bb73ebedb4a2b98ad5296fe687cb9124ad896f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
