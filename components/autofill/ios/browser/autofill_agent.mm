@@ -696,7 +696,7 @@ void GetFormAndField(autofill::FormData* form,
   // enough forms to make them likely candidates for profile completion are
   // extracted.
   [self fetchFormsWithName:base::string16()
-      minimumRequiredFieldsCount:autofill::kRequiredFieldsForPredictionRoutines
+      minimumRequiredFieldsCount:autofill::MinRequiredFieldsForPrediction()
                          pageURL:pageURL
                completionHandler:completionHandler];
 }
