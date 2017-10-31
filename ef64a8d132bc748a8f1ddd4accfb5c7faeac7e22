@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "4c40c41c_8730da9b",
+        "filename": "media/ffmpeg/ffmpeg_decoding_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T22:53:15Z",
+      "side": 1,
+      "message": "sorry, read too fast and didn\u0027t see the argument to CHECK(...)",
+      "parentUuid": "05d5160a_5afe0c41",
+      "range": {
+        "startLine": 43,
+        "startChar": 53,
+        "endLine": 43,
+        "endChar": 66
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b58c5eec_faec48ea",
         "filename": "media/ffmpeg/ffmpeg_decoding_loop.h",
         "patchSetId": 5
@@ -460,6 +484,30 @@
       "side": 1,
       "message": "Acknowledged but left as is. I think it couldn\u0027t be clearer, the function is literally _ToAVCodecContext_ :)",
       "parentUuid": "6238497c_006e491c",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 10
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bc4301a_f9bf41d3",
+        "filename": "media/filters/media_file_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T22:53:15Z",
+      "side": 1,
+      "message": "Fair enough - but my point is we can\u0027t tell its a unique pointer. Or a pointer at all for that matter.",
+      "parentUuid": "c980c45a_101c06e5",
       "range": {
         "startLine": 64,
         "startChar": 6,
