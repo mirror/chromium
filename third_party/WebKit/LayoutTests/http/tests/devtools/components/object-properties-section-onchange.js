@@ -8,7 +8,7 @@
   await TestRunner.loadModule('object_ui');
   await TestRunner.showPanel('console');
 
-  TestRunner.addSniffer(Console.ConsoleViewMessage.prototype, '_onObjectChange', onChange, true /* sticky */);
+  TestRunner.addSniffer(Console.ConsoleViewMessage.prototype, '_clearTextCache', onChange, true /* sticky */);
   await TestRunner.evaluateInPagePromise(`
     var arrayWithRanges = new Array(101).fill(1);
     var localObject = {a: arrayWithRanges, get b() { return 'myGetterValue'; } };
