@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5167ad5_7997d7c3",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T04:09:08Z",
+      "side": 1,
+      "message": "Is this needed? I\u0027d prefer we just have the one weak pointer, in the base class, and static_cast it in the accessor.",
+      "revId": "ca5668704b0b1c8277caf0101f9cc5fe981ed81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f049c69_4397f845",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T04:09:08Z",
+      "side": 1,
+      "message": "With the change below, this can just be\n\nint thickness \u003d cocoa_scroll_bar_-\u003eScrollbarThickness();",
+      "revId": "ca5668704b0b1c8277caf0101f9cc5fe981ed81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4528051f_db17b97c",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T04:09:08Z",
+      "side": 1,
+      "message": "I played with a vertical Cocoa scroll bar (one in NSTextView - not the one in Chrome which we hack a bunch), and the inset at the top and bottom definitely does not change when it expands. The inset on the right edge also definitely does not change. On the left edge, it\u0027s harder to tell - it might be constant - but it does need to be more than 2 to look right.\n\n\nI think before this line we should be doing\n\n  gfx::Rect bounds(GetLocalBounds());\n  bounds.Inset(kScrollbarThumbInset, kScrollbarThumbInset);\n  if (IsHorizontal())\n    bounds.Inset(0, kScrollerTrackBorderWidth, 0, 0);\n  else if (base::i18n::IsRTL())\n    bounds.Inset(0, 0, kScrollerTrackBorderWidth, 0);\n  else\n    bounds.Inset(kScrollerTrackBorderWidth, 0, 0, 0);\n\n\n\n\nWe can just delete CocoaScrollBar::ThumbInset() and some constants.",
+      "revId": "ca5668704b0b1c8277caf0101f9cc5fe981ed81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c930c03e_73b13167",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T04:09:08Z",
+      "side": 1,
+      "message": "these are backward :). Usually this is what insets for the up/down arrows that appear at the ends of Windows scrollers. So Horizontal scrollers need to inset X-values.\n\nBut also I don\u0027t think it makes sense to use the animated value. We just want to ensure the tip of the scroller \"pill\" doesn\u0027t go flush to the end of the track.\n\nMaybe this is also a case where we shouldn\u0027t be insetting the view bounds, but instead just the drawing done in OnPaint. I.e., I think this can actually be implemented as just\n\n  return GetLocalBounds();",
+      "revId": "ca5668704b0b1c8277caf0101f9cc5fe981ed81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f956afc_92dda13f",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T04:09:08Z",
+      "side": 1,
+      "message": "(I think these need to be swapped in RTL, but that\u0027s a separate bug :)",
+      "revId": "ca5668704b0b1c8277caf0101f9cc5fe981ed81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
