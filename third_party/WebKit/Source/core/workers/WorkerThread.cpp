@@ -47,7 +47,6 @@
 #include "platform/WaitableEvent.h"
 #include "platform/WebThreadSupportingGC.h"
 #include "platform/bindings/Microtask.h"
-#include "platform/heap/SafePoint.h"
 #include "platform/heap/ThreadState.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/child/webthread_impl_for_worker_scheduler.h"
