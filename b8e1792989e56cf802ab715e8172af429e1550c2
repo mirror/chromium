@@ -260,6 +260,29 @@
     },
     {
       "key": {
+        "uuid": "badf3332_76a5c802",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-31T00:49:26Z",
+      "side": 1,
+      "message": "How about just call \"worker\" here?",
+      "range": {
+        "startLine": 234,
+        "startChar": 38,
+        "endLine": 234,
+        "endChar": 48
+      },
+      "revId": "b8e1792989e56cf802ab715e8172af429e1550c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b0cc3d7_dbc15a6a",
         "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 2
