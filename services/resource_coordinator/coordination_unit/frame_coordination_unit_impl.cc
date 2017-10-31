@@ -57,6 +57,19 @@ void FrameCoordinationUnitImpl::RemoveChildFrame(
   }
 }
 
+void FrameCoordinationUnitImpl::RecalculateProperty(
+    const mojom::PropertyType property_type) {
+  if (property_type == mojom::PropertyType::kLowMainThreadLoad) {
+    int64_t is_main_thread_load_low;
+    if (GetProcessCoordinationUnit()->GetProperty(
+            mojom::PropertyType::kLowMainThreadLoad,
+            &is_main_thread_load_low)) {
+      SetProperty(mojom::PropertyType::kLowMainThreadLoad,
+                  is_main_thread_load_low);
+    }
+  }
+}
+
 void FrameCoordinationUnitImpl::SetAudibility(bool audible) {
   SetProperty(mojom::PropertyType::kAudible, audible);
 }

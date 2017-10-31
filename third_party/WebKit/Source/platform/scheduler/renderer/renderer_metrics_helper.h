@@ -17,6 +17,7 @@ namespace blink {
 class WebFrameScheduler;
 namespace scheduler {
 
+enum class MainThreadLoadState;
 class MainThreadTaskQueue;
 class RendererSchedulerImpl;
 
@@ -104,6 +105,7 @@ class PLATFORM_EXPORT RendererMetricsHelper {
   TaskDurationPerQueueTypeMetricReporter hidden_music_task_duration_reporter;
 
   TaskDurationMetricReporter<FrameType> frame_type_duration_reporter;
+  MainThreadLoadState main_thread_load_state;
 
   DISALLOW_COPY_AND_ASSIGN(RendererMetricsHelper);
 };

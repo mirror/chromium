@@ -29,6 +29,7 @@ class PLATFORM_EXPORT RendererResourceCoordinator
   ~RendererResourceCoordinator();
 
   void SetExpectedTaskQueueingDuration(base::TimeDelta duration);
+  void SetLowMainThreadLoad(bool is_main_thread_load_low);
 
  protected:
   RendererResourceCoordinator();

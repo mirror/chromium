@@ -68,6 +68,11 @@ void ProcessCoordinationUnitImpl::SetLaunchTime(base::Time launch_time) {
   SetProperty(mojom::PropertyType::kLaunchTime, launch_time.ToTimeT());
 }
 
+void ProcessCoordinationUnitImpl::SetLowMainThreadLoad(
+    bool is_main_thread_load_low) {
+  SetProperty(mojom::PropertyType::kLowMainThreadLoad, is_main_thread_load_low);
+}
+
 void ProcessCoordinationUnitImpl::SetPID(int64_t pid) {
   SetProperty(mojom::PropertyType::kPID, pid);
 }
@@ -108,6 +113,11 @@ void ProcessCoordinationUnitImpl::PropagateProperty(
               mojom::PropertyType::kExpectedTaskQueueingDuration);
         }
       }
+      break;
+    }
+    case mojom::PropertyType::kLowMainThreadLoad: {
+      for (auto* frame_cu : frame_coordination_units_)
+        frame_cu->RecalculateProperty(mojom::PropertyType::kLowMainThreadLoad);
       break;
     }
     default:

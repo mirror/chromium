@@ -28,6 +28,8 @@ class FrameCoordinationUnitImpl
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
   ~FrameCoordinationUnitImpl() override;
 
+  void RecalculateProperty(const mojom::PropertyType property_type) override;
+
   // FrameCoordinationUnit implementation.
   void AddChildFrame(const CoordinationUnitID& cu_id) override;
   void RemoveChildFrame(const CoordinationUnitID& cu_id) override;

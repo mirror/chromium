@@ -80,5 +80,6 @@ interface ProcessCoordinationUnit {
   SetCPUUsage(double cpu_usage);
   SetExpectedTaskQueueingDuration(mojo.common.mojom.TimeDelta duration);
   SetLaunchTime(mojo.common.mojom.Time launch_time);
+  SetLowMainThreadLoad(bool is_main_thread_load_low);
   SetPID(int64 pid);
 };
