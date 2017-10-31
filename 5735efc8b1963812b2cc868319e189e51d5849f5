@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f5c73dd_b05d3115",
+        "filename": "third_party/WebKit/Source/core/dom/FlatTreeTraversalTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-31T04:25:48Z",
+      "side": 1,
+      "message": "If the purpose of this test is to confirm that InclusiveAncestor behaves as if it were consecutive calls of FlatTreeTraversalParent(), this HTML is complex rather than necessary.\n\nPlease use a simple HTML.\ne.g. \"\u003cdiv\u003e\u003cdiv\u003e\u003cdiv id\u003da\u003e\u003c/div\u003e\u003c/div\u003e\u003c/div\u003e\" is enough. No need to involve a shadow tree.\nThat should be tested separately on a test for FlatTreeTraversal::Parent",
+      "revId": "5735efc8b1963812b2cc868319e189e51d5849f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
