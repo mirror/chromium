@@ -2,8 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_RENDERER_MEDIA_RTC_VIDEO_RENDERER_H_
-#define CONTENT_RENDERER_MEDIA_RTC_VIDEO_RENDERER_H_
+#ifndef CONTENT_RENDERER_MEDIA_MEDIA_STREAM_VIDEO_RENDERER_SINK_H_
+#define CONTENT_RENDERER_MEDIA_MEDIA_STREAM_VIDEO_RENDERER_SINK_H_
+
+#include <memory>
 
 #include "base/callback.h"
 #include "base/macros.h"
@@ -70,8 +72,7 @@ class CONTENT_EXPORT MediaStreamVideoRendererSink
   };
 
   // MediaStreamVideoSink implementation. Called on the main thread.
-  void OnReadyStateChanged(
-      blink::WebMediaStreamSource::ReadyState state) override;
+  void OnSourceStateChanged(blink::WebMediaStreamSource::State state) override;
 
   // Helper methods used for testing.
   State GetStateForTesting();
@@ -99,4 +100,4 @@ class CONTENT_EXPORT MediaStreamVideoRendererSink
 
 }  // namespace content
 
-#endif  // CONTENT_RENDERER_MEDIA_RTC_VIDEO_RENDERER_H_
+#endif  // CONTENT_RENDERER_MEDIA_MEDIA_STREAM_VIDEO_RENDERER_SINK_H_

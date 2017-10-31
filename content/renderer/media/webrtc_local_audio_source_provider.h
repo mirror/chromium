@@ -63,8 +63,7 @@ class CONTENT_EXPORT WebRtcLocalAudioSourceProvider
   void OnData(const media::AudioBus& audio_bus,
               base::TimeTicks estimated_capture_time) override;
   void OnSetFormat(const media::AudioParameters& params) override;
-  void OnReadyStateChanged(
-      blink::WebMediaStreamSource::ReadyState state) override;
+  void OnSourceStateChanged(blink::WebMediaStreamSource::State state) override;
 
   // blink::WebAudioSourceProvider implementation.
   void SetClient(blink::WebAudioSourceProviderClient* client) override;

@@ -103,12 +103,12 @@ void SpeechRecognitionAudioSink::OnSetFormat(
   audio_converter_->AddInput(this);
 }
 
-void SpeechRecognitionAudioSink::OnReadyStateChanged(
-    blink::WebMediaStreamSource::ReadyState state) {
+void SpeechRecognitionAudioSink::OnSourceStateChanged(
+    blink::WebMediaStreamSource::State state) {
   DCHECK(main_render_thread_checker_.CalledOnValidThread());
   DCHECK(!track_stopped_);
 
-  if (state == blink::WebMediaStreamSource::kReadyStateEnded) {
+  if (state == blink::WebMediaStreamSource::kStateEnded) {
     track_stopped_ = true;
 
     if (!on_stopped_cb_.is_null())

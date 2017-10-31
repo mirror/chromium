@@ -69,11 +69,7 @@ class WebMediaStreamSource {
 
   enum Type { kTypeAudio, kTypeVideo };
 
-  enum ReadyState {
-    kReadyStateLive = 0,
-    kReadyStateMuted = 1,
-    kReadyStateEnded = 2
-  };
+  enum State { kStateLive = 0, kStateMuted = 1, kStateEnded = 2 };
 
   WebMediaStreamSource() {}
   WebMediaStreamSource(const WebMediaStreamSource& other) { Assign(other); }
@@ -101,8 +97,8 @@ class WebMediaStreamSource {
   BLINK_PLATFORM_EXPORT WebString GetName() const;
   BLINK_PLATFORM_EXPORT bool Remote() const;
 
-  BLINK_PLATFORM_EXPORT void SetReadyState(ReadyState);
-  BLINK_PLATFORM_EXPORT ReadyState GetReadyState() const;
+  BLINK_PLATFORM_EXPORT void SetState(State);
+  BLINK_PLATFORM_EXPORT State GetState() const;
 
   // Extra data associated with this object.
   // If non-null, the extra data pointer will be deleted when the object is

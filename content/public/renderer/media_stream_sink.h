@@ -18,8 +18,7 @@ namespace content {
 // object underlying a blink::WebMediaStreamTrack.
 class CONTENT_EXPORT MediaStreamSink {
  public:
-  virtual void OnReadyStateChanged(
-      blink::WebMediaStreamSource::ReadyState state) {}
+  virtual void OnSourceStateChanged(blink::WebMediaStreamSource::State state) {}
   virtual void OnEnabledChanged(bool enabled) {}
   virtual void OnContentHintChanged(
       blink::WebMediaStreamTrack::ContentHintType content_hint) {}
