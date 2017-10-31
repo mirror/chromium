@@ -264,6 +264,8 @@ ProcessInfoVector GetProcessInfo(ukm::UkmRecorder& ukm_recorder) {
     process_infos.push_back(std::move(process_info));
   }
 
+  (void)0;
+
   // Process 202 always has 2 URL
   {
     ProcessInfoPtr process_info(
