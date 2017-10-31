@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5b81a97d_7b1690a7",
+        "filename": "chrome/browser/banners/app_banner_infobar_delegate_desktop.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-31T06:35:41Z",
+      "side": 1,
+      "message": "manifest_ is still used for stats. Removed manifest_url_ in https://chromium-review.googlesource.com/c/chromium/src/+/746401",
+      "parentUuid": "22b6e07e_07b9cb8e",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 38
+      },
+      "revId": "452f6a429bc1cddbcacc4ae4b23cd8fc5ad5738e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0493b6bc_e69a7661",
         "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
         "patchSetId": 16
