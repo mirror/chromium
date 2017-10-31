@@ -12,7 +12,7 @@
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "components/safe_browsing/db/database_manager.h"
-#include "components/safe_browsing/db/util.h"
+#include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "url/gurl.h"
 
 namespace base {

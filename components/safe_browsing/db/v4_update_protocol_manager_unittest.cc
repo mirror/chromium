@@ -15,7 +15,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "components/safe_browsing/db/safebrowsing.pb.h"
-#include "components/safe_browsing/db/util.h"
+#include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "components/safe_browsing/db/v4_test_util.h"
 #include "net/base/escape.h"
 #include "net/base/load_flags.h"

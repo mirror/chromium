@@ -12,7 +12,7 @@
 #include "base/base64url.h"
 #include "base/bind.h"
 #include "base/logging.h"
-#include "components/safe_browsing/db/util.h"
+#include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "components/safe_browsing/db/v4_test_util.h"
 #include "net/base/url_util.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
