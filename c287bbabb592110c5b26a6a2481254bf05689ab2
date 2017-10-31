@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0738bab_3cc25ad6",
+        "filename": "base/win/winrt_storage_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:57:49Z",
+      "side": 1,
+      "message": "This should just be a raw pointer to indicate this doesn\u0027t pick up any ownership.",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 74
+      },
+      "revId": "c287bbabb592110c5b26a6a2481254bf05689ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd7d24f_5683f200",
+        "filename": "base/win/winrt_storage_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:57:49Z",
+      "side": 1,
+      "message": "This however, can remain a ComPtr to indicate an ownership transfer.",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 75
+      },
+      "revId": "c287bbabb592110c5b26a6a2481254bf05689ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
