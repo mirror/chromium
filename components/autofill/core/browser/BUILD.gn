@@ -394,11 +394,13 @@ source_set("unit_tests") {
     "webdata/autofill_wallet_syncable_service_unittest.cc",
     "webdata/web_data_service_unittest.cc",
   ]
-
   if (is_ios || is_android) {
     sources += [ "autofill_assistant_unittest.cc" ]
   }
 
+  data = [
+    "//third_party/libaddressinput/src/testdata/",
+  ]
   deps = [
     ":browser",
     ":test_support",
