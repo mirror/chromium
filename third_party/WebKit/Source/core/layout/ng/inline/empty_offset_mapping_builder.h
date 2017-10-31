@@ -26,6 +26,8 @@ class EmptyOffsetMappingBuilder {
   void CollapseTrailingSpace(unsigned) {}
   void Composite(const EmptyOffsetMappingBuilder&) {}
   void Concatenate(const EmptyOffsetMappingBuilder&) {}
+  void EnterContainer(const void*) {}
+  void ExitContainer(const void*) {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(EmptyOffsetMappingBuilder);
