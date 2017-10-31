@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "593dcdcb_8399aa79",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/layout_test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T19:59:35Z",
+      "side": 1,
+      "message": "Note, shard_tests no longer takes this argument (run_singly), do any unit tests still fail if this argument is not passed here?",
+      "revId": "baab9e04e5a74f98fcf2e2b9e96b51bb2cefdc5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
