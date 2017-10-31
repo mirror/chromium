@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "3d6def28_45a62b02",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-31T17:43:07Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "fcff4e81_d311648b",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 1
+      },
+      "revId": "e29a7ee3b94fc1d3fac489b8f64fda47f4671d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5415c4c_28b5a1e4",
         "filename": "third_party/zlib/contrib/tests/OWNERS",
         "patchSetId": 1
@@ -91,6 +115,30 @@
       "revId": "e29a7ee3b94fc1d3fac489b8f64fda47f4671d42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a59853_b1f90193",
+        "filename": "third_party/zlib/contrib/tests/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-31T17:43:07Z",
+      "side": 1,
+      "message": "I made a subdir like you suggested and made you a general owner of it.",
+      "parentUuid": "67200ae6_84335dff",
+      "range": {
+        "startLine": 3,
+        "startChar": 2,
+        "endLine": 3,
+        "endChar": 13
+      },
+      "revId": "e29a7ee3b94fc1d3fac489b8f64fda47f4671d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
