@@ -16,6 +16,47 @@
       "revId": "1906c71155734e7cadbaeaab9398ab1f034b4357",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76151163_cf8d2c53",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-31T23:40:34Z",
+      "side": 1,
+      "message": "I concur. I\u0027d leave this out in lieu of checking the extension context capability.",
+      "parentUuid": "935937f8_b34021fe",
+      "revId": "1906c71155734e7cadbaeaab9398ab1f034b4357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36298f14_2483ca73",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-31T23:40:34Z",
+      "side": 1,
+      "message": "nit: Rename to disable_gpu_memory_buffer_textures? Compositor resources is a bit vague because this also applies to non-compositor use cases.",
+      "range": {
+        "startLine": 437,
+        "startChar": 20,
+        "endLine": 437,
+        "endChar": 66
+      },
+      "revId": "1906c71155734e7cadbaeaab9398ab1f034b4357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
