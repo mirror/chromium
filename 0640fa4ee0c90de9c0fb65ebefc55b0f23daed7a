@@ -92,6 +92,30 @@
       "revId": "0640fa4ee0c90de9c0fb65ebefc55b0f23daed7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f7cb09_cdce4d1f",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-31T23:03:14Z",
+      "side": 1,
+      "message": "I\u0027ve tried early return if IsLoadCompleted in the patchset here: https://chromium-review.googlesource.com/c/chromium/src/+/744985/3\n\nThis fails quite a few layout tests (https://storage.googleapis.com/chromium-layout-test-archives/linux_chromium_rel_ng/577105/layout-test-results/results.html), and some browser tests:\n- ExtensionWebRequestApiTest.WebRequestUnloadImmediately\n- ExecuteScriptApiTest.FrameWithHttp204\n- PlatformAppNavigationRedirectorBrowserTest.ClickInTabIntercepted\n- AdsPageLoadMetricsObserverBrowserTest.DocOverwritesNavigation\n\nMaybe I should ask Nate for a comment about this (he authored r466470).",
+      "parentUuid": "cd591549_66305dd7",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 39
+      },
+      "revId": "0640fa4ee0c90de9c0fb65ebefc55b0f23daed7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
