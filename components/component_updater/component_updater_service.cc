@@ -67,8 +67,8 @@ CrxUpdateService::CrxUpdateService(
 CrxUpdateService::~CrxUpdateService() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  for (const auto item : ready_callbacks_) {
-    item.second.Run();
+  for (auto& item : ready_callbacks_) {
+    std::move(item.second).Run();
   }
 
   RemoveObserver(this);
@@ -238,18 +238,19 @@ const CrxUpdateItem* CrxUpdateService::GetComponentState(
 }
 
 void CrxUpdateService::MaybeThrottle(const std::string& id,
-                                     const base::Closure& callback) {
+                                     base::OnceClosure callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   auto it = components_.find(id);
   if (it != components_.end()) {
     DCHECK_EQ(it->first, id);
     if (OnDemandUpdateWithCooldown(id)) {
-      ready_callbacks_.insert(std::make_pair(id, callback));
+      ready_callbacks_.insert(std::make_pair(id, std::move(callback)));
       return;
     }
   }
 
-  callback.Run();  // Unblock the request if the request can't be throttled.
+  std::move(callback)
+      .Run();  // Unblock the request if the request can't be throttled.
 }
 
 void CrxUpdateService::OnDemandUpdate(const std::string& id,
@@ -293,7 +294,7 @@ void CrxUpdateService::OnDemandUpdateInternal(const std::string& id,
   UMA_HISTOGRAM_ENUMERATION("ComponentUpdater.Calls", UPDATE_TYPE_MANUAL,
                             UPDATE_TYPE_COUNT);
   update_client_->Install(
-      id, base::Bind(&CrxUpdateService::OnUpdate, base::Unretained(this)),
+      id, base::BindOnce(&CrxUpdateService::OnUpdate, base::Unretained(this)),
       base::BindOnce(&CrxUpdateService::OnUpdateComplete,
                      base::Unretained(this), std::move(callback),
                      base::TimeTicks::Now()));
@@ -320,7 +321,7 @@ bool CrxUpdateService::CheckForUpdates() {
   if (!unsecure_ids.empty()) {
     update_client_->Update(
         unsecure_ids,
-        base::Bind(&CrxUpdateService::OnUpdate, base::Unretained(this)),
+        base::BindOnce(&CrxUpdateService::OnUpdate, base::Unretained(this)),
         base::BindOnce(&CrxUpdateService::OnUpdateComplete,
                        base::Unretained(this), Callback(),
                        base::TimeTicks::Now()));
@@ -329,7 +330,7 @@ bool CrxUpdateService::CheckForUpdates() {
   if (!secure_ids.empty()) {
     update_client_->Update(
         secure_ids,
-        base::Bind(&CrxUpdateService::OnUpdate, base::Unretained(this)),
+        base::BindOnce(&CrxUpdateService::OnUpdate, base::Unretained(this)),
         base::BindOnce(&CrxUpdateService::OnUpdateComplete,
                        base::Unretained(this), Callback(),
                        base::TimeTicks::Now()));
@@ -402,8 +403,8 @@ void CrxUpdateService::OnEvent(Events event, const std::string& id) {
   if (event == Observer::Events::COMPONENT_UPDATED ||
       event == Observer::Events::COMPONENT_NOT_UPDATED) {
     auto callbacks = ready_callbacks_.equal_range(id);
-    for (auto it = callbacks.first; it != callbacks.second; ++it) {
-      it->second.Run();
+    for (auto& it = callbacks.first; it != callbacks.second; ++it) {
+      std::move(it->second).Run();
     }
     ready_callbacks_.erase(id);
   }
