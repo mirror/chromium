@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5f55d4c_0d755c82",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_unittest_context_lost.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-31T18:40:14Z",
+      "side": 1,
+      "message": "nit: maybe just \"2.0\" (meaning desktop GL). GL_ARB_sync isn\u0027t supposed to exist on ES contexts, and we might accidentally break that.",
+      "revId": "0a3bd748c6d924bc13cfd64b9f3f2b4443a70132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
