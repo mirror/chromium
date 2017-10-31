@@ -1801,6 +1801,22 @@ void GL_APIENTRY GLES2TexStorage2DImageCHROMIUM(GLenum target,
   gles2::GetGLContext()->TexStorage2DImageCHROMIUM(target, internalFormat,
                                                    bufferUsage, width, height);
 }
+void GL_APIENTRY
+GLES2CreateTransferCacheEntryCHROMIUM(uint64_t handle_id,
+                                      uint32_t handle_shm_id,
+                                      uint32_t handle_shm_offset,
+                                      uint32_t type,
+                                      size_t size,
+                                      void* data) {
+  gles2::GetGLContext()->CreateTransferCacheEntryCHROMIUM(
+      handle_id, handle_shm_id, handle_shm_offset, type, size, data);
+}
+void GL_APIENTRY GLES2DeleteTransferCacheEntryCHROMIUM(uint64_t handle_id) {
+  gles2::GetGLContext()->DeleteTransferCacheEntryCHROMIUM(handle_id);
+}
+void GL_APIENTRY GLES2UnlockTransferCacheEntryCHROMIUM(uint64_t handle_id) {
+  gles2::GetGLContext()->UnlockTransferCacheEntryCHROMIUM(handle_id);
+}
 
 namespace gles2 {
 
@@ -3156,6 +3172,21 @@ extern const NameToFunc g_gles2_function_table[] = {
     {
         "glTexStorage2DImageCHROMIUM",
         reinterpret_cast<GLES2FunctionPointer>(glTexStorage2DImageCHROMIUM),
+    },
+    {
+        "glCreateTransferCacheEntryCHROMIUM",
+        reinterpret_cast<GLES2FunctionPointer>(
+            glCreateTransferCacheEntryCHROMIUM),
+    },
+    {
+        "glDeleteTransferCacheEntryCHROMIUM",
+        reinterpret_cast<GLES2FunctionPointer>(
+            glDeleteTransferCacheEntryCHROMIUM),
+    },
+    {
+        "glUnlockTransferCacheEntryCHROMIUM",
+        reinterpret_cast<GLES2FunctionPointer>(
+            glUnlockTransferCacheEntryCHROMIUM),
     },
     {
         NULL, NULL,

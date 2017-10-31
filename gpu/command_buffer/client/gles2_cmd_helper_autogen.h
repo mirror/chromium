@@ -3320,4 +3320,35 @@ void TexStorage2DImageCHROMIUM(GLenum target,
   }
 }
 
+void CreateTransferCacheEntryCHROMIUM(uint64_t handle_id,
+                                      uint32_t handle_shm_id,
+                                      uint32_t handle_shm_offset,
+                                      uint32_t type,
+                                      uint32_t data_shm_id,
+                                      uint32_t data_shm_offset,
+                                      uint32_t data_size) {
+  gles2::cmds::CreateTransferCacheEntryCHROMIUM* c =
+      GetCmdSpace<gles2::cmds::CreateTransferCacheEntryCHROMIUM>();
+  if (c) {
+    c->Init(handle_id, handle_shm_id, handle_shm_offset, type, data_shm_id,
+            data_shm_offset, data_size);
+  }
+}
+
+void DeleteTransferCacheEntryCHROMIUM(uint64_t handle_id) {
+  gles2::cmds::DeleteTransferCacheEntryCHROMIUM* c =
+      GetCmdSpace<gles2::cmds::DeleteTransferCacheEntryCHROMIUM>();
+  if (c) {
+    c->Init(handle_id);
+  }
+}
+
+void UnlockTransferCacheEntryCHROMIUM(uint64_t handle_id) {
+  gles2::cmds::UnlockTransferCacheEntryCHROMIUM* c =
+      GetCmdSpace<gles2::cmds::UnlockTransferCacheEntryCHROMIUM>();
+  if (c) {
+    c->Init(handle_id);
+  }
+}
+
 #endif  // GPU_COMMAND_BUFFER_CLIENT_GLES2_CMD_HELPER_AUTOGEN_H_
