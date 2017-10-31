@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e032d3b_45aef203",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1202434
+      },
+      "writtenOn": "2017-10-31T22:42:14Z",
+      "side": 1,
+      "message": "I decided to not add this to line 82 because we don\u0027t need to bring in \"//build/config:exe_and_shlib_deps\" for source_set",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 8
+      },
+      "revId": "492ff4d23234e568342a9f6505028339ff8ae7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
