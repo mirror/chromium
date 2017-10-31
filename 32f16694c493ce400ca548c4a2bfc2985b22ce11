@@ -16,6 +16,24 @@
       "revId": "32f16694c493ce400ca548c4a2bfc2985b22ce11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df90c4e2_327873d0",
+        "filename": "third_party/WebKit/LayoutTests/fast/reflections/reflection-masks-outset.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-31T17:12:34Z",
+      "side": 1,
+      "message": "Done.\n\nWill track the flakiness of the test after this CL. Will file a bug if it\u0027s no longer flaky. Otherwise I will continue to find the root cause.",
+      "parentUuid": "3c45a131_7a9e77dd",
+      "revId": "32f16694c493ce400ca548c4a2bfc2985b22ce11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
