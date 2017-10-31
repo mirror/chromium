@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "11cd052a_66d8390d",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T03:15:15Z",
+      "side": 1,
+      "message": "Just return the sink by non-const-ref like MockRenderProcessHost.",
+      "range": {
+        "startLine": 257,
+        "startChar": 2,
+        "endLine": 257,
+        "endChar": 16
+      },
+      "revId": "cd7855051ce052e248cbbfb802c3d4b0b78ced8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05943867_4f752977",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T03:15:15Z",
+      "side": 1,
+      "message": "You\u0027ll need initiator_sink() and preview_sink(), since PrintMsg_PrintForPrintPreview and PrintMsg_PrintPreview are sent to different RPHs.\n\nYou can get to the RPH\u0027s sink with:\n\nauto* rfh \u003d web_contents-\u003eGetMainFrame();\nauto* rph \u003d static_cast\u003ccontent::MockRenderProcessHost*\u003e(rfh-\u003eGetProcess());\nreturn rph-\u003esink();",
+      "revId": "cd7855051ce052e248cbbfb802c3d4b0b78ced8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d6437d3_c277f6df",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
         "patchSetId": 4
@@ -13,6 +53,23 @@
       "writtenOn": "2017-10-31T01:35:10Z",
       "side": 1,
       "message": "content::WebContents* const initiator_;",
+      "revId": "cd7855051ce052e248cbbfb802c3d4b0b78ced8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a3984d_b228739b",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T03:15:15Z",
+      "side": 1,
+      "message": "You can switch to content::MockRenderProcessHost with:\n\ncontent::RenderViewHostTestEnabler rvh_test_enabler_;",
       "revId": "cd7855051ce052e248cbbfb802c3d4b0b78ced8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
