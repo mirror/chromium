@@ -16,6 +16,24 @@
       "revId": "d9a556baabcf9a2959795449b626a173866a846f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e697400_826aba91",
+        "filename": "media/cdm/ppapi/external_clear_key/ffmpeg_cdm_video_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-31T04:55:50Z",
+      "side": 1,
+      "message": "Yes, that\u0027s what we do in other CDM implementations :)",
+      "parentUuid": "94dfd814_a4c50536",
+      "revId": "d9a556baabcf9a2959795449b626a173866a846f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
