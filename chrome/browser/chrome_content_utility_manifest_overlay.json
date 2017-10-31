@@ -4,6 +4,7 @@
     "service_manager:connector": {
       "provides": {
         "browser": [
+          "chrome::mojom::DialAppInfoParser",
           "chrome::mojom::DialDeviceDescriptionParser",
           "chrome::mojom::FilePatcher",
           "chrome::mojom::ProfileImport",
