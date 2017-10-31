@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "371e68bb_727a7dea",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 14
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-31T12:55:19Z",
+      "side": 1,
+      "message": "Or we may want to manage this expectation list while implementing. Seems to work somehow.",
+      "range": {
+        "startLine": 628,
+        "startChar": 0,
+        "endLine": 632,
+        "endChar": 36
+      },
+      "revId": "6a39d25c4005991f67f8c1e80444c9a3829e466f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
