@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "529bf216_80aa5647",
+        "filename": "content/browser/gpu/browser_gpu_channel_host_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-31T17:10:52Z",
+      "side": 1,
+      "message": "Can you put this in the #if? Else MSVC errors out:\n\nFAILED: obj/content/browser/browser/browser_gpu_channel_host_factory.obj \nninja -t msvc -e environment.x64 -- C:\\b\\c\\goma_client/gomacc.exe \"c:\\b\\c\\win_toolchain\\vs_files\\88c3b62e1eb0893b8cd57e3f4859c3af27907f64\\vc\\tools\\msvc\\14.11.25503\\bin\\hostx64\\x64/cl.exe\" /nologo /showIncludes  @obj/content/browser/browser/browser_gpu_channel_host_factory.obj.rsp /c ../../content/browser/gpu/browser_gpu_channel_host_factory.cc /Foobj/content/browser/browser/browser_gpu_channel_host_factory.obj /Fd\"obj/content/browser/browser_cc.pdb\"\nc:\\b\\c\\b\\win_clang\\src\\content\\browser\\gpu\\browser_gpu_channel_host_factory.cc(364) : error C2220: warning treated as error - no \u0027object\u0027 file generated\nc:\\b\\c\\b\\win_clang\\src\\content\\browser\\gpu\\browser_gpu_channel_host_factory.cc(364) : warning C4702: unreachable code\nc:\\b\\c\\b\\win_clang\\src\\content\\browser\\gpu\\browser_gpu_channel_host_factory.cc(374) : warning C4702: unreachable code\n\nhttps://logs.chromium.org/v/?s\u003dchromium%2Fbb%2Fchromium.clang%2FCrWinClang64_dbg_%2F159%2F%2B%2Frecipes%2Fsteps%2Fcompile%2F0%2Fstdout (only in debug builds for some reason)\n\nI\u0027m in the process of adding an msvc dbg cq bot, but it\u0027s not there yet, sorry.",
+      "revId": "e1249bf1aa9ea8cd256b1dca56ba8dd73be41547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
