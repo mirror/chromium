@@ -25,9 +25,11 @@ import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.content.browser.ContentView;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer;
+import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.WebContents;
@@ -175,11 +177,12 @@ public final class ContentShellTestCommon {
     }
 
     void assertWaitForPageScaleFactorMatch(float expectedScale) {
+        final RenderCoordinates coord = ((WebContentsImpl) getWebContents()).getRenderCoordinates();
         CriteriaHelper.pollInstrumentationThread(
                 Criteria.equals(expectedScale, new Callable<Float>() {
                     @Override
                     public Float call() {
-                        return getContentViewCore().getPageScaleFactor();
+                        return coord.getPageScaleFactor();
                     }
                 }));
     }
