@@ -16,6 +16,24 @@
       "revId": "1877795d519c699678ad0ede6ce448d242515829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d13338d_66277d5a",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3718,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-31T23:11:03Z",
+      "side": 1,
+      "message": "I\u0027m 75% sure I had issues in the first patch set where RF observers needed this bit, which is why I moved it (it was originally in FrameLoader::Load). Of course, the logs are lost :) I can try it again if you\u0027d like though and see if the bots are OK.",
+      "parentUuid": "5d3ab8e1_b1d997e9",
+      "revId": "1877795d519c699678ad0ede6ce448d242515829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
