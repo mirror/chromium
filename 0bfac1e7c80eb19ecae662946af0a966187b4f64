@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d8c3ccf2_3eb689b0",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSProtoConverter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1707,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-31T18:45:45Z",
+      "side": 1,
+      "message": "No, but I should have had a return at the end of the if.\nI\u0027ve refactored the code so it\u0027s easier to understand.",
+      "parentUuid": "1c9369a8_6bd0fee6",
+      "range": {
+        "startLine": 1707,
+        "startChar": 16,
+        "endLine": 1707,
+        "endChar": 17
+      },
+      "revId": "0bfac1e7c80eb19ecae662946af0a966187b4f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36cc8736_8f8f9819",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSProtoConverter.cpp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0bfac1e7c80eb19ecae662946af0a966187b4f64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc33ccfc_e17918cc",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSProtoConverter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1995,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-31T18:45:45Z",
+      "side": 1,
+      "message": "That\u0027s a fine question, I\u0027ve kind of been handling whitespace in an ad hoc way.\nA space is not needed here since the next character should always be a semi colon or close paren.",
+      "parentUuid": "36cc8736_8f8f9819",
+      "range": {
+        "startLine": 1995,
+        "startChar": 27,
+        "endLine": 1995,
+        "endChar": 28
+      },
+      "revId": "0bfac1e7c80eb19ecae662946af0a966187b4f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
