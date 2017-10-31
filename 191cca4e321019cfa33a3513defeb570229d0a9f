@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ced35552_44e8a001",
+        "filename": "content/renderer/loader/cors_url_loader.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-31T10:19:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4779fc43_36334fd0",
+      "revId": "191cca4e321019cfa33a3513defeb570229d0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4783726_d1881b30",
         "filename": "content/renderer/loader/cors_url_loader.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "191cca4e321019cfa33a3513defeb570229d0a9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fedb7b_63848f71",
+        "filename": "content/renderer/loader/cors_url_loader.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-31T10:19:11Z",
+      "side": 1,
+      "message": "Sounds good. Let me add HandleComplete method that can be called here and from OnComplete since I hesitate to reuse a public interface and call it differently.",
+      "parentUuid": "f4783726_d1881b30",
+      "revId": "191cca4e321019cfa33a3513defeb570229d0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4a048760_6c657420",
+        "filename": "content/renderer/loader/cors_url_loader.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-31T10:19:11Z",
+      "side": 1,
+      "message": "Sorry, I misunderstood that this can be called synchronously. Let me revise this logic.",
+      "parentUuid": "df1e3703_4248b46a",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 32
+      },
+      "revId": "191cca4e321019cfa33a3513defeb570229d0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "101a9808_02b88761",
         "filename": "content/renderer/loader/cors_url_loader.cc",
         "patchSetId": 11
@@ -115,6 +175,24 @@
       "revId": "191cca4e321019cfa33a3513defeb570229d0a9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4928ace7_aa843e39",
+        "filename": "content/renderer/loader/cors_url_loader.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-31T10:19:11Z",
+      "side": 1,
+      "message": "Yutaka: OK, but can I use reset() instead of assigning nullptr so that this gets to be consistent to OnUpstreamConnectionError?\n\nKinuko: Good point. That makes it possible to remove network_loader_ check above. Since I didn\u0027t close the binding, OnComplete was called again after the cors_error handling.",
+      "parentUuid": "101a9808_02b88761",
+      "revId": "191cca4e321019cfa33a3513defeb570229d0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
