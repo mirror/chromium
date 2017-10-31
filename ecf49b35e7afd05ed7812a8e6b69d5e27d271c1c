@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9375b0ab_07e45612",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eafa8d28_b99e3637",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e841a1c_25f284f2",
         "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b3369c82_18bd9e7e",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e841a1c_25f284f2",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfebf8b5_3078ec05",
         "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-27T20:52:37Z",
       "side": 1,
       "message": "Is there a reason for this call? Looks like pretty unexpected side effect to me. If the call is necessary, please restore cookie policy to the old value before exiting the method.",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c573c828_44620469",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "The call here is making sure to revert the shared_store_ to its default state which is NSHTTPCookieAcceptPolicyAlways, so if for any reason a test case changed it it\u0027s reseted here.",
+      "parentUuid": "bfebf8b5_3078ec05",
       "range": {
         "startLine": 46,
         "startChar": 19,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "6d111951_bec9ea1d",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "This is considered a template code, which is why its on the header file.\ni\u0027d create an implementation file if there is a test for default implementation but there is no default implementation.\nHere are some examples:\nhttps://cs.chromium.org/chromium/src/net/cookies/cookie_store_unittest.h\nhttps://cs.chromium.org/chromium/src/base/test/task_runner_test_template.h\nhttps://cs.chromium.org/chromium/src/ui/gl/test/gl_image_test_template.h\n\nI probably should name it system_cookie_store_test_template instead of the current name.",
+      "parentUuid": "c2b6fc07_679f405b",
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1366f6aa_bf427f36",
         "filename": "ios/net/cookies/system_cookie_store_unittest.h",
         "patchSetId": 6
@@ -99,6 +189,24 @@
       "writtenOn": "2017-10-27T20:52:37Z",
       "side": 1,
       "message": "This is not really a callback. The class has methods which are used as callbacks but class is not. Would it be better to bind blocks instead of creating a separate class? Blocks would make it easier to reason about assertions in the test.",
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b8aa12_63e601e7",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "I agree on not naming the class callback, however i think having it like this saves adding block for each callback \nand if i created a global blocks i\u0027ll still need global variables to check if the callback ran or not that\u0027s why i prefer the encapsulation here.",
+      "parentUuid": "1366f6aa_bf427f36",
       "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "bc945efc_fe5e1d93",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "I\u0027m leaning to leave it like this  - as its easier to deal with NSURL - if i used char* and created constants for URLs i\u0027ll need to convert sometimes to NSURL and sometimes to GURL before some calls.  and also the path/host to NSString when needed",
+      "parentUuid": "bfc185f2_a3e1aa3a",
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb1f1bb0_3be466e1",
         "filename": "ios/net/cookies/system_cookie_store_unittest.h",
         "patchSetId": 6
@@ -133,6 +259,30 @@
       "writtenOn": "2017-10-27T20:52:37Z",
       "side": 1,
       "message": "Is there a value if having wrappers for delegate calls?",
+      "range": {
+        "startLine": 91,
+        "startChar": 21,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0c8acf_167ad069",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "It\u0027s to make it easier for the implementor to use, the implementor need to create the same functions in the existing SystemCookieStoreTest. I don\u0027t have strong opinion here, but i prefer it this way so its clear how this is being used.",
+      "parentUuid": "bb1f1bb0_3be466e1",
       "range": {
         "startLine": 91,
         "startChar": 21,
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "78ca07c3_1449bc5d",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "based on my understanding to callbacks here, spinRunLoop is for thee main thread callback which we don\u0027t have access to as callers to SetCookieAsync. So how can we wait for that callback.\nThen we use RunUntilIdle for the callbacks posted using the taskrunner",
+      "parentUuid": "eb1323a2_09158c9b",
+      "range": {
+        "startLine": 127,
+        "startChar": 19,
+        "endLine": 127,
+        "endChar": 42
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9cc3057_51f4ec6b",
         "filename": "ios/net/cookies/system_cookie_store_unittest.h",
         "patchSetId": 6
@@ -182,6 +356,24 @@
       "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc96897_1488d90f",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "The method is large because it just tests more than once  i added a small comment, but not sure how can i describe it more",
+      "parentUuid": "a9cc3057_51f4ec6b",
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "d2178c44_7ea1433a",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c24b424b_81534508",
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "838ef1be_daadb09e",
         "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
         "patchSetId": 6
@@ -213,6 +423,30 @@
       "writtenOn": "2017-10-27T20:52:37Z",
       "side": 1,
       "message": "bool ShouldIncludeForRequestUrl() ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 19
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38497c4_b8f5d836",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "I don\u0027t like having the word Request in the function, just because cookies existence and retrieval here have no knowledge of Requests.\nWe use in cookie_store_ios getCookieForURL\nand in NSHTTPCookieStore there is cookieForURL \nso for consistency i made it IsCookieForURL",
+      "parentUuid": "838ef1be_daadb09e",
       "range": {
         "startLine": 41,
         "startChar": 5,
@@ -248,6 +482,30 @@
     },
     {
       "key": {
+        "uuid": "66690ca8_ca4fd222",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea61f52f_d5d0a39d",
+      "range": {
+        "startLine": 46,
+        "startChar": 25,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "354ae65f_59af0f4e",
         "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
         "patchSetId": 6
@@ -268,6 +526,30 @@
       "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfe3c55_ac132b20",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "354ae65f_59af0f4e",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -294,6 +576,30 @@
     },
     {
       "key": {
+        "uuid": "c3c073ea_a7811d5c",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "no",
+      "parentUuid": "358a6542_bea1b0fa",
+      "range": {
+        "startLine": 118,
+        "startChar": 35,
+        "endLine": 118,
+        "endChar": 47
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a70e86_5e8a0248",
         "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
         "patchSetId": 6
@@ -305,6 +611,30 @@
       "writtenOn": "2017-10-27T20:52:37Z",
       "side": 1,
       "message": "This does not feel right. Is there even a way to change the policy for WKWebView? Should this method return a constant?",
+      "range": {
+        "startLine": 128,
+        "startChar": 31,
+        "endLine": 128,
+        "endChar": 54
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1fcc5a_470c0776",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure yet what should this return, however if i return allow always this can be false signal, so i thought to use sharedHTTPCookieStorage policy instead, i have a todo here to check what is the best value to return",
+      "parentUuid": "b7a70e86_5e8a0248",
       "range": {
         "startLine": 128,
         "startChar": 31,
@@ -340,6 +670,30 @@
     },
     {
       "key": {
+        "uuid": "5340c767_0e170923",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "Yes it\u0027s needed without the cast there is incompatible pointer error.",
+      "parentUuid": "ae9be58a_9e6e1b0a",
+      "range": {
+        "startLine": 139,
+        "startChar": 17,
+        "endLine": 139,
+        "endChar": 24
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5862c20_487b0a6e",
         "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
         "patchSetId": 6
@@ -360,6 +714,30 @@
       "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d95e1e0_23f90867",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5862c20_487b0a6e",
+      "range": {
+        "startLine": 5,
+        "startChar": 59,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -386,6 +764,30 @@
     },
     {
       "key": {
+        "uuid": "62edc612_6b8555cb",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "175e866e_51b51714",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 40
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce8fe7d4_1558d49d",
         "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
         "patchSetId": 6
@@ -406,6 +808,30 @@
       "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3e3774_901a3e81",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce8fe7d4_1558d49d",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 38
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -432,6 +858,30 @@
     },
     {
       "key": {
+        "uuid": "55bc8f20_188eb4fe",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c51a91e_af6bbdb7",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 39
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37481d2a_98e07baa",
         "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
         "patchSetId": 6
@@ -452,6 +902,30 @@
       "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03988985_7834df43",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37481d2a_98e07baa",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -478,6 +952,30 @@
     },
     {
       "key": {
+        "uuid": "03b3c08a_9e9ebb7f",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2de8ed8e_f2a27ff4",
+      "range": {
+        "startLine": 59,
+        "startChar": 37,
+        "endLine": 59,
+        "endChar": 49
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e70147ee_b25b5d28",
         "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
         "patchSetId": 6
@@ -489,6 +987,30 @@
       "writtenOn": "2017-10-27T20:52:37Z",
       "side": 1,
       "message": "Would it be better to have this ivar in test fixture?",
+      "range": {
+        "startLine": 84,
+        "startChar": 27,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9366178_6c82acf6",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T15:08:54Z",
+      "side": 1,
+      "message": "There is no need for the webThreadBundle in the template as it\u0027s generic it shouldn\u0027t know what type of thread we use, and in cases that we test NSHTTPSystemCookieStore this is not needed at all.",
+      "parentUuid": "e70147ee_b25b5d28",
       "range": {
         "startLine": 84,
         "startChar": 27,
