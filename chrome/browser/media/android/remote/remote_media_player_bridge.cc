@@ -34,9 +34,6 @@ namespace {
  * actually called by MediaPlayerAndroid or RemoteMediaPlayer but is needed
  * to compile the constructor call.
  */
-void DoNothing(int /*i*/) {}
-}
-
 namespace remote_media {
 
 RemoteMediaPlayerBridge::RemoteMediaPlayerBridge(
@@ -45,7 +42,7 @@ RemoteMediaPlayerBridge::RemoteMediaPlayerBridge(
     RemoteMediaPlayerManager* manager)
     : MediaPlayerAndroid(player_id,
                          manager,
-                         base::Bind(&DoNothing),
+                         base::Bind(&base::DoNothingWithParam<int>),
                          manager->GetLocalPlayer(player_id)->frame_url()),
       width_(0),
       height_(0),
