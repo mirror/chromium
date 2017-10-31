@@ -414,5 +414,9 @@ void RendererMetricsHelper::RecordBackgroundMainThreadTaskLoad(
                  load_percentage);
 }
 
+// static
+const char RendererMetricsHelper::kHistogramBackgroundedRendererState[] =
+    "RendererScheduler.BackgroundedRendererState";
+
 }  // namespace scheduler
 }  // namespace blink

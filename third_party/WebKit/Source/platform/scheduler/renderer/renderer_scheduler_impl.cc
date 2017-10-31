@@ -599,9 +599,15 @@ void RendererSchedulerImpl::SetRendererBackgrounded(bool backgrounded) {
   if (backgrounded) {
     TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                  "RendererSchedulerImpl::OnRendererBackgrounded");
+    UMA_HISTOGRAM_ENUMERATION(
+        RendererMetricsHelper::kHistogramBackgroundedRendererState,
+        BackgroundedState::BACKGROUNDED, BackgroundedState::COUNT);
   } else {
     TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                  "RendererSchedulerImpl::OnRendererForegrounded");
+    UMA_HISTOGRAM_ENUMERATION(
+        RendererMetricsHelper::kHistogramBackgroundedRendererState,
+        BackgroundedState::RESUMED, BackgroundedState::COUNT);
   }
   helper_.CheckOnValidThread();
   if (helper_.IsShutdown() ||
@@ -1024,12 +1030,10 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   main_thread_only().longest_jank_free_task_duration =
       longest_jank_free_task_duration;
 
-  bool loading_tasks_seem_expensive = false;
-  bool timer_tasks_seem_expensive = false;
-  loading_tasks_seem_expensive =
+  bool loading_tasks_seem_expensive =
       main_thread_only().loading_task_cost_estimator.expected_task_duration() >
       longest_jank_free_task_duration;
-  timer_tasks_seem_expensive =
+  bool timer_tasks_seem_expensive =
       main_thread_only().timer_task_cost_estimator.expected_task_duration() >
       longest_jank_free_task_duration;
 
@@ -1276,6 +1280,12 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
     if (main_thread_only().stopped_when_backgrounded !=
         previously_stopped_when_backgrounded) {
       SetStoppedInBackground(main_thread_only().stopped_when_backgrounded);
+      UMA_HISTOGRAM_ENUMERATION(
+          RendererMetricsHelper::kHistogramBackgroundedRendererState,
+          main_thread_only().stopped_when_backgrounded
+              ? BackgroundedState::STOPPED_AFTER_DELAY
+              : BackgroundedState::RESUMED_AFTER_STOP,
+          BackgroundedState::COUNT);
     }
   }
 
