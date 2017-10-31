@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7346abb7_8255c9cd",
+        "filename": "content/renderer/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:35:43Z",
+      "side": 1,
+      "message": "Since we don\u0027t expect to ship this on Android for some time (binary size), it\u0027s probably not going away for some time :)",
+      "parentUuid": "6f5e6886_e4d9a26f",
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "871d303f_f4a81292",
         "filename": "content/renderer/DEPS",
         "patchSetId": 2
