@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "a87ab624_9178e7ff",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T22:31:34Z",
+      "side": 1,
+      "message": "s/header/constructor",
+      "parentUuid": "b79076d5_e3004308",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f74447cc_b3256bdb",
         "filename": "components/viz/service/frame_sinks/video_detector.cc",
         "patchSetId": 26
