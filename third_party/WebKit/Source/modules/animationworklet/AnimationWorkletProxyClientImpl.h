@@ -6,6 +6,7 @@
 #define AnimationWorkletProxyClientImpl_h
 
 #include "core/animation/CompositorAnimator.h"
+#include "core/animation/CompositorMutatorImpl.h"
 #include "core/dom/AnimationWorkletProxyClient.h"
 #include "modules/ModulesExport.h"
 #include "modules/animationworklet/AnimationWorkletGlobalScope.h"
@@ -16,6 +17,7 @@ namespace blink {
 
 class CompositorMutatorImpl;
 class Document;
+class WaitableEvent;
 class WorkletGlobalScope;
 
 // Mediates between one Animator and the associated CompositorMutatorImpl. There
@@ -23,7 +25,7 @@ class WorkletGlobalScope;
 // for a given mutator and animatorWorklet.
 //
 // This is constructed on the main thread but it is used in the worklet backing
-// thread i.e., compositor thread.
+// thread.
 class MODULES_EXPORT AnimationWorkletProxyClientImpl final
     : public GarbageCollectedFinalized<AnimationWorkletProxyClientImpl>,
       public AnimationWorkletProxyClient,
@@ -45,10 +47,16 @@ class MODULES_EXPORT AnimationWorkletProxyClientImpl final
 
   static AnimationWorkletProxyClientImpl* FromDocument(Document*);
 
- private:
-  CrossThreadPersistent<CompositorMutatorImpl> mutator_;
+  // This method is invoked in the worklet thread
+  void MutateWithEvent(const CompositorMutatorInputState*,
+                       std::unique_ptr<CompositorMutatorOutputState>*,
+                       WaitableEvent*);
 
-  CrossThreadPersistent<AnimationWorkletGlobalScope> global_scope_;
+ private:
+  CompositorMutatorImpl* mutator_;
+
+  CrossThreadWeakPersistent<AnimationWorkletGlobalScope> global_scope_;
+  bool active_;
 };
 
 }  // namespace blink
