@@ -12,6 +12,17 @@ namespace gpu {
 
 class Buffer;
 
+// A discardableHandleId is used to uniquely identify a
+// Client/ServiceDiscardableHandle. It is a uint64_t built from the
+// shared memory ID offset, guaranteeing uniqueness.
+using DiscardableHandleId = uint64_t;
+
+DiscardableHandleId DiscardableHandleIdFromShmAndOffset(uint32_t shm_id,
+                                                        uint32_t byte_offset);
+void ShmAndOffsetFromDiscardableHandleId(DiscardableHandleId handle_id,
+                                         uint32_t* shm_id,
+                                         uint32_t* offset);
+
 // DiscardableHandleBase is the base class for the discardable handle
 // implementation. In order to facilitate transfering handles across the
 // command buffer, DiscardableHandleBase is backed by a gpu::Buffer and an

@@ -17,9 +17,7 @@ class ToughImageDecodeCasesPage(page_module.Page):
   def RunPageInteractions(self, action_runner):
     action_runner.WaitForJavaScriptCondition(
       'document.readyState === "complete"')
-    action_runner.ScrollPage(direction='down', speed_in_pixels_per_second=5000)
-    with action_runner.CreateGestureInteraction('ScrollAction'):
-      action_runner.ScrollPage(direction='up', speed_in_pixels_per_second=5000)
+    action_runner.Wait(15)
 
 class ToughImageDecodeCasesPageSet(story.StorySet):
 
@@ -33,8 +31,7 @@ class ToughImageDecodeCasesPageSet(story.StorySet):
       cloud_storage_bucket=story.PUBLIC_BUCKET)
 
     page_name_list = [
-      'http://localhost:9000/cats-unscaled.html',
-      'http://localhost:9000/cats-viewport-width.html'
+      'https://www.espn.com/nfl/story/_/id/21182994/aaron-rodgers-green-bay-packers-says-anthony-barr-gave-finger-hit'
     ]
 
     for name in page_name_list:

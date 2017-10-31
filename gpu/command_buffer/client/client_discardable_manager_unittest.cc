@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "gpu/command_buffer/client/client_discardable_manager.h"
+#include "gpu/command_buffer/client/client_discardable_texture_manager.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace gpu {
@@ -76,10 +77,95 @@ void UnlockAndDeleteClientHandleForTesting(
 
 TEST(ClientDiscardableManagerTest, BasicUsage) {
   FakeCommandBuffer command_buffer;
+  gles2::GLES2CmdHelper helper(&command_buffer);
   ClientDiscardableManager manager;
+  DiscardableHandleId handle_id = manager.CreateHandle(&helper);
+  ClientDiscardableHandle handle = manager.GetHandleForTesting(handle_id);
+  EXPECT_TRUE(handle.IsLockedForTesting());
+  EXPECT_EQ(handle.shm_id(), 1);
+  EXPECT_FALSE(DeleteClientHandleForTesting(handle));
+  UnlockClientHandleForTesting(handle);
+  manager.LockHandle(handle_id);
+  EXPECT_FALSE(DeleteClientHandleForTesting(handle));
+  UnlockAndDeleteClientHandleForTesting(handle);
+  manager.FreeHandle(handle_id);
+  manager.CheckPendingForTesting(&command_buffer);
+}
+
+TEST(ClientDiscardableManagerTest, Reuse) {
+  FakeCommandBuffer command_buffer;
+  gles2::GLES2CmdHelper helper(&command_buffer);
+  ClientDiscardableManager manager;
+  manager.SetElementCountForTesting(1024);
+  std::vector<DiscardableHandleId> handle_ids;
+  for (int i = 0; i < 1024; ++i) {
+    DiscardableHandleId handle_id = manager.CreateHandle(&helper);
+    ClientDiscardableHandle handle = manager.GetHandleForTesting(handle_id);
+    EXPECT_TRUE(handle.IsLockedForTesting());
+    EXPECT_EQ(handle.shm_id(), 1);
+    UnlockAndDeleteClientHandleForTesting(handle);
+    handle_ids.push_back(handle_id);
+  }
+  // Delete every other entry.
+  for (auto it = handle_ids.begin(); it != handle_ids.end();) {
+    manager.FreeHandle(*it);
+    it = handle_ids.erase(it);
+    ++it;
+  }
+  // Allocate 512 more entries, ensure we re-use the original buffer.
+  for (int i = 0; i < 512; ++i) {
+    DiscardableHandleId handle_id = manager.CreateHandle(&helper);
+    ClientDiscardableHandle handle = manager.GetHandleForTesting(handle_id);
+    EXPECT_TRUE(handle.IsLockedForTesting());
+    EXPECT_EQ(handle.shm_id(), 1);
+    UnlockAndDeleteClientHandleForTesting(handle);
+    handle_ids.push_back(handle_id);
+  }
+  // Delete all outstanding allocations
+  for (const auto& handle_id : handle_ids) {
+    manager.FreeHandle(handle_id);
+  }
+  manager.CheckPendingForTesting(&command_buffer);
+}
+
+TEST(ClientDiscardableManagerTest, MultipleAllocations) {
+  FakeCommandBuffer command_buffer;
+  gles2::GLES2CmdHelper helper(&command_buffer);
+  ClientDiscardableManager manager;
+  manager.SetElementCountForTesting(1024);
+  std::vector<DiscardableHandleId> handle_ids;
+  for (int i = 1; i <= 1024; ++i) {
+    DiscardableHandleId handle_id = manager.CreateHandle(&helper);
+    ClientDiscardableHandle handle = manager.GetHandleForTesting(handle_id);
+    EXPECT_TRUE(handle.IsLockedForTesting());
+    EXPECT_EQ(handle.shm_id(), 1);
+    UnlockAndDeleteClientHandleForTesting(handle);
+    handle_ids.push_back(handle_id);
+  }
+  // Allocate and free one entry multiple times, this should cause the
+  // allocation and release of a new shm_id each time.
+  for (int i = 1; i < 10; ++i) {
+    DiscardableHandleId handle_id = manager.CreateHandle(&helper);
+    ClientDiscardableHandle handle = manager.GetHandleForTesting(handle_id);
+    EXPECT_TRUE(handle.IsLockedForTesting());
+    EXPECT_EQ(handle.shm_id(), i + 1);
+    UnlockAndDeleteClientHandleForTesting(handle);
+    manager.FreeHandle(handle_id);
+  }
+  // Delete all outstanding allocations
+  for (const auto& handle_id : handle_ids) {
+    manager.FreeHandle(handle_id);
+  }
+  manager.CheckPendingForTesting(&command_buffer);
+}
+
+TEST(ClientDiscardableTextureManagerTest, BasicUsage) {
+  FakeCommandBuffer command_buffer;
+  gles2::GLES2CmdHelper helper(&command_buffer);
+  ClientDiscardableTextureManager manager;
   {
-    ClientDiscardableHandle handle =
-        manager.InitializeTexture(&command_buffer, 1);
+    manager.InitializeTexture(&helper, 1);
+    ClientDiscardableHandle handle = manager.GetHandleForTesting(1);
     EXPECT_TRUE(handle.IsLockedForTesting());
     EXPECT_EQ(handle.shm_id(), 1);
     EXPECT_FALSE(DeleteClientHandleForTesting(handle));
@@ -89,71 +175,8 @@ TEST(ClientDiscardableManagerTest, BasicUsage) {
     UnlockAndDeleteClientHandleForTesting(handle);
   }
   manager.FreeTexture(1);
-  manager.CheckPendingForTesting(&command_buffer);
-}
-
-TEST(ClientDiscardableManagerTest, Reuse) {
-  FakeCommandBuffer command_buffer;
-  ClientDiscardableManager manager;
-  manager.SetElementCountForTesting(1024);
-  for (int i = 1; i <= 1024; ++i) {
-    ClientDiscardableHandle handle =
-        manager.InitializeTexture(&command_buffer, i);
-    EXPECT_TRUE(handle.IsLockedForTesting());
-    EXPECT_EQ(handle.shm_id(), 1);
-    UnlockAndDeleteClientHandleForTesting(handle);
-  }
-  // Delete every other entry.
-  for (int i = 1; i <= 1024; i += 2) {
-    manager.FreeTexture(i);
-  }
-  // Allocate 512 more entries, ensure we re-use the original buffer.
-  for (int i = 1; i <= 512; ++i) {
-    ClientDiscardableHandle handle =
-        manager.InitializeTexture(&command_buffer, 1024 + i);
-    EXPECT_TRUE(handle.IsLockedForTesting());
-    EXPECT_EQ(handle.shm_id(), 1);
-    UnlockAndDeleteClientHandleForTesting(handle);
-  }
-  // Delete the other half of the original allocations.
-  for (int i = 2; i <= 1024; i += 2) {
-    manager.FreeTexture(i);
-  }
-  // And delete the second set of allocations.
-  for (int i = 1; i <= 512; ++i) {
-    manager.FreeTexture(1024 + i);
-  }
-  manager.CheckPendingForTesting(&command_buffer);
-}
-
-TEST(ClientDiscardableManagerTest, MultipleAllocations) {
-  FakeCommandBuffer command_buffer;
-  ClientDiscardableManager manager;
-  manager.SetElementCountForTesting(1024);
-  for (int i = 1; i <= 1024; ++i) {
-    ClientDiscardableHandle handle =
-        manager.InitializeTexture(&command_buffer, i);
-    EXPECT_TRUE(handle.IsLockedForTesting());
-    EXPECT_EQ(handle.shm_id(), 1);
-    UnlockAndDeleteClientHandleForTesting(handle);
-  }
-  // Allocate and free one entry multiple times, this should cause the
-  // allocation and release of a new shm_id each time.
-  for (int i = 1; i < 10; ++i) {
-    {
-      ClientDiscardableHandle handle =
-          manager.InitializeTexture(&command_buffer, 1024 + i);
-      EXPECT_TRUE(handle.IsLockedForTesting());
-      EXPECT_EQ(handle.shm_id(), i + 1);
-      UnlockAndDeleteClientHandleForTesting(handle);
-    }
-    manager.FreeTexture(1024 + i);
-  }
-  // Delete every other entry.
-  for (int i = 1; i <= 1024; ++i) {
-    manager.FreeTexture(i);
-  }
-  manager.CheckPendingForTesting(&command_buffer);
+  manager.DiscardableManagerForTesting()->CheckPendingForTesting(
+      &command_buffer);
 }
 
 }  // namespace gpu
