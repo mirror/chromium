@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "3b071878_7071177e",
+        "filename": "components/autofill/core/browser/autofill_field.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-31T15:09:14Z",
+      "side": 1,
+      "message": "surfaced*",
+      "range": {
+        "startLine": 613,
+        "startChar": 8,
+        "endLine": 613,
+        "endChar": 16
+      },
+      "revId": "ccccb702d15091550d2c7417c64d52efbda3c7a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1088a81_91109a21",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-31T15:09:14Z",
+      "side": 1,
+      "message": "The name/impl combination confused me for a little bit. This is checking whether the field has a type relevant to our groups (CC/Address)? IsCreditCardOrAddressField could be a better name.",
+      "range": {
+        "startLine": 304,
+        "startChar": 1,
+        "endLine": 310,
+        "endChar": 0
+      },
+      "revId": "ccccb702d15091550d2c7417c64d52efbda3c7a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb56bc1_a7028720",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-31T15:09:14Z",
+      "side": 1,
+      "message": "CreditCardNameTypeToAddressNameType?",
+      "range": {
+        "startLine": 322,
+        "startChar": 16,
+        "endLine": 322,
+        "endChar": 43
+      },
+      "revId": "ccccb702d15091550d2c7417c64d52efbda3c7a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5334bc7_57cbcbf1",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 1
@@ -13,6 +82,30 @@
       "writtenOn": "2017-10-27T16:55:16Z",
       "side": 1,
       "message": "This is getting pretty big, do you think you could split it in subfunctions?",
+      "range": {
+        "startLine": 1088,
+        "startChar": 20,
+        "endLine": 1088,
+        "endChar": 57
+      },
+      "revId": "ccccb702d15091550d2c7417c64d52efbda3c7a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a31f72_10733c8d",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-31T15:09:14Z",
+      "side": 1,
+      "message": "Could even be in a different util file, that would accept the vector of field pointers (that\u0027s the only input to this function, right?)",
+      "parentUuid": "c5334bc7_57cbcbf1",
       "range": {
         "startLine": 1088,
         "startChar": 20,
