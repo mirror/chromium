@@ -86561,19 +86561,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Translate.CLD2.LanguageAccuracy" units="%">
-  <owner>rkaplow@google.com</owner>
-  <summary>
-    Accuracy of the language detected by CLD2. Only recorded if the detection
-    returned a &quot;known&quot; result.
-  </summary>
-</histogram>
-
-<histogram name="Translate.CLD2.LanguageDetected" enum="CLD2LanguageCode">
-  <owner>rkaplow@google.com</owner>
-  <summary>Language of page detected by CLD2.</summary>
-</histogram>
-
 <histogram name="Translate.CLD3.LanguageDetected" enum="CLD3LanguageCode">
   <owner>abakalov@chromium.org</owner>
   <summary>
