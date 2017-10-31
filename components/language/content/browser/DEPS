@@ -1,3 +1,5 @@
 include_rules = [
-  "+content/public/browser",
+  "+device/geolocation/public/interfaces",
+  "+services/device/public/interfaces",
+  "+services/service_manager/public/cpp",
 ]
