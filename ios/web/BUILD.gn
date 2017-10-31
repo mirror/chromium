@@ -32,6 +32,8 @@ source_set("web") {
     "//ios/web/web_state/ui:wk_web_view_configuration_provider",
     "//ios/web/webui",
     "//net",
+    "//ios/web/public/download",
+    "//net",
   ]
 
   deps = [
@@ -40,6 +42,7 @@ source_set("web") {
     ":navigation_resources",
     ":resources",
     "//base",
+    "//ios/web/download",
     "//ios/web/interstitials",
     "//ios/web/navigation",
     "//ios/web/net",
@@ -166,6 +169,7 @@ test("ios_web_unittests") {
     ":ios_web_web_state_unittests",
     ":ios_web_webui_unittests",
     "//ios/testing:http_server_bundle_data",
+    "//ios/web/download:download_unittests",
   ]
 
   assert_no_deps = ios_assert_no_deps
@@ -526,6 +530,7 @@ test("ios_web_inttests") {
     "//ios/testing:ios_test_support",
     "//ios/web:resources_grit",
     "//ios/web/navigation:core",
+    "//ios/web/download:download_inttests",
     "//ios/web/public/test",
     "//ios/web/public/test/fakes",
     "//ios/web/public/test/http_server",
