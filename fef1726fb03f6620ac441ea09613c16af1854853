@@ -498,6 +498,30 @@
     },
     {
       "key": {
+        "uuid": "fbfa0b1d_93aec233",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T03:03:20Z",
+      "side": 1,
+      "message": "Yeah, updating the scope to null isn\u0027t great - especially if that overrides what the developer specified in their web app manifest. It will need addressing.",
+      "parentUuid": "163a207a_fcc22b6d",
+      "range": {
+        "startLine": 439,
+        "startChar": 8,
+        "endLine": 439,
+        "endChar": 21
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f45061af_c3bc929a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 5

@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbfb16a5_562bf8bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T03:03:20Z",
+      "side": 1,
+      "message": "TODO: rename this method and other references in the ExternalNavigationParams code",
+      "range": {
+        "startLine": 867,
+        "startChar": 32,
+        "endLine": 867,
+        "endChar": 52
+      },
+      "revId": "266f303b4afc9f3fad91886f6b9954f1a19735ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848ce344_cf71739e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T03:03:20Z",
+      "side": 1,
+      "message": "Can this just be moved to WebappInterceptNavigationDelegate? Having looked at it I think it should behave correctly for legacy webapps since getNativeClientPackageName() will return null. (though piotrs if you have a second look that would reassure me)",
+      "range": {
+        "startLine": 861,
+        "startChar": 19,
+        "endLine": 869,
+        "endChar": 21
+      },
+      "revId": "266f303b4afc9f3fad91886f6b9954f1a19735ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc8622c_3755ea03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T03:03:20Z",
+      "side": 1,
+      "message": "Can this be moved to WebappDelegateFactory (with the below change)?",
+      "range": {
+        "startLine": 874,
+        "startChar": 27,
+        "endLine": 874,
+        "endChar": 44
+      },
+      "revId": "266f303b4afc9f3fad91886f6b9954f1a19735ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0633256_fb18a41f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T03:03:20Z",
+      "side": 1,
+      "message": "This can just be return false. WebappActivities never show banners already thanks to a separate check, but this can cover that too and reduce the complexity a little.\n\nThe comment can just say, \"Do not show banners when we are in a standalone activity\"",
+      "range": {
+        "startLine": 879,
+        "startChar": 24,
+        "endLine": 879,
+        "endChar": 34
+      },
+      "revId": "266f303b4afc9f3fad91886f6b9954f1a19735ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a12aff2_e8762764",
+        "filename": "chrome/browser/android/shortcut_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T03:03:20Z",
+      "side": 1,
+      "message": "This needs to be added to enums.xml.",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 31
+      },
+      "revId": "266f303b4afc9f3fad91886f6b9954f1a19735ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
