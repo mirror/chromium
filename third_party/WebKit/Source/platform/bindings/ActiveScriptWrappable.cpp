@@ -12,14 +12,14 @@
 
 namespace blink {
 
-ActiveScriptWrappableBase::ActiveScriptWrappableBase() {
+ActiveScriptWrappable::ActiveScriptWrappable() {
   DCHECK(ThreadState::Current());
   v8::Isolate* isolate = ThreadState::Current()->GetIsolate();
   V8PerIsolateData* isolate_data = V8PerIsolateData::From(isolate);
   isolate_data->AddActiveScriptWrappable(this);
 }
 
-void ActiveScriptWrappableBase::TraceActiveScriptWrappables(
+void ActiveScriptWrappable::TraceActiveScriptWrappables(
     v8::Isolate* isolate,
     ScriptWrappableVisitor* visitor) {
   V8PerIsolateData* isolate_data = V8PerIsolateData::From(isolate);

@@ -56,7 +56,7 @@ const WrapperTypeInfo& TestInterface5Implementation::wrapper_type_info_ = V8Test
 
 // [ActiveScriptWrappable]
 static_assert(
-    std::is_base_of<ActiveScriptWrappableBase, TestInterface5Implementation>::value,
+    std::is_base_of<ActiveScriptWrappable, TestInterface5Implementation>::value,
     "TestInterface5Implementation does not inherit from ActiveScriptWrappable<>, but specifying "
     "[ActiveScriptWrappable] extended attribute in the IDL file.  "
     "Be consistent.");

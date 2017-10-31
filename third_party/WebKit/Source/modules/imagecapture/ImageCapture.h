@@ -6,6 +6,7 @@
 #define ImageCapture_h
 
 #include <memory>
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/events/EventTarget.h"
@@ -17,7 +18,6 @@
 #include "modules/mediastream/MediaTrackConstraintSet.h"
 #include "modules/mediastream/MediaTrackSettings.h"
 #include "platform/AsyncMethodRunner.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 
 namespace blink {
 
@@ -31,7 +31,7 @@ class WebImageCaptureFrameGrabber;
 // garbage collected while it has event listeners.
 class MODULES_EXPORT ImageCapture final
     : public EventTargetWithInlineData,
-      public ActiveScriptWrappable<ImageCapture>,
+      public ActiveScriptWrappableAdapter<ImageCapture>,
       public ContextLifecycleObserver {
   USING_GARBAGE_COLLECTED_MIXIN(ImageCapture);
   DEFINE_WRAPPERTYPEINFO();

@@ -5,9 +5,9 @@
 #ifndef NetworkInformation_h
 #define NetworkInformation_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/events/EventTarget.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/network/NetworkStateNotifier.h"
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/Time.h"
@@ -20,7 +20,7 @@ class ExecutionContext;
 
 class NetworkInformation final
     : public EventTargetWithInlineData,
-      public ActiveScriptWrappable<NetworkInformation>,
+      public ActiveScriptWrappableAdapter<NetworkInformation>,
       public ContextLifecycleObserver,
       public NetworkStateNotifier::NetworkStateObserver {
   USING_GARBAGE_COLLECTED_MIXIN(NetworkInformation);

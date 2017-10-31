@@ -116,7 +116,7 @@ DOMHighResTimeStamp Sensor::timestamp(ScriptState* script_state,
 
 void Sensor::Trace(blink::Visitor* visitor) {
   visitor->Trace(sensor_proxy_);
-  ActiveScriptWrappable::Trace(visitor);
+  ActiveScriptWrappableAdapter::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);
   EventTargetWithInlineData::Trace(visitor);
 }
