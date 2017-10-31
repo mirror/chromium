@@ -164,6 +164,7 @@ gpu::ContextResult ContextGroup::Initialize(
 
   feature_info_->Initialize(context_type, adjusted_disallowed_features);
 
+  // Adding a comment for running buildbot.
   const GLint kMinRenderbufferSize = 512;  // GL says 1 pixel!
   GLint max_renderbuffer_size = 0;
   if (!QueryGLFeature(
@@ -582,9 +583,7 @@ void ContextGroup::Destroy(GLES2Decoder* decoder, bool have_context) {
   }
 
   if (texture_manager_ != NULL) {
-    if (!have_context)
-      texture_manager_->MarkContextLost();
-    texture_manager_->Destroy();
+    texture_manager_->Destroy(have_context);
     texture_manager_.reset();
     ReportProgress();
   }
