@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d02911ed_05ae48f5",
+        "filename": "chrome/browser/chromeos/arc/optin/arc_optin_preference_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-31T22:46:53Z",
+      "side": 1,
+      "message": "Is this check still necessary?",
+      "revId": "fc8002b57ce2c15ba34b24327063aadc2e2d3073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
