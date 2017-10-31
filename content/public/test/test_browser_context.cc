@@ -9,6 +9,7 @@
 #include "base/files/file_path.h"
 #include "base/single_thread_task_runner.h"
 #include "base/test/null_task_runner.h"
+#include "content/public/browser/download_manager_delegate.h"
 #include "content/public/browser/permission_manager.h"
 #include "content/public/test/mock_resource_context.h"
 #include "content/test/mock_background_sync_controller.h"
@@ -39,6 +40,15 @@ class TestContextURLRequestContextGetter : public net::URLRequestContextGetter {
 
   net::TestURLRequestContext context_;
   scoped_refptr<base::SingleThreadTaskRunner> null_task_runner_;
+};
+
+class TestDownloadManagerDelegate : public content::DownloadManagerDelegate {
+ public:
+  TestDownloadManagerDelegate() {}
+  ~TestDownloadManagerDelegate() override {}
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(TestDownloadManagerDelegate);
 };
 
 }  // namespace
@@ -91,7 +101,9 @@ bool TestBrowserContext::IsOffTheRecord() const {
 }
 
 DownloadManagerDelegate* TestBrowserContext::GetDownloadManagerDelegate() {
-  return NULL;
+  if (!download_manager_delegate_)
+    download_manager_delegate_.reset(new TestDownloadManagerDelegate());
+  return download_manager_delegate_.get();
 }
 
 ResourceContext* TestBrowserContext::GetResourceContext() {

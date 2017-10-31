@@ -82,6 +82,7 @@ class TestBrowserContext : public BrowserContext {
   std::unique_ptr<MockSSLHostStateDelegate> ssl_host_state_delegate_;
   std::unique_ptr<PermissionManager> permission_manager_;
   std::unique_ptr<MockBackgroundSyncController> background_sync_controller_;
+  std::unique_ptr<DownloadManagerDelegate> download_manager_delegate_;
   bool is_off_the_record_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(TestBrowserContext);

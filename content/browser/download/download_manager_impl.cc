@@ -22,6 +22,8 @@
 #include "base/supports_user_data.h"
 #include "base/synchronization/lock.h"
 #include "build/build_config.h"
+#include "components/download/in_progress_metadata/download_entry.h"
+#include "components/download/in_progress_metadata/in_progress_metadata_cache.h"
 #include "content/browser/byte_stream.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/download/download_create_info.h"
@@ -210,6 +212,14 @@ void InterceptNavigationResponse(
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(std::move(callback), std::move(resource_downloader)));
+}
+
+active_downloads::DownloadEntry DownloadUrlParametersToDownloadEntry(
+    const DownloadUrlParameters* params) {
+  active_downloads::DownloadEntry download_entry;
+  download_entry.guid = params->guid();
+  download_entry.request_origin = params->request_origin();
+  return download_entry;
 }
 
 class DownloadItemFactoryImpl : public DownloadItemFactory {
@@ -874,6 +884,11 @@ void DownloadManagerImpl::ShowDownloadInShell(DownloadItemImpl* download) {
 void DownloadManagerImpl::BeginDownloadInternal(
     std::unique_ptr<content::DownloadUrlParameters> params,
     uint32_t id) {
+  active_downloads::InProgressMetadataCache* metadata_cache =
+      GetBrowserContext()->GetDownloadManagerDelegate()->GetMetadataCache();
+  metadata_cache->AddOrUpdateMetadata(
+      DownloadUrlParametersToDownloadEntry(params.get()));
+
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     std::unique_ptr<ResourceRequest> request = CreateResourceRequest(
         params.get());
