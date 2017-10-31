@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54faa0d4_c71377aa",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-31T18:05:42Z",
+      "side": 1,
+      "message": "the exclude list",
+      "range": {
+        "startLine": 70,
+        "startChar": 53,
+        "endLine": 70,
+        "endChar": 65
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a30936_21317422",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-31T18:05:42Z",
+      "side": 1,
+      "message": "devices_.empty()",
+      "range": {
+        "startLine": 79,
+        "startChar": 12,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9d0168_d3c6e60e",
+        "filename": "device/u2f/u2f_register.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-31T18:05:42Z",
+      "side": 1,
+      "message": "|registered_keys_|",
+      "range": {
+        "startLine": 40,
+        "startChar": 50,
+        "endLine": 40,
+        "endChar": 62
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae3e402_7b638c6f",
+        "filename": "device/u2f/u2f_register.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-31T18:05:42Z",
+      "side": 1,
+      "message": "|current_device_|",
+      "range": {
+        "startLine": 49,
+        "startChar": 25,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2adf2f26_072309fc",
+        "filename": "device/u2f/u2f_register.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-31T18:05:42Z",
+      "side": 1,
+      "message": "|registered_keys_| or \"the exclude list\".",
+      "range": {
+        "startLine": 50,
+        "startChar": 50,
+        "endLine": 50,
+        "endChar": 62
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0eecb3_2a7fd99e",
+        "filename": "device/u2f/u2f_register.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-31T18:05:42Z",
+      "side": 1,
+      "message": "\"in the exclude list\"",
+      "range": {
+        "startLine": 56,
+        "startChar": 71,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9573a31_2b2c686e",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-31T18:05:42Z",
+      "side": 1,
+      "message": "0u",
+      "range": {
+        "startLine": 159,
+        "startChar": 12,
+        "endLine": 159,
+        "endChar": 34
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "465e8c9e_f96f9354",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-31T18:05:42Z",
+      "side": 1,
+      "message": "This cast should be unnecessary as kRegister is already a uint8_t.",
+      "range": {
+        "startLine": 160,
+        "startChar": 12,
+        "endLine": 160,
+        "endChar": 32
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ee6bd3_4db0e284",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-31T18:05:42Z",
+      "side": 1,
+      "message": "Explain what a duplicate key in the exclude list means:\n\n\"a key in the exclude list that was created by this device\"",
+      "range": {
+        "startLine": 281,
+        "startChar": 8,
+        "endLine": 281,
+        "endChar": 37
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26fdb8e2_21b6844d",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-31T18:05:42Z",
+      "side": 1,
+      "message": "Define this after |wrong_key2| just so it isn\u0027t confusing that this is defined first but put at the end of |handles|.",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 286,
+        "endChar": 46
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d9b339_fed39d7b",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-31T18:05:42Z",
+      "side": 1,
+      "message": "Again, putting these definitions in the same order as they are placed in |handles| would be less confusing.",
+      "range": {
+        "startLine": 337,
+        "startChar": 2,
+        "endLine": 337,
+        "endChar": 46
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e2a93b_cb67f0c5",
+        "filename": "device/u2f/u2f_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-31T18:05:42Z",
+      "side": 1,
+      "message": "A better way to store these constants is to create static functions defined here and implemented in u2f_request.cc:\n\nstatic const std::vector\u003cuint8_t\u003e\u0026 GetBogusAppParam();\nstatic const std::vector\u003cuint8_t\u003e\u0026 GetBogusChallenge();\n\n// static\nconst std::vector\u003cuint8_t\u003e\u0026 U2fRequest::GetBogusAppParam() {\n  static const std::vector\u003cuint8_t\u003e kBogusAppParam(32, 0x41);\n  return kBogusAppParam;\n}\n\n// static\nconst std::vector\u003cuint8_t\u003e\u0026 U2fRequest::GetBogusChallenge() {\n  static const std::vector\u003cuint8_t\u003e kBogusChallenge(32, 0x42);\n  return kBogusChallenge;\n}\n\nThis means that the vectors will only be constructed once when the functions are first called.\n\nThe other way to declare constant data like this is as \"static const uint8_t kBogusAppParam[]\" but that makes them harder to use and introduces an extra copy every time you call a method that needs them to be a vector.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 66
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
