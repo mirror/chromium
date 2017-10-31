@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "783e202b_a9214df8",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-10-31T23:06:21Z",
+      "side": 1,
+      "message": "Please put a helpful comment here explaining that this config is applied to all code in the chromecast/ directory.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 1
+      },
+      "revId": "75fa18abf2a6cc615ddfe16f66cfa20904960f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

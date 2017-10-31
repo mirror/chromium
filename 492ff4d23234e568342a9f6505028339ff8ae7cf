@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e450cd67_7ca92917",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-10-31T23:06:21Z",
+      "side": 1,
+      "message": "This is a nit, but I would prefer cutting down the boiler plate by adding source_set to the list and putting the new config in the template. Seems more clear to me.\n\n  template(\"cast_${target_type}\") {\n    target(target_type, target_name) {\n      forward_variables_from(invoker, \"*\")\n      \n      configs +\u003d [\"//chromecast:cast_config\"]\n      \n      if (!defined(deps)) {\n        deps \u003d []\n      }\n      if (target_type !\u003d \"source_set\") {\n        deps +\u003d [ \"//build/config:exe_and_shlib_deps\" ]\n      }\n    }\n  }",
+      "parentUuid": "7e032d3b_45aef203",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 8
+      },
+      "revId": "492ff4d23234e568342a9f6505028339ff8ae7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "866e57dc_90b9c802",
         "filename": "chromecast/chromecast.gni",
         "patchSetId": 1
