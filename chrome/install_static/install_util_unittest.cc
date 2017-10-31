@@ -452,6 +452,29 @@ TEST_P(InstallStaticUtilTest, GetBaseAppId) {
   EXPECT_THAT(GetBaseAppId(), StrCaseEq(kBaseAppIds[std::get<0>(GetParam())]));
 }
 
+TEST_P(InstallStaticUtilTest, GetToastActivatorClsid) {
+#if defined(GOOGLE_CHROME_BUILD)
+  // The toast activator CLSIDs for the brand's install modes; parallel to
+  // kInstallModes.
+  static constexpr const wchar_t* kToastActivatorClsids[] = {
+      L"{8A69D345-D564-463c-AFF1-A69D9E530F96}",  // Google Chrome.
+      L"{8237E44A-0054-442C-B6B6-EA0509993955}",  // Google Chrome Beta.
+      L"{401C381F-E0DE-4B85-8BD8-3F3F14FBDA57}",  // Google Chrome Dev.
+      L"{4EA16AC7-FD5A-47C3-875B-DBF4A2008C20}",  // Google Chrome SxS (Canary).
+  };
+#else
+  // The toast activator CLSIDs for the brand's install modes; parallel to
+  // kInstallModes.
+  static constexpr const wchar_t* kToastActivatorClsids[] = {
+      L"{635EFA6F-08D6-4EC9-BD14-8A0FDE975159}",  // Chromium.
+  };
+#endif
+  static_assert(arraysize(kToastActivatorClsids) == NUM_INSTALL_MODES,
+                "kToastActivatorClsids out of date.");
+  EXPECT_THAT(GetToastActivatorClsid(),
+              StrCaseEq(kToastActivatorClsids[std::get<0>(GetParam())]));
+}
+
 TEST_P(InstallStaticUtilTest, UsageStatsAbsent) {
   EXPECT_FALSE(GetCollectStatsConsent());
 }

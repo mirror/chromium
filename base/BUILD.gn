@@ -1488,6 +1488,7 @@ jumbo_component("base") {
       "setupapi.lib",
       "userenv.lib",
       "winmm.lib",
+      "propsys.lib",
     ]
     all_dependent_configs += [
       ":base_win_linker_flags",

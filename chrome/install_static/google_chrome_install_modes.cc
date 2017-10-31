@@ -38,6 +38,7 @@ const InstallConstants kInstallModes[] = {
         L"Chrome HTML Document",                    // ProgID description.
         L"{8A69D345-D564-463c-AFF1-A69D9E530F96}",  // Active Setup GUID.
         L"{5C65F4B0-3651-4514-B207-D10CB699B14B}",  // CommandExecuteImpl CLSID.
+        L"{A2C6CB58-C076-425C-ACB7-6D19D64428CD}",  // Toast Activator CLSID.
         L"",  // The empty string means "stable".
         ChannelStrategy::ADDITIONAL_PARAMETERS,
         true,  // Supports system-level installs.
@@ -61,6 +62,7 @@ const InstallConstants kInstallModes[] = {
         L"Chrome Beta HTML Document",               // ProgID description.
         L"{8237E44A-0054-442C-B6B6-EA0509993955}",  // Active Setup GUID.
         L"",                                        // CommandExecuteImpl CLSID.
+        L"{B89B137F-96AA-4AE2-98C4-6373EAA1EA4D}",  // Toast Activator CLSID.
         L"beta",                                    // Forced channel name.
         ChannelStrategy::FIXED,
         true,   // Supports system-level installs.
@@ -84,6 +86,7 @@ const InstallConstants kInstallModes[] = {
         L"Chrome Dev HTML Document",                // ProgID description.
         L"{401C381F-E0DE-4B85-8BD8-3F3F14FBDA57}",  // Active Setup GUID.
         L"",                                        // CommandExecuteImpl CLSID.
+        L"{F01C03EB-D431-4C83-8D7A-902771E732FA}",  // Toast Activator CLSID.
         L"dev",                                     // Forced channel name.
         ChannelStrategy::FIXED,
         true,   // Supports system-level installs.
@@ -107,6 +110,7 @@ const InstallConstants kInstallModes[] = {
         L"Chrome Canary HTML Document",             // ProgID description.
         L"{4ea16ac7-fd5a-47c3-875b-dbf4a2008c20}",  // Active Setup GUID.
         L"{1BEAC3E3-B852-44F4-B468-8906C062422E}",  // CommandExecuteImpl CLSID.
+        L"{FA372A6E-149F-4E95-832D-8F698D40AD7F}",  // Toast Activator CLSID.
         L"canary",                                  // Forced channel name.
         ChannelStrategy::FIXED,
         false,  // Does not support system-level installs.
