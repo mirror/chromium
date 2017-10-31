@@ -46,6 +46,30 @@
       "revId": "e9a42ce255092e52c76a19fc5fee4fd25e96f2ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf58b0b_c5407a1c",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-31T21:47:14Z",
+      "side": 1,
+      "message": "Got it.  I guess I got confused because DidBlockContentType() sounds like a read-only method.",
+      "parentUuid": "09f4a12f_dce94894",
+      "range": {
+        "startLine": 175,
+        "startChar": 40,
+        "endLine": 175,
+        "endChar": 46
+      },
+      "revId": "e9a42ce255092e52c76a19fc5fee4fd25e96f2ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
