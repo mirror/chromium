@@ -162,7 +162,7 @@ bool D3D11H264Accelerator::SubmitFrameMetadata(
     const H264Picture::Vector& ref_pic_listp0,
     const H264Picture::Vector& ref_pic_listb0,
     const H264Picture::Vector& ref_pic_listb1,
-    const scoped_refptr<H264Picture>& pic) {
+    scoped_refptr<H264Picture> pic) {
   scoped_refptr<D3D11H264Picture> our_pic(
       static_cast<D3D11H264Picture*>(pic.get()));
 
@@ -235,7 +235,7 @@ bool D3D11H264Accelerator::SubmitSlice(const H264PPS* pps,
                                        const H264SliceHeader* slice_hdr,
                                        const H264Picture::Vector& ref_pic_list0,
                                        const H264Picture::Vector& ref_pic_list1,
-                                       const scoped_refptr<H264Picture>& pic,
+                                       scoped_refptr<H264Picture> pic,
                                        const uint8_t* data,
                                        size_t size) {
   scoped_refptr<D3D11H264Picture> our_pic(
@@ -463,7 +463,7 @@ void D3D11H264Accelerator::SubmitSliceData() {
   bitstream_buffer_size_ = 0;
 }
 
-bool D3D11H264Accelerator::SubmitDecode(const scoped_refptr<H264Picture>& pic) {
+bool D3D11H264Accelerator::SubmitDecode(scoped_refptr<H264Picture> pic) {
   SubmitSliceData();
 
   HRESULT hr = video_context_->DecoderEndFrame(video_decoder_.Get());
@@ -484,8 +484,7 @@ void D3D11H264Accelerator::Reset() {
   }
 }
 
-bool D3D11H264Accelerator::OutputPicture(
-    const scoped_refptr<H264Picture>& pic) {
+bool D3D11H264Accelerator::OutputPicture(scoped_refptr<H264Picture> pic) {
   scoped_refptr<D3D11H264Picture> our_pic(
       static_cast<D3D11H264Picture*>(pic.get()));
   client_->OutputResult(our_pic->picture, our_pic->input_buffer_id_);
