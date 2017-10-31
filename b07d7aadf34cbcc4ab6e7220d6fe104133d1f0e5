@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae153d2a_6152eb02",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-31T21:57:02Z",
+      "side": 1,
+      "message": "nit: can this go, too?",
+      "revId": "b07d7aadf34cbcc4ab6e7220d6fe104133d1f0e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
