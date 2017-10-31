@@ -32,10 +32,10 @@
 #ifndef SharedWorker_h
 #define SharedWorker_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/CoreExport.h"
 #include "core/workers/AbstractWorker.h"
 #include "platform/Supplementable.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -45,7 +45,7 @@ class ExceptionState;
 class CORE_EXPORT SharedWorker final
     : public AbstractWorker,
       public Supplementable<SharedWorker>,
-      public ActiveScriptWrappable<SharedWorker> {
+      public ActiveScriptWrappableAdapter<SharedWorker> {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(SharedWorker);
 

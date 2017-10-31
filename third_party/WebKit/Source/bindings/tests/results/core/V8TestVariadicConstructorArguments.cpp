@@ -52,7 +52,7 @@ const WrapperTypeInfo& TestVariadicConstructorArguments::wrapper_type_info_ = V8
 
 // not [ActiveScriptWrappable]
 static_assert(
-    !std::is_base_of<ActiveScriptWrappableBase, TestVariadicConstructorArguments>::value,
+    !std::is_base_of<ActiveScriptWrappable, TestVariadicConstructorArguments>::value,
     "TestVariadicConstructorArguments inherits from ActiveScriptWrappable<>, but is not specifying "
     "[ActiveScriptWrappable] extended attribute in the IDL file.  "
     "Be consistent.");

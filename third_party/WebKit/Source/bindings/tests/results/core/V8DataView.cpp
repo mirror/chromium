@@ -54,7 +54,7 @@ const WrapperTypeInfo& TestDataView::wrapper_type_info_ = V8DataView::wrapperTyp
 
 // not [ActiveScriptWrappable]
 static_assert(
-    !std::is_base_of<ActiveScriptWrappableBase, TestDataView>::value,
+    !std::is_base_of<ActiveScriptWrappable, TestDataView>::value,
     "TestDataView inherits from ActiveScriptWrappable<>, but is not specifying "
     "[ActiveScriptWrappable] extended attribute in the IDL file.  "
     "Be consistent.");

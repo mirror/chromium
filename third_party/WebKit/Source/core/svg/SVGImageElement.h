@@ -21,13 +21,13 @@
 #ifndef SVGImageElement_h
 #define SVGImageElement_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/html/canvas/ImageElementBase.h"
 #include "core/svg/SVGAnimatedLength.h"
 #include "core/svg/SVGAnimatedPreserveAspectRatio.h"
 #include "core/svg/SVGGraphicsElement.h"
 #include "core/svg/SVGImageLoader.h"
 #include "core/svg/SVGURIReference.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -36,7 +36,7 @@ class CORE_EXPORT SVGImageElement final
     : public SVGGraphicsElement,
       public ImageElementBase,
       public SVGURIReference,
-      public ActiveScriptWrappable<SVGImageElement> {
+      public ActiveScriptWrappableAdapter<SVGImageElement> {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(SVGImageElement);
 

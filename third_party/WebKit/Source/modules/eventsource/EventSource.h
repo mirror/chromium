@@ -33,6 +33,7 @@
 #define EventSource_h
 
 #include <memory>
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/events/EventTarget.h"
 #include "core/loader/ThreadableLoader.h"
@@ -40,7 +41,6 @@
 #include "modules/ModulesExport.h"
 #include "modules/eventsource/EventSourceParser.h"
 #include "platform/Timer.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Forward.h"
@@ -54,7 +54,7 @@ class ResourceResponse;
 class MODULES_EXPORT EventSource final
     : public EventTargetWithInlineData,
       private ThreadableLoaderClient,
-      public ActiveScriptWrappable<EventSource>,
+      public ActiveScriptWrappableAdapter<EventSource>,
       public ContextLifecycleObserver,
       public EventSourceParser::Client {
   DEFINE_WRAPPERTYPEINFO();
