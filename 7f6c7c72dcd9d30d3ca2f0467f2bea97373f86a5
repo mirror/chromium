@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3d55709_7b003901",
+        "filename": "chrome/renderer/extensions/tabs_hooks_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-31T20:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0722715_d2f58844",
+      "revId": "7f6c7c72dcd9d30d3ca2f0467f2bea97373f86a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb53b1d3_fc09185d",
         "filename": "chrome/renderer/extensions/tabs_hooks_delegate.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "7f6c7c72dcd9d30d3ca2f0467f2bea97373f86a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eabcd85_d3c738bb",
+        "filename": "chrome/renderer/extensions/tabs_hooks_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-31T20:22:53Z",
+      "side": 1,
+      "message": "Good catch!  Handled here and below, and updated unittests to cover it.",
+      "parentUuid": "cb53b1d3_fc09185d",
+      "revId": "7f6c7c72dcd9d30d3ca2f0467f2bea97373f86a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "192ad81e_ce0d4e46",
+        "filename": "chrome/renderer/extensions/tabs_hooks_delegate_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-31T20:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0a1533f_747d3bee",
+      "revId": "7f6c7c72dcd9d30d3ca2f0467f2bea97373f86a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fca50bc0_c35dcf08",
         "filename": "extensions/renderer/messaging_util.cc",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c37b0f5c_39acd1e6",
+        "filename": "extensions/renderer/messaging_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-31T20:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fca50bc0_c35dcf08",
+      "revId": "7f6c7c72dcd9d30d3ca2f0467f2bea97373f86a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e87c4a7_93dfb282",
         "filename": "extensions/renderer/send_message_tester.cc",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "7f6c7c72dcd9d30d3ca2f0467f2bea97373f86a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7639885_b5a00748",
+        "filename": "extensions/renderer/send_message_tester.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-31T20:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e87c4a7_93dfb282",
+      "revId": "7f6c7c72dcd9d30d3ca2f0467f2bea97373f86a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
