@@ -30,7 +30,7 @@ class NetworkServiceTest : public testing::Test {
   NetworkServiceTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::IO),
-        service_(NetworkServiceImpl::CreateForTesting()) {}
+        service_(NetworkService::CreateForTesting()) {}
   ~NetworkServiceTest() override {}
 
   NetworkService* service() const { return service_.get(); }
@@ -98,7 +98,7 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
                      const std::string& name) override {
     if (name == mojom::kNetworkServiceName) {
       service_context_.reset(new service_manager::ServiceContext(
-          NetworkServiceImpl::CreateForTesting(), std::move(request)));
+          NetworkService::CreateForTesting(), std::move(request)));
     }
   }
 
@@ -398,8 +398,8 @@ class NetworkServiceNetworkChangeTest
                        const std::string& name) override {
       if (name == mojom::kNetworkServiceName) {
         service_context_.reset(new service_manager::ServiceContext(
-            NetworkServiceImpl::CreateForTesting(), std::move(request)));
-        // Send a broadcast after NetworkServiceImpl is actually created.
+            NetworkService::CreateForTesting(), std::move(request)));
+        // Send a broadcast after NetworkService is actually created.
         // Otherwise, this NotifyObservers is a no-op.
         net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
             net::NetworkChangeNotifier::CONNECTION_3G);
