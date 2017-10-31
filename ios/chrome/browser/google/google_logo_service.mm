@@ -39,7 +39,9 @@ GoogleLogoService::GoogleLogoService(
                       template_url_service,
                       image_fetcher::CreateIOSImageDecoder(),
                       request_context_getter,
-                      /*use_gray_background=*/false) {}
+                      /*logo_type_getter=*/base::BindRepeating(^(void) {
+                        return false;
+                      })) {}
 
 GoogleLogoService::~GoogleLogoService() {}
 

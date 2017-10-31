@@ -290,7 +290,7 @@ class LogoServiceImplTest : public ::testing::Test {
         std::make_unique<FakeImageDecoder>(),
         new net::TestURLRequestContextGetter(
             base::ThreadTaskRunnerHandle::Get()),
-        /*use_gray_background=*/false);
+        /*logo_type_getter=*/base::BindRepeating([] { return false; }));
     logo_service_->SetClockForTests(base::WrapUnique(test_clock_));
     logo_service_->SetLogoCacheForTests(base::WrapUnique(logo_cache_));
   }
