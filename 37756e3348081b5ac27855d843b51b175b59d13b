@@ -16,6 +16,24 @@
       "revId": "37756e3348081b5ac27855d843b51b175b59d13b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878c0bb5_017c7144",
+        "filename": "chrome/browser/net/chrome_network_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T15:36:20Z",
+      "side": 1,
+      "message": "There are quite a few call sites which use this signature and which don\u0027t have an absolute path. I think we can probably eliminate the call but it should be a separate CL.",
+      "parentUuid": "70fc865a_3ae4f52a",
+      "revId": "37756e3348081b5ac27855d843b51b175b59d13b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
