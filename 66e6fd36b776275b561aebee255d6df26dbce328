@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b79453d1_66550386",
+        "filename": "ios/web/net/wk_cookie_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T17:06:18Z",
+      "side": 1,
+      "message": "I\u0027m creating cookies directory in web/net/ can you put this in there ?",
+      "revId": "66e6fd36b776275b561aebee255d6df26dbce328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2799d82_684e8538",
+        "filename": "ios/web/net/wk_cookie_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T17:06:18Z",
+      "side": 1,
+      "message": "Do you need to add that you are returning Persistent cookieStore, or provide a boolean for that ?",
+      "range": {
+        "startLine": 17,
+        "startChar": 19,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "66e6fd36b776275b561aebee255d6df26dbce328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7fbac8_0957512a",
+        "filename": "ios/web/net/wk_cookie_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-10-31T17:06:18Z",
+      "side": 1,
+      "message": "what do you feel about using WKSystemCookieStore instead of WKHTTPCookieStore ?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "66e6fd36b776275b561aebee255d6df26dbce328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
