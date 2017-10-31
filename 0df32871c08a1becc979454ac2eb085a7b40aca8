@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0a463c4_376fb9d8",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T15:11:13Z",
+      "side": 1,
+      "message": "leftover, remove this.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "0df32871c08a1becc979454ac2eb085a7b40aca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21a4d27_9cdca891",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T15:11:13Z",
+      "side": 1,
+      "message": "nit: s/malloc/winheap/ here.\n\n\nAlso I\u0027d probably do in the opposite order (winheap first, than malloc).\nI never remember if there is some odd case where windows can have both.",
+      "range": {
+        "startLine": 98,
+        "startChar": 34,
+        "endLine": 98,
+        "endChar": 40
+      },
+      "revId": "0df32871c08a1becc979454ac2eb085a7b40aca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
