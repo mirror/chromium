@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "cb5416c8_29dce15e",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-31T16:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98b05e70_445b09b5",
+      "revId": "06af31c87e62e48686dd5dab57c254b41332f469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1133d9b8_fae3fa21",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
         "patchSetId": 10
