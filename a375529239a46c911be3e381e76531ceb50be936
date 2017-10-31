@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0be088b3_637983fa",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-31T22:30:00Z",
+      "side": 1,
+      "message": "(optional) It looks like CGRectEqualToRect is deprecated. You can just use \u003d\u003d instead\nAlthough is there a point for checking before you set it?",
+      "range": {
+        "startLine": 267,
+        "startChar": 7,
+        "endLine": 267,
+        "endChar": 24
+      },
+      "revId": "a375529239a46c911be3e381e76531ceb50be936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
