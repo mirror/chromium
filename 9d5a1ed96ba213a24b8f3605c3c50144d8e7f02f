@@ -52,6 +52,24 @@
       "revId": "9d5a1ed96ba213a24b8f3605c3c50144d8e7f02f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45e2257_0ba1a5a1",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-31T01:07:54Z",
+      "side": 1,
+      "message": "\u003e You could just set-up a registration scheme where you register multiple sections of memory to be set RO, but it doesn\u0027t seem worth it to introduce the additional complexity just for the component build. WDYT?\n\nEvidently the component build is all that a lot of developers ever use, so not covering it would be a pretty big detriment in my mind: Without dev-time coverage of this feature, it’s much harder to have assurance that it works as we want for real users in official builds.",
+      "parentUuid": "724e5bbe_85a0fe43",
+      "revId": "9d5a1ed96ba213a24b8f3605c3c50144d8e7f02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
