@@ -119,6 +119,12 @@ void HTMLFrameOwnerElement::DisconnectContentFrame() {
   if (Frame* frame = ContentFrame()) {
     frame->Detach(FrameDetachType::kRemove);
   }
+
+  // Removing a child frame can impact the result of AllDescendantsAreComplete
+  // that is consulted by Document::ShouldComplete - therefore we need to
+  // re-check this after removing the child frame.  See also
+  // https://crbug.com/779433.
+  GetDocument().CheckCompleted();
 }
 
 HTMLFrameOwnerElement::~HTMLFrameOwnerElement() {
