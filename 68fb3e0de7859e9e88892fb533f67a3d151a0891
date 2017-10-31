@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0424943d_d0491d75",
+        "filename": "chrome/browser/metrics/antivirus_metrics_provider_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-31T17:05:18Z",
+      "side": 1,
+      "message": "Can you add a comment explaining why this should run on a COMSTATTaskRunner?",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "68fb3e0de7859e9e88892fb533f67a3d151a0891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
