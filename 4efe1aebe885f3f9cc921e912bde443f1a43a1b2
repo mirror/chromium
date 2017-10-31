@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d2b1743_6520a50b",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-31T19:53:56Z",
+      "side": 1,
+      "message": "The default of player_info.last_pipeline_status is already PIPELINE_OK, so this change only makes sure we don\u0027t have crazy numbers reported.",
+      "revId": "4efe1aebe885f3f9cc921e912bde443f1a43a1b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb106ed_44e03f85",
+        "filename": "media/base/media_log_event.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-31T19:53:56Z",
+      "side": 1,
+      "message": "Shall we define consts for these strings? This is hardcoded in multiple places (across both renderer and browser processes).",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "4efe1aebe885f3f9cc921e912bde443f1a43a1b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa44091_1b2ad0d7",
+        "filename": "media/base/pipeline_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-31T19:53:56Z",
+      "side": 1,
+      "message": "I am not sure whether the new values will be reported. But we should keep this enum synced with enums.xml. WDYT?",
+      "revId": "4efe1aebe885f3f9cc921e912bde443f1a43a1b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95be27ff_74b9473a",
+        "filename": "media/base/pipeline_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-31T19:53:56Z",
+      "side": 1,
+      "message": "These comments doesn\u0027t really add much value...",
+      "revId": "4efe1aebe885f3f9cc921e912bde443f1a43a1b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3096ece_d40fc55d",
+        "filename": "media/base/pipeline_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-31T19:53:56Z",
+      "side": 1,
+      "message": "I feel it\u0027s better to keep these enums in numerical number. WDYT?",
+      "revId": "4efe1aebe885f3f9cc921e912bde443f1a43a1b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
