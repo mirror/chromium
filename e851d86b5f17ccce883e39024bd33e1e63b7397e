@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2f4cfc5_9ed7df7c",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-31T01:28:52Z",
+      "side": 1,
+      "message": "Maybe rename this to settings_object to match spec\u0027s argname.",
+      "revId": "e851d86b5f17ccce883e39024bd33e1e63b7397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4920dfdb_608d9c22",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-31T01:28:52Z",
+      "side": 1,
+      "message": "// #fetch-a-classic-script Step 2. Set request\u0027s client to settings object. [spec text]\n// Note: |element_document| corresponds to the settings object.",
+      "revId": "e851d86b5f17ccce883e39024bd33e1e63b7397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6124cf_5abddee0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ScriptFetchOptions.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-31T01:28:52Z",
+      "side": 1,
+      "message": "// Step 2. Set request\u0027s client to settings object. [spec text]\n// Note: Implemented at ClassicPendingScript::Fetch()",
+      "revId": "e851d86b5f17ccce883e39024bd33e1e63b7397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c2ce6b_fd814abe",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ScriptFetchOptions.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-31T01:28:52Z",
+      "side": 1,
+      "message": "// #fetch-a-classic-script Step 4- is implemented at ClassicPendingScript::Fetch().",
+      "revId": "e851d86b5f17ccce883e39024bd33e1e63b7397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
