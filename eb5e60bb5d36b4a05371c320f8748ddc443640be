@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba0fdae6_57134d3a",
+        "filename": "components/safe_browsing/android/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-31T22:18:27Z",
+      "side": 1,
+      "message": "Theoretically this shouldn\u0027t be compiled on win, but it\u0027s possible it still is. Can you see if it passes w/o this? Feel free to try it in a subsequent CL.",
+      "revId": "eb5e60bb5d36b4a05371c320f8748ddc443640be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
