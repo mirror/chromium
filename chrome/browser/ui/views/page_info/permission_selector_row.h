@@ -57,6 +57,12 @@ class PermissionSelectorRow {
 
   void PermissionChanged(const PageInfoUI::PermissionInfo& permission);
 
+  // Returns the width for the initially selected combobox option.
+  int GetInitialSelectionWidth() const;
+
+  // Sets the minimum width for |combobox_|.
+  void SetMinComboboxContentWidth(int width);
+
  private:
   friend class test::PageInfoBubbleViewTestApi;
 
