@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f80c9a85_d1d01bcc",
+        "filename": "chrome/browser/chromeos/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-31T07:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f31a1771_046b1cd8",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 7
+      },
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6a48fea_80987cff",
         "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
         "patchSetId": 11
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-30T08:13:16Z",
       "side": 1,
       "message": "Do we have the other case? How about?\n\nDCHECK(shm_handle.OwnershipPassesToIPC());\nshm_handle.Close();",
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05bd0cca_a4b1bcc1",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-31T07:08:20Z",
+      "side": 1,
+      "message": "Yes, for AllocateProtectedBuffer case the handle is unowned.",
+      "parentUuid": "d6a48fea_80987cff",
       "revId": "3af64792074f0ac087f75addb66080c26f5726be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e55def7d_04e4cb86",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-31T07:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4049120c_7701926f",
+      "range": {
+        "startLine": 229,
+        "startChar": 23,
+        "endLine": 229,
+        "endChar": 39
+      },
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5513f185_7f09944d",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 11
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "87210d36_21435e2c",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-31T07:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5513f185_7f09944d",
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de189a4d_4b5bf7a0",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
         "patchSetId": 11
@@ -96,6 +180,24 @@
       "revId": "3af64792074f0ac087f75addb66080c26f5726be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b491fcf8_c41ff076",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-31T07:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de189a4d_4b5bf7a0",
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "fa0d4076_e37844aa",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-31T07:08:20Z",
+      "side": 1,
+      "message": "The constructor is private and this causes a compilation error. This appears to be a general issue with make_unique, there seem to be some workarounds, but they don\u0027t seem straightforward...",
+      "parentUuid": "8c417c63_b978a07d",
+      "range": {
+        "startLine": 130,
+        "startChar": 18,
+        "endLine": 130,
+        "endChar": 39
+      },
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "959a14f1_47fff51e",
         "filename": "chrome/gpu/protected_buffer_manager.cc",
         "patchSetId": 11
@@ -133,6 +259,24 @@
       "writtenOn": "2017-10-30T13:26:44Z",
       "side": 1,
       "message": "nit/clarification: in chrome, I often see calling weak_factory_.GetWeakPtr() for each Bind*() individually. Any reasons to cache the pointer?",
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cbcb344_c0eb83ae",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-31T07:08:20Z",
+      "side": 1,
+      "message": "It\u0027s to avoid the call, I\u0027ve seen this pattern in other places as well. I\u0027m not aware of any potential issues, I wonder if there are any other particular advantages/disadvantages...",
+      "parentUuid": "959a14f1_47fff51e",
       "revId": "3af64792074f0ac087f75addb66080c26f5726be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "e2ff36c5_31a6d384",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surface_factory.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-31T07:08:20Z",
+      "side": 1,
+      "message": "I did this to make the formatting more consistent, l.178 is to match no empty line at l.174, and to have visual separation between error return here at 179.",
+      "parentUuid": "2c59b237_220d3d40",
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69d75dcb_596ecf83",
         "filename": "ui/ozone/public/surface_factory_ozone.h",
         "patchSetId": 11
@@ -167,6 +329,24 @@
       "writtenOn": "2017-10-30T08:13:16Z",
       "side": 1,
       "message": "Sounds like we should have a bug to remove the temporary solution.",
+      "revId": "3af64792074f0ac087f75addb66080c26f5726be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e694c1_fd5ee0e9",
+        "filename": "ui/ozone/public/surface_factory_ozone.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-31T07:08:20Z",
+      "side": 1,
+      "message": "That\u0027s crbug.com/771863. Adding.",
+      "parentUuid": "69d75dcb_596ecf83",
       "revId": "3af64792074f0ac087f75addb66080c26f5726be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
