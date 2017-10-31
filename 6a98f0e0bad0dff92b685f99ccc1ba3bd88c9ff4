@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c468ca9_ffde2b63",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-31T17:55:19Z",
+      "side": 1,
+      "message": "This method should only be called on the UI thread. If we need to post back to the UI thread, we should do it in TabPersistentStore, not here.",
+      "revId": "6a98f0e0bad0dff92b685f99ccc1ba3bd88c9ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
