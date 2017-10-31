@@ -211,9 +211,6 @@ void DistillerPageIOS::DistillPageImpl(const GURL& url,
   web::NavigationManager::WebLoadParams params(url_);
   web_state_->SetWebUsageEnabled(true);
   web_state_->GetNavigationManager()->LoadURLWithParams(params);
-  // LoadIfNecessary is needed because the view is not created (but needed) when
-  // loading the page. TODO(crbug.com/705819): Remove this call.
-  web_state_->GetNavigationManager()->LoadIfNecessary();
 }
 
 void DistillerPageIOS::OnLoadURLDone(

@@ -679,6 +679,7 @@ TEST_F(TabModelTest, AddWithOrderControllerAndGrouping) {
   web::NavigationManager::WebLoadParams parent_params(
       GURL("http://www.espn.com"));
   parent_params.transition_type = ui::PAGE_TRANSITION_TYPED;
+  parent.webState->SetWebUsageEnabled(true);
   [parent navigationManager]->LoadURLWithParams(parent_params);
   ASSERT_TRUE([parent navigationManagerImpl]);
   [parent navigationManagerImpl]->CommitPendingItem();

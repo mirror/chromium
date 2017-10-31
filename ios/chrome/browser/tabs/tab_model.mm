@@ -450,15 +450,16 @@ void CleanCertificatePolicyCache(
   web::WebState::CreateParams createParams(self.browserState);
   createParams.created_with_opener = openedByDOM;
 
-  std::unique_ptr<web::WebState> webState = web::WebState::Create(createParams);
+  // Insert WebState before loading the URL. This way it is guaranteed that the
+  // new WebState is propely configured.
+  insertionIndex = _webStateList->InsertWebState(
+      insertionIndex, web::WebState::Create(createParams), insertionFlags,
+      WebStateOpener(parentTab.webState));
+  web::WebState* webState = _webStateList->GetWebStateAt(insertionIndex);
+  webState->SetWebUsageEnabled(true);
   webState->GetNavigationManager()->LoadURLWithParams(loadParams);
 
-  insertionIndex = _webStateList->InsertWebState(
-      insertionIndex, std::move(webState), insertionFlags,
-      WebStateOpener(parentTab.webState));
-
-  return LegacyTabHelper::GetTabForWebState(
-      _webStateList->GetWebStateAt(insertionIndex));
+  return LegacyTabHelper::GetTabForWebState(webState);
 }
 
 - (void)moveTab:(Tab*)tab toIndex:(NSUInteger)toIndex {
