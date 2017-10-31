@@ -14,6 +14,8 @@
   <template>
     <style include="md-select cr-shared-style">
       :host {
+        --card-max-width: 928px;
+        --card-min-width: 600px;
         height: 100%;
       }
 
@@ -28,8 +30,8 @@
         @apply(--shadow-elevation-2dp);
         background-color: white;
         margin: 0 auto 16px auto;
-        max-width: 928px;
-        min-width: 600px;
+        max-width: var(--card-max-width);
+        min-width: var(--card-min-width);
         padding-bottom: 8px;
         width: 90%;
       }
@@ -80,8 +82,17 @@
         -webkit-margin-end: 20px;
         -webkit-margin-start: 56px;
       }
+
+      #instructions {
+        @apply(--cr-title-text);
+        margin: 0 auto 16px auto;
+        max-width: var(--card-max-width);
+        min-width: var(--card-min-width);
+        width: 90%;
+      }
     </style>
     <div id="container">
+      <div id="instructions">$i18n{shortcutInstructions}</div>
       <template is="dom-repeat" items="[[calculateShownItems_(items.*)]]">
         <div class="shortcut-card">
           <div class="card-title">
