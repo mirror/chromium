@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "64531f3b_1cc4b05d",
+        "filename": "chrome/common/extensions/api/language_settings_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-31T01:58:14Z",
+      "side": 1,
+      "message": "+1. The browser has the source of truth for the pref, other functions are used to change the pref itself, let\u0027s not make these moveLanguage* functions use what the JS thinks is the current pref.",
+      "parentUuid": "f966282c_720ca577",
+      "range": {
+        "startLine": 95,
+        "startChar": 61,
+        "endLine": 96,
+        "endChar": 16
+      },
+      "revId": "3c1347643e716b9aeaab2f5085f5d21f45ae906d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff45fcd5_4d8b98db",
         "filename": "chrome/test/data/webui/settings/fake_language_settings_private.js",
         "patchSetId": 6
