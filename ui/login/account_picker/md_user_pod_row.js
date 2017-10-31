@@ -2913,6 +2913,9 @@ cr.define('login', function() {
     // LANDSCAPE_MODE_LIMIT or PORTRAIT_MODE_LIMIT.
     overlayColors_: {maskColor: undefined, scrollColor: undefined},
 
+    // Whether we should add background to user pods and the header bar.
+    shouldAddBackground_: false,
+
     /** @override */
     decorate: function() {
       // Event listeners that are installed for the time period during which
@@ -4041,6 +4044,8 @@ cr.define('login', function() {
         }
       }
       this.updateSigninBannerPosition_();
+      if (this.shouldAddBackground_)
+        this.addBackgroundToUserPods();
     },
 
     /**
@@ -4233,6 +4238,23 @@ cr.define('login', function() {
      */
     getMaskGradient_: function(maskColor) {
       return 'linear-gradient(' + maskColor + ', transparent)';
+    },
+
+    /**
+     * Adds background to each user pod.
+     */
+    addBackgroundToUserPods: function() {
+      this.shouldAddBackground_ = true;
+      // Note: the user pods may not be initialized yet when this method is
+      // called, so the following may be no-op. |handleAfterPodPlacement_|
+      // will check the flag and call this method again.
+      var pods = this.pods;
+      for (var pod of pods)
+        pod.classList.add('translucent-background');
+      if ($('login-header-bar')) {
+        // Also add background to the header bar.
+        $('login-header-bar').classList.add('translucent-background');
+      }
     },
 
     /**

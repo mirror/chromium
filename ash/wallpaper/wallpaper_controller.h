@@ -127,6 +127,14 @@ class ASH_EXPORT WallpaperController
   // Opens the set wallpaper page in the browser.
   void OpenSetWallpaperPage();
 
+  // Wallpaper should be dimmed and blurred when showing login, lock, OOBE or
+  // add user screens, except when the wallpaper is set by device policy. See
+  // crbug.com/775591.
+  bool ShouldApplyDimAndBlur() const;
+
+  // Returns whether the wallpaper is set by device policy.
+  bool IsDevicePolicyWallpaper() const;
+
   // mojom::WallpaperController overrides:
   void AddObserver(mojom::WallpaperObserverAssociatedPtrInfo observer) override;
   void SetWallpaperPicker(mojom::WallpaperPickerPtr picker) override;

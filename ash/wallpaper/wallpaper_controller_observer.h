@@ -19,6 +19,9 @@ class ASH_EXPORT WallpaperControllerObserver {
   // WallpaperController, e.g. WallpaperController::SetWallpaperImage().
   virtual void OnWallpaperColorsChanged() {}
 
+  // Invoked when a device policy wallpaper is set.
+  virtual void OnDevicePolicyWallpaperSet() {}
+
  protected:
   virtual ~WallpaperControllerObserver() {}
 };
