@@ -34,6 +34,24 @@
       "revId": "8b06bd89e94761f97e8aae63376103c87f799897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8eb62cf_172a363c",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-10-31T00:17:21Z",
+      "side": 1,
+      "message": "It does leave out some benchmarks. I removed this list and just defaulted to true, and there are changes in the json file. It looks like it\u0027s mostly just reference tests not being uploaded, although it\u0027s hard to tell because the diff is so big.",
+      "parentUuid": "ae81599a_ee2e8bc4",
+      "revId": "8b06bd89e94761f97e8aae63376103c87f799897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
