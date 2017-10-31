@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1263d31_81a39a37",
+        "filename": "base/metrics/histogram_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-31T17:58:12Z",
+      "side": 1,
+      "message": "They only get put in a map if the histogram is being allocated from the heap.  If persistence is enabled, then the histograms just point to the strings held in that memory segment.  In that latter case, we\u0027ve cut the string storage in half.",
+      "parentUuid": "f76fd15a_04cacdab",
+      "range": {
+        "startLine": 168,
+        "startChar": 70,
+        "endLine": 168,
+        "endChar": 0
+      },
+      "revId": "abec7c5535b34571f3403708450420ec77ac65f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef316c82_c5f88c07",
         "filename": "base/metrics/sparse_histogram_unittest.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-31T17:29:13Z",
       "side": 1,
       "message": "Nit: Can you remove this wrapper and replace with std::make_unique()?",
+      "range": {
+        "startLine": 76,
+        "startChar": 35,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "abec7c5535b34571f3403708450420ec77ac65f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eddc4ad_a1c1a8b8",
+        "filename": "base/metrics/sparse_histogram_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-31T17:58:12Z",
+      "side": 1,
+      "message": "std::make_unique can\u0027t access the protected constructor.  I\u0027ll add a comment.",
+      "parentUuid": "ef316c82_c5f88c07",
       "range": {
         "startLine": 76,
         "startChar": 35,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3735f021_e2738a72",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-31T17:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "def661ca_bdd340b2",
+      "range": {
+        "startLine": 99,
+        "startChar": 30,
+        "endLine": 99,
+        "endChar": 31
+      },
+      "revId": "abec7c5535b34571f3403708450420ec77ac65f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7097f72_8783051b",
         "filename": "base/metrics/statistics_recorder.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "abec7c5535b34571f3403708450420ec77ac65f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4c0a7a_cf98c7a6",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-31T17:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7097f72_8783051b",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 102,
+        "endChar": 24
+      },
+      "revId": "abec7c5535b34571f3403708450420ec77ac65f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
