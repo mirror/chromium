@@ -1,0 +1,1434 @@
+<dom-module id="user-pod-template-shared-styles">
+  <template>
+    <link rel="stylesheet" href="user_pod_template.css">
+  </template>
+</dom-module>
+
+<style is="custom-style" include="user-pod-template-shared-styles"></style>
+
+<iron-iconset-svg name="user-pod" size="24">
+  <svg>
+    <defs>
+      <!--
+      Inlined from Polymer's iron-icons to avoid importing everything.
+      See http://goo.gl/Y1OdAq for instructions on adding additional icons.
+      -->
+      <g id="arrow-forward"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></g>
+      <g id="close"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></g>
+    </defs>
+  </svg>
+</iron-iconset-svg>
+
+<dom-module id="user-pod">
+<dom-module id="desktop-user-pod">
+<style is="custom-style" include="user-pod-template-shared-styles">
+
+  @import '../oobe.css';
+
+pin-keyboard {
+  display: block;
+}
+
+{
+  -webkit-tap-highlight-color: transparent;
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: 0 4px 23px 5px rgba(0, 0, 0, 0.2),
+              0 2px 6px rgba(0, 0, 0, 0.15),
+              0 3px 0 rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  height: 213px;
+  outline: none;
+  position: absolute;
+  top: 0;
+  transform: scale3d(0.9, 0.9, 0.9);
+  width: 180px;
+  z-index: 0;
+}
+
+:host-context(.account-picker.flying-pods) {
+  transition: all 180ms;
+}
+
+:host(.pin-enabled) {
+  height: 417px;
+  top: -87px !important;
+}
+
+.pin-container {
+  height: 204px;
+  position: absolute;
+  top: 170px;
+}
+
+:host(.faded) {
+  opacity: .75;
+}
+
+:host-context([ncolumns='6']) {
+  transform: scale3d(0.8, 0.8, 0.8);
+}
+
+:host(.focused) {
+  /* Focused pod has the same size no matter how many pods. */
+  cursor: default;
+  transform: scale3d(1, 1, 1) !important;
+  z-index: 1;
+}
+
+:host(.focused[auth-type='userClick']) {
+  cursor: pointer;
+}
+
+.user-image-pane {
+  background-color: white;
+  height: 160px;
+  left: 10px;
+  position: absolute;
+  top: 10px;
+  transition: height 180ms ease-in-out,
+              left 180ms ease-in-out,
+              right 180ms ease-in-out,
+              top 180ms ease-in-out,
+              width 180ms ease-in-out;
+  width: 160px;
+  z-index: 3;
+}
+
+:host-context([dir=rtl]) .user-image-pane {
+  left: auto;
+  right: 10px;
+}
+
+.user-image-container {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.user-image {
+  flex: none;
+}
+
+:host(.focused) .user-image {
+  display: none;
+}
+
+.animated-image {
+  display: none;
+}
+
+:host(.focused) .animated-image {
+  display: block;
+}
+
+/* TODO(noms): Refactor this out into a CrOS-specific file and simplify the
+ style rule once it is included on CrOS only. crbug.com/397638 */
+:host-context(html:not([screen=login-add-user])) .user-image {
+  max-height: 160px;
+  max-width: 160px;
+  opacity: 0.7;
+  position: absolute;
+}
+
+:host-context(html:not([screen=login-add-user])):host(.focused) .user-image {
+  opacity: 1;
+}
+
+:host(.multiprofiles-policy-applied) .user-image {
+  -webkit-filter: grayscale(100%);
+}
+
+.signed-in-indicator {
+  display: none;
+}
+
+:host(.signed-in) .signed-in-indicator {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: block;
+  font-size: small;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}
+
+.main-pane {
+  left: 10px;
+  position: absolute;
+  top: 10px;
+  z-index: 2;
+}
+
+:host-context([dir=rtl]) .main-pane {
+  left: auto;
+  right: 10px;
+}
+
+.name-container,
+:host(.focused:not(.multiprofiles-policy-applied)) .auth-container {
+  background-color: white;
+  display: flex;
+  position: absolute;
+  top: 160px;
+/* On chromeos we extend the width to cover the padding on the user pods. This
+ is so the submit button on chromeos can extend onto the padding as shown on
+ mocks. */
+<if expr="not chromeos">
+  width: 160px;
+</if>
+<if expr="chromeos">
+  width: 170px;
+</if>
+}
+
+.auth-container .submit-button[disabled] {
+  color: #000;
+  opacity: 0.26;
+}
+
+.auth-container .submit-button {
+  box-sizing: border-box;
+  color: var(--google-blue-500);
+  height: 43px;
+  min-height: 43px;
+  min-width: 43px;
+  padding: 11.5px 10px;
+  position: relative;
+  width: 43px;
+}
+
+.auth-container .submit-button.error-shown {
+  color: #CD2A00;
+}
+
+.name-container {
+  transition: transform 180ms;
+}
+
+:host(.focused) .name-container {
+  display: none;
+}
+
+:host(.focused.multiprofiles-policy-applied) .name-container {
+  display: flex;
+}
+
+.name {
+  color: #565656;
+  /* This should be 15.6px - the equivalent of 14px at 90% scale. */
+  flex: auto;
+  font-size: 16px;
+  margin-top: 12px;
+  outline: none;
+  overflow: hidden;
+  padding: 0 6px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.learn-more-container,
+.auth-container,
+.password-entry-container,
+.reauth-hint-container {
+  display: none;
+}
+
+:host([is-active-directory]) .reauth-warning {
+  display: none;
+}
+
+:host([auth-type='offlinePassword'].focused) .password-entry-container,
+:host([auth-type='forceOfflinePassword'].focused) .password-entry-container {
+  display: flex;
+  flex: auto;
+}
+
+.password-container {
+  flex: auto;
+}
+
+input[type='password'] {
+  background-color: white;
+  border: none;
+  padding: 4px 6px;
+  position: relative;
+  top: 6px;
+  width: 100%;
+}
+
+.capslock-hint-container {
+  display: none;
+}
+
+<if expr="chromeos">
+.capslock-on .capslock-hint-container {
+  display: block;
+  flex: none;
+  height: 43px;
+  position: relative;
+  width: 20px;
+}
+</if>
+
+.capslock-hint {
+  -webkit-margin-end: 6px;
+  -webkit-margin-start: -2px;
+  margin: auto;
+  position: relative;
+  top: 15px;
+}
+
+.password-label,
+.signin-transition-container {
+  display: none;
+}
+
+:host([auth-type='userClick']:not(.signing-in)) .password-label,
+:host([auth-type='userClick'].signing-in) .signin-transition-container {
+  color: grey;
+  display: block;
+  flex: auto;
+  margin-top: 11px;
+  outline: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.custom-icon {
+  -webkit-margin-end: 0;
+  -webkit-margin-start: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex: none;
+  height: 27px;
+  margin: 8px 0;
+  width: 27px;
+}
+
+.custom-icon.faded {
+  transition: opacity 200ms ease-in-out, visibility 200ms ease-in-out;
+}
+
+.custom-icon-hardlocked {
+  background-image: url(chrome://theme/IDR_EASY_UNLOCK_HARDLOCKED);
+}
+
+.custom-icon-hardlocked.icon-with-tooltip:hover {
+  background-image: url(chrome://theme/IDR_EASY_UNLOCK_HARDLOCKED_HOVER);
+}
+
+.custom-icon-hardlocked.interactive-custom-icon:active {
+  background-image: url(chrome://theme/IDR_EASY_UNLOCK_HARDLOCKED_PRESSED);
+}
+
+.custom-icon-locked {
+  background-image: url(chrome://theme/IDR_EASY_UNLOCK_LOCKED);
+}
+
+.custom-icon-locked.icon-with-tooltip:hover {
+  background-image: url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_HOVER);
+}
+
+.custom-icon-locked.interactive-custom-icon:active {
+  background-image: url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_PRESSED);
+}
+
+.custom-icon-locked-to-be-activated {
+  background-image:
+      url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_TO_BE_ACTIVATED);
+}
+
+.custom-icon-locked-to-be-activated.icon-with-tooltip:hover {
+  background-image:
+      url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_TO_BE_ACTIVATED_HOVER);
+}
+
+.custom-icon-locked-to-be-activated.interactive-custom-icon:active {
+  background-image:
+      url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_TO_BE_ACTIVATED_PRESSED);
+}
+
+.custom-icon-locked-with-proximity-hint {
+  background-image:
+      url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_WITH_PROXIMITY_HINT);
+}
+
+.custom-icon-locked-with-proximity-hint.icon-with-tooltip:hover {
+  background-image:
+      url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_WITH_PROXIMITY_HINT_HOVER);
+}
+
+.custom-icon-locked-with-proximity-hint.interactive-custom-icon:active {
+  background-image:
+      url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_WITH_PROXIMITY_HINT_PRESSED);
+}
+
+.custom-icon-unlocked {
+  background-image: url(chrome://theme/IDR_EASY_UNLOCK_UNLOCKED);
+}
+
+.custom-icon-unlocked.icon-with-tooltip:hover {
+  background-image: url(chrome://theme/IDR_EASY_UNLOCK_UNLOCKED_HOVER);
+}
+
+.custom-icon-unlocked.interactive-custom-icon:active {
+  background-image: url(chrome://theme/IDR_EASY_UNLOCK_UNLOCKED_PRESSED);
+}
+
+/**
+ * Preloads resources for custom icon. Without this, the resources will be
+ * loaded when CSS properties using them are first applied, which has visible
+ * delay and may cause a short white flash when the icon background changes.
+ */
+.custom-icon::after {
+  content:
+    url(chrome://theme/IDR_EASY_UNLOCK_HARDLOCKED)
+    url(chrome://theme/IDR_EASY_UNLOCK_HARDLOCKED_HOVER)
+    url(chrome://theme/IDR_EASY_UNLOCK_HARDLOCKED_PRESSED)
+    url(chrome://theme/IDR_EASY_UNLOCK_LOCKED)
+    url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_HOVER)
+    url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_PRESSED)
+    url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_TO_BE_ACTIVATED)
+    url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_TO_BE_ACTIVATED_HOVER)
+    url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_TO_BE_ACTIVATED_PRESSED)
+    url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_WITH_PROXIMITY_HINT)
+    url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_WITH_PROXIMITY_HINT_HOVER)
+    url(chrome://theme/IDR_EASY_UNLOCK_LOCKED_WITH_PROXIMITY_HINT_PRESSED)
+    url(chrome://theme/IDR_EASY_UNLOCK_UNLOCKED)
+    url(chrome://theme/IDR_EASY_UNLOCK_UNLOCKED_HOVER)
+    url(chrome://theme/IDR_EASY_UNLOCK_UNLOCKED_PRESSED);
+  display: none;
+}
+
+.custom-icon-spinner {
+  animation: easy-unlock-spinner-animation 2s steps(45) infinite;
+  background-image: url(chrome://theme/IDR_EASY_UNLOCK_SPINNER);
+}
+
+@keyframes easy-unlock-spinner-animation {
+  from { background-position: 0 }
+  to { background-position: -1215px }
+}
+
+.interactive-custom-icon {
+  cursor: pointer;
+}
+
+:host([auth-type='onlineSignIn']) .custom-icon-container {
+  display: none;
+}
+
+.fingerprint-icon-container,
+.custom-icon-container {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  height: 43px;
+  width: 27px;
+}
+
+.launch-app-button-container {
+  display: block;
+  flex: auto;
+  text-align: center;
+}
+
+.launch-app-button {
+  display: inline;
+  margin-top: 6px !important;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:host([auth-type='onlineSignIn']) .reauth-hint-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.reauth-hint-container .reauth-warning {
+  -webkit-mask-image: url(../../../ui/webui/resources/images/warning.svg);
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 20px;
+  background-color: #f4b400;
+  height: 24px;
+  width: 24px;
+}
+
+.reauth-hint-container .reauth-name-hint {
+  align-self: center;
+  color: #565656;
+  font-size: 16px;
+  outline: none;
+  overflow: hidden;
+  padding: 0 6px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.action-box-area,
+.user-type-icon-area {
+  background-color: white;
+  border-radius: 2px;
+  position: absolute;
+  top: 0;
+}
+
+.action-box-area {
+  opacity: 0;
+  outline: none;
+  right: 0;
+  transition: opacity 100ms;
+  z-index: 4;
+}
+
+html[dir=rtl] .action-box-area {
+  left: 0;
+  right: auto;
+}
+
+.action-box-area:focus,
+.action-box-area.hovered,
+.action-box-area.active,
+.action-box-area.forced {
+  opacity: 1;
+}
+
+.action-box-button {
+  background-image: url(chrome://theme/IDR_OOBE_ACTION_BOX_BUTTON_NORMAL);
+  height: 13px;
+  margin: 5px;
+  width: 13px;
+}
+
+.action-box-button:hover {
+  background-image: url(chrome://theme/IDR_OOBE_ACTION_BOX_BUTTON_HOVER);
+}
+
+.action-box-area.active .action-box-button {
+  background-image: url(chrome://theme/IDR_OOBE_ACTION_BOX_BUTTON_PRESSED);
+}
+
+.action-box-area .action-box-icon {
+  /* overriden in chrome/browser/resources/md_user_manager/user_manager.css */
+  display: none;
+}
+
+.user-image-gradient-area {
+  /* overriden in chrome/browser/resources/md_user_manager/user_manager.css */
+  display: none;
+}
+
+.user-type-icon-area {
+  left: 0;
+  z-index: 5;
+}
+
+html[dir=rtl] .user-type-icon-area {
+  left: auto;
+  right: 0;
+}
+
+.user-type-icon-image {
+  height: 16px;
+  margin: 5px;
+  width: 16px;
+}
+
+.user-type-icon-area.legacySupervised .user-type-icon-image {
+  background-image: url(../../webui/resources/images/supervisor_account.svg);
+  background-size: 18px;
+}
+
+.user-type-icon-area.child .user-type-icon-image {
+  background-image: url(../../webui/resources/images/account_child_invert.svg);
+  background-size: 18px;
+}
+
+.user-type-icon-area.policy .user-type-icon-image {
+  background-image: url(../../webui/resources/images/business.svg);
+  background-size: 18px;
+}
+
+.user-type-icon-area.app .user-type-icon-image {
+  background-image: url(chrome://theme/IDR_KIOSK_APP_USER_POD_ICON);
+}
+
+.fingerprint-icon-container.hidden {
+  display: none;
+}
+
+.fingerprint-icon-container.default .fingerprint-icon-image {
+  background-image: url(../../webui/resources/images/fingerprint_default.svg);
+}
+
+.fingerprint-icon-container.default:hover .fingerprint-icon-image {
+  background-image: url(../../webui/resources/images/fingerprint_signin.svg);
+}
+
+.fingerprint-icon-container.signin .fingerprint-icon-image {
+  background-image: url(../../webui/resources/images/fingerprint_signin.svg);
+}
+
+.fingerprint-icon-container.failed .fingerprint-icon-image {
+  background-image: url(../../webui/resources/images/fingerprint_failed.svg);
+}
+
+input[type='password'].hidden::-webkit-input-placeholder {
+  color: grey;
+}
+
+input[type='password'].default::-webkit-input-placeholder {
+  color: grey;
+}
+
+input[type='password'].signin::-webkit-input-placeholder {
+  color: var(--google-blue-500);
+}
+
+input[type='password'].failed::-webkit-input-placeholder {
+  color: var(--google-red-500);
+}
+
+.action-box-menu {
+  display: none;
+  z-index: 6;
+}
+
+.action-box-area.active ~ .action-box-menu {
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  position: absolute;
+  right: 5px;
+  width: 220px;
+}
+
+.action-box-area.active ~ .action-box-menu.left-edge-offset {
+  left: 0 !important;
+}
+
+.action-box-area.active ~ .action-box-menu.right-edge-offset {
+  right: 0 !important;
+}
+
+.action-box-area.active ~ .action-box-menu:not(.menu-moved-up) {
+  top: 18px;
+}
+
+.action-box-area.active ~ .action-box-menu.menu-moved-up {
+  bottom: 207px;
+}
+
+.action-box-area.menu-moved-up {
+  transform: rotate(180deg);
+}
+
+html[dir=rtl] .action-box-area.active ~ .action-box-menu {
+  left: 5px;
+  right: auto;
+}
+
+.action-box-menu-title {
+  color: #757575;
+  display: flex;
+  flex-direction: column;
+  padding: 7px 20px;
+}
+
+.action-box-menu-title:focus {
+  outline-style: none;
+}
+
+.action-box-menu-title-name,
+.action-box-menu-title-email {
+  flex: none;
+  height: 23px;
+  line-height: 19px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.action-box-menu-remove {
+  border-top: 1px solid lightgray;
+  line-height: 19px;
+  min-height: 24px;
+  outline: none;
+  padding: 12px 20px 7px;
+}
+
+.action-box-menu-remove:hover,
+.action-box-menu-remove:focus {
+  background-color: #f3f3f3;
+}
+
+.action-box-remove-user-warning {
+  border-top: 1px solid lightgray;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 20px;
+}
+
+.action-box-remove-user-warning > div,
+.action-box-remove-user-warning > table {
+  padding-bottom: 20px;
+}
+
+.total-count {
+  font-weight: bold;
+}
+
+.action-box-remove-user-warning-table-nonsync {
+  border-spacing: 0;
+  width: 100%;
+}
+
+.action-box-remove-user-warning-table td {
+  padding: 0;
+}
+
+.action-box-remove-user-warning-table-numbers {
+  color: #757575;
+  text-align: end;
+}
+
+/* Hide dialog elements not in a correct category. Only combinations currently
+   in use are included here. */
+:host(.legacy-supervised) .non-sync,
+:host(.legacy-supervised) .action-box-remove-user-warning-text,
+:host(.legacy-supervised) .action-box-remove-non-owner-user-warning-text,
+:host(:not(.legacy-supervised))
+    .action-box-remove-legacy-supervised-user-warning-text,
+:host(.synced) .non-sync {
+  display: none;
+}
+
+.user-type-bubble {
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  left: 5px;
+  opacity: 0;
+  padding: 17px;
+  position: absolute;
+  top: 20px;
+  transition: all 100ms;
+  visibility: hidden;
+  width: 200px;
+  z-index: 7;
+}
+
+html[dir=rtl] .user-type-bubble {
+  left: auto;
+  right: 5px;
+}
+
+.bubble-shown,
+.user-type-icon-area.policy:hover ~ .user-type-bubble {
+  opacity: 1;
+  visibility: visible;
+}
+
+.user-type-bubble-header {
+  font-weight: bold;
+  margin-bottom: 14px;
+}
+
+/**** Public account user pod rules *******************************************/
+
+:host(.public-account.expanded) {
+  height: 230px;
+  width: 500px;
+}
+
+:host(.public-account.expanded.advanced) {
+  height: 280px;
+  width: 610px;
+}
+
+:host(.public-account.focused) .name-container {
+  display: flex;
+}
+
+:host(.public-account.expanded) .name-container {
+  display: none;
+}
+
+:host(.public-account) .learn-more-container {
+  display: block;
+  flex: none;
+}
+
+:host(.public-account) .learn-more {
+  top: 22px;
+}
+
+.expanded-pane {
+  display: none;
+}
+
+:host(.public-account.animating) .expanded-pane,
+:host(.public-account.expanded) .expanded-pane {
+  display: block;
+  font-size: 12px;
+  margin: 10px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.expanded-pane-contents {
+  display: flex;
+  flex-direction: column;
+  float: right;
+  height: 213px;
+  width: 490px;
+}
+
+:host(.public-account.transitioning-to-advanced) .expanded-pane-contents {
+  transition: width 180ms;
+}
+
+:host(.public-account.expanded.advanced) .expanded-pane-contents {
+  height: 263px;
+  width: 600px;
+}
+
+html[dir=rtl] .expanded-pane-contents {
+  float: left;
+}
+
+.side-container {
+  -webkit-margin-start: 200px;
+  flex: auto;
+}
+
+.expanded-pane-name {
+  font-size: 19px;
+  margin-bottom: 11px;
+  margin-top: -2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.expanded-pane-container {
+  color: grey;
+}
+
+.reminder {
+  margin-top: 20px;
+}
+
+.language-and-input-section {
+  display: none;
+}
+
+:host(.public-account.transitioning-to-advanced) .language-and-input-section {
+  display: block;
+  opacity: 0;
+  transition: opacity 180ms ease 180ms;
+}
+
+:host(.public-account.expanded.advanced) .language-and-input-section {
+  display: block;
+  opacity: 1;
+}
+
+.select-with-label {
+  display: flex;
+  margin-top: 20px;
+}
+
+.language-select-label,
+.keyboard-select-label {
+  flex: none;
+  margin-top: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 170px;
+}
+
+.select-container {
+  flex: auto;
+}
+
+.language-select,
+.keyboard-select {
+  width: 100%;
+}
+
+.bottom-container {
+  -webkit-margin-start: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+  flex: none;
+  font-size: 13px;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.expanded-pane-learn-more-container,
+.enter-button {
+  flex: none;
+}
+
+.expanded-pane-learn-more,
+:host(.public-account) .learn-more {
+  background-image: url(../../webui/resources/images/business.svg);
+  background-size: 18px;
+  height: 18px;
+  margin-top: -10px;
+  position: relative;
+  width: 18px;
+}
+
+.expanded-pane-learn-more {
+  top: 5px;
+}
+
+.info {
+  flex: auto;
+  margin: -10px 25px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.monitoring-container {
+  margin-top: 35px;
+}
+
+.monitoring-learn-more {
+  color: rgb(49, 106, 197);
+  text-decoration: none;
+}
+
+.monitoring-dialog-container .cr-dialog-shield {
+  background: black;
+  opacity: 0.5;
+}
+
+.monitoring-dialog-container .cr-dialog-buttons {
+  display: none;
+}
+
+.monitoring-dialog-container .cr-dialog-frame {
+  height: 170px;
+  left: -46px;
+  padding: 0px;
+  position: relative;
+  top: -24px;
+  width: 430px;
+}
+
+.monitoring-dialog-container.advanced .cr-dialog-frame {
+  left: -110px;
+  top: 0px;
+}
+
+.monitoring-dialog-container .cr-dialog-close {
+  color: grey;
+  height: 34px;
+  position: absolute;
+  top: 0px;
+  width: 34px;
+}
+
+.monitoring-dialog-container .cr-dialog-title {
+  font-size: 16px;
+  font-weight: bold;
+  left: 20px;
+  position: absolute;
+  top: 15px;
+}
+
+.monitoring-dialog-container .cr-dialog-text {
+  color: grey;
+  font-size: 13px;
+  overflow: visible;
+  position: absolute;
+  top: 20px;
+}
+
+.monitoring-dialog-container .cr-dialog-item {
+  -webkit-margin-start: 42px;
+  display: list-item;
+  margin-bottom: -6px;
+}
+
+.language-and-input-container {
+  -webkit-margin-end: 25px;
+  flex: none;
+}
+
+.language-and-input {
+  color: rgb(49, 106, 197);
+  text-decoration: none;
+}
+
+:host(.public-account.expanded.advanced) .language-and-input-container {
+  display: none;
+}
+
+.enter-button {
+  background-color: rgb(66, 133, 244);
+  color: white;
+  font-size: 12px;
+  text-transform: none;
+}
+
+.enter-button.keyboard-focus {
+  font-weight: normal;
+}
+
+.horizontal-line {
+  border-bottom: 1px double #cccccc;
+  bottom: 8px;
+  position: relative;
+}
+
+/* Animations for the animated ellipsis: */
+.animated-ellipsis-component0 {
+  animation: ellipsis-component0 1.5s infinite;
+}
+
+@keyframes ellipsis-component0 {
+  0% { opacity: 0; }
+  25% { opacity: 1; }
+  50% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.animated-ellipsis-component1 {
+  animation: ellipsis-component1 1.5s infinite;
+}
+
+@keyframes ellipsis-component1 {
+  0% { opacity: 0; }
+  25% { opacity: 0; }
+  50% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.animated-ellipsis-component2 {
+  animation: ellipsis-component2 1.5s infinite;
+}
+
+@keyframes ellipsis-component2 {
+  0% { opacity: 0; }
+  25% { opacity: 0; }
+  50% { opacity: 0; }
+  75% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+
+
+
+
+
+
+
+
+
+    :host {
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .24),
+                  0 0 2px 0 rgba(0, 0, 0, .12);
+      color: var(--primary-text-color);
+      cursor: default;
+      height: auto;
+      transform: none;
+      width: auto;
+    }
+
+    .user-image-gradient-area,
+    .user-image-pane {
+      border-top-left-radius: 2px;
+      border-top-right-radius: 2px;
+    }
+
+    .user-image-pane {
+      overflow: hidden;
+      position: static;
+    }
+
+    .user-image {
+      height: 160px;
+      width: 160px;
+    }
+
+    .main-pane {
+      line-height: 20px;
+      padding: 10px;
+      position: static;
+    }
+
+    .main-pane .name-container {
+      display: block;
+      position: static;
+      width: auto;
+    }
+
+    .main-pane .name-container .name,
+    .reauth-hint-container .reauth-name-hint {
+      color: inherit;
+      font-size: inherit;
+      margin: 0;
+      padding: 0;
+      text-align: initial;
+      width: 120px;
+    }
+
+    :host(.locked.child) .name-container .name {
+      width: 92px;
+    }
+
+    .indicator-container {
+      bottom: 10px;
+      display: flex;
+      left: auto;
+      position: absolute;
+      right: 10px;
+      top: auto;
+    }
+
+    :host-context([dir='rtl']) .indicator-container {
+      left: 10px;
+      right: auto;
+    }
+
+    /* Using -webkit-mask on the indicators allows us to tweak the color. */
+    .indicator-container > .indicator {
+      -webkit-mask-position: center;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-size: 16px;
+      background: var(--paper-grey-600);
+      display: none;
+      height: 20px;
+      width: 20px;
+    }
+
+    :host(.locked) .locked-indicator {
+      -webkit-mask-image: url(../../webui/resources/images/lock.svg);
+      display: block;
+    }
+
+    :host(.locked.child) .locked-indicator {
+      -webkit-margin-start: 8px;
+    }
+
+    :host(.legacy-supervised) .legacy-supervised-indicator {
+      -webkit-mask-image:
+          url(../../webui/resources/images/supervisor_account.svg);
+      display: block;
+    }
+
+    :host(.child) .child-indicator {
+      -webkit-mask-image:
+          url(../../webui/resources/images/account_child_invert.svg);
+      display: block;
+    }
+
+    .action-box-area:focus ~ .user-image-gradient-area,
+    .action-box-area.hovered ~ .user-image-gradient-area {
+      background-image: linear-gradient(rgba(0, 0, 0, .2), transparent 100%);
+      display: initial;
+      height: 40px;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+
+    .action-box-area {
+      background-color: transparent;
+    }
+
+    .action-box-area.menu-moved-up {
+      transform: none;
+    }
+
+    .action-box-area .action-box-button {
+      display: none;
+    }
+
+    .action-box-area .action-box-icon {
+      color: white;
+      display: inline-flex;
+      margin-top: 4px;
+    }
+
+    :host(.focused:not(.locked)) .auth-container {
+      display: none;
+    }
+
+    :host(.focused:not(.multiprofiles-policy-applied)) .auth-container {
+      left: 0;
+    }
+
+    .auth-container input[type='password'] {
+      font: inherit;
+      line-height: inherit;
+      padding: 10px;
+      top: 0;
+      width: 140px;
+    }
+
+    .auth-container input[type='password']:focus {
+      outline: 0;
+    }
+
+    :host([auth-type='onlineSignIn']) .reauth-hint-container {
+      flex-direction: row-reverse;
+      margin: 0;
+      padding: 10px;
+    }
+
+    .reauth-hint-container .reauth-warning {
+      -webkit-mask-size: 16px;
+      height: 20px;
+      width: 20px;
+    }
+
+    .action-box-area.active .action-box-button {
+      display: none;
+    }
+
+    .action-box-area.active ~ .action-box-menu:not(.menu-moved-up) {
+      top: 8px;
+    }
+
+    .action-box-area.active ~ .action-box-menu {
+      border: none;
+      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .19);
+      right: 8px;
+      width: 224px;
+    }
+
+    html[dir=rtl] .action-box-area.active ~ .action-box-menu {
+      left: 8px;
+      right: auto;
+    }
+
+    .action-box-menu-title {
+      color: inherit;
+      padding: 16px 12px;
+    }
+
+    .action-box-menu-title-name,
+    .action-box-menu-title-email {
+      height: auto;
+    }
+
+    .action-box-menu-title-email {
+      color: var(--paper-grey-600);
+    }
+
+    .action-box-menu-remove {
+      border-top: var(--user-manager-separator-line);
+      line-height: 32px;
+      padding: 8px 12px;
+    }
+
+    .action-box-remove-user-warning {
+      align-items: center;
+      border-top: var(--user-manager-separator-line);
+      display: flex;
+      flex-direction: column;
+      font-size: inherit;
+      line-height: 20px;
+      padding: 12px;
+    }
+
+    .action-box-remove-user-warning > * {
+      word-wrap: break-word;
+    }
+
+    .total-count,
+    :host(:not(.synced)) .action-box-remove-user-warning-text {
+      font-weight: 500;
+    }
+
+    .action-box-remove-user-warning .remove-warning-button {
+      --paper-button: {
+        background: var(--google-red-700);
+        color: white;
+        font-weight: 500;
+      };
+      --paper-button-flat-keyboard-focus: {
+        background: rgb(173, 50, 36);
+      };
+      @apply(--action-button);
+    }
+
+</style>
+<template>
+  <div class="user-image-pane">
+    <div class="user-image-container">
+      <img class="user-image" alt>
+      <img class="user-image animated-image" alt>
+    </div>
+    <div class="signed-in-indicator">$i18n{signedIn}</div>
+    <div class="indicator-container">
+      <div class="indicator legacy-supervised-indicator"></div>
+      <div class="indicator child-indicator"></div>
+      <div class="indicator locked-indicator"></div>
+    </div>
+  </div>
+<if expr="chromeos">
+  <div class="pin-container pin-disabled pin-tag">
+    <pin-keyboard enable-password hide-input></pin-keyboard>
+  </div>
+</if>
+  <div class="main-pane">
+    <div class="name-container">
+      <div class="learn-more-container">
+        <div class="learn-more"></div>
+      </div>
+      <div class="name"></div>
+    </div>
+    <div class="auth-container">
+      <!-- Password Authentication -->
+      <div class="custom-icon-container" hidden></div>
+<if expr="chromeos">
+      <div class="fingerprint-icon-container" hidden
+          aria-label="$i18n{fingerprintIconMessage}">
+        <div class="custom-icon fingerprint-icon-image"></div>
+      </div>
+</if>
+      <div class="password-entry-container">
+        <div class="password-container">
+          <input type="password" class="password"
+              placeholder="$i18n{passwordHint}">
+        </div>
+<if expr="chromeos">
+        <div class="capslock-hint-container">
+          <img class="capslock-hint"
+               src="chrome://theme/IDR_LOGIN_PASSWORD_CAPS_LOCK" alt>
+        </div>
+        <paper-icon-button class="submit-button" disabled
+            aria-label="$i18n{submitButtonAccessibleName}"
+            icon="user-pod:arrow-forward" tabindex="-1">
+        </paper-icon-button>
+</if>
+      </div>
+      <!-- User Click Authentication -->
+      <div class="password-label"></div>
+      <div class="signin-transition-container">
+        <span class="signing-in-label">$i18n{signingIn}</span>
+        <span class="animated-ellipsis-component0">.</span>
+        <span class="animated-ellipsis-component1">.</span>
+        <span class="animated-ellipsis-component2">.</span>
+      </div>
+      <div class="reauth-hint-container">
+        <span class="reauth-warning"></span>
+        <span class="reauth-name-hint"></span>
+      </div>
+      <div class="launch-app-button-container" hidden>
+        <button class="launch-app-button">$i18n{launchAppButton}</button>
+      </div>
+    </div>
+  </div>
+  <div class="action-box-area">
+    <div class="custom-appearance action-box-button"></div>
+    <!-- iron-icon is imported inside user_manager.html -->
+    <iron-icon icon="cr:more-vert" class="action-box-icon"></iron-icon>
+  </div>
+  <div class="user-image-gradient-area">
+  </div>
+  <div class="user-type-icon-area" hidden>
+    <div class="custom-appearance user-type-icon-image"></div>
+  </div>
+  <div class="action-box-menu">
+    <div class="action-box-menu-title">
+      <span class="action-box-menu-title-name"></span>
+      <span class="action-box-menu-title-email"></span>
+    </div>
+    <div class="action-box-menu-remove">
+      <span class="action-box-menu-remove-command"/>
+    </div>
+    <div class="action-box-remove-user-warning" hidden>
+      <div class="action-box-remove-user-warning-text"></div>
+      <table class="action-box-remove-user-warning-table-nonsync
+                    non-sync has-stats">
+        <tbody>
+          <tr>
+            <td>$i18n{removeUserWarningTextHistory}</td>
+            <td class="action-box-remove-user-warning-history
+                       action-box-remove-user-warning-table-numbers">
+              $i18n{removeUserWarningTextCalculating}
+            </td>
+          </tr>
+          <tr>
+            <td>$i18n{removeUserWarningTextPasswords}</td>
+            <td class="action-box-remove-user-warning-passwords
+                       action-box-remove-user-warning-table-numbers">
+              $i18n{removeUserWarningTextCalculating}
+            </td>
+          </tr>
+          <tr>
+            <td>$i18n{removeUserWarningTextBookmarks}</td>
+            <td class="action-box-remove-user-warning-bookmarks
+                       action-box-remove-user-warning-table-numbers">
+              $i18n{removeUserWarningTextCalculating}
+            </td>
+          </tr>
+          <tr>
+            <td>$i18n{removeUserWarningTextAutofill}</td>
+            <td class="action-box-remove-user-warning-autofill
+                       action-box-remove-user-warning-table-numbers">
+              $i18n{removeUserWarningTextCalculating}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="action-box-remove-legacy-supervised-user-warning-text">
+        $i18n{removeLegacySupervisedUserWarningText}
+      </div>
+      <div class="action-box-remove-non-owner-user-warning-text">
+        $i18n{removeNonOwnerUserWarningText}
+      </div>
+      <!-- paper-button is imported inside user_manager.html -->
+      <paper-button class="remove-warning-button">
+        $i18n{removeUserWarningButtonTitle}
+      </paper-button>
+    </div>
+  </div>
+  <div class="user-type-bubble">
+    <div class="user-type-bubble-header">
+      <span class="mp-policy-title">
+        $i18n{multiProfilesRestrictedPolicyTitle}
+      </span>
+    </div>
+    <div class="user-type-bubble-body">
+      <span class="mp-policy-not-allowed-msg" hidden>
+        $i18n{multiProfilesNotAllowedPolicyMsg}
+      </span>
+      <span class="mp-policy-primary-only-msg" hidden>
+        $i18n{multiProfilesPrimaryOnlyPolicyMsg}
+      </span>
+      <span class="mp-owner-primary-only-msg" hidden>
+        $i18n{multiProfilesOwnerPrimaryOnlyMsg}
+      </span>
+    </div>
+  </div>
+</template>
+</dom-module>
+</dom-module>

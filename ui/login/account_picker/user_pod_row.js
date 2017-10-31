@@ -2440,105 +2440,6 @@ cr.define('login', function() {
   };
 
   /**
-   * Creates a user pod to be used only in desktop chrome.
-   * @constructor
-   * @extends {UserPod}
-   */
-  var DesktopUserPod = cr.ui.define(function() {
-    // Don't just instantiate a UserPod(), as this will call decorate() on the
-    // parent object, and add duplicate event listeners.
-    var node = $('user-pod-template').cloneNode(true);
-    node.removeAttribute('id');
-    return node;
-  });
-
-  DesktopUserPod.prototype = {
-    __proto__: UserPod.prototype,
-
-    /** @override */
-    initialize: function() {
-      if (this.user.needsSignin) {
-        if (this.user.hasLocalCreds) {
-          this.user.initialAuthType = AUTH_TYPE.OFFLINE_PASSWORD;
-        } else {
-          this.user.initialAuthType = AUTH_TYPE.ONLINE_SIGN_IN;
-        }
-      }
-      UserPod.prototype.initialize.call(this);
-    },
-
-    /** @override */
-    get mainInput() {
-      if (this.user.needsSignin)
-        return this.passwordElement;
-      else
-        return this.nameElement;
-    },
-
-    /** @override */
-    update: function() {
-      this.imageElement.src = this.user.userImage;
-      this.animatedImageElement.src = this.user.userImage;
-      this.nameElement.textContent = this.user.displayName;
-      this.reauthNameHintElement.textContent = this.user.displayName;
-
-      var isLockedUser = this.user.needsSignin;
-      var isLegacySupervisedUser = this.user.legacySupervisedUser;
-      var isChildUser = this.user.childUser;
-      var isSyncedUser = this.user.emailAddress !== "";
-      var isProfileLoaded = this.user.isProfileLoaded;
-      this.classList.toggle('locked', isLockedUser);
-      this.classList.toggle('legacy-supervised', isLegacySupervisedUser);
-      this.classList.toggle('child', isChildUser);
-      this.classList.toggle('synced', isSyncedUser);
-
-      if (this.isAuthTypeUserClick)
-        this.passwordLabelElement.textContent = this.authValue;
-
-      this.passwordElement.setAttribute('aria-label', loadTimeData.getStringF(
-        'passwordFieldAccessibleName', this.user_.emailAddress));
-
-      UserPod.prototype.updateActionBoxArea.call(this);
-    },
-
-    /** @override */
-    activate: function(e) {
-      if (!this.user.needsSignin) {
-        Oobe.launchUser(this.user.profilePath);
-      } else if (this.user.hasLocalCreds && !this.passwordElement.value) {
-        return false;
-      } else {
-        chrome.send('authenticatedLaunchUser',
-                    [this.user.profilePath,
-                     this.user.emailAddress,
-                     this.passwordElement.value]);
-      }
-      this.passwordElement.value = '';
-      return true;
-    },
-
-    /** @override */
-    handleClickOnPod_: function(e) {
-      if (this.parentNode.disabled)
-        return;
-
-      Oobe.clearErrors();
-      this.parentNode.lastFocusedPod_ = this;
-
-      // If this is a locked pod and there are local credentials, show the
-      // password field.  Otherwise call activate() which will open up a browser
-      // window or show the reauth dialog, as needed.
-      if (!(this.user.needsSignin && this.user.hasLocalCreds) &&
-          !this.isActionBoxMenuActive) {
-        this.activate(e);
-      }
-
-      if (this.isAuthTypeUserClick)
-        chrome.send('attemptUnlock', [this.user.emailAddress]);
-    },
-  };
-
-  /**
    * Creates a user pod that represents kiosk app.
    * @constructor
    * @extends {UserPod}
@@ -2783,9 +2684,10 @@ cr.define('login', function() {
      */
     createUserPod: function(user) {
       var userPod;
-      if (user.isDesktopUser)
-        userPod = new DesktopUserPod({user: user});
-      else if (user.publicAccount)
+      if (user.isDesktopUser) {
+        userPod = document.createElement('desktop-user-pod');
+        userPod.user = user;
+      } else if (user.publicAccount)
         userPod = new PublicAccountUserPod({user: user});
       else if (user.isApp)
         userPod = new KioskAppPod({user: user});
@@ -2803,7 +2705,6 @@ cr.define('login', function() {
     addUserPod: function(user) {
       var userPod = this.createUserPod(user);
       this.appendChild(userPod);
-      userPod.initialize();
     },
 
     /**
@@ -3874,6 +3775,11 @@ cr.define('login', function() {
         this.ownerDocument.addEventListener(
             event, this.listeners_[event][0], this.listeners_[event][1]);
       }
+
+      this.addEventListener('activate-pod', (e, data) => {
+        this.setActivatedPod(data.pod, data.event);
+      });
+
       $('login-header-bar').buttonsTabIndex = UserPodTabOrder.HEADER_BAR;
 
       if (this.podPlacementPostponed_) {
