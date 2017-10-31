@@ -46,10 +46,11 @@ void PassThroughImageTransportSurface::Destroy() {
   GLSurfaceAdapter::Destroy();
 }
 
-gfx::SwapResult PassThroughImageTransportSurface::SwapBuffers() {
+gfx::SwapResult PassThroughImageTransportSurface::SwapBuffers(
+    const PresentationCallback& callback) {
   std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
       StartSwapBuffers();
-  gfx::SwapResult result = gl::GLSurfaceAdapter::SwapBuffers();
+  gfx::SwapResult result = gl::GLSurfaceAdapter::SwapBuffers(callback);
   FinishSwapBuffers(std::move(latency_info), result);
   return result;
 }
@@ -69,22 +70,26 @@ void PassThroughImageTransportSurface::SwapBuffersAsync(
 }
 
 gfx::SwapResult PassThroughImageTransportSurface::SwapBuffersWithBounds(
-    const std::vector<gfx::Rect>& rects) {
+    const std::vector<gfx::Rect>& rects,
+    const PresentationCallback& callback) {
   std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
       StartSwapBuffers();
-  gfx::SwapResult result = gl::GLSurfaceAdapter::SwapBuffersWithBounds(rects);
+  gfx::SwapResult result =
+      gl::GLSurfaceAdapter::SwapBuffersWithBounds(rects, callback);
   FinishSwapBuffers(std::move(latency_info), result);
   return result;
 }
 
-gfx::SwapResult PassThroughImageTransportSurface::PostSubBuffer(int x,
-                                                                int y,
-                                                                int width,
-                                                                int height) {
+gfx::SwapResult PassThroughImageTransportSurface::PostSubBuffer(
+    int x,
+    int y,
+    int width,
+    int height,
+    const PresentationCallback& callback) {
   std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
       StartSwapBuffers();
   gfx::SwapResult result =
-      gl::GLSurfaceAdapter::PostSubBuffer(x, y, width, height);
+      gl::GLSurfaceAdapter::PostSubBuffer(x, y, width, height, callback);
   FinishSwapBuffers(std::move(latency_info), result);
   return result;
 }
@@ -104,10 +109,11 @@ void PassThroughImageTransportSurface::PostSubBufferAsync(
                  callback));
 }
 
-gfx::SwapResult PassThroughImageTransportSurface::CommitOverlayPlanes() {
+gfx::SwapResult PassThroughImageTransportSurface::CommitOverlayPlanes(
+    const PresentationCallback& callback) {
   std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
       StartSwapBuffers();
-  gfx::SwapResult result = gl::GLSurfaceAdapter::CommitOverlayPlanes();
+  gfx::SwapResult result = gl::GLSurfaceAdapter::CommitOverlayPlanes(callback);
   FinishSwapBuffers(std::move(latency_info), result);
   return result;
 }
@@ -224,9 +230,12 @@ void PassThroughImageTransportSurface::FinishSwapBuffers(
 void PassThroughImageTransportSurface::FinishSwapBuffersAsync(
     std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info,
     GLSurface::SwapCompletionCallback callback,
-    gfx::SwapResult result) {
+    gfx::SwapResult result,
+    base::TimeTicks time,
+    base::TimeDelta refresh,
+    uint32_t flags) {
   FinishSwapBuffers(std::move(latency_info), result);
-  callback.Run(result);
+  callback.Run(result, time, refresh, flags);
 }
 
 }  // namespace gpu

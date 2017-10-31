@@ -56,7 +56,8 @@ bool GbmSurfaceless::Initialize(gl::GLSurfaceFormat format) {
   return true;
 }
 
-gfx::SwapResult GbmSurfaceless::SwapBuffers() {
+gfx::SwapResult GbmSurfaceless::SwapBuffers(
+    const PresentationCallback& callback) {
   NOTREACHED();
   return gfx::SwapResult::SWAP_FAILED;
 }
@@ -87,10 +88,12 @@ bool GbmSurfaceless::SupportsPostSubBuffer() {
   return true;
 }
 
-gfx::SwapResult GbmSurfaceless::PostSubBuffer(int x,
-                                              int y,
-                                              int width,
-                                              int height) {
+gfx::SwapResult GbmSurfaceless::PostSubBuffer(
+    int x,
+    int y,
+    int width,
+    int height,
+    const PresentationCallback& callback) {
   // The actual sub buffer handling is handled at higher layers.
   NOTREACHED();
   return gfx::SwapResult::SWAP_FAILED;
@@ -100,7 +103,8 @@ void GbmSurfaceless::SwapBuffersAsync(const SwapCompletionCallback& callback) {
   TRACE_EVENT0("drm", "GbmSurfaceless::SwapBuffersAsync");
   // If last swap failed, don't try to schedule new ones.
   if (!last_swap_buffers_result_) {
-    callback.Run(gfx::SwapResult::SWAP_FAILED);
+    callback.Run(gfx::SwapResult::SWAP_FAILED, base::TimeTicks(),
+                 base::TimeDelta(), 0u);
     return;
   }
 
@@ -135,7 +139,8 @@ void GbmSurfaceless::SwapBuffersAsync(const SwapCompletionCallback& callback) {
   // implemented in GL drivers.
   EGLSyncKHR fence = InsertFence(has_implicit_external_sync_);
   if (!fence) {
-    callback.Run(gfx::SwapResult::SWAP_FAILED);
+    callback.Run(gfx::SwapResult::SWAP_FAILED, base::TimeTicks(),
+                 base::TimeDelta(), 0u);
     return;
   }
 
@@ -220,7 +225,8 @@ void GbmSurfaceless::SubmitFrame() {
     if (!frame->ScheduleOverlayPlanes(widget_)) {
       // |callback| is a wrapper for SwapCompleted(). Call it to properly
       // propagate the failed state.
-      frame->callback.Run(gfx::SwapResult::SWAP_FAILED);
+      frame->callback.Run(gfx::SwapResult::SWAP_FAILED, base::TimeTicks(),
+                          base::TimeDelta(), 0u);
       return;
     }
 
@@ -244,8 +250,11 @@ void GbmSurfaceless::FenceRetired(EGLSyncKHR fence, PendingFrame* frame) {
 }
 
 void GbmSurfaceless::SwapCompleted(const SwapCompletionCallback& callback,
-                                   gfx::SwapResult result) {
-  callback.Run(result);
+                                   gfx::SwapResult result,
+                                   base::TimeTicks time,
+                                   base::TimeDelta refresh,
+                                   uint32_t flags) {
+  callback.Run(result, time, refresh, flags);
   swap_buffers_pending_ = false;
   if (result == gfx::SwapResult::SWAP_FAILED) {
     last_swap_buffers_result_ = false;

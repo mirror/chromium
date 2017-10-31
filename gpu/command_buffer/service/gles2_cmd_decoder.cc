@@ -951,8 +951,18 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                                        const volatile GLint* rects);
 
   // Callback for async SwapBuffers.
-  void FinishAsyncSwapBuffers(gfx::SwapResult result);
+  void FinishAsyncSwapBuffers(gfx::SwapResult result,
+                              base::TimeTicks time,
+                              base::TimeDelta refres,
+                              uint32_t flags);
+  void FinishAsyncCommitOverlayPlanes(gfx::SwapResult result,
+                                      base::TimeTicks time,
+                                      base::TimeDelta refres,
+                                      uint32_t flags);
   void FinishSwapBuffers(gfx::SwapResult result);
+  void FinishPresent(base::TimeTicks time,
+                     base::TimeDelta refres,
+                     uint32_t flags);
 
   void DoCommitOverlayPlanes();
 
@@ -12144,7 +12154,8 @@ void GLES2DecoderImpl::DoSwapBuffersWithBoundsCHROMIUM(
     bounds[i] = gfx::Rect(rects[i * 4 + 0], rects[i * 4 + 1], rects[i * 4 + 2],
                           rects[i * 4 + 3]);
   }
-  FinishSwapBuffers(surface_->SwapBuffersWithBounds(bounds));
+  FinishSwapBuffers(surface_->SwapBuffersWithBounds(
+      bounds, gl::GLSurface::PresentationCallback()));
 }
 
 error::Error GLES2DecoderImpl::HandlePostSubBufferCHROMIUM(
@@ -12184,7 +12195,8 @@ error::Error GLES2DecoderImpl::HandlePostSubBufferCHROMIUM(
         base::Bind(&GLES2DecoderImpl::FinishAsyncSwapBuffers,
                    weak_ptr_factory_.GetWeakPtr()));
   } else {
-    FinishSwapBuffers(surface_->PostSubBuffer(c.x, c.y, c.width, c.height));
+    FinishSwapBuffers(surface_->PostSubBuffer(
+        c.x, c.y, c.width, c.height, gl::GLSurface::PresentationCallback()));
   }
 
   return error::kNoError;
@@ -15977,7 +15989,8 @@ void GLES2DecoderImpl::DoSwapBuffers() {
         base::Bind(&GLES2DecoderImpl::FinishAsyncSwapBuffers,
                    weak_ptr_factory_.GetWeakPtr()));
   } else {
-    FinishSwapBuffers(surface_->SwapBuffers());
+    FinishSwapBuffers(
+        surface_->SwapBuffers(gl::GLSurface::PresentationCallback()));
   }
 
   // This may be a slow command.  Exit command processing to allow for
@@ -15985,13 +15998,25 @@ void GLES2DecoderImpl::DoSwapBuffers() {
   ExitCommandProcessingEarly();
 }
 
-void GLES2DecoderImpl::FinishAsyncSwapBuffers(gfx::SwapResult result) {
+void GLES2DecoderImpl::FinishAsyncSwapBuffers(gfx::SwapResult result,
+                                              base::TimeTicks time,
+                                              base::TimeDelta refresh,
+                                              uint32_t flags) {
   DCHECK_NE(0u, pending_swaps_);
   uint32_t async_swap_id = next_async_swap_id_ - pending_swaps_;
   --pending_swaps_;
   TRACE_EVENT_ASYNC_END0("gpu", "AsyncSwapBuffers", async_swap_id);
 
   FinishSwapBuffers(result);
+  FinishPresent(time, refresh, flags);
+}
+
+void GLES2DecoderImpl::FinishAsyncCommitOverlayPlanes(gfx::SwapResult result,
+                                                      base::TimeTicks time,
+                                                      base::TimeDelta refresh,
+                                                      uint32_t flags) {
+  FinishSwapBuffers(result);
+  FinishPresent(time, refresh, flags);
 }
 
 void GLES2DecoderImpl::FinishSwapBuffers(gfx::SwapResult result) {
@@ -16010,6 +16035,10 @@ void GLES2DecoderImpl::FinishSwapBuffers(gfx::SwapResult result) {
   }
 }
 
+void GLES2DecoderImpl::FinishPresent(base::TimeTicks time,
+                                     base::TimeDelta refres,
+                                     uint32_t flags) {}
+
 void GLES2DecoderImpl::DoCommitOverlayPlanes() {
   TRACE_EVENT0("gpu", "GLES2DecoderImpl::DoCommitOverlayPlanes");
   if (!supports_commit_overlay_planes_) {
@@ -16020,10 +16049,12 @@ void GLES2DecoderImpl::DoCommitOverlayPlanes() {
   ClearScheduleCALayerState();
   ClearScheduleDCLayerState();
   if (supports_async_swap_) {
-    surface_->CommitOverlayPlanesAsync(base::Bind(
-        &GLES2DecoderImpl::FinishSwapBuffers, weak_ptr_factory_.GetWeakPtr()));
+    surface_->CommitOverlayPlanesAsync(
+        base::Bind(&GLES2DecoderImpl::FinishAsyncCommitOverlayPlanes,
+                   weak_ptr_factory_.GetWeakPtr()));
   } else {
-    FinishSwapBuffers(surface_->CommitOverlayPlanes());
+    FinishSwapBuffers(
+        surface_->CommitOverlayPlanes(gl::GLSurface::PresentationCallback()));
   }
 }
 

@@ -39,17 +39,23 @@ class PassThroughImageTransportSurface : public gl::GLSurfaceAdapter {
   // GLSurface implementation.
   bool Initialize(gl::GLSurfaceFormat format) override;
   void Destroy() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(const PresentationCallback& callback) override;
   void SwapBuffersAsync(const SwapCompletionCallback& callback) override;
   gfx::SwapResult SwapBuffersWithBounds(
-      const std::vector<gfx::Rect>& rects) override;
-  gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
+      const std::vector<gfx::Rect>& rects,
+      const PresentationCallback& callback) override;
+  gfx::SwapResult PostSubBuffer(int x,
+                                int y,
+                                int width,
+                                int height,
+                                const PresentationCallback& callback) override;
   void PostSubBufferAsync(int x,
                           int y,
                           int width,
                           int height,
                           const SwapCompletionCallback& callback) override;
-  gfx::SwapResult CommitOverlayPlanes() override;
+  gfx::SwapResult CommitOverlayPlanes(
+      const PresentationCallback& callback) override;
   void CommitOverlayPlanesAsync(
       const SwapCompletionCallback& callback) override;
 
@@ -72,7 +78,10 @@ class PassThroughImageTransportSurface : public gl::GLSurfaceAdapter {
   void FinishSwapBuffersAsync(
       std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info,
       GLSurface::SwapCompletionCallback callback,
-      gfx::SwapResult result);
+      gfx::SwapResult result,
+      base::TimeTicks time,
+      base::TimeDelta refresh,
+      uint32_t flags);
 
   base::WeakPtr<ImageTransportSurfaceDelegate> delegate_;
   std::vector<ui::LatencyInfo> latency_info_;

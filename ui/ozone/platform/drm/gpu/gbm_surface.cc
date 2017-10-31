@@ -64,7 +64,8 @@ void GbmSurface::SwapBuffersAsync(const SwapCompletionCallback& callback) {
   if (!images_[current_surface_]->ScheduleOverlayPlane(
           widget(), 0, gfx::OverlayTransform::OVERLAY_TRANSFORM_NONE,
           gfx::Rect(GetSize()), gfx::RectF(1, 1))) {
-    callback.Run(gfx::SwapResult::SWAP_FAILED);
+    callback.Run(gfx::SwapResult::SWAP_FAILED, base::TimeTicks(),
+                 base::TimeDelta(), 0u);
     return;
   }
   GbmSurfaceless::SwapBuffersAsync(callback);

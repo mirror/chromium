@@ -36,7 +36,7 @@ class GbmSurfaceless : public gl::SurfacelessEGL {
 
   // gl::GLSurface:
   bool Initialize(gl::GLSurfaceFormat format) override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(const PresentationCallback& callback) override;
   bool ScheduleOverlayPlane(int z_order,
                             gfx::OverlayTransform transform,
                             gl::GLImage* image,
@@ -46,7 +46,11 @@ class GbmSurfaceless : public gl::SurfacelessEGL {
   gfx::VSyncProvider* GetVSyncProvider() override;
   bool SupportsAsyncSwap() override;
   bool SupportsPostSubBuffer() override;
-  gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
+  gfx::SwapResult PostSubBuffer(int x,
+                                int y,
+                                int width,
+                                int height,
+                                const PresentationCallback& callback) override;
   void SwapBuffersAsync(const SwapCompletionCallback& callback) override;
   void PostSubBufferAsync(int x,
                           int y,
@@ -81,7 +85,10 @@ class GbmSurfaceless : public gl::SurfacelessEGL {
   void FenceRetired(EGLSyncKHR fence, PendingFrame* frame);
 
   void SwapCompleted(const SwapCompletionCallback& callback,
-                     gfx::SwapResult result);
+                     gfx::SwapResult result,
+                     base::TimeTicks time,
+                     base::TimeDelta refresh,
+                     uint32_t flags);
 
   GbmSurfaceFactory* surface_factory_;
   std::unique_ptr<DrmWindowProxy> window_;
