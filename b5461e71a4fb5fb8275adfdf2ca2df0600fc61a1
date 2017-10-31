@@ -22,6 +22,30 @@
       "revId": "b5461e71a4fb5fb8275adfdf2ca2df0600fc61a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19406bb_f0d2208a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-31T00:38:29Z",
+      "side": 1,
+      "message": "Agreed. Is there a component in chrome that should take care of it? May be I can plumb this notification to it through a listener on WindowAndroid instead of doing this here.",
+      "parentUuid": "7f2b2e06_f9bf71b0",
+      "range": {
+        "startLine": 422,
+        "startChar": 37,
+        "endLine": 422,
+        "endChar": 60
+      },
+      "revId": "b5461e71a4fb5fb8275adfdf2ca2df0600fc61a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
