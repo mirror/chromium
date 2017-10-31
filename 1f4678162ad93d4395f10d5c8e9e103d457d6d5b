@@ -335,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "3c27be2a_86ed10f8",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-31T11:12:15Z",
+      "side": 1,
+      "message": "There is no equality operator on DOMTokenList to compare two DOMTokenList\u0027s.",
+      "parentUuid": "c8b4fb69_3a8dc3cd",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc2d2e7a_6466ad2d",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 1
