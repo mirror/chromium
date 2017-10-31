@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad5a97b8_203c0166",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationParams.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T23:42:48Z",
+      "side": 1,
+      "message": "Nit: no @return since this is a field. Reflow comment.",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 14
+      },
+      "revId": "db56301e243371685056327236de52fd645f1d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fddd154_f612e540",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationParams.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T23:42:48Z",
+      "side": 1,
+      "message": "Nit: no @return since this is a field. Reflow comment.",
+      "range": {
+        "startLine": 198,
+        "startChar": 12,
+        "endLine": 198,
+        "endChar": 18
+      },
+      "revId": "db56301e243371685056327236de52fd645f1d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42295b7d_76cec824",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationParams.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T23:42:48Z",
+      "side": 1,
+      "message": "Nit: this doesn\u0027t doesn\u0027t a package name. Reflow comment and match the surrounding comments in style.\n\n\"/** Sets the package name of the TWA or WebAPK within which the navigation is happening. **/",
+      "range": {
+        "startLine": 263,
+        "startChar": 12,
+        "endLine": 263,
+        "endChar": 18
+      },
+      "revId": "db56301e243371685056327236de52fd645f1d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
