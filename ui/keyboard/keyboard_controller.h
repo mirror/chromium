@@ -32,6 +32,7 @@ class TextInputClient;
 namespace keyboard {
 
 class CallbackAnimationObserver;
+class ContainerBehavior;
 class KeyboardControllerObserver;
 class KeyboardUI;
 

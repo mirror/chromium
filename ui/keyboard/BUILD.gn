@@ -10,6 +10,7 @@ import("//tools/grit/grit_rule.gni")
 
 component("keyboard") {
   sources = [
+    "container_behavior.cc",
     "container_behavior.h",
     "container_floating_behavior.cc",
     "container_floating_behavior.h",

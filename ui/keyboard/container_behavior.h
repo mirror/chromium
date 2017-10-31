@@ -8,15 +8,19 @@
 #include "ui/aura/window.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/keyboard/container_type.h"
+#include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_export.h"
 #include "ui/wm/core/window_animations.h"
 
 namespace keyboard {
 
+class KeyboardController;
+
 // Represents and encapsulates how the keyboard container should visually behave
 // within the workspace window.
 class KEYBOARD_EXPORT ContainerBehavior {
  public:
+  ContainerBehavior(KeyboardController* controller);
   virtual ~ContainerBehavior() {}
 
   // Apply changes to the animation settings to animate the keyboard container
@@ -65,6 +69,9 @@ class KEYBOARD_EXPORT ContainerBehavior {
                                   const gfx::Vector2d& kb_offset) = 0;
 
   virtual ContainerType GetType() const = 0;
+
+ protected:
+  KeyboardController* controller_;
 };
 
 }  // namespace keyboard
