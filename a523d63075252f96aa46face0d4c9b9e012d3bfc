@@ -52,6 +52,24 @@
       "revId": "a523d63075252f96aa46face0d4c9b9e012d3bfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5f2920_09c2a004",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-31T22:31:20Z",
+      "side": 1,
+      "message": "Good catch!\nI\u0027ll use 8-space alignment if you don\u0027t mind.\nI\u0027ve started a thread on java@chromium.org to come up with public agreement about JavaDoc formatting: https://groups.google.com/a/chromium.org/forum/#!topic/java/yhwV2pK80zw.",
+      "parentUuid": "7b6aa562_3db09ea5",
+      "revId": "a523d63075252f96aa46face0d4c9b9e012d3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
