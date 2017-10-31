@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15cfbf2e_7e655bd6",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T07:30:20Z",
+      "side": 1,
+      "message": "This insetting to account for kLocationBarBorderThicknessDip probably shouldn\u0027t be done in fullscreen, since there is no location bar. But I couldn\u0027t tell from the bug whether UX have fully specified how this should appear in fullscreen (e.g. maybe it would be neat to inset by a scrollbars\u0027-thickness from the top as well as the side so the padding is the same). Maybe it\u0027s a good thing to demo/screencast in the meeting tomorrow. I toyed with it on ChromeOS and it doesn\u0027t look terrible, so this is probably fine to look at in a follow-up.",
+      "revId": "d2a9ea7b2567dfd1f1c6dcb0b52c20f782ae13bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
