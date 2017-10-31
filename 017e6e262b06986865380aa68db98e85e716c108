@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0a83a8f_89e8e2ba",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T20:52:43Z",
+      "side": 1,
+      "message": "Just use the string literal directly on the next line?",
+      "revId": "017e6e262b06986865380aa68db98e85e716c108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
