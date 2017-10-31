@@ -127,8 +127,11 @@ void Gpu::EstablishGpuChannel(
       base::Bind(&Gpu::OnEstablishedGpuChannel, base::Unretained(this)));
 }
 
-scoped_refptr<gpu::GpuChannelHost> Gpu::EstablishGpuChannelSync() {
+scoped_refptr<gpu::GpuChannelHost> Gpu::EstablishGpuChannelSync(
+    bool* connection_error) {
   DCHECK(IsMainThread());
+  if (connection_error)
+    *connection_error = false;
   if (GetGpuChannel())
     return gpu_channel_;
   if (!gpu_ || !gpu_.is_bound())
@@ -142,6 +145,8 @@ scoped_refptr<gpu::GpuChannelHost> Gpu::EstablishGpuChannelSync() {
   if (!gpu_->EstablishGpuChannel(&client_id, &channel_handle, &gpu_info,
                                  &gpu_feature_info)) {
     DLOG(WARNING) << "Encountered error while establishing gpu channel.";
+    if (connection_error)
+      *connection_error = true;
     return nullptr;
   }
   OnEstablishedGpuChannel(client_id, std::move(channel_handle), gpu_info,
