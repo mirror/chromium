@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "52558c4c_cf3c766b",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-31T20:42:23Z",
+      "side": 1,
+      "message": "Ok, after looking at the code more I see what\u0027s happening. It seems like we need to disable the use_texture_storage_image cap as well to have this work in ToT. Code here:\nhttps://cs.chromium.org/chromium/src/cc/resources/resource_provider.cc?rcl\u003df1ec6a94694e0b9cdd06337393ff01492e38df01\u0026l\u003d252\n\nSunny, does this make sense to you?",
+      "parentUuid": "2655828d_97b33ccc",
+      "range": {
+        "startLine": 340,
+        "startChar": 6,
+        "endLine": 340,
+        "endChar": 27
+      },
+      "revId": "00e0ee5e1a742d9a57cc5a5244554f559b27fc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d16c3e9_f2393f0b",
         "filename": "gpu/config/gpu_driver_bug_list.json",
         "patchSetId": 4
