@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8836aa11_516f6e8e",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-31T20:33:11Z",
+      "side": 1,
+      "message": "Do you think it would be better to *not* make kErrorStorage behave as though the value was not found, and instead call CacheStorageError::CreateException(...) which will create a kUnknownError exception?",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
