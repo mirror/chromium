@@ -82,9 +82,9 @@ void WebRtcLocalAudioSourceProvider::OnSetFormat(
       kMaxNumberOfBuffers * params.frames_per_buffer()));
 }
 
-void WebRtcLocalAudioSourceProvider::OnReadyStateChanged(
-      blink::WebMediaStreamSource::ReadyState state) {
-  if (state == blink::WebMediaStreamSource::kReadyStateEnded)
+void WebRtcLocalAudioSourceProvider::OnSourceStateChanged(
+    blink::WebMediaStreamSource::State state) {
+  if (state == blink::WebMediaStreamSource::kStateEnded)
     track_stopped_ = true;
 }
 

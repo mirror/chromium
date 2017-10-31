@@ -103,12 +103,10 @@ void RemoteAudioTrackAdapter::OnChangedOnMainThread(
 
   switch (state) {
     case webrtc::MediaStreamTrackInterface::kLive:
-      web_track()->Source().SetReadyState(
-          blink::WebMediaStreamSource::kReadyStateLive);
+      web_track()->Source().SetState(blink::WebMediaStreamSource::kStateLive);
       break;
     case webrtc::MediaStreamTrackInterface::kEnded:
-      web_track()->Source().SetReadyState(
-          blink::WebMediaStreamSource::kReadyStateEnded);
+      web_track()->Source().SetState(blink::WebMediaStreamSource::kStateEnded);
       break;
     default:
       NOTREACHED();

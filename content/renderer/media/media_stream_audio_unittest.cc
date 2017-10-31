@@ -209,10 +209,9 @@ class FakeMediaStreamAudioSink : public MediaStreamAudioSink {
     base::subtle::NoBarrier_AtomicIncrement(&num_on_data_calls_, 1);
   }
 
-  void OnReadyStateChanged(
-      blink::WebMediaStreamSource::ReadyState state) final {
+  void OnSourceStateChanged(blink::WebMediaStreamSource::State state) final {
     CHECK(main_thread_checker_.CalledOnValidThread());
-    if (state == blink::WebMediaStreamSource::kReadyStateEnded)
+    if (state == blink::WebMediaStreamSource::kStateEnded)
       was_ended_ = true;
   }
 
@@ -306,7 +305,7 @@ TEST_F(MediaStreamAudioTest, BasicUsage) {
 
   // Stop the track. Since this was the last track connected to the source, the
   // source should automatically stop. In addition, the sink should receive a
-  // ReadyStateEnded notification.
+  // SourceStateEnded notification.
   track()->Stop();
   EXPECT_TRUE(source()->was_started());
   EXPECT_TRUE(source()->was_stopped());
@@ -339,7 +338,7 @@ TEST_F(MediaStreamAudioTest, ConnectTrackAfterSourceStopped) {
 // Tests that a sink is immediately "ended" when connected to a stopped track.
 TEST_F(MediaStreamAudioTest, AddSinkToStoppedTrack) {
   // Create a track and stop it. Then, when adding a sink, the sink should get
-  // the ReadyStateEnded notification immediately.
+  // the SourceStateEnded notification immediately.
   MediaStreamAudioTrack track(true);
   track.Stop();
   FakeMediaStreamAudioSink sink;
