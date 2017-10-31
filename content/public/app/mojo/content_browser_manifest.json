@@ -92,7 +92,7 @@
           "test",
           "url_loader"
         ],
-        "ui": [ "display_output_protection" ],
+        "ui": [ "display_output_protection", "video_detector" ],
         "service_manager": [
           "service_manager:client_process",
           "service_manager:instance_name",
