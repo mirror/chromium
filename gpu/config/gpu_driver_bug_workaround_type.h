@@ -71,6 +71,8 @@
          disable_framebuffer_cmaa)                           \
   GPU_OP(DISABLE_GL_RGB_FORMAT,                              \
          disable_gl_rgb_format)                              \
+  GPU_OP(DISABLE_GPU_MEMORY_BUFFER_COMPOSITOR_RESOURCES,     \
+         disable_gpu_memory_buffer_compositor_resources)     \
   GPU_OP(DISABLE_LARGER_THAN_SCREEN_OVERLAYS,                \
          disable_larger_than_screen_overlays)                \
   GPU_OP(DISABLE_NON_EMPTY_POST_SUB_BUFFERS_FOR_ONSCREEN_SURFACES, \
