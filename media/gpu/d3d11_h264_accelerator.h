@@ -101,17 +101,17 @@ class D3D11H264Accelerator : public H264Decoder::H264Accelerator {
                            const H264Picture::Vector& ref_pic_listp0,
                            const H264Picture::Vector& ref_pic_listb0,
                            const H264Picture::Vector& ref_pic_listb1,
-                           const scoped_refptr<H264Picture>& pic) override;
+                           scoped_refptr<H264Picture> pic) override;
   bool SubmitSlice(const H264PPS* pps,
                    const H264SliceHeader* slice_hdr,
                    const H264Picture::Vector& ref_pic_list0,
                    const H264Picture::Vector& ref_pic_list1,
-                   const scoped_refptr<H264Picture>& pic,
+                   scoped_refptr<H264Picture> pic,
                    const uint8_t* data,
                    size_t size) override;
-  bool SubmitDecode(const scoped_refptr<H264Picture>& pic) override;
+  bool SubmitDecode(scoped_refptr<H264Picture> pic) override;
   void Reset() override;
-  bool OutputPicture(const scoped_refptr<H264Picture>& pic) override;
+  bool OutputPicture(scoped_refptr<H264Picture> pic) override;
 
  private:
   void SubmitSliceData();
