@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28590667_97d84fe3",
+        "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T07:07:47Z",
+      "side": 1,
+      "message": "ContentBlockedPlugins.xib no longer exists ¯\\_(ツ)_/¯  (I think it was converted form xib to code and then deleted)",
+      "range": {
+        "startLine": 46,
+        "startChar": 28,
+        "endLine": 46,
+        "endChar": 53
+      },
+      "revId": "5560e63edffc0e916b7c4ccb3345218d40d77a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
