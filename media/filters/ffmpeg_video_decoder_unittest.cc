@@ -54,7 +54,7 @@ ACTION_P(ReturnBuffer, buffer) {
 }
 
 MATCHER(ContainsInvalidDataLog, "") {
-  return CONTAINS_STRING(arg, "Invalid data");
+  return CONTAINS_STRING(arg, "Failed to send");
 }
 
 class FFmpegVideoDecoderTest : public testing::Test {
