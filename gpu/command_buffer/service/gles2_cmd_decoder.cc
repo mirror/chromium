@@ -32,6 +32,7 @@
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
 #include "gpu/command_buffer/common/mailbox.h"
 #include "gpu/command_buffer/common/sync_token.h"
+#include "gpu/command_buffer/common/transfer_cache_entry.h"
 #include "gpu/command_buffer/service/buffer_manager.h"
 #include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/context_group.h"
@@ -20331,6 +20332,45 @@ void GLES2DecoderImpl::DoEndRasterCHROMIUM() {
   sk_surface_.reset();
 
   RestoreState(nullptr);
+}
+
+error::Error GLES2DecoderImpl::HandleCreateTransferCacheEntryCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  // const volatile gles2::cmds::CreateTransferCacheEntryCHROMIUM& c =
+  //     *static_cast<
+  //         const volatile gles2::cmds::CreateTransferCacheEntryCHROMIUM*>(
+  //         cmd_data);
+  // DiscardableHandleId handle_id = c.handle_id();
+  // TransferCacheEntryType type = static_cast<TransferCacheEntryType>(c.type);
+  // GLuint shm_id = c.shm_id;
+  // GLuint shm_offset = c.shm_offset;
+
+  // scoped_refptr<gpu::Buffer> buffer = GetSharedMemoryBuffer(shm_id);
+  // if (!DiscardableHandleBase::ValidateParameters(buffer.get(), shm_offset))
+  //   return error::kInvalidArguments;
+
+  // ServiceDiscardableHandle handle = CreateDiscardableHandle(handle_id);
+  // if (!handle.shm_id())
+  //   return error::kInvalidArguments;
+
+  // // if (!GetContextGroup()->transfer_cache()->CreateTransferCacheEntry(
+  // //         handle_id, handle, type, std::move(buffer)))
+  // //   return error::kInvalidArguments;
+
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleUnlockTransferCacheEntryCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleDeleteTransferCacheEntryCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  return error::kNoError;
 }
 
 // Include the auto-generated part of this file. We split this because it means

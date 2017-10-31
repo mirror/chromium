@@ -1263,4 +1263,13 @@ void TexStorage2DImageCHROMIUM(GLenum target,
                                GLsizei width,
                                GLsizei height) override;
 
+void CreateTransferCacheEntryCHROMIUM(GLuint64 id,
+                                      GLuint type,
+                                      GLuint size,
+                                      void* data) override;
+
+void DeleteTransferCacheEntryCHROMIUM(GLuint64 id) override;
+
+void UnlockTransferCacheEntryCHROMIUM(GLuint64 id) override;
+
 #endif  // GPU_COMMAND_BUFFER_CLIENT_GLES2_IMPLEMENTATION_AUTOGEN_H_

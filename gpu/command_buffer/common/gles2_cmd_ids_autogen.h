@@ -341,7 +341,10 @@
   OP(BeginRasterCHROMIUM)                                  /* 582 */ \
   OP(RasterCHROMIUM)                                       /* 583 */ \
   OP(EndRasterCHROMIUM)                                    /* 584 */ \
-  OP(TexStorage2DImageCHROMIUM)                            /* 585 */
+  OP(TexStorage2DImageCHROMIUM)                            /* 585 */ \
+  OP(CreateTransferCacheEntryCHROMIUM)                     /* 586 */ \
+  OP(DeleteTransferCacheEntryCHROMIUM)                     /* 587 */ \
+  OP(UnlockTransferCacheEntryCHROMIUM)                     /* 588 */
 
 enum CommandId {
   kOneBeforeStartPoint =
