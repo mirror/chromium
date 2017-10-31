@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "93268dc7_2594029f",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-31T17:49:13Z",
+      "side": 1,
+      "message": "Whitespace",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 4
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed60190b_d1e4b6dd",
         "filename": "components/cronet/ios/Cronet.h",
         "patchSetId": 2
@@ -18,6 +41,75 @@
         "startChar": 32,
         "endLine": 203,
         "endChar": 40
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee31457_337a2061",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-31T17:49:13Z",
+      "side": 1,
+      "message": "Whitespace",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 31
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee35ee4_0f77b3ff",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-31T17:49:13Z",
+      "side": 1,
+      "message": "I think that the implementation of the writable metrics should not be exposed to the client because the client is not supposed to change its values. The first step that matches Apple metrics should not expose any new types in Cronet.h but rely on NSURLSessionTaskTransactionMetrics interface.",
+      "range": {
+        "startLine": 204,
+        "startChar": 16,
+        "endLine": 204,
+        "endChar": 25
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15827235_8e3be671",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-31T17:49:13Z",
+      "side": 1,
+      "message": "I think you don\u0027t need @synthesize anymore. It will be auto generated for you.",
+      "range": {
+        "startLine": 519,
+        "startChar": 0,
+        "endLine": 519,
+        "endChar": 11
       },
       "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -64,6 +156,52 @@
         "startChar": 32,
         "endLine": 26,
         "endChar": 37
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47d8ac5_078bcb37",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-31T17:49:13Z",
+      "side": 1,
+      "message": "In general, you should call \u0027init\u0027 method even if you want to get an object with default value because alloc only allocates the memory for the storage. For the sake of the test we should give it some meaningful value that we can check.",
+      "range": {
+        "startLine": 27,
+        "startChar": 29,
+        "endLine": 27,
+        "endChar": 49
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f80715_93d64e30",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-31T17:49:13Z",
+      "side": 1,
+      "message": "Ideally, we should give different values to different properties.",
+      "range": {
+        "startLine": 34,
+        "startChar": 45,
+        "endLine": 34,
+        "endChar": 54
       },
       "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
