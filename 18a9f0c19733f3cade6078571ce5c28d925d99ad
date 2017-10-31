@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "c51a95c1_6599436e",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T23:21:05Z",
+      "side": 1,
+      "message": "Agreed.",
+      "parentUuid": "3b70c23d_681650b0",
+      "range": {
+        "startLine": 227,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 3
+      },
+      "revId": "18a9f0c19733f3cade6078571ce5c28d925d99ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e33be9d_39aee06f",
         "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
         "patchSetId": 2
