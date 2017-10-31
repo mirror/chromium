@@ -581,7 +581,37 @@ message NestedAtRule {
     Page page = 3;
     FontFace font_face = 4;
     Viewport viewport = 5;
+    SupportsRule supports_rule = 6;
   }
+}
+
+message SupportsRule {
+  required SupportsCondition supports_condition = 1;
+  repeated AtRuleOrRulesets at_rule_or_rulesets = 2;
+}
+
+message AtRuleOrRulesets {
+  required AtRuleOrRuleset first = 1;
+  repeated AtRuleOrRuleset laters = 2;
+}
+
+message AtRuleOrRuleset {
+  required Ruleset ruleset = 1;
+  optional NestedAtRule at_rule = 2;
+}
+
+message SupportsCondition {
+  required Declaration declaration = 1;  // Default.
+  required bool not_condition = 2;
+  oneof rhs {
+    SupportsConditionConjunction and_supports_condition = 3;
+    SupportsConditionConjunction or_supports_condition = 4;
+  }
+}
+
+message SupportsConditionConjunction {
+  required SupportsCondition condition_1 = 1;
+  required SupportsCondition condition_2 = 2;
 }
 
 message Viewport {
@@ -1520,10 +1550,10 @@ message Pseudo {
 
 message Declaration {
   // property ':' S* expr prio? | /* empty */
-  optional NonEmptyDeclaration nonempty_declaration = 1;
+  optional PropertyAndValue prop_and_val = 1;
 }
 
-message NonEmptyDeclaration {
+message PropertyAndValue {
   required Property property = 1;
   required Expr expr = 2;
   enum Prio {
