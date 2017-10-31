@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec7b052a_f6ae1461",
+        "filename": "ash/wm/window_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-31T21:25:50Z",
+      "side": 1,
+      "message": "Why are we doing these operations with strings, rather than creating a mojo interface for window management? It seems safer to use real function calls (like, what if we want to pass a parameter?).",
+      "revId": "8a6b22a9d08aa2bd81dd6a545bfc2076c5f6090c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
