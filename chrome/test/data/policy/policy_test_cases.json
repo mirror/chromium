@@ -1732,6 +1732,14 @@
     ]
   },
 
+  "SecurityKeyDirectAttestation": {
+    "os": ["win", "linux", "mac", "chromeos", "android"],
+    "test_policy": { "SecurityKeyDirectAttestation": ["https://example.com", "example.net"] },
+    "pref_mappings": [
+      { "pref": "securitykey.direct_attestation" }
+    ]
+  },
+
   "ImportBookmarks": {
     "os": ["win", "mac", "linux"],
     "can_be_recommended": true,
