@@ -16,6 +16,24 @@
       "revId": "7073ee6e903ddc4f8d27552b936c8137e39e7490",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f454426b_f7fc18e3",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-10-31T19:13:13Z",
+      "side": 1,
+      "message": "A few commands pass shmem or bucket info to the doers already for performance reasons, I think it\u0027s an acceptable tradeoff.",
+      "parentUuid": "a0a95d2f_08a7c475",
+      "revId": "7073ee6e903ddc4f8d27552b936c8137e39e7490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
