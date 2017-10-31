@@ -16,6 +16,24 @@
       "revId": "d4b8905fdeb7cc38b5ef924a6045be2fa9b44122",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64d0481_fd368907",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-10-31T18:30:20Z",
+      "side": 0,
+      "message": "Added them :)",
+      "parentUuid": "36d954c8_e2e47ec1",
+      "revId": "d4b8905fdeb7cc38b5ef924a6045be2fa9b44122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
