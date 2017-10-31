@@ -282,6 +282,17 @@ static bool NeedsPaintOffsetTranslation(const LayoutObject& object) {
     return true;
   if (NeedsSVGLocalToBorderBoxTransform(object))
     return true;
+
+  // Don't let paint offset cross paint invalidation container boundaries, to
+  // avoid unnecessary paint/raster invalidation when paint offset to ancestor
+  // transform node changes which should not affect the descendants of the
+  // paint invalidation container.
+  // TODO(wangxianzhu): We also need a avoid unnecessary paint/raster
+  // invalidation in composited layers when their paint offset changes.
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
+      object.IsPaintInvalidationContainer())
+    return true;
+
   return false;
 }
 
@@ -319,7 +330,6 @@ Optional<IntPoint> PaintPropertyTreeBuilder::UpdateForPaintOffsetTranslation(
   if (NeedsPaintOffsetTranslation(object)) {
     paint_offset_translation =
         ApplyPaintOffsetTranslation(object, context.current.paint_offset);
-
     if (RuntimeEnabledFeatures::RootLayerScrollingEnabled() &&
         object.IsLayoutView()) {
       context.absolute_position.paint_offset = context.current.paint_offset;

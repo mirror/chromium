@@ -4185,4 +4185,27 @@ TEST_P(PaintPropertyTreeBuilderTest, ScrollBoundsOffset) {
             scroll_properties->PaintOffsetTranslation()->Matrix());
 }
 
+TEST_P(PaintPropertyTreeBuilderTest, CompositedLayerPaintOffsetTranslation) {
+  SetBodyInnerHTML(R"HTML(
+    <div id='target'
+         style='position: absolute; backface-visibility: hidden;
+                top: 50px; left: 60px'>
+    </div>
+  )HTML");
+
+  const auto* target = GetLayoutObjectByElementId("target");
+  EXPECT_EQ(LayoutPoint(60, 50), target->FirstFragment().PaintOffset());
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+    EXPECT_EQ(nullptr, target->FirstFragment().PaintProperties());
+    EXPECT_EQ(LayoutPoint(60, 50), target->FirstFragment().PaintOffset());
+  } else {
+    DCHECK(target->IsPaintInvalidationContainer());
+    const auto* paint_offset_translation =
+        target->FirstFragment().PaintProperties()->PaintOffsetTranslation();
+    ASSERT_NE(nullptr, paint_offset_translation);
+    EXPECT_EQ(TransformationMatrix().Translate(60, 50),
+              paint_offset_translation->Matrix());
+  }
+}
+
 }  // namespace blink
