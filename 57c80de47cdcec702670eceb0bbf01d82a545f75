@@ -16,6 +16,24 @@
       "revId": "57c80de47cdcec702670eceb0bbf01d82a545f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb60969c_327b0529",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-31T23:24:05Z",
+      "side": 1,
+      "message": "Yes I plan to change the unusual kSrcOver(mask kSrcIn(content)) to kSrcOver(content kDstIn(mask)). That way the blending rendering surface (or Skia layer) will always be sized big enough because the mask drawing item are always sized to the visual overflow. We can remove this hack when that happens (CSS mask didn\u0027t need this hack due to this exact reason).",
+      "parentUuid": "8f7d9e06_8071fc8a",
+      "revId": "57c80de47cdcec702670eceb0bbf01d82a545f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
