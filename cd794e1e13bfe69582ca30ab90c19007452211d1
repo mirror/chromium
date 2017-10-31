@@ -16,6 +16,24 @@
       "revId": "cd794e1e13bfe69582ca30ab90c19007452211d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef51012_16a765b2",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-10-31T17:56:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b80f3916_378bd907",
+      "revId": "cd794e1e13bfe69582ca30ab90c19007452211d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
