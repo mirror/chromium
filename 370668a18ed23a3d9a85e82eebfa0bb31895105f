@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1b4835_98684b31",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T15:46:30Z",
+      "side": 1,
+      "message": "no need for explicit if you have \u003e1 arg (I hate this part of C++ where casting ctro is implicit by default and not the opposite)",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 12
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314bc8a0_815b927d",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T15:46:30Z",
+      "side": 1,
+      "message": "global_process is a bit of a confusing name, mostly nameed after the fact that we have a special hidden process there.\nI\u0027d just here:\nNode* global_node \u003d global_graph-\u003eshared_memory_graph()-\u003eroot()-\u003eGetChild(\"global\");\n\nThe best way to solve naming ambiguity is to not have a name :)",
+      "range": {
+        "startLine": 103,
+        "startChar": 28,
+        "endLine": 103,
+        "endChar": 63
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ac1722_e4a8b848",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T15:46:30Z",
+      "side": 1,
+      "message": "I might remember wrong but I think that we never have \u003e1 owner of the global dump, so I\u0027d expect this loop to always find one entry.\nI think the real problem is if some other node in the process graph owns the shared memory node.\n\nIn other words, I think that this does NOT happen:\nshared_memory/foo    -\u003e   global/foo\nsomethingelse/foo    /\n\ninstead I think that this can happen:\n  \nsomethingelse/foo -\u003e shared_memory/foo -\u003e global/foo",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 62
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3547b54_f972d0e4",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T15:46:30Z",
+      "side": 1,
+      "message": ".count(\"size\") \u003d\u003d 0 is shorter and perhaps even slightly more efficient as doesn\u0027t have to setup the iterator.",
+      "range": {
+        "startLine": 112,
+        "startChar": 13,
+        "endLine": 112,
+        "endChar": 29
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e514b0_5e9071d9",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T15:46:30Z",
+      "side": 1,
+      "message": "s/shared/shared_memory/?",
+      "range": {
+        "startLine": 116,
+        "startChar": 54,
+        "endLine": 116,
+        "endChar": 59
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9893741d_800bfcc0",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T15:46:30Z",
+      "side": 1,
+      "message": "maybe this is a property we could cache when we do the first traversals and build the children (do we do any traversal root -\u003e child)? so yo won\u0027t need to go up here? something like const char* Node.root_mdp_name.",
+      "range": {
+        "startLine": 124,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 36
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f71fe7d_64593a32",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T15:46:30Z",
+      "side": 1,
+      "message": "maybe this could be a static const char SharedMemoryTracker::kDumpRootName[]",
+      "range": {
+        "startLine": 128,
+        "startChar": 32,
+        "endLine": 128,
+        "endChar": 47
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c20ba7f_7ba02b9c",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T15:46:30Z",
+      "side": 1,
+      "message": "if we end up needing this you could easily build the max element while adding to the global_node_to_shared_owners, instead of looping agian here.",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 11
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
