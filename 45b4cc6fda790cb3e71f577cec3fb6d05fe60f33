@@ -22,6 +22,30 @@
       "revId": "45b4cc6fda790cb3e71f577cec3fb6d05fe60f33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4935d5_6384fc3c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/TabbedModeFirstRunActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-31T17:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ff3c1b1_bd8a4b80",
+      "range": {
+        "startLine": 93,
+        "startChar": 20,
+        "endLine": 93,
+        "endChar": 23
+      },
+      "revId": "45b4cc6fda790cb3e71f577cec3fb6d05fe60f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

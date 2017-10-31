@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "532bf6e3_6d269947",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/TabbedModeFirstRunActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-31T17:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5f8a730_16dfac12",
+      "range": {
+        "startLine": 32,
+        "startChar": 38,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "11b4cba9cf55d2fc9b463c199e41177511c59695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4764740_0c516392",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/TabbedModeFirstRunActivity.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5cd67e97_76b771f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/TabbedModeFirstRunActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-31T17:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4764740_0c516392",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 18
+      },
+      "revId": "11b4cba9cf55d2fc9b463c199e41177511c59695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fafa6bd_c9ced7c1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/TabbedModeFirstRunActivity.java",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "11b4cba9cf55d2fc9b463c199e41177511c59695",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0328bd40_5d99e66d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/TabbedModeFirstRunActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-31T17:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fafa6bd_c9ced7c1",
+      "range": {
+        "startLine": 82,
+        "startChar": 23,
+        "endLine": 82,
+        "endChar": 32
+      },
+      "revId": "11b4cba9cf55d2fc9b463c199e41177511c59695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
