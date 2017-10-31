@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b52a9b64_80735464",
+        "filename": "third_party/libaom/enable.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T17:29:25Z",
+      "side": 1,
+      "message": "You want to use a BUILDFLAG, https://cs.chromium.org/chromium/src/build/buildflag_header.gni\n\nAlso, name this file something like options.gni or libaom_options.gni for clarity instead.",
+      "parentUuid": "43602edc_fab68d9a",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "c7c578ce9f75189551b1975b30c5ba71552da3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19f09432_7a9a81a8",
         "filename": "third_party/libaom/generate_gni.sh",
         "patchSetId": 1
