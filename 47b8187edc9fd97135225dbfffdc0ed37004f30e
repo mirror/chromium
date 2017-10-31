@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11041045_06342774",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-container-select.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-31T12:33:03Z",
+      "side": 1,
+      "message": "For completeness, maybe add tests for overflow-y: hidden|visible|auto|scroll as well? \n\nThis file could be renamed to snav-within-overflow-scroll.html and then copied into snav-within-overflow-hidden|visible|auto.html.\n\nI think it would be good to test both navigation to visible and clipped content in such divs. Ideally, spatnav should be able to reach the same elements that TAB-key navigation can reach.\n\nTo get even better test coverage we could also test overflow-x ;)",
+      "revId": "47b8187edc9fd97135225dbfffdc0ed37004f30e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f498f9_ee5b4672",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-31T12:33:03Z",
+      "side": 1,
+      "message": "Now this function looks very similar to CanScrollInDirection. I wonder if we can fixup CanScrollInDirection instead? \n\nLayoutBox.h has HasScrollableOverflowX() and HasScrollableOverflowY(), can these be used?",
+      "revId": "47b8187edc9fd97135225dbfffdc0ed37004f30e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
