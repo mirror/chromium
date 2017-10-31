@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c6736da6_759d2429",
+        "filename": "ui/keyboard/container_behavior.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-31T21:19:12Z",
+      "side": 1,
+      "message": "Yes. Keeping ContainerBehavior class a pure interface is cleaner IMO. cf. https://google.github.io/styleguide/cppguide.html#Inheritance",
+      "parentUuid": "e6633c40_3deca756",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 34
+      },
+      "revId": "453e71b785120977fcb26821418e14ef3683a917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a37adc14_1638d377",
         "filename": "ui/keyboard/container_floating_behavior.cc",
         "patchSetId": 1
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Required now that ContainerBehavior points to KeyboardController.",
       "parentUuid": "8fdce08b_072f2e93",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "453e71b785120977fcb26821418e14ef3683a917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "329bc983_56b75a80",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-31T21:19:12Z",
+      "side": 1,
+      "message": "container_behavior.h is included in L17.",
+      "parentUuid": "44e391ec_2f3e28e3",
       "range": {
         "startLine": 35,
         "startChar": 0,
