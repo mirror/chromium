@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6efa256a_cde76ca2",
+        "filename": "tools/gn/xcode_object.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-10-31T18:23:09Z",
+      "side": 0,
+      "message": "the constructor of SourceFile requires that |source_path| begins with \u0027/\u0027, however, all the |source_path|s passed into this function are relative paths and don\u0027t start with \u0027/\u0027. I\u0027m not sure what\u0027s the best way to fix it, but this CL breaks rolling gn, thus reverting it.",
+      "range": {
+        "startLine": 698,
+        "startChar": 56,
+        "endLine": 698,
+        "endChar": 0
+      },
+      "revId": "844a031c63c6ec1123da1b5b0caa97958679ddf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
