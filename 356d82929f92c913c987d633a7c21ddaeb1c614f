@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d942559_5af93f68",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-31T21:16:45Z",
+      "side": 1,
+      "message": "Since you have switched to using a weak reference there is no cycle to break.\nPlease update this comment accordingly.",
+      "range": {
+        "startLine": 40,
+        "startChar": 13,
+        "endLine": 40,
+        "endChar": 76
+      },
+      "revId": "356d82929f92c913c987d633a7c21ddaeb1c614f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e355ff_3a437eca",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-31T21:16:45Z",
+      "side": 1,
+      "message": "nit: I don\u0027t fully grok why this is needed. Can we just bind \nAnimationWorkletProxyClientImpl::MutateWithEvent directly and skip\nhaving this?\n\nThat way we can make MutateWithEvent private as well.",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 15
+      },
+      "revId": "356d82929f92c913c987d633a7c21ddaeb1c614f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2854f6_7d6ecfd1",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-31T21:16:45Z",
+      "side": 1,
+      "message": "I think we should be using CrossThreadBind instead of WTF:Bind here.\nThat has additional safeties around used of parameters across threads.\n\nBTW, there are some neat util functions that can be used for the first argument: \nWrapCrossThreadPersistent",
+      "range": {
+        "startLine": 81,
+        "startChar": 12,
+        "endLine": 81,
+        "endChar": 33
+      },
+      "revId": "356d82929f92c913c987d633a7c21ddaeb1c614f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
