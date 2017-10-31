@@ -7,7 +7,9 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "content/browser/loader/resource_controller.h"
-#include "net/url_request/url_request_status.h"
+#include "content/browser/streams/stream.h"
+#include "content/browser/streams/stream_metadata.h"
+#include "net/url_request/url_request.h"
 
 namespace content {
 
@@ -36,6 +38,19 @@ void StreamResourceHandler::OnRequestRedirected(
 void StreamResourceHandler::OnResponseStarted(
     ResourceResponse* resp,
     std::unique_ptr<ResourceController> controller) {
+  const net::HttpResponseInfo& response_info = request()->response_info();
+  std::unique_ptr<StreamMetadata> metadata;
+  if (response_info.headers) {
+    metadata.reset(new StreamMetadata(response_info));
+  } else {
+    // Assume request wasn't backed by HTTP and produce fake "200 OK" response,
+    // as some consumers expect it for, say, data urls.
+    net::HttpResponseInfo fake_response_info = response_info;
+    fake_response_info.headers =
+        new net::HttpResponseHeaders("HTTP/1.1 200 OK");
+    metadata.reset(new StreamMetadata(fake_response_info));
+  }
+  writer_.set_metadata(std::move(metadata));
   controller->Resume();
 }
 
@@ -56,6 +71,11 @@ void StreamResourceHandler::OnWillRead(
 void StreamResourceHandler::OnReadCompleted(
     int bytes_read,
     std::unique_ptr<ResourceController> controller) {
+  int64_t total_bytes_read = request()->GetTotalReceivedBytes();
+  writer_.stream()->metadata()->set_total_received_bytes(total_bytes_read);
+
+  int64_t raw_body_bytes = request()->GetRawBodyBytes();
+  writer_.stream()->metadata()->set_raw_body_bytes(raw_body_bytes);
   writer_.OnReadCompleted(bytes_read,
                           base::Bind(&ResourceController::Resume,
                                      base::Passed(std::move(controller))));
