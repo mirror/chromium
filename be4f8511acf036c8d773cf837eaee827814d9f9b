@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74331cfb_44daad6f",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-31T09:43:35Z",
+      "side": 1,
+      "message": "I don\u0027t really like using a global variable but this is a simple way to check web_contents() is (was) foreground.",
+      "revId": "be4f8511acf036c8d773cf837eaee827814d9f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
