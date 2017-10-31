@@ -5,6 +5,12 @@
         },
         "http://localhost:9000/cats-viewport-width.html": {
             "DEFAULT": "tough_image_decode_cases_000.wprgo"
+        },
+        "http://www.espn.com/nfl/story/_/id/21182994/aaron-rodgers-green-bay-packers-says-anthony-barr-gave-finger-hit": {
+            "DEFAULT": "tough_image_decode_cases_001.wprgo"
+        },
+        "https://www.espn.com/nfl/story/_/id/21182994/aaron-rodgers-green-bay-packers-says-anthony-barr-gave-finger-hit": {
+            "DEFAULT": "tough_image_decode_cases_016.wprgo"
         }
     },
     "description": "Describes the Web Page Replay archives for a story set. Don't edit by hand! Use record_wpr for updating.",

@@ -15,6 +15,19 @@ const int32_t kHandleLockedStart = 2;
 
 }  // namespace
 
+DiscardableHandleId DiscardableHandleIdFromShmAndOffset(uint32_t shm_id,
+                                                        uint32_t byte_offset) {
+  return (static_cast<uint64_t>(shm_id) << 32) |
+         static_cast<uint64_t>(byte_offset);
+}
+
+void ShmAndOffsetFromDiscardableHandleId(DiscardableHandleId handle_id,
+                                         uint32_t* shm_id,
+                                         uint32_t* offset) {
+  *shm_id = (handle_id >> 32) & 0xFFFFFFFF;
+  *offset = handle_id & 0xFFFFFFFF;
+}
+
 DiscardableHandleBase::DiscardableHandleBase(scoped_refptr<Buffer> buffer,
                                              uint32_t byte_offset,
                                              int32_t shm_id)
