@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d382599_2b3ea0f3",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/history.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-31T23:38:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa6eb98b_50a1d6a8",
+      "revId": "830aa56caf7e2c3f771758667fd100960e2fbeb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "659d062b_20944481",
         "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "830aa56caf7e2c3f771758667fd100960e2fbeb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c674344_2ba9a64d",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-31T23:38:35Z",
+      "side": 1,
+      "message": "***Magic!***",
+      "parentUuid": "659d062b_20944481",
+      "revId": "830aa56caf7e2c3f771758667fd100960e2fbeb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5f0025af_54ffcfe8",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-31T23:38:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeb8f5d7_a01c25fa",
+      "revId": "830aa56caf7e2c3f771758667fd100960e2fbeb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b1b70a8_5e0c04e5",
         "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "830aa56caf7e2c3f771758667fd100960e2fbeb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ccc58cd_911e9c9d",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-31T23:38:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b1b70a8_5e0c04e5",
+      "revId": "830aa56caf7e2c3f771758667fd100960e2fbeb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
