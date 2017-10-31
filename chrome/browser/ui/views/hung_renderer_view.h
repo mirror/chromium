@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_UI_VIEWS_HUNG_RENDERER_VIEW_H_
 
 #include "base/macros.h"
+#include "chrome/browser/ui/views/chrome_views_export.h"
 #include "components/favicon/content/content_favicon_driver.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -30,6 +31,7 @@ class HungPagesTableModel : public ui::TableModel {
   // is destroyed.
   class Delegate {
    public:
+    virtual void TabUpdated() = 0;
     virtual void TabDestroyed() = 0;
 
    protected:
@@ -68,6 +70,8 @@ class HungPagesTableModel : public ui::TableModel {
 
     // WebContentsObserver overrides:
     void RenderProcessGone(base::TerminationStatus status) override;
+    void RenderViewHostChanged(content::RenderViewHost* old_host,
+                               content::RenderViewHost* new_host) override;
     void WebContentsDestroyed() override;
 
    private:
@@ -80,6 +84,10 @@ class HungPagesTableModel : public ui::TableModel {
   // notifies the observer and delegate.
   void TabDestroyed(WebContentsObserverImpl* tab);
 
+  // Invoked when a WebContents have been updated. The title or location of
+  // the WebContents may have changed.
+  void TabUpdated(WebContentsObserverImpl* tab);
+
   std::vector<std::unique_ptr<WebContentsObserverImpl>> tab_observers_;
 
   ui::TableModelObserver* observer_;
@@ -90,8 +98,9 @@ class HungPagesTableModel : public ui::TableModel {
 
 // This class displays a dialog which contains information about a hung
 // renderer process.
-class HungRendererDialogView : public views::DialogDelegateView,
-                               public HungPagesTableModel::Delegate {
+class CHROME_VIEWS_EXPORT HungRendererDialogView
+    : public views::DialogDelegateView,
+      public HungPagesTableModel::Delegate {
  public:
   // Factory function for creating an instance of the HungRendererDialogView
   // class. At any given point only one instance can be active.
@@ -126,6 +135,7 @@ class HungRendererDialogView : public views::DialogDelegateView,
   bool ShouldUseCustomFrame() const override;
 
   // HungPagesTableModel::Delegate overrides:
+  void TabUpdated() override;
   void TabDestroyed() override;
 
  protected:
