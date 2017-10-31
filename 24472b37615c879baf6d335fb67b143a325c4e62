@@ -158,6 +158,24 @@
       "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fcc104_b7128ff2",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-31T11:10:16Z",
+      "side": 1,
+      "message": "A final question: If the common case is just ignoring exceptions, what about just asking the call site to use v8::TryCatch always? i.e., stop using v8::Maybe\u003cbool\u003e and ask the call site to use v8::TryCatch if they want to catch the exception.\n\nAgain my concern is not about v8::Maybe but about we expose different ways to handle exceptions for the void case and the boolean case.",
+      "parentUuid": "2e5c127d_9b50d9a7",
+      "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
