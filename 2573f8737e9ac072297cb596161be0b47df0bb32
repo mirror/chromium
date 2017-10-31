@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e1167e7_c85a5772",
+        "filename": "third_party/WebKit/Source/modules/permissions/PermissionUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-31T06:02:28Z",
+      "side": 1,
+      "message": "Unrelated, but maybe we should get rid of the bool return value... very few call sites are checking it, and the ones that do, don\u0027t check it in ways that really matter? Probably?",
+      "revId": "2573f8737e9ac072297cb596161be0b47df0bb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
