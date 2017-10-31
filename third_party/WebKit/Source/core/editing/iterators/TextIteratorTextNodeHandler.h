@@ -71,6 +71,13 @@ class TextIteratorTextNodeHandler {
                 unsigned text_start_offset,
                 unsigned text_end_offset);
 
+  void EmitTextInternal(Node*,
+                        unsigned position_start_offset,
+                        unsigned position_end_offset,
+                        const String&,
+                        unsigned text_start_offset,
+                        unsigned text_end_offset);
+
   // The current text node and offset range, from which text should be emitted.
   Member<Text> text_node_;
   unsigned offset_ = 0;
