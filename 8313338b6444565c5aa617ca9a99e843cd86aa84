@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8459cb0b_86512046",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-10-31T15:31:11Z",
+      "side": 1,
+      "message": "Yes, we could do this. I had a dispatchVrIntent so that the dispatching for VR intents stays in one place and the cases we support are clear. But this might be better from a code health point of view. Done! :)",
+      "parentUuid": "5fc9bbcb_511d3a8f",
+      "range": {
+        "startLine": 150,
+        "startChar": 36,
+        "endLine": 150,
+        "endChar": 53
+      },
+      "revId": "8313338b6444565c5aa617ca9a99e843cd86aa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73d146f8_ee974a2d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "8313338b6444565c5aa617ca9a99e843cd86aa84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e831d00_c548ed3d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-10-31T15:31:11Z",
+      "side": 1,
+      "message": "Absolutely. Done.",
+      "parentUuid": "73d146f8_ee974a2d",
+      "range": {
+        "startLine": 168,
+        "startChar": 36,
+        "endLine": 168,
+        "endChar": 37
+      },
+      "revId": "8313338b6444565c5aa617ca9a99e843cd86aa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
