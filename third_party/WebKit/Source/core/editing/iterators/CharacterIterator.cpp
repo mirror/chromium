@@ -88,6 +88,36 @@ int CharacterIteratorAlgorithm<Strategy>::EndOffset() const {
 }
 
 template <typename Strategy>
+PositionTemplate<Strategy>
+CharacterIteratorAlgorithm<Strategy>::ComputeFirstPosition() const {
+  if (!text_iterator_.AtEnd()) {
+    if (text_iterator_.length() > 1) {
+      Node* const node = text_iterator_.CurrentContainer();
+      const int offset =
+          text_iterator_.StartOffsetInCurrentContainer() + run_offset_;
+      return PositionTemplate<Strategy>(node, offset);
+    }
+    DCHECK_EQ(run_offset_, 0);
+  }
+  return text_iterator_.StartPositionInCurrentContainer();
+}
+
+template <typename Strategy>
+PositionTemplate<Strategy>
+CharacterIteratorAlgorithm<Strategy>::ComputeLastPosition() const {
+  if (!text_iterator_.AtEnd()) {
+    if (text_iterator_.length() > 1) {
+      Node* const node = text_iterator_.CurrentContainer();
+      const int offset =
+          text_iterator_.StartOffsetInCurrentContainer() + run_offset_;
+      return PositionTemplate<Strategy>(node, offset + 1);
+    }
+    DCHECK_EQ(run_offset_, 0);
+  }
+  return text_iterator_.EndPositionInCurrentContainer();
+}
+
+template <typename Strategy>
 PositionTemplate<Strategy> CharacterIteratorAlgorithm<Strategy>::StartPosition()
     const {
   if (!text_iterator_.AtEnd()) {
