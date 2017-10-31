@@ -104,6 +104,24 @@
       "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f24b791_61c94023",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-31T08:18:23Z",
+      "side": 1,
+      "message": "In that way, the return type is not void, so we always need a helper function when using a callback interface as: PostTask(Bind(callback, ...));  We need a bunch of rewriting, and the codebase will look more complicated.  This is the problem of b) in my previous reply.\n\nAnother problem is that the call sites can use the return value without checking if an exception is thrown or not.  The call sites must check an exception first before using the return value.  This problem is solvable with WARN_UNUSED_RESULT, however, that\u0027s why V8 team introduced v8::Maybe/MaybeLocal and Maybe better provides this restriction, I think.  So, I prefer v8::Maybe to WARN_UNUSED_RESULT + return value in the last argument.\n\n\nAs a general discussion of exception handling, C++\u0027s functions look:\n\n    return_type func_name(argument_type...);\n\nand as we\u0027re disabling C++\u0027s exception handling, there is no room for exception.  Exception and return value are somewhat similar in terms that both exception and return value are considered as a \"result\" of function execution.  So it\u0027s more natural to couple exception and return value than to couple return value and arguments, i.e.\n\n    couple_of\u003cexception, return_type\u003e func_name(argument_type...)\n\nis more natural than\n\n    exception func_name(argument_type..., return_type)\n\nAlso, coupling exception and return value can provide a good restriction that call sites cannot access a return value without checking an exception.  This coupling is the maybe type.\n\n\nConsidering these things, I think it\u0027s best to follow the way of v8::Maybe, and I think it\u0027s not a good idea to reinvent a wheel.",
+      "parentUuid": "a6315668_6952fe26",
+      "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
