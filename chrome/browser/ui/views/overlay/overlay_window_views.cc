@@ -6,6 +6,8 @@
 
 #include "chrome/grit/generated_resources.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/display/manager/display_manager.h"
+#include "ui/display/screen.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
@@ -13,6 +15,31 @@
 std::unique_ptr<OverlayWindow> OverlayWindow::Create() {
   return base::WrapUnique(new OverlayWindowViews());
 }
+
+namespace {
+
+// OverlayWindow implementation of Widget.
+class OverlayWindowWidget : public views::Widget {
+ public:
+  OverlayWindowWidget() {}
+
+  // views::Widget:
+  gfx::Size GetMinimumSize() const override {
+    // TODO(apacible): Update minimum size after more feedback.
+    // Initial value 140 taken from PRD.
+    return gfx::Size(140, 140);
+  }
+  gfx::Size GetMaximumSize() const override {
+    // Currently maximizes to be a little smaller than one quadrant of the
+    // primary display work area.
+    gfx::Rect work_area =
+        display::Screen::GetScreen()->GetPrimaryDisplay().work_area();
+    return gfx::Size(work_area.width() / 3, work_area.height() / 3);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(OverlayWindowWidget);
+};
 
 // OverlayWindow implementation of WidgetDelegate.
 class OverlayWindowWidgetDelegate : public views::WidgetDelegate {
@@ -39,8 +66,10 @@ class OverlayWindowWidgetDelegate : public views::WidgetDelegate {
   DISALLOW_COPY_AND_ASSIGN(OverlayWindowWidgetDelegate);
 };
 
+}  // namespace
+
 OverlayWindowViews::OverlayWindowViews() {
-  widget_.reset(new views::Widget());
+  widget_.reset(new OverlayWindowWidget());
 }
 
 OverlayWindowViews::~OverlayWindowViews() = default;
@@ -52,7 +81,13 @@ void OverlayWindowViews::Init() {
 
   // TODO(apacible): Update preferred sizing and positioning.
   // http://crbug/726621
-  params.bounds = gfx::Rect(200, 200, 700, 500);
+  // These bounds are arbitrary. See OverlayWindowWidget for specified
+  // constraints. The initial positioning is on the bottom right quadrant
+  // of the primary display work area.
+  gfx::Rect work_area =
+      display::Screen::GetScreen()->GetPrimaryDisplay().work_area();
+  params.bounds =
+      gfx::Rect(work_area.width() / 2, work_area.height() / 2, 500, 300);
   params.keep_on_top = true;
   params.visible_on_all_workspaces = true;
 
