@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20c7873d_70d3ef42",
+        "filename": "chrome/browser/chromeos/arc/arc_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-31T05:55:28Z",
+      "side": 1,
+      "message": "nit/off-topic: Could you reword this to;\n\"if Chrome OS OOBE or OPA OptIn flow is currently showing.\"\n\n# I know/understand you copied from the original one, the function name is confusing, and we should fix it. Though, the background story is longer and let\u0027s focus on it separately to move forward your work. (I\u0027m happy to chat with you offline, e.g., via IM, if you\u0027re interested in ;-)). Thank you for your understanding and cooperation!",
+      "range": {
+        "startLine": 118,
+        "startChar": 19,
+        "endLine": 118,
+        "endChar": 28
+      },
+      "revId": "4abbaf1969a819e6e65ed25863e4ac56c486e478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -408,6 +408,24 @@
       "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c92248e_13b014f9",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-31T05:55:28Z",
+      "side": 1,
+      "message": "Thank you for investigation, and please let me ask you one more investigation, as it conflicts with my understanding.\n\nIn OOBE case (or I\u0027d say regardless of whether it is OOBE case or non-OOBE case),\nkArcEnabled should be set to true. OOBE sets the value from here:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/webui/chromeos/login/arc_terms_of_service_screen_handler.cc?type\u003dcs\u0026l\u003d203 on showing the UI.\n\nSo, when we reach here, it should be \"true\" always (note, regardless of managed or not).\nThen, setting false should trigger the RequestDisable, because it should actually change the value, and should trigger the OnPreferenceChanged handler, as you said.",
+      "parentUuid": "eb8af719_bd59aa0f",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
