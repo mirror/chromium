@@ -266,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "4172a083_8a0f13fe",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-10-31T03:12:28Z",
+      "side": 1,
+      "message": "Thanks, I upload this CL according to your comment for now. And I\u0027ll upload new CL for the SetLayoutNGPaintFragmentsEnabled soon.",
+      "parentUuid": "f84ba80c_f7b054b2",
+      "revId": "ee06bb6c0f1f5e604fdbf9785440d0a9bda6313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b801e49d_6241a628",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter_test.cc",
         "patchSetId": 7
