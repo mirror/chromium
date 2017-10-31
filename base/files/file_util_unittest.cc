@@ -18,6 +18,7 @@
 #include "base/bind_helpers.h"
 #include "base/callback_helpers.h"
 #include "base/environment.h"
+#include "base/files/file.h"
 #include "base/files/file_enumerator.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -46,6 +47,7 @@
 #if defined(OS_POSIX)
 #include <errno.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 #include <unistd.h>
 #endif
 
@@ -1328,6 +1330,39 @@ TEST_F(FileUtilTest, DeleteDirRecursive) {
   EXPECT_FALSE(PathExists(file_name));
   EXPECT_FALSE(PathExists(subdir_path1));
   EXPECT_FALSE(PathExists(test_subdir));
+}
+
+// Tests recursive Delete() for a directory.
+TEST_F(FileUtilTest, DeleteDirRecursiveWithOpenFile) {
+  // Create a subdirectory and put a file and two directories inside.
+  FilePath test_subdir = temp_dir_.GetPath().Append(FPL("DeleteWithOpenFile"));
+  CreateDirectory(test_subdir);
+  ASSERT_TRUE(PathExists(test_subdir));
+
+  FilePath file_name1 = test_subdir.Append(FPL("Un-deletebale File.txt"));
+  File file1(file_name1,
+             File::FLAG_CREATE | File::FLAG_READ | File::FLAG_WRITE);
+  ASSERT_TRUE(PathExists(file_name1));
+
+#if defined(OS_POSIX)
+  // On Windows, holding the file open in sufficient to make it un-deletable.
+  // POSIX requires a bit more effort.
+  ASSERT_EQ(0, chmod(file_name1.value().c_str(), 0));
+#endif
+
+  FilePath file_name2 = test_subdir.Append(FPL("Deleteable File.txt"));
+  CreateTextFile(file_name2, bogus_content);
+  ASSERT_TRUE(PathExists(file_name2));
+
+  // Delete recursively and check that at least the second file got deleted.
+  DeleteFile(test_subdir, true);
+  EXPECT_TRUE(PathExists(file_name1));
+  EXPECT_FALSE(PathExists(file_name2));
+
+#if defined(OS_POSIX)
+  // Make sure that the test can clean up after itself.
+  ASSERT_EQ(0, chmod(file_name1.value().c_str(), S_IRWXU));
+#endif
 }
 
 TEST_F(FileUtilTest, MoveFileNew) {
