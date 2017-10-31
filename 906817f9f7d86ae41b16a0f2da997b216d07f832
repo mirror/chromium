@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb2ddc66_df32ac78",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-31T20:24:47Z",
+      "side": 1,
+      "message": "Should we run OnLayerAnimationEnded?",
+      "revId": "906817f9f7d86ae41b16a0f2da997b216d07f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8094d6_358c6e66",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-31T20:24:47Z",
+      "side": 1,
+      "message": "Why do we need to abort?",
+      "revId": "906817f9f7d86ae41b16a0f2da997b216d07f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
