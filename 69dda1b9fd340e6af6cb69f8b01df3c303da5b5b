@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7acd2b3_766af6cf",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-31T01:16:39Z",
+      "side": 1,
+      "message": "The guideline from the security team has been to keep kLast equal to the last valid value, instead of using it as a \"kNumValues\" type.\n\nFor enums used in UMA, I find the convention here useful: \nhttps://cs.chromium.org/chromium/src/services/network/public/interfaces/fetch_api.mojom?q\u003dservices/network/public/interfaces/fetch_api.mojom\u0026sq\u003dpackage:chromium\u0026dr\n\ni.e., at the beginning point to the enums.xml entry, and add a line before kLast saying to put new types here.",
+      "revId": "69dda1b9fd340e6af6cb69f8b01df3c303da5b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
