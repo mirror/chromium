@@ -53,7 +53,7 @@ MediaStreamAudioDestinationHandler::MediaStreamAudioDestinationHandler(
   source_ = MediaStreamSource::Create("WebAudio-" + CreateCanonicalUUIDString(),
                                       MediaStreamSource::kTypeAudio,
                                       "MediaStreamAudioDestinationNode", false,
-                                      MediaStreamSource::kReadyStateLive, true);
+                                      MediaStreamSource::kStateLive, true);
   MediaStreamSourceVector audio_sources;
   audio_sources.push_back(source_.Get());
   MediaStreamSourceVector video_sources;

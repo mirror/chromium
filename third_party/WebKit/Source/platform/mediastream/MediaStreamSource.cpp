@@ -38,7 +38,7 @@ MediaStreamSource* MediaStreamSource::Create(const String& id,
                                              StreamType type,
                                              const String& name,
                                              bool remote,
-                                             ReadyState ready_state,
+                                             State ready_state,
                                              bool requires_consumer) {
   return new MediaStreamSource(id, type, name, remote, ready_state,
                                requires_consumer);
@@ -48,18 +48,18 @@ MediaStreamSource::MediaStreamSource(const String& id,
                                      StreamType type,
                                      const String& name,
                                      bool remote,
-                                     ReadyState ready_state,
+                                     State ready_state,
                                      bool requires_consumer)
     : id_(id),
       type_(type),
       name_(name),
       remote_(remote),
-      ready_state_(ready_state),
+      state_(ready_state),
       requires_consumer_(requires_consumer) {}
 
-void MediaStreamSource::SetReadyState(ReadyState ready_state) {
-  if (ready_state_ != kReadyStateEnded && ready_state_ != ready_state) {
-    ready_state_ = ready_state;
+void MediaStreamSource::SetState(State ready_state) {
+  if (state_ != kStateEnded && state_ != ready_state) {
+    state_ = ready_state;
 
     // Observers may dispatch events which create and add new Observers;
     // take a snapshot so as to safely iterate.
@@ -68,7 +68,7 @@ void MediaStreamSource::SetReadyState(ReadyState ready_state) {
     for (auto observer : observers)
       observer->SourceChangedState();
 
-    // setReadyState() will be invoked via the MediaStreamComponent::dispose()
+    // setState() will be invoked via the MediaStreamComponent::dispose()
     // prefinalizer, allocating |observers|. Which means that |observers| will
     // live until the next GC (but be unreferenced by other heap objects),
     // _but_ it will potentially contain references to Observers that were
@@ -138,11 +138,11 @@ STATIC_ASSERT_ENUM(WebMediaStreamSource::kTypeAudio,
                    MediaStreamSource::kTypeAudio);
 STATIC_ASSERT_ENUM(WebMediaStreamSource::kTypeVideo,
                    MediaStreamSource::kTypeVideo);
-STATIC_ASSERT_ENUM(WebMediaStreamSource::kReadyStateLive,
-                   MediaStreamSource::kReadyStateLive);
-STATIC_ASSERT_ENUM(WebMediaStreamSource::kReadyStateMuted,
-                   MediaStreamSource::kReadyStateMuted);
-STATIC_ASSERT_ENUM(WebMediaStreamSource::kReadyStateEnded,
-                   MediaStreamSource::kReadyStateEnded);
+STATIC_ASSERT_ENUM(WebMediaStreamSource::kStateLive,
+                   MediaStreamSource::kStateLive);
+STATIC_ASSERT_ENUM(WebMediaStreamSource::kStateMuted,
+                   MediaStreamSource::kStateMuted);
+STATIC_ASSERT_ENUM(WebMediaStreamSource::kStateEnded,
+                   MediaStreamSource::kStateEnded);
 
 }  // namespace blink

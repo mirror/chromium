@@ -4,7 +4,9 @@
 
 #include "content/renderer/media_recorder/media_recorder_handler.h"
 
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -201,16 +203,15 @@ bool MediaRecorderHandler::Start(int timeslice) {
     return false;
   }
 
-  const bool use_video_tracks =
-      !video_tracks_.IsEmpty() && video_tracks_[0].IsEnabled() &&
-      video_tracks_[0].Source().GetReadyState() !=
-          blink::WebMediaStreamSource::kReadyStateEnded;
-  const bool use_audio_tracks =
-      !audio_tracks_.IsEmpty() &&
-      MediaStreamAudioTrack::From(audio_tracks_[0]) &&
-      audio_tracks_[0].IsEnabled() &&
-      audio_tracks_[0].Source().GetReadyState() !=
-          blink::WebMediaStreamSource::kReadyStateEnded;
+  const bool use_video_tracks = !video_tracks_.IsEmpty() &&
+                                video_tracks_[0].IsEnabled() &&
+                                video_tracks_[0].Source().GetState() !=
+                                    blink::WebMediaStreamSource::kStateEnded;
+  const bool use_audio_tracks = !audio_tracks_.IsEmpty() &&
+                                MediaStreamAudioTrack::From(audio_tracks_[0]) &&
+                                audio_tracks_[0].IsEnabled() &&
+                                audio_tracks_[0].Source().GetState() !=
+                                    blink::WebMediaStreamSource::kStateEnded;
 
   if (!use_video_tracks && !use_audio_tracks) {
     LOG(WARNING) << __func__ << ": no tracks to be recorded.";

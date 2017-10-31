@@ -151,7 +151,7 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
   void DoStopSource() override;
 
   // Sets ready state and notifies the ready state to all registered tracks.
-  virtual void SetReadyState(blink::WebMediaStreamSource::ReadyState state);
+  virtual void SetSourceState(blink::WebMediaStreamSource::State state);
 
   // Sets muted state and notifies it to all registered tracks.
   virtual void SetMutedState(bool state);
