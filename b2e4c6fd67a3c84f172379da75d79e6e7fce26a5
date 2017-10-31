@@ -16,6 +16,24 @@
       "revId": "b2e4c6fd67a3c84f172379da75d79e6e7fce26a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15587a3f_a0e3c394",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-31T18:34:21Z",
+      "side": 1,
+      "message": "I\u0027m always in favor of quitting elegantly in case of a problem. It should not happen, but I\u0027d rather not take the chance :P",
+      "parentUuid": "f23fdc3f_a2c6da01",
+      "revId": "b2e4c6fd67a3c84f172379da75d79e6e7fce26a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
