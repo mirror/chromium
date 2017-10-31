@@ -113,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "dc148179_47a7be7e",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller+protected.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-31T17:20:28Z",
+      "side": 1,
+      "message": "This is actually an approach we discussed for clean/, and I think it\u0027s a pattern that scales better as we have more decomposed components -- for example, if the location bar ends up containing another object with its own animations.",
+      "parentUuid": "bf0591d9_22f0c28d",
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "344c7ba3_b8b19c93",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 2
@@ -157,6 +175,30 @@
       "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4fc63e_3e918846",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-31T17:20:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e3567136_2c3b67dd",
+      "range": {
+        "startLine": 728,
+        "startChar": 27,
+        "endLine": 728,
+        "endChar": 50
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -242,6 +284,30 @@
       "side": 1,
       "message": "Its some preparation in order for the animator to move then into their final position. On the other hand we could leave the buttons in a shifted position after the expanding animation, and this wouldn\u0027t be needed, but I feel like leaving them like that doesn\u0027t feel right. WDYT?",
       "parentUuid": "c467c5ff_db87ac85",
+      "range": {
+        "startLine": 847,
+        "startChar": 4,
+        "endLine": 847,
+        "endChar": 17
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e48547_2cd2c93e",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-31T17:20:28Z",
+      "side": 1,
+      "message": "It would be cleaner if the animations left the views \"in place\" for the counterpart animations, but for now the comment is fine.\n\nAlso note that this method needs a comment.",
+      "parentUuid": "565d6066_1f5ac5ad",
       "range": {
         "startLine": 847,
         "startChar": 4,
@@ -359,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "73ccbb98_e0957e12",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-31T17:20:28Z",
+      "side": 1,
+      "message": "Also looks like this (and the rect calculated on line 1826) will be incorrect for RTL.",
+      "parentUuid": "5192ae51_c38a32e0",
+      "range": {
+        "startLine": 1836,
+        "startChar": 14,
+        "endLine": 1836,
+        "endChar": 22
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdcb0f90_4c751d38",
         "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
         "patchSetId": 2
@@ -394,6 +484,30 @@
       "side": 1,
       "message": "Just checked, you\u0027re right. But I still need to copy the Button or if not the compiler complains about self being retained, I guess we might as well weakify since we\u0027re creating a new variable anyways?",
       "parentUuid": "fdcb0f90_4c751d38",
+      "range": {
+        "startLine": 2281,
+        "startChar": 19,
+        "endLine": 2281,
+        "endChar": 33
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c40938a6_cfdad176",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2281,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-31T17:20:28Z",
+      "side": 1,
+      "message": "The complaint about self being retained should only appear if an ivar is used; if there\u0027s a property it shouldn\u0027t complain (because the retention is explicit).\n\nSo make _backButton and _forwardButton properties (or, if they\u0027re already properties, just use them) and it should be fine.",
+      "parentUuid": "13cb2880_972c8988",
       "range": {
         "startLine": 2281,
         "startChar": 19,
