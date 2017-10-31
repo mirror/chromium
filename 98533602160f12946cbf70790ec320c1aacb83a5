@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "654ef635_5d9c8f09",
+        "filename": "base/message_loop/message_pump_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-31T23:17:49Z",
+      "side": 1,
+      "message": "This right here is the only intended functional change. Nothing else should change behaviour.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "98533602160f12946cbf70790ec320c1aacb83a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
