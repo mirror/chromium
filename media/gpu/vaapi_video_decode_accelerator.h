@@ -94,42 +94,42 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // Queue a input buffer for decode.
   void QueueInputBuffer(const BitstreamBuffer& bitstream_buffer);
 
-  // Get a new input buffer from the queue and set it up in decoder. This will
-  // sleep if no input buffers are available. Return true if a new buffer has
-  // been set up, false if an early exit has been requested (due to initiated
-  // reset/flush/destroy).
-  bool GetInputBuffer_Locked();
+  // Get a new input buffer from |input_buffers_| and set it up in |decoder_|.
+  // This will sleep if no input buffers are available. Return true if a new
+  // buffer has been set up, false if an early exit has been requested (due to
+  // initiated reset/flush/destroy).
+  bool GetInputBufferOnTaskRunner_Locked();
 
   // Signal the client that the current buffer has been read and can be
   // returned. Will also release the mapping.
-  void ReturnCurrInputBuffer_Locked();
+  void ReturnCurrInputBufferOnTaskRunner_Locked();
 
   // Wait for more surfaces to become available. Return true once they do or
   // false if an early exit has been requested (due to an initiated
   // reset/flush/destroy).
-  bool WaitForSurfaces_Locked();
+  bool WaitForSurfacesOnTaskRunner_Locked();
 
   // Continue decoding given input buffers and sleep waiting for input/output
   // as needed. Will exit if a new set of surfaces or reset/flush/destroy
   // is requested.
-  void DecodeTask();
+  void DecodeOnTaskRunner();
 
   // Scheduled after receiving a flush request and executed after the current
   // decoding task finishes decoding pending inputs. Makes the decoder return
   // all remaining output pictures and puts it in an idle state, ready
-  // to resume if needed and schedules a FinishFlush.
-  void FlushTask();
+  // to resume if needed and schedules a FinishFlushOnTaskRunner.
+  void FlushOnTaskRunner();
 
   // Scheduled by the FlushTask after decoder is flushed to put VAVDA into idle
   // state and notify the client that flushing has been finished.
-  void FinishFlush();
+  void FinishFlushOnTaskRunner();
 
   // Scheduled after receiving a reset request and executed after the current
   // decoding task finishes decoding the current frame. Puts the decoder into
   // an idle state, ready to resume if needed, discarding decoded but not yet
   // outputted pictures (decoder keeps ownership of their associated picture
   // buffers). Schedules a FinishReset afterwards.
-  void ResetTask();
+  void ResetOnTaskRunner();
 
   // Scheduled by ResetTask after it's done putting VAVDA into an idle state.
   // Drops remaining input buffers and notifies the client that reset has been
@@ -143,23 +143,22 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // or return false on failure.
   bool InitializeFBConfig();
 
-  // Callback to be executed once we have a |va_surface| to be output and
-  // an available |picture| to use for output.
-  // Puts contents of |va_surface| into given |picture|, releases the surface
-  // and passes the resulting picture to client to output the given
-  // |visible_rect| part of it.
-  void OutputPicture(const scoped_refptr<VASurface>& va_surface,
-                     int32_t input_id,
-                     gfx::Rect visible_rect,
-                     VaapiPicture* picture);
+  // Callback to be executed once we have a |va_surface| to be output and an
+  // available |picture| to use for output. Puts contents of |va_surface| into
+  // given |picture|, releases the surface and passes the resulting picture to
+  // client to output the given |visible_rect| part of it.
+  void OutputPictureOnTaskRunner(const scoped_refptr<VASurface>& va_surface,
+                                 int32_t input_id,
+                                 gfx::Rect visible_rect,
+                                 VaapiPicture* picture);
 
   // Try to OutputPicture() if we have both a ready surface and picture.
-  void TryOutputSurface();
+  void TryOutputSurfaceOnTaskRunner();
 
   // Called when a VASurface is no longer in use by the decoder or is not being
   // synced/waiting to be synced to a picture. Returns it to available surfaces
   // pool.
-  void RecycleVASurfaceID(VASurfaceID va_surface_id);
+  void RecycleVASurfaceOnTaskRunner(VASurfaceID va_surface_id);
 
   // Initiate wait cycle for surfaces to be released before we release them
   // and allocate new ones, as requested by the decoder.
@@ -173,7 +172,8 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   //
   // Decode of |dec_surface| is ready to be submitted and all codec-specific
   // settings are set in hardware.
-  bool DecodeSurface(const scoped_refptr<VaapiDecodeSurface>& dec_surface);
+  bool DecodeSurfaceOnTaskRunner(
+      const scoped_refptr<VaapiDecodeSurface>& dec_surface);
 
   // |dec_surface| is ready to be outputted once decode is finished.
   // This can be called before decode is actually done in hardware, and this
@@ -183,13 +183,13 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // driver will maintain ordering, as well as dependencies, and will process
   // each submitted command in order, and run each command only if its
   // dependencies are ready.
-  void SurfaceReady(const scoped_refptr<VaapiDecodeSurface>& dec_surface);
+  void SurfaceReadyOnTaskRunner(
+      const scoped_refptr<VaapiDecodeSurface>& dec_surface);
 
   // Return a new VaapiDecodeSurface for decoding into, or nullptr if not
   // available.
-  scoped_refptr<VaapiDecodeSurface> CreateSurface();
+  scoped_refptr<VaapiDecodeSurface> CreateSurfaceOnTaskRunner();
 
-  // VAVDA state.
   enum State {
     // Initialize() not called yet or failed.
     kUninitialized,
@@ -203,7 +203,7 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
     kDestroying,
   };
 
-  // Protects input buffer and surface queues and state_.
+  // Protects |input_buffers_|, the surface queues and |state_|.
   base::Lock lock_;
   State state_;
   Config::OutputMode output_mode_;
@@ -238,8 +238,8 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   typedef std::map<int32_t, linked_ptr<VaapiPicture>> Pictures;
   // All allocated Pictures, regardless of their current state.
   // Pictures are allocated once and destroyed at the end of decode.
-  // Comes after vaapi_wrapper_ to ensure all pictures are destroyed
-  // before vaapi_wrapper_ is destroyed.
+  // Comes after |vaapi_wrapper_| to ensure all pictures are destroyed
+  // before |vaapi_wrapper_| is destroyed.
   Pictures pictures_;
 
   // Return a VaapiPicture associated with given client-provided id.
@@ -248,8 +248,8 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // VA Surfaces no longer in use that can be passed back to the decoder for
   // reuse, once it requests them.
   std::list<VASurfaceID> available_va_surfaces_;
-  // Signalled when output surfaces are queued onto the available_va_surfaces_
-  // queue.
+  // Signalled on |task_runner_| when output surfaces are queued onto
+  // |available_va_surfaces_| queue. Waited on |decoder_thread_task_runner_|.
   base::ConditionVariable surfaces_available_;
 
   // Pending output requests from the decoder. When it indicates that we should
@@ -274,9 +274,6 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // decoder thread should use base::Unretained(this), and tasks posted from the
   // decoder thread to the ChildThread should use |weak_this_|.
   base::WeakPtr<VaapiVideoDecodeAccelerator> weak_this_;
-
-  // Callback used when creating VASurface objects.
-  VASurface::ReleaseCB va_surface_release_cb_;
 
   // To expose client callbacks from VideoDecodeAccelerator.
   // NOTE: all calls to these objects *MUST* be executed on task_runner_.
