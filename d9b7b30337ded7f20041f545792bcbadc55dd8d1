@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "5e35068d_91a8616b",
+        "filename": "chrome/browser/task_manager/task_manager_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-31T15:38:26Z",
+      "side": 0,
+      "message": "I\u0027ve opened https://crbug.com/780038",
+      "parentUuid": "588d236f_323b4723",
+      "range": {
+        "startLine": 950,
+        "startChar": 10,
+        "endLine": 950,
+        "endChar": 29
+      },
+      "revId": "d9b7b30337ded7f20041f545792bcbadc55dd8d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07bd1f37_cace774a",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 18
@@ -147,6 +171,24 @@
       "revId": "d9b7b30337ded7f20041f545792bcbadc55dd8d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5641285f_7b97c6ef",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3280,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-31T15:38:26Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "c3651fb7_d5e21728",
+      "revId": "d9b7b30337ded7f20041f545792bcbadc55dd8d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
