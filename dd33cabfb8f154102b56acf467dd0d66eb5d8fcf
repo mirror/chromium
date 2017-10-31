@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79edfb10_01684043",
+        "filename": "tools/chrome_proxy/webdriver/video.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-31T20:11:53Z",
+      "side": 1,
+      "message": "Which versions of Chrome is this expected to work on?\nMay be add @ChromeVersionEqualOrAfterM(63)\n..assuming 63 is the version.",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 22
+      },
+      "revId": "dd33cabfb8f154102b56acf467dd0d66eb5d8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c532d76_4bb8574c",
+        "filename": "tools/chrome_proxy/webdriver/video.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-31T20:11:53Z",
+      "side": 1,
+      "message": "Why are we looking for content length (201) and not original content length in this histogram?",
+      "range": {
+        "startLine": 81,
+        "startChar": 9,
+        "endLine": 82,
+        "endChar": 57
+      },
+      "revId": "dd33cabfb8f154102b56acf467dd0d66eb5d8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eadd6df7_3fea4022",
+        "filename": "tools/chrome_proxy/webdriver/video.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-31T20:11:53Z",
+      "side": 1,
+      "message": "same comment as above.",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 29
+      },
+      "revId": "dd33cabfb8f154102b56acf467dd0d66eb5d8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
