@@ -38,8 +38,6 @@ class TestingURLBlacklistManager : public URLBlacklistManager {
  public:
   explicit TestingURLBlacklistManager(PrefService* pref_service)
       : URLBlacklistManager(pref_service,
-                            base::ThreadTaskRunnerHandle::Get(),
-                            base::ThreadTaskRunnerHandle::Get(),
                             base::Bind(OverrideBlacklistForURL)),
         update_called_(0),
         set_blacklist_called_(false) {}
@@ -48,14 +46,6 @@ class TestingURLBlacklistManager : public URLBlacklistManager {
 
   // Make this method public for testing.
   using URLBlacklistManager::ScheduleUpdate;
-
-  // Makes a direct call to UpdateOnIO during tests.
-  void UpdateOnIOForTesting() {
-    std::unique_ptr<base::ListValue> block(new base::ListValue);
-    block->AppendString("example.com");
-    std::unique_ptr<base::ListValue> allow(new base::ListValue);
-    URLBlacklistManager::UpdateOnIO(std::move(block), std::move(allow));
-  }
 
   // URLBlacklistManager overrides:
   void SetBlacklist(std::unique_ptr<URLBlacklist> blacklist) override {
@@ -91,10 +81,7 @@ class URLBlacklistManagerTest : public testing::Test {
 
   void TearDown() override {
     if (blacklist_manager_.get())
-      blacklist_manager_->ShutdownOnUIThread();
     base::RunLoop().RunUntilIdle();
-    // Delete |blacklist_manager_| while |io_thread_| is mapping IO to
-    // |loop_|.
     blacklist_manager_.reset();
   }
 
@@ -227,9 +214,7 @@ TEST_F(URLBlacklistManagerTest, LoadBlacklistOnCreate) {
   list->AppendString("example.com");
   pref_service_.SetManagedPref(policy_prefs::kUrlBlacklist, std::move(list));
   auto manager = base::MakeUnique<URLBlacklistManager>(
-      &pref_service_, base::ThreadTaskRunnerHandle::Get(),
-      base::ThreadTaskRunnerHandle::Get(),
-      URLBlacklistManager::OverrideBlacklistCallback());
+      &pref_service_, URLBlacklistManager::OverrideBlacklistCallback());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(URLBlacklist::URL_IN_BLACKLIST,
             manager->GetURLBlacklistState(GURL("http://example.com")));
@@ -240,9 +225,7 @@ TEST_F(URLBlacklistManagerTest, LoadWhitelistOnCreate) {
   list->AppendString("example.com");
   pref_service_.SetManagedPref(policy_prefs::kUrlWhitelist, std::move(list));
   auto manager = base::MakeUnique<URLBlacklistManager>(
-      &pref_service_, base::ThreadTaskRunnerHandle::Get(),
-      base::ThreadTaskRunnerHandle::Get(),
-      URLBlacklistManager::OverrideBlacklistCallback());
+      &pref_service_, URLBlacklistManager::OverrideBlacklistCallback());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(URLBlacklist::URL_IN_WHITELIST,
             manager->GetURLBlacklistState(GURL("http://example.com")));
@@ -260,40 +243,6 @@ TEST_F(URLBlacklistManagerTest, SingleUpdateForTwoPrefChanges) {
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(1, blacklist_manager_->update_called());
-}
-
-TEST_F(URLBlacklistManagerTest, ShutdownWithPendingTask0) {
-  // Post an update task to the UI thread.
-  blacklist_manager_->ScheduleUpdate();
-  // Shutdown comes before the task is executed.
-  blacklist_manager_->ShutdownOnUIThread();
-  blacklist_manager_.reset();
-  // Run the task after shutdown and deletion.
-  base::RunLoop().RunUntilIdle();
-}
-
-TEST_F(URLBlacklistManagerTest, ShutdownWithPendingTask1) {
-  // Post an update task.
-  blacklist_manager_->ScheduleUpdate();
-  // Shutdown comes before the task is executed.
-  blacklist_manager_->ShutdownOnUIThread();
-  // Run the task after shutdown, but before deletion.
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_EQ(0, blacklist_manager_->update_called());
-  blacklist_manager_.reset();
-  base::RunLoop().RunUntilIdle();
-}
-
-TEST_F(URLBlacklistManagerTest, ShutdownWithPendingTask2) {
-  // This posts a task to the FILE thread.
-  blacklist_manager_->UpdateOnIOForTesting();
-  // But shutdown happens before it is done.
-  blacklist_manager_->ShutdownOnUIThread();
-
-  EXPECT_FALSE(blacklist_manager_->set_blacklist_called());
-  blacklist_manager_.reset();
-  base::RunLoop().RunUntilIdle();
 }
 
 INSTANTIATE_TEST_CASE_P(
