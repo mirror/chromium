@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1765bffe_3d3254c7",
+        "filename": "ios/chrome/browser/ui/webui/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-31T22:37:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d81348f_1655b7c6",
+      "range": {
+        "startLine": 34,
+        "startChar": 18,
+        "endLine": 34,
+        "endChar": 47
+      },
+      "revId": "1e0a9d29012e8e949729abe6f36049360a1bfd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee8d1951_cd39d3e9",
         "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b989bd80_1b17947a",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-31T22:37:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee8d1951_cd39d3e9",
+      "range": {
+        "startLine": 28,
+        "startChar": 48,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "1e0a9d29012e8e949729abe6f36049360a1bfd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ed498a8_e704f4a6",
         "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-30T21:24:47Z",
       "side": 1,
       "message": "Why interstitials can not be shown if the web_state has only loaded chrome:// pages? Is it a bug? If so, can we fix that bug?",
+      "range": {
+        "startLine": 59,
+        "startChar": 27,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "1e0a9d29012e8e949729abe6f36049360a1bfd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8591e28_9d96960e",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-31T22:37:32Z",
+      "side": 1,
+      "message": "It\u0027s not a bug, it\u0027s a DCHECK that ensures there was a real pageload in the navigation stack. I briefly looked at disabling the DCHECK, but it didn\u0027t seem easily possible.",
+      "parentUuid": "5ed498a8_e704f4a6",
       "range": {
         "startLine": 59,
         "startChar": 27,
