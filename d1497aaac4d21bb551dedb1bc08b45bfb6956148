@@ -22,6 +22,30 @@
       "revId": "d1497aaac4d21bb551dedb1bc08b45bfb6956148",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dcefb6c_dec213d3",
+        "filename": "android_webview/browser/scoped_app_gl_state_restore.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T13:41:32Z",
+      "side": 1,
+      "message": "\u003e What do you think about naming this {Save|Restore}HWUIContextState? it seems like what saved/restored here is specifically linked to what HWUI required, and while we don\u0027t need to save anything extra now, that could conceivably change in the future.\n\nDone",
+      "parentUuid": "93975ec2_ddadf6c5",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 23
+      },
+      "revId": "d1497aaac4d21bb551dedb1bc08b45bfb6956148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
