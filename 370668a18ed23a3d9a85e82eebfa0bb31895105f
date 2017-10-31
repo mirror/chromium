@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "54c95d77_f5d3f1e1",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T16:29:55Z",
+      "side": 1,
+      "message": "maybe just a std::multimap\u003cNode*, Edge*\u003e ?",
+      "range": {
+        "startLine": 106,
+        "startChar": 18,
+        "endLine": 106,
+        "endChar": 27
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07ac1722_e4a8b848",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 1
@@ -59,6 +82,30 @@
       "writtenOn": "2017-10-31T15:46:30Z",
       "side": 1,
       "message": "I might remember wrong but I think that we never have \u003e1 owner of the global dump, so I\u0027d expect this loop to always find one entry.\nI think the real problem is if some other node in the process graph owns the shared memory node.\n\nIn other words, I think that this does NOT happen:\nshared_memory/foo    -\u003e   global/foo\nsomethingelse/foo    /\n\ninstead I think that this can happen:\n  \nsomethingelse/foo -\u003e shared_memory/foo -\u003e global/foo",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 62
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8403c86a_aa63692a",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T16:29:55Z",
+      "side": 1,
+      "message": "discussed this offline, I was reading this off by one. This makes sense.\nMaybe let\u0027s do this,\n1) rename |global_node| above to |global_root| or |global_nodes_root|.\n2) rename |child| below to |global_node|, cause this is what it really is.\nthis is waht caused my off by one :)\n\nAlso add a comment saying:\n// This is something like \"global/dabadaba\"",
+      "parentUuid": "07ac1722_e4a8b848",
       "range": {
         "startLine": 107,
         "startChar": 2,
@@ -179,6 +226,52 @@
         "startChar": 4,
         "endLine": 140,
         "endChar": 11
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6d2663_b83a6d32",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T16:29:55Z",
+      "side": 1,
+      "message": "add also some coverage that mimic the existing weak shared memory links?",
+      "range": {
+        "startLine": 116,
+        "startChar": 27,
+        "endLine": 116,
+        "endChar": 76
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf69ea19_abd42d52",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T16:29:55Z",
+      "side": 1,
+      "message": "out of curiosity why splitting this in 3? now looks like we do 3x lookups?",
+      "range": {
+        "startLine": 188,
+        "startChar": 1,
+        "endLine": 191,
+        "endChar": 65
       },
       "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
