@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05b9fd54_a40622ca",
+        "filename": "base/files/file_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-31T20:47:52Z",
+      "side": 1,
+      "message": "set... to what? This could probably be more clear.",
+      "range": {
+        "startLine": 113,
+        "startChar": 39,
+        "endLine": 113,
+        "endChar": 42
+      },
+      "revId": "4f559e189aed9158143e8081c0a80f14e32f0ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85782d8d_c2e99b08",
+        "filename": "base/files/file_util_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-31T20:47:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be |final_path| if |to_path| were a recursive symlink?",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 17
+      },
+      "revId": "4f559e189aed9158143e8081c0a80f14e32f0ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff90a15c_72d0526e",
+        "filename": "base/files/file_util_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-31T20:47:52Z",
+      "side": 1,
+      "message": "When would this fail but copyfile (or the previous lstat) succeed?",
+      "revId": "4f559e189aed9158143e8081c0a80f14e32f0ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfacfda1_95c9efc1",
+        "filename": "base/files/file_util_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-31T20:47:52Z",
+      "side": 1,
+      "message": "Same question: shouldn\u0027t this be on |final_path|?",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 17
+      },
+      "revId": "4f559e189aed9158143e8081c0a80f14e32f0ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
