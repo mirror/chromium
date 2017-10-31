@@ -46,6 +46,30 @@
       "revId": "b5461e71a4fb5fb8275adfdf2ca2df0600fc61a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5bb647d_6a0013a9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-31T18:22:51Z",
+      "side": 1,
+      "message": "Hmm...I don\u0027t think we have a great option at the moment.\n\nFirst off, I wish there was a way for a Window (or even Activity) to monitor outbound requests to InputMethodManager to handle this without being poked by this class.\n\nI do think we could add the concept of showSoftKeyboard/hideSoftKeyboard to WindowAndroid and force all callers to delegate into that instead of calling directly here.  That would allow the initial constructor of the WindowAndroid to manipulate this behavior.  I think we\u0027d want to then force all callers in Chrome to use this API to keep the manipulation consistent.\n\nThat being said, we could also add additional methods to the ImeEventObserver to allow embedders to control this without delegating through the window.  This logic might end up moving to Tab.  I don\u0027t know if we need to worry about multiple ImeAdapters being alive at the same time and could have bad interactions of\n\nImeAdapter#1 :: showSoftKeyboard\n  - Switch to white background\n  - Cache original background\nImeAdpater#2 :: showSoftKeyboard\n  - Switch to white background\n  - Cache white background from ImeAdapter#1 as original (bad)\nImeAdapter#1 :: hideSoftKeyboard\n  - Switch back to original background\nImeAdapter#2 :: hideSoftKeyboard\n  - Switch back to white background (sadness).\n\nGranted, I don\u0027t know if that is ever possible.  If that could, then we do really want something outside the lifetime of a single webcontents/tab to control this.  We could introduce a new class that tracks the visible tab and registers a ImeEventObserver for it and then can ensure the proper ordering of signals to keep the background sane.  This could just as easily be done in WindowAndroid since that is shared across all tabs and could handle this.\n\nAdding changwan@ as he\u0027ll have better knowledge of keyboard interactions and he\u0027ll likely have guidance for whether this behavior should exist in WebView at all (in which case being here is certainly wrong and we\u0027d actually want to add any changes in chrome/ specifically).",
+      "parentUuid": "d19406bb_f0d2208a",
+      "range": {
+        "startLine": 422,
+        "startChar": 37,
+        "endLine": 422,
+        "endChar": 60
+      },
+      "revId": "b5461e71a4fb5fb8275adfdf2ca2df0600fc61a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
