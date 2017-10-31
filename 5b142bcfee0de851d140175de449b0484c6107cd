@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7efd9f2b_b968ec30",
+        "filename": "components/language/ios/browser/ios_language_detection_notifier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-10-31T01:44:41Z",
+      "side": 1,
+      "message": "maybe move this to private and friend the test?",
+      "revId": "5b142bcfee0de851d140175de449b0484c6107cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04975276_36689819",
+        "filename": "components/language/ios/browser/ios_language_detection_notifier.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-10-31T01:44:41Z",
+      "side": 1,
+      "message": "I wonder what does this do? are you just want to check whether web_state can be casted?",
+      "revId": "5b142bcfee0de851d140175de449b0484c6107cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
