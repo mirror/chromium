@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae796cf8_df41f543",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-31T19:14:04Z",
+      "side": 1,
+      "message": "Finding the process name in this way is slow because it involves an IPC. For the one usage, I think it\u0027s fine, but I would put this right in PureJavaExceptionReporter.java to avoid anyone else adding a use of it.\n\nWould also be good to call it \"detectProcessName()\", as \"get\" implies that it does not have any performance implications.",
+      "revId": "0198cb77c39fb6747a19332b529d963f2a5fac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c831833_3066086f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-31T19:14:04Z",
+      "side": 1,
+      "message": "What happens if we call PureJavaExceptionHandler.installHandler(); in an isolated process? Unless it crashes things, it might be better to do that so that we don\u0027t need the isIsolatedProcess() call.",
+      "revId": "0198cb77c39fb6747a19332b529d963f2a5fac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82c96b9_e442d711",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-31T19:14:04Z",
+      "side": 1,
+      "message": "This is the correct value for the browser process, but should this also have cases for gpu / util processes? What are the tags for them? And can you add a comment that renderers can\u0027t use this, so don\u0027t need a value.",
+      "range": {
+        "startLine": 111,
+        "startChar": 12,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "0198cb77c39fb6747a19332b529d963f2a5fac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
