@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d496fb3_5c1b4db4",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7288,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-31T18:17:12Z",
+      "side": 1,
+      "message": "Is the negation correct?  RasterSource::PlaybackToCanvas does:\n  raster_canvas-\u003etranslate(raster_transform.translation().x(),\n                           raster_transform.translation().y());\n\nand RasterizeSourceOOP passes transform.translation().x() as post_translate_x (and s/x/y/), so I think we shouldn\u0027t negate?",
+      "revId": "085333f7e68d8615691cd351f5f4612703a394e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
