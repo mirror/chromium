@@ -22,6 +22,52 @@
       "revId": "dc9a7ebe162876ab46749ebc3d3b5b7438903b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9258b792_e1742b19",
+        "filename": "media/blink/video_decode_stats_reporter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T16:49:13Z",
+      "side": 1,
+      "message": "Can you change the expectation to provide some non-zero count of power_efficient frames as we MakeAdvancingDecodeStats. And then verify that value here. Gives us better coverage of some of the offset math without needing huge updates to this file.",
+      "range": {
+        "startLine": 297,
+        "startChar": 29,
+        "endLine": 297,
+        "endChar": 65
+      },
+      "revId": "dc9a7ebe162876ab46749ebc3d3b5b7438903b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05996602_0f3832c5",
+        "filename": "media/mojo/services/video_decode_stats.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T16:49:13Z",
+      "side": 1,
+      "message": "Can you add default to 0? This value wasn\u0027t in the original DB so it may not be present for anyone thats been testing MediaCap. I think the syntax is [default \u003d 0] just before the semi colon.",
+      "range": {
+        "startLine": 20,
+        "startChar": 18,
+        "endLine": 20,
+        "endChar": 48
+      },
+      "revId": "dc9a7ebe162876ab46749ebc3d3b5b7438903b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
