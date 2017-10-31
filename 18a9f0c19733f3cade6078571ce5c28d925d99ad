@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b497269_9a4ef9c3",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-31T20:19:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adfb8da0_f10ed8d9",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "18a9f0c19733f3cade6078571ce5c28d925d99ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4f96772_3ea8548e",
         "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-31T19:30:33Z",
       "side": 1,
       "message": "Do you really need the virtual here?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "18a9f0c19733f3cade6078571ce5c28d925d99ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807098b8_3cde0015",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-31T20:19:04Z",
+      "side": 1,
+      "message": "No, I updated the otehr copy as well in the _impl file.",
+      "parentUuid": "d4f96772_3ea8548e",
       "range": {
         "startLine": 30,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bc58c7d4_3f276f9a",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-31T20:19:04Z",
+      "side": 1,
+      "message": "Don\u0027t look at me, I just copied this!\n\nI updated both. This caused me to replace the simple std::find with a loop. I didn\u0027t do find for that because it looks like:\n  auto found \u003d std::find_if(observers_.begin(), observers_.end(),\n                            [observer](std::unique_ptr\u003cDeletionObserver\u003e\u0026 a) {\n                              return a.get() \u003d\u003d observer;\n                            });\n  if (found !\u003d observers_.end()) {\n    observers_.erase(found);\n    return;\n  }",
+      "parentUuid": "3a11280f_bce00424",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 9
+      },
+      "revId": "18a9f0c19733f3cade6078571ce5c28d925d99ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a64a8ae_d8d69589",
         "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-31T19:30:33Z",
       "side": 1,
       "message": "std::find?",
+      "range": {
+        "startLine": 227,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 3
+      },
+      "revId": "18a9f0c19733f3cade6078571ce5c28d925d99ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b70c23d_681650b0",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-31T20:19:04Z",
+      "side": 1,
+      "message": "I just copied this from the old one. The next step will be to ad a struct like the old one. To replace the old one with std::find means this:\n  auto found \u003d\n      std::find_if(contents_data_.begin(), contents_data_.end(),\n                   [contents](const std::unique_ptr\u003cWebContentsData\u003e\u0026 data) {\n                     return contents \u003d\u003d data-\u003eweb_contents();\n                   });\n  if (found \u003d\u003d contents_data_.end())\n    return kNoTab;\n  return found - contents_data_.begin();\nwhich I think is way worse than the loop here.",
+      "parentUuid": "4a64a8ae_d8d69589",
       "range": {
         "startLine": 227,
         "startChar": 2,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2db5e09c_ffe2df21",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-31T20:19:04Z",
+      "side": 1,
+      "message": "Changed in both implementations.",
+      "parentUuid": "9e33be9d_39aee06f",
+      "range": {
+        "startLine": 419,
+        "startChar": 2,
+        "endLine": 419,
+        "endChar": 37
+      },
+      "revId": "18a9f0c19733f3cade6078571ce5c28d925d99ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e49796a_9c363046",
         "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-10-31T19:30:33Z",
       "side": 1,
       "message": "I\u0027m assuming this is the same as the old.",
+      "range": {
+        "startLine": 445,
+        "startChar": 5,
+        "endLine": 445,
+        "endChar": 50
+      },
+      "revId": "18a9f0c19733f3cade6078571ce5c28d925d99ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8001c7d_60de8f54",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-31T20:19:04Z",
+      "side": 1,
+      "message": "Yes :(",
+      "parentUuid": "2e49796a_9c363046",
       "range": {
         "startLine": 445,
         "startChar": 5,
