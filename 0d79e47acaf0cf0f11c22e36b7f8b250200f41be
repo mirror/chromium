@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "14b4c951_90fe080a",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-31T08:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea1f53ae_aa285d80",
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0358332_bbd2f79a",
         "filename": "base/win/winrt_storage_util.cc",
         "patchSetId": 7
@@ -200,6 +218,30 @@
       "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438d440b_1cc376d2",
+        "filename": "base/win/winrt_storage_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-31T08:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "920d9378_0b175d8b",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 44
+      },
+      "revId": "0d79e47acaf0cf0f11c22e36b7f8b250200f41be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
