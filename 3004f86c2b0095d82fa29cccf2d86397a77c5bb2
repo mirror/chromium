@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a11cbd3_cf0c213f",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-31T18:56:05Z",
+      "side": 1,
+      "message": "I think !strcmp() blabla is preferred in chrome.\nAlso, does it make sense to move \"IN_FORMAT\" to a constant?",
+      "revId": "3004f86c2b0095d82fa29cccf2d86397a77c5bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d47986_cbc8ad4d",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-31T18:56:05Z",
+      "side": 1,
+      "message": "nit: can this be const char*? Maybe also const uint8_t*?",
+      "revId": "3004f86c2b0095d82fa29cccf2d86397a77c5bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d513d63_3c5c7682",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-31T18:56:05Z",
+      "side": 1,
+      "message": "WE should be able to get rid of all the reintepret casts and use static casts instead.",
+      "revId": "3004f86c2b0095d82fa29cccf2d86397a77c5bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63844243_adc371e0",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-31T18:56:05Z",
+      "side": 1,
+      "message": "Why CHECK and not DCHECK?\nAlso, CHECK_EQ(0, bla.offset) or CHECK(!offset) is preferred.",
+      "revId": "3004f86c2b0095d82fa29cccf2d86397a77c5bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
