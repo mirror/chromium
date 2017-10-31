@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "4c08366d_2e5877c3",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-31T20:24:24Z",
+      "side": 1,
+      "message": "base::Unretained makes me nervous, though it\u0027s safe if ~VFC has to run on |task_runner_|.  There\u0027s no way that one could post ~VFC before VFC completes.  still, fewer base::Unretaineds are better usually.\n\nare there any other calls besides VFC::VFC that happen on non-media threads?\n\nif not, then just have a function VFC::InitializeSubmitter, bind the weak ptr as |this| for the callback, and have it just call WVFS::Initialize(this).  then you don\u0027t need to expose the weak ptr outside of this class.",
+      "revId": "cf3f3ac1a260051bff5511b4e7fabaaba9e8d6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a8dff0_a62f5155",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-31T20:24:24Z",
+      "side": 1,
+      "message": "not sure if this should be an if() or a dcheck the more that i look at it.\n\nis there a path that calls StopRendering with |!provider_|?\n\nsame question for other places except StopUsingProvider(), which could be called with |!provider_|.",
+      "revId": "cf3f3ac1a260051bff5511b4e7fabaaba9e8d6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "529c72b0_1e02a7bf",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 21
@@ -13,6 +47,40 @@
       "writtenOn": "2017-10-30T17:28:49Z",
       "side": 1,
       "message": "Does StartRendering and StartSubmitting (and others) also need a thread check?\n\nIt\u0027s still hard to follow what\u0027s being called on what thread here.  Can every function get a DCHECK? (Or do we need two thread checkers?)  Or more comments?",
+      "revId": "cf3f3ac1a260051bff5511b4e7fabaaba9e8d6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2efe1cc2_eabfa5b2",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-31T20:24:24Z",
+      "side": 1,
+      "message": "a problem with this approach is that it assumes that we must be run on the same thread as |provider|, else the weak deref isn\u0027t allowed.\n\nnothing else assumes that, i think.  it\u0027s assumed elsewhere that we run \"on the right thread\" to call Get/PutCurrentFrame, etc.  @82 assumes that we run \"on the same thread as ~VFC\", which doesn\u0027t necessarily have to be the same thing.\n\ni mention this because we have that open issue about whether the submitter can be on the media thread or not.  un-tangling the threading later might be much harder than keeping it untangled now.\n\nthe original init case for VideoFrameProviderClientImpl had the note \"this only happens on the compositor thread while the main thread is blocked\" as a description of why calling into VFC was safe.  we don\u0027t have that guarantee here, which is i think why this is harder than it was.",
+      "revId": "cf3f3ac1a260051bff5511b4e7fabaaba9e8d6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f953ad2c_4909a699",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-31T20:24:24Z",
+      "side": 1,
+      "message": "it\u0027s generally not a good idea to vend weak ptrs to other classes.\n\ni\u0027m not sure that this one needed to change, anyway.  StopUsingProvider() is supposed to handle this case.  it\u0027s just that i don\u0027t see how this works if the provider is destroyed before Initialize runs.",
       "revId": "cf3f3ac1a260051bff5511b4e7fabaaba9e8d6ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
