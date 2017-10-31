@@ -95,7 +95,7 @@ void WorkerInterfaceBinders::InitializeParameterizedBinderRegistry() {
                     RenderProcessHost* host, const url::Origin& origin) {
         static_cast<RenderProcessHostImpl*>(host)
             ->permission_service_context()
-            .CreateService(std::move(request));
+            .CreateServiceForWorker(std::move(request), origin);
       }));
 }
 
