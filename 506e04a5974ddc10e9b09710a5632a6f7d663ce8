@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7b36d834_bf5ef84f",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 3056,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-31T05:10:25Z",
+      "side": 1,
+      "message": "\u003e I think it\u0027s better than \"tab switch\". \"tab switch suggestions\" ?\n\nSure.  Just don\u0027t call it \"search\" because that\u0027s misleading (and I can easily imagine adding a \"tab search\" provider at some point).",
+      "parentUuid": "521c438a_8c710767",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db063619_9a3c9864",
         "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
         "patchSetId": 23
@@ -107,6 +125,30 @@
       "side": 1,
       "message": "Perhaps you\u0027re thinking of the other direction? There\u0027s Profile::FromBrowserContext() for downcasting, but Profile is-a content::BrowserContext.\n\nNote permission_decision_auto_blocker.cc#174. eek",
       "parentUuid": "ae7838ca_e657dc45",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 65
+      },
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9001a428_f634ebda",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-31T05:10:25Z",
+      "side": 1,
+      "message": "\u003e Perhaps you\u0027re thinking of the other direction? There\u0027s Profile::FromBrowserContext() for downcasting, but Profile is-a content::BrowserContext.\n\nAh, I was thinking other direction.\n\nInstead of casting to use equality, can you simply do\nuse IsSameProfile()\nand\nthe GetProfileType()s are equal.\n?\n\nThat seems somehow cleaner to me.\n\n\u003e Note permission_decision_auto_blocker.cc#174. eek",
+      "parentUuid": "bad2f683_ed3d43d8",
       "range": {
         "startLine": 45,
         "startChar": 8,
