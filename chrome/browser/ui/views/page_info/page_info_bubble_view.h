@@ -100,6 +100,7 @@ class PageInfoBubbleView : public content::WebContentsObserver,
   static views::BubbleDialogDelegateView* GetPageInfoBubble();
 
  private:
+  friend class PageInfoBubbleViewBrowserTest;
   friend class test::PageInfoBubbleViewTestApi;
 
   PageInfoBubbleView(views::View* anchor_view,
@@ -158,6 +159,9 @@ class PageInfoBubbleView : public content::WebContentsObserver,
   // destruction of the settings view and the base class window still needs to
   // be alive to finish handling the mouse or keyboard click.
   void HandleLinkClickedAsync(views::Link* source);
+
+  // Returns a pointer to this instance for testing.
+  static PageInfoBubbleView* GetPageInfoBubbleViewForTesting();
 
   // The presenter that controls the Page Info UI.
   std::unique_ptr<PageInfo> presenter_;
