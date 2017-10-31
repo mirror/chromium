@@ -22,6 +22,30 @@
       "revId": "80c50c4bdb3b38bac6286ad1d26322d8c305380a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bea1bac_06de2f7c",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-31T05:31:12Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "53875b7c_06830fb9",
+      "range": {
+        "startLine": 90,
+        "startChar": 32,
+        "endLine": 90,
+        "endChar": 70
+      },
+      "revId": "80c50c4bdb3b38bac6286ad1d26322d8c305380a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
