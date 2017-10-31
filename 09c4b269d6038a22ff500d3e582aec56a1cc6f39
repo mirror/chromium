@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "341bda87_1202af42",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-31T17:06:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51693004_1d058639",
+      "revId": "09c4b269d6038a22ff500d3e582aec56a1cc6f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d81769ae_5e80502f",
         "filename": "services/data_decoder/public/cpp/safe_json_parser_impl.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-31T15:57:12Z",
       "side": 1,
       "message": "nit: maybe use base::GenerateGUID() instead? then no need for a new dependency on //crypto and bonus: it\u0027s more in line with the future i\u0027d like to see where instance ID \u003d\u003d guid",
+      "revId": "09c4b269d6038a22ff500d3e582aec56a1cc6f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a5f468_a9650607",
+        "filename": "services/data_decoder/public/cpp/safe_json_parser_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-31T17:06:37Z",
+      "side": 1,
+      "message": "Ah! Much better, thanks.",
+      "parentUuid": "d81769ae_5e80502f",
       "revId": "09c4b269d6038a22ff500d3e582aec56a1cc6f39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
