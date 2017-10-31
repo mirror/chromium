@@ -143,10 +143,12 @@
 #include "chromeos/system/devicemode.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
+#include "components/viz/host/host_frame_sink_manager.h"
 #include "services/preferences/public/cpp/pref_service_factory.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
+#include "services/viz/public/interfaces/compositing/video_detector.mojom.h"
 #include "ui/app_list/presenter/app_list.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/env.h"
@@ -1075,7 +1077,15 @@ void Shell::Init(const ShellInitParams& init_params) {
   autoclick_controller_.reset(AutoclickController::CreateInstance());
 
   high_contrast_controller_.reset(new HighContrastController);
-  video_detector_.reset(new VideoDetector);
+
+  viz::HostFrameSinkManager* host_frame_sink_manager = nullptr;
+  if (init_params.context_factory_private)
+    host_frame_sink_manager =
+        init_params.context_factory_private->GetHostFrameSinkManager();
+  viz::mojom::VideoDetectorObserverPtr observer;
+  video_detector_.reset(new VideoDetector(mojo::MakeRequest(&observer)));
+  shell_port_->AddVideoDetectorObserver(std::move(observer),
+                                        host_frame_sink_manager);
 
   tooltip_controller_.reset(new views::corewm::TooltipController(
       std::unique_ptr<views::corewm::Tooltip>(new views::corewm::TooltipAura)));
