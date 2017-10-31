@@ -16,6 +16,24 @@
       "revId": "a93ad7967a9b0233e6e86ea0a96f0b384dffc5a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9978fa27_8236fbe8",
+        "filename": "device/gamepad/gamepad_data_fetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-31T22:00:04Z",
+      "side": 1,
+      "message": "Good point. Rather than not-supported, I think this should be an error (meaning the promise should reject) since it shouldn\u0027t be possible to get here if haptics aren\u0027t supported (vibrationActuator should be null).",
+      "parentUuid": "46b44c6a_30e4cbfa",
+      "revId": "a93ad7967a9b0233e6e86ea0a96f0b384dffc5a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
