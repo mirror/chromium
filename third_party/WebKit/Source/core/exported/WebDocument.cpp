@@ -78,7 +78,7 @@ WebSecurityOrigin WebDocument::GetSecurityOrigin() const {
 
 void WebDocument::GrantLoadLocalResources() {
   if (Document* document = Unwrap<Document>())
-    document->GetSecurityOrigin()->GrantLoadLocalResources();
+    document->GrantLoadLocalResources();
 }
 
 bool WebDocument::IsSecureContext() const {
