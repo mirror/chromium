@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "563a391b_410b32c8",
+        "filename": "ui/gl/gl_context_glx_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-31T20:54:06Z",
+      "side": 1,
+      "message": "Could you fix the typo? Should be Destroy.",
+      "range": {
+        "startLine": 19,
+        "startChar": 23,
+        "endLine": 19,
+        "endChar": 55
+      },
+      "revId": "1c7827c9f2b39245d4f3204db9818184a4824ba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
