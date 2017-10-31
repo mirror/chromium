@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3ad8426_a815a999",
+        "filename": "chrome/browser/resources/print_preview/search/destination_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-31T01:17:41Z",
+      "side": 1,
+      "message": "s/let/const since this is never re-assigned.",
+      "range": {
+        "startLine": 175,
+        "startChar": 6,
+        "endLine": 175,
+        "endChar": 9
+      },
+      "revId": "7a28d9a44186180935c17f4b2e008baa5db5eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
