@@ -35,7 +35,7 @@ if use_head_revision:
   CLANG_REVISION = 'HEAD'
 
 # This is incremented when pushing a new build of Clang at the same revision.
-CLANG_SUB_REVISION=1
+CLANG_SUB_REVISION=3
 
 PACKAGE_VERSION = "%s-%s" % (CLANG_REVISION, CLANG_SUB_REVISION)
 
@@ -47,7 +47,7 @@ LLVM_DIR = os.path.join(THIRD_PARTY_DIR, 'llvm')
 LLVM_BOOTSTRAP_DIR = os.path.join(THIRD_PARTY_DIR, 'llvm-bootstrap')
 LLVM_BOOTSTRAP_INSTALL_DIR = os.path.join(THIRD_PARTY_DIR,
                                           'llvm-bootstrap-install')
-LLVM_LTO_LLD_DIR = os.path.join(THIRD_PARTY_DIR, 'llvm-lto-lld')
+LLVM_LLD_DIR = os.path.join(THIRD_PARTY_DIR, 'llvm-lld-build')
 CHROME_TOOLS_SHIM_DIR = os.path.join(LLVM_DIR, 'tools', 'chrometools')
 LLVM_BUILD_DIR = os.path.join(CHROMIUM_DIR, 'third_party', 'llvm-build',
                               'Release+Asserts')
@@ -538,36 +538,39 @@ def UpdateClang(args):
       cxxflags = ['--gcc-toolchain=' + args.gcc_toolchain]
     print 'Building final compiler'
 
-  # Build lld with LTO. That speeds up the linker by ~10%.
-  # We only use LTO for Linux now.
-  if args.bootstrap and args.lto_lld:
-    print 'Building LTO lld'
-    if os.path.exists(LLVM_LTO_LLD_DIR):
-      RmTree(LLVM_LTO_LLD_DIR)
-    EnsureDirExists(LLVM_LTO_LLD_DIR)
-    os.chdir(LLVM_LTO_LLD_DIR)
+  print 'Building lld'
+  if os.path.exists(LLVM_LLD_DIR):
+    RmTree(LLVM_LLD_DIR)
+  EnsureDirExists(LLVM_LLD_DIR)
+  os.chdir(LLVM_LLD_DIR)
 
+  # Build lld. This is done separately from the rest of the build because lld
+  # requires threading support.
+  lld_cmake_args = base_cmake_args + [
+      '-DCMAKE_C_COMPILER=' + cc,
+      '-DCMAKE_CXX_COMPILER=' + cxx,
+      '-DCMAKE_C_FLAGS=' + ' '.join(cflags),
+      '-DCMAKE_CXX_FLAGS=' + ' '.join(cxxflags)]
+
+  if args.lto_lld:
+    # Build lld with LTO. That speeds up the linker by ~10%.
+    # We only use LTO for Linux now.
+    #
     # The linker expects all archive members to have symbol tables, so the
     # archiver needs to be able to create symbol tables for bitcode files.
     # GNU ar and ranlib don't understand bitcode files, but llvm-ar and
     # llvm-ranlib do, so use them.
     ar = os.path.join(LLVM_BOOTSTRAP_INSTALL_DIR, 'bin', 'llvm-ar')
     ranlib = os.path.join(LLVM_BOOTSTRAP_INSTALL_DIR, 'bin', 'llvm-ranlib')
-
-    lto_cmake_args = base_cmake_args + [
-        '-DCMAKE_C_COMPILER=' + cc,
-        '-DCMAKE_CXX_COMPILER=' + cxx,
+    lld_cmake_args += [
         '-DCMAKE_AR=' + ar,
         '-DCMAKE_RANLIB=' + ranlib,
         '-DLLVM_ENABLE_LTO=thin',
-        '-DLLVM_USE_LINKER=lld',
-        '-DCMAKE_C_FLAGS=' + ' '.join(cflags),
-        '-DCMAKE_CXX_FLAGS=' + ' '.join(cxxflags)]
+        '-DLLVM_USE_LINKER=lld']
 
-    RmCmakeCache('.')
-    RunCommand(['cmake'] + lto_cmake_args + [LLVM_DIR])
-    RunCommand(['ninja', 'lld'])
-
+  RmCmakeCache('.')
+  RunCommand(['cmake'] + lld_cmake_args + [LLVM_DIR])
+  RunCommand(['ninja', 'lld'])
 
   # LLVM uses C++11 starting in llvm 3.5. On Linux, this means libstdc++4.7+ is
   # needed, on OS X it requires libc++. clang only automatically links to libc++
@@ -637,9 +640,12 @@ def UpdateClang(args):
              msvc_arch='x64', env=deployment_env)
   RunCommand(['ninja'], msvc_arch='x64')
 
-  # Copy LTO-optimized lld, if any.
-  if args.bootstrap and args.lto_lld:
-    CopyFile(os.path.join(LLVM_LTO_LLD_DIR, 'bin', 'lld'),
+  # Copy in the threaded version of lld.
+  if sys.platform == 'win32':
+    CopyFile(os.path.join(LLVM_LLD_DIR, 'bin', 'lld-link.exe'),
+             os.path.join(LLVM_BUILD_DIR, 'bin'))
+  else:
+    CopyFile(os.path.join(LLVM_LLD_DIR, 'bin', 'lld'),
              os.path.join(LLVM_BUILD_DIR, 'bin'))
 
   if chrome_tools:
