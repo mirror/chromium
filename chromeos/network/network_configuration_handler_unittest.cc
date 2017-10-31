@@ -18,6 +18,7 @@
 #include "base/strings/string_piece.h"
 #include "base/values.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/fake_shill_service_client.h"
 #include "chromeos/dbus/mock_shill_manager_client.h"
 #include "chromeos/dbus/mock_shill_profile_client.h"
 #include "chromeos/dbus/mock_shill_service_client.h"
@@ -28,6 +29,7 @@
 #include "chromeos/network/network_state_handler.h"
 #include "chromeos/network/network_state_handler_observer.h"
 #include "chromeos/network/shill_property_util.h"
+#include "chromeos/network/tether_constants.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
@@ -49,20 +51,22 @@ namespace chromeos {
 
 namespace {
 
-static std::string PrettyJson(const base::DictionaryValue& value) {
+// Copies the result of GetProperties().
+void CopyProperties(bool* called,
+                    std::string* out_service_path,
+                    base::Value* out_result,
+                    const std::string& service_path,
+                    const base::DictionaryValue& result) {
+  *called = true;
+  *out_service_path = service_path;
+  *out_result = result.Clone();
+}
+
+std::string PrettyJson(const base::DictionaryValue& value) {
   std::string pretty;
   base::JSONWriter::WriteWithOptions(
       value, base::JSONWriter::OPTIONS_PRETTY_PRINT, &pretty);
   return pretty;
-}
-
-void DictionaryValueCallback(const std::string& expected_id,
-                             const std::string& expected_json,
-                             const std::string& service_path,
-                             const base::DictionaryValue& dictionary) {
-  std::string dict_str = PrettyJson(dictionary);
-  EXPECT_EQ(expected_json, dict_str);
-  EXPECT_EQ(expected_id, service_path);
 }
 
 void ErrorCallback(const std::string& error_name,
@@ -82,12 +86,6 @@ void ServiceResultCallback(const std::string& expected_result,
                            const std::string& service_path,
                            const std::string& guid) {
   EXPECT_EQ(expected_result, service_path);
-}
-
-void DBusErrorCallback(const std::string& error_name,
-                       const std::string& error_message) {
-  EXPECT_TRUE(false) << "DBus Error: " << error_name << "(" << error_message
-                     << ")";
 }
 
 class TestCallback {
@@ -332,151 +330,6 @@ class NetworkConfigurationHandlerTest : public testing::Test {
       property_changed_observers_;
 };
 
-TEST_F(NetworkConfigurationHandlerTest, GetProperties) {
-  std::string service_path = "/service/1";
-  std::string expected_json = "{\n   \"SSID\": \"MyNetwork\"\n}\n";
-  std::string networkName = "MyNetwork";
-  std::string key = "SSID";
-  std::unique_ptr<base::Value> networkNameValue(new base::Value(networkName));
-
-  base::DictionaryValue value;
-  value.SetString(key, networkName);
-  dictionary_value_result_ = &value;
-  EXPECT_CALL(*mock_service_client_,
-              SetProperty(dbus::ObjectPath(service_path), key,
-                          IsEqualTo(networkNameValue.get()), _, _)).Times(1);
-  mock_service_client_->SetProperty(
-      dbus::ObjectPath(service_path), key, *networkNameValue,
-      base::Bind(&base::DoNothing), base::Bind(&DBusErrorCallback));
-  base::RunLoop().RunUntilIdle();
-
-  ShillServiceClient::DictionaryValueCallback get_properties_callback;
-  EXPECT_CALL(*mock_service_client_, GetProperties(_, _))
-      .WillOnce(
-          Invoke(this, &NetworkConfigurationHandlerTest::OnGetProperties));
-  network_configuration_handler_->GetShillProperties(
-      service_path,
-      base::Bind(&DictionaryValueCallback, service_path, expected_json),
-      base::Bind(&ErrorCallback));
-  base::RunLoop().RunUntilIdle();
-}
-
-TEST_F(NetworkConfigurationHandlerTest, GetProperties_TetherNetwork) {
-  network_state_handler_->SetTetherTechnologyState(
-      NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED);
-
-  std::string kTetherGuid = "TetherGuid";
-  // TODO(khorimoto): Pass a has_connected_to_host parameter to this function
-  // and verify that it is present in the JSON below. Currently, it is hard-
-  // coded to false.
-  network_state_handler_->AddTetherNetworkState(
-      kTetherGuid, "TetherNetworkName", "TetherNetworkCarrier",
-      100 /* battery_percentage */, 100 /* signal_strength */,
-      true /* has_connected_to_host */);
-
-  std::string expected_json =
-      "{\n   "
-      "\"GUID\": \"TetherGuid\",\n   "
-      "\"Name\": \"TetherNetworkName\",\n   "
-      "\"Priority\": 0,\n   "
-      "\"Profile\": \"\",\n   "
-      "\"SecurityClass\": \"\",\n   "
-      "\"State\": \"\",\n   "
-      "\"Tether.BatteryPercentage\": 100,\n   "
-      "\"Tether.Carrier\": \"TetherNetworkCarrier\",\n   "
-      "\"Tether.HasConnectedToHost\": true,\n   "
-      "\"Tether.SignalStrength\": 100,\n   "
-      "\"Type\": \"wifi-tether\"\n"
-      "}\n";
-
-  // Tether networks use service path and GUID interchangeably.
-  std::string& tether_service_path = kTetherGuid;
-  network_configuration_handler_->GetShillProperties(
-      tether_service_path,
-      base::Bind(&DictionaryValueCallback, tether_service_path, expected_json),
-      base::Bind(&ErrorCallback));
-}
-
-TEST_F(NetworkConfigurationHandlerTest, SetProperties) {
-  std::string service_path = "/service/1";
-  std::string networkName = "MyNetwork";
-  std::string key = "SSID";
-  std::unique_ptr<base::Value> networkNameValue(new base::Value(networkName));
-
-  base::DictionaryValue value;
-  value.SetString(key, networkName);
-  dictionary_value_result_ = &value;
-  EXPECT_CALL(*mock_service_client_, SetProperties(_, _, _, _))
-      .WillOnce(
-          Invoke(this, &NetworkConfigurationHandlerTest::OnSetProperties));
-  network_configuration_handler_->SetShillProperties(
-      service_path, value, NetworkConfigurationObserver::SOURCE_USER_ACTION,
-      base::Bind(&base::DoNothing), base::Bind(&ErrorCallback));
-  base::RunLoop().RunUntilIdle();
-}
-
-TEST_F(NetworkConfigurationHandlerTest, ClearProperties) {
-  std::string service_path = "/service/1";
-  std::string networkName = "MyNetwork";
-  std::string key = "SSID";
-  std::unique_ptr<base::Value> networkNameValue(new base::Value(networkName));
-
-  // First set up a value to clear.
-  base::DictionaryValue value;
-  value.SetString(key, networkName);
-  dictionary_value_result_ = &value;
-  EXPECT_CALL(*mock_service_client_, SetProperties(_, _, _, _))
-      .WillOnce(
-          Invoke(this, &NetworkConfigurationHandlerTest::OnSetProperties));
-  network_configuration_handler_->SetShillProperties(
-      service_path, value, NetworkConfigurationObserver::SOURCE_USER_ACTION,
-      base::Bind(&base::DoNothing), base::Bind(&ErrorCallback));
-  base::RunLoop().RunUntilIdle();
-
-  // Now clear it.
-  std::vector<std::string> values_to_clear;
-  values_to_clear.push_back(key);
-  EXPECT_CALL(*mock_service_client_, ClearProperties(_, _, _, _))
-      .WillOnce(
-          Invoke(this, &NetworkConfigurationHandlerTest::OnClearProperties));
-  network_configuration_handler_->ClearShillProperties(
-      service_path, values_to_clear, base::Bind(&base::DoNothing),
-      base::Bind(&ErrorCallback));
-  base::RunLoop().RunUntilIdle();
-}
-
-TEST_F(NetworkConfigurationHandlerTest, ClearPropertiesError) {
-  std::string service_path = "/service/1";
-  std::string networkName = "MyNetwork";
-  std::string key = "SSID";
-  std::unique_ptr<base::Value> networkNameValue(new base::Value(networkName));
-
-  // First set up a value to clear.
-  base::DictionaryValue value;
-  value.SetString(key, networkName);
-  dictionary_value_result_ = &value;
-  EXPECT_CALL(*mock_service_client_, SetProperties(_, _, _, _))
-      .WillOnce(
-          Invoke(this, &NetworkConfigurationHandlerTest::OnSetProperties));
-  network_configuration_handler_->SetShillProperties(
-      service_path, value, NetworkConfigurationObserver::SOURCE_USER_ACTION,
-      base::Bind(&base::DoNothing), base::Bind(&ErrorCallback));
-  base::RunLoop().RunUntilIdle();
-
-  // Now clear it.
-  std::vector<std::string> values_to_clear;
-  values_to_clear.push_back(key);
-  EXPECT_CALL(*mock_service_client_, ClearProperties(_, _, _, _))
-      .WillOnce(Invoke(
-          this, &NetworkConfigurationHandlerTest::OnClearPropertiesError));
-
-  std::string error;
-  network_configuration_handler_->ClearShillProperties(
-      service_path, values_to_clear, base::Bind(&base::DoNothing),
-      base::Bind(&ErrorCallback));
-  base::RunLoop().RunUntilIdle();
-}
-
 TEST_F(NetworkConfigurationHandlerTest, CreateConfiguration) {
   std::string networkName = "MyNetwork";
   std::string key = "SSID";
@@ -658,6 +511,8 @@ class TestObserver final : public chromeos::NetworkStateHandlerObserver {
 
 }  // namespace
 
+// TODO(hidehiko): Rename to NetworkConfigurationHandlerTest when all TEST_F
+// are migarted into this class to remove gmock.
 class NetworkConfigurationHandlerStubTest : public testing::Test {
  public:
   NetworkConfigurationHandlerStubTest() {}
@@ -723,6 +578,11 @@ class NetworkConfigurationHandlerStubTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
   }
 
+  FakeShillServiceClient* GetShillServiceClient() {
+    return static_cast<FakeShillServiceClient*>(
+        DBusThreadManager::Get()->GetShillServiceClient());
+  }
+
  protected:
   bool GetServiceStringProperty(const std::string& service_path,
                                 const std::string& key,
@@ -756,6 +616,146 @@ class NetworkConfigurationHandlerStubTest : public testing::Test {
   std::unique_ptr<base::DictionaryValue> get_properties_;
   std::string create_service_path_;
 };
+
+TEST_F(NetworkConfigurationHandlerStubTest, GetProperties) {
+  constexpr char kServicePath[] = "/service/1";
+  constexpr char kNetworkName[] = "MyName";
+  GetShillServiceClient()->AddService(
+      kServicePath, std::string() /* guid */, kNetworkName, shill::kTypeWifi,
+      std::string() /* state */, true /* visible */);
+
+  bool success = false;
+  std::string service_path;
+  base::DictionaryValue result;
+  network_configuration_handler_->GetShillProperties(
+      kServicePath,
+      base::Bind(&CopyProperties, &success, &service_path, &result),
+      base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
+
+  ASSERT_TRUE(success);
+  EXPECT_EQ(kServicePath, service_path);
+  const auto* ssid =
+      result.FindKeyOfType(shill::kSSIDProperty, base::Value::Type::STRING);
+  ASSERT_TRUE(ssid);
+  EXPECT_EQ(kNetworkName, ssid->GetString());
+}
+
+TEST_F(NetworkConfigurationHandlerStubTest, GetProperties_TetherNetwork) {
+  constexpr char kTetherGuid[] = "TetherGuid";
+  constexpr char kTetherNetworkName[] = "TetherNetworkName";
+  constexpr char kTetherNetworkCarrier[] = "TetherNetworkCarrier";
+  constexpr int kBatteryPercentage = 100;
+  constexpr int kSignalStrength = 100;
+  constexpr bool kHasConnectedToHost = true;
+
+  network_state_handler_->SetTetherTechnologyState(
+      NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED);
+  network_state_handler_->AddTetherNetworkState(
+      kTetherGuid, kTetherNetworkName, kTetherNetworkCarrier,
+      kBatteryPercentage, kSignalStrength, kHasConnectedToHost);
+
+  bool success = false;
+  std::string service_path;
+  base::DictionaryValue result;
+  network_configuration_handler_->GetShillProperties(
+      // Tether networks use service path and GUID interchangeably.
+      kTetherGuid,
+      base::Bind(&CopyProperties, &success, &service_path, &result),
+      base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
+
+  ASSERT_TRUE(success);
+  const auto* guid =
+      result.FindKeyOfType(shill::kGuidProperty, base::Value::Type::STRING);
+  ASSERT_TRUE(guid);
+  EXPECT_EQ(kTetherGuid, guid->GetString());
+  const auto* name =
+      result.FindKeyOfType(shill::kNameProperty, base::Value::Type::STRING);
+  ASSERT_TRUE(name);
+  EXPECT_EQ(kTetherNetworkName, name->GetString());
+  const auto* battery_percentage = result.FindKeyOfType(
+      kTetherBatteryPercentage, base::Value::Type::INTEGER);
+  ASSERT_TRUE(battery_percentage);
+  EXPECT_EQ(kBatteryPercentage, battery_percentage->GetInt());
+  const auto* carrier =
+      result.FindKeyOfType(kTetherCarrier, base::Value::Type::STRING);
+  ASSERT_TRUE(carrier);
+  EXPECT_EQ(kTetherNetworkCarrier, carrier->GetString());
+  const auto* has_connected_to_host = result.FindKeyOfType(
+      kTetherHasConnectedToHost, base::Value::Type::BOOLEAN);
+  ASSERT_TRUE(has_connected_to_host);
+  EXPECT_TRUE(has_connected_to_host->GetBool());
+  const auto* signal_strength =
+      result.FindKeyOfType(kTetherSignalStrength, base::Value::Type::INTEGER);
+  ASSERT_TRUE(signal_strength);
+  EXPECT_EQ(kSignalStrength, signal_strength->GetInt());
+}
+
+TEST_F(NetworkConfigurationHandlerStubTest, SetProperties) {
+  constexpr char kServicePath[] = "/service/1";
+  constexpr char kNetworkName[] = "MyNetwork";
+
+  GetShillServiceClient()->AddService(
+      kServicePath, std::string() /* guid */, std::string() /* name */,
+      shill::kTypeWifi, std::string() /* state */, true /* visible */);
+
+  base::DictionaryValue value;
+  value.SetString(shill::kSSIDProperty, kNetworkName);
+  network_configuration_handler_->SetShillProperties(
+      kServicePath, value, NetworkConfigurationObserver::SOURCE_USER_ACTION,
+      base::Bind(&base::DoNothing), base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
+
+  const base::DictionaryValue* properties =
+      GetShillServiceClient()->GetServiceProperties(kServicePath);
+  ASSERT_TRUE(properties);
+  const auto* ssid = properties->FindKeyOfType(shill::kSSIDProperty,
+                                               base::Value::Type::STRING);
+  ASSERT_TRUE(ssid);
+  EXPECT_EQ(kNetworkName, ssid->GetString());
+}
+
+TEST_F(NetworkConfigurationHandlerStubTest, ClearProperties) {
+  constexpr char kServicePath[] = "/service/1";
+  constexpr char kNetworkName[] = "MyNetwork";
+
+  // Set up a value to be cleared.
+  GetShillServiceClient()->AddService(
+      kServicePath, std::string() /* guid */, kNetworkName, shill::kTypeWifi,
+      std::string() /* state */, true /* visible */);
+
+  // Now clear it.
+  std::vector<std::string> names = {shill::kSSIDProperty};
+  network_configuration_handler_->ClearShillProperties(
+      kServicePath, names, base::Bind(&base::DoNothing),
+      base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
+
+  const base::DictionaryValue* properties =
+      GetShillServiceClient()->GetServiceProperties(kServicePath);
+  ASSERT_TRUE(properties);
+  const auto* ssid = properties->FindKeyOfType(shill::kSSIDProperty,
+                                               base::Value::Type::STRING);
+  EXPECT_FALSE(ssid);
+}
+
+TEST_F(NetworkConfigurationHandlerStubTest, ClearPropertiesError) {
+  constexpr char kServicePath[] = "/service/1";
+  constexpr char kNetworkName[] = "MyNetwork";
+
+  GetShillServiceClient()->AddService(
+      kServicePath, std::string() /* guid */, kNetworkName, shill::kTypeWifi,
+      std::string() /* state */, true /* visible */);
+
+  // Now clear it. Even for unknown property removal (i.e. fail to clear it),
+  // the whole ClearShillProperties() should success.
+  std::vector<std::string> names = {"Unknown name"};
+  network_configuration_handler_->ClearShillProperties(
+      kServicePath, names, base::Bind(&base::DoNothing),
+      base::Bind(&ErrorCallback));
+  base::RunLoop().RunUntilIdle();
+}
 
 TEST_F(NetworkConfigurationHandlerStubTest, StubSetAndClearProperties) {
   // TODO(stevenjb): Remove dependency on default Stub service.
