@@ -46,6 +46,30 @@
       "revId": "2c21e538f5a88dd8c6dbf5d4079de73964410e32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a333ce88_01a219f3",
+        "filename": "components/omnibox/browser/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-31T16:17:19Z",
+      "side": 1,
+      "message": "My initial numbers were the extremely naive approach of looking at file size on disk (for all icons in the vector directories).  I didn\u0027t expect it to actually change binary size that much, but thank you for doing the investigation and proving that!",
+      "parentUuid": "70eb37a5_b7249711",
+      "range": {
+        "startLine": 189,
+        "startChar": 20,
+        "endLine": 189,
+        "endChar": 32
+      },
+      "revId": "2c21e538f5a88dd8c6dbf5d4079de73964410e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
