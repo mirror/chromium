@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2edd3c9b_455a2496",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-31T20:42:11Z",
+      "side": 1,
+      "message": "Unless I\u0027m missing something, \"subsequent\" doesn\u0027t seem to make sense outside the context of the loop in the calling function. How about something like:\n\n\"Return a |max_match_score| that is the raw score of the first match, but reduce it if we think there will be a URL-what-you-typed match. [...]\"",
+      "range": {
+        "startLine": 181,
+        "startChar": 53,
+        "endLine": 181,
+        "endChar": 64
+      },
+      "revId": "c74b28662ef694d9a8a870c2472145ce773ea3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874d63d5_fb5437d5",
+        "filename": "components/omnibox/browser/history_quick_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-31T20:42:11Z",
+      "side": 1,
+      "message": "Per the style guide, avoid abbreviations. s/URL-WYT/URL-what-you-typed/",
+      "revId": "c74b28662ef694d9a8a870c2472145ce773ea3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
