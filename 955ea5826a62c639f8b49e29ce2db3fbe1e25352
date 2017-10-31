@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2bfadcab_ced7da49",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-31T17:44:48Z",
+      "side": 1,
+      "message": "For that matter, should we verify the assertion that all unseen suggestions follow all seen suggestions?",
+      "parentUuid": "b6b95edf_1570ebf2",
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ea0622b_a83caa13",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "347c1e81_5e1481eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-31T17:44:48Z",
+      "side": 1,
+      "message": "I think it would be reasonable to apply different thresholds to UMA tracking (where we are interested in whether the user has seen the majority of the card) vs. UI stability (where we are interested in whether the user has seen any non-static part of the card), but if we do that, we need to admit that these are two different pieces of functionality and we shouldn\u0027t lump them together. Maybe that does mean that we need to allow ImpressionTracker to be configured, and then have one for UMA and one for this, or have ImpressionTracker return the percentage that is visible...?",
+      "parentUuid": "6ea0622b_a83caa13",
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89b09fbc_5fbf7573",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 2
@@ -47,6 +83,52 @@
       "writtenOn": "2017-10-25T20:24:18Z",
       "side": 1,
       "message": "We should run that before checking with the target size. Otherwise we might have duplicates between the new suggestions and the incoming ones, which is possible even if we have less suggestions than we would like to add in the first place.",
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ee347f_c2dc0c40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-31T17:44:48Z",
+      "side": 1,
+      "message": "At this point we might as well make this member public and move the logic to the caller.",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 45
+      },
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2a144a_ef9a0a63",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-31T17:44:48Z",
+      "side": 1,
+      "message": "Naming nit: using \"impressed\" as the passive voice / past participle of \"to impress\" feels weird here, as it is very easily confused with the adjective, which has a different meaning. Maybe just use \"seen\"?",
+      "range": {
+        "startLine": 145,
+        "startChar": 19,
+        "endLine": 145,
+        "endChar": 30
+      },
       "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
