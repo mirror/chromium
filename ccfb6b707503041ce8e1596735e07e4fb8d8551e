@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f3c6864_0c451bd3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T05:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aee3f366_de030e5b",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5c2c743_be848a3f",
         "filename": "content/browser/file_url_loader_factory.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "e905743a_0accfce4",
+        "filename": "content/browser/file_url_loader_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T05:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5c2c743_be848a3f",
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3a3495e_0dc1e8b9",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-30T15:53:30Z",
       "side": 1,
       "message": "curious why this and webui on 3408 aren\u0027t handled the same way, i.e. why isn\u0027t webui using the subresource_loader_factories (too many schemes i think per our chat last week?) or why doesn\u0027t this code use default_factory?",
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f86cc0_791d7472",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3435,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T05:51:42Z",
+      "side": 1,
+      "message": "Not sure I fully understand the question, but let me try to answer:\n\n- WebUI replaces the default factory because a) lots of schemes and b) WebUI has no need (and in fact should not be able) to load non-Web UI resources. So it makes sense to not provide a network-backed default factory.\n\n- file:// resources on the other hand are not constrained in the same way and are free to load resources from any origin. It makes sense to have a default network-backed loader here.\n\nOf course we could do as we discussed before and get rid of the notion of a \"default\" loader. That would make this easier to reason about. Just means we change the bundle from default + \u003cstring,ptr\u003e map, to a structure which maps any of N keys to M \u003c\u003d N factory ptrs (i.e. we want to be able to share a single ptr for multiple schemes).\n\nThough maybe it would make sense to do that in a follow-up patch.",
+      "parentUuid": "a3a3495e_0dc1e8b9",
       "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a12577c9_cb768c48",
+        "filename": "content/public/browser/content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T05:51:42Z",
+      "side": 1,
+      "message": "That\u0027s what happens in production today, yes.",
+      "parentUuid": "661dd09d_ad035a19",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 8
+      },
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b3cff9_c445c6dc",
         "filename": "content/public/common/simple_url_loader_factory.cc",
         "patchSetId": 2
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "095e82e3_24fc63f1",
+        "filename": "content/public/common/simple_url_loader_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T05:51:42Z",
+      "side": 1,
+      "message": "Yeah, I agree these benefits (BindingSet wrapping, Clone() boilerplate, and a simpler CreateLoaderAndStart signature) are probably not sufficient justification. Removed.",
+      "parentUuid": "79b3cff9_c445c6dc",
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "229266ae_3e82e7b9",
         "filename": "content/public/common/url_utils.h",
         "patchSetId": 2
@@ -113,6 +215,24 @@
       "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28b94fd_9517a88f",
+        "filename": "content/public/common/url_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T05:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "229266ae_3e82e7b9",
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "36043bb0_44cf0b7b",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T05:51:42Z",
+      "side": 1,
+      "message": "I went with using max size_t value instead, which obviates any need for special documentation.\n\nI\u0027m not sure I understand your concerns with 32- vs 64-bit though. Keep in mind that all individual read operations are limited in size by the data pipe capacity (which is unlikely to ever even approach 4 GB in practice, but is capped at 4 GB anyway) as well as by kDefaultMaxReadSize which is defined as 64 MB here.\n\nI think I\u0027ve been careful enough with the book-keeping along the way in TransferSomeBytes, but please make sure I didn\u0027t miss something.",
+      "parentUuid": "63c80749_f1adc9ce",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b084ffb2_64d143a6",
         "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
         "patchSetId": 2
@@ -177,6 +321,24 @@
       "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9353a50e_59e8bb7a",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T05:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b084ffb2_64d143a6",
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
