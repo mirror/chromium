@@ -34,6 +34,24 @@
       "revId": "6dbf7f03b3e93c039a9890e90978f10929063de0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da65284_a93c1ede",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-31T04:40:35Z",
+      "side": 1,
+      "message": "Ah got it, OnConnectionError also has to hop to creation_task_runner_.",
+      "parentUuid": "0b54a26e_d9d9e425",
+      "revId": "6dbf7f03b3e93c039a9890e90978f10929063de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
