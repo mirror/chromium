@@ -252,6 +252,52 @@
       "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16ebea8_a84732c1",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T16:44:21Z",
+      "side": 1,
+      "message": "Nit: I think it would be clearer to delete the blank line before this block and maybe add a comment that this is the case we didn\u0027t get the mutex? I was about to complain that you\u0027re not releasing it until I figured out what\u0027s going on.",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33921106_8962d5c2",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T16:44:21Z",
+      "side": 1,
+      "message": "Comment what these numbers are? Pairs of x/y coordinates for a two-triangle quad I assume?",
+      "range": {
+        "startLine": 105,
+        "startChar": 10,
+        "endLine": 105,
+        "endChar": 21
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
