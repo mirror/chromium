@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1867c4b_581cbba8",
+        "filename": "media/gpu/d3d11_h264_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-31T17:42:28Z",
+      "side": 1,
+      "message": "There\u0027s now an extra ref count here? (one for passing it in and one on this line). I think this line itself doesn\u0027t have to be a scoped_refptr can just be a raw ptr:\n\nauto* our_pic \u003d static_cast\u003cD3D11H264Picture*\u003e(pic.get())? Also if that\u0027s the case, should this function just take a raw ptr instead?",
+      "revId": "137796fc517a352b777fb19f5e7e8f997db04a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f412b6ac_d401a594",
+        "filename": "media/gpu/d3d11_h264_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-31T17:42:28Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "137796fc517a352b777fb19f5e7e8f997db04a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349ae4dc_f9699a3c",
+        "filename": "media/gpu/d3d11_h264_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-31T17:42:28Z",
+      "side": 1,
+      "message": "And here.",
+      "revId": "137796fc517a352b777fb19f5e7e8f997db04a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
