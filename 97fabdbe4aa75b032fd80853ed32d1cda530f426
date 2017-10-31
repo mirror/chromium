@@ -34,6 +34,24 @@
       "revId": "97fabdbe4aa75b032fd80853ed32d1cda530f426",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1667cb18_eb5f9e86",
+        "filename": "third_party/WebKit/common/blob/size_getter.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-31T15:11:20Z",
+      "side": 1,
+      "message": "Sounds good",
+      "parentUuid": "8695be47_ed98a00c",
+      "revId": "97fabdbe4aa75b032fd80853ed32d1cda530f426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
