@@ -31,10 +31,10 @@
             value: false,
           },
         },
-        resolve_timezone_by_geolocation: {
-          key: 'settings.resolve_timezone_by_geolocation',
-          type: chrome.settingsPrivate.PrefType.BOOLEAN,
-          value: true,
+        resolve_timezone_by_geolocation_method: {
+          key: 'settings.resolve_timezone_by_geolocation_method',
+          type: settings.TimeZoneAutoDetectMethod,
+          value: settings.TimeZoneAutoDetectMethod.IP_ONLY,
         },
         timezone: {
           key: 'settings.timezone',
@@ -48,23 +48,25 @@
   function updatePrefsWithPolicy(prefs, managed, valueFromPolicy) {
     var prefsCopy = JSON.parse(JSON.stringify(prefs));
     if (managed) {
-      prefsCopy.settings.resolve_timezone_by_geolocation.controlledBy =
+      prefsCopy.settings.resolve_timezone_by_geolocation_method.controlledBy =
           chrome.settingsPrivate.ControlledBy.USER_POLICY;
-      prefsCopy.settings.resolve_timezone_by_geolocation.enforcement =
+      prefsCopy.settings.resolve_timezone_by_geolocation_method.enforcement =
           chrome.settingsPrivate.Enforcement.ENFORCED;
-      prefsCopy.settings.resolve_timezone_by_geolocation.value =
-          valueFromPolicy;
+      prefsCopy.settings.resolve_timezone_by_geolocation_method.value =
+          valueFromPolicy ? settings.TimeZoneAutoDetectMethod.IP_ONLY :
+                            settings.TimeZoneAutoDetectMethod.DISABLED;
       prefsCopy.settings.timezone.controlledBy =
           chrome.settingsPrivate.ControlledBy.USER_POLICY;
       prefsCopy.settings.timezone.enforcement =
           chrome.settingsPrivate.Enforcement.ENFORCED;
     } else {
-      prefsCopy.settings.resolve_timezone_by_geolocation.controlledBy =
+      prefsCopy.settings.resolve_timezone_by_geolocation_method.controlledBy =
           undefined;
-      prefsCopy.settings.resolve_timezone_by_geolocation.enforcement =
+      prefsCopy.settings.resolve_timezone_by_geolocation_method.enforcement =
           undefined;
       // Auto-resolve defaults to true.
-      prefsCopy.settings.resolve_timezone_by_geolocation.value = true;
+      prefsCopy.settings.resolve_timezone_by_geolocation_method.value =
+          settings.TimeZoneAutoDetectMethod.IP_ONLY;
       prefsCopy.settings.timezone.controlledBy = undefined;
       prefsCopy.settings.timezone.enforcement = undefined;
     }
@@ -230,7 +232,8 @@
     test('auto-detect off', function(done) {
       dateTime = initializeDateTime(getFakePrefs(), false);
       dateTime.set(
-          'prefs.settings.resolve_timezone_by_geolocation.value', false);
+          'prefs.settings.resolve_timezone_by_geolocation_method.value',
+          settings.TimeZoneAutoDetectMethod.DISABLED);
 
       assertTrue(dateTimePageReadyCalled);
       assertTrue(getTimeZonesCalled);
@@ -252,7 +255,8 @@
       var prefs = getFakePrefs();
       dateTime = initializeDateTime(prefs, true, true);
       dateTime.set(
-          'prefs.settings.resolve_timezone_by_geolocation.value', false);
+          'prefs.settings.resolve_timezone_by_geolocation_method.value',
+          settings.TimeZoneAutoDetectMethod.DISABLED);
 
       assertTrue(dateTimePageReadyCalled);
       assertFalse(getTimeZonesCalled);
