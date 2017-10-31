@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cf53ee4_28a0a910",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-31T19:03:33Z",
+      "side": 1,
+      "message": "More precisely: We transitioned based on center_color_ (we did set edge_color_).",
+      "revId": "e608dc77c37912ca9f4b7e0115af04312b3b65d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
