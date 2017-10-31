@@ -47,6 +47,10 @@ class HistoryQuickProvider : public HistoryProvider {
   // Performs the autocomplete matching and scoring.
   void DoAutocomplete();
 
+  // Converts matches whose URL matches a tab's URL to TAB_SEARCH matches.
+  // Fixes up description as well.
+  void ConvertOpenTabMatches();
+
   // Creates an AutocompleteMatch from |history_match|, assigning it
   // the score |score|.
   AutocompleteMatch QuickMatchToACMatch(const ScoredHistoryMatch& history_match,

@@ -2146,6 +2146,12 @@ const char kOmniboxEntitySuggestionsDescription[] =
     "Enable receiving entity suggestions - disambiguation descriptions - for "
     "Omnibox suggestions.";
 
+const char kOmniboxTabSwitchSuggestionsName[] =
+    "Omnibox tab switch suggestions";
+const char kOmniboxTabSwitchSuggestionsDescription[] =
+    "Enable suggestions for switching to open tabs with matching URL within "
+    "the Omnibox.";
+
 const char kOmniboxTailSuggestionsName[] = "Omnibox tail suggestions";
 const char kOmniboxTailSuggestionsDescription[] =
     "Enable receiving tail suggestions, a type of search suggestion based on "

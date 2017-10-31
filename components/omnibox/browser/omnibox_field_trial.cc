@@ -54,6 +54,12 @@ const base::Feature kOmniboxEntitySuggestions{
 const base::Feature kOmniboxTailSuggestions{
     "OmniboxTailSuggestions", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Feature used to enable the searching of open tabs for URLs in suggestions,
+// and converting those suggestions to ones that allow switching to the tab if
+// found. Currently only on the desktop.
+const base::Feature kOmniboxTabSwitchSuggestions{
+    "OmniboxTabSwitchSuggestions", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Feature used to enable clipboard provider, which provides the user with
 // suggestions of the URL in the user's clipboard (if any) upon omnibox focus.
 const base::Feature kEnableClipboardProvider {
