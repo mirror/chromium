@@ -95,6 +95,21 @@ class SharedAndroidVrPageState(
     self._ConfigureVrCore(os.path.join(path_util.GetChromiumSrcDir(),
                                        CARDBOARD_PATH))
 
+  def _EnsureScreenOn(self):
+    """Overrides the AndroidScreenRestorationSharedState's version.
+
+    Instead of just ensuring that the screen is on, the screen is cycled. This
+    is because VR test devices are set to have normal screen brightness and
+    automatically turn off after several minutes instead of the usual approach
+    of having the screen always on at minimum brightness. This is due to the
+    motion-to-photon latency test being sensitive to screen brightness, and min
+    brightness does not work well for it.
+
+    Simply using TurnScreenOn does not actually reset the timer for turning off
+    the screen, so instead cycle the screen to refresh it periodically.
+    """
+    self.platform.android_action_runner.TurnScreenOff()
+    self.platform.android_action_runner.TurnScreenOn()
 
   @property
   def platform(self):
