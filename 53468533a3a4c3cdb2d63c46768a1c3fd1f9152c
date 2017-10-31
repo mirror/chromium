@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69c9bcba_898c7fbc",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-31T22:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "362767b2_4d69159f",
+      "revId": "53468533a3a4c3cdb2d63c46768a1c3fd1f9152c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "981aa7c3_16d64624",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-31T16:04:41Z",
       "side": 1,
       "message": "Nit: don\u0027t indirect through unique_ptr, it doesn\u0027t seem like it\u0027s ever reset() before the class is destroyed anyway",
+      "revId": "53468533a3a4c3cdb2d63c46768a1c3fd1f9152c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d8a940d_a50148db",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-31T22:59:31Z",
+      "side": 1,
+      "message": "Maybe stay consistent with the existing code here -- the HighlighterClient is created and used in a similar way.",
+      "parentUuid": "981aa7c3_16d64624",
       "revId": "53468533a3a4c3cdb2d63c46768a1c3fd1f9152c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
