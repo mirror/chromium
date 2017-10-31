@@ -3338,6 +3338,8 @@ void LocalFrameView::PaintTree() {
   LayoutViewItem view = GetLayoutViewItem();
   DCHECK(!view.IsNull());
   paint_frame_count_++;
+  if (GetFrame().DomWindow() && GetFrame().DomWindow()->document())
+    GetFrame().DomWindow()->document()->ResetCurrentFrameHasRAF();
   ForAllNonThrottledLocalFrameViews([](LocalFrameView& frame_view) {
     frame_view.Lifecycle().AdvanceTo(DocumentLifecycle::kInPaint);
   });

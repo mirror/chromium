@@ -6530,12 +6530,14 @@ ScriptedAnimationController& Document::EnsureScriptedAnimationController() {
 
 int Document::RequestAnimationFrame(
     FrameRequestCallbackCollection::FrameCallback* callback) {
+  current_frame_has_raf_ = true;
   return EnsureScriptedAnimationController().RegisterCallback(callback);
 }
 
 void Document::CancelAnimationFrame(int id) {
   if (!scripted_animation_controller_)
     return;
+  current_frame_has_raf_ = false;
   scripted_animation_controller_->CancelCallback(id);
 }
 

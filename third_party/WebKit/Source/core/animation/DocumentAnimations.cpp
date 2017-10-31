@@ -85,8 +85,13 @@ void DocumentAnimations::UpdateAnimations(
         main_thread_compositable_animations_count =
             document.Timeline().MainThreadCompositableAnimationsCount();
       }
+      // We want to pass the |document.CurrentFrameHasRAF()| all the way to the
+      // CompositorTimingHistory::DidDraw which indicates that this frames has
+      // some visual update. We'd have to make a decision there whether to
+      // record UMA or not.
       host->SetAnimationCounts(total_animations_count,
-                               main_thread_compositable_animations_count);
+                               main_thread_compositable_animations_count,
+                               document.CurrentFrameHasRAF());
     }
   }
 
