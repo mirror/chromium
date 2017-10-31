@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "33f286f3_4a40b024",
+        "filename": "base/win/shortcut.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9efaab6_7e1d57ef",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64c0d1e3_3ea0e979",
         "filename": "chrome/BUILD.gn",
         "patchSetId": 35
@@ -65,6 +83,24 @@
       "writtenOn": "2017-10-27T13:08:59Z",
       "side": 1,
       "message": "I recall that this caused issues on Windows 7 in the past. Have these been fixed with the DELAYLOAD calls below?",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f27b87_be3f421c",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 35
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "With the delay loading strategy applied here, the Windows 7 trybots stopped complaining and Chromium did run without issues in my Windows 7 machine.",
+      "parentUuid": "64c0d1e3_3ea0e979",
       "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -106,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "c73ab872_e2de76ca",
+        "filename": "chrome/app/chrome_exe_main_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "Yes, deferring this allows us to use base::Feature, which is used by Finnur to display toast notifications now.\n\nHow to interact with the toasts is definitely something we need to think about carefully. The code or at least some of it should be added in the Activate() method in chrome_native_notification_prep_win.cc, which I haven\u0027t implemented yet.",
+      "parentUuid": "ecdb60ac_74b99643",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fac94d27_b2661ae9",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 35
@@ -123,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "651cbceb_30f2fdac",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fac94d27_b2661ae9",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80a0c799_28c8675b",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 35
@@ -134,6 +206,24 @@
       "writtenOn": "2017-10-27T11:37:43Z",
       "side": 1,
       "message": "this should be moved into the installer; AddInstallWorkItems is a good place.",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a26244_f495e1fd",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "Sure, I will do it in a following CL after the shortcut one.",
+      "parentUuid": "80a0c799_28c8675b",
       "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -157,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "765d8c00_177a0701",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c341677e_8f1801ae",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b52959a_395135c0",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 35
@@ -168,6 +276,24 @@
       "writtenOn": "2017-10-27T11:37:43Z",
       "side": 1,
       "message": "this creates a static dtor, which is banned. if this really needs to be shut down, doing so explicitly in PostMainMessageLoopRun or PreShutdown seems like a fine place.",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1e788c_c4b7bba6",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "ACK. I will fix this later.",
+      "parentUuid": "6b52959a_395135c0",
       "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -188,6 +314,24 @@
       "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80cae8d_96057493",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "43b756ee_b2d2a8fa",
+      "revId": "e9394805dd1e9630bf53f27db273e51eac92ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

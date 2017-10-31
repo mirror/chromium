@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe61c2ed_c4244415",
+        "filename": "base/win/shortcut.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "Definitely :-) Done",
+      "parentUuid": "24d900ee_e363bab5",
+      "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b57993f_0bea77c8",
         "filename": "chrome/install_static/install_constants.h",
         "patchSetId": 38
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "103f39e6_85a24e0c",
+        "filename": "chrome/install_static/install_constants.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b57993f_0bea77c8",
+      "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65dd284e_8fe6f636",
         "filename": "chrome/installer/setup/install.cc",
         "patchSetId": 38
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-30T13:45:15Z",
       "side": 1,
       "message": "DO_NOT_COMMIT :-)",
+      "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23c27d72_4bffe9ae",
+        "filename": "chrome/installer/setup/install.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65dd284e_8fe6f636",
       "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0461ec90_a6355864",
+        "filename": "chrome/installer/setup/install.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61ec9500_09995faa",
+      "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "432c5cd8_f876b4b8",
         "filename": "chrome/installer/util/shell_util.cc",
         "patchSetId": 38
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e12b7f0e_677a5bb1",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "432c5cd8_f876b4b8",
+      "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12ce9e07_17b9ddcf",
         "filename": "chrome/installer/util/shell_util.cc",
         "patchSetId": 38
@@ -101,6 +191,24 @@
       "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0174cbc_33b3a9d7",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T00:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12ce9e07_17b9ddcf",
+      "revId": "593f547a47db8a3d653a2c0c4bfd78c8e0147ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
