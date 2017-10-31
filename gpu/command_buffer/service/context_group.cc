@@ -164,6 +164,7 @@ gpu::ContextResult ContextGroup::Initialize(
 
   feature_info_->Initialize(context_type, adjusted_disallowed_features);
 
+  // Adding a comment for running buildbot.
   const GLint kMinRenderbufferSize = 512;  // GL says 1 pixel!
   GLint max_renderbuffer_size = 0;
   if (!QueryGLFeature(
