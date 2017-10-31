@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d08845ef_b7f01e86",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-10-31T07:36:24Z",
+      "side": 1,
+      "message": "FSP API shouldn\u0027t know about Samba. It\u0027s a dependency issue. We should have something like CreateSmbProvidedFileSystem in a location with samba code. Samba code can depend on FSP.",
+      "revId": "582571205fda189cf676c96f2b963b4e0d5042e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f25f5f20_197a10c7",
+        "filename": "chrome/browser/chromeos/file_system_provider/smb_provided_file_system.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-10-31T07:36:24Z",
+      "side": 1,
+      "message": "This file should not be in file_system_provider/. Please create a separate directory and put Samba code there.",
+      "range": {
+        "startLine": 1,
+        "startChar": 22,
+        "endLine": 1,
+        "endChar": 30
+      },
+      "revId": "582571205fda189cf676c96f2b963b4e0d5042e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
