@@ -16,6 +16,24 @@
       "revId": "2b47dbf0c95b0f5feaaa32bba46c1df1019b1a88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c1b7df7_037e86a6",
+        "filename": "third_party/WebKit/Source/core/page/CreateWindow.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1181784
+      },
+      "writtenOn": "2017-10-31T05:11:14Z",
+      "side": 1,
+      "message": "I don\u0027t see any dupe events. The code shows that the two paths are separate until CreateWindowHelper:\n1. For window.open(): LocalDOMWindow::open -\u003e CreateWindow -\u003e CreateWindowHelper\n2. For links and form click: CreateWindowForRequest -\u003e CreateWindowHelper\n\nTo make the event tracking more clear. I moved the probe to CreateWindowHelper instead, so that it is tracked only in one place for the two use cases.\n\nHowever, in CreateWindowHelper the window feature has been parsed into a struct instead of string. I feel it is better to generate the string back instead of adding a new arg to CreateWindowHelper. This could also filter out invalid features and reflect what chrome really used to create the window. WDYT?",
+      "parentUuid": "f364d937_6ae23113",
+      "revId": "2b47dbf0c95b0f5feaaa32bba46c1df1019b1a88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
