@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb3a576d_8733270a",
+        "filename": "ash/mus/shell_port_mus.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "Let\u0027s avoid accessing HostFrameSinkManager from ash if we don\u0027t need to.",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e357d8_57df98d3",
+        "filename": "ash/shell.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "This is really icky. I wish AddVideoDetectorObserver didn\u0027t take in a HostFrameSinkManager. sadrul@ might have a better idea for this.",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e07efc_65bfa254",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "frame_sink_manager_-\u003eAddVideoDetectorObserver(std::move(observer));",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dddb13a_f71a8b0f",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "nit: initialize",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c49dd0_6dd8447f",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "How do frames go backward?",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d230cc1_53a30bab",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "should all of these be constexpr?",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437b496d_df2480ce",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "should all of these be constexpr?",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2980bcb1_bfca5eca",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "should all of these be constexpr?",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb61e673_4eab9bf0",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "should all of these be constexpr?",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d5a09c_8a443dd0",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "should all of these be constexpr?",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877f3120_d8548982",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac3c701_3b8ba2b8",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "make this a member variable instead?",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad98b57f_8cb44ed7",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "constexpr for these?",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b05c09_ed02defc",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "constexpr gfx::Size kFrameSinkSize(10000, 10000)",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64b760e_da21f05f",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "Test description above every test?",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a75d2d59_4e44f9a6",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "what if you kept ownership in VideoDetectorTest?",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d4d7985_c8bd78dc",
+        "filename": "components/viz/service/surfaces/surface_observer.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "nit: Comment",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64984738_bdc94723",
+        "filename": "mojo/public/cpp/bindings/interface_ptr_set.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "bool empty() const",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b2513f_f5138787",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 27
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-31T22:53:38Z",
+      "side": 1,
+      "message": "nit: comment",
+      "revId": "b9fb5a108e3b808af03400be61b42a95e63a6aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
