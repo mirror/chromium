@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56e2abed_0ecb51df",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-31T16:46:25Z",
+      "side": 1,
+      "message": "rect-\u003eSetRect(y, x, height, width)",
+      "revId": "936a6123ff80e377f1f5cab8e1011e9c01c85d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177acbdc_a9bc84df",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-31T16:46:25Z",
+      "side": 1,
+      "message": "aura::Window* left \u003d isLeftWindowOn....() ? left_window_ : right_window;\nif (delegate)\n   minimum_width \u003d is_landscape  ? width() : height();\n\nthenyou don\u0027t need to flip the size.",
+      "revId": "936a6123ff80e377f1f5cab8e1011e9c01c85d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
