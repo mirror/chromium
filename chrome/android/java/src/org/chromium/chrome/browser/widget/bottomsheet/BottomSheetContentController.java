@@ -265,6 +265,12 @@ public class BottomSheetContentController
                     mBottomSheetContents.get(INCOGNITO_HOME_ID).destroy();
                     mBottomSheetContents.remove(INCOGNITO_HOME_ID);
                 }
+
+                // Remove all bottom sheet contents except Home if switching between standard and
+                // incognito mode to prevent contents from being out of date.
+                if (newModel.isIncognito() != oldModel.isIncognito()) {
+                    clearBottomSheetContents(false);
+                }
             }
         };
         mTabModelSelector.addObserver(mTabModelSelectorObserver);
