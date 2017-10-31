@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "90fb0605_f3dec9ba",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-31T16:58:31Z",
+      "side": 1,
+      "message": "Weeeell. Things are a bit brittle here, but I wasn\u0027t able to avoid it (to be precise, the current design is the least brittle of them all).\n\nWatch my hands: when we asynchronously shutdown task queue, it\u0027s ownership is transferred to a task inside the shutdown task runner via base::Passed. At the same time a reference to this task queue impl is stored inside active_queues_.\n\nWe also want to use a task queue as a shutdown task runner. That means that if we unregister shutdown task queue first, all tasks inside shutdown task queue are deleted and some queues which where deleted asynchronously will be deleted together with them, leaving some stale pointers in active_queues_. Also TaskQueueImpl destructor requires that TaskQueueImpl is unregistered before deleting the object.\n\nThe easiest way to work around these is to unregister queues with async deletion support (ownership of which may be tied to some other task queues) during the first pass.",
+      "parentUuid": "e92c3d24_16d32e4e",
+      "range": {
+        "startLine": 76,
+        "startChar": 49,
+        "endLine": 76,
+        "endChar": 68
+      },
+      "revId": "9e3980730ccb98a1289066e1771ffbb9e783be07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72a1117f_5fac25a3",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 3
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "I think I still prefer a test hook because 1) this test can easily become a no-op when we change TQM logic and don\u0027t see the connection to here and 2) not sure if we can rely on allocator and set internals in all circumstances (e.g., ASAN/MSAN). WDYT?",
       "parentUuid": "e66660fe_77f29dfe",
+      "range": {
+        "startLine": 3186,
+        "startChar": 17,
+        "endLine": 3186,
+        "endChar": 19
+      },
+      "revId": "9e3980730ccb98a1289066e1771ffbb9e783be07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad280519_a35a9d57",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3186,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-31T16:58:31Z",
+      "side": 1,
+      "message": "The test hook will have to change active_queues_ iteration order, which is messy and simply isn\u0027t worth it.\n\nThis test is looking for one concrete thing — I tested it locally that it does catch it, I\u0027m happy with the fact that this test checks for one thing and might become obsolete when we change TQM.",
+      "parentUuid": "cd2cfad3_38731031",
       "range": {
         "startLine": 3186,
         "startChar": 17,
