@@ -278,18 +278,18 @@ class V4L2SliceVideoDecodeAccelerator::V4L2H264Accelerator
                            const H264Picture::Vector& ref_pic_listp0,
                            const H264Picture::Vector& ref_pic_listb0,
                            const H264Picture::Vector& ref_pic_listb1,
-                           const scoped_refptr<H264Picture>& pic) override;
+                           scoped_refptr<H264Picture> pic) override;
 
   bool SubmitSlice(const H264PPS* pps,
                    const H264SliceHeader* slice_hdr,
                    const H264Picture::Vector& ref_pic_list0,
                    const H264Picture::Vector& ref_pic_list1,
-                   const scoped_refptr<H264Picture>& pic,
+                   scoped_refptr<H264Picture> pic,
                    const uint8_t* data,
                    size_t size) override;
 
-  bool SubmitDecode(const scoped_refptr<H264Picture>& pic) override;
-  bool OutputPicture(const scoped_refptr<H264Picture>& pic) override;
+  bool SubmitDecode(scoped_refptr<H264Picture> pic) override;
+  bool OutputPicture(scoped_refptr<H264Picture> pic) override;
 
   void Reset() override;
 
@@ -2154,7 +2154,7 @@ bool V4L2SliceVideoDecodeAccelerator::V4L2H264Accelerator::SubmitFrameMetadata(
     const H264Picture::Vector& ref_pic_listp0,
     const H264Picture::Vector& ref_pic_listb0,
     const H264Picture::Vector& ref_pic_listb1,
-    const scoped_refptr<H264Picture>& pic) {
+    scoped_refptr<H264Picture> pic) {
   struct v4l2_ext_control ctrl;
   std::vector<struct v4l2_ext_control> ctrls;
 
@@ -2330,7 +2330,7 @@ bool V4L2SliceVideoDecodeAccelerator::V4L2H264Accelerator::SubmitSlice(
     const H264SliceHeader* slice_hdr,
     const H264Picture::Vector& ref_pic_list0,
     const H264Picture::Vector& ref_pic_list1,
-    const scoped_refptr<H264Picture>& pic,
+    scoped_refptr<H264Picture> pic,
     const uint8_t* data,
     size_t size) {
   if (num_slices_ == kMaxSlices) {
@@ -2490,7 +2490,7 @@ bool V4L2SliceVideoDecodeAccelerator::IsCtrlExposed(uint32_t ctrl_id) {
 }
 
 bool V4L2SliceVideoDecodeAccelerator::V4L2H264Accelerator::SubmitDecode(
-    const scoped_refptr<H264Picture>& pic) {
+    scoped_refptr<H264Picture> pic) {
   scoped_refptr<V4L2DecodeSurface> dec_surface =
       H264PictureToV4L2DecodeSurface(pic);
 
@@ -2529,7 +2529,7 @@ bool V4L2SliceVideoDecodeAccelerator::V4L2H264Accelerator::SubmitDecode(
 }
 
 bool V4L2SliceVideoDecodeAccelerator::V4L2H264Accelerator::OutputPicture(
-    const scoped_refptr<H264Picture>& pic) {
+    scoped_refptr<H264Picture> pic) {
   scoped_refptr<V4L2DecodeSurface> dec_surface =
       H264PictureToV4L2DecodeSurface(pic);
   dec_surface->set_visible_rect(pic->visible_rect);
