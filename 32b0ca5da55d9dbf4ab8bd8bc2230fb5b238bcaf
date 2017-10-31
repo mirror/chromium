@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a434e566_0644814b",
+        "filename": "components/policy/core/browser/url_blacklist_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T16:46:26Z",
+      "side": 1,
+      "message": "Please use base::SequencedTaskRunnerHandle::Get() instead (in base/threading/sequenced_task_runner_handle.h)\n\nIn general we try to avoid thread affinity where it\u0027s not strictly necessary, and almost everything (including PrefService) is fine with simple sequence affinity.",
+      "revId": "32b0ca5da55d9dbf4ab8bd8bc2230fb5b238bcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc915b82_d6dcaaef",
+        "filename": "components/policy/core/browser/url_blacklist_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T16:46:26Z",
+      "side": 1,
+      "message": "nit: use BindOnce, then you can std::move(block) etc instead of base::Passed(\u0026block)",
+      "revId": "32b0ca5da55d9dbf4ab8bd8bc2230fb5b238bcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4914b480_87569978",
+        "filename": "components/policy/core/browser/url_blacklist_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T16:46:26Z",
+      "side": 1,
+      "message": "BindOnce (generally always prefer BindOnce with PostTask)",
+      "revId": "32b0ca5da55d9dbf4ab8bd8bc2230fb5b238bcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a863a38_a4487753",
+        "filename": "components/policy/core/browser/url_blacklist_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T16:46:26Z",
+      "side": 1,
+      "message": "nitty nit: Technically I don\u0027t think it *must* be constructed on the UI thread. Rather it assumes it is, though I\u0027m not sure why it should matter and the only relevance is that it calls its thing a \"ui_task_runner_\" instead of maybe more appropriately a \"pref_service_task_runner_\".\n\nThe only thing that really matters is that it\u0027s constructed on the same thread the PrefService instance lives on - which is sort of implied by the constructor anyway - and that is not necessarily constrained to the UI thread.",
+      "revId": "32b0ca5da55d9dbf4ab8bd8bc2230fb5b238bcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aefb5df_2054c6d7",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-31T16:46:26Z",
+      "side": 1,
+      "message": "I\u0027ll leave this to clamy@ as I have no idea :)",
+      "revId": "32b0ca5da55d9dbf4ab8bd8bc2230fb5b238bcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
