@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8e42510_ef54106a",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-31T01:07:54Z",
+      "side": 1,
+      "message": "nit: can you extract this into a named variable (A_to_B_scale type of thing.. this is recording_to_transform_scale? where i\u0027m not sure what the transform is mapping?).. scales are always scary :P Or maybe just a comment",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 65
+      },
+      "revId": "1aa5a9aa6f3b108e6703ff293af09c17c3a9dd5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
