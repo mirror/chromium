@@ -52,6 +52,24 @@
       "revId": "bcbd9bd93eeb85ab51e7ca49644bae6246084347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b2d989_7bfd296c",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-31T17:52:21Z",
+      "side": 1,
+      "message": "The dialog won\u0027t necessarily show for A \u0026 B.. Only if they have pending input on them and the timer has fired.. \n\nWhat is really wrong with this dialog is that Kill only kills the process that is first in the list. So if you have process 123 and 456 both unresponsive. The last one in will only be kiiled; see the Cancel() method only takes element[0].\n\nAgain looking at this class it has a number of flaws and I don\u0027t believe the original author works on Chromium anymore and someone should address all of these problems.",
+      "parentUuid": "81976dbb_880319bf",
+      "revId": "bcbd9bd93eeb85ab51e7ca49644bae6246084347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
