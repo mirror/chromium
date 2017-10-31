@@ -26,7 +26,6 @@
           "blink::mojom::MimeRegistry",
           "blink::mojom::NotificationService",
           "blink::mojom::OffscreenCanvasProvider",
-          "blink::mojom::PermissionService",
           "blink::mojom::ReportingServiceProxy",
           "blink::mojom::WebSocket",
           "content::mojom::FieldTrialRecorder",
@@ -172,6 +171,8 @@
     "navigation:dedicated_worker": {
       "provides": {
         "renderer": [
+          "blink::mojom::PermissionService",
+          "payments::mojom::PaymentManager",
           "shape_detection::mojom::BarcodeDetection",
           "shape_detection::mojom::FaceDetectionProvider",
           "shape_detection::mojom::TextDetection"
@@ -181,6 +182,9 @@
     "navigation:service_worker": {
       "provides": {
         "renderer": [
+          "blink::mojom::PermissionService",
+          "blink::mojom::WebSocket",
+          "payments::mojom::PaymentManager",
           "shape_detection::mojom::BarcodeDetection",
           "shape_detection::mojom::FaceDetectionProvider",
           "shape_detection::mojom::TextDetection"
@@ -190,6 +194,9 @@
     "navigation:shared_worker": {
       "provides": {
         "renderer": [
+          "blink::mojom::PermissionService",
+          "blink::mojom::WebSocket",
+          "payments::mojom::PaymentManager",
           "shape_detection::mojom::BarcodeDetection",
           "shape_detection::mojom::FaceDetectionProvider",
           "shape_detection::mojom::TextDetection"
