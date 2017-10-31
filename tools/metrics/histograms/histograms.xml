@@ -13444,6 +13444,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DataUse.MessageSize" units="bytes">
+  <obsolete>
+    Deprecated 10/2017.
+  </obsolete>
   <owner>amohammadkhan@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
