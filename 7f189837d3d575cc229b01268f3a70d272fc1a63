@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "d33e948a_f2198538",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-31T23:10:02Z",
+      "side": 1,
+      "message": "Thanks! Those comments are great!",
+      "parentUuid": "0d808005_58322304",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "024e726b_fdcfe809",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 10
@@ -335,6 +353,24 @@
       "side": 1,
       "message": "The issue here was that media_factory.cc is not the only client issuing GetInterface messages, but instead a InterfaceProvider* is passed around to many places in media/, e.g. to MojoRendererFactory and MediaInterfaceFactory.",
       "parentUuid": "20d304de_885867a2",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "078f4cbb_7254005d",
+        "filename": "content/renderer/media/media_factory.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-31T23:10:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "151690ad_19895937",
       "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

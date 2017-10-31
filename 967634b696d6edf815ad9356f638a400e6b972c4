@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85c2022f_2a6f1b88",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-31T23:10:02Z",
+      "side": 1,
+      "message": "Posting it to the message loop will allow potentially other messages to be processed before the GetInterface one, right? I think that is less desirable as we want to simulate it coming as the first possible message after commit. Given that DidFinishNavigation is called on the same event loop with DidCommitProvisionalLoad, but after it has been processed, it does seem closer to what we want than using a PostTask, doesn\u0027t it?",
+      "parentUuid": "661ed611_940c2e0d",
+      "revId": "967634b696d6edf815ad9356f638a400e6b972c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbd970e6_ff37c8a1",
         "filename": "content/browser/frame_host/render_frame_host_interface_provider_unittest.cc",
         "patchSetId": 14
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-27T21:05:18Z",
       "side": 1,
       "message": "Note that these are basically the same as the browser tests, but uglier and probably provide fewer guarantees. I wonder if it makes sense to keep these?",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 1
+      },
+      "revId": "967634b696d6edf815ad9356f638a400e6b972c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5de15a_2ae29273",
+        "filename": "content/browser/frame_host/render_frame_host_interface_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-31T23:10:02Z",
+      "side": 1,
+      "message": "I always prefer browser tests, as they are much closer to reality than unit tests, even when we mess with ordering of messages :).",
+      "parentUuid": "bbd970e6_ff37c8a1",
       "range": {
         "startLine": 138,
         "startChar": 0,

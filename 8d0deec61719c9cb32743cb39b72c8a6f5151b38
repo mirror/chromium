@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "f5fd9dd5_31afaea3",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1536,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-31T23:10:02Z",
+      "side": 1,
+      "message": "I think we want to be as strict as we can, since it is always easier to relax restrictions than it is to tighten them. I don\u0027t see a reason why we want to rebind the InterfaceProvider on same document navigations and mostly see downsides to performance if that is allowed.",
+      "parentUuid": "c1f8bade_46bc14cc",
+      "revId": "8d0deec61719c9cb32743cb39b72c8a6f5151b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72733477_47635dab",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 9
