@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "b0e5877c_7f961ba5",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-31T19:15:47Z",
+      "side": 1,
+      "message": "Please, ignore this comment. \u0027gn\u0027 is actually changing the default \"implicit synthesized properties\" setting to false, so it is necessary to @synthesize the properties explicitly.",
+      "parentUuid": "15827235_8e3be671",
+      "range": {
+        "startLine": 519,
+        "startChar": 0,
+        "endLine": 519,
+        "endChar": 11
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90d2469b_dd7abfca",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 2
@@ -469,6 +493,30 @@
       "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b97670ed_8f9b0cb2",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-31T19:15:47Z",
+      "side": 1,
+      "message": "I think it works because some of the objects are immutable and return themselves when copied. Try instead of\n[cronet_metrics setNetworkProtocolName:@\"http/2\"]\nsomething like\n[cronet_metrics setNetworkProtocolName:[NSMutableString stringWithString:@\"http/2\"]\nand it should fail.",
+      "parentUuid": "3bc6b8aa_dd4042e5",
+      "range": {
+        "startLine": 51,
+        "startChar": 23,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
