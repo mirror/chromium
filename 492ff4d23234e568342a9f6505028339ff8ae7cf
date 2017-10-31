@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7051f20b_2abdfecc",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1202434
+      },
+      "writtenOn": "2017-10-31T22:56:25Z",
+      "side": 1,
+      "message": "Good point, it looks like this currently doesn\u0027t work for our build.",
+      "parentUuid": "08e88cc6_4dd3a49d",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 1
+      },
+      "revId": "492ff4d23234e568342a9f6505028339ff8ae7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e032d3b_45aef203",
         "filename": "chromecast/chromecast.gni",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-10-31T22:50:59Z",
       "side": 1,
       "message": "I think you want to add \"source_set\" to the list in the foreach @line 84? Or do the source_sets not want to get the //build/config:exe_and_shlib_deps dep?",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 1
+      },
+      "revId": "492ff4d23234e568342a9f6505028339ff8ae7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f2b613_3c8cd210",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1202434
+      },
+      "writtenOn": "2017-10-31T22:56:25Z",
+      "side": 1,
+      "message": "source_set doesn\u0027t need //build/config:exe_and_shlib_deps, so I decided to separate it.",
+      "parentUuid": "866e57dc_90b9c802",
       "range": {
         "startLine": 120,
         "startChar": 0,
