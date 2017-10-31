@@ -20,7 +20,6 @@
   const Number = global.Number;
   const Number_isFinite = Number.isFinite;
   const Number_isNaN = Number.isNaN;
-  const undefined = global.undefined;
 
   const RangeError = global.RangeError;
   const TypeError = global.TypeError;
@@ -95,7 +94,8 @@
     // assert(
     //     hasOwnProperty(container, _queue) &&
     //         hasOwnProperty(container, _queueTotalSize),
-    //     'Assert: _container_ has [[queue]] and [[queueTotalSize]] internal ' +
+    //     'Assert: _container_ has [[queue]] and [[queueTotalSize]] internal '
+    //     +
     //         'slots.');
     // assert(container[_queue].length !== 0,
     //        '_container_.[[queue]] is not empty.');
@@ -111,7 +111,8 @@
     // assert(
     //     hasOwnProperty(container, _queue) &&
     //         hasOwnProperty(container, _queueTotalSize),
-    //     'Assert: _container_ has [[queue]] and [[queueTotalSize]] internal ' +
+    //     'Assert: _container_ has [[queue]] and [[queueTotalSize]] internal '
+    //     +
     //         'slots.');
     size = Number(size);
     if (!IsFiniteNonNegativeNumber(size)) {
@@ -126,7 +127,8 @@
     // assert(
     //     hasOwnProperty(container, _queue) &&
     //         hasOwnProperty(container, _queueTotalSize),
-    //     'Assert: _container_ has [[queue]] and [[queueTotalSize]] internal ' +
+    //     'Assert: _container_ has [[queue]] and [[queueTotalSize]] internal '
+    //     +
     //         'slots.');
     // assert(container[_queue].length !== 0,
     //        '_container_.[[queue]] is not empty.');
@@ -138,7 +140,8 @@
     // assert(
     //     hasOwnProperty(container, _queue) &&
     //         hasOwnProperty(container, _queueTotalSize),
-    //     'Assert: _container_ has [[queue]] and [[queueTotalSize]] internal ' +
+    //     'Assert: _container_ has [[queue]] and [[queueTotalSize]] internal '
+    //     +
     //         'slots.');
     container[_queue] = new binding.SimpleQueue();
     container[_queueTotalSize] = 0;
@@ -165,12 +168,18 @@
     return {size, highWaterMark};
   }
 
-  binding.streamOperations = { _queue, _queueTotalSize,
-                               hasOwnPropertyNoThrow, rejectPromise,
-                               resolvePromise, markPromiseAsHandled,
-                               promiseState, DequeueValue,
-                               EnqueueValueWithSize, PeekQueueValue,
-                               ResetQueue,
-                               ValidateAndNormalizeQueuingStrategy };
-
+  binding.streamOperations = {
+    _queue,
+    _queueTotalSize,
+    hasOwnPropertyNoThrow,
+    rejectPromise,
+    resolvePromise,
+    markPromiseAsHandled,
+    promiseState,
+    DequeueValue,
+    EnqueueValueWithSize,
+    PeekQueueValue,
+    ResetQueue,
+    ValidateAndNormalizeQueuingStrategy
+  };
 });
