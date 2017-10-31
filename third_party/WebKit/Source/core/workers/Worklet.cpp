@@ -57,6 +57,13 @@ ScriptPromise Worklet::addModule(ScriptState* script_state,
                                            "This frame is already detached"));
   }
 
+  // Restrict to secure contexts.
+  String error_message;
+  if (!GetExecutionContext()->IsSecureContext(error_message)) {
+    return ScriptPromise::RejectWithDOMException(
+        script_state, DOMException::Create(kSecurityError, error_message));
+  }
+
   // Step 1: "Let promise be a new promise."
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
