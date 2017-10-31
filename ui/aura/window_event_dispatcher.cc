@@ -730,14 +730,14 @@ void WindowEventDispatcher::OnWindowBoundsChanged(Window* window,
   }
 }
 
-void WindowEventDispatcher::OnWindowTransforming(Window* window) {
+void WindowEventDispatcher::OnWindowTargetTransformChanging(Window* window) {
   if (!host_->window()->Contains(window))
     return;
 
   SynthesizeMouseMoveAfterChangeToWindow(window);
 }
 
-void WindowEventDispatcher::OnWindowTransformed(Window* window) {
+void WindowEventDispatcher::OnWindowTargetTransformChanged(Window* window) {
   if (!host_->window()->Contains(window))
     return;
 
