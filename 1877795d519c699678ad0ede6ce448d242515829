@@ -34,6 +34,24 @@
       "revId": "1877795d519c699678ad0ede6ce448d242515829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d9afe0_96acb1ef",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3718,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-10-31T23:16:02Z",
+      "side": 1,
+      "message": "I see that it could indeed be a problem. In that case leaving it here should be fine.",
+      "parentUuid": "7d13338d_66277d5a",
+      "revId": "1877795d519c699678ad0ede6ce448d242515829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
