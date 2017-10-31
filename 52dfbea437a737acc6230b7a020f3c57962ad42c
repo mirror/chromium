@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "487ec23f_badf6e38",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-10-31T22:37:12Z",
+      "side": 1,
+      "message": "ui::PAGE_TRANSITION_FORWARD_BACK is a qualifier and not a core transition type. This should be transition_ |\u003d ui::PAGE_TRANSITION_FORWARD_BACK; in order not to erase the core transition type. Same below.",
+      "revId": "52dfbea437a737acc6230b7a020f3c57962ad42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
