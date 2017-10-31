@@ -12,16 +12,20 @@
 namespace content {
 
 ControllerServiceWorkerConnector::ControllerServiceWorkerConnector(
-    mojom::ServiceWorkerContainerHost* container_host)
-    : container_host_(container_host) {}
+    mojom::ServiceWorkerContainerHost* container_host,
+    mojom::ControllerServiceWorkerPtr controller_ptr)
+    : container_host_(container_host) {
+  if (controller_ptr) {
+    controller_service_worker_ = std::move(controller_ptr);
+    controller_service_worker_.set_connection_error_handler(base::BindOnce(
+        &ControllerServiceWorkerConnector::OnControllerConnectionClosed,
+        base::Unretained(this)));
+  }
+}
 
 mojom::ControllerServiceWorker*
 ControllerServiceWorkerConnector::GetControllerServiceWorker() {
   if (!controller_service_worker_ && container_host_) {
-    // TODO(kinuko): For simplicity we always call GetControllerServiceWorker
-    // for now, but it should be possible to give the initial
-    // controller_service_worker_ in ctor (by sending it from the browser
-    // process when a new controller is set).
     container_host_->GetControllerServiceWorker(
         mojo::MakeRequest(&controller_service_worker_));
     controller_service_worker_.set_connection_error_handler(base::BindOnce(
@@ -43,12 +47,12 @@ void ControllerServiceWorkerConnector::OnContainerHostConnectionClosed() {
   container_host_ = nullptr;
 }
 
-ControllerServiceWorkerConnector::~ControllerServiceWorkerConnector() = default;
-
 void ControllerServiceWorkerConnector::OnControllerConnectionClosed() {
   controller_service_worker_.reset();
   for (auto& observer : observer_list_)
     observer.OnConnectionClosed();
 }
+
+ControllerServiceWorkerConnector::~ControllerServiceWorkerConnector() = default;
 
 }  // namespace content
