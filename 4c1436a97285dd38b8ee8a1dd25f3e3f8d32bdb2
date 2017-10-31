@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f914b40_5a715555",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-31T21:30:56Z",
+      "side": 1,
+      "message": "probably better to pass TextDirection here rather than a bool.",
+      "range": {
+        "startLine": 93,
+        "startChar": 6,
+        "endLine": 93,
+        "endChar": 32
+      },
+      "revId": "4c1436a97285dd38b8ee8a1dd25f3e3f8d32bdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
