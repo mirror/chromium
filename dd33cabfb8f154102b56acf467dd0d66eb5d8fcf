@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "ce6205fe_f54243c7",
+        "filename": "tools/chrome_proxy/webdriver/video.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-31T20:42:43Z",
+      "side": 1,
+      "message": "So, instead can we do this:\n1. Verify that the histogram has 1 entry\n2. Verify that the sum of entries in the histogram matches |ofcl/compressed_full_content_length * 200|?\n\nThere is some existing code to check for |count| and |sum| of histogram: https://cs.chromium.org/chromium/src/tools/chrome_proxy/webdriver/quic.py?rcl\u003d0aa10a8d01e118db52d355ddaee261fbb5c8ed11\u0026l\u003d59\n\nIt seems a bit weird to look for compressed content length in a histogram that records uncompressed content length.",
+      "parentUuid": "22f375a5_4d5860b5",
+      "range": {
+        "startLine": 81,
+        "startChar": 9,
+        "endLine": 82,
+        "endChar": 57
+      },
+      "revId": "dd33cabfb8f154102b56acf467dd0d66eb5d8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eadd6df7_3fea4022",
         "filename": "tools/chrome_proxy/webdriver/video.py",
         "patchSetId": 1
