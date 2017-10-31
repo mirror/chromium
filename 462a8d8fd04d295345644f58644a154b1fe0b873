@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "afcc482b_d699b68c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-31T23:59:00Z",
+      "side": 1,
+      "message": "You can have it refer to bug 664630.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e4f84d_6e7f3b32",
+        "filename": "device/u2f/u2f_apdu_command.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-31T23:59:00Z",
+      "side": 1,
+      "message": "We could negate the need for the link by including the description here instead. Something like \"The \u0027check-only\u0027 command is used to determine if the provided key handle was originally created by this token and whether it was created for the provided application parameter.\"?",
+      "range": {
+        "startLine": 95,
+        "startChar": 47,
+        "endLine": 100,
+        "endChar": 78
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54faa0d4_c71377aa",
         "filename": "device/u2f/u2f_register.cc",
         "patchSetId": 4
@@ -18,6 +64,29 @@
         "startChar": 53,
         "endLine": 70,
         "endChar": 65
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d188ae9f_746e7093",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-31T23:59:00Z",
+      "side": 1,
+      "message": "Nit: maybe specify that this is a continuation, since you\u0027ve already checked the first key handle.",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 16
       },
       "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -64,6 +133,29 @@
         "startChar": 50,
         "endLine": 40,
         "endChar": 62
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c33e80_55122b42",
+        "filename": "device/u2f/u2f_register.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-31T23:59:00Z",
+      "side": 1,
+      "message": "nit: It might be better to say \u0027already registered keys\u0027 or the equivalent rather than \u0027duplicate keys\u0027 (here and in your other comments). Technically, although we are preventing duplicates, no duplicates exist at this point.",
+      "range": {
+        "startLine": 41,
+        "startChar": 20,
+        "endLine": 41,
+        "endChar": 29
       },
       "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -186,6 +278,98 @@
     },
     {
       "key": {
+        "uuid": "fb79517c_5df999e4",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-31T23:59:00Z",
+      "side": 1,
+      "message": "nit: unnecessary to include \"function\"",
+      "range": {
+        "startLine": 177,
+        "startChar": 22,
+        "endLine": 177,
+        "endChar": 30
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5720793e_4a082bf3",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-31T23:59:00Z",
+      "side": 1,
+      "message": "nit: \"the exclude list\"",
+      "range": {
+        "startLine": 180,
+        "startChar": 46,
+        "endLine": 180,
+        "endChar": 58
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1b6e5e_d477284e",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-31T23:59:00Z",
+      "side": 1,
+      "message": "nit: unnecessary to include \"function\"",
+      "range": {
+        "startLine": 231,
+        "startChar": 22,
+        "endLine": 231,
+        "endChar": 30
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91b35846_431cbacc",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-31T23:59:00Z",
+      "side": 1,
+      "message": "nit: This confused me on first pass. Maybe \"..four times: three times to...\"?",
+      "range": {
+        "startLine": 231,
+        "startChar": 45,
+        "endLine": 231,
+        "endChar": 75
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40ee6bd3_4db0e284",
         "filename": "device/u2f/u2f_register_unittest.cc",
         "patchSetId": 4
@@ -266,6 +450,30 @@
       "writtenOn": "2017-10-31T18:05:42Z",
       "side": 1,
       "message": "A better way to store these constants is to create static functions defined here and implemented in u2f_request.cc:\n\nstatic const std::vector\u003cuint8_t\u003e\u0026 GetBogusAppParam();\nstatic const std::vector\u003cuint8_t\u003e\u0026 GetBogusChallenge();\n\n// static\nconst std::vector\u003cuint8_t\u003e\u0026 U2fRequest::GetBogusAppParam() {\n  static const std::vector\u003cuint8_t\u003e kBogusAppParam(32, 0x41);\n  return kBogusAppParam;\n}\n\n// static\nconst std::vector\u003cuint8_t\u003e\u0026 U2fRequest::GetBogusChallenge() {\n  static const std::vector\u003cuint8_t\u003e kBogusChallenge(32, 0x42);\n  return kBogusChallenge;\n}\n\nThis means that the vectors will only be constructed once when the functions are first called.\n\nThe other way to declare constant data like this is as \"static const uint8_t kBogusAppParam[]\" but that makes them harder to use and introduces an extra copy every time you call a method that needs them to be a vector.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 66
+      },
+      "revId": "462a8d8fd04d295345644f58644a154b1fe0b873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39b0c6f6_3a107f2e",
+        "filename": "device/u2f/u2f_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-31T23:59:00Z",
+      "side": 1,
+      "message": "(I actually work with a lot of test data like this, too, so I appreciate the tip!)",
+      "parentUuid": "d8e2a93b_cb67f0c5",
       "range": {
         "startLine": 50,
         "startChar": 2,
