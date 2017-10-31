@@ -124,6 +124,56 @@ NavigationPolicy GetNavigationPolicy(const WebInputEvent* current_event,
   return policy;
 }
 
+bool isDefaultWindowFeatures(const WebWindowFeatures& a) {
+  WebWindowFeatures b = GetWindowFeaturesFromString("");
+  return a.x == b.x && a.x_set == b.x_set && a.y == b.y && a.y_set == b.y_set &&
+         a.width == b.width && a.width_set == b.width_set &&
+         a.height == b.height && a.height_set == b.height_set &&
+         a.menu_bar_visible == b.menu_bar_visible &&
+         a.status_bar_visible == b.status_bar_visible &&
+         a.tool_bar_visible == b.tool_bar_visible &&
+         a.scrollbars_visible == b.scrollbars_visible &&
+         a.resizable == b.resizable && a.noopener == b.noopener &&
+         a.background == b.background && a.persistent == b.persistent;
+}
+
+String GetStringForWindowFeatures(const WebWindowFeatures& window_features) {
+  if (isDefaultWindowFeatures(window_features))
+    return "";
+  String feature_string;
+  if (window_features.x_set)
+    feature_string.append(String::Format("left=%d,", int(window_features.x)));
+  if (window_features.y_set)
+    feature_string.append(String::Format("top=%d,", int(window_features.y)));
+  if (window_features.width_set) {
+    feature_string.append(
+        String::Format("width=%d,", int(window_features.width)));
+  }
+  if (window_features.height_set) {
+    feature_string.append(
+        String::Format("height=%d,", int(window_features.height)));
+  }
+  if (window_features.menu_bar_visible)
+    feature_string.append("menubar,");
+  if (window_features.tool_bar_visible)
+    feature_string.append("toolbar,");
+  if (window_features.status_bar_visible)
+    feature_string.append("status,");
+  if (window_features.scrollbars_visible)
+    feature_string.append("scrollbars,");
+  if (window_features.resizable)
+    feature_string.append("resizable,");
+  if (window_features.noopener)
+    feature_string.append("noopener,");
+  if (window_features.background)
+    feature_string.append("background,");
+  if (window_features.persistent)
+    feature_string.append("persistent,");
+  if (feature_string.EndsWith(","))
+    feature_string.Truncate(feature_string.length() - 1);
+  return feature_string;
+}
+
 }  // anonymous namespace
 
 NavigationPolicy EffectiveNavigationPolicy(NavigationPolicy policy,
@@ -351,7 +401,10 @@ static Frame* CreateWindowHelper(LocalFrame& opener_frame,
          opener_frame.GetDocument()->Url().IsEmpty());
   DCHECK_EQ(request.GetResourceRequest().GetFrameType(),
             WebURLRequest::kFrameTypeAuxiliary);
-
+  probe::windowOpen(opener_frame.GetDocument(),
+                    request.GetResourceRequest().Url(), request.FrameName(),
+                    GetStringForWindowFeatures(features),
+                    Frame::HasTransientUserActivation(&opener_frame));
   created = false;
 
   Frame* window =
