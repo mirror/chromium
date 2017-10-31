@@ -17,6 +17,10 @@
 // |frame|.
 - (UIView*)snapshotForStackViewWithWidth:(CGFloat)width;
 
+// Color of the background to be used. Returns nil if the default color should
+// be used.
+- (UIColor*)toolbarBackgroundColor;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_TOOLBAR_SNAPSHOT_PROVIDER_H_
