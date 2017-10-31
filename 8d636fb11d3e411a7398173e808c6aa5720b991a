@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab15fdb5_fb45458f",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-without-poster.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-31T16:46:01Z",
+      "side": 1,
+      "message": "The HasAvailableVideoFrame check looks for a readyState of \u003e\u003d kReadyStatecurrentData so at the loadedmetadata event it has only has kReadyStateHaveMetadata.",
+      "parentUuid": "c4ee37a3_239d3db8",
+      "revId": "8d636fb11d3e411a7398173e808c6aa5720b991a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "863b5c51_30431718",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 3
@@ -50,6 +68,24 @@
       "revId": "8d636fb11d3e411a7398173e808c6aa5720b991a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad823daa_a953883f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-31T16:46:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21f816a2_9eb73d59",
+      "revId": "8d636fb11d3e411a7398173e808c6aa5720b991a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
