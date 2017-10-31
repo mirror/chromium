@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_NETWORK_NETWORK_SERVICE_IMPL_H_
-#define CONTENT_NETWORK_NETWORK_SERVICE_IMPL_H_
+#ifndef CONTENT_NETWORK_NETWORK_SERVICE_H_
+#define CONTENT_NETWORK_NETWORK_SERVICE_H_
 
 #include <memory>
 #include <set>
@@ -12,7 +12,7 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
-#include "content/network/network_change_manager_impl.h"
+#include "content/network/network_change_manager.h"
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/network/network_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -33,18 +33,18 @@ namespace content {
 
 class NetworkContext;
 
-class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
-                                          public NetworkService {
+class CONTENT_EXPORT NetworkService : public service_manager::Service,
+                                      public NetworkService {
  public:
   // |net_log| is an optional shared NetLog, which will be used instead of the
   // service's own NetLog. It must outlive the NetworkService.
   //
   // TODO(https://crbug.com/767450): Once the NetworkService can always create
   // its own NetLog in production, remove the |net_log| argument.
-  NetworkServiceImpl(std::unique_ptr<service_manager::BinderRegistry> registry,
-                     net::NetLog* net_log = nullptr);
+  NetworkService(std::unique_ptr<service_manager::BinderRegistry> registry,
+                 net::NetLog* net_log = nullptr);
 
-  ~NetworkServiceImpl() override;
+  ~NetworkService() override;
 
   std::unique_ptr<mojom::NetworkContext> CreateNetworkContextWithBuilder(
       content::mojom::NetworkContextRequest request,
@@ -52,7 +52,7 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
       std::unique_ptr<net::URLRequestContextBuilder> builder,
       net::URLRequestContext** url_request_context) override;
 
-  static std::unique_ptr<NetworkServiceImpl> CreateForTesting();
+  static std::unique_ptr<NetworkService> CreateForTesting();
 
   // These are called by NetworkContexts as they are being created and
   // destroyed.
@@ -98,7 +98,7 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   std::unique_ptr<net::NetworkChangeNotifierFactoryAndroid>
       network_change_notifier_factory_;
 #endif
-  std::unique_ptr<NetworkChangeManagerImpl> network_change_manager_;
+  std::unique_ptr<NetworkChangeManager> network_change_manager_;
 
   std::unique_ptr<service_manager::BinderRegistry> registry_;
 
@@ -113,9 +113,9 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
 
   bool quic_disabled_ = false;
 
-  DISALLOW_COPY_AND_ASSIGN(NetworkServiceImpl);
+  DISALLOW_COPY_AND_ASSIGN(NetworkService);
 };
 
 }  // namespace content
 
-#endif  // CONTENT_NETWORK_NETWORK_SERVICE_IMPL_H_
+#endif  // CONTENT_NETWORK_NETWORK_SERVICE_H_

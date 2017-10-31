@@ -23,7 +23,7 @@
 #include "components/network_session_configurator/browser/network_session_configurator.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "content/network/network_context.h"
-#include "content/network/network_service_impl.h"
+#include "content/network/network_service.h"
 #include "content/public/common/network_service.mojom.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "net/base/cache_type.h"

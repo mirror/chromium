@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_NETWORK_NETWORK_SERVICE_URL_LOADER_FACTORY_IMPL_H_
-#define CONTENT_NETWORK_NETWORK_SERVICE_URL_LOADER_FACTORY_IMPL_H_
+#ifndef CONTENT_NETWORK_NETWORK_SERVICE_URL_LOADER_FACTORY_H_
+#define CONTENT_NETWORK_NETWORK_SERVICE_URL_LOADER_FACTORY_H_
 
 #include "base/macros.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -44,4 +44,4 @@ class NetworkServiceURLLoaderFactoryImpl : public mojom::URLLoaderFactory {
 
 }  // namespace content
 
-#endif  // CONTENT_NETWORK_NETWORK_SERVICE_URL_LOADER_FACTORY_IMPL_H_
+#endif  // CONTENT_NETWORK_NETWORK_SERVICE_URL_LOADER_FACTORY_H_
