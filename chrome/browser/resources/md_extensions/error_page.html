@@ -166,8 +166,9 @@
             <template is="dom-repeat" items="[[calculateShownItems_(data.*)]]">
               <div class="item-container">
                 <div class$="error-item [[computeErrorClass_(selectedError_, item)]]">
-                  <div class="start" on-tap="onErrorItemAction_"
-                      on-keydown="onErrorItemAction_" tabindex="0">
+                  <div class="start" on-mousedown="onErrorItemAction_"
+                      on-tap="onErrorItemAction_" on-keydown="onErrorItemAction_"
+                      tabIndex="0">
                     <iron-icon icon$="[[computeErrorIcon_(item)]]"></iron-icon>
                     <div class="error-message">[[item.message]]</div>
                     <cr-expand-button hidden="[[!computeIsRuntimeError_(item)]]"
