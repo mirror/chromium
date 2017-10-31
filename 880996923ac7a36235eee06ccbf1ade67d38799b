@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "fd0fd730_b8ff3a43",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-31T22:33:14Z",
+      "side": 1,
+      "message": "The problem probably is that if the call is made from the same thread that is supposed to handle the call it\u0027ll never actually handle the call, since the thread will be blocked. So you\u0027d have to either create the LocalStoragecontextMojo instance on a different thread, or change this method to post a task to a different thread to call GetAll, and then wait for a reply, but at that point there isn\u0027t really any benefit anymore to using the sync GetAll method, so yeah, might as well keep the code as you have it now.",
+      "parentUuid": "21185dda_ffcaf511",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3913a6d_fc927e8f",
         "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
         "patchSetId": 2
@@ -738,6 +756,24 @@
     },
     {
       "key": {
+        "uuid": "c9b155f8_0f99b70d",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-31T22:33:14Z",
+      "side": 1,
+      "message": "both can be null, but both can\u0027t be non-null, right? (if keys_only_map_ is set, keys_values_map_ has to be null and vice versa)",
+      "parentUuid": "21d93e56_9c86e25b",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f64d0a5a_0c87d5bc",
         "filename": "content/browser/leveldb_wrapper_impl.h",
         "patchSetId": 2
@@ -922,6 +958,24 @@
       "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ed3103f_bf007e97",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-31T22:33:14Z",
+      "side": 1,
+      "message": "I generally dislike tests that rely on implementation details for their tests (i.e. the fact that put and get call they callbacks sync).\n\nAlso not sure what would cause a crash if they aren\u0027t run sync? I thought task runners are flushed at the end of a test? Either way, relying on implementation details of other parts of the system (and possibly undefined behavior?) to catch problems in the implementation seems pretty bad. So if you\u0027re going to write this test to rely on callbacks being called sync at least add explicit assertions that the callbacks have in fact been called. Don\u0027t rely on implementation details without asserting that those details actually are true.",
+      "parentUuid": "1576b64e_09050e15",
+      "revId": "880996923ac7a36235eee06ccbf1ade67d38799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

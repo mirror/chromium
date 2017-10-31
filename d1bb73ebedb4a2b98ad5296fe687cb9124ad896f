@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b25457f8_14e14c2b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-31T22:33:14Z",
+      "side": 1,
+      "message": "that bug is about session storage (and marked as fixed), is there a bug for localstorage you should be using instead?",
+      "revId": "d1bb73ebedb4a2b98ad5296fe687cb9124ad896f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afdf2ccb_a9d8a245",
         "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
         "patchSetId": 10
@@ -19,6 +36,74 @@
     },
     {
       "key": {
+        "uuid": "ddfd50f7_f6492af8",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-31T22:33:14Z",
+      "side": 1,
+      "message": "no need to call callback after calling ReportBadMessage (as ReportBadMessage will close the pipe anyway)",
+      "revId": "d1bb73ebedb4a2b98ad5296fe687cb9124ad896f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0fe1bd_a7f5ee89",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-31T22:33:14Z",
+      "side": 1,
+      "message": "nit: I think you can just compare client_old_value directly to value",
+      "revId": "d1bb73ebedb4a2b98ad5296fe687cb9124ad896f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20b3415_24571279",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-31T22:33:14Z",
+      "side": 1,
+      "message": "nit: here too no need to invoke the callback",
+      "revId": "d1bb73ebedb4a2b98ad5296fe687cb9124ad896f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3635a22_69f5e934",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-31T22:33:14Z",
+      "side": 1,
+      "message": "since you have NOTREACHED() here anyway, you might as well skip calling the callback? Handling NOTREACHED() failures is generally frowned upon.\nAlso add a TODO here with the correct bug to get rid of this method.",
+      "revId": "d1bb73ebedb4a2b98ad5296fe687cb9124ad896f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50166c35_c9118e42",
         "filename": "content/browser/leveldb_wrapper_impl.h",
         "patchSetId": 10
@@ -30,6 +115,46 @@
       "writtenOn": "2017-10-30T21:09:12Z",
       "side": 1,
       "message": "Nit: no need for comma.",
+      "revId": "d1bb73ebedb4a2b98ad5296fe687cb9124ad896f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c91b6e_81944096",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-31T22:33:14Z",
+      "side": 1,
+      "message": "nit: maybe add a comment here that the values in this map are only used if load state \u003d\u003d KEYS_ONLY?",
+      "revId": "d1bb73ebedb4a2b98ad5296fe687cb9124ad896f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad67cb43_5ca4a506",
+        "filename": "content/common/leveldb_wrapper.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-31T22:33:14Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem to be the right bug number?",
+      "range": {
+        "startLine": 78,
+        "startChar": 39,
+        "endLine": 78,
+        "endChar": 55
+      },
       "revId": "d1bb73ebedb4a2b98ad5296fe687cb9124ad896f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
