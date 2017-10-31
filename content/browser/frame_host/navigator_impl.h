@@ -119,7 +119,8 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
                        bool is_same_document_history_load,
                        bool is_history_navigation_in_new_child,
                        bool is_pending_entry,
-                       const scoped_refptr<ResourceRequestBody>& post_body);
+                       const scoped_refptr<ResourceRequestBody>& post_body,
+                       const base::UnguessableToken& devtools_navigation_token);
 
   // PlzNavigate: if needed, sends a BeforeUnload IPC to the renderer to ask it
   // to execute the beforeUnload event. Otherwise, the navigation request will
@@ -134,7 +135,8 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
                          bool is_same_document_history_load,
                          bool is_history_navigation_in_new_child,
                          const scoped_refptr<ResourceRequestBody>& post_body,
-                         base::TimeTicks navigation_start);
+                         base::TimeTicks navigation_start,
+                         const base::UnguessableToken& devtools_navigation_token);
 
   void RecordNavigationMetrics(
       const LoadCommittedDetails& details,
