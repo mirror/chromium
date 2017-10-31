@@ -66,7 +66,8 @@
       </div>
       <template is="dom-if" if="[[shownExtensions_.length]]">
         <div class="items-container">
-          <template is="dom-repeat" items="[[shownExtensions_]]">
+          <template is="dom-repeat" items="[[shownExtensions_]]"
+              initial-count="3">
             <extensions-item data="[[item]]" delegate="[[delegate]]"
                 in-dev-mode="[[inDevMode]]">
             </extensions-item>
