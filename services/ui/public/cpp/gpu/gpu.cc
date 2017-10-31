@@ -4,6 +4,7 @@
 
 #include "services/ui/public/cpp/gpu/gpu.h"
 
+#include "base/debug/stack_trace.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -127,8 +128,11 @@ void Gpu::EstablishGpuChannel(
       base::Bind(&Gpu::OnEstablishedGpuChannel, base::Unretained(this)));
 }
 
-scoped_refptr<gpu::GpuChannelHost> Gpu::EstablishGpuChannelSync() {
+scoped_refptr<gpu::GpuChannelHost> Gpu::EstablishGpuChannelSync(
+    bool* connection_error) {
   DCHECK(IsMainThread());
+  if (connection_error)
+    *connection_error = false;
   if (GetGpuChannel())
     return gpu_channel_;
   if (!gpu_ || !gpu_.is_bound())
@@ -141,7 +145,11 @@ scoped_refptr<gpu::GpuChannelHost> Gpu::EstablishGpuChannelSync() {
   mojo::SyncCallRestrictions::ScopedAllowSyncCall allow_sync_call;
   if (!gpu_->EstablishGpuChannel(&client_id, &channel_handle, &gpu_info,
                                  &gpu_feature_info)) {
-    DLOG(WARNING) << "Encountered error while establishing gpu channel.";
+    DLOG(WARNING) << "Encountered error while establishing gpu channel."
+                  << "\n"
+                  << base::debug::StackTrace().ToString();
+    if (connection_error)
+      *connection_error = true;
     return nullptr;
   }
   OnEstablishedGpuChannel(client_id, std::move(channel_handle), gpu_info,
