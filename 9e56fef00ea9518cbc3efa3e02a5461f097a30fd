@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f675cd46_1a92a302",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T17:46:16Z",
+      "side": 1,
+      "message": "Were you going to add a test for creating a mirroring route controller?",
+      "revId": "9e56fef00ea9518cbc3efa3e02a5461f097a30fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2f4b37_17829e13",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T17:46:16Z",
+      "side": 1,
+      "message": "revert this line",
+      "revId": "9e56fef00ea9518cbc3efa3e02a5461f097a30fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5047d864_c60eca5b",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T17:46:16Z",
+      "side": 1,
+      "message": "you will need to export MirroringMediaRouteController",
+      "revId": "9e56fef00ea9518cbc3efa3e02a5461f097a30fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
