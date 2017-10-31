@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2655828d_97b33ccc",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-31T20:37:37Z",
+      "side": 1,
+      "message": "You\u0027re absolutely right... needed more coffee this morning...\n\nSo, if I understand correctly, this flag isn\u0027t used at all now, so it won\u0027t have any impact in ToT. Historically, this may control whether we use IOSurfaces for GPU Raster in 62/63 when merged, but won\u0027t change things in ToT.\n\nSunny, how do we disable GPU raster to IOSurfaces after your change?",
+      "parentUuid": "97c0cce4_811483f4",
+      "range": {
+        "startLine": 340,
+        "startChar": 6,
+        "endLine": 340,
+        "endChar": 27
+      },
+      "revId": "00e0ee5e1a742d9a57cc5a5244554f559b27fc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d16c3e9_f2393f0b",
         "filename": "gpu/config/gpu_driver_bug_list.json",
         "patchSetId": 4
