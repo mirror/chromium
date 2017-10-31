@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 from telemetry.page import page as page_module
+from telemetry.page import traffic_setting as traffic_setting_module
 from telemetry import story
 
 _PAGE_TAGS_LIST = [
@@ -33,23 +34,27 @@ _PAGE_TAGS_LIST = [
 
 class ToughVideoCasesPage(page_module.Page):
 
-  def __init__(self, url, page_set, tags, extra_browser_args=None):
+  def __init__(self, url, page_set, tags, extra_browser_args=None,
+               traffic_setting=traffic_setting_module.NONE):
     if tags:
       for t in tags:
         assert t in _PAGE_TAGS_LIST
     super(ToughVideoCasesPage, self).__init__(
         url=url, page_set=page_set, tags=tags, name=url.split('/')[-1],
-        extra_browser_args=extra_browser_args)
+        extra_browser_args=extra_browser_args,
+        traffic_setting=traffic_setting)
 
 
 class BeginningToEndPlayPage(ToughVideoCasesPage):
   """A normal play page simply plays the given media until the end."""
 
-  def __init__(self, url, page_set, tags, extra_browser_args=None):
+  def __init__(self, url, page_set, tags, extra_browser_args=None,
+               traffic_setting=traffic_setting_module.NONE):
     tags.append('beginning_to_end')
     self.add_browser_metrics = True
     super(BeginningToEndPlayPage, self).__init__(
-        url, page_set, tags, extra_browser_args)
+        url, page_set, tags, extra_browser_args,
+        traffic_setting=traffic_setting)
 
   def RunPageInteractions(self, action_runner):
     # Play the media until it has finished or it times out.
@@ -63,12 +68,14 @@ class SeekPage(ToughVideoCasesPage):
   """A seek page seeks twice in the video and measures the seek time."""
 
   def __init__(self, url, page_set, tags, extra_browser_args=None,
-               action_timeout_in_seconds=60):
+               action_timeout_in_seconds=60,
+               traffic_setting=traffic_setting_module.NONE):
     tags.append('seek')
     self.skip_basic_metrics = True
     self._action_timeout = action_timeout_in_seconds
     super(SeekPage, self).__init__(
-        url, page_set, tags, extra_browser_args)
+        url, page_set, tags, extra_browser_args,
+        traffic_setting=traffic_setting)
 
   def RunPageInteractions(self, action_runner):
     timeout = self._action_timeout
@@ -94,7 +101,8 @@ class BackgroundPlaybackPage(ToughVideoCasesPage):
   """
 
   def __init__(self, url, page_set, tags, extra_browser_args=None,
-               background_time=10):
+               background_time=10,
+               traffic_setting=traffic_setting_module.NONE):
     self._background_time = background_time
     self.skip_basic_metrics = True
     tags.append('background')
@@ -349,6 +357,17 @@ class Page38(BeginningToEndPlayPage):
       url='file://tough_video_cases/video.html?src=tulip2.mp4&busyjs',
       page_set=page_set,
       tags=['h264', 'aac', 'audio_video', 'busyjs'])
+
+
+class Page43(BeginningToEndPlayPage):
+
+  def __init__(self, page_set):
+    super(Page43, self).__init__(
+      url='file://tough_video_cases/video.html?src=tulip2.vp9.webm',
+      page_set=page_set,
+      tags=['vp9', 'opus', 'audio_video'],
+      traffic_setting=traffic_setting_module.REGULAR_3G)
+
 
 
 class ToughVideoCasesPageSet(story.StorySet):

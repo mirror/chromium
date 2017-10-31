@@ -20,22 +20,6 @@
        params[d(match[1])] = d(match[2]);
       return params;
     }
-    // Each network config = [DOWNLOAD_BANDWIDTH_Kbit/s, LATENCY_MS]
-    // Numbers are chosen to be similar to webpagereplay/net_configs.py
-    var netConfig = {};
-    netConfig['cable'] = [5120, 28];
-    netConfig['dsl'] = [1536, 50];
-    netConfig['wifi'] = [1024, 60];
-    netConfig['none'] = null;
-    // Constrained network server URL.
-    var CNS_BASE_URL = 'http://cns.chrome:9000/ServeConstrained?';
-
-    function getNetsimURL(net) {
-      if (!netConfig[net])
-        return CNS_BASE_URL;
-      return CNS_BASE_URL + 'bandwidth=' + netConfig[net][0] +
-          '&latency=' + netConfig[net][1]
-    }
 
     function getMediaSRC() {
       var mediaSRC = qsParams['src']
