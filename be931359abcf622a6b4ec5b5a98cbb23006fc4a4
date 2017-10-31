@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74f5b918_3b55bdd7",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFace.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-31T16:49:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9668dcc1_33511ab6",
+      "revId": "be931359abcf622a6b4ec5b5a98cbb23006fc4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa5ae860_59fc1501",
         "filename": "third_party/WebKit/Source/core/css/CSSFontFace.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "be931359abcf622a6b4ec5b5a98cbb23006fc4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20fc58f7_d36bafc3",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFace.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-31T16:49:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa5ae860_59fc1501",
+      "revId": "be931359abcf622a6b4ec5b5a98cbb23006fc4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2f58ed57_ac5a07dd",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-31T16:49:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74952eaf_f2137c3b",
+      "revId": "be931359abcf622a6b4ec5b5a98cbb23006fc4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11147da5_cd50efc0",
         "filename": "third_party/WebKit/Source/core/css/FontFaceSetWorker.cpp",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "be931359abcf622a6b4ec5b5a98cbb23006fc4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1408f48_1330c65e",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSetWorker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-31T16:49:59Z",
+      "side": 1,
+      "message": "nahh. The STATIC_LOCAL AtomicStrings can\u0027t be shared across threads, so creating them once on Document will break them on Workers.",
+      "parentUuid": "11147da5_cd50efc0",
+      "revId": "be931359abcf622a6b4ec5b5a98cbb23006fc4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
