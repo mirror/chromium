@@ -34,6 +34,24 @@
       "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3dec85e3_afbcde5f",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-10-31T09:05:17Z",
+      "side": 1,
+      "message": "Unfortunately it won\u0027t work. Sync to the server skips component extensions. They won\u0027t get sent to server. At least that was the case around a year ago when I wrote a similar hack. See: https://codereview.chromium.org/2647783003",
+      "parentUuid": "6b6c4f5b_eda13ce9",
+      "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
