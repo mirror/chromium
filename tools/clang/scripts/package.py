@@ -183,13 +183,6 @@ def main():
   else:
     platform = 'Linux_x64'
 
-  # Check if Google Cloud Storage already has the artifacts we want to build.
-  if args.upload and GsutilArchiveExists(pdir, platform):
-    print ('Desired toolchain revision %s is already available '
-           'in Google Cloud Storage:') % expected_stamp
-    print 'gs://chromium-browser-clang-staging/%s/%s.tgz' % (platform, pdir)
-    return 0
-
   with open('buildlog.txt', 'w') as log:
     Tee('Diff in llvm:\n', log)
     TeeCmd(['svn', 'stat', LLVM_DIR], log, fail_hard=False)
