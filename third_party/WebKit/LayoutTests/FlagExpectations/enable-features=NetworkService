@@ -20,7 +20,6 @@ Bug(none) external/wpt/cssom-view/scrolling-quirks-vs-nonquirks.html [ Failure T
 Bug(none) external/wpt/cssom-view/scrollingElement.html [ Failure Timeout Crash ]
 Bug(none) external/wpt/fetch/api/basic/accept-header.any.html [ Failure ]
 Bug(none) external/wpt/fetch/api/basic/accept-header.any.worker.html [ Failure ]
-Bug(none) external/wpt/fetch/api/cors/cors-cookies.any.html [ Failure Pass ]
 Bug(none) external/wpt/html/browsers/history/the-location-interface/location-protocol-setter-non-broken-weird.html [ Failure Timeout Failure ]
 Bug(none) external/wpt/html/browsers/offline/appcache/workers/appcache-worker.html [ Timeout ]
 Bug(none) external/wpt/html/semantics/embedded-content/the-iframe-element/iframe-load-event.html [ Crash Failure Timeout ]
