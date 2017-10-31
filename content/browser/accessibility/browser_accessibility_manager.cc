@@ -877,7 +877,7 @@ BrowserAccessibilityManager::FindTextOnlyObjectsInRange(
 
   const BrowserAccessibility* start_text_object = nullptr;
   const BrowserAccessibility* end_text_object = nullptr;
-  if (&start_object == &end_object && start_object.IsSimpleTextControl()) {
+  if (&start_object == &end_object && start_object.IsPlainTextField()) {
     // We need to get to the shadow DOM that is inside the text control in order
     // to find the text-only objects.
     if (!start_object.InternalChildCount())
@@ -934,7 +934,7 @@ base::string16 BrowserAccessibilityManager::GetTextForRange(
   DCHECK_GE(start_offset, 0);
   DCHECK_GE(end_offset, 0);
 
-  if (&start_object == &end_object && start_object.IsSimpleTextControl()) {
+  if (&start_object == &end_object && start_object.IsPlainTextField()) {
     if (start_offset > end_offset)
       std::swap(start_offset, end_offset);
 
@@ -1004,7 +1004,7 @@ gfx::Rect BrowserAccessibilityManager::GetPageBoundsForRange(
   DCHECK_GE(start_offset, 0);
   DCHECK_GE(end_offset, 0);
 
-  if (&start_object == &end_object && start_object.IsSimpleTextControl()) {
+  if (&start_object == &end_object && start_object.IsPlainTextField()) {
     if (start_offset > end_offset)
       std::swap(start_offset, end_offset);
 
