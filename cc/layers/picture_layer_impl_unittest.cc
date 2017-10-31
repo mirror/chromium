@@ -3380,20 +3380,26 @@ TEST_F(PictureLayerImplTest, LowResReadyToDrawNotEnoughToActivate) {
   SetupDefaultTreesWithFixedTileSize(layer_bounds, tile_size, invalidation);
 
   // All pending layer tiles required are not ready.
-  EXPECT_FALSE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_FALSE(
+      host_impl()->tile_manager()->AreRequiredTilesReadyToDrawForTesting(
+          RasterTilePriorityQueue::Type::REQUIRED_FOR_ACTIVATION));
 
   // Initialize all low-res tiles.
   EXPECT_FALSE(pending_layer()->LowResTiling());
   pending_layer()->SetAllTilesReadyInTiling(active_layer()->LowResTiling());
 
   // Low-res tiles should not be enough.
-  EXPECT_FALSE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_FALSE(
+      host_impl()->tile_manager()->AreRequiredTilesReadyToDrawForTesting(
+          RasterTilePriorityQueue::Type::REQUIRED_FOR_ACTIVATION));
 
   // Initialize remaining tiles.
   pending_layer()->SetAllTilesReady();
   active_layer()->SetAllTilesReady();
 
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(
+      host_impl()->tile_manager()->AreRequiredTilesReadyToDrawForTesting(
+          RasterTilePriorityQueue::Type::REQUIRED_FOR_ACTIVATION));
 }
 
 TEST_F(PictureLayerImplTest, HighResReadyToDrawEnoughToActivate) {
@@ -3405,14 +3411,18 @@ TEST_F(PictureLayerImplTest, HighResReadyToDrawEnoughToActivate) {
   SetupDefaultTreesWithFixedTileSize(layer_bounds, tile_size, invalidation);
 
   // All pending layer tiles required are not ready.
-  EXPECT_FALSE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_FALSE(
+      host_impl()->tile_manager()->AreRequiredTilesReadyToDrawForTesting(
+          RasterTilePriorityQueue::Type::REQUIRED_FOR_ACTIVATION));
 
   // Initialize all high-res tiles.
   pending_layer()->SetAllTilesReadyInTiling(pending_layer()->HighResTiling());
   active_layer()->SetAllTilesReadyInTiling(active_layer()->HighResTiling());
 
   // High-res tiles should be enough, since they cover everything visible.
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(
+      host_impl()->tile_manager()->AreRequiredTilesReadyToDrawForTesting(
+          RasterTilePriorityQueue::Type::REQUIRED_FOR_ACTIVATION));
 }
 
 TEST_F(PictureLayerImplTest, ActiveHighResReadyNotEnoughToActivate) {
@@ -3427,11 +3437,15 @@ TEST_F(PictureLayerImplTest, ActiveHighResReadyNotEnoughToActivate) {
   active_layer()->SetAllTilesReadyInTiling(active_layer()->HighResTiling());
 
   // The pending high-res tiles are not ready, so we cannot activate.
-  EXPECT_FALSE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_FALSE(
+      host_impl()->tile_manager()->AreRequiredTilesReadyToDrawForTesting(
+          RasterTilePriorityQueue::Type::REQUIRED_FOR_ACTIVATION));
 
   // When the pending high-res tiles are ready, we can activate.
   pending_layer()->SetAllTilesReadyInTiling(pending_layer()->HighResTiling());
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(
+      host_impl()->tile_manager()->AreRequiredTilesReadyToDrawForTesting(
+          RasterTilePriorityQueue::Type::REQUIRED_FOR_ACTIVATION));
 }
 
 TEST_F(NoLowResPictureLayerImplTest, ManageTilingsCreatesTilings) {
@@ -4648,7 +4662,9 @@ TEST_F(PictureLayerImplTest, ChangeInViewportAllowsTilingUpdates) {
   pending_layer()->HighResTiling()->UpdateAllRequiredStateForTesting();
 
   // Ensure we can't activate.
-  EXPECT_FALSE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_FALSE(
+      host_impl()->tile_manager()->AreRequiredTilesReadyToDrawForTesting(
+          RasterTilePriorityQueue::Type::REQUIRED_FOR_ACTIVATION));
 
   // Now in the same frame, move the viewport (this can happen during
   // animation).
@@ -4681,7 +4697,9 @@ TEST_F(PictureLayerImplTest, ChangeInViewportAllowsTilingUpdates) {
   host_impl()->tile_manager()->InitializeTilesWithResourcesForTesting(tiles);
 
   // Ensure we can activate.
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(
+      host_impl()->tile_manager()->AreRequiredTilesReadyToDrawForTesting(
+          RasterTilePriorityQueue::Type::REQUIRED_FOR_ACTIVATION));
 }
 
 TEST_F(PictureLayerImplTest, CloneMissingRecordings) {

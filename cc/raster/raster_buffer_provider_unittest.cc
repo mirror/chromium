@@ -404,6 +404,10 @@ TEST_P(RasterBufferProviderTest, LostContext) {
 }
 
 TEST_P(RasterBufferProviderTest, ReadyToDrawCallback) {
+  if (GetParam() != RASTER_BUFFER_PROVIDER_TYPE_ASYNC_GPU &&
+      GetParam() != RASTER_BUFFER_PROVIDER_TYPE_ASYNC_ONE_COPY)
+    return;
+
   AppendTask(0u);
   ScheduleTasks();
   RunMessageLoopUntilAllTasksHaveCompleted();
@@ -413,44 +417,10 @@ TEST_P(RasterBufferProviderTest, ReadyToDrawCallback) {
     array.push_back(resource->id());
   }
   base::RunLoop run_loop;
-  uint64_t callback_id = raster_buffer_provider_->SetReadyToDrawCallback(
+  raster_buffer_provider_->NotifyResourceReadyToDraw(
       array,
-      base::Bind([](base::RunLoop* run_loop) { run_loop->Quit(); }, &run_loop),
-      0);
-
-  if (GetParam() == RASTER_BUFFER_PROVIDER_TYPE_ASYNC_GPU ||
-      GetParam() == RASTER_BUFFER_PROVIDER_TYPE_ASYNC_ONE_COPY)
-    EXPECT_TRUE(callback_id);
-
-  if (!callback_id)
-    return;
-
+      base::Bind([](base::RunLoop* run_loop) { run_loop->Quit(); }, &run_loop));
   run_loop.Run();
-}
-
-TEST_P(RasterBufferProviderTest, ReadyToDrawCallbackNoDuplicate) {
-  AppendTask(0u);
-  ScheduleTasks();
-  RunMessageLoopUntilAllTasksHaveCompleted();
-
-  ResourceProvider::ResourceIdArray array;
-  for (const auto& resource : resources_) {
-    array.push_back(resource->id());
-  }
-
-  uint64_t callback_id = raster_buffer_provider_->SetReadyToDrawCallback(
-      array, base::Bind([]() {}), 0);
-
-  // Calling SetReadyToDrawCallback a second time for the same resources
-  // should return the same callback ID.
-  uint64_t callback_id_2 = raster_buffer_provider_->SetReadyToDrawCallback(
-      array, base::Bind([]() {}), 0);
-
-  EXPECT_EQ(callback_id, callback_id_2);
-
-  if (GetParam() == RASTER_BUFFER_PROVIDER_TYPE_ASYNC_GPU ||
-      GetParam() == RASTER_BUFFER_PROVIDER_TYPE_ASYNC_ONE_COPY)
-    EXPECT_TRUE(callback_id);
 }
 
 INSTANTIATE_TEST_CASE_P(

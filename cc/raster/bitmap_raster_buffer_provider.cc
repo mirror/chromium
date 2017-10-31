@@ -115,17 +115,16 @@ bool BitmapRasterBufferProvider::CanPartialRasterIntoProvidedResource() const {
 }
 
 bool BitmapRasterBufferProvider::IsResourceReadyToDraw(
-    viz::ResourceId resource_id) const {
+    viz::ResourceId resource_id) {
   // Bitmap resources are immediately ready to draw.
   return true;
 }
 
-uint64_t BitmapRasterBufferProvider::SetReadyToDrawCallback(
-    const ResourceProvider::ResourceIdArray& resource_ids,
-    const base::Closure& callback,
-    uint64_t pending_callback_id) const {
+void BitmapRasterBufferProvider::NotifyResourceReadyToDraw(
+    const std::vector<viz::ResourceId>& resource_ids,
+    const base::Closure& callback) {
   // Bitmap resources are immediately ready to draw.
-  return 0;
+  callback.Run();
 }
 
 void BitmapRasterBufferProvider::Shutdown() {}
