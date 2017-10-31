@@ -10,6 +10,7 @@
 #include <string>
 
 #include "ash/wm/window_state_observer.h"
+#include "ash/wm/wm_event.h"
 #include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "base/optional.h"
@@ -30,6 +31,9 @@ namespace ash {
 class WindowResizer;
 namespace mojom {
 enum class WindowPinType;
+}
+namespace wm {
+class ClientControlledState;
 }
 }
 
@@ -290,6 +294,12 @@ class ShellSurface : public SurfaceTreeHost,
   struct Config;
   class ScopedConfigure;
   class ScopedAnimationsDisabled;
+  class CustomClientControlledStateDelegate;
+  class CustomWindowStateDelegate;
+  /*
+  friend class CustomClientControlledStateDelegate;
+  friend class CustomWindowStateDelegate;
+  */
 
   // Creates the |widget_| for |surface_|. |show_state| is the initial state
   // of the widget (e.g. maximized).
@@ -344,6 +354,12 @@ class ShellSurface : public SurfaceTreeHost,
   // crbug.com/765954
   void EnsureCompositorIsLockedForOrientationChange();
 
+  bool ToggleFullscreen(ash::mojom::WindowStateType current_state);
+  void SendWindowStateRequest(ash::mojom::WindowStateType current_state,
+                              ash::wm::WMEventType type);
+  void SendBoundsRequest(ash::mojom::WindowStateType current_state,
+                         const gfx::Rect& bounds);
+
   views::Widget* widget_ = nullptr;
   aura::Window* parent_;
   const BoundsMode bounds_mode_;
@@ -387,6 +403,7 @@ class ShellSurface : public SurfaceTreeHost,
   std::unique_ptr<ui::CompositorLock> orientation_compositor_lock_;
   bool system_modal_ = false;
   bool non_system_modal_window_was_active_ = false;
+  ash::wm::ClientControlledState* client_controlled_state_ = nullptr;
   gfx::ImageSkia icon_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellSurface);
