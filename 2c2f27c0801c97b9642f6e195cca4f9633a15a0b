@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71c3a8d8_29059e1c",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-31T01:04:54Z",
+      "side": 1,
+      "message": "I think you should check document_under_mouse_ for nullptr before doing this hit test.  local_root.DocumentAtPoint() already does the same hit test (with a null check).  Maybe this:\n\nif (!prevented_default \u0026\u0026 document_under_mouse_) {\n  ...\n  CHECK(result.InnerNode());\n  ...\n}",
+      "revId": "2c2f27c0801c97b9642f6e195cca4f9633a15a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
