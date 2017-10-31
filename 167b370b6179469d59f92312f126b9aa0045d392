@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2fcb4650_dccaaa57",
+        "filename": "base/metrics/histogram.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-31T20:15:53Z",
+      "side": 1,
+      "message": "Exactly.  Android std::string, on 32-bit, is 12 bytes which will now become only 4 so moving it down two words keeps it in the same place.  Windows std::string is 28 bytes (thanks to internal short-string storage) so the offset is completely different.\n\nI do plan to remove it completely but I have another CL dedicated to that.",
+      "parentUuid": "1258edad_711cb4e5",
+      "range": {
+        "startLine": 326,
+        "startChar": 25,
+        "endLine": 326,
+        "endChar": 0
+      },
+      "revId": "167b370b6179469d59f92312f126b9aa0045d392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69deaaed_3e307241",
         "filename": "base/metrics/histogram_base.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "167b370b6179469d59f92312f126b9aa0045d392",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560a22e0_e943bbf8",
+        "filename": "base/metrics/histogram_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-31T20:15:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69deaaed_3e307241",
+      "range": {
+        "startLine": 269,
+        "startChar": 63,
+        "endLine": 269,
+        "endChar": 0
+      },
+      "revId": "167b370b6179469d59f92312f126b9aa0045d392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
