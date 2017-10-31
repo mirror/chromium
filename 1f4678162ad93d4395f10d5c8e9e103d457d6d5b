@@ -229,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "53fb213a_d2355736",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-without-poster.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-31T11:01:35Z",
+      "side": 1,
+      "message": "Chrome doesn\u0027t really do that. We usually download the first couple of frames.",
+      "parentUuid": "2512c9df_19695dc0",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1398dcf_0fc4a0e9",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 1
@@ -293,6 +311,24 @@
       "side": 1,
       "message": "There are no setters/getters that use DOMTokenList so you would still need to create a space separated string.",
       "parentUuid": "44eebfdc_ec67a255",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b4fb69_3a8dc3cd",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-31T11:01:35Z",
+      "side": 1,
+      "message": "Couldn\u0027t you use classList()?",
+      "parentUuid": "3399b1c9_6cc3cbb4",
       "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -398,6 +434,24 @@
       "side": 1,
       "message": "It is a gradient, but the panel that sits on top of it provides the gradient.",
       "parentUuid": "e5d46e13_3ee7365f",
+      "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcc4b22d_ce9b4e21",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-31T11:01:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "861645f3_9403358f",
       "revId": "1f4678162ad93d4395f10d5c8e9e103d457d6d5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
