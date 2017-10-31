@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d6f1e5d_421f7da5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-10-31T07:25:38Z",
+      "side": 1,
+      "message": "nit: Adding",
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d7772c0_b692109c",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3601,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-10-31T07:25:38Z",
+      "side": 1,
+      "message": "Naming is confusing. Sometimes is smb, sometimes samba, sometimes there is pfs suffix, sometimes client. Sometimes there is native prefix, sometimes not. Let\u0027s choose one naming and keep consistent. Unless we actually deal with multiple different things?",
+      "range": {
+        "startLine": 3601,
+        "startChar": 6,
+        "endLine": 3601,
+        "endChar": 20
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2e7c39e_0627315e",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3642,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-10-31T07:25:38Z",
+      "side": 1,
+      "message": "Why this change? Is it related to this CL or caused by rebase?",
+      "range": {
+        "startLine": 3642,
+        "startChar": 22,
+        "endLine": 3642,
+        "endChar": 24
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e90aed1_85660271",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2540,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-10-31T07:25:38Z",
+      "side": 1,
+      "message": "Is it Smb or Samba? Some variables use smb. Which one is the correct term? We should IMHO use one.",
+      "range": {
+        "startLine": 2540,
+        "startChar": 63,
+        "endLine": 2540,
+        "endChar": 68
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f96cc321_80c72023",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2540,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-10-31T07:25:38Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 2540,
+        "startChar": 28,
+        "endLine": 2540,
+        "endChar": 34
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0cb577a_37de335d",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-10-31T07:25:38Z",
+      "side": 1,
+      "message": "nit: remove native.",
+      "range": {
+        "startLine": 443,
+        "startChar": 63,
+        "endLine": 443,
+        "endChar": 69
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97cff200_fd8b3267",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-10-31T07:25:38Z",
+      "side": 1,
+      "message": "files app -\u003e Files app.",
+      "range": {
+        "startLine": 443,
+        "startChar": 70,
+        "endLine": 443,
+        "endChar": 79
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9af9870_56edd40c",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-10-31T07:25:38Z",
+      "side": 1,
+      "message": "nit: Remove space.",
+      "range": {
+        "startLine": 445,
+        "startChar": 18,
+        "endLine": 445,
+        "endChar": 19
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "acf1186c_585c0fe0",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-10-31T07:25:38Z",
+      "side": 1,
+      "message": "nit: Similarly here. Should it be kNativeSamba, or maybe kNativeSambaClient, or kNativeSmbClient? We should be consistent with one version.",
+      "range": {
+        "startLine": 233,
+        "startChar": 27,
+        "endLine": 233,
+        "endChar": 37
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
