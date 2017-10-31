@@ -45,6 +45,26 @@ static const char kPaymentResponseShippingOption[] = "shippingOption";
 
 }  // namespace
 
+BOOL CanPay(const payments::PaymentRequest& paymentRequest) {
+  return paymentRequest.selected_payment_method() != nullptr &&
+         (paymentRequest.selected_shipping_option() != nullptr ||
+          !RequestShipping(paymentRequest)) &&
+         (paymentRequest.selected_shipping_profile() != nullptr ||
+          !RequestShipping(paymentRequest)) &&
+         (paymentRequest.selected_contact_profile() != nullptr ||
+          !RequestContactInfo(paymentRequest));
+}
+
+BOOL RequestShipping(const payments::PaymentRequest& paymentRequest) {
+  return paymentRequest.request_shipping();
+}
+
+BOOL RequestContactInfo(const payments::PaymentRequest& paymentRequest) {
+  return paymentRequest.request_payer_name() ||
+         paymentRequest.request_payer_email() ||
+         paymentRequest.request_payer_phone();
+}
+
 std::unique_ptr<base::DictionaryValue> PaymentResponseToDictionaryValue(
     const payments::PaymentResponse& response) {
   auto result = std::make_unique<base::DictionaryValue>();
