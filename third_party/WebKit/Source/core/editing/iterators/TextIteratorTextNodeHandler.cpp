@@ -117,8 +117,8 @@ void TextIteratorTextNodeHandler::HandleTextNodeWithLayoutNG() {
       const String& string = string_and_offsets.first;
       const unsigned text_content_start = string_and_offsets.second.first;
       const unsigned text_content_end = string_and_offsets.second.second;
-      text_state_.EmitText(text_node_, run_start, run_end, string,
-                           text_content_start, text_content_end);
+      EmitTextInternal(text_node_, run_start, run_end, string,
+                       text_content_start, text_content_end);
       offset_ = run_end;
       return;
     }
@@ -552,15 +552,33 @@ void TextIteratorTextNodeHandler::EmitText(Node* text_node,
                                            LayoutText* layout_object,
                                            unsigned text_start_offset,
                                            unsigned text_end_offset) {
+  // Note: When |text_node| has CSS property "-webkit-text-security" and
+  // its value other than "none", we get bullet characters from
+  // |LayoutText::GetText()|.
   String string = behavior_.EmitsOriginalText() ? layout_object->OriginalText()
                                                 : layout_object->GetText();
   if (behavior_.EmitsSpaceForNbsp())
     string.Replace(kNoBreakSpaceCharacter, kSpaceCharacter);
-  text_state_.EmitText(text_node,
-                       text_start_offset + layout_object->TextStartOffset(),
-                       text_end_offset + layout_object->TextStartOffset(),
-                       string, text_start_offset, text_end_offset);
+  EmitTextInternal(text_node,
+                   text_start_offset + layout_object->TextStartOffset(),
+                   text_end_offset + layout_object->TextStartOffset(), string,
+                   text_start_offset, text_end_offset);
   ResetCollapsedWhiteSpaceFixup();
+}
+
+void TextIteratorTextNodeHandler::EmitTextInternal(
+    Node* text_node,
+    unsigned position_start_offset,
+    unsigned position_end_offset,
+    const String& string,
+    unsigned text_start_offset,
+    unsigned text_end_offset) {
+  text_state_.EmitText(
+      text_node, position_start_offset, position_end_offset,
+      behavior_.EmitsSmallXForTextSecurity() && IsTextSecurityNode(text_node)
+          ? RepeatString("x", string.length())
+          : string,
+      text_start_offset, text_end_offset);
 }
 
 }  // namespace blink
