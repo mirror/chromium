@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8a62ead_cc88203a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T21:10:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f69f7232_cd686f21",
+      "revId": "206c251a5b9c49c8ae70930a94119a01856c4f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10f6a9bb_319429e4",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "206c251a5b9c49c8ae70930a94119a01856c4f66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5da1042_812be151",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T21:10:11Z",
+      "side": 1,
+      "message": "Nope. Removed.",
+      "parentUuid": "10f6a9bb_319429e4",
+      "revId": "206c251a5b9c49c8ae70930a94119a01856c4f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -68,6 +104,24 @@
       "revId": "206c251a5b9c49c8ae70930a94119a01856c4f66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7330324b_83c15ec6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T21:10:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb5c0349_76da2e4b",
+      "revId": "206c251a5b9c49c8ae70930a94119a01856c4f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
