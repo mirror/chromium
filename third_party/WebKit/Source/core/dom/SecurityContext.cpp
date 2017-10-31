@@ -46,8 +46,8 @@ void SecurityContext::Trace(blink::Visitor* visitor) {
 }
 
 void SecurityContext::SetSecurityOrigin(
-    scoped_refptr<const SecurityOrigin> security_origin) {
-  security_origin_ = security_origin->IsolatedCopy();
+    scoped_refptr<SecurityOrigin> security_origin) {
+  security_origin_ = security_origin;
   UpdateFeaturePolicyOrigin();
 }
 

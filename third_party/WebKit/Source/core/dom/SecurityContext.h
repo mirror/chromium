@@ -64,7 +64,7 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
   // Explicitly override the security origin for this security context.
   // Note: It is dangerous to change the security origin of a script context
   //       that already contains content.
-  void SetSecurityOrigin(scoped_refptr<const SecurityOrigin>);
+  void SetSecurityOrigin(scoped_refptr<SecurityOrigin>);
   virtual void DidUpdateSecurityOrigin() = 0;
 
   SandboxFlags GetSandboxFlags() const { return sandbox_flags_; }
