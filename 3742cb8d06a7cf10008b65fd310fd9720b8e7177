@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17813390_df13768c",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2052,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-31T22:25:41Z",
+      "side": 1,
+      "message": "OH. I put the connection error early out here (in mash code)",
+      "revId": "3742cb8d06a7cf10008b65fd310fd9720b8e7177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98663dc_1ddd12d9",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2100,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-31T22:25:41Z",
+      "side": 1,
+      "message": "But forgot it here, that\u0027s why tests are failing and keep making compositor contexts. Woops.\n\nRemoved the StackTrace() printing again and we\u0027ll see how CQ goes now.",
+      "revId": "3742cb8d06a7cf10008b65fd310fd9720b8e7177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
