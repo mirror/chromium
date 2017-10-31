@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98ef53dc_3d079ef5",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_header_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-31T17:34:42Z",
+      "side": 1,
+      "message": "Is this correct on incognito? Can you just reference the background of another existing view instead?",
+      "range": {
+        "startLine": 236,
+        "startChar": 18,
+        "endLine": 236,
+        "endChar": 28
+      },
+      "revId": "d05256b2947b55d3972b13eb209b58b801c697e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951f033f_c26e300c",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_snapshot_providing.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-31T17:34:42Z",
+      "side": 1,
+      "message": "nit: Used for what?\n\nnit: Protocols should describe behavior in terms of what an implementing object should do, so \"Asks the provider for the color of the background to be used for \u003cwhatever\u003e. A nil value indicates the default color will be used\".",
+      "range": {
+        "startLine": 20,
+        "startChar": 33,
+        "endLine": 20,
+        "endChar": 37
+      },
+      "revId": "d05256b2947b55d3972b13eb209b58b801c697e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
