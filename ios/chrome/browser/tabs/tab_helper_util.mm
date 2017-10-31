@@ -74,7 +74,6 @@ void AttachTabHelpers(web::WebState* web_state) {
   FindTabHelper::CreateForWebState(web_state, tab.findInPageControllerDelegate);
   StoreKitTabHelper::CreateForWebState(web_state);
   PagePlaceholderTabHelper::CreateForWebState(web_state, tab);
-  CaptivePortalDetectorTabHelper::CreateForWebState(web_state);
   HistoryTabHelper::CreateForWebState(web_state);
   LoadTimingTabHelper::CreateForWebState(web_state);
 
