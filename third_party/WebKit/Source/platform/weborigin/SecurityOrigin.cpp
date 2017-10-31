@@ -525,8 +525,11 @@ scoped_refptr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
                                                      int port,
                                                      const String& suborigin) {
   scoped_refptr<SecurityOrigin> origin = Create(protocol, host, port);
-  if (!suborigin.IsEmpty())
-    origin->suborigin_.SetName(suborigin);
+  if (!suborigin.IsEmpty()) {
+    RefPtr<SecurityOrigin> new_origin = origin->IsolatedCopy();
+    new_origin->suborigin_.SetName(suborigin);
+    return new_origin;
+  }
   return origin;
 }
 
