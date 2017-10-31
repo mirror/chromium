@@ -2024,6 +2024,39 @@ IN_PROC_BROWSER_TEST_F(SBNavigationObserverBrowserTest,
                            referrer_chain.Get(0));
 }
 
+// Download via html5 file API and hosting page has url fragment.
+IN_PROC_BROWSER_TEST_F(SBNavigationObserverBrowserTest,
+                       DownloadViaHTML5FileApiWithURLFragment) {
+  GURL hosting_url = embedded_test_server()->GetURL(kSingleFrameTestURL);
+  GURL::Replacements replacements;
+  replacements.SetRef("foo",
+                      hosting_url.parsed_for_possibly_invalid_spec().ref);
+  GURL hosting_url_with_fragment = hosting_url.ReplaceComponents(replacements);
+
+  ui_test_utils::NavigateToURL(browser(), hosting_url_with_fragment);
+
+  // Trigger download without user gesture.
+  TriggerDownloadViaHtml5FileApi(false /* has_user_gesture */);
+  std::string test_server_ip(embedded_test_server()->host_port_pair().host());
+  auto* nav_list = navigation_event_list();
+  ASSERT_EQ(2U, nav_list->Size());
+
+  ReferrerChain referrer_chain;
+  IdentifyReferrerChainForDownload(GetDownload(), &referrer_chain);
+  ASSERT_EQ(1, referrer_chain.size());
+
+  // Verify url fragment is cleared in referrer chain.
+  VerifyReferrerChainEntry(hosting_url,  // url
+                           GURL(),       // main_frame_url
+                           ReferrerChainEntry::CLIENT_REDIRECT,  // type
+                           test_server_ip,                       // ip_address
+                           GURL(),                               // referrer_url
+                           GURL(),               // referrer_main_frame_url
+                           false,                // is_retargeting
+                           std::vector<GURL>(),  // server redirects
+                           referrer_chain.Get(0));
+}
+
 IN_PROC_BROWSER_TEST_F(SBNavigationObserverBrowserTest,
                        VerifySanitizeReferrerChain) {
   GURL initial_url = embedded_test_server()->GetURL(kSingleFrameTestURL);
