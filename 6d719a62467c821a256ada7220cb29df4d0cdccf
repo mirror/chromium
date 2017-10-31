@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b33d21b_5cbaf07c",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T15:08:07Z",
+      "side": 1,
+      "message": "I\u0027would have called this just use_module_base_names, as argument filtering is very generic.\nHowever this is not a big deal enough to justify a new patchset.\nIf you happen to need to touch this code again change the name. If not dont\u0027 worry we\u0027ll live with this.",
+      "range": {
+        "startLine": 168,
+        "startChar": 9,
+        "endLine": 168,
+        "endChar": 38
+      },
+      "revId": "6d719a62467c821a256ada7220cb29df4d0cdccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
