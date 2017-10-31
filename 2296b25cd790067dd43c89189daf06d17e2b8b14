@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e33f35b0_9a1ff8c1",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T20:57:22Z",
+      "side": 1,
+      "message": "Actually, nothing. PresentationDispatcher is supposed to do the right thing by calling SetController immediately after connecting to PresentationService, but anything could happen for a misbehaving renderer.",
+      "parentUuid": "47b246a3_152f1f5d",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a525433f_af4b0329",
         "filename": "content/browser/presentation/presentation_service_impl.cc",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5a0e27a3_0a1bc987",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T20:57:22Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "a525433f_af4b0329",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bf663ad_45adaea5",
         "filename": "content/renderer/presentation/presentation_dispatcher.cc",
         "patchSetId": 15
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-30T23:06:36Z",
       "side": 1,
       "message": "Thanks for fixing our layout tests :-)",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64956f99_14ffa343",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T20:57:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7bf663ad_45adaea5",
       "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "fca11aea_fb2e46a5",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T20:57:22Z",
+      "side": 1,
+      "message": "Yep there are virtual methods overridden in testing, since it\u0027s a pain to create a mock of PresentationService in tests... might as well do it since it could be reused in other tests (and it would make this class non-virtual)",
+      "parentUuid": "c7a86bfd_03c99fa3",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a862f7d_86bb89c9",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
         "patchSetId": 15
@@ -84,6 +156,24 @@
       "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec3636b_dbc34c01",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T20:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a862f7d_86bb89c9",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "bb1475f0_82d04b99",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T20:57:22Z",
+      "side": 1,
+      "message": "I haven\u0027t seen any usages of base:: in third_party/WebKit/Source/modules so I assume it is disallowed.",
+      "parentUuid": "a2f9fed5_a2dfaf83",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7d734ab_8925dc31",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
         "patchSetId": 15
@@ -118,6 +226,24 @@
       "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2975a4a_b56d2240",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityState.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T20:57:22Z",
+      "side": 1,
+      "message": "This method\u0027s logic can go into PresentationAvailability as part of the future refactoring.",
+      "parentUuid": "f7d734ab_8925dc31",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "e732124b_deae8b6c",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T20:57:22Z",
+      "side": 1,
+      "message": "This should never be nullptr under normal circumstances, so removing the DCHECK.",
+      "parentUuid": "479c7446_d573f165",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a2fddca_a26af678",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
         "patchSetId": 15
@@ -152,6 +296,24 @@
       "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8cd0da_5cfbeb31",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T20:57:22Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8a2fddca_a26af678",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "0b93ecf0_7e20e9f1",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T20:57:22Z",
+      "side": 1,
+      "message": "This should always be non-null.",
+      "parentUuid": "1f587103_b9a94e44",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba9f7ba4_0afaa8da",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
         "patchSetId": 15
@@ -186,6 +366,24 @@
       "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c53630_57799f3d",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T20:57:22Z",
+      "side": 1,
+      "message": "Ok, removed DCHECK.",
+      "parentUuid": "ba9f7ba4_0afaa8da",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "dffd2fb6_166ca716",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T20:57:22Z",
+      "side": 1,
+      "message": "Done, I will be using crbug.com/749327 to track it.",
+      "parentUuid": "6de2c861_c4218534",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0ff40e8_ba2153a1",
         "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
         "patchSetId": 15
@@ -220,6 +436,24 @@
       "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a745295_feabb765",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-31T20:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0ff40e8_ba2153a1",
+      "revId": "2296b25cd790067dd43c89189daf06d17e2b8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
