@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82378fc5_ea44f22d",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-31T15:41:22Z",
+      "side": 1,
+      "message": "Can we go ahead and add a flag for this? That way we can fix it behind the flag, then enable the flag by default, then remove the flag once we ship it.\n\nAlss, otherwise if something happens and we never get back to this it\u0027s super confusing to the next dev).",
+      "revId": "bf1be69ba1a26367a241df14939803b5f4c3bddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
