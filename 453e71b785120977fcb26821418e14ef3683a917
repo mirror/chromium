@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "390e2ff4_07611007",
+        "filename": "ui/keyboard/container_behavior.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-31T19:32:34Z",
+      "side": 1,
+      "message": "I\u0027d prefer to have an private member in each sub-classes that actually need a pointer of KeyboardController. WDYT?",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 34
+      },
+      "revId": "453e71b785120977fcb26821418e14ef3683a917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37adc14_1638d377",
+        "filename": "ui/keyboard/container_floating_behavior.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-31T19:32:34Z",
+      "side": 1,
+      "message": "We pass nullptr to the constructor in the unit tests. Can you add a null check for this and a comment about controller_ can be nullptr only in the unit tests.",
+      "range": {
+        "startLine": 178,
+        "startChar": 28,
+        "endLine": 178,
+        "endChar": 39
+      },
+      "revId": "453e71b785120977fcb26821418e14ef3683a917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fdce08b_072f2e93",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-31T19:32:34Z",
+      "side": 1,
+      "message": "nit: remove?",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "453e71b785120977fcb26821418e14ef3683a917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
