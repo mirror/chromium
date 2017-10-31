@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f919ede9_4fe7a923",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T20:40:57Z",
+      "side": 1,
+      "message": "Here and below:\n\nFor multi-line docstrings, the closing \"\"\" goes on its own line.",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43d142d7_273dd1f9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T20:40:57Z",
+      "side": 1,
+      "message": "This looks like it could be made more readable. To make this more like _directories_immediately_preceding_root:\n\n   directories \u003d set()\n   for port in self._ports.values():\n       directories.update(set(self._relative_baseline_search_path(port)))",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807c3c5a_32793c69",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T20:40:57Z",
+      "side": 1,
+      "message": "\"missing baseline\" -\u003e \"missing a baseline\"",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9d5ce9_3a5aa2a0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T20:40:57Z",
+      "side": 1,
+      "message": "Nit: single quotes for consistency.",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1bebbb3_4fdbc3e5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T20:40:57Z",
+      "side": 1,
+      "message": "The implicit all-PASS concept only applies to testharness.js tests. This comment might be slightly clarified by saying \"an implicit all-PASS for a testharness.js test.\".",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498ec766_4453ce04",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T20:40:57Z",
+      "side": 1,
+      "message": "Maybe \"the LayoutTests baseline\" could be called \"the root baseline\" or \"the generic baseline\" here.",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78fcb94_2714aae4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T20:40:57Z",
+      "side": 1,
+      "message": "Thanks for making the names more consistent.\n\nThe term fallback_path is still used instead of search_path in some other places (e.g. latest_platform_fallback_path in Port, and views/printing.py, and rebaseline.py). Shall we change those in this CL as well?",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f421941_61d71a03",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T20:40:57Z",
+      "side": 1,
+      "message": "Does this make it so test-webkitpy -vv prints debug\nlog statements in the code under test to stderr?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 50
+      },
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8b91c1_ec0bc9d6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T20:40:57Z",
+      "side": 1,
+      "message": "This is nice to add. You could still use self.assertEqual here if you\u0027d like to.\n\nFor style, if you keep this as an assert statement, you could add a space after `assert`.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 93
+      },
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e41dc09_58babdd8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T20:40:57Z",
+      "side": 1,
+      "message": "Nit: When iterating through dicts, you can omit `.keys()`.",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc78b564_f7890236",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/optimize_baselines.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T20:40:57Z",
+      "side": 1,
+      "message": "Much better :-)",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
