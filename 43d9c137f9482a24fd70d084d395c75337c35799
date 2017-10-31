@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcb7143d_4d31fe01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-31T23:54:44Z",
+      "side": 1,
+      "message": "Please be more specific. What does this patch do exactly?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "43d9c137f9482a24fd70d084d395c75337c35799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a009a7a6_87f54e2b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBarObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-31T23:54:44Z",
+      "side": 1,
+      "message": "nit: Observer usually implies there is more than one and it seems like there would only be one per infobar. The way this is used, I think \u0027delegate\u0027 is a better identifier, especially since it is passed into the constructor.",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 34
+      },
+      "revId": "43d9c137f9482a24fd70d084d395c75337c35799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b566df74_4f8f3ed5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBarObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-31T23:54:44Z",
+      "side": 1,
+      "message": "nit: Triggered?",
+      "range": {
+        "startLine": 22,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "43d9c137f9482a24fd70d084d395c75337c35799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b202eb_f0c10ff5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-31T23:54:44Z",
+      "side": 1,
+      "message": "Can we append \"_KEY\" here and above to indicate what this is?",
+      "range": {
+        "startLine": 41,
+        "startChar": 24,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "43d9c137f9482a24fd70d084d395c75337c35799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f29742_c7314272",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-31T23:54:44Z",
+      "side": 1,
+      "message": "nit: javadoc",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 177,
+        "endChar": 62
+      },
+      "revId": "43d9c137f9482a24fd70d084d395c75337c35799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
