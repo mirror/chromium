@@ -74,6 +74,7 @@
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/common/mhtml_generation_params.h"
 #include "content/public/common/renderer_preferences.h"
 #include "gpu/config/gpu_info.h"
@@ -1173,8 +1174,16 @@ void AwContents::OnWebLayoutContentsSizeChanged(
   ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
   if (obj.is_null())
     return;
+
+  // Convert contents_size to CSS scale.
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  gfx::Size contents_size_css =
+      command_line->HasSwitch(switches::kEnableUseZoomForDSF)
+          ? ScaleToFlooredSize(contents_size,
+                               1 / browser_view_renderer_.dip_scale())
+          : contents_size;
   Java_AwContents_onWebLayoutContentsSizeChanged(
-      env, obj, contents_size.width(), contents_size.height());
+      env, obj, contents_size_css.width(), contents_size_css.height());
 }
 
 jlong AwContents::CapturePicture(JNIEnv* env,
