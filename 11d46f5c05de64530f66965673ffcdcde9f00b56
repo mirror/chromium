@@ -22,6 +22,30 @@
       "revId": "11d46f5c05de64530f66965673ffcdcde9f00b56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ea53bd_c5e16595",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-31T20:15:43Z",
+      "side": 1,
+      "message": "Whoops, leftover from adding a LOG debug statement",
+      "parentUuid": "9b68e34c_87ef4c52",
+      "range": {
+        "startLine": 231,
+        "startChar": 37,
+        "endLine": 231,
+        "endChar": 38
+      },
+      "revId": "11d46f5c05de64530f66965673ffcdcde9f00b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
