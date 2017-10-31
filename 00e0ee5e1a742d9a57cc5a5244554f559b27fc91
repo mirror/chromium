@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "2c951704_d1649cbb",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-31T20:52:21Z",
+      "side": 1,
+      "message": "Following up on our offline discussion:\n\nDisabling texture storage image extension should disable use of GMBs as render targets by the compositor (both Ganesh and overlays in display compositor): https://cs.chromium.org/chromium/src/gpu/command_buffer/service/feature_info.cc?rcl\u003d0aa10a8d01e118db52d355ddaee261fbb5c8ed11\u0026l\u003d434\n\nWebGL/Canvas need to be handled separately. Also need to look into whether the root render pass rendering into an io surface matters.",
+      "parentUuid": "97c0cce4_811483f4",
+      "range": {
+        "startLine": 340,
+        "startChar": 6,
+        "endLine": 340,
+        "endChar": 27
+      },
+      "revId": "00e0ee5e1a742d9a57cc5a5244554f559b27fc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d16c3e9_f2393f0b",
         "filename": "gpu/config/gpu_driver_bug_list.json",
         "patchSetId": 4
