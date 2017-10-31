@@ -141,8 +141,4 @@ SecurityOrigin* WebSecurityOrigin::Get() const {
   return private_.Get();
 }
 
-void WebSecurityOrigin::GrantLoadLocalResources() const {
-  Get()->GrantLoadLocalResources();
-}
-
 }  // namespace blink
