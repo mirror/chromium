@@ -34,6 +34,24 @@
       "revId": "225e202fdf7caa31f782da71007b0057d479afdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9187e0e_de104f28",
+        "filename": "tools/gn/variables.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-31T20:09:32Z",
+      "side": 1,
+      "message": "Okay. You should just let clang-format do its thing, rather than trying to work around it.",
+      "parentUuid": "b01db7bb_145317f3",
+      "revId": "225e202fdf7caa31f782da71007b0057d479afdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
