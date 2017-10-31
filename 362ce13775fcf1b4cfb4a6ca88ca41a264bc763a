@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cc52e76_4320d363",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-31T21:55:24Z",
+      "side": 1,
+      "message": "Pawel, do you think taking some time from the decoder thread for the blit could regress video playback?\n\nIIUC libva is asynchronous and most of the time the decoder thread is just waiting, moving the blit to this thread could still delay processing of new buffers/videoframes for a few milliseconds. Would that be an issue?",
+      "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3951d64_5a6ac634",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-31T21:55:24Z",
+      "side": 1,
+      "message": "nit: This comment seems superfluous. Looking at the body of the function I don\u0027t think anyone would doubt it can be called from any thread. If you want to make sure no one will make it non re-entrant, I\u0027d suggest to move the comment with the decl.",
+      "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582368a6_3087c9c9",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-31T21:55:24Z",
+      "side": 1,
+      "message": "This one used to be executed on the task_runner_ instead of decoder_thread_task_runner_, and now you seem to guard only state_ with lock_.\n\nAre pending_output_cbs_, output_buffers_ and finish_flush_pending_ only accessed on the decoder_thread_task_runner_ thread?\n\nIf that\u0027s the case, why are they guarded by lock_ in FinishFlushOnTaskRunner?",
+      "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac1242b4_6a662ff7",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-31T21:55:24Z",
+      "side": 1,
+      "message": "Needs a comment explaining why it\u0027s fine to use unretained.",
+      "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f50600_c8fcfc2c",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-31T21:55:24Z",
+      "side": 1,
+      "message": "Can you comment how it is guaranteed that this outlives va_surface?",
+      "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "112cf62b_73774002",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-31T21:55:24Z",
+      "side": 1,
+      "message": "As briefly mentioned offline. Wouldn\u0027t it be more informative to call all this method SomethingOnDecodingThread instead of SomethingOnTaskRunner?",
+      "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
