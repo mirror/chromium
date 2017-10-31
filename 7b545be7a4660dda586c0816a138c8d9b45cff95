@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3a2d5b1_0008826b",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_header_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-31T10:46:55Z",
+      "side": 1,
+      "message": "Add comments explaining what\u0027s happening here.",
+      "range": {
+        "startLine": 219,
+        "startChar": 2,
+        "endLine": 219,
+        "endChar": 4
+      },
+      "revId": "7b545be7a4660dda586c0816a138c8d9b45cff95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980dad36_317f6cd2",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_snapshot_providing.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-31T10:46:55Z",
+      "side": 1,
+      "message": "Overall this is a problem because we try and not couple to which tab switcher is being used. I\u0027m OK with it as an intermediate step, I think, but hopefully the newer toolbar designs won\u0027t be this tightly coupled.",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "7b545be7a4660dda586c0816a138c8d9b45cff95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9980e7_a12d460f",
+        "filename": "ios/chrome/browser/ui/uikit_ui_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-31T10:46:55Z",
+      "side": 1,
+      "message": "maybe /* not opaque */",
+      "range": {
+        "startLine": 177,
+        "startChar": 65,
+        "endLine": 177,
+        "endChar": 71
+      },
+      "revId": "7b545be7a4660dda586c0816a138c8d9b45cff95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
