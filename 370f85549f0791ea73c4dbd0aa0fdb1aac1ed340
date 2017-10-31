@@ -1,0 +1,262 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ead82ad1_91643bc1",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 0,
+      "message": "We already know adding an option works by AddOption above and that removing an option works by RemoveOption above. Adding and removing options are both simple delegations to TableView, so I don\u0027t think we need to really hammer on combinations of these features. That\u0027s why I deleted this test.",
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8da450_65e1b912",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 0,
+      "message": "Same reasoning as for deleting AddAndRemoveOption above. UpdateOption in particular is just a notification to TableView that it should re-get the row contents, so I don\u0027t think we need to test the union of these features.",
+      "range": {
+        "startLine": 247,
+        "startChar": 37,
+        "endLine": 247,
+        "endChar": 68
+      },
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c472183b_5e238d20",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 0,
+      "message": "This test isn\u0027t verifying anything on DeviceChooserContentView, so that\u0027s a pretty clear signal that it\u0027s misplaced. This case is covered by TableViewTest.Selection.",
+      "range": {
+        "startLine": 315,
+        "startChar": 37,
+        "endLine": 315,
+        "endChar": 77
+      },
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee78d7b_3a79b264",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 0,
+      "message": "Again, we aren\u0027t verifying anything on DeviceChooserContentView. However, this case was actually missing from TableView\u0027s unit tests, so I added it as TableViewTest.RemoveUnselectedRows.",
+      "range": {
+        "startLine": 346,
+        "startChar": 37,
+        "endLine": 346,
+        "endChar": 73
+      },
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe5cc40_f21d823d",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 0,
+      "message": "Deleted for the same reason as SelectAnOptionAndThenSelectAnotherOption above. It is covered by TableView.SelectionNoSelectOnRemove.",
+      "range": {
+        "startLine": 383,
+        "startChar": 37,
+        "endLine": 383,
+        "endChar": 77
+      },
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986daf3d_fce5cfef",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 0,
+      "message": "We already know that selecting an option works from SelectAndDeselectAnOption above, and updating an option works by UpdateOption above. There\u0027s no reason to think that the union of the two features would somehow fail (because selection is controlled by the TableView and is agnostic to the row contents anyway), so this test is redundant.",
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9fd42d8_b64fc693",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 0,
+      "message": "Same reasoning as for deleting AddAndRemoveOption above, plus removing a selected option is covered by TableViewTest.SelectionNoSelectOnRemove. That\u0027s why I deleted this test.",
+      "range": {
+        "startLine": 444,
+        "startChar": 7,
+        "endLine": 444,
+        "endChar": 55
+      },
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a65efd_8ec60e57",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 0,
+      "message": "This test was renamed TurnBluetoothOffAndOn.",
+      "range": {
+        "startLine": 473,
+        "startChar": 37,
+        "endLine": 473,
+        "endChar": 57
+      },
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b0cf695_273b8c0d",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 0,
+      "message": "This and the following test were combined into ScanForDevices.",
+      "range": {
+        "startLine": 534,
+        "startChar": 37,
+        "endLine": 534,
+        "endChar": 71
+      },
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ff5f56_d0f990cd",
+        "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 0,
+      "message": "I rolled this test and SelectAndDeselectAnOption below into the new ButtonState test, in order to cover IsDialogButtonEnabled.",
+      "range": {
+        "startLine": 82,
+        "startChar": 30,
+        "endLine": 82,
+        "endChar": 42
+      },
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f971f7_71646311",
+        "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 0,
+      "message": "The code in IsDialogButtonEnabled is really not that complicated and TableView is sufficiently covered with tests for what happens in various selection cases. So I think the one test is enough to cover it; that\u0027s why I deleted this test and the others below.",
+      "range": {
+        "startLine": 135,
+        "startChar": 30,
+        "endLine": 135,
+        "endChar": 70
+      },
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496343bc_0c0c9916",
+        "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 0,
+      "message": "I rolled this and the following tests into ButtonState.",
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

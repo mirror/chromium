@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2e98b5b_f377a1e9",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 1,
+      "message": "From this test I removed adding a device before turning off the adapter. The table isn\u0027t visible while the adapter is off so we don\u0027t really care whether the device is there or not. Whether that device is present when the adapter is turned back on is determined by the controller, which isn\u0027t the class of concern and is fake here anyway.",
+      "range": {
+        "startLine": 205,
+        "startChar": 37,
+        "endLine": 205,
+        "endChar": 58
+      },
+      "revId": "22d448ab5d4ee4476dd8ad6d88765ad2f97cb99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1084843c_2e878afa",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T00:06:07Z",
+      "side": 1,
+      "message": "I combined the \"find no devices\" and \"find one device\" into this case, since if we\u0027ve looking for a device but haven\u0027t found one we\u0027re already set up to find one.",
+      "range": {
+        "startLine": 221,
+        "startChar": 37,
+        "endLine": 221,
+        "endChar": 51
+      },
+      "revId": "22d448ab5d4ee4476dd8ad6d88765ad2f97cb99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
