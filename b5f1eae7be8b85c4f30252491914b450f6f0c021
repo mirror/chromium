@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bbe43961_cbe28ffa",
+        "filename": "ui/display/mojo/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T17:12:40Z",
+      "side": 1,
+      "message": "As this code is enabled in production using \u0027test\u0027 is mildly confusing (and easy to miss). WDYT of renaming this to debug_display_controller, or dev_display_controller or something that doesn\u0027t imply it\u0027s only used in tests.",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "b5f1eae7be8b85c4f30252491914b450f6f0c021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "901254e3_037fc488",
         "filename": "ui/display/mojo/test_display_controller.mojom",
         "patchSetId": 1
