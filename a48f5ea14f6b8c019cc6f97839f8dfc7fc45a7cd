@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27b68664_418810a9",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 19
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-31T13:50:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afbdc449_5bfec53e",
+      "revId": "a48f5ea14f6b8c019cc6f97839f8dfc7fc45a7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1688c2c9_efc1b526",
         "filename": "third_party/WebKit/Source/core/events/MouseEvent.h",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "a48f5ea14f6b8c019cc6f97839f8dfc7fc45a7cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b50946_bfa66db7",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-31T13:50:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1688c2c9_efc1b526",
+      "revId": "a48f5ea14f6b8c019cc6f97839f8dfc7fc45a7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9d04c5e5_eb485d37",
+        "filename": "third_party/WebKit/Source/core/events/PointerEvent.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-31T13:50:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0630e818_db2c4679",
+      "range": {
+        "startLine": 42,
+        "startChar": 56,
+        "endLine": 42,
+        "endChar": 62
+      },
+      "revId": "a48f5ea14f6b8c019cc6f97839f8dfc7fc45a7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e797614_4233584a",
         "filename": "third_party/WebKit/Source/core/events/PointerEvent.h",
         "patchSetId": 19
@@ -73,6 +133,24 @@
       "revId": "a48f5ea14f6b8c019cc6f97839f8dfc7fc45a7cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd90fb73_9733effd",
+        "filename": "third_party/WebKit/Source/core/events/PointerEvent.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-31T13:50:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e797614_4233584a",
+      "revId": "a48f5ea14f6b8c019cc6f97839f8dfc7fc45a7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
