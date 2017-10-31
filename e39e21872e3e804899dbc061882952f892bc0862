@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "108be359_2b8fff58",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T23:11:24Z",
+      "side": 1,
+      "message": "yfriedman: do we need to do anything special with TWAs in here? Or will it be handled at the native Android layer?",
+      "range": {
+        "startLine": 522,
+        "startChar": 55,
+        "endLine": 522,
+        "endChar": 76
+      },
+      "revId": "e39e21872e3e804899dbc061882952f892bc0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2171ac9_86b952a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationParams.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T23:11:24Z",
+      "side": 1,
+      "message": "Nit: this comment is a little confusing since this class might launch an Android native app; it might be clearer as:\n\n\"The package name of the TWA or WebAPK within which the navigation is happening. Null if the navigation is not within one of these wrapping APKs.",
+      "range": {
+        "startLine": 47,
+        "startChar": 31,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "e39e21872e3e804899dbc061882952f892bc0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91fa1351_a7f61a92",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDelegateFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T23:11:24Z",
+      "side": 1,
+      "message": "Nit: add back the newline between methods.",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 5
+      },
+      "revId": "e39e21872e3e804899dbc061882952f892bc0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a2c964_145986f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDelegateFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T23:11:24Z",
+      "side": 1,
+      "message": "This should be in WebappInterceptNavigationDelegate directly, there\u0027s no need to have the override here since only this class and its subclasses use this.",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 104,
+        "endChar": 13
+      },
+      "revId": "e39e21872e3e804899dbc061882952f892bc0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
