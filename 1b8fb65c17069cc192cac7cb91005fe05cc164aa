@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22d0f2e2_8c9ae743",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-31T20:56:03Z",
+      "side": 0,
+      "message": "I had introduced the usage of FocusOutlineManager at https://chromium-review.googlesource.com/c/chromium/src/+/666126/7..8, but it turns out just switching from |downAction()| and |upAction()| to |holdDown| was enough to fix the issue I was fixing with that patch (preventing a double ripple from showing up when clicking on an already focused cr-toggle).\n\nThe usage of FocusOutlineManager is not necessary here since we always want to show the ripple (both mouse and keyboard focus).",
+      "revId": "1b8fb65c17069cc192cac7cb91005fe05cc164aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
