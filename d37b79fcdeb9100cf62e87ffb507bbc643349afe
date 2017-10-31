@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dd01b07_33112345",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-31T13:14:20Z",
+      "side": 1,
+      "message": "After some thinking, I assume you mean \"copy \u0026 paste\"? maybe it would be good to spell it out :)",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "d37b79fcdeb9100cf62e87ffb507bbc643349afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096537dc_a4d23fa2",
+        "filename": "content/public/common/manifest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-31T13:14:20Z",
+      "side": 1,
+      "message": "Maybe this could be dropped.",
+      "revId": "d37b79fcdeb9100cf62e87ffb507bbc643349afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a16ac0c0_6b415cbd",
+        "filename": "content/renderer/manifest/manifest_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-31T13:14:20Z",
+      "side": 1,
+      "message": "With an enum, make this a switch() and make sure to return on every branch without a `default`. Add a NOTREACHED() after the switch with return GURL().",
+      "revId": "d37b79fcdeb9100cf62e87ffb507bbc643349afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a21196_f57fb4ce",
+        "filename": "content/renderer/manifest/manifest_parser.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-31T13:14:20Z",
+      "side": 1,
+      "message": "Could you make this an enum? Something like\n```\nenum class ParseURLOriginRestrictions {\n  kNoRestrictions \u003d 0,\n  kSameOriginOnly,\n};\n```",
+      "revId": "d37b79fcdeb9100cf62e87ffb507bbc643349afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd557d00_9223fac8",
+        "filename": "content/renderer/manifest/manifest_parser.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-31T13:14:20Z",
+      "side": 1,
+      "message": "As above, probably no need to mention this here.",
+      "revId": "d37b79fcdeb9100cf62e87ffb507bbc643349afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
