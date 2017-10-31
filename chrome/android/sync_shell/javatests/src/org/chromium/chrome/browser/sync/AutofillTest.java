@@ -147,7 +147,7 @@ public class AutofillTest {
 
         // Delete on server, sync, and verify deleted locally.
         Autofill autofill = getClientAutofillProfiles().get(0);
-        mSyncTestRule.getFakeServerHelper().deleteEntity(autofill.id);
+        mSyncTestRule.getFakeServerHelper().deleteEntity(autofill.id, "");
         SyncTestUtil.triggerSync();
         waitForClientAutofillProfileCount(0);
     }

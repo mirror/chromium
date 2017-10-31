@@ -163,7 +163,7 @@ public class BookmarksTest {
 
         // Delete on server, sync, and verify deleted locally.
         Bookmark bookmark = getClientBookmarks().get(0);
-        mSyncTestRule.getFakeServerHelper().deleteEntity(bookmark.id);
+        mSyncTestRule.getFakeServerHelper().deleteEntity(bookmark.id, "");
         SyncTestUtil.triggerSync();
         waitForClientBookmarkCount(0);
     }
@@ -269,7 +269,7 @@ public class BookmarksTest {
         Bookmark folder = getClientBookmarks().get(0);
         Assert.assertTrue(folder.isFolder());
 
-        mSyncTestRule.getFakeServerHelper().deleteEntity(folder.id);
+        mSyncTestRule.getFakeServerHelper().deleteEntity(folder.id, "");
         assertServerBookmarkCountWithName(0, TITLE);
         SyncTestUtil.triggerSync();
         waitForClientBookmarkCount(0);

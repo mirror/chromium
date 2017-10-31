@@ -283,9 +283,9 @@ public class OpenTabsTest {
 
     private void deleteServerTabsForClient(String clientName) throws JSONException {
         OpenTabs openTabs = getLocalTabsForClient(clientName);
-        mSyncTestRule.getFakeServerHelper().deleteEntity(openTabs.headerId);
+        mSyncTestRule.getFakeServerHelper().deleteEntity(openTabs.headerId, "");
         for (String tabId : openTabs.tabIds) {
-            mSyncTestRule.getFakeServerHelper().deleteEntity(tabId);
+            mSyncTestRule.getFakeServerHelper().deleteEntity(tabId, "");
         }
     }
 
