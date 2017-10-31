@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bf8950f_12f13bed",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-31T16:53:02Z",
+      "side": 1,
+      "message": "The dialog shows multiple tabs that are part of the same process, right?  Will this cause the dialog to show all the tabs in the new process, or only change the row for this tab?  (I\u0027m not sure where this call is implemented.)",
+      "revId": "bcbd9bd93eeb85ab51e7ca49644bae6246084347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
