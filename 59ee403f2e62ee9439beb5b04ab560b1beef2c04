@@ -240,6 +240,30 @@
     },
     {
       "key": {
+        "uuid": "ad9b4d3b_4a736bcc",
+        "filename": "ui/gfx/color_space.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-31T21:27:36Z",
+      "side": 1,
+      "message": "Yes, for power reasons on Mac we need all displays\u0027 ICCProfiles in all processes. That is going to need to be fixed for some ongoing GMB work (crbug.com/768108).",
+      "parentUuid": "731f7309_c3578c24",
+      "range": {
+        "startLine": 57,
+        "startChar": 78,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "59ee403f2e62ee9439beb5b04ab560b1beef2c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fff148c7_e65bf7d0",
         "filename": "ui/gfx/icc_profile.h",
         "patchSetId": 3
