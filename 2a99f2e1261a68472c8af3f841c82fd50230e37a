@@ -22,6 +22,104 @@
       "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7fc4fcc_817699ed",
+        "filename": "net/reporting/reporting_header_parser_fuzzer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-31T15:06:21Z",
+      "side": 1,
+      "message": "I think adding \"+third_party/libprotobuf-mutator\" to //net/DEPS would fix it, but I\u0027m not sure if that\u0027s the *correct* way to fix it.",
+      "parentUuid": "d73ee667_05659886",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 78
+      },
+      "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd419417_b651926d",
+        "filename": "net/reporting/reporting_header_parser_fuzzer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-31T15:06:21Z",
+      "side": 1,
+      "message": "Reporing -\u003e Reporting.",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ed38f6_db70f51f",
+        "filename": "net/reporting/reporting_header_parser_fuzzer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-31T15:06:21Z",
+      "side": 1,
+      "message": "I\u0027m not sure how much benefit you get out of fuzzing all of the ReportingPolicy -- it doesn\u0027t look like the parser makes any decisions based on it, and the cache only looks at max_client_count. On the other hand, covering it means you\u0027re good even if I make things more complex.",
+      "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3829c76_9add2342",
+        "filename": "testing/libfuzzer/proto/json.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-31T15:06:21Z",
+      "side": 1,
+      "message": "It might make sense to split the JSON fuzzer stuff out as a separate CL.",
+      "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363d1083_bb168391",
+        "filename": "testing/libfuzzer/proto/json_proto_converter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-31T15:06:21Z",
+      "side": 1,
+      "message": "Either drop this blank line, or add one after the line that appends \u0027[\u0027.",
+      "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
