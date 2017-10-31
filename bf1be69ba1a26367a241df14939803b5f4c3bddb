@@ -34,6 +34,24 @@
       "revId": "bf1be69ba1a26367a241df14939803b5f4c3bddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6affa847_0af7eb3c",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-31T16:27:08Z",
+      "side": 1,
+      "message": "Done. Added a videomodeEnabled property that is false by default. I\u0027ll re-enable this in ToT by having users of cr-camera specify that it should be enabled.",
+      "parentUuid": "6add1a5b_6a22340c",
+      "revId": "bf1be69ba1a26367a241df14939803b5f4c3bddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
