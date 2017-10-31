@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "252462cf_4e5d4b93",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/volumechange-muted-attribute.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-10-31T07:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10fde3ac_8729bea7",
+      "revId": "b7c067d7ed95f828db6aa5d75639b1e534107b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccdba10d_d51de723",
         "filename": "third_party/WebKit/LayoutTests/media/video-defaultmuted.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b7c067d7ed95f828db6aa5d75639b1e534107b4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd6ee19_e178fffe",
+        "filename": "third_party/WebKit/LayoutTests/media/video-defaultmuted.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-10-31T07:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccdba10d_d51de723",
+      "revId": "b7c067d7ed95f828db6aa5d75639b1e534107b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

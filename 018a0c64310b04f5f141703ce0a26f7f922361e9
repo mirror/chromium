@@ -16,6 +16,24 @@
       "revId": "018a0c64310b04f5f141703ce0a26f7f922361e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c3496f_1c348c38",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/user-interface/muted-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-10-31T07:44:49Z",
+      "side": 0,
+      "message": "I guess these are still failing because the current fix is just an improvement over the existing code as mentioned by foolip. The actual fix (handing it via finishedParsingAttributes) that he attempted which will fix all these failures has a performance regression. Please refer comment#8 in the bug by foolip. Please let me know whether we can still investigate and try some other approach. I can give a try if required.",
+      "parentUuid": "66c10ef9_abdabf64",
+      "revId": "018a0c64310b04f5f141703ce0a26f7f922361e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
