@@ -76,6 +76,7 @@ class MockServiceWorkerRegistrationObject
   }
   ~MockServiceWorkerRegistrationObject() override = default;
 
+  int update_found_called_count() { return update_found_called_count_; };
   int set_version_attributes_called_count() {
     return set_version_attributes_called_count_;
   };
@@ -99,7 +100,9 @@ class MockServiceWorkerRegistrationObject
     waiting_ = std::move(waiting);
     active_ = std::move(active);
   }
+  void UpdateFound() override { update_found_called_count_++; }
 
+  int update_found_called_count_ = 0;
   int set_version_attributes_called_count_ = 0;
   int changed_mask_ = 0;
   blink::mojom::ServiceWorkerObjectInfoPtr installing_;
@@ -1007,6 +1010,30 @@ TEST_F(ServiceWorkerRegistrationHandleTest, SetVersionAttributes) {
     EXPECT_EQ(blink::mojom::kInvalidServiceWorkerHandleId,
               mock_registration_object->waiting()->handle_id);
   }
+}
+
+TEST_F(ServiceWorkerRegistrationHandleTest, UpdateFound) {
+  const GURL kScope("https://www.example.com/");
+  const GURL kScriptUrl("https://www.example.com/sw.js");
+  int64_t registration_id = SetUpRegistration(kScope, kScriptUrl);
+  const int64_t kProviderId = 99;  // Dummy value
+  ServiceWorkerRemoteProviderEndpoint remote_endpoint =
+      PrepareProviderHost(kProviderId, kScope);
+  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info =
+      GetRegistrationFromRemote(remote_endpoint.host_ptr()->get(), kScope);
+  EXPECT_EQ(registration_id, info->registration_id);
+  EXPECT_TRUE(info->request.is_pending());
+  auto mock_registration_object =
+      std::make_unique<MockServiceWorkerRegistrationObject>(
+          std::move(info->request));
+
+  ServiceWorkerRegistration* registration =
+      context()->GetLiveRegistration(registration_id);
+  ASSERT_NE(nullptr, registration);
+  ASSERT_EQ(0, mock_registration_object->update_found_called_count());
+  registration->NotifyUpdateFound();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1, mock_registration_object->update_found_called_count());
 }
 
 }  // namespace content
