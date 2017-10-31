@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99ce5016_bb6002cf",
+        "filename": "ui/display/mojo/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:13:13Z",
+      "side": 1,
+      "message": "Changed to DevDisplayController.",
+      "parentUuid": "bbe43961_cbe28ffa",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "b5f1eae7be8b85c4f30252491914b450f6f0c021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "901254e3_037fc488",
         "filename": "ui/display/mojo/test_display_controller.mojom",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "b5f1eae7be8b85c4f30252491914b450f6f0c021",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52723db4_b653e8c6",
+        "filename": "ui/display/mojo/test_display_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:13:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "901254e3_037fc488",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "b5f1eae7be8b85c4f30252491914b450f6f0c021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
