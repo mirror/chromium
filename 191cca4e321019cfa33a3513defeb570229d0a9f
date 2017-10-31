@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4779fc43_36334fd0",
+        "filename": "content/renderer/loader/cors_url_loader.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-31T09:31:25Z",
+      "side": 1,
+      "message": "You can use value_or.",
+      "revId": "191cca4e321019cfa33a3513defeb570229d0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1e3703_4248b46a",
+        "filename": "content/renderer/loader/cors_url_loader.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-31T09:31:25Z",
+      "side": 1,
+      "message": "Is this possible?",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 32
+      },
+      "revId": "191cca4e321019cfa33a3513defeb570229d0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101a9808_02b88761",
+        "filename": "content/renderer/loader/cors_url_loader.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-31T09:31:25Z",
+      "side": 1,
+      "message": "Is the following logic better?\n\nif (!forwarding_client_)\n  return;\n\nforwarding_client_-\u003eOnComplete(status);\nforwarding_client_ \u003d nullptr;",
+      "revId": "191cca4e321019cfa33a3513defeb570229d0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
