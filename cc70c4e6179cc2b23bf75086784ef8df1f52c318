@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec7682a9_38311b39",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/streams/readable-streams/count-queuing-strategy-integration.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-31T06:03:49Z",
+      "side": 1,
+      "message": "The occurrences of \"ReadableStreamController\" in the web platform tests are referring to the spec term, not the internal class of Chrome. Adding Default to them is fine but please remove \"Wrapper\" from them.",
+      "revId": "cc70c4e6179cc2b23bf75086784ef8df1f52c318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecd84b3_10763e0f",
+        "filename": "third_party/WebKit/Source/core/streams/ReadableStreamDefaultControllerWrapper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-31T06:03:49Z",
+      "side": 1,
+      "message": "please remove this comment :)",
+      "revId": "cc70c4e6179cc2b23bf75086784ef8df1f52c318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
