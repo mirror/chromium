@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5816a5d_0dda4856",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_test.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-31T00:24:48Z",
+      "side": 1,
+      "message": "Nit (optional): viewElement makes it sound as if this is a reference to the element itself. Perhaps rename to tagName?",
+      "range": {
+        "startLine": 26,
+        "startChar": 30,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "2967cb55fa9c4e08bbc2590b09e5714e99540745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
