@@ -16,6 +16,24 @@
       "revId": "7de911091c2dfe3214241b86bb522287c2c14e62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bcb731a_249de1f0",
+        "filename": "content/shell/android/javatests/src/org/chromium/content_shell_apk/ContentShellTestCommon.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-10-31T04:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d55169f2_408faf4b",
+      "revId": "7de911091c2dfe3214241b86bb522287c2c14e62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
