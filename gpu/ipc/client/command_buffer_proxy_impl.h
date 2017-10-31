@@ -154,6 +154,10 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
   void SetUpdateVSyncParametersCallback(
       const UpdateVSyncParametersCallback& callback);
 
+  using PresentationCallback = base::Callback<
+      void(base::TimeTicks timestamp, base::TimeDelta refresh, uint32_t flags)>;
+  void SetPresentationCallback(const PresentationCallback& callback);
+
   void SetNeedsVSync(bool needs_vsync);
 
   int32_t route_id() const { return route_id_; }
@@ -193,6 +197,9 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
       const GpuCommandBufferMsg_SwapBuffersCompleted_Params& params);
   void OnUpdateVSyncParameters(base::TimeTicks timebase,
                                base::TimeDelta interval);
+  void OnBufferPresented(base::TimeTicks timestamp,
+                         base::TimeDelta refresh,
+                         uint32_t flags);
 
   // Try to read an updated copy of the state from shared memory, and calls
   // OnGpuStateError() if the new state has an error.
@@ -285,6 +292,7 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
 
   SwapBuffersCompletionCallback swap_buffers_completion_callback_;
   UpdateVSyncParametersCallback update_vsync_parameters_completion_callback_;
+  PresentationCallback presentation_callback_;
 
   scoped_refptr<base::SingleThreadTaskRunner> callback_thread_;
   base::WeakPtrFactory<CommandBufferProxyImpl> weak_ptr_factory_;

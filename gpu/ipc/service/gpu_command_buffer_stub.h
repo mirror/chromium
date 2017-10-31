@@ -118,6 +118,9 @@ class GPU_EXPORT GpuCommandBufferStub
   void SetLatencyInfoCallback(const LatencyInfoCallback& callback) override;
   void UpdateVSyncParameters(base::TimeTicks timebase,
                              base::TimeDelta interval) override;
+  void BufferPresented(base::TimeTicks timestamp,
+                       base::TimeDelta refresh,
+                       uint32_t flags) override;
 
   void AddFilter(IPC::MessageFilter* message_filter) override;
   int32_t GetRouteID() const override;

@@ -219,6 +219,12 @@ IPC_MESSAGE_ROUTED2(GpuCommandBufferMsg_UpdateVSyncParameters,
                     base::TimeTicks /* timebase */,
                     base::TimeDelta /* interval */)
 
+// Tells the browser a buffer has been presented on screen.
+IPC_MESSAGE_ROUTED3(GpuCommandBufferMsg_BufferPresented,
+                    base::TimeTicks /* timebase */,
+                    base::TimeDelta /* interval */,
+                    uint32_t /* flags */)
+
 // The receiver will stop processing messages until the Synctoken is signaled.
 IPC_MESSAGE_ROUTED1(GpuCommandBufferMsg_WaitSyncToken,
                     gpu::SyncToken /* sync_token */)
