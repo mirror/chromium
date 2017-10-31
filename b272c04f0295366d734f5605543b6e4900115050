@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35243476_963fc532",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-31T17:48:25Z",
+      "side": 1,
+      "message": "Hmm, still diff is being confused.\nThis is hust \"Mock\" renaming result.",
+      "revId": "b272c04f0295366d734f5605543b6e4900115050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
