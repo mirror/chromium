@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5551eda0_4b3ac456",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-31T16:16:25Z",
+      "side": 1,
+      "message": "Ack.  I\u0027m just going to leave this in the same ordering (same as the old ToolbarFrameDelegate protocol).",
+      "parentUuid": "e51c4ba7_4f5eb04d",
+      "revId": "1fa4a39bbcbd09cd78a86996d29a3ae2a6312c51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0eb98cbc_70189e3f",
         "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
         "patchSetId": 2
