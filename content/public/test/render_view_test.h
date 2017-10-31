@@ -94,7 +94,7 @@ class RenderViewTest : public testing::Test, blink::WebLeakDetectorClient {
 
   // Loads |html| into the main frame as a data: URL and blocks until the
   // navigation is committed.
-  void LoadHTML(const char* html);
+  virtual void LoadHTML(const char* html);
 
   // Pretends to load |url| into the main frame, but substitutes |html| for the
   // response body (and does not include any response headers). This can be used

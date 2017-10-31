@@ -22,10 +22,6 @@ class RenderViewTestAdapter : public RenderViewTest {
   // make SetUp visible.
   void SetUp() override;
 
-  void LoadHTML(const std::string& html, const std::string& url) {
-    RenderViewTest::LoadHTMLWithUrlOverride(html.c_str(), url.c_str());
-  }
-
  private:
   DISALLOW_COPY_AND_ASSIGN(RenderViewTestAdapter);
 };
