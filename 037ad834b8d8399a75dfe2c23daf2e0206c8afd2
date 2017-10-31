@@ -85,6 +85,24 @@
       "revId": "037ad834b8d8399a75dfe2c23daf2e0206c8afd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ed891f_c0a50938",
+        "filename": "components/autofill/core/browser/payments/payments_client_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-31T17:56:18Z",
+      "side": 1,
+      "message": "Done.  Also removed an instance of this from payments_client.cc as well.",
+      "parentUuid": "3bb39e26_dea620f4",
+      "revId": "037ad834b8d8399a75dfe2c23daf2e0206c8afd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
