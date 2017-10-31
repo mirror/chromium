@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7c678bc_428c30b0",
+        "filename": "tools/perf/page_sets/tough_video_cases.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-10-31T21:18:43Z",
+      "side": 1,
+      "message": "Yes. These are just the codecs that we have tests for.",
+      "parentUuid": "04ccd286_3a7b5847",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96f08736_80197199",
         "filename": "tools/perf/page_sets/tough_video_cases.py",
         "patchSetId": 7
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f6ea478d_84904f2a",
+        "filename": "tools/perf/page_sets/tough_video_cases.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-10-31T21:18:43Z",
+      "side": 1,
+      "message": "I will fix this in a future commit. I just didn\u0027t want to put MSE tests into ToughVideoCases class... I\u0027m ACKing this nit and moving on. Sorry.",
+      "parentUuid": "9b15c364_413eaaa2",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d74d0475_19221413",
         "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
         "patchSetId": 7
@@ -92,6 +140,30 @@
       "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c159fcd3_f10c5c9d",
+        "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-10-31T21:18:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d74d0475_19221413",
+      "range": {
+        "startLine": 34,
+        "startChar": 46,
+        "endLine": 34,
+        "endChar": 48
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "63946c20_0e01add8",
+        "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-10-31T21:18:43Z",
+      "side": 1,
+      "message": "You\u0027re right! I copied this from the old version. Thanks.",
+      "parentUuid": "411aba3a_8e303d49",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 23
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62e7cc1f_0bd73e8b",
         "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
         "patchSetId": 7
@@ -138,6 +234,30 @@
       "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067c3d88_deba4c1d",
+        "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-10-31T21:18:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62e7cc1f_0bd73e8b",
+      "range": {
+        "startLine": 55,
+        "startChar": 10,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "5dd750c2_920f0628",
+        "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-10-31T21:18:43Z",
+      "side": 1,
+      "message": "Thank you!",
+      "parentUuid": "456c9978_914f13fe",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 43
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ea0a05a_9e717b2b",
         "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
         "patchSetId": 7
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "d5f6ea5e_9dad3181",
+        "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-10-31T21:18:43Z",
+      "side": 1,
+      "message": "It already contains that in error.stack.",
+      "parentUuid": "6ea0a05a_9e717b2b",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 152,
+        "endChar": 24
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "283d1984_e6572950",
         "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
         "patchSetId": 7
@@ -207,6 +375,30 @@
       "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd6e24b_bfb999f3",
+        "filename": "tools/perf/page_sets/tough_video_cases/mse.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-10-31T21:18:43Z",
+      "side": 1,
+      "message": "This was another copy from the old code. Fixed it and changed the naming a bit as well.",
+      "parentUuid": "283d1984_e6572950",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 21
+      },
+      "revId": "1cfdf1b4eb856b4ddbbec30b4c40cc52b45008cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
