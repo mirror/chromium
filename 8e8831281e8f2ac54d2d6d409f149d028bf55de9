@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec8ad8b1_41ed0f76",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1573,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-31T10:21:13Z",
+      "side": 1,
+      "message": "The toolbar controller would be nil if the feature is enabled. So it is fine.\nI have added a feature check. The self.transitionToolbarSnapshot check is needed because even if the flag is on, the snapshot might be nil. In that case we are building an array with nil object and we crash.",
+      "parentUuid": "31b8758b_7329f757",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f2f5e5e_a8f14c53",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b225941e_dcb89175",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-31T10:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f2f5e5e_a8f14c53",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e776598d_d912e750",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2041,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-31T10:21:13Z",
+      "side": 1,
+      "message": "After this CL the animations are not correct yet. This is a preliminary CL showing how we could do it. Other CL will be landed.\nI did not know we were hiding the background of the toolbar. I will see how to make it work with snapshots.\nIn a future CL I am taking snapshot of NTP with respect to alpha, so the dummy background is still working in that case.",
+      "parentUuid": "26bb57bb_80019de3",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f51acdd_d4e5af13",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc53c7f_e91cbd7c",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2052,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-31T10:21:13Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "7f51acdd_d4e5af13",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "c918802e_02d16e20",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2060,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-31T10:21:13Z",
+      "side": 1,
+      "message": "This is the stackview toolbar, not the web toolbar. So self.view is its superview. But it is clearer to use its superview directly.",
+      "parentUuid": "6723739e_2d69dcce",
+      "range": {
+        "startLine": 2060,
+        "startChar": 46,
+        "endLine": 2060,
+        "endChar": 55
+      },
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2484cac9_a3b670c3",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 4
@@ -107,6 +203,24 @@
       "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78f1efe_f506afcd",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2061,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-31T10:21:13Z",
+      "side": 1,
+      "message": "This is the difference between the StackView toolbar and the snapshot. I don\u0027t know why there would have a difference, this comes from the non-snapshot animation.",
+      "parentUuid": "2484cac9_a3b670c3",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "ee97c296_ccbc9677",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2075,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-31T10:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a08881d0_d7277194",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c19afb2_1e5437f1",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 4
@@ -141,6 +273,24 @@
       "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d9d9c2_685cdf2e",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2095,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-31T10:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c19afb2_1e5437f1",
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +314,30 @@
       "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5934b4e3_7bb89115",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2097,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-31T10:21:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af9fb5e9_90ffe968",
+      "range": {
+        "startLine": 2097,
+        "startChar": 53,
+        "endLine": 2097,
+        "endChar": 61
+      },
+      "revId": "8e8831281e8f2ac54d2d6d409f149d028bf55de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
