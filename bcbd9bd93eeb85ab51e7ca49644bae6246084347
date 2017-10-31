@@ -70,6 +70,24 @@
       "revId": "bcbd9bd93eeb85ab51e7ca49644bae6246084347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68dcb99_e1c7d4a6",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-31T18:15:10Z",
+      "side": 1,
+      "message": "When do we ever show tabs from different processes in the dialog today?  I\u0027m not aware of a way for that to happen, but I could be wrong.\n\nAnd wouldn\u0027t this problem from my example go away if we went back to using OnModelChanged?  If that clears the stale state in the dialog and builds it up again, would we show D in my example (for process 456) instead of both B and D (a strange mix of two processes)?\n\nAnyway, I agree that this class needs an overhaul, and you\u0027re not on the hook to do that in this CL.  I think we should try to avoid introducing new bugs (e.g., showing tabs from multiple processes) if possible, though.",
+      "parentUuid": "35b2d989_7bfd296c",
+      "revId": "bcbd9bd93eeb85ab51e7ca49644bae6246084347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
