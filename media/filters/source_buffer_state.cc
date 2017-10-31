@@ -8,6 +8,7 @@
 
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
+#include "base/debug/dump_without_crashing.h"
 #include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "media/base/media_switches.h"
@@ -229,21 +230,22 @@ bool SourceBufferState::Append(const uint8_t* data,
         << " append_window_start=" << append_window_start.InSecondsF()
         << " append_window_end=" << append_window_end.InSecondsF();
 
-    // Crash with a 1/10 chance to investigate https://crbug.com/778363.
-    // CHECK on different conditions so we can more easily distinguish between
-    // different cases.
+    // Dump stack to help investigate https://crbug.com/778363. Only dump with a
+    // 1/10 chance to avoid spam the crash server. Dump on different lines in
+    // different conditions so we can distinguish different cases more easily.
     // TODO(crbug.com/778363): Remove after investigation is done.
-    int n = base::RandInt(1, 10);
-    if (state_ == PARSER_INITIALIZED) {
-      if (encrypted_media_init_data_reported_)
-        CHECK(n != 1);
-      else
-        CHECK(n != 2);
-    } else {
-      if (encrypted_media_init_data_reported_)
-        CHECK(n != 3);
-      else
-        CHECK(n != 4);
+    if (base::RandInt(1, 10) == 1) {
+      if (state_ == PARSER_INITIALIZED) {
+        if (encrypted_media_init_data_reported_)
+          base::debug::DumpWithoutCrashing();
+        else
+          base::debug::DumpWithoutCrashing();
+      } else {
+        if (encrypted_media_init_data_reported_)
+          base::debug::DumpWithoutCrashing();
+        else
+          base::debug::DumpWithoutCrashing();
+      }
     }
   }
 
