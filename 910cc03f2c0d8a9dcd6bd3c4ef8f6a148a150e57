@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b11ec84f_3bf14800",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1593,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-31T19:24:21Z",
+      "side": 1,
+      "message": "Probably \"at most\" once per, since not all sources will have a tab closure?",
+      "range": {
+        "startLine": 1593,
+        "startChar": 34,
+        "endLine": 1593,
+        "endChar": 43
+      },
+      "revId": "910cc03f2c0d8a9dcd6bd3c4ef8f6a148a150e57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
