@@ -473,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "77c3ef51_38348c7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-31T20:20:29Z",
+      "side": 1,
+      "message": "I checked the TextBubble.java class and it seems to work as expected; you are right, there is no padding added.",
+      "parentUuid": "d29f456b_0962be4e",
+      "range": {
+        "startLine": 85,
+        "startChar": 24,
+        "endLine": 85,
+        "endChar": 55
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3078e850_827b0ca3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 9
@@ -541,6 +565,30 @@
       "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c65eaa_f5546868",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-31T20:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dca1660f_d8568bf3",
+      "range": {
+        "startLine": 1256,
+        "startChar": 3,
+        "endLine": 1261,
+        "endChar": 5
+      },
+      "revId": "9c845157680f65ed9f2fedb834080d0852a852a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

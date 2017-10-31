@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "778c3ad7_34bfeb0c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanelMetrics.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-31T20:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2642a40d_bd181e59",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 79
+      },
+      "revId": "d8939b9599a3c946762fcec2eb119fa169707540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9faca7a8_59a4485c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanelMetrics.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "d8939b9599a3c946762fcec2eb119fa169707540",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02dd172a_d0b83c5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanelMetrics.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-31T20:20:29Z",
+      "side": 1,
+      "message": "That\u0027s right, same goes for the other histogram.",
+      "parentUuid": "9faca7a8_59a4485c",
+      "range": {
+        "startLine": 190,
+        "startChar": 13,
+        "endLine": 194,
+        "endChar": 0
+      },
+      "revId": "d8939b9599a3c946762fcec2eb119fa169707540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

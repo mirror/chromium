@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3205438d_846b5b7a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-31T20:20:29Z",
+      "side": 1,
+      "message": "Theresa: the problem here, was that TextBubble#setAnchorRect expects position in screen (i.e absolute), and I was passing the location relative to the Activity. The height difference was because of the status bar.\n\nIf the panel was a view attached to the view hierarchy, I could\u0027ve called View#getLocationOnScreen. But since it isn\u0027t, I\u0027ve used the Window object to get the visible Rect. To be honest, this doesn\u0027t look very clean to me, but I didn\u0027t know of a better way to do it.",
+      "range": {
+        "startLine": 618,
+        "startChar": 8,
+        "endLine": 619,
+        "endChar": 95
+      },
+      "revId": "0864461a9a5175b02c9b192be37d28d9e167da11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
