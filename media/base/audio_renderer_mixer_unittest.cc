@@ -97,7 +97,9 @@ class AudioRendererMixerTest
     return mixer_.get();
   };
 
-  MOCK_METHOD1(ReturnMixer, void(AudioRendererMixer*));
+  void ReturnMixer(AudioRendererMixer* mixer) {
+    EXPECT_EQ(mixer_.get(), mixer);
+  }
 
   MOCK_METHOD4(
       GetOutputDeviceInfo,
@@ -235,8 +237,6 @@ class AudioRendererMixerTest
     InitializeInputs(inputs);
 
     for (size_t i = 0; i < mixer_inputs_.size(); ++i) {
-      mixer_inputs_[i]->Start();
-      mixer_inputs_[i]->Play();
     }
 
     // Set a different volume for each mixer input and verify the results.
@@ -515,7 +515,7 @@ TEST_P(AudioRendererMixerBehavioralTest, MixerPausesStream) {
 }
 
 INSTANTIATE_TEST_CASE_P(
-    AudioRendererMixerTest,
+    /* no prefix */,
     AudioRendererMixerTest,
     testing::Values(
         // No resampling, 1 input sample rate.
