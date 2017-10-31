@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd97cba9_52939f34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-31T08:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c613431_f9778c72",
+      "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47d7026b_2ad115bc",
         "filename": "content/public/common/resource_request_completion_status.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f8a0b1_50f0afe6",
+        "filename": "content/public/common/resource_request_completion_status.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-31T08:53:44Z",
+      "side": 1,
+      "message": "It looks delegating constructor does not allow to have another initializer?\nI wrote like this because of the following compile error.\n\n../../content/public/common/resource_request_completion_status.cc:20:7: error: an initializer for a delegating constructor must appear alone\n    : ResourceRequestCompletionStatus(net::ERR_FAILED), cors_error(error) {\n      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~~~~~\n1 error generated.",
+      "parentUuid": "47d7026b_2ad115bc",
+      "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bcc96fea_4ea1f156",
+        "filename": "content/renderer/loader/cors_url_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-31T08:53:44Z",
+      "side": 1,
+      "message": "Hum... according to url_loader.mojom,\n\n\u003e // Called when the request has been redirected. The receiver is expected to\n\u003e // call FollowRedirect or cancel the request.\n\u003e OnReceiveRedirect(URLRequestRedirectInfo redirect_info, URLResponseHead head);\n\nSo, to be accurate, we need to check if the fowarding_client_\u0027s callback calls FollowRedirect here, and reset network_loader_ if FollowRedirect wasn\u0027t called.\n\nI thought updating url here is safe because client have no chance to access it after this callback, but this network_loader_ issue violates the protocol. Let me fix this.",
+      "parentUuid": "9b5d82fb_71594f15",
+      "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0a3f737_8d69f67e",
         "filename": "content/renderer/loader/cors_url_loader.h",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e87ace7_f34d3c98",
+        "filename": "content/renderer/loader/cors_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-31T08:53:44Z",
+      "side": 1,
+      "message": "Agreed. Let me use last_response_url_ here.",
+      "parentUuid": "e0a3f737_8d69f67e",
+      "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3243f44b_1bbe4f73",
+        "filename": "content/renderer/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-31T08:53:44Z",
+      "side": 1,
+      "message": "Ah, good point. This test name is hard to understand. Let me revise.",
+      "parentUuid": "50b8e9cb_af8d3954",
+      "range": {
+        "startLine": 152,
+        "startChar": 26,
+        "endLine": 152,
+        "endChar": 76
+      },
+      "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
