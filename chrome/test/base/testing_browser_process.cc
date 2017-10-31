@@ -14,6 +14,7 @@
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
+#include "chrome/browser/optimization_guide/optimization_guide_service.h"
 #include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
@@ -241,6 +242,11 @@ TestingBrowserProcess::safe_browsing_detection_service() {
 subresource_filter::ContentRulesetService*
 TestingBrowserProcess::subresource_filter_ruleset_service() {
   return subresource_filter_ruleset_service_.get();
+}
+
+optimization_guide::OptimizationGuideService*
+TestingBrowserProcess::optimization_guide_service() {
+  return optimization_guide_service_.get();
 }
 
 net::URLRequestContextGetter* TestingBrowserProcess::system_request_context() {
@@ -472,6 +478,12 @@ void TestingBrowserProcess::SetRulesetService(
     std::unique_ptr<subresource_filter::ContentRulesetService>
         content_ruleset_service) {
   subresource_filter_ruleset_service_.swap(content_ruleset_service);
+}
+
+void TestingBrowserProcess::SetOptimizationGuideService(
+    std::unique_ptr<optimization_guide::OptimizationGuideService>
+        optimization_guide_service) {
+  optimization_guide_service_.swap(optimization_guide_service);
 }
 
 void TestingBrowserProcess::SetRapporServiceImpl(
