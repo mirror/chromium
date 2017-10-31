@@ -16,6 +16,24 @@
       "revId": "bcbd9bd93eeb85ab51e7ca49644bae6246084347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab15ee85_54692809",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-31T17:23:33Z",
+      "side": 1,
+      "message": "This just updates the title name for the page. It doesn\u0027t change what the backing process is.\n\nIf multiple renderers are determined to be hung there will be multiple line entries, killing one will kill all in the same process.",
+      "parentUuid": "9bf8950f_12f13bed",
+      "revId": "bcbd9bd93eeb85ab51e7ca49644bae6246084347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
