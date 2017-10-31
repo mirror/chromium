@@ -39,6 +39,24 @@
       "revId": "70875fdbcfa084948aab6914a7ec5eb1fc9d6f3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3178c184_cda0eb53",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-31T06:49:36Z",
+      "side": 0,
+      "message": "|origin_denied| was used in all switch cases before merging these three functions, but in the new function, it was used in half cases (and unused cases may increase...).\n\nI assume there are only small pros-cons, such as calling String::Format() twice might cost, vs inlining increases memory usage. Both should be very small. But now that this is a little large switch-cases, I just prefer simpler string generation that does not affect each other case.",
+      "parentUuid": "8a292341_073b2991",
+      "revId": "70875fdbcfa084948aab6914a7ec5eb1fc9d6f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
