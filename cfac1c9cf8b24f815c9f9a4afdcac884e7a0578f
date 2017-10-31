@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f4b8201_f0e767b2",
+        "filename": "chrome/browser/notifications/chrome_ash_message_center_client_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-31T00:20:38Z",
+      "side": 1,
+      "message": "FWIW, I was suggesting something like:\n\n message_center_client()-\u003eGetNotifierList(\n        base::BindOnce([](\n  std::vector\u003cash::mojom::NotifierUiDataPtr\u003e* out,\n  std::vector\u003cash::mojom::NotifierUiDataPtr\u003e in) {\n    *out \u003d std::move(in);\n}, \u0026notifiers);\n\nSine we only do this in the one place and I think that makes the reason for the inverted operators more clear.\n\nThat said I am fine with all 3 options.",
+      "revId": "cfac1c9cf8b24f815c9f9a4afdcac884e7a0578f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
