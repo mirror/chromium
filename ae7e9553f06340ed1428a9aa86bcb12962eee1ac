@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fbf2a918_9845a195",
+        "filename": "ui/latency/latency_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-10-31T21:45:41Z",
+      "side": 1,
+      "message": "I tried going down that route, but it looked a little hairy. \n\nE.g. there several places where we do DCHECKs like this one:\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/input/gesture_event_queue.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d367\nWe can\u0027t do that easily with UkmSourceId, because the incrementing id is ORed with the type: https://cs.chromium.org/chromium/src/services/metrics/public/cpp/ukm_source_id.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d31\n\ntrace_id is also used a part of the key in LatencyMap, so there were some rippling changes. Finally, we\u0027d probably need to convert UkmSourceId to int64 in a few places, so we\u0027d probabaly need to add a converter in ukm_source_id.h.",
+      "parentUuid": "9471974e_13c0959e",
+      "range": {
+        "startLine": 226,
+        "startChar": 7,
+        "endLine": 226,
+        "endChar": 19
+      },
+      "revId": "ae7e9553f06340ed1428a9aa86bcb12962eee1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19b4c18c_b425f7cb",
         "filename": "ui/latency/latency_tracker.cc",
         "patchSetId": 1
