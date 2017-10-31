@@ -320,6 +320,30 @@
     },
     {
       "key": {
+        "uuid": "cbe39855_33c20026",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-31T21:54:33Z",
+      "side": 1,
+      "message": "Ok, sounds good! Will make those change in the follow up CL that improves the animations.\nThe method has a comment on the protected header where its declared",
+      "parentUuid": "34e48547_2cd2c93e",
+      "range": {
+        "startLine": 847,
+        "startChar": 4,
+        "endLine": 847,
+        "endChar": 17
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53569548_1d2c17a8",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 2
@@ -449,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "4f9342b2_98bec02c",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-31T21:54:33Z",
+      "side": 1,
+      "message": "Ack. This is temporary, so will make sure its fixed when implementing in the real place.",
+      "parentUuid": "73ccbb98_e0957e12",
+      "range": {
+        "startLine": 1836,
+        "startChar": 14,
+        "endLine": 1836,
+        "endChar": 22
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdcb0f90_4c751d38",
         "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
         "patchSetId": 2
@@ -508,6 +556,30 @@
       "side": 1,
       "message": "The complaint about self being retained should only appear if an ivar is used; if there\u0027s a property it shouldn\u0027t complain (because the retention is explicit).\n\nSo make _backButton and _forwardButton properties (or, if they\u0027re already properties, just use them) and it should be fine.",
       "parentUuid": "13cb2880_972c8988",
+      "range": {
+        "startLine": 2281,
+        "startChar": 19,
+        "endLine": 2281,
+        "endChar": 33
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f323a17_3409e91c",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2281,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-31T21:54:33Z",
+      "side": 1,
+      "message": "Tried with properties and I get the same error from the compiler, even if it is a weak property. I think its because we are making a call to self. even if it returns a weak object.",
+      "parentUuid": "c40938a6_cfdad176",
       "range": {
         "startLine": 2281,
         "startChar": 19,
