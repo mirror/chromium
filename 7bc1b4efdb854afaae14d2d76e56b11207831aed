@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f9394b5_4f266cb6",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-31T20:21:33Z",
+      "side": 1,
+      "message": "nit: carat -\u003e caret",
+      "range": {
+        "startLine": 207,
+        "startChar": 37,
+        "endLine": 207,
+        "endChar": 42
+      },
+      "revId": "7bc1b4efdb854afaae14d2d76e56b11207831aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
