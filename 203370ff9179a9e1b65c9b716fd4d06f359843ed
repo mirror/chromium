@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26be821a_c2bcdac5",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-31T15:00:53Z",
+      "side": 1,
+      "message": "This file is shared between inline login webui and ChromeOS oobe/login. It is pulled into chromeos oobe webui via a \u003cinclude\u003e in JS [1]. Would gzip compression work there?\n\n[1]: https://cs.chromium.org/chromium/src/chrome/browser/resources/chromeos/login/login_non_lock_shared.js?rcl\u003d426f9c09d093131662c732691d42c2d81a30c3e9\u0026l\u003d38",
+      "revId": "203370ff9179a9e1b65c9b716fd4d06f359843ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
