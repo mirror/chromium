@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa6eb98b_50a1d6a8",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/history.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-31T19:26:28Z",
+      "side": 1,
+      "message": "nit: wrap to within 80 characters:\n      \u003cinput id\u003d\"searchInput\" type\u003d\"text\" name\u003d\"search\"\n          placeholder\u003d\"Search History\"\u003e",
+      "revId": "830aa56caf7e2c3f771758667fd100960e2fbeb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659d062b_20944481",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-31T19:26:28Z",
+      "side": 1,
+      "message": "trick:\nlet $ \u003d document.getElementById.bind(document);",
+      "revId": "830aa56caf7e2c3f771758667fd100960e2fbeb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb8f5d7_a01c25fa",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-31T19:26:28Z",
+      "side": 1,
+      "message": "and then:\nlet template \u003d $(\u0027history-template\u0027);",
+      "revId": "830aa56caf7e2c3f771758667fd100960e2fbeb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1b70a8_5e0c04e5",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-31T19:26:28Z",
+      "side": 1,
+      "message": "$(\u0027searchSubmit\u0027).onclick \u003d ...\n\nand similar for historyDiv, deleteSelected, removeAll, and seeAll",
+      "revId": "830aa56caf7e2c3f771758667fd100960e2fbeb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
