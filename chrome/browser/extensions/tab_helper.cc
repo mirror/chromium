@@ -9,6 +9,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "chrome/browser/banners/app_banner_manager_desktop.h"
 #include "chrome/browser/extensions/activity_log/activity_log.h"
 #include "chrome/browser/extensions/api/bookmark_manager_private/bookmark_manager_private_api.h"
 #include "chrome/browser/extensions/api/declarative_content/chrome_content_rules_registry.h"
@@ -186,6 +187,7 @@ TabHelper::TabHelper(content::WebContents* web_contents)
       set_delegate(this);
 
   BookmarkManagerPrivateDragEventRouter::CreateForWebContents(web_contents);
+  banners::AppBannerManagerDesktop::CreateForWebContents(web_contents);
 }
 
 void TabHelper::CreateHostedAppFromWebContents() {
@@ -282,6 +284,9 @@ void TabHelper::FinishCreateBookmarkApp(
     const Extension* extension,
     const WebApplicationInfo& web_app_info) {
   pending_web_app_action_ = NONE;
+  banners::AppBannerManagerDesktop* manager =
+      banners::AppBannerManagerDesktop::FromWebContents(web_contents());
+  manager->OnInstall(false /* is_native app */);
 }
 
 void TabHelper::RenderFrameCreated(content::RenderFrameHost* host) {

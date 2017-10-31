@@ -113,7 +113,7 @@ class AppBannerManager : public content::WebContentsObserver,
   // performs logging related to the app installation. Appinstalled event is
   // redundant for the beforeinstallprompt event's promise being resolved, but
   // is required by the install event spec.
-  void OnInstall(bool is_native, blink::WebDisplayMode display);
+  void OnInstall(bool is_native);
 
   // Sends a message to the renderer that the user accepted the banner.
   void SendBannerAccepted();

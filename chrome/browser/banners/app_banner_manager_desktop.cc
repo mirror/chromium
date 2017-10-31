@@ -57,6 +57,8 @@ void AppBannerManagerDesktop::DidFinishCreatingBookmarkApp(
     } else {
       SendBannerAccepted();
 
+      OnInstall(false /* is_native app */);
+
       AppBannerSettingsHelper::RecordBannerInstallEvent(
           contents, GetAppIdentifier(), AppBannerSettingsHelper::WEB);
     }
