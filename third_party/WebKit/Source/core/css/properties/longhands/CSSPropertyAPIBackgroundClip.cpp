@@ -14,6 +14,7 @@ const CSSValue* CSSPropertyAPIBackgroundClip::ParseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext&,
     const CSSParserLocalContext& local_context) const {
+  // This is legacy behavior that does not match spec, see crbug.com/604023
   if (local_context.UseAliasParsing()) {
     return CSSPropertyParserHelpers::ConsumeCommaSeparatedList(
         CSSPropertyBackgroundUtils::ConsumePrefixedBackgroundBox, range,

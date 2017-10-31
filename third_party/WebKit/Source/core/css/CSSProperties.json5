@@ -4634,7 +4634,8 @@
       name: "-webkit-backface-visibility",
       alias_for: "backface-visibility",
     },
-    // TODO(bugsnash): add difference in parsing logic comment
+    // -webkit-background-clip accepts "content", "padding", and "border" values
+    // See crbug.com/604023
     {
       name: "-webkit-background-clip",
       alias_for: "background-clip",
