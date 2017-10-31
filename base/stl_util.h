@@ -28,10 +28,10 @@ namespace internal {
 
 // Calls erase on iterators of matching elements.
 template <typename Container, typename Predicate>
-void IterateAndEraseIf(Container& container, Predicate pred) {
-  for (auto it = container.begin(); it != container.end();) {
+void IterateAndEraseIf(Container* container, Predicate pred) {
+  for (auto it = container->begin(); it != container->end();) {
     if (pred(*it))
-      it = container.erase(it);
+      it = container->erase(it);
     else
       ++it;
   }
