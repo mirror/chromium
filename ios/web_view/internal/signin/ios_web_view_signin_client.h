@@ -7,6 +7,10 @@
 
 #include "components/signin/ios/browser/ios_signin_client.h"
 
+#include "base/ios/weak_nsobject.h"
+
+@class CWVAuthenticationController;
+
 // iOS WebView specific signin client.
 class IOSWebViewSigninClient : public IOSSigninClient {
  public:
@@ -26,7 +30,18 @@ class IOSWebViewSigninClient : public IOSSigninClient {
   // SigninErrorController::Observer implementation.
   void OnErrorChanged() override;
 
+  void SetAuthenticationController(
+      CWVAuthenticationController* authentication_controller) {
+    authentication_controller_.reset(authentication_controller);
+  }
+
+  CWVAuthenticationController* GetAuthenticationController() {
+    return authentication_controller_.get();
+  }
+
  private:
+  base::WeakNSObject<CWVAuthenticationController> authentication_controller_;
+
   DISALLOW_COPY_AND_ASSIGN(IOSWebViewSigninClient);
 };
 
