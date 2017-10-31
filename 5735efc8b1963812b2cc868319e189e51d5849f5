@@ -16,6 +16,24 @@
       "revId": "5735efc8b1963812b2cc868319e189e51d5849f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d3f190_88f114be",
+        "filename": "third_party/WebKit/Source/core/dom/FlatTreeTraversalTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-31T05:04:45Z",
+      "side": 1,
+      "message": "Done. Replace to simple HTML.",
+      "parentUuid": "8f5c73dd_b05d3115",
+      "revId": "5735efc8b1963812b2cc868319e189e51d5849f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
