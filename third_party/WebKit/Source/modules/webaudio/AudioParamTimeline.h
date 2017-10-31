@@ -182,8 +182,6 @@ class AudioParamTimeline {
     Vector<float>& Curve() { return curve_; }
     float InitialValue() const { return initial_value_; }
     double CallTime() const { return call_time_; }
-    bool NeedsTimeClampCheck() const { return needs_time_clamp_check_; }
-    void ClearTimeClampCheck() { needs_time_clamp_check_ = false; }
 
     double CurvePointsPerSecond() const { return curve_points_per_second_; }
     float CurveEndValue() const { return curve_end_value_; }
@@ -273,10 +271,6 @@ class AudioParamTimeline {
     // continue as if the event still existed up until we reach the actual
     // scheduled cancel time.
     std::unique_ptr<ParamEvent> saved_event_;
-
-    // True if the start time needs to be checked against current time
-    // to implement clamping.
-    bool needs_time_clamp_check_;
 
     // True if a default value has been assigned to the CancelValues event.
     bool has_default_cancelled_value_;
@@ -368,9 +362,7 @@ class AudioParamTimeline {
                       double sample_rate) const;
 
   // Clamp event times to current time, if needed.
-  void ClampToCurrentTime(int number_of_events,
-                          size_t start_frame,
-                          double sample_rate);
+  void ClampToCurrentTime(double current_time);
 
   // Handle the case where the last event in the timeline is in the
   // past.  Returns false if any event is not in the past. Otherwise,
@@ -464,6 +456,11 @@ class AudioParamTimeline {
   // Vector of all automation events for the AudioParam.  Access must
   // be locked via m_eventsLock.
   Vector<std::unique_ptr<ParamEvent>> events_;
+
+  // Vector of new events.  As new events are added, records the index
+  // into |events_| where the event was placed.  Access must be locked
+  // via |events_lock_|.
+  Vector<size_t> new_events_;
 
   mutable Mutex events_lock_;
 
