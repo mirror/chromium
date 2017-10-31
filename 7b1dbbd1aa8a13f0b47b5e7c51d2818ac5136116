@@ -219,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "4aa9f705_2d35fe91",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_callback_interface.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-31T09:09:18Z",
+      "side": 1,
+      "message": "Yes, having LEGACY_CALLBACK_INTERFACE_H_INCLUDES seems easy and simple.",
+      "parentUuid": "baec4caa_8b71393a",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cd5be13_d9249d1f",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
         "patchSetId": 4
@@ -459,6 +477,24 @@
       "side": 1,
       "message": "If this is a pure question, it doesn\u0027t make much difference to me.\n\nIf this is a suggestion, I\u0027m just fine to follow it since there is no big difference to me.  The temporary variable name shouldn\u0027t start with \"is_\" though.  {% set single_operation_enum_value \u003d ... %} for example?",
       "parentUuid": "a57ca9a5_aaaa66d4",
+      "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5acff1e2_3dba94c8",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.h.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-31T09:09:18Z",
+      "side": 1,
+      "message": "I prefer to use {% set ... %}, because it looks complex for me to have {% if .. else .. endif %} in multi-line and Jinja hacks for an argument.\nSuggested variable name looks good to me.",
+      "parentUuid": "526bdd15_23bfa01d",
       "revId": "7b1dbbd1aa8a13f0b47b5e7c51d2818ac5136116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
