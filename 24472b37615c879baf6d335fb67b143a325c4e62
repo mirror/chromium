@@ -176,6 +176,24 @@
       "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb19e99_cff908ee",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-31T13:59:00Z",
+      "side": 1,
+      "message": "First of all, I\u0027m sorry that I misunderstood the exception handling in callback interface.  As we\u0027ve been using v8::TryCatch + SetVerbose(true), we\u0027ve been killing all the exceptions inside the callbacks.  We\u0027ve been reporting if an exception occurred or not without an actual exception.\n\n\nMaybe it\u0027s possible to ask the call sites to always use v8::TryCatch, but I don\u0027t think it\u0027s a good idea because it doesn\u0027t solve the problem that call sites should check an exception before using a return value.\n\nI don\u0027t like the asymmetry between void and non-void types here, and I\u0027m happy to work on it.  However, IMHO, the asymmetry between void and non-void is a style issue (lack of style consistency), and less important than a problem that call sites can use a return value without checking an exception or a problem whether callbacks should kill an exception or not.\n\nEven when considering this style issue, I think that the trend will be v8::Maybe, we\u0027ll need to use more v8::Maybe here and there, e.g. ToV8 needs to return v8::MaybeLocal.  Considering this as a general style issue of exception handling, I\u0027d vote for v8::Maybe rather than \"throw an exception + return a return value\" so that it better matches with other cases.\n\nIf the style breakage is an important problem here, why don\u0027t we always return a v8::Maybe?  Technically it\u0027s possible (although we need to pay a tax).",
+      "parentUuid": "f2fcc104_b7128ff2",
+      "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
