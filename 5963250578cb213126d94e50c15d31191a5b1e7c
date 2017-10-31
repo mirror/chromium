@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ba9e187_25113978",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 2278,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T23:28:14Z",
+      "side": 1,
+      "message": "Added \"We pass an null BlockingPageReadyCallback() to indicate that we don\u0027t want SSLErrorHandler to take the committed interstitials code path.\" and switched the type.",
+      "parentUuid": "21e59605_3c181fb6",
+      "range": {
+        "startLine": 2276,
+        "startChar": 6,
+        "endLine": 2278,
+        "endChar": 67
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf086c1e_3ceb77b4",
         "filename": "chrome/browser/ssl/ssl_error_handler.h",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1a4367_e9fbb38d",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T23:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf086c1e_3ceb77b4",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "42029c45_7819615f",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T23:28:14Z",
+      "side": 1,
+      "message": "Changed to \"When --committed--interstitials is enabled, it passes a constructed blocking page to the |blocking_page_ready_callback| that was given to HandleSSLError().\".",
+      "parentUuid": "bbad91af_d117f14a",
+      "range": {
+        "startLine": 57,
+        "startChar": 49,
+        "endLine": 57,
+        "endChar": 75
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cdadd87_382322f5",
         "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
         "patchSetId": 17
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-30T23:00:29Z",
       "side": 1,
       "message": "Instead of mapping to a net error, you could instead do\nif (net::IsCertStatusError(...) \u0026\u0026 !net::IsCertStatusMinorError(...)",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ebd977_45749b10",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T23:28:14Z",
+      "side": 1,
+      "message": "We need to use the error below anyhow, so this seems more natural to me.\n\nWould you prefer to check the cert status before conversion?",
+      "parentUuid": "8cdadd87_382322f5",
       "range": {
         "startLine": 43,
         "startChar": 12,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "b1acf207_f7553404",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T23:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57aa8bff_995bb3c3",
+      "range": {
+        "startLine": 47,
+        "startChar": 3,
+        "endLine": 48,
+        "endChar": 72
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0da857fc_d3875b49",
         "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
         "patchSetId": 17
@@ -160,6 +280,30 @@
       "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1404d8_aefade27",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T23:28:14Z",
+      "side": 1,
+      "message": "We have to get the error page HML from `blocking_page` before passing it to AssociateBlockingPage().\n\nI just tried swapping the order of CancelDeferredNavigation() and AssociateBlockingPage(), and it *seems* that SSLErrorTabHelper::DidFinishNavigation() gets called asynchronously after AssociateBlockingPage(), but I don\u0027t know enough about whether we can rely on that.\n\nIf it\u0027s possible that SSLErrorTabHelper::DidFinishNavigation() ever does get called synchronously, then at best SSLErrorTabHelper could be holding on to multiple interstitials pages even after committing. However, the documentation for DidFinishNavigation() [1] says that the navigation handle will be destroyed, which suggests that it would actually cause a crash.\n\nIn light of that information, would you still prefer to swap the two calls below and inline it?\n(Or do you know any documentation that makes it safe to assume that the navigation will finish asynchronously?)\n\n[1] https://cs.chromium.org/chromium/src/content/public/browser/web_contents_observer.h?l\u003d176\u0026rcl\u003d26c0aca7510956caf16635512f4e5d7a8e256bf0",
+      "parentUuid": "0da857fc_d3875b49",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 65
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "8e2106b0_b59f436a",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T23:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "337b60c9_71281c7d",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9149a226_30326c7f",
         "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.h",
         "patchSetId": 17
@@ -206,6 +374,30 @@
       "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d1f7e3_d528f495",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T23:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9149a226_30326c7f",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 49
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "2ee16b5a_55ae6f20",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T23:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae4e700f_a3a9d471",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 81
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8b54c9e_7cd520ec",
         "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.h",
         "patchSetId": 17
@@ -252,6 +468,30 @@
       "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ec46c6_f9034e0a",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T23:28:14Z",
+      "side": 1,
+      "message": "At this point, it certainly can! Done. :-)",
+      "parentUuid": "a8b54c9e_7cd520ec",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "a70cc998_67c6538e",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T23:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d28a2e0_9b133538",
+      "range": {
+        "startLine": 8,
+        "startChar": 14,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf0bd43a_779762c6",
         "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
         "patchSetId": 17
@@ -345,6 +609,30 @@
       "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b413d83_906aef71",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T23:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf0bd43a_779762c6",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 81
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

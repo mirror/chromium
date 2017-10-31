@@ -22,6 +22,30 @@
       "revId": "bfda8251a0f4373eaa93147c24cb7df13e5af16e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8abeaa04_f94060fd",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T23:28:14Z",
+      "side": 1,
+      "message": "Ah, thanks for laying that out. I had in my mind that A\u0027s commit would somehow stop B from navigating.\nI can\u0027t reproduce your sequence easily, but I\u0027ve adapted the code to guard against it using your `blocking_page_for_currently_committed_navigation_` idea.\n\n\u003e Any navigations that don\u0027t commit are responsible for cleaning up their own blocking pages.\n\ni.e. they are responsible for the whole lifetime of their blocking pages?",
+      "parentUuid": "39757595_666a4277",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 43
+      },
+      "revId": "bfda8251a0f4373eaa93147c24cb7df13e5af16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
