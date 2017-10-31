@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46b44c6a_30e4cbfa",
+        "filename": "device/gamepad/gamepad_data_fetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-31T19:12:15Z",
+      "side": 1,
+      "message": "These default functions should run the callback, maybe with a not supported error? Otherwise data fetchers that don\u0027t bother to implement them because the pads don\u0027t support haptics may accidentally bottom out here and the callback will never be run.",
+      "revId": "a93ad7967a9b0233e6e86ea0a96f0b384dffc5a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
