@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2e653f27_adc8d5d4",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-31T17:26:01Z",
+      "side": 1,
+      "message": "I don\u0027t see where the |is_successful| optional parameter is bound to a value. The execution flow seems to always take the \u0027or\u0027 path, so perhaps this parameter is not needed at all?",
+      "range": {
+        "startLine": 254,
+        "startChar": 6,
+        "endLine": 254,
+        "endChar": 19
+      },
+      "revId": "4c01bd1f31f2927b5e8bd0d1e5866f5a550ff157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72f8769f_ad8dd59a",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 2
