@@ -75,6 +75,9 @@ class CdmFileImpl final : public media::mojom::CdmFile {
                               const base::Closure& on_close_callback);
   void OnTempFileOpenedForWriting(base::File file,
                                   const base::Closure& on_close_callback);
+  void OnGetFileInfo(base::File::Error result,
+                     const base::File::Info& file_info);
+  void OnFileDeleted(base::File::Error delete_result);
   void OnFileRenamed(base::File::Error move_result);
 
   // Returns the FileSystemURL for the specified |file_name|.

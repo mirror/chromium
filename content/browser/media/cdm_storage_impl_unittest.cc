@@ -121,12 +121,15 @@ class CdmStorageTest : public RenderViewHostTestHarness {
     int bytes_to_write = base::checked_cast<int>(data.size());
     int bytes_written = file_to_write.Write(
         0, reinterpret_cast<const char*>(data.data()), bytes_to_write);
-    *status = bytes_to_write == bytes_written;
-    cdm_file->CommitWrite(
-        base::Bind(&CdmStorageTest::WriteDone, base::Unretained(this), file));
+    EXPECT_EQ(bytes_to_write, bytes_written);
+    cdm_file->CommitWrite(base::Bind(&CdmStorageTest::WriteDone,
+                                     base::Unretained(this), status, file));
   }
 
-  void WriteDone(base::File* file, base::File new_file_for_reading) {
+  void WriteDone(bool* status,
+                 base::File* file,
+                 base::File new_file_for_reading) {
+    *status = new_file_for_reading.IsValid();
     *file = std::move(new_file_for_reading);
     run_loop_->Quit();
   }
@@ -322,6 +325,46 @@ TEST_F(CdmStorageTest, ReadThenWriteEmptyFile) {
   // Should still be empty.
   EXPECT_EQ(
       0, file.Read(0, reinterpret_cast<char*>(data_read), kTestDataReadSize));
+}
+
+TEST_F(CdmStorageTest, WriteHugeFile) {
+  Initialize(kTestFileSystemId);
+
+  const char kFileName[] = "huge_file_name";
+  CdmStorage::Status status;
+  base::File file;
+  CdmFileAssociatedPtr cdm_file;
+  EXPECT_TRUE(Open(kFileName, &status, &file, &cdm_file));
+  EXPECT_EQ(status, CdmStorage::Status::kSuccess);
+  EXPECT_TRUE(file.IsValid());
+  EXPECT_TRUE(cdm_file.is_bound());
+
+  // Write a few bytes to the file.
+  const uint8_t kTestData[] = "random string";
+  const int kTestDataSize = sizeof(kTestData);
+  EXPECT_TRUE(Write(cdm_file.get(),
+                    std::vector<uint8_t>(kTestData, kTestData + kTestDataSize),
+                    &file));
+  EXPECT_TRUE(file.IsValid());
+
+  // Write lots of data, which should fail. Size must be > 32 Mb.
+  const size_t kHugeDataSize = 34000000;
+  EXPECT_FALSE(
+      Write(cdm_file.get(), std::vector<uint8_t>(kHugeDataSize), &file));
+  EXPECT_FALSE(file.IsValid());
+
+  // Now close the file and reopen. It should contain |kTestData|.
+  file.Close();
+  cdm_file.reset();
+  EXPECT_TRUE(Open(kFileName, &status, &file, &cdm_file));
+
+  uint8_t data_read[32];
+  const int kTestDataReadSize = sizeof(data_read);
+  EXPECT_GT(kTestDataReadSize, kTestDataSize);
+  EXPECT_EQ(kTestDataSize, file.Read(0, reinterpret_cast<char*>(data_read),
+                                     kTestDataReadSize));
+  for (size_t i = 0; i < kTestDataSize; i++)
+    EXPECT_EQ(kTestData[i], data_read[i]);
 }
 
 }  // namespace content
