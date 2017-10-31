@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Worklet: addModule() on an insecure origin</title>
+<body>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="/resources/get-host-info.js"></script>
+<script>
+
+// This test should be in chromium/ because Worklets are now restrected to
+// secure contexts by Chromium's policy.
+
+if (window.location.origin != get_host_info().UNAUTHENTICATED_ORIGIN) {
+    window.location = get_host_info().UNAUTHENTICATED_ORIGIN +
+                      window.location.pathname;
+} else {
+  promise_test(() => {
+      const kScriptURL = 'resources/empty-worklet-script.js';
+      return CSS.paintWorklet.addModule(kScriptURL).then(() => {
+          assert_unreached('addModule() should fail.');
+      }).catch(error => {
+          assert_equals(error.name, 'SecurityError');
+          assert_equals(
+              error.message,
+              'Only secure origins are allowed (see: https://goo.gl/Y0ZkNV).');
+      });
+  }, 'Importing a script on an insecure origin should reject the given ' +
+     'promise');
+}
+
+</script>
+</body>
