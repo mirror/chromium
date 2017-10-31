@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "a939aee2_3ddad124",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-31T18:58:07Z",
+      "side": 1,
+      "message": "tl;dr; I think the CL as-is will help the crashing situation, so I\u0027m inclined to submit in the interest of time and do another pass in a separate CL. I did add a dcheck to ensure AllDone gets called after FinishCollection is called, which may also aid in debugging if further crashes occur.\n\nI played around with using |this| in the AllDone callback in addition to WebContents to handle that corner case, but too much of trigger manager relies on WebContents being the key into its map, so without a webcontents available it\u0027s hard to tidy up properly. So for now I\u0027m keeping the logic to discard threatDetails as soon as the webcontents goes away. The one possible case where this might fail is if we tell ThreatDetails to finish up and WebContents is destroyed while ThreatDetails is working. TM will cleanup that TD, which may work (TD stays alive due to refcounting) or crash (as per the existing crashes). But I hope this CL will at least improve the situation.\n\nThe next pass will involve making ThreatDetails non-ref-counted, which will force us to manage lifetime much more accurately and address more of the holes we\u0027ve discussed. I think that change will be a bit more involved, and may undo some of the changes in this CL.",
+      "parentUuid": "2702dc2e_c19580b1",
+      "revId": "65063cd08711d7774b3271006fc23cc43b88d79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2ab066b_73296d7b",
         "filename": "components/safe_browsing/triggers/trigger_manager.cc",
         "patchSetId": 7
