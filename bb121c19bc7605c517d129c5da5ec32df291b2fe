@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "703dcd05_93d5ae0f",
+        "filename": "third_party/WebKit/LayoutTests/images/image-with-zero-size-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-10-31T04:34:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87851df0_40827ce4",
+      "range": {
+        "startLine": 2,
+        "startChar": 7,
+        "endLine": 2,
+        "endChar": 8
+      },
+      "revId": "bb121c19bc7605c517d129c5da5ec32df291b2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32e514a0_1cb8d8ff",
         "filename": "third_party/WebKit/LayoutTests/images/image-with-zero-size-svg.html",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7e88d6e0_3b1b70d5",
+        "filename": "third_party/WebKit/LayoutTests/images/image-with-zero-size-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-10-31T04:34:15Z",
+      "side": 1,
+      "message": "Have added test case",
+      "parentUuid": "32e514a0_1cb8d8ff",
+      "range": {
+        "startLine": 8,
+        "startChar": 15,
+        "endLine": 8,
+        "endChar": 34
+      },
+      "revId": "bb121c19bc7605c517d129c5da5ec32df291b2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7184fcb7_582cd772",
         "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "bb121c19bc7605c517d129c5da5ec32df291b2fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d83ce94_a97385c0",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-10-31T04:34:15Z",
+      "side": 1,
+      "message": "Added required changes to cover that case.",
+      "parentUuid": "7184fcb7_582cd772",
+      "range": {
+        "startLine": 434,
+        "startChar": 22,
+        "endLine": 434,
+        "endChar": 63
+      },
+      "revId": "bb121c19bc7605c517d129c5da5ec32df291b2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
