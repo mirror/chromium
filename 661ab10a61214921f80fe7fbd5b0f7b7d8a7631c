@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24f05cff_b67d9f4b",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-31T16:34:48Z",
+      "side": 1,
+      "message": "\"should be doomed\" is sufficient",
+      "range": {
+        "startLine": 435,
+        "startChar": 51,
+        "endLine": 435,
+        "endChar": 64
+      },
+      "revId": "661ab10a61214921f80fe7fbd5b0f7b7d8a7631c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa38c93_bd896393",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-31T16:34:48Z",
+      "side": 1,
+      "message": "if the entry",
+      "range": {
+        "startLine": 435,
+        "startChar": 35,
+        "endLine": 435,
+        "endChar": 43
+      },
+      "revId": "661ab10a61214921f80fe7fbd5b0f7b7d8a7631c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d46f3dd_d39785eb",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-31T16:34:48Z",
+      "side": 1,
+      "message": "Is this method necessary? The class is friended with WritersTest. WritersTest should be able to read should_keep_entry_ directly. Ideally we would do either of those int ests and just look at the results of DoneWritingToEntry to determine if the entry needs to be doomed or not.",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 32
+      },
+      "revId": "661ab10a61214921f80fe7fbd5b0f7b7d8a7631c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
