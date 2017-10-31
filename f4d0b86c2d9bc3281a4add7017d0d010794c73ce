@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "3bebe355_8f08146a",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-31T17:38:13Z",
+      "side": 1,
+      "message": "I guess that\u0027s fine...",
+      "parentUuid": "1d6bec3f_5886fdbc",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aafd2875_e4160e0c",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 3
@@ -99,6 +117,24 @@
       "writtenOn": "2017-10-31T01:42:20Z",
       "side": 1,
       "message": "nit: while you\u0027re here, can you make the descriptions of the two fields above different and mmm... more descriptive?",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af09ef3c_b680c8a8",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-31T17:38:13Z",
+      "side": 1,
+      "message": "The types themselves have the documentation explaining the difference!",
+      "parentUuid": "aafd2875_e4160e0c",
       "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -119,6 +155,24 @@
       "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81aa524_2d079cb7",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-31T17:38:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1381c8c8_2c383be5",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +210,24 @@
     },
     {
       "key": {
+        "uuid": "9d9374e9_be686198",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2875,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-31T17:38:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65551b8a_925cca24",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a25b0303_dba871e8",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 3
@@ -187,6 +259,24 @@
       "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c344f7_6da86659",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3457,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-31T17:38:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9278a06_53251106",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
