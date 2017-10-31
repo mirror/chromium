@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "e90ee163_3784123b",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_snapshot_providing.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-31T12:44:29Z",
+      "side": 1,
+      "message": "I agree. I used two different method as this is one is used only by code behind a flag so I can land more radical changes.\nThe plan is to merge then once things settle down.",
+      "parentUuid": "980dad36_317f6cd2",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "7b545be7a4660dda586c0816a138c8d9b45cff95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc9980e7_a12d460f",
         "filename": "ios/chrome/browser/ui/uikit_ui_util.mm",
         "patchSetId": 2
@@ -68,6 +92,30 @@
       "revId": "7b545be7a4660dda586c0816a138c8d9b45cff95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cac9af7_d454ff7c",
+        "filename": "ios/chrome/browser/ui/uikit_ui_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-31T12:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc9980e7_a12d460f",
+      "range": {
+        "startLine": 177,
+        "startChar": 65,
+        "endLine": 177,
+        "endChar": 71
+      },
+      "revId": "7b545be7a4660dda586c0816a138c8d9b45cff95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
