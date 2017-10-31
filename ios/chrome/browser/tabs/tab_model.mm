@@ -451,6 +451,7 @@ void CleanCertificatePolicyCache(
   createParams.created_with_opener = openedByDOM;
 
   std::unique_ptr<web::WebState> webState = web::WebState::Create(createParams);
+  webState->SetWebUsageEnabled(true);
   webState->GetNavigationManager()->LoadURLWithParams(loadParams);
 
   insertionIndex = _webStateList->InsertWebState(
