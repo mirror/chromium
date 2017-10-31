@@ -1649,6 +1649,7 @@ const char kChromeHomeSwipeLogicName[] = "Chrome Home Swipe Logic";
 const char kChromeHomeSwipeLogicDescription[] =
     "Various swipe logic options for Chrome Home for sheet expansion.";
 const char kChromeHomeSwipeLogicRestrictArea[] = "Restrict swipable area";
+const char kChromeHomeSwipeLogicVelocity[] = "Velocity suppression model";
 
 const char kChromeHomeBottomNavLabelsName[] =
     "Chrome Home bottom navigation menu item labels.";
