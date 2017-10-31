@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28ef0532_e3a11af6",
+        "filename": "storage/browser/fileapi/async_file_util_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-31T23:31:18Z",
+      "side": 1,
+      "message": "\"IO thread\" has a different meaning which means the thread that dispatches IPC messages and should not allow IO (surprisingly). Also we should stay away from \"threads\". Can we call this some runner, e.g. FileTaskRunner?",
+      "revId": "4ae30b9bb61de40a7c691840a49274f099eba801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
