@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "0a49b178_b6a7c316",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationParams.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-31T23:31:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2171ac9_86b952a1",
+      "range": {
+        "startLine": 47,
+        "startChar": 31,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "e39e21872e3e804899dbc061882952f892bc0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91fa1351_a7f61a92",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDelegateFactory.java",
         "patchSetId": 7
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d32b2b5d_d658186c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDelegateFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-31T23:31:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91fa1351_a7f61a92",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 5
+      },
+      "revId": "e39e21872e3e804899dbc061882952f892bc0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21a2c964_145986f6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDelegateFactory.java",
         "patchSetId": 7
@@ -91,6 +139,30 @@
       "revId": "e39e21872e3e804899dbc061882952f892bc0862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260d08ae_9a37f124",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDelegateFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-31T23:31:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21a2c964_145986f6",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 104,
+        "endChar": 13
+      },
+      "revId": "e39e21872e3e804899dbc061882952f892bc0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
