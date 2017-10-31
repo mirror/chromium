@@ -4,6 +4,7 @@
 
 #include "content/browser/accessibility/ax_platform_position.h"
 
+#include "base/strings/string_util.h"
 #include "content/browser/accessibility/accessibility_flags.h"
 #include "content/browser/accessibility/browser_accessibility.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
@@ -119,12 +120,13 @@ int AXPlatformPosition::MaxTextOffsetInParent() const {
 #endif
 }
 
-bool AXPlatformPosition::IsInLineBreak() const {
+bool AXPlatformPosition::IsInWhiteSpace() const {
   if (IsNullPosition())
     return false;
 
   DCHECK(GetAnchor());
-  return GetAnchor()->IsLineBreakObject();
+  return GetAnchor()->IsLineBreakObject() ||
+         base::ContainsOnlyChars(GetInnerText(), base::kWhitespaceUTF16);
 }
 
 std::vector<int32_t> AXPlatformPosition::GetWordStartOffsets() const {
