@@ -332,6 +332,7 @@ void OnAppIconsReceived(
     int render_process_host_id,
     int routing_id,
     const GURL& url,
+    bool is_chrome_listed,
     std::vector<mojom::IntentHandlerInfoPtr> handlers,
     std::unique_ptr<ArcIntentHelperBridge::ActivityToIconsMap> icons) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -352,6 +353,7 @@ void OnAppIconsReceived(
   WebContents* web_contents =
       tab_util::GetWebContentsByID(render_process_host_id, routing_id);
   show_bubble_cb.Run(nullptr /* anchor_view */, web_contents, app_info,
+                     !is_chrome_listed,
                      base::Bind(OnIntentPickerClosed, render_process_host_id,
                                 routing_id, url, base::Passed(&handlers)));
 }
@@ -403,7 +405,9 @@ void OnUrlHandlerList(int render_process_host_id,
   // for handling external protocols, Chrome is rarely in the list, but if the
   // |url| is intent: with fallback or geo:, for example, it may be.
   std::pair<size_t, size_t> indices;
-  if (ArcNavigationThrottle::IsSwapElementsNeeded(handlers, &indices))
+  bool is_chrome_listed =
+      ArcNavigationThrottle::IsSwapElementsNeeded(handlers, &indices);
+  if (is_chrome_listed)
     std::swap(handlers[indices.first], handlers[indices.second]);
 
   // Then request the icons.
@@ -412,8 +416,9 @@ void OnUrlHandlerList(int render_process_host_id,
     activities.emplace_back(handler->package_name, handler->activity_name);
   }
   intent_helper_bridge->GetActivityIcons(
-      activities, base::Bind(OnAppIconsReceived, render_process_host_id,
-                             routing_id, url, base::Passed(&handlers)));
+      activities,
+      base::Bind(OnAppIconsReceived, render_process_host_id, routing_id, url,
+                 is_chrome_listed, base::Passed(&handlers)));
 }
 
 // Returns true if the |url| is safe to be forwarded to ARC without showing the
