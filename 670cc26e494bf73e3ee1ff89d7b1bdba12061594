@@ -1,0 +1,243 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42ab0fb5_5977fa3d",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T20:42:36Z",
+      "side": 1,
+      "message": "Is scale factor the only thing we need to account for in this mapping? Is there anything we need to account for with the various viewports such as pinch zoom?\n\nWe should have a unit test for this hit detection.\n\nThis also seems an ideal candidate to separate out into its own patch.",
+      "range": {
+        "startLine": 661,
+        "startChar": 51,
+        "endLine": 661,
+        "endChar": 70
+      },
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8da31acb_d44e101a",
+        "filename": "content/browser/renderer_host/input/input_router.h",
+        "patchSetId": 56
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T20:42:36Z",
+      "side": 1,
+      "message": "Update comment - when is this not set?",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c33805_35076a40",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T20:42:36Z",
+      "side": 1,
+      "message": "What is the reason for this? Is it that we want to start the ack timeout as soon as we know the touch action is not none? Can we test this? It looks to me like TouchEventQueue::SetAckTimeoutEnabled(false) will prevent us from re-enabling the touch ack timeout if the real touch action comes in later and is not none.",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ba0508_bf9e5291",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T20:42:36Z",
+      "side": 1,
+      "message": "whitelisted touch action implies no event handlers.",
+      "range": {
+        "startLine": 43,
+        "startChar": 41,
+        "endLine": 43,
+        "endChar": 72
+      },
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b584a57d_38191013",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T20:42:36Z",
+      "side": 1,
+      "message": "This is misleading. We accumulate when the gesture does not match the whitelisted touch action. If it matched we would just allow the events.",
+      "range": {
+        "startLine": 50,
+        "startChar": 51,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9defaab0_abad3c7c",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T20:42:36Z",
+      "side": 1,
+      "message": "This is extremely verbose. I\u0027m not sure that you need to try to completely describe what\u0027s done in the function, we can have inline comments as necessary to tie it to particular parts. For a general comment we can say that this method\n\nFilters gestures which are not allowed by the current touch action. If we do not yet know the real touch action, save accumulated deltas from blocked actions so that if the action is later allowed they can be applied.",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5611dc1_01b9fd31",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T20:42:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand, why do we apply touch action auto if we don\u0027t have a touch action? Wouldn\u0027t this allow gestures which perhaps shouldn\u0027t be?",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829f536f_6d4c4c4a",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T20:42:36Z",
+      "side": 1,
+      "message": "This seems to be handling the state change of the real touch action coming in, can we not do this when touch_action_from_main_ gets set?",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c669fd_f52d6f1a",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T20:42:36Z",
+      "side": 1,
+      "message": "Does this mean accumulated_pinch_scale_ is only ever non-1 if we are accumulating? Can we DCHECK this? Is it possible that we get the real touch action and then don\u0027t see another pinch update and so we end up doing the wrong thing here?",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab90704_0a2ec1c8",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 56
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T20:42:36Z",
+      "side": 1,
+      "message": "There is a bug still that we only apply it if another similar event is filtered that we can modify. Can you ensure we have a TODO and bug filed that we should emit events when the action later becomes allowed.",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceac3293_ccc7474c",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 56
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T20:42:36Z",
+      "side": 1,
+      "message": "Is this perhaps equivalent to touch_action_from_main_.has_value()?",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9aa0e2_76b81e75",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T20:42:36Z",
+      "side": 1,
+      "message": "It looks like we only get NON_BLOCKING on 1084 if there is an event listener, doesn\u0027t this mean the whitelisted touch action will always be none making the result DID_NOT_HANDLE?",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47a7792_25aa5633",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 56
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T20:42:36Z",
+      "side": 1,
+      "message": "Can we check this on 1074 before setting NON_BLOCKING?",
+      "revId": "670cc26e494bf73e3ee1ff89d7b1bdba12061594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
