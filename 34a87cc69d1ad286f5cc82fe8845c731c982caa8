@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c48c6b80_8e2132c6",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-31T17:47:40Z",
+      "side": 1,
+      "message": "nit: Can you leave a comment explaining the image check (similar to the blurb you have in the patch description)",
+      "revId": "34a87cc69d1ad286f5cc82fe8845c731c982caa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
