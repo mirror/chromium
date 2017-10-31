@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "136ba6a6_14cafbce",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 13350,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-31T20:13:49Z",
+      "side": 1,
+      "message": "can you mark enum SyncModelTypes obsolete (if there isn\u0027t any other histograms using it)",
+      "revId": "351c98c325cf24845fcd2fa5f04b00717aafde85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
