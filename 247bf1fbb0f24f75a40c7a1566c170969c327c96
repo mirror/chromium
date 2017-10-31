@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bbc8b787_163f1462",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-31T21:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb88206f_80361a58",
+      "range": {
+        "startLine": 40,
+        "startChar": 1,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "247bf1fbb0f24f75a40c7a1566c170969c327c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38d4c040_43112b76",
         "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "247bf1fbb0f24f75a40c7a1566c170969c327c96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54564655_2246a90c",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-31T21:42:09Z",
+      "side": 1,
+      "message": "Yeah I think initially I had it so the //components/signin stack can be created before this class, but I believe this isn\u0027t the case anymore, so I\u0027ll just move this call to to init.",
+      "parentUuid": "38d4c040_43112b76",
+      "range": {
+        "startLine": 47,
+        "startChar": 31,
+        "endLine": 47,
+        "endChar": 58
+      },
+      "revId": "247bf1fbb0f24f75a40c7a1566c170969c327c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4caec161_ec6826f9",
+        "filename": "ios/web_view/internal/signin/ios_web_view_signin_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-31T21:42:09Z",
+      "side": 1,
+      "message": "I redid this according to your suggestion from another comment. Now I set the CWVAuthenticationController on this class and pass this class to the constructor of the token provider.",
+      "parentUuid": "26d93e31_c0182b08",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 53
+      },
+      "revId": "247bf1fbb0f24f75a40c7a1566c170969c327c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8141105_fec8e07a",
         "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.h",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "247bf1fbb0f24f75a40c7a1566c170969c327c96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4496b32f_5898759e",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-31T21:42:09Z",
+      "side": 1,
+      "message": "Yes I like this approach better. PTAL.",
+      "parentUuid": "e8141105_fec8e07a",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 49
+      },
+      "revId": "247bf1fbb0f24f75a40c7a1566c170969c327c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "33d30e2f_070de69e",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-31T21:42:09Z",
+      "side": 1,
+      "message": "If possible, let me take care of this in a follow up CL.",
+      "parentUuid": "f7515f6e_327a2cd2",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "247bf1fbb0f24f75a40c7a1566c170969c327c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1cc3271_46b85001",
         "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.mm",
         "patchSetId": 5
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "2c122977_4fdb7dbb",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-31T21:42:09Z",
+      "side": 1,
+      "message": "No callback to call here.",
+      "parentUuid": "d1cc3271_46b85001",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 19
+      },
+      "revId": "247bf1fbb0f24f75a40c7a1566c170969c327c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc76a52e_a2f2dc40",
         "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.mm",
         "patchSetId": 5
@@ -160,6 +304,30 @@
       "revId": "247bf1fbb0f24f75a40c7a1566c170969c327c96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa6e450_8c4b83eb",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-31T21:42:09Z",
+      "side": 1,
+      "message": "Are you OK if I do this in a follow up CL?",
+      "parentUuid": "fc76a52e_a2f2dc40",
+      "range": {
+        "startLine": 77,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 50
+      },
+      "revId": "247bf1fbb0f24f75a40c7a1566c170969c327c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
