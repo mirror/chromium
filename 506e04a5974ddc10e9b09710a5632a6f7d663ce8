@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9fc9acf2_a40164a4",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 3056,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-31T18:31:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b36d834_bf5ef84f",
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db063619_9a3c9864",
         "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
         "patchSetId": 23
@@ -158,6 +176,30 @@
       "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e4c33f_933b0f7a",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-31T18:31:31Z",
+      "side": 1,
+      "message": "I think the standard C++ upcast is safer, more reliable and better known than these Chrome-specific functions, but I see that incognito profiles have a strange sense of equality, so I guess we have to use it.\n\nI didn\u0027t understand the GetProfileType() comment. I would think that profile equality covers type equality, and I assumed from your TODO that we did not want to switch from one incognito profile to a different one.",
+      "parentUuid": "9001a428_f634ebda",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 65
+      },
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
