@@ -16,6 +16,24 @@
       "revId": "351c98c325cf24845fcd2fa5f04b00717aafde85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ecdcff_d8b59273",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 13350,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-10-31T20:41:57Z",
+      "side": 1,
+      "message": "SyncModelTypes enum is still used by a few histograms\n Sync.ConfigureDataTypes\n Sync.ConfigureFailed",
+      "parentUuid": "136ba6a6_14cafbce",
+      "revId": "351c98c325cf24845fcd2fa5f04b00717aafde85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
