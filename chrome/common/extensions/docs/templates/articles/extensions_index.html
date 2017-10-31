@@ -2,9 +2,20 @@
 
 <p>
   Extensions are small software programs that
-  can modify and enhance the functionality of the Chrome browser.
-  You write them using web technologies such as
-  HTML, JavaScript, and CSS.
+  customize the browsing experience.
+  They enable users to tailor Chrome functionality and
+  behavior to individual needs or preferences.
+  They are built on web technologies
+  such as HTML, JavaScript, and CSS.
+</p>
+
+<p>
+  An extension must fulfill a
+  <a href="single_purpose">single purpose</a>
+  that is narrowly defined
+  and easy to understand.
+  It can include multiple components
+  if they contribute to their extensions underlying intention.
 </p>
 
 <p>
@@ -14,25 +25,25 @@
        align="right"
        style="margin-top:0px; margin-left:0.5em"
        alt="A screenshot of an extension's icon in the browser bar">
-  Extensions have little to no user interface.
-  For example, the image to the right shows the icon
-  that provides the UI for the
-  <a href="samples#google-mail-checker">Google Mail Checker extension</a>.
+  User interfaces should be minimal and have intent.
+  They can range from a simple icon,
+  such as the
+  <a href="samples#google-mail-checker">Google Mail Checker extension</a>
+  shown on the right,
+  to <a href="override">overriding</a> an entire page.
 </p>
 
 <p>
-  Extensions bundle all their files
-  into a single file that the user downloads and installs.
-  This bundling means that, unlike ordinary web apps,
-  extensions don't need to depend
-  on content from the web.
+  Extensions files are zipped into a single <code>.crx</code> package
+  that the user downloads and installs.
+  This means extensions do not depend on content from the web,
+  unlike ordinary web apps.
 </p>
 
 <p>
-  You can distribute your extension
-  using the
+  Extensions are distributed through the
   <a href="https://chrome.google.com/webstore/developer/dashboard">Chrome Developer Dashboard</a>
-  to publish to the
+  and published to the
   <a href="http://chrome.google.com/webstore">Chrome Web Store</a>.
   For more information, see the
   <a href="http://code.google.com/chrome/webstore">store developer documentation</a>.
