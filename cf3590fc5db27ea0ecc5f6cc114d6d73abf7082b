@@ -16,6 +16,24 @@
       "revId": "cf3590fc5db27ea0ecc5f6cc114d6d73abf7082b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a957557_63c81336",
+        "filename": "testing/libfuzzer/proto/json_proto_converter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-31T21:19:14Z",
+      "side": 1,
+      "message": "Hm... is it doing the same thing? I\u0027ve been thinking it\u0027s more for converting proto Message into JSON representation, but not for arbitrary JSON testcases. I guess I\u0027m wrong, since you\u0027ve asked about that :)",
+      "parentUuid": "3b8c56eb_8e287260",
+      "revId": "cf3590fc5db27ea0ecc5f6cc114d6d73abf7082b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
