@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b8c56eb_8e287260",
+        "filename": "testing/libfuzzer/proto/json_proto_converter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-10-31T21:06:35Z",
+      "side": 1,
+      "message": "Why not to use https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.util.json_util",
+      "revId": "cf3590fc5db27ea0ecc5f6cc114d6d73abf7082b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
