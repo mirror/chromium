@@ -26,7 +26,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// https://www.w3.org/TR/webdatabase/#sqlstatementerrorcallback
+// https://dev.w3.org/html5/webdatabase/#sqlstatementerrorcallback
 callback interface SQLStatementErrorCallback {
-    [Custom] boolean handleEvent(SQLTransaction transaction, SQLError error);
+    boolean handleEvent(SQLTransaction transaction, SQLError error);
 };

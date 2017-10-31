@@ -26,7 +26,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// https://www.w3.org/TR/webdatabase/#sqltransactioncallback
+// https://dev.w3.org/html5/webdatabase/#sqltransactioncallback
 callback interface SQLTransactionCallback {
-    boolean handleEvent(SQLTransaction transaction);
+    void handleEvent(SQLTransaction transaction);
 };

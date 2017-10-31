@@ -40,7 +40,7 @@ class SQLTransactionErrorCallback
  public:
   virtual ~SQLTransactionErrorCallback() {}
   virtual void Trace(blink::Visitor* visitor) {}
-  virtual bool handleEvent(SQLError*) = 0;
+  virtual void handleEvent(SQLError*) = 0;
 };
 
 }  // namespace blink

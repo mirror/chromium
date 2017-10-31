@@ -29,6 +29,7 @@
 #include "modules/webdatabase/SQLTransaction.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/modules/v8/V8SQLTransactionCallback.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/html/VoidCallback.h"
 #include "core/probe/CoreProbes.h"
@@ -160,7 +161,11 @@ SQLTransactionState SQLTransaction::DeliverTransactionCallback() {
   // object.
   if (SQLTransactionCallback* callback = callback_.Release()) {
     execute_sql_allowed_ = true;
-    should_deliver_error_callback = !callback->handleEvent(this);
+    v8::TryCatch tryCatch(
+        static_cast<V8SQLTransactionCallback*>(callback)->GetIsolate());
+    tryCatch.SetVerbose(true);
+    callback->handleEvent(this);
+    should_deliver_error_callback = tryCatch.HasCaught();
     execute_sql_allowed_ = false;
   }
 
