@@ -58,6 +58,11 @@ pin-keyboard {
   opacity: 1;
 }
 
+.pod.translucent-background {
+  background-color: rgba(0, 0, 0, 0.56);
+  border-radius: 2px;
+}
+
 .user-image-pane {
   height: 96px;
   left: 105px;
