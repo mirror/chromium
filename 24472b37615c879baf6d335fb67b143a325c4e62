@@ -122,6 +122,24 @@
       "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d37bdd_046f526e",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-31T08:31:02Z",
+      "side": 1,
+      "message": "Just to clarify, my main concern is not about using v8::Maybe types but about the fact that we need different handling for void cases and boolean cases.\n\nGiven that supporting v8::Maybe\u003cvoid\u003e is hard, I was trying to think about a different way.\n\nWhat I still don\u0027t fully understand is why it\u0027s okay to ignore exceptions in so many cases. For example, if you have:\n\n  callback-\u003ehandleEvent();\n\nand it throws an exception, all subsequent V8 APIs will just fail. Why is that okay? Is it okay just because in common cases the call sites of callback-\u003ehandleEvent() immediately returns to V8 without calling any V8 API?\n\n(Maybe we can chat offline tomorrow :-)",
+      "parentUuid": "0f24b791_61c94023",
+      "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
