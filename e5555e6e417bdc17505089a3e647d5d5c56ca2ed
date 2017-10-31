@@ -16,6 +16,24 @@
       "revId": "e5555e6e417bdc17505089a3e647d5d5c56ca2ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3c9bb9_ed11e5d2",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-31T14:13:56Z",
+      "side": 1,
+      "message": "This is an actual bug, thanks for catching: we should also issue a deletion in certain cases where history lookup is slower than the candidates, now fixed and covered by test DeleteFaviconMappingsIfCandidatesFaster.\n\nNote that the opposite (over-triggering of deletion) is not possible because notification_icon_type_ gets reset in FaviconHandler::FetchFavicon(), where the history lookup is triggered.",
+      "parentUuid": "bc54f4ca_5bc5f0b2",
+      "revId": "e5555e6e417bdc17505089a3e647d5d5c56ca2ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
