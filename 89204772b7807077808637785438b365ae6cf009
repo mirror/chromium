@@ -52,6 +52,24 @@
       "revId": "89204772b7807077808637785438b365ae6cf009",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d0a53c8_bc1326b4",
+        "filename": "tools/perf/contrib/vr_benchmarks/shared_android_vr_page_state.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-31T20:21:10Z",
+      "side": 1,
+      "message": "Done. I\u0027ve renamed it to _CycleScreen and manually called it in WillRunStory. As a result, the page state no longer inherits from AndroidScreenRestorationSharedState since we don\u0027t gain anything from doing that anymore.",
+      "parentUuid": "171da18b_796f12ca",
+      "revId": "89204772b7807077808637785438b365ae6cf009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
