@@ -29,7 +29,13 @@ TEST_F(TabStatsDataStoreTest, TabStatsGetsReloadedFromLocalState) {
   std::unique_ptr<TabStatsDataStore> data_store(
       std::make_unique<TabStatsDataStore>(&pref_service));
   size_t expected_tab_count = 12;
-  data_store->OnTabsAdded(expected_tab_count);
+  std::vector<content::WebContents*> fake_tabs;
+  for (size_t i = 0; i < expected_tab_count; ++i) {
+    content::WebContents* fake_tab =
+        reinterpret_cast<content::WebContents*>(0xBEEF000 + i);
+    data_store->OnTabAdded(fake_tab);
+    fake_tabs.push_back(fake_tab);
+  }
   size_t expected_window_count = 5;
   for (size_t i = 0; i < expected_window_count; ++i)
     data_store->OnWindowAdded();
