@@ -139,7 +139,8 @@ class DiceURLRequestUserData : public base::SupportsUserData::Data {
   ~DiceURLRequestUserData() override {
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE,
-        base::BindOnce(&DiceURLRequestUserData::DoNothing,
+        base::BindOnce(&base::DoNothingWithParam<
+                           scoped_refptr<AccountReconcilorLockWrapper>>,
                        account_reconcilor_lock_wrapper_),
         base::TimeDelta::FromMilliseconds(
             g_dice_account_reconcilor_blocked_delay_ms));
@@ -165,9 +166,6 @@ class DiceURLRequestUserData : public base::SupportsUserData::Data {
     return (resource_type == content::RESOURCE_TYPE_XHR) &&
            gaia::IsGaiaSignonRealm(GURL(request->referrer()).GetOrigin());
   }
-  // Dummy function used to extend the lifetime of the wrapper by keeping a
-  // reference on it.
-  static void DoNothing(scoped_refptr<AccountReconcilorLockWrapper> wrapper) {}
 
   scoped_refptr<AccountReconcilorLockWrapper> account_reconcilor_lock_wrapper_;
   DISALLOW_COPY_AND_ASSIGN(DiceURLRequestUserData);

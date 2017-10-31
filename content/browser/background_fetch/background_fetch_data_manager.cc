@@ -123,8 +123,6 @@ std::string PendingRequestKey(
          base::IntToString(request_index);
 }
 
-void EmptyErrorHandler(blink::mojom::BackgroundFetchError) {}
-
 enum class DatabaseStatus { kOk, kFailed, kNotFound };
 
 DatabaseStatus ToDatabaseStatus(ServiceWorkerStatusCode status) {
@@ -594,7 +592,7 @@ class DeleteRegistrationTask : public BackgroundFetchDataManager::DatabaseTask {
 // TODO(johnme): Log failed deletions to UMA.
 class CleanupTask : public BackgroundFetchDataManager::DatabaseTask {
  public:
-  CleanupTask(BackgroundFetchDataManager* data_manager)
+  explicit CleanupTask(BackgroundFetchDataManager* data_manager)
       : DatabaseTask(data_manager), weak_factory_(this) {}
 
   ~CleanupTask() override = default;
@@ -654,7 +652,8 @@ class CleanupTask : public BackgroundFetchDataManager::DatabaseTask {
             // DeleteRegistrationTask for the actual deletion logic.
             AddDatabaseTask(std::make_unique<DeleteRegistrationTask>(
                 data_manager(), service_worker_registration_id, unique_id,
-                base::BindOnce(&EmptyErrorHandler)));
+                base::BindOnce(&base::DoNothingWithParam<
+                               blink::mojom::BackgroundFetchError>)));
           }
         }
       }
