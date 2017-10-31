@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01980a39_4344d5c0",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-31T22:32:49Z",
+      "side": 1,
+      "message": "If these lines are part of the same logical group, consider removing the blank line.",
+      "revId": "0f10b998e7130b895ffe5b0159b6cbd75b1a1e5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
