@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "eccb5149_dea86454",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T23:24:26Z",
+      "side": 1,
+      "message": "\u003e I switched to this because I was running to issues in CalculatePreferredSize() where the method cocoa_scroll_bar() was not const. Do you have a better idea for this?\n\nAhh... you could just declare the coco_scroll_bar() method const :). (conventionally, in a public header, it would/should also return a `const CocoaScrollBar*`, but it doesn\u0027t need to, and it\u0027s fine to return non-const in a private impl class).",
+      "parentUuid": "3f9fc239_253dbc0c",
+      "revId": "ca5668704b0b1c8277caf0101f9cc5fe981ed81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f049c69_4397f845",
         "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
         "patchSetId": 6
