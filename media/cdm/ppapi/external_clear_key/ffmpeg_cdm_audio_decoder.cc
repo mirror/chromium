@@ -8,6 +8,9 @@
 
 #include <algorithm>
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
+#include "base/callback.h"
 #include "base/logging.h"
 #include "media/base/audio_bus.h"
 #include "media/base/audio_timestamp_helper.h"
@@ -15,14 +18,7 @@
 #include "media/base/limits.h"
 #include "media/base/timestamp_constants.h"
 #include "media/ffmpeg/ffmpeg_common.h"
-
-// Include FFmpeg header files.
-extern "C" {
-// Temporarily disable possible loss of data warning.
-MSVC_PUSH_DISABLE_WARNING(4244);
-#include <libavcodec/avcodec.h>
-MSVC_POP_WARNING();
-}  // extern "C"
+#include "media/ffmpeg/ffmpeg_decoding_loop.h"
 
 namespace media {
 
@@ -181,7 +177,7 @@ bool FFmpegCdmAudioDecoder::Initialize(const cdm::AudioDecoderConfig& config) {
   }
 
   // Success!
-  av_frame_.reset(av_frame_alloc());
+  decoding_loop_.reset(new FFmpegDecodingLoop(codec_context_.get()));
   samples_per_second_ = config.samples_per_second;
   bytes_per_frame_ = codec_context_->channels * config.bits_per_channel / 8;
   output_timestamp_helper_.reset(
@@ -266,128 +262,14 @@ cdm::Status FFmpegCdmAudioDecoder::DecodeBuffer(
   DCHECK_NE(cdm_format, cdm::kUnknownAudioFormat);
   decoded_frames->SetFormat(cdm_format);
 
-  // Each audio packet may contain several frames, so we must call the decoder
-  // until we've exhausted the packet.  Regardless of the packet size we always
-  // want to hand it to the decoder at least once, otherwise we would end up
-  // skipping end of stream packets since they have a size of zero.
-  do {
-    // Reset frame to default values.
-    av_frame_unref(av_frame_.get());
-
-    int frame_decoded = 0;
-    int result = avcodec_decode_audio4(
-        codec_context_.get(), av_frame_.get(), &frame_decoded, &packet);
-
-    if (result < 0) {
-      DCHECK(!is_end_of_stream)
-          << "End of stream buffer produced an error! "
-          << "This is quite possibly a bug in the audio decoder not handling "
-          << "end of stream AVPackets correctly.";
-
-      DLOG(ERROR)
-          << "Error decoding an audio frame with timestamp: "
-          << timestamp.InMicroseconds() << " us, duration: "
-          << timestamp.InMicroseconds() << " us, packet size: "
-          << compressed_buffer_size << " bytes";
-
-      return cdm::kDecodeError;
-    }
-
-    // Update packet size and data pointer in case we need to call the decoder
-    // with the remaining bytes from this packet.
-    packet.size -= result;
-    packet.data += result;
-
-    if (output_timestamp_helper_->base_timestamp() == kNoTimestamp &&
-        !is_end_of_stream) {
-      DCHECK(timestamp != kNoTimestamp);
-      if (output_bytes_to_drop_ > 0) {
-        // Currently Vorbis is the only codec that causes us to drop samples.
-        // If we have to drop samples it always means the timeline starts at 0.
-        DCHECK_EQ(codec_context_->codec_id, AV_CODEC_ID_VORBIS);
-        output_timestamp_helper_->SetBaseTimestamp(base::TimeDelta());
-      } else {
-        output_timestamp_helper_->SetBaseTimestamp(timestamp);
-      }
-    }
-
-    int decoded_audio_size = 0;
-    if (frame_decoded) {
-      if (av_frame_->sample_rate != samples_per_second_ ||
-          av_frame_->channels != channels_ ||
-          av_frame_->format != av_sample_format_) {
-        DLOG(ERROR) << "Unsupported midstream configuration change!"
-                    << " Sample Rate: " << av_frame_->sample_rate << " vs "
-                    << samples_per_second_
-                    << ", Channels: " << av_frame_->channels << " vs "
-                    << channels_
-                    << ", Sample Format: " << av_frame_->format << " vs "
-                    << av_sample_format_;
-        return cdm::kDecodeError;
-      }
-
-      decoded_audio_size = av_samples_get_buffer_size(
-          NULL, codec_context_->channels, av_frame_->nb_samples,
-          codec_context_->sample_fmt, 1);
-    }
-
-    if (decoded_audio_size > 0 && output_bytes_to_drop_ > 0) {
-      DCHECK_EQ(decoded_audio_size % bytes_per_frame_, 0)
-          << "Decoder didn't output full frames";
-
-      int dropped_size = std::min(decoded_audio_size, output_bytes_to_drop_);
-      decoded_audio_size -= dropped_size;
-      output_bytes_to_drop_ -= dropped_size;
-    }
-
-    if (decoded_audio_size > 0) {
-      DCHECK_EQ(decoded_audio_size % bytes_per_frame_, 0)
-          << "Decoder didn't output full frames";
-
-      base::TimeDelta output_timestamp =
-          output_timestamp_helper_->GetTimestamp();
-      output_timestamp_helper_->AddFrames(decoded_audio_size /
-                                          bytes_per_frame_);
-
-      // If we've exhausted the packet in the first decode we can write directly
-      // into the frame buffer instead of a multistep serialization approach.
-      if (serialized_audio_frames_.empty() && !packet.size) {
-        const uint32_t buffer_size = decoded_audio_size + sizeof(int64_t) * 2;
-        decoded_frames->SetFrameBuffer(host_->Allocate(buffer_size));
-        if (!decoded_frames->FrameBuffer()) {
-          LOG(ERROR) << "DecodeBuffer() ClearKeyCdmHost::Allocate failed.";
-          return cdm::kDecodeError;
-        }
-        decoded_frames->FrameBuffer()->SetSize(buffer_size);
-        uint8_t* output_buffer = decoded_frames->FrameBuffer()->Data();
-
-        const int64_t timestamp = output_timestamp.InMicroseconds();
-        memcpy(output_buffer, &timestamp, sizeof(timestamp));
-        output_buffer += sizeof(timestamp);
-
-        const int64_t output_size = decoded_audio_size;
-        memcpy(output_buffer, &output_size, sizeof(output_size));
-        output_buffer += sizeof(output_size);
-
-        // Copy the samples and return success.
-        CopySamples(
-            cdm_format, decoded_audio_size, *av_frame_, output_buffer);
-        return cdm::kSuccess;
-      }
-
-      // There are still more frames to decode, so we need to serialize them in
-      // a secondary buffer since we don't know their sizes ahead of time (which
-      // is required to allocate the FrameBuffer object).
-      SerializeInt64(output_timestamp.InMicroseconds());
-      SerializeInt64(decoded_audio_size);
-
-      const size_t previous_size = serialized_audio_frames_.size();
-      serialized_audio_frames_.resize(previous_size + decoded_audio_size);
-      uint8_t* output_buffer = &serialized_audio_frames_[0] + previous_size;
-      CopySamples(
-          cdm_format, decoded_audio_size, *av_frame_, output_buffer);
-    }
-  } while (packet.size > 0);
+  if (decoding_loop_->DecodePacket(
+          &packet,
+          base::BindRepeating(&FFmpegCdmAudioDecoder::OnNewFrame,
+                              base::Unretained(this), is_end_of_stream,
+                              timestamp, cdm_format, decoded_frames)) !=
+      FFmpegDecodingLoop::DecodeStatus::kOkay) {
+    return cdm::kDecodeError;
+  }
 
   if (!serialized_audio_frames_.empty()) {
     decoded_frames->SetFrameBuffer(
@@ -396,8 +278,7 @@ cdm::Status FFmpegCdmAudioDecoder::DecodeBuffer(
       LOG(ERROR) << "DecodeBuffer() ClearKeyCdmHost::Allocate failed.";
       return cdm::kDecodeError;
     }
-    memcpy(decoded_frames->FrameBuffer()->Data(),
-           &serialized_audio_frames_[0],
+    memcpy(decoded_frames->FrameBuffer()->Data(), &serialized_audio_frames_[0],
            serialized_audio_frames_.size());
     decoded_frames->FrameBuffer()->SetSize(serialized_audio_frames_.size());
     serialized_audio_frames_.clear();
@@ -406,6 +287,70 @@ cdm::Status FFmpegCdmAudioDecoder::DecodeBuffer(
   }
 
   return cdm::kNeedMoreData;
+}
+
+bool FFmpegCdmAudioDecoder::OnNewFrame(bool is_end_of_stream,
+                                       base::TimeDelta timestamp,
+                                       cdm::AudioFormat cdm_format,
+                                       cdm::AudioFrames* decoded_frames,
+                                       AVFrame* frame) {
+  if (output_timestamp_helper_->base_timestamp() == kNoTimestamp &&
+      !is_end_of_stream) {
+    DCHECK(timestamp != kNoTimestamp);
+    if (output_bytes_to_drop_ > 0) {
+      // Currently Vorbis is the only codec that causes us to drop samples.
+      // If we have to drop samples it always means the timeline starts at 0.
+      DCHECK_EQ(codec_context_->codec_id, AV_CODEC_ID_VORBIS);
+      output_timestamp_helper_->SetBaseTimestamp(base::TimeDelta());
+    } else {
+      output_timestamp_helper_->SetBaseTimestamp(timestamp);
+    }
+  }
+
+  int decoded_audio_size = 0;
+  if (frame->sample_rate != samples_per_second_ ||
+      frame->channels != channels_ || frame->format != av_sample_format_) {
+    DLOG(ERROR) << "Unsupported midstream configuration change!"
+                << " Sample Rate: " << frame->sample_rate << " vs "
+                << samples_per_second_ << ", Channels: " << frame->channels
+                << " vs " << channels_ << ", Sample Format: " << frame->format
+                << " vs " << av_sample_format_;
+    return false;
+  }
+
+  decoded_audio_size = av_samples_get_buffer_size(
+      NULL, codec_context_->channels, frame->nb_samples,
+      codec_context_->sample_fmt, 1);
+
+  if (decoded_audio_size > 0 && output_bytes_to_drop_ > 0) {
+    DCHECK_EQ(decoded_audio_size % bytes_per_frame_, 0)
+        << "Decoder didn't output full frames";
+
+    int dropped_size = std::min(decoded_audio_size, output_bytes_to_drop_);
+    decoded_audio_size -= dropped_size;
+    output_bytes_to_drop_ -= dropped_size;
+  }
+
+  if (decoded_audio_size > 0) {
+    DCHECK_EQ(decoded_audio_size % bytes_per_frame_, 0)
+        << "Decoder didn't output full frames";
+
+    base::TimeDelta output_timestamp = output_timestamp_helper_->GetTimestamp();
+    output_timestamp_helper_->AddFrames(decoded_audio_size / bytes_per_frame_);
+
+    // There are still more frames to decode, so we need to serialize them in
+    // a secondary buffer since we don't know their sizes ahead of time (which
+    // is required to allocate the FrameBuffer object).
+    SerializeInt64(output_timestamp.InMicroseconds());
+    SerializeInt64(decoded_audio_size);
+
+    const size_t previous_size = serialized_audio_frames_.size();
+    serialized_audio_frames_.resize(previous_size + decoded_audio_size);
+    uint8_t* output_buffer = &serialized_audio_frames_[0] + previous_size;
+    CopySamples(cdm_format, decoded_audio_size, *frame, output_buffer);
+  }
+
+  return true;
 }
 
 void FFmpegCdmAudioDecoder::ResetTimestampState() {
@@ -417,8 +362,8 @@ void FFmpegCdmAudioDecoder::ResetTimestampState() {
 void FFmpegCdmAudioDecoder::ReleaseFFmpegResources() {
   DVLOG(1) << "ReleaseFFmpegResources()";
 
+  decoding_loop_.reset();
   codec_context_.reset();
-  av_frame_.reset();
 }
 
 void FFmpegCdmAudioDecoder::SerializeInt64(int64_t value) {

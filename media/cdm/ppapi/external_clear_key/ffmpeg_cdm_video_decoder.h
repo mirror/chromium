@@ -19,6 +19,7 @@ struct AVCodecContext;
 struct AVFrame;
 
 namespace media {
+class FFmpegDecodingLoop;
 
 class FFmpegCdmVideoDecoder : public CdmVideoDecoder {
  public:
@@ -41,15 +42,19 @@ class FFmpegCdmVideoDecoder : public CdmVideoDecoder {
                                   const cdm::Size& data_size);
 
  private:
-  // Allocates storage, then copies video frame stored in |av_frame_| to
+  bool OnNewFrame(bool* did_decode_frame,
+                  cdm::VideoFrame* decoded_frame,
+                  AVFrame* frame);
+
+  // Allocates storage, then copies video frame stored in |frame| to
   // |cdm_video_frame|. Returns true when allocation and copy succeed.
-  bool CopyAvFrameTo(cdm::VideoFrame* cdm_video_frame);
+  bool CopyAvFrameTo(AVFrame* frame, cdm::VideoFrame* cdm_video_frame);
 
   void ReleaseFFmpegResources();
 
   // FFmpeg structures owned by this object.
   std::unique_ptr<AVCodecContext, ScopedPtrAVFreeContext> codec_context_;
-  std::unique_ptr<AVFrame, ScopedPtrAVFreeFrame> av_frame_;
+  std::unique_ptr<FFmpegDecodingLoop> decoding_loop_;
 
   bool is_initialized_;
 
