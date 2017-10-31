@@ -35,12 +35,14 @@ cr.define('extensions', function() {
     behaviors: [I18nBehavior],
 
     properties: {
-      /** @type {extensions.Toolbar} */
-      toolbar: Object,
-
       // This is not typed because it implements multiple interfaces, and is
       // passed to different elements as different types.
-      delegate: Object,
+      delegate: {
+        type: Object,
+        value: function() {
+          return extensions.Service.getInstance();
+        },
+      },
 
       isGuest_: {
         type: Boolean,
@@ -143,15 +145,27 @@ cr.define('extensions', function() {
     navigationListener_: null,
 
     /** @override */
-    created: function() {
-      this.readyPromiseResolver = new PromiseResolver();
-    },
-
-    /** @override */
     ready: function() {
-      this.toolbar =
-          /** @type {extensions.Toolbar} */ (this.$$('extensions-toolbar'));
-      this.readyPromiseResolver.resolve();
+      if (loadTimeData.getBoolean('isGuest')) {
+        this.initPage();
+        return;
+      }
+
+      let service = extensions.Service.getInstance();
+
+      let onProfileStateChanged = profileInfo => {
+        this.inDevMode = profileInfo.inDeveloperMode;
+      };
+      service.getProfileStateChangedTarget().addListener(onProfileStateChanged);
+      service.getProfileConfiguration().then(onProfileStateChanged);
+
+      service.getExtensionsInfo().then(extensions => {
+        for (let extension of extensions)
+          this.addItem(extension);
+        this.initPage();
+      });
+
+      // TODO(dpapad): Add event listeners for events fired from Service.
 
       // <if expr="chromeos">
       extensions.KioskBrowserProxyImpl.getInstance()

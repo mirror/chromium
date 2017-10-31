@@ -17,48 +17,30 @@ cr.define('extensions', function() {
       /** @private {boolean} */
       this.isDeleting_ = false;
 
-      /** @private {extensions.Manager} */
-      this.manager_;
-
       /** @private {Array<chrome.developerPrivate.ExtensionInfo>} */
       this.extensions_;
-    }
 
-    /** @param {extensions.Manager} manager */
-    managerReady(manager) {
-      this.manager_ = manager;
-      this.manager_.set('delegate', this);
-
-      // Skip any setup or backend requests if we're in guest-mode.
-      // TODO(scottchen): there might be a better place to do this once manager
-      //     and service become less coupled.
-      if (loadTimeData.getBoolean('isGuest')) {
-        this.manager_.initPage();
-        return;
+      if (!loadTimeData.getBoolean('isGuest')) {
+        chrome.developerPrivate.onItemStateChanged.addListener(
+            this.onItemStateChanged_.bind(this));
       }
-
-      chrome.developerPrivate.onProfileStateChanged.addListener(
-          this.onProfileStateChanged_.bind(this));
-      chrome.developerPrivate.onItemStateChanged.addListener(
-          this.onItemStateChanged_.bind(this));
-      chrome.developerPrivate.getExtensionsInfo(
-          {includeDisabled: true, includeTerminated: true}, extensions => {
-            this.extensions_ = extensions;
-            for (let extension of extensions)
-              this.manager_.addItem(extension);
-
-            this.manager_.initPage();
-          });
-      chrome.developerPrivate.getProfileConfiguration(
-          this.onProfileStateChanged_.bind(this));
     }
 
-    /**
-     * @param {chrome.developerPrivate.ProfileInfo} profileInfo
-     * @private
-     */
-    onProfileStateChanged_(profileInfo) {
-      this.manager_.set('inDevMode', profileInfo.inDeveloperMode);
+    getProfileConfiguration() {
+      return new Promise(function(resolve, reject) {
+        chrome.developerPrivate.getProfileConfiguration(resolve);
+      });
+    }
+
+    getProfileStateChangedTarget() {
+      return chrome.developerPrivate.onProfileStateChanged;
+    }
+
+    getExtensionsInfo() {
+      return new Promise(function(resolve, reject) {
+        chrome.developerPrivate.getExtensionsInfo(
+            {includeDisabled: true, includeTerminated: true}, resolve);
+      });
     }
 
     /**
@@ -88,14 +70,14 @@ cr.define('extensions', function() {
 
           if (currentIndex >= 0) {
             this.extensions_[currentIndex] = eventData.extensionInfo;
-            this.manager_.updateItem(eventData.extensionInfo);
+            // TODO(dpapad): Dispatch updateItem event.
           } else {
             this.extensions_.push(eventData.extensionInfo);
-            this.manager_.addItem(eventData.extensionInfo);
+            // TODO(dpapad): Dispatch addItem event.
           }
           break;
         case EventType.UNINSTALLED:
-          this.manager_.removeItem(this.extensions_[currentIndex]);
+          // TODO(dpapad): Dispatch removeItem event.
           this.extensions_.splice(currentIndex, 1);
           break;
         default:
@@ -167,7 +149,7 @@ cr.define('extensions', function() {
               throw new Error(chrome.runtime.lastError.message);
             }
             if (loadError) {
-              this.manager_.showLoadError(loadError);
+              // TODO(dpapad): Fire event to show error.
             }
           });
     }
