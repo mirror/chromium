@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ad7e890_2db4be42",
+        "filename": "chrome/common/extensions/docs/templates/articles/extensions_index.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-31T20:15:48Z",
+      "side": 1,
+      "message": "Small nit-- minmal should be minimal.",
+      "revId": "93b5355acf6dc59b62b3a627836ddb99cb9985f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c7153b_1e57979b",
+        "filename": "chrome/common/extensions/docs/templates/articles/extensions_index.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-31T20:15:48Z",
+      "side": 1,
+      "message": "Small nit-- publish should be published in this instance.",
+      "revId": "93b5355acf6dc59b62b3a627836ddb99cb9985f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
