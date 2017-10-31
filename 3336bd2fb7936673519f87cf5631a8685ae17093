@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "051f7346_405c0ea8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-31T15:13:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0139286_9699839e",
+      "range": {
+        "startLine": 11,
+        "startChar": 35,
+        "endLine": 11,
+        "endChar": 36
+      },
+      "revId": "3336bd2fb7936673519f87cf5631a8685ae17093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63fbd956_271f3d9f",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1c525c3b_84c21847",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-31T15:13:29Z",
+      "side": 1,
+      "message": "Done. Excellent point.",
+      "parentUuid": "63fbd956_271f3d9f",
+      "range": {
+        "startLine": 554,
+        "startChar": 8,
+        "endLine": 554,
+        "endChar": 33
+      },
+      "revId": "3336bd2fb7936673519f87cf5631a8685ae17093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d3acf47_aeeb0ba6",
         "filename": "content/browser/renderer_host/input/input_router_impl.cc",
         "patchSetId": 3
@@ -59,6 +107,24 @@
       "writtenOn": "2017-10-30T10:18:27Z",
       "side": 1,
       "message": "An InputRouterImpl can be reused for frame or widget input handling? I\u0027m trying to remember how this works, and I\u0027m getting confused \u003d)\n\nWhy do we need to keep them separately? IOW, why would we want the widget one to stay live if we set the frame one?",
+      "revId": "3336bd2fb7936673519f87cf5631a8685ae17093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8573feb5_e3fe3e99",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-31T15:13:29Z",
+      "side": 1,
+      "message": "I agree this is a little confusing. No I wouldn\u0027t expect the widget one to stay alive if we set the frame one. But I do believe in some code paths we will end up setting the widget one first then the frame one after; which that case is valid.",
+      "parentUuid": "2d3acf47_aeeb0ba6",
       "revId": "3336bd2fb7936673519f87cf5631a8685ae17093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "327fb9fe_7183dab2",
+        "filename": "content/common/input/input_handler.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-31T15:13:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11dce9cc_a2dda3cf",
+      "revId": "3336bd2fb7936673519f87cf5631a8685ae17093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f778612_eede294e",
         "filename": "content/renderer/input/widget_input_handler_manager.h",
         "patchSetId": 3
@@ -102,6 +186,30 @@
       "revId": "3336bd2fb7936673519f87cf5631a8685ae17093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff4a481_3148d2c1",
+        "filename": "content/renderer/input/widget_input_handler_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-31T15:13:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f778612_eede294e",
+      "range": {
+        "startLine": 131,
+        "startChar": 59,
+        "endLine": 131,
+        "endChar": 69
+      },
+      "revId": "3336bd2fb7936673519f87cf5631a8685ae17093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
