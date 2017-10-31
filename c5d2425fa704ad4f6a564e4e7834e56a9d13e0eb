@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92a1f3fa_ff68d962",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-31T19:49:11Z",
+      "side": 1,
+      "message": "nit: whitespace after this, BUG\u003d is a separate section. also use complete sentences ie punctuation.",
+      "revId": "c5d2425fa704ad4f6a564e4e7834e56a9d13e0eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6594426c_0f0fcc5e",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-31T19:49:11Z",
+      "side": 1,
+      "message": "This seems like an input to the HasDamage() function, same as the property trees and damage rects. They\u0027re invisible but maybe this one should be passed as a parameter?",
+      "revId": "c5d2425fa704ad4f6a564e4e7834e56a9d13e0eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
