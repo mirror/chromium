@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6e07a71_080329b5",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T02:50:49Z",
+      "side": 1,
+      "message": "can we change the type of g_page_info_bubble and avoid the static cast?",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed7e670_b8cf8a49",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T02:50:49Z",
+      "side": 1,
+      "message": "Can this return |page_info| at the end? I don\u0027t think we need GetPageInfoBubbleViewForTesting() or the friend declaration -- we should be able to change the return type of the existing GetPageInfoBubble()",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa5d62b_88fab2d4",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T02:50:49Z",
+      "side": 1,
+      "message": "nit: move below comment? (and declare them const?)",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a049079_f9c3f60b",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T02:50:49Z",
+      "side": 1,
+      "message": "this can just be `GURL url \u003d http_url;` - GURL is cheap to copy.",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed371d1_730e138c",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T02:50:49Z",
+      "side": 1,
+      "message": "the strings used more than once should be constepxr.. but then there should be consistency too (so perhaps make them all constexpr, at the top of this function).",
+      "range": {
+        "startLine": 127,
+        "startChar": 16,
+        "endLine": 127,
+        "endChar": 26
+      },
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfff0bc3_0bbcdfe6",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T02:50:49Z",
+      "side": 1,
+      "message": "nit: default -\u003e Default, (or HTTP, or AboutBlank?)",
+      "range": {
+        "startLine": 134,
+        "startChar": 17,
+        "endLine": 134,
+        "endChar": 24
+      },
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5317bb5_5c0132fa",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T02:50:49Z",
+      "side": 1,
+      "message": "perhaps make these a chain of \n\n} else if (name \u003d\u003d \"Deceptive\") {\n\nthat keeps the bracing consistent and will take up less vertical space, and makes it clear they are all orthogonal (except for the !\u003d at the end)",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d43d73_5e28cedc",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T02:50:49Z",
+      "side": 1,
+      "message": "maybe feature_list_ -\u003e softer_warning_feature_;",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
