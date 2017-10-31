@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a02aa88f_efaa1d71",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2034,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-31T18:02:49Z",
+      "side": 1,
+      "message": "Added test cases to cover url fragment (empty or not) and query parameters. This test case looks like:\ninitial url  [click]-\u003e\n.../page_before_landing_referrer.html  [click]-\u003e\n.../landing_referrer.html?bar\u003dfoo#baz  [click]-\u003e\n.../landing.html#\n\nIn the resulting referrer chain, url fragments all get cleared, query parameters are kept.",
+      "parentUuid": "01ec0cb8_8d2d4140",
+      "range": {
+        "startLine": 2034,
+        "startChar": 79,
+        "endLine": 2034,
+        "endChar": 0
+      },
+      "revId": "faa3662d3d1a0a47c0167aeca9e681c167f76f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b61046f_70a5da7d",
         "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "faa3662d3d1a0a47c0167aeca9e681c167f76f24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed36afd0_d418ed17",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-31T18:02:49Z",
+      "side": 1,
+      "message": "Sure, that is what VerifyReferrerChainEntry(...) function do in the following lines.",
+      "parentUuid": "5b61046f_70a5da7d",
+      "range": {
+        "startLine": 2046,
+        "startChar": 38,
+        "endLine": 2046,
+        "endChar": 0
+      },
+      "revId": "faa3662d3d1a0a47c0167aeca9e681c167f76f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
