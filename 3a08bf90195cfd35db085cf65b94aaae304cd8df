@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c10e573a_3058dc10",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSetWorker.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-31T19:01:55Z",
+      "side": 1,
+      "message": "These duplicate declarations (copies from FontFaceSetDocument.cpp) are breaking jumbo builds. Can they be changed to be extern const declarations, and the originals changed to extern const definitions. This avoids the jumbo breakage and avoids replicating data (maintenance costs, possibly size waste)",
+      "revId": "3a08bf90195cfd35db085cf65b94aaae304cd8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
