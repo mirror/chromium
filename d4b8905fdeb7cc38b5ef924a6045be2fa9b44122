@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36d954c8_e2e47ec1",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-10-31T18:24:06Z",
+      "side": 0,
+      "message": "You should mention the bug fixes you made to this file in the CL description.",
+      "revId": "d4b8905fdeb7cc38b5ef924a6045be2fa9b44122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
