@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f76fd15a_04cacdab",
+        "filename": "base/metrics/histogram_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-31T17:29:13Z",
+      "side": 1,
+      "message": "I am confused how this saves anything. You\u0027re keeping FactoryGet() functions as taking std::strings - which means even cases where a literal is passed get converted to std::strings and eventually get put into this map.\n\nSo how are we saving anything if we\u0027re still allocating a string for every histogram object\u0027s name?",
+      "range": {
+        "startLine": 168,
+        "startChar": 70,
+        "endLine": 168,
+        "endChar": 0
+      },
+      "revId": "abec7c5535b34571f3403708450420ec77ac65f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef316c82_c5f88c07",
+        "filename": "base/metrics/sparse_histogram_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-31T17:29:13Z",
+      "side": 1,
+      "message": "Nit: Can you remove this wrapper and replace with std::make_unique()?",
+      "range": {
+        "startLine": 76,
+        "startChar": 35,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "abec7c5535b34571f3403708450420ec77ac65f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def661ca_bdd340b2",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-31T17:29:13Z",
+      "side": 1,
+      "message": "Nit: name_piece(name)",
+      "range": {
+        "startLine": 99,
+        "startChar": 30,
+        "endLine": 99,
+        "endChar": 31
+      },
+      "revId": "abec7c5535b34571f3403708450420ec77ac65f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7097f72_8783051b",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-31T17:29:13Z",
+      "side": 1,
+      "message": "This comment seems out of date.",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 102,
+        "endChar": 24
+      },
+      "revId": "abec7c5535b34571f3403708450420ec77ac65f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
