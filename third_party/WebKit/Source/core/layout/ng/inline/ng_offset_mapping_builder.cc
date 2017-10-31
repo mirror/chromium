@@ -27,7 +27,7 @@ const Node* GetAssociatedNode(const LayoutObject* layout_object) {
     return nullptr;
   if (!layout_object->IsText() ||
       !ToLayoutText(layout_object)->IsTextFragment())
-    return layout_object->GetNode();
+    return layout_object->NonPseudoNode();
   const LayoutTextFragment* fragment = ToLayoutTextFragment(layout_object);
   return fragment->AssociatedTextNode();
 }
@@ -45,8 +45,7 @@ std::pair<NGOffsetMappingUnitType, unsigned> GetMappingUnitTypeAndEnd(
 
   unsigned end = start + 1;
   for (; end + 1 < mapping.size(); ++end) {
-    if (GetAssociatedNode(annotation[end]) !=
-        GetAssociatedNode(annotation[start]))
+    if (annotation[end] != annotation[start])
       break;
     NGOffsetMappingUnitType next_type =
         GetUnitLengthMappingType(mapping[end + 1] - mapping[end]);
@@ -99,7 +98,6 @@ void NGOffsetMappingBuilder::CollapseTrailingSpace(unsigned skip_length) {
     DCHECK_GT(i, 0u);
     if (mapping_[i] != mapping_[i - 1])
       ++skipped_count;
-    --mapping_[i];
   }
 }
 
@@ -145,53 +143,102 @@ void NGOffsetMappingBuilder::SetDestinationString(String string) {
   destination_string_ = string;
 }
 
-NGOffsetMapping NGOffsetMappingBuilder::Build() const {
+NGOffsetMapping NGOffsetMappingBuilder::Build() {
   NGOffsetMapping::UnitVector units;
   NGOffsetMapping::RangeMap ranges;
 
-  const Node* current_node = nullptr;
+  // Information of current owner
   unsigned inline_start = 0;
   unsigned unit_range_start = 0;
   unsigned remaining_text_offset = 0;
-  for (unsigned start = 0; start + 1 < mapping_.size();) {
-    if (GetAssociatedNode(annotation_[start]) != current_node) {
-      if (current_node) {
-        ranges.insert(current_node,
-                      std::make_pair(unit_range_start, units.size()));
-      }
-      current_node = GetAssociatedNode(annotation_[start]);
-      inline_start = start;
-      unit_range_start = units.size();
-      // We get a non-zero |remaining_text_offset| only when |current_node| is a
-      // text node that has blockified ::first-letter style, and we are at the
-      // remaining text of |current_node|.
-      remaining_text_offset = GetRemainingTextOffset(annotation_[start]);
-    }
 
-    if (!current_node) {
-      // Only extra characters are not annotated.
-      DCHECK_EQ(mapping_[start] + 1, mapping_[start + 1]);
-      ++start;
+  // Information of contains that we are currently in
+  using ContainerAndStart = std::pair<const Node*, unsigned>;
+  Vector<ContainerAndStart> current_containers;
+
+  // Sentinel for |boundaries_|
+  boundaries_.push_back(
+      ContainerBoundary({nullptr, false, mapping_.size() - 1}));
+
+  // Sentinel for |annotation_|
+  annotation_.push_back(nullptr);
+
+  const ContainerBoundary* boundary_it = boundaries_.begin();
+  unsigned inline_it = 0;
+  for (; inline_it + 1 < mapping_.size() ||
+         std::next(boundary_it) != boundaries_.end();) {
+    // Priority: boundary end > boundary start > unit
+
+    // Container boundary
+    if (std::next(boundary_it) != boundaries_.end() &&
+        boundary_it->inline_offset <= inline_it) {
+      const ContainerBoundary& boundary = *boundary_it++;
+      const Node* node = GetAssociatedNode(boundary.container);
+      // Skip generated content
+      if (!node)
+        continue;
+
+      // Enter container
+      if (boundary.is_enter_container) {
+        current_containers.push_back(ContainerAndStart({node, units.size()}));
+        continue;
+      }
+
+      // Exit container
+      DCHECK(current_containers.size());
+      DCHECK_EQ(node, current_containers.back().first);
+      const unsigned container_unit_start = current_containers.back().second;
+      if (units.size() > container_unit_start) {
+        ranges.insert(node, std::make_pair(container_unit_start, units.size()));
+      }
+      current_containers.pop_back();
       continue;
     }
 
-    auto type_and_end = GetMappingUnitTypeAndEnd(mapping_, annotation_, start);
-    NGOffsetMappingUnitType type = type_and_end.first;
-    unsigned end = type_and_end.second;
-    unsigned dom_start = start - inline_start + remaining_text_offset;
-    unsigned dom_end = end - inline_start + remaining_text_offset;
-    unsigned text_content_start = mapping_[start];
-    unsigned text_content_end = mapping_[end];
-    units.emplace_back(type, *current_node, dom_start, dom_end,
-                       text_content_start, text_content_end);
+    // Create mapping units, if any
+    DCHECK_LT(inline_it, annotation_.size());
+    const Node* node = GetAssociatedNode(annotation_[inline_it]);
+    const auto type_and_end =
+        GetMappingUnitTypeAndEnd(mapping_, annotation_, inline_it);
+    // Create unit only for non-generated content.
+    if (node) {
+      if (!inline_it || node != GetAssociatedNode(annotation_[inline_it - 1])) {
+        inline_start = inline_it;
+        unit_range_start = units.size();
+        // We get a non-zero |remaining_text_offset| only when |current_node| is
+        // a text node that has blockified ::first-letter style, and we are at
+        // the remaining text of |current_node|.
+        remaining_text_offset = GetRemainingTextOffset(annotation_[inline_it]);
+      }
 
-    start = end;
+      NGOffsetMappingUnitType type = type_and_end.first;
+      unsigned end = type_and_end.second;
+      unsigned dom_start = inline_it - inline_start + remaining_text_offset;
+      unsigned dom_end = end - inline_start + remaining_text_offset;
+      unsigned text_content_start = mapping_[inline_it];
+      unsigned text_content_end = mapping_[end];
+      units.emplace_back(type, *node, dom_start, dom_end, text_content_start,
+                         text_content_end);
+
+      if (GetAssociatedNode(annotation_[end]) != node) {
+        ranges.insert(node, std::make_pair(unit_range_start, units.size()));
+      }
+    }
+    inline_it = type_and_end.second;
   }
-  if (current_node) {
-    ranges.insert(current_node, std::make_pair(unit_range_start, units.size()));
-  }
+
   return NGOffsetMapping(std::move(units), std::move(ranges),
                          destination_string_);
+}
+
+void NGOffsetMappingBuilder::EnterContainer(const LayoutObject* container) {
+  boundaries_.push_back(
+      ContainerBoundary({container, true, mapping_.size() - 1}));
+}
+
+void NGOffsetMappingBuilder::ExitContainer(const LayoutObject* container) {
+  boundaries_.push_back(
+      ContainerBoundary({container, false, mapping_.size() - 1}));
 }
 
 Vector<unsigned> NGOffsetMappingBuilder::DumpOffsetMappingForTesting() const {
