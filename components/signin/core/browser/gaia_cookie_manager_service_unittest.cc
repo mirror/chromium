@@ -554,8 +554,6 @@ TEST_F(GaiaCookieManagerServiceTest, ListAccountsFindsOneAccount) {
   listed_account.email = "a@b.com";
   listed_account.raw_email = "a@b.com";
   listed_account.gaia_id = "8";
-  listed_account.valid = true;
-  listed_account.signed_out = false;
   expected_accounts.push_back(listed_account);
 
   std::vector<gaia::ListedAccount> signed_out_accounts;
@@ -582,8 +580,6 @@ TEST_F(GaiaCookieManagerServiceTest, ListAccountsFindsSignedOutAccounts) {
   listed_account.email = "a@b.com";
   listed_account.raw_email = "a@b.com";
   listed_account.gaia_id = "8";
-  listed_account.valid = true;
-  listed_account.signed_out = false;
   expected_accounts.push_back(listed_account);
 
   std::vector<gaia::ListedAccount> signed_out_accounts;
@@ -592,7 +588,6 @@ TEST_F(GaiaCookieManagerServiceTest, ListAccountsFindsSignedOutAccounts) {
   signed_out_account.email = "c@d.com";
   signed_out_account.raw_email = "c@d.com";
   signed_out_account.gaia_id = "9";
-  signed_out_account.valid = true;
   signed_out_account.signed_out = true;
   expected_signed_out_accounts.push_back(signed_out_account);
 

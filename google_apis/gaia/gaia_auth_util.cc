@@ -72,10 +72,9 @@ bool ListedAccount::operator==(const ListedAccount& other) const {
   if (!id.empty() && !other.id.empty()) {
     return id == other.id;
   } else {
-    return email == other.email &&
-           gaia_id == other.gaia_id &&
-           valid == other.valid &&
-           raw_email == other.raw_email;
+    return email == other.email && gaia_id == other.gaia_id &&
+           valid == other.valid && raw_email == other.raw_email &&
+           signed_out == other.signed_out && verified == other.verified;
   }
 }
 
@@ -132,6 +131,8 @@ bool IsGaiaSignonRealm(const GURL& url) {
 bool ParseListAccountsData(const std::string& data,
                            std::vector<ListedAccount>* accounts,
                            std::vector<ListedAccount>* signed_out_accounts) {
+  LOG(ERROR) << data;
+
   if (accounts)
     accounts->clear();
 
@@ -172,6 +173,10 @@ bool ParseListAccountsData(const std::string& data,
         if (!account->GetInteger(14, &signed_out))
           signed_out = 0;
 
+        int verified = 1;
+        if (!account->GetInteger(15, &verified))
+          verified = 1;
+
         std::string gaia_id;
         // ListAccounts must also return the Gaia Id.
         if (account->GetString(10, &gaia_id) && !gaia_id.empty()) {
@@ -180,6 +185,7 @@ bool ParseListAccountsData(const std::string& data,
           listed_account.gaia_id = gaia_id;
           listed_account.valid = is_email_valid != 0;
           listed_account.signed_out = signed_out != 0;
+          listed_account.verified = verified != 0;
           listed_account.raw_email = email;
           auto* list =
               listed_account.signed_out ? signed_out_accounts : accounts;
