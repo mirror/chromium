@@ -426,7 +426,10 @@ __gCrWeb['common'] = __gCrWeb.common;
   };
 
   /**
-   * Returns the name that should be used for the specified |element| when
+   * Returns the form's |name| attribute if not space only; otherwise the
+   * form's |id| attribute.
+   *
+   * It is the name that should be used for the specified |element| when
    * storing Autofill data. Various attributes are used to attempt to identify
    * the element, beginning with 'name' and 'id' attributes. Providing a
    * uniquely reversible identifier for any element is a non-trivial problem;
@@ -441,8 +444,8 @@ __gCrWeb['common'] = __gCrWeb.common;
    *     returned.
    * @return {string} the name for Autofill.
    */
-  __gCrWeb.common.nameForAutofill = function(element) {
-    if (!element) {
+  __gCrWeb.common.getFieldIdentifier = function(element) {
+    if (!element || !(element instanceof HTMLElement)) {
       return '';
     }
     var trimmedName = element.name;
