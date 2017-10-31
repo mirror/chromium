@@ -41,8 +41,8 @@ class CONTENT_EXPORT RTCRtpReceiver : public blink::WebRTCRtpReceiver {
   uintptr_t Id() const override;
   const blink::WebMediaStreamTrack& Track() const override;
   blink::WebVector<blink::WebMediaStream> Streams() const override;
-  blink::WebVector<std::unique_ptr<blink::WebRTCRtpContributingSource>>
-  GetSources() override;
+  blink::WebVector<std::unique_ptr<blink::WebRTCRtpSource>> GetSources()
+      override;
 
   const webrtc::MediaStreamTrackInterface& webrtc_track() const;
   bool HasStream(const webrtc::MediaStreamInterface* webrtc_stream) const;

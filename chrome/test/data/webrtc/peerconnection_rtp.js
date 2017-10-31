@@ -99,6 +99,33 @@ function verifyRtpReceivers(expectedNumTracks = null) {
 }
 
 /**
+ * Verifies that each receiver with a remote audio track returns a
+ * synchronization source and that object identity is preserved.
+ *
+ * Returns "ok-synchronization-sources-verified" on sucess.
+ */
+function verifySynchronizationSources() {
+  peerConnection_().getReceivers().forEach(function(receiver) {
+    if (receiver == null)
+      throw failTest('receiver is null or undefined.');
+    if (receiver.track.kind == "audio") {
+      if (!arrayEquals_(receiver.getSynchronizationSources(),
+                        receiver.getSynchronizationSources())) {
+        throw failTest(
+            'One getSynchronizationSources() call is not equal to the next.');
+      }
+
+      let synchronizationSources = receiver.getSynchronizationSources();
+      if (synchronizationSources == null)
+        throw failTest('synchronizationSources is null or undefined.');
+      if (synchronizationSources.length != 1)
+        throw failTest('synchronizationSources.length was not 1.');
+    }
+  });
+  returnToTest('ok-synchronization-sources-verified');
+}
+
+/**
  * Creates an audio and video track and adds them to the peer connection using
  * |addTrack|. They are added with or without a stream in accordance with
  * |streamArgumentType|.
