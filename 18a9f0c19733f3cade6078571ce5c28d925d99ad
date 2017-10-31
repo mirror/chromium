@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adfb8da0_f10ed8d9",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T19:30:33Z",
+      "side": 1,
+      "message": "using?",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "18a9f0c19733f3cade6078571ce5c28d925d99ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f96772_3ea8548e",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T19:30:33Z",
+      "side": 1,
+      "message": "Do you really need the virtual here?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "18a9f0c19733f3cade6078571ce5c28d925d99ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a11280f_bce00424",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T19:30:33Z",
+      "side": 1,
+      "message": "using.\nAlso, any reason you\u0027re using vector\u003c*\u003e rather than vector\u003cunique_ptr\u003e ?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 9
+      },
+      "revId": "18a9f0c19733f3cade6078571ce5c28d925d99ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a64a8ae_d8d69589",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T19:30:33Z",
+      "side": 1,
+      "message": "std::find?",
+      "range": {
+        "startLine": 227,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 3
+      },
+      "revId": "18a9f0c19733f3cade6078571ce5c28d925d99ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e33be9d_39aee06f",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T19:30:33Z",
+      "side": 1,
+      "message": "optional: early out?",
+      "range": {
+        "startLine": 419,
+        "startChar": 2,
+        "endLine": 419,
+        "endChar": 37
+      },
+      "revId": "18a9f0c19733f3cade6078571ce5c28d925d99ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e49796a_9c363046",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T19:30:33Z",
+      "side": 1,
+      "message": "I\u0027m assuming this is the same as the old.",
+      "range": {
+        "startLine": 445,
+        "startChar": 5,
+        "endLine": 445,
+        "endChar": 50
+      },
+      "revId": "18a9f0c19733f3cade6078571ce5c28d925d99ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
