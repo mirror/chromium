@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69843952_13fc4de2",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-31T14:09:52Z",
+      "side": 1,
+      "message": "naming: camelCase in ObjC",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1f9a76_a5d4ce85",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-31T14:09:52Z",
+      "side": 1,
+      "message": "nit: naming",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 33
+      },
+      "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc8b2ac_81b3d352",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-31T14:09:52Z",
+      "side": 1,
+      "message": "Put this next to -animatedIcon since they\u0027re a getter/setter pair.",
+      "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45879f07_072c9381",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-31T14:09:52Z",
+      "side": 1,
+      "message": "nit: punctuation",
+      "range": {
+        "startLine": 25,
+        "startChar": 38,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81eceb8_f9929516",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-31T14:09:52Z",
+      "side": 1,
+      "message": "nit: blank line before",
+      "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91f34e5_5d9545c7",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-31T14:09:52Z",
+      "side": 1,
+      "message": "Rather than delaying entirely, would it be better to tweak the TimeInterval param for testing, so that it can be set to something low to test the timer callback?",
+      "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
