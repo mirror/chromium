@@ -22,6 +22,30 @@
       "revId": "e9a42ce255092e52c76a19fc5fee4fd25e96f2ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f4a12f_dce94894",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T21:24:59Z",
+      "side": 1,
+      "message": "No, std::map::operator[] will insert into the map if the element does not exist.\n\nBefore / no existing element:\n// automatically inserts, defaults to false.\nbool\u0026 blocked \u003d content_blocked_[settings_type];\n\nBefore / existing element:\n// reads existing value, which is always true.\nbool\u0026 blocked \u003d content_blocked_[settings_type];\n\nAfter / no existing element:\n// |newly_blocked| is true, |content_blocked_| is a set now, it gets a new element\nbool newly_blocked \u003d content_blocked_.insert(settings_type).second;\n\nAfter / existing element:\n// |newly_blocked| is false, |content_blocked_| remains the same.\nbool newly_blocked \u003d content_blocked_.insert(settings_type).second;",
+      "parentUuid": "21d6b1f5_3793007a",
+      "range": {
+        "startLine": 175,
+        "startChar": 40,
+        "endLine": 175,
+        "endChar": 46
+      },
+      "revId": "e9a42ce255092e52c76a19fc5fee4fd25e96f2ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
