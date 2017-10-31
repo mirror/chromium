@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "362767b2_4d69159f",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-31T16:04:41Z",
+      "side": 1,
+      "message": "Nit: please use TypeConverter to make manual conversions easier to find and audit: see https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#Do-not-write-one_off-functions-to-convert-to_from-Mojo-types",
+      "revId": "53468533a3a4c3cdb2d63c46768a1c3fd1f9152c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981aa7c3_16d64624",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-31T16:04:41Z",
+      "side": 1,
+      "message": "Nit: don\u0027t indirect through unique_ptr, it doesn\u0027t seem like it\u0027s ever reset() before the class is destroyed anyway",
+      "revId": "53468533a3a4c3cdb2d63c46768a1c3fd1f9152c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
