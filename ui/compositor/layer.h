@@ -412,7 +412,6 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   void didUpdateMainThreadScrollingReasons() override;
   void didChangeScrollbarsHidden(bool) override;
   void DidChangeLayerOpacity(float old_opacity, float new_opacity) override;
-  void DidChangeLayerTransform() override;
 
   // Triggers a call to SwitchToLayer.
   void SwitchCCLayerForTest();
@@ -486,6 +485,7 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   LayerAnimatorCollection* GetLayerAnimatorCollection() override;
   int GetFrameNumber() const override;
   float GetRefreshRate() const override;
+  void OnTargetTransformChanged() override;
 
   // Creates a corresponding composited layer for |type_|.
   void CreateCcLayer();

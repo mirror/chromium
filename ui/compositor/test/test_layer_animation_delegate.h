@@ -57,6 +57,7 @@ class TestLayerAnimationDelegate : public LayerAnimationDelegate {
   LayerThreadedAnimationDelegate* GetThreadedAnimationDelegate() override;
   int GetFrameNumber() const override;
   float GetRefreshRate() const override;
+  void OnTargetTransformChanged() override;
 
  private:
   void CreateCcLayer();
