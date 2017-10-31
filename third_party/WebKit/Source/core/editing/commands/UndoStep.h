@@ -51,7 +51,7 @@ class UndoStep : public GarbageCollectedFinalized<UndoStep> {
   InputEvent::InputType GetInputType() const;
   void Append(SimpleEditCommand*);
   void Append(UndoStep*);
-
+  bool IsDirectional() { return is_directional_; }
   const SelectionForUndoStep& StartingSelection() const {
     return starting_selection_;
   }
@@ -60,6 +60,7 @@ class UndoStep : public GarbageCollectedFinalized<UndoStep> {
   }
   void SetStartingSelection(const SelectionForUndoStep&);
   void SetEndingSelection(const SelectionForUndoStep&);
+  void SetIsDirectional(bool directional) { is_directional_ = directional; }
   Element* StartingRootEditableElement() const {
     return starting_root_editable_element_.Get();
   }
@@ -85,6 +86,7 @@ class UndoStep : public GarbageCollectedFinalized<UndoStep> {
   Member<Element> ending_root_editable_element_;
   InputEvent::InputType input_type_;
   const uint64_t sequence_number_;
+  bool is_directional_ = false;
 };
 
 }  // namespace blink

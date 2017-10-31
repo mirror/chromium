@@ -172,7 +172,6 @@ void FrameSelection::MoveCaretSelection(const IntPoint& point) {
   const VisiblePosition position =
       VisiblePositionForContentsPoint(point, GetFrame());
   SelectionInDOMTree::Builder builder;
-  builder.SetIsDirectional(GetSelectionInDOMTree().IsDirectional());
   if (position.IsNotNull())
     builder.Collapse(position.ToPositionWithAffinity());
   SetSelection(builder.Build(), SetSelectionOptions::Builder()
@@ -180,6 +179,7 @@ void FrameSelection::MoveCaretSelection(const IntPoint& point) {
                                     .SetShouldClearTypingStyle(true)
                                     .SetSetSelectionBy(SetSelectionBy::kUser)
                                     .SetShouldShowHandle(true)
+                                    .SetIsDirectional(IsDirectional())
                                     .Build());
 }
 
@@ -202,9 +202,12 @@ bool FrameSelection::SetSelectionDeprecated(
   DCHECK(IsAvailable());
   passed_selection.AssertValidFor(GetDocument());
 
+  bool passed_is_directional = options.IsDirectional();
+
   SelectionInDOMTree::Builder builder(passed_selection);
   if (ShouldAlwaysUseDirectionalSelection(frame_))
-    builder.SetIsDirectional(true);
+    passed_is_directional = true;
+
   SelectionInDOMTree new_selection = builder.Build();
   if (granularity_strategy_ && !options.DoNotClearStrategy())
     granularity_strategy_->Clear();
@@ -222,10 +225,12 @@ bool FrameSelection::SetSelectionDeprecated(
       selection_editor_->GetSelectionInDOMTree();
   const bool is_changed = old_selection_in_dom_tree != new_selection;
   const bool should_show_handle = options.ShouldShowHandle();
-  if (!is_changed && is_handle_visible_ == should_show_handle)
+  if (!is_changed && is_handle_visible_ == should_show_handle &&
+      is_directional_ == passed_is_directional)
     return false;
   if (is_changed)
     selection_editor_->SetSelection(new_selection);
+  is_directional_ = passed_is_directional;
   should_shrink_next_tap_ = options.ShouldShrinkNextTap();
   is_handle_visible_ = should_show_handle;
   ScheduleVisualUpdateForPaintInvalidationIfNeeded();
@@ -344,9 +349,9 @@ bool FrameSelection::Modify(SelectionModifyAlteration alter,
                             SelectionModifyDirection direction,
                             TextGranularity granularity,
                             SetSelectionBy set_selection_by) {
-  SelectionModifier selection_modifier(*GetFrame(),
-                                       ComputeVisibleSelectionInDOMTree(),
-                                       x_pos_for_vertical_arrow_navigation_);
+  SelectionModifier selection_modifier(
+      *GetFrame(), ComputeVisibleSelectionInDOMTree(),
+      x_pos_for_vertical_arrow_navigation_, IsDirectional());
   const bool modified =
       selection_modifier.Modify(alter, direction, granularity);
   if (set_selection_by == SetSelectionBy::kUser &&
@@ -367,12 +372,19 @@ bool FrameSelection::Modify(SelectionModifyAlteration alter,
     // scroll window when caret is at end of content editable.
     return true;
   }
+  bool directional = IsDirectional();
+  // For MacOS
+  if (alter == SelectionModifyAlteration::kExtend)
+    directional = true;
+  if (alter == SelectionModifyAlteration::kMove)
+    directional = ShouldAlwaysUseDirectionalSelection(frame_);
 
   SetSelection(selection_modifier.Selection().AsSelection(),
                SetSelectionOptions::Builder()
                    .SetShouldCloseTyping(true)
                    .SetShouldClearTypingStyle(true)
                    .SetSetSelectionBy(set_selection_by)
+                   .SetIsDirectional(directional)
                    .Build());
 
   if (granularity == TextGranularity::kLine ||
@@ -1168,7 +1180,7 @@ void FrameSelection::ClearLayoutSelection() {
 }
 
 bool FrameSelection::IsDirectional() const {
-  return GetSelectionInDOMTree().IsDirectional();
+  return is_directional_;
 }
 
 }  // namespace blink

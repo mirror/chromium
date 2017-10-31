@@ -213,7 +213,6 @@ void IndentOutdentCommand::OutdentParagraph(EditingState* editing_state) {
   // We can't outdent if there is no place to go!
   if (!enclosing_element || !HasEditableStyle(*enclosing_element->parentNode()))
     return;
-
   // Use InsertListCommand to remove the selection from the list
   if (IsHTMLOListElement(*enclosing_element)) {
     ApplyCommandToComposite(InsertListCommand::Create(
