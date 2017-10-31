@@ -149,6 +149,7 @@ base::PlatformFile OpenV8File(const char* file_name,
         break;
       }
     } else if (file.error_details() != base::File::FILE_ERROR_IN_USE) {
+      LOG(ERROR) << "error in loading " << file_name << " is " << file.error_details();
       result = OpenV8FileResult::FAILED_OTHER;
 #ifdef OS_WIN
       // TODO(oth): temporary diagnostics for http://crbug.com/479537
@@ -230,6 +231,7 @@ void V8Initializer::LoadV8Snapshot() {
   if (g_mapped_snapshot)
     return;
 
+  LOG(ERROR) << "Load V8 Snapshot";
   LoadV8FileResult result = MapOpenedFile(GetOpenedFile(kSnapshotFileName),
                                           &g_mapped_snapshot);
   // V8 can't start up without the source of the natives, but it can
@@ -260,6 +262,7 @@ void V8Initializer::LoadV8SnapshotFromFD(base::PlatformFile snapshot_pf,
   if (snapshot_pf == base::kInvalidPlatformFile)
     return;
 
+  LOG(ERROR) << "Load V8 Snapshot from FD";
   base::MemoryMappedFile::Region snapshot_region =
       base::MemoryMappedFile::Region::kWholeFile;
   if (snapshot_size != 0 || snapshot_offset != 0) {
@@ -360,7 +363,13 @@ void V8Initializer::Initialize(IsolateHolder::ScriptMode mode,
 void V8Initializer::GetV8ExternalSnapshotData(v8::StartupData* natives,
                                               v8::StartupData* snapshot) {
   GetMappedFileData(g_mapped_natives, natives);
-  GetMappedFileData(g_mapped_snapshot, snapshot);
+  if (g_mapped_v8_context_snapshot) {
+    LOG(ERROR) << "Use Context Snapshot";
+    GetMappedFileData(g_mapped_v8_context_snapshot, snapshot);
+  } else {
+    LOG(ERROR) << "Use V8 Snapshot";
+    GetMappedFileData(g_mapped_snapshot, snapshot);
+  }
 }
 
 // static
@@ -381,11 +390,12 @@ void V8Initializer::GetV8ExternalSnapshotData(const char** natives_data_out,
 void V8Initializer::LoadV8ContextSnapshot() {
   if (g_mapped_v8_context_snapshot)
     return;
+  LOG(ERROR) << "Load Context Snapshot";
 
-  MapOpenedFile(GetOpenedFile(kV8ContextSnapshotFileName),
-                &g_mapped_v8_context_snapshot);
+  LoadV8FileResult result = MapOpenedFile(GetOpenedFile(kV8ContextSnapshotFileName),
+                                          &g_mapped_v8_context_snapshot);
 
-  // TODO(peria): Check if the snapshot file is loaded successfully.
+  DCHECK(V8_LOAD_SUCCESS == result);
 }
 
 // static
@@ -394,6 +404,7 @@ void V8Initializer::LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_pf,
                                                 int64_t snapshot_size) {
   if (g_mapped_v8_context_snapshot)
     return;
+  LOG(ERROR) << "Load Context Snapshot from FD";
   CHECK_NE(base::kInvalidPlatformFile, snapshot_pf);
 
   base::MemoryMappedFile::Region snapshot_region =
