@@ -191,6 +191,9 @@ URLRequest::~URLRequest() {
       job_->NotifyURLRequestDestroyed();
   }
 
+  if (upload_data_stream_)
+    upload_data_stream_->Reset();  // Invalidate pending callbacks.
+
   // Delete job before |this|, since subclasses may do weird things, like depend
   // on UserData associated with |this| and poke at it during teardown.
   job_.reset();
