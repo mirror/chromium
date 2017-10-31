@@ -34,6 +34,24 @@
       "revId": "d9a556baabcf9a2959795449b626a173866a846f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a49fab_b1fd181c",
+        "filename": "media/cdm/ppapi/external_clear_key/ffmpeg_cdm_video_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T16:52:59Z",
+      "side": 1,
+      "message": "Ooof, that\u0027s pretty painful for performance. I was hoping this was a test only issue. Does the MojoCDM suffer from the same issue? Seems like an issue worth tracking for performance otherwise.",
+      "parentUuid": "0e697400_826aba91",
+      "revId": "d9a556baabcf9a2959795449b626a173866a846f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
