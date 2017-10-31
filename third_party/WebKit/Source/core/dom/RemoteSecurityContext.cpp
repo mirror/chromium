@@ -32,7 +32,7 @@ void RemoteSecurityContext::Trace(blink::Visitor* visitor) {
 }
 
 void RemoteSecurityContext::SetReplicatedOrigin(
-    scoped_refptr<SecurityOrigin> origin) {
+    scoped_refptr<const SecurityOrigin> origin) {
   DCHECK(origin);
   SetSecurityOrigin(std::move(origin));
   GetContentSecurityPolicy()->SetupSelf(*GetSecurityOrigin());

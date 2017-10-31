@@ -46,6 +46,53 @@ namespace blink {
 class SecurityOrigin;
 class WebURL;
 
+class MutableWebSecurityOrigin {
+ public:
+  ~MutableWebSecurityOrigin() { Reset(); }
+
+  MutableWebSecurityOrigin() {}
+  MutableWebSecurityOrigin(const MutableWebSecurityOrigin& s) { Assign(s); }
+  MutableWebSecurityOrigin& operator=(const MutableWebSecurityOrigin& s) {
+    Assign(s);
+    return *this;
+  }
+
+  BLINK_PLATFORM_EXPORT static MutableWebSecurityOrigin CreateUnique();
+
+  BLINK_PLATFORM_EXPORT void Reset();
+  BLINK_PLATFORM_EXPORT void Assign(const MutableWebSecurityOrigin&);
+
+#if INSIDE_BLINK
+  BLINK_PLATFORM_EXPORT MutableWebSecurityOrigin(
+      scoped_refptr<const SecurityOrigin>);
+  BLINK_PLATFORM_EXPORT const SecurityOrigin* Get() const;
+#else
+  MutableWebSecurityOrigin(const url::Origin& origin) {
+    if (origin.unique()) {
+      Assign(MutableWebSecurityOrigin::CreateUnique());
+      return;
+    }
+
+    // TODO(mkwst): This might open up issues by double-canonicalizing the host.
+    Assign(MutableWebSecurityOrigin::CreateFromTupleWithSuborigin(
+        WebString::FromUTF8(origin.scheme()),
+        WebString::FromUTF8(origin.host()), origin.port(),
+        WebString::FromUTF8(origin.suborigin())));
+  }
+#endif
+
+ private:
+  // Present only to facilitate conversion from 'url::Origin'; this constructor
+  // shouldn't be used anywhere else.
+  BLINK_PLATFORM_EXPORT static MutableWebSecurityOrigin
+  CreateFromTupleWithSuborigin(const WebString& protocol,
+                               const WebString& host,
+                               int port,
+                               const WebString& suborigin);
+
+  WebPrivatePtr<const SecurityOrigin> private_;
+};
+
 class WebSecurityOrigin {
  public:
   ~WebSecurityOrigin() { Reset(); }
@@ -64,6 +111,7 @@ class WebSecurityOrigin {
 
   BLINK_PLATFORM_EXPORT void Reset();
   BLINK_PLATFORM_EXPORT void Assign(const WebSecurityOrigin&);
+  BLINK_PLATFORM_EXPORT void Assign(const MutableWebSecurityOrigin&);
 
   bool IsNull() const { return private_.IsNull(); }
 
@@ -107,15 +155,12 @@ class WebSecurityOrigin {
   // passwords stored in password manager.
   BLINK_PLATFORM_EXPORT bool CanAccessPasswordManager() const;
 
-  // Allows this WebSecurityOrigin access to local resources.
-  BLINK_PLATFORM_EXPORT void GrantLoadLocalResources() const;
-
 #if INSIDE_BLINK
-  BLINK_PLATFORM_EXPORT WebSecurityOrigin(WTF::RefPtr<SecurityOrigin>);
+  BLINK_PLATFORM_EXPORT WebSecurityOrigin(scoped_refptr<const SecurityOrigin>);
   BLINK_PLATFORM_EXPORT WebSecurityOrigin& operator=(
-      WTF::RefPtr<SecurityOrigin>);
-  BLINK_PLATFORM_EXPORT operator WTF::RefPtr<SecurityOrigin>() const;
-  BLINK_PLATFORM_EXPORT SecurityOrigin* Get() const;
+      scoped_refptr<const SecurityOrigin>);
+  BLINK_PLATFORM_EXPORT operator scoped_refptr<const SecurityOrigin>() const;
+  BLINK_PLATFORM_EXPORT const SecurityOrigin* Get() const;
 #else
   // TODO(mkwst): A number of properties don't survive a round-trip
   // ('document.domain', for instance).  We'll need to fix that for OOPI-enabled
@@ -128,29 +173,12 @@ class WebSecurityOrigin {
   }
 
   WebSecurityOrigin(const url::Origin& origin) {
-    if (origin.unique()) {
-      Assign(WebSecurityOrigin::CreateUnique());
-      return;
-    }
-
-    // TODO(mkwst): This might open up issues by double-canonicalizing the host.
-    Assign(WebSecurityOrigin::CreateFromTupleWithSuborigin(
-        WebString::FromUTF8(origin.scheme()),
-        WebString::FromUTF8(origin.host()), origin.port(),
-        WebString::FromUTF8(origin.suborigin())));
+    Assign(MutableWebSecurityOrigin(origin));
   }
 #endif
 
  private:
-  // Present only to facilitate conversion from 'url::Origin'; this constructor
-  // shouldn't be used anywhere else.
-  BLINK_PLATFORM_EXPORT static WebSecurityOrigin CreateFromTupleWithSuborigin(
-      const WebString& protocol,
-      const WebString& host,
-      int port,
-      const WebString& suborigin);
-
-  WebPrivatePtr<SecurityOrigin> private_;
+  WebPrivatePtr<const SecurityOrigin> private_;
 };
 
 }  // namespace blink

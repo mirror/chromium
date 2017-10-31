@@ -26,6 +26,7 @@
 
 #include "core/dom/SecurityContext.h"
 
+#include "core/dom/Document.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -46,8 +47,14 @@ void SecurityContext::Trace(blink::Visitor* visitor) {
 }
 
 void SecurityContext::SetSecurityOrigin(
-    scoped_refptr<SecurityOrigin> security_origin) {
+    scoped_refptr<const SecurityOrigin> security_origin) {
   security_origin_ = std::move(security_origin);
+  UpdateFeaturePolicyOrigin();
+}
+
+void SecurityContext::SetSecurityOriginFromDocument(Document& document) {
+  // Intentionally share the SecurityOrigin.
+  security_origin_ = document.security_origin_;
   UpdateFeaturePolicyOrigin();
 }
 
@@ -100,6 +107,33 @@ void SecurityContext::EnforceSuborigin(const Suborigin& suborigin) {
          security_origin_->GetSuborigin()->GetName() == suborigin.GetName());
   security_origin_->AddSuborigin(suborigin);
   DidUpdateSecurityOrigin();
+}
+
+void SecurityContext::SetDomainFromDOM(const String& new_domain) {
+  security_origin_->SetDomainFromDOM(new_domain);
+}
+
+void SecurityContext::SetUniqueOriginIsPotentiallyTrustworthy(
+    bool is_unique_origin_potentially_trustworthy) {
+  security_origin_->SetUniqueOriginIsPotentiallyTrustworthy(
+      is_unique_origin_potentially_trustworthy);
+}
+
+void SecurityContext::GrantLoadLocalResources() {
+  security_origin_->GrantLoadLocalResources();
+}
+
+void SecurityContext::GrantUniversalAccess() {
+  security_origin_->GrantUniversalAccess();
+}
+
+void SecurityContext::BlockLocalAccessFromLocalOrigin() {
+  security_origin_->BlockLocalAccessFromLocalOrigin();
+}
+
+void SecurityContext::TransferPrivilegesFrom(
+    std::unique_ptr<SecurityOrigin::PrivilegeData> data) {
+  security_origin_->TransferPrivilegesFrom(std::move(data));
 }
 
 void SecurityContext::InitializeFeaturePolicy(

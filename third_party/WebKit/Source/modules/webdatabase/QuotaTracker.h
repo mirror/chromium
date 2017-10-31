@@ -49,11 +49,11 @@ class MODULES_EXPORT QuotaTracker {
   static QuotaTracker& Instance();
 
   void GetDatabaseSizeAndSpaceAvailableToOrigin(
-      SecurityOrigin*,
+      const SecurityOrigin*,
       const String& database_name,
       unsigned long long* database_size,
       unsigned long long* space_available);
-  void UpdateDatabaseSize(SecurityOrigin*,
+  void UpdateDatabaseSize(const SecurityOrigin*,
                           const String& database_name,
                           unsigned long long database_size);
 

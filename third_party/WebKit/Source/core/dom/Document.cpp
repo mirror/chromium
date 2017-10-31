@@ -557,12 +557,11 @@ class Document::NetworkStateObserver final
       online_observer_handle_;
 };
 
-Document* Document::Create(const Document& document) {
-  Document* new_document =
-      new Document(DocumentInit::Create()
-                       .WithContextDocument(const_cast<Document*>(&document))
-                       .WithURL(BlankURL()));
-  new_document->SetSecurityOrigin(document.GetSecurityOrigin());
+Document* Document::Create(Document& document) {
+  Document* new_document = new Document(
+      DocumentInit::Create().WithContextDocument(&document).WithURL(
+          BlankURL()));
+  new_document->SetSecurityOriginFromDocument(document);
   new_document->SetContextFeatures(document.GetContextFeatures());
   return new_document;
 }
@@ -2913,7 +2912,7 @@ void Document::open(Document* entered_document,
           "Can only call open() on same-origin documents.");
       return;
     }
-    SetSecurityOrigin(entered_document->GetSecurityOrigin());
+    SetSecurityOriginFromDocument(*entered_document);
 
     if (this != entered_document) {
       // Clear the hash fragment from the inherited URL to prevent a
@@ -5198,7 +5197,7 @@ void Document::setDomain(const String& raw_domain,
                           ? WebFeature::kDocumentDomainSetWithDefaultPort
                           : WebFeature::kDocumentDomainSetWithNonDefaultPort);
     bool was_cross_domain = frame_->IsCrossOriginSubframe();
-    GetSecurityOrigin()->SetDomainFromDOM(new_domain);
+    SetDomainFromDOM(new_domain);
     if (View() && (was_cross_domain != frame_->IsCrossOriginSubframe()))
       View()->CrossOriginStatusChanged();
 
@@ -5253,7 +5252,8 @@ const KURL Document::SiteForCookies() const {
   if (top.IsLocalFrame()) {
     top_document_url = ToLocalFrame(top).GetDocument()->Url();
   } else {
-    SecurityOrigin* origin = top.GetSecurityContext()->GetSecurityOrigin();
+    const SecurityOrigin* origin =
+        top.GetSecurityContext()->GetSecurityOrigin();
     // TODO(yhirano): Ideally |origin| should not be null here.
     if (origin)
       top_document_url = KURL(NullURL(), origin->ToString());
@@ -5574,7 +5574,7 @@ KURL Document::OpenSearchDescriptionURL() {
 
     // Count usage; perhaps we can lock this to secure contexts.
     WebFeature osd_disposition;
-    scoped_refptr<SecurityOrigin> target =
+    scoped_refptr<const SecurityOrigin> target =
         SecurityOrigin::Create(link_element->Href());
     if (IsSecureContext()) {
       osd_disposition = target->IsPotentiallyTrustworthy()
@@ -6037,16 +6037,16 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
     Document* owner = initializer.OwnerDocument();
     if (owner) {
       if (owner->GetSecurityOrigin()->IsPotentiallyTrustworthy())
-        GetSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(true);
+        SetUniqueOriginIsPotentiallyTrustworthy(true);
       if (owner->GetSecurityOrigin()->CanLoadLocalResources())
-        GetSecurityOrigin()->GrantLoadLocalResources();
+        GrantLoadLocalResources();
       policy_to_inherit = owner->GetContentSecurityPolicy();
     }
   } else if (Document* owner = initializer.OwnerDocument()) {
     cookie_url_ = owner->CookieURL();
     // We alias the SecurityOrigins to match Firefox, see Bug 15313
     // https://bugs.webkit.org/show_bug.cgi?id=15313
-    SetSecurityOrigin(owner->GetSecurityOrigin());
+    SetSecurityOriginFromDocument(*owner);
     policy_to_inherit = owner->GetContentSecurityPolicy();
   } else {
     cookie_url_ = url_;
@@ -6090,23 +6090,23 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
       // Web security is turned off. We should let this document access every
       // other document. This is used primary by testing harnesses for web
       // sites.
-      GetSecurityOrigin()->GrantUniversalAccess();
+      GrantUniversalAccess();
     } else if (GetSecurityOrigin()->IsLocal()) {
       if (settings->GetAllowUniversalAccessFromFileURLs()) {
         // Some clients want local URLs to have universal access, but that
         // setting is dangerous for other clients.
-        GetSecurityOrigin()->GrantUniversalAccess();
+        GrantUniversalAccess();
       } else if (!settings->GetAllowFileAccessFromFileURLs()) {
         // Some clients do not want local URLs to have access to other local
         // URLs.
-        GetSecurityOrigin()->BlockLocalAccessFromLocalOrigin();
+        BlockLocalAccessFromLocalOrigin();
       }
     }
   }
 
   if (GetSecurityOrigin()->IsUnique() &&
       SecurityOrigin::Create(url_)->IsPotentiallyTrustworthy())
-    GetSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(true);
+    SetUniqueOriginIsPotentiallyTrustworthy(true);
 
   if (GetSecurityOrigin()->HasSuborigin())
     EnforceSuborigin(*GetSecurityOrigin()->GetSuborigin());
@@ -6157,7 +6157,7 @@ void Document::InitContentSecurityPolicy(
 }
 
 bool Document::IsSecureTransitionTo(const KURL& url) const {
-  scoped_refptr<SecurityOrigin> other = SecurityOrigin::Create(url);
+  scoped_refptr<const SecurityOrigin> other = SecurityOrigin::Create(url);
   return GetSecurityOrigin()->CanAccess(other.get());
 }
 
@@ -6229,20 +6229,26 @@ bool Document::AllowInlineEventHandler(Node* node,
 }
 
 void Document::EnforceSandboxFlags(SandboxFlags mask) {
-  scoped_refptr<SecurityOrigin> stand_in_origin = GetSecurityOrigin();
+  scoped_refptr<const SecurityOrigin> stand_in_origin = GetSecurityOrigin();
   ApplySandboxFlags(mask);
   // Send a notification if the origin has been updated.
   if (stand_in_origin && !stand_in_origin->IsUnique() &&
       GetSecurityOrigin()->IsUnique()) {
-    GetSecurityOrigin()->SetUniqueOriginIsPotentiallyTrustworthy(
+    SetUniqueOriginIsPotentiallyTrustworthy(
         stand_in_origin->IsPotentiallyTrustworthy());
     if (GetFrame())
       GetFrame()->Client()->DidUpdateToUniqueOrigin();
   }
 }
 
-void Document::UpdateSecurityOrigin(scoped_refptr<SecurityOrigin> origin) {
+void Document::UpdateSecurityOrigin(
+    scoped_refptr<const SecurityOrigin> origin) {
   SetSecurityOrigin(std::move(origin));
+  DidUpdateSecurityOrigin();
+}
+
+void Document::UpdateSecurityOriginFromDocument(Document& document) {
+  SetSecurityOriginFromDocument(document);
   DidUpdateSecurityOrigin();
 }
 

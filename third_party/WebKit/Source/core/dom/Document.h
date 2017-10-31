@@ -280,7 +280,7 @@ class CORE_EXPORT Document : public ContainerNode,
   // a document instance representing window.document, and it works as the
   // source of ExecutionContext and security origin of the new document.
   // https://dom.spec.whatwg.org/#dom-document-document
-  static Document* Create(const Document&);
+  static Document* Create(Document&);
   ~Document() override;
 
   MediaQueryMatcher& GetMediaQueryMatcher();
@@ -1283,7 +1283,8 @@ class CORE_EXPORT Document : public ContainerNode,
   enum HttpRefreshType { kHttpRefreshFromHeader, kHttpRefreshFromMetaTag };
   void MaybeHandleHttpRefresh(const String&, HttpRefreshType);
 
-  void UpdateSecurityOrigin(scoped_refptr<SecurityOrigin>);
+  void UpdateSecurityOrigin(scoped_refptr<const SecurityOrigin>);
+  void UpdateSecurityOriginFromDocument(Document&);
 
   void SetHasViewportUnits() { has_viewport_units_ = true; }
   bool HasViewportUnits() const { return has_viewport_units_; }

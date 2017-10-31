@@ -30,6 +30,7 @@
 #include "core/CoreExport.h"
 #include "core/dom/SandboxFlags.h"
 #include "platform/heap/Handle.h"
+#include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/Suborigin.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/Noncopyable.h"
@@ -45,8 +46,8 @@
 
 namespace blink {
 
-class SecurityOrigin;
 class ContentSecurityPolicy;
+class Document;
 
 class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
   WTF_MAKE_NONCOPYABLE(SecurityContext);
@@ -56,15 +57,24 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
 
   using InsecureNavigationsSet = HashSet<unsigned, WTF::AlreadyHashed>;
 
-  SecurityOrigin* GetSecurityOrigin() const { return security_origin_.get(); }
+  const SecurityOrigin* GetSecurityOrigin() const {
+    return security_origin_.get();
+  }
   ContentSecurityPolicy* GetContentSecurityPolicy() const {
     return content_security_policy_.Get();
+  }
+
+  // Do not use except for BlobRegistry::RegisterPublicBlobURL() and its
+  // related methods.
+  const SecurityOrigin* GetMutableSecurityOrigin() const {
+    return security_origin_.get();
   }
 
   // Explicitly override the security origin for this security context.
   // Note: It is dangerous to change the security origin of a script context
   //       that already contains content.
-  void SetSecurityOrigin(scoped_refptr<SecurityOrigin>);
+  void SetSecurityOrigin(scoped_refptr<const SecurityOrigin>);
+  void SetSecurityOriginFromDocument(Document&);
   virtual void DidUpdateSecurityOrigin() = 0;
 
   SandboxFlags GetSandboxFlags() const { return sandbox_flags_; }
@@ -92,7 +102,15 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
     return insecure_request_policy_;
   }
 
+  // SecurityOrigin modifiers.
   void EnforceSuborigin(const Suborigin&);
+  void SetDomainFromDOM(const String& new_domain);
+  void SetUniqueOriginIsPotentiallyTrustworthy(
+      bool is_unique_origin_potentially_trustworthy);
+  void GrantLoadLocalResources();
+  void GrantUniversalAccess();
+  void BlockLocalAccessFromLocalOrigin();
+  void TransferPrivilegesFrom(std::unique_ptr<SecurityOrigin::PrivilegeData>);
 
   WebFeaturePolicy* GetFeaturePolicy() const { return feature_policy_.get(); }
   void InitializeFeaturePolicy(const WebParsedFeaturePolicy& parsed_header,
@@ -109,7 +127,7 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
   void SetContentSecurityPolicy(ContentSecurityPolicy*);
 
  private:
-  scoped_refptr<SecurityOrigin> security_origin_;
+  scoped_refptr<const SecurityOrigin> security_origin_;
   Member<ContentSecurityPolicy> content_security_policy_;
   std::unique_ptr<WebFeaturePolicy> feature_policy_;
 
