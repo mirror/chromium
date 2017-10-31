@@ -108,10 +108,6 @@ void ServiceWorkerURLLoaderJob::ForwardToServiceWorker() {
   StartRequest();
 }
 
-bool ServiceWorkerURLLoaderJob::ShouldFallbackToNetwork() {
-  return response_type_ == ResponseType::FALLBACK_TO_NETWORK;
-}
-
 ui::PageTransition ServiceWorkerURLLoaderJob::GetPageTransition() {
   NOTIMPLEMENTED();
   return ui::PAGE_TRANSITION_LINK;
