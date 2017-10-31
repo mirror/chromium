@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa9203e3_e8a42489",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-31T21:01:25Z",
+      "side": 1,
+      "message": "This is fine, but it\u0027s better to have an affirmative \"known-good\" list or lexical analysis than checking for \"known-bad\". Is it possible to capture all valid session names with a regular expression or the like?",
+      "revId": "bfb049b3dc333bfd096575b0a7d76a301bc8afea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
