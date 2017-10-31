@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba7b2a4b_4f3748a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-31T23:05:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dd01b07_33112345",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "d37b79fcdeb9100cf62e87ffb507bbc643349afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "096537dc_a4d23fa2",
         "filename": "content/public/common/manifest.h",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "d37b79fcdeb9100cf62e87ffb507bbc643349afe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63a6886_0d1622d3",
+        "filename": "content/public/common/manifest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-31T23:05:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "096537dc_a4d23fa2",
+      "revId": "d37b79fcdeb9100cf62e87ffb507bbc643349afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6461729e_879a8c12",
+        "filename": "content/renderer/manifest/manifest_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-31T23:05:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a16ac0c0_6b415cbd",
+      "revId": "d37b79fcdeb9100cf62e87ffb507bbc643349afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4a21196_f57fb4ce",
         "filename": "content/renderer/manifest/manifest_parser.h",
         "patchSetId": 4
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "07e9ca7e_afee408d",
+        "filename": "content/renderer/manifest/manifest_parser.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-31T23:05:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4a21196_f57fb4ce",
+      "revId": "d37b79fcdeb9100cf62e87ffb507bbc643349afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd557d00_9223fac8",
         "filename": "content/renderer/manifest/manifest_parser.h",
         "patchSetId": 4
@@ -90,6 +168,24 @@
       "revId": "d37b79fcdeb9100cf62e87ffb507bbc643349afe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1c9379_36f162cf",
+        "filename": "content/renderer/manifest/manifest_parser.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-31T23:05:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd557d00_9223fac8",
+      "revId": "d37b79fcdeb9100cf62e87ffb507bbc643349afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
