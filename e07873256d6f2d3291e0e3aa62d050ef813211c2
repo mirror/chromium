@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "307b7422_1695cdb3",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-31T16:17:38Z",
+      "side": 1,
+      "message": "Regarding loss, the owner of WebGraphicsContext3dProvider just needs to set a callback on it, and when it\u0027s called, discard and recreate a new provider. Providers in blink are singly-owned (tho they can share an underlying GL context internally) so that each owner can set its own callback and act independently.\n\nThe fact this code is in content/renderer/ and not in blink platform makes me wonder if its following onion soup principles - which afaik go the opposite direction. Should this be part of a platform/graphics/ API that blink consumes rather than in content?\n\nRegarding using GLHelper with WebGraphicsContext3dProvider - probably we need blink::Platform to do that, since it\u0027s the renderer_blink_platform_impl that knows the underlying type of Providers it hands out - and this would be compatible with putting the code in platform/graphics/.",
+      "parentUuid": "61a7afb9_ccf04cdc",
+      "range": {
+        "startLine": 238,
+        "startChar": 1,
+        "endLine": 239,
+        "endChar": 55
+      },
+      "revId": "e07873256d6f2d3291e0e3aa62d050ef813211c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1778edc_e060bb46",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 9
@@ -174,6 +198,24 @@
       "side": 1,
       "message": "I think a good place for a GLHelper instance to live is in viz::ContextProvider (possible lazily initialized). That way it\u0027s life time would be tied to the life time of the gpu channel it uses. Also, this means it could be accessed via ContextProviderWrapper.",
       "parentUuid": "f1778edc_e060bb46",
+      "revId": "e07873256d6f2d3291e0e3aa62d050ef813211c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdfe94a3_5999d1ac",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-31T16:17:38Z",
+      "side": 1,
+      "message": "I\u0027d rather not tie it to ContextProvider so much. GrContext is tied to ContextProvider like so and it\u0027s been a real pain as a result multiple times. If I could go back I would not do that again.",
+      "parentUuid": "67b0ae5d_140ba437",
       "revId": "e07873256d6f2d3291e0e3aa62d050ef813211c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
