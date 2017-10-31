@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "base/gtest_prod_util.h"
+#include "base/optional.h"
 #include "base/process/process_handle.h"
 #include "base/trace_event/memory_allocator_dump_guid.h"
 
