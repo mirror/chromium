@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bc1fa7e_40c66678",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-31T09:02:54Z",
+      "side": 1,
+      "message": "ikilpatrick@: Let me know if you plan to update the spec for the restriction. I\u0027ll update here based on your change :)",
+      "revId": "8d9aae0f7a396a715719ec4c98453ed87d8f0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
