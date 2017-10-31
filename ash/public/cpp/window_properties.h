@@ -56,6 +56,12 @@ ASH_PUBLIC_EXPORT extern const aura::WindowProperty<
 ASH_PUBLIC_EXPORT extern const aura::WindowProperty<mojom::WindowPinType>* const
     kWindowPinTypeKey;
 
+// A property key to indicate whether ash should perform auto management of
+// window positions; when you open a second browser, ash will move the two to
+// minimize overlap.
+ASH_PUBLIC_EXPORT extern const aura::WindowProperty<bool>* const
+    kWindowPositionManagedTypeKey;
+
 // Alphabetical sort.
 
 }  // namespace ash
