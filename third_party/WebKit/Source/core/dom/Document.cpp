@@ -3263,6 +3263,9 @@ bool Document::ShouldComplete() {
 }
 
 void Document::CheckCompleted() {
+  if (IsLoadCompleted())
+    return;
+
   if (!ShouldComplete())
     return;
 
