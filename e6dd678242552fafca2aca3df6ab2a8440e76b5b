@@ -45,6 +45,30 @@
       "revId": "e6dd678242552fafca2aca3df6ab2a8440e76b5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce3f29f_5c503bce",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-31T13:31:03Z",
+      "side": 1,
+      "message": "Thanks for spotting this!",
+      "parentUuid": "302bee82_cd58baad",
+      "range": {
+        "startLine": 780,
+        "startChar": 7,
+        "endLine": 780,
+        "endChar": 40
+      },
+      "revId": "e6dd678242552fafca2aca3df6ab2a8440e76b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
