@@ -22,6 +22,30 @@
       "revId": "c2930c83812897abd499798eea398ef441cfc353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781ed64e_c0f4309f",
+        "filename": "chrome/browser/android/webapk/webapk_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-31T04:13:46Z",
+      "side": 1,
+      "message": "I named the file webapk_types.h because we might add other WebAPK enums to the file in the future.\n\nThere are a bunch of files named in this way in CrOS. e.g. ash/public/cpp/shelf_types.h",
+      "parentUuid": "6c01ae8b_577087e4",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 53
+      },
+      "revId": "c2930c83812897abd499798eea398ef441cfc353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
