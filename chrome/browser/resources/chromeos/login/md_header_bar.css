@@ -7,17 +7,19 @@
   left: 0;
   min-height: 34px;  /* Should be consistent with .header-bar-item's height. */
   padding-bottom: 6px;
+  padding-top: 7px;
   position: absolute;
   right: 0;
-}
-
-#login-header-bar {
-  padding-top: 7px;
 }
 
 #login-header-bar.full-header-background {
   background-color: #000;
   border-top: 1px solid #000;
+}
+
+#login-header-bar.translucent-background {
+  background-color: rgba(0, 0, 0, 0.56);
+  border-radius: 2px;
 }
 
 html[screen=lock] .login-header-bar-hidden,
