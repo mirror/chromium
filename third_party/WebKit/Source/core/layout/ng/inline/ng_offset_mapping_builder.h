@@ -69,8 +69,17 @@ class CORE_EXPORT NGOffsetMappingBuilder {
   // Set the destination string of the offset mapping.
   void SetDestinationString(String);
 
+  // Called when entering a container node (e.g., SPAN), before collecting any
+  // of its inline descendants.
+  void EnterContainer(const LayoutObject*);
+
+  // Called when exiting a container node (e.g., SPAN), after having collected
+  // all of its inline descendants.
+  void ExitContainer(const LayoutObject*);
+
   // Finalize and return the offset mapping.
-  NGOffsetMapping Build() const;
+  // This method can only be called once, as it can invalidate the stored data.
+  NGOffsetMapping Build();
 
   // Exposed for testing only.
   Vector<unsigned> DumpOffsetMappingForTesting() const;
@@ -88,6 +97,13 @@ class CORE_EXPORT NGOffsetMappingBuilder {
 
   // The destination string of the offset mapping.
   String destination_string_;
+
+  struct ContainerBoundary {
+    const LayoutObject* container;
+    bool is_enter_container;
+    unsigned inline_offset;
+  };
+  Vector<ContainerBoundary> boundaries_;
 
   DISALLOW_COPY_AND_ASSIGN(NGOffsetMappingBuilder);
 };
