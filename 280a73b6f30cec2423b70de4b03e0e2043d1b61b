@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6634c50_e3a44686",
+        "filename": "chrome/browser/chromeos/file_manager/zip_file_creator_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-31T08:45:48Z",
+      "side": 1,
+      "message": "It looks base::WriteFile returns -1 for errors, so maybe \"... !\u003d content.size()\" is needed?\nhttps://cs.chromium.org/chromium/src/base/files/file_util.h?rcl\u003d56ddcb187cd833ad17affaaf2ce8cc7bc3211a2a\u0026l\u003d351",
+      "revId": "280a73b6f30cec2423b70de4b03e0e2043d1b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c2bc20_ffa03c9e",
+        "filename": "chrome/browser/chromeos/file_manager/zip_file_creator_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-31T08:45:48Z",
+      "side": 1,
+      "message": "nit: j?",
+      "range": {
+        "startLine": 165,
+        "startChar": 54,
+        "endLine": 165,
+        "endChar": 55
+      },
+      "revId": "280a73b6f30cec2423b70de4b03e0e2043d1b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003a2092_2821a17b",
+        "filename": "chrome/services/chrome_file_util/public/cpp/zip_file_creator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-31T08:45:48Z",
+      "side": 1,
+      "message": "According to the definition of task priority, this should be USER_BLOCKING because archiving starts just after a user select the context menu for creating zip.\nhttps://cs.chromium.org/chromium/src/base/task_scheduler/task_traits.h?rcl\u003df409847329e8c94d3912d3c54e0121a06e778d0f\u0026l\u003d37",
+      "range": {
+        "startLine": 75,
+        "startChar": 47,
+        "endLine": 75,
+        "endChar": 57
+      },
+      "revId": "280a73b6f30cec2423b70de4b03e0e2043d1b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
