@@ -5,11 +5,14 @@
 #include "services/data_decoder/public/cpp/safe_json_parser_impl.h"
 
 #include "base/callback.h"
+#include "base/guid.h"
 #include "base/sequenced_task_runner.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/values.h"
 #include "services/data_decoder/public/interfaces/constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/interfaces/constants.mojom.h"
 
 namespace data_decoder {
 
@@ -20,7 +23,12 @@ SafeJsonParserImpl::SafeJsonParserImpl(service_manager::Connector* connector,
     : unsafe_json_(unsafe_json),
       success_callback_(success_callback),
       error_callback_(error_callback) {
-  connector->BindInterface(mojom::kServiceName, &json_parser_ptr_);
+  // Use a random instance ID to guarantee the connection is to a new service
+  // (running in its own process).
+  service_manager::Identity identity(mojom::kServiceName,
+                                     service_manager::mojom::kInheritUserID,
+                                     base::GenerateGUID());
+  connector->BindInterface(identity, &json_parser_ptr_);
 }
 
 SafeJsonParserImpl::~SafeJsonParserImpl() = default;
