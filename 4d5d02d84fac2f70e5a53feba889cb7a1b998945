@@ -16,6 +16,24 @@
       "revId": "4d5d02d84fac2f70e5a53feba889cb7a1b998945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d69bf7c_707192f5",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-31T23:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db93e045_73927005",
+      "revId": "4d5d02d84fac2f70e5a53feba889cb7a1b998945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

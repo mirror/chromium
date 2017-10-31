@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f9fc239_253dbc0c",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-31T23:01:37Z",
+      "side": 1,
+      "message": "I switched to this because I was running to issues in CalculatePreferredSize() where the method cocoa_scroll_bar() was not const. Do you have a better idea for this?",
+      "parentUuid": "a5167ad5_7997d7c3",
+      "revId": "ca5668704b0b1c8277caf0101f9cc5fe981ed81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f049c69_4397f845",
         "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
         "patchSetId": 6
