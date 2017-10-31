@@ -22,6 +22,30 @@
       "revId": "68fb3e0de7859e9e88892fb533f67a3d151a0891",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e5eae0_7f014baf",
+        "filename": "chrome/browser/metrics/antivirus_metrics_provider_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T17:39:55Z",
+      "side": 1,
+      "message": "Done\n\n  // __uuidof(WSCProductList) expects to be run in an STA and CLSID_WbemLocator\n  // is fine with an STA or MTA. The COM STA task runner accomodates both of\n  // these requirements.",
+      "parentUuid": "0424943d_d0491d75",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "68fb3e0de7859e9e88892fb533f67a3d151a0891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
