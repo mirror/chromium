@@ -34,6 +34,24 @@
       "revId": "bcbd9bd93eeb85ab51e7ca49644bae6246084347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81976dbb_880319bf",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-31T17:44:03Z",
+      "side": 1,
+      "message": "That sounds like a problem, right?  (Or am I not understanding?)\n\nSuppose process 123 has hung, and it\u0027s hosting tabs A and B.  Tab C is in a different process.  The dialog will show A and B.\n\nLet\u0027s say we\u0027re on tab A while it\u0027s showing, and a cross-process navigation to page D commits in the background (in process 456).  If 456 is responsive, we\u0027ll dismiss the dialog and we\u0027re done.  But if process 456 is also unresponsive, this logic sounds like it will change A to D and leave B in the dialog as well, even though B and D are in different processes and won\u0027t both be killed if the user clicks \"Exit page.\"\n\nIs that what would happen?",
+      "parentUuid": "ab15ee85_54692809",
+      "revId": "bcbd9bd93eeb85ab51e7ca49644bae6246084347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
