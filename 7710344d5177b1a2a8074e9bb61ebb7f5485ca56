@@ -1,0 +1,507 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09448b7f_0d2051aa",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1936,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "if you are looking for correctness things here, then this is not enough. browser generally can\u0027t trust data from renderer\n\nalso what does it mean if this is negative?",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708aedd4_b1145f13",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionEventProxyImpl.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "there is no need to cache the params, the whole loop thing is kinda overkill imo",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3c1070_84b3ce3e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionEventProxyImpl.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "why is the class passed in rather than just have the class path harded coded here?",
+      "range": {
+        "startLine": 45,
+        "startChar": 58,
+        "endLine": 45,
+        "endChar": 77
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad30057e_c8aa263f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionEventProxyImpl.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "so changes are these aren\u0027t reflection exceptions, right? feels like bad form to swallow these exceptions then",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e1e125_787a9392",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "all the logic in this class needs massive amounts of comments to explain what it\u0027s doing",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6e9954_ce260d24",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "not needed since it can always be computed from above?",
+      "range": {
+        "startLine": 21,
+        "startChar": 16,
+        "endLine": 21,
+        "endChar": 32
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb2b0f6_ad55971e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 26,
+        "startChar": 16,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb3f5ed_929757b9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "this doesn\u0027t look necessary since it\u0027s only used from getWordDelta",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad11626_72c8b362",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "make VisibleForTesting methods (that are not used by Logger) consistent, either all public or all protected\n\nmake methods called by Logger public as well\n\nThen put public methods first, then protected, then private",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 10
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee73ce60_e44a38a9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "this method is overly complicated with special cases\n\nit\u0027s would be much easier to read to do a \"append to front if needed\", then \"append to end if needed\"",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "953ef116_f1a1d0f6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "how can this happen?",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc14245f_3902c858",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "I don\u0027t see any point in keeping the last selection just for this, why not just use the global selection for this instead?",
+      "range": {
+        "startLine": 119,
+        "startChar": 20,
+        "endLine": 119,
+        "endChar": 36
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18bcb28_f061c18b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "regionMatches",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 125,
+        "endChar": 63
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09bc1cc_8df830fe",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "can this happen in practice? isn\u0027t the global text supposed to expand only? should turn this into an assert here, and actually check this in setInitialStartOffset",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98edc3cb_9d82a087",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "why is this case special?",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852e8791_a7c10c38",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "this is a bit confusing, use start/end?",
+      "range": {
+        "startLine": 195,
+        "startChar": 51,
+        "endLine": 195,
+        "endChar": 65
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0621ff_c482c5cc",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "why not just log this here as well? instead of keeping yet another piece of state which doesn\u0027t actually work on the edge case",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc58ee9_1bc2ccfc",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "static final string at top of class",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16b8841_61392dea",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "there is no need for this if you are just hard coding the array anyway, just pass individual types into the call",
+      "range": {
+        "startLine": 121,
+        "startChar": 53,
+        "endLine": 121,
+        "endChar": 64
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f179a833_807f4c89",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "instead of forcing update, which is really confusing, what if you create a new converter?\n\nsame for when something invalid is detected",
+      "range": {
+        "startLine": 147,
+        "startChar": 71,
+        "endLine": 147,
+        "endChar": 76
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1bc64da_ae493527",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "\u003e This is because junit doesn\u0027t support TextClassification and TextSelection API. I can only have createSelectionModified(int, int) and createSelectionAction(int, int, int) in test.\n\nThen use Object (with a comment explaining what type it should be)",
+      "range": {
+        "startLine": 169,
+        "startChar": 22,
+        "endLine": 169,
+        "endChar": 45
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031c3276_b222eb13",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "don\u0027t want to end this session immediately after invalid?",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bd6701_99a8a6e2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 207,
+        "startChar": 35,
+        "endLine": 207,
+        "endChar": 40
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e17787_404f70c8",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "this should be checked in create before constructing this\n\nthen you can probably just inline all the mTracker null checks",
+      "range": {
+        "startLine": 211,
+        "startChar": 35,
+        "endLine": 211,
+        "endChar": 55
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb887f6_d9905874",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-31T22:19:53Z",
+      "side": 1,
+      "message": "again, only swallow reflection related exceptions, not all of them",
+      "range": {
+        "startLine": 218,
+        "startChar": 17,
+        "endLine": 218,
+        "endChar": 26
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
