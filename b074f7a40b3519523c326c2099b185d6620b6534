@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "98ccfebf_ff51022d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/builder_list.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T21:41:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdd385f3_2accdf9e",
+      "revId": "b074f7a40b3519523c326c2099b185d6620b6534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4ff39f1_1edeb53e",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "b074f7a40b3519523c326c2099b185d6620b6534",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6892856_4302efda",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-31T21:41:22Z",
+      "side": 1,
+      "message": "Good point -- it looks like elsewhere there\u0027s a hanging indent of four spaces after the first line. Now changed.",
+      "parentUuid": "c4ff39f1_1edeb53e",
+      "revId": "b074f7a40b3519523c326c2099b185d6620b6534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
