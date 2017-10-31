@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b8e25ea_9bbc31cd",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-31T07:34:05Z",
+      "side": 1,
+      "message": "Ditto: icon_types \u003d {{...}}; here. Similar comment elsewher that uniform initialization is used to initialized variables.\n\n(Note that this comment is specifically only about using uniform initialization syntax for variable initialization: using it for initializer lists is perfectly fine)",
+      "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed114ad5_cdd586c3",
+        "filename": "components/favicon/core/favicon_driver_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-31T07:34:05Z",
+      "side": 1,
+      "message": "Per https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization, this should be touch_icon_types \u003d {...}",
+      "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e77a61a_9a402ff4",
+        "filename": "components/history/core/browser/history_backend_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2156,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-31T07:34:05Z",
+      "side": 1,
+      "message": "Even though this isn\u0027t a variable, per https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization, this should probably not use uniform initialization except where required, i.e. this should be std::vector\u003cIconTypeSet\u003e({{...}})\n\nSame comment applies elsewhere.",
+      "range": {
+        "startLine": 2156,
+        "startChar": 40,
+        "endLine": 2156,
+        "endChar": 42
+      },
+      "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3cae26d_0eedd6d8",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-31T07:34:05Z",
+      "side": 1,
+      "message": "Another option is CountLeadingZeroBits32: I think this might compile to a bit less code, since it\u0027s supported natively on most architectures (though you\u0027ll have to invert the result).",
+      "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb777cd0_d8cf02b2",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_utils.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-31T07:34:05Z",
+      "side": 1,
+      "message": "Is this bitmasking still correct?",
+      "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
