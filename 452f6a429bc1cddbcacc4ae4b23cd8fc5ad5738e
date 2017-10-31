@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f65e4d6_3f6c0579",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-31T03:14:31Z",
+      "side": 1,
+      "message": "Ignore this, I misunderstood the lifetime of this helper.",
+      "parentUuid": "0493b6bc_e69a7661",
+      "revId": "452f6a429bc1cddbcacc4ae4b23cd8fc5ad5738e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9479d17_c86b65ce",
         "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
         "patchSetId": 16
@@ -30,6 +48,41 @@
       "writtenOn": "2017-10-30T06:23:56Z",
       "side": 1,
       "message": "Is this change orthogonal?",
+      "revId": "452f6a429bc1cddbcacc4ae4b23cd8fc5ad5738e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e610a8c2_4dd29eeb",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-31T03:14:31Z",
+      "side": 1,
+      "message": "Oh, I see it\u0027s to do with the the above prevention of downloading the primary icon again.",
+      "parentUuid": "f9479d17_c86b65ce",
+      "revId": "452f6a429bc1cddbcacc4ae4b23cd8fc5ad5738e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce7957d_ecc69651",
+        "filename": "chrome/browser/extensions/favicon_downloader.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-31T03:14:31Z",
+      "side": 1,
+      "message": "What\u0027s this change for?",
       "revId": "452f6a429bc1cddbcacc4ae4b23cd8fc5ad5738e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
