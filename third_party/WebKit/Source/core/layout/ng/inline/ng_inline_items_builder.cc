@@ -511,6 +511,8 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::EnterBlock(
 template <typename OffsetMappingBuilder>
 void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::EnterInline(
     LayoutObject* node) {
+  mapping_builder_.EnterContainer(node);
+
   // https://drafts.csswg.org/css-writing-modes-3/#bidi-control-codes-injection-table
   const ComputedStyle* style = node->Style();
   if (style->RtlOrdering() == EOrder::kLogical) {
@@ -570,6 +572,8 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::ExitInline(
   AppendOpaque(NGInlineItem::kCloseTag, node->Style(), node);
 
   Exit(node);
+
+  mapping_builder_.ExitContainer(node);
 }
 
 template <typename OffsetMappingBuilder>
