@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4da759e0_14fb0d75",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-31T22:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69843952_13fc4de2",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e1f9a76_a5d4ce85",
         "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "68f4c4f0_6ec66b7d",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-31T22:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e1f9a76_a5d4ce85",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 33
+      },
+      "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acc8b2ac_81b3d352",
         "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e25c3b_b90079c4",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-31T22:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acc8b2ac_81b3d352",
+      "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +182,24 @@
       "writtenOn": "2017-10-31T14:09:52Z",
       "side": 1,
       "message": "Rather than delaying entirely, would it be better to tweak the TimeInterval param for testing, so that it can be set to something low to test the timer callback?",
+      "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b45942_7b27ce7a",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-31T22:56:22Z",
+      "side": 1,
+      "message": "That\u0027s a good point. I tried to set this the time interval to 0, however the callback didn\u0027t happen right away. Do you have any suggestions?\n\nOne thing I can do is implement something like this: https://cs.chromium.org/chromium/src/ios/testing/wait_util.h\n\nHowever, this might be more trouble than its worth since I don\u0027t think we\u0027ll be getting a lot of value from testing this.",
+      "parentUuid": "f91f34e5_5d9545c7",
       "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
