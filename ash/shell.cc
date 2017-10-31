@@ -167,6 +167,7 @@
 #include "ui/display/manager/chromeos/display_configurator.h"
 #include "ui/display/manager/chromeos/touch_transform_setter.h"
 #include "ui/display/manager/display_manager.h"
+#include "ui/display/mojo/test_display_controller.mojom.h"
 #include "ui/display/screen.h"
 #include "ui/display/types/native_display_delegate.h"
 #include "ui/events/event_target_iterator.h"
@@ -927,6 +928,15 @@ void Shell::Init(const ShellInitParams& init_params) {
       new ProjectingObserver(dbus_thread_manager->GetPowerManagerClient()));
   display_configurator_->AddObserver(projecting_observer_.get());
   AddShellObserver(projecting_observer_.get());
+
+  if (config != Config::CLASSIC && !chromeos::IsRunningAsSystemCompositor()) {
+    // |connector| can be null in tests.
+    if (auto* connector = shell_delegate_->GetShellConnector()) {
+      display::mojom::TestDisplayControllerPtr controller;
+      connector->BindInterface(ui::mojom::kServiceName, &controller);
+      display_manager_->SetTestDisplayController(std::move(controller));
+    }
+  }
 
   if (!display_initialized &&
       (config != Config::CLASSIC || chromeos::IsRunningAsSystemCompositor())) {

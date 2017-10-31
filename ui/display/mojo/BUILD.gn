@@ -13,6 +13,7 @@ mojom("interfaces") {
     "display_snapshot.mojom",
     "gamma_ramp_rgb_entry.mojom",
     "native_display_delegate.mojom",
+    "test_display_controller.mojom",
   ]
 
   public_deps = [
