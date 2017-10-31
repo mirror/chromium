@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "0c342472_6cb64f6d",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "Please document the reason for changing cookie accept policy (\"Reset CookieAcceptPolicy to default value.\" is unnecessary because this is obvious from the code) and restore the policy to default value.",
+      "parentUuid": "c573c828_44620469",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2b6fc07_679f405b",
         "filename": "ios/net/cookies/system_cookie_store_unittest.h",
         "patchSetId": 6
@@ -175,6 +199,24 @@
       "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd721ab4_fa94961b",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "Thank you for the link",
+      "parentUuid": "6d111951_bec9ea1d",
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +337,30 @@
     },
     {
       "key": {
+        "uuid": "c302da3d_87a68667",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "be0c8acf_167ad069",
+      "range": {
+        "startLine": 91,
+        "startChar": 21,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb1323a2_09158c9b",
         "filename": "ios/net/cookies/system_cookie_store_unittest.h",
         "patchSetId": 6
@@ -342,6 +408,30 @@
     },
     {
       "key": {
+        "uuid": "8e54f07a_ca7cb998",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand this reply. If I understand the code correctly (maybe I don\u0027t), |SpinRunLoopWithMaxDelay|  and |RunUntilIdle| calls are performed to wait until cookie are set. So my proposal is to wait until SetCookieAsync callback is called instead of spinning runloop for arbitrary time (which will be flaky in some cases).",
+      "parentUuid": "78ca07c3_1449bc5d",
+      "range": {
+        "startLine": 127,
+        "startChar": 19,
+        "endLine": 127,
+        "endChar": 42
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9cc3057_51f4ec6b",
         "filename": "ios/net/cookies/system_cookie_store_unittest.h",
         "patchSetId": 6
@@ -374,6 +464,29 @@
       "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "362c79b2_7d60c955",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "Do you need to include base/mac/availability.h?",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -447,6 +560,30 @@
       "side": 1,
       "message": "I don\u0027t like having the word Request in the function, just because cookies existence and retrieval here have no knowledge of Requests.\nWe use in cookie_store_ios getCookieForURL\nand in NSHTTPCookieStore there is cookieForURL \nso for consistency i made it IsCookieForURL",
       "parentUuid": "838ef1be_daadb09e",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 19
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2fa778_29e1d400",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "When I see IsCookieForURL method I have to look up for the comment to understand what this method does. cookieForURL follow Objective-C naming patterns (name starts with a noun describing the result, words before arguments describe the argument) and returns cookie. This method is different. This method is the same as CanonicalCookie::IncludeForRequestURL, so I would make sense to follow existing naming patterns. Cookie does not have a knowledge of \"Request\" but cookie does have a knowledge of \"RequestUrl\".",
+      "parentUuid": "b38497c4_b8f5d836",
       "range": {
         "startLine": 41,
         "startChar": 5,

@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "717f528b_a2b0b227",
+        "filename": "ios/net/cookies/system_cookie_store_unittest_template.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "Initialize with nil",
+      "revId": "08b8b761898e593e167b3c457edf7765112057fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282842ef_6805555f",
+        "filename": "ios/net/cookies/system_cookie_store_unittest_template.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "nit: Please move comments from the top to here.",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 20
+      },
+      "revId": "08b8b761898e593e167b3c457edf7765112057fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

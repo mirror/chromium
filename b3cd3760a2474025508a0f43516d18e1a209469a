@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99ffca92_831ef38d",
+        "filename": "ios/net/cookies/system_cookie_store_unittest_template.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "nit: s/Different/different",
+      "range": {
+        "startLine": 189,
+        "startChar": 53,
+        "endLine": 189,
+        "endChar": 62
+      },
+      "revId": "b3cd3760a2474025508a0f43516d18e1a209469a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20665832_81b3ac5f",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "nit: s/opts/options",
+      "range": {
+        "startLine": 48,
+        "startChar": 21,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "b3cd3760a2474025508a0f43516d18e1a209469a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4959b393_57ef7c9a",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "Do we need to cast here?",
+      "range": {
+        "startLine": 89,
+        "startChar": 31,
+        "endLine": 89,
+        "endChar": 43
+      },
+      "revId": "b3cd3760a2474025508a0f43516d18e1a209469a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5126ce2f_9ea2a67b",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "We have to wait until all deleteCookie: callbacks are called. We can use CallbackCounter for that.",
+      "range": {
+        "startLine": 121,
+        "startChar": 43,
+        "endLine": 121,
+        "endChar": 47
+      },
+      "revId": "b3cd3760a2474025508a0f43516d18e1a209469a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13cdf835_cbf917d4",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "Do we need to cast here?",
+      "revId": "b3cd3760a2474025508a0f43516d18e1a209469a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98643390_a0236922",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "WaitUntilConditionOrTimeout returns false on failure and we should not ignore the call result. Same question for other places.",
+      "range": {
+        "startLine": 49,
+        "startChar": 13,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "b3cd3760a2474025508a0f43516d18e1a209469a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70920f2_26f13ebe",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:47:41Z",
+      "side": 1,
+      "message": "Please create a constant for cookie operations.",
+      "range": {
+        "startLine": 49,
+        "startChar": 41,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "b3cd3760a2474025508a0f43516d18e1a209469a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
