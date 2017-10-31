@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d73743b_4fd0fd8b",
+        "filename": "gpu/command_buffer/client/client_discardable_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-31T18:34:57Z",
+      "side": 1,
+      "message": "How do we feel about uint32_t IDs? I wonder how much risk there is of overflow.... we could also use a uint64_t which would allow us to use:\n\n(shm_id \u003c\u003c 32) | shm_offset\n\nfor the ID, which should always be unique... but not sure if it\u0027s overkill.",
+      "range": {
+        "startLine": 58,
+        "startChar": 30,
+        "endLine": 58,
+        "endChar": 45
+      },
+      "revId": "ff6828c1de43b9e509fe1134af212391f03e728f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
