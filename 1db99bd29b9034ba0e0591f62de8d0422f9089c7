@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4eb2d19b_b07c053a",
+        "filename": "cc/paint/paint_font.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-31T17:21:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bb15a789_a8973740",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93f1c57a_dc947316",
         "filename": "cc/paint/paint_op_buffer.h",
         "patchSetId": 15
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Can the array be stored directly on PaintTextBlob and the PaintTextBlob stored on the op directly so that it doesn\u0027t need to be reallocated and stored separately?",
       "parentUuid": "bf469f68_c38abe57",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "771ddbad_f8f5cb89",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-31T17:21:45Z",
+      "side": 1,
+      "message": "Yeah the latest patch set does this. I\u0027m storing a refptr to the PaintTextBlob on the op, which internally has a vector.",
+      "parentUuid": "16368815_5af4f5b1",
       "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -161,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "c316442f_0eb04304",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-31T17:21:45Z",
+      "side": 1,
+      "message": "That\u0027s correct, it will cause a nullptr SkTextBlob (so essentially a PaintTextBlob that evaluates to false), but the DrawTextBlobOp will remain valid.",
+      "parentUuid": "3ddcbc9c_59af3e70",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d1743e2_46b4607f",
         "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
         "patchSetId": 15
@@ -211,6 +265,24 @@
       "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b315efd_77e2f926",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-31T17:21:45Z",
+      "side": 1,
+      "message": "I think at this point I\u0027d prefer to punt. I do see your point about having PaintFoo::ToSkFoo in a bunch of places.. I\u0027m confident that with sufficient C++, we can remove all of those by adding corresponding pass-through-for-now functions. However, I prefer to leave that to a follow-up so as not to muddy the review with straight forward red herrings.",
+      "parentUuid": "50ef7c1e_a5c065ff",
+      "revId": "1db99bd29b9034ba0e0591f62de8d0422f9089c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
