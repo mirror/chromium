@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9e84543c_6a420e31",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-31T18:52:38Z",
+      "side": 1,
+      "message": "Not sure why that is a bad thing, but I meant that you need to explain this in the comment..",
+      "parentUuid": "9e3bd044_e645ab25",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 221,
+        "endChar": 13
+      },
+      "revId": "59ee403f2e62ee9439beb5b04ab560b1beef2c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "448a0b8e_586c4581",
         "filename": "ui/gfx/color_space.h",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "The concept of |icc_profile_id_| has generally been a mess, mostly because the id\u003c-\u003eprofile mapping isn\u0027t properly synchronized across the 3 processes.\n\nMy goal in this sequence of patches is to have gfx::ColorSpace store scoped_refptr to an ICCProfile directly.",
       "parentUuid": "448a0b8e_586c4581",
+      "range": {
+        "startLine": 57,
+        "startChar": 78,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "59ee403f2e62ee9439beb5b04ab560b1beef2c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d720cabb_c9d739e5",
+        "filename": "ui/gfx/color_space.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-31T18:52:38Z",
+      "side": 1,
+      "message": "Can we get rid of ICC_BASED after we replace icc_profile_id_ with a scoped_refptr\u003cICCProfile\u003e ?\nAlso, how do we avoid passing the ICCProfile over IPC over and over and over again?",
+      "parentUuid": "5b96299f_51d93cd2",
       "range": {
         "startLine": 57,
         "startChar": 78,
