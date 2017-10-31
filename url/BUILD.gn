@@ -17,6 +17,8 @@ buildflag_header("url_features") {
 
 component("url") {
   sources = [
+    "empty_string.cc",
+    "empty_string.h",
     "gurl.cc",
     "gurl.h",
     "origin.cc",
