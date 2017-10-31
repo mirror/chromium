@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f07e3c02_79e480e5",
+        "filename": "chromeos/dbus/fake_shill_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T17:19:36Z",
+      "side": 1,
+      "message": "hmm. i still find it a bit ambiguous, but i\u0027m okay with it if it\u0027s what everyone is already doing. :-)",
+      "parentUuid": "36ef6ddf_5c827336",
+      "revId": "0247d7c780f8a7f92a669ed3ec1205fe893261e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14daff02_92cd4439",
         "filename": "chromeos/network/network_configuration_handler_unittest.cc",
         "patchSetId": 2
