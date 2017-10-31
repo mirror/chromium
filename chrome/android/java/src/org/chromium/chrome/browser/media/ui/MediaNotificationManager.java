@@ -80,13 +80,13 @@ public class MediaNotificationManager {
     private static final int COMPACT_VIEW_ACTIONS_COUNT = 3;
 
     // The maximum number of actions in BigView media notification.
-    private static final int BIG_VIEW_ACTIONS_COUNT = isRunningN() ? 5 : 3;
+    private static final int BIG_VIEW_ACTIONS_COUNT = 5;
 
     // Maps the notification ids to their corresponding notification managers.
     private static SparseArray<MediaNotificationManager> sManagers;
 
     // Overrides N detection. The production code will use |null|, which uses the Android version
-    // code. Otherwise, |isRunningN()| will return whatever value is set.
+    // code. Otherwise, |isRunningAtLeastN()| will return whatever value is set.
     @VisibleForTesting
     static Boolean sOverrideIsRunningNForTesting;
 
@@ -708,7 +708,7 @@ public class MediaNotificationManager {
         sManagers.put(notificationId, manager);
     }
 
-    private static boolean isRunningN() {
+    private static boolean isRunningAtLeastN() {
         return (sOverrideIsRunningNForTesting != null)
                 ? sOverrideIsRunningNForTesting
                 : Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
@@ -1067,7 +1067,7 @@ public class MediaNotificationManager {
             builder.setLargeIcon(null);
         } else if (mMediaNotificationInfo.notificationLargeIcon != null) {
             builder.setLargeIcon(mMediaNotificationInfo.notificationLargeIcon);
-        } else if (!isRunningN()) {
+        } else if (!isRunningAtLeastN()) {
             if (mDefaultNotificationLargeIcon == null) {
                 int resourceId = (mMediaNotificationInfo.defaultNotificationLargeIcon != 0)
                         ? mMediaNotificationInfo.defaultNotificationLargeIcon
@@ -1127,7 +1127,7 @@ public class MediaNotificationManager {
     private void setMediaStyleNotificationText(ChromeNotificationBuilder builder) {
         builder.setContentTitle(mMediaNotificationInfo.metadata.getTitle());
         String artistAndAlbumText = getArtistAndAlbumText(mMediaNotificationInfo.metadata);
-        if (isRunningN() || !artistAndAlbumText.isEmpty()) {
+        if (isRunningAtLeastN() || !artistAndAlbumText.isEmpty()) {
             builder.setContentText(artistAndAlbumText);
             builder.setSubText(mMediaNotificationInfo.origin);
         } else {
