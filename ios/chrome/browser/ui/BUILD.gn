@@ -361,6 +361,10 @@ source_set("ui_internal") {
     "//ui/base",
     "//ui/gfx",
     "//url",
+
+    # Fake dependencies to break cycles
+    "//ios/chrome/browser/browsing_data:browsing_data_internal",
+    "//ios/chrome/browser/ui/settings",
   ]
   public_deps = [
     "//ios/chrome/browser/ui/side_swipe",
@@ -375,6 +379,9 @@ source_set("ui_internal") {
     "//ios/chrome/browser/ui/tabs:coordinator",
     "//ios/chrome/browser/ui/toolbar",
     "//ios/chrome/browser/web:web_internal",
+    "//ios/chrome/browser/browsing_data:browsing_data_internal",
+    "//ios/chrome/browser/ui/settings",
+    "//ios/chrome/browser/signin",
   ]
   libs = [
     "AssetsLibrary.framework",

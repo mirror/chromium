@@ -102,9 +102,10 @@ source_set("browsing_data_internal") {
     "//ios/chrome/browser/signin",
     "//ios/chrome/browser/snapshots",
     "//ios/chrome/browser/tabs",
-    "//ios/chrome/browser/ui:ui_internal",
     "//ios/web",
     "//net",
+    "//ui/gfx",
   ]
+  allow_circular_includes_from = [ "//ios/chrome/browser/signin" ]
   libs = [ "WebKit.framework" ]
 }
