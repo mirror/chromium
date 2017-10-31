@@ -45,7 +45,7 @@ function t2Callback(pseudoComputedStyleMap) {
 
 document.onreadystatechange = function() {
   if(document.readyState == 'complete') {
-    var pseudoComputedStyleMap = getComputedStyleMap(testElement, '::after');
+    var pseudoComputedStyleMap = testElement.after.computedStyleMap();
     t1Callback(pseudoComputedStyleMap);
     t2Callback(pseudoComputedStyleMap);
   }
