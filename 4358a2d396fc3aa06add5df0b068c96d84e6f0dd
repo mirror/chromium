@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c4f4311_5b3965dd",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionEventProxyImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-31T19:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4aa284f_b092896d",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0392c235_c1627113",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
         "patchSetId": 14
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "5430b4a9_ac8a9c93",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-31T19:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0392c235_c1627113",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddbe2f1c_004d11d3",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 14
@@ -56,6 +98,24 @@
       "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92147803_6231eb77",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-31T19:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddbe2f1c_004d11d3",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "0a340088_3777380b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-31T19:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eb76f4e_1f20b5fa",
+      "range": {
+        "startLine": 106,
+        "startChar": 34,
+        "endLine": 106,
+        "endChar": 35
+      },
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02128b69_8ad2f472",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 14
@@ -96,6 +180,24 @@
       "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b891025f_89bdd32c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-31T19:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02128b69_8ad2f472",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "c6e3f143_e00fc58c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-31T19:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a4eab27_93ce961a",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05118eb9_64d7c102",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 14
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "a5510728_c70d3ec9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-31T19:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05118eb9_64d7c102",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcba3718_3c1bf38a",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 14
@@ -144,6 +282,30 @@
       "writtenOn": "2017-10-25T23:18:51Z",
       "side": 1,
       "message": "why do you need to case here and below? add it to the interface",
+      "range": {
+        "startLine": 162,
+        "startChar": 23,
+        "endLine": 162,
+        "endChar": 46
+      },
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45044cd2_41fe0513",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-31T19:26:46Z",
+      "side": 1,
+      "message": "This is because junit doesn\u0027t support TextClassification and TextSelection API. I can only have createSelectionModified(int, int) and createSelectionAction(int, int, int) in test.",
+      "parentUuid": "bcba3718_3c1bf38a",
       "range": {
         "startLine": 162,
         "startChar": 23,
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "7539f05c_64e0417d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-31T19:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ca6a4b6_b8569624",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e77b2ff_10c1994a",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 14
@@ -187,6 +367,24 @@
       "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29db300e_0f246613",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-31T19:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e77b2ff_10c1994a",
+      "revId": "4358a2d396fc3aa06add5df0b068c96d84e6f0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
