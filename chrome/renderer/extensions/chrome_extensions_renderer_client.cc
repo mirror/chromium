@@ -9,6 +9,7 @@
 
 #include "base/command_line.h"
 #include "base/lazy_instance.h"
+#include "base/strings/stringprintf.h"
 #include "chrome/common/chrome_isolated_world_ids.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_constants.h"
@@ -21,7 +22,9 @@
 #include "chrome/renderer/extensions/resource_request_policy.h"
 #include "chrome/renderer/media/cast_ipc_dispatcher.h"
 #include "content/public/common/content_constants.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_thread.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -33,11 +36,14 @@
 #include "extensions/renderer/guest_view/extensions_guest_view_container.h"
 #include "extensions/renderer/guest_view/extensions_guest_view_container_dispatcher.h"
 #include "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.h"
+#include "extensions/renderer/mime_handler_view/mime_handler_view_manager.h"
 #include "extensions/renderer/script_context.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
+#include "third_party/WebKit/public/web/WebElement.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebPluginParams.h"
+#include "v8/include/v8.h"
 
 using extensions::Extension;
 
@@ -186,6 +192,33 @@ bool ChromeExtensionsRendererClient::OverrideCreatePlugin(
       render_frame, base::Bind(&IsGuestViewApiAvailableToScriptContext,
                                &guest_view_api_available));
   return !guest_view_api_available;
+}
+
+bool ChromeExtensionsRendererClient::OverrideNavigationForMimeHandlerView(
+    content::RenderFrame* render_frame,
+    const GURL& url,
+    const std::string& actual_mime_type) {
+  return extensions::MimeHandlerViewManager::
+      OverrideNavigationForMimeHandlerView(render_frame, url, actual_mime_type);
+}
+
+bool ChromeExtensionsRendererClient::CreatePluginController(
+    const blink::WebElement& plugin_element,
+    const GURL& completed_url,
+    const std::string& mime_type) {
+  return extensions::MimeHandlerViewManager::Get(
+             content::RenderFrame::FromWebFrame(
+                 plugin_element.GetDocument().GetFrame()))
+      ->CreatePluginController(plugin_element, completed_url, mime_type);
+}
+
+v8::Local<v8::Object> ChromeExtensionsRendererClient::CreateV8ScriptableObject(
+    const blink::WebElement& plugin_element,
+    v8::Isolate* isolate) {
+  return extensions::MimeHandlerViewManager::Get(
+             content::RenderFrame::FromWebFrame(
+                 plugin_element.GetDocument().GetFrame()))
+      ->CreateV8ScriptableObject(plugin_element, isolate);
 }
 
 bool ChromeExtensionsRendererClient::AllowPopup() {

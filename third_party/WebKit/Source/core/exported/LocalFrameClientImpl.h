@@ -249,6 +249,12 @@ class LocalFrameClientImpl final : public LocalFrameClient {
       const WebRect&,
       const WebRemoteScrollProperties&) override;
 
+  bool CreatePluginFrame(HTMLPlugInElement*,
+                         const KURL&,
+                         const String&) override;
+  v8::Local<v8::Object> CreateV8ScriptableObject(HTMLPlugInElement*,
+                                                 v8::Isolate*) override;
+
  private:
   explicit LocalFrameClientImpl(WebLocalFrameImpl*);
 

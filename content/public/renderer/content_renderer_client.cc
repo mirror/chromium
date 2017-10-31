@@ -14,6 +14,7 @@
 #include "third_party/WebKit/public/platform/modules/webmidi/WebMIDIAccessor.h"
 #include "ui/gfx/icc_profile.h"
 #include "url/gurl.h"
+#include "v8/include/v8.h"
 
 namespace content {
 
@@ -30,6 +31,25 @@ bool ContentRendererClient::OverrideCreatePlugin(
     const blink::WebPluginParams& params,
     blink::WebPlugin** plugin) {
   return false;
+}
+
+bool ContentRendererClient::CreatePluginController(
+    const blink::WebElement& owner,
+    const GURL& completed_url,
+    const std::string& mime_type) {
+  return false;
+}
+
+bool ContentRendererClient::OverrideNavigationForMimeHandlerView(
+    content::RenderFrame* render_frame,
+    const GURL& url) {
+  return false;
+}
+
+v8::Local<v8::Object> ContentRendererClient::CreateV8ScriptableObject(
+    const blink::WebElement& plugin_element,
+    v8::Isolate* isolate) {
+  return v8::Local<v8::Object>();
 }
 
 blink::WebPlugin* ContentRendererClient::CreatePluginReplacement(
