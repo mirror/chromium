@@ -1016,9 +1016,15 @@ void Dispatcher::OnLoaded(
     }
     if (param.uses_default_policy_blocked_allowed_hosts) {
       extension->permissions_data()->SetUsesDefaultHostRestrictions();
+      UpdateOriginExtensionPolicy(
+          extension.get(),
+          extension->permissions_data()->default_policy_blocked_hosts(),
+          extension->permissions_data()->default_policy_allowed_hosts());
     } else {
       extension->permissions_data()->SetPolicyHostRestrictions(
           param.policy_blocked_hosts, param.policy_allowed_hosts);
+      UpdateOriginExtensionPolicy(extension.get(), param.policy_blocked_hosts,
+                                  param.policy_allowed_hosts);
     }
 
     ExtensionsRendererClient::Get()->OnExtensionLoaded(*extension);
@@ -1163,6 +1169,19 @@ void Dispatcher::OnUpdateDefaultPolicyHostRestrictions(
     const ExtensionMsg_UpdateDefaultPolicyHostRestrictions_Params& params) {
   PermissionsData::SetDefaultPolicyHostRestrictions(
       params.default_policy_blocked_hosts, params.default_policy_allowed_hosts);
+  // Update blink host permission whitelist exceptions for all loaded extensions
+  for (std::set<std::string>::iterator iter = active_extension_ids_.begin();
+       iter != active_extension_ids_.end(); ++iter) {
+    const Extension* extension =
+        RendererExtensionRegistry::Get()->GetByID(*iter);
+    if (extension->permissions_data()->UsesDefaultPolicyHostRestrictions()) {
+      LOG(WARNING) << "$$$ Updating Default Blink whitelist exception for ";
+      LOG(WARNING) << *iter;
+      UpdateOriginExtensionPolicy(extension,
+                                  params.default_policy_blocked_hosts,
+                                  params.default_policy_allowed_hosts);
+    }
+  }
   UpdateBindings(std::string());
 }
 
@@ -1179,17 +1198,22 @@ void Dispatcher::OnUpdatePermissions(
       params.withheld_permissions.ToPermissionSet();
 
   UpdateOriginPermissions(
-      extension->url(),
-      extension->permissions_data()->GetEffectiveHostPermissions(),
+      extension, extension->permissions_data()->GetEffectiveHostPermissions(),
       active->effective_hosts());
 
   extension->permissions_data()->SetPermissions(std::move(active),
                                                 std::move(withheld));
   if (params.uses_default_policy_host_restrictions) {
     extension->permissions_data()->SetUsesDefaultHostRestrictions();
+    UpdateOriginExtensionPolicy(
+        extension,
+        extension->permissions_data()->default_policy_blocked_hosts(),
+        extension->permissions_data()->default_policy_allowed_hosts());
   } else {
     extension->permissions_data()->SetPolicyHostRestrictions(
         params.policy_blocked_hosts, params.policy_allowed_hosts);
+    UpdateOriginExtensionPolicy(extension, params.policy_blocked_hosts,
+                                params.policy_allowed_hosts);
   }
 
   bindings_system_->OnExtensionPermissionsUpdated(params.extension_id);
@@ -1216,8 +1240,7 @@ void Dispatcher::OnUpdateTabSpecificPermissions(const GURL& visible_url,
 
   if (update_origin_whitelist) {
     UpdateOriginPermissions(
-        extension->url(),
-        old_effective,
+        extension, old_effective,
         extension->permissions_data()->GetEffectiveHostPermissions());
   }
 }
@@ -1234,8 +1257,7 @@ void Dispatcher::OnClearTabSpecificPermissions(
       extension->permissions_data()->ClearTabSpecificPermissions(tab_id);
       if (update_origin_whitelist) {
         UpdateOriginPermissions(
-            extension->url(),
-            old_effective,
+            extension, old_effective,
             extension->permissions_data()->GetEffectiveHostPermissions());
       }
     }
@@ -1266,12 +1288,49 @@ void Dispatcher::InitOriginPermissions(const Extension* extension) {
   delegate_->InitOriginPermissions(extension,
                                    IsExtensionActive(extension->id()));
   UpdateOriginPermissions(
-      extension->url(),
+      extension,
       URLPatternSet(),  // No old permissions.
       extension->permissions_data()->GetEffectiveHostPermissions());
 }
 
-void Dispatcher::UpdateOriginPermissions(const GURL& extension_url,
+void Dispatcher::UpdateOriginExtensionPolicy(
+    const Extension* extension,
+    const URLPatternSet& blocked_hosts,
+    const URLPatternSet& allowed_hosts) {
+  LOG(WARNING) << "------- Clearing Current Blink Whitelist Exceptions";
+  WebSecurityPolicy::RemoveOriginAccessWhitelistException(extension->url());
+
+  LOG(WARNING) << "----Called UpdateOriginExtensionPolicy from dispatcher";
+  // Update blacklist in Blink
+  for (const URLPattern& blocked_host : blocked_hosts) {
+    LOG(WARNING) << extension->url();
+    LOG(WARNING) << blocked_host.host();
+    std::vector<URLPattern> explicit_schemes =
+        blocked_host.ConvertToExplicitSchemes();
+    for (const URLPattern& explicit_scheme : explicit_schemes) {
+      WebSecurityPolicy::AddOriginAccessWhitelistExceptionEntry(
+          extension->url(), WebString::FromUTF8(explicit_scheme.scheme()),
+          WebString::FromUTF8(explicit_scheme.host()),
+          explicit_scheme.match_subdomains(), true);
+    }
+  }
+  LOG(WARNING) << "=-- Updating Whitelist";
+  // Update whitelist in Blink
+  for (const URLPattern& allowed_host : allowed_hosts) {
+    LOG(WARNING) << extension->url();
+    LOG(WARNING) << allowed_host.host();
+    std::vector<URLPattern> explicit_schemes =
+        allowed_host.ConvertToExplicitSchemes();
+    for (const URLPattern& explicit_scheme : explicit_schemes) {
+      WebSecurityPolicy::AddOriginAccessWhitelistExceptionEntry(
+          extension->url(), WebString::FromUTF8(explicit_scheme.scheme()),
+          WebString::FromUTF8(explicit_scheme.host()),
+          explicit_scheme.match_subdomains(), false);
+    }
+  }
+}
+
+void Dispatcher::UpdateOriginPermissions(const Extension* extension,
                                          const URLPatternSet& old_patterns,
                                          const URLPatternSet& new_patterns) {
   static const char* kSchemes[] = {
@@ -1285,6 +1344,7 @@ void Dispatcher::UpdateOriginPermissions(const GURL& extension_url,
 #endif
     extensions::kExtensionScheme,
   };
+  const GURL& extension_url = extension->url();
   for (size_t i = 0; i < arraysize(kSchemes); ++i) {
     const char* scheme = kSchemes[i];
     // Remove all old patterns...
@@ -1300,6 +1360,13 @@ void Dispatcher::UpdateOriginPermissions(const GURL& extension_url,
     for (URLPatternSet::const_iterator pattern = new_patterns.begin();
          pattern != new_patterns.end(); ++pattern) {
       if (pattern->MatchesScheme(scheme)) {
+        LOG(WARNING) << extension_url.spec();
+        LOG(WARNING) << pattern->host();
+        if (pattern->match_subdomains())
+          LOG(WARNING) << "Match Subdomains";
+        else
+          LOG(WARNING) << "NO SUBDOMAINS";
+        // If extension permission fully blocked by policy
         WebSecurityPolicy::AddOriginAccessWhitelistEntry(
             extension_url, WebString::FromUTF8(scheme),
             WebString::FromUTF8(pattern->host()), pattern->match_subdomains());

@@ -48,9 +48,22 @@ using OriginAccessWhiteList = Vector<OriginAccessEntry>;
 using OriginAccessMap = HashMap<String, std::unique_ptr<OriginAccessWhiteList>>;
 using OriginSet = HashSet<String>;
 
+struct OriginWhitelistExceptionStruct {
+  Vector<OriginAccessEntry> whitelist_;
+  Vector<OriginAccessEntry> blacklist_;
+};
+using OriginWhitelistException = OriginWhitelistExceptionStruct;
+using OriginWhitelistExceptionMap =
+    HashMap<String, std::unique_ptr<OriginWhitelistException>>;
+
 static OriginAccessMap& GetOriginAccessMap() {
   DEFINE_STATIC_LOCAL(OriginAccessMap, origin_access_map, ());
   return origin_access_map;
+}
+
+static OriginWhitelistExceptionMap& GetOriginExceptionsMap() {
+  DEFINE_STATIC_LOCAL(OriginWhitelistExceptionMap, origin_exception_map, ());
+  return origin_exception_map;
 }
 
 static OriginSet& TrustworthyOriginSet() {
@@ -193,6 +206,55 @@ bool SecurityPolicy::IsUrlWhiteListedTrustworthy(const KURL& url) {
   return IsOriginWhiteListedTrustworthy(*SecurityOrigin::Create(url).get());
 }
 
+bool SecurityPolicy::IsExceptionToWhitelist(
+    const SecurityOrigin* active_origin,
+    const SecurityOrigin* target_origin) {
+  LOG(WARNING) << "** Checking Exception to Whitelist";
+  const OriginWhitelistExceptionMap& map = GetOriginExceptionsMap();
+
+  // No blacklist or whitelist for any active_origin
+  if (map.IsEmpty()) {
+    LOG(WARNING) << " *** OH no, the exception list hash map is empty";
+    return true;
+  }
+
+  OriginWhitelistException* list = map.at(active_origin->ToString());
+  // No exceptions for this active_origin
+  if (!(list)) {
+    LOG(WARNING) << "**** No exceptions for this particular extension";
+    return true;
+  }
+
+  const Vector<blink::OriginAccessEntry>& blacklist = list->blacklist_;
+  // Blacklist is empty so no exceptions for this active_origin
+  if (blacklist.IsEmpty()) {
+    LOG(WARNING) << "***** Blacklist is empty :/";
+    return true;
+  }
+
+  for (size_t i = 0; i < blacklist.size(); ++i) {
+    LOG(WARNING) << "****** Checking blacklist entry";
+    if (blacklist.at(i).MatchesOrigin(*target_origin) !=
+        OriginAccessEntry::kDoesNotMatchOrigin) {
+      // On the blacklist but no whitelist for this active_origin
+      const Vector<blink::OriginAccessEntry>& whitelist = list->whitelist_;
+      if (whitelist.IsEmpty())
+        return false;
+
+      for (size_t j = 0; j < whitelist.size(); ++j) {
+        if (whitelist.at(i).MatchesOrigin(*target_origin) !=
+            OriginAccessEntry::kDoesNotMatchOrigin) {
+          // On the blacklist but also on the whitelist
+          return true;
+        }
+      }
+      // Matched blacklist but no matching whitelist
+      return false;
+    }
+  }
+  return true;
+}
+
 bool SecurityPolicy::IsAccessWhiteListed(const SecurityOrigin* active_origin,
                                          const SecurityOrigin* target_origin) {
   const OriginAccessMap& map = GetOriginAccessMap();
@@ -201,10 +263,16 @@ bool SecurityPolicy::IsAccessWhiteListed(const SecurityOrigin* active_origin,
   if (OriginAccessWhiteList* list = map.at(active_origin->ToString())) {
     for (size_t i = 0; i < list->size(); ++i) {
       if (list->at(i).MatchesOrigin(*target_origin) !=
-          OriginAccessEntry::kDoesNotMatchOrigin)
-        return true;
+          OriginAccessEntry::kDoesNotMatchOrigin) {
+        LOG(WARNING) << "Active Origin: ";
+        LOG(WARNING) << active_origin->ToString();
+        LOG(WARNING) << "Target Origin: ";
+        LOG(WARNING) << target_origin->ToString();
+        return IsExceptionToWhitelist(active_origin, target_origin);
+      }
     }
   }
+  LOG(WARNING) << "Access is NOT whitelisted";
   return false;
 }
 
@@ -226,6 +294,9 @@ void SecurityPolicy::AddOriginAccessWhitelistEntry(
     return;
 
   String source_string = source_origin.ToString();
+  LOG(WARNING) << source_string;
+  LOG(WARNING) << destination_protocol;
+  LOG(WARNING) << destination_domain;
   OriginAccessMap::AddResult result =
       GetOriginAccessMap().insert(source_string, nullptr);
   if (result.is_new_entry)
@@ -236,6 +307,58 @@ void SecurityPolicy::AddOriginAccessWhitelistEntry(
       destination_protocol, destination_domain,
       allow_destination_subdomains ? OriginAccessEntry::kAllowSubdomains
                                    : OriginAccessEntry::kDisallowSubdomains));
+}
+
+void SecurityPolicy::AddOriginAccessWhitelistExceptionEntry(
+    const SecurityOrigin& source_origin,
+    const String& destination_protocol,
+    const String& destination_domain,
+    bool allow_destination_subdomains,
+    bool blacklist) {
+  DCHECK(IsMainThread());
+  DCHECK(!source_origin.IsUnique());
+  if (source_origin.IsUnique())
+    return;
+
+  String source_string = source_origin.ToString();
+  OriginWhitelistExceptionMap::AddResult result =
+      GetOriginExceptionsMap().insert(source_string, nullptr);
+  if (result.is_new_entry)
+    result.stored_value->value = WTF::WrapUnique(new OriginWhitelistException);
+
+  OriginWhitelistException* list = result.stored_value->value.get();
+  if (blacklist) {
+    list->blacklist_.push_back(OriginAccessEntry(
+        destination_protocol, destination_domain,
+        allow_destination_subdomains ? OriginAccessEntry::kAllowSubdomains
+                                     : OriginAccessEntry::kDisallowSubdomains));
+  } else {
+    list->whitelist_.push_back(OriginAccessEntry(
+        destination_protocol, destination_domain,
+        allow_destination_subdomains ? OriginAccessEntry::kAllowSubdomains
+                                     : OriginAccessEntry::kDisallowSubdomains));
+  }
+}
+
+void SecurityPolicy::RemoveOriginAccessWhitelistException(
+    const SecurityOrigin& source_origin) {
+  DCHECK(IsMainThread());
+  DCHECK(!source_origin.IsUnique());
+  if (source_origin.IsUnique())
+    return;
+
+  String source_string = source_origin.ToString();
+  OriginAccessMap& map = GetOriginAccessMap();
+  OriginAccessMap::iterator it = map.find(source_string);
+  if (it == map.end())
+    return;
+
+  // TODO(nrpeter): Double check whether this is neccessary and correct
+  //  OriginWhitelistException* exception = it->value.get();
+  //  exception->whitelist_.clear();
+  //  exception->blacklist_.clear();
+
+  map.erase(it);
 }
 
 void SecurityPolicy::RemoveOriginAccessWhitelistEntry(

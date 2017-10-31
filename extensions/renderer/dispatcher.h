@@ -213,10 +213,16 @@ class Dispatcher : public content::RenderThreadObserver,
 
   // Updates the host permissions for the extension url to include only those in
   // |new_patterns|, and remove from |old_patterns| that are no longer allowed.
-  void UpdateOriginPermissions(const GURL& extension_url,
+  void UpdateOriginPermissions(const Extension* extension,
                                const URLPatternSet& old_patterns,
                                const URLPatternSet& new_patterns);
 
+  // Updates Blink with the list of |blocked_hosts| not on the |allowed_hosts|
+  // list for an |extension|. This blocks an |extension| from bypassing the
+  // same origin policy by delcaring a host permission.
+  void UpdateOriginExtensionPolicy(const Extension* extension,
+                                   const URLPatternSet& blocked_hosts,
+                                   const URLPatternSet& allowed_hosts);
   // Enable custom element whitelist in Apps.
   void EnableCustomElementWhiteList();
 
