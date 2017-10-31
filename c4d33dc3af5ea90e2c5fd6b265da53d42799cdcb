@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5e113b1_9521c695",
+        "filename": "ash/mus/shell_delegate_mus.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-31T19:12:39Z",
+      "side": 1,
+      "message": "For me personally this comment makes things more confusing, not less:)",
+      "range": {
+        "startLine": 19,
+        "startChar": 56,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "c4d33dc3af5ea90e2c5fd6b265da53d42799cdcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
