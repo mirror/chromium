@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "187f1597_df6dad00",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-10-31T23:28:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de5abb27_4aac14ca",
+      "range": {
+        "startLine": 124,
+        "startChar": 17,
+        "endLine": 124,
+        "endChar": 40
+      },
+      "revId": "07dc7e8eb36287fddf1bc5e93e9aec791ea3a8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d19404f4_7f95ce9c",
         "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "07dc7e8eb36287fddf1bc5e93e9aec791ea3a8f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0f1eb2_9c71412b",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-10-31T23:28:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d19404f4_7f95ce9c",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 26
+      },
+      "revId": "07dc7e8eb36287fddf1bc5e93e9aec791ea3a8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6f115226_3fcfe3f5",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-10-31T23:28:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3396731_82ad1b00",
+      "range": {
+        "startLine": 86,
+        "startChar": 23,
+        "endLine": 86,
+        "endChar": 41
+      },
+      "revId": "07dc7e8eb36287fddf1bc5e93e9aec791ea3a8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c2b1510_57f447da",
         "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "07dc7e8eb36287fddf1bc5e93e9aec791ea3a8f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313ce16b_e0ba5af8",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-10-31T23:28:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c2b1510_57f447da",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 41
+      },
+      "revId": "07dc7e8eb36287fddf1bc5e93e9aec791ea3a8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b5e344e9_a9cca349",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-10-31T23:28:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00f32822_1c532a68",
+      "range": {
+        "startLine": 98,
+        "startChar": 25,
+        "endLine": 98,
+        "endChar": 27
+      },
+      "revId": "07dc7e8eb36287fddf1bc5e93e9aec791ea3a8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c8d566c_1d4a683f",
         "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-10-31T23:01:08Z",
       "side": 1,
       "message": "nit: Can you please consider reducing the number of NotifyArcVpnProviderUpdate calls by implementing some set of vpn apps and calling NotifyArcVpnProviderUpdate only in case this app is VPN app?",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 28
+      },
+      "revId": "07dc7e8eb36287fddf1bc5e93e9aec791ea3a8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1decd474_887aa0c8",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-10-31T23:28:58Z",
+      "side": 1,
+      "message": "The check is actually inside NotifyArcVpnProviderUpdate() and reused by both app name update and last launch time update. Observer will be notified only when the check passed. Change to name of \nthe function to MaybeNotifyArcVpnProviderUpdate",
+      "parentUuid": "5c8d566c_1d4a683f",
       "range": {
         "startLine": 108,
         "startChar": 2,
@@ -160,6 +304,30 @@
       "revId": "07dc7e8eb36287fddf1bc5e93e9aec791ea3a8f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c2cbb55_07a5a271",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-10-31T23:28:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "533eb2c2_b8dbafd7",
+      "range": {
+        "startLine": 8,
+        "startChar": 69,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "07dc7e8eb36287fddf1bc5e93e9aec791ea3a8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
