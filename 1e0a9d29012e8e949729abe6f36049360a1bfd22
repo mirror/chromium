@@ -140,6 +140,30 @@
       "revId": "1e0a9d29012e8e949729abe6f36049360a1bfd22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda0ef33_fc96e32e",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T22:47:32Z",
+      "side": 1,
+      "message": "What is the reason for that DCHECK? WebUI page load is the real pageload. We can talk about this offline, but I don\u0027t think we should workaround the behavior (DCHECK) unless we understand that behavior is actually correct.",
+      "parentUuid": "c8591e28_9d96960e",
+      "range": {
+        "startLine": 59,
+        "startChar": 27,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "1e0a9d29012e8e949729abe6f36049360a1bfd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
