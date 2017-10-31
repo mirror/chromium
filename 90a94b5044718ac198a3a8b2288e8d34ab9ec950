@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1b1def9_b7e25afe",
+        "filename": "ash/shell.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T17:39:47Z",
+      "side": 1,
+      "message": "nit just because you\u0027re touching this code: std::make_unique\u003cVideoDetector\u003e(mojo::MakeRequest(\u0026observer)) is preferred now",
+      "revId": "90a94b5044718ac198a3a8b2288e8d34ab9ec950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41ab8c5_4ba8ec96",
+        "filename": "ash/system/power/video_activity_notifier_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T17:39:47Z",
+      "side": 1,
+      "message": "same comment here re std::make_unique",
+      "revId": "90a94b5044718ac198a3a8b2288e8d34ab9ec950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
