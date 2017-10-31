@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f7d9e06_8071fc8a",
+        "filename": "third_party/WebKit/Source/core/paint/ClipPathClipper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-31T22:02:07Z",
+      "side": 1,
+      "message": "Is there final solution better than the hack? If no I would suggest to remove the \"Hack\" postfix.",
+      "revId": "57c80de47cdcec702670eceb0bbf01d82a545f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
