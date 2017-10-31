@@ -16,6 +16,24 @@
       "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b6c4f5b_eda13ce9",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-10-31T09:00:57Z",
+      "side": 1,
+      "message": "Good catch.\nIf the server is repeatedly sending sync data to disable the extension by some reason, this will not work well.\nHowever, since this code updates the preference, I think that it should sync it back to the cloud after first run. (this needs to be verified)",
+      "parentUuid": "6f9bfa23_cdb208cb",
+      "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
