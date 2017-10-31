@@ -401,6 +401,26 @@
     "label": "//courgette:courgette_unittests",
     "type": "console_test_launcher",
   },
+  "crashpad_client_test": {
+    "label": "//third_party/crashpad/crashpad/client:crashpad_client_test",
+    "type": "console_test_launcher",
+  },
+  "crashpad_handler_test": {
+    "label": "//third_party/crashpad/crashpad/handler:crashpad_handler_test",
+    "type": "console_test_launcher",
+  },
+  "crashpad_minidump_test": {
+    "label": "//third_party/crashpad/crashpad/minidump:crashpad_minidump_test",
+    "type": "console_test_launcher",
+  },
+  "crashpad_snapshot_test": {
+    "label": "//third_party/crashpad/crashpad/snapshot:crashpad_snapshot_test",
+    "type": "console_test_launcher",
+  },
+  "crashpad_test_test": {
+    "label": "//third_party/crashpad/crashpad/test:crashpad_test_test",
+    "type": "console_test_launcher",
+  },
   "crashpad_util_test": {
     "label": "//third_party/crashpad/crashpad/util:crashpad_util_test",
     "type": "console_test_launcher",
