@@ -40,8 +40,6 @@
 #include "components/safe_browsing/common/safebrowsing_switches.h"
 #include "components/safe_browsing/db/database_manager.h"
 #include "components/safe_browsing/db/v4_feature_list.h"
-#include "components/safe_browsing/db/v4_get_hash_protocol_manager.h"
-#include "components/safe_browsing/db/v4_local_database_manager.h"
 #include "components/safe_browsing/triggers/trigger_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
@@ -55,7 +53,8 @@
 #endif
 
 #if defined(SAFE_BROWSING_DB_LOCAL)
-#include "chrome/browser/safe_browsing/local_database_manager.h"
+#include "components/safe_browsing/db/v4_get_hash_protocol_manager.h"
+#include "components/safe_browsing/db/v4_local_database_manager.h"
 #elif defined(SAFE_BROWSING_DB_REMOTE)
 #include "components/safe_browsing/db/remote_database_manager.h"
 #endif
@@ -66,7 +65,6 @@
 #include "chrome/browser/safe_browsing/incident_reporting/binary_integrity_analyzer.h"
 #include "chrome/browser/safe_browsing/incident_reporting/incident_reporting_service.h"
 #include "chrome/browser/safe_browsing/incident_reporting/resource_request_detector.h"
-#include "chrome/browser/safe_browsing/protocol_manager.h"
 #include "components/safe_browsing/password_protection/password_protection_service.h"
 #endif
 
@@ -124,10 +122,10 @@ SafeBrowsingService::SafeBrowsingService(
       estimated_extended_reporting_by_prefs_(SBER_LEVEL_OFF),
       enabled_(false),
       enabled_by_prefs_(false),
-      use_v4_only_(v4_usage_status == V4FeatureList::V4UsageStatus::V4_ONLY),
-      v4_enabled_(v4_usage_status ==
-                      V4FeatureList::V4UsageStatus::V4_INSTANTIATED ||
-                  v4_usage_status == V4FeatureList::V4UsageStatus::V4_ONLY) {}
+      use_v4_(v4_usage_status == V4FeatureList::V4UsageStatus::V4_ONLY) {
+  VLOG(1) << __FUNCTION__ << ": v4_usage_status: " << v4_usage_status;
+  DCHECK_NE(V4FeatureList::V4UsageStatus::V4_INSTANTIATED, v4_usage_status);
+}
 
 SafeBrowsingService::~SafeBrowsingService() {
   // We should have already been shut down. If we're still enabled, then the
@@ -149,13 +147,13 @@ void SafeBrowsingService::Initialize() {
 
   ui_manager_ = CreateUIManager();
 
-  if (!use_v4_only_) {
-    database_manager_ = CreateDatabaseManager();
-  }
+  database_manager_ = CreateDatabaseManager();
+  VLOG(1) << __FUNCTION__ << ": service: " << this;
+  VLOG(1) << __FUNCTION__ << ": database_manager_: " << database_manager_;
 
   navigation_observer_manager_ = new SafeBrowsingNavigationObserverManager();
 
-  services_delegate_->Initialize(v4_enabled_);
+  services_delegate_->Initialize(use_v4_);
   services_delegate_->InitializeCsdService(url_request_context_getter_.get());
 
   // Needs to happen after |ui_manager_| is created.
@@ -233,7 +231,10 @@ SafeBrowsingService::ui_manager() const {
 
 const scoped_refptr<SafeBrowsingDatabaseManager>&
 SafeBrowsingService::database_manager() const {
-  return use_v4_only_ ? v4_local_database_manager() : database_manager_;
+  VLOG(1) << __FUNCTION__ << ": use_v4_: " << use_v4_;
+  VLOG(1) << __FUNCTION__ << ": database_manager_: " << database_manager_;
+  return use_v4_ ? services_delegate_->v4_local_database_manager()
+                 : database_manager_;
 }
 
 scoped_refptr<SafeBrowsingNavigationObserverManager>
@@ -241,24 +242,9 @@ SafeBrowsingService::navigation_observer_manager() {
   return navigation_observer_manager_;
 }
 
-SafeBrowsingProtocolManager* SafeBrowsingService::protocol_manager() const {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-#if defined(SAFE_BROWSING_DB_LOCAL)
-  DCHECK(!use_v4_only_);
-  return protocol_manager_.get();
-#else
-  return nullptr;
-#endif
-}
-
 SafeBrowsingPingManager* SafeBrowsingService::ping_manager() const {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   return ping_manager_.get();
-}
-
-const scoped_refptr<SafeBrowsingDatabaseManager>&
-SafeBrowsingService::v4_local_database_manager() const {
-  return services_delegate_->v4_local_database_manager();
 }
 
 TriggerManager* SafeBrowsingService::trigger_manager() const {
@@ -307,11 +293,10 @@ SafeBrowsingUIManager* SafeBrowsingService::CreateUIManager() {
 }
 
 SafeBrowsingDatabaseManager* SafeBrowsingService::CreateDatabaseManager() {
-#if defined(SAFE_BROWSING_DB_LOCAL)
-  return new LocalSafeBrowsingDatabaseManager(this);
-#elif defined(SAFE_BROWSING_DB_REMOTE)
+#if defined(SAFE_BROWSING_DB_REMOTE)
   return new RemoteSafeBrowsingDatabaseManager();
 #else
+  // Don't create a database_manager here. The services_delegate provides that.
   return NULL;
 #endif
 }
@@ -322,29 +307,14 @@ void SafeBrowsingService::RegisterAllDelayedAnalysis() {
 #endif
 }
 
-SafeBrowsingProtocolConfig SafeBrowsingService::GetProtocolConfig() const {
-  SafeBrowsingProtocolConfig config;
-  config.client_name = GetProtocolConfigClientName();
-
-  base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
-  config.disable_auto_update =
-      cmdline->HasSwitch(safe_browsing::switches::kSbDisableAutoUpdate) ||
-      cmdline->HasSwitch(::switches::kDisableBackgroundNetworking);
-  config.url_prefix = kSbDefaultURLPrefix;
-  config.backup_connect_error_url_prefix = kSbBackupConnectErrorURLPrefix;
-  config.backup_http_error_url_prefix = kSbBackupHttpErrorURLPrefix;
-  config.backup_network_error_url_prefix = kSbBackupNetworkErrorURLPrefix;
-
-  return config;
-}
-
 V4ProtocolConfig
 SafeBrowsingService::GetV4ProtocolConfig() const {
   base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
   return V4ProtocolConfig(
       GetProtocolConfigClientName(),
       cmdline->HasSwitch(::switches::kDisableBackgroundNetworking),
-      google_apis::GetAPIKey(), ProtocolManagerHelper::Version());
+      google_apis::GetAPIKey(), kSbDefaultURLPrefix,
+      V4ProtocolManagerUtil::GetProductVersion());
 }
 
 std::string SafeBrowsingService::GetProtocolConfigClientName() const {
@@ -372,20 +342,6 @@ std::string SafeBrowsingService::GetProtocolConfigClientName() const {
   return client_name;
 }
 
-// Any tests that create a DatabaseManager that isn't derived from
-// LocalSafeBrowsingDatabaseManager should override this to return NULL.
-SafeBrowsingProtocolManagerDelegate*
-SafeBrowsingService::GetProtocolManagerDelegate() {
-#if defined(SAFE_BROWSING_DB_LOCAL)
-  DCHECK(!use_v4_only_);
-  return static_cast<LocalSafeBrowsingDatabaseManager*>(
-      database_manager_.get());
-#else
-  NOTREACHED();
-  return NULL;
-#endif
-}
-
 void SafeBrowsingService::StartOnIOThread(
     net::URLRequestContextGetter* url_request_context_getter) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -393,43 +349,31 @@ void SafeBrowsingService::StartOnIOThread(
     return;
   enabled_ = true;
 
-  SafeBrowsingProtocolConfig config = GetProtocolConfig();
   V4ProtocolConfig v4_config = GetV4ProtocolConfig();
 
   services_delegate_->StartOnIOThread(url_request_context_getter, v4_config);
 
-#if defined(SAFE_BROWSING_DB_LOCAL) || defined(SAFE_BROWSING_DB_REMOTE)
-  if (!use_v4_only_) {
-    DCHECK(database_manager_.get());
+  VLOG(1) << __FUNCTION__ << ": use_v4_: " << use_v4_;
+  VLOG(1) << __FUNCTION__ << ": database_manager_: " << database_manager_;
+  VLOG(1) << __FUNCTION__ << ": database_manager(): " << database_manager();
+  if (database_manager_) {
+    DCHECK(!use_v4_);
     database_manager_->StartOnIOThread(url_request_context_getter, v4_config);
   }
-#endif
-
-#if defined(SAFE_BROWSING_DB_LOCAL)
-  if (!use_v4_only_) {
-    SafeBrowsingProtocolManagerDelegate* protocol_manager_delegate =
-        GetProtocolManagerDelegate();
-    if (protocol_manager_delegate) {
-      protocol_manager_ = SafeBrowsingProtocolManager::Create(
-          protocol_manager_delegate, url_request_context_getter, config);
-      protocol_manager_->Initialize();
-    }
-  }
-#endif
 
   DCHECK(!ping_manager_);
-  ping_manager_ = SafeBrowsingPingManager::Create(
-      url_request_context_getter, config);
+  ping_manager_ =
+      SafeBrowsingPingManager::Create(url_request_context_getter, v4_config);
 }
 
 void SafeBrowsingService::StopOnIOThread(bool shutdown) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-#if defined(SAFE_BROWSING_DB_LOCAL) || defined(SAFE_BROWSING_DB_REMOTE)
-  if (!use_v4_only_) {
+  if (database_manager_) {
+    DCHECK(!use_v4_);
     database_manager_->StopOnIOThread(shutdown);
   }
-#endif
+
   ui_manager_->StopOnIOThread(shutdown);
 
   services_delegate_->StopOnIOThread(shutdown);
@@ -437,12 +381,6 @@ void SafeBrowsingService::StopOnIOThread(bool shutdown) {
   if (enabled_) {
     enabled_ = false;
 
-#if defined(SAFE_BROWSING_DB_LOCAL)
-    // This cancels all in-flight GetHash requests. Note that
-    // |database_manager_| relies on |protocol_manager_| so if the latter is
-    // destroyed, the former must be stopped.
-    protocol_manager_.reset();
-#endif
     ping_manager_.reset();
   }
 }
