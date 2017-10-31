@@ -682,6 +682,14 @@ static inline int NumDescendantsThatDrawContent(LayerImpl* layer) {
   return num_descendants_that_draw_content;
 }
 
+static inline const gfx::Vector3dF& ColorScales(Layer* layer) {
+  return layer->color_scales();
+}
+
+static inline const gfx::Vector3dF& ColorScales(LayerImpl* layer) {
+  return layer->test_properties()->color_scales;
+}
+
 static inline float EffectiveOpacity(Layer* layer) {
   return layer->EffectiveOpacity();
 }
@@ -933,9 +941,13 @@ bool PropertyTreeBuilderContext<LayerType>::AddEffectNodeIfNeeded(
   bool has_non_axis_aligned_clip =
       not_axis_aligned_since_last_clip && LayerClipsSubtree(layer);
 
-  bool requires_node =
-      is_root || has_transparency || has_potential_opacity_animation ||
-      has_non_axis_aligned_clip || should_create_render_surface;
+  const gfx::Vector3dF& color_scales = ColorScales(layer);
+  const bool has_color_scales = color_scales.LengthSquared() < 3.0;
+
+  bool requires_node = is_root || has_transparency || has_color_scales ||
+                       has_potential_opacity_animation ||
+                       has_non_axis_aligned_clip ||
+                       should_create_render_surface;
 
   int parent_id = data_from_ancestor.effect_tree_parent;
 
@@ -949,6 +961,7 @@ bool PropertyTreeBuilderContext<LayerType>::AddEffectNodeIfNeeded(
   EffectNode* node = effect_tree_.back();
 
   node->stable_id = layer->id();
+  node->color_scales = color_scales;
   node->opacity = Opacity(layer);
   node->blend_mode = BlendMode(layer);
   node->unscaled_mask_target_size = layer->bounds();

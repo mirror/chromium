@@ -75,6 +75,10 @@ using gpu::gles2::GLES2Interface;
 namespace viz {
 namespace {
 
+inline bool HasColorScales(const SharedQuadState* const shared_quad_state) {
+  return shared_quad_state->color_scales.LengthSquared() < 3.0;
+}
+
 Float4 UVTransform(const TextureDrawQuad* quad) {
   gfx::PointF uv0 = quad->uv_top_left;
   gfx::PointF uv1 = quad->uv_bottom_right;
@@ -250,6 +254,8 @@ struct DrawRenderPassDrawQuadParams {
   // The color space of the texture bound for sampling (from filter_image or
   // contents_resource_lock, depending on the path taken).
   gfx::ColorSpace contents_color_space;
+
+  bool has_color_scales = false;
 };
 
 static GLint GetActiveTextureUnit(GLES2Interface* gl) {
@@ -1143,6 +1149,7 @@ bool GLRenderer::InitializeRPDQParameters(
   local_matrix.setTranslate(quad->filters_origin.x(), quad->filters_origin.y());
   local_matrix.postScale(quad->filters_scale.x(), quad->filters_scale.y());
   params->filters = FiltersForPass(quad->render_pass_id);
+  params->has_color_scales = HasColorScales(quad->shared_quad_state);
   params->background_filters = BackgroundFiltersForPass(quad->render_pass_id);
   gfx::Rect dst_rect = params->filters
                            ? params->filters->MapRect(quad->rect, local_matrix)
@@ -1395,11 +1402,12 @@ void GLRenderer::ChooseRPDQProgram(DrawRenderPassDrawQuadParams* params) {
     sampler_type =
         SamplerTypeFromTextureTarget(params->mask_resource_lock->target());
   }
-  SetUseProgram(ProgramKey::RenderPass(
-                    tex_coord_precision, sampler_type, shader_blend_mode,
-                    params->use_aa ? USE_AA : NO_AA, mask_mode,
-                    mask_for_background, params->use_color_matrix),
-                params->contents_color_space);
+  SetUseProgram(
+      ProgramKey::RenderPass(
+          tex_coord_precision, sampler_type, shader_blend_mode,
+          params->use_aa ? USE_AA : NO_AA, mask_mode, mask_for_background,
+          params->use_color_matrix, params->has_color_scales),
+      params->contents_color_space);
 }
 
 void GLRenderer::UpdateRPDQUniforms(DrawRenderPassDrawQuadParams* params) {
@@ -1522,6 +1530,7 @@ void GLRenderer::UpdateRPDQUniforms(DrawRenderPassDrawQuadParams* params) {
     }
   }
 
+  SetShaderColorScales(params->quad);
   SetShaderOpacity(params->quad);
   SetShaderQuadF(params->surface_quad);
 }
@@ -1848,9 +1857,11 @@ void GLRenderer::DrawSolidColorQuad(const SolidColorDrawQuad* quad,
   // TODO(ccameron): Solid color draw quads need to specify their implied
   // color space. Assume SRGB (which is wrong) for now.
   gfx::ColorSpace quad_color_space = gfx::ColorSpace::CreateSRGB();
-  SetUseProgram(ProgramKey::SolidColor(use_aa ? USE_AA : NO_AA),
+  SetUseProgram(ProgramKey::SolidColor(use_aa ? USE_AA : NO_AA,
+                                       HasColorScales(quad->shared_quad_state)),
                 quad_color_space);
   SetShaderColor(color, opacity);
+  SetShaderColorScales(quad);
 
   if (use_aa) {
     gl_->Uniform3fv(current_program_->edge_location(), 8, edge);
@@ -2017,7 +2028,8 @@ void GLRenderer::DrawContentQuadAA(const ContentDrawQuadBase* quad,
 
   SetUseProgram(
       ProgramKey::Tile(tex_coord_precision, sampler, USE_AA,
-                       quad->swizzle_contents ? DO_SWIZZLE : NO_SWIZZLE, false),
+                       quad->swizzle_contents ? DO_SWIZZLE : NO_SWIZZLE, false,
+                       HasColorScales(quad->shared_quad_state)),
       quad_resource_lock.color_space());
 
   gl_->Uniform3fv(current_program_->edge_location(), 8, edge);
@@ -2035,6 +2047,7 @@ void GLRenderer::DrawContentQuadAA(const ContentDrawQuadBase* quad,
   // Normalize to tile_rect.
   local_quad.Scale(1.0f / tile_rect.width(), 1.0f / tile_rect.height());
 
+  SetShaderColorScales(quad);
   SetShaderOpacity(quad);
   SetShaderQuadF(local_quad);
 
@@ -2094,7 +2107,8 @@ void GLRenderer::DrawContentQuadNoAA(const ContentDrawQuadBase* quad,
   SetUseProgram(
       ProgramKey::Tile(tex_coord_precision, sampler, NO_AA,
                        quad->swizzle_contents ? DO_SWIZZLE : NO_SWIZZLE,
-                       !quad->ShouldDrawWithBlending()),
+                       !quad->ShouldDrawWithBlending(),
+                       HasColorScales(quad->shared_quad_state)),
       quad_resource_lock.color_space());
 
   gl_->Uniform4f(current_program_->vertex_tex_transform_location(),
@@ -2103,6 +2117,7 @@ void GLRenderer::DrawContentQuadNoAA(const ContentDrawQuadBase* quad,
 
   SetBlendEnabled(quad->ShouldDrawWithBlending());
 
+  SetShaderColorScales(quad);
   SetShaderOpacity(quad);
 
   // Pass quad coordinates to the uniform in the same order as GeometryBinding
@@ -2203,7 +2218,8 @@ void GLRenderer::DrawYUVVideoQuad(const YUVVideoDrawQuad* quad,
   SamplerType sampler = SamplerTypeFromTextureTarget(y_plane_lock.target());
 
   SetUseProgram(ProgramKey::YUVVideo(tex_coord_precision, sampler,
-                                     alpha_texture_mode, uv_texture_mode),
+                                     alpha_texture_mode, uv_texture_mode,
+                                     HasColorScales(quad->shared_quad_state)),
                 src_color_space, dst_color_space);
 
   gfx::SizeF ya_tex_scale(1.0f, 1.0f);
@@ -2280,6 +2296,7 @@ void GLRenderer::DrawYUVVideoQuad(const YUVVideoDrawQuad* quad,
   // it. This is why this centered rect is used and not the original quad_rect.
   auto tile_rect = gfx::RectF(quad->rect);
 
+  SetShaderColorScales(quad);
   SetShaderOpacity(quad);
   if (!clip_region) {
     DrawQuadGeometry(current_frame()->projection_matrix,
@@ -2312,8 +2329,10 @@ void GLRenderer::DrawStreamVideoQuad(const StreamVideoDrawQuad* quad,
   cc::DisplayResourceProvider::ScopedReadLockGL lock(resource_provider_,
                                                      quad->resource_id());
 
-  SetUseProgram(ProgramKey::VideoStream(tex_coord_precision),
-                lock.color_space());
+  SetUseProgram(
+      ProgramKey::VideoStream(tex_coord_precision,
+                              HasColorScales(quad->shared_quad_state)),
+      lock.color_space());
 
   DCHECK_EQ(GL_TEXTURE0, GetActiveTextureUnit(gl_));
   gl_->BindTexture(GL_TEXTURE_EXTERNAL_OES, lock.texture_id());
@@ -2323,6 +2342,7 @@ void GLRenderer::DrawStreamVideoQuad(const StreamVideoDrawQuad* quad,
   gl_->UniformMatrix4fvStreamTextureMatrixCHROMIUM(
       current_program_->tex_matrix_location(), false, gl_matrix);
 
+  SetShaderColorScales(quad);
   SetShaderOpacity(quad);
   gfx::Size texture_size = lock.size();
   gfx::Vector2dF uv = quad->matrix.Scale2d();
@@ -2481,7 +2501,8 @@ void GLRenderer::EnqueueTextureQuad(const TextureDrawQuad* quad,
   ProgramKey program_key = ProgramKey::Texture(
       tex_coord_precision, sampler,
       quad->premultiplied_alpha ? PREMULTIPLIED_ALPHA : NON_PREMULTIPLIED_ALPHA,
-      quad->background_color != SK_ColorTRANSPARENT, need_tex_clamp_rect);
+      quad->background_color != SK_ColorTRANSPARENT, need_tex_clamp_rect,
+      HasColorScales(quad->shared_quad_state));
   int resource_id = quad->resource_id();
 
   size_t max_quads = StaticGeometryBinding::NUM_QUADS;
@@ -2679,6 +2700,15 @@ void GLRenderer::SetShaderQuadF(const gfx::QuadF& quad) {
   gl_quad[6] = quad.p4().x();
   gl_quad[7] = quad.p4().y();
   gl_->Uniform2fv(current_program_->quad_location(), 4, gl_quad);
+}
+
+void GLRenderer::SetShaderColorScales(const DrawQuad* quad) {
+  if (!current_program_ || current_program_->color_scales_location() == -1)
+    return;
+
+  const gfx::Vector3dF& color_scales = quad->shared_quad_state->color_scales;
+  gl_->Uniform4f(current_program_->color_scales_location(), color_scales.x(),
+                 color_scales.y(), color_scales.z(), 1.f);
 }
 
 void GLRenderer::SetShaderOpacity(const DrawQuad* quad) {

@@ -10,6 +10,7 @@
 #include "components/viz/common/viz_common_export.h"
 #include "third_party/skia/include/core/SkBlendMode.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/geometry/vector3d_f.h"
 #include "ui/gfx/transform.h"
 
 namespace base {
@@ -37,6 +38,7 @@ class VIZ_COMMON_EXPORT SharedQuadState {
               const gfx::Rect& clip_rect,
               bool is_clipped,
               bool are_contents_opaque,
+              const gfx::Vector3dF& color_scales,
               float opacity,
               SkBlendMode blend_mode,
               int sorting_context_id);
@@ -54,6 +56,7 @@ class VIZ_COMMON_EXPORT SharedQuadState {
   bool is_clipped;
   // Indicates whether the quads share this sqs contains opaque content.
   bool are_contents_opaque;
+  gfx::Vector3dF color_scales;
   float opacity;
   SkBlendMode blend_mode;
   int sorting_context_id;

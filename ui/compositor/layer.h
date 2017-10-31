@@ -188,7 +188,7 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
 
   // The layer temperature value between 0.0f and 1.0f, where a value of 0.0f
   // is least warm (which is the default), and a value of 1.0f is most warm.
-  float layer_temperature() const { return layer_temperature_; }
+  float layer_temperature() const;
   void SetLayerTemperature(float value);
 
   // Returns the target color temperature if animator is running, or the current
@@ -550,14 +550,6 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   float layer_grayscale_;
   bool layer_inverted_;
   float layer_blur_sigma_;
-
-  // The global color temperature value (0.0f ~ 1.0f). Used to calculate the
-  // layer blue and green colors scales. 0.0f is least warm (default), and 1.0f
-  // is most warm.
-  float layer_temperature_;
-  // The calculated layer blue and green color scales (0.0f ~ 1.0f).
-  float layer_blue_scale_;
-  float layer_green_scale_;
 
   // The associated mask layer with this layer.
   Layer* layer_mask_;
