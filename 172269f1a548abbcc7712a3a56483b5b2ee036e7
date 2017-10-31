@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "40113153_7fd4a802",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-31T19:32:13Z",
+      "side": 1,
+      "message": "Given this, I suggest the following: \n- In this patch, continue using the GetSingleThreadTaskRunner()-\u003ePostTask() as before but\n  make a change [1] to avoid any access violation.\n\n- In a follow-up patch, start to use the per-global-scope scheduler as suggested in (1) while also\n  remove the waitable event.\n\n[1] Here a simple solution that Peter and I came up with for the current access violation issue.\nInstead of posting task that captures the |global_scope_|, we post a task that captures |this|.\nThat task then runs on worklet thread and can safely check if |global_scope_| is still valid and\ncan be used. Here is a sketch:\n\nAnimationWorkletProxyClientImpl::Mutate(...) {\n WaitableEvent is_done;\n AnimationWorkletThread::GetSharedBackingThread()\n    -\u003eGetSingleThreadTaskRunner()\n    -\u003ePostTask(\n            BLINK_FROM_HERE,\n            ConvertToBaseCallback(WTF::Bind(\n                \u0026AnimationWorkletProxyClientImpl::MutateOnWorkletThread, this,\n                CrossThreadUnretained(\u0026state), CrossThreadUnretained(\u0026output),\n                CrossThreadUnretained(\u0026is_done))));\n \n is_done.Wait();\n  mutator_-\u003eSetMutationUpdate(std::move(output));\n\n }\n\n AnimationWorkletProxyClientImpl::MutateOnWorkletThread(state, output, is_done) {\n   if (global_scope_) {\n     DCHECK(global_scope_-\u003eIsContextThread());\n     *output \u003d global_scope_-\u003eMutate(state)\n   }\n   id_done-\u003eSignal();\n }\n\nSide note:  Once we do this, we can also change global_scope_ to be a raw pointer (or a\n WeakMember) instead of it being a CrossThreadPersistent reference.\n\npetermayo@: Please correct me if anything is not accurate here.\nnhiroki@: wdyt?",
+      "parentUuid": "a5f91cc2_720d5ea8",
+      "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf9276c7_aae471a0",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 24
