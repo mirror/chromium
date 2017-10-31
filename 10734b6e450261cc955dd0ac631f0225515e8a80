@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6671ddec_ca7ecaf2",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-31T16:19:02Z",
+      "side": 1,
+      "message": "So it\u0027s also the case that gpu compositing is never enabled with swiftshader. I\u0027m not sure if this should rely on that though.. it\u0027s not something I ever see changing. wdyt?",
+      "parentUuid": "a7aba885_dbc165bf",
+      "range": {
+        "startLine": 186,
+        "startChar": 26,
+        "endLine": 186,
+        "endChar": 49
+      },
+      "revId": "10734b6e450261cc955dd0ac631f0225515e8a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b277ab33_cf830382",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/SharedGpuContext.cpp",
         "patchSetId": 5
