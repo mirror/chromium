@@ -107,20 +107,14 @@ bool ResourceError::Compare(const ResourceError& a, const ResourceError& b) {
   return true;
 }
 
-void ResourceError::InitializeWebURLError(WebURLError* error,
-                                          const WebURL& url,
-                                          bool stale_copy_in_cache,
-                                          int reason) {
-  error->domain = Domain::kNet;
-  error->reason = reason;
-  error->stale_copy_in_cache = stale_copy_in_cache;
-  error->unreachable_url = url;
-  if (reason == net::ERR_TEMPORARILY_THROTTLED) {
-    error->localized_description =
-        WebString::FromASCII(kThrottledErrorDescription);
+void ResourceError::InitializeLocalizedDescription() {
+  if (domain_ != Domain::kNet)
+    return;
+  if (error_code_ == net::ERR_TEMPORARILY_THROTTLED) {
+    localized_description_ = WebString::FromASCII(kThrottledErrorDescription);
   } else {
-    error->localized_description =
-        WebString::FromASCII(net::ErrorToString(reason));
+    localized_description_ =
+        WebString::FromASCII(net::ErrorToString(error_code_));
   }
 }
 
