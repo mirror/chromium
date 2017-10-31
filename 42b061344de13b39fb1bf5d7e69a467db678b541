@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe511811_72bb7a41",
+        "filename": "components/policy/core/browser/url_blacklist_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-10-31T18:30:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2b098798_02dd630c",
+      "revId": "42b061344de13b39fb1bf5d7e69a467db678b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56c6e3f5_c1298558",
         "filename": "components/policy/core/browser/url_blacklist_manager_unittest.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fd18a098_6470dc4b",
+        "filename": "components/policy/core/browser/url_blacklist_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-10-31T18:30:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "56c6e3f5_c1298558",
+      "revId": "42b061344de13b39fb1bf5d7e69a467db678b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1f8919f_b7a5708e",
         "filename": "components/policy/core/browser/url_blacklist_manager_unittest.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-31T16:46:26Z",
       "side": 1,
       "message": "Same comment really, though I feel a little more strongly about this. It would be nice if you could say:\n\n base::RunLoop loop;\n manager-\u003eObserveSomethingSpecificAndUseful(loop.QuitClosure());\n loop.Run();\n\nInstead of just running until idle.\n\nPractical example where this can fall apart in the future: someone changes URLBlacklistManager to start its own background thread or do work out of process (I know, hypothetical). Suddenly the current task execution environment can appear to be \"idle\" while there is still relevant work going on somewhere in the system. This kind of thing is a pretty regular source of flake in my experience, and is often tricky to debug.",
+      "revId": "42b061344de13b39fb1bf5d7e69a467db678b541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9c2351_6b7a81a1",
+        "filename": "components/policy/core/browser/url_blacklist_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-10-31T18:30:36Z",
+      "side": 1,
+      "message": "I can do this in a follow up.  The tests code can get cleaned up a bunch by providing a callback from URLBlacklistManager when an update happens.  This would allow us to remove all of the run-to-idles.",
+      "parentUuid": "a1f8919f_b7a5708e",
       "revId": "42b061344de13b39fb1bf5d7e69a467db678b541",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

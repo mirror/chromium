@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c968c202_50530e0d",
+        "filename": "components/policy/core/browser/url_blacklist_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-10-31T18:30:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a434e566_0644814b",
+      "revId": "32b0ca5da55d9dbf4ab8bd8bc2230fb5b238bcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc915b82_d6dcaaef",
         "filename": "components/policy/core/browser/url_blacklist_manager.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-31T16:46:26Z",
       "side": 1,
       "message": "nit: use BindOnce, then you can std::move(block) etc instead of base::Passed(\u0026block)",
+      "revId": "32b0ca5da55d9dbf4ab8bd8bc2230fb5b238bcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09446feb_81f77d8b",
+        "filename": "components/policy/core/browser/url_blacklist_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-10-31T18:30:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc915b82_d6dcaaef",
       "revId": "32b0ca5da55d9dbf4ab8bd8bc2230fb5b238bcaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5cd19c67_e0675477",
+        "filename": "components/policy/core/browser/url_blacklist_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-10-31T18:30:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4914b480_87569978",
+      "revId": "32b0ca5da55d9dbf4ab8bd8bc2230fb5b238bcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a863a38_a4487753",
         "filename": "components/policy/core/browser/url_blacklist_manager.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-31T16:46:26Z",
       "side": 1,
       "message": "nitty nit: Technically I don\u0027t think it *must* be constructed on the UI thread. Rather it assumes it is, though I\u0027m not sure why it should matter and the only relevance is that it calls its thing a \"ui_task_runner_\" instead of maybe more appropriately a \"pref_service_task_runner_\".\n\nThe only thing that really matters is that it\u0027s constructed on the same thread the PrefService instance lives on - which is sort of implied by the constructor anyway - and that is not necessarily constrained to the UI thread.",
+      "revId": "32b0ca5da55d9dbf4ab8bd8bc2230fb5b238bcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d674512a_c096713c",
+        "filename": "components/policy/core/browser/url_blacklist_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-10-31T18:30:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a863a38_a4487753",
       "revId": "32b0ca5da55d9dbf4ab8bd8bc2230fb5b238bcaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
