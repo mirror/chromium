@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d84ce2c_bbcef119",
+        "filename": "third_party/WebKit/Source/core/svg/SVGURIReference.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-31T16:55:16Z",
+      "side": 1,
+      "message": "I figure it might be nice to have these two combined into one in KURL (by means of an argument or a separate method), but I\u0027ll look at that in a follow-up.",
+      "range": {
+        "startLine": 94,
+        "startChar": 6,
+        "endLine": 94,
+        "endChar": 66
+      },
+      "revId": "e99ed163d2ff185d3fd3f3ef7dc9cd254f2a39a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
