@@ -18,7 +18,7 @@ class GURL;
 // be displayed to the user.
 - (void)captivePortalDetectorTabHelper:
             (CaptivePortalDetectorTabHelper*)tabHelper
-                 connectWithLandingURL:(GURL)landingURL;
+                 connectWithLandingURL:(const GURL&)landingURL;
 
 @end
 

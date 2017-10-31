@@ -36,7 +36,7 @@ class CaptivePortalDetectorTabHelper
   void DisplayCaptivePortalLoginPage(GURL landing_url);
 
  private:
-  explicit CaptivePortalDetectorTabHelper(
+  CaptivePortalDetectorTabHelper(
       web::WebState* web_state,
       id<CaptivePortalDetectorTabHelperDelegate> delegate);
 
