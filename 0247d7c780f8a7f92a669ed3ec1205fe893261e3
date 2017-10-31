@@ -16,6 +16,144 @@
       "revId": "0247d7c780f8a7f92a669ed3ec1205fe893261e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa83a6b_b9991dd9",
+        "filename": "chromeos/dbus/fake_shill_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T15:28:51Z",
+      "side": 1,
+      "message": "i think you need to continue explicitly specifying the type here instead of using \"auto*\", since the type isn\u0027t obvious from the context. (base::Value::Type::DICTIONARY is specified, but it\u0027s probably non-obvious to most readers that that corresponds to base::DictionaryValue.)",
+      "parentUuid": "63017cdf_c4dfe6d5",
+      "revId": "0247d7c780f8a7f92a669ed3ec1205fe893261e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14daff02_92cd4439",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T15:28:51Z",
+      "side": 1,
+      "message": "nit: service_path_out and result_out? i think i\u0027ve seen that order more commonly.",
+      "range": {
+        "startLine": 56,
+        "startChar": 33,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "0247d7c780f8a7f92a669ed3ec1205fe893261e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9927efe4_dbe50a53",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T15:28:51Z",
+      "side": 1,
+      "message": "nit: migrated",
+      "range": {
+        "startLine": 515,
+        "startChar": 7,
+        "endLine": 515,
+        "endChar": 15
+      },
+      "revId": "0247d7c780f8a7f92a669ed3ec1205fe893261e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f18c0e2_6565d175",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T15:28:51Z",
+      "side": 1,
+      "message": "nit: const base::StringValue* (or whatever the correct type is)",
+      "range": {
+        "startLine": 638,
+        "startChar": 2,
+        "endLine": 638,
+        "endChar": 13
+      },
+      "revId": "0247d7c780f8a7f92a669ed3ec1205fe893261e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f731b785_e7765fed",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T15:28:51Z",
+      "side": 1,
+      "message": "please explicitly specify types here and below as well",
+      "revId": "0247d7c780f8a7f92a669ed3ec1205fe893261e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93024a47_2cc6f712",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T15:28:51Z",
+      "side": 1,
+      "message": "here too",
+      "revId": "0247d7c780f8a7f92a669ed3ec1205fe893261e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c74fcdcd_d75b667a",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T15:28:51Z",
+      "side": 1,
+      "message": "here too",
+      "revId": "0247d7c780f8a7f92a669ed3ec1205fe893261e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
