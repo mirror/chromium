@@ -16,6 +16,24 @@
       "revId": "71716930f260e22871135e8657f85f7e383e6dc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f46ee31_e32e992b",
+        "filename": "third_party/WebKit/Source/core/css/ZoomAdjustedPixelValue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-31T03:39:41Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "31f756ab_99bf5296",
+      "revId": "71716930f260e22871135e8657f85f7e383e6dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

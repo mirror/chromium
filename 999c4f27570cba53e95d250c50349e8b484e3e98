@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f09a6fa8_cdfa3649",
+        "filename": "third_party/WebKit/Source/core/css/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-31T03:39:41Z",
+      "side": 1,
+      "message": "If it helps, it works (mostly) for header files because when you #include something in another file, it gets pulled in automatically. It doesn\u0027t work for cpp files because we hopefully don\u0027t #include them... However if this isn\u0027t here, and you make changes in the file, then try to rebuild, gn won\u0027t think there has been a change. So I guess think of it as bypassing the build file :/",
+      "parentUuid": "ae785da7_ae1cb793",
+      "revId": "999c4f27570cba53e95d250c50349e8b484e3e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38676a4c_1f9cfae8",
         "filename": "third_party/WebKit/Source/core/css/ZoomAdjustedPixelValue.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "999c4f27570cba53e95d250c50349e8b484e3e98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2edba6_3620d3c6",
+        "filename": "third_party/WebKit/Source/core/css/ZoomAdjustedPixelValue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-31T03:39:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38676a4c_1f9cfae8",
+      "revId": "999c4f27570cba53e95d250c50349e8b484e3e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
