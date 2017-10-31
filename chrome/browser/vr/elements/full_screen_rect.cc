@@ -21,8 +21,4 @@ void FullScreenRect::Render(
                              computed_opacity(), size(), corner_radius());
 }
 
-bool FullScreenRect::IsWorldPositioned() const {
-  return false;
-}
-
 }  // namespace vr

@@ -67,10 +67,7 @@ void UiRenderer::Draw2dBrowsing(const RenderInfo& render_info,
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
     glClear(GL_DEPTH_BUFFER_BIT);
-    DrawUiView(render_info, controller_info, elements,
-               scene_->ControllerWouldBeVisibleInTheSceneGraph()
-                   ? kReticleVisible
-                   : kReticleHidden);
+    DrawUiView(render_info, controller_info, elements, kReticleVisible);
   }
 
   if (elements_overlay.empty())
@@ -99,12 +96,7 @@ void UiRenderer::DrawSplashScreen(const RenderInfo& render_info,
   glDisable(GL_CULL_FACE);
   glDisable(GL_DEPTH_TEST);
   glDepthMask(GL_FALSE);
-
-  DrawUiView(render_info, controller_info, elements,
-             scene_->ControllerWouldBeVisibleInTheSceneGraph()
-                 ? kReticleVisible
-                 : kReticleHidden);
-
+  DrawUiView(render_info, controller_info, elements, kReticleHidden);
   // NB: we do not draw the viewport aware objects here. They get put into
   // another buffer that is size optimized.
 }

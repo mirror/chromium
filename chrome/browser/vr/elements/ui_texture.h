@@ -49,6 +49,7 @@ class UiTexture {
                           base::string16 text,
                           gfx::FontList* font_list);
 
+ protected:
   enum TextAlignment {
     kTextAlignmentNone,
     kTextAlignmentLeft,
@@ -61,7 +62,6 @@ class UiTexture {
     kWrappingBehaviorNoWrap,
   };
 
- protected:
   virtual void Draw(SkCanvas* canvas, const gfx::Size& texture_size) = 0;
 
   virtual void OnSetMode();
