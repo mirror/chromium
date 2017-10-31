@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9213a865_d2587b8c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-10-31T22:10:08Z",
+      "side": 1,
+      "message": "Indeed, the libva API looks asynchronous, and is designed for asynchronous case.\n\nHowever things are different in the i915 driver. Decode \u0026 blit jobs are mostly serialized there because they access the same buffers and both use the 3D engine. This change would move serialization higher in the stack which shouldn\u0027t hurt performance. We might of course hit a platform in the future which doesn\u0027t serialize video decoding and blitting, but AMD isn\u0027t that platform either.\n\nIf we had a GMA500-based product (where the decode and blit engines share nothing), I would probably agree that this could help it; thankfully we don\u0027t.",
+      "parentUuid": "7cc52e76_4320d363",
+      "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3951d64_5a6ac634",
         "filename": "media/gpu/vaapi_drm_picture.cc",
         "patchSetId": 6
