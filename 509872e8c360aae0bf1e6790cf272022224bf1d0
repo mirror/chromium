@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5a02f20_db6578e3",
+        "filename": "url/origin.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-31T09:18:10Z",
+      "side": 1,
+      "message": "This changes ordering: previously, unique always sorted strictly less than (due to the fact that the empty string is less than any other string)",
+      "revId": "509872e8c360aae0bf1e6790cf272022224bf1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748ab38b_24a02386",
+        "filename": "url/origin.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-31T09:18:10Z",
+      "side": 1,
+      "message": "Changed for consistency with the other creation helper.",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 35
+      },
+      "revId": "509872e8c360aae0bf1e6790cf272022224bf1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28323aac_67667793",
+        "filename": "url/origin.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-31T09:18:10Z",
+      "side": 1,
+      "message": "Here and elsewhere, I put the non-unique case first, despite this putting the \u0027negative\u0027 conditional first. I figure the non-unique case is the more common one.\n\nI left this inlined because I expect it to be optimized to a cmov... maybe. I\u0027ll likely need to figure out how to extern empty_string for that to happen.",
+      "range": {
+        "startLine": 128,
+        "startChar": 11,
+        "endLine": 128,
+        "endChar": 19
+      },
+      "revId": "509872e8c360aae0bf1e6790cf272022224bf1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
