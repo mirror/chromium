@@ -21,7 +21,6 @@
 #include "chrome/browser/vr/elements/invisible_hit_target.h"
 #include "chrome/browser/vr/elements/linear_layout.h"
 #include "chrome/browser/vr/elements/rect.h"
-#include "chrome/browser/vr/elements/spinner.h"
 #include "chrome/browser/vr/elements/system_indicator.h"
 #include "chrome/browser/vr/elements/text.h"
 #include "chrome/browser/vr/elements/throbber.h"
@@ -42,7 +41,6 @@
 #include "chrome/browser/vr/ui_browser_interface.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/ui_scene_constants.h"
-#include "chrome/browser/vr/vector_icons/vector_icons.h"
 #include "chrome/browser/vr/vr_gl_util.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/grit/generated_resources.h"
@@ -59,8 +57,12 @@ void BindColor(UiSceneManager* model, Rect* rect, P p) {
   rect->AddBinding(base::MakeUnique<Binding<SkColor>>(
       base::Bind([](UiSceneManager* m, P p) { return (m->color_scheme()).*p; },
                  base::Unretained(model), p),
-      base::Bind([](Rect* r, const SkColor& c) { r->SetColor(c); },
-                 base::Unretained(rect))));
+      base::Bind(
+          [](Rect* r, const SkColor& c) {
+            r->SetCenterColor(c);
+            r->SetEdgeColor(c);
+          },
+          base::Unretained(rect))));
 }
 
 template <typename P>
@@ -100,8 +102,8 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateCloseButton();
   CreateScreenDimmer();
   CreateExitPrompt();
-  CreateToasts(model);
-  CreateSplashScreen(model);
+  CreateToasts();
+  CreateSplashScreen();
   CreateUnderDevelopmentNotice();
   CreateVoiceSearchUiGroup(model);
 
@@ -250,10 +252,11 @@ void UiSceneManager::CreateContentQuad(ContentInputDelegate* delegate) {
                                   kBackgroundDistanceMultiplier);
 }
 
-void UiSceneManager::CreateSplashScreen(Model* model) {
+void UiSceneManager::CreateSplashScreen() {
+  // Create splash screen root.
   auto element = base::MakeUnique<UiElement>();
   element->set_name(kSplashScreenRoot);
-  element->SetVisible(true);
+  element->SetVisible(started_for_autopresentation_);
   element->set_hit_testable(false);
   scene_->AddUiElement(kRoot, std::move(element));
 
@@ -300,104 +303,9 @@ void UiSceneManager::CreateSplashScreen(Model* model) {
   bg->set_draw_phase(kPhaseOverlayBackground);
   bg->SetVisible(true);
   bg->set_hit_testable(false);
-  bg->SetColor(color_scheme().splash_screen_background);
+  bg->SetCenterColor(color_scheme().splash_screen_background);
+  bg->SetEdgeColor(color_scheme().splash_screen_background);
   scene_->AddUiElement(kSplashScreenText, std::move(bg));
-
-  auto spinner = base::MakeUnique<Spinner>(512);
-  spinner->set_name(kWebVrTimeoutSpinner);
-  spinner->set_draw_phase(kPhaseOverlayForeground);
-  spinner->SetSize(kSpinnerWidth, kSpinnerHeight);
-  spinner->SetTranslate(0, kSpinnerVerticalOffset, -kSpinnerDistance);
-  spinner->SetColor(color_scheme().spinner_color);
-  spinner->AddBinding(VR_BIND_FUNC(
-      bool, Model, model, web_vr_timeout_state == kWebVrTimeoutImminent,
-      Spinner, spinner.get(), SetVisible));
-  spinner->SetTransitionedProperties({OPACITY});
-  scene_->AddUiElement(kSplashScreenViewportAwareRoot, std::move(spinner));
-
-  // Note, this cannot be a descendant of the viewport aware root, otherwise it
-  // will fade out when the viewport aware elements reposition.
-  auto spinner_bg = base::MakeUnique<FullScreenRect>();
-  spinner_bg->set_name(kWebVrTimeoutSpinnerBackground);
-  spinner_bg->set_draw_phase(kPhaseOverlayBackground);
-  spinner_bg->set_hit_testable(false);
-  spinner_bg->SetColor(color_scheme().spinner_background);
-  spinner_bg->SetTransitionedProperties({OPACITY});
-  spinner_bg->SetTransitionDuration(base::TimeDelta::FromMilliseconds(200));
-  spinner_bg->AddBinding(VR_BIND_FUNC(
-      bool, Model, model, web_vr_timeout_state != kWebVrNoTimeoutPending,
-      FullScreenRect, spinner_bg.get(), SetVisible));
-  scene_->AddUiElement(kSplashScreenRoot, std::move(spinner_bg));
-
-  auto timeout_message = base::MakeUnique<Rect>();
-  timeout_message->set_name(kWebVrTimeoutMessage);
-  timeout_message->set_draw_phase(kPhaseOverlayForeground);
-  timeout_message->SetSize(kTimeoutMessageBackgroundWidthM,
-                           kTimeoutMessageBackgroundHeightM);
-  timeout_message->SetTranslate(0, kSpinnerVerticalOffset, -kSpinnerDistance);
-  timeout_message->set_corner_radius(kTimeoutMessageCornerRadius);
-  timeout_message->SetTransitionedProperties({OPACITY});
-  timeout_message->AddBinding(
-      VR_BIND_FUNC(bool, Model, model, web_vr_timeout_state == kWebVrTimedOut,
-                   Rect, timeout_message.get(), SetVisible));
-  timeout_message->SetColor(color_scheme().timeout_message_background);
-  scene_->AddUiElement(kSplashScreenViewportAwareRoot,
-                       std::move(timeout_message));
-
-  auto timeout_layout = base::MakeUnique<LinearLayout>(LinearLayout::kRight);
-  timeout_layout->set_name(kWebVrTimeoutMessageLayout);
-  timeout_layout->set_hit_testable(false);
-  timeout_layout->SetVisible(true);
-  timeout_layout->set_margin(kTimeoutMessageLayoutGap);
-  scene_->AddUiElement(kWebVrTimeoutMessage, std::move(timeout_layout));
-
-  auto timeout_icon = base::MakeUnique<VectorIcon>(512);
-  timeout_icon->SetIcon(kSadTabIcon);
-  timeout_icon->set_name(kWebVrTimeoutMessageIcon);
-  timeout_icon->set_draw_phase(kPhaseOverlayForeground);
-  timeout_icon->SetVisible(true);
-  timeout_icon->SetSize(kTimeoutMessageIconWidth, kTimeoutMessageIconHeight);
-  scene_->AddUiElement(kWebVrTimeoutMessageLayout, std::move(timeout_icon));
-
-  auto timeout_text = base::MakeUnique<Text>(
-      512, kTimeoutMessageTextFontHeightM, kTimeoutMessageTextWidthM);
-  timeout_text->SetText(
-      l10n_util::GetStringUTF16(IDS_VR_WEB_VR_TIMEOUT_MESSAGE));
-  timeout_text->SetColor(color_scheme().timeout_message_foreground);
-  timeout_text->SetTextAlignment(UiTexture::kTextAlignmentLeft);
-  timeout_text->set_name(kWebVrTimeoutMessageText);
-  timeout_text->set_draw_phase(kPhaseOverlayForeground);
-  timeout_text->SetVisible(true);
-  timeout_text->SetSize(kTimeoutMessageTextWidthM, kTimeoutMessageTextHeightM);
-  scene_->AddUiElement(kWebVrTimeoutMessageLayout, std::move(timeout_text));
-
-  auto button = base::MakeUnique<Button>(
-      base::Bind(&UiSceneManager::OnWebVrTimedOut, base::Unretained(this)),
-      base::MakeUnique<VectorIconButtonTexture>(vector_icons::kClose16Icon));
-  button->set_name(kWebVrTimeoutMessageButton);
-  button->set_draw_phase(kPhaseOverlayForeground);
-  button->SetTranslate(0, kTimeoutButtonVerticalOffset,
-                       -kTimeoutButtonDistance);
-  button->SetRotate(1, 0, 0, kTimeoutButtonRotationRad);
-  button->SetSize(kTimeoutButtonWidth, kTimeoutButtonHeight);
-  button->SetTransitionedProperties({OPACITY});
-  button->AddBinding(VR_BIND_FUNC(bool, Model, model,
-                                  web_vr_timeout_state == kWebVrTimedOut,
-                                  Button, button.get(), SetVisible));
-  scene_->AddUiElement(kSplashScreenViewportAwareRoot, std::move(button));
-
-  timeout_text = base::MakeUnique<Text>(512, kTimeoutMessageTextFontHeightM,
-                                        kTimeoutButtonTextWidth);
-  timeout_text->SetText(
-      l10n_util::GetStringUTF16(IDS_VR_WEB_VR_EXIT_BUTTON_LABEL));
-  timeout_text->set_name(kWebVrTimeoutMessageButtonText);
-  timeout_text->SetColor(color_scheme().spinner_color);
-  timeout_text->set_draw_phase(kPhaseOverlayForeground);
-  timeout_text->SetVisible(true);
-  timeout_text->SetSize(kTimeoutButtonTextWidth, kTimeoutButtonTextHeight);
-  timeout_text->set_y_anchoring(YBOTTOM);
-  timeout_text->SetTranslate(0, -kTimeoutButtonTextVerticalOffset, 0);
-  scene_->AddUiElement(kWebVrTimeoutMessageButton, std::move(timeout_text));
 }
 
 void UiSceneManager::CreateUnderDevelopmentNotice() {
@@ -696,7 +604,7 @@ void UiSceneManager::CreateExitPrompt() {
   scene_->AddUiElement(kExitPrompt, std::move(element));
 }
 
-void UiSceneManager::CreateToasts(Model* model) {
+void UiSceneManager::CreateToasts() {
   // Create fullscreen toast.
   exclusive_screen_toast_transient_parent_ =
       AddTransientParent(kExclusiveScreenToastTransientParent,
@@ -728,24 +636,6 @@ void UiSceneManager::CreateToasts(Model* model) {
   element->SetRotate(1, 0, 0, kWebVrAngleRadians);
   element->SetScale(kWebVrToastDistance, kWebVrToastDistance, 1);
   element->set_hit_testable(false);
-
-  // When we first get a web vr frame, we switch states to
-  // kWebVrNoTimeoutPending, when that happens, we want to SetVisible(true) to
-  // kick the visibility of this element.
-  element->AddBinding(base::MakeUnique<Binding<bool>>(
-      base::Bind(
-          [](Model* m) {
-            return m->web_vr_timeout_state == kWebVrNoTimeoutPending;
-          },
-          base::Unretained(model)),
-      base::Bind(
-          [](UiElement* v, const bool& b) {
-            if (b)
-              v->SetVisible(b);
-          },
-          base::Unretained(
-              exclusive_screen_toast_viewport_aware_transient_parent_))));
-
   scene_->AddUiElement(kExclusiveScreenToastViewportAwareTransientParent,
                        std::move(element));
 }
@@ -957,7 +847,8 @@ void UiSceneManager::ConfigureIndicators() {
 void UiSceneManager::ConfigureBackgroundColor() {
   DCHECK(configuring_scene_);
   for (Rect* panel : background_panels_) {
-    panel->SetColor(color_scheme().world_background);
+    panel->SetCenterColor(color_scheme().world_background);
+    panel->SetEdgeColor(color_scheme().world_background);
   }
   ceiling_->SetCenterColor(color_scheme().ceiling);
   ceiling_->SetEdgeColor(color_scheme().world_background);

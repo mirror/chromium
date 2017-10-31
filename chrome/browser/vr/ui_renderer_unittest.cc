@@ -42,7 +42,6 @@ TEST_P(UiRendererTest, UiRendererSortingTest) {
   EXPECT_EQ(GetParam().expected_order.size(), sorted.size());
 
   for (size_t i = 0; i < sorted.size(); ++i) {
-    EXPECT_NE(0, sorted[i]->name());
     EXPECT_EQ(GetParam().expected_order[i], sorted[i]->name());
   }
 }
@@ -85,10 +84,7 @@ TestParams params[] = {
      }},
     {&UiScene::GetVisibleSplashScreenElements,
      {
-         kSplashScreenBackground, kWebVrTimeoutSpinnerBackground,
-         kSplashScreenText, kWebVrTimeoutSpinner, kWebVrTimeoutMessage,
-         kWebVrTimeoutMessageIcon, kWebVrTimeoutMessageText,
-         kWebVrTimeoutMessageButton, kWebVrTimeoutMessageButtonText,
+         kSplashScreenBackground, kSplashScreenText,
      }},
     {&UiScene::GetVisibleWebVrOverlayForegroundElements,
      {

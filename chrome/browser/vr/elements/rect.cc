@@ -13,11 +13,6 @@ namespace vr {
 Rect::Rect() {}
 Rect::~Rect() {}
 
-void Rect::SetColor(SkColor color) {
-  SetCenterColor(color);
-  SetEdgeColor(color);
-}
-
 void Rect::SetCenterColor(SkColor color) {
   animation_player().TransitionColorTo(last_frame_time(), BACKGROUND_COLOR,
                                        center_color_, color);

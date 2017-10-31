@@ -53,12 +53,6 @@ const std::set<UiElementName> kHitTestableElements = {
     kUrlBar,
     kLoadingIndicator,
     kCloseButton,
-    kWebVrTimeoutSpinner,
-    kWebVrTimeoutMessage,
-    kWebVrTimeoutMessageIcon,
-    kWebVrTimeoutMessageText,
-    kWebVrTimeoutMessageButton,
-    kWebVrTimeoutMessageButtonText,
     kVoiceSearchButton,
     kSpeechRecognitionPromptMicrophoneIcon,
     kSpeechRecognitionPromptBackplane,
@@ -606,84 +600,6 @@ TEST_F(UiSceneManagerTest, EnforceSceneHierarchyForProjMatrixChanges) {
       browsing_foreground->IsAnimatingProperty(TargetProperty::TRANSFORM));
   EXPECT_FALSE(browsing_root->IsAnimatingProperty(TargetProperty::TRANSFORM));
   EXPECT_FALSE(root->IsAnimatingProperty(TargetProperty::TRANSFORM));
-}
-
-TEST_F(UiSceneManagerTest, WebVrTimeout) {
-  MakeManager(kNotInCct, kInWebVr);
-
-  manager_->SetWebVrMode(true, false);
-  model_->web_vr_timeout_state = kWebVrAwaitingFirstFrame;
-
-  AnimateBy(MsToDelta(500));
-  VerifyVisibility(
-      {
-          kWebVrTimeoutSpinner, kWebVrTimeoutMessage,
-          kWebVrTimeoutMessageLayout, kWebVrTimeoutMessageIcon,
-          kWebVrTimeoutMessageText, kWebVrTimeoutMessageButton,
-          kWebVrTimeoutMessageButtonText,
-      },
-      false);
-  VerifyVisibility(
-      {
-          kWebVrTimeoutSpinnerBackground,
-      },
-      true);
-
-  model_->web_vr_timeout_state = kWebVrTimeoutImminent;
-  AnimateBy(MsToDelta(500));
-  VerifyVisibility(
-      {
-          kWebVrTimeoutMessage, kWebVrTimeoutMessageLayout,
-          kWebVrTimeoutMessageIcon, kWebVrTimeoutMessageText,
-          kWebVrTimeoutMessageButton, kWebVrTimeoutMessageButtonText,
-      },
-      false);
-  VerifyVisibility(
-      {
-          kWebVrTimeoutSpinner, kWebVrTimeoutSpinnerBackground,
-      },
-      true);
-
-  model_->web_vr_timeout_state = kWebVrTimedOut;
-  AnimateBy(MsToDelta(500));
-  VerifyVisibility(
-      {
-          kWebVrTimeoutSpinner,
-      },
-      false);
-  VerifyVisibility(
-      {
-          kWebVrTimeoutSpinnerBackground, kWebVrTimeoutMessage,
-          kWebVrTimeoutMessageLayout, kWebVrTimeoutMessageIcon,
-          kWebVrTimeoutMessageText, kWebVrTimeoutMessageButton,
-          kWebVrTimeoutMessageButtonText,
-      },
-      true);
-}
-
-TEST_F(UiSceneManagerTest, SpeechRecognitionPromptBindings) {
-  MakeManager(kNotInCct, kNotInWebVr);
-  UiElement* growing_circle =
-      scene_->GetUiElementByName(kSpeechRecognitionPromptGrowingCircle);
-
-  model_->recognizing_speech = true;
-  EXPECT_TRUE(AnimateBy(MsToDelta(200)));
-  VerifyVisibility(
-      {kSpeechRecognitionPrompt, kSpeechRecognitionPromptBackplane}, true);
-  EXPECT_FALSE(IsVisible(k2dBrowsingForeground));
-  EXPECT_FALSE(IsAnimating(growing_circle, {CIRCLE_GROW}));
-
-  model_->speech_recognition_state = SPEECH_RECOGNITION_READY;
-  EXPECT_TRUE(AnimateBy(MsToDelta(300)));
-  EXPECT_TRUE(IsAnimating(growing_circle, {CIRCLE_GROW}));
-
-  model_->recognizing_speech = false;
-  model_->speech_recognition_state = SPEECH_RECOGNITION_END;
-  EXPECT_TRUE(AnimateBy(MsToDelta(500)));
-  EXPECT_FALSE(IsAnimating(growing_circle, {CIRCLE_GROW}));
-  VerifyVisibility(
-      {kSpeechRecognitionPrompt, kSpeechRecognitionPromptBackplane}, false);
-  EXPECT_TRUE(IsVisible(k2dBrowsingForeground));
 }
 
 }  // namespace vr
