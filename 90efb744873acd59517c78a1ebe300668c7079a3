@@ -22,6 +22,30 @@
       "revId": "90efb744873acd59517c78a1ebe300668c7079a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c02aa42_d823447c",
+        "filename": "base/trace_event/trace_log.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-31T15:30:47Z",
+      "side": 0,
+      "message": "Ah yeah I agree with Scott.\nWe use const char* in tracing only to mark things that must be be long-lived strings (i.e. literals or leaked strings). This doesn\u0027t seem to be the case here (I guess it was and then somebody changed it to be a std::string).\nAlso given its simplicity I\u0027d probably make this an inline set_process_name(const std::string\u0026) accessor defined in the .h.\nThere are a dozen callers of SetProcessName, but given the mechanical nature of the change that would be TBR-able.",
+      "parentUuid": "fea593e5_0af1991c",
+      "range": {
+        "startLine": 311,
+        "startChar": 22,
+        "endLine": 311,
+        "endChar": 46
+      },
+      "revId": "90efb744873acd59517c78a1ebe300668c7079a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
