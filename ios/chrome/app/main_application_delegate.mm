@@ -255,12 +255,6 @@
          startupInformation:_startupInformation];
 }
 
-#pragma mark - chromeExecuteCommand
-
-- (void)chromeExecuteCommand:(id)sender {
-  [_mainController chromeExecuteCommand:sender];
-}
-
 #pragma mark - Testing methods
 
 - (MainController*)mainController {

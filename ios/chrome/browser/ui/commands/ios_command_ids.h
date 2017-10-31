@@ -13,7 +13,9 @@
 // also need to be updated.
 
 // clang-format off
-#define IDC_CLEAR_BROWSING_DATA_IOS                    40924
+
+//#define IDC_CLEAR_BROWSING_DATA_IOS                    40924
+
 // clang-format on
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_IOS_COMMAND_IDS_H_
