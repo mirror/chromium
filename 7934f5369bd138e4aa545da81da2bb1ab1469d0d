@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94cc2752_e4efd2ec",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/content_script.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-31T19:22:48Z",
+      "side": 1,
+      "message": "Let\u0027s try using clang format on this file and see how it works. :)  I mentioned this briefly in another CL here: https://chromium-review.googlesource.com/c/chromium/src/+/731660#message-fd1096d402655cffc40f4e7c81c6ff23bd3e8695, but I can also swing by and see if we can get it to work.",
+      "revId": "7934f5369bd138e4aa545da81da2bb1ab1469d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f73dae5_f5e07786",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/content_script.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-31T19:22:48Z",
+      "side": 1,
+      "message": "nit: let\u0027s use let (instead of var) :)",
+      "revId": "7934f5369bd138e4aa545da81da2bb1ab1469d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e4b385f_400eb539",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/manifest.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-31T19:22:48Z",
+      "side": 1,
+      "message": "gerrit thinks there\u0027s a weird character in here.",
+      "range": {
+        "startLine": 18,
+        "startChar": 41,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "7934f5369bd138e4aa545da81da2bb1ab1469d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
