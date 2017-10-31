@@ -10,6 +10,7 @@ import("//content/common/features.gni")
 import("//media/media_options.gni")
 import("//ppapi/features/features.gni")
 import("//printing/features/features.gni")
+import("//third_party/libaom/enable.gni")
 import("//third_party/webrtc/webrtc.gni")
 import("//tools/ipc_fuzzer/ipc_fuzzer.gni")
 
@@ -940,6 +941,9 @@ target(link_target_type, "renderer") {
       "//third_party/webrtc/system_wrappers",
       "//third_party/webrtc_overrides:init_webrtc",
     ]
+    if (use_av1) {
+      deps += [ "//third_party/libaom" ]
+    }
     if (rtc_use_h264) {
       sources += [
         "media_recorder/h264_encoder.cc",
