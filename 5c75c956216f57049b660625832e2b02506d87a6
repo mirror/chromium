@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "745ecba3_afc44172",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T07:13:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ffd928ec_ce578f75",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cba10c48_820c0fa0",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 4
@@ -51,6 +69,24 @@
       "revId": "5c75c956216f57049b660625832e2b02506d87a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37188d7f_6531111a",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T07:13:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba10c48_820c0fa0",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e25181c0_9754e080",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T07:13:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4497c66_3924e734",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "924a8f0c_9904fef0",
         "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
         "patchSetId": 4
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "628aa3f7_643826df",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T07:13:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "924a8f0c_9904fef0",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0099269_16548e95",
         "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
         "patchSetId": 4
@@ -99,6 +171,24 @@
       "writtenOn": "2017-10-27T02:58:03Z",
       "side": 1,
       "message": "How about, before this `if`, something like\n\n  // Calculate the maximum size of the Combobox before possibly shrinking\n  // the width.\n  max_width_ \u003d GetPreferredSize().width();\n\nAnd provide a get_max_width() accessor.",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6170e20f_1d14cb03",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T07:13:21Z",
+      "side": 1,
+      "message": "Done, except only after 241 because we want the currently selected option, right?",
+      "parentUuid": "f0099269_16548e95",
       "revId": "5c75c956216f57049b660625832e2b02506d87a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "e6c183f3_f4b2afbd",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T07:13:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baf44a54_f63ee47d",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "713345be_32d00ba5",
         "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
         "patchSetId": 4
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "59a16796_258349f9",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T07:13:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "713345be_32d00ba5",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5f0f568_c8211eed",
         "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
         "patchSetId": 4
@@ -153,6 +279,24 @@
       "revId": "5c75c956216f57049b660625832e2b02506d87a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6afb0df3_d827832d",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T07:13:21Z",
+      "side": 1,
+      "message": "I moved the MAX_LINKABLE_WIDTH stuff to PIBV, since we only care about the currently selected option now.",
+      "parentUuid": "b5f0f568_c8211eed",
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -176,6 +320,30 @@
       "revId": "5c75c956216f57049b660625832e2b02506d87a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d711792c_cb3cef7f",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T07:13:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69dcbd51_837b06f3",
+      "range": {
+        "startLine": 61,
+        "startChar": 30,
+        "endLine": 61,
+        "endChar": 75
+      },
+      "revId": "5c75c956216f57049b660625832e2b02506d87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
