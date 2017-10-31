@@ -22,6 +22,7 @@
 #include "gpu/command_buffer/common/constants.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/service_discardable_manager.h"
+#include "gpu/command_buffer/service/service_transfer_cache.h"
 #include "gpu/command_buffer/service/shader_translator_cache.h"
 #include "gpu/config/gpu_driver_bug_workarounds.h"
 #include "gpu/config/gpu_feature_info.h"
@@ -106,6 +107,7 @@ class GPU_EXPORT GpuChannelManager {
   ServiceDiscardableManager* discardable_manager() {
     return &discardable_manager_;
   }
+  ServiceTransferCache* transfer_cache() { return &transfer_cache_; }
   gles2::Outputter* outputter();
   gles2::ProgramCache* program_cache();
   gles2::ShaderTranslatorCache* shader_translator_cache() {
@@ -191,6 +193,7 @@ class GPU_EXPORT GpuChannelManager {
   GpuMemoryBufferFactory* const gpu_memory_buffer_factory_;
   GpuFeatureInfo gpu_feature_info_;
   ServiceDiscardableManager discardable_manager_;
+  ServiceTransferCache transfer_cache_;
 #if defined(OS_ANDROID)
   // Last time we know the GPU was powered on. Global for tracking across all
   // transport surfaces.
