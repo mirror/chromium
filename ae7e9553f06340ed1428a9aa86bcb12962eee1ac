@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c01dd2a_221e20c7",
+        "filename": "ui/latency/latency_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-31T20:57:08Z",
+      "side": 1,
+      "message": "Can we assert that the ukm source id is invalid iff the trace id is -1?",
+      "range": {
+        "startLine": 176,
+        "startChar": 29,
+        "endLine": 176,
+        "endChar": 45
+      },
+      "revId": "ae7e9553f06340ed1428a9aa86bcb12962eee1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9471974e_13c0959e",
+        "filename": "ui/latency/latency_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-31T20:57:08Z",
+      "side": 1,
+      "message": "Why did we decide against reusing the trace id?",
+      "range": {
+        "startLine": 226,
+        "startChar": 7,
+        "endLine": 226,
+        "endChar": 19
+      },
+      "revId": "ae7e9553f06340ed1428a9aa86bcb12962eee1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b4c18c_b425f7cb",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-31T20:57:08Z",
+      "side": 1,
+      "message": "Nittiest nit: can we just do a 32 bit random integer here?",
+      "range": {
+        "startLine": 39,
+        "startChar": 14,
+        "endLine": 39,
+        "endChar": 24
+      },
+      "revId": "ae7e9553f06340ed1428a9aa86bcb12962eee1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
