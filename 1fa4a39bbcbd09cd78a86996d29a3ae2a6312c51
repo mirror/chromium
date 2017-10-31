@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e51c4ba7_4f5eb04d",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-31T15:57:33Z",
+      "side": 1,
+      "message": "optional nit: order these alphabetically.",
+      "revId": "1fa4a39bbcbd09cd78a86996d29a3ae2a6312c51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb98cbc_70189e3f",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-31T15:57:33Z",
+      "side": 1,
+      "message": "optional nit: for readability I think it makes more sense to call \n[self updateToolbarAlphaForFrame:self.view.frame];\nand then\n_lastKnownToolbarFrame \u003d self.view.frame;",
+      "range": {
+        "startLine": 1212,
+        "startChar": 2,
+        "endLine": 1212,
+        "endChar": 24
+      },
+      "revId": "1fa4a39bbcbd09cd78a86996d29a3ae2a6312c51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
