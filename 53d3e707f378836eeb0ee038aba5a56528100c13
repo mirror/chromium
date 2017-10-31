@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9bb78e2b_670827ae",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-31T01:50:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b4d1f9e_a176b4bd",
+      "range": {
+        "startLine": 80,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 17
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70e31ad7_4267cd30",
         "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d343960b_16b015c1",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-31T01:50:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "70e31ad7_4267cd30",
+      "range": {
+        "startLine": 67,
+        "startChar": 18,
+        "endLine": 67,
+        "endChar": 48
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "e3567136_2c3b67dd",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-31T01:50:20Z",
+      "side": 1,
+      "message": "These are defined on the Protected Category, If I try to synthesize them I get errors. This should be temporary until we get rid of this ToolbarController \"Protected\" Category",
+      "parentUuid": "344c7ba3_b8b19c93",
+      "range": {
+        "startLine": 728,
+        "startChar": 27,
+        "endLine": 728,
+        "endChar": 50
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c3d6c72_f2627f2e",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 2
@@ -111,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "a03f3c6f_60d6a064",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-31T01:50:20Z",
+      "side": 1,
+      "message": "Agree! Wanted to keep this analogous to its counterpart by adding Animation at the end of the name, but will change it. Done",
+      "parentUuid": "4c3d6c72_f2627f2e",
+      "range": {
+        "startLine": 844,
+        "startChar": 8,
+        "endLine": 844,
+        "endChar": 39
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c467c5ff_db87ac85",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 2
@@ -122,6 +218,30 @@
       "writtenOn": "2017-10-20T12:17:37Z",
       "side": 1,
       "message": "My assumption was that this method wouldn\u0027t directly manipulate any views, just configure the animator that could do that. Maybe there should be a comment explaining why view frames are being set here?",
+      "range": {
+        "startLine": 847,
+        "startChar": 4,
+        "endLine": 847,
+        "endChar": 17
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565d6066_1f5ac5ad",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-31T01:50:20Z",
+      "side": 1,
+      "message": "Its some preparation in order for the animator to move then into their final position. On the other hand we could leave the buttons in a shifted position after the expanding animation, and this wouldn\u0027t be needed, but I feel like leaving them like that doesn\u0027t feel right. WDYT?",
+      "parentUuid": "c467c5ff_db87ac85",
       "range": {
         "startLine": 847,
         "startChar": 4,
@@ -157,6 +277,30 @@
     },
     {
       "key": {
+        "uuid": "3a10e886_38c343d4",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-31T01:50:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53569548_1d2c17a8",
+      "range": {
+        "startLine": 855,
+        "startChar": 21,
+        "endLine": 855,
+        "endChar": 31
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c7d3fba_91041029",
         "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
         "patchSetId": 2
@@ -171,6 +315,24 @@
       "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ef06d8_0e79b5d1",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-31T01:50:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c7d3fba_91041029",
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +370,30 @@
       "writtenOn": "2017-10-20T12:17:37Z",
       "side": 1,
       "message": "General note: I don\u0027t think it\u0027s necessary to weakify in cases like this as a default. If the weakified view is retained by the animator, that\u0027s not really a problem.",
+      "range": {
+        "startLine": 2281,
+        "startChar": 19,
+        "endLine": 2281,
+        "endChar": 33
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13cb2880_972c8988",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2281,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-31T01:50:20Z",
+      "side": 1,
+      "message": "Just checked, you\u0027re right. But I still need to copy the Button or if not the compiler complains about self being retained, I guess we might as well weakify since we\u0027re creating a new variable anyways?",
+      "parentUuid": "fdcb0f90_4c751d38",
       "range": {
         "startLine": 2281,
         "startChar": 19,
