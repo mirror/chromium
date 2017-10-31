@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7599f84f_b125c83f",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-31T04:56:51Z",
+      "side": 1,
+      "message": "It came up in a review comment. Rather than redownloading the primary icon, since the InstallableManager is now integrated, it makes sense to use the icon that was already retrieved.",
+      "parentUuid": "f9479d17_c86b65ce",
+      "revId": "452f6a429bc1cddbcacc4ae4b23cd8fc5ad5738e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ce7957d_ecc69651",
         "filename": "chrome/browser/extensions/favicon_downloader.cc",
         "patchSetId": 16
@@ -83,6 +101,24 @@
       "writtenOn": "2017-10-31T03:14:31Z",
       "side": 1,
       "message": "What\u0027s this change for?",
+      "revId": "452f6a429bc1cddbcacc4ae4b23cd8fc5ad5738e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f27386_4b00d754",
+        "filename": "chrome/browser/extensions/favicon_downloader.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-31T04:56:51Z",
+      "side": 1,
+      "message": "This was messing up lifetime issues. Basically, the callback deletes the FaviconDownloader and is not expected to be called in the same task. After the callback was run, this object was deleted and segfaults happened as it tried to continue above.\n\nI discovered this because the test I wrote caught this (it has no icons to download).\n\nThis makes the deletion flow more consistent, fixing the problem.",
+      "parentUuid": "0ce7957d_ecc69651",
       "revId": "452f6a429bc1cddbcacc4ae4b23cd8fc5ad5738e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
