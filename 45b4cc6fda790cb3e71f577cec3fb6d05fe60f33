@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ff3c1b1_bd8a4b80",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/TabbedModeFirstRunActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-31T16:39:02Z",
+      "side": 1,
+      "message": "should this just be an assert?  It\u0027s always a fraction right?\n\nmaybe a similar assert on expected MeasureSpec mode?  If it came in as UNSPECIFIED then the width could be 0 and we\u0027d be in a bad way.",
+      "range": {
+        "startLine": 93,
+        "startChar": 20,
+        "endLine": 93,
+        "endChar": 23
+      },
+      "revId": "45b4cc6fda790cb3e71f577cec3fb6d05fe60f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
