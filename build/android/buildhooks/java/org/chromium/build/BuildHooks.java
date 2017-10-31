@@ -8,10 +8,32 @@ package org.chromium.build;
  * All Java targets that support android have dependence on this class.
  */
 public abstract class BuildHooks {
+    private static Callback<AssertionError> sReportAssertionCallback;
+
     /**
-     * This method is inserted to handle any assert failure by java_assertion_enabler.
+     * This method is used to handle assert failures when asserts are enabled by
+     * //build/android/bytecode:java_bytecode_rewriter. For non-release builds, this is always
+     * enabled and assert failures will result in an assertion error being thrown. For release
+     * builds, this is only enabled when report_java_assert = true. Assert failures will result in
+     * an error report being uploaded to the crash servers only if the callback is set (so that this
+     * can be a no-op for WebView in Monochrome). This also means that asserts hit before the
+     * callback is set will be no-op's as well.
      */
     public static void assertFailureHandler(AssertionError assertionError) {
-        throw assertionError;
+        if (BuildHooksConfig.REPORT_JAVA_ASSERT) {
+            if (sReportAssertionCallback != null) {
+                sReportAssertionCallback.run(assertionError);
+            }
+        } else {
+            throw assertionError;
+        }
+    }
+
+    /**
+     * Set the callback function that handles assert failure.
+     * This should be called from attachBaseContext.
+     */
+    public static void setReportAssertionCallback(Callback<AssertionError> callback) {
+        sReportAssertionCallback = callback;
     }
 }
