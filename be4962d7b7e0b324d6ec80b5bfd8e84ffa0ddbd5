@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e473477_e9abbad8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/img-crossorigin-redirect-anonymous-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-31T07:08:56Z",
+      "side": 1,
+      "message": "This isn\u0027t an error message that\u0027s surfaced to JavaScript, right? Because we shouldn\u0027t expose redirect targets to JavaScript.",
+      "revId": "be4962d7b7e0b324d6ec80b5bfd8e84ffa0ddbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
