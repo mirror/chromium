@@ -25,7 +25,7 @@
 namespace views {
 namespace {
 
-#if !defined(DESKTOP_LINUX)
+#if !defined(DESKTOP_LINUX) && !defined(OS_MACOSX)
 // Default text and shadow colors for STYLE_BUTTON.
 const SkColor kStyleButtonTextColor = SK_ColorBLACK;
 const SkColor kStyleButtonShadowColor = SK_ColorWHITE;
@@ -37,6 +37,7 @@ const SkColor kStyleButtonShadowColor = SK_ColorWHITE;
 
 const int PlatformStyle::kMinLabelButtonWidth = 70;
 const int PlatformStyle::kMinLabelButtonHeight = 33;
+const bool PlatformStyle::kDefaultLabelButtonHasBoldFont = true;
 const bool PlatformStyle::kDialogDefaultButtonCanBeCancel = true;
 const bool PlatformStyle::kSelectWordOnRightClick = false;
 const bool PlatformStyle::kSelectAllOnRightClickWhenUnfocused = false;
@@ -60,11 +61,18 @@ std::unique_ptr<ScrollBar> PlatformStyle::CreateScrollBar(bool is_horizontal) {
 }
 
 // static
+SkColor PlatformStyle::TextColorForButton(
+    const ButtonColorByState& color_by_state,
+    const LabelButton& button) {
+  return color_by_state[button.state()];
+}
+
+// static
 void PlatformStyle::OnTextfieldEditFailed() {}
 
 #endif  // OS_MACOSX
 
-#if !defined(DESKTOP_LINUX)
+#if !defined(DESKTOP_LINUX) && !defined(OS_MACOSX)
 // static
 void PlatformStyle::ApplyLabelButtonTextStyle(
     Label* label,
