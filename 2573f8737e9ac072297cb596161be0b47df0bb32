@@ -16,6 +16,24 @@
       "revId": "2573f8737e9ac072297cb596161be0b47df0bb32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261933c1_aa6b6cfb",
+        "filename": "third_party/WebKit/Source/modules/permissions/PermissionUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-31T08:47:21Z",
+      "side": 1,
+      "message": "The two places that do check do seem a bit odd. They never return null (they call MakeRequest() when the InterfacePtr is null), but their callers all check for null.\n\nRemoved the return value and updated the callers that used it.",
+      "parentUuid": "3e1167e7_c85a5772",
+      "revId": "2573f8737e9ac072297cb596161be0b47df0bb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
