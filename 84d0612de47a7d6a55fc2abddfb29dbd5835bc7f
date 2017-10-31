@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "205ff4f2_2da1b7f2",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7270,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-31T17:16:59Z",
+      "side": 1,
+      "message": "RasterSource::PlaybackToCanvas also has a save/restore. Would it be needed here too?",
+      "revId": "84d0612de47a7d6a55fc2abddfb29dbd5835bc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f1b010_6285da95",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7282,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-31T17:16:59Z",
+      "side": 1,
+      "message": "nit: 0.f",
+      "revId": "84d0612de47a7d6a55fc2abddfb29dbd5835bc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08881a9_e9b415bc",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7283,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-31T17:16:59Z",
+      "side": 1,
+      "message": "Should this be post_translate_x/post_translate_y?",
+      "revId": "84d0612de47a7d6a55fc2abddfb29dbd5835bc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e0d34f_d81c9791",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7287,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-31T17:16:59Z",
+      "side": 1,
+      "message": "nit: 1.f",
+      "revId": "84d0612de47a7d6a55fc2abddfb29dbd5835bc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b484b0e_6d98fa04",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7295,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-31T17:16:59Z",
+      "side": 1,
+      "message": "Is it possible that this returns nothing, and in that case, should we skip the whole thing?",
+      "revId": "84d0612de47a7d6a55fc2abddfb29dbd5835bc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
