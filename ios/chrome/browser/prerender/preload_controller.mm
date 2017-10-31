@@ -356,10 +356,6 @@ bool IsPrerenderTabEvictionExperimentalGroup() {
         web::NavigationManager::UserAgentOverrideOption::DESKTOP;
   }
   webState_->GetNavigationManager()->LoadURLWithParams(loadParams);
-
-  // Trigger the page to start loading.
-  // TODO(crbug.com/705819): Remove this call.
-  [tab view];
 }
 
 - (void)destroyPreviewContents {
