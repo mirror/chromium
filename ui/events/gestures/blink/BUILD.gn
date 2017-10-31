@@ -4,6 +4,8 @@
 
 source_set("blink") {
   sources = [
+    "fling_booster.cc",
+    "fling_booster.h",
     "web_gesture_curve_impl.cc",
     "web_gesture_curve_impl.h",
   ]
