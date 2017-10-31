@@ -45,7 +45,8 @@ interface FrameNavigationControl {
                    CommonNavigationParams common_params,
                    RequestNavigationParams request_params,
                    handle<data_pipe_consumer>? body_data,
-                   URLLoaderFactory? default_subresource_url_loader_factory);
+                   URLLoaderFactory? default_subresource_url_loader_factory,
+                   mojo.common.mojom.UnguessableToken devtools_navigation_token);
 };
 
 // Implemented by the frame (e.g. renderer processes).

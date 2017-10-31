@@ -302,7 +302,8 @@ bool NavigatorImpl::NavigateToEntry(
     bool is_same_document_history_load,
     bool is_history_navigation_in_new_child,
     bool is_pending_entry,
-    const scoped_refptr<ResourceRequestBody>& post_body) {
+    const scoped_refptr<ResourceRequestBody>& post_body,
+    const base::UnguessableToken& devtools_navigation_token) {
   TRACE_EVENT0("browser,navigation", "NavigatorImpl::NavigateToEntry");
 
   GURL dest_url = frame_entry.url();
@@ -375,7 +376,8 @@ bool NavigatorImpl::NavigateToEntry(
     RequestNavigation(
         frame_tree_node, dest_url, dest_referrer, frame_entry, entry,
         reload_type, previews_state, is_same_document_history_load,
-        is_history_navigation_in_new_child, post_body, navigation_start);
+        is_history_navigation_in_new_child, post_body, navigation_start,
+        devtools_navigation_token);
     if (frame_tree_node->IsMainFrame() &&
         frame_tree_node->navigation_request()) {
       // TODO(carlosk): extend these traces to support subframes and
@@ -1143,7 +1145,8 @@ void NavigatorImpl::RequestNavigation(
     bool is_same_document_history_load,
     bool is_history_navigation_in_new_child,
     const scoped_refptr<ResourceRequestBody>& post_body,
-    base::TimeTicks navigation_start) {
+    base::TimeTicks navigation_start,
+    const base::UnguessableToken& devtools_navigation_token) {
   CHECK(IsBrowserSideNavigationEnabled());
   DCHECK(frame_tree_node);
 
@@ -1169,7 +1172,7 @@ void NavigatorImpl::RequestNavigation(
           frame_tree_node, dest_url, dest_referrer, frame_entry, entry,
           navigation_type, previews_state, is_same_document_history_load,
           is_history_navigation_in_new_child, post_body, navigation_start,
-          controller_);
+          controller_, devtools_navigation_token);
 
   // Navigation to a javascript URL is not a "real" navigation so there is no
   // need to create a NavigationHandle. The navigation commits immediately and
@@ -1185,7 +1188,7 @@ void NavigatorImpl::RequestNavigation(
         nullptr,  // body
         mojo::ScopedDataPipeConsumerHandle(), scoped_request->common_params(),
         scoped_request->request_params(), scoped_request->is_view_source(),
-        base::nullopt);
+        base::nullopt, devtools_navigation_token);
     return;
   }
 

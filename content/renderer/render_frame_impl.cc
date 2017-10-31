@@ -1816,7 +1816,8 @@ void RenderFrameImpl::OnNavigate(
   TRACE_EVENT2("navigation,rail", "RenderFrameImpl::OnNavigate", "id",
                routing_id_, "url", common_params.url.possibly_invalid_spec());
   NavigateInternal(common_params, start_params, request_params,
-                   std::unique_ptr<StreamOverrideParameters>());
+                   std::unique_ptr<StreamOverrideParameters>(),
+                   base::UnguessableToken());
 }
 
 void RenderFrameImpl::BindEngagement(
@@ -3011,7 +3012,8 @@ void RenderFrameImpl::CommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
     mojo::ScopedDataPipeConsumerHandle body_data,
-    mojom::URLLoaderFactoryPtr default_subresource_url_loader_factory) {
+    mojom::URLLoaderFactoryPtr default_subresource_url_loader_factory,
+    const base::UnguessableToken& devtools_navigation_token) {
   CHECK(IsBrowserSideNavigationEnabled());
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.
@@ -3058,7 +3060,7 @@ void RenderFrameImpl::CommitNavigation(
   browser_side_navigation_pending_url_ = GURL();
 
   NavigateInternal(common_params, StartNavigationParams(), request_params,
-                   std::move(stream_override));
+                   std::move(stream_override), devtools_navigation_token);
 
   // Don't add code after this since NavigateInternal may have destroyed this
   // RenderFrameImpl.
@@ -6169,7 +6171,8 @@ void RenderFrameImpl::NavigateInternal(
     const CommonNavigationParams& common_params,
     const StartNavigationParams& start_params,
     const RequestNavigationParams& request_params,
-    std::unique_ptr<StreamOverrideParameters> stream_params) {
+    std::unique_ptr<StreamOverrideParameters> stream_params,
+    const base::UnguessableToken& devtools_navigation_token) {
   bool browser_side_navigation = IsBrowserSideNavigationEnabled();
 
   // PlzNavigate
@@ -6410,7 +6413,7 @@ void RenderFrameImpl::NavigateInternal(
 
       // Load the request.
       frame_->Load(request, load_type, item_for_history_navigation,
-                   history_load_type, is_client_redirect);
+                   history_load_type, is_client_redirect, devtools_navigation_token);
 
       if (!weak_this)
         return;

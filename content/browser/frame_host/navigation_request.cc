@@ -219,7 +219,8 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
     bool is_history_navigation_in_new_child,
     const scoped_refptr<ResourceRequestBody>& post_body,
     const base::TimeTicks& navigation_start,
-    NavigationControllerImpl* controller) {
+    NavigationControllerImpl* controller,
+    const base::UnguessableToken& devtools_navigation_token) {
   // A form submission happens either because the navigation is a
   // renderer-initiated form submission that took the OpenURL path or a
   // back/forward/reload navigation the does a form resubmission.
@@ -275,7 +276,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
                             is_form_submission, initiator),
       request_params, browser_initiated,
       false,  // from_begin_navigation
-      &frame_entry, &entry));
+      &frame_entry, &entry, devtools_navigation_token));
   return navigation_request;
 }
 
@@ -321,7 +322,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateRendererInitiated(
       frame_tree_node, common_params, begin_params, request_params,
       false,  // browser_initiated
       true,   // from_begin_navigation
-      nullptr, entry));
+      nullptr, entry, base::UnguessableToken::Create()));
   return navigation_request;
 }
 
@@ -333,7 +334,8 @@ NavigationRequest::NavigationRequest(
     bool browser_initiated,
     bool from_begin_navigation,
     const FrameNavigationEntry* frame_entry,
-    const NavigationEntryImpl* entry)
+    const NavigationEntryImpl* entry,
+    const base::UnguessableToken& devtools_navigation_token)
     : frame_tree_node_(frame_tree_node),
       common_params_(common_params),
       begin_params_(begin_params),
@@ -348,6 +350,7 @@ NavigationRequest::NavigationRequest(
       from_begin_navigation_(from_begin_navigation),
       has_stale_copy_in_cache_(false),
       net_error_(net::OK),
+      devtools_navigation_token_(devtools_navigation_token),
       weak_factory_(this) {
   DCHECK(!browser_initiated || (entry != nullptr && frame_entry != nullptr));
   TRACE_EVENT_ASYNC_BEGIN2("navigation", "NavigationRequest", this,
@@ -1191,7 +1194,8 @@ void NavigationRequest::CommitNavigation() {
 
   render_frame_host->CommitNavigation(
       response_.get(), std::move(body_), std::move(handle_), common_params_,
-      request_params_, is_view_source_, std::move(subresource_loader_params_));
+      request_params_, is_view_source_, std::move(subresource_loader_params_),
+      devtools_navigation_token_);
 
   frame_tree_node_->ResetNavigationRequest(true, true);
 }

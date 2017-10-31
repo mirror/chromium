@@ -88,7 +88,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
       bool is_history_navigation_in_new_child,
       const scoped_refptr<ResourceRequestBody>& post_body,
       const base::TimeTicks& navigation_start,
-      NavigationControllerImpl* controller);
+      NavigationControllerImpl* controller,
+      const base::UnguessableToken& devtools_navigation_token);
 
   // Creates a request for a renderer-intiated navigation.
   // Note: |body| is sent to the IO thread when calling BeginNavigation, and
@@ -197,7 +198,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
                     bool browser_initiated,
                     bool from_begin_navigation,
                     const FrameNavigationEntry* frame_navigation_entry,
-                    const NavigationEntryImpl* navitation_entry);
+                    const NavigationEntryImpl* navitation_entry,
+                    const base::UnguessableToken& devtools_navigation_token);
 
   // NavigationURLLoaderDelegate implementation.
   void OnRequestRedirected(
@@ -346,6 +348,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // Used in the network service world to pass the subressource loader params
   // to the renderer. Used by AppCache and ServiceWorker.
   base::Optional<SubresourceLoaderParams> subresource_loader_params_;
+
+  base::UnguessableToken devtools_navigation_token_;
 
   base::WeakPtrFactory<NavigationRequest> weak_factory_;
 

@@ -361,7 +361,8 @@ TEST_F(RenderFrameImplTest, ZoomLimit) {
   GetMainRenderFrame()->SetHostZoomLevel(common_params.url, kMinZoomLevel);
   GetMainRenderFrame()->NavigateInternal(
       common_params, StartNavigationParams(), RequestNavigationParams(),
-      std::unique_ptr<StreamOverrideParameters>());
+      std::unique_ptr<StreamOverrideParameters>(),
+      base::UnguessableToken::Create());
   base::RunLoop().RunUntilIdle();
   EXPECT_DOUBLE_EQ(kMinZoomLevel, view_->GetWebView()->ZoomLevel());
 
