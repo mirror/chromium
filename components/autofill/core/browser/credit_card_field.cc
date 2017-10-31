@@ -213,6 +213,10 @@ std::unique_ptr<FormField> CreditCardField::Parse(AutofillScanner* scanner) {
       scanner->RewindTo(saved_cursor);
       return nullptr;
     }
+    if (!scanner->Cursor()->is_focusable) {
+      scanner->Advance();
+      continue;
+    }
 
     break;
   }
