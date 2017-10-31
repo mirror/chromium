@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "3c226443_b2d24fec",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T21:56:14Z",
+      "side": 1,
+      "message": "This method is used by cc right? Since it\u0027s only observing rather than changing anything could we do this without a lock? i.e. observe a bool that gets updated when register / unregister is called. As far as I can tell it\u0027s an optimization to not call when not necessary so it should be fine if we get a wrong answer when it has just changed.",
+      "revId": "356d82929f92c913c987d633a7c21ddaeb1c614f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d7e2fd_0ade7638",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-31T21:56:14Z",
+      "side": 1,
+      "message": "Can we post messages to get the methods invoked on the same thread rather than locking?",
+      "revId": "356d82929f92c913c987d633a7c21ddaeb1c614f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d942559_5af93f68",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 29
