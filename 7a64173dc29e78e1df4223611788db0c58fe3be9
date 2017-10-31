@@ -16,6 +16,24 @@
       "revId": "7a64173dc29e78e1df4223611788db0c58fe3be9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b73992_b8153589",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-31T13:10:19Z",
+      "side": 1,
+      "message": "Uh, oh, not needed (and VaapiTfpPicture doesn\u0027t have it)\nmust have seeped from another CL. \nCorrecting it.",
+      "parentUuid": "78d71567_e5eb3b04",
+      "revId": "7a64173dc29e78e1df4223611788db0c58fe3be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
