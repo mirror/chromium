@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63017cdf_c4dfe6d5",
+        "filename": "chromeos/dbus/fake_shill_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-31T14:56:59Z",
+      "side": 1,
+      "message": "Note: got rid of DEPRECATED methods defined in base::Value.\nMaybe we want to do similar refactoring in this file, but IMO it is out of scope of this CL.",
+      "revId": "0247d7c780f8a7f92a669ed3ec1205fe893261e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
