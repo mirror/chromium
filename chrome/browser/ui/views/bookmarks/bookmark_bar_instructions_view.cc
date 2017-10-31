@@ -20,6 +20,9 @@
 
 namespace {
 
+// Use CONTEXT_BUTTON to be consistent with LabelButtons in the toolbar.
+constexpr int kTextContext = views::style::CONTEXT_BUTTON;
+
 // Horizontal padding, in pixels, between the link and label.
 int GetViewPadding() {
   static int space_width =
@@ -36,14 +39,14 @@ BookmarkBarInstructionsView::BookmarkBarInstructionsView(
       import_link_(NULL),
       updated_colors_(false) {
   instructions_ = new views::Label(
-      l10n_util::GetStringUTF16(IDS_BOOKMARKS_NO_ITEMS));
+      l10n_util::GetStringUTF16(IDS_BOOKMARKS_NO_ITEMS), kTextContext);
   instructions_->SetAutoColorReadabilityEnabled(false);
   instructions_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   AddChildView(instructions_);
 
   if (browser_defaults::kShowImportOnBookmarkBar) {
     import_link_ = new views::Link(
-        l10n_util::GetStringUTF16(IDS_BOOKMARK_BAR_IMPORT_LINK));
+        l10n_util::GetStringUTF16(IDS_BOOKMARK_BAR_IMPORT_LINK), kTextContext);
     // We don't want the link to alter tab navigation.
     import_link_->SetFocusBehavior(FocusBehavior::NEVER);
     import_link_->set_listener(this);
