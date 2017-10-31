@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6d48ca1_7d705bba",
+        "filename": "chrome/renderer/content_settings_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-31T18:51:25Z",
+      "side": 1,
+      "message": "may be #include \"ipc/ipc_test_sink.h\"",
+      "range": {
+        "startLine": 323,
+        "startChar": 39,
+        "endLine": 323,
+        "endChar": 43
+      },
+      "revId": "782806db9fed1867552086e6df4d59b5e88312de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ea9d1b_4ac7adad",
+        "filename": "chrome/renderer/content_settings_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-31T18:51:25Z",
+      "side": 1,
+      "message": "May be rm |was_blocked|. combine with the statement above.",
+      "range": {
+        "startLine": 325,
+        "startChar": 14,
+        "endLine": 325,
+        "endChar": 25
+      },
+      "revId": "782806db9fed1867552086e6df4d59b5e88312de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
