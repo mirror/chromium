@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ade5869_60f9f2c8",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3167,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T22:12:01Z",
+      "side": 0,
+      "message": "This is the same #if as line 3115. It\u0027s an unneeded nested #if.",
+      "revId": "6f3a2600804e7c5839ae4221d403e5e453f54abb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
