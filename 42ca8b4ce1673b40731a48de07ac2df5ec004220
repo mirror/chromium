@@ -22,6 +22,30 @@
       "revId": "42ca8b4ce1673b40731a48de07ac2df5ec004220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46669c2f_db26fcca",
+        "filename": "net/spdy/OWNERS",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-31T20:05:11Z",
+      "side": 1,
+      "message": "That was precisely the thing I most wanted feedback on.  Done, thanks!",
+      "parentUuid": "8097a072_b2083170",
+      "range": {
+        "startLine": 6,
+        "startChar": 19,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "42ca8b4ce1673b40731a48de07ac2df5ec004220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
