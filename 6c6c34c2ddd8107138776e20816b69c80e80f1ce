@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d21e85e2_5cbdc97d",
+        "filename": "components/language/ios/browser/ios_language_detection_tab_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-31T04:20:51Z",
+      "side": 1,
+      "message": "Fair enough - in my opinion it\u0027s not worth the messiness, so leaving as-is.\n\nThanks for the review.",
+      "parentUuid": "4cd78dbb_6ca80d9d",
+      "revId": "6c6c34c2ddd8107138776e20816b69c80e80f1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20a97faa_235fb4d9",
         "filename": "ios/chrome/browser/translate/translate_egtest.mm",
         "patchSetId": 7
