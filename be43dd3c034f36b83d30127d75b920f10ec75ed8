@@ -22,6 +22,30 @@
       "revId": "be43dd3c034f36b83d30127d75b920f10ec75ed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321f938d_54fc4898",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-31T15:23:50Z",
+      "side": 1,
+      "message": "As in, change the flag inside of ChromeFullscreenManager to be tri-state? That seems like a good idea.",
+      "parentUuid": "e076fa4f_ff0a3e17",
+      "range": {
+        "startLine": 97,
+        "startChar": 49,
+        "endLine": 97,
+        "endChar": 87
+      },
+      "revId": "be43dd3c034f36b83d30127d75b920f10ec75ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
