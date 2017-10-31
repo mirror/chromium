@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eefafcfa_efa13d1d",
+        "filename": "media/ffmpeg/ffmpeg_decoding_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T21:14:29Z",
+      "side": 1,
+      "message": "FFmpegVideoDecoder used to loop past the first EOF to be sure we get all the EOF buffers out. Is similar needed here?",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b13acb_20bc3657",
+        "filename": "media/ffmpeg/ffmpeg_decoding_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T21:14:29Z",
+      "side": 1,
+      "message": "Not clear why this is done for EAGAIN. Probably needs a comment.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36836313_18037248",
+        "filename": "media/ffmpeg/ffmpeg_decoding_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T21:14:29Z",
+      "side": 1,
+      "message": "How do you know they _both_ returned EAGAIN? Looks like you\u0027re only checking the return from receive, not send.",
+      "range": {
+        "startLine": 43,
+        "startChar": 53,
+        "endLine": 43,
+        "endChar": 66
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58c5eec_faec48ea",
+        "filename": "media/ffmpeg/ffmpeg_decoding_loop.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T21:14:29Z",
+      "side": 1,
+      "message": "Also, I think the comment is wrong. I don\u0027t see avcodec_flush_buffers called inside the loop.",
+      "range": {
+        "startLine": 60,
+        "startChar": 15,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773cbc04_6b82f09d",
+        "filename": "media/ffmpeg/ffmpeg_decoding_loop.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T21:14:29Z",
+      "side": 1,
+      "message": "extra words",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 14
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e892404d_8bb7daed",
+        "filename": "media/filters/ffmpeg_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T21:14:29Z",
+      "side": 1,
+      "message": "Why 1? Needs a comment.",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995cdc99_86e168b6",
+        "filename": "media/filters/ffmpeg_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T21:14:29Z",
+      "side": 1,
+      "message": "Stale comment. Multiple EOS is no longer handled by the code below",
+      "range": {
+        "startLine": 279,
+        "startChar": 6,
+        "endLine": 279,
+        "endChar": 44
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9985d6cf_605074d5",
+        "filename": "media/filters/ffmpeg_video_decoder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T21:14:29Z",
+      "side": 1,
+      "message": "Can you add some documentation for the bool return values here?",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 52
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afd009c_a975a23e",
+        "filename": "media/filters/ffmpeg_video_decoder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T21:14:29Z",
+      "side": 1,
+      "message": "Update the name?",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6238497c_006e491c",
+        "filename": "media/filters/media_file_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T21:14:29Z",
+      "side": 1,
+      "message": "I think this auto doesn\u0027t help. Its not obvious from this call what the returned type will be.",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 10
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec4ea9c_a0451133",
+        "filename": "media/filters/media_file_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-31T21:14:29Z",
+      "side": 1,
+      "message": "ditto for subtle auto",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 8
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
