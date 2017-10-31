@@ -18,7 +18,7 @@ using ui::PlatformEventSource;
 namespace gl {
 
 NativeViewGLSurfaceEGLX11::NativeViewGLSurfaceEGLX11(EGLNativeWindowType window)
-    : NativeViewGLSurfaceEGL(0, nullptr), parent_window_(window) {}
+    : NativeViewGLSurfaceEGL(0, nullptr, false), parent_window_(window) {}
 
 bool NativeViewGLSurfaceEGLX11::InitializeNativeWindow() {
   Display* x11_display = GetNativeDisplay();

@@ -32,7 +32,8 @@ GLSurfaceCast::GLSurfaceCast(gfx::AcceleratedWidget widget,
     : NativeViewGLSurfaceEGL(
           parent->GetNativeWindow(),
           std::make_unique<gfx::FixedVSyncProvider>(base::TimeTicks(),
-                                                    GetVSyncInterval())),
+                                                    GetVSyncInterval()),
+          false),
       widget_(widget),
       parent_(parent),
       supports_swap_buffer_with_bounds_(
