@@ -147,6 +147,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   net::HostPortPair GetSocketAddress() override;
   const net::HttpResponseHeaders* GetResponseHeaders() override;
   net::HttpResponseInfo::ConnectionInfo GetConnectionInfo() override;
+  const base::Optional<net::SSLInfo>& GetSSLInfo() override;
+  bool ShouldSSLErrorsBeFatal() override;
   void RegisterThrottleForTesting(
       std::unique_ptr<NavigationThrottle> navigation_throttle) override;
   NavigationThrottle::ThrottleCheckResult CallWillStartRequestForTesting(
@@ -472,15 +474,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // throttle at index |next_index_ -1|). If the handle is not deferred, returns
   // nullptr;
   NavigationThrottle* GetDeferringThrottle() const;
-
-  // Returns the SSLInfo for a request that failed due to a certificate error.
-  // In the case of other request failures, returns base::nullopt.
-  // TODO(crrev.com/c/621236): Expose and use this method outside //content.
-  base::Optional<net::SSLInfo> GetSSLInfo();
-
-  // Returns the whether failure for a certificate error should be fatal.
-  // TODO(crrev.com/c/621236): Expose and use this method outside //content.
-  bool ShouldSSLErrorsBeFatal();
 
   // See NavigationHandle for a description of those member variables.
   GURL url_;
