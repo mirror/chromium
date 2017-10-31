@@ -16,6 +16,24 @@
       "revId": "6f91757d2d2ba99ec95e8ded803ff25d7ec4c60e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f78963_6528f3da",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-31T21:14:12Z",
+      "side": 1,
+      "message": "No, if you change multiple settings it will show the info bar. This gets called each time a permission changes, so the times that it\u0027s called on non-sound settings will set show_info_bar_ to true",
+      "parentUuid": "4a0c2fe3_9d8d7d74",
+      "revId": "6f91757d2d2ba99ec95e8ded803ff25d7ec4c60e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
