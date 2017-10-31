@@ -39,6 +39,80 @@
       "revId": "c928d52a2726a24683ba9d5262432140d8f57927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93cf849_7e8b5500",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-31T11:51:59Z",
+      "side": 1,
+      "message": "This is a good candidate to be renamed, since we didn\u0027t like the \"placeholder\" name.",
+      "revId": "c928d52a2726a24683ba9d5262432140d8f57927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a253abc_bfc6e112",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-31T11:51:59Z",
+      "side": 1,
+      "message": "Constrains",
+      "range": {
+        "startLine": 97,
+        "startChar": 3,
+        "endLine": 97,
+        "endChar": 14
+      },
+      "revId": "c928d52a2726a24683ba9d5262432140d8f57927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1018d594_34a01f20",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-31T11:51:59Z",
+      "side": 1,
+      "message": "Why are these compression/hugging calls needed?  What happens if you leave them out?\n\nMight be worth commenting with an explanation, because we don\u0027t set these values very often.",
+      "revId": "c928d52a2726a24683ba9d5262432140d8f57927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc709642_9e95b1cc",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-31T11:51:59Z",
+      "side": 1,
+      "message": "Is there any way to fix this now, before submitting?\n\nWe should at least use ObjCCastStrict here, so that the app fails loudly if the superview is of an unexpected class.",
+      "revId": "c928d52a2726a24683ba9d5262432140d8f57927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
