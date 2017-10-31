@@ -10,7 +10,6 @@
 #include "public/platform/WebString.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerCache.h"
-#include "public/platform/modules/serviceworker/WebServiceWorkerCacheError.h"
 
 #include <memory>
 
@@ -24,14 +23,17 @@ class WebServiceWorkerCache;
 // operations complete.
 class WebServiceWorkerCacheStorage {
  public:
-  using CacheStorageCallbacks = WebCallbacks<void, WebServiceWorkerCacheError>;
+  using CacheStorageCallbacks =
+      WebCallbacks<void, blink::mojom::ServiceWorkerCacheError>;
   using CacheStorageWithCacheCallbacks =
       WebCallbacks<std::unique_ptr<WebServiceWorkerCache>,
-                   WebServiceWorkerCacheError>;
+                   blink::mojom::ServiceWorkerCacheError>;
   using CacheStorageKeysCallbacks =
-      WebCallbacks<const WebVector<WebString>&, WebServiceWorkerCacheError>;
+      WebCallbacks<const WebVector<WebString>&,
+                   blink::mojom::ServiceWorkerCacheError>;
   using CacheStorageMatchCallbacks =
-      WebCallbacks<const WebServiceWorkerResponse&, WebServiceWorkerCacheError>;
+      WebCallbacks<const WebServiceWorkerResponse&,
+                   blink::mojom::ServiceWorkerCacheError>;
 
   virtual ~WebServiceWorkerCacheStorage() {}
 
