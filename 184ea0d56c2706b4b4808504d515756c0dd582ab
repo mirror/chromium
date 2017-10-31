@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8b74599_f30985d7",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T17:04:19Z",
+      "side": 1,
+      "message": "How about moving this to a separate function, say PaintNodeIcon or something?",
+      "range": {
+        "startLine": 784,
+        "startChar": 4,
+        "endLine": 800,
+        "endChar": 77
+      },
+      "revId": "184ea0d56c2706b4b4808504d515756c0dd582ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20862d5f_c87ca0c0",
+        "filename": "ui/views/controls/tree/tree_view_drawing_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T17:04:19Z",
+      "side": 1,
+      "message": "If you need the ability to made some nodes have icons and not others, then I think you\u0027ll need to also update how the preferred size is calculated.",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 36
+      },
+      "revId": "184ea0d56c2706b4b4808504d515756c0dd582ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
