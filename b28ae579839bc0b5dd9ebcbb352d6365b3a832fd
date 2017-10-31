@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2da7b6f2_63fb367d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-31T02:26:49Z",
+      "side": 1,
+      "message": "Optional: we can use http://crrev.com/c/720817\nshorter is better. ;-)",
+      "revId": "b28ae579839bc0b5dd9ebcbb352d6365b3a832fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4bced7_4fc69ab8",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-31T02:26:49Z",
+      "side": 1,
+      "message": "nit: Should be DCHEK_NE(state, SelectionState::kContain)\nThen we don\u0027t need to have \"\u003c\u003c\".",
+      "revId": "b28ae579839bc0b5dd9ebcbb352d6365b3a832fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b043b307_772cf3c5",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-31T02:26:49Z",
+      "side": 1,
+      "message": "nit: s/containing_block/runner/\nas L319-L323\n\nShould we introduce MarkContainingBlocks(LayoutObject*, SelectionState state), where state is kContain or kNone, to share code?",
+      "revId": "b28ae579839bc0b5dd9ebcbb352d6365b3a832fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
