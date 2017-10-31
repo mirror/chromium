@@ -12,7 +12,7 @@
 #include "content/common/navigation_params.h"
 #include "content/common/service_manager/service_manager_connection_impl.h"
 #include "content/network/network_context.h"
-#include "content/network/url_loader_impl.h"
+#include "content/network/url_loader.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_ui_data.h"
