@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d6437d3_c277f6df",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T01:35:10Z",
+      "side": 1,
+      "message": "content::WebContents* const initiator_;",
+      "revId": "cd7855051ce052e248cbbfb802c3d4b0b78ced8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12732168_9688ed4c",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T01:35:10Z",
+      "side": 1,
+      "message": "If you write all the new base::Value code the new way, you can at the very end use an adapter to pass it to HandleGetPreview().\n\nbase::Value args(base::Value::Type::LIST);\n...\nstd::unique_ptr\u003cListValue\u003e list_args \u003d\n    base::ListValue::From(base::Value::ToUniquePtrValue(std::move(args)));\nhandler()-\u003eHandleGetPreview(list_args.get());\n\nThen there\u0027s less work to do in the future to convert code to the new way. The ToUniquePtrValue() use makes it obvious that this is an adapter that needs to eventually go away.",
+      "revId": "cd7855051ce052e248cbbfb802c3d4b0b78ced8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d2697b_794e9222",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T01:35:10Z",
+      "side": 1,
+      "message": "const char works too and is simpler.",
+      "revId": "cd7855051ce052e248cbbfb802c3d4b0b78ced8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30996f11_a27ad81e",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T01:35:10Z",
+      "side": 1,
+      "message": "Maybe preview_id_found?",
+      "revId": "cd7855051ce052e248cbbfb802c3d4b0b78ced8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be28daf_765f172d",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T01:35:10Z",
+      "side": 1,
+      "message": "Do this after the if statement. There\u0027s no need to call FindKey() if the loop ends up not using the result.",
+      "revId": "cd7855051ce052e248cbbfb802c3d4b0b78ced8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
