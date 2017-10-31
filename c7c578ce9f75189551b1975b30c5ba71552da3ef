@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43602edc_fab68d9a",
+        "filename": "third_party/libaom/enable.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-10-31T03:39:08Z",
+      "side": 1,
+      "message": "The alternative is to declare these where it says \"DON\u0027T ADD MORE FLAGS HERE.\" in https://chromium.googlesource.com/chromium/src/build/config/+/master/BUILDCONFIG.gn#154\n\nlibvpx has dependencies in\ncontent/renderer/BUILD.gn\ncontent/test/BUILD.gn\nmedia/base/BUILD.gn\nmedia/cast/BUILD.gn\nmedia/filters/BUILD.gn\nremoting/base/BUILD.gn\nremoting/codec/BUILD.gn\n\nso adding an include to content and media (probably won\u0027t be in remoting for a while) seemed pretty reasonable given the strong language in BUILDCONFIG.gn.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "c7c578ce9f75189551b1975b30c5ba71552da3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f09432_7a9a81a8",
+        "filename": "third_party/libaom/generate_gni.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-10-31T03:39:08Z",
+      "side": 1,
+      "message": "not actually sure if av1 has a useful postproc or if this is a no-op",
+      "range": {
+        "startLine": 312,
+        "startChar": 48,
+        "endLine": 312,
+        "endChar": 56
+      },
+      "revId": "c7c578ce9f75189551b1975b30c5ba71552da3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b92e1bc_3c7881b0",
+        "filename": "third_party/libaom/generate_gni.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-10-31T03:39:08Z",
+      "side": 1,
+      "message": "av1 is targeting higher resolutions, but I\u0027m pretty sure 16k x 16k is still pretty far out there.",
+      "range": {
+        "startLine": 313,
+        "startChar": 45,
+        "endLine": 313,
+        "endChar": 56
+      },
+      "revId": "c7c578ce9f75189551b1975b30c5ba71552da3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07b2869_de19c4c4",
+        "filename": "third_party/libaom/generate_gni.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-10-31T03:39:08Z",
+      "side": 1,
+      "message": "I didn\u0027t want to throw this config information away, but I also think x86[_64] is a good starting point for now.",
+      "range": {
+        "startLine": 318,
+        "startChar": 1,
+        "endLine": 318,
+        "endChar": 17
+      },
+      "revId": "c7c578ce9f75189551b1975b30c5ba71552da3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
