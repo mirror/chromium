@@ -10,8 +10,11 @@
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/ios/browser/profile_oauth2_token_service_ios_delegate.h"
+#include "ios/web_view/internal/signin/ios_web_view_signin_client.h"
 #include "ios/web_view/internal/signin/web_view_account_tracker_service_factory.h"
 #include "ios/web_view/internal/signin/web_view_oauth2_token_service_factory.h"
+#include "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.h"
+#include "ios/web_view/internal/signin/web_view_signin_client_factory.h"
 #include "ios/web_view/internal/signin/web_view_signin_manager_factory.h"
 #include "ios/web_view/internal/web_view_browser_state.h"
 #import "ios/web_view/public/cwv_authentication_controller_delegate.h"
@@ -32,6 +35,8 @@
   self = [super init];
   if (self) {
     _browserState = browserState;
+
+    [self signinClient]->SetAuthenticationController(self);
   }
   return self;
 }
@@ -101,6 +106,13 @@
 - (ProfileOAuth2TokenServiceIOSDelegate*)tokenServiceDelegate {
   return static_cast<ProfileOAuth2TokenServiceIOSDelegate*>(
       [self tokenService]->GetDelegate());
+}
+
+- (IOSWebViewSigninClient*)signinClient {
+  IOSWebViewSigninClient* signInClient = static_cast<IOSWebViewSigninClient*>(
+      ios_web_view::WebViewSigninClientFactory::GetForBrowserState(
+          _browserState));
+  return signInClient;
 }
 
 - (std::string)authenticatedAccountID {
