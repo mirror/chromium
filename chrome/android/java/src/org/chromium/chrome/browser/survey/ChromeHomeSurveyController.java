@@ -8,13 +8,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
+import android.text.style.ClickableSpan;
 
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.StrictModeContext;
+import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.infobar.SurveyInfoBar;
+import org.chromium.chrome.browser.infobar.SurveyInfoBarObserver;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.preferences.privacy.PrivacyPreferencesManager;
 import org.chromium.chrome.browser.tab.Tab;
@@ -27,12 +30,15 @@ import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.components.variations.VariationsAssociatedData;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
+import org.chromium.ui.text.SpanApplier;
+import org.chromium.ui.text.SpanApplier.SpanInfo;
 
 /**
  * Class that controls if and when to show surveys related to the Chrome Home experiment.
  */
 public class ChromeHomeSurveyController {
     static final String SURVEY_INFO_BAR_DISPLAYED = "chrome_home_survey_info_bar_displayed";
+    static final String SURVEY_INFOBAR_DISMISSED = "chrome_home_survey_info_bar_dismissed";
     static final long ONE_WEEK_IN_MILLIS = 604800000L;
 
     private static final String PARAM_NAME = "survey_override_site_id";
@@ -133,7 +139,8 @@ public class ChromeHomeSurveyController {
     }
 
     private void showSurveyInfoBar(WebContents webContents, String siteId) {
-        SurveyInfoBar.showSurveyInfoBar(webContents, siteId, true, R.drawable.chrome_sync_logo);
+        SurveyInfoBar.showSurveyInfoBar(
+                webContents, siteId, true, R.drawable.chrome_sync_logo, getSurveyInfoBarObserver());
         SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
         sharedPreferences.edit().putBoolean(SURVEY_INFO_BAR_DISPLAYED, true).apply();
     }
@@ -165,5 +172,29 @@ public class ChromeHomeSurveyController {
     @VisibleForTesting
     public static ChromeHomeSurveyController createChromeHomeSurveyControllerForTests() {
         return new ChromeHomeSurveyController();
+    }
+
+    private SurveyInfoBarObserver getSurveyInfoBarObserver() {
+        return new SurveyInfoBarObserver() {
+
+            @Override
+            public void onSurveyInfoBarClosed() {
+                SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
+                sharedPreferences.edit().putBoolean(SURVEY_INFOBAR_DISMISSED, true).apply();
+            }
+
+            @Override
+            public void onSurveyAccepted() {
+                RecordUserAction.record("Android.ChromeHome.AcceptedSurvey");
+            }
+
+            @Override
+            public CharSequence getSurveyPromptString(ClickableSpan clickableSpan) {
+                CharSequence infoBarText = SpanApplier.applySpans(
+                        ContextUtils.getApplicationContext().getString(R.string.survey_prompt),
+                        new SpanInfo("<LINK>", "</LINK>", clickableSpan));
+                return infoBarText;
+            }
+        };
     }
 }
