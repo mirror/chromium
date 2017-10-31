@@ -64,9 +64,6 @@ class CoordinationUnitBase {
   static std::vector<CoordinationUnitBase*> GetCoordinationUnitsOfType(
       CoordinationUnitType cu_type);
 
-  // Propagate property change to relevant |CoordinationUnitBase| instances.
-  virtual void PropagateProperty(mojom::PropertyType property_type,
-                                 int64_t value) {}
   virtual void OnEventReceived(mojom::Event event);
   virtual void OnPropertyChanged(mojom::PropertyType property_type,
                                  int64_t value);
