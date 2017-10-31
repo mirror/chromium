@@ -47,7 +47,7 @@ public class PaymentRequestServiceWorkerPaymentAppTest {
             final ServiceWorkerPaymentApp.Capabilities[] capabilities) {
         PaymentAppFactory.getInstance().addAdditionalFactory(
                 (webContents, methodNames, callback) -> {
-                    ServiceWorkerPaymentAppBridge.setCanMakePaymentForTesting(true);
+                    ServiceWorkerPaymentAppBridge.setCanMakePaymentForTesting();
                     callback.onPaymentAppCreated(new ServiceWorkerPaymentApp(webContents,
                             0 /* registrationId */,
                             UriUtils.parseUriFromString("https://bobpay.com") /* scope */,

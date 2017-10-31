@@ -12,14 +12,15 @@ import android.text.TextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
-import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.payments.PaymentAppFactory.PaymentAppFactoryAddition;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.payments.mojom.PaymentDetailsModifier;
 import org.chromium.payments.mojom.PaymentItem;
 import org.chromium.payments.mojom.PaymentMethodData;
 
 import java.net.URI;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -27,31 +28,27 @@ import javax.annotation.Nullable;
 /**
  * Native bridge for interacting with service worker based payment apps.
  */
-// TODO(tommyt): crbug.com/669876. Remove these suppressions when we actually
-// start using all of the functionality in this class.
-@SuppressFBWarnings({"UWF_NULL_FIELD", "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD",
-        "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD"})
-public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentAppFactoryAddition {
+public class ServiceWorkerPaymentAppBridge implements PaymentAppFactoryAddition {
     private static final String TAG = "SWPaymentApp";
     private static boolean sCanMakePaymentForTesting;
 
     /**
      * The interface for the requester to check whether a SW payment app can make payment.
      */
-    static interface CanMakePaymentCallback {
+    /* package */ interface CanMakePaymentCallback {
         /**
          * Called by this app to provide an information whether can make payment asynchronously.
          *
          * @param canMakePayment Indicates whether a SW payment app can make payment.
          */
-        public void onCanMakePaymentResponse(boolean canMakePayment);
+        void onCanMakePaymentResponse(boolean canMakePayment);
     }
 
     @Override
-    public void create(WebContents webContents, Set<String> methodNames,
+    public void create(WebContents webContents, Map<String, PaymentMethodData> methodData,
             PaymentAppFactory.PaymentAppCreatedCallback callback) {
-        nativeGetAllPaymentApps(
-                webContents, methodNames.toArray(new String[methodNames.size()]), callback);
+        nativeGetAllPaymentApps(webContents,
+                methodData.values().toArray(new PaymentMethodData[methodData.size()]), callback);
     }
 
     /**
@@ -81,12 +78,10 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
 
     /**
      * Make canMakePayment() return true always for testing purpose.
-     *
-     * @param canMakePayment Indicates whether a SW payment app can make payment.
      */
     @VisibleForTesting
-    public static void setCanMakePaymentForTesting(boolean canMakePayment) {
-        sCanMakePaymentForTesting = canMakePayment;
+    /* package */ static void setCanMakePaymentForTesting() {
+        sCanMakePaymentForTesting = true;
     }
 
     /**
@@ -104,9 +99,10 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
      * @param modifiers        Payment method specific modifiers to the payment items and the total.
      * @param callback         Called after the payment app is finished running.
      */
-    public static void invokePaymentApp(WebContents webContents, long registrationId, String origin,
-            String iframeOrigin, String paymentRequestId, Set<PaymentMethodData> methodData,
-            PaymentItem total, Set<PaymentDetailsModifier> modifiers,
+    /* package */ static void invokePaymentApp(WebContents webContents, long registrationId,
+            String origin, String iframeOrigin, String paymentRequestId,
+            Set<PaymentMethodData> methodData, PaymentItem total,
+            Set<PaymentDetailsModifier> modifiers,
             PaymentInstrument.InstrumentDetailsCallback callback) {
         nativeInvokePaymentApp(webContents, registrationId, origin, iframeOrigin, paymentRequestId,
                 methodData.toArray(new PaymentMethodData[0]), total,
@@ -120,7 +116,7 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
      * @param registrationId   The service worker registration ID of the Payment App.
      * @param callback         Called after abort invoke payment app is finished running.
      */
-    public static void abortPaymentApp(WebContents webContents, long registrationId,
+    /* package */ static void abortPaymentApp(WebContents webContents, long registrationId,
             PaymentInstrument.AbortCallback callback) {
         nativeAbortPaymentApp(webContents, registrationId, callback);
     }
@@ -231,7 +227,7 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
      * has been resolved.
      */
     private static native void nativeGetAllPaymentApps(
-            WebContents webContents, String[] pmis, Object callback);
+            WebContents webContents, PaymentMethodData[] methodData, Object callback);
 
     /*
      * TODO(tommyt): crbug.com/505554. Change the |callback| parameter below to
