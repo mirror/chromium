@@ -16,6 +16,24 @@
       "revId": "e608dc77c37912ca9f4b7e0115af04312b3b65d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7275ec6_7c20cb4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-31T20:06:54Z",
+      "side": 1,
+      "message": "hah. You are right. Changed the commit message also added a simple test for the transition.",
+      "parentUuid": "9cf53ee4_28a0a910",
+      "revId": "e608dc77c37912ca9f4b7e0115af04312b3b65d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
