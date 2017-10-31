@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "730e2aaa_a205efa2",
+        "filename": "net/reporting/reporting_header_parser_fuzzer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-31T17:30:18Z",
+      "side": 1,
+      "message": "Thanks, that seems to work!",
+      "parentUuid": "a7fc4fcc_817699ed",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 78
+      },
+      "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd419417_b651926d",
         "filename": "net/reporting/reporting_header_parser_fuzzer.cc",
         "patchSetId": 7
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5dfcd8f7_23b08217",
+        "filename": "net/reporting/reporting_header_parser_fuzzer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-31T17:30:18Z",
+      "side": 1,
+      "message": "Oops, thanks!",
+      "parentUuid": "dd419417_b651926d",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6ed38f6_db70f51f",
         "filename": "net/reporting/reporting_header_parser_fuzzer.cc",
         "patchSetId": 7
@@ -86,6 +134,24 @@
       "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473b0e85_42161f45",
+        "filename": "net/reporting/reporting_header_parser_fuzzer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-31T17:30:18Z",
+      "side": 1,
+      "message": "Fair point. I\u0027m also not 100% sure, but it doesn\u0027t seem to add a lot of complexity on the mutator side, since all the values are either bool or int types. I tend to think that it\u0027s worth trying.",
+      "parentUuid": "c6ed38f6_db70f51f",
+      "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "a6d57622_cedfcf85",
+        "filename": "testing/libfuzzer/proto/json.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-31T17:30:18Z",
+      "side": 1,
+      "message": "Sure, done in https://chromium-review.googlesource.com/c/chromium/src/+/746990",
+      "parentUuid": "c3829c76_9add2342",
+      "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "363d1083_bb168391",
         "filename": "testing/libfuzzer/proto/json_proto_converter.cc",
         "patchSetId": 7
@@ -120,6 +204,24 @@
       "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91b06375_0d304d52",
+        "filename": "testing/libfuzzer/proto/json_proto_converter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-31T17:30:18Z",
+      "side": 1,
+      "message": "Done in https://chromium-review.googlesource.com/c/chromium/src/+/746990 as well",
+      "parentUuid": "363d1083_bb168391",
+      "revId": "2a99f2e1261a68472c8af3f841c82fd50230e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
