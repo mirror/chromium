@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d382bd4b_f7fad51b",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-31T17:42:03Z",
+      "side": 1,
+      "message": "Please explain why we\u0027re breaking the connection here.",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 221,
+        "endChar": 13
+      },
+      "revId": "59ee403f2e62ee9439beb5b04ab560b1beef2c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448a0b8e_586c4581",
+        "filename": "ui/gfx/color_space.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-31T17:42:03Z",
+      "side": 1,
+      "message": "I wonder if it would be better to just get rid of ICC_BASED and just use the presence of icc_profile_id_ to see if it is icc based?",
+      "range": {
+        "startLine": 57,
+        "startChar": 78,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "59ee403f2e62ee9439beb5b04ab560b1beef2c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff148c7_e65bf7d0",
+        "filename": "ui/gfx/icc_profile.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-31T17:42:03Z",
+      "side": 1,
+      "message": "I\u0027m actually not quite sure why you don\u0027t want to store a color space here?\nSeems like you still have all the contents of a color space.",
+      "range": {
+        "startLine": 114,
+        "startChar": 38,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "59ee403f2e62ee9439beb5b04ab560b1beef2c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
