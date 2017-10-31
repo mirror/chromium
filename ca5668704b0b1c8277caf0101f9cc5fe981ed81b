@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6463577f_af98df26",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T23:27:04Z",
+      "side": 1,
+      "message": "ohhh except BaseScrollBarThumb::scroll_bar() does count as a public header, so it should probably return const BaseScrollBar*.. Yeah what you have is good.",
+      "parentUuid": "eccb5149_dea86454",
+      "revId": "ca5668704b0b1c8277caf0101f9cc5fe981ed81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f049c69_4397f845",
         "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
         "patchSetId": 6
