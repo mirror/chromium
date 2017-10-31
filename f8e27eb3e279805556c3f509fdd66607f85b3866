@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d65cc854_98c548cc",
+        "filename": "base/test/launcher/unit_test_launcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-31T22:06:38Z",
+      "side": 1,
+      "message": "nice catch. done.",
+      "parentUuid": "51d80706_3b71b3d4",
+      "range": {
+        "startLine": 425,
+        "startChar": 34,
+        "endLine": 425,
+        "endChar": 58
+      },
+      "revId": "f8e27eb3e279805556c3f509fdd66607f85b3866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f85bf97_b3ecae6c",
         "filename": "base/test/launcher/unit_test_launcher.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-31T16:45:20Z",
       "side": 1,
       "message": "Can the output_file be passed to the constructor too? (no set_output_file)?",
+      "range": {
+        "startLine": 618,
+        "startChar": 2,
+        "endLine": 618,
+        "endChar": 40
+      },
+      "revId": "f8e27eb3e279805556c3f509fdd66607f85b3866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77ec482_5ed8c009",
+        "filename": "base/test/launcher/unit_test_launcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-31T22:06:38Z",
+      "side": 1,
+      "message": "yes. there was some reason i was keeping it apart from the others, but i can\u0027t make any compelling reason now. ah well.",
+      "parentUuid": "9f85bf97_b3ecae6c",
       "range": {
         "startLine": 618,
         "startChar": 2,
