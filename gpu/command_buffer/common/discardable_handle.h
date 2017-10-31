@@ -66,6 +66,8 @@ class GPU_EXPORT DiscardableHandleBase {
 // handle (via the constructor), and can Lock an existing handle.
 class GPU_EXPORT ClientDiscardableHandle : public DiscardableHandleBase {
  public:
+  using Id = uint32_t;
+
   ClientDiscardableHandle(scoped_refptr<Buffer> buffer,
                           uint32_t byte_offset,
                           int32_t shm_id);
