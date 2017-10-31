@@ -16,6 +16,24 @@
       "revId": "9d5a1ed96ba213a24b8f3605c3c50144d8e7f02f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c4366d_57bbbb85",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-31T00:26:17Z",
+      "side": 1,
+      "message": "\u003e This could actually still fail for component builds because the destructor can only set a single protected memory section read-only without additional component build special-casing. If there isn\u0027t a way to make writers per-DSO then we have to just disable protected memory for component builds.\n\nSince you know where the memory you’re protecting is, you can dladdr() to find which module it’s in. Does that help at all?",
+      "parentUuid": "68f4a724_29f5b8c4",
+      "revId": "9d5a1ed96ba213a24b8f3605c3c50144d8e7f02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
