@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e3bdbe8_1dc3e692",
+        "filename": "net/reporting/reporting_header_parser_fuzzer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-10-31T21:06:57Z",
+      "side": 1,
+      "message": "void?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 3
+      },
+      "revId": "a4afab20fa6a8f2acf44f59462e8f8d209973d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee97806b_c545c79d",
+        "filename": "third_party/libprotobuf-mutator/OWNERS",
+        "patchSetId": 12
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-10-31T21:06:57Z",
+      "side": 1,
+      "message": "sure, but looks like unrelated change",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 19
+      },
+      "revId": "a4afab20fa6a8f2acf44f59462e8f8d209973d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
