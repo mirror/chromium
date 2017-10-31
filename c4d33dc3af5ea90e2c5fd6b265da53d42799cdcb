@@ -22,6 +22,30 @@
       "revId": "c4d33dc3af5ea90e2c5fd6b265da53d42799cdcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44953701_a3c38918",
+        "filename": "ash/mus/shell_delegate_mus.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-31T19:21:17Z",
+      "side": 1,
+      "message": "Removed the comment. We really ought to rename the class, I\u0027ll chat with people here about naming things.",
+      "parentUuid": "a5e113b1_9521c695",
+      "range": {
+        "startLine": 19,
+        "startChar": 56,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "c4d33dc3af5ea90e2c5fd6b265da53d42799cdcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
