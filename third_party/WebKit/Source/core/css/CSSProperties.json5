@@ -3111,22 +3111,6 @@
       type_name: "float",
     },
     {
-      name: "-webkit-box-flex-group",
-      api_class: true,
-      api_methods: ["ParseSingleValue"],
-      field_group: "*",
-      field_template: "primitive",
-      default_value: "1",
-      type_name: "unsigned",
-    },
-    {
-      name: "-webkit-box-lines",
-      field_group: "*",
-      field_template: "keyword",
-      keywords: ["single", "multiple"],
-      default_value: "single",
-    },
-    {
       name: "-webkit-box-ordinal-group",
       api_class: true,
       api_methods: ["ParseSingleValue"],

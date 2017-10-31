@@ -2439,11 +2439,6 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyWebkitBoxFlex:
       return CSSPrimitiveValue::Create(style.BoxFlex(),
                                        CSSPrimitiveValue::UnitType::kNumber);
-    case CSSPropertyWebkitBoxFlexGroup:
-      return CSSPrimitiveValue::Create(style.BoxFlexGroup(),
-                                       CSSPrimitiveValue::UnitType::kNumber);
-    case CSSPropertyWebkitBoxLines:
-      return CSSIdentifierValue::Create(style.BoxLines());
     case CSSPropertyWebkitBoxOrdinalGroup:
       return CSSPrimitiveValue::Create(style.BoxOrdinalGroup(),
                                        CSSPrimitiveValue::UnitType::kNumber);
@@ -2779,11 +2774,8 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyWebkitLineClamp:
       if (style.LineClamp().IsNone())
         return CSSIdentifierValue::Create(CSSValueNone);
-      return CSSPrimitiveValue::Create(
-          style.LineClamp().Value(),
-          style.LineClamp().IsPercentage()
-              ? CSSPrimitiveValue::UnitType::kPercentage
-              : CSSPrimitiveValue::UnitType::kNumber);
+      return CSSPrimitiveValue::Create(style.LineClamp().Value(),
+                                       CSSPrimitiveValue::UnitType::kNumber);
     case CSSPropertyLineHeight:
       return ValueForLineHeight(style);
     case CSSPropertyLineHeightStep:

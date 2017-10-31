@@ -31,30 +31,25 @@
 
 namespace blink {
 
-enum class LineClampType { kLineCount, kPercentage };
-
 class LineClampValue {
   DISALLOW_NEW();
 
  public:
-  LineClampValue() : type_(LineClampType::kLineCount), value_(-1) {}
+  LineClampValue() : value_(-1) {}
 
-  LineClampValue(int value, LineClampType type) : type_(type), value_(value) {}
+  LineClampValue(int value) : value_(value) {}
 
   int Value() const { return value_; }
-
-  bool IsPercentage() const { return type_ == LineClampType::kPercentage; }
 
   bool IsNone() const { return value_ == -1; }
 
   bool operator==(const LineClampValue& o) const {
-    return Value() == o.Value() && IsPercentage() == o.IsPercentage();
+    return Value() == o.Value();
   }
 
   bool operator!=(const LineClampValue& o) const { return !(*this == o); }
 
  private:
-  LineClampType type_;
   int value_;
 };
 

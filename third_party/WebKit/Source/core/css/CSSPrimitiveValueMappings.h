@@ -89,20 +89,13 @@ inline float CSSPrimitiveValue::ConvertTo() const {
 template <>
 inline CSSPrimitiveValue::CSSPrimitiveValue(LineClampValue i)
     : CSSValue(kPrimitiveClass) {
-  Init(i.IsPercentage() ? UnitType::kPercentage : UnitType::kInteger);
+  Init(UnitType::kInteger);
   value_.num = static_cast<double>(i.Value());
 }
 
 template <>
 inline LineClampValue CSSPrimitiveValue::ConvertTo() const {
-  if (GetType() == UnitType::kInteger)
-    return LineClampValue(clampTo<int>(value_.num), LineClampType::kLineCount);
-
-  if (GetType() == UnitType::kPercentage)
-    return LineClampValue(clampTo<int>(value_.num), LineClampType::kPercentage);
-
-  NOTREACHED();
-  return LineClampValue();
+  return LineClampValue(clampTo<int>(value_.num));
 }
 
 // TODO(sashab): Move these to CSSIdentifierValueMappings.h, and update to use

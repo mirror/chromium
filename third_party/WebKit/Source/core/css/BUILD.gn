@@ -622,7 +622,6 @@ blink_core_sources("css") {
     "properties/longhands/CSSPropertyAPIWebkitBorderStartColor.cpp",
     "properties/longhands/CSSPropertyAPIWebkitBorderStartWidth.cpp",
     "properties/longhands/CSSPropertyAPIWebkitBoxFlex.cpp",
-    "properties/longhands/CSSPropertyAPIWebkitBoxFlexGroup.cpp",
     "properties/longhands/CSSPropertyAPIWebkitBoxOrdinalGroup.cpp",
     "properties/longhands/CSSPropertyAPIWebkitBoxReflect.cpp",
     "properties/longhands/CSSPropertyAPIWebkitClip.cpp",
