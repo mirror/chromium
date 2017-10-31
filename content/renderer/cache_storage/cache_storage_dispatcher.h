@@ -18,7 +18,6 @@
 #include "content/public/renderer/worker_thread.h"
 #include "ipc/ipc_message.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerCache.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerCacheError.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerCacheStorage.h"
 
 namespace url {
@@ -64,16 +63,16 @@ class CacheStorageDispatcher : public WorkerThread::Observer {
 
   void OnCacheStorageHasError(int thread_id,
                               int request_id,
-                              blink::WebServiceWorkerCacheError reason);
+                              blink::mojom::ServiceWorkerCacheError reason);
   void OnCacheStorageOpenError(int thread_id,
                                int request_id,
-                               blink::WebServiceWorkerCacheError reason);
+                               blink::mojom::ServiceWorkerCacheError reason);
   void OnCacheStorageDeleteError(int thread_id,
                                  int request_id,
-                                 blink::WebServiceWorkerCacheError reason);
+                                 blink::mojom::ServiceWorkerCacheError reason);
   void OnCacheStorageMatchError(int thread_id,
                                 int request_id,
-                                blink::WebServiceWorkerCacheError reason);
+                                blink::mojom::ServiceWorkerCacheError reason);
 
   // Message handlers for Cache messages from the browser process.
   void OnCacheMatchSuccess(int thread_id,
@@ -92,16 +91,16 @@ class CacheStorageDispatcher : public WorkerThread::Observer {
 
   void OnCacheMatchError(int thread_id,
                          int request_id,
-                         blink::WebServiceWorkerCacheError reason);
+                         blink::mojom::ServiceWorkerCacheError reason);
   void OnCacheMatchAllError(int thread_id,
                             int request_id,
-                            blink::WebServiceWorkerCacheError reason);
+                            blink::mojom::ServiceWorkerCacheError reason);
   void OnCacheKeysError(int thread_id,
                         int request_id,
-                        blink::WebServiceWorkerCacheError reason);
+                        blink::mojom::ServiceWorkerCacheError reason);
   void OnCacheBatchError(int thread_id,
                          int request_id,
-                         blink::WebServiceWorkerCacheError reason);
+                         blink::mojom::ServiceWorkerCacheError reason);
 
   // TODO(jsbell): These are only called by WebServiceWorkerCacheStorageImpl
   // and should be renamed to match Chromium conventions. crbug.com/439389

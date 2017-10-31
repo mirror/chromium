@@ -32,7 +32,7 @@
 namespace content {
 
 using base::TimeTicks;
-using blink::WebServiceWorkerCacheError;
+using blink::mojom::ServiceWorkerCacheError;
 using blink::WebServiceWorkerCacheStorage;
 using blink::WebServiceWorkerRequest;
 using blink::WebString;
@@ -121,7 +121,8 @@ template <typename T>
 void ClearCallbacksMapWithErrors(T* callbacks_map) {
   typename T::iterator iter(callbacks_map);
   while (!iter.IsAtEnd()) {
-    iter.GetCurrentValue()->OnError(blink::kWebServiceWorkerCacheErrorNotFound);
+    iter.GetCurrentValue()->OnError(
+        blink::mojom::ServiceWorkerCacheError::kErrorNotFound);
     callbacks_map->Remove(iter.GetCurrentKey());
     iter.Advance();
   }
@@ -344,7 +345,7 @@ void CacheStorageDispatcher::OnCacheStorageMatchSuccess(
 void CacheStorageDispatcher::OnCacheStorageHasError(
     int thread_id,
     int request_id,
-    blink::WebServiceWorkerCacheError reason) {
+    blink::mojom::ServiceWorkerCacheError reason) {
   DCHECK_EQ(thread_id, CurrentWorkerId());
   WebServiceWorkerCacheStorage::CacheStorageCallbacks* callbacks =
       has_callbacks_.Lookup(request_id);
@@ -356,7 +357,7 @@ void CacheStorageDispatcher::OnCacheStorageHasError(
 void CacheStorageDispatcher::OnCacheStorageOpenError(
     int thread_id,
     int request_id,
-    blink::WebServiceWorkerCacheError reason) {
+    blink::mojom::ServiceWorkerCacheError reason) {
   DCHECK_EQ(thread_id, CurrentWorkerId());
   WebServiceWorkerCacheStorage::CacheStorageWithCacheCallbacks* callbacks =
       open_callbacks_.Lookup(request_id);
@@ -368,7 +369,7 @@ void CacheStorageDispatcher::OnCacheStorageOpenError(
 void CacheStorageDispatcher::OnCacheStorageDeleteError(
     int thread_id,
     int request_id,
-    blink::WebServiceWorkerCacheError reason) {
+    blink::mojom::ServiceWorkerCacheError reason) {
   DCHECK_EQ(thread_id, CurrentWorkerId());
   WebServiceWorkerCacheStorage::CacheStorageCallbacks* callbacks =
       delete_callbacks_.Lookup(request_id);
@@ -380,7 +381,7 @@ void CacheStorageDispatcher::OnCacheStorageDeleteError(
 void CacheStorageDispatcher::OnCacheStorageMatchError(
     int thread_id,
     int request_id,
-    blink::WebServiceWorkerCacheError reason) {
+    blink::mojom::ServiceWorkerCacheError reason) {
   DCHECK_EQ(thread_id, CurrentWorkerId());
   WebServiceWorkerCacheStorage::CacheStorageMatchCallbacks* callbacks =
       match_callbacks_.Lookup(request_id);
@@ -453,7 +454,7 @@ void CacheStorageDispatcher::OnCacheBatchSuccess(
 void CacheStorageDispatcher::OnCacheMatchError(
     int thread_id,
     int request_id,
-    blink::WebServiceWorkerCacheError reason) {
+    blink::mojom::ServiceWorkerCacheError reason) {
   DCHECK_EQ(thread_id, CurrentWorkerId());
   blink::WebServiceWorkerCache::CacheMatchCallbacks* callbacks =
       cache_match_callbacks_.Lookup(request_id);
@@ -465,7 +466,7 @@ void CacheStorageDispatcher::OnCacheMatchError(
 void CacheStorageDispatcher::OnCacheMatchAllError(
     int thread_id,
     int request_id,
-    blink::WebServiceWorkerCacheError reason) {
+    blink::mojom::ServiceWorkerCacheError reason) {
   DCHECK_EQ(thread_id, CurrentWorkerId());
   blink::WebServiceWorkerCache::CacheWithResponsesCallbacks* callbacks =
       cache_match_all_callbacks_.Lookup(request_id);
@@ -477,7 +478,7 @@ void CacheStorageDispatcher::OnCacheMatchAllError(
 void CacheStorageDispatcher::OnCacheKeysError(
     int thread_id,
     int request_id,
-    blink::WebServiceWorkerCacheError reason) {
+    blink::mojom::ServiceWorkerCacheError reason) {
   DCHECK_EQ(thread_id, CurrentWorkerId());
   blink::WebServiceWorkerCache::CacheWithRequestsCallbacks* callbacks =
       cache_keys_callbacks_.Lookup(request_id);
@@ -489,11 +490,11 @@ void CacheStorageDispatcher::OnCacheKeysError(
 void CacheStorageDispatcher::OnCacheBatchError(
     int thread_id,
     int request_id,
-    blink::WebServiceWorkerCacheError reason) {
+    blink::mojom::ServiceWorkerCacheError reason) {
   DCHECK_EQ(thread_id, CurrentWorkerId());
   blink::WebServiceWorkerCache::CacheBatchCallbacks* callbacks =
       cache_batch_callbacks_.Lookup(request_id);
-  callbacks->OnError(blink::WebServiceWorkerCacheError(reason));
+  callbacks->OnError(blink::mojom::ServiceWorkerCacheError(reason));
   cache_batch_callbacks_.Remove(request_id);
   cache_batch_times_.erase(request_id);
 }

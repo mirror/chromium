@@ -86,6 +86,8 @@
 #include "base/threading/platform_thread.h"
 #endif
 
+using blink::mojom::ServiceWorkerCacheError;
+
 namespace content {
 namespace {
 
@@ -112,7 +114,7 @@ void ResizeHelperPostMsgToUIThread(int render_process_id,
 
 void NoOpCacheStorageErrorCallback(
     std::unique_ptr<CacheStorageCacheHandle> cache_handle,
-    CacheStorageError error) {}
+    ServiceWorkerCacheError error) {}
 
 }  // namespace
 
@@ -311,8 +313,9 @@ void RenderMessageFilter::OnCacheStorageOpenCallback(
     scoped_refptr<net::IOBuffer> buf,
     int buf_len,
     std::unique_ptr<CacheStorageCacheHandle> cache_handle,
-    CacheStorageError error) {
-  if (error != CACHE_STORAGE_OK || !cache_handle || !cache_handle->value())
+    ServiceWorkerCacheError error) {
+  if (error != ServiceWorkerCacheError::kSuccess || !cache_handle ||
+      !cache_handle->value())
     return;
   CacheStorageCache* cache = cache_handle->value();
   if (!cache)

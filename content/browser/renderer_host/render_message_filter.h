@@ -143,7 +143,7 @@ class CONTENT_EXPORT RenderMessageFilter
       scoped_refptr<net::IOBuffer> buf,
       int buf_len,
       std::unique_ptr<CacheStorageCacheHandle> cache_handle,
-      CacheStorageError error);
+      blink::mojom::ServiceWorkerCacheError error);
   void OnMediaLogEvents(const std::vector<media::MediaLogEvent>&);
 
   bool CheckBenchmarkingEnabled() const;

@@ -42,6 +42,7 @@
 #include "storage/browser/quota/quota_manager_proxy.h"
 
 using base::LazyInstance;
+using blink::mojom::ServiceWorkerCacheError;
 using crypto::SymmetricKey;
 
 namespace content {
@@ -101,7 +102,7 @@ struct CacheStorage::CacheMatchResponse {
   CacheMatchResponse() = default;
   ~CacheMatchResponse() = default;
 
-  CacheStorageError error;
+  ServiceWorkerCacheError error;
   std::unique_ptr<ServiceWorkerResponse> service_worker_response;
   std::unique_ptr<storage::BlobDataHandle> blob_data_handle;
 };
@@ -844,7 +845,8 @@ void CacheStorage::OpenCacheImpl(const std::string& cache_name,
   std::unique_ptr<CacheStorageCacheHandle> cache_handle =
       GetLoadedCache(cache_name);
   if (cache_handle) {
-    std::move(callback).Run(std::move(cache_handle), CACHE_STORAGE_OK);
+    std::move(callback).Run(std::move(cache_handle),
+                            ServiceWorkerCacheError::kSuccess);
     return;
   }
 
@@ -865,7 +867,7 @@ void CacheStorage::CreateCacheDidCreateCache(
 
   if (!cache) {
     std::move(callback).Run(std::unique_ptr<CacheStorageCacheHandle>(),
-                            CACHE_STORAGE_ERROR_STORAGE);
+                            ServiceWorkerCacheError::kErrorStorage);
     return;
   }
 
@@ -896,13 +898,14 @@ void CacheStorage::CreateCacheDidWriteIndex(
 
   // TODO(jkarlin): Handle !success.
 
-  std::move(callback).Run(std::move(cache_handle), CACHE_STORAGE_OK);
+  std::move(callback).Run(std::move(cache_handle),
+                          ServiceWorkerCacheError::kSuccess);
 }
 
 void CacheStorage::HasCacheImpl(const std::string& cache_name,
                                 BoolAndErrorCallback callback) {
   bool has_cache = base::ContainsKey(cache_map_, cache_name);
-  std::move(callback).Run(has_cache, CACHE_STORAGE_OK);
+  std::move(callback).Run(has_cache, ServiceWorkerCacheError::kSuccess);
 }
 
 void CacheStorage::DeleteCacheImpl(const std::string& cache_name,
@@ -912,7 +915,7 @@ void CacheStorage::DeleteCacheImpl(const std::string& cache_name,
   if (!cache_handle) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), false,
-                                  CACHE_STORAGE_ERROR_NOT_FOUND));
+                                  ServiceWorkerCacheError::kErrorNotFound));
     return;
   }
 
@@ -935,7 +938,7 @@ void CacheStorage::DeleteCacheDidWriteIndex(
     // Undo any changes if the index couldn't be written to disk.
     cache_index_->RestoreDoomedCache();
     cache_handle->value()->SetObserver(this);
-    std::move(callback).Run(false, CACHE_STORAGE_ERROR_STORAGE);
+    std::move(callback).Run(false, ServiceWorkerCacheError::kErrorStorage);
     return;
   }
 
@@ -953,7 +956,7 @@ void CacheStorage::DeleteCacheDidWriteIndex(
   if (cache_storage_manager_)
     cache_storage_manager_->NotifyCacheListChanged(origin_);
 
-  std::move(callback).Run(true, CACHE_STORAGE_OK);
+  std::move(callback).Run(true, ServiceWorkerCacheError::kSuccess);
 }
 
 // Call this once the last handle to a doomed cache is gone. It's okay if this
@@ -989,7 +992,7 @@ void CacheStorage::MatchCacheImpl(
       GetLoadedCache(cache_name);
 
   if (!cache_handle) {
-    std::move(callback).Run(CACHE_STORAGE_ERROR_CACHE_NAME_NOT_FOUND,
+    std::move(callback).Run(ServiceWorkerCacheError::kErrorCacheNameNotFound,
                             std::unique_ptr<ServiceWorkerResponse>(),
                             std::unique_ptr<storage::BlobDataHandle>());
     return;
@@ -1008,7 +1011,7 @@ void CacheStorage::MatchCacheImpl(
 void CacheStorage::MatchCacheDidMatch(
     std::unique_ptr<CacheStorageCacheHandle> cache_handle,
     CacheStorageCache::ResponseCallback callback,
-    CacheStorageError error,
+    ServiceWorkerCacheError error,
     std::unique_ptr<ServiceWorkerResponse> response,
     std::unique_ptr<storage::BlobDataHandle> handle) {
   std::move(callback).Run(error, std::move(response), std::move(handle));
@@ -1049,7 +1052,7 @@ void CacheStorage::MatchAllCachesDidMatch(
     std::unique_ptr<CacheStorageCacheHandle> cache_handle,
     CacheMatchResponse* out_match_response,
     const base::RepeatingClosure& barrier_closure,
-    CacheStorageError error,
+    ServiceWorkerCacheError error,
     std::unique_ptr<ServiceWorkerResponse> service_worker_response,
     std::unique_ptr<storage::BlobDataHandle> handle) {
   out_match_response->error = error;
@@ -1063,14 +1066,14 @@ void CacheStorage::MatchAllCachesDidMatchAll(
     std::unique_ptr<std::vector<CacheMatchResponse>> match_responses,
     CacheStorageCache::ResponseCallback callback) {
   for (CacheMatchResponse& match_response : *match_responses) {
-    if (match_response.error == CACHE_STORAGE_ERROR_NOT_FOUND)
+    if (match_response.error == ServiceWorkerCacheError::kErrorNotFound)
       continue;
     std::move(callback).Run(match_response.error,
                             std::move(match_response.service_worker_response),
                             std::move(match_response.blob_data_handle));
     return;
   }
-  std::move(callback).Run(CACHE_STORAGE_ERROR_NOT_FOUND,
+  std::move(callback).Run(ServiceWorkerCacheError::kErrorNotFound,
                           std::unique_ptr<ServiceWorkerResponse>(),
                           std::unique_ptr<storage::BlobDataHandle>());
 }
