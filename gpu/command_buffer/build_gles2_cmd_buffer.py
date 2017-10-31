@@ -4621,6 +4621,28 @@ _FUNCTION_INFO = {
     'extension': 'CHROMIUM_texture_storage_image',
     'extension_flag': 'chromium_texture_storage_image',
   },
+  "CreateTransferCacheEntryCHROMIUM": {
+    'type': 'Custom',
+    'cmd_args': 'GLuint64 handle_id, GLuint type, GLuint shm_id, '
+                'GLuint shm_offset',
+    'impl_func': False,
+    'client_test': False,
+    'extension': True,
+  },
+  "DeleteTransferCacheEntryCHROMIUM": {
+    'type': 'Custom',
+    'cmd_args': 'GLuint64 handle_id',
+    'impl_func': False,
+    'client_test': False,
+    'extension': True,
+  },
+  "UnlockTransferCacheEntryCHROMIUM": {
+    'type': 'Custom',
+    'cmd_args': 'GLuint64 handle_id',
+    'impl_func': False,
+    'client_test': False,
+    'extension': True,
+  }
 }
 
 

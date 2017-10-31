@@ -5423,4 +5423,45 @@ TEST_F(GLES2FormatTest, TexStorage2DImageCHROMIUM) {
   CheckBytesWrittenMatchesExpectedSize(next_cmd, sizeof(cmd));
 }
 
+TEST_F(GLES2FormatTest, CreateTransferCacheEntryCHROMIUM) {
+  cmds::CreateTransferCacheEntryCHROMIUM& cmd =
+      *GetBufferAs<cmds::CreateTransferCacheEntryCHROMIUM>();
+  void* next_cmd =
+      cmd.Set(&cmd, static_cast<GLuint64>(11), static_cast<GLuint>(12),
+              static_cast<GLuint>(13), static_cast<GLuint>(14));
+  EXPECT_EQ(
+      static_cast<uint32_t>(cmds::CreateTransferCacheEntryCHROMIUM::kCmdId),
+      cmd.header.command);
+  EXPECT_EQ(sizeof(cmd), cmd.header.size * 4u);
+  EXPECT_EQ(static_cast<GLuint64>(11), cmd.handle_id());
+  EXPECT_EQ(static_cast<GLuint>(12), cmd.type);
+  EXPECT_EQ(static_cast<GLuint>(13), cmd.shm_id);
+  EXPECT_EQ(static_cast<GLuint>(14), cmd.shm_offset);
+  CheckBytesWrittenMatchesExpectedSize(next_cmd, sizeof(cmd));
+}
+
+TEST_F(GLES2FormatTest, DeleteTransferCacheEntryCHROMIUM) {
+  cmds::DeleteTransferCacheEntryCHROMIUM& cmd =
+      *GetBufferAs<cmds::DeleteTransferCacheEntryCHROMIUM>();
+  void* next_cmd = cmd.Set(&cmd, static_cast<GLuint64>(11));
+  EXPECT_EQ(
+      static_cast<uint32_t>(cmds::DeleteTransferCacheEntryCHROMIUM::kCmdId),
+      cmd.header.command);
+  EXPECT_EQ(sizeof(cmd), cmd.header.size * 4u);
+  EXPECT_EQ(static_cast<GLuint64>(11), cmd.handle_id());
+  CheckBytesWrittenMatchesExpectedSize(next_cmd, sizeof(cmd));
+}
+
+TEST_F(GLES2FormatTest, UnlockTransferCacheEntryCHROMIUM) {
+  cmds::UnlockTransferCacheEntryCHROMIUM& cmd =
+      *GetBufferAs<cmds::UnlockTransferCacheEntryCHROMIUM>();
+  void* next_cmd = cmd.Set(&cmd, static_cast<GLuint64>(11));
+  EXPECT_EQ(
+      static_cast<uint32_t>(cmds::UnlockTransferCacheEntryCHROMIUM::kCmdId),
+      cmd.header.command);
+  EXPECT_EQ(sizeof(cmd), cmd.header.size * 4u);
+  EXPECT_EQ(static_cast<GLuint64>(11), cmd.handle_id());
+  CheckBytesWrittenMatchesExpectedSize(next_cmd, sizeof(cmd));
+}
+
 #endif  // GPU_COMMAND_BUFFER_COMMON_GLES2_CMD_FORMAT_TEST_AUTOGEN_H_

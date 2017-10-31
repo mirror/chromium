@@ -938,4 +938,10 @@ virtual void TexStorage2DImageCHROMIUM(GLenum target,
                                        GLenum bufferUsage,
                                        GLsizei width,
                                        GLsizei height) = 0;
+virtual void CreateTransferCacheEntryCHROMIUM(GLuint64 id,
+                                              GLuint type,
+                                              GLuint size,
+                                              void* data) = 0;
+virtual void DeleteTransferCacheEntryCHROMIUM(GLuint64 id) = 0;
+virtual void UnlockTransferCacheEntryCHROMIUM(GLuint64 id) = 0;
 #endif  // GPU_COMMAND_BUFFER_CLIENT_GLES2_INTERFACE_AUTOGEN_H_
