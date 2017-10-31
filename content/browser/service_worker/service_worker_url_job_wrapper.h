@@ -71,6 +71,9 @@ class ServiceWorkerURLJobWrapper {
   // instead should fallback to the network.
   bool ShouldFallbackToNetwork();
 
+  // Returns true if this job should be handled by a service worker.
+  bool ShouldForwardToServiceWorker();
+
   // Tells the job to abort with a start error. Currently this is only called
   // because the controller was lost. This function could be made more generic
   // if needed later.
