@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "14515f1e_8bb7e4c2",
+        "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-31T11:24:12Z",
+      "side": 1,
+      "message": "\u003e   else if (base::i18n::IsRTL())\n\u003e     bounds.Inset(0, 0, kScrollerTrackBorderWidth, 0);\n\nactually I\u0027m not certain you need this RTL bit - all the drawing might get automatically mirrored in the canvas. Please check :)",
+      "parentUuid": "4528051f_db17b97c",
+      "revId": "ca5668704b0b1c8277caf0101f9cc5fe981ed81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c930c03e_73b13167",
         "filename": "ui/views/controls/scrollbar/cocoa_scroll_bar.mm",
         "patchSetId": 6
