@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25522532_e885a59a",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-31T13:18:31Z",
+      "side": 1,
+      "message": "nit: can you file a bug about making damage more precise for sub surface changes and add a TODO above this?",
+      "revId": "cbbcddbe424d086664d8d1f865258b9f6c058e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
