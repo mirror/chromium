@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c45a131_7a9e77dd",
+        "filename": "third_party/WebKit/LayoutTests/fast/reflections/reflection-masks-outset.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-31T16:49:39Z",
+      "side": 1,
+      "message": "It seems the real bug here is that webkit-box-reflect urls don\u0027t block onload? If so, I\u0027m okay with landing this but lets file a bug if it turns out to be true.\n\nNit: instead of using \u003cimg id\u003d\"imageLoader\"\u003e, just do it in script:\nvar imageLoader \u003d new Image();\nimageLoader.onload \u003d ...\nimageLoader.src \u003d \u0027resources/vignette-mask.png\u0027;\n\nNo need to set the webkitBoxReflect style in script, you can leave that in the image\u0027s style and rely on the Image loader to delay loading of the image.",
+      "revId": "32f16694c493ce400ca548c4a2bfc2985b22ce11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
