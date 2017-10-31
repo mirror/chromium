@@ -9,6 +9,7 @@
 #include <string>
 
 #import "base/mac/scoped_nsobject.h"
+#include "base/message_loop/message_loop.h"
 #import "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h"
@@ -69,6 +70,8 @@ void ExtensionUninstallDialogCocoa::Show() {
     [alert setAccessoryView:reportAbuseCheckbox];
   }
 
+  base::MessageLoop::ScopedNestableTaskAllower allow_nested(
+      base::MessageLoop::current());
   if ([alert runModal] == NSAlertFirstButtonReturn) {
     bool report_abuse_checked =
         reportAbuseCheckbox.get() && [reportAbuseCheckbox state] == NSOnState;
