@@ -10,7 +10,7 @@
 #include "base/command_line.h"
 #include "build/build_config.h"
 #include "content/child/child_process.h"
-#include "content/network/network_service_impl.h"
+#include "content/network/network_service.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
