@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef593fb3_67c2de62",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-31T00:54:52Z",
+      "side": 1,
+      "message": "Sorry to be picky, this one would also be /* upDirection */. It\u0027s the name of the parameter rather than a comment about it. (I think the C++ style is clearer because /*upDirection\u003d*/false is unambiguous).\n\nHere\u0027s the style guide mention of \"\u0027parameter name\u0027 comments\"\nhttps://google.github.io/styleguide/jsguide.html#formatting-block-comment-style",
+      "revId": "10084f67142be8590dd2a5c5cf6866c9413fdf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6eda3d3_4217b8ba",
+        "filename": "chrome/test/data/webui/settings/languages_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-31T00:54:52Z",
+      "side": 1,
+      "message": "true /* upDirection */",
+      "revId": "10084f67142be8590dd2a5c5cf6866c9413fdf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c9daa5_a68487bc",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-31T00:54:52Z",
+      "side": 1,
+      "message": "Style nit (optional):\n\nIf this can be reached by a caller passing an unexpected |where| value*, then:\n\nConsider making this a CHECK or otherwise crash out on an unexpected value OR remove the NOTREACHED (because unexpected values are handled by the return).\n\nThere are some guidelines on when to use NOTREACHED here\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#check_dcheck_and-notreached",
+      "revId": "10084f67142be8590dd2a5c5cf6866c9413fdf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
