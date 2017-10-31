@@ -23,7 +23,11 @@
 
 namespace base {
 class FilePath;
-}
+}  // namespace base
+
+namespace content {
+class RenderProcessHost;
+}  // namespace content
 
 namespace profiling {
 
@@ -59,6 +63,16 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
 
     // Profile all processes.
     kAll = 2,
+
+    // Profile only the browser process.
+    kBrowser = 3,
+
+    // Profile only the gpu process.
+    kGpu = 4,
+
+    // Profile a sampled number of renderer processes.
+    kRendererSampling = 5,
+
     kCount
   };
 
@@ -67,6 +81,7 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
 
   // Returns the mode set on the current process' command line.
   static Mode GetCurrentMode();
+  static bool ShouldProfileProcessType(int process_type);
 
   // Launches the profiling process and returns a pointer to it.
   static ProfilingProcessHost* Start(
@@ -160,6 +175,12 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // Reports the profiling mode.
   void ReportMetrics();
 
+  // Helpers for controlling process selection for the sampling modes.
+  bool ShouldProfileNewRenderer(content::RenderProcessHost* renderer) const;
+
+  // Sends message to a renderer to begin profiling that process.
+  void StartProfilingRenderer(content::RenderProcessHost* renderer);
+
   content::NotificationRegistrar registrar_;
   std::unique_ptr<service_manager::Connector> connector_;
   mojom::ProfilingServicePtr profiling_service_;
@@ -179,6 +200,11 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
 
   // Whether or not the profiling host is started.
   static bool has_started_;
+
+  // If in kRendererSampling mode, holds currently profiled RenderProcessHost.
+  // TODO(ajwong): Threading here is wrong since it can be accessed on IO or UI.
+  // Ugh.
+  content::RenderProcessHost* profiled_renderer_;
 
   // For tests.
   base::OnceClosure dump_process_for_tracing_callback_;
