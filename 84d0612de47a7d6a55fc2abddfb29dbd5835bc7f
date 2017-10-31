@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2da317b1_043c5e53",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7270,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-31T17:58:29Z",
+      "side": 1,
+      "message": "I think it\u0027s moot at the moment because there\u0027s only one RasterCHROMIUM call.  If there are callers in the future that make multiple calls between begin and end at the top level, then the internal canvas state on the gles2_implementation would be wrong (because it\u0027s not persisted) and also the preamble of the second call would happen at whatever state the previous RasterCHROMIUM created, which is likely unexpected.\n\nI\u0027ll add these in to protect against the future.  Good question.  :)",
+      "parentUuid": "205ff4f2_2da1b7f2",
+      "revId": "84d0612de47a7d6a55fc2abddfb29dbd5835bc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8f1b010_6285da95",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "16cb9262_56961d89",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7282,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-31T17:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8f1b010_6285da95",
+      "revId": "84d0612de47a7d6a55fc2abddfb29dbd5835bc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f08881a9_e9b415bc",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-31T17:16:59Z",
       "side": 1,
       "message": "Should this be post_translate_x/post_translate_y?",
+      "revId": "84d0612de47a7d6a55fc2abddfb29dbd5835bc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d1a7d3_cfbfa121",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7283,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-31T17:58:29Z",
+      "side": 1,
+      "message": "Whoops! Done.",
+      "parentUuid": "f08881a9_e9b415bc",
       "revId": "84d0612de47a7d6a55fc2abddfb29dbd5835bc7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9f870eae_85a69acf",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7287,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-31T17:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08e0d34f_d81c9791",
+      "revId": "84d0612de47a7d6a55fc2abddfb29dbd5835bc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b484b0e_6d98fa04",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "84d0612de47a7d6a55fc2abddfb29dbd5835bc7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26d4a55_52cf9175",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7295,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-31T17:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b484b0e_6d98fa04",
+      "revId": "84d0612de47a7d6a55fc2abddfb29dbd5835bc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
