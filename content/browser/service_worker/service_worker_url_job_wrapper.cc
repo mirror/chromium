@@ -53,6 +53,14 @@ bool ServiceWorkerURLJobWrapper::ShouldFallbackToNetwork() {
   }
 }
 
+bool ServiceWorkerURLJobWrapper::ShouldForwardToServiceWorker() {
+  if (url_loader_job_) {
+    return url_loader_job_->ShouldForwardToServiceWorker();
+  } else {
+    return url_request_job_->ShouldForwardToServiceWorker();
+  }
+}
+
 ui::PageTransition ServiceWorkerURLJobWrapper::GetPageTransition() {
   if (url_loader_job_) {
     return url_loader_job_->GetPageTransition();

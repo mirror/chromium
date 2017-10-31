@@ -17,6 +17,7 @@
 #include "content/browser/service_worker/service_worker_response_info.h"
 #include "content/browser/service_worker/service_worker_url_job_wrapper.h"
 #include "content/browser/service_worker/service_worker_url_request_job.h"
+#include "content/common/navigation_subresource_loader_params.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
@@ -241,6 +242,28 @@ void ServiceWorkerControlleeRequestHandler::MaybeCreateLoader(
   }
 
   // We will asynchronously continue on DidLookupRegistrationForMainResource.
+}
+
+base::Optional<SubresourceLoaderParams>
+ServiceWorkerControlleeRequestHandler::MaybeCreateSubresourceLoaderParams() {
+  // We should come here only after the job is created, and only when
+  // the request is to be handled by a service worker.
+  DCHECK(url_job_);
+  DCHECK(url_job_->ShouldForwardToServiceWorker());
+
+  // ServiceWorkerProviderHost::AssociateRegistration must have been already
+  // called during DidLookupRegistrationForMainResource, and it must have
+  // the controller now.
+  DCHECK(provider_host_ && provider_host_->controller());
+
+  // TODO(kinuko): We should probably try to send the controller's
+  // service worker object info here too, while we cannot do so for
+  // now because creating an object info requires the client's
+  // dispatcher host, which is not created yet.
+  SubresourceLoaderParams params;
+  params.controller_service_worker =
+      provider_host_->GetControllerServiceWorkerPtr();
+  return params;
 }
 
 void ServiceWorkerControlleeRequestHandler::PrepareForMainResource(

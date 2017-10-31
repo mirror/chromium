@@ -4,6 +4,7 @@
 
 module content.mojom;
 
+import "content/common/service_worker/controller_service_worker.mojom";
 import "content/public/common/url_loader.mojom";
 import "content/public/common/url_loader_factory.mojom";
 import "content/public/common/window_container_type.mojom";
@@ -45,7 +46,8 @@ interface FrameNavigationControl {
                    CommonNavigationParams common_params,
                    RequestNavigationParams request_params,
                    handle<data_pipe_consumer>? body_data,
-                   URLLoaderFactory? default_subresource_url_loader_factory);
+                   URLLoaderFactory? default_subresource_url_loader_factory,
+                   ControllerServiceWorker? controller_service_worker);
 };
 
 // Implemented by the frame (e.g. renderer processes).
