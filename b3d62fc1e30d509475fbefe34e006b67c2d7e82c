@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a29ebdeb_a7b959f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-31T22:12:31Z",
+      "side": 1,
+      "message": ".com",
+      "range": {
+        "startLine": 17,
+        "startChar": 21,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "b3d62fc1e30d509475fbefe34e006b67c2d7e82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5efd4d_08cbb912",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-31T22:12:31Z",
+      "side": 1,
+      "message": "I think it\u0027s the orderFront: that\u0027s the problem. What happens if a Chrome window on another space shows the status bubble? Does the orderFront: not cause an automatic spaces switch?\n\nAlso, have you tested with the various settings in System Preferences \u003e Mission Control? E.g., \"When switching to an application, switch to a Space with open windows for the application\".",
+      "range": {
+        "startLine": 17,
+        "startChar": 34,
+        "endLine": 18,
+        "endChar": 71
+      },
+      "revId": "b3d62fc1e30d509475fbefe34e006b67c2d7e82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
