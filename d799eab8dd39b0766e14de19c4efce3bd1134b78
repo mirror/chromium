@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5283ddf_33c9d10e",
+        "filename": "chrome/browser/media/webrtc/webrtc_audio_quality_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-10-31T16:13:53Z",
+      "side": 1,
+      "message": "Ok, so googEchoCancellation will turn off echo cancellation but not AGC, whereas echoCancellation on line 842 turns of all audio processing? If so, maybe clarify with a comment.",
+      "range": {
+        "startLine": 832,
+        "startChar": 30,
+        "endLine": 832,
+        "endChar": 50
+      },
+      "revId": "d799eab8dd39b0766e14de19c4efce3bd1134b78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
