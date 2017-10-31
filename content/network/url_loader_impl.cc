@@ -322,6 +322,10 @@ URLLoaderImpl::URLLoaderImpl(
     url_request_->SetResponseHeadersCallback(base::Bind(
         &URLLoaderImpl::SetRawResponseHeaders, base::Unretained(this)));
   }
+
+  if (!(options_ & mojom::kURLLoadOptionSniffMimeType))
+    AttachAcceptHeader(request.resource_type, url_request_.get());
+
   url_request_->Start();
 }
 
