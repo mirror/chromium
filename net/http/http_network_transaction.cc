@@ -114,8 +114,7 @@ HttpNetworkTransaction::~HttpNetworkTransaction() {
       stream->Drain(session_);
     }
   }
-  if (request_ && request_->upload_data_stream)
-    request_->upload_data_stream->Reset();  // Invalidate pending callbacks.
+  // Do not access request_ here as consumer may have been already destroyed.
 }
 
 int HttpNetworkTransaction::Start(const HttpRequestInfo* request_info,
