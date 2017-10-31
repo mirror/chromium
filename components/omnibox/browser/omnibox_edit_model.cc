@@ -694,7 +694,15 @@ void OmniboxEditModel::OpenMatch(AutocompleteMatch match,
     base::RecordAction(
         base::UserMetricsAction("OmniboxDestinationURLIsSearchOnDSP"));
   }
-
+  if (match.type == AutocompleteMatchType::TAB_SEARCH) {
+    // We look to |permanent_text_| to detect if the current tab has a previous
+    // location. If it's the new tab page, it won't so we want to close it.
+    // If this fails (the previously found tab may have closed or navigated
+    // since) fall through and navigate to the URL normally.
+    if (controller_->SwitchToTabWithURL(match.destination_url.spec(),
+                                        permanent_text_.empty()))
+      return;
+  }
   if (match.destination_url.is_valid()) {
     // This calls RevertAll again.
     base::AutoReset<bool> tmp(&in_revert_, true);
