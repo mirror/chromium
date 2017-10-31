@@ -38,8 +38,6 @@
 
 namespace blink {
 
-class SelectionAdjuster;
-
 const TextAffinity kSelDefaultAffinity = TextAffinity::kDownstream;
 
 template <typename Strategy>
@@ -113,8 +111,6 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
   static void PrintTo(const VisibleSelectionTemplate&, std::ostream*);
 
  private:
-  friend class SelectionAdjuster;
-
   explicit VisibleSelectionTemplate(const SelectionTemplate<Strategy>&);
 
   // We need to store these as Positions because VisibleSelection is

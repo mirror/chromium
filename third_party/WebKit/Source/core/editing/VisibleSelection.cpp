@@ -522,20 +522,28 @@ static SelectionTemplate<Strategy> ComputeVisibleSelection(
 
   const EphemeralRangeTemplate<Strategy> expanded_range(expanded_start,
                                                         expanded_end);
-
-  const EphemeralRangeTemplate<Strategy> shadow_adjusted_range =
+  // TODO(yoichio): Implement
+  // SelectionAdjuster::AdjustSelectionWithGranularity().
+  const SelectionTemplate<Strategy> expanded_selection =
       canonicalized_selection.IsBaseFirst()
-          ? EphemeralRangeTemplate<Strategy>(
-                expanded_range.StartPosition(),
-                SelectionAdjuster::
-                    AdjustSelectionEndToAvoidCrossingShadowBoundaries(
-                        expanded_range))
-          : EphemeralRangeTemplate<Strategy>(
-                SelectionAdjuster::
-                    AdjustSelectionStartToAvoidCrossingShadowBoundaries(
-                        expanded_range),
-                expanded_range.EndPosition());
+          ? typename SelectionTemplate<Strategy>::Builder()
+                .SetAsForwardSelection(expanded_range)
+                .Build()
+          : typename SelectionTemplate<Strategy>::Builder()
+                .SetAsBackwardSelection(expanded_range)
+                .Build();
 
+  const SelectionTemplate<Strategy> shadow_adjusted_selection =
+      SelectionAdjuster::AdjustSelectionToAvoidCrossingShadowBoundaries(
+          expanded_selection);
+  const EphemeralRangeTemplate<Strategy> shadow_adjusted_range =
+      shadow_adjusted_selection.IsBaseFirst()
+          ? EphemeralRangeTemplate<Strategy>(shadow_adjusted_selection.Base(),
+                                             shadow_adjusted_selection.Extent())
+          : EphemeralRangeTemplate<Strategy>(shadow_adjusted_selection.Extent(),
+                                             shadow_adjusted_selection.Base());
+  // TODO(yoichio): Implement
+  // SelectionAdjuster::AdjustSelectionToAvoidEditingBoundaries().
   const EphemeralRangeTemplate<Strategy> editing_adjusted_range =
       AdjustSelectionToAvoidCrossingEditingBoundaries(
           shadow_adjusted_range, canonicalized_selection.Base());

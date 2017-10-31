@@ -11,21 +11,16 @@
 
 namespace blink {
 
-// |SelectionAdjuster| adjusts positions in |VisibleSelection| directly without
-// calling |validate()|. Users of |SelectionAdjuster| should keep invariant of
-// |VisibleSelection|, e.g. all positions are canonicalized.
+// |SelectionAdjuster| adjusts Selection to avoid crossing a boundary.
+// Each boundary is defined by each function.
 class CORE_EXPORT SelectionAdjuster final {
   STATIC_ONLY(SelectionAdjuster);
 
  public:
-  static Position AdjustSelectionStartToAvoidCrossingShadowBoundaries(
-      const EphemeralRange&);
-  static Position AdjustSelectionEndToAvoidCrossingShadowBoundaries(
-      const EphemeralRange&);
-  static PositionInFlatTree AdjustSelectionStartToAvoidCrossingShadowBoundaries(
-      const EphemeralRangeInFlatTree&);
-  static PositionInFlatTree AdjustSelectionEndToAvoidCrossingShadowBoundaries(
-      const EphemeralRangeInFlatTree&);
+  static SelectionInDOMTree AdjustSelectionToAvoidCrossingShadowBoundaries(
+      const SelectionInDOMTree&);
+  static SelectionInFlatTree AdjustSelectionToAvoidCrossingShadowBoundaries(
+      const SelectionInFlatTree&);
 };
 
 }  // namespace blink
