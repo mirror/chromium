@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "054299c0_4d9202b1",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-31T06:35:11Z",
+      "side": 1,
+      "message": "Could we also add one or a few others (e.g. with frame and image type)?",
+      "revId": "8971aa858452cb3a2217de5035cdd6aa58df9bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
