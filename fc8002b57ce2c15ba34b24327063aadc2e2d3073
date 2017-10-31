@@ -16,6 +16,24 @@
       "revId": "fc8002b57ce2c15ba34b24327063aadc2e2d3073",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d77d532_703c54d1",
+        "filename": "chrome/browser/chromeos/arc/optin/arc_optin_preference_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-31T23:05:57Z",
+      "side": 1,
+      "message": "Yes, used by IsMetricsReportingPolicyManaged",
+      "parentUuid": "d02911ed_05ae48f5",
+      "revId": "fc8002b57ce2c15ba34b24327063aadc2e2d3073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
