@@ -37,4 +37,8 @@ int HandlerMainAdaptor(int argc, char* argv[]) {
 int APIENTRY wWinMain(HINSTANCE, HINSTANCE, wchar_t*, int) {
   return crashpad::ToolSupport::Wmain(__argc, __wargv, HandlerMainAdaptor);
 }
+
+int wmain(int argc, wchar_t* argv[]) {
+  return crashpad::ToolSupport::Wmain(argc, argv, HandlerMainAdaptor);
+}
 #endif  // OS_MACOSX
