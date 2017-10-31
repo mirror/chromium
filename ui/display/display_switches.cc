@@ -13,6 +13,9 @@ namespace switches {
 // Enables software based mirroring.
 const char kEnableSoftwareMirroring[] = "ash-enable-software-mirroring";
 
+// Enables mirroring across multiple displays.
+const char kEnableMultiMirroring[] = "enable-multi-mirroring";
+
 // Force all monitors to be treated as though they have the specified color
 // profile. Accepted values are "srgb" and "generic-rgb" (currently used by Mac
 // layout tests) and "color-spin-gamma24" (used by layout tests).

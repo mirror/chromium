@@ -411,6 +411,10 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   }
 #endif
 
+  bool is_multi_mirroring_enabled() const {
+    return is_multi_mirroring_enabled_;
+  }
+
  private:
   friend class test::DisplayManagerTestApi;
 
@@ -566,6 +570,9 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 #if defined(OS_CHROMEOS)
   std::unique_ptr<TouchDeviceManager> touch_device_manager_;
 #endif
+
+  // Whether mirroring across multiple displays is enabled.
+  bool is_multi_mirroring_enabled_;
 
   base::WeakPtrFactory<DisplayManager> weak_ptr_factory_;
 

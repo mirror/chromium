@@ -74,8 +74,11 @@ class ASH_EXPORT CursorWindowController {
 
   const gfx::ImageSkia& GetCursorImageForTest() const;
 
-  bool is_cursor_compositing_enabled_;
+  bool is_cursor_compositing_enabled_ = false;
   aura::Window* container_;
+
+  // If true, cursor_compositing will be always enabled. (For test only)
+  bool is_cursor_compositing_enabled_for_test_ = false;
 
   // The bounds of the container in screen coordinates.
   gfx::Rect bounds_in_screen_;
