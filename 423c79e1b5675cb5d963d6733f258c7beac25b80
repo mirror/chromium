@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35bebfe8_30491fca",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-31T13:54:42Z",
+      "side": 0,
+      "message": "Your CL looks correct to me. Out of paranoia...do you think it\u0027s worth adding a DCHECK(spdy_session) here? \nI am not sure what your plan for this class is, so if it won\u0027t be applicable, please feel free to land as is.",
+      "revId": "423c79e1b5675cb5d963d6733f258c7beac25b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
