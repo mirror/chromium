@@ -22,6 +22,30 @@
       "revId": "7c17a377a38a280d3387efd77db2e4a0224f8d96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5bcf1c_8da51e49",
+        "filename": "tools/cygprofile/section_to_symbol_orderfile.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-31T01:21:51Z",
+      "side": 1,
+      "message": "For the record, ThinLTO uses symbols with \u0027.\u0027 in them as well.",
+      "parentUuid": "25b241dc_2e17371a",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "7c17a377a38a280d3387efd77db2e4a0224f8d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
