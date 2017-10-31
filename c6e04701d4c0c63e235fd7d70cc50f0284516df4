@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "432ceaf8_fc89f5c2",
+        "filename": "chrome/app/chrome_exe_main_win.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-31T13:00:44Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "c6e04701d4c0c63e235fd7d70cc50f0284516df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa627eac_c314de8c",
+        "filename": "chrome/app/chrome_exe_main_win.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-31T13:00:44Z",
+      "side": 1,
+      "message": "this use of an MTA thread seems like an implementation detail of whatever PrepareForNativeNotification is going to do. how about moving this all into PrepareForNativeNotification (and maybe rename it to StartNativeNotificationThread or something)?",
+      "revId": "c6e04701d4c0c63e235fd7d70cc50f0284516df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399571a5_f9055359",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-31T13:00:44Z",
+      "side": 1,
+      "message": "can you use base::win::ScopedWinrtInitializer?",
+      "revId": "c6e04701d4c0c63e235fd7d70cc50f0284516df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a016bb_7c3f8634",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-31T13:00:44Z",
+      "side": 1,
+      "message": "this needs to be addressed before landing",
+      "revId": "c6e04701d4c0c63e235fd7d70cc50f0284516df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67bc0926_96e7292c",
+        "filename": "chrome/app/chrome_native_notification_prep_win.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-31T13:00:44Z",
+      "side": 1,
+      "message": "do not define string constants in headers. leave the declaration here and put the definition in a .cc file.",
+      "revId": "c6e04701d4c0c63e235fd7d70cc50f0284516df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d7bbd2_64cf4859",
+        "filename": "chrome/app/chrome_native_notification_prep_win.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-31T13:00:44Z",
+      "side": 1,
+      "message": "please document",
+      "revId": "c6e04701d4c0c63e235fd7d70cc50f0284516df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5494e2bf_b06d2a7b",
+        "filename": "chrome/installer/setup/install.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-31T13:00:44Z",
+      "side": 1,
+      "message": "is there not an implicit ctor for string16 (can you remove the explicit \"base::string16\")?",
+      "range": {
+        "startLine": 504,
+        "startChar": 8,
+        "endLine": 504,
+        "endChar": 22
+      },
+      "revId": "c6e04701d4c0c63e235fd7d70cc50f0284516df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e90d6a7_e2005a8e",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-31T13:00:44Z",
+      "side": 1,
+      "message": "yikes, msdn recommends comparing to NOERROR. makes me shudder, but okay. :-)",
+      "revId": "c6e04701d4c0c63e235fd7d70cc50f0284516df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
