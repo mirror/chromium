@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "767decf1_33df1c86",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-31T21:59:19Z",
+      "side": 1,
+      "message": "nit: consider breaking early once you set non_tail_default\nOr perhaps (best yet) using std::find_if rather than rolling your own loop.",
+      "revId": "988a67f1178f84d4763c21c6b49ec1063fc04f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393d40e4_3766e440",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-31T21:59:19Z",
+      "side": 1,
+      "message": "Suggested revision, please feel free to edit further:\n// If the only default matches are tail suggestions, let them remain and instead remove the non-tail suggestions.  This is necessary because we do not want to display tail suggestions mixed with other suggestions in the dropdown below the first item (the default match).  In this case, we cannot remove the tail suggestions because we\u0027ll be left without a legal default match--the non-tail ones much go.  This situation though is unlikely, as we normally would expect the search-what-you-typed suggestion as a default match (and that\u0027s a non-tail suggestion).",
+      "revId": "988a67f1178f84d4763c21c6b49ec1063fc04f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0e6b15_8daafe5f",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-31T21:59:19Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t really apply to this block; it applies further down.  The best comment for this block is something like\n// Determine if there are both tail and non-tail matches.",
+      "revId": "988a67f1178f84d4763c21c6b49ec1063fc04f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b9b4d4_1c2768d0",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-31T21:59:19Z",
+      "side": 1,
+      "message": "I don\u0027t think the above code is right.  Consider the above input:\ntail1 \u003d 1200 (legal default)\ntail2 \u003d 1100 (legal default)\nUWYT \u003d 1000 (legal default)\ntail3 \u003d 900 (legal default)\n\nWe\u0027d find a non-tail legal default (UWYT).\nThen we\u0027d go through this loop and find (ignoring the non-tail default)\nany_tail \u003d true\nany_non_tail \u003d false\nSo we wouldn\u0027t do any interventions.\n\nThen we\u0027d show an omnibox dropdown with a non-tail suggestion in the middle.",
+      "revId": "988a67f1178f84d4763c21c6b49ec1063fc04f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4752777_3c8578b4",
+        "filename": "components/omnibox/browser/autocomplete_result.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-31T21:59:19Z",
+      "side": 1,
+      "message": "Can you rephrase?  (I think there can be, for example, tail non-default matches too.)\nDo you mean:\nIf the only default matches are tail suggestions, ...",
+      "range": {
+        "startLine": 133,
+        "startChar": 43,
+        "endLine": 134,
+        "endChar": 46
+      },
+      "revId": "988a67f1178f84d4763c21c6b49ec1063fc04f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

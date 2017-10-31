@@ -550,6 +550,24 @@
       "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06e1e73_f313c1df",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-31T21:59:19Z",
+      "side": 1,
+      "message": "I\u0027m not sure there\u0027s anything to do here.  I was wondering whether, for example, by copying old matches, we may temporarily cause tail suggestions to be suppressed, and they\u0027ll then appear a second later when the matches expire, and then typing another keystroke would do the same thing again.\n\nFor example, if we copied an old what-you-typed match, and then generate a new what-you-type match.  In this case, we\u0027ll have two non-tail matches, causing tail to be suppressed.  When the old what-you-typed match expires, then tail appears.  And then another keystroke may make that happen again.  Is that possible?",
+      "parentUuid": "0b8894fc_59f8011d",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
