@@ -27,8 +27,7 @@ void ShowImportLockDialog(gfx::NativeWindow parent,
   base::scoped_nsobject<NSAlert> lock_alert([[NSAlert alloc] init]);
   [lock_alert addButtonWithTitle:l10n_util::GetNSStringWithFixup(
       IDS_IMPORTER_LOCK_OK)];
-  [lock_alert addButtonWithTitle:l10n_util::GetNSStringWithFixup(
-      IDS_IMPORTER_LOCK_CANCEL)];
+  [lock_alert addButtonWithTitle:l10n_util::GetNSStringWithFixup(IDS_CANCEL)];
   [lock_alert setInformativeText:l10n_util::GetNSStringWithFixup(
       IDS_IMPORTER_LOCK_TEXT)];
   [lock_alert setMessageText:l10n_util::GetNSStringWithFixup(
