@@ -53,6 +53,10 @@
         padding: 0 var(--cr-section-padding);
       }
 
+      :host-context(:not(.focus-outline-visible)) .start:focus {
+        outline: none;
+      }
+
       #heading {
         height: 40px;
         margin-bottom: 30px;
