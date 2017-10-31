@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "d36019de_40587a80",
+        "filename": "build/config/android/config.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-31T21:24:59Z",
+      "side": 1,
+      "message": "Sounds reasonable \u0026 less likely to get confused w/ android_sdk_version. Switched.",
+      "parentUuid": "fbca0b83_5d298601",
+      "revId": "e73d88b502bc8bcb1d3ef56ba930bc04e9676a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68adc203_b41d22f5",
         "filename": "tools/perf/chrome_telemetry_build/BUILD.gn",
         "patchSetId": 1
@@ -93,6 +111,30 @@
       "revId": "e73d88b502bc8bcb1d3ef56ba930bc04e9676a10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5122e7_d3ca176a",
+        "filename": "tools/perf/chrome_telemetry_build/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-31T21:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68adc203_b41d22f5",
+      "range": {
+        "startLine": 7,
+        "startChar": 53,
+        "endLine": 7,
+        "endChar": 73
+      },
+      "revId": "e73d88b502bc8bcb1d3ef56ba930bc04e9676a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
