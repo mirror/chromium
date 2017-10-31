@@ -587,9 +587,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   // we receive a request to show the context menu on a long press.
   std::unique_ptr<ContextMenuParams> last_context_menu_params_;
 
-  // Set to true if we requested the on screen keyboard to be displayed.
-  bool virtual_keyboard_requested_;
-
   std::unique_ptr<ui::OnScreenKeyboardObserver> keyboard_observer_;
 
   gfx::Point last_mouse_move_location_;
