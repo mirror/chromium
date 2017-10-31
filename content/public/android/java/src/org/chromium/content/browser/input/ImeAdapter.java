@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +23,7 @@ import android.text.style.UnderlineSpan;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedText;
@@ -108,6 +110,7 @@ public class ImeAdapter {
     private int mTextInputMode = WebTextInputMode.DEFAULT;
     private boolean mNodeEditable;
     private boolean mNodePassword;
+    private Drawable mWindowBackgroundDrawable;
 
     // Viewport rect before the OSK was brought up.
     // Used to tell View#onSizeChanged to focus a form element.
@@ -412,6 +415,16 @@ public class ImeAdapter {
      */
     private void showSoftKeyboard() {
         if (DEBUG_LOGS) Log.i(TAG, "showSoftKeyboard");
+
+        // Set the window background to white to avoid a black flicker during the transition. This
+        // color is used by the framework to momentarily fill the area for the keyboard, overlapping
+        // the web content, before it appears. See b/66834406.
+        Window window = mWebContents.getTopLevelNativeWindow().getWindow();
+        if (window != null) {
+            mWindowBackgroundDrawable = window.getDecorView().getBackground();
+            window.getDecorView().setBackgroundColor(Color.WHITE);
+        }
+
         mInputMethodManagerWrapper.showSoftInput(mContainerView, 0, getNewShowKeyboardReceiver());
         if (mContainerView.getResources().getConfiguration().keyboard
                 != Configuration.KEYBOARD_NOKEYS) {
@@ -470,6 +483,13 @@ public class ImeAdapter {
             // we need to unblock in any case. We want to call this after restartInput() to
             // ensure that there is no additional IME operation in the queue.
             inputConnection.unblockOnUiThread();
+        }
+
+        // Restore the background color for the window.
+        Window window = mWebContents.getTopLevelNativeWindow().getWindow();
+        if (window != null) {
+            window.getDecorView().setBackground(mWindowBackgroundDrawable);
+            mWindowBackgroundDrawable = null;
         }
     }
 

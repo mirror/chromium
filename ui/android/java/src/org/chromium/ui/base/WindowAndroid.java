@@ -752,14 +752,18 @@ public class WindowAndroid {
         return new WeakReference<>(mContextRef.get());
     }
 
+    public Window getWindow() {
+        Activity activity = activityFromContext(mContextRef.get());
+        if (activity == null) return null;
+        return activity.getWindow();
+    }
+
     /**
      * Return the current window token, or null.
      */
     @CalledByNative
     private IBinder getWindowToken() {
-        Activity activity = activityFromContext(mContextRef.get());
-        if (activity == null) return null;
-        Window window = activity.getWindow();
+        Window window = getWindow();
         if (window == null) return null;
         View decorView = window.peekDecorView();
         if (decorView == null) return null;
