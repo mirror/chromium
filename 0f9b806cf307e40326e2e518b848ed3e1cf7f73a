@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "6f09ab50_2035552b",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-31T17:53:45Z",
+      "side": 1,
+      "message": "Huh, I don\u0027t know why cl format would do that.\n\nDone",
+      "parentUuid": "ed60190b_d1e4b6dd",
+      "range": {
+        "startLine": 203,
+        "startChar": 32,
+        "endLine": 203,
+        "endChar": 40
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ee35ee4_0f77b3ff",
         "filename": "components/cronet/ios/Cronet.h",
         "patchSetId": 2
@@ -140,6 +164,30 @@
     },
     {
       "key": {
+        "uuid": "25d1b5e7_02585e65",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-31T17:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90d2469b_dd7abfca",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f5ce8a5_472d9dce",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 2
@@ -151,6 +199,30 @@
       "writtenOn": "2017-10-31T17:27:13Z",
       "side": 1,
       "message": "I think those should be initialized and test should verify that metrics contain valid copies of passed data.",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7d7087_0273fc1f",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-31T17:53:45Z",
+      "side": 1,
+      "message": "The trouble I was having with what to initialize NSURLRequest and NSURLResponse objects to.  Do you have any suggestions?",
+      "parentUuid": "6f5ce8a5_472d9dce",
       "range": {
         "startLine": 26,
         "startChar": 32,
@@ -229,6 +301,30 @@
       "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc6b8aa_dd4042e5",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-31T17:53:45Z",
+      "side": 1,
+      "message": "|metrics| is a pointer, so it\u0027s strictly speaking the exact same object as |cronet_metrics|.\n\nA test case that might be more faithful to the intended use is to have the |EXPECT| statements in a function which takes an |NSURLSessionTaskTransactionMetrics*|, and call that passing |cronet_metrics|, but I don\u0027t really expect that that would change anything.",
+      "parentUuid": "71377cdf_33f67aa7",
+      "range": {
+        "startLine": 51,
+        "startChar": 23,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
