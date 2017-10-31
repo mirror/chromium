@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e27cce01_ceeee71f",
+        "filename": "base/win/shortcut.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T17:23:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "422ba38f_2629918c",
+      "range": {
+        "startLine": 314,
+        "startChar": 48,
+        "endLine": 314,
+        "endChar": 57
+      },
+      "revId": "c8e9bc612a66c84e4eeaffc3a3a9ca74f663c06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53f92017_7a239cc3",
         "filename": "chrome/install_static/install_constants.h",
         "patchSetId": 15
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-31T14:36:49Z",
       "side": 1,
       "message": "what do you think about making this a CLSID rather than a const wchar_t* so that there\u0027s no need for CLSIDFromString in install.cc.",
+      "revId": "c8e9bc612a66c84e4eeaffc3a3a9ca74f663c06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1d13ad_dd727d70",
+        "filename": "chrome/install_static/install_constants.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-31T17:23:54Z",
+      "side": 1,
+      "message": "I prefer to keep wchar_t* here. Later on, we need to write reg key to path Software\\Classes\\CLSID\\{toast_activator_clsid}. That means, we need a wchar_t* (or similar) to assemble the path.\n\nAFAIK, there are two common ways to initialize a CLSID. One is through CLSIDFromString, the other is using the following pattern:\nclass __declspec(uuid(\"{557cf406-1a04-11d3-9a73-0000f81ef32e}\")) Foo;\nstatic const CLSID CLSID_Foo \u003d __uuidof(Foo);\n\nI am not a fan of the latter method, as it looks like a overkill if we don\u0027t want class Foo at all. If we choose CLSIDFromString, then we need to use it at least once in our code. Making wchar_t* here avoids converting back from CLSID to string.",
+      "parentUuid": "53f92017_7a239cc3",
       "revId": "c8e9bc612a66c84e4eeaffc3a3a9ca74f663c06a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
