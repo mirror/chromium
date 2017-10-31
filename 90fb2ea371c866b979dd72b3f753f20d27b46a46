@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af2f28bc_21b91b01",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T05:51:31Z",
+      "side": 1,
+      "message": "Nit: add a TODO to remove when app banners are enabled by default on desktop.",
+      "range": {
+        "startLine": 740,
+        "startChar": 2,
+        "endLine": 740,
+        "endChar": 68
+      },
+      "revId": "90fb2ea371c866b979dd72b3f753f20d27b46a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
