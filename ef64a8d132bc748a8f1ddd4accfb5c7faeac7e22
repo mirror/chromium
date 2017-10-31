@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "ba789bb8_6b352534",
+        "filename": "media/ffmpeg/ffmpeg_decoding_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:59:23Z",
+      "side": 1,
+      "message": "Added a comment for clarity. EAGAIN means no frames available and we\u0027ve already sent the only input packet we have, so there\u0027s nothing left to do.",
+      "parentUuid": "c6b13acb_20bc3657",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "782d8046_cc6de7b9",
+        "filename": "media/ffmpeg/ffmpeg_decoding_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:59:23Z",
+      "side": 1,
+      "message": "Once EOF is sent via avcodec_send_packet() we just need to loop avcodec_receive_frame() until we receive the EOF back.",
+      "parentUuid": "eefafcfa_efa13d1d",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36836313_18037248",
         "filename": "media/ffmpeg/ffmpeg_decoding_loop.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-31T21:14:29Z",
       "side": 1,
       "message": "How do you know they _both_ returned EAGAIN? Looks like you\u0027re only checking the return from receive, not send.",
+      "range": {
+        "startLine": 43,
+        "startChar": 53,
+        "endLine": 43,
+        "endChar": 66
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d5160a_5afe0c41",
+        "filename": "media/ffmpeg/ffmpeg_decoding_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:59:23Z",
+      "side": 1,
+      "message": "Huh? sent_packet is set based on the value from avcodec_send_packet()? If it\u0027s false then we got EAGAIN from sending.",
+      "parentUuid": "36836313_18037248",
       "range": {
         "startLine": 43,
         "startChar": 53,
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "13a20e54_d3860cba",
+        "filename": "media/ffmpeg/ffmpeg_decoding_loop.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:59:23Z",
+      "side": 1,
+      "message": "Extra words make it wrong :)",
+      "parentUuid": "b58c5eec_faec48ea",
+      "range": {
+        "startLine": 60,
+        "startChar": 15,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68fda992_5052b070",
+        "filename": "media/ffmpeg/ffmpeg_decoding_loop.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "773cbc04_6b82f09d",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 14
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e892404d_8bb7daed",
         "filename": "media/filters/ffmpeg_video_decoder.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93221812_c24a4ed8",
+        "filename": "media/filters/ffmpeg_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:59:23Z",
+      "side": 1,
+      "message": "Reverted this change, ffmpeg logs show an error, but it doesn\u0027t seem to matter.",
+      "parentUuid": "e892404d_8bb7daed",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "63f79fc8_d51702ba",
+        "filename": "media/filters/ffmpeg_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "995cdc99_86e168b6",
+      "range": {
+        "startLine": 279,
+        "startChar": 6,
+        "endLine": 279,
+        "endChar": 44
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9985d6cf_605074d5",
         "filename": "media/filters/ffmpeg_video_decoder.h",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b616520a_6e1bfa82",
+        "filename": "media/filters/ffmpeg_video_decoder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9985d6cf_605074d5",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 52
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "b8d5208d_89b9899d",
+        "filename": "media/filters/ffmpeg_video_decoder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8afd009c_a975a23e",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6238497c_006e491c",
         "filename": "media/filters/media_file_checker.cc",
         "patchSetId": 5
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "c980c45a_101c06e5",
+        "filename": "media/filters/media_file_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:59:23Z",
+      "side": 1,
+      "message": "Acknowledged but left as is. I think it couldn\u0027t be clearer, the function is literally _ToAVCodecContext_ :)",
+      "parentUuid": "6238497c_006e491c",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 10
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dec4ea9c_a0451133",
         "filename": "media/filters/media_file_checker.cc",
         "patchSetId": 5
@@ -252,6 +492,30 @@
       "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19414c8c_494bdad6",
+        "filename": "media/filters/media_file_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:59:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dec4ea9c_a0451133",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 8
+      },
+      "revId": "ef64a8d132bc748a8f1ddd4accfb5c7faeac7e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -52,6 +52,24 @@
       "revId": "d9a556baabcf9a2959795449b626a173866a846f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a2e131_875ef675",
+        "filename": "media/cdm/ppapi/external_clear_key/ffmpeg_cdm_video_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:59:23Z",
+      "side": 1,
+      "message": "Forgot there\u0027s an easy way to resolve this without extra copies. We can shallow copy the ffmpeg frame refs so we only copy once into the shared memory just like before.",
+      "parentUuid": "72a49fab_b1fd181c",
+      "revId": "d9a556baabcf9a2959795449b626a173866a846f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
