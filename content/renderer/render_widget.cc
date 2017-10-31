@@ -354,7 +354,7 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
       owner_delegate_(nullptr),
       next_paint_flags_(0),
       auto_resize_mode_(false),
-      need_update_rect_for_auto_resize_(false),
+      need_resize_ack_for_auto_resize_(false),
       did_show_(false),
       is_hidden_(hidden),
       compositor_never_visible_(never_visible),
@@ -773,6 +773,7 @@ void RenderWidget::OnSetLocalSurfaceIdForAutoResize(
     const viz::LocalSurfaceId& local_surface_id) {
   if (!auto_resize_mode_ || resize_or_repaint_ack_num_ != sequence_number)
     return;
+  physical_backing_size_ = gfx::ScaleToCeiledSize(size_, device_scale_factor_);
   local_surface_id_ = local_surface_id;
   compositor_->SetViewportSize(physical_backing_size_, local_surface_id);
 }
@@ -1373,6 +1374,8 @@ void RenderWidget::SetScreenRects(const gfx::Rect& view_screen_rect,
 // WebWidgetClient
 
 void RenderWidget::AutoResizeCompositor()  {
+  // The compositor must have a non-empty ViewportSize in order to get
+  // BeginFrames.
   physical_backing_size_ = gfx::ScaleToCeiledSize(size_, device_scale_factor_);
   // A new LocalSurfaceId will need to be allocated by the browser for the new
   // size.
@@ -2181,7 +2184,7 @@ void RenderWidget::DidAutoResize(const gfx::Size& new_size) {
     AutoResizeCompositor();
 
     if (!resizing_mode_selector_->is_synchronous_mode()) {
-      need_update_rect_for_auto_resize_ = true;
+      need_resize_ack_for_auto_resize_ = true;
       // If surface synchronization is off, then ResizeAcks go to the browser in
       // response to a DidReceiveCompositorFrame. With surface synchronization
       // on, that notification will not arrive here because the compositor is
@@ -2496,7 +2499,7 @@ void RenderWidget::SetWidgetBinding(mojom::WidgetRequest request) {
 }
 
 void RenderWidget::DidResizeOrRepaintAck() {
-  if (!next_paint_flags_ && !need_update_rect_for_auto_resize_)
+  if (!next_paint_flags_ && !need_resize_ack_for_auto_resize_)
     return;
 
   ViewHostMsg_ResizeOrRepaint_ACK_Params params;
@@ -2506,7 +2509,7 @@ void RenderWidget::DidResizeOrRepaintAck() {
 
   Send(new ViewHostMsg_ResizeOrRepaint_ACK(routing_id_, params));
   next_paint_flags_ = 0;
-  need_update_rect_for_auto_resize_ = false;
+  need_resize_ack_for_auto_resize_ = false;
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS)

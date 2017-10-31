@@ -359,8 +359,6 @@ class GuestViewBase : public content::BrowserPluginGuestDelegate,
       content::WebContents* web_contents,
       SkColor color,
       const std::vector<content::ColorSuggestion>& suggestions) final;
-  void ResizeDueToAutoResize(content::WebContents* web_contents,
-                             const gfx::Size& new_size) final;
   void RunFileChooser(content::RenderFrameHost* render_frame_host,
                       const content::FileChooserParams& params) final;
   bool ShouldFocusPageAfterCrash() final;

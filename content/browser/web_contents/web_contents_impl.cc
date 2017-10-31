@@ -2873,11 +2873,17 @@ void WebContentsImpl::UpdatePreferredSize(const gfx::Size& pref_size) {
 
 void WebContentsImpl::ResizeDueToAutoResize(
     RenderWidgetHostImpl* render_widget_host,
-    const gfx::Size& new_size) {
+    const gfx::Size& new_size,
+    uint64_t sequence_number) {
   if (render_widget_host != GetRenderViewHost()->GetWidget())
     return;
 
   auto_resize_size_ = new_size;
+
+  if (browser_plugin_guest_) {
+    browser_plugin_guest_->ResizeDueToAutoResize(new_size, sequence_number);
+    return;
+  }
 
   // Out-of-process iframe visible viewport sizes usually come from the
   // top-level RenderWidgetHostView, but when auto-resize is enabled on the
@@ -2893,6 +2899,10 @@ void WebContentsImpl::ResizeDueToAutoResize(
 
   if (delegate_)
     delegate_->ResizeDueToAutoResize(this, new_size);
+
+  // For a top level WebContents, the viz::LocalSurfaceId should be available
+  // immediately because the delegate is expected to update synchronously.
+  render_widget_host->DidAllocateLocalSurfaceIdForAutoResize(sequence_number);
 }
 
 gfx::Size WebContentsImpl::GetAutoResizeSize() {

@@ -42,6 +42,8 @@ IPC_STRUCT_BEGIN(BrowserPluginHostMsg_Attach_Params)
   IPC_STRUCT_MEMBER(bool, visible)
   // The new size of the guest view.
   IPC_STRUCT_MEMBER(gfx::Rect, frame_rect)
+  IPC_STRUCT_MEMBER(content::ScreenInfo, screen_info)
+  IPC_STRUCT_MEMBER(viz::LocalSurfaceId, local_surface_id)
   // Whether the browser plugin is a full page plugin document.
   IPC_STRUCT_MEMBER(bool, is_full_page_plugin)
 IPC_STRUCT_END()
@@ -154,10 +156,11 @@ IPC_MESSAGE_CONTROL1(BrowserPluginHostMsg_UnlockMouse_ACK,
                      int /* browser_plugin_instance_id */)
 
 // Sent when plugin's position has changed.
-IPC_MESSAGE_CONTROL4(BrowserPluginHostMsg_UpdateResizeParams,
+IPC_MESSAGE_CONTROL5(BrowserPluginHostMsg_UpdateResizeParams,
                      int /* browser_plugin_instance_id */,
                      gfx::Rect /* frame_rect */,
                      content::ScreenInfo /* screen_info */,
+                     uint64_t /* sequence_number */,
                      viz::LocalSurfaceId /* local_surface_id */)
 
 IPC_MESSAGE_ROUTED2(BrowserPluginHostMsg_SatisfySequence,
@@ -186,6 +189,12 @@ IPC_MESSAGE_CONTROL2(BrowserPluginMsg_GuestReady,
 IPC_MESSAGE_CONTROL2(BrowserPluginMsg_AdvanceFocus,
                      int /* browser_plugin_instance_id */,
                      bool /* reverse */)
+
+// When a guest resizes due to autosize, this message informs the BrowserPlugin.
+IPC_MESSAGE_CONTROL3(BrowserPluginMsg_ResizeDueToAutoResize,
+                     int /* browser_plugin_instance_id */,
+                     gfx::Size /* frame_size */,
+                     uint64_t /* sequence_number */)
 
 // When the guest starts/stops listening to touch events, it needs to notify the
 // plugin in the embedder about it.

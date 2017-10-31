@@ -654,11 +654,6 @@ content::ColorChooser* GuestViewBase::OpenColorChooser(
       web_contents, color, suggestions);
 }
 
-void GuestViewBase::ResizeDueToAutoResize(WebContents* web_contents,
-                                          const gfx::Size& new_size) {
-  guest_host_->GuestResizeDueToAutoResize(new_size);
-}
-
 void GuestViewBase::RunFileChooser(content::RenderFrameHost* render_frame_host,
                                    const content::FileChooserParams& params) {
   if (!attached() || !embedder_web_contents()->GetDelegate())

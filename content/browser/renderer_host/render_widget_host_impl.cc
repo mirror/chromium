@@ -840,6 +840,18 @@ void RenderWidgetHostImpl::WasResized() {
     delegate_->RenderWidgetWasResized(this, width_changed);
 }
 
+void RenderWidgetHostImpl::DidAllocateLocalSurfaceIdForAutoResize(
+    uint64_t sequence_number) {
+  if (last_auto_resize_request_number_ != sequence_number)
+    return;
+
+  viz::LocalSurfaceId local_surface_id(view_->GetLocalSurfaceId());
+  if (local_surface_id.is_valid()) {
+    Send(new ViewMsg_SetLocalSurfaceIdForAutoResize(
+        routing_id_, sequence_number, local_surface_id));
+  }
+}
+
 void RenderWidgetHostImpl::GotFocus() {
   Focus();
   if (owner_delegate_)
@@ -2462,14 +2474,10 @@ void RenderWidgetHostImpl::DelayedAutoResized(uint64_t sequence_number) {
   if (!auto_resize_enabled_)
     return;
 
-  if (delegate_)
-    delegate_->ResizeDueToAutoResize(this, new_size);
+  last_auto_resize_request_number_ = sequence_number;
 
-  viz::LocalSurfaceId local_surface_id(view_->GetLocalSurfaceId());
-  if (local_surface_id.is_valid()) {
-    Send(new ViewMsg_SetLocalSurfaceIdForAutoResize(
-        routing_id_, sequence_number, local_surface_id));
-  }
+  if (delegate_)
+    delegate_->ResizeDueToAutoResize(this, new_size, sequence_number);
 }
 
 void RenderWidgetHostImpl::DetachDelegate() {
