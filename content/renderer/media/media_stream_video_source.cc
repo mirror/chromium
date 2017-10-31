@@ -251,7 +251,7 @@ void MediaStreamVideoSource::DoStopSource() {
   track_adapter_->StopFrameMonitoring();
   StopSourceImpl();
   state_ = ENDED;
-  SetReadyState(blink::WebMediaStreamSource::kReadyStateEnded);
+  SetSourceState(blink::WebMediaStreamSource::kStateEnded);
 }
 
 void MediaStreamVideoSource::OnStartDone(MediaStreamRequestResult result) {
@@ -263,7 +263,7 @@ void MediaStreamVideoSource::OnStartDone(MediaStreamRequestResult result) {
   if (result == MEDIA_DEVICE_OK) {
     DCHECK_EQ(STARTING, state_);
     state_ = STARTED;
-    SetReadyState(blink::WebMediaStreamSource::kReadyStateLive);
+    SetSourceState(blink::WebMediaStreamSource::kStateLive);
     StartFrameMonitoring();
   } else {
     StopSource();
@@ -306,23 +306,22 @@ void MediaStreamVideoSource::StartFrameMonitoring() {
                              weak_factory_.GetWeakPtr()));
 }
 
-void MediaStreamVideoSource::SetReadyState(
-    blink::WebMediaStreamSource::ReadyState state) {
-  DVLOG(3) << "MediaStreamVideoSource::SetReadyState state " << state;
+void MediaStreamVideoSource::SetSourceState(
+    blink::WebMediaStreamSource::State state) {
+  DVLOG(3) << "MediaStreamVideoSource::SetSourceState state " << state;
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!Owner().IsNull())
-    Owner().SetReadyState(state);
+    Owner().SetState(state);
   for (auto* track : tracks_)
-    track->OnReadyStateChanged(state);
+    track->OnSourceStateChanged(state);
 }
 
 void MediaStreamVideoSource::SetMutedState(bool muted_state) {
   DVLOG(3) << "MediaStreamVideoSource::SetMutedState state=" << muted_state;
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!Owner().IsNull()) {
-    Owner().SetReadyState(muted_state
-                              ? blink::WebMediaStreamSource::kReadyStateMuted
-                              : blink::WebMediaStreamSource::kReadyStateLive);
+    Owner().SetState(muted_state ? blink::WebMediaStreamSource::kStateMuted
+                                 : blink::WebMediaStreamSource::kStateLive);
   }
 }
 

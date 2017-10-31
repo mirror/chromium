@@ -65,17 +65,13 @@ class PLATFORM_EXPORT MediaStreamSource final
 
   enum StreamType { kTypeAudio, kTypeVideo };
 
-  enum ReadyState {
-    kReadyStateLive = 0,
-    kReadyStateMuted = 1,
-    kReadyStateEnded = 2
-  };
+  enum State { kStateLive = 0, kStateMuted = 1, kStateEnded = 2 };
 
   static MediaStreamSource* Create(const String& id,
                                    StreamType,
                                    const String& name,
                                    bool remote,
-                                   ReadyState = kReadyStateLive,
+                                   State = kStateLive,
                                    bool requires_consumer = false);
 
   const String& Id() const { return id_; }
@@ -83,8 +79,8 @@ class PLATFORM_EXPORT MediaStreamSource final
   const String& GetName() const { return name_; }
   bool Remote() const { return remote_; }
 
-  void SetReadyState(ReadyState);
-  ReadyState GetReadyState() const { return ready_state_; }
+  void SetState(State);
+  State GetState() const { return state_; }
 
   void AddObserver(Observer*);
 
@@ -124,14 +120,14 @@ class PLATFORM_EXPORT MediaStreamSource final
                     StreamType,
                     const String& name,
                     bool remote,
-                    ReadyState,
+                    State,
                     bool requires_consumer);
 
   String id_;
   StreamType type_;
   String name_;
   bool remote_;
-  ReadyState ready_state_;
+  State state_;
   bool requires_consumer_;
   HeapHashSet<WeakMember<Observer>> observers_;
   Mutex audio_consumers_lock_;

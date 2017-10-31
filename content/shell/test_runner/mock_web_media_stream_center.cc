@@ -38,17 +38,17 @@ class MockWebAudioDestinationConsumer
 
 void MockWebMediaStreamCenter::DidEnableMediaStreamTrack(
     const blink::WebMediaStreamTrack& track) {
-  track.Source().SetReadyState(blink::WebMediaStreamSource::kReadyStateLive);
+  track.Source().SetState(blink::WebMediaStreamSource::kStateLive);
 }
 
 void MockWebMediaStreamCenter::DidDisableMediaStreamTrack(
     const blink::WebMediaStreamTrack& track) {
-  track.Source().SetReadyState(blink::WebMediaStreamSource::kReadyStateMuted);
+  track.Source().SetState(blink::WebMediaStreamSource::kStateMuted);
 }
 
 bool MockWebMediaStreamCenter::DidStopMediaStreamTrack(
     const blink::WebMediaStreamTrack& track) {
-  track.Source().SetReadyState(blink::WebMediaStreamSource::kReadyStateEnded);
+  track.Source().SetState(blink::WebMediaStreamSource::kStateEnded);
   return true;
 }
 
