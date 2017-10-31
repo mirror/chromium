@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af527a67_8833e7ac",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-31T03:26:17Z",
+      "side": 1,
+      "message": "Should we update histograms.xml as well?",
+      "revId": "ce4bd0fa7559e3ea391e3e79981a1ebe246f6dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0946fa6_08d1510c",
+        "filename": "chrome/browser/memory/swap_thrashing_monitor_delegate_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-31T03:26:17Z",
+      "side": 1,
+      "message": "If this threshold changes again in the future, we may want to make this (and following parameters) configurable and run a finch experiment.",
+      "revId": "ce4bd0fa7559e3ea391e3e79981a1ebe246f6dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
