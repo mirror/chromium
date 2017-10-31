@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17e2f6cc_cfcee333",
+        "filename": "testing/buildbot/chromium.webkit.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-31T23:47:54Z",
+      "side": 1,
+      "message": "The following is needed:\n  \"gpu\": \"1002:6821\",\n\nThis will target just the MacBook Pros with AMD GPUs in that pool, not the ones with NVIDIA GPUs.",
+      "revId": "f63bf0d2e7352dda469bc4b1e130a2c76e58b02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
