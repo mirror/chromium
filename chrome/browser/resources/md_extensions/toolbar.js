@@ -45,6 +45,11 @@ cr.define('extensions', function() {
       role: 'banner',
     },
 
+    /** @override */
+    attached: function() {
+      document.documentElement.classList.remove('loading');
+    },
+
     /** @private */
     onDevModeChange_: function() {
       this.delegate.setProfileInDevMode(this.$['dev-mode'].checked);
