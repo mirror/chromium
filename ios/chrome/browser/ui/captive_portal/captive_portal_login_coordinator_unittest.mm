@@ -9,6 +9,7 @@
 #import "ios/chrome/browser/web/chrome_web_test.h"
 #import "ios/chrome/test/scoped_key_window.h"
 #import "ios/testing/wait_util.h"
+#import "third_party/ocmock/OCMock/OCMock.h"
 #include "url/gurl.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -20,7 +21,10 @@ class CaptivePortalLoginCoordinatorTest : public ChromeWebTest {
  protected:
   void SetUp() override {
     ChromeWebTest::SetUp();
-    CaptivePortalDetectorTabHelper::CreateForWebState(web_state());
+    id captivePortalDetectorTabHelperDelegate = [OCMockObject
+        mockForProtocol:@protocol(CaptivePortalDetectorTabHelperDelegate)];
+    CaptivePortalDetectorTabHelper::CreateForWebState(
+        web_state(), captivePortalDetectorTabHelperDelegate);
   }
 };
 
