@@ -6,10 +6,20 @@ module content.mojom;
 
 import "mojo/common/time.mojom";
 import "third_party/WebKit/common/blob/blob.mojom";
+import "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom";
 import "third_party/WebKit/public/platform/modules/serviceworker/service_worker_stream_handle.mojom";
 
 [Native]
 struct ServiceWorkerResponse;
+
+// Extra info for the FetchEvent that isn't in URLRequest.
+struct FetchEventInfo {
+  // |client_id| is empty for main resource requests.
+  // TODO(falken): Can possibly repurpose URLRequest.service_worker_provider_id?
+  string client_id;
+  // TODO(falken): Can remove this after foreign fetch is deleted.
+  blink.mojom.ServiceWorkerFetchType fetch_type;
+};
 
 // Callback interface which is passed to a controller service worker through
 // DispatchFetchEvent (either via ServiceWorkerEventDispatcher or via
