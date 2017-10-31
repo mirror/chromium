@@ -197,10 +197,23 @@ void PolicyToolUIHandler::HandleInitializedAdmin(const base::ListValue* args) {
 
 bool PolicyToolUIHandler::IsValidSessionName(
     const base::FilePath::StringType& name) const {
-  // Check if the session name is valid, which means that it doesn't use
-  // filesystem navigation (e.g. ../ or nested folder).
+  // Check if the session name is valid by insuring that it doesn't try to
+  // escape. Some of these checks might be redundant but we're taking a belt and
+  // suspenders approach.
   base::FilePath session_path = GetSessionPath(name);
-  return !session_path.empty() && session_path.DirName() == sessions_dir_;
+  if (session_path.empty())
+    return false;
+  if (session_path.DirName() != sessions_dir_)
+    return false;
+  if (session_path.ReferencesParent())
+    return false;
+  if (session_path.value().find(FILE_PATH_LITERAL("$")) !=
+      base::FilePath::StringType::npos)
+    return false;
+  if (session_path.value().find(FILE_PATH_LITERAL("%")) !=
+      base::FilePath::StringType::npos)
+    return false;
+  return true;
 }
 
 void PolicyToolUIHandler::HandleLoadSession(const base::ListValue* args) {

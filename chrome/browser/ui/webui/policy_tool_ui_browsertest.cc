@@ -326,6 +326,12 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, InvalidSessionName) {
   EXPECT_FALSE(IsInvalidSessionNameErrorMessageDisplayed());
   LoadSession("../test");
   EXPECT_TRUE(IsInvalidSessionNameErrorMessageDisplayed());
+  LoadSession("test/");
+  EXPECT_TRUE(IsInvalidSessionNameErrorMessageDisplayed());
+  LoadSession("%test%");
+  EXPECT_TRUE(IsInvalidSessionNameErrorMessageDisplayed());
+  LoadSession("$test$");
+  EXPECT_TRUE(IsInvalidSessionNameErrorMessageDisplayed());
   LoadSession("policy");
   EXPECT_FALSE(IsInvalidSessionNameErrorMessageDisplayed());
 }
