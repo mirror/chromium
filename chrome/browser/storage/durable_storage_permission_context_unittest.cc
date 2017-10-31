@@ -29,8 +29,6 @@ using bookmarks::BookmarkModel;
 
 namespace {
 
-void DoNothing(ContentSetting content_setting) {}
-
 class TestDurablePermissionContext : public DurableStoragePermissionContext {
  public:
   explicit TestDurablePermissionContext(Profile* profile)
@@ -102,9 +100,9 @@ TEST_F(DurableStoragePermissionContextTest, Bookmarked) {
   ASSERT_EQ(CONTENT_SETTING_DEFAULT,
             permission_context.last_permission_set_setting());
 
-  permission_context.DecidePermission(web_contents(), id, url, url,
-                                      true /* user_gesture */,
-                                      base::Bind(&DoNothing));
+  permission_context.DecidePermission(
+      web_contents(), id, url, url, true /* user_gesture */,
+      base::Bind(&base::DoNothingWithParam<ContentSetting>));
   // Success.
   EXPECT_EQ(1, permission_context.permission_set_count());
   EXPECT_TRUE(permission_context.last_permission_set_persisted());
@@ -128,9 +126,9 @@ TEST_F(DurableStoragePermissionContextTest, BookmarkAndIncognitoMode) {
   ASSERT_EQ(CONTENT_SETTING_DEFAULT,
             permission_context.last_permission_set_setting());
 
-  permission_context.DecidePermission(web_contents(), id, url, url,
-                                      true /* user_gesture */,
-                                      base::Bind(&DoNothing));
+  permission_context.DecidePermission(
+      web_contents(), id, url, url, true /* user_gesture */,
+      base::Bind(&base::DoNothingWithParam<ContentSetting>));
   // Success.
   EXPECT_EQ(1, permission_context.permission_set_count());
   EXPECT_TRUE(permission_context.last_permission_set_persisted());
@@ -152,9 +150,9 @@ TEST_F(DurableStoragePermissionContextTest, NoBookmark) {
   ASSERT_EQ(CONTENT_SETTING_DEFAULT,
             permission_context.last_permission_set_setting());
 
-  permission_context.DecidePermission(web_contents(), id, url, url,
-                                      true /* user_gesture */,
-                                      base::Bind(&DoNothing));
+  permission_context.DecidePermission(
+      web_contents(), id, url, url, true /* user_gesture */,
+      base::Bind(&base::DoNothingWithParam<ContentSetting>));
 
   // We shouldn't be granted.
   EXPECT_EQ(1, permission_context.permission_set_count());
@@ -183,9 +181,9 @@ TEST_F(DurableStoragePermissionContextTest, CookiesNotAllowed) {
   ASSERT_EQ(CONTENT_SETTING_DEFAULT,
             permission_context.last_permission_set_setting());
 
-  permission_context.DecidePermission(web_contents(), id, url, url,
-                                      true /* user_gesture */,
-                                      base::Bind(&DoNothing));
+  permission_context.DecidePermission(
+      web_contents(), id, url, url, true /* user_gesture */,
+      base::Bind(&base::DoNothingWithParam<ContentSetting>));
   // We shouldn't be granted.
   EXPECT_EQ(1, permission_context.permission_set_count());
   EXPECT_FALSE(permission_context.last_permission_set_persisted());
@@ -209,9 +207,9 @@ TEST_F(DurableStoragePermissionContextTest, EmbeddedFrame) {
   ASSERT_EQ(CONTENT_SETTING_DEFAULT,
             permission_context.last_permission_set_setting());
 
-  permission_context.DecidePermission(web_contents(), id, requesting_url, url,
-                                      true /* user_gesture */,
-                                      base::Bind(&DoNothing));
+  permission_context.DecidePermission(
+      web_contents(), id, requesting_url, url, true /* user_gesture */,
+      base::Bind(&base::DoNothingWithParam<ContentSetting>));
   // We shouldn't be granted.
   EXPECT_EQ(1, permission_context.permission_set_count());
   EXPECT_FALSE(permission_context.last_permission_set_persisted());
