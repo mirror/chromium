@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92e3034b_686b556b",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRequest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-10-31T07:23:16Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to belong in this CL?",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 19
+      },
+      "revId": "365de022d1f2fad80b19923f12838f7bf3765643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
