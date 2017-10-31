@@ -7,26 +7,32 @@
 #include "core/dom/DOMException.h"
 #include "core/dom/ExceptionCode.h"
 #include "modules/cachestorage/Cache.h"
-#include "public/platform/modules/serviceworker/WebServiceWorkerCacheError.h"
+
+using blink::mojom::ServiceWorkerCacheError;
 
 namespace blink {
 
 DOMException* CacheStorageError::CreateException(
-    WebServiceWorkerCacheError web_error) {
+    ServiceWorkerCacheError web_error) {
   switch (web_error) {
-    case kWebServiceWorkerCacheErrorNotImplemented:
+    case ServiceWorkerCacheError::kErrorNotImplemented:
       return DOMException::Create(kNotSupportedError,
                                   "Method is not implemented.");
-    case kWebServiceWorkerCacheErrorNotFound:
+    case ServiceWorkerCacheError::kErrorNotFound:
       return DOMException::Create(kNotFoundError, "Entry was not found.");
-    case kWebServiceWorkerCacheErrorExists:
+    case ServiceWorkerCacheError::kErrorExists:
       return DOMException::Create(kInvalidAccessError, "Entry already exists.");
-    case kWebServiceWorkerCacheErrorQuotaExceeded:
+    case ServiceWorkerCacheError::kErrorQuotaExceeded:
       return DOMException::Create(kQuotaExceededError, "Quota exceeded.");
-    case kWebServiceWorkerCacheErrorCacheNameNotFound:
+    case ServiceWorkerCacheError::kErrorCacheNameNotFound:
       return DOMException::Create(kNotFoundError, "Cache was not found.");
-    case kWebServiceWorkerCacheErrorTooLarge:
+    case ServiceWorkerCacheError::kErrorQueryTooLarge:
       return DOMException::Create(kAbortError, "Operation too large.");
+    case ServiceWorkerCacheError::kErrorStorage:
+      return DOMException::Create(kUnknownError, "Storage failure.");
+    case ServiceWorkerCacheError::kSuccess:
+      // This function should only be called with an error.
+      break;
   }
   NOTREACHED();
   return nullptr;

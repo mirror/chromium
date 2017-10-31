@@ -7,7 +7,7 @@
 
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Noncopyable.h"
-#include "public/platform/modules/serviceworker/WebServiceWorkerCacheError.h"
+#include "public/platform/modules/serviceworker/service_worker_cache_storage.mojom-shared.h"
 
 namespace blink {
 
@@ -20,13 +20,14 @@ class CacheStorageError {
  public:
   // For CallbackPromiseAdapter. Ownership of a given error is not
   // transferred.
-  using WebType = WebServiceWorkerCacheError;
+  using WebType = mojom::ServiceWorkerCacheError;
   static DOMException* Take(ScriptPromiseResolver*,
-                            WebServiceWorkerCacheError web_error) {
+                            mojom::ServiceWorkerCacheError web_error) {
     return CreateException(web_error);
   }
 
-  static DOMException* CreateException(WebServiceWorkerCacheError web_error);
+  static DOMException* CreateException(
+      mojom::ServiceWorkerCacheError web_error);
 };
 
 }  // namespace blink
