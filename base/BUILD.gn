@@ -95,7 +95,10 @@ if (is_nacl_nonsfi) {
 
 if (is_android) {
   config("android_system_libs") {
-    libs = [ "log" ]  # Used by logging.cc.
+    libs = [
+      "android",  # Used by message_pump_android.cc.
+      "log",  # Used by logging.cc.
+    ]
   }
 }
 
@@ -2824,8 +2827,7 @@ if (is_android) {
     ]
     java_files = [
       "test/android/java/src/org/chromium/base/ContentUriTestUtils.java",
-      "test/android/java/src/org/chromium/base/JavaHandlerThreadTest.java",
-      "test/android/java/src/org/chromium/base/TestSystemMessageHandler.java",
+      "test/android/java/src/org/chromium/base/JavaHandlerThreadHelpers.java",
     ]
   }
 }
