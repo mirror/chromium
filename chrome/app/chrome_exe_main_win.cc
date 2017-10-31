@@ -23,6 +23,7 @@
 #include "base/win/registry.h"
 #include "base/win/win_util.h"
 #include "base/win/windows_version.h"
+#include "chrome/app/chrome_native_notification_prep_win.h"
 #include "chrome/app/main_dll_loader_win.h"
 #include "chrome/browser/policy/policy_path_parser.h"
 #include "chrome/browser/win/chrome_process_finder.h"
@@ -223,6 +224,15 @@ int main() {
     return 0;
 
   RemoveAppCompatFlagsEntry();
+
+#if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
+  // Start a new thread to prepare for Windows 10 native notification features.
+  if (process_type.empty() &&
+      command_line->HasSwitch(kEnableNativeNotification) &&
+      base::win::GetVersion() >= base::win::VERSION_WIN10_RS1) {
+    StartNativeNotificationThread();
+  }
+#endif  // BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
 
   // Load and launch the chrome dll. *Everything* happens inside.
   VLOG(1) << "About to load main DLL.";
