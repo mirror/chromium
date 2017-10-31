@@ -28832,6 +28832,9 @@ from previous Chrome versions.
 </enum>
 
 <enum name="NotifierType">
+  <obsolete>
+    Deprecated October 2017 (currently unused).
+  </obsolete>
   <int value="0" label="Application"/>
   <int value="1" label="Arc++"/>
   <int value="2" label="Web Page"/>

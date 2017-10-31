@@ -603,6 +603,10 @@ void MessageCenterImpl::DisplayedNotification(
   }
 }
 
+void MessageCenterImpl::FullscreenStateChanged() {
+  notification_list_->FullscreenStateChanged();
+}
+
 void MessageCenterImpl::SetNotifierSettingsProvider(
     std::unique_ptr<NotifierSettingsProvider> provider) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);

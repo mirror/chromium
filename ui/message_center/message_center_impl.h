@@ -76,6 +76,7 @@ class MESSAGE_CENTER_EXPORT MessageCenterImpl
                               bool mark_notification_as_read) override;
   void DisplayedNotification(const std::string& id,
                              const DisplaySource source) override;
+  void FullscreenStateChanged() override;
   void SetNotifierSettingsProvider(
       std::unique_ptr<NotifierSettingsProvider> provider) override;
   NotifierSettingsProvider* GetNotifierSettingsProvider() override;

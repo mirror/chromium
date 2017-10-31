@@ -10,6 +10,7 @@
 #include "ash/wm/window_state.h"
 #include "base/metrics/histogram_macros.h"
 #include "ui/aura/window.h"
+#include "ui/message_center/message_center.h"
 #include "ui/message_center/notifier_settings.h"
 
 namespace ash {
@@ -28,8 +29,8 @@ bool FullscreenNotificationBlocker::ShouldShowNotificationAsPopup(
     const message_center::Notification& notification) const {
   bool enabled =
       !should_block_ ||
-      (notification.delegate() &&
-       notification.delegate()->ShouldDisplayOverFullscreen()) ||
+      (notification.fullscreen_visibility() !=
+       message_center::FullscreenVisibility::NONE) ||
       system_notifier::ShouldAlwaysShowPopups(notification.notifier_id());
 
   if (enabled && !should_block_) {
@@ -54,16 +55,8 @@ void FullscreenNotificationBlocker::OnFullscreenStateChanged(
   if (!controller)
     return;
 
-  // Block notifications if the shelf is hidden because of a fullscreen
-  // window.
-  const aura::Window* fullscreen_window =
-      controller->GetWindowForFullscreenMode();
-  bool was_blocked = should_block_;
-  should_block_ =
-      fullscreen_window &&
-      wm::GetWindowState(fullscreen_window)->hide_shelf_when_fullscreen();
-  if (was_blocked != should_block_)
-    NotifyBlockingStateChanged();
+  message_center::MessageCenter::Get()->FullscreenStateChanged();
+  NotifyBlockingStateChanged();
 }
 
 }  // namespace ash
