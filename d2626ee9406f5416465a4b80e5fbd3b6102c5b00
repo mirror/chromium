@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2d44aff_c01eefb7",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T22:07:11Z",
+      "side": 1,
+      "message": "Why not just explicitly call GetModuleFileNameA() and skip wcstombs()? That\u0027s what PathService::GetExecutableDir() does and I assume it works.",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea5f707_7224a252",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T22:07:11Z",
+      "side": 1,
+      "message": "I\u0027m kind of worried that the trybots are all green, but this shouldn\u0027t work, since |res| has eben renamed to |len|.",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c18f85d_52c9003f",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T22:07:11Z",
+      "side": 1,
+      "message": "Since you are passing a buffer to _NSGetExecutablePath(), you should check its return result instead of the |len| output.",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb41192e_5cdcaaf2",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T22:07:11Z",
+      "side": 1,
+      "message": "Isn\u0027t unique_ptr going to delete its pointer by default? realpath() requires the memory it malloc\u0027d to be free\u0027d. This is going to cause a delete/free mismatch. You probably need FxFreeDeleter.",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df5dfa2_23a7a75e",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-31T22:07:11Z",
+      "side": 1,
+      "message": "Can |resolved_path| be of type const char, to avoid a const_cast here?",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
