@@ -445,6 +445,7 @@ source_set("common") {
     deps += [
       "//content/public/android:common_aidl",
       "//content/public/android:jni",
+      "//ui/android",
     ]
 
     libs += [ "android" ]
