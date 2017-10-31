@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0faa13b6_ed9862db",
+        "filename": "BUILD.gn",
+        "patchSetId": 22
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-31T20:08:05Z",
+      "side": 1,
+      "message": "I would get rid of the is_linux check here, I don\u0027t think having the target declared but empty on other platforms is harmful, and it\u0027s probably somewhat clearer without the check.",
+      "revId": "a9bb628d394a07af58a9f4c0d5624dde1186d1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b979eb72_bbb6e14e",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 22
+      },
+      "lineNbr": 3536,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-31T20:08:05Z",
+      "side": 1,
+      "message": "You don\u0027t need to add this here (and in fact, I think it\u0027ll be ignored).\n\nIf you did need to add it, you\u0027d need to add it to the \"Linux Builder\" target, up on line 3513, but since that already says \"all\", this is unnecessary.",
+      "revId": "a9bb628d394a07af58a9f4c0d5624dde1186d1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0004c55_1742d8f5",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 22
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-31T20:08:05Z",
+      "side": 1,
+      "message": "I think you can delete this now.",
+      "revId": "a9bb628d394a07af58a9f4c0d5624dde1186d1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
