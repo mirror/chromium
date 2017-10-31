@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ca8b666_46c17e7f",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/document-selectedStylesheetSet-use-counter.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-31T02:36:17Z",
+      "side": 1,
+      "message": "nit: this blank line appears to be a mistake",
+      "revId": "7246a4e3b904acaf5b1d425351b3c13de1b2af03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
