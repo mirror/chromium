@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "389f8044_27328bce",
+        "filename": "ios/chrome/browser/ui/payments/address_edit_mediator_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-31T15:59:41Z",
+      "side": 1,
+      "message": "nit: is there a resource string for this that could be used instead?",
+      "range": {
+        "startLine": 120,
+        "startChar": 52,
+        "endLine": 120,
+        "endChar": 63
+      },
+      "revId": "89525b7f4757dcf8a493a7a741e5be4acb07a7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9090c5_2c06ef2f",
+        "filename": "ios/chrome/browser/ui/payments/address_edit_mediator_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-31T15:59:41Z",
+      "side": 1,
+      "message": "nit: can we get these strings from the profile, instead of hardcoding them (or store them as const static members in autofill::test:: that would be used everywhere)?",
+      "range": {
+        "startLine": 171,
+        "startChar": 52,
+        "endLine": 171,
+        "endChar": 66
+      },
+      "revId": "89525b7f4757dcf8a493a7a741e5be4acb07a7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e89b94_d4c09d3a",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-31T15:59:41Z",
+      "side": 1,
+      "message": "nit: ditto (here and below)",
+      "range": {
+        "startLine": 139,
+        "startChar": 52,
+        "endLine": 139,
+        "endChar": 74
+      },
+      "revId": "89525b7f4757dcf8a493a7a741e5be4acb07a7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
