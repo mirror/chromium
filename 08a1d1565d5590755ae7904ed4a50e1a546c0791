@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaaeb7c8_0ccfd614",
+        "filename": "ash/shell.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:42:03Z",
+      "side": 1,
+      "message": "What happens with --mus/--mash where ash isn\u0027t the host process? There is no HostFrameSinkManager in that case and it\u0027ll be nullptr.",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57e9ff5_155aa320",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:42:03Z",
+      "side": 1,
+      "message": "You want to use |frame_sink_manager_| here instead of the if statement. It points to the right place.",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79076d5_e3004308",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:42:03Z",
+      "side": 1,
+      "message": "Might as well set these to 0 when they are defined instead of in the header.",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74447cc_b3256bdb",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:42:03Z",
+      "side": 1,
+      "message": "You should define this as a constexpr base::TimeDlta to avoid conversion from int to TimeDelta each execution? You can also just have that as your static constant in the header class definition or in the source file but in an anonymous namespace.\n\nprivate:\n static constexpr base::TimeDelta kMinVideoDuration \u003d base::TimeDelta::FromMilliseconds(N);",
+      "range": {
+        "startLine": 54,
+        "startChar": 22,
+        "endLine": 54,
+        "endChar": 76
+      },
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f80780_9290d319",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:42:03Z",
+      "side": 1,
+      "message": "frame.device_scale_factor() maybe?",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb414f3_884af3c5",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:42:03Z",
+      "side": 1,
+      "message": "if (!info)\n  info \u003d std::make_unique\u003cClientInfo\u003e();",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12849458_f3cb54e1",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:42:03Z",
+      "side": 1,
+      "message": "Same as above about constexpr.",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fbe4ae8_2e26feb8",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:42:03Z",
+      "side": 1,
+      "message": "You can make these all static constexpr and define them in the header (or source file in an anonymous namespace if they\u0027re not needed outside this class).",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3a1766_1dd47d59",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:42:03Z",
+      "side": 1,
+      "message": "Could also probably be constexpr.",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb73e8a_89d749db",
+        "filename": "components/viz/service/surfaces/surface_observer.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:42:03Z",
+      "side": 1,
+      "message": "Can you add a comment for exactly when this gets called?",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ea81bf_7134e4ac",
+        "filename": "services/ui/manifest.json",
+        "patchSetId": 26
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:42:03Z",
+      "side": 1,
+      "message": "Tabs?",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7595a587_373b118c",
+        "filename": "services/ui/ws/video_detector_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-31T20:42:03Z",
+      "side": 1,
+      "message": "Missing newline.",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
