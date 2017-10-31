@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8097a072_b2083170",
+        "filename": "net/spdy/OWNERS",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-31T19:55:34Z",
+      "side": 1,
+      "message": "I recommend moving these to net/http2/OWNERS.",
+      "range": {
+        "startLine": 6,
+        "startChar": 19,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "42ca8b4ce1673b40731a48de07ac2df5ec004220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
