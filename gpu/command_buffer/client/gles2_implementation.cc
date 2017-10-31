@@ -4627,7 +4627,7 @@ void GLES2Implementation::DeleteTexturesHelper(
     return;
   }
   for (GLsizei ii = 0; ii < n; ++ii) {
-    share_group_->discardable_manager()->FreeTexture(textures[ii]);
+    share_group_->discardable_texture_manager()->FreeTexture(textures[ii]);
 
     for (GLint tt = 0; tt < capabilities_.max_combined_texture_image_units;
          ++tt) {
@@ -6098,7 +6098,8 @@ void GLES2Implementation::AddLatencyInfo(
 
 bool GLES2Implementation::ThreadSafeShallowLockDiscardableTexture(
     uint32_t texture_id) {
-  ClientDiscardableManager* manager = share_group()->discardable_manager();
+  ClientDiscardableTextureManager* manager =
+      share_group()->discardable_texture_manager();
   return manager->TextureIsValid(texture_id) &&
          manager->LockTexture(texture_id);
 }
@@ -7064,7 +7065,8 @@ void GLES2Implementation::ProgramPathFragmentInputGenCHROMIUM(
 
 void GLES2Implementation::InitializeDiscardableTextureCHROMIUM(
     GLuint texture_id) {
-  ClientDiscardableManager* manager = share_group()->discardable_manager();
+  ClientDiscardableTextureManager* manager =
+      share_group()->discardable_texture_manager();
   if (manager->TextureIsValid(texture_id)) {
     SetGLError(GL_INVALID_VALUE, "glInitializeDiscardableTextureCHROMIUM",
                "Texture ID already initialized");
@@ -7077,7 +7079,8 @@ void GLES2Implementation::InitializeDiscardableTextureCHROMIUM(
 }
 
 void GLES2Implementation::UnlockDiscardableTextureCHROMIUM(GLuint texture_id) {
-  ClientDiscardableManager* manager = share_group()->discardable_manager();
+  ClientDiscardableTextureManager* manager =
+      share_group()->discardable_texture_manager();
   if (!manager->TextureIsValid(texture_id)) {
     SetGLError(GL_INVALID_VALUE, "glUnlockDiscardableTextureCHROMIUM",
                "Texture ID not initialized");
@@ -7087,7 +7090,8 @@ void GLES2Implementation::UnlockDiscardableTextureCHROMIUM(GLuint texture_id) {
 }
 
 bool GLES2Implementation::LockDiscardableTextureCHROMIUM(GLuint texture_id) {
-  ClientDiscardableManager* manager = share_group()->discardable_manager();
+  ClientDiscardableTextureManager* manager =
+      share_group()->discardable_texture_manager();
   if (!manager->TextureIsValid(texture_id)) {
     SetGLError(GL_INVALID_VALUE, "glLockDiscardableTextureCHROMIUM",
                "Texture ID not initialized");
