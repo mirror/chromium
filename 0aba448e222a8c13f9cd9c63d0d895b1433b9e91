@@ -22,6 +22,23 @@
       "revId": "0aba448e222a8c13f9cd9c63d0d895b1433b9e91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f41d170_e270cfa6",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-31T07:42:58Z",
+      "side": 1,
+      "message": "Can we pass SelectionTemplate\u003cT\u003e?\nYou can create SelectionTemplate\u003cT\u003e by Builder::SetAsBackwardSelection(range) and SetAsForwardSelection(range)",
+      "revId": "0aba448e222a8c13f9cd9c63d0d895b1433b9e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
