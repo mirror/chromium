@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8678ff3_3ae5984e",
+        "filename": "third_party/WebKit/Source/core/page/CreateWindow.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-31T21:30:51Z",
+      "side": 1,
+      "message": "I like normalizing the features, but as currently implemented, you are adding overhead - no matter whether probe is read, you are building the list. I would suggest that you:\n1) pass WebWindowFeatures into the probe\n2) serialize WebWindowFeatures into an array of strings and pass it over the protocol.",
+      "revId": "0397d8a33388a303f13150dd2abb13b78c8278c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
