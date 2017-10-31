@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbf842c9_dd8ce5fa",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-31T18:25:40Z",
+      "side": 1,
+      "message": "U2F devices only provide a single report so specify a report ID of 0 here.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 72
+      },
+      "revId": "439074922d761ff1abe65ff1261a4d606f438921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
