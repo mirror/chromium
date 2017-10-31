@@ -14,6 +14,7 @@
 #include "base/debug/alias.h"
 #include "base/debug/dump_without_crashing.h"
 #include "base/debug/stack_trace.h"
+#include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
@@ -129,6 +130,70 @@ void RecordNetworkErrorHistograms(const net::URLRequest* request,
           "Net.HttpRequestCompletionErrorCodes.MainFrame", std::abs(net_error));
     }
   }
+}
+
+bool IsAccessAllowedInternal(const base::FilePath& path,
+                             const base::FilePath& profile_path) {
+#if !defined(OS_CHROMEOS) && !defined(OS_ANDROID)
+  return true;
+#else
+
+  std::vector<base::FilePath> whitelist;
+#if defined(OS_CHROMEOS)
+  // Use a whitelist to only allow access to files residing in the list of
+  // directories below.
+  static const base::FilePath::CharType* const kLocalAccessWhiteList[] = {
+      "/home/chronos/user/Downloads",
+      "/home/chronos/user/log",
+      "/home/chronos/user/WebRTC Logs",
+      "/media",
+      "/opt/oem",
+      "/usr/share/chromeos-assets",
+      "/var/log",
+  };
+
+  base::FilePath temp_dir;
+  if (PathService::Get(base::DIR_TEMP, &temp_dir))
+    whitelist.push_back(temp_dir);
+
+  // The actual location of "/home/chronos/user/Xyz" is the Xyz directory under
+  // the profile path ("/home/chronos/user' is a hard link to current primary
+  // logged in profile.) For the support of multi-profile sessions, we are
+  // switching to use explicit "$PROFILE_PATH/Xyz" path and here whitelist such
+  // access.
+  if (!profile_path.empty()) {
+    const base::FilePath downloads = profile_path.AppendASCII("Downloads");
+    whitelist.push_back(downloads);
+    const base::FilePath webrtc_logs = profile_path.AppendASCII("WebRTC Logs");
+    whitelist.push_back(webrtc_logs);
+  }
+#elif defined(OS_ANDROID)
+  // Access to files in external storage is allowed.
+  base::FilePath external_storage_path;
+  PathService::Get(base::DIR_ANDROID_EXTERNAL_STORAGE, &external_storage_path);
+  if (external_storage_path.IsParent(path))
+    return true;
+
+  // Whitelist of other allowed directories.
+  static const base::FilePath::CharType* const kLocalAccessWhiteList[] = {
+      "/sdcard", "/mnt/sdcard",
+  };
+#endif
+
+  for (const auto* whitelisted_path : kLocalAccessWhiteList)
+    whitelist.push_back(base::FilePath(whitelisted_path));
+
+  for (const auto& whitelisted_path : whitelist) {
+    // base::FilePath::operator== should probably handle trailing separators.
+    if (whitelisted_path == path.StripTrailingSeparators() ||
+        whitelisted_path.IsParent(path)) {
+      return true;
+    }
+  }
+
+  DVLOG(1) << "File access denied - " << path.value().c_str();
+  return false;
+#endif  // !defined(OS_CHROMEOS) && !defined(OS_ANDROID)
 }
 
 }  // namespace
@@ -426,83 +491,23 @@ bool ChromeNetworkDelegate::OnCanAccessFile(
     const net::URLRequest& request,
     const base::FilePath& original_path,
     const base::FilePath& absolute_path) const {
-  if (g_access_to_all_files_enabled)
-    return true;
-
-#if defined(OS_ANDROID)
-  // Android's whitelist relies on symbolic links (ex. /sdcard is whitelisted
-  // and commonly a symbolic link), thus do not check absolute paths.
-  return IsAccessAllowed(original_path, profile_path_);
-#else
-  return (IsAccessAllowed(original_path, profile_path_) &&
-          IsAccessAllowed(absolute_path, profile_path_));
-#endif
+  return g_access_to_all_files_enabled ||
+         IsAccessAllowed(original_path, profile_path_);
 }
 
 // static
 bool ChromeNetworkDelegate::IsAccessAllowed(
     const base::FilePath& path,
     const base::FilePath& profile_path) {
-#if !defined(OS_CHROMEOS) && !defined(OS_ANDROID)
-  return true;
-#else
-
-  std::vector<base::FilePath> whitelist;
-#if defined(OS_CHROMEOS)
-  // Use a whitelist to only allow access to files residing in the list of
-  // directories below.
-  static const base::FilePath::CharType* const kLocalAccessWhiteList[] = {
-      "/home/chronos/user/Downloads",
-      "/home/chronos/user/log",
-      "/home/chronos/user/WebRTC Logs",
-      "/media",
-      "/opt/oem",
-      "/usr/share/chromeos-assets",
-      "/var/log",
-  };
-
-  base::FilePath temp_dir;
-  if (PathService::Get(base::DIR_TEMP, &temp_dir))
-    whitelist.push_back(temp_dir);
-
-  // The actual location of "/home/chronos/user/Xyz" is the Xyz directory under
-  // the profile path ("/home/chronos/user' is a hard link to current primary
-  // logged in profile.) For the support of multi-profile sessions, we are
-  // switching to use explicit "$PROFILE_PATH/Xyz" path and here whitelist such
-  // access.
-  if (!profile_path.empty()) {
-    const base::FilePath downloads = profile_path.AppendASCII("Downloads");
-    whitelist.push_back(downloads);
-    const base::FilePath webrtc_logs = profile_path.AppendASCII("WebRTC Logs");
-    whitelist.push_back(webrtc_logs);
-  }
-#elif defined(OS_ANDROID)
-  // Access to files in external storage is allowed.
-  base::FilePath external_storage_path;
-  PathService::Get(base::DIR_ANDROID_EXTERNAL_STORAGE, &external_storage_path);
-  if (external_storage_path.IsParent(path))
-    return true;
-
-  // Whitelist of other allowed directories.
-  static const base::FilePath::CharType* const kLocalAccessWhiteList[] = {
-      "/sdcard", "/mnt/sdcard",
-  };
+  bool access_allowed = IsAccessAllowedInternal(path, profile_path);
+#if !defined(OS_ANDROID)
+  // Android's whitelist relies on symbolic links (ex. /sdcard is whitelisted
+  // and commonly a symbolic link), thus only check absolute paths on other
+  // platforms.
+  access_allowed &=
+      IsAccessAllowedInternal(base::MakeAbsoluteFilePath(path), profile_path);
 #endif
-
-  for (const auto* whitelisted_path : kLocalAccessWhiteList)
-    whitelist.push_back(base::FilePath(whitelisted_path));
-
-  for (const auto& whitelisted_path : whitelist) {
-    // base::FilePath::operator== should probably handle trailing separators.
-    if (whitelisted_path == path.StripTrailingSeparators() ||
-        whitelisted_path.IsParent(path)) {
-      return true;
-    }
-  }
-
-  DVLOG(1) << "File access denied - " << path.value().c_str();
-  return false;
-#endif  // !defined(OS_CHROMEOS) && !defined(OS_ANDROID)
+  return access_allowed;
 }
 
 // static
