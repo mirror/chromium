@@ -34,6 +34,24 @@
       "revId": "89204772b7807077808637785438b365ae6cf009",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171da18b_796f12ca",
+        "filename": "tools/perf/contrib/vr_benchmarks/shared_android_vr_page_state.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-31T18:57:09Z",
+      "side": 1,
+      "message": "This overriding seems a bit like anti pattern. The reason is because we change the method named _EnsureScreenOn to now do more than just \"Ensure Screen On\". In general, the overrider should obey the contract of the method it overrides.\n\nEither the method name should be changed to be more general, or the TurnScreenOff action should be moved to somewhere else.",
+      "parentUuid": "a9ec5b25_a17885aa",
+      "revId": "89204772b7807077808637785438b365ae6cf009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
