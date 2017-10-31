@@ -4841,63 +4841,89 @@ TEST_F(AutofillManagerTest,
 }
 
 TEST_F(AutofillManagerTest, ShouldUploadForm) {
+  // Note: The enforcement of a minimum number of required fields for upload
+  // is disabled by default. This tests validates both the disabled and enabled
+  // scenarios.
   FormData form;
   form.name = ASCIIToUTF16("TestForm");
   form.origin = GURL("http://example.com/form.html");
   form.action = GURL("http://example.com/submit.html");
 
+  // Empty Form.
+  EXPECT_FALSE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
+
+  // Add a field to the form.
   FormFieldData field;
   test::CreateTestFormField("Name", "name", "", "text", &field);
   form.fields.push_back(field);
+
+  // Single-field form.
+  EXPECT_TRUE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
+  {
+    base::test::ScopedFeatureList features;
+    features.InitAndEnableFeature(kAutofillEnforceMinRequiredFieldsForUpload);
+    EXPECT_FALSE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
+  }
+
+  // Add a second field to the form.
   test::CreateTestFormField("Email", "email", "", "text", &field);
   form.fields.push_back(field);
 
-  FormStructure form_structure(form);
-
-  // Has less than 3 fields.
-  EXPECT_FALSE(autofill_manager_->ShouldUploadForm(form_structure));
+  // Two-field form.
+  EXPECT_TRUE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
+  {
+    base::test::ScopedFeatureList features;
+    features.InitAndEnableFeature(kAutofillEnforceMinRequiredFieldsForUpload);
+    EXPECT_FALSE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
+  }
 
   // Has less than 3 fields but has autocomplete attribute.
   form.fields[0].autocomplete_attribute = "given-name";
-  FormStructure form_structure_2(form);
-  EXPECT_FALSE(autofill_manager_->ShouldUploadForm(form_structure_2));
+  EXPECT_TRUE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
+  {
+    base::test::ScopedFeatureList features;
+    features.InitAndEnableFeature(kAutofillEnforceMinRequiredFieldsForUpload);
+    EXPECT_FALSE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
+  }
 
   // Has more than 3 fields, no autocomplete attribute.
   form.fields[0].autocomplete_attribute = "";
   test::CreateTestFormField("Country", "country", "", "text", &field);
   form.fields.push_back(field);
   FormStructure form_structure_3(form);
-  EXPECT_TRUE(autofill_manager_->ShouldUploadForm(form_structure_3));
+  EXPECT_TRUE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
 
   // Has more than 3 fields and at least one autocomplete attribute.
   form.fields[0].autocomplete_attribute = "given-name";
-  FormStructure form_structure_4(form);
-  EXPECT_TRUE(autofill_manager_->ShouldUploadForm(form_structure_4));
+  EXPECT_TRUE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
 
   // Is off the record.
   autofill_driver_->SetIsIncognito(true);
-  EXPECT_FALSE(autofill_manager_->ShouldUploadForm(form_structure_4));
+  EXPECT_FALSE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
 
   // Make sure it's reset for the next test case.
   autofill_driver_->SetIsIncognito(false);
-  EXPECT_TRUE(autofill_manager_->ShouldUploadForm(form_structure_4));
+  EXPECT_TRUE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
 
-  // Has one field which is a password field.
+  // Has one field which is appears to be a password field.
   form.fields.clear();
-  test::CreateTestFormField("Password", "pw", "", "password", &field);
+  test::CreateTestFormField("Password", "password", "", "password", &field);
   form.fields.push_back(field);
-  FormStructure form_structure_5(form);
-  EXPECT_FALSE(autofill_manager_->ShouldUploadForm(form_structure_5));
+  EXPECT_TRUE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
+  {
+    base::test::ScopedFeatureList features;
+    features.InitAndEnableFeature(kAutofillEnforceMinRequiredFieldsForUpload);
+    EXPECT_FALSE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
+  }
 
   // Has two fields which are password fields.
   test::CreateTestFormField("New Password", "new_pw", "", "password", &field);
   form.fields.push_back(field);
-  FormStructure form_structure_6(form);
-  EXPECT_TRUE(autofill_manager_->ShouldUploadForm(form_structure_6));
+  EXPECT_TRUE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
 
   // Autofill disabled.
   autofill_manager_->set_autofill_enabled(false);
-  EXPECT_FALSE(autofill_manager_->ShouldUploadForm(form_structure_3));
+  EXPECT_FALSE(autofill_manager_->ShouldUploadForm(FormStructure(form)));
 }
 
 // Verify that no suggestions are shown on desktop for non credit card related

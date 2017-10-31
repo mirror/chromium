@@ -153,7 +153,9 @@ bool IsFormInteresting(const FormData& form, size_t num_editable_elements) {
   // If there are no autocomplete attributes, the form needs to have at least
   // the required number of editable fields for the prediction routines to be a
   // candidate for autofill.
-  return num_editable_elements >= kRequiredFieldsForPredictionRoutines ||
+  bool min_required_fields =
+      std::min(MinRequiredFieldsForPrediction(), MinRequiredFieldsForUpload());
+  return num_editable_elements >= min_required_fields ||
          (all_fields_are_passwords &&
           num_editable_elements >=
               kRequiredFieldsForFormsWithOnlyPasswordFields);
