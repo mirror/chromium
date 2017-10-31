@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9160adf6_b02345fe",
+        "filename": "components/offline_pages/core/request_header/offline_page_navigation_ui_data.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-31T16:23:59Z",
+      "side": 1,
+      "message": "nit:  explicit",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "2c110e3d6bfe93c47965f0f703f8713937aebd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f820270_66d941a6",
+        "filename": "content/browser/download/download_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3161,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-31T16:23:59Z",
+      "side": 1,
+      "message": "This isn\u0027t safe to call on the UI thread - should post a task over to the IO thread.",
+      "range": {
+        "startLine": 3161,
+        "startChar": 2,
+        "endLine": 3161,
+        "endChar": 24
+      },
+      "revId": "2c110e3d6bfe93c47965f0f703f8713937aebd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa573f3_95d774d0",
+        "filename": "content/browser/download/download_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3164,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-31T16:23:59Z",
+      "side": 1,
+      "message": "I think this blocks until the page stops loading, not until a successful commit?\n\nCan work around that by creating a DownloadTestObserver at the start of the test, and making sure NumDangerousDownloadsSeen() is 0u, and maybe also check the URL of the current webcontents?\n\nNot sufficiently familiar with NavigationObserver to know how easy it is to distinguish a download from a committed navigation, but could alternatively look into that approach.",
+      "range": {
+        "startLine": 3164,
+        "startChar": 46,
+        "endLine": 3164,
+        "endChar": 47
+      },
+      "revId": "2c110e3d6bfe93c47965f0f703f8713937aebd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
