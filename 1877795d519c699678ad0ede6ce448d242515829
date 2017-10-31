@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d3ab8e1_b1d997e9",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3718,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-10-31T22:09:21Z",
+      "side": 1,
+      "message": "Could we move this to the method that sends the BeginNavigation IPC? This way it would be easier to see that all methods that can navigate you cross-origin are covered.",
+      "revId": "1877795d519c699678ad0ede6ce448d242515829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
