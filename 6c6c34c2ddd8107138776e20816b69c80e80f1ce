@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23c87b32_4b82f2e2",
+        "filename": "components/language/ios/browser/ios_language_detection_tab_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-31T02:37:08Z",
+      "side": 1,
+      "message": "If you mean the class CallbackList: it can\u0027t be used because it assumes that all listeners are destructed before the list itself (and there is indeterminate order of tab helper destruction).\n\nIf you just mean (e.g.) std::vector\u003cCallback\u003e, I\u0027d prefer not to just for two callbacks. I will make this change if we need any more though.",
+      "parentUuid": "d3c83598_89e8cbeb",
+      "revId": "6c6c34c2ddd8107138776e20816b69c80e80f1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20a97faa_235fb4d9",
         "filename": "ios/chrome/browser/translate/translate_egtest.mm",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "6c6c34c2ddd8107138776e20816b69c80e80f1ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff1c70f_9585be45",
+        "filename": "ios/chrome/browser/translate/translate_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-31T02:37:08Z",
+      "side": 1,
+      "message": "I can\u0027t actually see why it would be necessary (AFAIK each test case gets a new TranslateTestCase object) but you can see here that all the setup for the test is undone in tearDown (even things that don\u0027t seem necessary like clearing instance variables).\n\nI didn\u0027t want to remove this behaviour, so I added my clean up instead.",
+      "parentUuid": "20a97faa_235fb4d9",
+      "revId": "6c6c34c2ddd8107138776e20816b69c80e80f1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d1f4f5e_0c679914",
+        "filename": "components/language/ios/browser/ios_language_detection_notifier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-31T02:37:08Z",
+      "side": 1,
+      "message": "There are discussions about this e.g. here https://groups.google.com/a/chromium.org/forum/#!searchin/chromium-dev/friend$20test|sort:date/chromium-dev/dbvibRLXjIo/5afePj4HZ3IJ\n\nI prefer a public method (with a name that guarantees no one will use it in non-test code) because then we don\u0027t have to keep updating the header of this language class to reflect the internals of translate tests.",
+      "parentUuid": "7efd9f2b_b968ec30",
+      "revId": "5b142bcfee0de851d140175de449b0484c6107cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04975276_36689819",
         "filename": "components/language/ios/browser/ios_language_detection_notifier.mm",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "5b142bcfee0de851d140175de449b0484c6107cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b565ea27_8b0a0be6",
+        "filename": "components/language/ios/browser/ios_language_detection_notifier.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-31T02:37:08Z",
+      "side": 1,
+      "message": "This is to follow the behaviour of CreateForWebState in https://cs.chromium.org/chromium/src/ios/web/public/web_state/web_state_user_data.h\nWhich is to only create a new tab helper if there doesn\u0027t already exist one for this tab.",
+      "parentUuid": "04975276_36689819",
+      "revId": "5b142bcfee0de851d140175de449b0484c6107cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
