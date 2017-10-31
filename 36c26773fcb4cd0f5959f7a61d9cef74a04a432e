@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c79cf3a9_417bca4a",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-31T18:42:37Z",
+      "side": 1,
+      "message": "Why do we need to set maxcpus on the kernel cmdline?",
+      "revId": "36c26773fcb4cd0f5959f7a61d9cef74a04a432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
