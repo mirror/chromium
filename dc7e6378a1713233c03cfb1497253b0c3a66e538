@@ -46,6 +46,30 @@
       "revId": "dc7e6378a1713233c03cfb1497253b0c3a66e538",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e650ed26_d5aeaed1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-31T01:05:16Z",
+      "side": 1,
+      "message": "As discussed offline, we shouldn\u0027t need OffTheRecordProfile for PrefChangeRegistrar, instead we should use the user original profile like PrefServiceBridge does. To fix the contents being incorrectly shown separately, it seems adding checks in BottomSheetContentController#mTabModelSelectorObserver#onTabModelSelected is easier than in onSheetContentChanged.",
+      "parentUuid": "bc76efe5_e4bb6701",
+      "range": {
+        "startLine": 373,
+        "startChar": 20,
+        "endLine": 375,
+        "endChar": 21
+      },
+      "revId": "dc7e6378a1713233c03cfb1497253b0c3a66e538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
