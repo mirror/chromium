@@ -52,6 +52,24 @@
       "revId": "b783f48ae5e1b8ff9fd885b0eb47d05b1c0c4c61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c9bed1_af6a9adc",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/Coordinates.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-10-31T02:10:38Z",
+      "side": 1,
+      "message": "Test checkdeps needs more cleanup. So far production codes were taken care of. Chrome/WebView have \"+content/public/test\" \"+content/public/test/android/javatests\" that include non-public content test utils for android such as CriteriaHelper. I\u0027ll add them as additional exceptions. I suppose it\u0027s still valid that we keep RenderCoordinates hidden from embedders.\n\n\u003e I didn\u0027t look at chrome since I don\u0027t own that code\n\nYou do own chrome/test/android :)",
+      "parentUuid": "cd5d59ce_03138716",
+      "revId": "b783f48ae5e1b8ff9fd885b0eb47d05b1c0c4c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
