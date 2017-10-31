@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d24305c9_9f4c4554",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/load-event-after-removing-child-frame.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-31T16:19:19Z",
+      "side": 1,
+      "message": "This problem wouldn\u0027t repro with the right combination of ad-hoc debugging printf statements.",
+      "range": {
+        "startLine": 27,
+        "startChar": 42,
+        "endLine": 27,
+        "endChar": 56
+      },
+      "revId": "0640fa4ee0c90de9c0fb65ebefc55b0f23daed7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b91bb005_2cf427a7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/load-event-after-removing-child-frame.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-31T16:19:19Z",
+      "side": 1,
+      "message": "I think that without OOPIFs it is not possible to 1) execute a script in the parent frame, 2) while a child frame started but has not finished parsing.\n\nSo far I couldn\u0027t figure out how to repro the problem (lack of \u0027load\u0027 event because of removing a still-loading subframe) without OOPIFs.  One attempt was by using a long/infinite-loading img in the subframe (https://chromium-review.googlesource.com/#/c/chromium/src/+/747067), but this didn\u0027t lead to a repro.",
+      "range": {
+        "startLine": 27,
+        "startChar": 61,
+        "endLine": 28,
+        "endChar": 23
+      },
+      "revId": "0640fa4ee0c90de9c0fb65ebefc55b0f23daed7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36afe5c3_7f635a70",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-31T16:19:19Z",
+      "side": 1,
+      "message": "I\u0027ve added the \"if\" statement here as a way to make this idempotent.  It seems that otherwise Document::CheckCompleted might re-do a bunch of work every time a subframe is removed.\n\nI am not sure if the \"if\" statement is the right way of dealing with this.",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 39
+      },
+      "revId": "0640fa4ee0c90de9c0fb65ebefc55b0f23daed7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
