@@ -16,6 +16,24 @@
       "revId": "ff646bb440530133640ffeb4198fa08b7b302445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960e67ca_ad0a70b1",
+        "filename": "ios/chrome/test/app/tab_test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T22:42:36Z",
+      "side": 1,
+      "message": "The change is in the base CL: https://chromium-review.googlesource.com/c/chromium/src/+/746995/2/ios/chrome/test/app/tab_test_util.h",
+      "parentUuid": "a635a50d_3e9286da",
+      "revId": "ff646bb440530133640ffeb4198fa08b7b302445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
