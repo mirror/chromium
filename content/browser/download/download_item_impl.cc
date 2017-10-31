@@ -47,6 +47,7 @@
 #include "content/browser/download/download_request_handle.h"
 #include "content/browser/download/download_stats.h"
 #include "content/browser/download/download_task_runner.h"
+#include "content/browser/download/download_ukm.h"
 #include "content/browser/download/parallel_download_utils.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
@@ -1367,7 +1368,14 @@ void DownloadItemImpl::Start(
       RecordParallelizableDownloadCount(NEW_DOWNLOAD_COUNT,
                                         IsParallelDownloadEnabled());
     }
-    RecordDownloadMimeType(mime_type_);
+
+    ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+    const GURL& url = GetURL();
+    download_ukm::DownloadUkmHelper download_ukm_helper(ukm_recorder, url);
+
+    int file_type = RecordDownloadMimeType(mime_type_);
+    download_ukm_helper.RecordDownloadStartedFileType(file_type);
+
     if (!GetBrowserContext()->IsOffTheRecord()) {
       RecordDownloadCount(NEW_DOWNLOAD_COUNT_NORMAL_PROFILE);
       RecordDownloadMimeTypeForNormalProfile(mime_type_);
