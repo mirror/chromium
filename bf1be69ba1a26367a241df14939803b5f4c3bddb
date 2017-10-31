@@ -16,6 +16,24 @@
       "revId": "bf1be69ba1a26367a241df14939803b5f4c3bddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6add1a5b_6a22340c",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-31T15:46:36Z",
+      "side": 1,
+      "message": "Alternatively, if we want a quick fix for now just tie this to a documented boolean property defined in cr_camera.js (e.g. enableVideoCapture), then we can tie setting it to a loadTimeData flag in the embedders later.",
+      "parentUuid": "82378fc5_ea44f22d",
+      "revId": "bf1be69ba1a26367a241df14939803b5f4c3bddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
