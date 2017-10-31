@@ -12,9 +12,12 @@
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/cpp/window_state_type.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "ash/public/interfaces/window_state_type.mojom.h"
 #include "ash/wm/drag_window_resizer.h"
+#include "ash/wm/window_properties.h"
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm/window_state_delegate.h"
 #include "ash/wm/window_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -23,6 +26,7 @@
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/trees/layer_tree_frame_sink.h"
+#include "components/exo/client_controlled_state.h"
 #include "components/exo/surface.h"
 #include "services/ui/public/interfaces/window_tree_constants.mojom.h"
 #include "ui/aura/client/aura_constants.h"
@@ -187,6 +191,47 @@ struct ShellSurface::Config {
   gfx::Vector2d origin_offset;
   int resize_component;
   std::unique_ptr<ui::CompositorLock> compositor_lock;
+};
+
+class ShellSurface::CustomWindowStateDelegate
+    : public ash::wm::WindowStateDelegate {
+ public:
+  explicit CustomWindowStateDelegate(ShellSurface* shell_surface)
+      : shell_surface_(shell_surface) {}
+  ~CustomWindowStateDelegate() override {}
+
+  bool ToggleFullscreen(ash::wm::WindowState* window_state) override {
+    return shell_surface_->ToggleFullscreen(window_state->GetStateType());
+  }
+
+  bool RestoreAlwaysOnTop(ash::wm::WindowState* window_state) override {
+    return !!shell_surface_;
+  }
+
+ private:
+  ShellSurface* shell_surface_;
+  DISALLOW_COPY_AND_ASSIGN(CustomWindowStateDelegate);
+};
+
+class ShellSurface::CustomClientControlledStateDelegate
+    : public ash::wm::ClientControlledState::Delegate {
+ public:
+  CustomClientControlledStateDelegate(ShellSurface* shell_surface)
+      : shell_surface_(shell_surface) {}
+  ~CustomClientControlledStateDelegate() override {}
+  void SendWindowStateRequest(ash::mojom::WindowStateType current_state,
+                              ash::wm::WMEventType type) override {
+    shell_surface_->SendWindowStateRequest(current_state, type);
+  }
+
+  void SendBoundsRequest(ash::mojom::WindowStateType current_state,
+                         const gfx::Rect& bounds) override {
+    shell_surface_->SendBoundsRequest(current_state, bounds);
+  }
+
+ private:
+  ShellSurface* shell_surface_;
+  DISALLOW_COPY_AND_ASSIGN(CustomClientControlledStateDelegate);
 };
 
 // Helper class used to coalesce a number of changes into one "configure"
@@ -417,7 +462,14 @@ void ShellSurface::Maximize() {
   // Note: This will ask client to configure its surface even if already
   // maximized.
   ScopedConfigure scoped_configure(this, true);
-  widget_->Maximize();
+  if (bounds_mode_ == BoundsMode::CLIENT) {
+    ash::wm::WindowState* window_state =
+        ash::wm::GetWindowState(widget_->GetNativeWindow());
+    client_controlled_state_->EnterToNextState(
+        window_state, ash::mojom::WindowStateType::MAXIMIZED);
+  } else {
+    widget_->Maximize();
+  }
 }
 
 void ShellSurface::Minimize() {
@@ -437,11 +489,17 @@ void ShellSurface::Restore() {
 
   if (!widget_)
     return;
-
-  // Note: This will ask client to configure its surface even if not already
-  // maximized or minimized.
   ScopedConfigure scoped_configure(this, true);
-  widget_->Restore();
+  if (bounds_mode_ == BoundsMode::CLIENT) {
+    ash::wm::WindowState* window_state =
+        ash::wm::GetWindowState(widget_->GetNativeWindow());
+    client_controlled_state_->EnterToNextState(
+        window_state, ash::mojom::WindowStateType::NORMAL);
+  } else {
+    // Note: This will ask client to configure its surface even if not already
+    // maximized or minimized.
+    widget_->Restore();
+  }
 }
 
 void ShellSurface::SetFullscreen(bool fullscreen) {
@@ -968,7 +1026,7 @@ void ShellSurface::OnPreWindowStateTypeChange(
     // TODO(domlaskowski): For BoundsMode::CLIENT, the configure callback does
     // not yet support window state changes. See crbug.com/699746.
     if (configure_callback_.is_null() || bounds_mode_ == BoundsMode::CLIENT) {
-      scoped_animations_disabled_.reset(new ScopedAnimationsDisabled(this));
+      // scoped_animations_disabled_.reset(new ScopedAnimationsDisabled(this));
     } else if (widget_) {
       // Give client a chance to produce a frame that takes state change into
       // account by acquiring a compositor lock.
@@ -1315,6 +1373,16 @@ void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
   // Allow the client to request bounds that do not fill the entire work area
   // when maximized, or the entire display when fullscreen.
   window_state->set_allow_set_bounds_direct(bounds_mode_ == BoundsMode::CLIENT);
+  if (bounds_mode_ == BoundsMode::CLIENT) {
+    LOG(ERROR) << "Using Custom Mode";
+    std::unique_ptr<ash::wm::ClientControlledState> state =
+        std::make_unique<ash::wm::ClientControlledState>(
+            std::make_unique<CustomClientControlledStateDelegate>(this));
+    client_controlled_state_ = state.get();
+    window_state->SetStateObject(std::move(state));
+    window_state->SetDelegate(
+        std::make_unique<CustomWindowStateDelegate>(this));
+  }
 
   // Notify client of initial state if different than normal.
   if (window_state->GetStateType() != ash::mojom::WindowStateType::NORMAL &&
@@ -1600,6 +1668,9 @@ void ShellSurface::UpdateWidgetBounds() {
   if (IsResizing())
     return;
 
+  LOG(ERROR) << "UpdatewidgetBounds:: scoped=" << scoped_configure_
+             << ", pending=" << pending_configs_.size();
+
   // Return early if there is pending configure requests.
   if (!pending_configs_.empty() || scoped_configure_)
     return;
@@ -1631,6 +1702,7 @@ void ShellSurface::UpdateWidgetBounds() {
       }
       break;
   }
+  LOG(ERROR) << "New Widget Bounds:" << new_widget_bounds.ToString();
 
   // Set |ignore_window_bounds_changes_| as this change to window bounds
   // should not result in a configure request.
@@ -1668,7 +1740,7 @@ void ShellSurface::UpdateWidgetBounds() {
 void ShellSurface::UpdateSurfaceBounds() {
   gfx::Rect client_view_bounds =
       widget_->non_client_view()->frame_view()->GetBoundsForClientView();
-
+  LOG(ERROR) << "Surface origin:" << GetSurfaceOrigin().ToString();
   host_window()->SetBounds(
       gfx::Rect(GetSurfaceOrigin() + client_view_bounds.OffsetFromOrigin(),
                 host_window()->bounds().size()));
@@ -1749,5 +1821,65 @@ void ShellSurface::EnsureCompositorIsLockedForOrientationChange() {
         this, base::TimeDelta::FromMilliseconds(kOrientationLockTimeoutMs));
   }
 }
+
+bool ShellSurface::ToggleFullscreen(ash::mojom::WindowStateType current_state) {
+  ash::mojom::WindowStateType next_state;
+  switch (current_state) {
+    case ash::mojom::WindowStateType::NORMAL:
+    case ash::mojom::WindowStateType::MAXIMIZED:
+      next_state = ash::mojom::WindowStateType::FULLSCREEN;
+      break;
+    case ash::mojom::WindowStateType::FULLSCREEN:
+      next_state = ash::mojom::WindowStateType::NORMAL;
+      break;
+    case ash::mojom::WindowStateType::MINIMIZED:
+      next_state = ash::mojom::WindowStateType::FULLSCREEN;
+      break;
+    default:
+      LOG(ERROR) << "UNKNOWN CURRENT STATE " << current_state;
+  }
+  state_changed_callback_.Run(current_state,
+                              ash::mojom::WindowStateType::FULLSCREEN);
+  return true;
+}
+
+void ShellSurface::SendWindowStateRequest(
+    ash::mojom::WindowStateType current_state,
+    ash::wm::WMEventType type) {
+  if (!state_changed_callback_.is_null()) {
+    ash::mojom::WindowStateType next_state;
+    switch (type) {
+      case ash::wm::WM_EVENT_NORMAL:
+        next_state = ash::mojom::WindowStateType::NORMAL;
+        break;
+      case ash::wm::WM_EVENT_MAXIMIZE:
+        next_state = ash::mojom::WindowStateType::MAXIMIZED;
+        break;
+      case ash::wm::WM_EVENT_MINIMIZE:
+        next_state = ash::mojom::WindowStateType::MINIMIZED;
+        break;
+      case ash::wm::WM_EVENT_FULLSCREEN:
+        next_state = ash::mojom::WindowStateType::FULLSCREEN;
+        break;
+      /*
+    case WM_EVENT_SNAP_LEFT:
+      next_state_type = mojom::WindowStateType::LEFT_SNAPPED;
+      break;
+      case WM_EVENT_SNAP_RIGHT:
+      next_state_type = mojom::WindowStateType::RIGHT_SNAPPED;
+      break;
+      */
+      default:
+        LOG(ERROR) << "UNKNOWN EVENT TYPE:" << type;
+        return;
+    }
+    LOG(ERROR) << "Sending WindowState Request:" << current_state << " => "
+               << next_state;
+    state_changed_callback_.Run(current_state, next_state);
+  }
+}
+
+void ShellSurface::SendBoundsRequest(ash::mojom::WindowStateType current_state,
+                                     const gfx::Rect& bounds) {}
 
 }  // namespace exo
