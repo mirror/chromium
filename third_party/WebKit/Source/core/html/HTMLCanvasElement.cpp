@@ -1191,8 +1191,12 @@ scoped_refptr<Image> HTMLCanvasElement::CopiedImage(
     SourceDrawingBuffer source_buffer,
     AccelerationHint hint,
     SnapshotReason snapshot_reason) {
+  if (SurfaceLayerBridge())
+    return PlaceholderFrame();
+
   if (!IsPaintable())
     return nullptr;
+
   if (!context_)
     return CreateTransparentImage(Size());
 
