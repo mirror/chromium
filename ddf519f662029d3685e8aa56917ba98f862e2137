@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "134e6101_599d7229",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-31T18:41:27Z",
+      "side": 1,
+      "message": "I have no opinion about final here. I just kept the existing one. Removed.",
+      "parentUuid": "149bf87a_df37bf0b",
+      "range": {
+        "startLine": 174,
+        "startChar": 38,
+        "endLine": 174,
+        "endChar": 43
+      },
+      "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "238be57c_a976d222",
         "filename": "chromeos/network/network_configuration_handler_unittest.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "ae0df0d3_6168a15c",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-31T18:41:27Z",
+      "side": 1,
+      "message": "Done.\n\nClearPropertyUpdates() is removed, by tweaking AddObserver timing.",
+      "parentUuid": "238be57c_a976d222",
+      "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33dd71eb_00506bee",
         "filename": "chromeos/network/network_configuration_handler_unittest.cc",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-31T18:13:13Z",
       "side": 1,
       "message": "nit: use c\u0027tor/d\u0027tor instead of SetUp/TearDown when possible (generally whenever you don\u0027t derive from another test class that does stuff in SetUp/TearDown): https://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function",
+      "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12130ee_ddd69b1e",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-31T18:41:27Z",
+      "side": 1,
+      "message": "Good to know. Done. Thank you for sharing the doc.",
+      "parentUuid": "33dd71eb_00506bee",
       "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "8be9b15a_305be539",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-31T18:41:27Z",
+      "side": 1,
+      "message": "It\u0027s private ctor, so we cannot use std::make_unique here. Commented.",
+      "parentUuid": "609b580f_19213f53",
+      "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb92c351_f1913954",
         "filename": "chromeos/network/network_configuration_handler_unittest.cc",
         "patchSetId": 2
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "72c0ed51_152252cd",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-31T18:41:27Z",
+      "side": 1,
+      "message": "Then, rather let\u0027s get rid of DEPRECATED methods, and use new ones.",
+      "parentUuid": "eb92c351_f1913954",
+      "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "422db5b9_218623ba",
         "filename": "chromeos/network/network_configuration_handler_unittest.cc",
         "patchSetId": 2
@@ -104,6 +200,24 @@
       "writtenOn": "2017-10-31T18:13:13Z",
       "side": 1,
       "message": "nit: could do the same here",
+      "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ddd98de_ecf2e1ed",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-31T18:41:27Z",
+      "side": 1,
+      "message": "Ditto. Done.",
+      "parentUuid": "422db5b9_218623ba",
       "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
