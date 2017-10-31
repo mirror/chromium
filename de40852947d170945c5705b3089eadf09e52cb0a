@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beb9c8ea_dad1a583",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-31T22:17:03Z",
+      "side": 1,
+      "message": "This comment may help, too (even though it\u0027s mostly covered by CommitFullscreenLowPower\u0027s comment)\n\n// Weak pointer to one the leaf ContentLayers in the tree rooted at this. This is non-null\n// if and only if we are in fullscreen low power mode.",
+      "revId": "de40852947d170945c5705b3089eadf09e52cb0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1000231_3d05282d",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-31T22:17:03Z",
+      "side": 1,
+      "message": "The following comment (and explicit re-setting of old_layer) may make code-archeology easier in the future\n\nif (old_low_power_layer) {\n  // We are transitioning from fullscreen low power mode to non-fullscreen low\n  // power mode. Re-set the root background color and frame.\n  [ca_layer setBackgroundColor:nil];\n  [ca_layer setFrame:CGRectZero];\n  // Re-set old_layer so that we reconstruct the CALayer tree from scratch.\n  old_layer \u003d nullptr;\n}",
+      "revId": "de40852947d170945c5705b3089eadf09e52cb0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
