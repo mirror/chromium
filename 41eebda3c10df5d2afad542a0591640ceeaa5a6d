@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c8eae69_e261da42",
+        "filename": "extensions/renderer/messaging_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-31T21:13:41Z",
+      "side": 1,
+      "message": "For what it\u0027s worth, I believe that (perhaps confusingly) Int32Value will work in any event, as it coerces to number and then converts the number value to int32_t, regardless of whether IsInt32 would have returned true (or even whether the result is integral). Your existing unit tests would allow you  to confirm this.\n\n(On the other hand, As\u003cv8::Int32\u003e()-\u003eValue() would have an illegal cast, albeit one that would probably also work anyway as well.)\n\nIf you do still want a DCHECK, something like this will work but be marginally less code:\n\n  DCHECK(value-\u003eIsNumber() \u0026\u0026 (value-\u003eIsInt32() || value-\u003eAs\u003cv8::Number\u003e()-\u003eValue() \u003d\u003d 0.0))\n  return value-\u003eInt32Value();",
+      "revId": "41eebda3c10df5d2afad542a0591640ceeaa5a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
