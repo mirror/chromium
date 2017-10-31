@@ -991,16 +991,14 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
     EXPECT_EQ(2, controller.GetEntryCount());
   }
 
-  // Navigate again to the page that fails to load. It must result in an error
-  // page, the EXISTING_PAGE navigation type, and no addition to the history
-  // list. We do not use SAME_PAGE here; that case only differs in that it
-  // clears the pending entry, and there is no pending entry after a load
-  // failure.
+  // Navigate again to the page that fails to load. It results in an error page,
+  // the NEW_PAGE navigation type with replacement, and no addition to the
+  // history list.
   {
     FrameNavigateParamsCapturer capturer(root);
     NavigateFrameToURL(root, error_url);
     capturer.Wait();
-    EXPECT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, capturer.navigation_type());
+    EXPECT_EQ(NAVIGATION_TYPE_NEW_PAGE, capturer.navigation_type());
     NavigationEntry* entry = controller.GetLastCommittedEntry();
     EXPECT_EQ(PAGE_TYPE_ERROR, entry->GetPageType());
     EXPECT_EQ(2, controller.GetEntryCount());
@@ -1011,14 +1009,11 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(3, controller.GetEntryCount());
 
   // ... and replace it with a failed load.
-  // TODO(creis): Make this be NEW_PAGE along with the other location.replace
-  // cases.  There isn't much impact to having this be EXISTING_PAGE for now.
-  // See https://crbug.com/596707.
   {
     FrameNavigateParamsCapturer capturer(root);
     RendererLocationReplace(shell(), error_url);
     capturer.Wait();
-    EXPECT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, capturer.navigation_type());
+    EXPECT_EQ(NAVIGATION_TYPE_NEW_PAGE, capturer.navigation_type());
     NavigationEntry* entry = controller.GetLastCommittedEntry();
     EXPECT_EQ(PAGE_TYPE_ERROR, entry->GetPageType());
     EXPECT_EQ(3, controller.GetEntryCount());
@@ -1126,21 +1121,19 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
     EXPECT_TRUE(capturer.is_same_document());
   }
 
-  if (AreAllSitesIsolatedForTesting()) {
-    // Cross-process location.replace().
-    FrameNavigateParamsCapturer capturer(root);
-    GURL frame_url(embedded_test_server()->GetURL(
-        "foo.com", "/navigation_controller/simple_page_1.html"));
-    std::string script = "location.replace('" + frame_url.spec() + "')";
-    EXPECT_TRUE(ExecuteScript(root, script));
-    capturer.Wait();
-    EXPECT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
-        capturer.transition(),
-        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK |
-                                  ui::PAGE_TRANSITION_CLIENT_REDIRECT)));
-    EXPECT_EQ(NAVIGATION_TYPE_NEW_PAGE, capturer.navigation_type());
-    EXPECT_FALSE(capturer.is_same_document());
-  }
+  // location.replace().
+  FrameNavigateParamsCapturer capturer(root);
+  GURL frame_url(embedded_test_server()->GetURL(
+      "foo.com", "/navigation_controller/simple_page_1.html"));
+  std::string script = "location.replace('" + frame_url.spec() + "')";
+  EXPECT_TRUE(ExecuteScript(root, script));
+  capturer.Wait();
+  EXPECT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+      capturer.transition(),
+      ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK |
+                                ui::PAGE_TRANSITION_CLIENT_REDIRECT)));
+  EXPECT_EQ(NAVIGATION_TYPE_NEW_PAGE, capturer.navigation_type());
+  EXPECT_FALSE(capturer.is_same_document());
 }
 
 // Verify that navigations for NAVIGATION_TYPE_EXISTING_PAGE are correctly
@@ -1268,8 +1261,6 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
 
   {
     // location.replace().
-    // TODO(creis): Change this to be NEW_PAGE with replacement in
-    // https://crbug.com/596707.
     FrameNavigateParamsCapturer capturer(root);
     GURL frame_url(embedded_test_server()->GetURL(
         "/navigation_controller/simple_page_1.html"));
@@ -1280,7 +1271,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
         capturer.transition(),
         ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK |
                                   ui::PAGE_TRANSITION_CLIENT_REDIRECT)));
-    EXPECT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, capturer.navigation_type());
+    EXPECT_EQ(NAVIGATION_TYPE_NEW_PAGE, capturer.navigation_type());
     EXPECT_FALSE(capturer.is_same_document());
   }
 
@@ -1658,7 +1649,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
         capturer.transitions()[1],
         ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK |
                                   ui::PAGE_TRANSITION_CLIENT_REDIRECT)));
-    EXPECT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, capturer.navigation_types()[1]);
+    EXPECT_EQ(NAVIGATION_TYPE_NEW_PAGE, capturer.navigation_types()[1]);
   }
 }
 
@@ -4904,7 +4895,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest, ReloadOriginalRequest) {
         capturer.transition(),
         ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK |
                                   ui::PAGE_TRANSITION_CLIENT_REDIRECT)));
-    EXPECT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, capturer.navigation_type());
+    EXPECT_EQ(NAVIGATION_TYPE_NEW_PAGE, capturer.navigation_type());
   }
 
   // Modify an entry in the session history and reload the original request.

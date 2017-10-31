@@ -291,12 +291,11 @@ IN_PROC_BROWSER_TEST_F(TranslateBrowserTest, IgnoreRefreshMetaTagAtOnload) {
 }
 
 IN_PROC_BROWSER_TEST_F(TranslateBrowserTest, UpdateLocation) {
-  ASSERT_NO_FATAL_FAILURE(CheckForTranslateUI(
-      kUpdateLocationTestPath, false));
+  ASSERT_NO_FATAL_FAILURE(CheckForTranslateUI(kUpdateLocationTestPath, true));
 }
 
 IN_PROC_BROWSER_TEST_F(TranslateBrowserTest, UpdateLocationAtOnload) {
-  ASSERT_NO_FATAL_FAILURE(CheckForTranslateUI(
-      kUpdateLocationAtOnloadTestPath, false));
+  ASSERT_NO_FATAL_FAILURE(
+      CheckForTranslateUI(kUpdateLocationAtOnloadTestPath, true));
 }
 #endif  // !defined(USE_AURA)
