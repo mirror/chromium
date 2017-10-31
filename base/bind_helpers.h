@@ -454,6 +454,9 @@ static inline internal::IgnoreResultHelper<T> IgnoreResult(T data) {
 
 BASE_EXPORT void DoNothing();
 
+template <typename T>
+BASE_EXPORT inline void DoNothingWithParam(T) {}
+
 template<typename T>
 void DeletePointer(T* obj) {
   delete obj;
