@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93f31052_45e3d950",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T23:21:42Z",
+      "side": 1,
+      "message": "I think the problem is InternalPageInfoBubbleView, which inherits from views::BubbleDialogDelegateView only but is also assigned to |g_page_info_bubble| :( Actually, I\u0027m not sure why the static_cast works in GetPageInfoBubbleForTesting() exactly..?\n\nIf that\u0027s not OK, maybe we can try doing something similar to PageInfoBubbleViewTestApi and create our own PIBV? (The PIBV unit test.)",
+      "parentUuid": "d6e07a71_080329b5",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ed7e670_b8cf8a49",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d9d83d_21956e95",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T23:21:42Z",
+      "side": 1,
+      "message": "See above comment.",
+      "parentUuid": "4ed7e670_b8cf8a49",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5a8242ca_237c931f",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T23:21:42Z",
+      "side": 1,
+      "message": "The |internal_url| is necessary to get the InternalPageInfoBubbleView to show up, but not the HTTPS/HTTP urls. I updated the comment to say \"the following two urls\" to be more explicit, is that ok?\n\nRE const: done.",
+      "parentUuid": "1aa5d62b_88fab2d4",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a049079_f9c3f60b",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02efc852_91e0818e",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T23:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a049079_f9c3f60b",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "9bfce379_390ecbe2",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T23:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ed371d1_730e138c",
+      "range": {
+        "startLine": 127,
+        "startChar": 16,
+        "endLine": 127,
+        "endChar": 26
+      },
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfff0bc3_0bbcdfe6",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
         "patchSetId": 5
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "690e77f3_ed9dd48a",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T23:21:42Z",
+      "side": 1,
+      "message": "I changed it to Insecure, and HTTPS-\u003eSecure to match.",
+      "parentUuid": "bfff0bc3_0bbcdfe6",
+      "range": {
+        "startLine": 134,
+        "startChar": 17,
+        "endLine": 134,
+        "endChar": 24
+      },
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5317bb5_5c0132fa",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
         "patchSetId": 5
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "fe4cb76b_be732b76",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T23:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5317bb5_5c0132fa",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63d43d73_5e28cedc",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
         "patchSetId": 5
@@ -147,6 +285,24 @@
       "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a65156_6d16259d",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-31T23:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63d43d73_5e28cedc",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
