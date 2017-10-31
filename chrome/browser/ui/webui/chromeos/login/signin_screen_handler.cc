@@ -943,6 +943,10 @@ void SigninScreenHandler::OnWallpaperColorsChanged() {
 
 void SigninScreenHandler::OnWallpaperDataChanged() {}
 
+void SigninScreenHandler::OnDevicePolicyWallpaperSet() {
+  CallJSOrDefer("login.AccountPickerScreen.addBackgroundToUserPods");
+}
+
 void SigninScreenHandler::ClearAndEnablePassword() {
   core_oobe_view_->ResetSignInUI(false);
 }
@@ -1306,6 +1310,12 @@ void SigninScreenHandler::HandleAccountPickerReady() {
   // Color calculation of the first wallpaper may have completed before the
   // instance is initialized, so make sure the colors are properly updated.
   UpdateAccountPickerColors();
+  // Device policy wallpaper may already be set before the instance is
+  // initialized.
+  if (GetAshConfig() != ash::Config::MASH &&
+      ash::Shell::Get()->wallpaper_controller()->IsDevicePolicyWallpaper()) {
+    OnDevicePolicyWallpaperSet();
+  }
   if (delegate_)
     delegate_->OnSigninScreenReady();
 }

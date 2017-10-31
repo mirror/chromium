@@ -282,6 +282,7 @@ class SigninScreenHandler
   // ash::WallpaperControllerObserver implementation:
   void OnWallpaperColorsChanged() override;
   void OnWallpaperDataChanged() override;
+  void OnDevicePolicyWallpaperSet() override;
 
   void SetFocusPODCallbackForTesting(base::Closure callback);
 

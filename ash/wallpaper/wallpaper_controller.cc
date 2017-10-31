@@ -222,7 +222,7 @@ SkColor WallpaperController::GetProminentColor(
 
 wallpaper::WallpaperLayout WallpaperController::GetWallpaperLayout() const {
   if (current_wallpaper_)
-    return current_wallpaper_->layout();
+    return current_wallpaper_->wallpaper_info().layout;
   return wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED;
 }
 
@@ -246,7 +246,7 @@ void WallpaperController::SetWallpaperImage(
     color_calculator_.reset();
   }
   current_wallpaper_.reset(new wallpaper::WallpaperResizer(
-      image, GetMaxDisplaySizeInNative(), layout, sequenced_task_runner_));
+      image, GetMaxDisplaySizeInNative(), info, sequenced_task_runner_));
   current_wallpaper_->AddObserver(this);
   current_wallpaper_->StartResize();
 
@@ -360,7 +360,7 @@ bool WallpaperController::WallpaperIsAlreadyLoaded(
     return false;
 
   // Compare layouts only if necessary.
-  if (compare_layouts && layout != current_wallpaper_->layout())
+  if (compare_layouts && layout != current_wallpaper_->wallpaper_info().layout)
     return false;
 
   return wallpaper::WallpaperResizer::GetImageId(image) ==
@@ -372,6 +372,18 @@ void WallpaperController::OpenSetWallpaperPage() {
       Shell::Get()->wallpaper_delegate()->CanOpenSetWallpaperPage()) {
     wallpaper_picker_->Open();
   }
+}
+
+bool WallpaperController::ShouldApplyDimAndBlur() const {
+  return Shell::Get()->session_controller()->IsUserSessionBlocked() &&
+         !IsDevicePolicyWallpaper();
+}
+
+bool WallpaperController::IsDevicePolicyWallpaper() const {
+  if (current_wallpaper_)
+    return current_wallpaper_->wallpaper_info().type ==
+           wallpaper::WallpaperType::DEVICE;
+  return false;
 }
 
 void WallpaperController::AddObserver(
@@ -427,8 +439,13 @@ void WallpaperController::InstallDesktopController(aura::Window* root_window) {
       return;
   }
 
-  if (Shell::Get()->session_controller()->IsUserSessionBlocked())
+  if (ShouldApplyDimAndBlur())
     component->SetWallpaperBlur(login_constants::kBlurSigma);
+
+  if (IsDevicePolicyWallpaper()) {
+    for (auto& observer : observers_)
+      observer.OnDevicePolicyWallpaperSet();
+  }
 
   RootWindowController* controller =
       RootWindowController::ForWindow(root_window);
