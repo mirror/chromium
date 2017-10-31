@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1d5c20c3_4c3b472d",
+        "filename": "gpu/command_buffer/client/client_discardable_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-31T21:23:23Z",
+      "side": 1,
+      "message": "I think we do want a uint64_t here. Updated Id generation to use the shm_id + offset scheme discussed above.",
+      "parentUuid": "f20ec13d_13a3b07d",
+      "range": {
+        "startLine": 58,
+        "startChar": 30,
+        "endLine": 58,
+        "endChar": 45
+      },
+      "revId": "ff6828c1de43b9e509fe1134af212391f03e728f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74a58e5c_88974dd2",
         "filename": "gpu/command_buffer/client/client_discardable_texture_manager.h",
         "patchSetId": 5
@@ -66,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "05586470_17b5dddc",
+        "filename": "gpu/command_buffer/client/client_discardable_texture_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-31T21:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74a58e5c_88974dd2",
+      "revId": "ff6828c1de43b9e509fe1134af212391f03e728f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc678d9a_6867f827",
         "filename": "gpu/command_buffer/common/discardable_handle.h",
         "patchSetId": 5
@@ -80,6 +122,24 @@
       "revId": "ff6828c1de43b9e509fe1134af212391f03e728f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7f52b1_5001c902",
+        "filename": "gpu/command_buffer/common/discardable_handle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-31T21:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc678d9a_6867f827",
+      "revId": "ff6828c1de43b9e509fe1134af212391f03e728f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
