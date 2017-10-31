@@ -80,13 +80,6 @@ FloatPoint ConvertAbsoluteLocationForLayoutObjectFloat(
   return layout_item.AbsoluteToLocal(FloatPoint(location), kUseTransforms);
 }
 
-IntPoint ConvertAbsoluteLocationForLayoutObjectInt(
-    const DoublePoint& location,
-    const LayoutItem layout_item) {
-  return RoundedIntPoint(
-      ConvertAbsoluteLocationForLayoutObjectFloat(location, layout_item));
-}
-
 // FIXME: Change |LocalFrameView| to const FrameView& after RemoteFrames get
 // RemoteFrameViews.
 void UpdateWebMouseEventFromCoreMouseEvent(const MouseEvent& event,
@@ -105,8 +98,10 @@ void UpdateWebMouseEventFromCoreMouseEvent(const MouseEvent& event,
         plugin_parent->ContentsToRootFrame(point_in_root_frame);
   }
   web_event.SetPositionInScreen(event.screenX(), event.screenY());
-  IntPoint local_point = ConvertAbsoluteLocationForLayoutObjectInt(
+  FloatPoint local_point = ConvertAbsoluteLocationForLayoutObjectFloat(
       event.AbsoluteLocation(), layout_item);
+  if (!RuntimeEnabledFeatures::FractionalMouseEventEnabled())
+    local_point = RoundedIntPoint(local_point);
   web_event.SetPositionInWidget(local_point.X(), local_point.Y());
 }
 
@@ -190,8 +185,10 @@ WebMouseEventBuilder::WebMouseEventBuilder(const LocalFrameView* plugin_parent,
       absolute_location = plugin_parent->RootFrameToContents(absolute_location);
     }
 
-    IntPoint local_point = RoundedIntPoint(
-        layout_item.AbsoluteToLocal(absolute_location, kUseTransforms));
+    FloatPoint local_point =
+        layout_item.AbsoluteToLocal(absolute_location, kUseTransforms);
+    if (!RuntimeEnabledFeatures::FractionalMouseEventEnabled())
+      local_point = RoundedIntPoint(local_point);
     SetPositionInWidget(local_point.X(), local_point.Y());
     return;
   }
@@ -307,15 +304,19 @@ WebMouseEventBuilder::WebMouseEventBuilder(const LocalFrameView* plugin_parent,
     point_in_root_frame =
         plugin_parent->ContentsToRootFrame(point_in_root_frame);
   }
-  IntPoint screen_point = RoundedIntPoint(touch->ScreenLocation());
+  FloatPoint screen_point = touch->ScreenLocation();
+  if (!RuntimeEnabledFeatures::FractionalMouseEventEnabled())
+    screen_point = RoundedIntPoint(screen_point);
   SetPositionInScreen(screen_point.X(), screen_point.Y());
 
   button = WebMouseEvent::Button::kLeft;
   modifiers_ |= WebInputEvent::kLeftButtonDown;
   click_count = (type_ == kMouseDown || type_ == kMouseUp);
 
-  IntPoint local_point = ConvertAbsoluteLocationForLayoutObjectInt(
+  FloatPoint local_point = ConvertAbsoluteLocationForLayoutObjectFloat(
       DoublePoint(touch->AbsoluteLocation()), layout_item);
+  if (!RuntimeEnabledFeatures::FractionalMouseEventEnabled())
+    local_point = RoundedIntPoint(local_point);
   SetPositionInWidget(local_point.X(), local_point.Y());
 
   pointer_type = WebPointerProperties::PointerType::kTouch;
