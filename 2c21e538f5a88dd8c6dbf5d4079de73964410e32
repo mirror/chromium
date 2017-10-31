@@ -22,6 +22,30 @@
       "revId": "2c21e538f5a88dd8c6dbf5d4079de73964410e32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70eb37a5_b7249711",
+        "filename": "components/omnibox/browser/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-31T13:51:38Z",
+      "side": 1,
+      "message": "Ted, where did you obtain those numbers OOC?\n\nThis CL pulls in 6 new vector icons.  Using supersize, I get this delta for the complete CL (code + icons):\n\nMonochromePublic.apk_Breakdown (+8,192 bytes)\n        +3 bytes Zip Overhead\n    +8,192 bytes Native code size\n        -3 bytes Package metadata size\nMonochromePublic.apk_Specifics\n    +8,192 bytes normalized apk size\n    +8,192 bytes main lib size\n\n... with this more detailed snippet of the actual resource sizes:\n\nMonochromePublic.apk_MainLibInfo (+5,516 bytes)\n235       +280 bytes unwind\n236     +2,672 bytes text\n237       +288 bytes relocations\n238         +0 bytes bss\n239         +4 bytes symbols\n240         +0 bytes other\n241     +2,272 bytes data\n\nTo isolate the icon-specific impact, I added a local commit that backs out only the icons, and get this decrease:\n\nMonochromePublic.apk_MainLibInfo (-2,376 bytes)\n        +0 bytes unwind\n        -4 bytes text\n      -192 bytes relocations\n        +0 bytes bss\n        -4 bytes symbols\n        +0 bytes other\n    -2,176 bytes data\n\nSo I think we\u0027re talking a little over 2K impact, which feels right.  The icon path descriptions themselves are pretty small.",
+      "parentUuid": "7d9aa1f2_8c6c6169",
+      "range": {
+        "startLine": 189,
+        "startChar": 20,
+        "endLine": 189,
+        "endChar": 32
+      },
+      "revId": "2c21e538f5a88dd8c6dbf5d4079de73964410e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
