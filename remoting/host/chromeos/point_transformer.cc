@@ -14,14 +14,14 @@ PointTransformer::PointTransformer() {
   root_window_ = ash::Shell::GetPrimaryRootWindow();
   root_window_->AddObserver(this);
   // Set the initial display rotation.
-  OnWindowTransformed(root_window_);
+  OnWindowTargetTransformChanged(root_window_);
 }
 
 PointTransformer::~PointTransformer() {
   root_window_->RemoveObserver(this);
 }
 
-void PointTransformer::OnWindowTransformed(aura::Window* window) {
+void PointTransformer::OnWindowTargetTransformChanged(aura::Window* window) {
   CHECK_EQ(window, root_window_);
 
   ui::Layer* layer = root_window_->layer();
