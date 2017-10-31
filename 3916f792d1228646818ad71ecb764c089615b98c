@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce4007bd_c0c60147",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-31T19:26:12Z",
+      "side": 1,
+      "message": "I\u0027m finding the structure of this file really hard to follow. What makes us know that history is available when we get here? Can you document that clearly with an assertion if possible at this call?",
+      "revId": "3916f792d1228646818ad71ecb764c089615b98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
