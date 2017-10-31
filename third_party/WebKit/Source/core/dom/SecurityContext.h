@@ -47,6 +47,7 @@
 namespace blink {
 
 class ContentSecurityPolicy;
+class Document;
 
 class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
   WTF_MAKE_NONCOPYABLE(SecurityContext);
@@ -65,6 +66,7 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
   // Note: It is dangerous to change the security origin of a script context
   //       that already contains content.
   void SetSecurityOrigin(scoped_refptr<SecurityOrigin>);
+  void SetSecurityOriginFromDocument(Document&);
   virtual void DidUpdateSecurityOrigin() = 0;
 
   SandboxFlags GetSandboxFlags() const { return sandbox_flags_; }
