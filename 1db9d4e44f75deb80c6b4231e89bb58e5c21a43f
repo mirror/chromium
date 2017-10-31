@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40598905_390c5557",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-31T11:00:48Z",
+      "side": 1,
+      "message": "Going down this path, we can probably at some point just make manager.html the main page.",
+      "revId": "1db9d4e44f75deb80c6b4231e89bb58e5c21a43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb94a2fe_0095182f",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-31T11:00:48Z",
+      "side": 1,
+      "message": "We could go one step further, and have manager handle all the logic via subscribing a callback or event listener, service just need to pass the data over. It makes more sense to me for manager to decide what to do with the data, since I think the service should really just be a data access layer.\n\nThis would also allow service to not keep any data (i,e. we can remove this.extensions_ from service), and not duplicate the extensionsInfo array both here and in manager. The only other place this.extensions_ is used in this file is to determine whether or not to open options in tab or modal, which we can easily move to manager too.",
+      "revId": "1db9d4e44f75deb80c6b4231e89bb58e5c21a43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a3fc0cf_174226fe",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-31T11:00:48Z",
+      "side": 1,
+      "message": "see above - no need to dispatch separate events if we end up moving all the logic to manager.",
+      "revId": "1db9d4e44f75deb80c6b4231e89bb58e5c21a43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
