@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01ec0cb8_8d2d4140",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2034,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-10-31T14:26:44Z",
+      "side": 1,
+      "message": "Could this test with a full set of referrers that look like e.g.\n\nhttp://foo.bar/baz\nhttp://foo.bar/baz#\nhttp://foo.bar/baz#bing\n\nperhaps also query params while we\u0027re at it:\n\nhttp://foo.bar/baz?\nhttp://foo.bar/baz?bing\u003dbong",
+      "range": {
+        "startLine": 2034,
+        "startChar": 79,
+        "endLine": 2034,
+        "endChar": 0
+      },
+      "revId": "faa3662d3d1a0a47c0167aeca9e681c167f76f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b61046f_70a5da7d",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-10-31T14:26:44Z",
+      "side": 1,
+      "message": "perhaps explicitly check for the expected referrer chain entry?",
+      "range": {
+        "startLine": 2046,
+        "startChar": 38,
+        "endLine": 2046,
+        "endChar": 0
+      },
+      "revId": "faa3662d3d1a0a47c0167aeca9e681c167f76f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
