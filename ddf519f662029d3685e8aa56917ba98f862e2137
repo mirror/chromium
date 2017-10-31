@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "149bf87a_df37bf0b",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T18:13:13Z",
+      "side": 1,
+      "message": "nit: this is fine, but i think that \u0027final\u0027 usage in chromium c++ code is very rare",
+      "range": {
+        "startLine": 174,
+        "startChar": 38,
+        "endLine": 174,
+        "endChar": 43
+      },
+      "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238be57c_a976d222",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T18:13:13Z",
+      "side": 1,
+      "message": "nit: reorder these methods? usually i see something like this for short classes with inline definitions:\n\n public:\n  c\u0027tor\n  d\u0027tor (if needed)\n\n  size_t network_list_changed_count() ...\n  [other getters and setters]\n\n  // Some comment describing what the method does.\n  int PropertyUpdatesForService ...\n\n  [more non-overridden methods, separated by blank lines]\n\n  // chromeos::NetworkStateHandlerObserver:\n  void NetworkListChanged ...\n  void NetworkPropertiesUpdated ... // no blank lines between overrides\n\n private:",
+      "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33dd71eb_00506bee",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T18:13:13Z",
+      "side": 1,
+      "message": "nit: use c\u0027tor/d\u0027tor instead of SetUp/TearDown when possible (generally whenever you don\u0027t derive from another test class that does stuff in SetUp/TearDown): https://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function",
+      "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609b580f_19213f53",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T18:13:13Z",
+      "side": 1,
+      "message": "nit: std:make_unique",
+      "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb92c351_f1913954",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T18:13:13Z",
+      "side": 1,
+      "message": "nit:\n\n  return properties \u0026\u0026 properties-\u003e... ?",
+      "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422db5b9_218623ba",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T18:13:13Z",
+      "side": 1,
+      "message": "nit: could do the same here",
+      "revId": "ddf519f662029d3685e8aa56917ba98f862e2137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
