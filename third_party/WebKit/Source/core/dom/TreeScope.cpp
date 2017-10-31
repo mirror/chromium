@@ -206,7 +206,7 @@ static bool PointInFrameContentIfVisible(Document& document, IntPoint& point) {
     return false;
 
   // The VisibleContentRect check below requires that scrollbars are up-to-date.
-  document.UpdateStyleAndLayoutIgnorePendingStylesheets();
+  // document.UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   FloatPoint point_in_document_content(point);
   point_in_document_content.Scale(frame->PageZoomFactor(),
