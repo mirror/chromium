@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05e2d5b2_a0cdbd28",
+        "filename": "components/previews/core/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-31T17:56:52Z",
+      "side": 1,
+      "message": "btw, this breaks layered component dependencies for ios (ios-simulator try-bot should fail). \nWe may need to more explicitly refactor previews component to not be layered component (I recently filed bug).",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 14
+      },
+      "revId": "57bcd2a3777d354a2b698aa39422b91b5f7ed825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e4a7db_bd21d933",
+        "filename": "components/previews/core/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-31T17:56:52Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 11
+      },
+      "revId": "57bcd2a3777d354a2b698aa39422b91b5f7ed825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
