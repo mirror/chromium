@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "398fad51_5ce70cd6",
+        "filename": "ios/web/net/wk_cookie_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T21:04:07Z",
+      "side": 1,
+      "message": "That\u0027s a good idea. Are you going to move cookie_notification_bridge.h to cookie directory as well?",
+      "parentUuid": "b79453d1_66550386",
+      "revId": "66e6fd36b776275b561aebee255d6df26dbce328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2799d82_684e8538",
         "filename": "ios/web/net/wk_cookie_util.h",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3f2a9128_9fa37479",
+        "filename": "ios/web/net/wk_cookie_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T21:04:07Z",
+      "side": 1,
+      "message": "This returns cookie store for browser state. If browser state is persistent - then cookie store is persistent as well. So caller already knows the value of that |bool|. Updating the comments to explain that.",
+      "parentUuid": "e2799d82_684e8538",
+      "range": {
+        "startLine": 17,
+        "startChar": 19,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "66e6fd36b776275b561aebee255d6df26dbce328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f7fbac8_0957512a",
         "filename": "ios/web/net/wk_cookie_util.mm",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-31T17:06:18Z",
       "side": 1,
       "message": "what do you feel about using WKSystemCookieStore instead of WKHTTPCookieStore ?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "66e6fd36b776275b561aebee255d6df26dbce328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46cc257_9017a8ef",
+        "filename": "ios/web/net/wk_cookie_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T21:04:07Z",
+      "side": 1,
+      "message": "In download code I need WKHTTPCookieStore, not WKSystemCookieStore.",
+      "parentUuid": "3f7fbac8_0957512a",
       "range": {
         "startLine": 17,
         "startChar": 0,
