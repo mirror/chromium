@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4ff9673c_b90a21c5",
+        "filename": "chrome/browser/chromeos/file_manager/zip_file_creator_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-31T08:47:43Z",
+      "side": 1,
+      "message": "Could you move the test to the directory containing ZipFileCreator (/chrome/services/chrome_file_util/public/cpp)?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 0
+      },
+      "revId": "280a73b6f30cec2423b70de4b03e0e2043d1b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6634c50_e3a44686",
         "filename": "chrome/browser/chromeos/file_manager/zip_file_creator_browsertest.cc",
         "patchSetId": 15
