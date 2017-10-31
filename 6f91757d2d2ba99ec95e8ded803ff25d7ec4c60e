@@ -34,6 +34,24 @@
       "revId": "6f91757d2d2ba99ec95e8ded803ff25d7ec4c60e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a910820_c67b3743",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-31T22:27:42Z",
+      "side": 1,
+      "message": "Alright. In that case:\n\n1) It would be good to have a test for that. Do you have time to write one?\n2) Could you also check that changing another permission followed by changing sound will not *hide* the infobar?",
+      "parentUuid": "03f78963_6528f3da",
+      "revId": "6f91757d2d2ba99ec95e8ded803ff25d7ec4c60e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
