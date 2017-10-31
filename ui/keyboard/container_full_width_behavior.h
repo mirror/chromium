@@ -42,6 +42,7 @@ class KEYBOARD_EXPORT ContainerFullWidthBehavior : public ContainerBehavior {
   void SetCanonicalBounds(aura::Window* container,
                           const gfx::Rect& display_bounds) override;
   ContainerType GetType() const override;
+  bool TextBlurHidesKeyboard() const override;
 };
 
 }  // namespace keyboard

@@ -228,8 +228,9 @@ KeyboardController::KeyboardController(std::unique_ptr<KeyboardUI> ui,
 
 KeyboardController::~KeyboardController() {
   if (container_) {
-    if (container_->GetRootWindow())
+    if (container_->GetRootWindow()) {
       container_->GetRootWindow()->RemoveObserver(this);
+    }
     container_->RemoveObserver(this);
     container_->RemovePreTargetHandler(&event_filter_);
   }
@@ -487,7 +488,7 @@ void KeyboardController::OnTextInputStateChanged(
 
   bool focused =
       client && (client->GetTextInputType() != ui::TEXT_INPUT_TYPE_NONE);
-  bool should_hide = !focused && !keyboard_locked_;
+  bool should_hide = !focused && container_behavior_->TextBlurHidesKeyboard();
 
   if (should_hide) {
     switch (state_) {
