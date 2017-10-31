@@ -4988,6 +4988,74 @@ TEST_F(AutofillMetricsTest, AutofillFormSubmittedState) {
   }
 }
 
+// Verify that we correctly log the submitted form's state with fields
+// having |only_fill_when_focused|=true.
+TEST_F(
+    AutofillMetricsTest,
+    AutofillFormSubmittedState_DoNotCountUnfilledFieldsWithOnlyFillWhenFocused) {
+  FormData form;
+  form.name = ASCIIToUTF16("TestForm");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Name", "name", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Email", "email", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Phone", "phone", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Billing Phone", "billing_phone", "", "text",
+                            &field);
+  form.fields.push_back(field);
+
+  std::vector<FormData> forms(1, form);
+
+  // Verify if the form is otherwise filled with a field having
+  // |only_fill_when_focused|=true, we consider the form is all filled.
+  {
+    base::HistogramTester histogram_tester;
+    base::UserActionTester user_action_tester;
+    autofill_manager_->OnFormsSeen(forms, TimeTicks::Now());
+    EXPECT_EQ(1U, test_ukm_recorder_.entries_count());
+    EXPECT_EQ(1U, test_ukm_recorder_.sources_count());
+    VerifyDeveloperEngagementUkm(
+        test_ukm_recorder_, form,
+        {AutofillMetrics::FILLABLE_FORM_PARSED_WITHOUT_TYPE_HINTS});
+    histogram_tester.ExpectTotalCount("Autofill.FormSubmittedState", 0);
+
+    form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+    form.fields[0].is_autofilled = true;
+    form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+    form.fields[1].is_autofilled = true;
+    form.fields[2].value = ASCIIToUTF16("12345678901");
+    form.fields[2].is_autofilled = true;
+
+    autofill_manager_->SubmitForm(form, TimeTicks::Now());
+    histogram_tester.ExpectUniqueSample(
+        "Autofill.FormSubmittedState",
+        AutofillMetrics::FILLABLE_FORM_AUTOFILLED_ALL, 1);
+    EXPECT_EQ(1, user_action_tester.GetActionCount(
+                     "Autofill_FormSubmitted_FilledAll"));
+
+    ExpectedUkmMetrics expected_form_submission_ukm_metrics;
+    ExpectedUkmMetrics expected_field_fill_status_ukm_metrics;
+
+    expected_form_submission_ukm_metrics.push_back(
+        {{UkmFormSubmittedType::kAutofillFormSubmittedStateName,
+          AutofillMetrics::FILLABLE_FORM_AUTOFILLED_ALL},
+         {UkmSuggestionFilledType::kMillisecondsSinceFormParsedName, 0}});
+    VerifyFormInteractionUkm(test_ukm_recorder_, form,
+                             UkmFormSubmittedType::kEntryName,
+                             expected_form_submission_ukm_metrics);
+
+    AppendFieldFillStatusUkm(form, &expected_field_fill_status_ukm_metrics);
+    VerifyFormInteractionUkm(test_ukm_recorder_, form,
+                             UkmFieldFillStatusType::kEntryName,
+                             expected_field_fill_status_ukm_metrics);
+  }
+}
+
 TEST_F(AutofillMetricsTest, LogUserHappinessMetric_PasswordForm) {
   {
     base::HistogramTester histogram_tester;
