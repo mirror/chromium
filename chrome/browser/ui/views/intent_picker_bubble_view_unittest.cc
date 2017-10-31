@@ -60,8 +60,9 @@ class IntentPickerBubbleViewTest : public BrowserWithTestWindowTest {
                       ui::PAGE_TRANSITION_TYPED, false));
 
     bubble_ = IntentPickerBubbleView::CreateBubbleView(
-        app_info_, base::Bind(&IntentPickerBubbleViewTest::OnBubbleClosed,
-                              base::Unretained(this)),
+        app_info_, true /* disable_stay_in_chrome*/,
+        base::Bind(&IntentPickerBubbleViewTest::OnBubbleClosed,
+                   base::Unretained(this)),
         web_contents);
   }
 
