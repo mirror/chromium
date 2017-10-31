@@ -55,7 +55,8 @@ std::unique_ptr<Message> MessageFromV8(v8::Local<v8::Context> context,
     return nullptr;
 
   return std::make_unique<Message>(
-      message, blink::WebUserGestureIndicator::IsProcessingUserGesture());
+      message,
+      blink::WebUserGestureIndicator::IsProcessingUserGesture(nullptr));
 }
 
 v8::Local<v8::Value> MessageToV8(v8::Local<v8::Context> context,

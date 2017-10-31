@@ -89,7 +89,8 @@ bool RequestSender::StartRequest(Source* source,
     return false;
 
   GURL source_url;
-  if (blink::WebLocalFrame* webframe = context->web_frame())
+  blink::WebLocalFrame* webframe = context->web_frame();
+  if (webframe)
     source_url = webframe->GetDocument().Url();
 
   InsertRequest(request_id,
@@ -104,8 +105,11 @@ bool RequestSender::StartRequest(Source* source,
   params->source_url = source_url;
   params->request_id = request_id;
   params->has_callback = has_callback;
+
+  // TODO(mustaq): Can't we check the bit where used? crbug.com/778769
   params->user_gesture =
-      blink::WebUserGestureIndicator::IsProcessingUserGestureThreadSafe();
+      blink::WebUserGestureIndicator::IsProcessingUserGestureThreadSafe(
+          webframe);
 
   // Set Service Worker specific params to default values.
   params->worker_thread_id = -1;

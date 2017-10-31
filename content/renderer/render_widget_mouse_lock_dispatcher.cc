@@ -23,7 +23,7 @@ RenderWidgetMouseLockDispatcher::RenderWidgetMouseLockDispatcher(
 RenderWidgetMouseLockDispatcher::~RenderWidgetMouseLockDispatcher() {}
 
 void RenderWidgetMouseLockDispatcher::SendLockMouseRequest() {
-  bool user_gesture = WebUserGestureIndicator::IsProcessingUserGesture();
+  bool user_gesture = WebUserGestureIndicator::IsProcessingUserGesture(nullptr);
 
   render_widget_->Send(new ViewHostMsg_LockMouse(render_widget_->routing_id(),
                                                  user_gesture, false));

@@ -118,7 +118,7 @@ void MessagingBindings::PostMessage(
 
   auto message = std::make_unique<Message>(
       *v8::String::Utf8Value(args[1]),
-      blink::WebUserGestureIndicator::IsProcessingUserGesture());
+      blink::WebUserGestureIndicator::IsProcessingUserGesture(nullptr));
 
   size_t message_length = message->data.length();
 

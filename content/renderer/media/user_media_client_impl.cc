@@ -151,7 +151,7 @@ void UserMediaClientImpl::RequestUserMedia(
   std::unique_ptr<UserMediaRequest> request_info =
       std::make_unique<UserMediaRequest>(
           request_id, web_request,
-          blink::WebUserGestureIndicator::IsProcessingUserGesture());
+          blink::WebUserGestureIndicator::IsProcessingUserGesture(nullptr));
   pending_request_infos_.push_back(Request(std::move(request_info)));
   if (!is_processing_request_) {
     base::SequencedTaskRunnerHandle::Get()->PostTask(

@@ -103,8 +103,10 @@ int APIRequestHandler::StartRequest(v8::Local<v8::Context> context,
         request_id, PendingRequest(isolate, callback, context, callback_args)));
   }
 
+  // TODO(mustaq): Can't we check the bit where used? crbug.com/778769
   request->has_user_gesture =
-      blink::WebUserGestureIndicator::IsProcessingUserGestureThreadSafe();
+      blink::WebUserGestureIndicator::IsProcessingUserGestureThreadSafe(
+          nullptr);
   request->arguments = std::move(arguments);
   request->method_name = method;
   request->thread = thread;
