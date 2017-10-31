@@ -34,6 +34,7 @@
         "ash_pref_connector": [ "pref_connector" ],
         // Only used in classic ash case.
         "chrome": [ "input_device_controller" ],
+        "chrome_file_util": [ "zip_file" ],
         "content_browser": [ "profiling_client" ],
         "device": [ "device:fingerprint" ],
         "identity": [ "identity_manager" ],

@@ -271,6 +271,7 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.h"
+#include "chrome/services/chrome_file_util/public/interfaces/constants.mojom.h"
 #include "chromeos/chromeos_constants.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/user_manager/user_manager.h"
@@ -3127,6 +3128,11 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
 #if defined(OS_WIN)
   (*services)[chrome::mojom::kUtilWinServiceName] =
       l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_UTILITY_WIN_NAME);
+#endif
+
+#if defined(OS_CHROMEOS)
+  (*services)[chrome::mojom::kChromeFileUtilServiceName] =
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_CHROME_FILE_UTILITIES_NAME);
 #endif
 
 #if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
