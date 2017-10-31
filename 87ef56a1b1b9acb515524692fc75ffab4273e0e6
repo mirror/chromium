@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b435482_12aec380",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbcba9f2_9ed53a9c",
+      "range": {
+        "startLine": 369,
+        "startChar": 66,
+        "endLine": 369,
+        "endChar": 67
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07cc2bcd_c7ffe76a",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c377021d_215d0a3c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07cc2bcd_c7ffe76a",
+      "range": {
+        "startLine": 187,
+        "startChar": 7,
+        "endLine": 187,
+        "endChar": 34
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d4dcb643_bf27fc86",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcece908_9de86897",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 17
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee5def1a_2e1b9352",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d29a3bf_5a8755c6",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee5def1a_2e1b9352",
+      "range": {
+        "startLine": 21,
+        "startChar": 16,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "f15e7453_5bb07ab4",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64cd01d3_d0fe1ca6",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 22
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fe30f66_8c608d6d",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -161,6 +281,30 @@
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2926d97c_beb9481a",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fe30f66_8c608d6d",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 20
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "24c5f692_4d6deed9",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "It does apply immediately - I\u0027m ignoring the frame_id parameter right now.  The mojo interface supports specifying future frames, but we always pass in the current frame_id_ in blink.\n\nSince this works, I\u0027d like to keep the logic simple for now so merging presentation providers with vr_shell_gl eventually can be done easier.\n\nI\u0027ll add a comment.",
+      "parentUuid": "0be1771e_f8a36ca6",
+      "range": {
+        "startLine": 179,
+        "startChar": 13,
+        "endLine": 179,
+        "endChar": 25
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee336da9_f66bbea3",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -207,6 +375,30 @@
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ba33e2_5ebed913",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "I was seeing an error with double bind when exiting presentation then starting presentation again.",
+      "parentUuid": "ee336da9_f66bbea3",
+      "range": {
+        "startLine": 203,
+        "startChar": 2,
+        "endLine": 203,
+        "endChar": 10
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "6291f232_99f3ca25",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "I don\u0027t think it matters, but done.",
+      "parentUuid": "264603d1_72ac3cce",
+      "range": {
+        "startLine": 207,
+        "startChar": 23,
+        "endLine": 207,
+        "endChar": 34
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8d1ee26_5ad84217",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -253,6 +469,30 @@
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7075aead_3f48d037",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Its really all Windows at this point, I\u0027m just trying to keep it semi-cross-platform by identifying where we are depending on platform-specific functionality.  If/when we really support mac or linux with openvr, there would only need to be about 2-4 lines of platform-specific code here - setting texture.eType, and calling texture_helper_ methods.",
+      "parentUuid": "d8d1ee26_5ad84217",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 19
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -327,6 +567,30 @@
     },
     {
       "key": {
+        "uuid": "64f1dd4a_989ee96a",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "We could either fork OpenVR (maybe only headers) and rename their namespace, or do something hacky like include the headers in a namespace, and maybe add a using statement.  Neither seems ideal.  I\u0027d like to keep the namespace what they publish so looking things up is (slightly) easier.  If we start to have collisions that cause issues we can look for a good solution then.",
+      "parentUuid": "afc41fac_512ad009",
+      "range": {
+        "startLine": 222,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 4
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b026ab6_731678c2",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -347,6 +611,30 @@
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652f4757_e0b69402",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Not really required, but I was hoping we wouldn\u0027t re-project the last frame for ~half a second fade out because it looks pretty bad.  This doesn\u0027t really look noticeably better, so I can remove it.  Perhaps we need to show something custom-rendered like a \"take off the headset\" message.  Eventually we could go to the browsing experience.\n\nI\u0027ll remove it since it doesn\u0027t really make things better.",
+      "parentUuid": "9b026ab6_731678c2",
+      "range": {
+        "startLine": 267,
+        "startChar": 18,
+        "endLine": 267,
+        "endChar": 41
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -373,6 +661,30 @@
     },
     {
       "key": {
+        "uuid": "4c012902_625fa8a9",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "711456c3_a34f5cc8",
+      "range": {
+        "startLine": 273,
+        "startChar": 2,
+        "endLine": 273,
+        "endChar": 10
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9882a162_ef142052",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -393,6 +705,30 @@
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab556301_0d80224f",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9882a162_ef142052",
+      "range": {
+        "startLine": 334,
+        "startChar": 2,
+        "endLine": 334,
+        "endChar": 7
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -442,6 +778,54 @@
     },
     {
       "key": {
+        "uuid": "144e4a6e_e64b816c",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "removed this - the current implementation is broken when not presenting.  The new implementation polls at a fixed frequency regardless of presentation.",
+      "parentUuid": "4c7affb9_ac191dd1",
+      "range": {
+        "startLine": 349,
+        "startChar": 16,
+        "endLine": 349,
+        "endChar": 44
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64c1bf88_30f19133",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "moved to RequestPresent",
+      "parentUuid": "fd25ac5a_d6238108",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 2
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aaf77c4_0dc9ba80",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -465,6 +849,30 @@
     },
     {
       "key": {
+        "uuid": "735f6f93_19e7061f",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aaf77c4_0dc9ba80",
+      "range": {
+        "startLine": 359,
+        "startChar": 45,
+        "endLine": 359,
+        "endChar": 53
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3a889d_c50a9541",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -485,6 +893,30 @@
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75ba127_21bb098e",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3a889d_c50a9541",
+      "range": {
+        "startLine": 364,
+        "startChar": 2,
+        "endLine": 364,
+        "endChar": 29
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -535,6 +967,30 @@
     },
     {
       "key": {
+        "uuid": "9ee22349_80edd0ba",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "I pulled the implementation out of the render loop to use here.",
+      "parentUuid": "879791af_d7c867be",
+      "range": {
+        "startLine": 385,
+        "startChar": 26,
+        "endLine": 385,
+        "endChar": 38
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22fe03bf_533fe112",
         "filename": "device/vr/windows/d3d11_texture_helper.cc",
         "patchSetId": 1
@@ -555,6 +1011,30 @@
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f07650_e5da9c98",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22fe03bf_533fe112",
+      "range": {
+        "startLine": 27,
+        "startChar": 44,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -581,6 +1061,30 @@
     },
     {
       "key": {
+        "uuid": "1ee8d930_fb5cf3c1",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "I previously had a DCHECK.  It is in the bucket of things that should never happen, and likely indicate bugs (so when debugging I want the debugger to break in), but _could_ happen.",
+      "parentUuid": "c830a2c9_2e69efe2",
+      "range": {
+        "startLine": 29,
+        "startChar": 36,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b99e1505_6cc191ac",
         "filename": "device/vr/windows/d3d11_texture_helper.cc",
         "patchSetId": 1
@@ -604,6 +1108,30 @@
     },
     {
       "key": {
+        "uuid": "66f02c8e_59f767e9",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "I like this order better - if (something) { simple_case } else { complex_case }.\n\nI could split complex_case into a separate function.",
+      "parentUuid": "b99e1505_6cc191ac",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "173fca14_564ebd3e",
         "filename": "device/vr/windows/d3d11_texture_helper.cc",
         "patchSetId": 1
@@ -618,6 +1146,24 @@
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb96b32_cab75fc1",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "I did try that, and it didn\u0027t work.  I did discuss a little bit about an ANGLE extension to optionally flip rendering for a PBufferSurface (one is already supported for window surfaces).  Ultimately that is what we\u0027ll want to avoid an extra copy here.",
+      "parentUuid": "173fca14_564ebd3e",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -638,6 +1184,24 @@
     },
     {
       "key": {
+        "uuid": "b9164e92_8987fb94",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "This initialization is done when device is lost as well.  I can split them into separate methods, but keeping them here so they can be done lazily.",
+      "parentUuid": "965a1e4b_1c5a2d3b",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c57a3ad4_baf4e5e8",
         "filename": "device/vr/windows/d3d11_texture_helper.cc",
         "patchSetId": 1
@@ -655,6 +1219,24 @@
     },
     {
       "key": {
+        "uuid": "c9a65940_746f4f20",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Its not ok, but I\u0027d like to hold off on creating a wrapper for a single usage.  Less indirection can improve readability.",
+      "parentUuid": "c57a3ad4_baf4e5e8",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "381f354e_e8684901",
         "filename": "device/vr/windows/d3d11_texture_helper.cc",
         "patchSetId": 1
@@ -669,6 +1251,24 @@
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52e440f_4bd6c44d",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "it doesn\u0027t silently fail - I\u0027ll add a comment that we reinitialize target_texture_ below\n\nCopyTextureToBackBuffer would return false if target_texture is null, so the consumer is notified if this does fail.",
+      "parentUuid": "381f354e_e8684901",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -695,6 +1295,30 @@
     },
     {
       "key": {
+        "uuid": "2b7f3035_c04814e3",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ea925fb_d8c3be5d",
+      "range": {
+        "startLine": 213,
+        "startChar": 38,
+        "endLine": 213,
+        "endChar": 44
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26b071c4_db006980",
         "filename": "device/vr/windows/d3d11_texture_helper.cc",
         "patchSetId": 1
@@ -706,6 +1330,24 @@
       "writtenOn": "2017-10-27T18:20:28Z",
       "side": 1,
       "message": "Should this have a retry limit somewhere? It looks as if you\u0027d be trying the CreateDevice every frame if initialization is failing.",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7baea421_8831c3a1",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Not a retry limit, but if we don\u0027t have the required feature level, I should bubble up an appropriate error saying that we don\u0027t support vr on this machine.\n\nI believe we get this for free since we had to initialize OpenVR before we get here, but that is fragile.",
+      "parentUuid": "26b071c4_db006980",
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -729,6 +1371,24 @@
     },
     {
       "key": {
+        "uuid": "2a8d6c70_21ac4268",
+        "filename": "device/vr/windows/flip_pixel_shader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done.  I\u0027m not a big fan of checking in the generated file, but the only example of hlsl is used in ANGLE, and generated like this.  I\u0027d prefer a build step that ran fxc to compile the shader, but that assumes the build machines have fxc installed.\n\nI\u0027ll look a bit more into this option.",
+      "parentUuid": "c3539127_7973e252",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81ef882a_b877f9f5",
         "filename": "device/vr/windows/flip_pixel_shader.hlsl",
         "patchSetId": 1
@@ -743,6 +1403,24 @@
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294a756b_9fef2704",
+        "filename": "device/vr/windows/flip_pixel_shader.hlsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81ef882a_b877f9f5",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -766,6 +1444,30 @@
       "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6988a87f_15ce0950",
+        "filename": "third_party/openvr/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T00:56:33Z",
+      "side": 1,
+      "message": "the reformat was unintentional (and I\u0027ll back it out to keep the diff saner).  It is required for building with clang, which we do now on windows.",
+      "parentUuid": "38d19f5c_6b981124",
+      "range": {
+        "startLine": 15,
+        "startChar": 69,
+        "endLine": 15,
+        "endChar": 76
+      },
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
