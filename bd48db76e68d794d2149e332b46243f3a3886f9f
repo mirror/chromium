@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "14e9b135_c9e23044",
+        "filename": "base/android/android_hardware_buffer_abi.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "After discussing options with agrieve@ and jbudorick@, I added a \"me too\" to the existing http://crbug.com/771171 that requests an NDK update, and added a reference to that in a TODO to delete this file once the NDK is updated.",
+      "parentUuid": "b0131bff_a23276a6",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2060fe3_3cab8c47",
         "filename": "base/android/android_hardware_buffer_compat.cc",
         "patchSetId": 14
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Why is SDK version \u003e\u003d OREO not sufficient? That seems to be sufficient everywhere else in Chrome. Why do we need an exception here?",
       "parentUuid": "01b193a1_f89d217c",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5482f10a_24918571",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "You\u0027ve convinced me that it\u0027s overly paranoid, removing this extra level of checking.",
+      "parentUuid": "08d85249_4c1a89b3",
       "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -788,6 +824,30 @@
     },
     {
       "key": {
+        "uuid": "c372999e_3a0eb826",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f1c395b_5278be4d",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 54
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e744279_84fdb469",
         "filename": "ui/gl/gl_image_egl.h",
         "patchSetId": 14
@@ -835,6 +895,24 @@
       "side": 1,
       "message": "Can\u0027t we use AHardwareBuffer_lock/unlock for this? No need to expose lock/unlock in the GMB API but using it for tests so we can at least run this on a device where we know it\u0027s supposed to work to verify the logic would be nice.",
       "parentUuid": "06096dae_a6e5c6d5",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b22a3ae_406cdeda",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Yes, that\u0027s what I\u0027m working on for the test. It\u0027s not done yet, leaving this item unresolved for now.",
+      "parentUuid": "2fac85a3_6cbc10e7",
       "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

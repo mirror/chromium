@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe1bee56_96ba893f",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Done, with a few differences. I\u0027m keeping IsSupportAvailable as a static method to ensure that the instance only gets constructed if it\u0027s actually needed, and using a GetInstance class method instead of exposing the lazy instance directly as a global. How does this look?",
+      "parentUuid": "795a390c_915dd8a7",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ed9fb3e_c0ceb6e1",
         "filename": "base/android/android_hardware_buffer_compat.cc",
         "patchSetId": 16
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "61d803ce_fdf8bb2b",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1ed9fb3e_c0ceb6e1",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "822fd4f3_7b25427f",
         "filename": "base/android/android_hardware_buffer_compat.cc",
         "patchSetId": 16
@@ -56,6 +98,24 @@
       "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e75ef2d_5a2d3dea",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "I\u0027ve removed the macro and inlined the dlsym calls. A helper method isn\u0027t really useful here, I\u0027ve added DCHECKs for loading symbols.",
+      "parentUuid": "822fd4f3_7b25427f",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "b9547eb9_2a284061",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Done. It\u0027s equivalent when this only gets called once, especially with the new constructor which makes it clearer.",
+      "parentUuid": "0e1301f2_e5fb6876",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 22
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dc90304_46688d07",
         "filename": "base/memory/shared_memory_handle.h",
         "patchSetId": 16
@@ -102,6 +186,30 @@
       "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ce79d2_4d9ff65d",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Done (using INVALID)",
+      "parentUuid": "5dc90304_46688d07",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 13
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "58b6b6b1_e0aa6f2f",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86a57c96_504a2284",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 9
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f87ccf6_e503be1c",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
         "patchSetId": 16
@@ -148,6 +280,30 @@
       "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c78d50b_37f971eb",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f87ccf6_e503be1c",
+      "range": {
+        "startLine": 63,
+        "startChar": 40,
+        "endLine": 63,
+        "endChar": 46
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "708a1157_85d78a14",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d23ab39_7428c2ac",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 28
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dae963d9_168f0297",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h",
         "patchSetId": 16
@@ -188,6 +368,24 @@
       "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63cfe66_d829c5bd",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dae963d9_168f0297",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "74aabe3c_fb12d273",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Done, split out into separate crrev.com/c/747601 .",
+      "parentUuid": "16d6fc3f_034cc2c6",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f4bd80f_49434848",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_create_test_template.h",
         "patchSetId": 16
@@ -225,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "8146bf3b_24dcb0f7",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_create_test_template.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f4bd80f_49434848",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2ca1522_123238ed",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_create_test_template.h",
         "patchSetId": 16
@@ -239,6 +473,24 @@
       "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a8848c_63ad5d64",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_create_test_template.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "I\u0027m not sure if there\u0027s a good way to keep it as a function. A plain function fails due to multiple definitions as this gets included multiple times as a header file. I think a static function would fail with \"unused function\" compiler errors for platforms that don\u0027t instantiate the Create test case. (This would be possible if I would keep it in a separate test template file.) I also tried a static member function for the class, but that ended up making even more changes to the test than the lambda did even before trying to get a function pointer to the templated static class member.\n\nI\u0027ve moved this into the separate change http://crrev.com/c/747604 to keep things cleaner. Since that now only contains this one change, I hope it\u0027s now clear enough that it\u0027s basically just a code move. Marking as resolved here, let\u0027s follow up in that CL?",
+      "parentUuid": "d2ca1522_123238ed",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -265,6 +517,30 @@
     },
     {
       "key": {
+        "uuid": "55b468bc_1eca5358",
+        "filename": "ui/gl/gl_image_ahardwarebuffer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Done, replaced with relying on the base destructor.",
+      "parentUuid": "e33d4ad4_42979477",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 3
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe49ae43_1af3c952",
         "filename": "ui/gl/gl_image_ahardwarebuffer.h",
         "patchSetId": 16
@@ -279,6 +555,24 @@
       "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286edfe4_f469e97f",
+        "filename": "ui/gl/gl_image_ahardwarebuffer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Removed, the base class implementation is all that\u0027s needed.",
+      "parentUuid": "fe49ae43_1af3c952",
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -302,6 +596,30 @@
       "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ce2317_91bcc7b3",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00ab7677_27b56705",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 4
+      },
+      "revId": "e3f1f0ae0802935e4024a4a27d1703de2f1a5fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

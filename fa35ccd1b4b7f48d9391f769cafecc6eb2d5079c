@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "a62f612c_021e420e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-31T21:07:04Z",
+      "side": 1,
+      "message": "I agree, the one concern I still have is that the AHardwareBuffer GMB code gets activated even in cases when it\u0027s not really needed due to being part of the generic GMB handle struct, and I\u0027d want to avoid potential crashes as part of unrelated code doing checks as a side effect. This should be doable as part of the lazy initialization.\n\nFor example, I had a mistake in earlier versions of the code that didn\u0027t correctly handle null AHardwareBuffer GMB handles, and this unexpectedly broke the Google Search and Docs web pages.",
+      "parentUuid": "92a8720d_60826ace",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42c6787a_96f773e9",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
         "patchSetId": 13
