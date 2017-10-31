@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "07898a24_40d3545b",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-31T21:22:43Z",
+      "side": 1,
+      "message": "Right, but before, we\u0027d switch off between them right? Now, we potentially keep both alive. I\u0027m wondering if that\u0027s necessary or we could just overwrite host_binding_ for both cases.",
+      "parentUuid": "8573feb5_e3fe3e99",
+      "revId": "3336bd2fb7936673519f87cf5631a8685ae17093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11dce9cc_a2dda3cf",
         "filename": "content/common/input/input_handler.mojom",
         "patchSetId": 3
@@ -160,6 +178,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "11dce9cc_a2dda3cf",
+      "revId": "3336bd2fb7936673519f87cf5631a8685ae17093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b191bc25_e09d3d20",
+        "filename": "content/common/input/input_handler.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-31T21:22:43Z",
+      "side": 1,
+      "message": "Super minor nit: line up the parameters to match clang-format style formatting\n\nWe should probably figure out how to clang-format mojoms",
+      "parentUuid": "327fb9fe_7183dab2",
       "revId": "3336bd2fb7936673519f87cf5631a8685ae17093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
