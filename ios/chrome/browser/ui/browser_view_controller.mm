@@ -5238,7 +5238,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (void)captivePortalDetectorTabHelper:
             (CaptivePortalDetectorTabHelper*)tabHelper
-                 connectWithLandingURL:(GURL)landingURL {
+                 connectWithLandingURL:(const GURL&)landingURL {
   _captivePortalLoginCoordinator = [[CaptivePortalLoginCoordinator alloc]
       initWithBaseViewController:self
                       landingURL:landingURL];
