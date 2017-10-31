@@ -1,0 +1,510 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf8b45cb_007c41e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 27
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Update the description to describe the new scheme (one pref key + dictionary used).",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 68
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5e10f2_042981a6",
+        "filename": "chrome/browser/feature_engagement/bookmark/bookmark_tracker.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Nit: Linebreak after here to make this symmetric from namespace { + Linebreak.",
+      "range": {
+        "startLine": 19,
+        "startChar": 1,
+        "endLine": 20,
+        "endChar": 1
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fbe799e_4e5238d8",
+        "filename": "chrome/browser/feature_engagement/bookmark/bookmark_tracker_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "This registration should be performed by the SessionDurationUpdater. The BookmarkTracker doesn\u0027t know about this pref.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 37
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe578330_f5b11034",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Braces are required for multiline conditionals.",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b101b5_83c8ba7b",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Braces are required for multiline conditionals.",
+      "range": {
+        "startLine": 48,
+        "startChar": 16,
+        "endLine": 50,
+        "endChar": 65
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef662a2_27ab3617",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Braces are required for multiline conditionals.",
+      "range": {
+        "startLine": 80,
+        "startChar": 17,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed200143_d371eede",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "All of these should be performed in FeatureTrackerMinutesTest::SetUp().",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 76
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de58947e_b1b5e9af",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_factory.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "IncognitoWindowTrackerFactory doesn\u0027t own this pref. This initialization should remain with SessionDurationUpdater.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c266dc06_7e41dce6",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Similarly, this should be handled by the SessionDurationUpdater.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 37
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e3ba07_45e97fee",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Similarly, NewTabTracker shouldn\u0027t know about this pref. Only SessionDurationUpdater does.",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee04f053_8d13a300",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "This comes from BrowserContextKeyedServiceFactory. Move this to the section above.",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 36
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4746e3b3_69c524cf",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "elapsed_timer_ \u003d std::make_unique\u003cElapsedTimer\u003e();",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 53
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a4e642_d53ce2da",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "is_session_active_ seems to only be true if elapsed_timer_ is set. If that\u0027s the case, use the existence of an elapsed_timer_ to perform the same check.\n\nRename elapsed_timer_ to something like current_session_timer_ to make it more descriptive.",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f55bf11_1e54b705",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "This is an internal detail and shouldn\u0027t be in the public docs. Reword this to say its the previously observed session time.",
+      "range": {
+        "startLine": 53,
+        "startChar": 22,
+        "endLine": 53,
+        "endChar": 56
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61998323_28c09b94",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Similar: This is an internal detail.",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 54
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dca3f2d_260a6bc9",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Group the call below with the above group.",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318e013d_2a40e138",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "This is now a dictionary key.",
+      "range": {
+        "startLine": 87,
+        "startChar": 14,
+        "endLine": 87,
+        "endChar": 45
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ddd40b6_a737cd75",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "This needs a\n#include \u003cmemory\u003e",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 36
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9b1ae5_2a1682c2",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Like SessionDurationUpdater, this should be inlined to TestObserver.",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 68
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2443cb79_65274d5e",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Should this be provided by SessionDurationUpdater instead?",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 33
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177be0b1_e8cd4cde",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "This should return a base::TimeDelta",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 8
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2fd049b_f7286839",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Make this a base::TimeDelta",
+      "range": {
+        "startLine": 59,
+        "startChar": 34,
+        "endLine": 59,
+        "endChar": 51
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

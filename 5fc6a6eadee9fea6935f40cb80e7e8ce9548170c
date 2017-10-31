@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "126443c4_eefffc1f",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Nit: Braces are required when the statement spans multiple lines.",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 66
+      },
+      "revId": "5fc6a6eadee9fea6935f40cb80e7e8ce9548170c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e85d12d1_bcde719c",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-31T16:53:15Z",
+      "side": 1,
+      "message": "Nit: Braces are required when the conditional spans multiple lines.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 11
+      },
+      "revId": "5fc6a6eadee9fea6935f40cb80e7e8ce9548170c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
