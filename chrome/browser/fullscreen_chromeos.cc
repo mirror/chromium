@@ -10,6 +10,7 @@
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 
+#if 0
 bool IsFullScreenMode(int64_t display_id) {
   if (ash_util::IsRunningInMash()) {
     // TODO: http://crbug.com/640390.
@@ -28,3 +29,4 @@ bool IsFullScreenMode(int64_t display_id) {
 
   return false;
 }
+#endif
