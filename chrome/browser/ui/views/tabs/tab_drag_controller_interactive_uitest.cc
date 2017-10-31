@@ -766,7 +766,7 @@ void DetachToOwnWindowStep2(DetachToBrowserTabDragControllerTest* test) {
 
 #if defined(OS_CHROMEOS)
 bool IsWindowPositionManaged(aura::Window* window) {
-  return ash::wm::GetWindowState(window)->window_position_managed();
+  return window->GetProperty(ash::kWindowPositionManagedTypeKey);
 }
 bool HasUserChangedWindowPositionOrSize(aura::Window* window) {
   return ash::wm::GetWindowState(window)->bounds_changed_by_user();
