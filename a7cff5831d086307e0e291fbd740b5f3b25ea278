@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f14c35c_9a34459a",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bar_instructions_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-31T22:44:23Z",
+      "side": 1,
+      "message": "I think this comment should be a bit more specific: \"The labels here aren\u0027t really button labels, but we use CONTEXT_BUTTON to match the style of the LabelButton text that appears normally.\"",
+      "range": {
+        "startLine": 23,
+        "startChar": 64,
+        "endLine": 23,
+        "endChar": 71
+      },
+      "revId": "a7cff5831d086307e0e291fbd740b5f3b25ea278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
