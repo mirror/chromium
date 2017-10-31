@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "9831ec02_c0d2c40b",
+        "filename": "content/browser/cache_storage/cache_storage.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "Need to #include the mojom.h file directly, rather than relying on indirect inclusion?",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "324a20c7_201ae343",
+        "filename": "content/browser/cache_storage/cache_storage_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "Need to #include the mojom.h file directly, rather than relying on indirect inclusion?",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f688e6d5_07bcd24c",
+        "filename": "content/browser/cache_storage/cache_storage_dispatcher_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "Need to #include the mojom.h file directly, rather than relying on indirect inclusion?\n\n(or forward-declare type and #include in impl file)",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde6c8f7_a88f5219",
+        "filename": "content/browser/cache_storage/cache_storage_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "#include the mojom.h ?",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138ab284_f49d2a09",
+        "filename": "content/browser/renderer_host/render_message_filter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "Include the mojom.h too. (cache_storage_types.h should go away once everything is mojo-ified)",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6927491d_cd4ce9cc",
+        "filename": "content/renderer/cache_storage/cache_storage_dispatcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "#include the mojom.h ? (sorry I\u0027m so repetitive)",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ba6b8c_f9400fdb",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "#include the mojom.h ?",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8836aa11_516f6e8e",
         "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
         "patchSetId": 6
@@ -13,6 +132,194 @@
       "writtenOn": "2017-10-31T20:33:11Z",
       "side": 1,
       "message": "Do you think it would be better to *not* make kErrorStorage behave as though the value was not found, and instead call CacheStorageError::CreateException(...) which will create a kUnknownError exception?",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d13e34_68135a37",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "I\u0027d favor UnknownError as a clearer signal to developers that they\u0027re not misusing the API - something outside specified behavior has occurred.\n\nFrom a spot check in the back end impl we do use kErrorStorage consistently for this case (i.e. context gone/backend closed)",
+      "parentUuid": "8836aa11_516f6e8e",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a648fec_d3cc1a25",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/Cache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8309f797_c77fdd95",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorage.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "Broken record: #include the mojom.h",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e0dc5d_7aee158d",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorage.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "And ditto from previous file (here and below)",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9178824_91501ec8",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorageError.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "Maybe \"Internal storage failure.\" or \"Unexpected internal error.\" or something slightly more specific?",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f4ecfa_2e6505bc",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorageError.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "DCHECK ?",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d48c2f_6622796f",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "#include ?",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eafad70_653bda54",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "#include",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb154b8b_dcd0526c",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerCacheStorage.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "#include the mojom-shared.h ?",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a94e1a52_83725ba2",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_cache_storage.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "(1) Can this be in public/platform/modules/cache_storage instead?\n\nThe uses of this are content/*/cache_storage and Source/modules/cachestorage - the fact that service worker is still in the path is... probably laziness on my part in the past. (It probably dates from before we merged the repos, and thus updating the Web* layer was painful.)\n\n(2) Similarly, do we need \"ServiceWorker\" in the name or can it just be CacheStorageErrorType ? \n\nNow is the time to get this right!",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8e924a_c3841309",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_cache_storage.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-31T22:01:53Z",
+      "side": 1,
+      "message": "Can we eliminate NotImplemented now? We used it when initially implementing the feature but it should not be needed now.\n\nI suppose we need to keep it for the histograms. If needed it could turn into kErrorUnknown. Maybe a TODO for follow-up at least.",
       "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
