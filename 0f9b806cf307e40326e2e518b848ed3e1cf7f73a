@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed60190b_d1e4b6dd",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-31T17:27:13Z",
+      "side": 1,
+      "message": "nit: bad alignment.",
+      "range": {
+        "startLine": 203,
+        "startChar": 32,
+        "endLine": 203,
+        "endChar": 40
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d2469b_dd7abfca",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-31T17:27:13Z",
+      "side": 1,
+      "message": "can this move down to checking portion?",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5ce8a5_472d9dce",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-31T17:27:13Z",
+      "side": 1,
+      "message": "I think those should be initialized and test should verify that metrics contain valid copies of passed data.",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71377cdf_33f67aa7",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-31T17:27:13Z",
+      "side": 1,
+      "message": "Interesting, I would\u0027ve expected [metrics request] to be a copy of test_req",
+      "range": {
+        "startLine": 51,
+        "startChar": 23,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
