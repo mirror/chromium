@@ -1284,6 +1284,7 @@ class CORE_EXPORT Document : public ContainerNode,
   void MaybeHandleHttpRefresh(const String&, HttpRefreshType);
 
   void UpdateSecurityOrigin(scoped_refptr<SecurityOrigin>);
+  void UpdateSecurityOriginFromDocument(Document&);
 
   void SetHasViewportUnits() { has_viewport_units_ = true; }
   bool HasViewportUnits() const { return has_viewport_units_; }
