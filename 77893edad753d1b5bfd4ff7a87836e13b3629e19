@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70f4a8e1_d23f7020",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-31T23:25:48Z",
+      "side": 1,
+      "message": "yeah! 31-bit architecture support :).",
+      "revId": "77893edad753d1b5bfd4ff7a87836e13b3629e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
