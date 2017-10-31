@@ -1354,6 +1354,24 @@
     },
     {
       "key": {
+        "uuid": "e0c27d45_f7f60cad",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7baea421_8831c3a1",
+      "revId": "87ef56a1b1b9acb515524692fc75ffab4273e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3539127_7973e252",
         "filename": "device/vr/windows/flip_pixel_shader.h",
         "patchSetId": 1

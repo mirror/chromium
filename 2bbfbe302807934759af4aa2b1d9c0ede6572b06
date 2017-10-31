@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e10d8acb_230427dc",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80bf087b_e1401a9d",
+      "range": {
+        "startLine": 14,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbc3cad9_6178b027",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b8d243_806bd3e1",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbc3cad9_6178b027",
+      "range": {
+        "startLine": 19,
+        "startChar": 28,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bcc4bd2a_b8d3883d",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d8681e_64087c0e",
+      "range": {
+        "startLine": 166,
+        "startChar": 3,
+        "endLine": 166,
+        "endChar": 31
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83e3589a_04c5062e",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c68ae2_e9680f39",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "Magic window support for desktop headsets is a dev convenience feature, so as long as tracking works its good enough - it doesn\u0027t need the lowest latency or most correct predictions as long as it is close enough.\n\nI\u0027ll change to 30ms as a rough estimate, but don\u0027t want to add any complicated code to calculate something that doesn\u0027t matter and won\u0027t really be used by real users.  (We\u0027ve talked about using device sensors instead of headsets for magic window on Windows tablets/laptops).",
+      "parentUuid": "83e3589a_04c5062e",
+      "range": {
+        "startLine": 195,
+        "startChar": 74,
+        "endLine": 195,
+        "endChar": 78
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "044f31cd_4a52425e",
+        "filename": "device/vr/openvr/openvr_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "010e55bb_ef2db23e",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2da048c_076ba38f",
         "filename": "device/vr/openvr/openvr_device.h",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3eedaa_67a211ff",
+        "filename": "device/vr/openvr/openvr_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2da048c_076ba38f",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "970ded38_6bd0c570",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "Yes, because I had a Bind method defined.  Removing since it is only used in one place.",
+      "parentUuid": "969b7d11_b8ece9cb",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 27
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e25a7da_404e05b3",
         "filename": "device/vr/openvr/openvr_render_loop.cc",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9c0dd2_4e671ff6",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "There is a new API to provide poses to submit.  However, even with that WaitGetPoses is required (or else nothing shows up in the headset - rendering to a mirror window works fine).\n\nEven if we that did work though, WaitGetPoses serves a few purposes.  It provides us with VSync timing - we know when to start rendering with minimum latency when it tells us to start.  It prevents us from getting too many frames queued up (related to knowing when VSync will occur).  It does appropriate throttling to ensure the experience looks best.  This includes logic to force apps to 45hz if they aren\u0027t hitting 90, because random dropped frames is more noticable that alternating reprojected and non-reprojected frames.\n\nRegarding our async behavior, we still toggle between submitting frames and obtaining poses.  The only thing that hurts us a bit is that we can\u0027t have multiple frames in progress (for example one doing js while the other is doing GPU work).\n\nAt some point if we wanted to allow multiple frames in progress, we could hack something on top of this, but I don\u0027t want to experiment with that before landing this patch.",
+      "parentUuid": "3e25a7da_404e05b3",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 76
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "df5f2ead_aa229a05",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "Documentation isn\u0027t clear, and it seems to work fine either way.  I think you are correct that this should go after WaitGetPoses, so I moved it.",
+      "parentUuid": "34f58403_c3f417b4",
+      "range": {
+        "startLine": 154,
+        "startChar": 56,
+        "endLine": 154,
+        "endChar": 79
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "381f71cb_62ef0263",
         "filename": "device/vr/openvr/openvr_render_loop.h",
         "patchSetId": 2
@@ -229,6 +445,30 @@
       "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0475fa7e_fa390e62",
+        "filename": "device/vr/openvr/openvr_render_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "381f71cb_62ef0263",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "6863289f_4197877b",
+        "filename": "device/vr/openvr/openvr_render_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f52887e_c962f7dd",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 11
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f16ebea8_a84732c1",
         "filename": "device/vr/windows/d3d11_texture_helper.cc",
         "patchSetId": 2
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "ecf7c1de_5ee82423",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f16ebea8_a84732c1",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33921106_8962d5c2",
         "filename": "device/vr/windows/d3d11_texture_helper.cc",
         "patchSetId": 2
@@ -298,6 +586,30 @@
       "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433c4a25_29066522",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-31T20:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33921106_8962d5c2",
+      "range": {
+        "startLine": 105,
+        "startChar": 10,
+        "endLine": 105,
+        "endChar": 21
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
