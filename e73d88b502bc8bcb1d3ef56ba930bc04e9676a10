@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "48bf1529_93b04f7e",
+        "filename": "build/config/android/config.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-31T18:34:56Z",
+      "side": 1,
+      "message": "I think it\u0027s good to align with VERSION_CODES. But VERSION_CODES defines a bunch of ints. In apks, there is version_code and version_name, and this seems like the name, not the code.",
+      "parentUuid": "8f027d8f_578ced3a",
+      "revId": "e73d88b502bc8bcb1d3ef56ba930bc04e9676a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68adc203_b41d22f5",
         "filename": "tools/perf/chrome_telemetry_build/BUILD.gn",
         "patchSetId": 1
