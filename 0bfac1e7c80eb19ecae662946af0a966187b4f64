@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c9369a8_6bd0fee6",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSProtoConverter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1707,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-31T15:57:42Z",
+      "side": 1,
+      "message": "don\u0027t you need anything after the paren here (e.g. semicolon or and/or?) before appending the next stuff below?",
+      "range": {
+        "startLine": 1707,
+        "startChar": 16,
+        "endLine": 1707,
+        "endChar": 17
+      },
+      "revId": "0bfac1e7c80eb19ecae662946af0a966187b4f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36cc8736_8f8f9819",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSProtoConverter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1995,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-31T15:57:42Z",
+      "side": 1,
+      "message": "probably dumb question: maybe you need a space here after \"!important\"?",
+      "range": {
+        "startLine": 1995,
+        "startChar": 27,
+        "endLine": 1995,
+        "endChar": 28
+      },
+      "revId": "0bfac1e7c80eb19ecae662946af0a966187b4f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
