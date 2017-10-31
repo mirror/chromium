@@ -436,6 +436,41 @@ Polymer({
           !!this.get('VPN.IPsec.SaveCredentials', properties) ||
           !!this.get('VPN.L2TP.SaveCredentials', properties);
     }
+
+    if (properties.Type == CrOnc.Type.ETHERNET) {
+      // Always assume EAP for Ethernet configuration.
+      this.security_ = CrOnc.Security.WPA_EAP;
+      this.networkingPrivate.getNetworks(
+          {networkType: CrOnc.Type.ETHERNET, visible: false, configured: true},
+          this.getEthernetEap_.bind(this));
+    }
+  },
+
+  /**
+   * networkingPrivate.getNetworks callback. Expects an array of Ethernet
+   * networks and looks for
+   * @param {!Array<chrome.networkingPrivate.NetworkStateProperties>} networks
+   * @private
+   */
+  getEthernetEap_: function(networks) {
+    var ethernetEap;
+    var err = this.getRuntimeError_();
+    if (!err && networks.length > 0) {
+      // Look for an existing EAP configuration. This may be stored in a
+      // separate 'Ethernet EAP Parameters' configuration.
+      ethernetEap = networks.find(function(network) {
+        return network.Ethernet.Authentication == '8021X';
+      });
+    }
+    if (!ethernetEap)
+      return;
+    this.networkingPrivate.getProperties(ethernetEap.GUID, (properties) => {
+      if (!properties.Ethernet.EAP)
+        return;
+      this.guid = properties.GUID;
+      this.networkProperties.Ethernet.EAP = properties.Ethernet.EAP;
+      this.updateConfigProperties_();
+    });
   },
 
   /**
@@ -588,6 +623,9 @@ Polymer({
       this.set('WiFi.Security', this.security_, this.configProperties_);
       // Set the share value to its default when the security type changes.
       this.setShareNetwork_();
+    } else if (this.type == CrOnc.Type.ETHERNET) {
+      var auth = this.security_ == CrOnc.Security.WPA_EAP ? '8021X' : 'None';
+      this.set('Ethernet.Authentication', auth, this.configProperties_);
     }
     if (this.security_ == CrOnc.Security.WPA_EAP) {
       var eap = this.getEap_(this.configProperties_, true);
