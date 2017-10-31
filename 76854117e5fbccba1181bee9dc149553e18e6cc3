@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dc77108_f6db87b6",
+        "filename": "content/browser/loader/stream_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-31T15:43:52Z",
+      "side": 1,
+      "message": "This all seems to be implementing logic that only the stream really cares about at a higher level.\n\nCould we instead move this logic down into the stream, and just call writer_.OnResponseStarted(const ResponseInfo\u0026) here, which when calls into the stream (And then the stream can deal with the no headers case itself)?",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "76854117e5fbccba1181bee9dc149553e18e6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec21311_f331ac7e",
+        "filename": "content/browser/loader/stream_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-31T15:43:52Z",
+      "side": 1,
+      "message": "Again, I\u0027d like to call into a stream method here, rather than having this class know about its guts.  Then we\u0027d at least get rid of the MetaData dependency from loader/.",
+      "range": {
+        "startLine": 75,
+        "startChar": 20,
+        "endLine": 75,
+        "endChar": 28
+      },
+      "revId": "76854117e5fbccba1181bee9dc149553e18e6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7a24fe_1eaedae0",
+        "filename": "content/browser/streams/stream_url_request_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-31T15:43:52Z",
+      "side": 1,
+      "message": "It\u0027s not valid for it to be nullptr here, is it?  At least the comment in StreamResourceHandler::OnResponseStarted implies that it is not.  The other methods will null checks may be legal to call on error.  This is not.",
+      "range": {
+        "startLine": 113,
+        "startChar": 32,
+        "endLine": 113,
+        "endChar": 41
+      },
+      "revId": "76854117e5fbccba1181bee9dc149553e18e6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553d5d50_ac245c3b",
+        "filename": "net/url_request/url_request_job.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-31T15:43:52Z",
+      "side": 1,
+      "message": "Please add a TODO about making this non-virtual when it\u0027s no longer needed.",
+      "range": {
+        "startLine": 210,
+        "startChar": 10,
+        "endLine": 210,
+        "endChar": 18
+      },
+      "revId": "76854117e5fbccba1181bee9dc149553e18e6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
