@@ -70,6 +70,30 @@
       "revId": "4e7922e6fd9946965212e7b42c752e1795b3e155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9329fbae_450874c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaNotificationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-31T19:15:40Z",
+      "side": 1,
+      "message": "Hmm, I completely forgot about this code. I think it would be fair to run an `assert` instead.",
+      "parentUuid": "5569d5c7_0e8799aa",
+      "range": {
+        "startLine": 1180,
+        "startChar": 8,
+        "endLine": 1180,
+        "endChar": 55
+      },
+      "revId": "4e7922e6fd9946965212e7b42c752e1795b3e155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
