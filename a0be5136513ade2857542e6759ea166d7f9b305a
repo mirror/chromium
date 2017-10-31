@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e100cef7_ecd8b200",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-10-31T18:23:04Z",
+      "side": 1,
+      "message": "buuuug!",
+      "revId": "a0be5136513ade2857542e6759ea166d7f9b305a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
