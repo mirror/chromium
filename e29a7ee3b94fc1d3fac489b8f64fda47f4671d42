@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "fcff4e81_d311648b",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-31T16:44:11Z",
+      "side": 1,
+      "message": "I believe that this piece is not needed if you do not create a new BUILD.gn in a subdir.",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 1
+      },
+      "revId": "e29a7ee3b94fc1d3fac489b8f64fda47f4671d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5415c4c_28b5a1e4",
         "filename": "third_party/zlib/contrib/tests/OWNERS",
         "patchSetId": 1
@@ -48,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "67200ae6_84335dff",
+        "filename": "third_party/zlib/contrib/tests/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-31T16:44:11Z",
+      "side": 1,
+      "message": "We may have other files like dictionaries, corpus, etc, so imho we should either:\n\n1) create a subdir for fuzzing\n2) add myself as a general owner but with a comment like \"# For fuzzing related changes:\"",
+      "range": {
+        "startLine": 3,
+        "startChar": 2,
+        "endLine": 3,
+        "endChar": 13
+      },
+      "revId": "e29a7ee3b94fc1d3fac489b8f64fda47f4671d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "560b5181_8ab7cf49",
         "filename": "third_party/zlib/contrib/tests/zlib_uncompress_fuzzer.cc",
         "patchSetId": 1
@@ -59,6 +105,30 @@
       "writtenOn": "2017-10-30T23:12:07Z",
       "side": 1,
       "message": "These changes were also part of the pre-submit formatting checker.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 75
+      },
+      "revId": "e29a7ee3b94fc1d3fac489b8f64fda47f4671d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aaa17b3_e3e62c61",
+        "filename": "third_party/zlib/contrib/tests/zlib_uncompress_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-31T16:44:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "560b5181_8ab7cf49",
       "range": {
         "startLine": 10,
         "startChar": 0,
