@@ -40,6 +40,18 @@ enum class FrameType {
   COUNT = 12
 };
 
+// This enum is used for histogram and should not be renumbered.
+enum class BackgroundedState {
+  BACKGROUNDED = 0,             // Renderer is backgrounded
+  STOPPED_AFTER_DELAY = 1,      // Stopped when backgrounded for a while
+  STOPPED_DUE_TO_CRITICAL = 2,  // Stopped due to critical resources,
+                                // reserved for future use.
+  RESUMED = 3,                  // Resumed
+  RESUMED_AFTER_STOP = 4,       // Resumed after a stop was called
+
+  COUNT = 5
+};
+
 PLATFORM_EXPORT FrameType
 GetFrameType(const WebFrameScheduler& frame_scheduler);
 
@@ -63,6 +75,8 @@ class PLATFORM_EXPORT RendererMetricsHelper {
   void RecordMainThreadTaskLoad(base::TimeTicks time, double load);
   void RecordForegroundMainThreadTaskLoad(base::TimeTicks time, double load);
   void RecordBackgroundMainThreadTaskLoad(base::TimeTicks time, double load);
+
+  static const char kHistogramBackgroundedRendererState[];
 
  private:
   RendererSchedulerImpl* renderer_scheduler_;  // NOT OWNED

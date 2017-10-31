@@ -107,6 +107,8 @@ class RendererMetricsHelperTest : public ::testing::Test {
     return base::TimeTicks() + base::TimeDelta::FromMilliseconds(milliseconds);
   }
 
+  void UpdatePolicy() { scheduler_->UpdatePolicy(); }
+
   std::unique_ptr<base::SimpleTestTickClock> clock_;
   scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
   scoped_refptr<SchedulerTqmDelegate> delegate_;
@@ -233,6 +235,51 @@ TEST_F(RendererMetricsHelperTest, GetFrameTypeTest) {
   MockWebFrameScheduler frame5(
       false, false, WebFrameScheduler::FrameType::kMainFrame, false, true);
   DCHECK_EQ(GetFrameType(frame5), FrameType::MAIN_FRAME_BACKGROUND_EXEMPT);
+}
+
+TEST_F(RendererMetricsHelperTest, BackgroundedRendererState) {
+  scheduler_->SetStoppingWhenBackgroundedEnabled(true);
+  scheduler_->SetRendererBackgrounded(true);
+  EXPECT_THAT(histogram_tester_->GetAllSamples(
+                  "RendererScheduler.BackgroundedRendererState"),
+              UnorderedElementsAre(Bucket(
+                  static_cast<int>(BackgroundedState::BACKGROUNDED), 1)));
+
+  scheduler_->SetRendererBackgrounded(false);
+  EXPECT_THAT(histogram_tester_->GetAllSamples(
+                  "RendererScheduler.BackgroundedRendererState"),
+              UnorderedElementsAre(
+                  Bucket(static_cast<int>(BackgroundedState::BACKGROUNDED), 1),
+                  Bucket(static_cast<int>(BackgroundedState::RESUMED), 1)));
+
+  scheduler_->SetRendererBackgrounded(true);
+  EXPECT_THAT(histogram_tester_->GetAllSamples(
+                  "RendererScheduler.BackgroundedRendererState"),
+              UnorderedElementsAre(
+                  Bucket(static_cast<int>(BackgroundedState::BACKGROUNDED), 2),
+                  Bucket(static_cast<int>(BackgroundedState::RESUMED), 1)));
+
+  // Waste 5+ minutes so that the delayed stop is triggered
+  RunTask(QueueType::DEFAULT, Milliseconds(1),
+          base::TimeDelta::FromSeconds(5 * 61));
+  UpdatePolicy();
+  EXPECT_THAT(
+      histogram_tester_->GetAllSamples(
+          "RendererScheduler.BackgroundedRendererState"),
+      UnorderedElementsAre(
+          Bucket(static_cast<int>(BackgroundedState::BACKGROUNDED), 2),
+          Bucket(static_cast<int>(BackgroundedState::RESUMED), 1),
+          Bucket(static_cast<int>(BackgroundedState::STOPPED_AFTER_DELAY), 1)));
+
+  scheduler_->SetRendererBackgrounded(false);
+  EXPECT_THAT(
+      histogram_tester_->GetAllSamples(
+          "RendererScheduler.BackgroundedRendererState"),
+      UnorderedElementsAre(
+          Bucket(static_cast<int>(BackgroundedState::BACKGROUNDED), 2),
+          Bucket(static_cast<int>(BackgroundedState::RESUMED), 2),
+          Bucket(static_cast<int>(BackgroundedState::STOPPED_AFTER_DELAY), 1),
+          Bucket(static_cast<int>(BackgroundedState::RESUMED_AFTER_STOP), 1)));
 }
 
 // TODO(crbug.com/754656): Add tests for NthMinute and AfterNthMinute

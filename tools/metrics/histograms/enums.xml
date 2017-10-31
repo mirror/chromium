@@ -34224,6 +34224,14 @@ from previous Chrome versions.
   <int value="3" label="Audio and video"/>
 </enum>
 
+<enum name="RendererSchedulerBackgroundedState">
+  <int value="0" label="Backgrounded"/>
+  <int value="1" label="Stopped after a delay"/>
+  <int value="2" label="Stopped due to critical resources"/>
+  <int value="3" label="Resumed"/>
+  <int value="4" label="Resumed after a stop"/>
+</enum>
+
 <enum name="RendererSchedulerFrameType">
   <int value="0" label="MainFrame_OnScreen"/>
   <int value="1" label="MainFrame_OffScreen"/>
