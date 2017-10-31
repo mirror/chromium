@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "20db37e2_b8040622",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-31T21:00:50Z",
+      "side": 1,
+      "message": "Do we need to enable layer for all children views for the animation? Think enabling layer on the parent view is enough.",
+      "revId": "906817f9f7d86ae41b16a0f2da997b216d07f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb2ddc66_df32ac78",
         "filename": "ash/login/ui/login_bubble.cc",
         "patchSetId": 3
