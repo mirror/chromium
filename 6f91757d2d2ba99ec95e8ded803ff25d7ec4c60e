@@ -52,6 +52,24 @@
       "revId": "6f91757d2d2ba99ec95e8ded803ff25d7ec4c60e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9a4114_6677e37d",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-31T23:09:45Z",
+      "side": 1,
+      "message": "Tests written. Checked and it does not hide the infobar",
+      "parentUuid": "9a910820_c67b3743",
+      "revId": "6f91757d2d2ba99ec95e8ded803ff25d7ec4c60e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
