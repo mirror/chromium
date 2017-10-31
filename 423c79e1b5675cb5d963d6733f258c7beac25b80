@@ -16,6 +16,24 @@
       "revId": "423c79e1b5675cb5d963d6733f258c7beac25b80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d615a272_ee77e8fe",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-31T14:05:14Z",
+      "side": 0,
+      "message": "Good idea.  Maybe not very useful though, because spdy_session-\u003espdy_session_key() would crash a few lines down anyway?  In any case, I\u0027m working on the next CL, and I\u0027m happy to include some paranoia in that one.  :)",
+      "parentUuid": "35bebfe8_30491fca",
+      "revId": "423c79e1b5675cb5d963d6733f258c7beac25b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
