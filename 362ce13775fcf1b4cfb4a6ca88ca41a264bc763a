@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2335dd23_b7ac46ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-31T22:14:53Z",
+      "side": 1,
+      "message": "Tnx for the answer.\nI\u0027d go with the option implemented in this CL then. I don\u0027t see any benefit going with the additional thread.",
+      "parentUuid": "9213a865_d2587b8c",
+      "revId": "362ce13775fcf1b4cfb4a6ca88ca41a264bc763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3951d64_5a6ac634",
         "filename": "media/gpu/vaapi_drm_picture.cc",
         "patchSetId": 6
