@@ -140,6 +140,24 @@
       "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5c127d_9b50d9a7",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-31T08:48:06Z",
+      "side": 1,
+      "message": "One of major use cases is: PostTask(Bind(callback, ...)).  So, the event loop runs the given |callback| and after that the even loop runs a next event task.  That\u0027s all in this case.\n\nRemember that callback interfaces / callback functions are *callback*.  There is no author script that invokes the callbacks.  So, answering your question, for most cases the call sites of callback-\u003ehandleEvent() immediately returns to **the event loop** (not V8) without calling any V8 API.  For most cases (if not all the cases), invoking an author callback function is only the purpose of the event tasks that invoke a callback, e.g. setTimeout.\n\nI agree that it\u0027s itchy that we\u0027ll have two return types of v8::Maybe\u003cT\u003e and void.  However, if we\u0027re going to change the return type to non-void, then I vote for v8::Maybe\u003cvoid\u003e or v8::Maybe\u003cMyVoid\u003e.",
+      "parentUuid": "26d37bdd_046f526e",
+      "revId": "24472b37615c879baf6d335fb67b143a325c4e62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
