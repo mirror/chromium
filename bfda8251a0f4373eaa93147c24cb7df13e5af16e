@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39757595_666a4277",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-31T15:29:34Z",
+      "side": 1,
+      "message": "Ok, I remembered the edge case that I was trying to remember in https://chromium-review.googlesource.com/c/chromium/src/+/621236#message-8617af7d4dd0f9ce109f0f7f3e47db4d6315ada5. I think we need to tweak this a bit, but it should be a fairly small change.\n\nRight now we\u0027re clearing all blocking pages except the currently committed one. But that means we might be clearing the blocking page for a subsequent navigation. For example:\nNavigation A begins\nNavigation B begins\nNavigation A fails and begins to commit a certificate error page\nNavigation B fails and begins to commit a certificate error page\nNavigation A commits and clears the blocking page for Navigation B\nNavigation B commits and now its blocking page is gone -- oops\n\nTBH I have no idea if the above sequence of events can actually occur. But, in case it can, I think it might be safer to tweak this DidFinishNavigation logic a little bit:\n- add a |blocking_page_for_currently_committed_navigation_| unique_ptr that owns the blocking page for the currently committed navigation\n- Here in DidFinishNavigation, when a navigation commits, and there is a blocking page for the navigation in the map, then move the blocking page out of |blocking_pages_for_navigation_| into |blocking_page_for_currently_committed_navigation_|. If the navigation is committing and there is no blocking page for it in the map, then clear |blocking_page_for_currently_committed_navigation_|. If the navigation finished but didn\u0027t commit, then clear that navigation out of the map.\n\nSo we always keep track of the blocking page for the currently committed navigation. When a navigation commits, we clean up the blocking page for the previously committed navigation and retain the blocking page (if any) for the current one. Any navigations that don\u0027t commit are responsible for cleaning up their own blocking pages.",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 43
+      },
+      "revId": "bfda8251a0f4373eaa93147c24cb7df13e5af16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

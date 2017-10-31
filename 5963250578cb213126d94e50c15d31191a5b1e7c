@@ -278,6 +278,30 @@
     },
     {
       "key": {
+        "uuid": "1f5cf15c_ac61fa94",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-31T15:29:34Z",
+      "side": 1,
+      "message": "Sorry, I misread this code; it\u0027s doing the opposite of erase(navigation_id). I got confused because I think what we want is actually something closer to erase(navigation_id); see my other comment.",
+      "parentUuid": "dbb927bc_6c363dc1",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 3
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d28a2e0_9b133538",
         "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
         "patchSetId": 17
