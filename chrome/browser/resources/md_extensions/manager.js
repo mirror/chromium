@@ -32,8 +32,6 @@ cr.define('extensions', function() {
   const Manager = Polymer({
     is: 'extensions-manager',
 
-    behaviors: [I18nBehavior],
-
     properties: {
       /** @type {extensions.Toolbar} */
       toolbar: Object,
@@ -164,8 +162,6 @@ cr.define('extensions', function() {
 
     /** @override */
     attached: function() {
-      document.documentElement.classList.remove('loading');
-
       this.navigationListener_ = extensions.navigation.addListener(newPage => {
         this.changePage_(newPage);
       });
