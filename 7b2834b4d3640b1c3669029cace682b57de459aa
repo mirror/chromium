@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f304d88f_80fee1b9",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-31T21:15:19Z",
+      "side": 1,
+      "message": "To clarify: do you refer to the cases where the type is explicit? I thought the curly-brace initializer-list syntax was common for function arguments, and this might be what you\u0027re saying in your note above. Is that even uniform initialization?\n\nSpecifically, I\u0027m asking if you\u0027re also referring to the multiple occurrences of f(...,{kFavicon}, ...).",
+      "parentUuid": "4b8e25ea_9bbc31cd",
+      "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed114ad5_cdd586c3",
         "filename": "components/favicon/core/favicon_driver_impl.cc",
         "patchSetId": 13
