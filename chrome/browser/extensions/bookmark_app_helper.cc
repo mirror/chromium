@@ -15,6 +15,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "chrome/browser/banners/app_banner_manager_desktop.h"
 #include "chrome/browser/banners/app_banner_settings_helper.h"
 #include "chrome/browser/bitmap_fetcher/bitmap_fetcher.h"
 #include "chrome/browser/bitmap_fetcher/bitmap_fetcher_delegate.h"
@@ -57,6 +58,7 @@
 #include "net/url_request/url_request.h"
 #include "skia/ext/image_operations.h"
 #include "skia/ext/platform_canvas.h"
+#include "third_party/WebKit/public/platform/WebDisplayMode.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/canvas.h"
@@ -734,6 +736,14 @@ void BookmarkAppHelper::FinishInstallation(const Extension* extension) {
     callback_.Run(extension, web_app_info_);
     return;
   }
+
+  banners::AppBannerManagerDesktop::CreateForWebContents(contents_);
+  banners::AppBannerManagerDesktop* banner_manager =
+      banners::AppBannerManagerDesktop::FromWebContents(contents_);
+  banner_manager->OnInstall(false /* is_native */,
+                            web_app_info_.open_as_window
+                                ? blink::kWebDisplayModeStandalone
+                                : blink::kWebDisplayModeBrowser);
 
 #if !defined(OS_CHROMEOS)
   // Pin the app to the relevant launcher depending on the OS.
