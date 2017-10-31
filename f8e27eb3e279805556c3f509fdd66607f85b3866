@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51d80706_3b71b3d4",
+        "filename": "base/test/launcher/unit_test_launcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T16:45:20Z",
+      "side": 1,
+      "message": "const std::vector\u0026 or maybe std::vector\u003cstd::string\u003e\u0026\u0026 based on usage.",
+      "range": {
+        "startLine": 425,
+        "startChar": 34,
+        "endLine": 425,
+        "endChar": 58
+      },
+      "revId": "f8e27eb3e279805556c3f509fdd66607f85b3866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f85bf97_b3ecae6c",
+        "filename": "base/test/launcher/unit_test_launcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T16:45:20Z",
+      "side": 1,
+      "message": "Can the output_file be passed to the constructor too? (no set_output_file)?",
+      "range": {
+        "startLine": 618,
+        "startChar": 2,
+        "endLine": 618,
+        "endChar": 40
+      },
+      "revId": "f8e27eb3e279805556c3f509fdd66607f85b3866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
