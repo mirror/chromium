@@ -248,6 +248,10 @@ class CONTENT_EXPORT RenderWidgetHostView {
   // This method returns the ScreenInfo used by the view to render.
   virtual void GetScreenInfo(ScreenInfo* screen_info) = 0;
 
+  // Informs the view that the renderer has resized to |new_size| because auto-
+  // resize is enabled.
+  virtual void ResizeDueToAutoResize(const gfx::Size& new_size,
+                                     uint64_t sequence_number) = 0;
 #if defined(OS_MACOSX)
   // Return the accelerated widget which hosts the CALayers that draw the
   // content of the view in GetNativeView. This may be null.

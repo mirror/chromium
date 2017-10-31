@@ -305,6 +305,13 @@ void RenderWidgetHostViewBase::GetScreenInfo(ScreenInfo* screen_info) {
   *screen_info = ScreenInfo();
 }
 
+void RenderWidgetHostViewBase::ResizeDueToAutoResize(const gfx::Size& new_size,
+                                                     uint64_t sequence_number) {
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(GetRenderWidgetHost());
+  host->DidAllocateLocalSurfaceIdForAutoResize(sequence_number);
+}
+
 uint32_t RenderWidgetHostViewBase::RendererFrameNumber() {
   return renderer_frame_number_;
 }

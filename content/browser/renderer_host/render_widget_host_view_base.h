@@ -129,6 +129,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   void FocusedNodeTouched(const gfx::Point& location_dips_screen,
                           bool editable) override;
   void GetScreenInfo(ScreenInfo* screen_info) override;
+  void ResizeDueToAutoResize(const gfx::Size& new_size,
+                             uint64_t sequence_number) override;
   TouchSelectionControllerClientManager*
   GetTouchSelectionControllerClientManager() override;
 
