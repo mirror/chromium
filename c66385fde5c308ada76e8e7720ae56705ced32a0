@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb1fbfbd_70856cd0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-31T23:12:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fda6454_1af13898",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "c66385fde5c308ada76e8e7720ae56705ced32a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0c67a64_dc73f965",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchSelectionController.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "c66385fde5c308ada76e8e7720ae56705ced32a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73617087_9ed4c24b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchSelectionController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-31T23:12:29Z",
+      "side": 1,
+      "message": "I changed it to CONTEXTUAL_SEARCH_ML_TAP_SUPPRESSION throughout.  This seems like a better name because Ranker is an internal code name that we shouldn\u0027t expose.  Thanks for the suggestion!",
+      "parentUuid": "e0c67a64_dc73f965",
+      "range": {
+        "startLine": 391,
+        "startChar": 12,
+        "endLine": 391,
+        "endChar": 80
+      },
+      "revId": "c66385fde5c308ada76e8e7720ae56705ced32a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
