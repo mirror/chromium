@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4ee37a3_239d3db8",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-without-poster.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-31T13:29:31Z",
+      "side": 1,
+      "message": "I\u0027m really confused that we still have use-default-poster. I wonder if this is because of some race. Can you investigate a bit? Not a blocker but I wonder if this could have impact on websites.",
+      "revId": "8d636fb11d3e411a7398173e808c6aa5720b991a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863b5c51_30431718",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-31T13:29:31Z",
+      "side": 1,
+      "message": "To summarise offline discussions: using DOMTokenList would be cleaner but we will end up doing at least two setAttribute() calls which will ultimately be less efficient.",
+      "revId": "8d636fb11d3e411a7398173e808c6aa5720b991a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21f816a2_9eb73d59",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-31T13:29:31Z",
+      "side": 1,
+      "message": "Probably worth mentioning that the caller must check that the element is an HTMLVideoElement before making this call.",
+      "revId": "8d636fb11d3e411a7398173e808c6aa5720b991a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
