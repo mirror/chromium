@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f757b507_232c5f29",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3417,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-31T03:48:02Z",
+      "side": 1,
+      "message": "might be slightly nicer if line 3417 does \u0026\u0026  subresource_loader_params so we can remove it from 3418 and 3425?",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a0cbde_684b9644",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3424,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-31T03:48:02Z",
+      "side": 1,
+      "message": "nit: Pass",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c08c05_70922986",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-31T03:48:02Z",
+      "side": 1,
+      "message": "nit: \"invoked |callback|\"",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b746655a_fecd7b66",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-31T03:48:02Z",
+      "side": 1,
+      "message": "how do we know the controller isn\u0027t stopped or stopping?",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a625bc06_10fe2e2d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-31T03:48:02Z",
+      "side": 1,
+      "message": "nit: prefer adding the \"For service worker clients.\" preamble.",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1adb152_e84d309a",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-31T03:48:02Z",
+      "side": 1,
+      "message": "Also say something about |controller_service_worker|?",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ad2a2b_4f212b55",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-31T03:48:02Z",
+      "side": 1,
+      "message": "I\u0027m regretting these names... probably should have named them ClientState and ContextState.",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d707153b_6994a04c",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-31T03:48:02Z",
+      "side": 1,
+      "message": "It\u0027s not super obvious here what |default_loader_factory_getter| has to do with the if() body.\n\nMaybe factor out a function CanCreateSubresourceLoaderFactory() to call here and in line 132-133?",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba53f94_9ab90755",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-31T03:48:02Z",
+      "side": 1,
+      "message": "This is kind of using |should_notify_controllerchange| for a bigger purpose than it was intended for, which is just to know whether we dispatch oncontroller event. It feels like there should be a better name for it... but it\u0027s tricky since we set it to true/false at weird times (cross-site transfer, dissociate registration, associate registration)...\n\nMaybe we can get away with a comment here like:\n// |should_notify_controllerchange| indicates whether the web context should observe that the controller changed from what it was before. In that case, reset the factory so that subsequent loads can use the new controller.",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
