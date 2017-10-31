@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "b9e48f1f_37fff3dc",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-31T19:41:11Z",
+      "side": 1,
+      "message": "Updated the comments.",
+      "parentUuid": "9e84543c_6a420e31",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 221,
+        "endChar": 13
+      },
+      "revId": "59ee403f2e62ee9439beb5b04ab560b1beef2c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "448a0b8e_586c4581",
         "filename": "ui/gfx/color_space.h",
         "patchSetId": 3
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Can we get rid of ICC_BASED after we replace icc_profile_id_ with a scoped_refptr\u003cICCProfile\u003e ?\nAlso, how do we avoid passing the ICCProfile over IPC over and over and over again?",
       "parentUuid": "5b96299f_51d93cd2",
+      "range": {
+        "startLine": 57,
+        "startChar": 78,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "59ee403f2e62ee9439beb5b04ab560b1beef2c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbbc06c_3109b306",
+        "filename": "ui/gfx/color_space.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-31T19:41:11Z",
+      "side": 1,
+      "message": "We may be able to.\n\nI plan to DCHECK that we never pass any ICC_BASED (however that is represented) color space via IPC in a couple of patches (still has a way to go though).",
+      "parentUuid": "d720cabb_c9d739e5",
       "range": {
         "startLine": 57,
         "startChar": 78,
