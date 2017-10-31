@@ -122,6 +122,7 @@ cr.define('extensions', function() {
      * @private
      */
     onDeleteErrorAction_: function(e) {
+
       if (e.type == 'keydown' && !((e.code == 'Space' || e.code == 'Enter')))
         return;
 
@@ -297,8 +298,12 @@ cr.define('extensions', function() {
      * @private
      */
     onErrorItemAction_: function(e) {
-      if (e.type == 'keydown' && !((e.code == 'Space' || e.code == 'Enter')))
+      // Prevent the item from :focus'ing on mousedown.
+      if (e.type == 'mousedown')
+        e.preventDefault();
+      if (e.type == 'keydown' && !((e.code == 'Space' || e.code == 'Enter'))) {
         return;
+      }
 
       this.selectError_(e.model.item);
     },
