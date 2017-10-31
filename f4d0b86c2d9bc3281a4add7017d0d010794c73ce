@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93809b67_ece679d6",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-31T01:42:20Z",
+      "side": 1,
+      "message": "I wonder if we can generate this text in docs automagically based on \"redirect\" field.",
+      "parentUuid": "4f716e64_7444427f",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53a9a005_d0ff8f3b",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 3
@@ -47,6 +65,125 @@
       "writtenOn": "2017-10-30T23:03:18Z",
       "side": 1,
       "message": "\u003e Use Emulation.setGeolocationOverride instead.",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6bec3f_5886fdbc",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-31T01:42:20Z",
+      "side": 1,
+      "message": "Note these are inconsistent with our usual naming for enum members.",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aafd2875_e4160e0c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-31T01:42:20Z",
+      "side": 1,
+      "message": "nit: while you\u0027re here, can you make the descriptions of the two fields above different and mmm... more descriptive?",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1381c8c8_2c383be5",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-31T01:42:20Z",
+      "side": 1,
+      "message": "can we drop frameId here? We\u0027ve already reported it in requestwillBeSent.",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44279a89_8e6e5c09",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2571,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-31T01:42:20Z",
+      "side": 1,
+      "message": "Can we remove this?",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65551b8a_925cca24",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2875,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-31T01:42:20Z",
+      "side": 1,
+      "message": "\"Returns box model for the specified node\"?",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a25b0303_dba871e8",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3275,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-31T01:42:20Z",
+      "side": 1,
+      "message": "Why is it here? Looks like it belongs to DOM.",
+      "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9278a06_53251106",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3457,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-31T01:42:20Z",
+      "side": 1,
+      "message": "This is a nasty one. Do we really need to make it stable?",
       "revId": "f4d0b86c2d9bc3281a4add7017d0d010794c73ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
