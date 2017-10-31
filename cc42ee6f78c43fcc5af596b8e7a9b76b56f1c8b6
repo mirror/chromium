@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0609a6d_8daf187a",
+        "filename": "chrome/utility/media_router/dial_app_info_parser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-10-31T20:03:36Z",
+      "side": 1,
+      "message": "Is name really the only required property?  Can we do anything useful without state or capabilities?\n\nShould we bail earlier (in the middle of processing in the if else above) if we detect things missing early, or will that leave us in a bad state?\n\nI\u0027m not sure we need to worry about it, but if we get a malicious payload that is crafted to be really long (something like just a bunch of empty repeated name tags) do we want to limit how long we spend on parsing?\n\n\nIf this is just a copy of what we do in the extension already then it sounds fine, mostly just wondering how it works.",
+      "revId": "cc42ee6f78c43fcc5af596b8e7a9b76b56f1c8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
