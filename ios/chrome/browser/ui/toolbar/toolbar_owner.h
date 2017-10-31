@@ -12,15 +12,6 @@
 
 @protocol ToolbarOwner<NSObject>
 
-// Returns a reference to the toolbar controller so that it can be included in
-// animations. Calls should be paired with calls to |-reparentToolbarController|
-// when the relinquished toolbar controller is no longer needed by the caller.
-// Returns nil if called when the toolbar has already been relinquished.
-- (ToolbarController*)relinquishedToolbarController;
-// Reparents the toolbar into its place in the view hierarchy before it was
-// relinquished.
-- (void)reparentToolbarController;
-
 // Snapshot provider for the toolbar owner by this class.
 @property(nonatomic, strong, readonly) id<ToolbarSnapshotProviding>
     toolbarSnapshotProvider;

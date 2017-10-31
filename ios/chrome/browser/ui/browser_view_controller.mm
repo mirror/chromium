@@ -4755,52 +4755,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 #pragma mark - ToolbarOwner
 
-- (ToolbarController*)relinquishedToolbarController {
-  if (_isToolbarControllerRelinquished)
-    return nil;
-
-  ToolbarController* relinquishedToolbarController = nil;
-  if ([_toolbarCoordinator view].hidden) {
-    Tab* currentTab = [_model currentTab];
-    if (currentTab.webState &&
-        UrlHasChromeScheme(currentTab.webState->GetLastCommittedURL())) {
-      // Use the native content controller's toolbar when the BVC's is hidden.
-      id nativeController = [self nativeControllerForTab:currentTab];
-      if ([nativeController conformsToProtocol:@protocol(ToolbarOwner)]) {
-        relinquishedToolbarController =
-            [nativeController relinquishedToolbarController];
-        _relinquishedToolbarOwner = nativeController;
-      }
-    }
-  } else {
-    relinquishedToolbarController = [_toolbarCoordinator toolbarController];
-  }
-  _isToolbarControllerRelinquished = (relinquishedToolbarController != nil);
-  return relinquishedToolbarController;
-}
-
-- (void)reparentToolbarController {
-  if (_isToolbarControllerRelinquished) {
-    if ([[_toolbarCoordinator view] isDescendantOfView:self.view]) {
-      // A native content controller's toolbar has been relinquished.
-      [_relinquishedToolbarOwner reparentToolbarController];
-      _relinquishedToolbarOwner = nil;
-    } else if ([_findBarController isFindInPageShown]) {
-      [self.view insertSubview:[_toolbarCoordinator view]
-                  belowSubview:[_findBarController view]];
-      if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
-        [self addConstraintsToToolbar];
-      }
-    } else {
-      [self.view addSubview:[_toolbarCoordinator view]];
-      if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
-        [self addConstraintsToToolbar];
-      }
-    }
-    _isToolbarControllerRelinquished = NO;
-  }
-}
-
 - (id<ToolbarSnapshotProviding>)toolbarSnapshotProvider {
   id<ToolbarSnapshotProviding> toolbarSnapshotProvider = nil;
   if ([_toolbarCoordinator view].hidden) {

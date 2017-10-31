@@ -697,14 +697,6 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
 
 #pragma mark - ToolbarOwner
 
-- (ToolbarController*)relinquishedToolbarController {
-  return [_headerView relinquishedToolbarController];
-}
-
-- (void)reparentToolbarController {
-  [_headerView reparentToolbarController];
-}
-
 #pragma mark - UICollectionView Methods.
 
 - (UIEdgeInsets)collectionView:(UICollectionView*)collectionView

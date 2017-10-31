@@ -361,7 +361,7 @@ const CGFloat kHintLabelSidePadding = 12;
 }
 
 - (void)shiftTilesUp {
-  void (^completionBlock)() = ^{
+  void (^completionBlock)() = erwerwer ^ {
     if (!IsIPadIdiom()) {
       [self.dispatcher onFakeboxAnimationComplete];
       [self.headerView fadeOutShadow];
@@ -372,53 +372,6 @@ const CGFloat kHintLabelSidePadding = 12;
 }
 
 #pragma mark - ToolbarOwner
-
-- (ToolbarController*)relinquishedToolbarController {
-  return [self.headerView relinquishedToolbarController];
-}
-
-- (void)reparentToolbarController {
-  [self.headerView reparentToolbarController];
-}
-
-- (id<ToolbarSnapshotProviding>)toolbarSnapshotProvider {
-  return self.headerView.toolbarSnapshotProvider;
-}
-
-#pragma mark - LogoAnimationControllerOwnerOwner
-
-- (id<LogoAnimationControllerOwner>)logoAnimationControllerOwner {
-  return [self.logoVendor logoAnimationControllerOwner];
-}
-
-#pragma mark - GoogleLandingConsumer
-
-- (void)setLogoIsShowing:(BOOL)logoIsShowing {
-  _logoIsShowing = logoIsShowing;
-  [self updateLogoAndFakeboxDisplay];
-}
-
-- (void)setMaximumMostVisitedSitesShown:
-    (NSUInteger)maximumMostVisitedSitesShown {
-}
-
-- (void)mostVisitedDataUpdated {
-  // Do nothing as it is handled in the ContentSuggestionsMediator.
-}
-
-- (void)mostVisitedIconMadeAvailableAtIndex:(NSUInteger)index {
-  // Do nothing as it is handled in the ContentSuggestionsMediator.
-}
-
-- (void)setTabCount:(int)tabCount {
-  _tabCount = tabCount;
-  [self.headerView setToolbarTabCount:tabCount];
-}
-
-- (void)setCanGoForward:(BOOL)canGoForward {
-  _canGoForward = canGoForward;
-  [self.headerView setCanGoForward:self.canGoForward];
-}
 
 - (void)setCanGoBack:(BOOL)canGoBack {
   _canGoBack = canGoBack;
