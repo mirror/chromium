@@ -79,6 +79,8 @@ void RemoteFrame::Reload(FrameLoadType frame_load_type,
   Client()->Reload(frame_load_type, client_redirect_policy);
 }
 
+void RemoteFrame::AddResourceTiming(const ResourceTimingInfo&) {}
+
 void RemoteFrame::Detach(FrameDetachType type) {
   lifecycle_.AdvanceTo(FrameLifecycle::kDetaching);
 
