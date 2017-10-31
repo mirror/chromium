@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78d71567_e5eb3b04",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-31T09:12:24Z",
+      "side": 1,
+      "message": "Do we need to detach, is the constructor called on a different thread than other methods?",
+      "revId": "7a64173dc29e78e1df4223611788db0c58fe3be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
