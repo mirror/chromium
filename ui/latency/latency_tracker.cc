@@ -109,6 +109,15 @@ void LatencyTracker::ComputeEndToEndLatencyHistograms(
             ".TimeToScrollUpdateSwapBegin2",
         original_component, gpu_swap_begin_component);
 
+    if (input_modality == "Wheel") {
+      // This UMA metric tracks the time from when the original wheel event
+      // is created to when the scroll gesture results in final frame swap.
+      // All scroll events are included in this metric.
+      UMA_HISTOGRAM_INPUT_LATENCY_HIGH_RESOLUTION_MICROSECONDS(
+          "Event.Latency.Scroll.Wheel.TimeToScrollUpdateSwapBegin2",
+          original_component, gpu_swap_begin_component);
+    }
+
     ReportRapporScrollLatency("Event.Latency.ScrollBegin." + input_modality +
                                   ".TimeToScrollUpdateSwapBegin2",
                               original_component, gpu_swap_begin_component);
@@ -129,6 +138,15 @@ void LatencyTracker::ComputeEndToEndLatencyHistograms(
         "Event.Latency.ScrollUpdate." + input_modality +
             ".TimeToScrollUpdateSwapBegin2",
         original_component, gpu_swap_begin_component);
+
+    if (input_modality == "Wheel") {
+      // This UMA metric tracks the time from when the original wheel event
+      // is created to when the scroll gesture results in final frame swap.
+      // All scroll events are included in this metric.
+      UMA_HISTOGRAM_INPUT_LATENCY_HIGH_RESOLUTION_MICROSECONDS(
+          "Event.Latency.Scroll.Wheel.TimeToScrollUpdateSwapBegin2",
+          original_component, gpu_swap_begin_component);
+    }
 
     ReportRapporScrollLatency("Event.Latency.ScrollUpdate." + input_modality +
                                   ".TimeToScrollUpdateSwapBegin2",
@@ -169,6 +187,12 @@ void LatencyTracker::ComputeEndToEndLatencyHistograms(
       "Event.Latency." + scroll_name + "." + input_modality +
           ".TimeToHandled2_" + thread_name,
       original_component, rendering_scheduled_component);
+
+  if (input_modality == "Wheel") {
+    UMA_HISTOGRAM_SCROLL_LATENCY_LONG_2(
+        "Event.Latency.Scroll.Wheel.TimeToHandled2_" + thread_name,
+        original_component, rendering_scheduled_component);
+  }
 
   LatencyInfo::LatencyComponent renderer_swap_component;
   if (!latency.FindLatency(ui::INPUT_EVENT_LATENCY_RENDERER_SWAP_COMPONENT, 0,
