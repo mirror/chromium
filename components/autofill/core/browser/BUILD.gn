@@ -399,6 +399,10 @@ source_set("unit_tests") {
     sources += [ "autofill_assistant_unittest.cc" ]
   }
 
+  data = [
+    "//third_party/libaddressinput/src/testdata/",
+  ]
+
   deps = [
     ":browser",
     ":test_support",
