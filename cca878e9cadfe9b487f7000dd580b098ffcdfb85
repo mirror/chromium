@@ -46,6 +46,30 @@
       "revId": "cca878e9cadfe9b487f7000dd580b098ffcdfb85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0a4641_00e77bce",
+        "filename": "components/data_reduction_proxy/core/browser/network_property.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-10-31T20:56:36Z",
+      "side": 1,
+      "message": "Ok, how are you planning to support adding new properties later? How are you planning to store it, e.g. in a SQLite database or something? It seems like it might be tricky to add new properties later if you\u0027re stringifying the object into a comma-separated list.",
+      "parentUuid": "e2d7901e_1afbfdbd",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "cca878e9cadfe9b487f7000dd580b098ffcdfb85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
