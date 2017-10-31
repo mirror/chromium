@@ -518,13 +518,15 @@ class CONTENT_EXPORT RenderFrameImpl
   void AllowBindings(int32_t enabled_bindings_flags) override;
 
   // mojom::FrameNavigationControl implemenentation:
-  void CommitNavigation(const ResourceResponseHead& head,
-                        const GURL& body_url,
-                        const CommonNavigationParams& common_params,
-                        const RequestNavigationParams& request_params,
-                        mojo::ScopedDataPipeConsumerHandle body_data,
-                        mojom::URLLoaderFactoryPtr
-                            default_subresource_url_loader_factory) override;
+  void CommitNavigation(
+      const ResourceResponseHead& head,
+      const GURL& body_url,
+      const CommonNavigationParams& common_params,
+      const RequestNavigationParams& request_params,
+      mojo::ScopedDataPipeConsumerHandle body_data,
+      mojom::URLLoaderFactoryPtr default_subresource_url_loader_factory,
+      mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info)
+      override;
 
   // mojom::HostZoom implementation:
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;
@@ -1533,6 +1535,12 @@ class CONTENT_EXPORT RenderFrameImpl
   // for AppCache).
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
       custom_url_loader_factory_;
+
+  // Non-null if this frame is to be controlled by a service worker.
+  // Sent from the browser process on navigation commit. Valid until the
+  // document loader for this frame is actually created (where this is
+  // consumed to initialize a subresource loader).
+  mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info_;
 
   scoped_refptr<ChildURLLoaderFactoryGetter> url_loader_factory_getter_;
 
