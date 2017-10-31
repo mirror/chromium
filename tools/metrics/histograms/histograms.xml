@@ -82606,6 +82606,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="SubresourceFilter.SafeBrowsing.TotalCheckTime" units="ms">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    The time an individual Safe Browsing URL check took before finishing,
+    including posting tasks to and from the IO thread. Measured on the UI
+    thread.
+  </summary>
+</histogram>
+
 <histogram name="SubresourceFilter.SubresourceLoad.Evaluation.CPUDuration"
     units="microseconds">
   <owner>pkalinnikov@chromium.org</owner>
