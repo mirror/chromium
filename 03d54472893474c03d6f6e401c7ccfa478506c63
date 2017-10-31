@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81c8c2ec_3b88a179",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T03:13:57Z",
+      "side": 1,
+      "message": "Now that I think about it, I\u0027ve led you astray here. :(\n\nThe best place to call this is BookmarkAppHelper::FinishInstallation. For now, we can hardcode standlone if web_app_info_.open_as_window is true, and browser otherwise. Then it will be up to the desktop PWAs team to update it when they work out how to do minimal UI / fullscreen modes (it will only support browser and standalone for now).\n\nThis means you can remove the calls here and in AppBannerManagerDesktop.",
+      "range": {
+        "startLine": 289,
+        "startChar": 30,
+        "endLine": 289,
+        "endChar": 39
+      },
+      "revId": "03d54472893474c03d6f6e401c7ccfa478506c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

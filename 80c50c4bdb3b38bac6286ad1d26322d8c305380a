@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53875b7c_06830fb9",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-31T03:13:57Z",
+      "side": 0,
+      "message": "We can\u0027t remove this argument from the public method. When triggering A2HS on Android from the menu item, the banner system might not yet have run, and the manifest_ member will be the empty manifest rather than the manifest of the page.\n\nThat also applies on desktop.",
+      "range": {
+        "startLine": 90,
+        "startChar": 32,
+        "endLine": 90,
+        "endChar": 70
+      },
+      "revId": "80c50c4bdb3b38bac6286ad1d26322d8c305380a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
