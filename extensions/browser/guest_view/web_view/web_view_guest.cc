@@ -39,6 +39,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/context_menu_params.h"
 #include "content/public/common/media_stream_request.h"
 #include "content/public/common/page_zoom.h"
 #include "content/public/common/result_codes.h"
@@ -586,6 +587,11 @@ ZoomController::ZoomMode WebViewGuest::GetZoomMode() {
 
 bool WebViewGuest::HandleContextMenu(
     const content::ContextMenuParams& params) {
+  const bool from_touch = params.source_type == ui::MENU_SOURCE_LONG_PRESS ||
+                          params.source_type == ui::MENU_SOURCE_TOUCH;
+  if (from_touch && !params.selection_text.empty())
+    return true;
+
   return web_view_guest_delegate_ &&
          web_view_guest_delegate_->HandleContextMenu(params);
 }
