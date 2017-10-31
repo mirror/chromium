@@ -8,3 +8,7 @@ module ash.mojom;
 // which require manually notifying the tablet mode controller that a window
 // should be considered visible.
 const string kAddWindowToTabletMode = "ash:add-window-to-tablet-mode";
+
+// This changes window management logic for how Browsers with tabstrips are
+// handled.
+const string kSetWindowPositionManaged = "ash:window-position-managed";

@@ -18,3 +18,11 @@ include_rules = [
   "+components/user_manager",
   "+media",
 ]
+
+specific_include_rules = {
+  # TODO(erg): ash_util provides a utility method which switches between direct
+  # use of window_util and the mus window server.
+  "ash_util\.cc": [
+    "+ash/wm/window_util.h"
+  ]
+}

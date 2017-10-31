@@ -11,6 +11,10 @@
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 
+namespace aura {
+class Window;
+}
+
 namespace service_manager {
 class Service;
 }
@@ -40,6 +44,11 @@ bool IsAcceleratorDeprecated(const ui::Accelerator& accelerator);
 
 // Returns true if ash has an accelerator for |key_event| that is enabled.
 bool WillAshProcessAcceleratorForEvent(const ui::KeyEvent& key_event);
+
+// Performs a window management action. In mash, this is dispatched indirectly
+// through the WindowTree.PerformWmAction(). Everywhere else, we just directly
+// call the implementation in ash.
+void PerformWmAction(aura::Window* window, const std::string& action);
 
 }  // namespace ash_util
 

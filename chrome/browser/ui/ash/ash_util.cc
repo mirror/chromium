@@ -9,12 +9,15 @@
 #include "ash/public/cpp/config.h"
 #include "ash/public/interfaces/event_properties.mojom.h"
 #include "ash/shell.h"
+#include "ash/wm/window_util.h"
 #include "base/macros.h"
 #include "chrome/browser/chromeos/ash_config.h"
 #include "content/public/common/service_names.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/interfaces/interface_provider_spec.mojom.h"
+#include "ui/aura/mus/window_tree_host_mus.h"
+#include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 
 namespace ash_util {
@@ -73,6 +76,13 @@ bool WillAshProcessAcceleratorForEvent(const ui::KeyEvent& key_event) {
   return key_event.properties() &&
          key_event.properties()->count(
              ash::mojom::kWillProcessAccelerator_KeyEventProperty);
+}
+
+void PerformWmAction(aura::Window* window, const std::string& action) {
+  if (IsRunningInMash())
+    aura::WindowTreeHostMus::ForWindow(window)->PerformWmAction(action);
+  else
+    ash::wm::PerformWmAction(window, action);
 }
 
 }  // namespace ash_util

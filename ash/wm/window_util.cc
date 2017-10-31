@@ -10,11 +10,13 @@
 #include "ash/ash_constants.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/public/interfaces/window_actions.mojom.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shell.h"
 #include "ash/wm/resize_handle_window_targeter.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/widget_finder.h"
 #include "ash/wm/window_properties.h"
 #include "ash/wm/window_state.h"
@@ -214,6 +216,13 @@ void InstallResizeHandleWindowTargeterForWindow(
     ImmersiveFullscreenController* immersive_fullscreen_controller) {
   window->SetEventTargeter(std::make_unique<ResizeHandleWindowTargeter>(
       window, immersive_fullscreen_controller));
+}
+
+void PerformWmAction(aura::Window* window, const std::string& action) {
+  if (action == mojom::kAddWindowToTabletMode)
+    ash::Shell::Get()->tablet_mode_controller()->AddWindow(window);
+  else if (action == mojom::kSetWindowPositionManaged)
+    ash::wm::GetWindowState(window)->set_window_position_managed(true);
 }
 
 }  // namespace wm

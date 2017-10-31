@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 
+#include <string>
+
 #include "ash/ash_export.h"
 #include "ui/base/ui_base_types.h"
 
@@ -118,6 +120,12 @@ ASH_EXPORT void RemoveLimitedPreTargetHandlerForWindow(
 ASH_EXPORT void InstallResizeHandleWindowTargeterForWindow(
     aura::Window* window,
     ImmersiveFullscreenController* immersive_fullscreen_controller);
+
+// Final implementation of PerformWmAction(). This is called directly from
+// //chrome/ in classic and mus mode, and is called indirectly through a ui
+// mojo call in mash.
+ASH_EXPORT void PerformWmAction(aura::Window* window,
+                                const std::string& action);
 
 }  // namespace wm
 }  // namespace ash

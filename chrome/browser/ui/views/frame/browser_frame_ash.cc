@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "ash/public/interfaces/window_actions.mojom.h"
 #include "ash/shell.h"
 #include "ash/wm/window_properties.h"
 #include "ash/wm/window_state.h"
@@ -13,6 +14,7 @@
 #include "ash/wm/window_util.h"
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
@@ -154,7 +156,7 @@ void BrowserFrameAsh::SetWindowAutoManaged() {
   // For browser window in Chrome OS, we should only enable the auto window
   // management logic for tabbed browser.
   if (!browser_view_->browser()->is_type_popup()) {
-    ash::wm::GetWindowState(GetNativeWindow())
-        ->set_window_position_managed(true);
+    ash_util::PerformWmAction(GetNativeWindow(),
+                              ash::mojom::kSetWindowPositionManaged);
   }
 }
