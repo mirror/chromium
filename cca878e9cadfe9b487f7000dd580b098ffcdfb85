@@ -70,6 +70,30 @@
       "revId": "cca878e9cadfe9b487f7000dd580b098ffcdfb85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200c174f_10d75fac",
+        "filename": "components/data_reduction_proxy/core/browser/network_property.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-31T21:10:29Z",
+      "side": 1,
+      "message": "It would be a dictionary pref which stores the pref as a map.\nIn this case, the map will be from network_id (string) to serialized NetworkProperty struct (serialized as string).\nSerializing |network_id| is outside the scope of this CL, but it would very likely be similar to \nhttps://cs.chromium.org/chromium/src/net/nqe/network_id.h?q\u003df:nqe+f:network_id\u0026sq\u003dpackage:chromium\u0026l\u003d86\n\nNew properties can be added by adding more enums to |proxyState|.\n\nIf we want to add more network-specific info, then we can add more tokens (currently there are only 2: secure_proxies_state, insecure_proxies_state).\n\n\u003e It seems like it might be tricky to add new properties later if you\u0027re stringifying the object into a comma-separated list.\n\nI am not sure why since the order of the tokens is not important. It is easy to add a token at the end, and it would be backward compatible.",
+      "parentUuid": "4a0a4641_00e77bce",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "cca878e9cadfe9b487f7000dd580b098ffcdfb85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
