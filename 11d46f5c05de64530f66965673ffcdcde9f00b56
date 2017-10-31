@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b68e34c_87ef4c52",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-31T19:33:04Z",
+      "side": 1,
+      "message": "nit: remove?",
+      "range": {
+        "startLine": 231,
+        "startChar": 37,
+        "endLine": 231,
+        "endChar": 38
+      },
+      "revId": "11d46f5c05de64530f66965673ffcdcde9f00b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
