@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "85ff2853_115eb256",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-31T17:17:05Z",
+      "side": 1,
+      "message": "Yes, you definitely should be using TransferableMessage here. And plain string wouldn\u0027t work (unless something changed since last I checked) since it needs to be valid unicode at least somewhere in the mojo stack (which I found out the hard way when originally implementing BroadcastChannel; messages containing some seemingly arbitrary subset of floating point numbers would silently disappear, because serialization/deserialization failed). Hopefully String16 doesn\u0027t have any of those limitations?",
+      "parentUuid": "c473b768_7e20a73b",
+      "range": {
+        "startLine": 96,
+        "startChar": 14,
+        "endLine": 96,
+        "endChar": 40
+      },
+      "revId": "b8e1792989e56cf802ab715e8172af429e1550c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d418b6d1_4734fa25",
         "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 2
