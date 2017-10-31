@@ -145,6 +145,15 @@ class MultipleWritesInterceptor : public net::URLRequestInterceptor {
   DISALLOW_COPY_AND_ASSIGN(MultipleWritesInterceptor);
 };
 
+void RecordAcceptHeader(base::WeakPtr<base::Optional<std::string>> result,
+                        const net::test_server::HttpRequest& request) {
+  if (result) {
+    auto i = request.headers.find("accept");
+    if (i != request.headers.end())
+      *result = i->second;
+  }
+}
+
 }  // namespace
 
 class URLLoaderImplTest : public testing::Test {
@@ -174,8 +183,7 @@ class URLLoaderImplTest : public testing::Test {
     DCHECK(!ran_);
     mojom::URLLoaderPtr loader;
 
-    ResourceRequest request =
-        CreateResourceRequest("GET", RESOURCE_TYPE_MAIN_FRAME, url);
+    ResourceRequest request = CreateResourceRequest("GET", resource_type_, url);
     uint32_t options = mojom::kURLLoadOptionNone;
     if (send_ssl_)
       options |= mojom::kURLLoadOptionSendSSLInfo;
@@ -281,6 +289,10 @@ class URLLoaderImplTest : public testing::Test {
     DCHECK(!ran_);
     send_ssl_ = true;
   }
+  void set_resource_type(ResourceType type) {
+    DCHECK(!ran_);
+    resource_type_ = type;
+  }
 
   // Convenience methods after calling Load();
   std::string mime_type() const {
@@ -360,6 +372,7 @@ class URLLoaderImplTest : public testing::Test {
   std::unique_ptr<NetworkContext> context_;
   bool sniff_ = false;
   bool send_ssl_ = false;
+  ResourceType resource_type_ = RESOURCE_TYPE_MAIN_FRAME;
   // Used to ensure that methods are called either before or after a request is
   // made, since the test fixture is meant to be used only once.
   bool ran_ = false;
@@ -851,6 +864,19 @@ TEST_F(URLLoaderImplTest, MultiplePauseResumeReadingBodyFromNet) {
   EXPECT_EQ(std::string(kBodyContentsFirstHalf) +
                 std::string(kBodyContentsSecondHalf),
             ReadBody());
+}
+
+TEST_F(URLLoaderImplTest, AttachAcceptHeader) {
+  base::Optional<std::string> result;
+  base::WeakPtrFactory<base::Optional<std::string>> factory(&result);
+  set_resource_type(RESOURCE_TYPE_XHR);
+  test_server()->RegisterRequestMonitor(
+      base::Bind(RecordAcceptHeader, factory.GetWeakPtr()));
+  EXPECT_EQ(net::OK,
+            Load(test_server()->GetURL("/content-sniffer-test0.html")));
+
+  ASSERT_TRUE(result.has_value());
+  EXPECT_EQ(*result, "*/*");
 }
 
 }  // namespace content
