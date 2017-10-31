@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a8ed3e6_cc5d2537",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/streams/readable-streams/count-queuing-strategy-integration.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-31T06:12:31Z",
+      "side": 1,
+      "message": "Ah, sorry. Even addition of Default should be done in a separate patch. So, sorry but I\u0027d like you to just revert the renaming on wpt from this patch.",
+      "parentUuid": "ec7682a9_38311b39",
+      "revId": "cc70c4e6179cc2b23bf75086784ef8df1f52c318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ecd84b3_10763e0f",
         "filename": "third_party/WebKit/Source/core/streams/ReadableStreamDefaultControllerWrapper.h",
         "patchSetId": 1
