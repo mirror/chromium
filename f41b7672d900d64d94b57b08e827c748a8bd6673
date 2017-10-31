@@ -22,6 +22,57 @@
       "revId": "f41b7672d900d64d94b57b08e827c748a8bd6673",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95cab0af_ec7518b6",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-31T05:40:20Z",
+      "side": 1,
+      "message": "using this opportunity, let\u0027s make this a separate paragraph as done for L61",
+      "revId": "f41b7672d900d64d94b57b08e827c748a8bd6673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31cf1ee9_9844f10e",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-31T05:40:20Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f41b7672d900d64d94b57b08e827c748a8bd6673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c9eec2_c3d64d67",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-31T05:40:20Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f41b7672d900d64d94b57b08e827c748a8bd6673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

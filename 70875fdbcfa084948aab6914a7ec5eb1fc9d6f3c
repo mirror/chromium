@@ -22,6 +22,23 @@
       "revId": "70875fdbcfa084948aab6914a7ec5eb1fc9d6f3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a292341_073b2991",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-31T05:40:20Z",
+      "side": 0,
+      "message": "What\u0027s the reason why you\u0027ve inline this? To get rid of the intermediate string generation?",
+      "revId": "70875fdbcfa084948aab6914a7ec5eb1fc9d6f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
