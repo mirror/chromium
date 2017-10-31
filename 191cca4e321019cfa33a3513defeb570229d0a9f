@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "f4783726_d1881b30",
+        "filename": "content/renderer/loader/cors_url_loader.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-31T09:45:32Z",
+      "side": 1,
+      "message": "Should we also close network_client_binding_?\n\nAlso- maybe just call OnComplete() here to centralize the logic?",
+      "revId": "191cca4e321019cfa33a3513defeb570229d0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df1e3703_4248b46a",
         "filename": "content/renderer/loader/cors_url_loader.cc",
         "patchSetId": 11
@@ -42,6 +59,30 @@
     },
     {
       "key": {
+        "uuid": "d71246c7_9493ea50",
+        "filename": "content/renderer/loader/cors_url_loader.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-31T09:45:32Z",
+      "side": 1,
+      "message": "I don\u0027t think this happens. I\u0027m convinced that saving last_response_url_ here is probably just fine.",
+      "parentUuid": "df1e3703_4248b46a",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 32
+      },
+      "revId": "191cca4e321019cfa33a3513defeb570229d0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "101a9808_02b88761",
         "filename": "content/renderer/loader/cors_url_loader.cc",
         "patchSetId": 11
@@ -53,6 +94,24 @@
       "writtenOn": "2017-10-31T09:31:25Z",
       "side": 1,
       "message": "Is the following logic better?\n\nif (!forwarding_client_)\n  return;\n\nforwarding_client_-\u003eOnComplete(status);\nforwarding_client_ \u003d nullptr;",
+      "revId": "191cca4e321019cfa33a3513defeb570229d0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d000c5e_ff765a47",
+        "filename": "content/renderer/loader/cors_url_loader.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-31T09:45:32Z",
+      "side": 1,
+      "message": "Should we do network_client_binding_.Close() too?",
+      "parentUuid": "101a9808_02b88761",
       "revId": "191cca4e321019cfa33a3513defeb570229d0a9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
