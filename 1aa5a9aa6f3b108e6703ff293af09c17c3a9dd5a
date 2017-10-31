@@ -22,6 +22,30 @@
       "revId": "1aa5a9aa6f3b108e6703ff293af09c17c3a9dd5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1144216_02c388f5",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-31T16:59:24Z",
+      "side": 1,
+      "message": "+  float scary_recording_to_raster_scale \u003d\n+      transform.scale() / raster_source-\u003erecording_scale_factor();",
+      "parentUuid": "f8e42510_ef54106a",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 65
+      },
+      "revId": "1aa5a9aa6f3b108e6703ff293af09c17c3a9dd5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
