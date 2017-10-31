@@ -22,6 +22,64 @@
       "revId": "06af31c87e62e48686dd5dab57c254b41332f469",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c196c6_512fee03",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-31T00:30:05Z",
+      "side": 1,
+      "message": "great suggestion. but I think it\u0027s more correct to say \"release\" builds rather than \"official\" builds since it\u0027s controlled by is_java_debug and not is_official_build",
+      "parentUuid": "ffac4684_b28b29f2",
+      "range": {
+        "startLine": 14,
+        "startChar": 63,
+        "endLine": 14,
+        "endChar": 85
+      },
+      "revId": "06af31c87e62e48686dd5dab57c254b41332f469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd80097_3e6ede08",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-31T00:30:05Z",
+      "side": 1,
+      "message": "Since sReportAssertionCallback is ignored when !BuildHooksConfig.REPORT_JAVA_ASSERT, might be worth adding:\n\nif (!BuildHooksConfig.REPORT_JAVA_ASSERT) {\n    throw new AssertionError();\n}",
+      "revId": "06af31c87e62e48686dd5dab57c254b41332f469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1133d9b8_fae3fa21",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-31T00:30:05Z",
+      "side": 1,
+      "message": "now that we\u0027re using a generated file, it\u0027s probably fine to move this to attachBaseContext. Also - should guard it behind BuildHooksConfig.REPORT_JAVA_ASSERT to ensure the code is stripped when not reporting exceptions.",
+      "revId": "06af31c87e62e48686dd5dab57c254b41332f469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
