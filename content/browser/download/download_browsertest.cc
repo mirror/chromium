@@ -98,6 +98,18 @@ const std::string kOriginOne = "one.example";
 const std::string kOriginTwo = "two.example";
 const std::string kOriginThree = "example.com";
 
+class MhtmlResourceDispatcherHostDelegate
+    : public ResourceDispatcherHostDelegate {
+ public:
+  MhtmlResourceDispatcherHostDelegate(bool allowed) : allowed_(allowed) {}
+  bool AllowRenderingMhtmlOverHttp(net::URLRequest* request) const override {
+    return allowed_;
+  }
+
+ private:
+  bool allowed_;
+};
+
 class MockDownloadItemObserver : public DownloadItem::Observer {
  public:
   MockDownloadItemObserver() {}
@@ -3133,6 +3145,23 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, FetchErrorResponseBodyResumption) {
         base::ReadFileToString(items[0]->GetTargetFilePath(), &file_content));
     EXPECT_EQ(std::string(), file_content);
   }
+}
+
+IN_PROC_BROWSER_TEST_F(DownloadContentTest, ForceDownloadMhtml) {
+  // By default, the MHTML page should be forced to download.
+  NavigateToURLAndWaitForDownload(
+      shell(), embedded_test_server()->GetURL("/download/hello.mhtml"),
+      DownloadItem::COMPLETE);
+}
+
+IN_PROC_BROWSER_TEST_F(DownloadContentTest, AllowRenderMhtml) {
+  // Overwrites the delegate to allow loading the MHTML, instead of downloading
+  // it.
+  MhtmlResourceDispatcherHostDelegate delegate(true);
+  ResourceDispatcherHost::Get()->SetDelegate(&delegate);
+
+  NavigateToURLBlockUntilNavigationsComplete(
+      shell(), embedded_test_server()->GetURL("/download/hello.mhtml"), 1);
 }
 
 }  // namespace content
