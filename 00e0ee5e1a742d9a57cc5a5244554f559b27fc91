@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d4f3a5b_cba06e0f",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-31T18:25:59Z",
+      "side": 1,
+      "message": "Sunny\u0027s recent change here (https://chromium-review.googlesource.com/714654) makes it so this value no longer does anything... we should probably remove it (assuming we actually don\u0027t want to use GMBs for one-copy).\n\nEven when the flag was used, it only controlled the one-copy path, which isn\u0027t in use on mac. Instead we need to modify the zero copy path.\n\nZero copy requires IOSurfaces, so it creates a resource pool that always creates GMBs/IOSurfaces. See:\n\nhttps://cs.chromium.org/chromium/src/cc/trees/layer_tree_host_impl.cc?rcl\u003d8e6d2ea6701a131914d0548689ad1b9be19a3081\u0026l\u003d2492\n\nSo rather than blacklisting IOSurfaces (or in addition to), we really need to blacklist zero-copy. Right now, zero copy is enabled (for mac only) here:\n\nhttps://cs.chromium.org/chromium/src/content/browser/gpu/compositor_util.cc?rcl\u003d812aebef73a68c9243f534ab422b654b16d59812\u0026l\u003d195\n\nNot sure if this is the right place to add exceptions, or maybe in RenderThreadImpl?\n\nhttps://cs.chromium.org/chromium/src/content/renderer/render_thread_impl.cc?rcl\u003d812aebef73a68c9243f534ab422b654b16d59812\u0026l\u003d1653",
+      "range": {
+        "startLine": 340,
+        "startChar": 6,
+        "endLine": 340,
+        "endChar": 27
+      },
+      "revId": "00e0ee5e1a742d9a57cc5a5244554f559b27fc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d16c3e9_f2393f0b",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 2668,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-31T18:25:59Z",
+      "side": 1,
+      "message": "Not sure if it\u0027s set by default, but please put \"multi_gpu_category\": \"any\"\n\nThe compositor only gets the workarounds from whatever GPU was active at context creation time. This means that switching to an NVidia GPU from Intel could lead to issues without \"any\".",
+      "range": {
+        "startLine": 2668,
+        "startChar": 7,
+        "endLine": 2668,
+        "endChar": 16
+      },
+      "revId": "00e0ee5e1a742d9a57cc5a5244554f559b27fc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
