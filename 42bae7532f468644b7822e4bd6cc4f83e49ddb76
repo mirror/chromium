@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a287147d_f3cdb52f",
+        "filename": "chrome/browser/browser_encoding_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T23:32:46Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these be ASSERTs? If they fail, you certainly don\u0027t want to continue, right?",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 49
+      },
+      "revId": "42bae7532f468644b7822e4bd6cc4f83e49ddb76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b409cfda_04db3fc9",
+        "filename": "chrome/browser/browser_encoding_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T23:32:46Z",
+      "side": 1,
+      "message": "I would think these should be asserts as well. But, it doesn\u0027t really matter here.",
+      "range": {
+        "startLine": 117,
+        "startChar": 6,
+        "endLine": 118,
+        "endChar": 17
+      },
+      "revId": "42bae7532f468644b7822e4bd6cc4f83e49ddb76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
