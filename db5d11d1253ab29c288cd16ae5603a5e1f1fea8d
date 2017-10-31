@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a6ce04c_23340291",
+        "filename": "content/browser/streams/stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-31T21:58:51Z",
+      "side": 1,
+      "message": "nit:  std::make_unique?",
+      "range": {
+        "startLine": 98,
+        "startChar": 22,
+        "endLine": 98,
+        "endChar": 36
+      },
+      "revId": "db5d11d1253ab29c288cd16ae5603a5e1f1fea8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
