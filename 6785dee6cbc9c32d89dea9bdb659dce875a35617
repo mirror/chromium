@@ -22,6 +22,30 @@
       "revId": "6785dee6cbc9c32d89dea9bdb659dce875a35617",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf70da4_82065622",
+        "filename": "base/test/launcher/test_launcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-31T11:48:58Z",
+      "side": 1,
+      "message": "You bet. BTW, some dude named Scott added that second one there in https://crrev.com/382020. :-)\n\n(greg ducks!)",
+      "parentUuid": "7d443dd2_06236cf4",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 60
+      },
+      "revId": "6785dee6cbc9c32d89dea9bdb659dce875a35617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
