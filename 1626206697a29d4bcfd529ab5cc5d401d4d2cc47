@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47f35a8b_c8b08c03",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T17:15:53Z",
+      "side": 1,
+      "message": "nit: instead of duplicating these comments from the header, just use \"CryptohomeClient override.\" as below (or delete all of these comments, as they don\u0027t seem to add much)",
+      "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0dfd5bf_0f7c45ec",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T17:15:53Z",
+      "side": 1,
+      "message": "nit, but this method and the next have pretty ambiguous names. it might be better to rename them to something like e.g. CryptohomeAsyncCallStatus.",
+      "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15df031c_1180d120",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T17:15:53Z",
+      "side": 1,
+      "message": "nit: // Calls DircryptoMigrationProgress() on Observer instances.\n\n(\"notifies\" usually needs to be followed by the recipient and then \"about ____\" or \"that ____\" or a similar clause, e.g. \"notifies observers about the completion of a download\" or \"notifies observers that dircrypto migration is complete\".)",
+      "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53727c2_a0d310c4",
+        "filename": "chromeos/dbus/fake_cryptohome_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-31T17:15:53Z",
+      "side": 1,
+      "message": "nit: accessors usually come immediately after the c\u0027tor and d\u0027tor, i think",
+      "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
