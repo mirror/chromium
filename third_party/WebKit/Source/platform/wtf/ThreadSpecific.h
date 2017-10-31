@@ -236,7 +236,7 @@ inline void ThreadSpecific<T>::Destroy(void* ptr) {
   // longer has a graceful shutdown sequence. Be careful to call this function
   // (which can be re-entrant) while the pointer is still set, to avoid lazily
   // allocating WTFThreadData after it is destroyed.
-  if (IsMainThread())
+  if (CurrentThread() == GetMainThreadIdentifier())
     return;
 
   data->value->~T();
