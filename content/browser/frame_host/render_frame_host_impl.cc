@@ -3397,7 +3397,8 @@ void RenderFrameHostImpl::CommitNavigation(
     GetNavigationControl()->CommitNavigation(
         ResourceResponseHead(), GURL(), common_params, request_params,
         mojo::ScopedDataPipeConsumerHandle(),
-        /*subresource_loader_factories=*/base::nullopt);
+        /*subresource_loader_factories=*/base::nullopt,
+        /*controller_service_worker=*/nullptr);
     return;
   }
 
@@ -3420,8 +3421,8 @@ void RenderFrameHostImpl::CommitNavigation(
   const bool is_same_document =
       FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type);
 
-  // TODO(scottmg): Pass a factory for SW, etc. once we have one.
   base::Optional<URLLoaderFactoryBundle> subresource_loader_factories;
+  mojom::ControllerServiceWorkerPtr controller_service_worker;
   if (base::FeatureList::IsEnabled(features::kNetworkService) &&
       !is_same_document) {
     // NOTE: On Network Service navigations, we want to ensure that a frame is
@@ -3455,11 +3456,18 @@ void RenderFrameHostImpl::CommitNavigation(
         mojo::MakeRequest(&blob_factory));
     subresource_loader_factories->RegisterFactory(url::kBlobScheme,
                                                   std::move(blob_factory));
+
+    // Passes the controller service worker info if we have one.
+    if (subresource_loader_params) {
+      controller_service_worker =
+          std::move(subresource_loader_params->controller_service_worker);
+    }
   }
 
   GetNavigationControl()->CommitNavigation(
       head, body_url, common_params, request_params, std::move(handle),
-      std::move(subresource_loader_factories));
+      std::move(subresource_loader_factories),
+      std::move(controller_service_worker));
 
   // If a network request was made, update the Previews state.
   if (IsURLHandledByNetworkStack(common_params.url) &&
