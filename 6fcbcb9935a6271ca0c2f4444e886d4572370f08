@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a78876b_f6a4ab1c",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-31T08:50:18Z",
+      "side": 1,
+      "message": "I noticed that this is almost always false in RenderProcessGone(). I\u0027ll try to find another way to record foreground tab termination metrics.",
+      "range": {
+        "startLine": 51,
+        "startChar": 49,
+        "endLine": 51,
+        "endChar": 58
+      },
+      "revId": "6fcbcb9935a6271ca0c2f4444e886d4572370f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620c5f9b_403c8094",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-31T08:50:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure why, but looks like IsVisible() \u003d\u003d false on WasShown(). I\u0027ll move this check somewhere else (probably DidStartNavigation).",
+      "revId": "6fcbcb9935a6271ca0c2f4444e886d4572370f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
