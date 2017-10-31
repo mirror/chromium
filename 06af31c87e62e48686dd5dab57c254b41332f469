@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "78f7ba81_18baf5c6",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-31T15:36:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8c196c6_512fee03",
+      "range": {
+        "startLine": 14,
+        "startChar": 63,
+        "endLine": 14,
+        "endChar": 85
+      },
+      "revId": "06af31c87e62e48686dd5dab57c254b41332f469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fd80097_3e6ede08",
         "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
         "patchSetId": 10
@@ -60,6 +84,24 @@
       "writtenOn": "2017-10-31T00:30:05Z",
       "side": 1,
       "message": "Since sReportAssertionCallback is ignored when !BuildHooksConfig.REPORT_JAVA_ASSERT, might be worth adding:\n\nif (!BuildHooksConfig.REPORT_JAVA_ASSERT) {\n    throw new AssertionError();\n}",
+      "revId": "06af31c87e62e48686dd5dab57c254b41332f469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf552fd_a8ad6e9a",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-31T15:36:21Z",
+      "side": 1,
+      "message": "Maybe the else statement in assertFailureHandler is enough to report the assertion when !BuildHooksConfig.REPORT_JAVA_ASSERT? Feel like the setter function should only set the callback.",
+      "parentUuid": "8fd80097_3e6ede08",
       "revId": "06af31c87e62e48686dd5dab57c254b41332f469",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -80,6 +122,24 @@
       "revId": "06af31c87e62e48686dd5dab57c254b41332f469",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02473e0e_7665946c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-31T15:36:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1133d9b8_fae3fa21",
+      "revId": "06af31c87e62e48686dd5dab57c254b41332f469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
