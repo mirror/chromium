@@ -52,6 +52,24 @@
       "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb00fc7a_5e86155d",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-10-31T09:51:01Z",
+      "side": 1,
+      "message": "Thanks. Summarized in the bug. https://bugs.chromium.org/p/chromium/issues/detail?id\u003d643060#c17",
+      "parentUuid": "3dec85e3_afbcde5f",
+      "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
