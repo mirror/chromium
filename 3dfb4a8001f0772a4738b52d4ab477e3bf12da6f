@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec46ec01_c7a6f97c",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-31T18:38:54Z",
+      "side": 1,
+      "message": "nit: I think TransposeRect would be better name.",
+      "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7e04a1_d24ea47b",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-31T18:38:54Z",
+      "side": 1,
+      "message": "nit: use rectangular size, not square.",
+      "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b84802d_8b74c81d",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-31T18:38:54Z",
+      "side": 1,
+      "message": "you don\u0027t need gfx::Point (CenterPoint returns gfx::Point)",
+      "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838a3be7_8db07ffb",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-31T18:38:54Z",
+      "side": 1,
+      "message": "nit: resize_point.SetPoint",
+      "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba5efbc7_c8a394c7",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-31T18:38:54Z",
+      "side": 1,
+      "message": "dotto for the rest.",
+      "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca892fe_4392d538",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-31T18:38:54Z",
+      "side": 1,
+      "message": "dotto for the rest.",
+      "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
