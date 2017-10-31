@@ -21,6 +21,7 @@ struct AVFrame;
 
 namespace media {
 class AudioTimestampHelper;
+class FFmpegDecodingLoop;
 }
 
 namespace media {
@@ -52,6 +53,12 @@ class FFmpegCdmAudioDecoder {
                            cdm::AudioFrames* decoded_frames);
 
  private:
+  bool OnNewFrame(bool is_end_of_stream,
+                  base::TimeDelta timestamp,
+                  cdm::AudioFormat cdm_format,
+                  cdm::AudioFrames* decoded_frames,
+                  AVFrame* frame);
+
   void ResetTimestampState();
   void ReleaseFFmpegResources();
 
@@ -65,7 +72,7 @@ class FFmpegCdmAudioDecoder {
 
   // FFmpeg structures owned by this object.
   std::unique_ptr<AVCodecContext, ScopedPtrAVFreeContext> codec_context_;
-  std::unique_ptr<AVFrame, ScopedPtrAVFreeFrame> av_frame_;
+  std::unique_ptr<FFmpegDecodingLoop> decoding_loop_;
 
   // Audio format.
   int samples_per_second_;
