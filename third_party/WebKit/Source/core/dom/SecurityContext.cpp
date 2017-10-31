@@ -26,6 +26,7 @@
 
 #include "core/dom/SecurityContext.h"
 
+#include "core/dom/Document.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -48,6 +49,12 @@ void SecurityContext::Trace(blink::Visitor* visitor) {
 void SecurityContext::SetSecurityOrigin(
     scoped_refptr<SecurityOrigin> security_origin) {
   security_origin_ = std::move(security_origin);
+  UpdateFeaturePolicyOrigin();
+}
+
+void SecurityContext::SetSecurityOriginFromDocument(Document& document) {
+  // Intentionally share the SecurityOrigin.
+  security_origin_ = document.security_origin_;
   UpdateFeaturePolicyOrigin();
 }
 
