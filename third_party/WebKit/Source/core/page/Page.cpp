@@ -534,7 +534,7 @@ void Page::SettingsChanged(SettingsDelegate::ChangeType change_type) {
         break;
       DeprecatedLocalMainFrame()
           ->GetDocument()
-          ->AxObjectCacheOwner()
+          ->AXObjectCacheOwner()
           .ClearAXObjectCache();
       break;
     case SettingsDelegate::kViewportRuleChange: {
