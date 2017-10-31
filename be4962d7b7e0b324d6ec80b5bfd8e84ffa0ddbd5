@@ -16,6 +16,24 @@
       "revId": "be4962d7b7e0b324d6ec80b5bfd8e84ffa0ddbd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2329408e_b5a66510",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/img-crossorigin-redirect-anonymous-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-31T07:50:05Z",
+      "side": 1,
+      "message": "Yes, this is DevTools console message, and I believe the generated error messages are not exposed to JavaScript.\n\nI will also add a warning comment for the GetErrorString() so that new call sites should not use it for JS exposed messages.",
+      "parentUuid": "7e473477_e9abbad8",
+      "revId": "be4962d7b7e0b324d6ec80b5bfd8e84ffa0ddbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
