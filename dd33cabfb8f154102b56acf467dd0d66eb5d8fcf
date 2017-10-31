@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd51fa07_4a31281d",
+        "filename": "tools/chrome_proxy/webdriver/video.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-10-31T20:36:26Z",
+      "side": 1,
+      "message": "Added the check.\nThe test passes with old Chrome, until XOCL is sent from server.",
+      "parentUuid": "06665dd0_729588e8",
+      "revId": "dd33cabfb8f154102b56acf467dd0d66eb5d8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79edfb10_01684043",
         "filename": "tools/chrome_proxy/webdriver/video.py",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "dd33cabfb8f154102b56acf467dd0d66eb5d8fcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62f2cf1_3a8b8128",
+        "filename": "tools/chrome_proxy/webdriver/video.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-10-31T20:36:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79edfb10_01684043",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 22
+      },
+      "revId": "dd33cabfb8f154102b56acf467dd0d66eb5d8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "22f375a5_4d5860b5",
+        "filename": "tools/chrome_proxy/webdriver/video.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-10-31T20:36:26Z",
+      "side": 1,
+      "message": "For this range response, only 201 bytes is downloaded. And this downloaded bytes correspond to 201 bytes of OCL (since no compression).\n\nSo OCL is only 201 (and not the entire image/video original length).",
+      "parentUuid": "6c532d76_4bb8574c",
+      "range": {
+        "startLine": 81,
+        "startChar": 9,
+        "endLine": 82,
+        "endChar": 57
+      },
+      "revId": "dd33cabfb8f154102b56acf467dd0d66eb5d8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eadd6df7_3fea4022",
         "filename": "tools/chrome_proxy/webdriver/video.py",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "dd33cabfb8f154102b56acf467dd0d66eb5d8fcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f172050_a8b38839",
+        "filename": "tools/chrome_proxy/webdriver/video.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-10-31T20:36:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eadd6df7_3fea4022",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 29
+      },
+      "revId": "dd33cabfb8f154102b56acf467dd0d66eb5d8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
