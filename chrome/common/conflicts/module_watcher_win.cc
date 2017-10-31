@@ -16,6 +16,8 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/lock.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/win/scoped_handle.h"
 
 // These structures and functions are documented in MSDN, see
@@ -154,7 +156,15 @@ ModuleWatcher::~ModuleWatcher() {
 void ModuleWatcher::Initialize(OnModuleEventCallback callback) {
   callback_ = std::move(callback);
   RegisterDllNotificationCallback();
-  EnumerateAlreadyLoadedModules();
+
+  // The enumeration of modules is done on a background task to make sure it
+  // doesn't slow down startup.
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::TaskPriority::BACKGROUND},
+      base::BindOnce(&ModuleWatcher::EnumerateAlreadyLoadedModules,
+                     base::SequencedTaskRunnerHandle::Get(),
+                     base::BindRepeating(&ModuleWatcher::RunCallback,
+                                         weak_ptr_factory_.GetWeakPtr())));
 }
 
 void ModuleWatcher::RegisterDllNotificationCallback() {
@@ -177,7 +187,10 @@ void ModuleWatcher::UnregisterDllNotificationCallback() {
     unreg_fn(dll_notification_cookie_);
 }
 
-void ModuleWatcher::EnumerateAlreadyLoadedModules() {
+// static
+void ModuleWatcher::EnumerateAlreadyLoadedModules(
+    scoped_refptr<base::SequencedTaskRunner> task_runner,
+    OnModuleEventCallback callback) {
   // Get all modules in the current process. According to MSDN,
   // CreateToolhelp32Snapshot should be retried as long as its returning
   // ERROR_BAD_LENGTH. To avoid locking up here a retry limit is enforced.
@@ -201,7 +214,7 @@ void ModuleWatcher::EnumerateAlreadyLoadedModules() {
     ModuleEvent event(mojom::ModuleEventType::MODULE_ALREADY_LOADED,
                       base::FilePath(module.szExePath), module.modBaseAddr,
                       module.modBaseSize);
-    callback_.Run(event);
+    task_runner->PostTask(FROM_HERE, base::BindOnce(callback, event));
   }
 }
 
@@ -240,4 +253,8 @@ void __stdcall ModuleWatcher::LoaderNotificationCallback(
   }
 }
 
-ModuleWatcher::ModuleWatcher() = default;
+void ModuleWatcher::RunCallback(const ModuleEvent& event) {
+  callback_.Run(event);
+}
+
+ModuleWatcher::ModuleWatcher() : weak_ptr_factory_(this) {}
