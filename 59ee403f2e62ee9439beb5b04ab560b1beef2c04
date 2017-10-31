@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e3bd044_e645ab25",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-31T18:31:01Z",
+      "side": 1,
+      "message": "If we left the connection intact, then looking up the SkColorSpace (or ICCProfile) for the result from GetParametricApproximation would get the original SkColorSpace (or ICCProfile), not the one from the parametric approximation.",
+      "parentUuid": "d382bd4b_f7fad51b",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 221,
+        "endChar": 13
+      },
+      "revId": "59ee403f2e62ee9439beb5b04ab560b1beef2c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "448a0b8e_586c4581",
         "filename": "ui/gfx/color_space.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5b96299f_51d93cd2",
+        "filename": "ui/gfx/color_space.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-31T18:31:01Z",
+      "side": 1,
+      "message": "The concept of |icc_profile_id_| has generally been a mess, mostly because the id\u003c-\u003eprofile mapping isn\u0027t properly synchronized across the 3 processes.\n\nMy goal in this sequence of patches is to have gfx::ColorSpace store scoped_refptr to an ICCProfile directly.",
+      "parentUuid": "448a0b8e_586c4581",
+      "range": {
+        "startLine": 57,
+        "startChar": 78,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "59ee403f2e62ee9439beb5b04ab560b1beef2c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fff148c7_e65bf7d0",
         "filename": "ui/gfx/icc_profile.h",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-31T17:42:03Z",
       "side": 1,
       "message": "I\u0027m actually not quite sure why you don\u0027t want to store a color space here?\nSeems like you still have all the contents of a color space.",
+      "range": {
+        "startLine": 114,
+        "startChar": 38,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "59ee403f2e62ee9439beb5b04ab560b1beef2c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0913dcf3_8e8e5cef",
+        "filename": "ui/gfx/icc_profile.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-31T18:31:01Z",
+      "side": 1,
+      "message": "The next patch in this cleanup makes gfx::ColorSpace have a scoped_refptr to its ICCProfile (so having ICCProfile store a ColorSpace would make this circular).",
+      "parentUuid": "fff148c7_e65bf7d0",
       "range": {
         "startLine": 114,
         "startChar": 38,
