@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5158cf2c_7cceffc5",
+        "filename": "cc/animation/worklet_animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-31T18:30:34Z",
+      "side": 1,
+      "message": "Just to confirm, we don\u0027t we need to push properties for the scroll timeline\nbecause it is not currently possible to mutate it at all.",
+      "range": {
+        "startLine": 74,
+        "startChar": 1,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "131d6c359a476391f0a5f1d3c7288338a43d1cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
