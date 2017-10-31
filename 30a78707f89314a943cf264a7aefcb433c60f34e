@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34a621e0_60303406",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-31T20:51:12Z",
+      "side": 1,
+      "message": "Why is this needed?  We own this object, and are in our destructor, so it will be destroyed without invoking the message loop again, and it shouldn\u0027t be invoking callbacks after deletion.  If it is, that should be fixed instead.\n\nI\u0027m also no seeing a way for ownership of the upload_data_stream_ to be passed elsewhere before it\u0027s destroyed.  Am I missing something?",
+      "range": {
+        "startLine": 195,
+        "startChar": 25,
+        "endLine": 195,
+        "endChar": 30
+      },
+      "revId": "30a78707f89314a943cf264a7aefcb433c60f34e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
