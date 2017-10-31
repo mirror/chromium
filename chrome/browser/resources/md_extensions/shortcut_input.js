@@ -5,6 +5,14 @@
 cr.define('extensions', function() {
   'use strict';
 
+  /** @enum {number} */
+  const Error = {
+    NoError: 0,
+    IncludeStartModifier: 1,
+    TooManyModifiers: 2,
+    NeedLetter: 3,
+  };
+
   // The UI to display and manage keyboard shortcuts set for extension commands.
   const ShortcutInput = Polymer({
     is: 'extensions-shortcut-input',
@@ -34,6 +42,14 @@ cr.define('extensions', function() {
       capturing_: {
         type: Boolean,
         value: false,
+      },
+
+      /**
+       * @type {!Error}
+       * @private */
+      error_: {
+        type: Number,
+        value: 0,
       },
 
       /** @private */
@@ -67,7 +83,9 @@ cr.define('extensions', function() {
         return;
       this.pendingShortcut_ = '';
       this.capturing_ = false;
-      this.$['input'].blur();
+      const input = this.$.input;
+      input.blur();
+      input.removeAttribute('invalid');
       this.delegate.setShortcutHandlingSuspended(false);
     },
 
@@ -110,6 +128,23 @@ cr.define('extensions', function() {
     },
 
     /**
+     * @param {!Error} error
+     * @param {string} includeStartModifier
+     * @param {string} tooManyModifiers
+     * @param {string} needLetter
+     * @return {string} UI string.
+     * @private
+     */
+    getErrorString_: function(
+        error, includeStartModifier, tooManyModifiers, needLetter) {
+      if (error == Error.TooManyModifiers)
+        return tooManyModifiers;
+      if (error == Error.NeedLetter)
+        return needLetter;
+      return includeStartModifier;
+    },
+
+    /**
      * @param {!KeyboardEvent} e
      * @private
      */
@@ -123,17 +158,27 @@ cr.define('extensions', function() {
       // We don't allow both Ctrl and Alt in the same keybinding.
       // TODO(devlin): This really should go in extensions.hasValidModifiers,
       // but that requires updating the existing page as well.
-      if ((e.ctrlKey && e.altKey) || !extensions.hasValidModifiers(e)) {
-        this.pendingShortcut_ = 'invalid';
+      if (e.ctrlKey && e.altKey) {
+        this.error_ = Error.TooManyModifiers;
+        this.$.input.setAttribute('invalid', 'invalid');
         return;
       }
-
-      this.pendingShortcut_ = extensions.keystrokeToString(e);
-
-      if (extensions.isValidKeyCode(e.keyCode)) {
-        this.commitPending_();
-        this.endCapture_();
+      if (!extensions.hasValidModifiers(e)) {
+        this.pendingShortcut_ = '';
+        this.error_ = Error.IncludeStartModifier;
+        this.$.input.setAttribute('invalid', 'invalid');
+        return;
       }
+      this.pendingShortcut_ = extensions.keystrokeToString(e);
+      if (!extensions.isValidKeyCode(e.keyCode)) {
+        this.error_ = Error.NeedLetter;
+        this.$.input.setAttribute('invalid', 'invalid');
+        return;
+      }
+      this.$.input.removeAttribute('invalid');
+
+      this.commitPending_();
+      this.endCapture_();
     },
 
     /** @private */
