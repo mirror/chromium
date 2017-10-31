@@ -33,6 +33,8 @@
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
+#include "gpu/config/gpu_driver_bug_workaround_type.h"
+#include "gpu/config/gpu_feature_info.h"
 #include "skia/ext/texture_handle.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "third_party/khronos/GLES2/gl2ext.h"
@@ -234,7 +236,10 @@ ResourceProvider::Settings::Settings(
                                       ? viz::R16_EXT
                                       : viz::LUMINANCE_8),
       use_gpu_memory_buffer_resources(
-          resource_settings.use_gpu_memory_buffer_resources),
+          resource_settings.use_gpu_memory_buffer_resources &&
+          compositor_context_provider &&
+          !compositor_context_provider->GetGpuFeatureInfo().IsWorkaroundEnabled(
+              gpu::DISABLE_GPU_MEMORY_BUFFER_COMPOSITOR_RESOURCES)),
       delegated_sync_points_required(delegated_sync_points_required) {
   if (!compositor_context_provider) {
     // Pick an arbitrary limit here similar to what hardware might.
