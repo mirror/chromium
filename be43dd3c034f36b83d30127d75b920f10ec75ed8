@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e076fa4f_ff0a3e17",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-31T14:57:43Z",
+      "side": 1,
+      "message": "The parameter is \u0027isBottomControls\u0027 which is now not relevant. I guess I could make ChromeFullscreenManager take one of TOP, BOTTOM or NONE?",
+      "range": {
+        "startLine": 97,
+        "startChar": 49,
+        "endLine": 97,
+        "endChar": 87
+      },
+      "revId": "be43dd3c034f36b83d30127d75b920f10ec75ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
