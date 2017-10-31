@@ -8,6 +8,10 @@
 
 #include "base/files/file_util.h"
 #include "base/path_service.h"
+#include "base/strings/string_number_conversions.h"
+#include "base/strings/string_piece.h"
+#include "base/strings/string_tokenizer.h"
+#include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/component_updater/component_installer_errors.h"
@@ -248,6 +252,36 @@ void CrOSComponent::InstallComponent(
 void CrOSComponent::LoadComponent(
     const std::string& name,
     const base::Callback<void(const std::string&)>& load_callback) {
+  // Block component updater for kernel 3.8 and 3.10
+  // Since this file is only compiled for Chrome OS and this API is only
+  // availble to be called on Chrome OS. The version returned by
+  // OperatingSystemVersion is Chrome OS version:
+  //
+  //        3.18.0-16235-ge6545a7cd77b
+  //
+  // The first part (delimited by -) is extracted as kernel version:
+  //
+  //        3.18.0-16235-ge6545a7cd77b -> 3.18.0
+  //        3.14.0                     -> 3.14.0
+  //        3.10.18                    -> 3.10.18
+  std::string os_version = base::SysInfo::OperatingSystemVersion();
+  os_version = os_version.substr(0, os_version.find('-'));
+  base::StringTokenizer tokenizer(os_version, ".");
+  int32_t major_version, minor_version;
+  if (tokenizer.GetNext()) {
+    base::StringToInt(
+        base::StringPiece(tokenizer.token_begin(), tokenizer.token_end()),
+        &major_version);
+  }
+  if (tokenizer.GetNext()) {
+    base::StringToInt(
+        base::StringPiece(tokenizer.token_begin(), tokenizer.token_end()),
+        &minor_version);
+  }
+  if (major_version == 3 && (minor_version == 10 || minor_version == 8)) {
+    return;
+  }
+
   if (!g_browser_process->platform_part()->IsCompatibleCrOSComponent(name)) {
     // A compatible component is not installed, start installation process.
     auto* const cus = g_browser_process->component_updater();
@@ -277,6 +311,8 @@ std::vector<ComponentConfig> CrOSComponent::GetInstalledComponents() {
   }
   return configs;
 }
+
+void load_cb(const std::string& result) {}
 
 void CrOSComponent::RegisterComponents(
     const std::vector<ComponentConfig>& configs) {
