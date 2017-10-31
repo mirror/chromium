@@ -956,12 +956,25 @@ void NavigationRequest::OnStartChecksComplete(
       result.action() == NavigationThrottle::CANCEL ||
       result.action() == NavigationThrottle::BLOCK_REQUEST ||
       result.action() == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
+    /*
+
+    TODO(dougt)  Ask Clamy what to do here.... I am not sure this is
+    needed...
+
+    essentially, i want to return:
+
+    ThrottleCheckResult(BLOCK_REQUEST,
+                               net::ERR_BLOCKED_BY_ADMINISTRATOR);
+
+    from a Navigation Throttle.
+
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE.
     DCHECK_EQ((result.action() == NavigationThrottle::CANCEL ||
                result.action() == NavigationThrottle::CANCEL_AND_IGNORE)
                   ? net::ERR_ABORTED
                   : net::ERR_BLOCKED_BY_CLIENT,
               result.net_error_code());
+    */
 
     // If the start checks completed synchronously, which could happen if there
     // is no onbeforeunload handler or if a NavigationThrottle cancelled it,
