@@ -57,6 +57,24 @@
       "revId": "117c016d971c639bfa59dc513180fefc1a3ecbf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc0e719_8712e834",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-31T04:35:15Z",
+      "side": 1,
+      "message": "Took the first option",
+      "parentUuid": "250d60f9_d73c0ce5",
+      "revId": "117c016d971c639bfa59dc513180fefc1a3ecbf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
