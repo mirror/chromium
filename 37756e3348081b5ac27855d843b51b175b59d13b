@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70fc865a_3ae4f52a",
+        "filename": "chrome/browser/net/chrome_network_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-31T15:26:41Z",
+      "side": 1,
+      "message": "we don\u0027t need this method anymore, do we?",
+      "revId": "37756e3348081b5ac27855d843b51b175b59d13b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

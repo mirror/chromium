@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "df23d310_e59c27b3",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3435,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-31T15:26:41Z",
+      "side": 1,
+      "message": "Thanks, I forgot that file://resources can load web!",
+      "parentUuid": "f4f86cc0_791d7472",
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "661dd09d_ad035a19",
         "filename": "content/public/browser/content_browser_client.cc",
         "patchSetId": 2
