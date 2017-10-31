@@ -90,12 +90,12 @@ void AwSafeBrowsingUIManager::SendSerializedThreatDetails(
 
   if (!ping_manager_) {
     // Lazy creation of ping manager, needs to happen on IO thread.
-    safe_browsing::SafeBrowsingProtocolConfig config;
+    safe_browsing::V4ProtocolConfig config;
     config.client_name = GetProtocolConfigClientName();
     base::CommandLine* cmdline = ::base::CommandLine::ForCurrentProcess();
     config.disable_auto_update =
         cmdline->HasSwitch(::safe_browsing::switches::kSbDisableAutoUpdate);
-    config.url_prefix = ::safe_browsing::kSbDefaultURLPrefix;
+    config.report_url_prefix = ::safe_browsing::kSbDefaultURLPrefix;
     config.backup_connect_error_url_prefix =
         ::safe_browsing::kSbBackupConnectErrorURLPrefix;
     config.backup_http_error_url_prefix =
