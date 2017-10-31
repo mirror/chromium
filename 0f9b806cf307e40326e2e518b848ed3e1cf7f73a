@@ -473,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "6f77a7b9_34ca23b4",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-31T20:31:15Z",
+      "side": 1,
+      "message": "What would that sort of test look like?",
+      "parentUuid": "e6dfa550_5d4a8b5e",
+      "range": {
+        "startLine": 34,
+        "startChar": 45,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71377cdf_33f67aa7",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 2
@@ -532,6 +556,30 @@
       "side": 1,
       "message": "I think it works because some of the objects are immutable and return themselves when copied. Try instead of\n[cronet_metrics setNetworkProtocolName:@\"http/2\"]\nsomething like\n[cronet_metrics setNetworkProtocolName:[NSMutableString stringWithString:@\"http/2\"]\nand it should fail.",
       "parentUuid": "3bc6b8aa_dd4042e5",
+      "range": {
+        "startLine": 51,
+        "startChar": 23,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97fb84eb_45da4c4b",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-31T20:31:15Z",
+      "side": 1,
+      "message": "Yup, this does cause it to fail.",
+      "parentUuid": "b97670ed_8f9b0cb2",
       "range": {
         "startLine": 51,
         "startChar": 23,

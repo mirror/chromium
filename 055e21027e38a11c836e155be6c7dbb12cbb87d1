@@ -22,6 +22,30 @@
       "revId": "055e21027e38a11c836e155be6c7dbb12cbb87d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a9bf06_dc1768f1",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-31T20:31:15Z",
+      "side": 1,
+      "message": "Yes; that was what I was saying about boilerplate.  Both here and Cronet.mm need access to the interface, so it might be best to put it into a shared header.",
+      "parentUuid": "34690c09_68c3de6c",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "055e21027e38a11c836e155be6c7dbb12cbb87d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
