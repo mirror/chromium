@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1489a5d_7f91c9b3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-31T23:09:13Z",
+      "side": 1,
+      "message": "could these be moved down to where we fire SetPageStopped() based on previously_stopped_when_backgrounded !\u003d stopped_when_backgrounded?",
+      "revId": "3c56250d4cca93a92500b20076d8e28ebd213c0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
