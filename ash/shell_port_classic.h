@@ -72,6 +72,9 @@ class ASH_EXPORT ShellPortClassic : public ShellPort {
   std::unique_ptr<display::NativeDisplayDelegate> CreateNativeDisplayDelegate()
       override;
   std::unique_ptr<AcceleratorController> CreateAcceleratorController() override;
+  void AddVideoDetectorObserver(
+      viz::mojom::VideoDetectorObserverPtr observer,
+      viz::HostFrameSinkManager* host_frame_sink_manager) override;
 
  private:
   std::unique_ptr<PointerWatcherAdapterClassic> pointer_watcher_adapter_;

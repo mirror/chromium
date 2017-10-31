@@ -116,6 +116,7 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   void AssignTemporaryReference(const SurfaceId& surface_id,
                                 const FrameSinkId& owner);
   void DropTemporaryReference(const SurfaceId& surface_id);
+  void AddVideoDetectorObserver(mojom::VideoDetectorObserverPtr observer);
 
   // CompositorFrameSinkSupportManager:
   std::unique_ptr<CompositorFrameSinkSupport> CreateCompositorFrameSinkSupport(
