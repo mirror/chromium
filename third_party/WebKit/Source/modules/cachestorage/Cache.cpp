@@ -28,6 +28,8 @@
 #include "public/platform/modules/serviceworker/WebServiceWorkerCache.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 
+using blink::mojom::ServiceWorkerCacheError;
+
 namespace blink {
 
 namespace {
@@ -50,14 +52,14 @@ class CacheMatchCallbacks : public WebServiceWorkerCache::CacheMatchCallbacks {
     resolver_.Clear();
   }
 
-  void OnError(WebServiceWorkerCacheError reason) override {
+  void OnError(mojom::ServiceWorkerCacheError reason) override {
     if (!resolver_->GetExecutionContext() ||
         resolver_->GetExecutionContext()->IsContextDestroyed())
       return;
-    if (reason == kWebServiceWorkerCacheErrorNotFound)
+    if (reason == mojom::ServiceWorkerCacheError::kErrorNotFound)
       resolver_->Resolve();
     else
-      resolver_->Reject(CacheStorageError::CreateException(reason));
+      resolver_->Reject(blink::CacheStorageError::CreateException(reason));
     resolver_.Clear();
   }
 
@@ -88,11 +90,11 @@ class CacheWithResponsesCallbacks
     resolver_.Clear();
   }
 
-  void OnError(WebServiceWorkerCacheError reason) override {
+  void OnError(mojom::ServiceWorkerCacheError reason) override {
     if (!resolver_->GetExecutionContext() ||
         resolver_->GetExecutionContext()->IsContextDestroyed())
       return;
-    resolver_->Reject(CacheStorageError::CreateException(reason));
+    resolver_->Reject(blink::CacheStorageError::CreateException(reason));
     resolver_.Clear();
   }
 
@@ -116,14 +118,14 @@ class CacheDeleteCallback : public WebServiceWorkerCache::CacheBatchCallbacks {
     resolver_.Clear();
   }
 
-  void OnError(WebServiceWorkerCacheError reason) override {
+  void OnError(mojom::ServiceWorkerCacheError reason) override {
     if (!resolver_->GetExecutionContext() ||
         resolver_->GetExecutionContext()->IsContextDestroyed())
       return;
-    if (reason == kWebServiceWorkerCacheErrorNotFound)
+    if (reason == mojom::ServiceWorkerCacheError::kErrorNotFound)
       resolver_->Resolve(false);
     else
-      resolver_->Reject(CacheStorageError::CreateException(reason));
+      resolver_->Reject(blink::CacheStorageError::CreateException(reason));
     resolver_.Clear();
   }
 
@@ -154,11 +156,11 @@ class CacheWithRequestsCallbacks
     resolver_.Clear();
   }
 
-  void OnError(WebServiceWorkerCacheError reason) override {
+  void OnError(mojom::ServiceWorkerCacheError reason) override {
     if (!resolver_->GetExecutionContext() ||
         resolver_->GetExecutionContext()->IsContextDestroyed())
       return;
-    resolver_->Reject(CacheStorageError::CreateException(reason));
+    resolver_->Reject(blink::CacheStorageError::CreateException(reason));
     resolver_.Clear();
   }
 
