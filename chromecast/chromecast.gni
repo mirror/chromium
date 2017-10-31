@@ -100,19 +100,29 @@ foreach(target_type,
 # should match their unwrapped counterparts in BUILDCONFIG.gn. The variables
 # referenced below are declared in BUILDCONFIG.gn.
 set_defaults("cast_executable") {
-  configs = default_executable_configs
+  configs = default_executable_configs + [ "//chromecast:cast_config" ]
 }
 
 set_defaults("cast_shared_library") {
-  configs = default_shared_library_configs
+  configs = default_shared_library_configs + [ "//chromecast:cast_config" ]
   if (is_android) {
     configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
   }
 }
 
 set_defaults("cast_loadable_module") {
-  configs = default_shared_library_configs
+  configs = default_shared_library_configs + [ "//chromecast:cast_config" ]
   if (is_android) {
     configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
   }
+}
+
+template("cast_source_set") {
+  source_set(target_name) {
+    forward_variables_from(invoker, "*")
+  }
+}
+
+set_defaults("cast_source_set") {
+  configs = default_compiler_configs + [ "//chromecast:cast_config" ]
 }
