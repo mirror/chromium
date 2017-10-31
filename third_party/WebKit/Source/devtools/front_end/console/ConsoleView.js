@@ -1171,6 +1171,8 @@ Console.ConsoleViewFilter = class {
 
   _updateCurrentFilter() {
     var parsedFilters = this._filterParser.parse(this._textFilterUI.value());
+    for (var parsedFilter of parsedFilters)
+      parsedFilter.text = parsedFilter.text ? parsedFilter.text.toLowerCase() : parsedFilter.text;
 
     if (this._hideNetworkMessagesSetting.get()) {
       parsedFilters.push({
