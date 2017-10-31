@@ -99,7 +99,8 @@ class GL_EXPORT GLSurfaceEGL : public GLSurface {
 class GL_EXPORT NativeViewGLSurfaceEGL : public GLSurfaceEGL {
  public:
   NativeViewGLSurfaceEGL(EGLNativeWindowType window,
-                         std::unique_ptr<gfx::VSyncProvider> vsync_provider);
+                         std::unique_ptr<gfx::VSyncProvider> vsync_provider,
+                         bool use_egl_timestamps);
 
   // Implement GLSurface.
   using GLSurfaceEGL::Initialize;
@@ -164,6 +165,7 @@ class GL_EXPORT NativeViewGLSurfaceEGL : public GLSurfaceEGL {
 
   // Stored in separate vectors so we can pass the egl timestamps
   // directly to the EGL functions.
+  const bool use_egl_timestamps_;
   std::vector<EGLint> supported_egl_timestamps_;
   std::vector<const char*> supported_event_names_;
 

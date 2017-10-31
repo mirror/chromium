@@ -119,7 +119,8 @@ scoped_refptr<GLSurface> CreateViewGLSurface(gfx::AcceleratedWidget window) {
       return InitializeGLSurface(new GLSurfaceOSMesaHeadless());
     case kGLImplementationEGLGLES2:
       if (window != gfx::kNullAcceleratedWidget) {
-        return InitializeGLSurface(new NativeViewGLSurfaceEGL(window, nullptr));
+        return InitializeGLSurface(
+            new NativeViewGLSurfaceEGL(window, nullptr, false));
       } else {
         return InitializeGLSurface(new GLSurfaceStub());
       }

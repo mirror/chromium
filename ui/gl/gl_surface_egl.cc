@@ -829,7 +829,8 @@ EGLDisplay GLSurfaceEGL::InitializeDisplay(
 
 NativeViewGLSurfaceEGL::NativeViewGLSurfaceEGL(
     EGLNativeWindowType window,
-    std::unique_ptr<gfx::VSyncProvider> vsync_provider)
+    std::unique_ptr<gfx::VSyncProvider> vsync_provider,
+    bool use_egl_timestamps)
     : window_(window),
       size_(1, 1),
       enable_fixed_size_angle_(true),
@@ -837,7 +838,9 @@ NativeViewGLSurfaceEGL::NativeViewGLSurfaceEGL(
       supports_post_sub_buffer_(false),
       supports_swap_buffer_with_damage_(false),
       flips_vertically_(false),
-      vsync_provider_external_(std::move(vsync_provider)) {
+      vsync_provider_external_(std::move(vsync_provider)),
+      use_egl_timestamps_(use_egl_timestamps &&
+                          g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps) {
 #if defined(OS_ANDROID)
   if (window)
     ANativeWindow_acquire(window);
@@ -965,7 +968,7 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
   // called twice.
   supported_egl_timestamps_.clear();
   supported_event_names_.clear();
-  if (g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps) {
+  if (use_egl_timestamps_) {
     eglSurfaceAttrib(GetDisplay(), surface_, EGL_TIMESTAMPS_ANDROID, EGL_TRUE);
 
     static const struct {
@@ -1032,7 +1035,7 @@ gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers() {
 
   EGLuint64KHR newFrameId = 0;
   bool newFrameIdIsValid = true;
-  if (g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps) {
+  if (use_egl_timestamps_) {
     newFrameIdIsValid =
         !!eglGetNextFrameIdANDROID(GetDisplay(), surface_, &newFrameId);
   }
@@ -1043,7 +1046,7 @@ gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers() {
     return gfx::SwapResult::SWAP_FAILED;
   }
 
-  if (g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps) {
+  if (use_egl_timestamps_) {
     UpdateSwapEvents(newFrameId, newFrameIdIsValid);
   }
 

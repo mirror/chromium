@@ -104,7 +104,7 @@ scoped_refptr<GLSurface> CreateNativeViewGLSurfaceEGL(
   DCHECK(window != gfx::kNullAcceleratedWidget);
 
   return InitializeGLSurface(
-      new NativeViewGLSurfaceEGL(window, std::move(sync_provider)));
+      new NativeViewGLSurfaceEGL(window, std::move(sync_provider), false));
 }
 
 scoped_refptr<GLSurface> CreateOffscreenGLSurfaceWithFormat(

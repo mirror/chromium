@@ -33,7 +33,7 @@ scoped_refptr<gl::GLSurface> ImageTransportSurface::CreateNativeSurface(
     return nullptr;
   }
   scoped_refptr<gl::GLSurface> surface =
-      new gl::NativeViewGLSurfaceEGL(window, nullptr);
+      new gl::NativeViewGLSurfaceEGL(window, nullptr, true);
   bool initialize_success = surface->Initialize(format);
   ANativeWindow_release(window);
   if (!initialize_success)

@@ -12,7 +12,7 @@
 namespace ui {
 
 GLSurfaceEGLOzoneX11::GLSurfaceEGLOzoneX11(EGLNativeWindowType window)
-    : NativeViewGLSurfaceEGL(window, nullptr) {}
+    : NativeViewGLSurfaceEGL(window, nullptr, false) {}
 
 EGLConfig GLSurfaceEGLOzoneX11::GetConfig() {
   // Try matching the window depth with an alpha channel, because we're worried
