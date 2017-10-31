@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e4472c4_5d4341b3",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-31T18:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93268dc7_2594029f",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 4
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed60190b_d1e4b6dd",
         "filename": "components/cronet/ios/Cronet.h",
         "patchSetId": 2
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5c5124d8_534f1871",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-31T18:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cee31457_337a2061",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 31
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ee35ee4_0f77b3ff",
         "filename": "components/cronet/ios/Cronet.h",
         "patchSetId": 2
@@ -106,6 +154,30 @@
       "writtenOn": "2017-10-31T17:49:13Z",
       "side": 1,
       "message": "I think that the implementation of the writable metrics should not be exposed to the client because the client is not supposed to change its values. The first step that matches Apple metrics should not expose any new types in Cronet.h but rely on NSURLSessionTaskTransactionMetrics interface.",
+      "range": {
+        "startLine": 204,
+        "startChar": 16,
+        "endLine": 204,
+        "endChar": 25
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81948b7_83d3cf9a",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-31T18:55:00Z",
+      "side": 1,
+      "message": "You\u0027re right; I\u0027d meant to put them in an exposedfortesting block in Cronet.mm, thanks for the reminder.\n\nPutting them in an exposedfortesting block in cronet_metrics_test.mm creates a bunch of code duplication.  Would it make sense to have a Cronet+ExposedForTesting.h header file to put the CronetMetrics interface?",
+      "parentUuid": "4ee35ee4_0f77b3ff",
       "range": {
         "startLine": 204,
         "startChar": 16,
@@ -138,6 +210,30 @@
       "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e4bde5_ea5ab64a",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-31T18:55:00Z",
+      "side": 1,
+      "message": "Synthesize is necessary because I\u0027m overwriting the readonly properties of NSURLSessionTaskTransactionMetrics to make them readwrite.",
+      "parentUuid": "15827235_8e3be671",
+      "range": {
+        "startLine": 519,
+        "startChar": 0,
+        "endLine": 519,
+        "endChar": 11
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "60921279_7699f84a",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-31T18:55:00Z",
+      "side": 1,
+      "message": "I created some more specific dummy values that are properly initialized with real values.",
+      "parentUuid": "f47d8ac5_078bcb37",
+      "range": {
+        "startLine": 27,
+        "startChar": 29,
+        "endLine": 27,
+        "endChar": 49
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86f80715_93d64e30",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 2
@@ -269,6 +389,30 @@
       "writtenOn": "2017-10-31T17:49:13Z",
       "side": 1,
       "message": "Ideally, we should give different values to different properties.",
+      "range": {
+        "startLine": 34,
+        "startChar": 45,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5cb784_4678add0",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-31T18:55:00Z",
+      "side": 1,
+      "message": "That ends up creating a lot of extra boilerplate (in the form of temp variables, since the value has to appear in both the setter and then again in the getter in the EXPECT_EQ statements).  I\u0027m not convinced that that\u0027s necessary given how simple the thing being tested is?",
+      "parentUuid": "86f80715_93d64e30",
       "range": {
         "startLine": 34,
         "startChar": 45,
