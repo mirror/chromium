@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0082eee_080fa193",
+        "filename": "chrome/browser/component_updater/optimization_hints_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-31T21:45:08Z",
+      "side": 1,
+      "message": "what does it mean to return false here? Easier debugging but still will use encryption in prod?",
+      "range": {
+        "startLine": 58,
+        "startChar": 48,
+        "endLine": 58,
+        "endChar": 73
+      },
+      "revId": "1dfbd6b88216c98e3c4e0cf40e79b2cf319366f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9be4cf_bd090ffd",
+        "filename": "chrome/browser/component_updater/optimization_hints_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-31T21:45:08Z",
+      "side": 1,
+      "message": "why not define string literal as const char at top?",
+      "range": {
+        "startLine": 106,
+        "startChar": 43,
+        "endLine": 106,
+        "endChar": 60
+      },
+      "revId": "1dfbd6b88216c98e3c4e0cf40e79b2cf319366f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9073c30c_0bf65440",
+        "filename": "chrome/browser/component_updater/optimization_hints_component_installer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-31T21:45:08Z",
+      "side": 1,
+      "message": "Check out ScopedFeatureList.InitAndEnableFeature as alternative to creating this method.",
+      "range": {
+        "startLine": 112,
+        "startChar": 7,
+        "endLine": 112,
+        "endChar": 37
+      },
+      "revId": "1dfbd6b88216c98e3c4e0cf40e79b2cf319366f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc11d3e4_eb14bc6f",
+        "filename": "chrome/browser/optimization_guide/optimization_guide_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-31T21:45:08Z",
+      "side": 1,
+      "message": "seems like in some key places we should clarify that unindexed hints is the received component data. So maybe here consider something like:\n\n  ... This is the received optimization hints data received from the components server.",
+      "range": {
+        "startLine": 20,
+        "startChar": 47,
+        "endLine": 20,
+        "endChar": 62
+      },
+      "revId": "1dfbd6b88216c98e3c4e0cf40e79b2cf319366f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
