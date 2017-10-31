@@ -37,6 +37,9 @@
 // Don't bother doing using .word here since r2 is the lowest supported mips64
 // that Chromium supports.
 #define YIELD_PROCESSOR __asm__ __volatile__("pause")
+#elif defined(ARCH_CPU_S390_FAMILY) || defined(ARCH_CPU_PPC64_FAMILY)
+// just do nothing
+#define YIELD_PROCESSOR
 #endif
 #endif
 
