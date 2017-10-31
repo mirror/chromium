@@ -378,8 +378,7 @@ SkColor Textfield::GetTextColor() const {
   if (!use_default_text_color_)
     return text_color_;
 
-  return style::GetColor(style::CONTEXT_TEXTFIELD, GetTextStyle(),
-                         GetNativeTheme());
+  return style::GetColor(*this, style::CONTEXT_TEXTFIELD, GetTextStyle());
 }
 
 void Textfield::SetTextColor(SkColor color) {
@@ -579,7 +578,7 @@ gfx::Size Textfield::CalculatePreferredSize() const {
   return gfx::Size(
       GetFontList().GetExpectedTextWidth(default_width_in_chars_) +
           insets.width(),
-      LayoutProvider::GetControlHeightForFont(style::CONTEXT_TEXTFIELD,
+      LayoutProvider::GetControlHeightForFont(*this, style::CONTEXT_TEXTFIELD,
                                               GetTextStyle(), GetFontList()));
 }
 

@@ -34,10 +34,11 @@ LayoutProvider* LayoutProvider::Get() {
 }
 
 // static
-int LayoutProvider::GetControlHeightForFont(int context,
+int LayoutProvider::GetControlHeightForFont(const View& control,
+                                            int context,
                                             int style,
                                             const gfx::FontList& font) {
-  return std::max(views::style::GetLineHeight(context, style),
+  return std::max(views::style::GetLineHeight(control, context, style),
                   font.GetHeight()) +
          Get()->GetDistanceMetric(DISTANCE_CONTROL_VERTICAL_TEXT_PADDING) * 2;
 }
