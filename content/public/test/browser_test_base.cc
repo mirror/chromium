@@ -260,6 +260,8 @@ void BrowserTestBase::SetUp() {
   // FeatureList::SetInstance, which expects no instance to exist.
   base::FeatureList::ClearInstanceForTesting();
 
+  SetUpBeforeBrowserMain();
+
   auto ui_task = std::make_unique<base::Closure>(base::Bind(
       &BrowserTestBase::ProxyRunTestOnMainThreadLoop, base::Unretained(this)));
 

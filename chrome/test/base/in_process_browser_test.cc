@@ -5,6 +5,7 @@
 #include "chrome/test/base/in_process_browser_test.h"
 
 #include "base/auto_reset.h"
+#include "base/base_switches.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
@@ -144,11 +145,13 @@ InProcessBrowserTest::InProcessBrowserTest()
     : browser_(NULL),
       exit_when_last_browser_closes_(true),
       open_about_blank_on_browser_launch_(true),
-      run_accessibility_checks_for_test_case_(false)
+      run_accessibility_checks_for_test_case_(false),
+      field_trial_list_(std::make_unique<base::FieldTrialList>(nullptr))
 #if defined(OS_MACOSX)
-      , autorelease_pool_(NULL)
+      ,
+      autorelease_pool_(NULL)
 #endif  // OS_MACOSX
-    {
+{
 #if defined(OS_MACOSX)
   // TODO(phajdan.jr): Make browser_tests self-contained on Mac, remove this.
   // Before we run the browser, we have to hack the path to the exe to match
@@ -520,6 +523,26 @@ base::CommandLine InProcessBrowserTest::GetCommandLineForRelaunch() {
   return new_command_line;
 }
 #endif
+
+void InProcessBrowserTest::SetUpBeforeBrowserMain() {
+  // The current global field trial list contains any trials that were activated
+  // prior to browser main. That global field trial list is about to be
+  // destroyed below, and will be recreated during the browser_tests browser
+  // process startup code. Pass the currently active trials to the subsequent
+  // list via the command line.
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+
+  std::string field_trial_states;
+  base::FieldTrialList::AllStatesToString(&field_trial_states);
+  if (!field_trial_states.empty()) {
+    // Please use ScopedFeatureList to modify feature and field trials at the
+    // same time.
+    DCHECK(!command_line->HasSwitch(switches::kForceFieldTrials));
+    command_line->AppendSwitchASCII(switches::kForceFieldTrials,
+                                    field_trial_states);
+  }
+  field_trial_list_.reset();
+}
 
 void InProcessBrowserTest::PreRunTestOnMainThread() {
   AfterStartupTaskUtils::SetBrowserStartupIsCompleteForTesting();

@@ -10,6 +10,7 @@
 #include "base/compiler_specific.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ref_counted.h"
+#include "base/metrics/field_trial.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
@@ -172,6 +173,7 @@ class InProcessBrowserTest : public content::BrowserTestBase {
   virtual bool SetUpUserDataDirectory() WARN_UNUSED_RESULT;
 
   // BrowserTestBase:
+  void SetUpBeforeBrowserMain() override;
   void PreRunTestOnMainThread() override;
   void PostRunTestOnMainThread() override;
 
@@ -269,6 +271,10 @@ class InProcessBrowserTest : public content::BrowserTestBase {
   storage::QuotaSettings quota_settings_;
 
   base::test::ScopedFeatureList scoped_feature_list_;
+
+  // A field trial list that's used to support field trials activated prior to
+  // browser start.
+  std::unique_ptr<base::FieldTrialList> field_trial_list_;
 
 #if defined(OS_MACOSX)
   base::mac::ScopedNSAutoreleasePool* autorelease_pool_;

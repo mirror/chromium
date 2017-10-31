@@ -61,6 +61,11 @@ class BrowserTestBase : public testing::Test {
   // of the overhead initialization has occured.
   virtual void SetUpInProcessBrowserTestFixture() {}
 
+  // This is invoked from SetUp just before browser_init/browser_main.
+  // This prepares for the test need to reset state set in SetUp before
+  // browser_main.
+  virtual void SetUpBeforeBrowserMain() {}
+
   // Override this for things you would normally override TearDown for.
   virtual void TearDownInProcessBrowserTestFixture() {}
 
