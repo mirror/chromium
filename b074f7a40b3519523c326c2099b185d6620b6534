@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdd385f3_2accdf9e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/builder_list.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-31T21:29:23Z",
+      "side": 1,
+      "message": "A simple unit test for this perhaps?",
+      "revId": "b074f7a40b3519523c326c2099b185d6620b6534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ff39f1_1edeb53e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-31T21:29:23Z",
+      "side": 1,
+      "message": "Not sure if it\u0027s a good practice, but I\u0027ve seen many places that use hanging indentation for longer argument explanation like this, which I think is clearer.",
+      "revId": "b074f7a40b3519523c326c2099b185d6620b6534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
