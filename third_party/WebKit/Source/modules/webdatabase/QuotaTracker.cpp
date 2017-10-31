@@ -44,7 +44,7 @@ QuotaTracker& QuotaTracker::Instance() {
 }
 
 void QuotaTracker::GetDatabaseSizeAndSpaceAvailableToOrigin(
-    SecurityOrigin* origin,
+    const SecurityOrigin* origin,
     const String& database_name,
     unsigned long long* database_size,
     unsigned long long* space_available) {
@@ -63,7 +63,7 @@ void QuotaTracker::GetDatabaseSizeAndSpaceAvailableToOrigin(
       WebSecurityOrigin(origin));
 }
 
-void QuotaTracker::UpdateDatabaseSize(SecurityOrigin* origin,
+void QuotaTracker::UpdateDatabaseSize(const SecurityOrigin* origin,
                                       const String& database_name,
                                       unsigned long long database_size) {
   MutexLocker lock_data(data_guard_);

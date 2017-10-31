@@ -57,7 +57,9 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
 
   using InsecureNavigationsSet = HashSet<unsigned, WTF::AlreadyHashed>;
 
-  SecurityOrigin* GetSecurityOrigin() const { return security_origin_.get(); }
+  const SecurityOrigin* GetSecurityOrigin() const {
+    return security_origin_.get();
+  }
   ContentSecurityPolicy* GetContentSecurityPolicy() const {
     return content_security_policy_.Get();
   }
