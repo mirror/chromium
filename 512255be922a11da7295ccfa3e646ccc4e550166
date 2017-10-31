@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "457870a1_68f9090e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-31T13:17:47Z",
+      "side": 1,
+      "message": "This bug is about throttling tabs in occluded windows. To detect occluded windows, we need to observe all window animations. To do that, we need to change LayerAnimator::AddObserver. Before changing LayerAnimator::AddObserver, we decided to remove callers that could use other APIs.",
+      "parentUuid": "50e7d06e_44f30d4e",
+      "revId": "512255be922a11da7295ccfa3e646ccc4e550166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bc3e068_93d1b599",
         "filename": "ash/sticky_keys/sticky_keys_overlay.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "283f2585_c2eb96e0",
+        "filename": "ash/sticky_keys/sticky_keys_overlay.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-31T13:17:47Z",
+      "side": 1,
+      "message": "Destroying StickyKeysOverlay destroys |overlay_widget_|. If |this| is still an observer of |overlay_widget_|\u0027s animator and |overlay_widget_| is animated when StickyKeysOverlay is destroyed, OnImplicitAnimationsCompleted() will be invoked.\n\nThe current code correctly removes |this| from the observer list of all LayerAnimationSequences associated with |overlay_widget_|\u0027s animator, but a simpler way to achieve the same result is to call StopObservingImplicitAnimations().",
+      "parentUuid": "1bc3e068_93d1b599",
+      "revId": "512255be922a11da7295ccfa3e646ccc4e550166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc0c379d_f1d89b9c",
         "filename": "ash/sticky_keys/sticky_keys_overlay.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "512255be922a11da7295ccfa3e646ccc4e550166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8998e883_7a13e351",
+        "filename": "ash/sticky_keys/sticky_keys_overlay.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-31T13:17:47Z",
+      "side": 1,
+      "message": "This type of observer is removed from observed LayerAnimationSequences when they end https://cs.chromium.org/chromium/src/ui/compositor/layer_animation_observer.cc?l\u003d97\u0026rcl\u003d07493032b5cf9f46de1d43087be1d3cdad6f1bb8 or are aborted https://cs.chromium.org/chromium/src/ui/compositor/layer_animation_observer.cc?l\u003d110\u0026rcl\u003d07493032b5cf9f46de1d43087be1d3cdad6f1bb8. Note that LayerAnimationSequences are aborted when the LayerAnimator (owned by the Layer) is deleted https://cs.chromium.org/chromium/src/ui/compositor/layer_animator.cc?l\u003d67\u0026rcl\u003d07493032b5cf9f46de1d43087be1d3cdad6f1bb8.",
+      "parentUuid": "cc0c379d_f1d89b9c",
+      "revId": "512255be922a11da7295ccfa3e646ccc4e550166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
