@@ -10,6 +10,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/time/time.h"
 #include "build/build_config.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
@@ -81,9 +82,11 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
   // Returns true if this surface is offscreen.
   virtual bool IsOffscreen() = 0;
 
+  using PresentationCallback =
+      base::OnceCallback<void(base::TimeTicks, base::TimeDelta)>;
   // Swaps front and back buffers. This has no effect for off-screen
   // contexts.
-  virtual gfx::SwapResult SwapBuffers() = 0;
+  virtual gfx::SwapResult SwapBuffers(const PresentationCallback& callback) = 0;
 
   // Get the size of the surface.
   virtual gfx::Size GetSize() = 0;
@@ -270,7 +273,7 @@ class GL_EXPORT GLSurfaceAdapter : public GLSurface {
   bool Recreate() override;
   bool DeferDraws() override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(const PresentationCallback& callback) override;
   void SwapBuffersAsync(const SwapCompletionCallback& callback) override;
   gfx::SwapResult SwapBuffersWithBounds(
       const std::vector<gfx::Rect>& rects) override;

@@ -1020,7 +1020,8 @@ bool NativeViewGLSurfaceEGL::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers() {
+gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers(
+    const PresentationCallback& callback) {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceEGL:RealSwapBuffers",
       "width", GetSize().width(),
       "height", GetSize().height());
@@ -1405,7 +1406,8 @@ bool PbufferGLSurfaceEGL::IsOffscreen() {
   return true;
 }
 
-gfx::SwapResult PbufferGLSurfaceEGL::SwapBuffers() {
+gfx::SwapResult PbufferGLSurfaceEGL::SwapBuffers(
+    const PresentationCallback& cakkback) {
   NOTREACHED() << "Attempted to call SwapBuffers on a PbufferGLSurfaceEGL.";
   return gfx::SwapResult::SWAP_FAILED;
 }
@@ -1489,7 +1491,8 @@ bool SurfacelessEGL::IsSurfaceless() const {
   return true;
 }
 
-gfx::SwapResult SurfacelessEGL::SwapBuffers() {
+gfx::SwapResult SurfacelessEGL::SwapBuffers(
+    const PresentationCallback& callback) {
   LOG(ERROR) << "Attempted to call SwapBuffers with SurfacelessEGL.";
   return gfx::SwapResult::SWAP_FAILED;
 }

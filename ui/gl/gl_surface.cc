@@ -260,8 +260,9 @@ bool GLSurfaceAdapter::IsOffscreen() {
   return surface_->IsOffscreen();
 }
 
-gfx::SwapResult GLSurfaceAdapter::SwapBuffers() {
-  return surface_->SwapBuffers();
+gfx::SwapResult GLSurfaceAdapter::SwapBuffers(
+    const PresentationCallback& callback) {
+  return surface_->SwapBuffers(callback);
 }
 
 void GLSurfaceAdapter::SwapBuffersAsync(

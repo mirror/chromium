@@ -46,10 +46,11 @@ void PassThroughImageTransportSurface::Destroy() {
   GLSurfaceAdapter::Destroy();
 }
 
-gfx::SwapResult PassThroughImageTransportSurface::SwapBuffers() {
+gfx::SwapResult PassThroughImageTransportSurface::SwapBuffers(
+    const PresentationCallback& callback) {
   std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
       StartSwapBuffers();
-  gfx::SwapResult result = gl::GLSurfaceAdapter::SwapBuffers();
+  gfx::SwapResult result = gl::GLSurfaceAdapter::SwapBuffers(callback);
   FinishSwapBuffers(std::move(latency_info), result);
   return result;
 }

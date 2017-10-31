@@ -56,7 +56,7 @@ bool GbmSurfaceless::Initialize(gl::GLSurfaceFormat format) {
   return true;
 }
 
-gfx::SwapResult GbmSurfaceless::SwapBuffers() {
+gfx::SwapResult GbmSurfaceless::SwapBuffers(const PresentationCallback& callback) {
   NOTREACHED();
   return gfx::SwapResult::SWAP_FAILED;
 }

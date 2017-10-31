@@ -39,7 +39,7 @@ class PassThroughImageTransportSurface : public gl::GLSurfaceAdapter {
   // GLSurface implementation.
   bool Initialize(gl::GLSurfaceFormat format) override;
   void Destroy() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(const PresentationCallback& callback) override;
   void SwapBuffersAsync(const SwapCompletionCallback& callback) override;
   gfx::SwapResult SwapBuffersWithBounds(
       const std::vector<gfx::Rect>& rects) override;
