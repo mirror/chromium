@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6480348_ae5a4e54",
+        "filename": "chrome/test/base/always_on_top_window_killer_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T16:55:23Z",
+      "side": 1,
+      "message": "Please describe what lineage means, it isn\u0027t readily obvious.",
+      "range": {
+        "startLine": 77,
+        "startChar": 17,
+        "endLine": 77,
+        "endChar": 25
+      },
+      "revId": "57ba8ac83cc99847bd47908a18df0d8fdb4c2096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82c2f66_d8e024ce",
+        "filename": "chrome/test/base/always_on_top_window_killer_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T16:55:23Z",
+      "side": 1,
+      "message": "Document what this means. Maybe should_log_ would better convey what this means.",
+      "range": {
+        "startLine": 86,
+        "startChar": 13,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "57ba8ac83cc99847bd47908a18df0d8fdb4c2096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6246ac_ef800662",
+        "filename": "chrome/test/base/always_on_top_window_killer_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T16:55:23Z",
+      "side": 1,
+      "message": "Is it really worth caching these? Could you instead compute when necessary?",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 37
+      },
+      "revId": "57ba8ac83cc99847bd47908a18df0d8fdb4c2096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
