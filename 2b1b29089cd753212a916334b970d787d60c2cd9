@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d0c2466_b7a7e85d",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-31T23:53:31Z",
+      "side": 1,
+      "message": "Can me merge this one with the message at line 210?\n\n\u003cif expr\u003d\"is_macosx or chromeos\"\u003e\n  \u003cmessage name\u003d\"IDS_MD_EXTENSIONS_TOO_MANY_MODIFIERS\" ...\u003e\u003c/message\u003e\n\u003c/if\u003e",
+      "revId": "2b1b29089cd753212a916334b970d787d60c2cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b266e6bd_4a54ddb1",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-31T23:53:31Z",
+      "side": 1,
+      "message": "With the old UI I am able to add non-letters as the 2nd component of a shortcut (example Ctrl+1, or Ctrl+comma). Should we rephrase this?",
+      "revId": "2b1b29089cd753212a916334b970d787d60c2cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca354fc0_e58a9d53",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-31T23:53:31Z",
+      "side": 1,
+      "message": "Can we avoid duplication as followS?\n\n#instructions,\nshortcut-card {\n  margin: 0 auto 16px auto;\n  max-width: var(--card-max-width);\n  min-width: var(--card-min-width);\n  width: 90%;\n}\n\n#instructions {\n  @apply(--cr-title-text);\n}\n\n.shortcut-card {\n  @apply(--cr-primary-text);\n  @apply(--shadow-elevation-2dp);\n  background-color: white;\n  padding-bottom: 8px;\n}",
+      "revId": "2b1b29089cd753212a916334b970d787d60c2cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc293ea1_3f0f3f11",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-31T23:53:31Z",
+      "side": 1,
+      "message": "Let\u0027s use the Polymer v2 (hybrid compliant) syntax for these\n@apply --cr-title-text;\n\nSee https://www.polymer-project.org/2.0/docs/upgrade#shadow-dom-styles",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 32
+      },
+      "revId": "2b1b29089cd753212a916334b970d787d60c2cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c654795f_d5b6295a",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-31T23:53:31Z",
+      "side": 1,
+      "message": "Should be name as NO_ERROR, per https://google.github.io/styleguide/jsguide.html#naming-enum-names.",
+      "revId": "2b1b29089cd753212a916334b970d787d60c2cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959c4465_eabe51c9",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-31T23:53:31Z",
+      "side": 1,
+      "message": "Nit: Use shorthand syntax where possible,\n@private {!Error}",
+      "revId": "2b1b29089cd753212a916334b970d787d60c2cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e274214_a6f0ab07",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-31T23:53:31Z",
+      "side": 1,
+      "message": "Isnt\u0027t invalid a boolean attribute? If so there is no need for a value. The following should be enough\nthis.$.input.setAttribute(\u0027invalid\u0027, \u0027\u0027);\n\nBut also, given that this.$.input is a paper-input, isnt\u0027t the following also sufficient?\nthis.$.input.invalid \u003d true;",
+      "revId": "2b1b29089cd753212a916334b970d787d60c2cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
