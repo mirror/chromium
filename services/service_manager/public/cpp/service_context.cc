@@ -88,7 +88,9 @@ ServiceContext::ServiceContext(
   service_->SetContext(this);
 }
 
-ServiceContext::~ServiceContext() {}
+ServiceContext::~ServiceContext() {
+  CHECK(false);
+}
 
 void ServiceContext::SetQuitClosure(const base::Closure& closure) {
   quit_closure_ = closure;
@@ -100,12 +102,14 @@ void ServiceContext::RequestQuit() {
 }
 
 void ServiceContext::DisconnectFromServiceManager() {
+  CHECK(false);
   if (binding_.is_bound())
     binding_.Close();
   connector_.reset();
 }
 
 void ServiceContext::QuitNow() {
+  CHECK(false);
   if (binding_.is_bound())
     binding_.Close();
   if (!quit_closure_.is_null()) {

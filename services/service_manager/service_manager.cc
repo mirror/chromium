@@ -206,6 +206,7 @@ class ServiceManager::Instance
     service_manager_->OnInstanceUnreachable(this);
 
     if (state_ == State::STARTING) {
+      CHECK(false);
       service_manager_->NotifyServiceFailedToStart(identity_);
     } else {
       // Notify the ServiceManager that this Instance is really going away.
@@ -631,6 +632,7 @@ class ServiceManager::Instance
 
   void OnServiceLost(
       base::WeakPtr<service_manager::ServiceManager> service_manager) {
+    CHECK(false);
     service_.reset();
     OnConnectionLost(service_manager);
   }
