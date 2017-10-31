@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f5e6886_e4d9a26f",
+        "filename": "content/renderer/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-10-31T21:31:51Z",
+      "side": 1,
+      "message": "this file is still just proof of concept, to be discarded when things look OK",
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871d303f_f4a81292",
+        "filename": "content/renderer/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-10-31T21:31:51Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 27,
+        "startChar": 23,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1e931a_a2a383c9",
+        "filename": "content/renderer/media_recorder/vpx_encoder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-10-31T21:31:51Z",
+      "side": 1,
+      "message": "wanted to make sure things worked correctly",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f62529e_90982929",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-10-31T21:31:51Z",
+      "side": 1,
+      "message": "turns out USE_AV1 \u003d $use_av1 evaluates to \u0027true\u0027 and \u0027false\u0027 instead of 0 and 1. Took me a bit to realize I needed to remove the spaces.",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
