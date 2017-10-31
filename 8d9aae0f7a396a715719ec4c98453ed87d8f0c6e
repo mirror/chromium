@@ -16,6 +16,24 @@
       "revId": "8d9aae0f7a396a715719ec4c98453ed87d8f0c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feed1974_79705e51",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-31T21:46:27Z",
+      "side": 1,
+      "message": "So all that we\u0027ll actually need to do is add the [SecureContext] annotation on:\n\n[SecureContext]\ninterface Worklet { };\nnamespace CSS {\n [SecureContext] attribute Worklet paintWorklet\n};",
+      "parentUuid": "8bc1fa7e_40c66678",
+      "revId": "8d9aae0f7a396a715719ec4c98453ed87d8f0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
