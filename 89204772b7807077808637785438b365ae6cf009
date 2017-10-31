@@ -16,6 +16,24 @@
       "revId": "89204772b7807077808637785438b365ae6cf009",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ec5b25_a17885aa",
+        "filename": "tools/perf/contrib/vr_benchmarks/shared_android_vr_page_state.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-31T18:52:04Z",
+      "side": 1,
+      "message": "It\u0027s called automatically by AndroidScreenRestorationSharedState, which we inherit from, before and after each story https://cs.chromium.org/chromium/src/tools/perf/page_sets/android_screen_restoration_shared_state.py?q\u003dAndroidScreenRestorationSharedState\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d13",
+      "parentUuid": "e59f9d17_2c379503",
+      "revId": "89204772b7807077808637785438b365ae6cf009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
