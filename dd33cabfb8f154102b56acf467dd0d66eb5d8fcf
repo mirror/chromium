@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "06665dd0_729588e8",
+        "filename": "tools/chrome_proxy/webdriver/video.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-31T20:18:26Z",
+      "side": 1,
+      "message": "Do these tests need a ChromeVersionAfter tag, or will they work before 64?",
+      "revId": "dd33cabfb8f154102b56acf467dd0d66eb5d8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79edfb10_01684043",
         "filename": "tools/chrome_proxy/webdriver/video.py",
         "patchSetId": 1
