@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "118836f4_5549ea93",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-31T20:08:01Z",
+      "side": 1,
+      "message": "Isn\u0027t the issue here only with using IO surfaces as a render target? Zero copy uses a separate code path, ScopedResource::AllocateWithGpuMemoryBuffer, that isn\u0027t affected by ResourceSettings::use_gpu_memory_buffer_resources. So it should work as it did before.",
+      "parentUuid": "8d4f3a5b_cba06e0f",
+      "range": {
+        "startLine": 340,
+        "startChar": 6,
+        "endLine": 340,
+        "endChar": 27
+      },
+      "revId": "00e0ee5e1a742d9a57cc5a5244554f559b27fc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d16c3e9_f2393f0b",
         "filename": "gpu/config/gpu_driver_bug_list.json",
         "patchSetId": 4
