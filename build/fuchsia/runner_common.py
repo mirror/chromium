@@ -69,6 +69,10 @@ def _DumpFile(dry_run, name, description):
   print '-' * 80
 
 
+def _ComputeMemorySize(num_cores):
+  return max(2048, num_cores * 512)
+
+
 def _MakeTargetImageName(common_prefix, output_directory, location):
   """Generates the relative path name to be used in the file system image.
   common_prefix: a prefix of both output_directory and location that
@@ -484,7 +488,7 @@ def _HandleOutputFromProcess(process, symbols_mapping):
 
 
 def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
-               test_launcher_summary_output):
+               test_launcher_summary_output, qemu_num_cores=4):
   if not kernel_path:
     # TODO(wez): Parameterize this on the |target_cpu| from GN.
     kernel_path = os.path.join(_TargetCpuToSdkBinPath(bootfs_data.target_cpu),
@@ -507,11 +511,11 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
         SDK_ROOT, 'qemu', 'bin',
         'qemu-system-' + _TargetCpuToArch(bootfs_data.target_cpu))
     qemu_command = [qemu_path,
-        '-m', '2048',
+        '-m', str(_ComputeMemorySize(qemu_num_cores)),
         '-nographic',
         '-kernel', kernel_path,
         '-initrd', bootfs_data.bootfs,
-        '-smp', '4',
+        '-smp', str(qemu_num_cores),
 
         # Configure virtual network. It is used in the tests to connect to
         # testserver running on the host.
@@ -526,7 +530,8 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
 
         # TERM=dumb tells the guest OS to not emit ANSI commands that trigger
         # noisy ANSI spew from the user's terminal emulator.
-        '-append', 'TERM=dumb kernel.halt_on_panic=true',
+        '-append', 'TERM=dumb kernel.halt_on_panic=true '
+                   'kernel.smp.maxcpus=%d' % qemu_num_cores,
       ]
 
     # Configure the machine & CPU to emulate, based on the target architecture.
