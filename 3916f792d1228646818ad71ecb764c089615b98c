@@ -16,6 +16,24 @@
       "revId": "3916f792d1228646818ad71ecb764c089615b98c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aae3c11_7679c962",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-31T21:03:01Z",
+      "side": 1,
+      "message": "Done, added assertions although a) they\u0027re quite redundant with the other assertions I already added; and b) pkotwicz is in general not a big fan of assertions, IIRC.\n\nI understand the structure of the file is quite convoluted, a complex state machine. I\u0027ve spent some time reducing technical debt for this class but there\u0027s room for improvement. In the current form, here\u0027s the high-level idea: the actual work starts only after a) the history lookup is done for the page URL; and b) favicon candidates are received from the renderer. When these two conditions hold true, OnGotInitialHistoryDataAndIconURLCandidates() gets called and the work begins. That\u0027s why it\u0027s quite obvious that the two calling sites to MaybeDeleteFaviconMappings() must have met those two conditions.",
+      "parentUuid": "ce4007bd_c0c60147",
+      "revId": "3916f792d1228646818ad71ecb764c089615b98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
