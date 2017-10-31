@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9668dcc1_33511ab6",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFace.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-31T03:28:15Z",
+      "side": 1,
+      "message": "Null check for |document| can be removed.",
+      "revId": "be931359abcf622a6b4ec5b5a98cbb23006fc4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5ae860_59fc1501",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFace.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-31T03:28:15Z",
+      "side": 1,
+      "message": "Same here, for |scope|",
+      "revId": "be931359abcf622a6b4ec5b5a98cbb23006fc4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74952eaf_f2137c3b",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-31T03:28:15Z",
+      "side": 1,
+      "message": "Can be non-virtual?",
+      "revId": "be931359abcf622a6b4ec5b5a98cbb23006fc4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11147da5_cd50efc0",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSetWorker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-31T03:28:15Z",
+      "side": 1,
+      "message": "Can we move this to the base class?",
+      "revId": "be931359abcf622a6b4ec5b5a98cbb23006fc4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
