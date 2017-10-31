@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "279d601a_497c2288",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-31T01:14:58Z",
+      "side": 1,
+      "message": "will remove in next patch.",
+      "revId": "6b9859c99939225bf730cbab6f03feb94198fe58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abcb9d48_2c218936",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-31T01:14:58Z",
+      "side": 1,
+      "message": "Will remove curly braces in next patch.",
+      "range": {
+        "startLine": 306,
+        "startChar": 0,
+        "endLine": 306,
+        "endChar": 7
+      },
+      "revId": "6b9859c99939225bf730cbab6f03feb94198fe58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
