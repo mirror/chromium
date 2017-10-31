@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80bf087b_e1401a9d",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-31T15:20:01Z",
+      "side": 1,
+      "message": "This include still needed here?",
+      "range": {
+        "startLine": 14,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc3cad9_6178b027",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-31T15:20:01Z",
+      "side": 1,
+      "message": "still needed?",
+      "range": {
+        "startLine": 19,
+        "startChar": 28,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d8681e_64087c0e",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-31T15:20:01Z",
+      "side": 1,
+      "message": "How about:\nif (!render_loop_-\u003eIsRunning()) {\n  std::move(callback).Run(false);\n  return;\n}",
+      "range": {
+        "startLine": 166,
+        "startChar": 3,
+        "endLine": 166,
+        "endChar": 31
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e3589a_04c5062e",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-31T15:20:01Z",
+      "side": 1,
+      "message": "I don\u0027t think we want 0 here. I guess it\u0027s not as big of a deal as on mobile because it\u0027s harder to tell if the tracking\u0027s off/delayed, but we should probably at least put in some lower bound on time to photons.\n\nThere\u0027s an example here on how to compute it, but it\u0027s probably wrong for magic window: https://github.com/ValveSoftware/openvr/wiki/IVRSystem::GetDeviceToAbsoluteTrackingPose",
+      "range": {
+        "startLine": 195,
+        "startChar": 74,
+        "endLine": 195,
+        "endChar": 78
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010e55bb_ef2db23e",
+        "filename": "device/vr/openvr/openvr_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-31T15:20:01Z",
+      "side": 1,
+      "message": "Include base/single_thread_task_runner.h instead of thread?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2da048c_076ba38f",
+        "filename": "device/vr/openvr/openvr_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-31T15:20:01Z",
+      "side": 1,
+      "message": "Can you use Thread::IsRunning() instead? Don\u0027t see a need to store this state here.",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969b7d11_b8ece9cb",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-31T15:20:01Z",
+      "side": 1,
+      "message": "whoa, this works? Still, probably less confusing to do binding_-\u003eBind(std::move(request));?",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 27
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e25a7da_404e05b3",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-31T15:20:01Z",
+      "side": 1,
+      "message": "Why are we using WaitGetPoses here rather than an instantaneous pose? Since our rendering pipeline is highly async, won\u0027t this just cause additional latency?\n\nThis thread here is interesting: https://steamcommunity.com/app/358720/discussions/0/405691491122676152/ (who is this Toji person?! :P)\n\nIs the problem here that there\u0027s no pose submitted with Submit()? Does it just assume the scene was rendered with the latest pose from WaitGetPoses? (I assume reprojection is still a thing with openvr, right?)",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 76
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f58403_c3f417b4",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-31T15:20:01Z",
+      "side": 1,
+      "message": "From the comments \"This aligns with the vsync that running start is relative to.\"\n\nDoesn\u0027t this mean we would want to read this after calling WaitGetPoses to get the vsync time for the current frame? (Not that this makes a big difference either way, as long as it\u0027s consistent)",
+      "range": {
+        "startLine": 154,
+        "startChar": 56,
+        "endLine": 154,
+        "endChar": 79
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381f71cb_62ef0263",
+        "filename": "device/vr/openvr/openvr_render_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-31T15:20:01Z",
+      "side": 1,
+      "message": "Some of these includes are unnecessary, please go through them and remove the unnecessary ones. Also, de-dup the ones in the .cc file with the ones here.",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f52887e_c962f7dd",
+        "filename": "device/vr/openvr/openvr_render_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-31T15:20:01Z",
+      "side": 1,
+      "message": "nit: you can make this protected, or probably even private.",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 11
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
