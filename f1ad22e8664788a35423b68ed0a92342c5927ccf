@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "f7f58608_9666e1f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-31T21:16:52Z",
+      "side": 1,
+      "message": "move to the top",
+      "range": {
+        "startLine": 454,
+        "startChar": 16,
+        "endLine": 454,
+        "endChar": 28
+      },
+      "revId": "f1ad22e8664788a35423b68ed0a92342c5927ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e7c4c2_e2a6c2b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-31T21:16:52Z",
+      "side": 1,
+      "message": "I think the detach behavior is specific to the usecase and not specific to the tab model handling.\n\nCTA supports moving tabs between windows in multi-window, and in that case we don\u0027t want the tab to be held onto by the old model.  Then there is fullscreen activity where we do want it.\n\nIf we want to solve this, I think we need to pass a flag into Tab#detach* that is something along the lines of retainOwnership.\n\nif (retainOwnership) detachTab(tab);\nelse removeTab(tab);\n\nAlso, CustomTabActivity uses TabModelImpl now and doesn\u0027t want to have their reparenting flow hold onto the tab in the detached state.",
+      "range": {
+        "startLine": 461,
+        "startChar": 16,
+        "endLine": 461,
+        "endChar": 25
+      },
+      "revId": "f1ad22e8664788a35423b68ed0a92342c5927ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b26004_ac5bc372",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-31T21:16:52Z",
+      "side": 1,
+      "message": "javadoc for these, most people won\u0027t know what the detached tab means (vs a normally removed tab)",
+      "range": {
+        "startLine": 473,
+        "startChar": 15,
+        "endLine": 473,
+        "endChar": 29
+      },
+      "revId": "f1ad22e8664788a35423b68ed0a92342c5927ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "762f849a_309f18cc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 1
