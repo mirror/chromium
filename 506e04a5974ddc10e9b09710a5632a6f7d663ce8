@@ -203,6 +203,30 @@
     },
     {
       "key": {
+        "uuid": "1bbc6fda_bad1dedc",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-31T18:37:17Z",
+      "side": 1,
+      "message": "\u003e I think the standard C++ upcast is safer, more reliable and better known than these Chrome-specific functions, but I see that incognito profiles have a strange sense of equality, so I guess we have to use it.\n\u003e \n\u003e I didn\u0027t understand the GetProfileType() comment. I would think that profile equality covers type equality, and I assumed from your TODO that we did not want to switch from one incognito profile to a different one.\n\nYou need to also test for GetProfileType.  IsSameProfile will say that the incognito\nprofile from a regular profile is identical, meaning you can switch to a tab that in an\nincognito window from a regular window and vice versa.  You don\u0027t want that.  You need\nto make sure the profile types are the same as well.\n  // Return whether 2 profiles are the same. 2 profiles are the same if they\n  // represent the same profile. This can happen if there is pointer equality\n  // or if one profile is the incognito version of another profile (or vice\n  // versa).\n  virtual bool IsSameProfile(Profile* profile) \u003d 0;",
+      "parentUuid": "82e4c33f_933b0f7a",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 65
+      },
+      "revId": "506e04a5974ddc10e9b09710a5632a6f7d663ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c09c794b_176929da",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
         "patchSetId": 23
