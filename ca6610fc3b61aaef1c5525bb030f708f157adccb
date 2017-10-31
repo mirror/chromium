@@ -83,6 +83,23 @@
     },
     {
       "key": {
+        "uuid": "b05c9752_ed0fae83",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:38:32Z",
+      "side": 1,
+      "message": "There\u0027s quite a few references to libvpx or vp9* functions in here. Want to scrub them?",
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f62529e_90982929",
         "filename": "third_party/libaom/BUILD.gn",
         "patchSetId": 2
@@ -100,6 +117,23 @@
         "endLine": 18,
         "endChar": 21
       },
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e7a61ef_90b57647",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T21:38:32Z",
+      "side": 1,
+      "message": "Do we configure cpu detection on chromium? How does that work currently?",
       "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
