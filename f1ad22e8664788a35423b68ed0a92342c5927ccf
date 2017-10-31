@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a6a18845_ce1c74b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-31T22:23:57Z",
+      "side": 1,
+      "message": "Along similar lines, I really feel like we need to define how the ownership in the tab model relates to the ownership on the Activity level if we are going to go this route. Right now we have remove and detach which sound very similar and it is not clear which one a developer looking into the code base for the first time should use.\n\nOr is this a temporary solution to be cherrypicked?",
+      "parentUuid": "42e7c4c2_e2a6c2b0",
+      "range": {
+        "startLine": 461,
+        "startChar": 16,
+        "endLine": 461,
+        "endChar": 25
+      },
+      "revId": "f1ad22e8664788a35423b68ed0a92342c5927ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01b26004_ac5bc372",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java",
         "patchSetId": 1
