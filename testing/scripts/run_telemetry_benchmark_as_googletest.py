@@ -92,8 +92,10 @@ def run_benchmark(args, rest_args):
       '--output-dir', tempfile_dir,
       '--output-format=json-test-results',
     ]
+    print cmd
     if args.xvfb:
-      rc = xvfb.run_executable(cmd, env)
+      pass
+      #rc = xvfb.run_executable(cmd, env)
     else:
       rc = common.run_command(cmd, env=env)
 
