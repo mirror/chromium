@@ -229,4 +229,8 @@ void ContainerFloatingBehavior::SetCanonicalBounds(
   container->SetBounds(gfx::Rect(keyboard_location, keyboard_size));
 }
 
+bool ContainerFloatingBehavior::TextBlurHidesKeyboard() const {
+  return true;
+}
+
 }  //  namespace keyboard
