@@ -224,10 +224,10 @@ void MediaStreamRemoteVideoSource::OnChanged(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   switch (state) {
     case webrtc::MediaStreamTrackInterface::kLive:
-      SetReadyState(blink::WebMediaStreamSource::kReadyStateLive);
+      SetSourceState(blink::WebMediaStreamSource::kStateLive);
       break;
     case webrtc::MediaStreamTrackInterface::kEnded:
-      SetReadyState(blink::WebMediaStreamSource::kReadyStateEnded);
+      SetSourceState(blink::WebMediaStreamSource::kStateEnded);
       break;
     default:
       NOTREACHED();

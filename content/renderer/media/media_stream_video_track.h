@@ -80,7 +80,7 @@ class CONTENT_EXPORT MediaStreamVideoTrack : public MediaStreamTrack {
   void Stop() override;
   void GetSettings(blink::WebMediaStreamTrack::Settings& settings) override;
 
-  void OnReadyStateChanged(blink::WebMediaStreamSource::ReadyState state);
+  void OnSourceStateChanged(blink::WebMediaStreamSource::State state);
 
   const base::Optional<bool>& noise_reduction() const {
     return noise_reduction_;

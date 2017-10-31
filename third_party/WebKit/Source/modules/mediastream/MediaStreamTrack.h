@@ -122,7 +122,7 @@ class MODULES_EXPORT MediaStreamTrack
   void applyConstraintsImageCapture(ScriptPromiseResolver*,
                                     const MediaTrackConstraints&);
 
-  MediaStreamSource::ReadyState ready_state_;
+  MediaStreamSource::State ready_state_;
   HeapHashSet<Member<MediaStream>> registered_media_streams_;
   bool is_iterating_registered_media_streams_;
   bool stopped_;

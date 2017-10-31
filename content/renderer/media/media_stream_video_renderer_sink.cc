@@ -199,8 +199,8 @@ void MediaStreamVideoRendererSink::Start() {
       // Local display video rendering is considered a secure link.
       true);
 
-  if (video_track_.Source().GetReadyState() ==
-          blink::WebMediaStreamSource::kReadyStateEnded ||
+  if (video_track_.Source().GetState() ==
+          blink::WebMediaStreamSource::kStateEnded ||
       !video_track_.IsEnabled()) {
     io_task_runner_->PostTask(
         FROM_HERE, base::BindOnce(&FrameDeliverer::RenderEndOfStream,
@@ -236,11 +236,10 @@ void MediaStreamVideoRendererSink::Pause() {
                                 base::Unretained(frame_deliverer_.get())));
 }
 
-void MediaStreamVideoRendererSink::OnReadyStateChanged(
-    blink::WebMediaStreamSource::ReadyState state) {
+void MediaStreamVideoRendererSink::OnSourceStateChanged(
+    blink::WebMediaStreamSource::State state) {
   DCHECK(main_thread_checker_.CalledOnValidThread());
-  if (state == blink::WebMediaStreamSource::kReadyStateEnded &&
-      frame_deliverer_) {
+  if (state == blink::WebMediaStreamSource::kStateEnded && frame_deliverer_) {
     io_task_runner_->PostTask(
         FROM_HERE, base::BindOnce(&FrameDeliverer::RenderEndOfStream,
                                   base::Unretained(frame_deliverer_.get())));

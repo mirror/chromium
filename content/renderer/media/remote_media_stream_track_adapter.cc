@@ -4,6 +4,9 @@
 
 #include "content/renderer/media/remote_media_stream_track_adapter.h"
 
+#include <memory>
+#include <utility>
+
 #include "content/renderer/media/media_stream_audio_source.h"
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/webrtc/media_stream_remote_video_source.h"
@@ -103,12 +106,10 @@ void RemoteAudioTrackAdapter::OnChangedOnMainThread(
 
   switch (state) {
     case webrtc::MediaStreamTrackInterface::kLive:
-      web_track()->Source().SetReadyState(
-          blink::WebMediaStreamSource::kReadyStateLive);
+      web_track()->Source().SetState(blink::WebMediaStreamSource::kStateLive);
       break;
     case webrtc::MediaStreamTrackInterface::kEnded:
-      web_track()->Source().SetReadyState(
-          blink::WebMediaStreamSource::kReadyStateEnded);
+      web_track()->Source().SetState(blink::WebMediaStreamSource::kStateEnded);
       break;
     default:
       NOTREACHED();
