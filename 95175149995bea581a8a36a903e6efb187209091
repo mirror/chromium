@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19f175d3_b613a4d8",
+        "filename": "ios/web/web_state/session_certificate_policy_cache_impl_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T16:18:43Z",
+      "side": 0,
+      "message": "Was not called in some cases, which defeats the purpose of WaitUntilConditionOrTimeout usage. Not sure why |io_thread_has_run| was added in the first place as test work correctly without AndReply part.",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "95175149995bea581a8a36a903e6efb187209091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
