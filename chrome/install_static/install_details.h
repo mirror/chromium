@@ -103,6 +103,12 @@ class InstallDetails {
   // empty string if this brand does not integrate with Google Update.
   const wchar_t* app_guid() const { return payload_->mode->app_guid; }
 
+  // The toast activator CLSID with which Chrome is registered with the Windows
+  // OS.
+  const wchar_t* toast_activator_clsid() const {
+    return payload_->mode->toast_activator_clsid;
+  }
+
   // Returns the unsuffixed portion of the AppUserModelId. The AppUserModelId is
   // used to group an app's windows together on the Windows taskbar along with
   // its corresponding shortcuts; see
