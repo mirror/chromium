@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1243b7dc_360720d0",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-10-31T18:48:20Z",
+      "side": 1,
+      "message": "Thanks Sorin. This value is return value (bool) of a dbus API. If the call fails, is_successful should be either (1)false or (2)\u0027null\u0027. In case of (1), the if statement evals to false which is expected. In case of (2), the if statement evals to false (or) which is expected too. Only on is_successful true, the if statement body can be finally executed which is also expected.",
+      "parentUuid": "2e653f27_adc8d5d4",
+      "range": {
+        "startLine": 254,
+        "startChar": 6,
+        "endLine": 254,
+        "endChar": 19
+      },
+      "revId": "4c01bd1f31f2927b5e8bd0d1e5866f5a550ff157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72f8769f_ad8dd59a",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 2
