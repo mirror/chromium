@@ -12,14 +12,17 @@ import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.SingleTabActivity;
 import org.chromium.chrome.browser.contextmenu.ChromeContextMenuPopulator;
 import org.chromium.chrome.browser.contextmenu.ContextMenuPopulator;
+import org.chromium.chrome.browser.externalnav.ExternalNavigationParams;
 import org.chromium.chrome.browser.fullscreen.ComposedBrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tab.BrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tab.InterceptNavigationDelegateImpl;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabContextMenuItemDelegate;
 import org.chromium.chrome.browser.tab.TabDelegateFactory;
+import org.chromium.chrome.browser.tab.TabRedirectHandler;
 import org.chromium.chrome.browser.tab.TabWebContentsDelegateAndroid;
 import org.chromium.chrome.browser.util.IntentUtils;
+import org.chromium.components.navigation_interception.NavigationParams;
 import org.chromium.webapk.lib.client.WebApkNavigationClient;
 
 /**
@@ -43,7 +46,7 @@ public class WebappDelegateFactory extends TabDelegateFactory {
             // compatibility we relaunch it the hard way.
             String startUrl = mActivity.getWebappInfo().uri().toString();
 
-            String webApkPackageName = mActivity.getWebappInfo().webApkPackageName();
+            String webApkPackageName = mActivity.getWebappInfo().apkPackageName();
             if (!TextUtils.isEmpty(webApkPackageName)) {
                 Intent intent = WebApkNavigationClient.createLaunchWebApkIntent(
                         webApkPackageName, startUrl, false /* forceNavigation */);
@@ -87,9 +90,24 @@ public class WebappDelegateFactory extends TabDelegateFactory {
                 // Ensures browser controls hiding is delayed after activity start.
                 mActivity.getFullscreenManager().getBrowserVisibilityDelegate());
     }
-
     @Override
     public InterceptNavigationDelegateImpl createInterceptNavigationDelegate(Tab tab) {
-        return new WebappInterceptNavigationDelegate(mActivity, tab);
+        return new WebappInterceptNavigationDelegate(mActivity, tab) {
+            @Override
+            public ExternalNavigationParams.Builder buildExternalNavigationParams(
+                    NavigationParams navigationParams, TabRedirectHandler tabRedirectHandler,
+                    boolean shouldCloseTab) {
+                ExternalNavigationParams.Builder builder = super.buildExternalNavigationParams(
+                        navigationParams, tabRedirectHandler, shouldCloseTab);
+                builder.setNativeClientPackageName(mActivity.getNativeClientPackageName());
+                return builder;
+            }
+        };
+    }
+
+    @Override
+    public boolean canShowAppBanners(Tab tab) {
+        // Do not show banners when we are in a standalone activity.
+        return false;
     }
 }
