@@ -325,6 +325,30 @@
     },
     {
       "key": {
+        "uuid": "c399536e_19b649d5",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-31T16:39:14Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right, we\u0027re never using this value as a file size or a file offset, just an IO size, so size_t is approriate.",
+      "parentUuid": "36043bb0_44cf0b7b",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "ccfb6b707503041ce8e1596735e07e4fb8d8551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b084ffb2_64d143a6",
         "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
         "patchSetId": 2
