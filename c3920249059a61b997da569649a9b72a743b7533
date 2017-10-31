@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c85b96c9_f907c7cd",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-31T16:12:28Z",
+      "side": 1,
+      "message": "initialize major_version, minor_version",
+      "range": {
+        "startLine": 270,
+        "startChar": 25,
+        "endLine": 270,
+        "endChar": 38
+      },
+      "revId": "c3920249059a61b997da569649a9b72a743b7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
