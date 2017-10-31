@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd104521_facc1ca4",
+        "filename": "media/cdm/ppapi/external_clear_key/ffmpeg_cdm_audio_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-31T22:01:26Z",
+      "side": 0,
+      "message": "Deleted all this because it never worked in the first place. |output_bytes_to_drop_| was never actually being applied.",
+      "revId": "18d25dee4ce217c49d9edb78ef1aafd1ed4179ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
