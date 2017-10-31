@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0219a9db_dc92151e",
+        "filename": "third_party/WebKit/LayoutTests/svg/custom/svg-length-empty-string.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-31T17:08:04Z",
+      "side": 1,
+      "message": "In a perfect (or, well, slightly better at least) world, this would be ..._equals(bounds.width, 300) (and ditto 150 for height), but we have troubles with invalid values and initial values \u003d(.",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "224b59e9d07ab2f20896c2db654dc02318bd3fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
