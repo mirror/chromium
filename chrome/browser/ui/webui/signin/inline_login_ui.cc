@@ -44,6 +44,7 @@ content::WebUIDataSource* CreateWebUIDataSource() {
   source->AddResourcePath("inline_login.css", IDR_INLINE_LOGIN_CSS);
   source->AddResourcePath("inline_login.js", IDR_INLINE_LOGIN_JS);
   source->AddResourcePath("gaia_auth_host.js", IDR_GAIA_AUTH_AUTHENTICATOR_JS);
+  source->UseGzip();
 
   source->AddLocalizedString("title", IDS_CHROME_SIGNIN_TITLE);
   source->AddLocalizedString(

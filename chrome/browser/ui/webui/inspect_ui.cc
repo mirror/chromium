@@ -515,6 +515,7 @@ content::WebUIDataSource* InspectUI::CreateInspectUIHTMLSource() {
   source->AddResourcePath("inspect.css", IDR_INSPECT_CSS);
   source->AddResourcePath("inspect.js", IDR_INSPECT_JS);
   source->SetDefaultResource(IDR_INSPECT_HTML);
+  source->UseGzip();
   return source;
 }
 

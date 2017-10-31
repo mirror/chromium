@@ -8,7 +8,9 @@
   </outputs>
   <release seq="1">
     <includes>
-      <include name="IDR_CHROME_EXTENSION_API_FEATURES" file="extensions\api\_api_features.json" type="BINDATA" />
+      <if expr="enable_extensions">
+        <include name="IDR_CHROME_EXTENSION_API_FEATURES" file="extensions\api\_api_features.json" type="BINDATA" />
+      </if>
     </includes>
   </release>
 </grit>
