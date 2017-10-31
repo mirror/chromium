@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cd30ca0_74a7e1b6",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1736,
+      "author": {
+        "id": 1134440
+      },
+      "writtenOn": "2017-10-31T22:53:18Z",
+      "side": 1,
+      "message": "Android?",
+      "range": {
+        "startLine": 1736,
+        "startChar": 57,
+        "endLine": 1736,
+        "endChar": 0
+      },
+      "revId": "349e0aabca2a1fec230bc21a5d81567f7838d61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3d97a1_69a53132",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4699,
+      "author": {
+        "id": 1134440
+      },
+      "writtenOn": "2017-10-31T22:53:18Z",
+      "side": 1,
+      "message": "Is there really a need for such permissiveness?  I would think the appID would be enough, but maybe I\u0027m naive.",
+      "range": {
+        "startLine": 4699,
+        "startChar": 190,
+        "endLine": 4699,
+        "endChar": 0
+      },
+      "revId": "349e0aabca2a1fec230bc21a5d81567f7838d61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b85569e_1b7356ef",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11830,
+      "author": {
+        "id": 1134440
+      },
+      "writtenOn": "2017-10-31T22:53:18Z",
+      "side": 1,
+      "message": "Are this change and the one above intended?",
+      "revId": "349e0aabca2a1fec230bc21a5d81567f7838d61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
