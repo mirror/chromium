@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "935937f8_b34021fe",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-31T23:32:32Z",
+      "side": 1,
+      "message": "nit: technically we don\u0027t need this any more since the extension is disabled, but I suppose it doesn\u0027t hurt.",
+      "revId": "1906c71155734e7cadbaeaab9398ab1f034b4357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
