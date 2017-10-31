@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fda6454_1af13898",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-31T20:52:50Z",
+      "side": 1,
+      "message": "Nit: Is chrome://flags different from about://flags? If not, it\u0027s better to use one for consistency.",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "c66385fde5c308ada76e8e7720ae56705ced32a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c67a64_dc73f965",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchSelectionController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-31T20:52:50Z",
+      "side": 1,
+      "message": "If the about flag for tap suppression is disabled, we would still suppress taps based on heuristics.\n\nIf this is intentional, maybe we should change the flag name to include ranker in its name, e.g. \"CONTEXTUAL_SEARCH_RANKER_TAP_SUPPRESSION\".\n\nIf the flag is supposed to disable suppression entirely, the if condition could be changed to something like this:\n(shouldSuppressTapBasedOnHeuristics || shouldSuppressTapBasedOnRanker) \u0026\u0026 ContextualSearchFieldTrial.isContextualSearchTapSuppressionEnabled()",
+      "range": {
+        "startLine": 391,
+        "startChar": 12,
+        "endLine": 391,
+        "endChar": 80
+      },
+      "revId": "c66385fde5c308ada76e8e7720ae56705ced32a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
