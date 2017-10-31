@@ -209,10 +209,9 @@ class FakeMediaStreamAudioSink : public MediaStreamAudioSink {
     base::subtle::NoBarrier_AtomicIncrement(&num_on_data_calls_, 1);
   }
 
-  void OnReadyStateChanged(
-      blink::WebMediaStreamSource::ReadyState state) final {
+  void OnSourceStateChanged(blink::WebMediaStreamSource::State state) final {
     CHECK(main_thread_checker_.CalledOnValidThread());
-    if (state == blink::WebMediaStreamSource::kReadyStateEnded)
+    if (state == blink::WebMediaStreamSource::kStateEnded)
       was_ended_ = true;
   }
 

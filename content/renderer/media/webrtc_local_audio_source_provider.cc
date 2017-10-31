@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/webrtc_local_audio_source_provider.h"
 
+#include <string>
+
 #include "base/logging.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/renderer/media/audio_device_factory.h"
@@ -82,9 +84,9 @@ void WebRtcLocalAudioSourceProvider::OnSetFormat(
       kMaxNumberOfBuffers * params.frames_per_buffer()));
 }
 
-void WebRtcLocalAudioSourceProvider::OnReadyStateChanged(
-      blink::WebMediaStreamSource::ReadyState state) {
-  if (state == blink::WebMediaStreamSource::kReadyStateEnded)
+void WebRtcLocalAudioSourceProvider::OnSourceStateChanged(
+    blink::WebMediaStreamSource::State state) {
+  if (state == blink::WebMediaStreamSource::kStateEnded)
     track_stopped_ = true;
 }
 
