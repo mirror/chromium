@@ -14,19 +14,22 @@
 #include "media/base/media_switches.h"
 #include "media/base/video_types.h"
 #include "media/base/video_util.h"
-#include "media/formats/mp4/avc.h"
 #include "media/formats/mp4/es_descriptor.h"
 #include "media/formats/mp4/rcheck.h"
 #include "media/media_features.h"
-#include "media/video/h264_parser.h"
+
+#if BUILDFLAG(USE_PROPRIETARY_CODECS)
+#include "media/formats/mp4/avc.h"
+#include "media/video/h264_parser.h"  // nogncheck
 
 #if BUILDFLAG(ENABLE_DOLBY_VISION_DEMUXING)
 #include "media/formats/mp4/dolby_vision.h"
-#endif
+#endif  // BUILDFLAG(ENABLE_DOLBY_VISION_DEMUXING)
 
 #if BUILDFLAG(ENABLE_HEVC_DEMUXING)
 #include "media/formats/mp4/hevc.h"
-#endif
+#endif  // BUILDFLAG(ENABLE_HEVC_DEMUXING)
+#endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
 
 namespace media {
 namespace mp4 {
@@ -574,6 +577,7 @@ bool HandlerReference::Parse(BoxReader* reader) {
   return true;
 }
 
+#if BUILDFLAG(USE_PROPRIETARY_CODECS)
 AVCDecoderConfigurationRecord::AVCDecoderConfigurationRecord()
     : version(0),
       profile_indication(0),
@@ -633,6 +637,7 @@ bool AVCDecoderConfigurationRecord::ParseInternal(BufferReader* reader,
 
   return true;
 }
+#endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
 
 VPCodecConfigurationRecord::VPCodecConfigurationRecord()
     : profile(VIDEO_CODEC_PROFILE_UNKNOWN) {}
@@ -728,6 +733,7 @@ bool VideoSampleEntry::Parse(BoxReader* reader) {
   const FourCC actual_format =
       format == FOURCC_ENCV ? sinf.format.format : format;
   switch (actual_format) {
+#if BUILDFLAG(USE_PROPRIETARY_CODECS)
     case FOURCC_AVC1:
     case FOURCC_AVC3: {
       DVLOG(2) << __func__ << " reading AVCDecoderConfigurationRecord (avcC)";
@@ -810,6 +816,7 @@ bool VideoSampleEntry::Parse(BoxReader* reader) {
     }
 #endif  // BUILDFLAG(ENABLE_HEVC_DEMUXING)
 #endif  // BUILDFLAG(ENABLE_DOLBY_VISION_DEMUXING)
+#endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
     case FOURCC_VP09: {
       DVLOG(2) << __func__ << " parsing VPCodecConfigurationRecord (vpcC)";
       std::unique_ptr<VPCodecConfigurationRecord> vp_config(
@@ -840,6 +847,7 @@ bool VideoSampleEntry::IsFormatValid() const {
   const FourCC actual_format =
       format == FOURCC_ENCV ? sinf.format.format : format;
   switch (actual_format) {
+#if BUILDFLAG(USE_PROPRIETARY_CODECS)
     case FOURCC_AVC1:
     case FOURCC_AVC3:
 #if BUILDFLAG(ENABLE_HEVC_DEMUXING)
@@ -854,6 +862,7 @@ bool VideoSampleEntry::IsFormatValid() const {
     case FOURCC_DVA1:
     case FOURCC_DVAV:
 #endif  // BUILDFLAG(ENABLE_DOLBY_VISION_DEMUXING)
+#endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
     case FOURCC_VP09:
       return true;
     default:
@@ -883,8 +892,13 @@ bool ElementaryStreamDescriptor::Parse(BoxReader* reader) {
 
   object_type = es_desc.object_type();
 
-  if (es_desc.IsAAC(object_type))
+  if (es_desc.IsAAC(object_type)) {
+#if BUILDFLAG(USE_PROPRIETARY_CODECS)
     RCHECK(aac.Parse(es_desc.decoder_specific_info(), reader->media_log()));
+#else
+    return false;
+#endif
+  }
 
   return true;
 }
