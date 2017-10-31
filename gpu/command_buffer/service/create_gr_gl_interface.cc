@@ -469,7 +469,7 @@ sk_sp<const GrGLInterface> CreateGrGLInterface(
   functions->fObjectLabel = gl->glObjectLabelFn;
 
   // GL_EXT_window_rectangles
-  // functions->fWindowRectangles = gl->glWindowRectanglesEXTFn;
+  functions->fWindowRectangles = gl->glWindowRectanglesEXTFn;
 
   // EGL_KHR_image / EGL_KHR_image_base
   // functions->fCreateImage = nullptr;
