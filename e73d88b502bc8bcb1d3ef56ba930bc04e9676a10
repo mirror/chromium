@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fbca0b83_5d298601",
+        "filename": "build/config/android/config.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-10-31T18:37:30Z",
+      "side": 1,
+      "message": "Yeah, I think Andrew is right here: Build.VERSION_CODES is the lookup table to find out what the integer version code is for a particular Android release.\n\nMaybe just call it android_sdk_release?",
+      "parentUuid": "48bf1529_93b04f7e",
+      "revId": "e73d88b502bc8bcb1d3ef56ba930bc04e9676a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68adc203_b41d22f5",
         "filename": "tools/perf/chrome_telemetry_build/BUILD.gn",
         "patchSetId": 1
