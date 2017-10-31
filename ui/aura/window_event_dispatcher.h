@@ -214,8 +214,8 @@ class AURA_EXPORT WindowEventDispatcher : public ui::EventProcessor,
   void OnWindowBoundsChanged(Window* window,
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds) override;
-  void OnWindowTransforming(Window* window) override;
-  void OnWindowTransformed(Window* window) override;
+  void OnWindowTargetTransformChanging(Window* window) override;
+  void OnWindowTargetTransformChanged(Window* window) override;
 
   // Overridden from EnvObserver:
   void OnWindowInitialized(Window* window) override;

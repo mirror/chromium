@@ -263,12 +263,10 @@ gfx::Rect Window::GetBoundsInScreen() const {
 
 void Window::SetTransform(const gfx::Transform& transform) {
   for (WindowObserver& observer : observers_)
-    observer.OnWindowTransforming(this);
+    observer.OnWindowTargetTransformChanging(this);
   gfx::Transform old_transform = layer()->transform();
   layer()->SetTransform(transform);
   port_->OnDidChangeTransform(old_transform, transform);
-  for (WindowObserver& observer : observers_)
-    observer.OnWindowTransformed(this);
 }
 
 void Window::SetLayoutManager(LayoutManager* layout_manager) {
@@ -1068,6 +1066,11 @@ void Window::OnLayerBoundsChanged(const gfx::Rect& old_bounds) {
     delegate_->OnBoundsChanged(old_bounds, bounds_);
   for (auto& observer : observers_)
     observer.OnWindowBoundsChanged(this, old_bounds, bounds_);
+}
+
+void Window::OnLayerTargetTransformChanged() {
+  for (WindowObserver& observer : observers_)
+    observer.OnWindowTargetTransformChanged(this);
 }
 
 void Window::OnLayerOpacityChanged(float old_opacity, float new_opacity) {
