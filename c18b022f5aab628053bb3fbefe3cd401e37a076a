@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb1d7fff_b88b79e6",
+        "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-31T23:54:46Z",
+      "side": 1,
+      "message": "Does this returning true ensure the browser has processed everything?",
+      "range": {
+        "startLine": 98,
+        "startChar": 10,
+        "endLine": 98,
+        "endChar": 67
+      },
+      "revId": "c18b022f5aab628053bb3fbefe3cd401e37a076a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
