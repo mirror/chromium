@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5016b7f2_8d4c851e",
+        "filename": "chrome/browser/vr/cpu_surface_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-31T15:43:37Z",
+      "side": 1,
+      "message": "This class doesn\u0027t appear to be used.  Is it meant to be used in the testapp?  I patched the change locally, and found that the UI testapp crashes after using GaneshSurfaceProvider.",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0460296e_4148f288",
+        "filename": "chrome/browser/vr/ganesh_surface_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-31T15:43:37Z",
+      "side": 1,
+      "message": "Why read this on every MakeSurface call, rather than when the surface provider is created?",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1b25e9_41738c6a",
+        "filename": "chrome/browser/vr/ganesh_surface_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-31T15:43:37Z",
+      "side": 1,
+      "message": "Is it necessary to pull the texture ID on every flush?  Can it change after the surface is created?  Is this expensive to do?",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf6559c_804d9003",
+        "filename": "chrome/browser/vr/ganesh_surface_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-31T15:43:37Z",
+      "side": 1,
+      "message": "This looks unrelated to flushing the surface.  Why is it needed here?",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7c5e69_b2833d1a",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-31T15:43:37Z",
+      "side": 1,
+      "message": "Needless blank line.",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64326fc_868ebf48",
+        "filename": "chrome/browser/vr/ui.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-31T15:43:37Z",
+      "side": 1,
+      "message": "Should be up in the alphabetical list of classes.",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
