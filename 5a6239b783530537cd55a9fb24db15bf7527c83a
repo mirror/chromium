@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "0c613431_f9778c72",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-31T00:17:39Z",
+      "side": 1,
+      "message": "Can we have a more descriptive description here?",
+      "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d7026b_2ad115bc",
+        "filename": "content/public/common/resource_request_completion_status.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-31T00:17:39Z",
+      "side": 1,
+      "message": "cors_error(error)?",
+      "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b5d82fb_71594f15",
         "filename": "content/renderer/loader/cors_url_loader.cc",
         "patchSetId": 7
@@ -30,6 +64,29 @@
       "writtenOn": "2017-10-30T13:16:03Z",
       "side": 1,
       "message": "nit: \u0027if redirects happen\u0027\n\nresponse_url_ is what\u0027s used in some other places, or last_response_url_ maybe? (\u0027final\u0027 sounds like the final one, while this gets updated on every redirect)",
+      "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b8e9cb_af8d3954",
+        "filename": "content/renderer/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-31T00:17:39Z",
+      "side": 1,
+      "message": "NoCORS is confusing. Maybe MissingCORSHeader?",
+      "range": {
+        "startLine": 152,
+        "startChar": 26,
+        "endLine": 152,
+        "endChar": 76
+      },
       "revId": "5a6239b783530537cd55a9fb24db15bf7527c83a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
