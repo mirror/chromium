@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6191cbc_7cc309d7",
+        "filename": "ios/chrome/browser/ssl/captive_portal_detector_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:54:07Z",
+      "side": 1,
+      "message": "No need for \"explicit\"",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 10
+      },
+      "revId": "0c8b6ab3432400ae757c0898c077403d0c1450f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0097d2b_83603210",
+        "filename": "ios/chrome/browser/ssl/captive_portal_detector_tab_helper_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-31T15:54:07Z",
+      "side": 1,
+      "message": "const GURL\u0026",
+      "range": {
+        "startLine": 21,
+        "startChar": 38,
+        "endLine": 21,
+        "endChar": 39
+      },
+      "revId": "0c8b6ab3432400ae757c0898c077403d0c1450f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
