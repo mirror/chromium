@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c9720af_0d32af98",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-31T18:51:43Z",
+      "side": 1,
+      "message": "nits: typically, these small refactors should be done in different CL to separate functional change from cosmetic change. Given that this script is not yet productionize, I am fine if you leave this as-is.",
+      "revId": "ad1958850df9592cca48d402306c4ab3990c7b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
