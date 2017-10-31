@@ -16,6 +16,24 @@
       "revId": "5d66e238ebba441603b3f7a91590c67bac52dcbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2796b90_19e7a1eb",
+        "filename": "docs/win_cross.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-10-31T08:48:39Z",
+      "side": 1,
+      "message": "https seems not working for it, unfortunately.",
+      "parentUuid": "facfa958_b4a717f0",
+      "revId": "5d66e238ebba441603b3f7a91590c67bac52dcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
