@@ -292,8 +292,6 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
     // writers is not present.
     bool SafeToDestroy();
 
-    bool TransactionInReaders(Transaction* transaction) const;
-
     disk_cache::Entry* disk_entry = nullptr;
 
     // Transactions waiting to be added to entry.
