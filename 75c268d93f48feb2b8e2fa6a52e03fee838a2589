@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff80610d_b9990c6e",
+        "filename": "third_party/WebKit/public/platform/modules/payments/payment_app.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-31T18:28:11Z",
+      "side": 1,
+      "message": "Nit: Typo (\"methods\")",
+      "revId": "75c268d93f48feb2b8e2fa6a52e03fee838a2589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
