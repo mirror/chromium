@@ -1232,9 +1232,9 @@ bool FocusController::SetFocusedElement(Element* element,
       new_document->FocusedElement() == element)
     return true;
 
-
-  if (old_document && old_document != new_document)
-    old_document->ClearFocusedElement();
+  if (old_document && old_document != new_document &&
+      old_document->FocusedElement())
+    DispatchBlurEvent(*old_document, *old_document->FocusedElement());
 
   if (new_focused_frame && !new_focused_frame->GetPage()) {
     SetFocusedFrame(nullptr);
