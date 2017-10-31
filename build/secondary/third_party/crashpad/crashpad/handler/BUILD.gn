@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("handler_lib") {
+import("//testing/test.gni")
+
+static_library("handler") {
   sources = [
     "crash_report_upload_thread.cc",
     "crash_report_upload_thread.h",
@@ -45,7 +47,7 @@ executable("crashpad_handler") {
   include_dirs = [ ".." ]
 
   deps = [
-    ":handler_lib",
+    ":handler",
     "../compat",
     "//base",
     "//build/win:default_exe_manifest",
@@ -61,7 +63,78 @@ executable("crashpad_handler") {
   }
 
   if (is_win) {
-    configs -= [ "//build/config/win:console" ]
-    configs += [ "//build/config/win:windowed" ]
+    configs -= [
+      "//build/config/win:console",
+      "//build/config/win:default_incremental_linking",
+    ]
+    configs += [
+      "//build/config/win:no_incremental_linking",
+      "//build/config/win:windowed",
+    ]
+  }
+}
+
+executable("crashpad_handler_test_extended_handler") {
+  testonly = true
+
+  deps = [
+    ":handler",
+    "../compat",
+    "../minidump:minidump_test_lib",
+    "../tools:tool_support",
+    "//base",
+  ]
+
+  include_dirs = [ ".." ]
+
+  sources = [
+    "crashpad_handler_test_extended_handler.cc",
+  ]
+}
+
+if (is_win) {
+  executable("crashpad_handler_console") {
+    output_name = "crashpad_handler"
+    output_extension = "com"
+
+    configs -= [
+      "//build/config/win:default_incremental_linking",
+    ]
+    configs += [
+      "//build/config/win:no_incremental_linking",
+    ]
+
+    deps = [
+      ":handler",
+      "../compat",
+      "//base",
+      "//build/win:default_exe_manifest",
+    ]
+
+    include_dirs = [ ".." ]
+
+    sources = [
+      "main.cc",
+    ]
+  }
+
+  test("crashpad_handler_test") {
+    deps = [
+      ":crashpad_handler_test_extended_handler",
+      ":handler",
+      "../client",
+      "../compat",
+      "../test",
+      "../test:crashpad_gtest_main",
+      "../util",
+      "//base",
+      "//testing/gtest",
+    ]
+
+    include_dirs = [ ".." ]
+
+    sources = [
+      "crashpad_handler_test.cc",
+    ]
   }
 }
