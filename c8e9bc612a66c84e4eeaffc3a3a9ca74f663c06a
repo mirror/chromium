@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "422ba38f_2629918c",
+        "filename": "base/win/shortcut.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-31T14:36:49Z",
+      "side": 1,
+      "message": "nit: CLSID_NULL thoughout",
+      "range": {
+        "startLine": 314,
+        "startChar": 48,
+        "endLine": 314,
+        "endChar": 57
+      },
+      "revId": "c8e9bc612a66c84e4eeaffc3a3a9ca74f663c06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f92017_7a239cc3",
+        "filename": "chrome/install_static/install_constants.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-31T14:36:49Z",
+      "side": 1,
+      "message": "what do you think about making this a CLSID rather than a const wchar_t* so that there\u0027s no need for CLSIDFromString in install.cc.",
+      "revId": "c8e9bc612a66c84e4eeaffc3a3a9ca74f663c06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
