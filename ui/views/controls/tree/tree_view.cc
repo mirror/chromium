@@ -780,24 +780,25 @@ void TreeView::PaintRow(gfx::Canvas* canvas,
   if (model_->GetChildCount(node->model_node()))
     PaintExpandControl(canvas, bounds, node->is_expanded());
 
-  // Paint the icon.
-  gfx::ImageSkia icon;
-  int icon_index = model_->GetIconIndex(node->model_node());
-  if (icon_index != -1)
-    icon = icons_[icon_index];
-  else if (node == selected_node_)
-    icon = open_icon_;
-  else
-    icon = closed_icon_;
-  int icon_x = kArrowRegionSize + kImagePadding +
-               (open_icon_.width() - icon.width()) / 2;
-  if (base::i18n::IsRTL())
-    icon_x = bounds.right() - icon_x - open_icon_.width();
-  else
-    icon_x += bounds.x();
-  canvas->DrawImageInt(
-      icon, icon_x,
-      bounds.y() + (bounds.height() - icon.height()) / 2);
+  if (drawing_provider()->ShouldDrawIconForNode(this, node->model_node())) {
+    // Paint the icon.
+    gfx::ImageSkia icon;
+    int icon_index = model_->GetIconIndex(node->model_node());
+    if (icon_index != -1)
+      icon = icons_[icon_index];
+    else if (node == selected_node_)
+      icon = open_icon_;
+    else
+      icon = closed_icon_;
+    int icon_x = kArrowRegionSize + kImagePadding +
+                 (open_icon_.width() - icon.width()) / 2;
+    if (base::i18n::IsRTL())
+      icon_x = bounds.right() - icon_x - open_icon_.width();
+    else
+      icon_x += bounds.x();
+    canvas->DrawImageInt(icon, icon_x,
+                         bounds.y() + (bounds.height() - icon.height()) / 2);
+  }
 
   // Paint the text background and text. In edit mode, the selected node is a
   // separate editing control, so it does not need to be painted here.
@@ -902,7 +903,10 @@ gfx::Rect TreeView::GetForegroundBoundsForNode(InternalNode* node) {
 
 gfx::Rect TreeView::GetTextBoundsForNode(InternalNode* node) {
   gfx::Rect bounds(GetForegroundBoundsForNode(node));
-  bounds.Inset(text_offset_, 0, 0, 0);
+  if (drawing_provider()->ShouldDrawIconForNode(this, node->model_node()))
+    bounds.Inset(text_offset_, 0, 0, 0);
+  else
+    bounds.Inset(kArrowRegionSize, 0, 0, 0);
   return bounds;
 }
 
