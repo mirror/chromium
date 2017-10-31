@@ -22,6 +22,64 @@
       "revId": "ff6828c1de43b9e509fe1134af212391f03e728f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20ec13d_13a3b07d",
+        "filename": "gpu/command_buffer/client/client_discardable_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-31T18:58:39Z",
+      "side": 1,
+      "message": "A rule-of-thumb I try to use is: say a user keeps Chrome open with a page running with a 60 fps animation for 8 weeks (release schedule in the worst case, forcing them to restart Chrome), which amounts to ~300M frames, how many ids would we create? If it\u0027s unlikely it\u0027ll ever happen, I\u0027m happy with just adding a CHECK if it overflows (unless overflow can be handled gracefully).",
+      "parentUuid": "2d73743b_4fd0fd8b",
+      "range": {
+        "startLine": 58,
+        "startChar": 30,
+        "endLine": 58,
+        "endChar": 45
+      },
+      "revId": "ff6828c1de43b9e509fe1134af212391f03e728f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a58e5c_88974dd2",
+        "filename": "gpu/command_buffer/client/client_discardable_texture_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-31T18:58:39Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "ff6828c1de43b9e509fe1134af212391f03e728f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc678d9a_6867f827",
+        "filename": "gpu/command_buffer/common/discardable_handle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-31T18:58:39Z",
+      "side": 1,
+      "message": "nit: you may want to consider IdTypeU32\u003cClientDiscardableHandle\u003e to give you type safety. It can be easy to accidentally confuse ClientDiscardableHandle::Id vs texture ids",
+      "revId": "ff6828c1de43b9e509fe1134af212391f03e728f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
