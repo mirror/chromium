@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18f97f34_642aaa3f",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3237,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-31T20:12:38Z",
+      "side": 1,
+      "message": "Could you split these into different tests? It will be easier to parse :)",
+      "range": {
+        "startLine": 3237,
+        "startChar": 11,
+        "endLine": 3237,
+        "endChar": 12
+      },
+      "revId": "d8590ad31ea914442286d6a42bd472f26e3ec42f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
