@@ -178,6 +178,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   bool IsCurrentlyUnresponsive() const override;
   void SetIgnoreInputEvents(bool ignore_input_events) override;
   void WasResized() override;
+  void DidAllocateLocalSurfaceIdForAutoResize(
+      uint64_t sequence_number) override;
   void AddKeyPressEventCallback(const KeyPressEventCallback& callback) override;
   void RemoveKeyPressEventCallback(
       const KeyPressEventCallback& callback) override;
@@ -853,6 +855,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
 
   // The maximum size for the render widget if auto-resize is enabled.
   gfx::Size max_size_for_auto_resize_;
+
+  uint64_t last_auto_resize_request_number_;
 
   bool waiting_for_screen_rects_ack_;
   gfx::Rect last_view_screen_rect_;

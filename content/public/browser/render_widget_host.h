@@ -207,6 +207,11 @@ class CONTENT_EXPORT RenderWidgetHost : public IPC::Sender {
   // Called to notify the RenderWidget that it has been resized.
   virtual void WasResized() = 0;
 
+  // Called to notify the RenderWidget that a viz::LocalSurfaceId was allocated
+  // for the auto-resize request specified by |sequence_number|.
+  virtual void DidAllocateLocalSurfaceIdForAutoResize(
+      uint64_t sequence_number) = 0;
+
   // Access to the implementation's IPC::Listener::OnMessageReceived. Intended
   // only for test code.
 
