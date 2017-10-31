@@ -196,25 +196,6 @@ class MediaMobile(_MediaBenchmark):
 
 
 @benchmark.Owner(emails=['crouleau@chromium.org', 'videostack-eng@google.com'],
-                 component='Internals>Media')
-class MediaNetworkSimulation(perf_benchmark.PerfBenchmark):
-  """Obtains media metrics under different network simulations."""
-  test = media.Media
-  page_set = page_sets.MediaCnsCasesPageSet
-
-  @classmethod
-  def Name(cls):
-    return 'media.media_cns_cases'
-
-  def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        self.DisableBenchmark([story.expectations.ALL],
-                              'Code path is old. crbug.com/676345')
-    return StoryExpectations()
-
-
-@benchmark.Owner(emails=['crouleau@chromium.org', 'videostack-eng@google.com'],
                  component='Internals>Media>Source')
 class MediaSourceExtensions(perf_benchmark.PerfBenchmark):
   """Obtains media metrics for key media source extensions functions."""
