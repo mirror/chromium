@@ -1343,27 +1343,23 @@ TEST_F(RTCPeerConnectionHandlerTest, RemoteTrackState) {
 
   blink::WebVector<blink::WebMediaStreamTrack> audio_tracks;
   webkit_stream.AudioTracks(audio_tracks);
-  EXPECT_EQ(blink::WebMediaStreamSource::kStateLive,
-            audio_tracks[0].Source().GetState());
+  EXPECT_FALSE(audio_tracks[0].IsEnded());
 
   blink::WebVector<blink::WebMediaStreamTrack> video_tracks;
   webkit_stream.VideoTracks(video_tracks);
-  EXPECT_EQ(blink::WebMediaStreamSource::kStateLive,
-            video_tracks[0].Source().GetState());
+  EXPECT_FALSE(video_tracks[0].IsEnded());
 
   InvokeOnSignalingThread(
       base::Bind(&MockWebRtcAudioTrack::SetEnded,
                  base::Unretained(static_cast<MockWebRtcAudioTrack*>(
                      remote_stream->GetAudioTracks()[0].get()))));
-  EXPECT_EQ(blink::WebMediaStreamSource::kStateEnded,
-            audio_tracks[0].Source().GetState());
+  EXPECT_TRUE(audio_tracks[0].IsEnded());
 
   InvokeOnSignalingThread(
       base::Bind(&MockWebRtcVideoTrack::SetEnded,
                  base::Unretained(static_cast<MockWebRtcVideoTrack*>(
                      remote_stream->GetVideoTracks()[0].get()))));
-  EXPECT_EQ(blink::WebMediaStreamSource::kStateEnded,
-            video_tracks[0].Source().GetState());
+  EXPECT_TRUE(video_tracks[0].IsEnded());
 }
 
 TEST_F(RTCPeerConnectionHandlerTest, RemoveAndAddAudioTrackFromRemoteStream) {

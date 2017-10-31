@@ -58,7 +58,7 @@ MediaStreamSource::MediaStreamSource(const String& id,
       requires_consumer_(requires_consumer) {}
 
 void MediaStreamSource::SetState(State state) {
-  if (state_ != kStateEnded && state_ != state) {
+  if (state_ != state) {
     state_ = state;
 
     // Observers may dispatch events which create and add new Observers;
@@ -68,7 +68,7 @@ void MediaStreamSource::SetState(State state) {
     for (auto observer : observers)
       observer->SourceChangedState();
 
-    // setState() will be invoked via the MediaStreamComponent::dispose()
+    // SetState() will be invoked via the MediaStreamComponent::dispose()
     // prefinalizer, allocating |observers|. Which means that |observers| will
     // live until the next GC (but be unreferenced by other heap objects),
     // _but_ it will potentially contain references to Observers that were

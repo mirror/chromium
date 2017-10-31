@@ -29,9 +29,11 @@ void MediaStreamSource::StopSource() {
 
 void MediaStreamSource::SetSourceMuted(bool is_muted) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  // Although this change is valid only if the ready state isn't already Ended,
-  // there's code further along (like in blink::MediaStreamTrack) which filters
-  // that out alredy.
+  // Ignore if source is ended.
+  if (Owner().IsNull() ||
+      Owner().GetState() == blink::WebMediaStreamSource::kStateEnded) {
+    return;
+  }
   Owner().SetState(is_muted ? blink::WebMediaStreamSource::kStateMuted
                             : blink::WebMediaStreamSource::kStateLive);
 }

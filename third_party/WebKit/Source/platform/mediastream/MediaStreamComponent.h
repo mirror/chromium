@@ -33,6 +33,8 @@
 #define MediaStreamComponent_h
 
 #include <memory>
+#include <utility>
+
 #include "platform/audio/AudioSourceProvider.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
@@ -90,6 +92,8 @@ class PLATFORM_EXPORT MediaStreamComponent final
   void SetEnabled(bool enabled) { enabled_ = enabled; }
   bool Muted() const { return muted_; }
   void SetMuted(bool muted) { muted_ = muted; }
+  bool IsEnded() const { return is_ended_; }
+  void SetEnded(bool is_ended) { is_ended_ = is_ended; }
   WebMediaStreamTrack::ContentHintType ContentHint() { return content_hint_; }
   void SetContentHint(WebMediaStreamTrack::ContentHintType);
   const WebMediaConstraints& Constraints() const { return constraints_; }
@@ -115,6 +119,7 @@ class PLATFORM_EXPORT MediaStreamComponent final
                        MediaStreamSource*,
                        bool enabled,
                        bool muted,
+                       bool is_ended,
                        WebMediaStreamTrack::ContentHintType);
 
   // AudioSourceProviderImpl wraps a WebAudioSourceProvider::provideInput()
@@ -145,6 +150,7 @@ class PLATFORM_EXPORT MediaStreamComponent final
   int unique_id_;
   bool enabled_;
   bool muted_;
+  bool is_ended_;
   WebMediaStreamTrack::ContentHintType content_hint_;
   WebMediaConstraints constraints_;
   std::unique_ptr<TrackData> track_data_;
