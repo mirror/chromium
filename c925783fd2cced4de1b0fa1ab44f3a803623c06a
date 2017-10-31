@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f48b7db_9af77e11",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListItem.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-31T08:07:35Z",
+      "side": 1,
+      "message": "Can you add a comment describing what this function does? These days we prefer to add function-level comments.",
+      "revId": "c925783fd2cced4de1b0fa1ab44f3a803623c06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870e2161_829f0962",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListItem.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-31T08:07:35Z",
+      "side": 1,
+      "message": "Doesn\u0027t FirstLineBoxBaseline work instead? If not, can you add comments why we need to compute baseline from FirstRootBox instead of FirstLineBaseline?",
+      "revId": "c925783fd2cced4de1b0fa1ab44f3a803623c06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
