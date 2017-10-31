@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6178fffc_18eb27da",
+        "filename": "chrome/browser/extensions/api/debugger/debugger_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-31T17:51:14Z",
+      "side": 0,
+      "message": "Let\u0027s clean up the enum as well!",
+      "revId": "933d12e3a03d19a58d84fd3b34e69e4d8b9f0d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238eff41_b239b2bb",
+        "filename": "content/browser/devtools/devtools_agent_host_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-31T17:51:14Z",
+      "side": 0,
+      "message": "Add a TODO to remove this altogether?",
+      "revId": "933d12e3a03d19a58d84fd3b34e69e4d8b9f0d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
