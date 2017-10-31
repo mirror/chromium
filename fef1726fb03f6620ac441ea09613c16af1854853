@@ -522,6 +522,30 @@
     },
     {
       "key": {
+        "uuid": "4f4df184_95e32e02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-31T22:13:18Z",
+      "side": 1,
+      "message": "OK, I updated the scope to be the domain that is sent to us (since the verification over DAL works for domains only, all urls that they verify has to be domain only right now). Hoping that is better than null as a best effort temp solution.",
+      "parentUuid": "fbfa0b1d_93aec233",
+      "range": {
+        "startLine": 439,
+        "startChar": 8,
+        "endLine": 439,
+        "endChar": 21
+      },
+      "revId": "fef1726fb03f6620ac441ea09613c16af1854853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f45061af_c3bc929a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 5

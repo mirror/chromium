@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5141269_c743e6cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-31T22:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbfb16a5_562bf8bf",
+      "range": {
+        "startLine": 867,
+        "startChar": 32,
+        "endLine": 867,
+        "endChar": 52
+      },
+      "revId": "266f303b4afc9f3fad91886f6b9954f1a19735ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "848ce344_cf71739e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "266f303b4afc9f3fad91886f6b9954f1a19735ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf69a611_10c9278a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-31T22:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "848ce344_cf71739e",
+      "range": {
+        "startLine": 861,
+        "startChar": 19,
+        "endLine": 869,
+        "endChar": 21
+      },
+      "revId": "266f303b4afc9f3fad91886f6b9954f1a19735ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6425248a_cfb3b9a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-31T22:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dc8622c_3755ea03",
+      "range": {
+        "startLine": 874,
+        "startChar": 27,
+        "endLine": 874,
+        "endChar": 44
+      },
+      "revId": "266f303b4afc9f3fad91886f6b9954f1a19735ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0633256_fb18a41f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f5252424_d1933f40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-31T22:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0633256_fb18a41f",
+      "range": {
+        "startLine": 879,
+        "startChar": 24,
+        "endLine": 879,
+        "endChar": 34
+      },
+      "revId": "266f303b4afc9f3fad91886f6b9954f1a19735ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a12aff2_e8762764",
         "filename": "chrome/browser/android/shortcut_info.h",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "266f303b4afc9f3fad91886f6b9954f1a19735ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92600fc_0db22040",
+        "filename": "chrome/browser/android/shortcut_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-31T22:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a12aff2_e8762764",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 31
+      },
+      "revId": "266f303b4afc9f3fad91886f6b9954f1a19735ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
