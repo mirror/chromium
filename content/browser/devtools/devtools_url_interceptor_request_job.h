@@ -19,6 +19,7 @@
 namespace net {
 class AuthChallengeInfo;
 class UploadDataStream;
+class GrowableIOBuffer;
 }
 
 namespace content {
@@ -38,7 +39,8 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob,
       const base::UnguessableToken& target_id,
       base::WeakPtr<protocol::NetworkHandler> network_handler,
       bool is_redirect,
-      ResourceType resource_type);
+      ResourceType resource_type,
+      DevToolsURLRequestInterceptor::InterceptionStage stage_to_intercept);
 
   ~DevToolsURLInterceptorRequestJob() override;
 
@@ -79,12 +81,17 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob,
 
   using ContinueInterceptedRequestCallback =
       protocol::Network::Backend::ContinueInterceptedRequestCallback;
+  using GetResponseBodyForInterceptionCallback =
+      protocol::Network::Backend::GetResponseBodyForInterceptionCallback;
+  using InterceptionStage = DevToolsURLRequestInterceptor::InterceptionStage;
 
   // Must be called only once per interception. Must be called on IO thread.
   void ContinueInterceptedRequest(
       std::unique_ptr<DevToolsURLRequestInterceptor::Modifications>
           modifications,
       std::unique_ptr<ContinueInterceptedRequestCallback> callback);
+  void GetResponseBody(
+      std::unique_ptr<GetResponseBodyForInterceptionCallback> callback);
 
   const base::UnguessableToken& target_id() const { return target_id_; }
 
@@ -110,6 +117,18 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob,
     net::RequestPriority priority;
     const net::URLRequestContext* url_request_context;
   };
+
+  void ReadSubRequestIntoBuffer();
+  void SubRequestResponseReady(net::Error result);
+  void SendBodyResponsesIfPossible();
+  bool ShouldInterceptBeforeRequest() const {
+    return stage_to_intercept_ == InterceptionStage::REQUEST ||
+           stage_to_intercept_ == InterceptionStage::BOTH;
+  }
+  bool ShouldInterceptAfterHeadersReceived() const {
+    return stage_to_intercept_ == InterceptionStage::HEADERS_RECEIVED ||
+           stage_to_intercept_ == InterceptionStage::BOTH;
+  }
 
   // If the request was either allowed or modified, a SubRequest will be used to
   // perform the fetch and the results proxied to the original request. This
@@ -207,6 +226,17 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob,
   const bool is_redirect_;
   const ResourceType resource_type_;
   GlobalRequestID global_request_id_;
+  DevToolsURLRequestInterceptor::InterceptionStage stage_to_intercept_;
+
+  // We store the original request's first read buffer and size to fill it
+  // after the subrequest has fulfilled if we are capturing response.
+  scoped_refptr<net::IOBuffer> original_request_buffer_;
+  int original_request_buffer_size_;
+  scoped_refptr<net::GrowableIOBuffer> new_response_buffer_;
+  net::Error response_error_;
+  std::vector<std::unique_ptr<GetResponseBodyForInterceptionCallback>>
+      pending_body_requests_;
+
   base::WeakPtrFactory<DevToolsURLInterceptorRequestJob> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DevToolsURLInterceptorRequestJob);

@@ -120,6 +120,18 @@ void DevToolsURLRequestInterceptor::ContinueInterceptedRequest(
           base::Passed(std::move(callback))));
 }
 
+void DevToolsURLRequestInterceptor::GetResponseBody(
+    std::string interception_id,
+    std::unique_ptr<GetResponseBodyForInterceptionCallback> callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&DevToolsURLRequestInterceptor::State::GetResponseBodyOnIO,
+                     state_, std::move(interception_id),
+                     base::Passed(std::move(callback))));
+}
+
 net::URLRequestJob* DevToolsURLRequestInterceptor::MaybeInterceptRedirect(
     net::URLRequest* request,
     net::NetworkDelegate* network_delegate,
@@ -133,6 +145,18 @@ net::URLRequestJob* DevToolsURLRequestInterceptor::MaybeInterceptResponse(
   return nullptr;
 }
 
+DevToolsURLRequestInterceptor::InterceptionStage
+DevToolsURLRequestInterceptor::ToInterceptorStage(
+    const protocol::Network::InterceptionStage& interceptor_stage) {
+  if (interceptor_stage == protocol::Network::InterceptionStageEnum::Request)
+    return REQUEST;
+  if (interceptor_stage ==
+      protocol::Network::InterceptionStageEnum::HeadersReceived)
+    return HEADERS_RECEIVED;
+  NOTREACHED();
+  return REQUEST;
+}
+
 DevToolsURLRequestInterceptor::Pattern::Pattern() = default;
 
 DevToolsURLRequestInterceptor::Pattern::~Pattern() = default;
@@ -141,8 +165,11 @@ DevToolsURLRequestInterceptor::Pattern::Pattern(const Pattern& other) = default;
 
 DevToolsURLRequestInterceptor::Pattern::Pattern(
     const std::string& url_pattern,
-    base::flat_set<ResourceType> resource_types)
-    : url_pattern(url_pattern), resource_types(std::move(resource_types)) {}
+    base::flat_set<ResourceType> resource_types,
+    protocol::Network::InterceptionStage interception_stage)
+    : url_pattern(url_pattern),
+      resource_types(std::move(resource_types)),
+      interception_stage(ToInterceptorStage(interception_stage)) {}
 
 DevToolsURLRequestInterceptor::State::State()
     : target_registry_(new DevToolsTargetRegistry(
@@ -182,6 +209,24 @@ void DevToolsURLRequestInterceptor::State::ContinueInterceptedRequestOnIO(
                                   std::move(callback));
 }
 
+void DevToolsURLRequestInterceptor::State::GetResponseBodyOnIO(
+    std::string interception_id,
+    std::unique_ptr<GetResponseBodyForInterceptionCallback> callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DevToolsURLInterceptorRequestJob* job = GetJob(interception_id);
+  if (!job) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(
+            &GetResponseBodyForInterceptionCallback::sendFailure,
+            base::Passed(std::move(callback)),
+            protocol::Response::InvalidParams("Invalid InterceptionId.")));
+    return;
+  }
+
+  job->GetResponseBody(std::move(callback));
+}
+
 DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
     MaybeCreateDevToolsURLInterceptorRequestJob(
         net::URLRequest* request,
@@ -212,7 +257,7 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
   if (sub_requests_.find(request) != sub_requests_.end())
     return nullptr;
 
-  bool matchFound = false;
+  InterceptionStage interception_stage = MAX_INTERCEPTION_STAGE;
   const std::string url =
       protocol::NetworkHandler::ClearUrlRef(request->url()).spec();
   for (const Pattern& pattern : intercepted_page.intercepted_patterns) {
@@ -222,11 +267,20 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
       continue;
     }
     if (base::MatchPattern(url, pattern.url_pattern)) {
-      matchFound = true;
-      break;
+      if (pattern.interception_stage == REQUEST &&
+          interception_stage == HEADERS_RECEIVED) {
+        interception_stage = BOTH;
+        break;
+      } else if (pattern.interception_stage == HEADERS_RECEIVED &&
+                 interception_stage == REQUEST) {
+        interception_stage = BOTH;
+        break;
+      }
+      interception_stage = pattern.interception_stage;
     }
   }
-  if (!matchFound)
+
+  if (interception_stage == MAX_INTERCEPTION_STAGE)
     return nullptr;
 
   bool is_redirect;
@@ -235,7 +289,7 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
       this, interception_id, request, network_delegate,
       target_info->devtools_token, target_info->devtools_target_id,
       intercepted_page.network_handler, is_redirect,
-      resource_request_info->GetResourceType());
+      resource_request_info->GetResourceType(), interception_stage);
   interception_id_to_job_map_[interception_id] = job;
   return job;
 }
