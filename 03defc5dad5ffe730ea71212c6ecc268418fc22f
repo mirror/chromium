@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1961c607_965c0e03",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-31T04:46:39Z",
+      "side": 1,
+      "message": "I made this unconditional as MimeTypeResourceHandler is always attached.",
+      "revId": "03defc5dad5ffe730ea71212c6ecc268418fc22f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
