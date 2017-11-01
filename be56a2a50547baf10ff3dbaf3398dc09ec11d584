@@ -22,6 +22,30 @@
       "revId": "be56a2a50547baf10ff3dbaf3398dc09ec11d584",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873a5ada_fffe08e4",
+        "filename": "chrome/browser/ui/global_error/global_error_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-01T20:21:41Z",
+      "side": 0,
+      "message": "Added an explanation indicating that since the new cleaner prompt is now used by all users, we non longer need the old code path.",
+      "parentUuid": "887576f8_5bcf5c36",
+      "range": {
+        "startLine": 178,
+        "startChar": 22,
+        "endLine": 178,
+        "endChar": 36
+      },
+      "revId": "be56a2a50547baf10ff3dbaf3398dc09ec11d584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
