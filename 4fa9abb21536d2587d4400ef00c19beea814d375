@@ -52,6 +52,24 @@
       "revId": "4fa9abb21536d2587d4400ef00c19beea814d375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccd684a_c74e20c5",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-01T18:24:33Z",
+      "side": 1,
+      "message": "Gotcha. Changed to iOS11. And I realized that I made a stupid copy paste bug that I forgot to actually update the flag name. This is fixed now too.",
+      "parentUuid": "6a6d58fe_bec0f94f",
+      "revId": "4fa9abb21536d2587d4400ef00c19beea814d375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
