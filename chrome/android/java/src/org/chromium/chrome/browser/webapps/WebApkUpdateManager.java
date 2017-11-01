@@ -247,7 +247,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
             return true;
         }
 
-        if (!info.webApkPackageName().startsWith(WEBAPK_PACKAGE_PREFIX)) {
+        if (!info.apkPackageName().startsWith(WEBAPK_PACKAGE_PREFIX)) {
             return false;
         }
 
