@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "942a8301_7b11eef9",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-01T05:10:07Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand why to modify the tree formatter, shouldn\u0027t we\njust be dumping whatever\u0027s actually output?",
+      "revId": "6f38a7c7a85511fcba23a227ae94b0ac5894977a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00d5d89_6b86f386",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2003,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-01T05:10:07Z",
+      "side": 1,
+      "message": "I don\u0027t think this will be correct if the cell has an ARIA label on it.\nHow about checking AX_ATTR_NAME_FROM?",
+      "revId": "6f38a7c7a85511fcba23a227ae94b0ac5894977a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
