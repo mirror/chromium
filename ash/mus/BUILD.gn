@@ -64,7 +64,7 @@ source_set("lib") {
     "window_properties.h",
   ]
 
-  defines = [ "NOTIMPLEMENTED_POLICY=5" ]
+  defines = [ "NOTIMPLEMENTED_LOG_ONCE_POLICY=5" ]
 
   deps = [
     "//chromeos",
@@ -242,5 +242,5 @@ source_set("unittests") {
     "//mash/quick_launch",
   ]
 
-  defines = [ "NOTIMPLEMENTED_POLICY=5" ]
+  defines = [ "NOTIMPLEMENTED_LOG_ONCE_POLICY=5" ]
 }
