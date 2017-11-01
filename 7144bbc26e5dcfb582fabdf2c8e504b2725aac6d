@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b24a1f9_606fb06f",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-01T06:21:17Z",
+      "side": 1,
+      "message": "why don\u0027t we assign loader_id here?",
+      "revId": "7144bbc26e5dcfb582fabdf2c8e504b2725aac6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3478f87_e8c9b05c",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoadRequest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-01T06:21:17Z",
+      "side": 1,
+      "message": "nit: missing newline. presubmit will probably yell here",
+      "revId": "7144bbc26e5dcfb582fabdf2c8e504b2725aac6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1d3fb7_683d4a6d",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoadRequest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-01T06:21:17Z",
+      "side": 1,
+      "message": "should this be initialized?",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 24
+      },
+      "revId": "7144bbc26e5dcfb582fabdf2c8e504b2725aac6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
