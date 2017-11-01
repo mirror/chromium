@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79487795_13c40525",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-01T16:35:23Z",
+      "side": 1,
+      "message": "Why we only check the first filter?",
+      "range": {
+        "startLine": 852,
+        "startChar": 40,
+        "endLine": 852,
+        "endChar": 45
+      },
+      "revId": "d6b31077f8e112187456779cfc275d1a70d94ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc40b26_ada62a3b",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-01T16:35:23Z",
+      "side": 1,
+      "message": "How does it look if we continuous dividing the layer scale by 2, until the effective filter.amount() \u003c\u003d kMinBlurAmountForLayerScaleAdjustment?",
+      "range": {
+        "startLine": 857,
+        "startChar": 4,
+        "endLine": 857,
+        "endChar": 7
+      },
+      "revId": "d6b31077f8e112187456779cfc275d1a70d94ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
