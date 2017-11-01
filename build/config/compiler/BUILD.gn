@@ -1039,7 +1039,7 @@ config("default_warnings") {
       cflags += [ "/WX" ]
     }
     if (fatal_linker_warnings) {
-      ldflags += [ "/WX" ]
+      #ldflags += [ "/WX" ]
     }
 
     cflags += [
