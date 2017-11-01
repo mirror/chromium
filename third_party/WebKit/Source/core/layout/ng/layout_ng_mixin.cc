@@ -25,6 +25,22 @@ bool LayoutNGMixin<Base>::IsOfType(LayoutObject::LayoutObjectType type) const {
 }
 
 template <typename Base>
+bool LayoutNGMixin<Base>::CreatesNewFormattingContext() const {
+  DCHECK(RuntimeEnabledFeatures::LayoutNGEnabled());
+
+  if (Base::CreatesNewFormattingContext())
+    return true;
+
+  // NGBlockNode cannot compute margin collapsing across NG/non-NG boundary.
+  // Create a new formatting context for non-NG node to prevent margin
+  // collapsing.
+  if (!NGBlockNode::CanUseNewLayout(this))
+    return true;
+
+  return false;
+}
+
+template <typename Base>
 NGInlineNodeData* LayoutNGMixin<Base>::GetNGInlineNodeData() const {
   DCHECK(ng_inline_node_data_);
   return ng_inline_node_data_.get();
