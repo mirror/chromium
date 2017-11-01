@@ -5,6 +5,7 @@
 #include "content/public/browser/navigation_controller.h"
 
 #include "base/memory/ref_counted_memory.h"
+#include "base/unguessable_token.h"
 #include "build/build_config.h"
 
 namespace content {
@@ -50,7 +51,8 @@ NavigationController::LoadURLParams::LoadURLParams(
       has_user_gesture(other.has_user_gesture),
 #endif
       should_clear_history_list(false),
-      started_from_context_menu(other.started_from_context_menu) {
+      started_from_context_menu(other.started_from_context_menu),
+      devtools_navigation_token(base::UnguessableToken::Create()) {
 }
 
 NavigationController::LoadURLParams&
@@ -76,6 +78,7 @@ NavigationController::LoadURLParams::operator=(
   has_user_gesture = other.has_user_gesture;
 #endif
   started_from_context_menu = other.started_from_context_menu;
+  devtools_navigation_token = other.devtools_navigation_token;
 
   return *this;
 }
