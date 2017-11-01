@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e627dbd6_a554e505",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-01T08:46:58Z",
+      "side": 1,
+      "message": "enumeration has enough overhead that it caused a startup regression, right? could it potentially get in the way of shutdown as well? in other words, should this also have the CONTINUE_ON_SHUTDOWN trait? how about MayBlock? i\u0027m not sure what TH32 does under the covers, but do you think it\u0027s sufficiently heavy-weight that it should be considered a blocking operation?\n\nalso: does iwyu say you also need to explicitly include base/task_scheduler/task_traits.h?",
+      "revId": "5977525bb1006c127152b86665de8bbecf2841dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69217a93_f7489bd6",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-01T08:46:58Z",
+      "side": 1,
+      "message": "#include \"base/bind.h\"",
+      "revId": "5977525bb1006c127152b86665de8bbecf2841dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa595db_b25be729",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-01T08:46:58Z",
+      "side": 1,
+      "message": "#include \"base/location.h\"",
+      "revId": "5977525bb1006c127152b86665de8bbecf2841dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e8892d_9b5da5e3",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-01T08:46:58Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Declaration_Order says that the ctor should come before the other methods in this section; please move it up so that it\u0027s just before Initialize (here and in the .cc file).",
+      "revId": "5977525bb1006c127152b86665de8bbecf2841dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
