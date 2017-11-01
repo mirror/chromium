@@ -18,11 +18,17 @@
 #include "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_settings_factory.h"
 #include "chrome/browser/page_load_metrics/metrics_web_contents_observer.h"
 #include "chrome/browser/previews/previews_infobar_tab_helper.h"
+#include "chrome/browser/previews/previews_service.h"
+#include "chrome/browser/previews/previews_service_factory.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
 #include "components/infobars/core/infobar.h"
 #include "components/network_time/network_time_tracker.h"
 #include "components/previews/core/previews_features.h"
+#include "components/previews/core/previews_logger.h"
+#include "components/previews/core/previews_ui_service.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -39,6 +45,13 @@ const char kMinStalenessParamName[] = "min_staleness_in_minutes";
 const char kMaxStalenessParamName[] = "max_staleness_in_minutes";
 const int kMinStalenessParamDefaultValue = 5;
 const int kMaxStalenessParamDefaultValue = 1440;
+
+const char kPreviewInfobar[] = "InfoBar";
+
+std::string GetDescriptionForInfoBarEvent(previews::PreviewsType type) {
+  return base::StringPrintf("%s InfoBar shown",
+                            previews::GetStringNameForType(type).c_str());
+}
 
 void RecordPreviewsInfoBarAction(
     previews::PreviewsType previews_type,
@@ -132,6 +145,19 @@ void PreviewsInfoBarDelegate::Create(
 #endif
 
   infobar_service->AddInfoBar(std::move(infobar_ptr));
+
+  // Logging the previews type of the info bar to PreviewsLogger.
+  PreviewsService* previews_service = PreviewsServiceFactory::GetForProfile(
+      Profile::FromBrowserContext(web_contents->GetBrowserContext()));
+  if (previews_service && previews_service->previews_ui_service()) {
+    // Not in incognito mode or guest mode.
+    previews_service->previews_ui_service()->previews_logger()->LogMessage(
+        kPreviewInfobar, GetDescriptionForInfoBarEvent(previews_type),
+        web_contents->GetController()
+            .GetLastCommittedEntry()
+            ->GetRedirectChain()[0] /* GURL */,
+        base::Time::Now());
+  }
 
   RecordPreviewsInfoBarAction(previews_type, INFOBAR_SHOWN);
   infobar_tab_helper->set_displayed_preview_infobar(true);
