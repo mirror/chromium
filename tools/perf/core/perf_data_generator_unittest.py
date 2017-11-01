@@ -337,7 +337,6 @@ class PerfDataGeneratorTest(unittest.TestCase):
 
   def testListsAlphabetical(self):
     keys = [
-        'BENCHMARKS_TO_UPLOAD_TO_FLAKINESS_DASHBOARD',
         'BENCHMARK_REF_BUILD_BLACKLIST',
         'SVELTE_DEVICE_LIST'
     ]
