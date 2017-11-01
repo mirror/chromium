@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "613b7146_e83a644b",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-01T23:33:34Z",
+      "side": 0,
+      "message": "@nasko: this is coming from the review of lucas\u0027s CL to add a way to specify the net error code. Why is the DCHECK set up that way?\n\nI think it makes sense that the net error should be net::ERR_ABORTED if you return NavigationThrottle::CANCEL* (in the current framework of how the NavigationThrottle::CheckResult work), however the implementer of NavigationThrottle should be able to specify the error code to some extent in other cases. Is this due to how we handle error pages for blocked navigations?\n\nIn terms of moving forward with the CL, we have several options:\n1) Modifying this DCHECK so that it accepts net::ERR_BLOCKED_BY_ADMINISTRATOR as a valid net error in the case of a blocked navigation. Caveat: we\u0027re going to have to do that again for the next implementer of NavigationThrottle that wants to set the error code.\n2) Make it so that NavigationThrottle::BLOCK_REQUEST accept taking an arbitrary net error code. Caveat: while getting NavigationThrottle::BLOCK_REQUEST and a code of net::ERR_BLOCKED_BY_CLIENT or net::ERR_BLOCKED_BY_ADMINISTRATOR makes sense, this might not be the case with other error codes.\n3) Add a throttle action of NavigationThrottle::CANCEL_WITH_ERROR that accepts any error code. Caveat: this adds yet another action, which might be confusing for implementers.\n4) Get rid of all cancelling/blocking actions so that we only have 3: PROCEED, DEFER or CANCEL - and let the implementer set the error code they want when returning CANCEL.\n\nPersonally, I quite like option 4, since it makes the interface simpler - and I have started to worry about an overbloat of the ThrottleCheckResults. It seems to me that an implementer of a NavigationThrottle wants to take these three basic actions: let the navigation go on, pause it, or cancel it with an error of its chosing. What do you think?\n\nSince this is a bit of work though, in the interest of letting this CL progress, I think we should just change the DCHECK to accept net::ERR_BLOCKED_BY_ADMINISTRATOR as a valid error for NavigationThrottle::BLOCK_REQUEST.",
+      "revId": "2ec883baa185dd4ed877fbbfeaaa7aea51385b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
