@@ -58,11 +58,20 @@ class ArgumentSpec {
 
   // Returns true if the passed |value| matches this specification. If
   // |out_value| is non-null, converts the value to a base::Value and populates
-  // |out_value|. Otherwise, no conversion is performed.
+  // |out_value|. Similarly, if |v8_out_value| is non-null, this will populate
+  // |v8_out_value| with the parsed value. The advantage to duplicating the
+  // parsed value into v8_out_value is that for defined objects, the result will
+  // be a data object with no getters/setters, so clients don't need to worry
+  // about re-checking the arguments. Note that this will *not* apply in the
+  // case of ArgumentType::ANY, ArgumentType::BINARY, or ArgumentType::FUNCTION,
+  // where we do not copy the (arbitrary) contents.
+  // If both |out_value| and |v8_out_value| are null, no conversion is
+  // performed.
   bool ParseArgument(v8::Local<v8::Context> context,
                      v8::Local<v8::Value> value,
                      const APITypeReferenceMap& refs,
                      std::unique_ptr<base::Value>* out_value,
+                     v8::Local<v8::Value>* v8_out_value,
                      std::string* error) const;
 
   // Returns a type name for this argument. Note: This should only be used to
@@ -104,20 +113,24 @@ class ArgumentSpec {
   bool ParseArgumentToFundamental(v8::Local<v8::Context> context,
                                   v8::Local<v8::Value> value,
                                   std::unique_ptr<base::Value>* out_value,
+                                  v8::Local<v8::Value>* v8_out_value,
                                   std::string* error) const;
   bool ParseArgumentToObject(v8::Local<v8::Context> context,
                              v8::Local<v8::Object> object,
                              const APITypeReferenceMap& refs,
                              std::unique_ptr<base::Value>* out_value,
+                             v8::Local<v8::Value>* v8_out_value,
                              std::string* error) const;
   bool ParseArgumentToArray(v8::Local<v8::Context> context,
                             v8::Local<v8::Array> value,
                             const APITypeReferenceMap& refs,
                             std::unique_ptr<base::Value>* out_value,
+                            v8::Local<v8::Value>* v8_out_value,
                             std::string* error) const;
   bool ParseArgumentToAny(v8::Local<v8::Context> context,
                           v8::Local<v8::Value> value,
                           std::unique_ptr<base::Value>* out_value,
+                          v8::Local<v8::Value>* v8_out_value,
                           std::string* error) const;
 
   // Returns an error message indicating the type of |value| does not match the
