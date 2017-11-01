@@ -22,6 +22,30 @@
       "revId": "84646fb9cdebe8acf9c071e211511466f60abbcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b739c8b_7958cb2a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T17:57:19Z",
+      "side": 1,
+      "message": "Though it occurs to me that this might be talking about javascript: URLs that don\u0027t result in a new document, i.e. running the script doesn\u0027t return anything? Though in that case, I don\u0027t think we navigate anywhere?",
+      "parentUuid": "dfbdbbed_ed8aa5a2",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "revId": "84646fb9cdebe8acf9c071e211511466f60abbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
