@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3b03f19_de125ab1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-11-01T00:17:03Z",
+      "side": 1,
+      "message": "call this RendererBackgroundState to be really clear as it is not 1:1 with \"page is backgrounded\"?\nThis feels like a mix of states and state-transitions, should we make it one or the other? \n\nFor state:Going forward maybe we could make the distinction clear - if in background page, Renderer is \"foreground\" because of say audio maybe we call that \"foreground-service\" \nso Renderer states might be something like:\n- foreground, foreground-service, backgrounded, stopped",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "e2ebf166eb258b10e4d9e7fb5bdd116ec27cf80b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003a89f6_85465bbf",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-11-01T00:17:03Z",
+      "side": 1,
+      "message": "Maybe RESTARTED to be consistent with Lifecycle terminology?",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "e2ebf166eb258b10e4d9e7fb5bdd116ec27cf80b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
