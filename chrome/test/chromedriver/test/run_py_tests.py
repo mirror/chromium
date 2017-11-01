@@ -117,6 +117,8 @@ _DESKTOP_NEGATIVE_FILTER = [
     'ChromeDriverTest.testTouchFlickElement',
     'ChromeDriverTest.testTouchPinch',
     'ChromeDriverAndroidTest.*',
+    # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2114
+    'ChromeDriverTest.testShadowDomFindElementFailsBetweenShadowRoots',
 ]
 
 
