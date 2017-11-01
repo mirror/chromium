@@ -2211,6 +2211,13 @@ void DXVAVideoDecodeAccelerator::NotifyPictureReady(
                     color_space, allow_overlay);
     client_->PictureReady(picture);
   }
+
+  // If we have accumulated more inputs than the outputs, we should try reading
+  // as much outputs as possible until MF_E_TRANSFORM_NEED_MORE_INPUT is
+  // returned.
+  decoder_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&DXVAVideoDecodeAccelerator::DoDecode,
+                            base::Unretained(this), color_space));
 }
 
 void DXVAVideoDecodeAccelerator::NotifyInputBuffersDropped(
