@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "5de4663c_51bbd832",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1334,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-01T17:06:22Z",
+      "side": 1,
+      "message": "Can we also make this conditional on enable_es3 \u003d\u003d true?",
+      "range": {
+        "startLine": 1334,
+        "startChar": 10,
+        "endLine": 1334,
+        "endChar": 22
+      },
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e1634f8_ed0751ec",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 14
@@ -58,6 +81,29 @@
         "startChar": 42,
         "endLine": 4687,
         "endChar": 71
+      },
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d5bbdc_ecc6b7b9",
+        "filename": "gpu/command_buffer/tests/gl_ext_window_rectangles_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-01T17:06:22Z",
+      "side": 1,
+      "message": "nit: just to be consistent with code above and below, use GLint.",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 7
       },
       "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
