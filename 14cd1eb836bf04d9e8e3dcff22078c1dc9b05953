@@ -16,6 +16,24 @@
       "revId": "14cd1eb836bf04d9e8e3dcff22078c1dc9b05953",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ad74d6_180aabe2",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-11-01T15:29:26Z",
+      "side": 1,
+      "message": "Unfortunately OperatingSystemVersionNumbers does not return desired value. a bug filed here: crbug.com780119",
+      "parentUuid": "0130682d_3ca2b0a9",
+      "revId": "14cd1eb836bf04d9e8e3dcff22078c1dc9b05953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
