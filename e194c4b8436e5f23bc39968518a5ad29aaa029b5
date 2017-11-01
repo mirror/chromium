@@ -42,6 +42,52 @@
     },
     {
       "key": {
+        "uuid": "c4d10b27_35f9b8a0",
+        "filename": "net/base/network_change_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-01T21:28:40Z",
+      "side": 1,
+      "message": "nit:  return std::make_unique\u003cNetworkChangeNotifierLinux\u003e(std::unordered_set\u003cstd::string\u003e()) (I believe that works, even though the types are different)",
+      "range": {
+        "startLine": 532,
+        "startChar": 10,
+        "endLine": 532,
+        "endChar": 36
+      },
+      "revId": "e194c4b8436e5f23bc39968518a5ad29aaa029b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f223a39f_0fd2197c",
+        "filename": "net/base/network_change_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-01T21:28:40Z",
+      "side": 1,
+      "message": "As above, return std::make_unique\u003cNetworkChangeNotifierMac\u003e()",
+      "range": {
+        "startLine": 534,
+        "startChar": 25,
+        "endLine": 534,
+        "endChar": 46
+      },
+      "revId": "e194c4b8436e5f23bc39968518a5ad29aaa029b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df217fff_eaea5391",
         "filename": "net/base/network_change_notifier.h",
         "patchSetId": 3
