@@ -55,6 +55,52 @@
     },
     {
       "key": {
+        "uuid": "65457bae_e173a8a1",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-01T00:11:11Z",
+      "side": 1,
+      "message": "Do we need to pass in Context here or can we use the application context from getApplicationContext()?",
+      "range": {
+        "startLine": 109,
+        "startChar": 40,
+        "endLine": 109,
+        "endChar": 55
+      },
+      "revId": "0198cb77c39fb6747a19332b529d963f2a5fac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6954863_fa9647cc",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-01T00:11:11Z",
+      "side": 1,
+      "message": "I have some hesitation that we\u0027re throwing an exception on a call to a hidden API not behaving as we\u0027d like.\n\nI think we should only be using this as a hint and not a guarantee around isolated-ness.  I\u0027d also be fine with this method being called detectIsIsolatedProcess and having it return a capital B Boolean where null would be the undefined state.",
+      "range": {
+        "startLine": 133,
+        "startChar": 25,
+        "endLine": 133,
+        "endChar": 26
+      },
+      "revId": "0198cb77c39fb6747a19332b529d963f2a5fac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c831833_3066086f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
         "patchSetId": 3
@@ -102,6 +148,47 @@
       "side": 1,
       "message": "Can we just catch this as an IOException rather than checking isIsolatedProcess?",
       "parentUuid": "55bfade1_3bb0ccce",
+      "revId": "0198cb77c39fb6747a19332b529d963f2a5fac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873f4391_1fc5d8e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-01T00:11:11Z",
+      "side": 1,
+      "message": "While I think we need to catch the IOException anyway, I guess I think it\u0027s useful to not do things that we know will fail.\n\nI\u0027d personally prefer we kept this check in, but do not feel intensely strong about it.",
+      "parentUuid": "062bcc48_9bfb000a",
+      "revId": "0198cb77c39fb6747a19332b529d963f2a5fac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f929a7d_602bab77",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-01T00:11:11Z",
+      "side": 1,
+      "message": "since the one caller catches the exception, I think we should find a way to not need it to be thrown.",
+      "range": {
+        "startLine": 53,
+        "startChar": 17,
+        "endLine": 53,
+        "endChar": 34
+      },
       "revId": "0198cb77c39fb6747a19332b529d963f2a5fac1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
