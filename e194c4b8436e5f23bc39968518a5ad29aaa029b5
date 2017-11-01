@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5a71d80_04df70a9",
+        "filename": "net/base/network_change_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-01T13:44:57Z",
+      "side": 1,
+      "message": "There\u0027s a typo in \"unique_ptr\"",
+      "revId": "e194c4b8436e5f23bc39968518a5ad29aaa029b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df217fff_eaea5391",
+        "filename": "net/base/network_change_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-01T13:44:57Z",
+      "side": 1,
+      "message": "nit: Could you remove \"The caller owns the returned pointer\"? The return type is no longer a pointer.",
+      "revId": "e194c4b8436e5f23bc39968518a5ad29aaa029b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
