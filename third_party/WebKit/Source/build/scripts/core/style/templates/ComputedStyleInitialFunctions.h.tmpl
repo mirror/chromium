@@ -1,0 +1,135 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef ComputedStyleInitialFunctions_h
+#define ComputedStyleInitialFunctions_h
+
+#include "core/layout/LayoutTheme.h"
+#include "core/style/ComputedStyleConstants.h"
+#include "platform/ThemeTypes.h"
+#include "platform/scroll/ScrollTypes.h"
+{% for include in includes %}
+#include "{{include}}"
+{% endfor %}
+
+namespace blink {
+
+class FilterOperations;
+class ShapeValue;
+class StyleImage;
+class StyleInheritedVariables;
+class StyleNonInheritedVariables;
+
+class ComputedStyleInitialFunctions{
+  STATIC_ONLY(ComputedStyleInitialFunctions);
+ public:
+  // Hand-written methods.
+
+  // content-alignment
+  static StyleContentAlignmentData InitialContentAlignment() {
+    return StyleContentAlignmentData(kContentPositionNormal,
+                                     kContentDistributionDefault,
+                                     kOverflowAlignmentDefault);
+  }
+  // default-alignment
+  static StyleSelfAlignmentData InitialDefaultAlignment() {
+    return StyleSelfAlignmentData(kItemPositionNormal,
+                                  kOverflowAlignmentDefault);
+  }
+
+  // border-image-source
+  static StyleImage* InitialBorderImageSource() { return nullptr; }
+
+  // border-width
+  static float InitialBorderWidth() { return 3; }
+
+  // column-rule-width
+  static unsigned short InitialColumnRuleWidth() {
+    return 3;
+  }
+
+  // Grid properties.
+  static size_t InitialGridAutoRepeatInsertionPoint() { return 0; }
+  static AutoRepeatType InitialGridAutoRepeatType() {
+    return AutoRepeatType::kNoAutoRepeat;
+  }
+
+  // FIXME: Remove letter-spacing/word-spacing and replace them with respective
+  // FontBuilder calls.  letter-spacing
+  static float InitialWordSpacing() { return 0.0f; }
+  static float InitialLetterSpacing() { return 0.0f; }
+
+  // outline-width
+  static unsigned short InitialOutlineWidth() {
+    return 3;
+  }
+
+  // vertical-align
+  static EVerticalAlign InitialVerticalAlign() {
+    return EVerticalAlign::kBaseline;
+  }
+
+  // -webkit-perspective-origin-x
+  static Length InitialPerspectiveOriginX() { return Length(50.0, kPercent); }
+
+  // -webkit-perspective-origin-y
+  static Length InitialPerspectiveOriginY() { return Length(50.0, kPercent); }
+
+  // -webkit-transform-origin-x
+  static Length InitialTransformOriginX() { return Length(50.0, kPercent); }
+  // -webkit-transform-origin-y
+  static Length InitialTransformOriginY() { return Length(50.0, kPercent); }
+  // -webkit-transform-origin-z
+  static float InitialTransformOriginZ() { return 0; }
+
+  // -webkit-mask-box-image-source
+  static StyleImage* InitialMaskBoxImageSource() { return nullptr; }
+
+  // filter and backdrop-filter
+  static const FilterOperations& InitialFilter() {
+    return InitialFilterInternal();
+  }
+  static const FilterOperations& InitialBackdropFilter() {
+    return InitialFilterInternal();
+  }
+
+  // Generated methods below.
+{% for property in properties if
+    'initial' not in property.computed_style_custom_functions %}
+  {% if property.field_template == "pointer" %}
+
+  // {{property.name}}
+  static {{property.type_name}}* {{property.initial}}() {
+    return {{property.default_value}};
+  }
+  {% elif property.field_template == "external" %}
+
+  // {{property.name}}
+    {% if property.wrapper_pointer_name %}
+  static {{property.unwrapped_type_name}}* {{property.initial}}() {
+    return {{property.default_value}};
+  }
+    {% else %}
+  static {{property.type_name}} {{property.initial}}() {
+    return {{property.default_value}};
+  }
+    {% endif %}
+  {% elif property.field_template == "keyword" or
+        property.field_template == "multi_keyword" or
+        property.field_template == "primitive" %}
+
+  // {{property.name}}
+  static {{property.type_name}} {{property.initial}}() {
+    return {{property.default_value}};
+  }
+  {% endif %}
+{% endfor %}
+
+ private:
+  static const FilterOperations& InitialFilterInternal();
+};
+
+} // namespace blink
+
+#endif // ComputedStyleInitialFunctions
