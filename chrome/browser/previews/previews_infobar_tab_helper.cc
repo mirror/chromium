@@ -105,12 +105,20 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
   if (headers && data_reduction_proxy::IsLitePagePreview(*headers)) {
     base::Time previews_freshness;
     headers->GetDateValue(&previews_freshness);
+
+    // Retrieve PreviewsUIService* associated with |web_contents| if available.
+    PreviewsService* previews_service = PreviewsServiceFactory::GetForProfile(
+        Profile::FromBrowserContext(web_contents()->GetBrowserContext()));
+    previews::PreviewsUIService* previews_ui_service =
+        previews_service ? previews_service->previews_ui_service() : nullptr;
+
     PreviewsInfoBarDelegate::Create(
         web_contents(), previews::PreviewsType::LITE_PAGE, previews_freshness,
         true /* is_data_saver_user */, is_reload,
         base::Bind(&AddPreviewNavigationCallback,
                    web_contents()->GetBrowserContext(),
                    navigation_handle->GetRedirectChain()[0],
-                   previews::PreviewsType::LITE_PAGE));
+                   previews::PreviewsType::LITE_PAGE),
+        previews_ui_service);
   }
 }
