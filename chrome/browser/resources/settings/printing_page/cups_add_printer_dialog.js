@@ -175,6 +175,30 @@ Polymer({
     this.fire('open-configuring-printer-dialog');
   },
 
+  /**
+   * @param {string} address
+   * @return {boolean}
+   * @private
+   */
+  isValidAddress_: function(address) {
+    // Loose hostname + port regex. Matches hostnames and IP addresses that
+    // might be valid.  Allows many invalid strings.
+    var addressRegex = RegExp('^[a-zA-Z0-9-._:]+(:[0-9]+)?$');
+
+    return addressRegex.test(address);
+  },
+
+  /**
+   * @param {string} printerName
+   * @param {string} printerAddress
+   * @return {boolean}
+   * @private
+   */
+  addPrinterAllowed_: function(printerName, printerAddress) {
+    return !!printerName && !!printerAddress &&
+        this.isValidAddress_(printerAddress);
+  },
+
   /** @private */
   onAddressChanged_: function() {
     // TODO(xdai): Check if the printer address exists and then show the
