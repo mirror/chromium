@@ -70,6 +70,24 @@
       "revId": "fbf59fdc6ba9b494dc59be9f7de7d9efcf46deb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e9d3588_41650ca9",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_test_template.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T20:22:00Z",
+      "side": 1,
+      "message": "Lambdas with captures of state outside the lifetime of the stack frame are not allowed in chromium. That\u0027s probably why base::Bind doesn\u0027t support it. See https://chromium-cpp.appspot.com/",
+      "parentUuid": "6a75e688_9fd264d6",
+      "revId": "fbf59fdc6ba9b494dc59be9f7de7d9efcf46deb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
