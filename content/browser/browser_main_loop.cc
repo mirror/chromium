@@ -459,7 +459,12 @@ GetDefaultTaskSchedulerInitParams() {
       base::SchedulerWorkerPoolParams(
           base::RecommendedMaxNumberOfThreadsInPool(8, 32, 0.3, 0),
           base::TimeDelta::FromSeconds(60),
-          base::SchedulerBackwardCompatibility::INIT_COM_STA));
+          base::SchedulerBackwardCompatibility::INIT_COM_STA)
+#if defined(OS_WIN)
+          ,
+      base::TaskScheduler::InitParams::SharedWorkerPoolEnvironment::COM_MTA
+#endif  // defined(OS_WIN)
+      );
 #endif
 }
 
