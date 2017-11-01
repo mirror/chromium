@@ -704,5 +704,24 @@ TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionImageData) {
   }
 }
 
+// This test verifies if requesting a large ImageData and creating an
+// ImageBitmap from that does not crash. crbug.com/780358
+TEST_F(ImageBitmapTest, CreateImageBitmapFromTooBigImageDataDoesNotCrash) {
+  // Enable experimental canvas features for this test.
+  ScopedExperimentalCanvasFeaturesForTest experimental_canvas_features(true);
+
+  // We use small integer max as the maximum buffer size to allow 32 bit ASAN
+  // bots successfully allocate the memory.
+  ImageData* image_data =
+      ImageData::CreateForTest(IntSize(v8::TypedArray::kMaxLength / 4, 1));
+  EXPECT_TRUE(image_data);
+
+  ImageBitmapOptions options =
+      PrepareBitmapOptions(ColorSpaceConversion::DEFAULT_COLOR_CORRECTED);
+  ImageBitmap* image_bitmap = ImageBitmap::Create(
+      image_data, IntRect(IntPoint(0, 0), image_data->Size()), options);
+  EXPECT_TRUE(image_bitmap);
+}
+
 #undef MAYBE_ImageBitmapColorSpaceConversionHTMLImageElement
 }  // namespace blink
