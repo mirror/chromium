@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e423ca87_eb75ad56",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-01T16:09:32Z",
+      "side": 1,
+      "message": "What\u0027s a \"pack\"? I can guess, but is that the normal name for this?",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ea6621_25af8827",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-01T16:09:32Z",
+      "side": 1,
+      "message": "I find the logical easier to read if this were like\n\n(reinterpret_cast\u003csize_t\u003e(p) \u0026\u0026 mask) \u003d\u003d 0",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24fbc8c2_942c9a12",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-01T16:09:32Z",
+      "side": 1,
+      "message": "Can these two block be unified in some way?  The only difference between lines 49-55 and lines 59-65 is the use of store vs storeu.  I thought there was no longer a penalty between store and storeu?\n\nNot sure what the compiler will do, but would it help to put the pointer updates between the computation of m_dest and the store of m_dest to memory?\n\nSame comment for lines 70-89 below.",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf90d326_2b74329b",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-01T16:09:32Z",
+      "side": 1,
+      "message": "Is this guaranteed by C++ to actually work? No aliasing issues and such?",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8efa542b_292ae496",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-01T16:09:32Z",
+      "side": 1,
+      "message": "Is this guaranteed to work in C++?",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721bf065_67354d65",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-01T16:09:32Z",
+      "side": 1,
+      "message": "Similar comments as in Vadd.",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914ed426_48fbeae4",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-01T16:09:32Z",
+      "side": 1,
+      "message": "Same comments as in Vadd.",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcc402b_0f784a45",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-01T16:09:32Z",
+      "side": 1,
+      "message": "Unlike the other routines with only required source1 to aligned, this requires everything to be aligned.  Too many cases to manage?\n\nWould it be worthwhile to allow this and use the unaligned load/store instructions in this case?",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
