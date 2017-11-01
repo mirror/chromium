@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65b854e1_5714c79a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T15:09:42Z",
+      "side": 1,
+      "message": "Why don\u0027t these methods use mContextualSearchManager?",
+      "revId": "9b6c726d1dfe2a44421fd0a3d3f272cea4efd744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ab9f59_96f73761",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3375,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T15:09:42Z",
+      "side": 1,
+      "message": "We can restrict the test to N only with @MinAndroidSdkLevel(Build.VERSION_CODES.N)",
+      "range": {
+        "startLine": 3375,
+        "startChar": 8,
+        "endLine": 3375,
+        "endChar": 66
+      },
+      "revId": "9b6c726d1dfe2a44421fd0a3d3f272cea4efd744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64308e99_97692ea4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3386,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T15:09:42Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed. The ChromeTabbedActivity2 should automatically come to the front  after it\u0027s started.",
+      "range": {
+        "startLine": 3386,
+        "startChar": 8,
+        "endLine": 3386,
+        "endChar": 39
+      },
+      "revId": "9b6c726d1dfe2a44421fd0a3d3f272cea4efd744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
