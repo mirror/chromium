@@ -99,6 +99,24 @@
       "revId": "c8e9bc612a66c84e4eeaffc3a3a9ca74f663c06a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb02e418_ee351cd2",
+        "filename": "chrome/install_static/install_constants.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-01T18:36:20Z",
+      "side": 1,
+      "message": "Thanks for reminding me that we can define CLSID via hexadecimal. \n\nI was trying to update this patch set based on your suggestions. However, the assertion in InstallDetails::GetPayload() fails after I changed wchar_t* to CLSID.\n\nstatic_assert(std::is_pod\u003cInstallConstants\u003e::value,\n                \"InstallConstants must be a POD-struct\"); \n\nI think this is because CLSID is not POD type so putting a CLSID in InstallConstants is not allowed?\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n\nAnother concern is that, in InstallConstants we use wchar_t* for legacy_command_execute_clsid and a couple of other guid-type variables. Using CLSID for toast_activator_clsid breaks the consistency.\n\nHow do you think please?",
+      "parentUuid": "88147514_fcfc788d",
+      "revId": "c8e9bc612a66c84e4eeaffc3a3a9ca74f663c06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
