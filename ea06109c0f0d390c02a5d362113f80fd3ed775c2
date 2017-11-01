@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a957a790_f9fcb2f3",
+        "filename": "content/renderer/accessibility/render_accessibility_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-01T16:55:49Z",
+      "side": 1,
+      "message": "The var was not private so I was extra careful.  Done, also made it private.",
+      "parentUuid": "25512137_dc8be415",
+      "revId": "ea06109c0f0d390c02a5d362113f80fd3ed775c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c06bdde8_91f3ab5b",
         "filename": "content/shell/test_runner/test_plugin.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f0db02d2_819cfc08",
+        "filename": "content/shell/test_runner/test_plugin.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-01T16:55:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c06bdde8_91f3ab5b",
+      "revId": "ea06109c0f0d390c02a5d362113f80fd3ed775c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "797c1cdc_a81ed9d4",
         "filename": "third_party/WebKit/Source/core/exported/WebUserGestureTokenTest.cpp",
         "patchSetId": 4
@@ -47,6 +83,30 @@
       "writtenOn": "2017-11-01T16:16:30Z",
       "side": 1,
       "message": "These tests look like they will fail with your feature on. Because passing in nullptr for a frame will return false won\u0027t it?",
+      "range": {
+        "startLine": 47,
+        "startChar": 42,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "ea06109c0f0d390c02a5d362113f80fd3ed775c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1dcabd9_c29845a5",
+        "filename": "third_party/WebKit/Source/core/exported/WebUserGestureTokenTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-01T16:55:49Z",
+      "side": 1,
+      "message": "Yes they will fail, and it is intentional.  UserActivation v2 is not token based, so we don\u0027t want to update these tests.",
+      "parentUuid": "797c1cdc_a81ed9d4",
       "range": {
         "startLine": 47,
         "startChar": 42,
