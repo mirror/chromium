@@ -4431,5 +4431,32 @@ error::Error GLES2DecoderPassthroughImpl::HandleTexStorage2DImageCHROMIUM(
   return error::kNoError;
 }
 
+error::Error GLES2DecoderPassthroughImpl::HandleWindowRectanglesEXTImmediate(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::WindowRectanglesEXTImmediate& c =
+      *static_cast<const volatile gles2::cmds::WindowRectanglesEXTImmediate*>(
+          cmd_data);
+  GLenum mode = static_cast<GLenum>(c.mode);
+  GLsizei count = static_cast<GLsizei>(c.count);
+  uint32_t data_size = 0;
+  if (count >= 0 && !GLES2Util::ComputeDataSize<GLint, 4>(count, &data_size)) {
+    return error::kOutOfBounds;
+  }
+  if (data_size > immediate_data_size) {
+    return error::kOutOfBounds;
+  }
+  volatile const GLint* box = GetImmediateDataAs<volatile const GLint*>(
+      c, data_size, immediate_data_size);
+  if (box == nullptr) {
+    return error::kOutOfBounds;
+  }
+  error::Error error = DoWindowRectanglesEXT(mode, count, box);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
+}
+
 }  // namespace gles2
 }  // namespace gpu
