@@ -79,6 +79,15 @@ struct MESSAGE_CENTER_EXPORT ButtonInfo {
   base::string16 placeholder;
 };
 
+// TODO(estade): add an ALWAYS value to mark notifications as additionally
+// visible over system fullscreen windows such as Chrome OS login so we don't
+// need to centrally track Ash system notification IDs.
+enum class FullscreenVisibility {
+  NONE,       // Don't show the notification over fullscreen (default).
+  OVER_USER,  // Show over the current fullscreened client window.
+              // windows (like Chrome OS login).
+};
+
 // Represents rich features available for notifications.
 class MESSAGE_CENTER_EXPORT RichNotificationData {
  public:
@@ -179,6 +188,8 @@ class MESSAGE_CENTER_EXPORT RichNotificationData {
   // and hides the icon when the notification is expanded.
   // This is only effective when new style notification is enabled.
   bool use_image_as_icon = false;
+
+  FullscreenVisibility fullscreen_visibility = FullscreenVisibility::NONE;
 };
 
 class MESSAGE_CENTER_EXPORT Notification {
@@ -408,6 +419,13 @@ class MESSAGE_CENTER_EXPORT Notification {
   bool use_image_as_icon() const { return optional_fields_.use_image_as_icon; }
   void set_use_image_as_icon(bool use_image_as_icon) {
     optional_fields_.use_image_as_icon = use_image_as_icon;
+  }
+
+  FullscreenVisibility fullscreen_visibility() const {
+    return optional_fields_.fullscreen_visibility;
+  }
+  void set_fullscreen_visibility(FullscreenVisibility visibility) {
+    optional_fields_.fullscreen_visibility = visibility;
   }
 
   NotificationDelegate* delegate() const { return delegate_.get(); }
