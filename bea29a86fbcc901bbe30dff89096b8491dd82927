@@ -63,6 +63,24 @@
       "revId": "bea29a86fbcc901bbe30dff89096b8491dd82927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed52fc0_cb7b9483",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-11-01T16:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09606554_69a265f4",
+      "revId": "bea29a86fbcc901bbe30dff89096b8491dd82927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
