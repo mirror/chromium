@@ -106,9 +106,14 @@ public class PureJavaExceptionReporter {
             mMinidumpFileStream = null;
             return;
         }
+        String processName = ContextUtils.detectProcessName(ContextUtils.getApplicationContext());
+        if (processName == null || !processName.contains(":")) {
+            processName = "browser";
+        }
+
         String[] allInfo = BuildInfo.getAll();
         addPairedString(PRODUCT, "Chrome_Android");
-        addPairedString(PROCESS_TYPE, "browser");
+        addPairedString(PROCESS_TYPE, processName);
         addPairedString(DEVICE, allInfo[BuildInfo.DEVICE_INDEX]);
         addPairedString(VERSION, ChromeVersionInfo.getProductVersion());
         addPairedString(CHANNEL, getChannel());

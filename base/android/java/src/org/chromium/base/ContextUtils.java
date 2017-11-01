@@ -4,12 +4,17 @@
 
 package org.chromium.base;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * This class provides Android application context related utility methods.
@@ -99,5 +104,38 @@ public class ContextUtils {
             throw new RuntimeException("Global application context cannot be set to null.");
         }
         sApplicationContext = appContext;
+    }
+
+    public static String detectProcessName(Context context) {
+        try {
+            String currentProcessName = null;
+            int pid = android.os.Process.myPid();
+
+            ActivityManager manager =
+                    (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            for (RunningAppProcessInfo processInfo : manager.getRunningAppProcesses()) {
+                if (processInfo.pid == pid) {
+                    currentProcessName = processInfo.processName;
+                    break;
+                }
+            }
+            return currentProcessName;
+        } catch (SecurityException e) {
+            return null;
+        }
+    }
+
+    public static Boolean detectIsIsolatedProcess() {
+        try {
+            Method isIsolatedMethod = android.os.Process.class.getMethod("isIsolated");
+            Object retVal = isIsolatedMethod.invoke(null);
+            if (retVal == null || !(retVal instanceof Boolean)) {
+                return null;
+            }
+            return (Boolean) retVal;
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+                | NoSuchMethodException | SecurityException e) {
+            return null;
+        }
     }
 }
