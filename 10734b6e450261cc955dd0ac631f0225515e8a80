@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5df73a51_b6e1fd64",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T20:00:45Z",
+      "side": 1,
+      "message": "I think the old code would do the wrong thing actually if this invariant didn\u0027t hold. It falls into case 2 when is_web_gl_software_rendering is true. If gpu compositing was enabled, then it would be passing a software bitmap to the compositor incorrectly. I\u0027ve added a comment for now.",
+      "parentUuid": "323258a9_83bec4ef",
+      "range": {
+        "startLine": 186,
+        "startChar": 26,
+        "endLine": 186,
+        "endChar": 49
+      },
+      "revId": "10734b6e450261cc955dd0ac631f0225515e8a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b277ab33_cf830382",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/SharedGpuContext.cpp",
         "patchSetId": 5
