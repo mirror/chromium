@@ -69,6 +69,24 @@
       "revId": "53468533a3a4c3cdb2d63c46768a1c3fd1f9152c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e557ce_cad15a21",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T01:46:04Z",
+      "side": 1,
+      "message": "OK, followup is fine, since it doesn\u0027t seem like highlighter_client_ should be a unique_ptr either \u003d)",
+      "parentUuid": "5d8a940d_a50148db",
+      "revId": "53468533a3a4c3cdb2d63c46768a1c3fd1f9152c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
