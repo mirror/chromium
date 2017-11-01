@@ -44,6 +44,9 @@ class CORE_EXPORT SuspendableObject : public ContextLifecycleObserver {
   bool SuspendIfNeededCalled() const { return suspend_if_needed_called_; }
 #endif
 
+  // ContextLifecycleObserver:
+  ExecutionContext* GetExecutionContext() const override;
+
   // These methods have an empty default implementation so that subclasses
   // which don't need special treatment can skip implementation.
   virtual void Suspend();

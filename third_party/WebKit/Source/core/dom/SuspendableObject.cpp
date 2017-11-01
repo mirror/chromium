@@ -61,6 +61,11 @@ void SuspendableObject::SuspendIfNeeded() {
     context->SuspendSuspendableObjectIfNeeded(this);
 }
 
+ExecutionContext* SuspendableObject::GetExecutionContext() const {
+  DCHECK(IsMainThread());
+  return ContextLifecycleObserver::GetExecutionContext();
+}
+
 void SuspendableObject::Suspend() {}
 
 void SuspendableObject::Resume() {}

@@ -68,7 +68,9 @@ class CORE_EXPORT ContextLifecycleObserver
  public:
   virtual void ContextDestroyed(ExecutionContext*) {}
 
-  ExecutionContext* GetExecutionContext() const { return LifecycleContext(); }
+  virtual ExecutionContext* GetExecutionContext() const {
+    return LifecycleContext();
+  }
   LocalFrame* GetFrame() const;
 
   enum Type {
