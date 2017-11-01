@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e145f776_ac08f6dd",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-01T16:37:37Z",
+      "side": 1,
+      "message": "nit: not necessary since |arc_app_list_prefs_| is a const pointer and we already assume it is not nullptr in constructor in L52. We should be consistent. That is, either remove the \"if\" here or add \"if\" in constructor.",
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b948cff_f37a5582",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-01T16:37:37Z",
+      "side": 1,
+      "message": "nit: move {} to cc",
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4693fb00_52585030",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-01T16:37:37Z",
+      "side": 1,
+      "message": "nit: const \u0026 ?",
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8230f6b2_1ac98c8a",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-01T16:37:37Z",
+      "side": 1,
+      "message": "nit: getArc... -\u003e GetArc...",
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53521e18_879496fe",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-01T16:37:37Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
