@@ -47,8 +47,11 @@ class PLATFORM_EXPORT CompositedLayerRasterInvalidator {
 
  private:
   struct PaintChunkInfo {
-    PaintChunkInfo(const IntRect& bounds, const PaintChunk& chunk)
+    PaintChunkInfo(const IntRect& bounds,
+                   const TransformationMatrix& transform_in_layer,
+                   const PaintChunk& chunk)
         : bounds_in_layer(bounds),
+          transform_in_layer(transform_in_layer),
           id(chunk.id),
           is_cacheable(chunk.is_cacheable),
           properties(chunk.properties) {}
@@ -58,6 +61,7 @@ class PLATFORM_EXPORT CompositedLayerRasterInvalidator {
     }
 
     IntRect bounds_in_layer;
+    TransformationMatrix transform_in_layer;
     PaintChunk::Id id;
     bool is_cacheable;
     PaintChunkProperties properties;
@@ -75,6 +79,8 @@ class PLATFORM_EXPORT CompositedLayerRasterInvalidator {
   void InvalidateRasterForOldChunk(const PaintChunkInfo&,
                                    PaintInvalidationReason);
   void InvalidateRasterForWholeLayer(const DisplayItemClient*);
+  bool ChunkPropertiesChanged(const PaintChunkInfo& new_chunk,
+                              const PaintChunkInfo& old_chunk) const;
 
   RasterInvalidationFunction raster_invalidation_function_;
   gfx::Rect layer_bounds_;

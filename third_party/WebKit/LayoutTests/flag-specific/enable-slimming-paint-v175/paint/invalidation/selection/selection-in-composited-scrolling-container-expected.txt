@@ -12,14 +12,9 @@
           "reason": "subtree"
         },
         {
-          "object": "LayoutBlockFlow DIV",
-          "rect": [10, 11, 60, 16],
-          "reason": "paint property change"
-        },
-        {
-          "object": "LayoutBlockFlow DIV",
+          "object": "InlineTextBox 'test test test'",
           "rect": [10, 11, 59, 16],
-          "reason": "paint property change"
+          "reason": "subtree"
         }
       ]
     }
