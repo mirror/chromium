@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f52e1173_753ebe57",
+        "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialFunctions.h.tmpl",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-01T05:24:08Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve renamed it to ComputedStyleInitialValues for now. We can revisit the name another time if it becomes confusing.",
+      "parentUuid": "a8d576a1_a650e9cb",
+      "revId": "415cf47dbb4f399155e12db88c01044a5e758e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b284db5f_8291c7f9",
         "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialFunctions.h.tmpl",
         "patchSetId": 9
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "yeah i was talking about the function name, not the prefix. given a prefix with the word \u0027initial\u0027 in it I was questioning whether \u0027initial\u0027 was required in the function names. I was imagining something like ComputedStyleInitialValues::TapHighlightColor. but i\u0027m not sure if it\u0027s less clear code, up to you",
       "parentUuid": "1f872419_6b7aecfa",
+      "revId": "415cf47dbb4f399155e12db88c01044a5e758e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73173e10_ce2350f3",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-01T05:24:08Z",
+      "side": 1,
+      "message": "Yeah, I wanted to do that, but we actually can\u0027t :/\n\nFor example: \n\nHyphens ComputedStyleInitialFunctions::Hyphens() \n\nis invalid, because Hyphens is now both a type name and a function name in the ComputedStyleInitialFunctions context, and a lot of the property names and the types they contain have the same name when converted to UpperCamelCase.",
+      "parentUuid": "fe2688e4_361481cb",
       "revId": "415cf47dbb4f399155e12db88c01044a5e758e76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
