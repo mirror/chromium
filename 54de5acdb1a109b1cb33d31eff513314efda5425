@@ -22,6 +22,23 @@
       "revId": "54de5acdb1a109b1cb33d31eff513314efda5425",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "146fe0ce_8c314066",
+        "filename": "components/previews/core/previews_opt_out_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-01T20:54:18Z",
+      "side": 1,
+      "message": "nit: DLOG should be sufficient (instead of LOG) for getting to developers, and will keep the release binary smaller.",
+      "revId": "54de5acdb1a109b1cb33d31eff513314efda5425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
