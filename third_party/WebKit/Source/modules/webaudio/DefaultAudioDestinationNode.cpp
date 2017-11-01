@@ -86,6 +86,7 @@ void DefaultAudioDestinationHandler::CreateDestination() {
 }
 
 void DefaultAudioDestinationHandler::StartDestination() {
+  DCHECK(!destination_->IsPlaying());
   // Use Experimental AudioWorkletThread only when AudioWorklet is enabled and
   // there is an active AudioWorkletGlobalScope.
   if (RuntimeEnabledFeatures::AudioWorkletEnabled() &&
@@ -99,28 +100,31 @@ void DefaultAudioDestinationHandler::StartDestination() {
 }
 
 void DefaultAudioDestinationHandler::StopDestination() {
+  DCHECK(destination_->IsPlaying());
   destination_->Stop();
 }
 
 void DefaultAudioDestinationHandler::StartRendering() {
   DCHECK(IsInitialized());
-  if (IsInitialized()) {
-    DCHECK(!destination_->IsPlaying());
+  // context might try to start rendering again while the destination is
+  // running. Ignore it when that happens.
+  if (IsInitialized() && !destination_->IsPlaying()) {
     StartDestination();
   }
 }
 
 void DefaultAudioDestinationHandler::StopRendering() {
   DCHECK(IsInitialized());
-  if (IsInitialized()) {
-    DCHECK(destination_->IsPlaying());
+  // context might try to stop rendering again while the destination is stopped.
+  // Ignore it when that happens.
+  if (IsInitialized() && destination_->IsPlaying()) {
     StopDestination();
   }
 }
 
-void DefaultAudioDestinationHandler::RestartDestination() {
-  StopDestination();
-  StartDestination();
+void DefaultAudioDestinationHandler::RestartRendering() {
+  StopRendering();
+  StartRendering();
 }
 
 unsigned long DefaultAudioDestinationHandler::MaxChannelCount() const {
