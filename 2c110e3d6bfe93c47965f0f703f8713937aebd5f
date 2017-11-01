@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "efcacb7e_0af1a039",
+        "filename": "content/browser/download/download_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3164,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-01T00:47:52Z",
+      "side": 1,
+      "message": "I don\u0027t believe this is correct - we start loading on navigation start, long before we know if it\u0027s a download or not.  If we then discover it is a download, we stop loading.",
+      "parentUuid": "bb400f37_bf73f271",
+      "range": {
+        "startLine": 3164,
+        "startChar": 46,
+        "endLine": 3164,
+        "endChar": 47
+      },
+      "revId": "2c110e3d6bfe93c47965f0f703f8713937aebd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e26ab90a_e9aa03b3",
         "filename": "content/browser/download/download_browsertest.cc",
         "patchSetId": 11
