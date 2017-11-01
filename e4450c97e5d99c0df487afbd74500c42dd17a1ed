@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e4a4d23_e5f9eec2",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-01T15:05:12Z",
+      "side": 1,
+      "message": "Nit:  Wouldn\u0027t a larger random value be a better starting seed?  99 doesn\u0027t have very many bits so the first few values are just multiplies of 99.  Not that that really matters here for these tests.",
+      "revId": "e4450c97e5d99c0df487afbd74500c42dd17a1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f715f500_334ba1a4",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMathTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-01T15:05:12Z",
+      "side": 1,
+      "message": "Comment: I find the term \"float equality\" really confusing here, because I interpret it to be truly equal.  But EXPECT_FLOAT_EQ is equally confusing because the numbers are truly equal, but just close to each other in some complicated way.",
+      "revId": "e4450c97e5d99c0df487afbd74500c42dd17a1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
