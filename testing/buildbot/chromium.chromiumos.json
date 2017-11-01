@@ -106,21 +106,6 @@
         "test": "browser_tests"
       },
       {
-        "args": [
-          "--mus",
-          "--ozone-platform=headless",
-          "--override-use-software-gl-for-tests",
-          "--test-launcher-filter-file=../../testing/buildbot/filters/mus.browser_tests.filter"
-        ],
-        "name": "mus_browser_tests",
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "hard_timeout": 1500,
-          "shards": 5
-        },
-        "test": "browser_tests"
-      },
-      {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -167,6 +152,20 @@
           "can_use_on_swarming_builders": true
         },
         "test": "compositor_unittests"
+      },
+      {
+        "args": [
+          "--enable-viz",
+          "--ozone-platform=headless",
+          "--override-use-software-gl-for-tests"
+        ],
+        "name": "viz_browser_tests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "hard_timeout": 1500,
+          "shards": 5
+        },
+        "test": "content_browsertests"
       },
       {
         "swarming": {
