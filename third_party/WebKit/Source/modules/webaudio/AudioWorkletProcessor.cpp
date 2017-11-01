@@ -4,6 +4,7 @@
 
 #include "modules/webaudio/AudioWorkletProcessor.h"
 
+#include "core/dom/MessagePort.h"
 #include "modules/webaudio/AudioBuffer.h"
 #include "modules/webaudio/AudioWorkletGlobalScope.h"
 
@@ -23,21 +24,21 @@ AudioWorkletProcessor* AudioWorkletProcessor::Create(
 AudioWorkletProcessor::AudioWorkletProcessor(
     AudioWorkletGlobalScope* global_scope,
     const String& name)
-    : global_scope_(global_scope), instance_(this), name_(name) {}
+    : global_scope_(global_scope), name_(name) {}
 
 AudioWorkletProcessor::~AudioWorkletProcessor() {}
 
-void AudioWorkletProcessor::SetInstance(v8::Isolate* isolate,
-                                        v8::Local<v8::Object> instance) {
-  DCHECK(global_scope_->IsContextThread());
-  instance_.Set(isolate, instance);
-}
+// void AudioWorkletProcessor::SetInstance(v8::Isolate* isolate,
+//                                         v8::Local<v8::Object> instance) {
+//   DCHECK(global_scope_->IsContextThread());
+//   instance_.Set(isolate, instance);
+// }
 
-v8::Local<v8::Object> AudioWorkletProcessor::InstanceLocal(
-    v8::Isolate* isolate) {
-  DCHECK(global_scope_->IsContextThread());
-  return instance_.NewLocal(isolate);
-}
+// v8::Local<v8::Object> AudioWorkletProcessor::InstanceLocal(
+//     v8::Isolate* isolate) {
+//   DCHECK(global_scope_->IsContextThread());
+//   return instance_.NewLocal(isolate);
+// }
 
 bool AudioWorkletProcessor::Process(
     Vector<AudioBus*>* input_buses,
@@ -49,14 +50,19 @@ bool AudioWorkletProcessor::Process(
       this, input_buses, output_buses, param_value_map, current_time);
 }
 
+MessagePort* AudioWorkletProcessor::port() const {
+  return processor_port_;
+}
+
 void AudioWorkletProcessor::Trace(blink::Visitor* visitor) {
   visitor->Trace(global_scope_);
+  visitor->Trace(processor_port_);
   ScriptWrappable::Trace(visitor);
 }
 
-void AudioWorkletProcessor::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
-  visitor->TraceWrappers(instance_.Cast<v8::Value>());
-}
+// void AudioWorkletProcessor::TraceWrappers(
+//     const ScriptWrappableVisitor* visitor) const {
+//   visitor->TraceWrappers(instance_.Cast<v8::Value>());
+// }
 
 }  // namespace blink

@@ -28,7 +28,7 @@
 
 [
     CustomConstructor,
-    Exposed=(Window,Worker),
+    Exposed=(Window,Worker,AudioWorklet),
     Measure
 ] interface MessageChannel {
     readonly attribute MessagePort port1;

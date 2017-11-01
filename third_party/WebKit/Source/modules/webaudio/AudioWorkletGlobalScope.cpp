@@ -11,6 +11,7 @@
 #include "bindings/core/v8/V8ObjectBuilder.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "bindings/modules/v8/V8AudioParamDescriptor.h"
+#include "bindings/modules/v8/V8AudioWorkletProcessor.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/typed_arrays/DOMTypedArray.h"
 #include "core/workers/GlobalScopeCreationParams.h"
@@ -163,10 +164,36 @@ AudioWorkletProcessor* AudioWorkletGlobalScope::CreateInstance(
   AudioWorkletProcessor* processor = AudioWorkletProcessor::Create(this, name);
   DCHECK(processor);
 
-  processor->SetInstance(isolate, instance_local);
+  // processor->SetInstance(isolate, instance_local);
   processor_instances_.push_back(processor);
 
   return processor;
+}
+
+AudioWorkletProcessor* AudioWorkletGlobalScope::CreateProcessor(
+    const String& name,
+    float sample_rate) {
+  DCHECK(IsContextThread());
+
+  sample_rate_ = sample_rate;
+
+  AudioWorkletProcessorDefinition* definition = FindDefinition(name);
+  if (!definition)
+    return nullptr;
+
+  ScriptState* script_state = ScriptController()->GetScriptState();
+  ScriptState::Scope scope(script_state);
+  v8::Isolate* isolate = script_state->GetIsolate();
+  v8::Local<v8::Value> result;
+  if (!V8ScriptRunner::CallAsConstructor(isolate,
+                                         definition->ConstructorLocal(isolate),
+                                         ExecutionContext::From(script_state),
+                                         0, nullptr)
+          .ToLocal(&result)) {
+    return nullptr;
+  }
+
+  return V8AudioWorkletProcessor::ToImplWithTypeCheck(isolate, result);
 }
 
 bool AudioWorkletGlobalScope::Process(
@@ -252,10 +279,12 @@ bool AudioWorkletGlobalScope::Process(
   // Perform JS function process() in AudioWorkletProcessor instance. The actual
   // V8 operation happens here to make the AudioWorkletProcessor class a thin
   // wrapper of v8::Object instance.
+  v8::Local<v8::Value> processor_handle =
+      ToV8(processor, script_state->GetContext()->Global(), isolate);
   v8::Local<v8::Value> local_result;
   if (!V8ScriptRunner::CallFunction(definition->ProcessLocal(isolate),
                                     ExecutionContext::From(script_state),
-                                    processor->InstanceLocal(isolate),
+                                    processor_handle,
                                     WTF_ARRAY_LENGTH(argv),
                                     argv,
                                     isolate).ToLocal(&local_result)) {

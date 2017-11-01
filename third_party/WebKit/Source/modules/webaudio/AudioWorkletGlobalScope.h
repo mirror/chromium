@@ -44,6 +44,8 @@ class MODULES_EXPORT AudioWorkletGlobalScope final
   // new V8 object cannot be constructed for some reason.
   AudioWorkletProcessor* CreateInstance(const String& name, float sample_rate);
 
+  AudioWorkletProcessor* CreateProcessor(const String& name, float sample_rate);
+
   // Invokes the JS audio processing function from an instance of
   // AudioWorkletProcessor, along with given AudioBuffer from the audio graph.
   bool Process(
@@ -80,6 +82,7 @@ class MODULES_EXPORT AudioWorkletGlobalScope final
 
   ProcessorDefinitionMap processor_definition_map_;
   ProcessorInstances processor_instances_;
+
   double current_time_ = 0.0;
   float sample_rate_ = 0.0;
 };
