@@ -66,7 +66,7 @@ void InputDeviceServer::OnKeyboardDeviceConfigurationChanged() {
     return;
 
   auto& devices = manager_->GetKeyboardDevices();
-  observers_.ForAllPtrs([&devices](mojom::InputDeviceObserverMojo* observer) {
+  observers_.ForAllPtrs([&devices](auto* observer) {
     observer->OnKeyboardDeviceConfigurationChanged(devices);
   });
 }
@@ -80,7 +80,7 @@ void InputDeviceServer::OnMouseDeviceConfigurationChanged() {
     return;
 
   auto& devices = manager_->GetMouseDevices();
-  observers_.ForAllPtrs([&devices](mojom::InputDeviceObserverMojo* observer) {
+  observers_.ForAllPtrs([&devices](auto* observer) {
     observer->OnMouseDeviceConfigurationChanged(devices);
   });
 }
@@ -90,21 +90,19 @@ void InputDeviceServer::OnTouchpadDeviceConfigurationChanged() {
     return;
 
   auto& devices = manager_->GetTouchpadDevices();
-  observers_.ForAllPtrs([&devices](mojom::InputDeviceObserverMojo* observer) {
+  observers_.ForAllPtrs([&devices](auto* observer) {
     observer->OnTouchpadDeviceConfigurationChanged(devices);
   });
 }
 
 void InputDeviceServer::OnDeviceListsComplete() {
-  observers_.ForAllPtrs([this](mojom::InputDeviceObserverMojo* observer) {
-    SendDeviceListsComplete(observer);
-  });
+  observers_.ForAllPtrs(
+      [this](auto* observer) { SendDeviceListsComplete(observer); });
 }
 
 void InputDeviceServer::OnStylusStateChanged(StylusState state) {
-  observers_.ForAllPtrs([state](mojom::InputDeviceObserverMojo* observer) {
-    observer->OnStylusStateChanged(state);
-  });
+  observers_.ForAllPtrs(
+      [state](auto* observer) { observer->OnStylusStateChanged(state); });
 }
 
 void InputDeviceServer::OnTouchDeviceAssociationChanged() {
@@ -129,7 +127,7 @@ void InputDeviceServer::CallOnTouchscreenDeviceConfigurationChanged() {
   const bool are_touchscreen_target_displays_valid =
       manager_->AreTouchscreenTargetDisplaysValid();
   observers_.ForAllPtrs([&devices, are_touchscreen_target_displays_valid](
-                            mojom::InputDeviceObserverMojo* observer) {
+                            auto* observer) {
     observer->OnTouchscreenDeviceConfigurationChanged(
         devices, are_touchscreen_target_displays_valid);
   });

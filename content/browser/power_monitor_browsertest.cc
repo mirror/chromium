@@ -72,10 +72,9 @@ class MockPowerMonitorMessageBroadcaster : public device::mojom::PowerMonitor {
 
   void OnPowerStateChange(bool on_battery_power) {
     on_battery_power_ = on_battery_power;
-    clients_.ForAllPtrs(
-        [&on_battery_power](device::mojom::PowerMonitorClient* client) {
-          client->PowerStateChange(on_battery_power);
-        });
+    clients_.ForAllPtrs([&on_battery_power](auto* client) {
+      client->PowerStateChange(on_battery_power);
+    });
   }
 
  private:

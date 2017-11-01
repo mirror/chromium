@@ -23,9 +23,8 @@ void MemoryPressureControllerImpl::AddBinding(
 
 void MemoryPressureControllerImpl::OnMemoryPressure(
     base::MemoryPressureListener::MemoryPressureLevel level) {
-  observers_.ForAllPtrs([level](mojom::MemoryPressureObserver* observer) {
-    observer->MemoryPressureLevelChanged(level);
-  });
+  observers_.ForAllPtrs(
+      [level](auto* observer) { observer->MemoryPressureLevelChanged(level); });
 }
 
 void MemoryPressureControllerImpl::AddObserver(

@@ -93,14 +93,14 @@ void HidManagerImpl::CreateConnection(
 
 void HidManagerImpl::OnDeviceAdded(device::mojom::HidDeviceInfoPtr device) {
   device::mojom::HidDeviceInfo* device_info = device.get();
-  clients_.ForAllPtrs([device_info](device::mojom::HidManagerClient* client) {
+  clients_.ForAllPtrs([device_info](auto* client) {
     client->DeviceAdded(device_info->Clone());
   });
 }
 
 void HidManagerImpl::OnDeviceRemoved(device::mojom::HidDeviceInfoPtr device) {
   device::mojom::HidDeviceInfo* device_info = device.get();
-  clients_.ForAllPtrs([device_info](device::mojom::HidManagerClient* client) {
+  clients_.ForAllPtrs([device_info](auto* client) {
     client->DeviceRemoved(device_info->Clone());
   });
 }
