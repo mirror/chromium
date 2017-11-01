@@ -835,6 +835,31 @@ void EffectTree::UpdateSurfaceContentsScale(EffectNode* effect_node) {
   if (transform_node->in_subtree_of_page_scale_layer)
     layer_scale_factor *= transform_tree.page_scale_factor();
 
+  if (!effect_node->filters.IsEmpty()) {
+    // Apply layer scale optimization for blur filters. Blur filters are
+    // implemented through down-scaling of contents using mipmaps to a size
+    // where the amount of blur needed is small enough that it can be
+    // efficiently processed by the GPU. When dividing the layer scale by 2, we
+    // handle the first level of down-scaling when producing input for the blur
+    // filter. More specifically, we scale contents when compositing to the
+    // intermediate render surface instead of having to down-scale the render
+    // surface. This provides a significant performance improvement without
+    // affecting quality. The performance improvement comes from the reduced
+    // bandwidth required for compositing and the reduced amount of down-scaling
+    // required when applying the filter. Quality is not affected as the amount
+    // of down-scaling is the same. The first level of down-scaling was just
+    // moved to a place where it can be handled more efficiently.
+    auto& filter = effect_node->filters.operations().back();
+    // This constant is set to match MAX_BLUR_SIGMA in Skia
+    // (SkGpuBlurUtils.cpp). The result is that this optimization can be used
+    // in as many cases as possible without causing a change to filter quality.
+    const float kMinBlurAmountForLayerScaleAdjustment = 4.0f;
+    if (filter.type() == FilterOperation::BLUR &&
+        filter.amount() > kMinBlurAmountForLayerScaleAdjustment) {
+      layer_scale_factor /= 2.0f;
+    }
+  }
+
   // Note: Copy requests currently expect transform to effect output size.
   bool use_transform_for_contents_scale =
       property_trees()->can_adjust_raster_scales ||
