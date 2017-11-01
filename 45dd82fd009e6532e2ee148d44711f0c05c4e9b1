@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5500236b_b43b4a17",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T17:47:50Z",
+      "side": 1,
+      "message": "Can you reverse this test please?  I think the tiebreaker is a good idea, but we should prefer https to http, not the other way around.",
+      "revId": "45dd82fd009e6532e2ee148d44711f0c05c4e9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
