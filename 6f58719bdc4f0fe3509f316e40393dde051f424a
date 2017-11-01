@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4ca250b_f783633e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/empty_offset_mapping_builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-01T04:30:13Z",
+      "side": 1,
+      "message": "nit: It is better to use |const LayoutObject*|.",
+      "revId": "6f58719bdc4f0fe3509f316e40393dde051f424a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fdbdfd7_0500d19e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/empty_offset_mapping_builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-01T04:30:13Z",
+      "side": 1,
+      "message": "nit: It is better to use |const LayoutObject*|.",
+      "revId": "6f58719bdc4f0fe3509f316e40393dde051f424a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21791ce2_c32853f3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-01T04:30:13Z",
+      "side": 1,
+      "message": "I\u0027m not sure about term \"Container\". Can we call |EnterInline()|?",
+      "revId": "6f58719bdc4f0fe3509f316e40393dde051f424a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6bc612_d22681fb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-01T04:30:13Z",
+      "side": 1,
+      "message": "nit: s/const LayoutObject*/const LayoutObject\u0026/\nSince we don\u0027t pass |nullptr|.",
+      "revId": "6f58719bdc4f0fe3509f316e40393dde051f424a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def9a05d_49007a28",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-01T04:30:13Z",
+      "side": 1,
+      "message": "nit: s/const LayoutObject*/const LayoutObject\u0026/\nSince we don\u0027t pass |nullptr|.",
+      "revId": "6f58719bdc4f0fe3509f316e40393dde051f424a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
