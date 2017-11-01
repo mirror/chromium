@@ -871,10 +871,11 @@ SDK.DOMNode = class {
   }
 
   /**
+   * @param {boolean=} cssPixels
    * @return {!Promise<?Protocol.DOM.BoxModel>}
    */
-  boxModel() {
-    return this._agent.getBoxModel(this.id);
+  boxModel(cssPixels) {
+    return this._agent.getBoxModel(this.id, undefined, undefined, cssPixels);
   }
 
   setAsInspectedNode() {

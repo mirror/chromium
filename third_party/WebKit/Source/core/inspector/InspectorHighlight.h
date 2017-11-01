@@ -50,7 +50,9 @@ class CORE_EXPORT InspectorHighlight {
   explicit InspectorHighlight(float scale);
   ~InspectorHighlight();
 
-  static bool GetBoxModel(Node*, std::unique_ptr<protocol::DOM::BoxModel>*);
+  static bool GetBoxModel(Node*,
+                          bool cssPixels,
+                          std::unique_ptr<protocol::DOM::BoxModel>*);
   static InspectorHighlightConfig DefaultConfig();
   static bool BuildNodeQuads(Node*,
                              FloatQuad* content,
