@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d02293f_cb694b21",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-01T16:31:47Z",
+      "side": 1,
+      "message": "Default arguments are generally discouraged on virtual functions..\n\nSee: http://google.github.io/styleguide/cppguide.html#Default_Arguments",
+      "revId": "880e9bb369ade513f86d8b1d9d49ca96b7d29daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
