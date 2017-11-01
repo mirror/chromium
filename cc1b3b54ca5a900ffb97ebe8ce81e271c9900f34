@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0c930a86_74d7cef1",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T21:31:35Z",
+      "side": 1,
+      "message": "Hm.. maybe this should be a member method and DCHECK(!is_gpu_compositing_disabled_) ? Cuz this gets the spirit but has false positives.",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2c94e27_c817cc12",
         "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
         "patchSetId": 14
@@ -13,6 +30,75 @@
       "writtenOn": "2017-11-01T20:35:16Z",
       "side": 1,
       "message": "Should we call DisableGpuCompositing instead so that other clients are notified?",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a7e9b8f_aa3348af",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T21:31:35Z",
+      "side": 1,
+      "message": "If this is going to disable compositing, shouldn\u0027t the null host also?",
+      "parentUuid": "f2c94e27_c817cc12",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04bee37f_66ecf99f",
+        "filename": "content/browser/compositor/image_transport_factory_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T21:31:35Z",
+      "side": 1,
+      "message": "can reuse the provider from l42",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a6e461_8e5901ae",
+        "filename": "content/browser/compositor/image_transport_factory_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T21:31:35Z",
+      "side": 1,
+      "message": "would a helper on GetGpuFeatureInfo() help? like GetGpuFeatureInfo().IsGpuCompositingEnabled() ?",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8717fcf2_17bc9e72",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T21:31:35Z",
+      "side": 1,
+      "message": "There\u0027s code like https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp?rcl\u003d4698aea3e347d67c817d7acebd16054b9f763cfb\u0026l\u003d264 that reads this pref only, ignoring the compositing mode. Before it could be wrong too, but now it would be wrong more often (any time we fallback to software compositing). How will we tell that code about the fallback mode? That code already has a context from SharedGpuContext, so after https://chromium-review.googlesource.com/c/chromium/src/+/742521 it should be able to ask if gpu compositing is enabled from it. Does that seem worth doing at the same time since this changes when this pref is true/false?",
       "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +122,40 @@
     },
     {
       "key": {
+        "uuid": "ee239fea_7a63422d",
+        "filename": "content/renderer/pepper/ppb_graphics_3d_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T21:31:35Z",
+      "side": 1,
+      "message": "You can do this before trying to make a channel, so we don\u0027t try spin up a gpu process then not use it.",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b867f58a_1d8ee374",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1524,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T21:31:35Z",
+      "side": 1,
+      "message": "Can you explain what makes this true?",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19cc444b_6b663c83",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 14
@@ -53,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "9bf10ac1_9f6b5e1b",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T21:31:35Z",
+      "side": 1,
+      "message": "Yea, we don\u0027t want the renderer making decisions about the mode, it simply listens to the CompositingModeWatcher. The display compositor makes all decisions.",
+      "parentUuid": "19cc444b_6b663c83",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c4d2f40_3fd89c5a",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 14
@@ -64,6 +202,23 @@
       "writtenOn": "2017-11-01T20:35:16Z",
       "side": 1,
       "message": "nit: can you comment that EstablishGpuChannelSync may have modified is_gpu_compositing_disabled_?",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee04d9ed_b6cf0052",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T21:31:35Z",
+      "side": 1,
+      "message": "Rebase error I think. https://chromium-review.googlesource.com/c/chromium/src/+/742521 makes this change now",
       "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +266,23 @@
         "endLine": 185,
         "endChar": 59
       },
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffbf103_34ab26bd",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T21:31:35Z",
+      "side": 1,
+      "message": "same",
       "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
