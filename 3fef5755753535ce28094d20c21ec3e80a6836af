@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "505db04a_fe8c964e",
+        "filename": "chrome/browser/history/history_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T22:45:13Z",
+      "side": 1,
+      "message": "sky@: The old expectation here seemed incorrect to me.  It matched Chrome\u0027s behavior for same-process client redirects due to the bug I mentioned in NavigationControllerImpl::RendererDidNavigate (line 864), but it doesn\u0027t match the intent of the client redirect code in HistoryBackend::AddPage:\n\nhttps://cs.chromium.org/chromium/src/components/history/core/browser/history_backend.cc?rcl\u003ddcffc143aeb27bfb9a7cf25909573c7f9cc43e88\u0026l\u003d539\n\nIndeed, chrome://history already lists only the landing URL for cross-process client redirects (e.g., to the Chrome Web Store), as the new test I added below shows in --site-per-process mode.  (That\u0027s true before the changes in this CL.)\n\nMy change makes the same-process client redirect behavior consistent with cross-process case, so that we don\u0027t show the redirecting URL in chrome://history for either case.  I\u0027ve verified manually that the omnibox autocomplete code isn\u0027t affected-- you can still type the redirector URL and have it autocomplete, even though it doesn\u0027t appear in chrome://history.\n\nDo you agree with the change?",
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84edbcbe_52d820fd",
+        "filename": "chrome/browser/translate/translate_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T22:45:13Z",
+      "side": 1,
+      "message": "toyoshim@: I\u0027m curious for your thoughts on this expectation change.\n\nAt first glance, it seems to be regressing https://crbug.com/236781, since the translate infobar now sticks around after a client redirect.  However, similar to the history case I mentioned to sky@, this is already broken today for cross-process client redirects (e.g., for a foreign page redirecting to the Chrome Web Store).\n\nThe behavior change is due to my fix in NavigationControllerImpl::RendererDidNavigate (line 864).  Before, we were incorrectly setting did_replace_entry to false for cross-document navigations, including same-process client redirects and location.replace.\n\nAfter pkasting@\u0027s work on on InfoBarDelegate::ShouldExpire in https://codereview.chromium.org/1142153002/ and https://codereview.chromium.org/1215053007, we have code that tries to keep infobars around if did_replace_entry is true (in contrast to what was expected for the translate infobar):\n\nhttps://cs.chromium.org/chromium/src/components/infobars/core/infobar_delegate.cc?type\u003dcs\u0026q\u003dinfobardelegate::shouldexpire\u0026l\u003d67\n\nIt seems that the motivation is that other types of infobars do want to stick around after a client redirect (e.g., the session crashed infobar).  I can see that the translate case is a bit different, but maybe there should be something custom within the translate code to make the infobar expire in that case?\n\n(I was planning to ask pkasting@ about this as well, but he\u0027s OOO for a while.)\n\nMy current change makes the same-process case consistent with the cross-process case, such that ShouldExpire always returns false when the navigation replaces the current entry.  That changes the expectation of these tests.  Should we proceed with that and fix infobars to dismiss on cross-document redirects separately, or is there a way to make them dismiss here in this CL?",
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f514db_641b5a91",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T22:45:13Z",
+      "side": 1,
+      "message": "Technically I could remove this block (since this test is about EXISTING_PAGE rather than NEW_PAGE), but I left it so that it didn\u0027t affect the session history progression in the test.",
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d194969_38e159c9",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2620,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T22:45:13Z",
+      "side": 1,
+      "message": "This is updated to more closely match what happens in practice.",
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ff5e78_41fcf7b1",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2742,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T22:45:13Z",
+      "side": 1,
+      "message": "I think this is what the test intended, given line 2756 and the test\u0027s name.",
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

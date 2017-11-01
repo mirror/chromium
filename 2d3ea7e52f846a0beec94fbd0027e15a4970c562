@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0801196d_0f8c0fd6",
+        "filename": "content/browser/frame_host/frame_navigation_entry.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T22:45:13Z",
+      "side": 0,
+      "message": "Just going back to the code before the TODO was added here:\nhttps://codereview.chromium.org/1906213003/diff/100001/content/browser/frame_host/frame_navigation_entry.cc",
+      "revId": "2d3ea7e52f846a0beec94fbd0027e15a4970c562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb552818_a7144362",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T22:45:13Z",
+      "side": 0,
+      "message": "This was a bug introduced in r337562.  It should have been:\n\nif (details-\u003eis_same_document)\n  details-\u003edid_replace_entry \u003d true;\n\nHowever, even that isn\u0027t needed anymore, because this case (i.e., replaceState) already has did_replace_entry set to true, thanks to other changes.\n\nThe consequence of this bug was that same-process, cross-document navigations that replaced the entry (e.g., client redirects, location.replace) were incorrectly marked as NOT replacing the entry.  That led to unexpected behavior for history and infobars, which are the only two places that look at did_replace_entry.",
+      "revId": "2d3ea7e52f846a0beec94fbd0027e15a4970c562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2a3216_e2e01ce0",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T22:45:13Z",
+      "side": 0,
+      "message": "This was added in https://codereview.chromium.org/1794513003/.  We still pass the OtherCommitDuringPendingEntryWithReplacement test that was added in that CL.",
+      "revId": "2d3ea7e52f846a0beec94fbd0027e15a4970c562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c38dcd_6e6d18b1",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T22:45:13Z",
+      "side": 0,
+      "message": "This classification is now the same whether it\u0027s cross-process or not.",
+      "revId": "2d3ea7e52f846a0beec94fbd0027e15a4970c562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
