@@ -29,6 +29,19 @@ class PaymentResponse;
 
 namespace payment_request_util {
 
+// Returns YES if there's a selected payment method. If shipping is requested,
+// there must be a selected shipping address and a shipping option, otherwise
+// returns NO. If contact info is requeted, there must be a selected contact
+// info, otherwise returns NO.
+BOOL CanPay(const payments::PaymentRequest& paymentRequest);
+
+// Returns YES if requestShipping of PaymentOptions is true and NO otherwise.
+BOOL RequestShipping(const payments::PaymentRequest& paymentRequest);
+
+// Returns YES if either payer's name, phone number, or email address are
+// requested and NO otherwise.
+BOOL RequestContactInfo(const payments::PaymentRequest& paymentRequest);
+
 // Returns a base::DictionaryValue populated with the properties of |response|.
 std::unique_ptr<base::DictionaryValue> PaymentResponseToDictionaryValue(
     const payments::PaymentResponse& response);
