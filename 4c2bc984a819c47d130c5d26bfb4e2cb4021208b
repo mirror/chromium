@@ -16,6 +16,24 @@
       "revId": "4c2bc984a819c47d130c5d26bfb4e2cb4021208b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54a9d61_65e398bc",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T18:10:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d47a45e3_a008914b",
+      "revId": "4c2bc984a819c47d130c5d26bfb4e2cb4021208b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
