@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48d6818e_9c5e0114",
+        "filename": "base/message_loop/message_pump_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-01T19:53:18Z",
+      "side": 1,
+      "message": "Yes, created https://chromium-review.googlesource.com/c/chromium/src/+/748979",
+      "parentUuid": "6ebd7e8a_82d25d2b",
+      "range": {
+        "startLine": 37,
+        "startChar": 45,
+        "endLine": 37,
+        "endChar": 46
+      },
+      "revId": "444f559f52481360d18823870aa5fc6f92c89d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "606a9540_73754d8e",
         "filename": "base/message_loop/message_pump_android.cc",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-01T18:19:51Z",
       "side": 1,
       "message": "Is the claim here that the message loop can be aborted outside of a running task? The aborts before were placed after running tasks to see if those tasks aborted.",
+      "revId": "444f559f52481360d18823870aa5fc6f92c89d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c1f2e3b_29db5598",
+        "filename": "base/message_loop/message_pump_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-01T19:53:18Z",
+      "side": 1,
+      "message": "No, the claim is that multiple tasks could already have been queued up (or more could be queued up in the future), and so DoRunLoopOnce will continue to fire even after the pump has been aborted. Nothing currently detects when control has actually returned to java and the exception has been handled, and un-aborts the pump, so the pump is left in a really weird state where it\u0027s only firing non-delayed tasks and delayed tasks are queued up but never run.",
+      "parentUuid": "606a9540_73754d8e",
       "revId": "444f559f52481360d18823870aa5fc6f92c89d83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
