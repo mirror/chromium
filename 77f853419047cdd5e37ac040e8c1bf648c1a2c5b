@@ -34,6 +34,24 @@
       "revId": "77f853419047cdd5e37ac040e8c1bf648c1a2c5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d6f148_effc264f",
+        "filename": "media/audio/win/core_audio_util_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-01T14:39:13Z",
+      "side": 1,
+      "message": "Sure, this is what we expect will happen, but if a bug is introduced to CreateDeviceEnumerator in the future, hr might lie (succeed when it\u0027s nullptr or fail when it\u0027s non-null). We shouldn\u0027t expect the code to be working properly when we\u0027re testing it.",
+      "parentUuid": "9b04d61f_1d1f9bd4",
+      "revId": "77f853419047cdd5e37ac040e8c1bf648c1a2c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
