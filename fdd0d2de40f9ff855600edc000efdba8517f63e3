@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70e52ccd_047e4bc7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-01T22:02:41Z",
+      "side": 1,
+      "message": "Please explain better what is being fixed (or what was previously broken).  This doesn\u0027t say and neither does the bug entry.\n\nIIUC, the previous version would stop the destination sometimes when it wasn\u0027t playing, causing problems.  And so on.",
+      "revId": "fdd0d2de40f9ff855600edc000efdba8517f63e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625b1881_13f1ab9a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DefaultAudioDestinationNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-01T22:02:41Z",
+      "side": 1,
+      "message": "\"context\" -\u003e \"Context\"?  Here and below.",
+      "revId": "fdd0d2de40f9ff855600edc000efdba8517f63e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
