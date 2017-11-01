@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9374350f_17ba3a64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1230579
+      },
+      "writtenOn": "2017-11-01T02:22:33Z",
+      "side": 1,
+      "message": "by \u0027comment below\u0027 are you referring to the comment at SVGElement.cpp:169, just above the if condition I modified?",
+      "parentUuid": "3925cfda_6aecb964",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "01593a257f4b17c32e3853234e1d9cf5a810e17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9eb27668_ef93e531",
         "filename": "third_party/WebKit/Source/core/svg/SVGElement.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-20T08:48:34Z",
       "side": 1,
       "message": "I think you could just check if \u0027this\u0027 is the document element (and \u003csvg\u003e just to be 100% sure.)",
+      "range": {
+        "startLine": 172,
+        "startChar": 6,
+        "endLine": 172,
+        "endChar": 66
+      },
+      "revId": "01593a257f4b17c32e3853234e1d9cf5a810e17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49973fbf_a3023a6f",
+        "filename": "third_party/WebKit/Source/core/svg/SVGElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1230579
+      },
+      "writtenOn": "2017-11-01T02:22:33Z",
+      "side": 1,
+      "message": "Well by the time it\u0027s in title() function \u0027this\u0027 is SVG element and not a document element so that\u0027s why the check for parentNode(). I didn\u0027t quite understand why we need to check if it\u0027s \u003csvg\u003e to be 100% sure if we are already an SVGElement?",
+      "parentUuid": "9eb27668_ef93e531",
       "range": {
         "startLine": 172,
         "startChar": 6,
