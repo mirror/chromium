@@ -16,6 +16,24 @@
       "revId": "fd502dfe65e7daa4f37b3dfe16fd013d0e1770f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "977d2627_33dfdcd2",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2233,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-01T17:53:54Z",
+      "side": 1,
+      "message": "Thanks for catching this. It was careless, and yes the CL has been reverted.",
+      "parentUuid": "f6392857_a17cd07b",
+      "revId": "fd502dfe65e7daa4f37b3dfe16fd013d0e1770f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
