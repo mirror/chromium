@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22771288_b0bef280",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-01T20:28:29Z",
+      "side": 1,
+      "message": "Done. Also made the conditional below a little less \"busy\".",
+      "parentUuid": "926d7fd9_05884537",
+      "revId": "e974c62ba43ad775bf4b868d547fafc1f8acf2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "451d09d5_23e3ac1e",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-01T17:35:09Z",
       "side": 1,
       "message": "the non-tail default\n-\u003e\none of the non-tail default matches",
+      "range": {
+        "startLine": 416,
+        "startChar": 17,
+        "endLine": 416,
+        "endChar": 37
+      },
+      "revId": "e974c62ba43ad775bf4b868d547fafc1f8acf2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de50e79_6dc9553e",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-01T20:28:29Z",
+      "side": 1,
+      "message": "In this branch, there\u0027s only one non-tail match - a default. A more verbose phrasing: Of all the default matches, we want the non-tail one to be first. I think saying, \"... matches\" would be confusing.",
+      "parentUuid": "451d09d5_23e3ac1e",
       "range": {
         "startLine": 416,
         "startChar": 17,
@@ -88,6 +130,54 @@
     },
     {
       "key": {
+        "uuid": "af5a2ab3_78449f2d",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-01T20:28:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b50aec50_e1f13712",
+      "range": {
+        "startLine": 417,
+        "startChar": 21,
+        "endLine": 417,
+        "endChar": 63
+      },
+      "revId": "e974c62ba43ad775bf4b868d547fafc1f8acf2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c63425f5_6e0ba4b6",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-01T20:28:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6819d40a_d3cea029",
+      "range": {
+        "startLine": 417,
+        "startChar": 9,
+        "endLine": 417,
+        "endChar": 20
+      },
+      "revId": "e974c62ba43ad775bf4b868d547fafc1f8acf2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67e944b6_809bb83c",
         "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
         "patchSetId": 8
@@ -102,6 +192,24 @@
       "revId": "e974c62ba43ad775bf4b868d547fafc1f8acf2bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86843fa1_dd696106",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-01T20:28:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67e944b6_809bb83c",
+      "revId": "e974c62ba43ad775bf4b868d547fafc1f8acf2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
