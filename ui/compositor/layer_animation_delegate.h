@@ -7,6 +7,7 @@
 
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/compositor/compositor_export.h"
+#include "ui/compositor/layer_animation_element.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/transform.h"
 
@@ -47,6 +48,10 @@ class COMPOSITOR_EXPORT LayerAnimationDelegate {
   virtual LayerThreadedAnimationDelegate* GetThreadedAnimationDelegate() = 0;
   virtual int GetFrameNumber() const = 0;
   virtual float GetRefreshRate() const = 0;
+
+  // Invoked when the target value changes for a property.
+  virtual void OnTargetChangedForProperties(
+      LayerAnimationElement::AnimatableProperties properties) = 0;
 
  protected:
   virtual ~LayerAnimationDelegate() {}

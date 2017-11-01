@@ -1078,11 +1078,6 @@ void Layer::DidChangeLayerOpacity(float old_opacity, float new_opacity) {
     delegate_->OnLayerOpacityChanged(old_opacity, new_opacity);
 }
 
-void Layer::DidChangeLayerTransform() {
-  if (delegate_)
-    delegate_->OnLayerTransformed();
-}
-
 void Layer::CollectAnimators(
     std::vector<scoped_refptr<LayerAnimator>>* animators) {
   if (animator_ && animator_->is_animating())
@@ -1266,6 +1261,12 @@ int Layer::GetFrameNumber() const {
 float Layer::GetRefreshRate() const {
   const Compositor* compositor = GetCompositor();
   return compositor ? compositor->refresh_rate() : 60.0;
+}
+
+void Layer::OnTargetChangedForProperties(
+    LayerAnimationElement::AnimatableProperties properties) {
+  if (delegate_ && properties & LayerAnimationElement::TRANSFORM)
+    delegate_->OnLayerTargetTransformChanged();
 }
 
 ui::Layer* Layer::GetLayer() {
