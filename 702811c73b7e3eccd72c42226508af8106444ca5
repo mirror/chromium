@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93c1c4e0_04a4365e",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerAssigner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-01T21:06:43Z",
+      "side": 1,
+      "message": "Nit: remove",
+      "revId": "702811c73b7e3eccd72c42226508af8106444ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
