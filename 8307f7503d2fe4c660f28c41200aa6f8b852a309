@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc569444_e2c7079e",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-01T06:33:45Z",
+      "side": 1,
+      "message": "DCHECK to make sure we have either request_ or legacy_request_ (and not both)?",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f9794f_a5941c51",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-01T06:33:45Z",
+      "side": 1,
+      "message": "Should we have DCHECKs to make sure we always take this path in S13nServiceWorker case, and below in non-s13n case for now? Hm maybe not for testing?",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788bf893_041a936a",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-01T06:33:45Z",
+      "side": 1,
+      "message": "super-micro-nit: non- -\u003e Non- ? (here and below)",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c1c0bb_76d2be8f",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-01T06:33:45Z",
+      "side": 1,
+      "message": "Maybe also add TODO to deprecate Legacy one regardless of s13n?",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7db70f09_5403562d",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-01T06:33:45Z",
+      "side": 1,
+      "message": "if this is only for s13n code (at least for now) I feel we should just DCHECK(!foreign_fetch)",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7709d7_4d2f3119",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-01T06:33:45Z",
+      "side": 1,
+      "message": "Please move this below the mojom::ServiceWorkerEventDispatcher method block",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2781e1_ff12dffa",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-01T06:33:45Z",
+      "side": 1,
+      "message": "Should we file a bug for this one to make sure we block on this?",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee07ca9_f8a580ad",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPBody.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-01T06:33:45Z",
+      "side": 1,
+      "message": "Is this one used?",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
