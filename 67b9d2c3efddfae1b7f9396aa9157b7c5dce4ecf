@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e081660_0d707e79",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-01T23:33:04Z",
+      "side": 0,
+      "message": "This code block is unreachable and thus removing this code block doesn\u0027t cause behavior changes, because\n- ClassicPendingScript\u0027s state is kWaitingForResource (i.e. ClassicPendingScript is not yet NotifyFinished()), and\n- ScriptResourceClient would have been synchronously NotifyFinished() if the resource were loaded.\n\nAccording to UMA, about 21% of WebCore.Scripts.Async.NotStreamingReason is kAlreadyLoaded on M-61 but kAlreadyLoaded is not seen on M-62, 63 and 64.",
+      "revId": "67b9d2c3efddfae1b7f9396aa9157b7c5dce4ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
