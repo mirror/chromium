@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b15fa72_fa80acb0",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-01T23:44:05Z",
+      "side": 1,
+      "message": "Would it make sense to defer initialization done in getPropertiesCallback_ until ethernet EAP properties are retrieved (so the dialog doesn\u0027t show incomplete Ethernet properties for a moment)?\n\nSomething like:\n\ngetPropertiesCallback_: function(properties) {\n  if (!properties) {close and return;}\n\n   if (properties.Type \u003d\u003d CrOnc.Type.ETHERNET \u0026\u0026\n       properties.Ethernet.Authentication !\u003d \u00278021X\u0027) {\n      this.getEthernetEapProperties_(eaProperties \u003d\u003e {\n         if (eapProperties) {\n            // merge properties and eapProperties is needed\n\n            this.initializeWithProperties_(eapProperties);\n         } else {\n           this.initializeWithProperties_(properties);\n         }\n      });\n   } else {\n     // current logic from the getPropertiesCallback_:\n     this.initializeWithProperties_(properties);\n   }\n}",
+      "revId": "7353e51afee42e0f9a4b0c6947b51d0d69d800c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9f8a90_231c6800",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-01T23:44:05Z",
+      "side": 1,
+      "message": "\u0026\u0026 network.Ethernet.Authentication !\u003d \u00278021X\u0027",
+      "revId": "7353e51afee42e0f9a4b0c6947b51d0d69d800c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c769e466_87b0a452",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-01T23:44:05Z",
+      "side": 1,
+      "message": "nit: this should not be needed (find should handle an empty array)\n\nmaybe something like:\n\nif (this.getRUntimeError_())\n  return;\nvar ethernetEap \u003d networks.find(..);\nif (!etherneEap)\n  return;",
+      "range": {
+        "startLine": 458,
+        "startChar": 13,
+        "endLine": 458,
+        "endChar": 35
+      },
+      "revId": "7353e51afee42e0f9a4b0c6947b51d0d69d800c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e222e171_bb6bef08",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-01T23:44:05Z",
+      "side": 1,
+      "message": "if there is no EAP config, should this.security_ be changed to NONE?",
+      "revId": "7353e51afee42e0f9a4b0c6947b51d0d69d800c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713db3e2_0835147c",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-01T23:44:05Z",
+      "side": 1,
+      "message": "if (!this.getRuntimeError_() || !properties.Ethernet.EAP)",
+      "revId": "7353e51afee42e0f9a4b0c6947b51d0d69d800c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
