@@ -3717,3 +3717,9 @@ crbug.com/773122 crbug.com/777813 [ Win ] fast/text/font-ascent-mac.html [ Failu
 crbug.com/778575 [ Mac Linux ] http/tests/devtools/tracing/timeline-js/timeline-script-id.html [ Pass Failure ]
 crbug.com/778575 [ Mac ] http/tests/devtools/tracing/timeline-js/timeline-injected-script-eval.html [ Pass Failure ]
 crbug.com/778575 [ Mac ] virtual/threaded/http/tests/devtools/tracing/hit-test.html [ Pass Failure ]
+
+# Tests that will start failing after this WebRTC CL is rolled in: https://webrtc-review.googlesource.com/c/src/+/9020
+crbug.com/780581 external/wpt/webrtc/RTCPeerConnection-setLocalDescription-pranswer.html [ Pass Failure ]
+crbug.com/780581 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-answer.html [ Pass Failure ]
+crbug.com/780581 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-offer.html [ Pass Failure ]
+crbug.com/780581 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-pranswer.html [ Pass Failure ]
