@@ -46,6 +46,23 @@
       "revId": "bea29a86fbcc901bbe30dff89096b8491dd82927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09606554_69a265f4",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-01T14:39:07Z",
+      "side": 1,
+      "message": "Since this and the other are storing the same metric can\u0027t we use the cached version of the histogram metric. (because the value is not runtime determined)?\n\nEach call of this does a table lookup. Whereas the cached version wouldn\u0027t. It just requires you to put this call (and the other) into an annonymous function and call the histogram macro.",
+      "revId": "bea29a86fbcc901bbe30dff89096b8491dd82927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
