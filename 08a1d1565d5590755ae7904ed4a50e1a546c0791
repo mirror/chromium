@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4402d2d_4898e449",
+        "filename": "ash/shell.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-01T18:22:10Z",
+      "side": 1,
+      "message": "The answer is ShellPortMus ignores host_frame_sink_manager, but this is was a bad design choice so I\u0027m removing the HostFrameSinkManager parameter.",
+      "parentUuid": "aaaeb7c8_0ccfd614",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d57e9ff5_155aa320",
         "filename": "components/viz/host/host_frame_sink_manager.cc",
         "patchSetId": 26
@@ -33,6 +51,24 @@
       "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89d1791_2c3bd044",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-01T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d57e9ff5_155aa320",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "deb5d3fd_369adefa",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-01T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b79076d5_e3004308",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f74447cc_b3256bdb",
         "filename": "components/viz/service/frame_sinks/video_detector.cc",
         "patchSetId": 26
@@ -94,6 +148,23 @@
     },
     {
       "key": {
+        "uuid": "9ad1f16d_27e4d562",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-01T18:22:10Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6f80780_9290d319",
         "filename": "components/viz/service/frame_sinks/video_detector.cc",
         "patchSetId": 26
@@ -108,6 +179,24 @@
       "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a40fef_d1e7a18e",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-01T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6f80780_9290d319",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +217,24 @@
     },
     {
       "key": {
+        "uuid": "e648492a_46cdcdc8",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-01T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cb414f3_884af3c5",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12849458_f3cb54e1",
         "filename": "components/viz/service/frame_sinks/video_detector.cc",
         "patchSetId": 26
@@ -142,6 +249,24 @@
       "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5486371_e136e10b",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-01T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12849458_f3cb54e1",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +287,24 @@
     },
     {
       "key": {
+        "uuid": "6b87e0d4_b8c19a6a",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-01T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fbe4ae8_2e26feb8",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab3a1766_1dd47d59",
         "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
         "patchSetId": 26
@@ -176,6 +319,24 @@
       "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c235d67_ddfc4b3d",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-01T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab3a1766_1dd47d59",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +357,24 @@
     },
     {
       "key": {
+        "uuid": "81d44ec1_874135ea",
+        "filename": "components/viz/service/surfaces/surface_observer.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-01T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fb73e8a_89d749db",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02ea81bf_7134e4ac",
         "filename": "services/ui/manifest.json",
         "patchSetId": 26
@@ -213,6 +392,24 @@
     },
     {
       "key": {
+        "uuid": "31eba204_4c097af0",
+        "filename": "services/ui/manifest.json",
+        "patchSetId": 26
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-01T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02ea81bf_7134e4ac",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7595a587_373b118c",
         "filename": "services/ui/ws/video_detector_impl.cc",
         "patchSetId": 26
@@ -227,6 +424,24 @@
       "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ef6e7b_c5b0d2d9",
+        "filename": "services/ui/ws/video_detector_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-01T18:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7595a587_373b118c",
+      "revId": "08a1d1565d5590755ae7904ed4a50e1a546c0791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
