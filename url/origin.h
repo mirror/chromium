@@ -11,6 +11,8 @@
 
 #include "base/strings/string16.h"
 #include "base/strings/string_piece.h"
+#include "base/unguessable_token.h"
+#include "url/empty_string.h"
 #include "url/scheme_host_port.h"
 #include "url/third_party/mozilla/url_parse.h"
 #include "url/url_canon.h"
@@ -114,20 +116,29 @@ class URL_EXPORT Origin {
   // and should NOT be used for IPC. Method takes std::strings for use with move
   // operators to avoid copies.
   static Origin CreateFromNormalizedTupleWithSuborigin(
-      std::string scheme,
-      std::string host,
+      base::StringPiece scheme,
+      base::StringPiece host,
       uint16_t port,
-      std::string suborigin);
+      base::StringPiece suborigin);
 
   ~Origin();
 
   // For unique origins, these return ("", "", 0).
-  const std::string& scheme() const { return tuple_.scheme(); }
-  const std::string& host() const { return tuple_.host(); }
-  uint16_t port() const { return tuple_.port(); }
+  const std::string& scheme() const {
+    return !unique_ ? tuple_.scheme_host_port.scheme()
+                    : internal::EmptyString();
+  }
+  const std::string& host() const {
+    return !unique_ ? tuple_.scheme_host_port.host() : internal::EmptyString();
+  }
+  uint16_t port() const {
+    return !unique_ ? tuple_.scheme_host_port.port() : 0;
+  }
 
   // Note that an origin without a suborgin will return the empty string.
-  const std::string& suborigin() const { return suborigin_; }
+  const std::string& suborigin() const {
+    return !unique_ ? tuple_.suborigin : internal::EmptyString();
+  }
 
   bool unique() const { return unique_; }
 
@@ -174,12 +185,37 @@ class URL_EXPORT Origin {
   bool operator<(const Origin& other) const;
 
  private:
-  // |tuple| must be valid, implying that the created Origin is never unique.
-  Origin(SchemeHostPort tuple, std::string suborigin);
+  // TODO(dcheng): Make the storage more efficient: ideally this would hold one
+  // backing store for the string, and then offset + size pairs for scheme,
+  // host, port (?), and suborigin. This involves tradeoffs though: the scheme,
+  // host, and suborigin accessors will need to return StringPiece objects...
+  // but this makes map lookups on those origin components less efficient.
+  struct OriginTuple {
+    OriginTuple(SchemeHostPort scheme_host_port, std::string suborigin);
 
-  SchemeHostPort tuple_;
+    GURL GetURL() const;
+    std::string Serialize() const;
+
+    bool operator==(const OriginTuple& other) const;
+    bool operator<(const OriginTuple& other) const;
+
+    SchemeHostPort scheme_host_port;
+    std::string suborigin;
+  };
+
+  // |tuple| must be valid, implying that the created Origin is never unique.
+  Origin(SchemeHostPort scheme_host_port, std::string suborigin);
+
+  // Helpers for managing union for destroy, copy, and move.
+  void Cleanup();
+  void CopyConstructFrom(const Origin& other);
+  void MoveConstructFrom(Origin&& other);
+
+  union {
+    OriginTuple tuple_;
+    base::UnguessableToken unique_id_;
+  };
   bool unique_;
-  std::string suborigin_;
 };
 
 URL_EXPORT std::ostream& operator<<(std::ostream& out, const Origin& origin);

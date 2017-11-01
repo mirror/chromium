@@ -41,7 +41,7 @@ TEST(OriginTest, UniqueOriginComparison) {
   EXPECT_EQ("", unique_origin.host());
   EXPECT_EQ(0, unique_origin.port());
   EXPECT_TRUE(unique_origin.unique());
-  EXPECT_FALSE(unique_origin.IsSameOriginWith(unique_origin));
+  EXPECT_TRUE(unique_origin.IsSameOriginWith(unique_origin));
 
   const char* const urls[] = {"data:text/html,Hello!",
                               "javascript:alert(1)",
@@ -57,9 +57,19 @@ TEST(OriginTest, UniqueOriginComparison) {
     EXPECT_EQ("", origin.host());
     EXPECT_EQ(0, origin.port());
     EXPECT_TRUE(origin.unique());
-    EXPECT_FALSE(origin.IsSameOriginWith(origin));
-    EXPECT_FALSE(unique_origin.IsSameOriginWith(origin));
+    // A unique origin is always same origin to itself.
+    EXPECT_TRUE(origin.IsSameOriginWith(origin));
+    // A copy of |origin| should be same origin as well.
+    url::Origin origin_copy = origin;
+    EXPECT_EQ("", origin_copy.scheme());
+    EXPECT_EQ("", origin_copy.host());
+    EXPECT_EQ(0, origin_copy.port());
+    EXPECT_TRUE(origin_copy.unique());
+    EXPECT_TRUE(origin.IsSameOriginWith(origin_copy));
+    // But it should always be cross origin to another unique origin.
     EXPECT_FALSE(origin.IsSameOriginWith(unique_origin));
+    // Re-creating the origin from the URL should also be cross origin.
+    EXPECT_FALSE(origin.IsSameOriginWith(url::Origin::Create(url)));
 
     ExpectParsedUrlsEqual(GURL(origin.Serialize()), origin.GetURL());
   }
@@ -323,23 +333,21 @@ TEST(OriginTest, SuboriginIsSameOriginWith) {
 TEST(OriginTest, Comparison) {
   // These URLs are arranged in increasing order:
   const char* const urls[] = {
-      "data:uniqueness",
-      "http://a:80",
-      "http://b:80",
-      "https://a:80",
-      "https://b:80",
-      "http://a:81",
-      "http://b:81",
-      "https://a:81",
-      "https://b:81",
+      "http://a:80",  "http://b:80",  "https://a:80",
+      "https://b:80", "http://a:81",  "http://b:81",
+      "https://a:81", "https://b:81", "data:uniqueness",
   };
 
-  for (size_t i = 0; i < arraysize(urls); i++) {
-    GURL current_url(urls[i]);
-    url::Origin current = url::Origin::Create(current_url);
+  // Pre-create the origins, as the internal nonce for unique origins changes
+  // with each freshly-constructed Origin (that's not copied).
+  std::vector<url::Origin> origins;
+  for (const auto* test_url : urls)
+    origins.push_back(url::Origin::Create(GURL(test_url)));
+
+  for (size_t i = 0; i < origins.size(); i++) {
+    const url::Origin& current = origins[i];
     for (size_t j = i; j < arraysize(urls); j++) {
-      GURL compare_url(urls[j]);
-      url::Origin to_compare = url::Origin::Create(compare_url);
+      const url::Origin& to_compare = origins[j];
       EXPECT_EQ(i < j, current < to_compare) << i << " < " << j;
       EXPECT_EQ(j < i, to_compare < current) << j << " < " << i;
     }
@@ -405,8 +413,19 @@ TEST(OriginTest, UnsafelyCreateUniqueOnInvalidInput) {
     EXPECT_EQ("", origin.scheme());
     EXPECT_EQ("", origin.host());
     EXPECT_EQ(0, origin.port());
+    // A unique origin should always be same origin to itself.
     EXPECT_TRUE(origin.unique());
-    EXPECT_FALSE(origin.IsSameOriginWith(origin));
+    EXPECT_TRUE(origin.IsSameOriginWith(origin));
+    // A copy of |origin| should be same origin as well.
+    url::Origin origin_copy = origin;
+    EXPECT_TRUE(origin_copy.unique());
+    EXPECT_TRUE(origin.IsSameOriginWith(origin_copy));
+    // But a second unique origin created from the same components should be
+    // cross origin.
+    url::Origin origin2 = url::Origin::UnsafelyCreateOriginWithoutNormalization(
+        test.scheme, test.host, test.port, "");
+    EXPECT_TRUE(origin2.unique());
+    EXPECT_FALSE(origin.IsSameOriginWith(origin2));
 
     ExpectParsedUrlsEqual(GURL(origin.Serialize()), origin.GetURL());
   }
@@ -435,8 +454,20 @@ TEST(OriginTest, UnsafelyCreateUniqueViaEmbeddedNulls) {
     EXPECT_EQ("", origin.scheme());
     EXPECT_EQ("", origin.host());
     EXPECT_EQ(0, origin.port());
+    // A unique origin should always be same origin to itself.
     EXPECT_TRUE(origin.unique());
-    EXPECT_FALSE(origin.IsSameOriginWith(origin));
+    EXPECT_TRUE(origin.IsSameOriginWith(origin));
+    // A copy of |origin| should be same origin as well.
+    url::Origin origin_copy = origin;
+    EXPECT_TRUE(origin_copy.unique());
+    EXPECT_TRUE(origin.IsSameOriginWith(origin_copy));
+    // But a second unique origin created from the same components should be
+    // cross origin.
+    url::Origin origin2 = url::Origin::UnsafelyCreateOriginWithoutNormalization(
+        std::string(test.scheme, test.scheme_length),
+        std::string(test.host, test.host_length), test.port, "");
+    EXPECT_TRUE(origin2.unique());
+    EXPECT_FALSE(origin.IsSameOriginWith(origin2));
 
     ExpectParsedUrlsEqual(GURL(origin.Serialize()), origin.GetURL());
   }

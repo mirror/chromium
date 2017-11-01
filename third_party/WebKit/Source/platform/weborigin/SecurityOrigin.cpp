@@ -42,6 +42,7 @@
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/StringUTF8Adaptor.h"
+#include "platform/wtf/text/WTFString.h"
 #include "url/url_canon.h"
 #include "url/url_canon_ip.h"
 
@@ -194,6 +195,24 @@ scoped_refptr<SecurityOrigin> SecurityOrigin::CreateUnique() {
   scoped_refptr<SecurityOrigin> origin = WTF::AdoptRef(new SecurityOrigin());
   DCHECK(origin->IsUnique());
   return origin;
+}
+
+url::Origin SecurityOrigin::ToUrlOrigin() const {
+  return IsUnique()
+             ? url::Origin()
+             : url::Origin::CreateFromNormalizedTupleWithSuborigin(
+                   StringUTF8Adaptor(protocol_).AsStringPiece(),
+                   StringUTF8Adaptor(host_).AsStringPiece(), effective_port_,
+                   StringUTF8Adaptor(suborigin_.GetName()).AsStringPiece());
+}
+
+// static
+scoped_refptr<SecurityOrigin> SecurityOrigin::FromUrlOrigin(
+    const url::Origin& origin) {
+  if (origin.unique())
+    return CreateUnique();
+
+  return CreateFromString(String::FromUTF8(origin.Serialize().c_str()));
 }
 
 scoped_refptr<SecurityOrigin> SecurityOrigin::IsolatedCopy() const {
