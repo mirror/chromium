@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a3f98e8_8a49d723",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1936,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "I saw this can be random negative number for MOUSE_CANCEL event, which won\u0027t trigger showSelectionMenu() event though. It generally won\u0027t be valid if there is no selection, but we won\u0027t use this value in such case.\n\nIf this max() is not enough, the only cross check I can think of is to check if selection length is 0, then make this 0, WDYT?",
+      "parentUuid": "09448b7f_0d2051aa",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "708aedd4_b1145f13",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionEventProxyImpl.java",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a3edcb_485ed95a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionEventProxyImpl.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "708aedd4_b1145f13",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "69ba9a59_7dc2b9fd",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionEventProxyImpl.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done\n\nReflection call to get this class is in Logger.java, I wanted to avoid to call it again. Removed anyway.",
+      "parentUuid": "be3c1070_84b3ce3e",
+      "range": {
+        "startLine": 45,
+        "startChar": 58,
+        "endLine": 45,
+        "endChar": 77
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad30057e_c8aa263f",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionEventProxyImpl.java",
         "patchSetId": 19
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "941bfbff_3e0b7980",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionEventProxyImpl.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad30057e_c8aa263f",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56e1e125_787a9392",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
         "patchSetId": 19
@@ -90,6 +168,24 @@
       "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff7ecf2_42520981",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56e1e125_787a9392",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "57c91f9a_1876120d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c6e9954_ce260d24",
+      "range": {
+        "startLine": 21,
+        "startChar": 16,
+        "endLine": 21,
+        "endChar": 32
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abb2b0f6_ad55971e",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
         "patchSetId": 19
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "2eddf43f_7be42bc0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abb2b0f6_ad55971e",
+      "range": {
+        "startLine": 26,
+        "startChar": 16,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cb3f5ed_929757b9",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
         "patchSetId": 19
@@ -153,6 +297,24 @@
       "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5604ada4_48f376e3",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "it\u0027s used by getWordDelta(), countWordBackward() and countWordForward().",
+      "parentUuid": "4cb3f5ed_929757b9",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "936ffd1d_c978a474",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ad11626_72c8b362",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 10
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee73ce60_e44a38a9",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
         "patchSetId": 19
@@ -196,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "33d2c52d_1a43a5da",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done\n\nI wanted to avoid unnecessary usage of substring(), but I agree this is not very easy to read.",
+      "parentUuid": "ee73ce60_e44a38a9",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "953ef116_f1a1d0f6",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
         "patchSetId": 19
@@ -210,6 +414,24 @@
       "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d06afb9_446e0348",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "953ef116_f1a1d0f6",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +458,30 @@
     },
     {
       "key": {
+        "uuid": "9639d3c2_06aaa09c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "last selection is needed to detect adjacent case.",
+      "parentUuid": "cc14245f_3902c858",
+      "range": {
+        "startLine": 119,
+        "startChar": 20,
+        "endLine": 119,
+        "endChar": 36
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b18bcb28_f061c18b",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
         "patchSetId": 19
@@ -259,6 +505,30 @@
     },
     {
       "key": {
+        "uuid": "74edee8a_46ea2d38",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b18bcb28_f061c18b",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 125,
+        "endChar": 63
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f09bc1cc_8df830fe",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
         "patchSetId": 19
@@ -276,6 +546,24 @@
     },
     {
       "key": {
+        "uuid": "824f3dc4_584ce283",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f09bc1cc_8df830fe",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98edc3cb_9d82a087",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
         "patchSetId": 19
@@ -290,6 +578,24 @@
       "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ce33fa_36eba9ea",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "When I first saw it in Android codebase, I was confused too.\n\nUse \"New York City\" as an example, if the selection started with \"New\", now we want to count \"York\" by calling countWordBackward(4, 0). We will count \"Y\" and \"New\" as two words, but we want the result be 1, so taking one step back here.",
+      "parentUuid": "98edc3cb_9d82a087",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -316,6 +622,30 @@
     },
     {
       "key": {
+        "uuid": "e980425b_39f43e5c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "852e8791_a7c10c38",
+      "range": {
+        "startLine": 195,
+        "startChar": 51,
+        "endLine": 195,
+        "endChar": 65
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b0621ff_c482c5cc",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
         "patchSetId": 19
@@ -333,6 +663,24 @@
     },
     {
       "key": {
+        "uuid": "a8bcf2c1_ea64e73a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done.\n\nAt this point, we have no select all selection yet. We are triggering another showSelectionMenu() call for select all. Removed this because two events should be fine, and makes this consistent to rest of events.",
+      "parentUuid": "8b0621ff_c482c5cc",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dc58ee9_1bc2ccfc",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 19
@@ -347,6 +695,24 @@
       "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4bcf865_80e90235",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dc58ee9_1bc2ccfc",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -373,6 +739,30 @@
     },
     {
       "key": {
+        "uuid": "3e226231_2b0875ad",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c16b8841_61392dea",
+      "range": {
+        "startLine": 121,
+        "startChar": 53,
+        "endLine": 121,
+        "endChar": 64
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f179a833_807f4c89",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 19
@@ -393,6 +783,30 @@
       "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5223a4e_7292fab2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f179a833_807f4c89",
+      "range": {
+        "startLine": 147,
+        "startChar": 71,
+        "endLine": 147,
+        "endChar": 76
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -419,6 +833,30 @@
     },
     {
       "key": {
+        "uuid": "ebb83e73_41b6adeb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1bc64da_ae493527",
+      "range": {
+        "startLine": 169,
+        "startChar": 22,
+        "endLine": 169,
+        "endChar": 45
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "031c3276_b222eb13",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 19
@@ -433,6 +871,24 @@
       "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c664060_34d339cb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "031c3276_b222eb13",
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -459,6 +915,30 @@
     },
     {
       "key": {
+        "uuid": "5deb1c0a_47b36df6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0bd6701_99a8a6e2",
+      "range": {
+        "startLine": 207,
+        "startChar": 35,
+        "endLine": 207,
+        "endChar": 40
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4e17787_404f70c8",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 19
@@ -482,6 +962,30 @@
     },
     {
       "key": {
+        "uuid": "7d71edee_93fd995e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4e17787_404f70c8",
+      "range": {
+        "startLine": 211,
+        "startChar": 35,
+        "endLine": 211,
+        "endChar": 55
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cb887f6_d9905874",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 19
@@ -502,6 +1006,30 @@
       "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252cef34_29ad9471",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-01T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cb887f6_d9905874",
+      "range": {
+        "startLine": 218,
+        "startChar": 17,
+        "endLine": 218,
+        "endChar": 26
+      },
+      "revId": "7710344d5177b1a2a8074e9bb61ebb7f5485ca56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
