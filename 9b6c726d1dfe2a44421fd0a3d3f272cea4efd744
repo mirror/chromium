@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26292730_3768cf05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-01T18:47:49Z",
+      "side": 1,
+      "message": "Basically because I don\u0027t trust mContextualSearchManager to always be correct in cases like where the tab is being reparented.  I know we get the onReparentingFinished call, but worried there might be cases where one of the other methods is called before reparenting is finished, or something similar is going on.\n\nI\u0027ve updated the name to mRecentContextualSearchManager (and it\u0027s javadoc), and also on mBaseContentViewCore.\n\nUsually this code is given a Tab instance, and it seems safest to just work off of that for these purposes, but there are a few cases where we\u0027re not given a Tab so we have to use one of these recents.  Do you think I should assert in all these cases to double-check that the right thing is happening?",
+      "parentUuid": "65b854e1_5714c79a",
+      "revId": "9b6c726d1dfe2a44421fd0a3d3f272cea4efd744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67ab9f59_96f73761",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "eeabf00c_8f91d292",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3375,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-01T18:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ab9f59_96f73761",
+      "range": {
+        "startLine": 3375,
+        "startChar": 8,
+        "endLine": 3375,
+        "endChar": 66
+      },
+      "revId": "9b6c726d1dfe2a44421fd0a3d3f272cea4efd744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64308e99_97692ea4",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
         "patchSetId": 7
@@ -62,6 +104,30 @@
       "revId": "9b6c726d1dfe2a44421fd0a3d3f272cea4efd744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b51d29e_0953719a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3386,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-01T18:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64308e99_97692ea4",
+      "range": {
+        "startLine": 3386,
+        "startChar": 8,
+        "endLine": 3386,
+        "endChar": 39
+      },
+      "revId": "9b6c726d1dfe2a44421fd0a3d3f272cea4efd744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
