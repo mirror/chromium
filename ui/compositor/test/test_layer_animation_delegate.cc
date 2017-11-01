@@ -104,7 +104,7 @@ SkColor TestLayerAnimationDelegate::GetColorForAnimation() const {
   return color_;
 }
 
-float TestLayerAnimationDelegate::GetTemperatureFromAnimation() const {
+float TestLayerAnimationDelegate::GetTemperatureForAnimation() const {
   return temperature_;
 }
 
@@ -138,6 +138,8 @@ float TestLayerAnimationDelegate::GetRefreshRate() const {
   return 60.0;
 }
 
+void TestLayerAnimationDelegate::OnTargetChangedForProperties(
+    LayerAnimationElement::AnimatableProperties properties) {}
 
 void TestLayerAnimationDelegate::CreateCcLayer() {
   cc_layer_ = cc::Layer::Create();

@@ -1240,7 +1240,7 @@ SkColor Layer::GetColorForAnimation() const {
       solid_color_layer_->background_color() : SK_ColorBLACK;
 }
 
-float Layer::GetTemperatureFromAnimation() const {
+float Layer::GetTemperatureForAnimation() const {
   return layer_temperature_;
 }
 
@@ -1261,6 +1261,12 @@ int Layer::GetFrameNumber() const {
 float Layer::GetRefreshRate() const {
   const Compositor* compositor = GetCompositor();
   return compositor ? compositor->refresh_rate() : 60.0;
+}
+
+void Layer::OnTargetChangedForProperties(
+    LayerAnimationElement::AnimatableProperties properties) {
+  if (delegate_ && properties & LayerAnimationElement::TRANSFORM)
+    delegate_->OnLayerTargetTransformChanged();
 }
 
 ui::Layer* Layer::GetLayer() {
