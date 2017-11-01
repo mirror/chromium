@@ -403,7 +403,9 @@ class InputRouterImplTest : public testing::Test {
         ViewHostMsg_HasTouchEventHandlers(0, has_handlers));
   }
 
-  void CancelTouchTimeout() { input_router_->CancelTouchTimeout(); }
+  void CancelTouchTimeout() {
+    input_router_->SetTouchActionFromMain(cc::kTouchActionNone);
+  }
 
   void OnSetWhiteListedTouchAction(cc::TouchAction white_listed_touch_action,
                                    uint32_t unique_touch_event_id,
@@ -1904,8 +1906,10 @@ TEST_F(InputRouterImplTest, TouchActionInCallback) {
       InputEventAckSource::COMPOSITOR_THREAD, ui::LatencyInfo(),
       INPUT_EVENT_ACK_STATE_CONSUMED, base::nullopt, cc::kTouchActionNone);
   ASSERT_EQ(1U, disposition_handler_->GetAndResetAckCount());
-  EXPECT_EQ(cc::TouchAction::kTouchActionNone,
-            input_router_->AllowedTouchAction());
+  base::Optional<cc::TouchAction> allowed_touch_action =
+      input_router_->AllowedTouchAction();
+  EXPECT_TRUE(allowed_touch_action.has_value());
+  EXPECT_EQ(cc::TouchAction::kTouchActionNone, allowed_touch_action.value());
 }
 
 namespace {

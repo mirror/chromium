@@ -275,6 +275,10 @@ class InputHandlerProxy : public cc::InputHandlerClient,
 
   std::unique_ptr<base::TickClock> tick_clock_;
 
+  // This flag indicates whether we enable compositor to handle touch action or
+  // not. The actual feature is defined in ui/events/blink/blink_features.cc.
+  bool is_compositor_touch_action_enabled_;
+
   DISALLOW_COPY_AND_ASSIGN(InputHandlerProxy);
 };
 
