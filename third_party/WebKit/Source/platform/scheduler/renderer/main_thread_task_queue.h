@@ -6,6 +6,7 @@
 #define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_RENDERER_MAIN_THREAD_TASK_QUEUE_H_
 
 #include "platform/scheduler/base/task_queue.h"
+#include "platform/scheduler/base/task_queue_impl.h"
 
 namespace blink {
 
@@ -18,7 +19,7 @@ class RendererSchedulerImpl;
 class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
  public:
   enum class QueueType {
-    // Keep MainThreadTaskQueue::NameForQueueType in sync.
+    // Keep MainThreadTaskQueue::ReportingMessageForQueueType in sync.
     // This enum is used for a histogram and it should not be re-numbered.
     // TODO(altimin): Clean up obsolete names and use a new histogram when
     // the situation settles.
@@ -48,7 +49,7 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
 
   // Returns name of the given queue type. Returned string has application
   // lifetime.
-  static const char* NameForQueueType(QueueType queue_type);
+  static const char* ReportingMessageForQueueType(QueueType queue_type);
 
   // High-level category used by RendererScheduler to make scheduling decisions.
   enum class QueueClass {
@@ -65,7 +66,7 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
   struct QueueCreationParams {
     explicit QueueCreationParams(QueueType queue_type)
         : queue_type(queue_type),
-          spec(NameForQueueType(queue_type)),
+          spec(ReportingMessageForQueueType(queue_type)),
           can_be_blocked(false),
           can_be_throttled(false),
           can_be_paused(false),

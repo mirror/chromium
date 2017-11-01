@@ -11,41 +11,50 @@ namespace blink {
 namespace scheduler {
 
 // static
-const char* MainThreadTaskQueue::NameForQueueType(
+const char* MainThreadTaskQueue::ReportingMessageForQueueType(
     MainThreadTaskQueue::QueueType queue_type) {
   switch (queue_type) {
     case MainThreadTaskQueue::QueueType::CONTROL:
-      return "TaskQueueType.Control";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType.Control";
     case MainThreadTaskQueue::QueueType::DEFAULT:
-      return "TaskQueueType.Default";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType.Default";
     case MainThreadTaskQueue::QueueType::DEFAULT_LOADING:
-      return "TaskQueueType.DefaultLoading";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType."
+             "DefaultLoading";
     case MainThreadTaskQueue::QueueType::DEFAULT_TIMER:
-      return "TaskQueueType.DefaultTimer";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType."
+             "DefaultTimer";
     case MainThreadTaskQueue::QueueType::UNTHROTTLED:
-      return "TaskQueueType.Unthrottled";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType."
+             "Unthrottled";
     case MainThreadTaskQueue::QueueType::FRAME_LOADING:
-      return "TaskQueueType.FrameLoading";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType."
+             "FrameLoading";
     case MainThreadTaskQueue::QueueType::FRAME_THROTTLEABLE:
-      return "TaskQueueType.FrameThrottleable";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType."
+             "FrameThrottleable";
     case MainThreadTaskQueue::QueueType::FRAME_DEFERRABLE:
-      return "TaskQueueType.FrameDeferrable";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType."
+             "FrameDeferrable";
     case MainThreadTaskQueue::QueueType::FRAME_PAUSABLE:
-      return "TaskQueueType.FramePausable";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType."
+             "FramePausable";
     case MainThreadTaskQueue::QueueType::FRAME_UNPAUSABLE:
-      return "TaskQueueType.FrameUnpausable";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType."
+             "FrameUnpausable";
     case MainThreadTaskQueue::QueueType::COMPOSITOR:
-      return "TaskQueueType.Compositor";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType.Compositor";
     case MainThreadTaskQueue::QueueType::IDLE:
-      return "TaskQueueType.Idle";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType.Idle";
     case MainThreadTaskQueue::QueueType::TEST:
-      return "TaskQueueType.Test";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType.Test";
     case MainThreadTaskQueue::QueueType::FRAME_LOADING_CONTROL:
-      return "TaskQueueType.FrameLoadingControl";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType."
+             "FrameLoadingControl";
     case MainThreadTaskQueue::QueueType::V8:
-      return "TaskQueueType.V8";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType.V8";
     case MainThreadTaskQueue::QueueType::OTHER:
-      return "TaskQueueType.Other";
+      return "RendererScheduler.ExpectedQueueingTimeByTaskQueueType.Other";
     case MainThreadTaskQueue::QueueType::COUNT:
       NOTREACHED();
       return nullptr;
