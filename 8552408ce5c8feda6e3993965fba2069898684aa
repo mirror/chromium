@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c8903a11_b865b551",
+        "filename": "third_party/guava/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-01T20:36:26Z",
+      "side": 1,
+      "message": "Then can you please explain this in the comment? Currently it looks like either the comment or the code is wrong.",
+      "parentUuid": "c895dc0e_c76b42b4",
+      "revId": "8552408ce5c8feda6e3993965fba2069898684aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "224f6ddc_c2dfbe24",
         "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
         "patchSetId": 12
