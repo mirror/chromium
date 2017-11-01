@@ -159,6 +159,7 @@
 #import "ios/chrome/browser/ui/reading_list/reading_list_menu_notifier.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/sad_tab/sad_tab_legacy_coordinator.h"
+#import "ios/chrome/browser/ui/settings/sync_utils/sync_presenter.h"
 #import "ios/chrome/browser/ui/settings/sync_utils/sync_util.h"
 #import "ios/chrome/browser/ui/side_swipe/side_swipe_controller.h"
 #import "ios/chrome/browser/ui/snackbar/snackbar_coordinator.h"
@@ -394,6 +395,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     SKStoreProductViewControllerDelegate,
                                     SnapshotOverlayProvider,
                                     StoreKitLauncher,
+                                    SyncPresenter,
                                     TabDialogDelegate,
                                     TabHeadersDelegate,
                                     TabHistoryPresentation,
@@ -1674,7 +1676,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [[UpgradeCenter sharedInstance] addInfoBarToManager:infoBarManager
                                              forTabId:[tab tabId]];
   if (!ReSignInInfoBarDelegate::Create(_browserState, tab, self.dispatcher)) {
-    DisplaySyncErrors(_browserState, tab, self.dispatcher);
+    DisplaySyncErrors(_browserState, tab, self, self.dispatcher);
   }
 
   // The rest of this function initiates the new tab animation, which is
@@ -5350,6 +5352,24 @@ bubblePresenterForFeature:(const base::Feature&)feature
   } else {
     [self.dispatcher openNewTab:[OpenNewTabCommand command]];
   }
+}
+
+#pragma mark - SyncPresenter
+
+- (void)showSignin {
+  //  [self.dispatcher
+  //   showSignin:[[ShowSigninCommand alloc]
+  //               initWithOperation:AUTHENTICATION_OPERATION_REAUTHENTICATE
+  //               accessPoint:signin_metrics::AccessPoint::
+  //               ACCESS_POINT_UNKNOWN]];
+}
+
+- (void)showSyncSettings {
+  [self.dispatcher showSyncSettings];
+}
+
+- (void)showSyncPassphraseSettings {
+  [self.dispatcher showSyncPassphraseSettings];
 }
 
 @end
