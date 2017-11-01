@@ -4621,6 +4621,30 @@ _FUNCTION_INFO = {
                 'GLsizei color_space_size',
     'extension': 'CHROMIUM_color_space_metadata',
   },
+  "CreateTransferCacheEntryCHROMIUM": {
+    'type': 'Custom',
+    'cmd_args': 'uint64_t handle_id, uint32_t handle_shm_id, '
+                'uint32_t handle_shm_offset, uint32_t type, '
+                'uint32_t data_shm_id, uint32_t data_shm_offset, '
+                'uint32_t data_size',
+    'impl_func': False,
+    'client_test': False,
+    'extension': True,
+  },
+  "DeleteTransferCacheEntryCHROMIUM": {
+    'type': 'Custom',
+    'cmd_args': 'uint64_t handle_id',
+    'impl_func': False,
+    'client_test': False,
+    'extension': True,
+  },
+  "UnlockTransferCacheEntryCHROMIUM": {
+    'type': 'Custom',
+    'cmd_args': 'uint64_t handle_id',
+    'impl_func': False,
+    'client_test': False,
+    'extension': True,
+  }
 }
 
 

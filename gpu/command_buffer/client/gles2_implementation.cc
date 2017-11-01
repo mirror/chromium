@@ -7109,6 +7109,27 @@ bool GLES2Implementation::LockDiscardableTextureCHROMIUM(GLuint texture_id) {
   return true;
 }
 
+void GLES2Implementation::CreateTransferCacheEntryCHROMIUM(
+    uint64_t handle_id,
+    uint32_t handle_shm_id,
+    uint32_t handle_shm_offset,
+    uint32_t type,
+    size_t size,
+    void* data) {
+  ScopedMappedMemoryPtr mapped_alloc(size, helper_, mapped_memory_.get());
+  DCHECK(mapped_alloc.valid());
+  memcpy(mapped_alloc.address(), data, size);
+  helper_->CreateTransferCacheEntryCHROMIUM(
+      handle_id, handle_shm_id, handle_shm_offset, type, mapped_alloc.shm_id(),
+      mapped_alloc.offset(), size);
+}
+void GLES2Implementation::DeleteTransferCacheEntryCHROMIUM(uint64_t handle_id) {
+  helper_->DeleteTransferCacheEntryCHROMIUM(handle_id);
+}
+void GLES2Implementation::UnlockTransferCacheEntryCHROMIUM(uint64_t handle_id) {
+  helper_->UnlockTransferCacheEntryCHROMIUM(handle_id);
+}
+
 void GLES2Implementation::UpdateCachedExtensionsIfNeeded() {
   if (cached_extension_string_) {
     return;

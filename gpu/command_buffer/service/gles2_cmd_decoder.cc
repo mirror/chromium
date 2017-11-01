@@ -27,6 +27,7 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "cc/paint/paint_op_buffer.h"
+#include "cc/paint/transfer_cache_entry.h"
 #include "gpu/command_buffer/common/debug_marker_manager.h"
 #include "gpu/command_buffer/common/gles2_cmd_format.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
@@ -63,6 +64,7 @@
 #include "gpu/command_buffer/service/renderbuffer_manager.h"
 #include "gpu/command_buffer/service/sampler_manager.h"
 #include "gpu/command_buffer/service/service_discardable_manager.h"
+#include "gpu/command_buffer/service/service_transfer_cache.h"
 #include "gpu/command_buffer/service/shader_manager.h"
 #include "gpu/command_buffer/service/shader_translator.h"
 #include "gpu/command_buffer/service/texture_manager.h"
@@ -20327,6 +20329,72 @@ void GLES2DecoderImpl::DoEndRasterCHROMIUM() {
   sk_surface_.reset();
 
   RestoreState(nullptr);
+}
+
+error::Error GLES2DecoderImpl::HandleCreateTransferCacheEntryCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::CreateTransferCacheEntryCHROMIUM& c =
+      *static_cast<
+          const volatile gles2::cmds::CreateTransferCacheEntryCHROMIUM*>(
+          cmd_data);
+  cc::TransferCacheEntryId handle_id =
+      cc::TransferCacheEntryId::FromUnsafeValue(c.handle_id);
+  uint32_t handle_shm_id = c.handle_shm_id;
+  uint32_t handle_shm_offset = c.handle_shm_offset;
+  cc::TransferCacheEntryType type =
+      static_cast<cc::TransferCacheEntryType>(c.type);
+  uint32_t data_shm_id = c.data_shm_id;
+  uint32_t data_shm_offset = c.data_shm_offset;
+  uint32_t data_size = c.data_size;
+
+  scoped_refptr<gpu::Buffer> data_buffer = GetSharedMemoryBuffer(data_shm_id);
+  if (!data_buffer)
+    return error::kInvalidArguments;
+
+  void* data_memory = data_buffer->GetDataAddress(data_shm_offset, data_size);
+  if (!data_memory)
+    return error::kInvalidArguments;
+
+  scoped_refptr<gpu::Buffer> handle_buffer =
+      GetSharedMemoryBuffer(handle_shm_id);
+  if (!DiscardableHandleBase::ValidateParameters(handle_buffer.get(),
+                                                 handle_shm_offset))
+    return error::kInvalidArguments;
+  ServiceDiscardableHandle handle(std::move(handle_buffer), handle_shm_offset,
+                                  handle_shm_id);
+
+  if (!GetContextGroup()->transfer_cache()->CreateLockedEntry(
+          handle_id, handle, type, data_memory, data_size))
+    return error::kInvalidArguments;
+
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleUnlockTransferCacheEntryCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::UnlockTransferCacheEntryCHROMIUM& c =
+      *static_cast<
+          const volatile gles2::cmds::UnlockTransferCacheEntryCHROMIUM*>(
+          cmd_data);
+  cc::TransferCacheEntryId handle_id =
+      cc::TransferCacheEntryId::FromUnsafeValue(c.handle_id);
+  GetContextGroup()->transfer_cache()->UnlockEntry(handle_id);
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleDeleteTransferCacheEntryCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::DeleteTransferCacheEntryCHROMIUM& c =
+      *static_cast<
+          const volatile gles2::cmds::DeleteTransferCacheEntryCHROMIUM*>(
+          cmd_data);
+  cc::TransferCacheEntryId handle_id =
+      cc::TransferCacheEntryId::FromUnsafeValue(c.handle_id);
+  GetContextGroup()->transfer_cache()->DeleteEntry(handle_id);
+  return error::kNoError;
 }
 
 // Include the auto-generated part of this file. We split this because it means

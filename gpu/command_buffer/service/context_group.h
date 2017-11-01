@@ -20,6 +20,7 @@
 #include "gpu/command_buffer/service/feature_info.h"
 #include "gpu/command_buffer/service/framebuffer_completeness_cache.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
+#include "gpu/command_buffer/service/service_transfer_cache.h"
 #include "gpu/command_buffer/service/shader_translator_cache.h"
 #include "gpu/config/gpu_feature_info.h"
 #include "gpu/gpu_export.h"
@@ -30,6 +31,7 @@ class ImageFactory;
 struct GpuPreferences;
 class TransferBufferManager;
 class ServiceDiscardableManager;
+class ServiceTransferCache;
 
 namespace gles2 {
 
@@ -203,6 +205,8 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
     return discardable_manager_;
   }
 
+  ServiceTransferCache* transfer_cache() const { return transfer_cache_.get(); }
+
   uint32_t GetMemRepresented() const;
 
   // Loses all the context associated with this group.
@@ -319,6 +323,7 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
   GpuFeatureInfo gpu_feature_info_;
 
   ServiceDiscardableManager* discardable_manager_;
+  std::unique_ptr<ServiceTransferCache> transfer_cache_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextGroup);
 };
