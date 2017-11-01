@@ -33,8 +33,10 @@
 #include "platform/PlatformExport.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebURLError.h"
+#include "services/network/public/interfaces/cors.mojom-blink.h"
 
 namespace blink {
 
@@ -67,10 +69,12 @@ class PLATFORM_EXPORT ResourceError final {
 
   ResourceError(Domain domain,
                 int error_code,
+                WTF::Optional<network::mojom::CORSError> cors_error,
                 const KURL& failing_url,
                 const String& localized_description)
       : domain_(domain),
         error_code_(error_code),
+        cors_error_(cors_error),
         failing_url_(failing_url),
         localized_description_(localized_description) {
     DCHECK_NE(domain, Domain::kEmpty);
@@ -84,6 +88,9 @@ class PLATFORM_EXPORT ResourceError final {
 
   Domain GetDomain() const { return domain_; }
   int ErrorCode() const { return error_code_; }
+  WTF::Optional<network::mojom::CORSError> CORSError() const {
+    return cors_error_;
+  }
   const String& FailingURL() const { return failing_url_; }
   const String& LocalizedDescription() const { return localized_description_; }
 
@@ -112,14 +119,17 @@ class PLATFORM_EXPORT ResourceError final {
 
   static bool Compare(const ResourceError&, const ResourceError&);
 
-  static void InitializeWebURLError(WebURLError*,
-                                    const WebURL&,
-                                    bool stale_copy_in_cache,
-                                    int reason);
+  static void InitializeWebURLError(
+      WebURLError*,
+      const WebURL&,
+      bool stale_copy_in_cache,
+      int reason,
+      base::Optional<network::mojom::CORSError> cors_error);
 
  private:
   Domain domain_ = Domain::kEmpty;
   int error_code_ = 0;
+  WTF::Optional<network::mojom::CORSError> cors_error_;
   KURL failing_url_;
   String localized_description_;
   bool is_access_check_ = false;

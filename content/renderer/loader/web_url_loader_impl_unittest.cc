@@ -354,7 +354,7 @@ class WebURLLoaderImplTest : public testing::Test {
     EXPECT_FALSE(client()->did_finish());
     peer()->OnCompletedRequest(net::OK, false, base::TimeTicks(),
                                strlen(kTestData), strlen(kTestData),
-                               strlen(kTestData));
+                               strlen(kTestData), base::nullopt);
     EXPECT_TRUE(client()->did_finish());
     // There should be no error.
     EXPECT_EQ(net::OK, client()->error().reason);
@@ -365,7 +365,7 @@ class WebURLLoaderImplTest : public testing::Test {
     EXPECT_FALSE(client()->did_finish());
     peer()->OnCompletedRequest(net::ERR_FAILED, false, base::TimeTicks(),
                                strlen(kTestData), strlen(kTestData),
-                               strlen(kTestData));
+                               strlen(kTestData), base::nullopt);
     EXPECT_FALSE(client()->did_finish());
     EXPECT_EQ(net::ERR_FAILED, client()->error().reason);
     EXPECT_EQ(blink::WebURLError::Domain::kNet, client()->error().domain);
@@ -593,7 +593,7 @@ TEST_F(WebURLLoaderImplTest, FtpDeleteOnReceiveMoreData) {
   client()->set_delete_on_receive_data();
   peer()->OnCompletedRequest(net::OK, false, base::TimeTicks(),
                              strlen(kTestData), strlen(kTestData),
-                             strlen(kTestData));
+                             strlen(kTestData), base::nullopt);
   EXPECT_FALSE(client()->did_finish());
 }
 
