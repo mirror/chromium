@@ -141,6 +141,30 @@
       "revId": "91fb603daed16109ea41b22bf0977ec58c6e8733",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92804306_4e63d35f",
+        "filename": "android_webview/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-01T20:07:24Z",
+      "side": 1,
+      "message": "\u003e should put this next to +content/public/test/android/javatests in android_webview/javatests/DEPS to make this clearer, ditto for chrome\n\nDone",
+      "parentUuid": "29d924cd_620580a3",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "91fb603daed16109ea41b22bf0977ec58c6e8733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
