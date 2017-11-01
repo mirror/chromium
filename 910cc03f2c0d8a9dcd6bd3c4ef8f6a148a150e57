@@ -22,6 +22,30 @@
       "revId": "910cc03f2c0d8a9dcd6bd3c4ef8f6a148a150e57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c164fdad_a46ded71",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1593,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-01T18:09:48Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "b11ec84f_3bf14800",
+      "range": {
+        "startLine": 1593,
+        "startChar": 34,
+        "endLine": 1593,
+        "endChar": 43
+      },
+      "revId": "910cc03f2c0d8a9dcd6bd3c4ef8f6a148a150e57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
