@@ -16,6 +16,57 @@
       "revId": "bbcd03d50c106530d2bc1f982513988bad366a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a560b5_17fce660",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-01T18:00:42Z",
+      "side": 1,
+      "message": "WDYT of initializing reason to PaintInvalidationReason::kNone and then having the following here:\nif (bg \u003d\u003d incremental)\n  reason \u003d PaintInvalidationReason::kIncremental;\nelse\n  reason \u003d PaintInvalidationReason::kBackgroundOnScrollingContentsLayer;\n\nI think it might make it more obvious that we\u0027re just setting the reason based on the invalidation type.",
+      "revId": "bbcd03d50c106530d2bc1f982513988bad366a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d345b3_5fc7bad6",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-01T18:00:42Z",
+      "side": 1,
+      "message": "nit: is this needed?",
+      "revId": "bbcd03d50c106530d2bc1f982513988bad366a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a62838_1e8765be",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-01T18:00:42Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this pass kIncremental?",
+      "revId": "bbcd03d50c106530d2bc1f982513988bad366a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
