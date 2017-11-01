@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6382f5d5_4e03291f",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-01T20:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0adb0e49_b8dad6cb",
+      "range": {
+        "startLine": 109,
+        "startChar": 25,
+        "endLine": 109,
+        "endChar": 42
+      },
+      "revId": "83cea06aa9651182864d2935944ebe2a91ef0641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d583245_471a6682",
         "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "83cea06aa9651182864d2935944ebe2a91ef0641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2d6b20_6aba2e20",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-01T20:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d583245_471a6682",
+      "range": {
+        "startLine": 118,
+        "startChar": 33,
+        "endLine": 118,
+        "endChar": 34
+      },
+      "revId": "83cea06aa9651182864d2935944ebe2a91ef0641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
