@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a0a05295_1a276bf8",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-11-01T16:09:17Z",
+      "side": 1,
+      "message": "Yep, that\u0027s fine. I just meant that it wasn\u0027t possible to observe a crash in the case where we weren\u0027t intending to generate a minidump, or something caused generation to fail.",
+      "parentUuid": "498a26d4_82b0a563",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 10
+      },
+      "revId": "9adc80b769526c4288c22aa8720d2044f7119dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3d1ff77_fa4988f7",
         "filename": "components/crash/content/browser/crash_dump_manager_android.h",
         "patchSetId": 18
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I made it public because I had the unit test test this. I could opt to friend the test harness instead if you prefer.",
       "parentUuid": "f3d1ff77_fa4988f7",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 17
+      },
+      "revId": "9adc80b769526c4288c22aa8720d2044f7119dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623bdeea_7ba7e74a",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-11-01T16:09:17Z",
+      "side": 1,
+      "message": "I just missed the usage in the unit test. However, looking at the use of ExpectUniqueSample in a number of other places, it seems like most tests hard code the value of the associated enum entry. This seems odd at first glance, but it does have the advantage that it enforces that that the enum remains append-only. It\u0027s up to you whether you want to leave it as-is, or change it.",
+      "parentUuid": "744dabf1_dfe8b96e",
       "range": {
         "startLine": 37,
         "startChar": 7,
