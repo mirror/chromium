@@ -154,6 +154,10 @@ class ExtensionSyncService : public syncer::SyncableService,
   // asynchronously via MergeDataAndStartSyncing as soon as possible.
   syncer::SyncableService::StartSyncFlare flare_;
 
+  // Whether the sync data for extension should be synced.
+  // This is
+  bool ShouldSyncExtensionData(const std::string& id) const;
+
   DISALLOW_COPY_AND_ASSIGN(ExtensionSyncService);
 };
 
