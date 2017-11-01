@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3150c6af_3a82e34b",
+        "filename": "ui/base/ui_base_features.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T16:19:57Z",
+      "side": 1,
+      "message": "Please make this ifdef match this statement (easier to read):\ndefined(OS_WIN) || (defined(OS_LINUX) \u0026\u0026 !defined(OS_CHROMEOS))",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "40a1b9ba400c6394cc2bf3efc1ced55bd4c7f3bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
