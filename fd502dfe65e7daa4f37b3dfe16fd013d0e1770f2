@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6392857_a17cd07b",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2233,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-01T15:31:44Z",
+      "side": 1,
+      "message": "You are deleting after erasing here. So you are either deleting the wrong entry, or deleting past the bounds of the array. Simply reversing the two lines do not fix the crash either, so something else is also going on. Please consider a revert.",
+      "revId": "fd502dfe65e7daa4f37b3dfe16fd013d0e1770f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
