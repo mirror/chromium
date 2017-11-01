@@ -36,6 +36,7 @@ FrameSinkManagerImpl::FrameSinkManagerImpl(
     : display_provider_(display_provider),
       surface_manager_(lifetime_type),
       hit_test_manager_(this),
+      video_detector_(this),
       binding_(this) {
   surface_manager_.AddObserver(&hit_test_manager_);
   surface_manager_.AddObserver(this);
@@ -403,6 +404,11 @@ void FrameSinkManagerImpl::SwitchActiveAggregatedHitTestRegionList(
     client_->SwitchActiveAggregatedHitTestRegionList(frame_sink_id,
                                                      active_handle_index);
   }
+}
+
+void FrameSinkManagerImpl::AddVideoDetectorObserver(
+    mojom::VideoDetectorObserverPtr observer) {
+  video_detector_.AddObserver(std::move(observer));
 }
 
 }  // namespace viz

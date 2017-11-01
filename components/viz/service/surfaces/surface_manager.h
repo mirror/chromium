@@ -189,6 +189,10 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
     return lifetime_type_ == LifetimeType::REFERENCES;
   }
 
+  // Called by SurfaceAggregator notifying us that it will use |surface_id| in
+  // the next display frame. We will notify SurfaceObservers accordingly.
+  void SurfaceWillBeDrawn(const SurfaceId& surface_id);
+
  private:
   friend class test::SurfaceSynchronizationTest;
   friend class test::SurfaceReferencesTest;
