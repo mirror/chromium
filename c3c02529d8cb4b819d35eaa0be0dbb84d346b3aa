@@ -22,6 +22,30 @@
       "revId": "c3c02529d8cb4b819d35eaa0be0dbb84d346b3aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594b707b_95be4abd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/TabbedModeFirstRunActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-01T18:43:39Z",
+      "side": 1,
+      "message": "Hmm, interesting.\n\nAndroid defines dialog_fixed_* values in values-sw600dp and values-sw720dp, while AppCompat defines them in values-large and values-xlarge.\n\nBut it\u0027s the AppCompat where our DialogWhenLarge comes from, and it depends on values-large too (it\u0027s AppCompat.FixedSize in values-large and plain AppCompat otherwise).\n\nSo it looks like standard FRE resizes to fullscreen in the bug\u0027s case.\n\nI\u0027m also going to add default (@null) dialog_fixed_* values into base values.xml, just to have some default.",
+      "parentUuid": "6648ca60_877720fc",
+      "range": {
+        "startLine": 71,
+        "startChar": 23,
+        "endLine": 71,
+        "endChar": 27
+      },
+      "revId": "c3c02529d8cb4b819d35eaa0be0dbb84d346b3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
