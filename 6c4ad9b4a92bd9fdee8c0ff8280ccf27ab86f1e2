@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6b6baaf_5639845b",
+        "filename": "android_webview/javatests/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T20:43:09Z",
+      "side": 1,
+      "message": "oh forgot, these should be test/util, right?",
+      "range": {
+        "startLine": 21,
+        "startChar": 75,
+        "endLine": 21,
+        "endChar": 79
+      },
+      "revId": "6c4ad9b4a92bd9fdee8c0ff8280ccf27ab86f1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
