@@ -22,6 +22,30 @@
       "revId": "68877309a0c272f65ccc41451387cb568f6fb0f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc98ac69_7fabf233",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-11-01T21:01:57Z",
+      "side": 1,
+      "message": "I think \"roll\" makes sense since mb.py updates this file to reflect the state of trybots in mb_config at whatever revision you run it at... but it really doesn\u0027t matter",
+      "parentUuid": "c06c7758_40759985",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "68877309a0c272f65ccc41451387cb568f6fb0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
