@@ -4058,7 +4058,7 @@ crbug.com/591099 fast/css/vertical-text-overflow-ellipsis-text-align-right.html 
 crbug.com/591099 fast/css/visibility-hit-test.html [ Failure ]
 crbug.com/591099 fast/css/word-space-extra.html [ Crash Failure ]
 crbug.com/591099 fast/css/zoom-font-size.html [ Failure ]
-crbug.com/591099 fast/css3-text/css3-text-decoration/text-decoration-skip.html [ Failure ]
+crbug.com/591099 fast/css3-text/css3-text-decoration/text-decoration-skip-ink.html [ Failure ]
 crbug.com/591099 fast/css3-text/css3-text-decoration/text-decoration-style-inherit-not-propagated-by-out-of-flow.html [ Failure ]
 crbug.com/591099 fast/css3-text/css3-text-decoration/text-underline-position/text-underline-position-auto.html [ Failure ]
 crbug.com/591099 fast/css3-text/css3-text-decoration/text-underline-position/text-underline-position-cjk.html [ Crash Failure ]
