@@ -347,6 +347,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // to the renderer. Used by AppCache and ServiceWorker.
   base::Optional<SubresourceLoaderParams> subresource_loader_params_;
 
+  base::UnguessableToken devtools_navigation_token_;
+
   base::WeakPtrFactory<NavigationRequest> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationRequest);

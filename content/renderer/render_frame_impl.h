@@ -518,13 +518,14 @@ class CONTENT_EXPORT RenderFrameImpl
   void AllowBindings(int32_t enabled_bindings_flags) override;
 
   // mojom::FrameNavigationControl implemenentation:
-  void CommitNavigation(const ResourceResponseHead& head,
-                        const GURL& body_url,
-                        const CommonNavigationParams& common_params,
-                        const RequestNavigationParams& request_params,
-                        mojo::ScopedDataPipeConsumerHandle body_data,
-                        mojom::URLLoaderFactoryPtr
-                            default_subresource_url_loader_factory) override;
+  void CommitNavigation(
+      const ResourceResponseHead& head,
+      const GURL& body_url,
+      const CommonNavigationParams& common_params,
+      const RequestNavigationParams& request_params,
+      mojo::ScopedDataPipeConsumerHandle body_data,
+      mojom::URLLoaderFactoryPtr default_subresource_url_loader_factory,
+      const base::UnguessableToken& devtools_navigation_token) override;
 
   // mojom::HostZoom implementation:
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;
@@ -1085,7 +1086,8 @@ class CONTENT_EXPORT RenderFrameImpl
       const CommonNavigationParams& common_params,
       const StartNavigationParams& start_params,
       const RequestNavigationParams& request_params,
-      std::unique_ptr<StreamOverrideParameters> stream_params);
+      std::unique_ptr<StreamOverrideParameters> stream_params,
+      const base::UnguessableToken& devtools_navigation_token);
 
   // Update current main frame's encoding and send it to browser window.
   // Since we want to let users see the right encoding info from menu

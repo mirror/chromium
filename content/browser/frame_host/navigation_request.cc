@@ -384,6 +384,14 @@ NavigationRequest::NavigationRequest(
   if (entry)
     nav_entry_id_ = entry->GetUniqueID();
 
+  // For non-browser_initiated navigations, devtools_navigation_token
+  // traceability is not essential, create the new token. This might change
+  // if we decide to trace renderer-initiated navigations.
+  if (browser_initiated)
+    devtools_navigation_token_ = entry->devtools_navigation_token();
+  else
+    devtools_navigation_token_ = base::UnguessableToken::Create();
+
   std::string user_agent_override;
   if (request_params.is_overriding_user_agent ||
       (entry && entry->GetIsOverridingUserAgent())) {
@@ -1191,7 +1199,8 @@ void NavigationRequest::CommitNavigation() {
 
   render_frame_host->CommitNavigation(
       response_.get(), std::move(body_), std::move(handle_), common_params_,
-      request_params_, is_view_source_, std::move(subresource_loader_params_));
+      request_params_, is_view_source_, std::move(subresource_loader_params_),
+      devtools_navigation_token_);
 
   frame_tree_node_->ResetNavigationRequest(true, true);
 }

@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
+#include "base/unguessable_token.h"
 #include "build/build_config.h"
 #include "content/browser/frame_host/frame_navigation_entry.h"
 #include "content/browser/frame_host/frame_tree_node.h"
@@ -418,6 +419,14 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   }
 #endif
 
+  base::UnguessableToken devtools_navigation_token() const {
+    return devtools_navigation_token_;
+  }
+
+  void set_devtools_navigation_token(const base::UnguessableToken& token) {
+    devtools_navigation_token_ = token;
+  }
+
  private:
   // WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
   // Session/Tab restore save portions of this class so that it can be recreated
@@ -553,6 +562,13 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   // Set to true if the navigation controller gets notified about a SSL error
   // for a pending navigation. Defaults to false.
   bool ssl_error_;
+
+  // For automation driver-initiated navigations over the devtools protocol,
+  // |devtools_navigation_token_| is used to tag the navigation. This navigation
+  // token is then sent into the renderer and lands on the DocumentLoader. That
+  // way subsequent Blink-level frame lifecycle events can be associated with
+  // the concrete navigation.
+  base::UnguessableToken devtools_navigation_token_;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationEntryImpl);
 };
