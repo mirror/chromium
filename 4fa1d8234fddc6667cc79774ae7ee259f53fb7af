@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64d4ac2f_9d52bdb9",
+        "filename": "third_party/WebKit/Source/core/streams/CommonOperations.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-01T06:09:51Z",
+      "side": 1,
+      "message": "Reformant needed?\n\nDitto bellow",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 18
+      },
+      "revId": "4fa1d8234fddc6667cc79774ae7ee259f53fb7af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c8a355_725f99a7",
+        "filename": "third_party/WebKit/Source/core/streams/CommonStrings.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-01T06:09:51Z",
+      "side": 1,
+      "message": "Is it preferable to split the string literal for the formatting reason?",
+      "revId": "4fa1d8234fddc6667cc79774ae7ee259f53fb7af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9df9e6_cd8034b4",
+        "filename": "third_party/WebKit/Source/core/streams/ReadableStream.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-01T06:09:51Z",
+      "side": 1,
+      "message": "Is it preferable to split the string literal for the formatting reason?\n\nDitto below",
+      "revId": "4fa1d8234fddc6667cc79774ae7ee259f53fb7af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
