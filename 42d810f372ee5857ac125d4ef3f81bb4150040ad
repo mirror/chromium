@@ -22,6 +22,30 @@
       "revId": "42d810f372ee5857ac125d4ef3f81bb4150040ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e3ccf21_09f80899",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-01T21:30:45Z",
+      "side": 1,
+      "message": "Done.\nyes, spaces for tabulation in Test: is not correctly recognized.",
+      "parentUuid": "92a5d549_209c0373",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 71
+      },
+      "revId": "42d810f372ee5857ac125d4ef3f81bb4150040ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
