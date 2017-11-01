@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1aaab0e_838247ba",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-11-01T18:02:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9ae0836_619952bb",
+      "range": {
+        "startLine": 418,
+        "startChar": 0,
+        "endLine": 419,
+        "endChar": 50
+      },
+      "revId": "e2ebf166eb258b10e4d9e7fb5bdd116ec27cf80b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3b03f19_de125ab1",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "328a22d1_1929c633",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-11-01T18:02:52Z",
+      "side": 1,
+      "message": "I resolved this by making it transitions instead. feel free to reopen.",
+      "parentUuid": "3c0c61c7_535080f2",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "e2ebf166eb258b10e4d9e7fb5bdd116ec27cf80b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd4a7f77_e625ec33",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
         "patchSetId": 2
@@ -92,6 +140,30 @@
       "revId": "e2ebf166eb258b10e4d9e7fb5bdd116ec27cf80b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999a5ff7_fe140035",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-11-01T18:02:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd4a7f77_e625ec33",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 25
+      },
+      "revId": "e2ebf166eb258b10e4d9e7fb5bdd116ec27cf80b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -166,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "892d6577_61118fd9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-11-01T18:02:52Z",
+      "side": 1,
+      "message": "Resolved by introducing FOREGROUNDED to differentiate the 2 cases. and clarified the possible transitions in the comment.",
+      "parentUuid": "409646f7_39ff79a1",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "e2ebf166eb258b10e4d9e7fb5bdd116ec27cf80b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "999a9ee5_9540a7a4",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper_unittest.cc",
         "patchSetId": 2
@@ -189,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "685c70e2_bde60aae",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-11-01T18:02:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "999a9ee5_9540a7a4",
+      "range": {
+        "startLine": 110,
+        "startChar": 36,
+        "endLine": 110,
+        "endChar": 48
+      },
+      "revId": "e2ebf166eb258b10e4d9e7fb5bdd116ec27cf80b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "664ecded_72f5dffb",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
         "patchSetId": 2
@@ -200,6 +320,30 @@
       "writtenOn": "2017-11-01T00:26:18Z",
       "side": 1,
       "message": "I believe that we should move this block several lines below to ensure that we don\u0027t record metrics when SetRendererBackground goes not change the current status.",
+      "range": {
+        "startLine": 599,
+        "startChar": 2,
+        "endLine": 599,
+        "endChar": 19
+      },
+      "revId": "e2ebf166eb258b10e4d9e7fb5bdd116ec27cf80b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f90669_f876857f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-11-01T18:02:52Z",
+      "side": 1,
+      "message": "Done. I am noticing that you are using TRACE_EVENT0 with limited scope throughout the file, was that intentional? Scoped trace events are expensive while here it seems that you are trying to track an instant event.\n\nLet me know your intentions and I can fix it in a follow up CL.",
+      "parentUuid": "664ecded_72f5dffb",
       "range": {
         "startLine": 599,
         "startChar": 2,
