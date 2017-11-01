@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c191c407_8780d533",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-01T13:03:17Z",
+      "side": 1,
+      "message": "I am puzzled, so I think I have missed something.\n\nGetBackgroundBoundsForNode() is:\n\n* An alias for GetBoundsForNode() on Mac\n* An alias for GetForegroundBoundsForNode() on Win/Linux\n\nSo this change will damage the foreground bounds only on Win/Linux, which I think should be included inside the bounds for the node - or, more concisely, GetBoundsForNode(n).Contains(GetForegroundBoundsForNode(n)) should always be true. If it isn\u0027t I think that is a bug in GetBoundsForNode() perhaps?",
+      "range": {
+        "startLine": 744,
+        "startChar": 22,
+        "endLine": 744,
+        "endChar": 48
+      },
+      "revId": "b61ee4a3bd160d3153418e8a407379c205700179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
