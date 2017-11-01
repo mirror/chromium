@@ -307,6 +307,29 @@
       "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "456f03aa_022ad9e4",
+        "filename": "third_party/libaom/generate_gni.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-01T15:57:19Z",
+      "side": 1,
+      "message": "This whole script is going to need to be reworked before the av1 release. Tom added a way to generate libaom_srcs.gni directly from cmake. Eventually we will be removing configure support, which will *force* a switch to cmake. But this works for now.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 18
+      },
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
