@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c15c6515_c55a4117",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-01T17:35:03Z",
+      "side": 0,
+      "message": "I could add another test API to InputDeviceManager to support this. However, this code isn\u0027t needed for the test to pass and I\u0027d prefer to keep that interface simple. The current test expectations seem sufficient to exercise the controller.",
+      "revId": "5b922d8ab1cdbf0eca0317bfc2b7cd6d119f4dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
