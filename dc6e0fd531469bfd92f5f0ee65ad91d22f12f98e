@@ -34,6 +34,24 @@
       "revId": "dc6e0fd531469bfd92f5f0ee65ad91d22f12f98e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b27037_888a2784",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-01T18:13:19Z",
+      "side": 1,
+      "message": "I actually interpreted it different. I think the word before \"Button\" is used to describe button instead of which screen the button is on. So, for SignOutAccountsButton, my understanding is:\n\nSignoutAccounts -- displayed text description for the button.\nButton -- button.",
+      "parentUuid": "d7de0abc_44471324",
+      "revId": "dc6e0fd531469bfd92f5f0ee65ad91d22f12f98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
