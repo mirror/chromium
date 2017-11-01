@@ -4,6 +4,7 @@
 
 #include "content/browser/service_worker/service_worker_registration_handle.h"
 
+#include "content/browser/service_worker/service_worker_common.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_dispatcher_host.h"
 #include "content/browser/service_worker/service_worker_handle.h"
@@ -22,11 +23,6 @@ namespace content {
 
 namespace {
 
-const char kNoDocumentURLErrorMessage[] =
-    "No URL is associated with the caller's document.";
-const char kShutdownErrorMessage[] = "The Service Worker system has shutdown.";
-const char kUserDeniedPermissionMessage[] =
-    "The user denied permission to use Service Worker.";
 const char kEnableNavigationPreloadErrorPrefix[] =
     "Failed to enable or disable navigation preload: ";
 const char kInvalidStateErrorMessage[] = "The object is in an invalid state.";
@@ -275,7 +271,8 @@ bool ServiceWorkerRegistrationHandle::CanServeRegistrationObjectHostMethods(
   if (!provider_host_ || !context_) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kAbort,
-        std::string(error_prefix) + std::string(kShutdownErrorMessage),
+        std::string(error_prefix) +
+            std::string(service_worker::kShutdownErrorMessage),
         args...);
     return false;
   }
@@ -285,7 +282,8 @@ bool ServiceWorkerRegistrationHandle::CanServeRegistrationObjectHostMethods(
   if (provider_host_->document_url().is_empty()) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kSecurity,
-        std::string(error_prefix) + std::string(kNoDocumentURLErrorMessage),
+        std::string(error_prefix) +
+            std::string(service_worker::kNoDocumentURLErrorMessage),
         args...);
     return false;
   }
@@ -304,7 +302,8 @@ bool ServiceWorkerRegistrationHandle::CanServeRegistrationObjectHostMethods(
                      provider_host_->frame_id()))) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kDisabled,
-        std::string(error_prefix) + std::string(kUserDeniedPermissionMessage));
+        std::string(error_prefix) +
+            std::string(service_worker::kUserDeniedPermissionMessage));
     return false;
   }
 

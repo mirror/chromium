@@ -17,6 +17,7 @@
 #include "content/browser/service_worker/embedded_worker_registry.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
 #include "content/browser/service_worker/service_worker_client_utils.h"
+#include "content/browser/service_worker/service_worker_common.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/service_worker/service_worker_handle.h"
@@ -49,12 +50,6 @@ namespace content {
 
 namespace {
 
-const char kNoDocumentURLErrorMessage[] =
-    "No URL is associated with the caller's document.";
-const char kShutdownErrorMessage[] =
-    "The Service Worker system has shutdown.";
-const char kUserDeniedPermissionMessage[] =
-    "The user denied permission to use Service Worker.";
 const char kGetNavigationPreloadStateErrorPrefix[] =
     "Failed to get navigation preload state: ";
 const char kSetNavigationPreloadHeaderErrorPrefix[] =
@@ -247,7 +242,7 @@ void ServiceWorkerDispatcherHost::OnGetNavigationPreloadState(
       Send(new ServiceWorkerMsg_GetNavigationPreloadStateError(
           thread_id, request_id, blink::mojom::ServiceWorkerErrorType::kAbort,
           std::string(kGetNavigationPreloadStateErrorPrefix) +
-              std::string(kShutdownErrorMessage)));
+              std::string(service_worker::kShutdownErrorMessage)));
       return;
     case ProviderStatus::NO_HOST:
       bad_message::ReceivedBadMessage(
@@ -258,7 +253,7 @@ void ServiceWorkerDispatcherHost::OnGetNavigationPreloadState(
           thread_id, request_id,
           blink::mojom::ServiceWorkerErrorType::kSecurity,
           std::string(kGetNavigationPreloadStateErrorPrefix) +
-              std::string(kNoDocumentURLErrorMessage)));
+              std::string(service_worker::kNoDocumentURLErrorMessage)));
       return;
     case ProviderStatus::OK:
       break;
@@ -290,7 +285,7 @@ void ServiceWorkerDispatcherHost::OnGetNavigationPreloadState(
     Send(new ServiceWorkerMsg_GetNavigationPreloadStateError(
         thread_id, request_id, blink::mojom::ServiceWorkerErrorType::kDisabled,
         std::string(kGetNavigationPreloadStateErrorPrefix) +
-            std::string(kUserDeniedPermissionMessage)));
+            std::string(service_worker::kUserDeniedPermissionMessage)));
     return;
   }
 
@@ -313,7 +308,7 @@ void ServiceWorkerDispatcherHost::OnSetNavigationPreloadHeader(
       Send(new ServiceWorkerMsg_SetNavigationPreloadHeaderError(
           thread_id, request_id, blink::mojom::ServiceWorkerErrorType::kAbort,
           std::string(kSetNavigationPreloadHeaderErrorPrefix) +
-              std::string(kShutdownErrorMessage)));
+              std::string(service_worker::kShutdownErrorMessage)));
       return;
     case ProviderStatus::NO_HOST:
       bad_message::ReceivedBadMessage(
@@ -324,7 +319,7 @@ void ServiceWorkerDispatcherHost::OnSetNavigationPreloadHeader(
           thread_id, request_id,
           blink::mojom::ServiceWorkerErrorType::kSecurity,
           std::string(kSetNavigationPreloadHeaderErrorPrefix) +
-              std::string(kNoDocumentURLErrorMessage)));
+              std::string(service_worker::kNoDocumentURLErrorMessage)));
       return;
     case ProviderStatus::OK:
       break;
@@ -371,7 +366,7 @@ void ServiceWorkerDispatcherHost::OnSetNavigationPreloadHeader(
     Send(new ServiceWorkerMsg_SetNavigationPreloadHeaderError(
         thread_id, request_id, blink::mojom::ServiceWorkerErrorType::kDisabled,
         std::string(kSetNavigationPreloadHeaderErrorPrefix) +
-            std::string(kUserDeniedPermissionMessage)));
+            std::string(service_worker::kUserDeniedPermissionMessage)));
     return;
   }
 
