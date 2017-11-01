@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbaec84f_e9dbcccf",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1937,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T19:16:35Z",
+      "side": 1,
+      "message": "\u003e I saw this can be random negative number for MOUSE_CANCEL event, which won\u0027t trigger showSelectionMenu() event though. It generally won\u0027t be valid if there is no selection, but we won\u0027t use this value in such case.\n\nShould figure out why that case is negative. Is it because the value was not initialized on the renderer side? Make sure to initialize it then\n \n\u003e If this max() is not enough, the only cross check I can think of is to check if selection length is 0, then make this 0, WDYT?\n\nOh I misread last time. This is browser side. If you see invalid values here, then you should actually kill the renderer.",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "befe5120_b1c0abfd",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T19:16:35Z",
+      "side": 1,
+      "message": "put a comment explaining what and how this class is used for, with example calls and expected results\n\nclearly it\u0027s not only computing word indices",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb046b2e_26474ab2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T19:16:35Z",
+      "side": 1,
+      "message": "\u003e it\u0027s used by getWordDelta(), countWordBackward() and countWordForward().\n\ncount is only called by getWordDelta, meaning getWordDelta can just pass this in",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52bd646_2aeefb21",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T19:16:35Z",
+      "side": 1,
+      "message": "\u003e last selection is needed to detect adjacent case.\n\nSay that up above",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9907335_0bd8a423",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T19:16:35Z",
+      "side": 1,
+      "message": "\u003e When I first saw it in Android codebase, I was confused too.\n\u003e \n\u003e Use \"New York City\" as an example, if the selection started with \"New\", now we want to count \"York\" by calling countWordBackward(4, 0). We will count \"Y\" and \"New\" as two words, but we want the result be 1, so taking one step back here.\n\nNow put that explanation in a comment\n\nAlso why isn\u0027t this a problem in the countWordsBackward call below?",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827b6d7e_593ea968",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T19:16:35Z",
+      "side": 1,
+      "message": "\u003e this is a bit confusing, use start/end?\n\nnot done",
+      "range": {
+        "startLine": 129,
+        "startChar": 51,
+        "endLine": 129,
+        "endChar": 69
+      },
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3418c3d8_6098fd65",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T19:16:35Z",
+      "side": 1,
+      "message": "\u003e I wanted to avoid unnecessary usage of substring(), but I agree this is not very easy to read.\n\nIf you are worried about performance, you can use StringBuilder/subSequence for everything",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39668857_89dbc994",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T19:16:35Z",
+      "side": 1,
+      "message": "selectionText.length(), clearer",
+      "range": {
+        "startLine": 209,
+        "startChar": 69,
+        "endLine": 209,
+        "endChar": 92
+      },
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01142580_81a51b1b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T19:16:35Z",
+      "side": 1,
+      "message": "Log supports a third throwable parameter, meaning an actual log message is still needed\n\napplies to all getMessage calls",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bffb87e4_f6b3eae0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T19:16:35Z",
+      "side": 1,
+      "message": "pass this in from create, so can null check this and just return null instead",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7594cfa_12c00459",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T19:16:35Z",
+      "side": 1,
+      "message": "base Log supports printf style formatting I think, might be easier to read here",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
