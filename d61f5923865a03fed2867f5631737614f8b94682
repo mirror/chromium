@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3eea657_e5e8a18b",
+        "filename": "components/previews/core/previews_opt_out_store_sql.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-01T22:26:30Z",
+      "side": 1,
+      "message": "LOG here not consistent with DLOG below",
+      "range": {
+        "startLine": 106,
+        "startChar": 11,
+        "endLine": 106,
+        "endChar": 14
+      },
+      "revId": "d61f5923865a03fed2867f5631737614f8b94682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
