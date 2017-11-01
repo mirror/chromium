@@ -6,16 +6,16 @@
 
 #include <utility>
 
-#include "base/values.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
 
 namespace resource_coordinator {
 
-#define DISPATCH_TAB_SIGNAL(observers, METHOD, cu, ...)          \
+#define DISPATCH_TAB_SIGNAL(observers, METHOD, ...)              \
   observers.ForAllPtrs([&](mojom::TabSignalObserver* observer) { \
-    observer->METHOD(cu->id(), __VA_ARGS__);                     \
+    observer->METHOD(__VA_ARGS__);                               \
   });
 
 TabSignalGeneratorImpl::TabSignalGeneratorImpl() = default;
@@ -28,9 +28,9 @@ void TabSignalGeneratorImpl::AddObserver(mojom::TabSignalObserverPtr observer) {
 
 bool TabSignalGeneratorImpl::ShouldObserve(
     const CoordinationUnitBase* coordination_unit) {
-  auto coordination_unit_type = coordination_unit->id().type;
-  return coordination_unit_type == CoordinationUnitType::kPage ||
-         coordination_unit_type == CoordinationUnitType::kFrame;
+  auto cu_type = coordination_unit->id().type;
+  return cu_type == CoordinationUnitType::kFrame ||
+         cu_type == CoordinationUnitType::kProcess;
 }
 
 void TabSignalGeneratorImpl::OnFramePropertyChanged(
@@ -43,19 +43,27 @@ void TabSignalGeneratorImpl::OnFramePropertyChanged(
       return;
     // TODO(lpy) Combine CPU usage or long task idleness signal.
     if (auto* page_cu = frame_cu->GetPageCoordinationUnit()) {
-      DISPATCH_TAB_SIGNAL(observers_, OnEventReceived, page_cu,
-                          mojom::TabEvent::kDoneLoading);
+      DISPATCH_TAB_SIGNAL(observers_, NotifyPageAlmostIdle, page_cu->id());
     }
   }
 }
 
-void TabSignalGeneratorImpl::OnPagePropertyChanged(
-    const PageCoordinationUnitImpl* page_cu,
+void TabSignalGeneratorImpl::OnProcessPropertyChanged(
+    const ProcessCoordinationUnitImpl* process_cu,
     const mojom::PropertyType property_type,
     int64_t value) {
   if (property_type == mojom::PropertyType::kExpectedTaskQueueingDuration) {
-    DISPATCH_TAB_SIGNAL(observers_, OnPropertyChanged, page_cu, property_type,
-                        value);
+    for (auto* frame_cu : process_cu->GetFrameCoordinationUnits()) {
+      if (!frame_cu->IsMainFrame())
+        continue;
+      auto* page_cu = frame_cu->GetPageCoordinationUnit();
+      int64_t duration;
+      if (!page_cu->GetExpectedTaskQueueingDuration(&duration))
+        continue;
+      DISPATCH_TAB_SIGNAL(observers_, SetExpectedTaskQueueingDuration,
+                          page_cu->id(),
+                          base::TimeDelta::FromMilliseconds(duration));
+    }
   }
 }
 
