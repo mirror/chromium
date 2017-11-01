@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4805cb2_468bd602",
+        "filename": "third_party/webrtc_overrides/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-11-01T17:52:30Z",
+      "side": 1,
+      "message": "Nit: field_trial",
+      "range": {
+        "startLine": 70,
+        "startChar": 53,
+        "endLine": 70,
+        "endChar": 64
+      },
+      "revId": "a66849516b72c820c9a1ff9a117361a04ce18091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
