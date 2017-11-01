@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff4beeef_5817d47b",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 1491,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-01T23:07:22Z",
+      "side": 1,
+      "message": "Nit: Alphabetize this list.",
+      "range": {
+        "startLine": 1490,
+        "startChar": 6,
+        "endLine": 1491,
+        "endChar": 20
+      },
+      "revId": "1c07b1fac8a470c171572b54a3328897dc027b79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ca2cd1_e0ff0b4d",
+        "filename": "base/win/shortcut_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-01T23:07:22Z",
+      "side": 1,
+      "message": "It might be worth commenting how this was selected.",
+      "range": {
+        "startLine": 50,
+        "startChar": 25,
+        "endLine": 50,
+        "endChar": 61
+      },
+      "revId": "1c07b1fac8a470c171572b54a3328897dc027b79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
