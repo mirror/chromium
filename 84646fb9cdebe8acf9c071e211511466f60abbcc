@@ -46,6 +46,31 @@
       "revId": "84646fb9cdebe8acf9c071e211511466f60abbcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9df29a4_5a8867c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-01T18:05:15Z",
+      "side": 1,
+      "message": "My understanding is that javascript URL \"navigations\" *never* navigate the current document (unless of course the javascript they execute elicits a navigation, but that\u0027s an unrelated issue). This is relatively easy to verify and seems consistent.",
+      "parentUuid": "7b739c8b_7958cb2a",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "tag": "mailMessageId\u003d\u003cCA+apAgH\u003dX-uTi9+LNXD7-TyDB3mq4FTDJKP0owhaTyh3ZWEfSA@mail.gmail.com\u003e",
+      "revId": "84646fb9cdebe8acf9c071e211511466f60abbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
