@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0644a29_937d48a7",
+        "filename": "base/android/junit/src/org/chromium/base/metrics/test/ShadowRecordHistogram.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T16:53:13Z",
+      "side": 1,
+      "message": "This is cool! Probably worth evangelizing to others to use",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "92949d33fe1ad4499412d638cbe16b028110c9e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
