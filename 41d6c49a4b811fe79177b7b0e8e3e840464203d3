@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09f57b76_3b918d68",
+        "filename": "ash/public/interfaces/system_tray.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T21:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f50b58e_d288794c",
+      "revId": "41d6c49a4b811fe79177b7b0e8e3e840464203d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18d47b0d_ee609a73",
         "filename": "chrome/browser/ui/ash/system_tray_client.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "41d6c49a4b811fe79177b7b0e8e3e840464203d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c2d170_24a9b0b2",
+        "filename": "chrome/browser/ui/ash/system_tray_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T21:42:56Z",
+      "side": 1,
+      "message": "Done as suggested.",
+      "parentUuid": "18d47b0d_ee609a73",
+      "revId": "41d6c49a4b811fe79177b7b0e8e3e840464203d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
