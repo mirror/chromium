@@ -9,7 +9,9 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
-#include "chrome/browser/vr/elements/textured_element.h"
+#include "chrome/browser/vr/elements/invisible_hit_target.h"
+#include "chrome/browser/vr/elements/ui_element.h"
+#include "ui/gfx/vector_icon_types.h"
 
 namespace gfx {
 class PointF;
@@ -17,12 +19,18 @@ class PointF;
 
 namespace vr {
 
-class ButtonTexture;
+class Rect;
+class VectorIcon;
 
-class Button : public TexturedElement {
+// Button has rounded rect as background and a vector icon as the foregroud.
+// When hovered, background and foregroup both moving forward on Z axis.
+class Button : public InvisibleHitTarget {
  public:
-  explicit Button(base::Callback<void()> click_handler,
-                  std::unique_ptr<ButtonTexture> texture);
+  Button(base::Callback<void()> click_handler,
+         int draw_phase,
+         float width,
+         float height,
+         const gfx::VectorIcon& icon);
   ~Button() override;
 
   void OnHoverLeave() override;
@@ -32,13 +40,28 @@ class Button : public TexturedElement {
   void OnButtonUp(const gfx::PointF& position) override;
   bool HitTest(const gfx::PointF& point) const override;
 
+  Rect* background() const { return background_; }
+  VectorIcon* foreground() const { return foreground_; }
+  void SetBackgroundColor(SkColor color);
+  void SetBackgroundColorHovered(SkColor color);
+  void SetBackgroundColorPressed(SkColor color);
+  void SetVectorIconColor(SkColor color);
+
  private:
-  UiTexture* GetTexture() const override;
   void OnStateUpdated(const gfx::PointF& position);
 
-  std::unique_ptr<ButtonTexture> texture_;
   bool down_ = false;
+
+  bool hovered_ = false;
+  bool pressed_ = false;
   base::Callback<void()> click_handler_;
+  SkColor background_color_ = SK_ColorWHITE;
+  SkColor background_color_hovered_ = SK_ColorWHITE;
+  SkColor background_color_pressed_ = SK_ColorWHITE;
+  SkColor foreground_color_ = SK_ColorWHITE;
+
+  Rect* background_;
+  VectorIcon* foreground_;
 
   DISALLOW_COPY_AND_ASSIGN(Button);
 };

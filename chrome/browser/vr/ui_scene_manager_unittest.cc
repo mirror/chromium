@@ -7,9 +7,12 @@
 #include "base/macros.h"
 #include "base/numerics/ranges.h"
 #include "chrome/browser/vr/color_scheme.h"
+#include "chrome/browser/vr/elements/button.h"
 #include "chrome/browser/vr/elements/content_element.h"
+#include "chrome/browser/vr/elements/rect.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
+#include "chrome/browser/vr/elements/vector_icon.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/speech_recognizer.h"
 #include "chrome/browser/vr/target_property.h"
@@ -83,6 +86,16 @@ void CheckHitTestableRecursive(UiElement* element) {
   for (const auto& child : element->children()) {
     CheckHitTestableRecursive(child.get());
   }
+}
+
+void VerifyButtonColor(Button* button,
+                       SkColor foreground_color,
+                       SkColor background_color,
+                       const std::string& trace_name) {
+  SCOPED_TRACE(trace_name);
+  EXPECT_EQ(button->foreground()->GetColor(), foreground_color);
+  EXPECT_EQ(button->background()->edge_color(), background_color);
+  EXPECT_EQ(button->background()->center_color(), background_color);
 }
 
 }  // namespace
@@ -706,6 +719,44 @@ TEST_F(UiSceneManagerTest, OmniboxSuggestionBindings) {
   OnBeginFrame();
   EXPECT_EQ(container->children().size(), 0u);
   EXPECT_EQ(NumVisibleChildren(kSuggestionLayout), initially_visible);
+}
+
+TEST_F(UiSceneManagerTest, CloseButtonColorBindings) {
+  MakeManager(kInCct, kNotInWebVr);
+  EXPECT_TRUE(IsVisible(kCloseButton));
+  Button* button =
+      static_cast<Button*>(scene_->GetUiElementByName(kCloseButton));
+
+  for (int i = 0; i < ColorScheme::kModeIncognito; i++) {
+    ColorScheme::Mode mode = static_cast<ColorScheme::Mode>(i);
+    SCOPED_TRACE(mode);
+    if (mode == ColorScheme::kModeIncognito) {
+      manager_->SetIncognito(true);
+    } else if (mode == ColorScheme::kModeFullscreen) {
+      manager_->SetIncognito(false);
+      manager_->SetFullscreen(true);
+    }
+    ColorScheme scheme = ColorScheme::GetColorScheme(mode);
+
+    EXPECT_TRUE(OnBeginFrame());
+    VerifyButtonColor(button, scheme.close_button_foreground,
+                      scheme.close_button_background, "normal");
+
+    button->OnHoverEnter(gfx::PointF(0.5f, 0.5f));
+    EXPECT_TRUE(OnBeginFrame());
+    VerifyButtonColor(button, scheme.close_button_foreground,
+                      scheme.close_button_background_hover, "hover");
+
+    button->OnButtonDown(gfx::PointF(0.5f, 0.5f));
+    EXPECT_TRUE(OnBeginFrame());
+    VerifyButtonColor(button, scheme.close_button_foreground,
+                      scheme.close_button_background_down, "down");
+
+    button->OnButtonUp(gfx::PointF());
+    EXPECT_TRUE(OnBeginFrame());
+    VerifyButtonColor(button, scheme.close_button_foreground,
+                      scheme.close_button_background, "up");
+  }
 }
 
 }  // namespace vr

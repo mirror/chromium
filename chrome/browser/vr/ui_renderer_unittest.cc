@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "chrome/browser/vr/elements/ui_element.h"
+#include "chrome/browser/vr/elements/ui_element_name.h"
 #include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/test/constants.h"
 #include "chrome/browser/vr/test/ui_scene_manager_test.h"
@@ -38,6 +39,13 @@ class UiRendererTest : public UiSceneManagerTest,
 TEST_P(UiRendererTest, UiRendererSortingTest) {
   auto unsorted = ((*scene_).*GetParam().f)();
   auto sorted = UiRenderer::GetElementsInDrawOrder(unsorted);
+
+  // Filter elements with no name. These elements usually created in ctor of
+  // their root element. See button.cc for example.
+  sorted.erase(
+      std::remove_if(sorted.begin(), sorted.end(),
+                     [](const UiElement* e) { return e->name() == kNone; }),
+      sorted.end());
 
   EXPECT_EQ(GetParam().expected_order.size(), sorted.size());
 

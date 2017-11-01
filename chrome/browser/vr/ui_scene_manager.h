@@ -16,6 +16,7 @@
 
 namespace vr {
 
+class Button;
 class ContentElement;
 class ContentInputDelegate;
 class Grid;
@@ -165,6 +166,7 @@ class UiSceneManager {
   void CreateToasts(Model* model);
   void CreateVoiceSearchUiGroup(Model* model);
   void CreateController(Model* model);
+  void BindButtonColors(Button* button);
 
   void ConfigureScene();
   void ConfigureExclusiveScreenToast();
