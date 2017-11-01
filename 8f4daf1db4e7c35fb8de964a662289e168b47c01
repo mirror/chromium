@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9178c6ac_6ccf59f0",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v175/paint/invalidation/caret-ancestor-clip-change-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-01T22:09:50Z",
+      "side": 1,
+      "message": "Before this CL, there was no raster invalidation on clip change.",
+      "revId": "8f4daf1db4e7c35fb8de964a662289e168b47c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5534b73_1170f20d",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v175/paint/invalidation/resize-skewed-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-01T22:09:50Z",
+      "side": 1,
+      "message": "This might be unrelated. It\u0027s a valid new result for SPv175.",
+      "revId": "8f4daf1db4e7c35fb8de964a662289e168b47c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abe6267_793798cb",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/caret-ancestor-clip-change.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-01T22:09:50Z",
+      "side": 1,
+      "message": "The original margin-left: -10px hid the caret, defeating the purpose of the test. The negative margin-top is enough for avoiding scroll on focus.",
+      "revId": "8f4daf1db4e7c35fb8de964a662289e168b47c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
