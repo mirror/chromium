@@ -556,8 +556,6 @@ bool InputMethodController::ReplaceCompositionAndMoveCaret(
           .Selection()
           .ComputeVisibleSelectionInDOMTreeDeprecated()
           .RootEditableElement();
-  if (!root_editable_element)
-    return false;
   DCHECK(HasComposition());
   PlainTextRange composition_range =
       PlainTextRange::Create(*root_editable_element, *composition_range_);
@@ -603,9 +601,7 @@ bool InputMethodController::InsertTextAndMoveCaret(
           .Selection()
           .ComputeVisibleSelectionInDOMTreeDeprecated()
           .RootEditableElement();
-  if (root_editable_element) {
-    AddImeTextSpans(ime_text_spans, root_editable_element, text_start);
-  }
+  AddImeTextSpans(ime_text_spans, root_editable_element, text_start);
 
   int absolute_caret_position = ComputeAbsoluteCaretPosition(
       text_start, text.length(), relative_caret_position);
@@ -868,8 +864,6 @@ EphemeralRange InputMethodController::EphemeralRangeForOffsets(
           .Selection()
           .ComputeVisibleSelectionInDOMTreeDeprecated()
           .RootEditableElement();
-  if (!root_editable_element)
-    return EphemeralRange();
 
   DCHECK(!GetDocument().NeedsLayoutTreeUpdate());
 
@@ -923,8 +917,6 @@ PlainTextRange InputMethodController::CreateRangeForSelection(
           .Selection()
           .ComputeVisibleSelectionInDOMTreeDeprecated()
           .RootEditableElement();
-  if (!root_editable_element)
-    return PlainTextRange();
   const EphemeralRange& range =
       EphemeralRange::RangeOfContents(*root_editable_element);
   if (range.IsNull())
@@ -1019,8 +1011,6 @@ void InputMethodController::DeleteSurroundingText(int before, int after) {
           .Selection()
           .ComputeVisibleSelectionInDOMTreeDeprecated()
           .RootEditableElement();
-  if (!root_editable_element)
-    return;
   int selection_start = static_cast<int>(selection_offsets.Start());
   int selection_end = static_cast<int>(selection_offsets.End());
 
@@ -1085,8 +1075,6 @@ void InputMethodController::DeleteSurroundingTextInCodePoints(int before,
     return;
   Element* const root_editable_element =
       GetFrame().Selection().RootEditableElementOrDocumentElement();
-  if (!root_editable_element)
-    return;
 
   const TextIteratorBehavior& behavior =
       TextIteratorBehavior::Builder()
