@@ -16,6 +16,24 @@
       "revId": "d2721b12097a094417141c0ce178488b9c957620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d004ce71_8207d72b",
+        "filename": "media/mojo/services/video_decode_stats_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T18:48:59Z",
+      "side": 1,
+      "message": "We only use uint64 for the database and we use uint32_t for recording the session/video data. The idea being that the DB will gather many of those. This is the pattern used for the other fields so if we need to change this, it should at least be done in a followup.",
+      "parentUuid": "26fe5a9d_b4452abc",
+      "revId": "d2721b12097a094417141c0ce178488b9c957620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
