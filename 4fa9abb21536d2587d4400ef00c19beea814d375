@@ -34,6 +34,24 @@
       "revId": "4fa9abb21536d2587d4400ef00c19beea814d375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a6d58fe_bec0f94f",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-01T18:12:01Z",
+      "side": 1,
+      "message": "It only stood out to me to make it consistent with other uses in this file. We should have more iOS 11 users already, if not, very soon.\n\nI\u0027m fine with it being 10 or 11, so completely up to you. Especially if there is no difference.",
+      "parentUuid": "9f3f98f3_fbbebda0",
+      "revId": "4fa9abb21536d2587d4400ef00c19beea814d375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
