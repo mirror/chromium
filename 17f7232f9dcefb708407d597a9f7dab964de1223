@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f17cbfea_ae33c6b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-01T16:59:55Z",
+      "side": 1,
+      "message": "instead of needing to expose a static here (and above for deviceWidthPx), let\u0027s add \n\nint[] getThumbnailDimensPx();\n\nto the ContextMenuUi interface.\n\nAll of this sizing is specific to the tabular UI, so we should be having that logic within the UI code.",
+      "range": {
+        "startLine": 240,
+        "startChar": 28,
+        "endLine": 240,
+        "endChar": 48
+      },
+      "revId": "17f7232f9dcefb708407d597a9f7dab964de1223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
