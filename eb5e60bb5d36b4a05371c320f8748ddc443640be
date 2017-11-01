@@ -16,6 +16,24 @@
       "revId": "eb5e60bb5d36b4a05371c320f8748ddc443640be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e3cfd7_d3d32494",
+        "filename": "components/safe_browsing/android/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-01T16:17:02Z",
+      "side": 1,
+      "message": "Ack, good point, thanks. Will try in a separate CL (easier to rebase).",
+      "parentUuid": "ba0fdae6_57134d3a",
+      "revId": "eb5e60bb5d36b4a05371c320f8748ddc443640be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
