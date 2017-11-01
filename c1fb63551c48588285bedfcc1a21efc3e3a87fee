@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3ec169f_5c180617",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-01T01:38:42Z",
+      "side": 1,
+      "message": "Drive-by nit: Avoid introducing another concept of \"security state\" and make this purely a text styling value.\n\nWe might be able to get away with simply green/red values for now, plus maybe a value for \"don\u0027t change the color\" for modes like High Contrast Black on Windows.",
+      "revId": "c1fb63551c48588285bedfcc1a21efc3e3a87fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
