@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e33f21e_71080f10",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-01T20:21:23Z",
+      "side": 1,
+      "message": "Extra space",
+      "range": {
+        "startLine": 204,
+        "startChar": 61,
+        "endLine": 204,
+        "endChar": 62
+      },
+      "revId": "23845917f6ad741bc832047567e0ebce5d416d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e05e901_2cd1410c",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-01T20:21:23Z",
+      "side": 1,
+      "message": "Is it possible to call this method after the Cronet engine started?",
+      "range": {
+        "startLine": 207,
+        "startChar": 8,
+        "endLine": 207,
+        "endChar": 26
+      },
+      "revId": "23845917f6ad741bc832047567e0ebce5d416d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45e1690_7280be5c",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-01T20:21:23Z",
+      "side": 1,
+      "message": "Since it is a global variable, its name should start with \"g\u0027.",
+      "range": {
+        "startLine": 67,
+        "startChar": 38,
+        "endLine": 67,
+        "endChar": 54
+      },
+      "revId": "23845917f6ad741bc832047567e0ebce5d416d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb799d8f_baaa6350",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-01T20:21:23Z",
+      "side": 1,
+      "message": "We should synchronize access to metricsDelegates or indicate that addMetricsDelegate and removeMetricsDelegate are not thread safe methods.",
+      "revId": "23845917f6ad741bc832047567e0ebce5d416d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
