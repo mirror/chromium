@@ -16,6 +16,24 @@
       "revId": "178bdce2d78f3f744f37306f9755b583dd4c8949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0497853_a6b34e1c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 89810,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-01T18:41:08Z",
+      "side": 1,
+      "message": "To answer for Leszek - the histograms are being emitted by V8 so they needed to land separately in the V8 repo here: https://chromium-review.googlesource.com/c/v8/v8/+/746922",
+      "parentUuid": "c40d6319_e586ffe9",
+      "revId": "178bdce2d78f3f744f37306f9755b583dd4c8949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
