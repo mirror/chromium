@@ -140,15 +140,15 @@ MediaStreamTrack* MediaStreamTrack::Create(ExecutionContext* context,
 MediaStreamTrack::MediaStreamTrack(ExecutionContext* context,
                                    MediaStreamComponent* component)
     : ContextLifecycleObserver(context),
-      ready_state_(component->Source()->GetState()),
       is_iterating_registered_media_streams_(false),
       stopped_(false),
       component_(component) {
-  component_->Source()->AddObserver(this);
+  component_->AddObserver(this);
 
   // If the source is already non-live at this point, the observer won't have
   // been called. Update the muted state manually.
-  component_->SetMuted(ready_state_ == MediaStreamSource::kStateMuted);
+  component_->SetMuted(component_->Source()->GetState() ==
+                       MediaStreamSource::kStateMuted);
 
   if (component_->Source() &&
       component_->Source()->GetType() == MediaStreamSource::kTypeVideo) {
@@ -258,28 +258,14 @@ void MediaStreamTrack::SetContentHint(const String& hint) {
 }
 
 String MediaStreamTrack::readyState() const {
-  if (Ended())
-    return "ended";
-
-  // Although muted is tracked as a ReadyState, only "live" and "ended" are
-  // visible externally.
-  switch (ready_state_) {
-    case MediaStreamSource::kStateLive:
-    case MediaStreamSource::kStateMuted:
-      return "live";
-    case MediaStreamSource::kStateEnded:
-      return "ended";
-  }
-
-  NOTREACHED();
-  return String();
+  return Ended() ? "ended" : "live";
 }
 
 void MediaStreamTrack::stopTrack(ExceptionState& exception_state) {
   if (Ended())
     return;
 
-  ready_state_ = MediaStreamSource::kStateEnded;
+  component_->SetEnded(true);
   MediaStreamCenter::Instance().DidStopMediaStreamTrack(Component());
   PropagateTrackEnded();
 }
@@ -464,28 +450,20 @@ void MediaStreamTrack::applyConstraintsImageCapture(
 }
 
 bool MediaStreamTrack::Ended() const {
-  return stopped_ || (ready_state_ == MediaStreamSource::kStateEnded);
+  return stopped_ || component_->IsEnded();
 }
 
-void MediaStreamTrack::SourceChangedState() {
-  if (Ended())
-    return;
+void MediaStreamTrack::DidBecomeMuted() {
+  DispatchEvent(Event::Create(EventTypeNames::mute));
+}
 
-  ready_state_ = component_->Source()->GetState();
-  switch (ready_state_) {
-    case MediaStreamSource::kStateLive:
-      component_->SetMuted(false);
-      DispatchEvent(Event::Create(EventTypeNames::unmute));
-      break;
-    case MediaStreamSource::kStateMuted:
-      component_->SetMuted(true);
-      DispatchEvent(Event::Create(EventTypeNames::mute));
-      break;
-    case MediaStreamSource::kStateEnded:
-      DispatchEvent(Event::Create(EventTypeNames::ended));
-      PropagateTrackEnded();
-      break;
-  }
+void MediaStreamTrack::DidBecomeUnmuted() {
+  DispatchEvent(Event::Create(EventTypeNames::unmute));
+}
+
+void MediaStreamTrack::DidEnd() {
+  DispatchEvent(Event::Create(EventTypeNames::ended));
+  PropagateTrackEnded();
 }
 
 void MediaStreamTrack::PropagateTrackEnded() {

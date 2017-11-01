@@ -319,10 +319,7 @@ void MediaStreamVideoSource::SetSourceState(
 void MediaStreamVideoSource::SetMutedState(bool muted_state) {
   DVLOG(3) << "MediaStreamVideoSource::SetMutedState state=" << muted_state;
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (!Owner().IsNull()) {
-    Owner().SetState(muted_state ? blink::WebMediaStreamSource::kStateMuted
-                                 : blink::WebMediaStreamSource::kStateLive);
-  }
+  MediaStreamSource::SetSourceMuted(muted_state);
 }
 
 void MediaStreamVideoSource::UpdateTrackSettings(

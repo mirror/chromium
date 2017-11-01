@@ -121,6 +121,7 @@ void CheckVideoSourceAndTrack(MediaStreamVideoSource* source,
                    expected_source_frame_rate);
   EXPECT_EQ(web_track.Source().GetState(),
             blink::WebMediaStreamSource::kStateLive);
+  EXPECT_FALSE(web_track.IsEnded());
   MediaStreamVideoTrack* track =
       MediaStreamVideoTrack::GetVideoTrack(web_track);
   EXPECT_EQ(track->source(), source);
@@ -1414,6 +1415,7 @@ TEST_F(UserMediaClientImplTest,
 
   EXPECT_EQ(web_track.Source().GetState(),
             blink::WebMediaStreamSource::kStateEnded);
+  EXPECT_TRUE(web_track.IsEnded());
   EXPECT_FALSE(source->IsRunning());
 }
 
@@ -1434,6 +1436,7 @@ TEST_F(UserMediaClientImplTest, ApplyConstraintsVideoDeviceStopped) {
   track->Stop();
   EXPECT_EQ(web_track.Source().GetState(),
             blink::WebMediaStreamSource::kStateEnded);
+  EXPECT_TRUE(web_track.IsEnded());
   EXPECT_FALSE(source->IsRunning());
   {
     blink::WebMediaStreamTrack::Settings settings;
@@ -1446,6 +1449,7 @@ TEST_F(UserMediaClientImplTest, ApplyConstraintsVideoDeviceStopped) {
   ApplyConstraintsVideoMode(web_track, 640, 480);
   EXPECT_EQ(web_track.Source().GetState(),
             blink::WebMediaStreamSource::kStateEnded);
+  EXPECT_TRUE(web_track.IsEnded());
   EXPECT_FALSE(source->IsRunning());
   {
     blink::WebMediaStreamTrack::Settings settings;

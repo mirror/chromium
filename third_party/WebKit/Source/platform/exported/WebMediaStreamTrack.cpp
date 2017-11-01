@@ -25,6 +25,8 @@
 #include "public/platform/WebMediaStreamTrack.h"
 
 #include <memory>
+#include <utility>
+
 #include "platform/mediastream/MediaStreamComponent.h"
 #include "platform/mediastream/MediaStreamSource.h"
 #include "platform/wtf/PtrUtil.h"
@@ -90,6 +92,11 @@ bool WebMediaStreamTrack::IsEnabled() const {
 bool WebMediaStreamTrack::IsMuted() const {
   DCHECK(!private_.IsNull());
   return private_->Muted();
+}
+
+bool WebMediaStreamTrack::IsEnded() const {
+  DCHECK(!private_.IsNull());
+  return private_->IsEnded();
 }
 
 WebMediaStreamTrack::ContentHintType WebMediaStreamTrack::ContentHint() const {
