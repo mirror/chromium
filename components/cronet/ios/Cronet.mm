@@ -64,6 +64,7 @@ BOOL gEnableTestCertVerifierForTesting;
 std::unique_ptr<net::CertVerifier> gMockCertVerifier;
 NSString* gAcceptLanguages;
 BOOL gEnablePKPBypassForLocalTrustAnchors;
+NSMutableSet<CronetMetricsDelegate*>* metricsDelegates;
 
 // CertVerifier, which allows any certificates for testing.
 class TestCertVerifier : public net::CertVerifier {
@@ -510,6 +511,23 @@ class CronetHttpProtocolHandlerDelegate
   gMockCertVerifier.reset(nullptr);
   gAcceptLanguages = nil;
   gEnablePKPBypassForLocalTrustAnchors = YES;
+  metricsDelegates = [NSMutableSet set];
+}
+
++ (BOOL)addMetricsDelegate:(CronetMetricsDelegate*)delegate {
+  if ([metricsDelegates containsObject:delegate]) {
+    return NO;
+  }
+  [metricsDelegates addObject:delegate];
+  return YES;
+}
+
++ (BOOL)removeMetricsDelegate:(CronetMetricsDelegate*)delegate {
+  if ([metricsDelegates containsObject:delegate]) {
+    [metricsDelegates removeObject:delegate];
+    return YES;
+  }
+  return NO;
 }
 
 @end
