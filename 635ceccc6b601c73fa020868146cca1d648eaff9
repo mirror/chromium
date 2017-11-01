@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01f81d2a_119eed14",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-01T21:06:36Z",
+      "side": 0,
+      "message": "Should these checks exist somewhere in the new code?",
+      "range": {
+        "startLine": 52,
+        "startChar": 55,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "635ceccc6b601c73fa020868146cca1d648eaff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

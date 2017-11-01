@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04459ff2_eb1c2e0d",
+        "filename": "services/metrics/metrics_mojo_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-01T21:06:36Z",
+      "side": 1,
+      "message": "Add a short comment.",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "c8d0e218a22ff5c3b8ae006abe4bd520b82b60cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf82bcda_274309d6",
+        "filename": "services/metrics/metrics_mojo_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-01T21:06:36Z",
+      "side": 1,
+      "message": "Nit: For new code, use the following comment syntax: // services_manager::Service:",
+      "range": {
+        "startLine": 29,
+        "startChar": 22,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "c8d0e218a22ff5c3b8ae006abe4bd520b82b60cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d6635ca_b0742c99",
+        "filename": "services/metrics/metrics_mojo_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-01T21:06:36Z",
+      "side": 1,
+      "message": "Add a short comment.",
+      "range": {
+        "startLine": 14,
+        "startChar": 42,
+        "endLine": 14,
+        "endChar": 62
+      },
+      "revId": "c8d0e218a22ff5c3b8ae006abe4bd520b82b60cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
