@@ -36,6 +36,11 @@ class PowerSaveBlocker {
     // app from being suspended on some platforms if the user hides it.
     // Example use case: playing video.
     kPowerSaveBlockPreventDisplaySleep,
+
+    // Like PreventDisplaySleep, but permits the display to dim while remaining
+    // on. This is only implemented on Chrome OS. On other platforms, this type
+    // is equivalent to PreventDisplaySleep.
+    kPowerSaveBlockPreventDisplaySleepAllowDimming,
   };
 
   // Reasons why power-saving features may be blocked.

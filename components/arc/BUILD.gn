@@ -259,6 +259,7 @@ source_set("unit_tests") {
     "intent_helper/intent_filter_unittest.cc",
     "intent_helper/link_handler_model_unittest.cc",
     "intent_helper/page_transition_util_unittest.cc",
+    "power/arc_power_bridge_unittest.cc",
   ]
 
   deps = [
@@ -274,6 +275,9 @@ source_set("unit_tests") {
     "//components/user_manager:test_support",
     "//device/bluetooth",
     "//mojo/public/cpp/system:system",
+    "//services/device/public/cpp/test:test_support",
+    "//services/device/public/interfaces:interfaces",
+    "//services/service_manager/public/cpp/test:test_support",
     "//testing/gmock",
     "//testing/gtest",
     "//ui/aura",
