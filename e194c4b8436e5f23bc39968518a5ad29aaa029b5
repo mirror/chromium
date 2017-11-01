@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fa621c93_b65d2ccf",
+        "filename": "net/base/network_change_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-01T13:47:01Z",
+      "side": 1,
+      "message": "Can we make NetworkChangeNotifierFactory::CreateInstance() also return a unique_ptr?",
+      "range": {
+        "startLine": 514,
+        "startChar": 61,
+        "endLine": 514,
+        "endChar": 0
+      },
+      "revId": "e194c4b8436e5f23bc39968518a5ad29aaa029b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5a71d80_04df70a9",
         "filename": "net/base/network_change_notifier.cc",
         "patchSetId": 3
