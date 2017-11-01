@@ -489,6 +489,35 @@ AdjustSelectionToAvoidCrossingEditingBoundaries(
     const EphemeralRangeTemplate<Strategy>&,
     const PositionTemplate<Strategy>& base);
 
+// TODO(editing-dev): Move this to SelectionAdjuster.
+template <typename Strategy>
+static SelectionTemplate<Strategy> AdjustSelectionRespectingGranularity(
+    const SelectionTemplate<Strategy>& selection,
+    TextGranularity granularity) {
+  const TextAffinity affinity = selection.Affinity();
+
+  const PositionTemplate<Strategy> start = selection.ComputeStartPosition();
+  const PositionTemplate<Strategy> new_start =
+      ComputeStartRespectingGranularity(
+          PositionWithAffinityTemplate<Strategy>(start, affinity), granularity);
+  const PositionTemplate<Strategy> expanded_start =
+      new_start.IsNotNull() ? new_start : start;
+
+  const PositionTemplate<Strategy> end = selection.ComputeEndPosition();
+  const PositionTemplate<Strategy> new_end = ComputeEndRespectingGranularity(
+      expanded_start, PositionWithAffinityTemplate<Strategy>(end, affinity),
+      granularity);
+  const PositionTemplate<Strategy> expanded_end =
+      new_end.IsNotNull() ? new_end : end;
+
+  typename SelectionTemplate<Strategy>::Builder builder;
+  return selection.IsBaseFirst()
+             ? builder.SetAsForwardSelection({expanded_start, expanded_end})
+                   .Build()
+             : builder.SetAsBackwardSelection({expanded_start, expanded_end})
+                   .Build();
+}
+
 template <typename Strategy>
 static SelectionTemplate<Strategy> ComputeVisibleSelection(
     const SelectionTemplate<Strategy>& passed_selection,
@@ -502,26 +531,15 @@ static SelectionTemplate<Strategy> ComputeVisibleSelection(
   if (canonicalized_selection.IsNone())
     return SelectionTemplate<Strategy>();
 
-  const TextAffinity affinity = canonicalized_selection.Affinity();
-
-  const PositionTemplate<Strategy> start =
-      canonicalized_selection.ComputeStartPosition();
-  const PositionTemplate<Strategy> new_start =
-      ComputeStartRespectingGranularity(
-          PositionWithAffinityTemplate<Strategy>(start, affinity), granularity);
-  const PositionTemplate<Strategy> expanded_start =
-      new_start.IsNotNull() ? new_start : start;
-
-  const PositionTemplate<Strategy> end =
-      canonicalized_selection.ComputeEndPosition();
-  const PositionTemplate<Strategy> new_end = ComputeEndRespectingGranularity(
-      expanded_start, PositionWithAffinityTemplate<Strategy>(end, affinity),
-      granularity);
-  const PositionTemplate<Strategy> expanded_end =
-      new_end.IsNotNull() ? new_end : end;
-
-  const EphemeralRangeTemplate<Strategy> expanded_range(expanded_start,
-                                                        expanded_end);
+  const SelectionTemplate<Strategy>& granularity_adjusted_selection =
+      AdjustSelectionRespectingGranularity(canonicalized_selection,
+                                           granularity);
+  // TODO(editing-dev): Implement
+  // const SelectionTemplate<Strategy>& shadow_adjusted_selection =
+  // AdjustSelectionShadow(granularity_adjusted_selection);
+  const EphemeralRangeTemplate<Strategy> expanded_range(
+      granularity_adjusted_selection.ComputeStartPosition(),
+      granularity_adjusted_selection.ComputeEndPosition());
 
   const EphemeralRangeTemplate<Strategy> shadow_adjusted_range =
       canonicalized_selection.IsBaseFirst()
@@ -535,10 +553,15 @@ static SelectionTemplate<Strategy> ComputeVisibleSelection(
                     AdjustSelectionStartToAvoidCrossingShadowBoundaries(
                         expanded_range),
                 expanded_range.EndPosition());
-
+  // TODO(editing-dev): Implement
+  // const SelectionTemplate<Strategy>& editing_adjusted_selection =
+  // AdjustSelectionEditing(shadow_adjusted_selection);
   const EphemeralRangeTemplate<Strategy> editing_adjusted_range =
       AdjustSelectionToAvoidCrossingEditingBoundaries(
           shadow_adjusted_range, canonicalized_selection.Base());
+  // TODO(editing-dev): Implement
+  // const SelectionTemplate<Strategy>& adjusted_selection =
+  // AdjustSelectionType(editing_adjusted_range);
   const SelectionType selection_type =
       ComputeSelectionType(editing_adjusted_range.StartPosition(),
                            editing_adjusted_range.EndPosition());
