@@ -81,6 +81,10 @@ if (enable_vr) {
         "openvr/openvr_gamepad_data_fetcher.h",
       ]
     }
+
+    if (enable_oculus_vr) {
+      deps += [ "//third_party/libovr:libovr" ]
+    }
   }
 
   static_library("fakes") {
