@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fdc0397_e5a5885e",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-01T22:53:59Z",
+      "side": 1,
+      "message": "Thanks for filing the cleanup bug.",
+      "range": {
+        "startLine": 153,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 24
+      },
+      "revId": "17f6338cec8a1300e59edbf4be204d87b896d706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acc3f9d_781299bc",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-01T22:53:59Z",
+      "side": 1,
+      "message": "Should this maybe be https://developer.apple.com/documentation/appkit/nsstatuswindowlevel?language\u003dobjc as well? \n\nAccording to https://developer.apple.com/documentation/appkit/nswindowcollectionbehavior/nswindowcollectionbehaviortransient?language\u003dobjc , the collection behavior changes to transient if the window level is not Normal.",
+      "range": {
+        "startLine": 456,
+        "startChar": 20,
+        "endLine": 456,
+        "endChar": 39
+      },
+      "revId": "17f6338cec8a1300e59edbf4be204d87b896d706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
