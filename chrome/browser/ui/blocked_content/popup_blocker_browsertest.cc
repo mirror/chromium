@@ -607,7 +607,13 @@ IN_PROC_BROWSER_TEST_F(PopupBlockerBrowserTest, DenialOfService) {
 }
 
 // Verify that an onunload popup does not show up for about:blank.
-IN_PROC_BROWSER_TEST_F(PopupBlockerBrowserTest, Regress427477) {
+// Flaky on renderer_side_navigation_interactive_ui_tests: crbug.com/780371
+#if defined(OS_MACOSX)
+#define MAYBE_Regress427477 DISABLED_Regress427477
+#else
+#define MAYBE_Regress427477 Regress427477
+#endif
+IN_PROC_BROWSER_TEST_F(PopupBlockerBrowserTest, MAYBE_Regress427477) {
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
   ui_test_utils::NavigateToURL(browser(), GURL(url::kAboutBlankURL));
 
