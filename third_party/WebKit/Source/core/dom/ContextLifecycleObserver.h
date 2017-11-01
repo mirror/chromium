@@ -68,7 +68,12 @@ class CORE_EXPORT ContextLifecycleObserver
  public:
   virtual void ContextDestroyed(ExecutionContext*) {}
 
-  ExecutionContext* GetExecutionContext() const { return LifecycleContext(); }
+  ExecutionContext* GetExecutionContext() const {
+#if DCHECK_IS_ON()
+    DCHECK(creation_thread_id_ == WTF::CurrentThread());
+#endif
+    return LifecycleContext();
+  }
   LocalFrame* GetFrame() const;
 
   enum Type {
@@ -81,10 +86,18 @@ class CORE_EXPORT ContextLifecycleObserver
  protected:
   explicit ContextLifecycleObserver(ExecutionContext* execution_context,
                                     Type type = kGenericType)
-      : LifecycleObserver(execution_context), observer_type_(type) {}
+      : LifecycleObserver(execution_context), observer_type_(type) {
+#if DCHECK_IS_ON()
+    creation_thread_id_ = WTF::CurrentThread();
+#endif
+  }
 
  private:
   Type observer_type_;
+
+#if DCHECK_IS_ON()
+  WTF::ThreadIdentifier creation_thread_id_;
+#endif
 };
 
 // DOMWindowClient is a helper to associate an object with a LocalDOMWindow.
