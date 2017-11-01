@@ -16,6 +16,24 @@
       "revId": "eb9976651925c2323e254379108e96eb58c3962f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b5cf23_5133f9ac",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-11-01T02:02:37Z",
+      "side": 1,
+      "message": "Fixed. I thought about this myself, but erred on the side of prettier code.",
+      "parentUuid": "686b6ad0_26a0bb6a",
+      "revId": "eb9976651925c2323e254379108e96eb58c3962f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
