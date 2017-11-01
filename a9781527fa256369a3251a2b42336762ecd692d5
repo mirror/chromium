@@ -16,6 +16,24 @@
       "revId": "a9781527fa256369a3251a2b42336762ecd692d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435cae94_8668ae3c",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-01T16:34:26Z",
+      "side": 1,
+      "message": "True, this is a mistake. Anyways since swapping Chrome is no longer needed I Am repurposing this function in an incoming CL, the only part that I need from it is to tell whether or not Chrome is included into the list of handlers.",
+      "parentUuid": "efff402b_6c5551fc",
+      "revId": "a9781527fa256369a3251a2b42336762ecd692d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
