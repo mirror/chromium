@@ -32,38 +32,36 @@
 namespace blink {
 
 PausableObject::PausableObject(ExecutionContext* execution_context)
-    : ContextLifecycleObserver(execution_context, kSuspendableObjectType)
+    : ContextLifecycleObserver(execution_context, kPausableObjectType)
 #if DCHECK_IS_ON()
       ,
       suspend_if_needed_called_(false)
 #endif
 {
   DCHECK(!execution_context || execution_context->IsContextThread());
-  InstanceCounters::IncrementCounter(
-      InstanceCounters::kSuspendableObjectCounter);
+  InstanceCounters::IncrementCounter(InstanceCounters::kPausableObjectCounter);
 }
 
 PausableObject::~PausableObject() {
-  InstanceCounters::DecrementCounter(
-      InstanceCounters::kSuspendableObjectCounter);
+  InstanceCounters::DecrementCounter(InstanceCounters::kPausableObjectCounter);
 
 #if DCHECK_IS_ON()
   DCHECK(suspend_if_needed_called_);
 #endif
 }
 
-void PausableObject::SuspendIfNeeded() {
+void PausableObject::PauseIfNeeded() {
 #if DCHECK_IS_ON()
   DCHECK(!suspend_if_needed_called_);
   suspend_if_needed_called_ = true;
 #endif
   if (ExecutionContext* context = GetExecutionContext())
-    context->SuspendSuspendableObjectIfNeeded(this);
+    context->SuspendPausableObjectIfNeeded(this);
 }
 
-void PausableObject::Suspend() {}
+void PausableObject::Pause() {}
 
-void PausableObject::Resume() {}
+void PausableObject::Unpause() {}
 
 void PausableObject::DidMoveToNewExecutionContext(ExecutionContext* context) {
   SetContext(context);
@@ -74,11 +72,11 @@ void PausableObject::DidMoveToNewExecutionContext(ExecutionContext* context) {
   }
 
   if (context->IsContextSuspended()) {
-    Suspend();
+    Pause();
     return;
   }
 
-  Resume();
+  Unpause();
 }
 
 }  // namespace blink

@@ -39,16 +39,15 @@ class CORE_EXPORT PausableObject : public ContextLifecycleObserver {
 
   // suspendIfNeeded() should be called exactly once after object construction
   // to synchronize the suspend state with that in ExecutionContext.
-  void SuspendIfNeeded();
+  void PauseIfNeeded();
 #if DCHECK_IS_ON()
-  bool SuspendIfNeededCalled() const { return suspend_if_needed_called_; }
+  bool PauseIfNeededCalled() const { return suspend_if_needed_called_; }
 #endif
 
   // These methods have an empty default implementation so that subclasses
   // which don't need special treatment can skip implementation.
-  // TODO(hajimehoshi): Rename Suspend to Pause (crbug/780378)
-  virtual void Suspend();
-  virtual void Resume();
+  virtual void Pause();
+  virtual void Unpause();
 
   void DidMoveToNewExecutionContext(ExecutionContext*);
 

@@ -51,8 +51,8 @@ class MockPausableObject final
     PausableObject::Trace(visitor);
   }
 
-  MOCK_METHOD0(Suspend, void());
-  MOCK_METHOD0(Resume, void());
+  MOCK_METHOD0(Pause, void());
+  MOCK_METHOD0(Unpause, void());
   MOCK_METHOD1(ContextDestroyed, void(ExecutionContext*));
 };
 
@@ -75,29 +75,29 @@ PausableObjectTest::PausableObjectTest()
       dest_page_holder_(DummyPageHolder::Create(IntSize(800, 600))),
       pausable_object_(
           new MockPausableObject(&src_page_holder_->GetDocument())) {
-  pausable_object_->SuspendIfNeeded();
+  pausable_object_->PauseIfNeeded();
 }
 
 TEST_F(PausableObjectTest, NewContextObserved) {
-  unsigned initial_src_count = SrcDocument().SuspendableObjectCount();
-  unsigned initial_dest_count = DestDocument().SuspendableObjectCount();
+  unsigned initial_src_count = SrcDocument().PausableObjectCount();
+  unsigned initial_dest_count = DestDocument().PausableObjectCount();
 
-  EXPECT_CALL(PausableObject(), Resume());
+  EXPECT_CALL(PausableObject(), Unpause());
   PausableObject().DidMoveToNewExecutionContext(&DestDocument());
 
-  EXPECT_EQ(initial_src_count - 1, SrcDocument().SuspendableObjectCount());
-  EXPECT_EQ(initial_dest_count + 1, DestDocument().SuspendableObjectCount());
+  EXPECT_EQ(initial_src_count - 1, SrcDocument().PausableObjectCount());
+  EXPECT_EQ(initial_dest_count + 1, DestDocument().PausableObjectCount());
 }
 
 TEST_F(PausableObjectTest, MoveToActiveDocument) {
-  EXPECT_CALL(PausableObject(), Resume());
+  EXPECT_CALL(PausableObject(), Unpause());
   PausableObject().DidMoveToNewExecutionContext(&DestDocument());
 }
 
 TEST_F(PausableObjectTest, MoveToSuspendedDocument) {
   DestDocument().SuspendScheduledTasks();
 
-  EXPECT_CALL(PausableObject(), Suspend());
+  EXPECT_CALL(PausableObject(), Pause());
   PausableObject().DidMoveToNewExecutionContext(&DestDocument());
 }
 

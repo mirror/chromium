@@ -2685,7 +2685,7 @@ void Document::Shutdown() {
   if (frame_->Client()->GetSharedWorkerRepositoryClient())
     frame_->Client()->GetSharedWorkerRepositoryClient()->DocumentDetached(this);
 
-  // FIXME: consider using SuspendableObject.
+  // FIXME: consider using PausableObject.
   if (scripted_animation_controller_)
     scripted_animation_controller_->ClearDocumentPointer();
   scripted_animation_controller_.Clear();
@@ -6381,21 +6381,21 @@ void Document::AddConsoleMessage(ConsoleMessage* console_message) {
 }
 
 void Document::TasksWereSuspended() {
-  GetScriptRunner()->Suspend();
+  GetScriptRunner()->Pause();
 
   if (parser_)
     parser_->SuspendScheduledTasks();
   if (scripted_animation_controller_)
-    scripted_animation_controller_->Suspend();
+    scripted_animation_controller_->Pause();
 }
 
 void Document::TasksWereResumed() {
-  GetScriptRunner()->Resume();
+  GetScriptRunner()->Unpause();
 
   if (parser_)
     parser_->ResumeScheduledTasks();
   if (scripted_animation_controller_)
-    scripted_animation_controller_->Resume();
+    scripted_animation_controller_->Unpause();
 
   MutationObserver::ResumeSuspendedObservers();
   if (dom_window_)
@@ -6521,7 +6521,7 @@ ScriptedAnimationController& Document::EnsureScriptedAnimationController() {
     // We need to make sure that we don't start up the animation controller on a
     // background tab, for example.
     if (!GetPage())
-      scripted_animation_controller_->Suspend();
+      scripted_animation_controller_->Pause();
   }
   return *scripted_animation_controller_;
 }

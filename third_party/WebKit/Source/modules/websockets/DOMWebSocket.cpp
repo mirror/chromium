@@ -101,7 +101,7 @@ bool DOMWebSocket::EventQueue::IsEmpty() const {
   return events_.IsEmpty();
 }
 
-void DOMWebSocket::EventQueue::Suspend() {
+void DOMWebSocket::EventQueue::Pause() {
   resume_timer_.Stop();
   if (state_ != kActive)
     return;
@@ -109,7 +109,7 @@ void DOMWebSocket::EventQueue::Suspend() {
   state_ = kSuspended;
 }
 
-void DOMWebSocket::EventQueue::Resume() {
+void DOMWebSocket::EventQueue::Unpause() {
   if (state_ != kSuspended || resume_timer_.IsActive())
     return;
 
@@ -221,7 +221,7 @@ const char* DOMWebSocket::SubprotocolSeperator() {
 }
 
 DOMWebSocket::DOMWebSocket(ExecutionContext* context)
-    : SuspendableObject(context),
+    : PausableObject(context),
       state_(kConnecting),
       buffered_amount_(0),
       consumed_buffered_amount_(0),
@@ -264,7 +264,7 @@ DOMWebSocket* DOMWebSocket::Create(ExecutionContext* context,
   }
 
   DOMWebSocket* web_socket = new DOMWebSocket(context);
-  web_socket->SuspendIfNeeded();
+  web_socket->PauseIfNeeded();
 
   if (protocols.IsNull()) {
     Vector<String> protocols_vector;
@@ -341,9 +341,9 @@ void DOMWebSocket::Connect(const String& url,
     // Delay the event dispatch until after the current task by suspending and
     // resuming the queue. If we don't do this, the event is fired synchronously
     // with the constructor, meaning that it's impossible to listen for.
-    event_queue_->Suspend();
+    event_queue_->Pause();
     event_queue_->Dispatch(Event::Create(EventTypeNames::error));
-    event_queue_->Resume();
+    event_queue_->Unpause();
     return;
   }
 
@@ -636,7 +636,7 @@ const AtomicString& DOMWebSocket::InterfaceName() const {
 }
 
 ExecutionContext* DOMWebSocket::GetExecutionContext() const {
-  return SuspendableObject::GetExecutionContext();
+  return PausableObject::GetExecutionContext();
 }
 
 void DOMWebSocket::ContextDestroyed(ExecutionContext*) {
@@ -654,12 +654,12 @@ bool DOMWebSocket::HasPendingActivity() const {
   return channel_ || !event_queue_->IsEmpty();
 }
 
-void DOMWebSocket::Suspend() {
-  event_queue_->Suspend();
+void DOMWebSocket::Pause() {
+  event_queue_->Pause();
 }
 
-void DOMWebSocket::Resume() {
-  event_queue_->Resume();
+void DOMWebSocket::Unpause() {
+  event_queue_->Unpause();
 }
 
 void DOMWebSocket::DidConnect(const String& subprotocol,
@@ -843,7 +843,7 @@ void DOMWebSocket::Trace(blink::Visitor* visitor) {
   visitor->Trace(event_queue_);
   WebSocketChannelClient::Trace(visitor);
   EventTargetWithInlineData::Trace(visitor);
-  SuspendableObject::Trace(visitor);
+  PausableObject::Trace(visitor);
 }
 
 }  // namespace blink

@@ -73,8 +73,8 @@ class HTMLParserScheduler final
   }
   ~HTMLParserScheduler();
 
-  bool IsScheduledForResume() const;
-  void ScheduleForResume();
+  bool IsScheduledForUnpause() const;
+  void ScheduleForUnpause();
   bool YieldIfNeeded(const SpeculationsPumpSession&, bool starting_script);
 
   /**
@@ -86,8 +86,8 @@ class HTMLParserScheduler final
      */
   void ForceResumeAfterYield();
 
-  void Suspend();
-  void Resume();
+  void Pause();
+  void Unpause();
 
   void Detach();  // Clear active tasks if any.
 
