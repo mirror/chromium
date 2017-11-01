@@ -142,7 +142,7 @@ void FileStreamForwarder::NotifyCompleted(bool result) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(!callback_.is_null());
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(std::move(callback_), result));
+                          base::BindOnce(std::move(callback_), this, result));
   callback_.Reset();  // Not to leave the callback in an undefined state.
 }
 

@@ -280,11 +280,13 @@ bool ArcFileSystemBridge::HandleReadRequest(const std::string& id,
   const GURL& url = it->second;
   scoped_refptr<storage::FileSystemContext> context =
       GetFileSystemContext(profile_, url);
-  file_stream_forwarders_[id] = FileStreamForwarderPtr(new FileStreamForwarder(
+  FileStreamForwarderPtr forwarder(new FileStreamForwarder(
       context, GetFileSystemURL(context, url), offset, size,
       std::move(pipe_write_end),
       base::BindOnce(&ArcFileSystemBridge::OnReadRequestCompleted,
                      weak_ptr_factory_.GetWeakPtr(), id)));
+  auto* forwarder_ptr = forwarder.get();
+  file_stream_forwarders_[forwarder_ptr] = std::move(forwarder);
   return true;
 }
 
@@ -293,10 +295,11 @@ bool ArcFileSystemBridge::HandleIdReleased(const std::string& id) {
 }
 
 void ArcFileSystemBridge::OnReadRequestCompleted(const std::string& id,
+                                                 FileStreamForwarder* forwarder,
                                                  bool result) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   LOG_IF(ERROR, !result) << "Failed to read " << id;
-  file_stream_forwarders_.erase(id);
+  file_stream_forwarders_.erase(forwarder);
 }
 
 }  // namespace arc

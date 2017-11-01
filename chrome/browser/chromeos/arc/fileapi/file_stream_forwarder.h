@@ -29,7 +29,8 @@ class FileStreamForwarder {
 
   // |result| is true when the specified amount of data was successfully
   // forwarded.
-  using ResultCallback = base::OnceCallback<void(bool result)>;
+  using ResultCallback =
+      base::OnceCallback<void(FileStreamForwarder* forwarder, bool result)>;
 
   // Starts reading the part of the file specified by |offset| and |size|, and
   // writes the data to |fd_dest|, and runs |callback| with true iff |size|

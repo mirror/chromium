@@ -81,7 +81,8 @@ TEST_F(FileStreamForwarderTest, ForwardAll) {
   FileStreamForwarderPtr forwarder(new FileStreamForwarder(
       context_, url_, kOffset, kSize, std::move(dest_fd_),
       base::BindOnce(
-          [](base::RunLoop* run_loop, bool result) {
+          [](base::RunLoop* run_loop, FileStreamForwarder* forwarder,
+             bool result) {
             EXPECT_TRUE(result);
             run_loop->Quit();
           },
@@ -100,7 +101,8 @@ TEST_F(FileStreamForwarderTest, ForwardPartially) {
   FileStreamForwarderPtr forwarder(new FileStreamForwarder(
       context_, url_, kOffset, kSize, std::move(dest_fd_),
       base::BindOnce(
-          [](base::RunLoop* run_loop, bool result) {
+          [](base::RunLoop* run_loop, FileStreamForwarder* forwarder,
+             bool result) {
             EXPECT_TRUE(result);
             run_loop->Quit();
           },
@@ -121,7 +123,8 @@ TEST_F(FileStreamForwarderTest, ForwardPartially2) {
   FileStreamForwarderPtr forwarder(new FileStreamForwarder(
       context_, url_, kOffset, kSize, std::move(dest_fd_),
       base::BindOnce(
-          [](base::RunLoop* run_loop, bool result) {
+          [](base::RunLoop* run_loop, FileStreamForwarder* forwarder,
+             bool result) {
             EXPECT_TRUE(result);
             run_loop->Quit();
           },
@@ -142,7 +145,8 @@ TEST_F(FileStreamForwarderTest, ForwardTooMuch) {
   FileStreamForwarderPtr forwarder(new FileStreamForwarder(
       context_, url_, kOffset, kSize, std::move(dest_fd_),
       base::BindOnce(
-          [](base::RunLoop* run_loop, bool result) {
+          [](base::RunLoop* run_loop, FileStreamForwarder* forwarder,
+             bool result) {
             EXPECT_FALSE(result);
             run_loop->Quit();
           },
@@ -161,7 +165,8 @@ TEST_F(FileStreamForwarderTest, ForwardTooMuch2) {
   FileStreamForwarderPtr forwarder(new FileStreamForwarder(
       context_, url_, kOffset, kSize, std::move(dest_fd_),
       base::BindOnce(
-          [](base::RunLoop* run_loop, bool result) {
+          [](base::RunLoop* run_loop, FileStreamForwarder* forwarder,
+             bool result) {
             EXPECT_FALSE(result);
             run_loop->Quit();
           },
@@ -184,7 +189,8 @@ TEST_F(FileStreamForwarderTest, InvalidURL) {
   FileStreamForwarderPtr forwarder(new FileStreamForwarder(
       context_, invalid_url, kOffset, kSize, std::move(dest_fd_),
       base::BindOnce(
-          [](base::RunLoop* run_loop, bool result) {
+          [](base::RunLoop* run_loop, FileStreamForwarder* forwarder,
+             bool result) {
             EXPECT_FALSE(result);
             run_loop->Quit();
           },

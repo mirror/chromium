@@ -104,7 +104,9 @@ class ArcFileSystemBridge
                   base::ScopedFD fd);
 
   // Called when FileStreamForwarder completes read request.
-  void OnReadRequestCompleted(const std::string& id, bool result);
+  void OnReadRequestCompleted(const std::string& id,
+                              FileStreamForwarder* forwarder,
+                              bool result);
 
   Profile* const profile_;
   ArcBridgeService* const bridge_service_;  // Owned by ArcServiceManager
@@ -114,8 +116,8 @@ class ArcFileSystemBridge
   // Map from file descriptor IDs to requested URLs.
   std::map<std::string, GURL> id_to_url_;
 
-  // Map from file descriptor IDs to FileStreamForwarders.
-  std::map<std::string, FileStreamForwarderPtr> file_stream_forwarders_;
+  std::map<FileStreamForwarder*, FileStreamForwarderPtr>
+      file_stream_forwarders_;
 
   base::WeakPtrFactory<ArcFileSystemBridge> weak_ptr_factory_;
 
