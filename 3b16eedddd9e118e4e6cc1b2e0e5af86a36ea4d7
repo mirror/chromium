@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccc384c5_dcd90a5e",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-01T22:55:09Z",
+      "side": 1,
+      "message": "So I found some time to investigate why this was not working. See working version at https://chromium-review.googlesource.com/c/chromium/src/+/749887. Things I discovered in the process:\n\n1) host-context(:not(...)) selector is not working. I could not find more details about that, even after looking at the spec https://drafts.csswg.org/css-scoping/#selectordef-host-context. So I had to avoid :not() to make this work.\n2) In this CL you were relying on the FocusOutlineManager that was instantiated by cr-toggle, which is only instantiated after you toggle one of the cr-toggles. So directly instantiating one is needed.\n3) FocusOutlineManager itself, defers changing the CSS class, until a focus event is received, see https://cs.chromium.org/chromium/src/ui/webui/resources/js/cr/ui/focus_outline_manager.js?l\u003d43. This is problematic with Shadow DOM because \u0027focus\u0027 is not always reaching the top document level.",
+      "revId": "3b16eedddd9e118e4e6cc1b2e0e5af86a36ea4d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
