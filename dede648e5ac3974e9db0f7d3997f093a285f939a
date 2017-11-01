@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56651cf2_1246c842",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-01T16:31:45Z",
+      "side": 1,
+      "message": "Do you need to adjust these flags too?",
+      "revId": "dede648e5ac3974e9db0f7d3997f093a285f939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
