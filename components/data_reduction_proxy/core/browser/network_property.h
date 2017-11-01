@@ -11,19 +11,12 @@ namespace data_reduction_proxy {
 
 // State of a proxy server scheme. Tracks if the proxy is allowed or not, and
 // why it is not allowed.
-enum ProxyState {
-  PROXY_STATE_ALLOWED = 0,
-  PROXY_STATE_DISALLOWED_BY_CARRIER = 1 << 0,
-  PROXY_STATE_DISALLOWED_DUE_TO_CAPTIVE_PORTAL = 1 << 1,
-  PROXY_STATE_DISALLOWED_DUE_TO_WARMUP_PROBE_FAILURE = 1 << 2,
-  PROXY_STATE_LAST = PROXY_STATE_DISALLOWED_DUE_TO_WARMUP_PROBE_FAILURE
-};
+typedef int ProxyState;
 
 // Stores the properties of a single network.
 class NetworkProperty {
  public:
-  NetworkProperty(ProxyState secure_proxies_state,
-                  ProxyState insecure_proxies_state);
+  NetworkProperty();
 
   NetworkProperty(const NetworkProperty& other);
 
@@ -32,8 +25,40 @@ class NetworkProperty {
   // Creates NetworkProperty from the serialized string.
   explicit NetworkProperty(const std::string& serialized);
 
+  virtual ~NetworkProperty();
+
   // Serializes |this| to string which can be persisted on the disk.
   std::string ToString() const;
+
+  bool IsProxyAllowed(bool secure_proxy) const;
+
+  bool IsSecureProxyDisallowedByCarrier() const;
+
+  void SetIsSecureProxyDisallowedByCarrier(bool disallowed_by_carrier);
+
+  bool IsCaptivePortal() const;
+
+  void SetIsCaptivePortal(bool is_captive_portal);
+
+  bool HasWarmupURLProbeFailed(bool secure_proxy) const;
+
+  void SetHasWarmupURLProbeFailed(bool secure_proxy,
+                                  bool warmup_url_probe_failed);
+
+ protected:
+  enum ProxyStateFlag {
+    PROXY_STATE_FLAG_ALLOWED = 0,
+    PROXY_STATE_FLAG_DISALLOWED_BY_CARRIER = 1 << 0,
+    PROXY_STATE_FLAG_DISALLOWED_DUE_TO_CAPTIVE_PORTAL = 1 << 1,
+    PROXY_STATE_FLAG_DISALLOWED_DUE_TO_WARMUP_PROBE_FAILURE = 1 << 2,
+    PROXY_STATE_FLAG_LAST =
+        PROXY_STATE_FLAG_DISALLOWED_DUE_TO_WARMUP_PROBE_FAILURE
+  };
+
+  NetworkProperty(ProxyState secure_proxies_state,
+                  ProxyState insecure_proxies_state);
+
+  static constexpr ProxyState kMaxProxyState = PROXY_STATE_FLAG_LAST << 1 - 1;
 
   // Most recent state of the secure and insecure proxies, respectively.
   ProxyState secure_proxies_state() const;
