@@ -205,14 +205,14 @@ class NET_EXPORT GrowableIOBuffer : public IOBuffer {
 
   // realloc memory to the specified capacity.
   void SetCapacity(int capacity);
-  int capacity() { return capacity_; }
+  int capacity() const { return capacity_; }
 
   // |offset| moves the |data_| pointer, allowing "seeking" in the data.
   void set_offset(int offset);
-  int offset() { return offset_; }
+  int offset() const { return offset_; }
 
-  int RemainingCapacity();
-  char* StartOfBuffer();
+  int RemainingCapacity() const;
+  char* StartOfBuffer() const;
 
  private:
   ~GrowableIOBuffer() override;

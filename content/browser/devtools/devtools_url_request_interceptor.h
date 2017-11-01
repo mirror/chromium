@@ -40,6 +40,8 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
 
   using ContinueInterceptedRequestCallback =
       protocol::Network::Backend::ContinueInterceptedRequestCallback;
+  using GetResponseBodyForInterceptionCallback =
+      protocol::Network::Backend::GetResponseBodyForInterceptionCallback;
 
   // Must be called on UI thread.
   static DevToolsURLRequestInterceptor* FromBrowserContext(
@@ -91,15 +93,26 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
     bool mark_as_canceled;
   };
 
+  enum InterceptionStage {
+    REQUEST,
+    HEADERS_RECEIVED,
+    // Note: Both is not sent from front-end. It is used if both Request
+    // and HeadersReceived was found it upgrades it to Both.
+    BOTH,
+    MAX_INTERCEPTION_STAGE
+  };
+
   struct Pattern {
    public:
     Pattern();
     ~Pattern();
     Pattern(const Pattern& other);
     Pattern(const std::string& url_pattern,
-            base::flat_set<ResourceType> resource_types);
+            base::flat_set<ResourceType> resource_types,
+            protocol::Network::InterceptionStage interception_stage);
     const std::string url_pattern;
     const base::flat_set<ResourceType> resource_types;
+    InterceptionStage interception_stage;
   };
 
   // The State needs to be accessed on both UI and IO threads.
@@ -148,6 +161,9 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
         std::unique_ptr<DevToolsURLRequestInterceptor::Modifications>
             modifications,
         std::unique_ptr<ContinueInterceptedRequestCallback> callback);
+    void GetResponseBodyOnIO(
+        std::string interception_id,
+        std::unique_ptr<GetResponseBodyForInterceptionCallback> callback);
 
     void StartInterceptingRequestsOnIO(
         const base::UnguessableToken& target_id,
@@ -202,7 +218,14 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
   // Must be called on the UI thread.
   void StopInterceptingRequests(const FrameTreeNode* target_frame);
 
+  void GetResponseBody(
+      std::string request_id,
+      std::unique_ptr<GetResponseBodyForInterceptionCallback> callback);
+
  private:
+  static DevToolsURLRequestInterceptor::InterceptionStage ToInterceptorStage(
+      const protocol::Network::InterceptionStage& interceptor_stage);
+
   BrowserContext* const browser_context_;
 
   scoped_refptr<State> state_;

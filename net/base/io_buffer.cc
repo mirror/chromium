@@ -155,11 +155,11 @@ void GrowableIOBuffer::set_offset(int offset) {
   data_ = real_data_.get() + offset;
 }
 
-int GrowableIOBuffer::RemainingCapacity() {
+int GrowableIOBuffer::RemainingCapacity() const {
   return capacity_ - offset_;
 }
 
-char* GrowableIOBuffer::StartOfBuffer() {
+char* GrowableIOBuffer::StartOfBuffer() const {
   return real_data_.get();
 }
 
