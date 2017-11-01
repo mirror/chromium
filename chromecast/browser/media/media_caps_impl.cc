@@ -48,16 +48,15 @@ void MediaCapsImpl::SetSupportedHdmiSinkCodecs(
     unsigned int supported_codecs_bitmask) {
   supported_codecs_bitmask_ = supported_codecs_bitmask;
 
-  observers_.ForAllPtrs(
-      [supported_codecs_bitmask](mojom::MediaCapsObserver* observer) {
-        observer->SupportedHdmiSinkCodecsChanged(supported_codecs_bitmask);
-      });
+  observers_.ForAllPtrs([supported_codecs_bitmask](auto* observer) {
+    observer->SupportedHdmiSinkCodecsChanged(supported_codecs_bitmask);
+  });
 }
 
 void MediaCapsImpl::ScreenResolutionChanged(unsigned width, unsigned height) {
   screen_resolution_ = gfx::Size(width, height);
 
-  observers_.ForAllPtrs([width, height](mojom::MediaCapsObserver* observer) {
+  observers_.ForAllPtrs([width, height](auto* observer) {
     observer->ScreenResolutionChanged(width, height);
   });
 }
@@ -79,8 +78,8 @@ void MediaCapsImpl::ScreenInfoChanged(int hdcp_version,
 
   observers_.ForAllPtrs([hdcp_version, supported_eotfs, dolby_vision_flags,
                          screen_width_mm, screen_height_mm,
-                         current_mode_supports_hdr, current_mode_supports_dv](
-      mojom::MediaCapsObserver* observer) {
+                         current_mode_supports_hdr,
+                         current_mode_supports_dv](auto* observer) {
     observer->ScreenInfoChanged(hdcp_version, supported_eotfs,
                                 dolby_vision_flags, screen_width_mm,
                                 screen_height_mm, current_mode_supports_hdr,
@@ -92,7 +91,7 @@ void MediaCapsImpl::AddSupportedCodecProfileLevel(
     const CodecProfileLevel& codec_profile_level) {
   codec_profile_levels_.push_back(codec_profile_level);
   observers_.ForAllPtrs(
-      [&codec_profile_level](mojom::MediaCapsObserver* observer) {
+      [&codec_profile_level](auto* observer) {
         mojom::CodecProfileLevelPtr mojo_codec_profile_level(
             ConvertCodecProfileLevelToMojo(codec_profile_level));
         observer->AddSupportedCodecProfileLevel(

@@ -178,7 +178,7 @@ class FakeHidManager : public device::mojom::HidManager {
     devices_[guid] = std::move(device);
 
     device::mojom::HidDeviceInfo* device_info = devices_[guid].get();
-    clients_.ForAllPtrs([device_info](device::mojom::HidManagerClient* client) {
+    clients_.ForAllPtrs([device_info](auto* client) {
       client->DeviceAdded(device_info->Clone());
     });
   }
@@ -186,10 +186,9 @@ class FakeHidManager : public device::mojom::HidManager {
   void RemoveDevice(const std::string& guid) {
     if (base::ContainsKey(devices_, guid)) {
       device::mojom::HidDeviceInfo* device_info = devices_[guid].get();
-      clients_.ForAllPtrs(
-          [device_info](device::mojom::HidManagerClient* client) {
-            client->DeviceRemoved(device_info->Clone());
-          });
+      clients_.ForAllPtrs([device_info](auto* client) {
+        client->DeviceRemoved(device_info->Clone());
+      });
       devices_.erase(guid);
     }
   }

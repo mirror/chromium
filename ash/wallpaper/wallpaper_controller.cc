@@ -490,7 +490,7 @@ void WallpaperController::SetProminentColors(
   prominent_colors_ = colors;
   for (auto& observer : observers_)
     observer.OnWallpaperColorsChanged();
-  mojo_observers_.ForAllPtrs([this](mojom::WallpaperObserver* observer) {
+  mojo_observers_.ForAllPtrs([this](auto* observer) {
     observer->OnWallpaperColorsChanged(prominent_colors_);
   });
 }
