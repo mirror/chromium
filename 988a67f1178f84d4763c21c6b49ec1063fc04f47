@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ef7118f_4f6e4b7c",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-01T00:43:55Z",
+      "side": 1,
+      "message": "gah, I need to turn in my STL card for not seeing that.",
+      "parentUuid": "767decf1_33df1c86",
+      "revId": "988a67f1178f84d4763c21c6b49ec1063fc04f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "393d40e4_3766e440",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "988a67f1178f84d4763c21c6b49ec1063fc04f47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30de340_f313bbb0",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-01T00:43:55Z",
+      "side": 1,
+      "message": "I like it; I\u0027m just averse to writing so much for a tiny function.",
+      "parentUuid": "393d40e4_3766e440",
+      "revId": "988a67f1178f84d4763c21c6b49ec1063fc04f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5aeebf6c_07bebdbc",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-01T00:43:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8c0e6b15_8daafe5f",
+      "revId": "988a67f1178f84d4763c21c6b49ec1063fc04f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38b9b4d4_1c2768d0",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "988a67f1178f84d4763c21c6b49ec1063fc04f47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e3b836_c444459b",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-01T00:43:55Z",
+      "side": 1,
+      "message": "Correct, I didn\u0027t want to hold up the CL with my change. Here it is from another branch. Let me know if there\u0027s more bookkeeping needed, but it passes the unit test I changed.",
+      "parentUuid": "38b9b4d4_1c2768d0",
+      "revId": "988a67f1178f84d4763c21c6b49ec1063fc04f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "988a67f1178f84d4763c21c6b49ec1063fc04f47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08005d6_439080d8",
+        "filename": "components/omnibox/browser/autocomplete_result.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-01T00:43:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4752777_3c8578b4",
+      "range": {
+        "startLine": 133,
+        "startChar": 43,
+        "endLine": 134,
+        "endChar": 46
+      },
+      "revId": "988a67f1178f84d4763c21c6b49ec1063fc04f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
