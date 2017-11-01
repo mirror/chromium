@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85ce15b8_63c0ba1c",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-01T01:45:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec46ec01_c7a6f97c",
+      "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b7e04a1_d24ea47b",
         "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "32d69d35_fa0dba3d",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-01T01:45:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b7e04a1_d24ea47b",
+      "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b84802d_8b74c81d",
         "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-31T18:38:54Z",
       "side": 1,
       "message": "you don\u0027t need gfx::Point (CenterPoint returns gfx::Point)",
+      "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5fc0ae4_67f6b8e6",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-01T01:45:06Z",
+      "side": 1,
+      "message": "I removed |resize_start_point| and use divider_bounds.CenterPoint() directly.",
+      "parentUuid": "9b84802d_8b74c81d",
       "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cfec7410_ecfba52a",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-01T01:45:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "838a3be7_8db07ffb",
+      "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba5efbc7_c8a394c7",
         "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
         "patchSetId": 8
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e824bfee_78f61299",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-01T01:45:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba5efbc7_c8a394c7",
+      "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aca892fe_4392d538",
         "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef21500_c23f71df",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-01T01:45:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aca892fe_4392d538",
+      "revId": "3dfb4a8001f0772a4738b52d4ab477e3bf12da6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
