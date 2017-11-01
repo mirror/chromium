@@ -42,6 +42,210 @@
     },
     {
       "key": {
+        "uuid": "82a0cbbf_d0ae2011",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2665,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T17:57:46Z",
+      "side": 1,
+      "message": "disable window rectangles here",
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecc89ac_10c0cffc",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2703,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T17:57:46Z",
+      "side": 1,
+      "message": "Disable window rectangles here",
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632469bd_0214acd1",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2724,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T17:57:46Z",
+      "side": 1,
+      "message": "And restore here",
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fabb7334_3f0c7d95",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2935,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T17:57:46Z",
+      "side": 1,
+      "message": "We need to disable window rectangles here.",
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5275d794_571ed090",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3031,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T17:57:46Z",
+      "side": 1,
+      "message": "And here.",
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01889ae8_4663e54f",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7848,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T17:57:46Z",
+      "side": 1,
+      "message": "Disable window rectangles here",
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa08a50_baa8fbf3",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7894,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T17:57:46Z",
+      "side": 1,
+      "message": "And here",
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69bcc60e_a62f5930",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7928,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T17:57:46Z",
+      "side": 1,
+      "message": "We should probably restore window rectangles here",
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc693c5f_f48bcefc",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 8882,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T17:57:46Z",
+      "side": 1,
+      "message": "Disable window rectangles here.",
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baac7d45_a567512f",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 8916,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T17:57:46Z",
+      "side": 1,
+      "message": "And restore here?",
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19fbddf5_bb1a90b2",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 13013,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T17:57:46Z",
+      "side": 1,
+      "message": "Disable window rectangles here",
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6563e3cc_6faee125",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 15968,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T17:57:46Z",
+      "side": 1,
+      "message": "And here",
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e1634f8_ed0751ec",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 14
