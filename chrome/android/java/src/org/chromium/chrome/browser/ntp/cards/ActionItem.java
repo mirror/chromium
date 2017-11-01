@@ -12,7 +12,6 @@ import android.widget.Button;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.metrics.ImpressionTracker;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
 import org.chromium.chrome.browser.snackbar.Snackbar;
@@ -162,7 +161,6 @@ public class ActionItem extends OptionalLeaf {
         private final ProgressIndicatorView mProgressIndicator;
         private final Button mButton;
         private final SuggestionsUiDelegate mUiDelegate;
-
         public ViewHolder(SuggestionsRecyclerView recyclerView,
                 ContextMenuManager contextMenuManager, final SuggestionsUiDelegate uiDelegate,
                 UiConfig uiConfig) {
@@ -173,13 +171,6 @@ public class ActionItem extends OptionalLeaf {
             mUiDelegate = uiDelegate;
             mButton.setOnClickListener(v -> mActionListItem.performAction(uiDelegate,
                     this::showFetchFailureSnackbar, this::showNoNewSuggestionsSnackbar));
-
-            new ImpressionTracker(itemView, () -> {
-                if (mActionListItem != null && !mActionListItem.mImpressionTracked) {
-                    mActionListItem.mImpressionTracked = true;
-                    uiDelegate.getEventReporter().onMoreButtonShown(mActionListItem);
-                }
-            });
         }
 
         private void showFetchFailureSnackbar() {
@@ -204,6 +195,7 @@ public class ActionItem extends OptionalLeaf {
         public void onBindViewHolder(ActionItem item) {
             super.onBindViewHolder();
             mActionListItem = item;
+            setImpressionListener(this::onImpression);
             setState(item.mState);
         }
 
@@ -228,6 +220,13 @@ public class ActionItem extends OptionalLeaf {
             } else {
                 // Not even HIDDEN is supported as the item should not be able to receive updates.
                 assert false : "ActionViewHolder got notified of an unsupported state: " + state;
+            }
+        }
+
+        private void onImpression() {
+            if (mActionListItem != null && !mActionListItem.mImpressionTracked) {
+                mActionListItem.mImpressionTracked = true;
+                mUiDelegate.getEventReporter().onMoreButtonShown(mActionListItem);
             }
         }
     }
