@@ -86,7 +86,6 @@ class Local;
 namespace blink {
 
 class InterfaceProvider;
-class TrialPolicy;
 class WebAudioBus;
 class WebAudioLatencyHint;
 class WebBlobRegistry;
@@ -697,10 +696,11 @@ class BLINK_PLATFORM_EXPORT Platform {
 
   virtual WebSyncProvider* BackgroundSyncProvider() { return nullptr; }
 
-  // Experimental Framework ----------------------------------------------
+  // Origin Trials ------------------------------------------------------
 
-  virtual std::unique_ptr<WebTrialTokenValidator> TrialTokenValidator();
-  virtual std::unique_ptr<TrialPolicy> OriginTrialPolicy();
+  // TODO(crbug.com/738505): Remove the Web layer and return a
+  // blink::TrialTokenValidator directly.
+  virtual std::unique_ptr<WebTrialTokenValidator> CreateTrialTokenValidator();
 
   // Media Capabilities --------------------------------------------------
 
