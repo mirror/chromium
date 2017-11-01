@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0160ab9c_3779c0a2",
+        "filename": "third_party/WebKit/Source/core/css/properties/shorthands/CSSShorthandPropertyAPIFont.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-01T16:38:50Z",
+      "side": 1,
+      "message": "Optionally remove: properties is only being received and passed by reference.",
+      "revId": "7269b9fdcbef8fe593a4f3028a7b11e28e245652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
