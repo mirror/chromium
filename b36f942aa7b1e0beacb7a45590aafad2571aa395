@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5355e089_8e130efe",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-01T08:42:27Z",
+      "side": 1,
+      "message": "Could you add SECURITY_DCHECK(offset \u003e\u003d text_start_offset_)?",
+      "revId": "b36f942aa7b1e0beacb7a45590aafad2571aa395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d29b185_b9b4184e",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-01T08:42:27Z",
+      "side": 1,
+      "message": "Could you explain why you\u0027re using SECURITY_DCHECK and CHECK_LE?",
+      "revId": "b36f942aa7b1e0beacb7a45590aafad2571aa395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
