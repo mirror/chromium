@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c67274b_44fbf078",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-01T11:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62b24f44_84ab7f84",
+      "range": {
+        "startLine": 79,
+        "startChar": 34,
+        "endLine": 79,
+        "endChar": 35
+      },
+      "revId": "dc37ed4f4ba65f143ed16f721d3bda812248d47b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "477f06d7_a66dbcb5",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "dc37ed4f4ba65f143ed16f721d3bda812248d47b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee378e61_d71f2ef2",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-01T11:17:03Z",
+      "side": 1,
+      "message": "Done. Separated to another CL https://chromium-review.googlesource.com/c/chromium/src/+/748905.",
+      "parentUuid": "477f06d7_a66dbcb5",
+      "revId": "dc37ed4f4ba65f143ed16f721d3bda812248d47b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
