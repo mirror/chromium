@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc9ac241_26f503a3",
+        "filename": "components/browser_watcher/watcher_metrics_provider_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-11-01T18:55:40Z",
+      "side": 1,
+      "message": "While having 32k entries would certainly be problematic, it wouldn\u0027t necessarily cause a count overflow.  That would only be the case if they were all for the same exit code.",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 7
+      },
+      "revId": "08bdba67f80ac580ee29d1f8b9c219cedab89b18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57157d46_f1f0310b",
+        "filename": "components/browser_watcher/watcher_metrics_provider_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-11-01T18:55:40Z",
+      "side": 1,
+      "message": "I suggest doing this both before and after the merge of codes from the registry.  You may also want to check the \"previous value\" before adding and abort if it\u0027s exceptionally high.",
+      "range": {
+        "startLine": 138,
+        "startChar": 22,
+        "endLine": 138,
+        "endChar": 26
+      },
+      "revId": "08bdba67f80ac580ee29d1f8b9c219cedab89b18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
