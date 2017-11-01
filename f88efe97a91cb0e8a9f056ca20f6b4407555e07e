@@ -22,6 +22,30 @@
       "revId": "f88efe97a91cb0e8a9f056ca20f6b4407555e07e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb131bd_09c6ec2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-01T16:11:36Z",
+      "side": 1,
+      "message": "Couldn\u0027t hurt. Done.",
+      "parentUuid": "db08ad7e_4f248c7d",
+      "range": {
+        "startLine": 217,
+        "startChar": 62,
+        "endLine": 217,
+        "endChar": 0
+      },
+      "revId": "f88efe97a91cb0e8a9f056ca20f6b4407555e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
