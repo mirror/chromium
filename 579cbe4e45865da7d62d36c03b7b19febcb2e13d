@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c72a2ea3_b2bc5ce5",
+        "filename": "base/allocator/partition_allocator/spin_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1155482
+      },
+      "writtenOn": "2017-11-01T20:02:15Z",
+      "side": 1,
+      "message": "ppc yield has been added.",
+      "parentUuid": "1d4d9d3f_06ee26a5",
+      "revId": "579cbe4e45865da7d62d36c03b7b19febcb2e13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ef60250_664b96e6",
         "filename": "tools/gn/substitution_writer.cc",
         "patchSetId": 1
@@ -138,6 +156,24 @@
       "side": 1,
       "message": "Which compiler (or version) is tricked by this?\n\nDo things get better if you remove the “else” on line 587? (“else” after “return” is a little pointless.)",
       "parentUuid": "b6507029_2905c454",
+      "revId": "579cbe4e45865da7d62d36c03b7b19febcb2e13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c680d41_fe2e4b04",
+        "filename": "tools/gn/substitution_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1155482
+      },
+      "writtenOn": "2017-11-01T20:02:15Z",
+      "side": 1,
+      "message": "Hello Mark, removing the \"else\" works too. The compiler is ubuntu 16.40 stock gcc 5.4.0.",
+      "parentUuid": "7d57a5cb_098d9b86",
       "revId": "579cbe4e45865da7d62d36c03b7b19febcb2e13d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
