@@ -584,6 +584,24 @@
     },
     {
       "key": {
+        "uuid": "8cc9c067_06012d25",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-01T22:57:17Z",
+      "side": 1,
+      "message": "Actually, that\u0027s right, I missed a section of the guidelines. I re-read it now and I see that I should remove the return.\nIt still sounds strange to me, because in non-debug code we are allowing the computation to continue, but following the guidelines seems like the best option.\n\nThanks martis@ for pointing it out to me.",
+      "parentUuid": "5e0cac81_05663124",
+      "revId": "10084f67142be8590dd2a5c5cf6866c9413fdf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "066c23e5_11b2450a",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 7
