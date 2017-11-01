@@ -238,7 +238,7 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
                              kSearchBoxPreferredHeight));
   // Creates an empty border as a placeholder for colored border which indicates
   // that the search box is selected.
-  SetDefaultBorder();
+  UpdateSearchBoxBorder();
   AddChildView(content_container_);
 
   SetShadow(GetShadowForZHeight(2));
@@ -513,6 +513,12 @@ bool SearchBoxView::MoveTabFocus(bool move_backwards) {
 }
 
 void SearchBoxView::ResetTabFocus(bool on_contents) {
+  if (is_app_list_focus_enabled_) {
+    // TODO(weidongg/766807) Remove this function when the flag is enabled by
+    // default.
+    return;
+  }
+
   if (back_button_)
     back_button_->SetSelected(false);
   if (speech_button_)
@@ -563,8 +569,11 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
   search_box_->set_placeholder_text_color(active ? kZeroQuerySearchboxColor
                                                  : search_box_color_);
   search_box_->SetCursorEnabled(active);
+  if (active)
+    search_box_->RequestFocus();
   search_box_right_space_->SetVisible(!active);
 
+  UpdateSearchBoxBorder();
   UpdateKeyboardVisibility();
 
   if (focused_view_ != FOCUS_CONTENTS_VIEW)
@@ -802,23 +811,14 @@ void SearchBoxView::SetSelected(bool selected) {
   if (selected) {
     // Set the ChromeVox focus to the search box.
     search_box_->NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
-    if (IsSearchBoxTrimmedQueryEmpty()) {
-      // This includes two situations: query is empty or query is a string of
-      // spaces. In both situations, opened search box is hidden and we need to
-      // show a ring around search box to indicate that it is selected.
-      SetBorder(views::CreateRoundedRectBorder(
-          kSearchBoxBorderWidth, kSearchBoxFocusBorderCornerRadius,
-          kSearchBoxBorderColor));
-    }
     if (!is_app_list_focus_enabled_ && !search_box_->text().empty()) {
       // If query is not empty (including a string of spaces), we need to select
       // the entire text range. When app list focus flag is enabled, query is
       // automatically selected all when search box is focused.
       search_box_->SelectAll(false);
     }
-  } else {
-    SetDefaultBorder();
   }
+  UpdateSearchBoxBorder();
   Layout();
   SchedulePaint();
 }
@@ -1121,9 +1121,20 @@ bool SearchBoxView::IsSearchBoxTrimmedQueryEmpty() const {
   return trimmed_query.empty();
 }
 
-void SearchBoxView::SetDefaultBorder() {
+void SearchBoxView::UpdateSearchBoxBorder() {
   if (!is_fullscreen_app_list_enabled_)
     return;
+
+  if (selected() && !is_search_box_active()) {
+    // Show a gray ring around search box to indicate that the search box is
+    // selected. Do not show it when search box is active, because blinking
+    // cursor already indicates that.
+    SetBorder(views::CreateRoundedRectBorder(kSearchBoxBorderWidth,
+                                             kSearchBoxFocusBorderCornerRadius,
+                                             kSearchBoxBorderColor));
+    return;
+  }
+
   SetBorder(
       views::CreateEmptyBorder(kSearchBoxBorderWidth, kSearchBoxBorderWidth,
                                kSearchBoxBorderWidth, kSearchBoxBorderWidth));
