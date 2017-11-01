@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6b9610_08ffabb2",
+        "filename": "url/origin.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-01T17:29:34Z",
+      "side": 1,
+      "message": "Do we really need Unguessable tokens for this? That\u0027s an expensive cryptographic operation when really it seems like we just need some unique number. I would expect the default constructor for Origin to be almost free, and I might use it in the code as a placeholder to assign to later, etc.",
+      "revId": "6e240e7bd0a1b9265d2991d35b9ef6ba6acb3476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13fe3da5_6ce66313",
+        "filename": "url/origin.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-01T17:29:34Z",
+      "side": 1,
+      "message": "Why did you change these? I would expect this to match the SchemeHostPort definition for how we expect these to be passed.\n\nFun: basically all schemes and many hosts on 64-bit platforms are short enough to fit in the short string optimization so passing by copy like this and moving would be worse than passing as StringPiece. If that\u0027s our rationale, we should change SchemeHostPort too.",
+      "revId": "6e240e7bd0a1b9265d2991d35b9ef6ba6acb3476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6056d6a5_58b788f7",
+        "filename": "url/origin.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-01T17:29:34Z",
+      "side": 1,
+      "message": "Can you document how this union works?",
+      "revId": "6e240e7bd0a1b9265d2991d35b9ef6ba6acb3476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68f3dfd_2cbe5ca6",
+        "filename": "url/origin.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-01T17:29:34Z",
+      "side": 1,
+      "message": "I feel like this should be above the union since it controls which one is valid.",
+      "revId": "6e240e7bd0a1b9265d2991d35b9ef6ba6acb3476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
