@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d87ac3ba_d545d39a",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-01T00:12:26Z",
+      "side": 1,
+      "message": "I prefer the language \"// Add a new type here, then update kLast and enums.xml.\" since I\u0027ve seen both mistakes happen for these enums and it\u0027s hard to catch in codereview otherwise.",
+      "revId": "894fbe44f9981da66566f08e41ddd5fabd9f05a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
