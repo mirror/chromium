@@ -32,12 +32,22 @@ namespace content {
 // threading subtleties, see the implementation file.
 class CONTENT_EXPORT AudioTrackRecorder : public MediaStreamAudioSink {
  public:
+  enum class CodecId {
+    // Do not change the order of codecs. Add new ones right before LAST.
+    OPUS,
+    PCM,  // Signed, little-endian, 16-bit linear PCM.
+    LAST
+  };
+
   using OnEncodedAudioCB =
       base::Callback<void(const media::AudioParameters& params,
                           std::unique_ptr<std::string> encoded_data,
                           base::TimeTicks capture_time)>;
 
-  AudioTrackRecorder(const blink::WebMediaStreamTrack& track,
+  static CodecId GetPreferredCodecId();
+
+  AudioTrackRecorder(CodecId codec,
+                     const blink::WebMediaStreamTrack& track,
                      const OnEncodedAudioCB& on_encoded_audio_cb,
                      int32_t bits_per_second);
   ~AudioTrackRecorder() override;
@@ -54,6 +64,15 @@ class CONTENT_EXPORT AudioTrackRecorder : public MediaStreamAudioSink {
   // Forward declaration of nested class for handling encoding.
   // See the implementation file for details.
   class AudioEncoder;
+  class OpusAudioEncoder;
+  class PcmAudioEncoder;
+
+  // Creates an audio encoder from the codec. Returns nullptr if the codec is
+  // invalid.
+  static AudioEncoder* CreateAudioEncoder(
+      CodecId codec,
+      const OnEncodedAudioCB& on_encoded_audio_cb,
+      int32_t bits_per_second);
 
   // Used to check that we are destroyed on the same thread we were created on.
   base::ThreadChecker main_render_thread_checker_;
@@ -72,6 +91,7 @@ class CONTENT_EXPORT AudioTrackRecorder : public MediaStreamAudioSink {
   // |encoder_thread_|, should allow us to be sure that all AudioEncoder work is
   // done by the time we destroy it on ATR's thread.
   const scoped_refptr<AudioEncoder> encoder_;
+
   // The thread on which |encoder_| works.
   base::Thread encoder_thread_;
 

@@ -5,11 +5,14 @@
 #include "content/renderer/media_recorder/audio_track_recorder.h"
 
 #include <stdint.h>
+#include <string.h>
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/stl_util.h"
+#include "base/sys_byteorder.h"
 #include "content/renderer/media/media_stream_audio_track.h"
 #include "media/base/audio_bus.h"
 #include "media/base/audio_converter.h"
@@ -42,16 +45,19 @@ enum : int {
 
   // For quality reasons we try to encode 60ms, the maximum Opus buffer.
   kOpusPreferredBufferDurationMs = 60,
-
-  // Maximum amount of buffers that can be held in the AudioEncoders' AudioFifo.
-  // Recording is not real time, hence a certain buffering is allowed.
-  kMaxNumberOfFifoBuffers = 2,
 };
+
+// Maximum buffer multiplier for the AudioEncoders' AudioFifo. Recording is not
+// real time, hence a certain buffering is allowed.
+const int kMaxNumberOfFifoBuffers = 2;
 
 // The amount of Frames in a 60 ms buffer @ 48000 samples/second.
 const int kOpusPreferredFramesPerBuffer = kOpusPreferredSamplingRate *
                                           kOpusPreferredBufferDurationMs /
                                           base::Time::kMillisecondsPerSecond;
+
+// For PCM, we'll always return 1024 frames at a time.
+const int kPcmPreferredFramesPerBuffer = 1024;
 
 // Tries to encode |data_in|'s |num_samples| into |data_out|.
 bool DoEncode(OpusEncoder* opus_encoder,
@@ -80,8 +86,7 @@ bool DoEncode(OpusEncoder* opus_encoder,
 
 }  // anonymous namespace
 
-// Nested class encapsulating opus-related encoding details. It contains an
-// AudioConverter to adapt incoming data to the format Opus likes to have.
+// Base interface for an AudioEncoder.
 // AudioEncoder is created and destroyed on ATR's main thread (usually the main
 // render thread) but otherwise should operate entirely on |encoder_thread_|,
 // which is owned by AudioTrackRecorder. Be sure to delete |encoder_thread_|
@@ -90,19 +95,165 @@ class AudioTrackRecorder::AudioEncoder
     : public base::RefCountedThreadSafe<AudioEncoder>,
       public media::AudioConverter::InputCallback {
  public:
-  AudioEncoder(const OnEncodedAudioCB& on_encoded_audio_cb,
-               int32_t bits_per_second);
+  virtual void OnSetFormat(const media::AudioParameters& params) = 0;
+  virtual void EncodeAudio(std::unique_ptr<media::AudioBus> audio_bus,
+                           const base::TimeTicks& capture_time) = 0;
+  virtual void set_paused(bool paused) = 0;
 
-  void OnSetFormat(const media::AudioParameters& params);
+ protected:
+  friend class base::RefCountedThreadSafe<AudioEncoder>;
+  ~AudioEncoder() override {}
+};
+
+// A signed, 16-bit linear audio "encoder" that will just pass the audio right
+// back out again.
+class AudioTrackRecorder::PcmAudioEncoder
+    : public AudioTrackRecorder::AudioEncoder {
+ public:
+  PcmAudioEncoder(const OnEncodedAudioCB& on_encoded_audio_cb);
+
+  void OnSetFormat(const media::AudioParameters& params) override;
 
   void EncodeAudio(std::unique_ptr<media::AudioBus> audio_bus,
-                   const base::TimeTicks& capture_time);
+                   const base::TimeTicks& capture_time) override;
 
-  void set_paused(bool paused) { paused_ = paused; }
+  void set_paused(bool paused) override { paused_ = paused; }
 
  private:
-  friend class base::RefCountedThreadSafe<AudioEncoder>;
-  ~AudioEncoder() override;
+  ~PcmAudioEncoder() override;
+
+  bool is_initialized() const { return converter_ != nullptr; }
+
+  // media::AudioConverted::InputCallback implementation.
+  double ProvideInput(media::AudioBus* audio_bus,
+                      uint32_t frames_delayed) override;
+
+  const OnEncodedAudioCB on_encoded_audio_cb_;
+
+  base::ThreadChecker encoder_thread_checker_;
+
+  media::AudioParameters input_params_;
+  media::AudioParameters output_params_;
+
+  std::unique_ptr<media::AudioConverter> converter_;
+  std::unique_ptr<media::AudioFifo> fifo_;
+
+  std::vector<int16_t> buffer_;
+
+  bool paused_;
+
+  DISALLOW_COPY_AND_ASSIGN(PcmAudioEncoder);
+};
+
+AudioTrackRecorder::PcmAudioEncoder::PcmAudioEncoder(
+    const OnEncodedAudioCB& on_encoded_audio_cb)
+    : on_encoded_audio_cb_(on_encoded_audio_cb), paused_(false) {
+  encoder_thread_checker_.DetachFromThread();
+}
+
+AudioTrackRecorder::PcmAudioEncoder::~PcmAudioEncoder() {}
+
+void AudioTrackRecorder::PcmAudioEncoder::OnSetFormat(
+    const media::AudioParameters& input_params) {
+  DVLOG(1) << __func__;
+  DCHECK(encoder_thread_checker_.CalledOnValidThread());
+  if (input_params_.Equals(input_params))
+    return;
+
+  if (!input_params.IsValid()) {
+    DLOG(ERROR) << "Invalid params: " << input_params.AsHumanReadableString();
+    return;
+  }
+  input_params_ = input_params;
+
+  output_params_ = media::AudioParameters(
+      media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
+      media::GuessChannelLayout(input_params_.channels()),
+      input_params_.sample_rate(), input_params_.bits_per_sample(),
+      kPcmPreferredFramesPerBuffer);
+  DVLOG(1) << "|input_params_|:" << input_params_.AsHumanReadableString()
+           << " -->|output_params_|:" << output_params_.AsHumanReadableString();
+
+  converter_.reset(new media::AudioConverter(input_params_, output_params_,
+                                             false /* disable_fifo */));
+  converter_->AddInput(this);
+  converter_->PrimeWithSilence();
+
+  fifo_.reset(new media::AudioFifo(
+      input_params_.channels(),
+      kMaxNumberOfFifoBuffers * kPcmPreferredFramesPerBuffer));
+
+  buffer_.resize(output_params_.channels() *
+                 output_params_.frames_per_buffer());
+}
+
+void AudioTrackRecorder::PcmAudioEncoder::EncodeAudio(
+    std::unique_ptr<media::AudioBus> input_bus,
+    const base::TimeTicks& capture_time) {
+  DVLOG(3) << __func__ << ", #frames " << input_bus->frames();
+  DCHECK(encoder_thread_checker_.CalledOnValidThread());
+  DCHECK_EQ(input_bus->channels(), input_params_.channels());
+  DCHECK(!capture_time.is_null());
+  DCHECK(converter_);
+
+  if (!is_initialized() || paused_)
+    return;
+
+  fifo_->Push(input_bus.get());
+
+  // Wait to have enough |input_bus|s to guarantee a satisfactory conversion.
+  size_t bytes_per_sample = sizeof(buffer_[0]);
+  while (fifo_->frames() >= kPcmPreferredFramesPerBuffer) {
+    std::unique_ptr<media::AudioBus> audio_bus = media::AudioBus::Create(
+        output_params_.channels(), kPcmPreferredFramesPerBuffer);
+    converter_->Convert(audio_bus.get());
+    audio_bus->ToInterleaved<media::SignedInt16SampleTypeTraits>(
+        audio_bus->frames(), &buffer_[0]);
+
+    std::unique_ptr<std::string> encoded_data_string(new std::string());
+    encoded_data_string->resize(buffer_.size() * bytes_per_sample);
+    char* encoded_data_ptr = base::string_as_array(encoded_data_string.get());
+
+    for (size_t i = 0; i < buffer_.size(); ++i) {
+      uint16_t le_sample = base::ByteSwapToLE16(buffer_[i]);
+      memcpy(encoded_data_ptr + bytes_per_sample * i, &le_sample,
+             bytes_per_sample);
+    }
+
+    const base::TimeTicks capture_time_of_first_sample =
+        capture_time -
+        base::TimeDelta::FromMicroseconds(fifo_->frames() *
+                                          base::Time::kMicrosecondsPerSecond /
+                                          input_params_.sample_rate());
+    on_encoded_audio_cb_.Run(output_params_, std::move(encoded_data_string),
+                             capture_time_of_first_sample);
+  }
+}
+
+double AudioTrackRecorder::PcmAudioEncoder::ProvideInput(
+    media::AudioBus* audio_bus,
+    uint32_t frames_delayed) {
+  fifo_->Consume(audio_bus, 0, audio_bus->frames());
+  return 1.0;  // Return volume greater than zero to indicate we have more data.
+}
+
+// Nested class encapsulating opus-related encoding details. It contains an
+// AudioConverter to adapt incoming data to the format Opus likes to have.
+class AudioTrackRecorder::OpusAudioEncoder
+    : public AudioTrackRecorder::AudioEncoder {
+ public:
+  OpusAudioEncoder(const OnEncodedAudioCB& on_encoded_audio_cb,
+                   int32_t bits_per_second);
+
+  void OnSetFormat(const media::AudioParameters& params) override;
+
+  void EncodeAudio(std::unique_ptr<media::AudioBus> audio_bus,
+                   const base::TimeTicks& capture_time) override;
+
+  void set_paused(bool paused) override { paused_ = paused; }
+
+ private:
+  ~OpusAudioEncoder() override;
 
   bool is_initialized() const { return !!opus_encoder_; }
 
@@ -137,30 +288,30 @@ class AudioTrackRecorder::AudioEncoder
 
   OpusEncoder* opus_encoder_;
 
-  DISALLOW_COPY_AND_ASSIGN(AudioEncoder);
+  DISALLOW_COPY_AND_ASSIGN(OpusAudioEncoder);
 };
 
-AudioTrackRecorder::AudioEncoder::AudioEncoder(
+AudioTrackRecorder::OpusAudioEncoder::OpusAudioEncoder(
     const OnEncodedAudioCB& on_encoded_audio_cb,
     int32_t bits_per_second)
     : on_encoded_audio_cb_(on_encoded_audio_cb),
       bits_per_second_(bits_per_second),
       paused_(false),
       opus_encoder_(nullptr) {
-  // AudioEncoder is constructed on the thread that ATR lives on, but should
+  // OpusAudioEncoder is constructed on the thread that ATR lives on, but should
   // operate only on the encoder thread after that. Reset
   // |encoder_thread_checker_| here, as the next call to CalledOnValidThread()
   // will be from the encoder thread.
   encoder_thread_checker_.DetachFromThread();
 }
 
-AudioTrackRecorder::AudioEncoder::~AudioEncoder() {
+AudioTrackRecorder::OpusAudioEncoder::~OpusAudioEncoder() {
   // We don't DCHECK that we're on the encoder thread here, as it should have
   // already been deleted at this point.
   DestroyExistingOpusEncoder();
 }
 
-void AudioTrackRecorder::AudioEncoder::OnSetFormat(
+void AudioTrackRecorder::OpusAudioEncoder::OnSetFormat(
     const media::AudioParameters& input_params) {
   DVLOG(1) << __func__;
   DCHECK(encoder_thread_checker_.CalledOnValidThread());
@@ -226,7 +377,7 @@ void AudioTrackRecorder::AudioEncoder::OnSetFormat(
   }
 }
 
-void AudioTrackRecorder::AudioEncoder::EncodeAudio(
+void AudioTrackRecorder::OpusAudioEncoder::EncodeAudio(
     std::unique_ptr<media::AudioBus> input_bus,
     const base::TimeTicks& capture_time) {
   DVLOG(3) << __func__ << ", #frames " << input_bus->frames();
@@ -265,14 +416,14 @@ void AudioTrackRecorder::AudioEncoder::EncodeAudio(
   }
 }
 
-double AudioTrackRecorder::AudioEncoder::ProvideInput(
+double AudioTrackRecorder::OpusAudioEncoder::ProvideInput(
     media::AudioBus* audio_bus,
     uint32_t frames_delayed) {
   fifo_->Consume(audio_bus, 0, audio_bus->frames());
   return 1.0;  // Return volume greater than zero to indicate we have more data.
 }
 
-void AudioTrackRecorder::AudioEncoder::DestroyExistingOpusEncoder() {
+void AudioTrackRecorder::OpusAudioEncoder::DestroyExistingOpusEncoder() {
   // We don't DCHECK that we're on the encoder thread here, as this could be
   // called from the dtor (main thread) or from OnSetFormat() (encoder thread).
   if (opus_encoder_) {
@@ -281,13 +432,17 @@ void AudioTrackRecorder::AudioEncoder::DestroyExistingOpusEncoder() {
   }
 }
 
+AudioTrackRecorder::CodecId AudioTrackRecorder::GetPreferredCodecId() {
+  return CodecId::OPUS;
+}
+
 AudioTrackRecorder::AudioTrackRecorder(
+    CodecId codec,
     const blink::WebMediaStreamTrack& track,
     const OnEncodedAudioCB& on_encoded_audio_cb,
     int32_t bits_per_second)
     : track_(track),
-      encoder_(new AudioEncoder(media::BindToCurrentLoop(on_encoded_audio_cb),
-                                bits_per_second)),
+      encoder_(CreateAudioEncoder(codec, on_encoded_audio_cb, bits_per_second)),
       encoder_thread_("AudioEncoderThread") {
   DCHECK(main_render_thread_checker_.CalledOnValidThread());
   DCHECK(!track_.IsNull());
@@ -304,6 +459,26 @@ AudioTrackRecorder::AudioTrackRecorder(
 AudioTrackRecorder::~AudioTrackRecorder() {
   DCHECK(main_render_thread_checker_.CalledOnValidThread());
   MediaStreamAudioSink::RemoveFromAudioTrack(this, track_);
+}
+
+// Creates an audio encoder from the codec. Returns nullptr if the codec is
+// invalid.
+AudioTrackRecorder::AudioEncoder* AudioTrackRecorder::CreateAudioEncoder(
+    CodecId codec,
+    const OnEncodedAudioCB& on_encoded_audio_cb,
+    int32_t bits_per_second) {
+  switch (codec) {
+    case CodecId::OPUS: {
+      return new OpusAudioEncoder(media::BindToCurrentLoop(on_encoded_audio_cb),
+                                  bits_per_second);
+    }
+    case CodecId::PCM: {
+      return new PcmAudioEncoder(media::BindToCurrentLoop(on_encoded_audio_cb));
+    }
+    case CodecId::LAST: {
+      return nullptr;
+    }
+  }
 }
 
 void AudioTrackRecorder::OnSetFormat(const media::AudioParameters& params) {
