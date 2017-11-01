@@ -22,6 +22,30 @@
       "revId": "247de9b0116b21573d7e19cb0ba362dd034b671d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1f67be_dae16cbf",
+        "filename": "chrome/android/webapk/shell_apk/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-01T19:18:18Z",
+      "side": 1,
+      "message": "Ok changed. I agree that using javatest_manifest_config.json is clearer\n\nThe old \"webapk_java\" target used bound_manifest_config.json\nNotice line 70 in the \"webapk_java\" target in the old code.",
+      "parentUuid": "59c7eb67_de200d1b",
+      "range": {
+        "startLine": 209,
+        "startChar": 17,
+        "endLine": 209,
+        "endChar": 38
+      },
+      "revId": "247de9b0116b21573d7e19cb0ba362dd034b671d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
