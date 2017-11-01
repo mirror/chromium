@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6648ca60_877720fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/TabbedModeFirstRunActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-01T18:24:33Z",
+      "side": 1,
+      "message": "we\u0027re not checking the return value though, so why worry about it?\n\nI \"think\" a potentially better fix would be to add:\n    \u003citem type\u003d\"dimen\" name\u003d\"dialog_fixed_width_major\"\u003e60%\u003c/item\u003e\n    \u003citem type\u003d\"dimen\" name\u003d\"dialog_fixed_width_minor\"\u003e90%\u003c/item\u003e\n    \u003citem type\u003d\"dimen\" name\u003d\"dialog_fixed_height_major\"\u003e60%\u003c/item\u003e\n    \u003citem type\u003d\"dimen\" name\u003d\"dialog_fixed_height_minor\"\u003e90%\u003c/item\u003e\nto the root dimens.xml.   (potentially changing all values to 100%).\n\nFrom the bug, it looks like we are either trying to inflate tablet resources on a phone or vice versa.\n\nI\u0027m actually surprised the check twellington@ added in AsyncInitializationActivity:\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java?l\u003d112\n\nDoesn\u0027t handle that for you.  It should be keeping the resources the same even when the screen size to android changes.  Maybe the modifiers of -large and -xlarge aren\u0027t handled in the same way and maybe the other solution would be to switch to smallest width dimen modifiers instead.",
+      "range": {
+        "startLine": 71,
+        "startChar": 23,
+        "endLine": 71,
+        "endChar": 27
+      },
+      "revId": "c3c02529d8cb4b819d35eaa0be0dbb84d346b3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
