@@ -2828,19 +2828,19 @@ TEST(LayerAnimatorTest, Temperature) {
                                                       delta)));
 
   EXPECT_TRUE(animator->is_animating());
-  EXPECT_EQ(start_temperature, delegate.GetTemperatureFromAnimation());
+  EXPECT_EQ(start_temperature, delegate.GetTemperatureForAnimation());
 
   base::TimeTicks start_time = animator->last_step_time();
 
   animator->Step(start_time + base::TimeDelta::FromMilliseconds(500));
 
   EXPECT_TRUE(animator->is_animating());
-  EXPECT_EQ(middle_temperature, delegate.GetTemperatureFromAnimation());
+  EXPECT_EQ(middle_temperature, delegate.GetTemperatureForAnimation());
 
   animator->Step(start_time + base::TimeDelta::FromMilliseconds(1000));
 
   EXPECT_FALSE(animator->is_animating());
-  EXPECT_EQ(target_temperature, delegate.GetTemperatureFromAnimation());
+  EXPECT_EQ(target_temperature, delegate.GetTemperatureForAnimation());
 }
 
 // Verifies SchedulePauseForProperties().
