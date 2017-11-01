@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "65b3d442_f4398df9",
+        "filename": "ios/chrome/browser/translate/translate_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-01T01:52:52Z",
+      "side": 1,
+      "message": "I\u0027d prefer not to create unnecessary local variables here, so leaving as-is.\n\nI\u0027m understanding this to be an optional suggestion - please let me know if you\u0027d like me to go back and change it.",
+      "parentUuid": "cdbbe441_8b93045d",
+      "range": {
+        "startLine": 329,
+        "startChar": 8,
+        "endLine": 329,
+        "endChar": 34
+      },
+      "revId": "6c6c34c2ddd8107138776e20816b69c80e80f1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20a97faa_235fb4d9",
         "filename": "ios/chrome/browser/translate/translate_egtest.mm",
         "patchSetId": 7
@@ -151,6 +175,30 @@
       "revId": "6c6c34c2ddd8107138776e20816b69c80e80f1ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1def1bc0_afc24836",
+        "filename": "ios/web_view/internal/translate/cwv_translation_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-01T01:52:52Z",
+      "side": 1,
+      "message": "See above (but also happy to change if your suggestion is not optional).",
+      "parentUuid": "85846f1e_3d3bbe46",
+      "range": {
+        "startLine": 79,
+        "startChar": 12,
+        "endLine": 79,
+        "endChar": 43
+      },
+      "revId": "6c6c34c2ddd8107138776e20816b69c80e80f1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
