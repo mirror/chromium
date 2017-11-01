@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cba0d02_3c3b2586",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T00:10:59Z",
+      "side": 0,
+      "message": "I\u0027m not sure why this was previously posted to the Handler but it seems likely that it was intentional. I\u0027d leave this alone.",
+      "range": {
+        "startLine": 690,
+        "startChar": 20,
+        "endLine": 690,
+        "endChar": 55
+      },
+      "revId": "6e83f760157a448e2a1be3904ea866f01346e45d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
