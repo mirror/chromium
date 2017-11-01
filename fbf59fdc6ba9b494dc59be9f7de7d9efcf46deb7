@@ -34,6 +34,24 @@
       "revId": "fbf59fdc6ba9b494dc59be9f7de7d9efcf46deb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "563ac1b7_cbadc3a6",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_test_template.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T18:36:24Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem like overdoing it to me. Seeing this function pointer here makes it seems like it\u0027s somehow required and that had me confused for a second and I\u0027m not sure \"buffer_destroyed\" is an appropriate name for a function pointer. I don\u0027t feel that strongly about it though. Your call.",
+      "parentUuid": "7d59c4ad_5a37d2f9",
+      "revId": "fbf59fdc6ba9b494dc59be9f7de7d9efcf46deb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
