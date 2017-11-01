@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be5e7dd3_70a782f4",
+        "filename": "device/geolocation/geoposition.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-01T14:52:27Z",
+      "side": 0,
+      "message": "How does that compare to the default initialization of the mojom::Geoposition?\nLooking at https://cs.chromium.org/chromium/src/out/Debug/gen/device/geolocation/public/interfaces/geoposition.mojom.cc?type\u003dcs\u0026l\u003d33-43\nit seems the members are initially zero.\n\nAlso, how does that impact the invocation of ValidateGeoposition, i.e. for example would the newly created mojo::Geoposition pass the ValidateGeoposition method?",
+      "revId": "374c2d43d4262956b9d60a23707e0dd6d3348970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

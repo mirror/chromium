@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e18d2301_85569b86",
+        "filename": "device/geolocation/public/cpp/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-01T14:52:27Z",
+      "side": 1,
+      "message": "is this needed?",
+      "revId": "f70e499cdb893fb7fec2f925ac3e63c73e8da473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
