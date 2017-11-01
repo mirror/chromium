@@ -34,6 +34,24 @@
       "revId": "9e53b6d7daf6f1f596266766ea49a82ae1bb1adc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0cffbc1_15c804b0",
+        "filename": "third_party/WebKit/public/platform/modules/manifest/manifest.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T23:09:52Z",
+      "side": 1,
+      "message": "Hmm... OK. Let\u0027s keep this for now to be consistent, but try figuring out what to do with this in a followup?",
+      "parentUuid": "78de8dff_63e57081",
+      "revId": "9e53b6d7daf6f1f596266766ea49a82ae1bb1adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
