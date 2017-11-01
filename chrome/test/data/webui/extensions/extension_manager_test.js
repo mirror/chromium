@@ -151,6 +151,21 @@ cr.define('extension_manager_tests', function() {
       isActiveView(Page.DETAILS);
       var detailsView = manager.$['details-view'];
       expectEquals('ldnnhddmnhbkjipkidpdiheffobcpfmf', detailsView.data.id);
+
+      // Try to open detail view for invalid ID.
+      extensions.navigation.navigateTo(
+          {page: Page.DETAILS, extensionId: 'z'.repeat(32)});
+      Polymer.dom.flush();
+      // Should be re-routed to the main page.
+      isActiveView(Page.LIST);
+
+      // Try to open detail view with a valid ID.
+      extensions.navigation.navigateTo({
+        page: Page.DETAILS,
+        extensionId: 'ldnnhddmnhbkjipkidpdiheffobcpfmf'
+      });
+      Polymer.dom.flush();
+      isActiveView(Page.DETAILS);
     });
 
     test(assert(TestNames.UpdateItemData), function() {
