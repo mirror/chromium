@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "d3c07288_08b5c1a4",
+        "filename": "chrome/browser/component_updater/optimization_hints_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-01T16:11:28Z",
+      "side": 1,
+      "message": "Interesting that we can have primary profile prefs here. I start to wonder if we should set guide data on profile IO data rather than global - if that would make plumbing simpler (eg, for example make the OptimizationGuideService a KeyedService associated with the Profile/BrowserContext - then PreviewsService could find it to register as handler/observer or whatever).",
+      "range": {
+        "startLine": 136,
+        "startChar": 7,
+        "endLine": 136,
+        "endChar": 20
+      },
+      "revId": "1dfbd6b88216c98e3c4e0cf40e79b2cf319366f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9073c30c_0bf65440",
         "filename": "chrome/browser/component_updater/optimization_hints_component_installer_unittest.cc",
         "patchSetId": 3
