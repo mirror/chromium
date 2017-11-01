@@ -11,6 +11,7 @@
 
 #include "cc/trees/occlusion.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/geometry/vector3d_f.h"
 #include "ui/gfx/transform.h"
 
 namespace cc {
@@ -30,6 +31,8 @@ struct CC_EXPORT DrawProperties {
 
   // Known occlusion above the layer mapped to the content space of the layer.
   Occlusion occlusion_in_content_space;
+
+  gfx::Vector3dF color_scales;
 
   // DrawProperties::opacity may be different than LayerImpl::opacity,
   // particularly in the case when a RenderSurface re-parents the layer's

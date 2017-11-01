@@ -26,6 +26,10 @@ struct SharedQuadState {
   // Indicates whether the quads share this sqs contains opaque content.
   bool are_contents_opaque;
 
+  float color_scale_red;
+  float color_scale_green;
+  float color_scale_blue;
+
   float opacity;
   // TODO(fsamuel): Change this to an SkXfermode enum once native enums are
   // supported.
