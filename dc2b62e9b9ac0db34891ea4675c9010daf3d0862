@@ -34,6 +34,24 @@
       "revId": "dc2b62e9b9ac0db34891ea4675c9010daf3d0862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301c0fd2_25247e8f",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-01T20:05:57Z",
+      "side": 1,
+      "message": "Drive by: can we use \u0027auto\u0027 instead of a specific type? That\u0027s C++14 feature, but Chrome switched to C++14 not long time ago.",
+      "parentUuid": "88a205b4_1b1a7219",
+      "revId": "dc2b62e9b9ac0db34891ea4675c9010daf3d0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
