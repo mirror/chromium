@@ -77,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "a71515b6_3da73a81",
+        "filename": "chrome/browser/vr/ui_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T21:40:44Z",
+      "side": 1,
+      "message": "Yep, no names. I\u0027d like to have an analog for CSS classes for these eventually so we can associate settings with swaths of unnamed elements (or named elements of the same class). Skipping unnamed elements feels quite reasonable for the time being.",
+      "parentUuid": "329f2c57_b977b7f6",
+      "revId": "5f3557fccd9fa21dff0509fb1609cded88ff9b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd7c4110_3a05583b",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 1
