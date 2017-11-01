@@ -16,6 +16,24 @@
       "revId": "8a2db95df86f30a05f5c30571a492be2f2eac12b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b75269_ff567618",
+        "filename": "media/remoting/proto_utils_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-01T21:08:36Z",
+      "side": 1,
+      "message": "I like this solution. Much simpler than what I originally proposed. Thanks. :)\n\nFYI: My original proposal was to run this test twice with different memset value (e.g, 0xcd, ~0xcd). \n\nvoid VerifyPipelineStatisticsConversion(int init_memset_value) {\n  PipelineStatistics original;\n  // Note: Fill the structure with non-zero bytes to ensure this test is\n  // initializing *all* fields.\n  memset(\u0026original, init_memset_value, sizeof(original));\n  PipelineStatistics default_stats;\n  original \u003d default_stats;  // Initialize fields with default values.\n  original.audio_bytes_decoded \u003d 123;\n  original.video_bytes_decoded \u003d 456;\n  original.video_frames_decoded \u003d 789;\n  original.video_frames_dropped \u003d 21;\n  original.audio_memory_usage \u003d 32;\n  original.video_memory_usage \u003d 43;\n  original.video_keyframe_distance_average \u003d base::TimeDelta::Max();\n  original.video_frame_duration_average \u003d base::TimeDelta::Max();\n\n  // There is no convert-to-proto function, so just do that here.\n  pb::PipelineStatistics pb_stats;\n  pb_stats.set_audio_bytes_decoded(original.audio_bytes_decoded);\n  pb_stats.set_video_bytes_decoded(original.video_bytes_decoded);\n  pb_stats.set_video_frames_decoded(original.video_frames_decoded);\n  pb_stats.set_video_frames_dropped(original.video_frames_dropped);\n  pb_stats.set_audio_memory_usage(original.audio_memory_usage);\n  pb_stats.set_video_memory_usage(original.video_memory_usage);\n  pb_stats.set_video_frame_duration_average_usec(\n      original.video_frame_duration_average.InMicroseconds());\n\n  PipelineStatistics converted;\n  memset(\u0026converted, init_memset_value, sizeof(converted));\n  ConvertProtoToPipelineStatistics(pb_stats, \u0026converted);\n\n  // If this fails, did media::PipelineStatistics add/change fields that are not\n  // being set by media::remoting::ConvertProtoToPipelineStatistics()?\n  EXPECT_EQ(0, memcmp(\u0026original, \u0026converted, sizeof(converted)));\n}\n\nThen the tests will become:\n\nTEST_F(ProtoUtilsTest, PipelineStatisticsConversion) {\n  VerifyPipelineStatisticsConversion(0xcd);\n  VerifyPipelineStatisticsConversion(~0xcd);\n}",
+      "parentUuid": "833107ed_a727b5ea",
+      "revId": "8a2db95df86f30a05f5c30571a492be2f2eac12b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
