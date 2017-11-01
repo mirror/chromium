@@ -28,21 +28,20 @@ cr.define('cr.ui', function() {
    */
   function FocusOutlineManager(doc) {
     this.classList_ = doc.documentElement.classList;
+    this.doc = doc.documentElement;
 
     var self = this;
 
-    doc.addEventListener('keydown', function(e) {
-      self.focusByKeyboard_ = true;
-    }, true);
-
-    doc.addEventListener('mousedown', function(e) {
-      self.focusByKeyboard_ = false;
-    }, true);
-
-    doc.addEventListener('focus', function(event) {
-      // Update visibility only when focus is actually changed.
+    let onEvent = function(focusByKeyboard, e) {
+      console.log(e.type, focusByKeyboard, self.focusByKeyboard_);
+      if (self.focusByKeyboard_ === focusByKeyboard)
+        return;
+      self.focusByKeyboard_ = focusByKeyboard;
       self.updateVisibility();
-    }, true);
+    };
+
+    doc.addEventListener('keydown', onEvent.bind(this, true), true);
+    doc.addEventListener('mousedown', onEvent.bind(this, false), true);
 
     doc.addEventListener('focusout', function(event) {
       window.setTimeout(function() {
