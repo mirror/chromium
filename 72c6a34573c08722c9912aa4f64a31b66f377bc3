@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "369d2cfa_60cc53b5",
+        "filename": "chrome/browser/browser_process_impl_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-01T20:58:02Z",
+      "side": 1,
+      "message": "Rather than sync, maybe \"blocking\"?  I read the name, and assumed it was for when the response is expected to happen synchronously.  Could also update the comment to make that explicit.\n\nActually...This is only called from OnConnectionChanged, so it should always complete synchronously, right?  So no need to block, can just assert it completes synchronously.  If you do that, I think it would make the most send to inline it in OnConnectionChanged.",
+      "range": {
+        "startLine": 43,
+        "startChar": 23,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "72c6a34573c08722c9912aa4f64a31b66f377bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f60996_0b89cb1f",
+        "filename": "chrome/browser/browser_process_impl_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-01T20:58:02Z",
+      "side": 1,
+      "message": "browser_tests don\u0027t run on OS_IOS (Or Fuschia, I assume?).",
+      "range": {
+        "startLine": 128,
+        "startChar": 28,
+        "endLine": 128,
+        "endChar": 35
+      },
+      "revId": "72c6a34573c08722c9912aa4f64a31b66f377bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfede996_504130a7",
+        "filename": "chrome/browser/browser_process_impl_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-01T20:58:02Z",
+      "side": 1,
+      "message": "I think this should have a comment, mentioning reason for each platform (Not yet supported on ChromeOS, OSX\u0027s test fixture issues).",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 130,
+        "endChar": 29
+      },
+      "revId": "72c6a34573c08722c9912aa4f64a31b66f377bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0252ad6f_d0db5fa8",
         "filename": "content/public/common/network_connection_tracker.h",
         "patchSetId": 9
@@ -13,6 +82,24 @@
       "writtenOn": "2017-11-01T16:05:56Z",
       "side": 1,
       "message": "There are two OnNetworkChanged() methods, which I find a bit odd looking. Everything seems to work though.",
+      "revId": "72c6a34573c08722c9912aa4f64a31b66f377bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c0137b_546e6291",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-01T20:58:02Z",
+      "side": 1,
+      "message": "That is rather unfortunate.  We could change one of the APIs, or make a helper inner class, that just listens to one type of event or the other...Not sure that really gets us much, though.\n\nThat having been said...Do we need this?  It will require some work, but we can create a UI-thread content::mojom::NetworkServicePtr for the IOThread\u0027s NetworkService.  This will probably be useful in the future, even if it does require a bit of setting up.\n\nWe may still need this, eventually, for use in other content embedders, not sure, but I think it would be good if we could use the mojo interface in production chrome.",
+      "parentUuid": "0252ad6f_d0db5fa8",
       "revId": "72c6a34573c08722c9912aa4f64a31b66f377bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
