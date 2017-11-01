@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af06727c_dbd70b7f",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-01T16:48:33Z",
+      "side": 1,
+      "message": "Probably would be more readable for greps if you eliminated histogram_name variable.",
+      "revId": "aaeb55f007039467afc5536d2fdd948b138cfac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
