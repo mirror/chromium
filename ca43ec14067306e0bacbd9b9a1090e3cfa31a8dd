@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2132682a_6fd7f208",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-01T14:20:20Z",
+      "side": 1,
+      "message": "this seems out of scope for this investigation; this method is just used for IPC delivery.\n\nhowever browser features are implemented, they\u0027ll still have a way of responding to IPCs",
+      "revId": "ca43ec14067306e0bacbd9b9a1090e3cfa31a8dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
