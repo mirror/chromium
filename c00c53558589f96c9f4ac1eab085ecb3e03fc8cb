@@ -22,6 +22,30 @@
       "revId": "c00c53558589f96c9f4ac1eab085ecb3e03fc8cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632af1f9_64e65b56",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T22:29:05Z",
+      "side": 1,
+      "message": "I think we could just use TabObserver#onReparentingFinished() https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/tab/TabObserver.java?q\u003dtabobserver\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d292",
+      "parentUuid": "96ef99f6_98e4366c",
+      "range": {
+        "startLine": 41,
+        "startChar": 48,
+        "endLine": 41,
+        "endChar": 59
+      },
+      "revId": "c00c53558589f96c9f4ac1eab085ecb3e03fc8cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
