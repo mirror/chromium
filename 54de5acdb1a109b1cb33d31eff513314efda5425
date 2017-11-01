@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "627e1dbe_c7f3b5b4",
+        "filename": "components/previews/core/previews_opt_out_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-01T20:53:18Z",
+      "side": 1,
+      "message": "I think it might be better to remove this altogether or replace it with DLOG(WARNING).",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 7
+      },
+      "revId": "54de5acdb1a109b1cb33d31eff513314efda5425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
