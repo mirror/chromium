@@ -18,6 +18,7 @@ include_rules = [
   "+components/supervised_user_error_page",
   "+components/web_restrictions",
   "+content/public/common",
+  "-content/public/test",
   "+crypto",
   "+gpu",
   "+jni",

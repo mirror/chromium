@@ -27,6 +27,7 @@ include_rules = [
   "!content/public/android/java/src/org/chromium/content/browser/input/ChromiumBaseInputConnection.java",
   "!content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
   "!content/public/android/java/src/org/chromium/content/common/ContentSwitches.java",
+  "+content/public/test/android/javatests/src/org/chromium/content/browser/test",
 
   "+device/geolocation/android/java",
   "+device/geolocation/android/javatests",
