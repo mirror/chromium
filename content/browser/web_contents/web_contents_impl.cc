@@ -3689,6 +3689,7 @@ void WebContentsImpl::ReadyToCommitNavigation(
 }
 
 void WebContentsImpl::DidFinishNavigation(NavigationHandle* navigation_handle) {
+  CHECK(navigation_handle->GetRenderFrameHost()->IsRenderFrameLive());
   for (auto& observer : observers_)
     observer.DidFinishNavigation(navigation_handle);
 
