@@ -136,10 +136,21 @@ void ReadDirectoryHelper(FileSystemFileUtil* file_util,
                             false /* has_more */));
 }
 
+void CloseFileOnTaskRunner(base::File file) {
+  file.Close();
+}
+
 void RunCreateOrOpenCallback(
     FileSystemOperationContext* context,
     const AsyncFileUtil::CreateOrOpenCallback& callback,
     base::File file) {
+  if (callback.IsCancelled()) {
+    // If |callback| been cancelled, free |file| on the correct task runner.
+    context->task_runner()->PostTask(
+        FROM_HERE, Bind(&CloseFileOnTaskRunner, Passed(&file)));
+    return;
+  }
+
   callback.Run(std::move(file), base::Closure());
 }
 
