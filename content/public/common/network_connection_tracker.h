@@ -19,14 +19,18 @@
 #include "content/public/common/network_service.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "net/base/network_change_notifier.h"
 
 namespace content {
 
 // This class subscribes to network change events from
 // mojom::NetworkChangeManager and propogates these notifications to its
 // NetworkConnectionObservers registered through AddObserver()/RemoveObserver().
+// TODO(xunjieli): Remove dependency on net::NetworkChangeNotifier once
+// Network Service is available everywhere.
 class CONTENT_EXPORT NetworkConnectionTracker
-    : public mojom::NetworkChangeManagerClient {
+    : public mojom::NetworkChangeManagerClient,
+      public net::NetworkChangeNotifier::NetworkChangeObserver {
  public:
   typedef base::Callback<void(mojom::ConnectionType)> ConnectionTypeCallback;
 
@@ -80,6 +84,10 @@ class CONTENT_EXPORT NetworkConnectionTracker
   void OnInitialConnectionType(mojom::ConnectionType type) override;
   void OnNetworkChanged(mojom::ConnectionType type) override;
 
+  // net::NetworkChangeNotifier::NetworkChangeObserver implementation:
+  void OnNetworkChanged(
+      net::NetworkChangeNotifier::ConnectionType type) override;
+
   // The task runner that |this| lives on.
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
@@ -95,6 +103,9 @@ class CONTENT_EXPORT NetworkConnectionTracker
 
   const scoped_refptr<base::ObserverListThreadSafe<NetworkConnectionObserver>>
       network_change_observer_list_;
+
+  // Temporary until Network Service becomes default. crbug.com/598073.
+  const bool has_network_service_;
 
   mojo::Binding<mojom::NetworkChangeManagerClient> binding_;
 
