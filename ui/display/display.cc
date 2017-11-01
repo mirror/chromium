@@ -126,9 +126,7 @@ gfx::ColorSpace Display::GetForcedColorProfile() {
     gfx::ColorSpace color_space(
         gfx::ColorSpace::PrimaryID::WIDE_GAMUT_COLOR_SPIN,
         gfx::ColorSpace::TransferID::GAMMA24);
-    gfx::ICCProfile icc_profile;
-    color_space.GetICCProfile(&icc_profile);
-    return icc_profile.GetColorSpace();
+    return color_space.GetICCProfile()->GetColorSpace();
   }
   LOG(ERROR) << "Invalid forced color profile";
   return gfx::ColorSpace::CreateSRGB();
