@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada1abf_27646fe6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T15:39:58Z",
+      "side": 1,
+      "message": "wasInfobarDismissed can\u0027t be true without wasInfoBarDisplayed, right? Why do we need both?",
+      "range": {
+        "startLine": 149,
+        "startChar": 42,
+        "endLine": 149,
+        "endChar": 62
+      },
+      "revId": "eed19915ce7d081666451c2149e6ef7249553edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa7ca61_80d1f738",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T15:39:58Z",
+      "side": 1,
+      "message": "nit: add a blank line after this return",
+      "range": {
+        "startLine": 171,
+        "startChar": 20,
+        "endLine": 171,
+        "endChar": 27
+      },
+      "revId": "eed19915ce7d081666451c2149e6ef7249553edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
