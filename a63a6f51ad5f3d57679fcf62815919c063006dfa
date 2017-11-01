@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f3ff8ce_6810a7f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-01T19:29:07Z",
+      "side": 1,
+      "message": "Non-public doc",
+      "revId": "a63a6f51ad5f3d57679fcf62815919c063006dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9764d339_4a80a77e",
+        "filename": "chrome/browser/media/webrtc/media_stream_device_permission_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-01T19:29:07Z",
+      "side": 1,
+      "message": "I guess this just needs to be rebased onto the latest version of CL#1, because the original name for this fit better :)",
+      "range": {
+        "startLine": 17,
+        "startChar": 28,
+        "endLine": 17,
+        "endChar": 54
+      },
+      "revId": "a63a6f51ad5f3d57679fcf62815919c063006dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28220e10_d219f953",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_feature.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-01T19:29:07Z",
+      "side": 1,
+      "message": "Can we remove this part of the comment? That function doesn\u0027t even exist anymore, according to codesearch.",
+      "range": {
+        "startLine": 15,
+        "startChar": 41,
+        "endLine": 15,
+        "endChar": 75
+      },
+      "revId": "a63a6f51ad5f3d57679fcf62815919c063006dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
