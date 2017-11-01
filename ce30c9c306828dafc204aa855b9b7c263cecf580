@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5db34b59_0f723272",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-01T16:32:19Z",
+      "side": 1,
+      "message": "Calendar.getInstance() is something that we shouldn\u0027t be doing on the UI thread.  The strict mode exclusion for shared prefs is hiding the fact that this can actually do a fair amount of I/O work itself.\n\nInstead of needing the strict mode exclusion at all, can you refactor your call in initialize to kick off an async task to calculate this in the background and only call startDownload if these are valid?\n\nSince the download call is already async to the caller, this should be fine from a API perspective.\n\nYou can also keep this as a method for testing, but add a ThreadUtils.assertOnBackgroundThread() check on it.",
+      "range": {
+        "startLine": 205,
+        "startChar": 24,
+        "endLine": 205,
+        "endChar": 35
+      },
+      "revId": "ce30c9c306828dafc204aa855b9b7c263cecf580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "357d7408_8948fa78",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyControllerTest.java",
         "patchSetId": 3
