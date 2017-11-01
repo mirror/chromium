@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc80802_77d5d80a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-01T06:15:24Z",
+      "side": 1,
+      "message": "you can use a lambda here to be a bit more terse",
+      "revId": "021e6e793a7948f9a4b1b39ed248f36b257d9fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
