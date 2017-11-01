@@ -81,6 +81,24 @@
       "revId": "c8e9bc612a66c84e4eeaffc3a3a9ca74f663c06a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88147514_fcfc788d",
+        "filename": "chrome/install_static/install_constants.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-01T08:05:16Z",
+      "side": 1,
+      "message": "i meant like this:\n  constexpr CLSID kFoo \u003d {0x8A69D345, 0xD564, 0x463c, {0xAF, 0xF1, 0xA6, 0x9D, 0x9E, 0x53, 0x0F, 0x96}};\n\nthe idea of doing a conversion every time the value is needed bugs me -- it means extra error handling and extra overhead to convert a constant into something else. it seems conceptually easier to convert from a CLSID to a string, though i haven\u0027t looked at the code. how about this:\n- change from string to CLSID\n- convert from CLSID to string in the unittest to be sure that each value can be converted/represented\n- remove error handling from the product since, as far as i know, a CLSID cannot be malformed (whereas a string representing one can be), and we\u0027ll have test coverage to be sure that the conversion won\u0027t fail.\n\nwhat do you think?",
+      "parentUuid": "2d1d13ad_dd727d70",
+      "revId": "c8e9bc612a66c84e4eeaffc3a3a9ca74f663c06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
