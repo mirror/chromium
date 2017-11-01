@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2c73950_ed95b16f",
+        "filename": "cc/animation/worklet_animation_player.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-01T16:19:52Z",
+      "side": 1,
+      "message": "There is already a TODO at the top of the method (lines 49-50 of this patchset). I have fixed that TODO to also mention playback rate, but left it above since it applies to both ScrollTimeline (strangely) and DocumentTimeline.",
+      "parentUuid": "d2bc6adb_95f6ac7b",
+      "range": {
+        "startLine": 60,
+        "startChar": 21,
+        "endLine": 60,
+        "endChar": 73
+      },
+      "revId": "1cdee4048c25e32b060ddd5fc725939cf5e0a1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d71f39a6_0eff129a",
         "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-01T14:37:52Z",
       "side": 1,
       "message": "It seems odd that we need to force style during animation construction\nas opposed to animation play. I think this is many a sideeffect of creating\ncompositor_player_ here.\n\nWhat if we postpone creation of compositor_player_ to when it actually \nstarts on compositor i.e., WorkletAnimation::StartOnCompositor.\n\nI believe that is only called when layout is clean.",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 74
+      },
+      "revId": "1cdee4048c25e32b060ddd5fc725939cf5e0a1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ca8aa1_aad3452f",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-01T16:19:52Z",
+      "side": 1,
+      "message": "Agree that it is odd, however the current code requires us to create compositor_player_ in the constructor, since the code in Create() then expects it to be there (or we never attach to the compositor timeline). This was based on the approach taken in blink::Animation::Create.\n\nA few possibilities:\n\n1. We could not set the ScrollTimeline at construction time, and have some sort of \u0027set timeline\u0027 method called later during WorkletAnimation::StartOnCompositor.\n\n2. We could figure out if its possible to delay attaching the player to the compositor timeline until WorkletAnimation::StartOnCompositor. That sounds sane, but breaks from what blink::Animation::Create does which is concerning.",
+      "parentUuid": "d71f39a6_0eff129a",
       "range": {
         "startLine": 101,
         "startChar": 0,
