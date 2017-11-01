@@ -3259,8 +3259,8 @@ TEST_F(PaintArtifactCompositorTest, LayerRasterInvalidationWithClip) {
   ASSERT_EQ(1u, ContentLayerCount());
   ASSERT_EQ(layer, ContentLayerAt(0));
 
-  // We invalidate the whole layer because it's origin changed.
-  EXPECT_EQ(gfx::Rect(0, 0, 300, 180), layer->update_rect());
+  // We should not invalidate the layer because there is no transform change.
+  EXPECT_EQ(gfx::Rect(), layer->update_rect());
   EXPECT_EQ(gfx::Vector2dF(10, 20), layer->offset_to_transform_parent());
   EXPECT_EQ(gfx::Size(300, 180), layer->bounds());
   EXPECT_THAT(

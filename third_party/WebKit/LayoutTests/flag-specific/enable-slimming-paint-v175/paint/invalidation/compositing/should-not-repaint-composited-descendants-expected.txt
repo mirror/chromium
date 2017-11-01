@@ -16,11 +16,6 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow (positioned) DIV id='composited-box'",
-          "rect": [0, 0, 20, 70],
-          "reason": "full layer"
-        },
-        {
-          "object": "LayoutBlockFlow (positioned) DIV id='composited-box'",
           "rect": [0, 0, 10, 60],
           "reason": "full"
         }

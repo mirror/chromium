@@ -966,6 +966,7 @@ Bug(none) paint/invalidation/scroll-fixed-layer-with-transformed-parent-layer.ht
 Bug(none) paint/invalidation/scrolled-iframe-scrollbar-change.html [ Failure ]
 Bug(none) paint/invalidation/selection/repaint-rect-for-vertical-writing-mode-with-positioned-root.html [ Failure ]
 Bug(none) paint/invalidation/single-line-cells-repeating-thead-break-inside-on-thead-only.html [ Crash Failure ]
+Bug(none) paint/invalidation/compositing/should-not-repaint-move-backface-hidden.html [ Failure ]
 Bug(none) paint/invalidation/svg/scrolling-embedded-svg-file-image-repaint-problem.html [ Failure ]
 Bug(none) paint/invalidation/svg/text-selection-text-05-t.svg [ Failure ]
 Bug(none) paint/invalidation/svg/text-viewbox-rescale.html [ Failure ]
