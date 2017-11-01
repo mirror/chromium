@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "83957ce1_c38f00b4",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T21:54:54Z",
+      "side": 1,
+      "message": "\u003e In this branch, there\u0027s only one non-tail match - a default. A more verbose phrasing: Of all the default matches, we want the non-tail one to be first. I think saying, \"... matches\" would be confusing.\n\nAh, I forgot that on this break we can have only one non-tail match and it might be allowed to be default.",
+      "parentUuid": "6de50e79_6dc9553e",
+      "range": {
+        "startLine": 416,
+        "startChar": 17,
+        "endLine": 416,
+        "endChar": 37
+      },
+      "revId": "e974c62ba43ad775bf4b868d547fafc1f8acf2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6819d40a_d3cea029",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 8
