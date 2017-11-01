@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bbd9af61_05a15bc4",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-01T20:51:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a66221ed_d39d2cfc",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 12
+      },
+      "revId": "b15560472bc2fe48711511f2171c5cf977659172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0cb7e32_8ebd3244",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8ac9d9a4_228c52e9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-01T20:51:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0cb7e32_8ebd3244",
+      "range": {
+        "startLine": 349,
+        "startChar": 11,
+        "endLine": 349,
+        "endChar": 14
+      },
+      "revId": "b15560472bc2fe48711511f2171c5cf977659172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26026036_2e89d357",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "b15560472bc2fe48711511f2171c5cf977659172",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6467455_709efbce",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-01T20:51:57Z",
+      "side": 1,
+      "message": "I changed it to MainThreadTaskLoadState, I think it\u0027s more precise :)",
+      "parentUuid": "26026036_2e89d357",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "b15560472bc2fe48711511f2171c5cf977659172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
