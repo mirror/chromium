@@ -449,22 +449,19 @@ PersonalDataManagerAndroid::GetBillingAddressLabelForPaymentRequest(
     const base::android::JavaParamRef<jobject>& unused_obj,
     const base::android::JavaParamRef<jobject>& jprofile) {
   // The company name and country are not included in the billing address label.
-  std::vector<ServerFieldType> label_fields;
-  label_fields.push_back(NAME_FULL);
-  label_fields.push_back(ADDRESS_HOME_LINE1);
-  label_fields.push_back(ADDRESS_HOME_LINE2);
-  label_fields.push_back(ADDRESS_HOME_DEPENDENT_LOCALITY);
-  label_fields.push_back(ADDRESS_HOME_CITY);
-  label_fields.push_back(ADDRESS_HOME_STATE);
-  label_fields.push_back(ADDRESS_HOME_ZIP);
-  label_fields.push_back(ADDRESS_HOME_SORTING_CODE);
+  static constexpr ServerFieldType label_fields[] = {
+      NAME_FULL,          ADDRESS_HOME_LINE1,
+      ADDRESS_HOME_LINE2, ADDRESS_HOME_DEPENDENT_LOCALITY,
+      ADDRESS_HOME_CITY,  ADDRESS_HOME_STATE,
+      ADDRESS_HOME_ZIP,   ADDRESS_HOME_SORTING_CODE,
+  };
 
   AutofillProfile profile;
   PopulateNativeProfileFromJava(jprofile, env, &profile);
 
   return ConvertUTF16ToJavaString(
       env, profile.ConstructInferredLabel(
-               label_fields, label_fields.size(),
+               label_fields, arraysize(label_fields), arraysize(label_fields),
                g_browser_process->GetApplicationLocale()));
 }
 
@@ -833,24 +830,23 @@ PersonalDataManagerAndroid::GetShippingAddressLabelForPaymentRequest(
     bool include_country_in_label) {
   // The full name is not included in the label for shipping address. It is
   // added separately instead.
-  std::vector<ServerFieldType> label_fields;
-  label_fields.push_back(COMPANY_NAME);
-  label_fields.push_back(ADDRESS_HOME_LINE1);
-  label_fields.push_back(ADDRESS_HOME_LINE2);
-  label_fields.push_back(ADDRESS_HOME_DEPENDENT_LOCALITY);
-  label_fields.push_back(ADDRESS_HOME_CITY);
-  label_fields.push_back(ADDRESS_HOME_STATE);
-  label_fields.push_back(ADDRESS_HOME_ZIP);
-  label_fields.push_back(ADDRESS_HOME_SORTING_CODE);
-  if (include_country_in_label)
-    label_fields.push_back(ADDRESS_HOME_COUNTRY);
+  static constexpr ServerFieldType label_fields[] = {
+      COMPANY_NAME,         ADDRESS_HOME_LINE1,
+      ADDRESS_HOME_LINE2,   ADDRESS_HOME_DEPENDENT_LOCALITY,
+      ADDRESS_HOME_CITY,    ADDRESS_HOME_STATE,
+      ADDRESS_HOME_ZIP,     ADDRESS_HOME_SORTING_CODE,
+      ADDRESS_HOME_COUNTRY,
+  };
+  size_t label_fields_size = arraysize(label_fields);
+  if (!include_country_in_label)
+    --label_fields_size;
 
   AutofillProfile profile;
   PopulateNativeProfileFromJava(jprofile, env, &profile);
 
   return ConvertUTF16ToJavaString(
       env, profile.ConstructInferredLabel(
-               label_fields, label_fields.size(),
+               label_fields, label_fields_size, label_fields_size,
                g_browser_process->GetApplicationLocale()));
 }
 
