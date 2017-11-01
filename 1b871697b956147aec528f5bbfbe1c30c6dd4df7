@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39f32fff_4726febf",
+        "filename": "content/common/content_switches_internal.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T18:20:30Z",
+      "side": 1,
+      "message": "not ok, this should be set once on start up, before any view_androids are created\n\nYou can put this in BrowserMainLoop::EarlyInitialization, remember to remove the gn deps change",
+      "revId": "1b871697b956147aec528f5bbfbe1c30c6dd4df7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49475cb1_e745fc3e",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T18:20:30Z",
+      "side": 1,
+      "message": "put this above non-static methods",
+      "revId": "1b871697b956147aec528f5bbfbe1c30c6dd4df7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f968a69_e00e359b",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T18:20:30Z",
+      "side": 1,
+      "message": "put this above non-static variables",
+      "revId": "1b871697b956147aec528f5bbfbe1c30c6dd4df7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
