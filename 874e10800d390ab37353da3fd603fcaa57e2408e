@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "991f50db_7101015f",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-01T02:42:50Z",
+      "side": 1,
+      "message": "Oops, you\u0027re right, thanks!",
+      "parentUuid": "f0b5a71b_17b1f89d",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef141975_e6cd2e6c",
         "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d1f241_f364eb5f",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-01T02:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef141975_e6cd2e6c",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c45f86e0_a6bcfb6c",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-01T02:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3230dea1_2058dd8d",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef55d963_b653ae73",
         "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dade89e_46634118",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-01T02:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef55d963_b653ae73",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fbc6d631_eac716f6",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-01T02:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d99a3ea_38af9038",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1902579_23a54758",
         "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
         "patchSetId": 6
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6c6b21a6_520f6260",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-01T02:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1902579_23a54758",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a01960b9_e4b0ba4d",
         "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f79288ea_6ecdd73e",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-01T02:42:50Z",
+      "side": 1,
+      "message": "Yeah I think we can get rid of it! :O Thanks Trent!\n\n - Renamed PermissionSelectorRow::GetInitialSelectionWidth() to PSR::GetComboboxWidth().\n - Used combobox_-\u003eCombobox::GetPreferredSize().width() because it seems more correct (even though it has the same behaviour at that point in the code because min_width_ is still 0).",
+      "parentUuid": "a01960b9_e4b0ba4d",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +267,30 @@
       "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49515f97_8d26f9b4",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-01T02:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91a2e673_f7ef97ba",
+      "range": {
+        "startLine": 434,
+        "startChar": 42,
+        "endLine": 434,
+        "endChar": 49
+      },
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
