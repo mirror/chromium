@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b0d9be9_b2e5f23c",
+        "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-11-01T13:24:39Z",
+      "side": 1,
+      "message": "This file needs a rebase, it generates additional checks in the passthrough cmd buffer since https://chromium-review.googlesource.com/c/chromium/src/+/743692",
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1634f8_ed0751ec",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 20380,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-11-01T13:24:39Z",
+      "side": 1,
+      "message": "box needs to be copied into a local vector, it\u0027s not safe to read the volatile memory more than once.",
+      "range": {
+        "startLine": 20380,
+        "startChar": 8,
+        "endLine": 20380,
+        "endChar": 11
+      },
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89e1135_319bd1f0",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4687,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-11-01T13:24:39Z",
+      "side": 1,
+      "message": "This needs to be copied into a vector first.",
+      "range": {
+        "startLine": 4687,
+        "startChar": 42,
+        "endLine": 4687,
+        "endChar": 71
+      },
+      "revId": "528e743345fabca204c83ee9b67a899646fac7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
