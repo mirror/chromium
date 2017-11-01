@@ -339,6 +339,9 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kAllowFileSelectionDialogs,
     prefs::kAllowFileSelectionDialogs,
     base::Value::Type::BOOLEAN },
+  { key::kPromptForDownload,
+    prefs::kPromptForDownload,
+    base::Value::Type::BOOLEAN },
 
   // First run import.
   { key::kImportBookmarks,

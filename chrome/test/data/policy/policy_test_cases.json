@@ -869,6 +869,14 @@
     ]
   },
 
+  "PromptForDownload": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": { "PromptForDownload": false },
+    "pref_mappings": [
+      { "pref": "download.prompt_for_download" }
+    ]
+  },
+
   "ExtensionInstallBlacklist": {
     "os": ["win", "linux", "mac", "chromeos"],
     "test_policy": { "ExtensionInstallBlacklist": ["*"] },
