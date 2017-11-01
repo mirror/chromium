@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94af81a7_2cc35218",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-11-01T20:37:04Z",
+      "side": 1,
+      "message": "For each individual test we will have to add a similar build target?\n\nWould it be possible to group it in a category (e.g. \u0027fuzzers\u0027) with all the sources together?",
+      "revId": "3953f2623ea621241f9d77fc8f451ea3477b957e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f54cd1c7_e00c95c4",
+        "filename": "third_party/zlib/contrib/tests/fuzzers/inflate_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-11-01T20:37:04Z",
+      "side": 1,
+      "message": "Could we replace it all for:\nvector\u003cunsigned char\u003e input_buffer(data, data + size);\n?",
+      "revId": "3953f2623ea621241f9d77fc8f451ea3477b957e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
