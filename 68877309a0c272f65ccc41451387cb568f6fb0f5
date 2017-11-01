@@ -46,6 +46,30 @@
       "revId": "68877309a0c272f65ccc41451387cb568f6fb0f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "889cc6d5_283d3215",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-11-01T21:33:05Z",
+      "side": 1,
+      "message": "ah, yeah, make sense. Sorry, I didn\u0027t notice your prior comment among all comments linking to doc.",
+      "parentUuid": "fc98ac69_7fabf233",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "68877309a0c272f65ccc41451387cb568f6fb0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
