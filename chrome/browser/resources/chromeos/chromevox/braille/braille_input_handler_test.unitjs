@@ -7,13 +7,6 @@ GEN_INCLUDE(['../testing/chromevox_unittest_base.js']);
 
 GEN_INCLUDE(['../testing/fake_objects.js']);
 
-// Fake out the Chrome API namespace we depend on.
-var chrome = {};
-/** Fake chrome.runtime object. */
-chrome.runtime = {};
-/** Fake chrome.virtualKeyboardPrivate object. */
-chrome.virtualKeyboardPrivate = {};
-
 
 /**
  * A fake input field that behaves like the Braille IME and also updates
@@ -514,13 +507,21 @@ CvoxBrailleInputHandlerUnitTest.prototype = {
 
   /** @override */
   setUp: function() {
-    chrome.runtime.onConnectExternal = new FakeChromeEvent();
-    this.port = new FakePort();
-    chrome.virtualKeyboardPrivate.getKeyboardConfig = function(callback) {
-      callback({ a11ymode: true });
+    // Fake out the Chrome API namespace we depend on.
+    var originalChrome = window.chrome;
+    window.chrome = {
+      __proto__: originalChrome,
+      /** Fake chrome.runtime object. */
+      runtime: {
+        onConnectExternal: new FakeChromeEvent(),
+      },
+      /** Fake chrome.virtualKeyboardPrivate object. */
+      virtualKeyboardPrivate: {
+        getKeyboardConfig: function(callback) { callback({ a11ymode: true }); },
+        sendKeyEvent: this.storeKeyEvent.bind(this),
+      },
     };
-    chrome.virtualKeyboardPrivate.sendKeyEvent =
-        this.storeKeyEvent.bind(this);
+    this.port = new FakePort();
     this.translatorManager = new FakeTranslatorManager();
     this.inputHandler = new cvox.BrailleInputHandler(this.translatorManager);
     this.inputHandler.init();

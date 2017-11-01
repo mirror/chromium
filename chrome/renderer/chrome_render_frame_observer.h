@@ -5,7 +5,10 @@
 #ifndef CHROME_RENDERER_CHROME_RENDER_FRAME_OBSERVER_H_
 #define CHROME_RENDERER_CHROME_RENDER_FRAME_OBSERVER_H_
 
+#include <vector>
+
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_render_frame.mojom.h"
@@ -68,7 +71,8 @@ class ChromeRenderFrameObserver
   // chrome::mojom::ChromeRenderFrame:
   void SetWindowFeatures(
       blink::mojom::WindowFeaturesPtr window_features) override;
-  void ExecuteWebUIJavaScript(const base::string16& javascript) override;
+  void ExecuteWebUIJavaScriptForTesting(
+      const base::string16& javascript) override;
   void RequestThumbnailForContextNode(
       int32_t thumbnail_min_area_pixels,
       const gfx::Size& thumbnail_max_size_pixels,
@@ -96,13 +100,19 @@ class ChromeRenderFrameObserver
 
 
 #if !defined(OS_ANDROID)
-  // Save the JavaScript to preload if ExecuteWebUIJavaScript is invoked.
+  // Executes javascript accumulated in |webui_javascript_|.
+  void ExecuteAccumulatedWebUIJavascript();
+
+  // Stores the JavaScript to preload if ExecuteWebUIJavaScriptForTesting is
+  // invoked.
   std::vector<base::string16> webui_javascript_;
 #endif
 
   mojo::AssociatedBindingSet<chrome::mojom::ChromeRenderFrame> bindings_;
 
   service_manager::BinderRegistry registry_;
+
+  base::WeakPtrFactory<ChromeRenderFrameObserver> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeRenderFrameObserver);
 };
