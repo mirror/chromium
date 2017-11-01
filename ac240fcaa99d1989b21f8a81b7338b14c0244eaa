@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8ab912b_2a373867",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-01T17:00:26Z",
+      "side": 1,
+      "message": "Closing tab is okay when the tab is a newly created one (with target\u003d_blank), and we should probably do that, but I\u0027m not sure if we want to Close() even non-new tabs. That may be overkill. As you might know, NavigationThrottle provides a better way to stop the navigation (CANCEL_AND_IGNORE). Can\u0027t we just use that instead of PROCEED+Close()?",
+      "revId": "ac240fcaa99d1989b21f8a81b7338b14c0244eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6747c121_affcf18a",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-01T17:00:26Z",
+      "side": 1,
+      "message": "FYI you can check if the |tab| is a newly created one with:\n\n  if (tab \u0026\u0026 tab-\u003eGetController().IsInitialNavigation())",
+      "revId": "ac240fcaa99d1989b21f8a81b7338b14c0244eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
