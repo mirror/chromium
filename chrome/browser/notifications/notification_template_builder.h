@@ -51,7 +51,7 @@ class NotificationTemplateBuilder {
   NotificationTemplateBuilder();
 
   // Formats the |origin| for display in the notification template.
-  std::string FormatOrigin(const GURL& origin) const;
+  base::string16 FormatOrigin(const GURL& origin) const;
 
   // Writes the <toast> element with the |notification_id| as the launch string.
   // Also closes the |xml_writer_| for writing as the toast is now complete.
@@ -81,9 +81,13 @@ class NotificationTemplateBuilder {
   // Writes the <audio silent="true"> element.
   void WriteAudioSilentElement();
 
-  // Fills in the details for the actions.
-  void AddActions(const std::vector<message_center::ButtonInfo>& buttons);
+  // Adds details of the notification's buttons to the <actions> element.
+  void AddActions(const message_center::Notification& notification);
+  void AddActions(const std::vector<message_center::ButtonInfo>& buttons,
+                  const GURL& origin);
   void WriteActionElement(const message_center::ButtonInfo& button, int index);
+  void WriteContextMenuElement(const std::string& content,
+                               const std::string& arguments);
 
   // The XML writer to which the template will be written.
   std::unique_ptr<XmlWriter> xml_writer_;

@@ -11,9 +11,12 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
+#include "chrome/grit/chromium_strings.h"
 #include "components/url_formatter/elide_url.h"
 #include "third_party/libxml/chromium/libxml_utils.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/message_center/notification.h"
+#include "ui/strings/grit/ui_strings.h"
 #include "url/origin.h"
 
 namespace {
@@ -29,10 +32,13 @@ const char kBindingElement[] = "binding";
 const char kBindingElementTemplateAttribute[] = "template";
 const char kButtonIndex[] = "buttonIndex=";
 const char kContent[] = "content";
+const char kContextMenu[] = "contextMenu";
+const char kDisableNotifications[] = "disableNotifications";
 const char kForeground[] = "foreground";
 const char kInputElement[] = "input";
 const char kInputId[] = "id";
 const char kInputType[] = "type";
+const char kNotificationSettings[] = "notificationSettings";
 const char kPlaceholderContent[] = "placeHolderContent";
 const char kPlacement[] = "placement";
 const char kSilent[] = "silent";
@@ -73,14 +79,14 @@ std::unique_ptr<NotificationTemplateBuilder> NotificationTemplateBuilder::Build(
                             TextType::NORMAL);
   builder->WriteTextElement("2", base::UTF16ToUTF8(notification.message()),
                             TextType::NORMAL);
-  builder->WriteTextElement("3",
-                            builder->FormatOrigin(notification.origin_url()),
-                            TextType::ATTRIBUTION);
+  builder->WriteTextElement(
+      "3", base::UTF16ToUTF8(builder->FormatOrigin(notification.origin_url())),
+      TextType::ATTRIBUTION);
 
   builder->EndBindingElement();
   builder->EndVisualElement();
 
-  builder->AddActions(notification.buttons());
+  builder->AddActions(notification);
 
   if (notification.silent())
     builder->WriteAudioSilentElement();
@@ -107,14 +113,13 @@ base::string16 NotificationTemplateBuilder::GetNotificationTemplate() const {
   return base::UTF8ToUTF16(template_xml.substr(sizeof(kXmlVersionHeader) - 1));
 }
 
-std::string NotificationTemplateBuilder::FormatOrigin(
+base::string16 NotificationTemplateBuilder::FormatOrigin(
     const GURL& origin) const {
   base::string16 origin_string = url_formatter::FormatOriginForSecurityDisplay(
       url::Origin::Create(origin),
       url_formatter::SchemeDisplay::OMIT_HTTP_AND_HTTPS);
   DCHECK(origin_string.size());
-
-  return base::UTF16ToUTF8(origin_string);
+  return origin_string;
 }
 
 void NotificationTemplateBuilder::StartToastElement(
@@ -168,12 +173,11 @@ void NotificationTemplateBuilder::WriteTextElement(const std::string& id,
 }
 
 void NotificationTemplateBuilder::AddActions(
-    const std::vector<message_center::ButtonInfo>& buttons) {
-  if (!buttons.size())
-    return;
-
+    const message_center::Notification& notification) {
   StartActionsElement();
 
+  const std::vector<message_center::ButtonInfo>& buttons =
+      notification.buttons();
   bool inline_reply = false;
   std::string placeholder;
   for (const auto& button : buttons) {
@@ -194,9 +198,20 @@ void NotificationTemplateBuilder::AddActions(
   }
 
   for (size_t i = 0; i < buttons.size(); ++i) {
-    const auto& button = buttons[i];
-    WriteActionElement(button, i);
+    WriteActionElement(buttons[i], i);
   }
+
+  // Add notification management actions in the context menu.
+  std::string disable_notifications_msg =
+      l10n_util::GetStringFUTF8(IDS_MESSAGE_CENTER_NOTIFIER_DISABLE,
+                                FormatOrigin(notification.origin_url()));
+  WriteContextMenuElement(disable_notifications_msg, kDisableNotifications);
+
+  base::string16 product_name =
+      l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_NAME);
+  std::string notification_settings_msg = l10n_util::GetStringFUTF8(
+      IDS_MESSAGE_NOTIFICATION_SETTINGS_CONTEXT_MENU_ITEM_NAME, product_name);
+  WriteContextMenuElement(notification_settings_msg, kNotificationSettings);
 
   EndActionsElement();
 }
@@ -225,5 +240,16 @@ void NotificationTemplateBuilder::WriteActionElement(
   xml_writer_->AddAttribute(kContent, base::UTF16ToUTF8(button.title).c_str());
   std::string param = std::string(kButtonIndex) + base::IntToString(index);
   xml_writer_->AddAttribute(kArguments, param.c_str());
+  xml_writer_->EndElement();
+}
+
+void NotificationTemplateBuilder::WriteContextMenuElement(
+    const std::string& content,
+    const std::string& arguments) {
+  xml_writer_->StartElement(kActionElement);
+  xml_writer_->AddAttribute(kContent, content);
+  xml_writer_->AddAttribute(kPlacement, kContextMenu);
+  xml_writer_->AddAttribute(kActivationType, kForeground);
+  xml_writer_->AddAttribute(kArguments, arguments);
   xml_writer_->EndElement();
 }
