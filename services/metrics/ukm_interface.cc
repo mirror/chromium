@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/ukm/ukm_interface.h"
+#include "services/metrics/ukm_interface.h"
 
 #include "base/atomic_sequence_num.h"
 #include "base/memory/ptr_util.h"
