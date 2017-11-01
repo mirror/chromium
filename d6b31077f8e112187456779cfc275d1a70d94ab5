@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "553f7268_ac11a7e4",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-11-01T17:54:15Z",
+      "side": 1,
+      "message": "Would it make sense to add a pixel test with a filter vector like {blur, something else} that would have caught this?",
+      "parentUuid": "c84592af_7eb0a0be",
+      "range": {
+        "startLine": 852,
+        "startChar": 40,
+        "endLine": 852,
+        "endChar": 45
+      },
+      "revId": "d6b31077f8e112187456779cfc275d1a70d94ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfc40b26_ada62a3b",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 2
