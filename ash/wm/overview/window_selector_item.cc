@@ -180,6 +180,9 @@ class ShieldButton : public views::Button {
         case ui::ET_GESTURE_END:
           listener()->HandleReleaseEvent(location);
           break;
+        case ui::ET_GESTURE_LONG_PRESS:
+          listener()->HandleLongPressEvent(location);
+          break;
         default:
           break;
       }
@@ -648,6 +651,11 @@ void WindowSelectorItem::HandleReleaseEvent(
 
 void WindowSelectorItem::HandleDragEvent(const gfx::Point& location_in_screen) {
   window_selector_->Drag(this, location_in_screen);
+}
+
+void WindowSelectorItem::HandleLongPressEvent(
+    const gfx::Point& location_in_screen) {
+  window_selector_->LongPress(this, location_in_screen);
 }
 
 gfx::Rect WindowSelectorItem::GetTargetBoundsInScreen() const {

@@ -556,6 +556,13 @@ void WindowSelector::CompleteDrag(WindowSelectorItem* item,
   window_drag_controller_->CompleteDrag(location_in_screen);
 }
 
+void WindowSelector::LongPress(WindowSelectorItem* item,
+                               const gfx::Point& location_in_screen) {
+  DCHECK(window_drag_controller_.get());
+  DCHECK_EQ(item, window_drag_controller_->item());
+  window_drag_controller_->LongPress(location_in_screen);
+}
+
 void WindowSelector::PositionWindows(bool animate) {
   for (std::unique_ptr<WindowGrid>& grid : grid_list_)
     grid->PositionWindows(animate);

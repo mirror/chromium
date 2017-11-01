@@ -34,6 +34,7 @@ class ASH_EXPORT OverviewWindowDragController {
                     const gfx::Point& location_in_screen);
   void Drag(const gfx::Point& location_in_screen);
   void CompleteDrag(const gfx::Point& location_in_screen);
+  void LongPress(const gfx::Point& location_in_screen);
 
   // Resets |window_selector_| to nullptr. It's needed since we defer the
   // deletion of OverviewWindowDragController in WindowSelector destructor and
@@ -71,6 +72,8 @@ class ASH_EXPORT OverviewWindowDragController {
 
   // The location of the previous mouse/touch/gesture event in screen.
   gfx::Point previous_event_location_;
+
+  bool did_long_press_ = false;
 
   // Set to true once the bounds of |item_| change.
   bool did_move_ = false;

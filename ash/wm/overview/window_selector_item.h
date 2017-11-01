@@ -127,6 +127,7 @@ class ASH_EXPORT WindowSelectorItem : public views::ButtonListener,
   void HandlePressEvent(const gfx::Point& location_in_screen);
   void HandleReleaseEvent(const gfx::Point& location_in_screen);
   void HandleDragEvent(const gfx::Point& location_in_screen);
+  void HandleLongPressEvent(const gfx::Point& location_in_screen);
 
  private:
   class CaptionContainerView;

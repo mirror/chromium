@@ -50,6 +50,7 @@ void OverviewWindowDragController::InitiateDrag(
     const gfx::Point& location_in_screen) {
   previous_event_location_ = location_in_screen;
   item_ = item;
+  did_long_press_ = false;
 
   window_selector_->SetSplitViewOverviewOverlayIndicatorType(
       split_view_controller_->CanSnap(item->GetWindow())
@@ -67,6 +68,7 @@ void OverviewWindowDragController::Drag(const gfx::Point& location_in_screen) {
     return;
   }
   did_move_ = true;
+  did_long_press_ = false;
 
   // Update the dragged |item_|'s bounds accordingly.
   gfx::Rect bounds(item_->target_bounds());
@@ -99,6 +101,12 @@ void OverviewWindowDragController::CompleteDrag(
       IndicatorType::NONE, gfx::Point());
 
   if (!did_move_) {
+    if (did_long_press_) {
+      did_long_press_ = false;
+      if (snap_position_ == SplitViewController::NONE)
+        window_selector_->PositionWindows(true /* animate */);
+      return;
+    }
     // If no drag was initiated (e.g., a click/tap on the overview window),
     // activate the window. If the split view is active and has a left window,
     // snap the current window to right. If the split view is active and has a
@@ -126,6 +134,11 @@ void OverviewWindowDragController::CompleteDrag(
     else
       SnapWindow(snap_position_);
   }
+}
+
+void OverviewWindowDragController::LongPress(
+    const gfx::Point& location_in_screen) {
+  did_long_press_ = true;
 }
 
 void OverviewWindowDragController::ResetWindowSelector() {
