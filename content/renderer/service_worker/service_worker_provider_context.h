@@ -11,6 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner_helpers.h"
 #include "content/common/content_export.h"
+#include "content/common/service_worker/controller_service_worker.mojom.h"
 #include "content/common/service_worker/service_worker_container.mojom.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
 #include "content/common/service_worker/service_worker_types.h"
@@ -59,6 +60,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
                                         ServiceWorkerProviderContextDeleter>,
       public mojom::ServiceWorkerContainer {
  public:
+  // Constructor for service worker clients.
+  //
   // |provider_id| is used to identify this provider in IPC messages to the
   // browser process. |request| is an endpoint which is connected to
   // the content::ServiceWorkerProviderHost that notifies of changes to the
@@ -66,6 +69,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // The new instance is registered to |dispatcher|, which is not owned.
   //
   // For S13nServiceWorker:
+  // |controller_ptr| is the Mojo ptr info that is connected to the service
+  // worker that controls this client.
   // |default_loader_factory_getter| contains a set of default loader
   // factories for the associated loading context, and is used when we
   // create a subresource loader for controllees. This is non-null only
@@ -73,11 +78,20 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // e.g. a frame, provides the default URLLoaderFactoryGetter.
   ServiceWorkerProviderContext(
       int provider_id,
+      const GURL& client_url,
       ServiceWorkerProviderType provider_type,
       mojom::ServiceWorkerContainerAssociatedRequest request,
       mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
       ServiceWorkerDispatcher* dispatcher,
+      mojom::ControllerServiceWorkerPtr controller_ptr,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter);
+
+  // Constructor for service worker contexts.
+  ServiceWorkerProviderContext(
+      int provider_id,
+      mojom::ServiceWorkerContainerAssociatedRequest request,
+      mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
+      ServiceWorkerDispatcher* dispatcher);
 
   ServiceWorkerProviderType provider_type() const { return provider_type_; }
 
@@ -109,9 +123,9 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   ServiceWorkerHandleReference* controller();
 
   // S13nServiceWorker:
-  // For service worker clients. Returns URLLoaderFactory for loading
-  // subresources with the controller ServiceWorker.
-  mojom::URLLoaderFactory* subresource_loader_factory();
+  // subresources with the controller ServiceWorker, or nullptr if
+  // no controller is attached.
+  mojom::URLLoaderFactory* GetSubresourceLoaderFactory();
 
   // For service worker clients. Keeps track of feature usage for UseCounter.
   void CountFeature(uint32_t feature);
@@ -176,7 +190,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   void UnregisterWorkerFetchContext(mojom::ServiceWorkerWorkerClient*);
 
   // Implementation of mojom::ServiceWorkerContainer.
-  void SetController(blink::mojom::ServiceWorkerObjectInfoPtr controller,
+  void SetController(blink::mojom::ServiceWorkerObjectInfoPtr controller_object,
+                     mojom::ControllerServiceWorkerPtr controller_ptr,
                      const std::vector<blink::mojom::WebFeature>& used_features,
                      bool should_notify_controllerchange) override;
   void PostMessageToClient(
