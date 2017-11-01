@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f5ba6d0_7b24641b",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-01T22:24:29Z",
+      "side": 1,
+      "message": "!defined(OS_WIN) is redundant, since OS_WIN is never OS_POSIX.",
+      "range": {
+        "startLine": 177,
+        "startChar": 49,
+        "endLine": 177,
+        "endChar": 65
+      },
+      "revId": "42a9829d19d97eef4970aeb328fceb7116c47ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f5873c_5d607372",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-01T22:24:29Z",
+      "side": 1,
+      "message": "“components” sounds funny. Can’t you just call this a SharedMemoryHandle backed by a FileDescriptor?",
+      "range": {
+        "startLine": 178,
+        "startChar": 51,
+        "endLine": 178,
+        "endChar": 61
+      },
+      "revId": "42a9829d19d97eef4970aeb328fceb7116c47ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761df17f_f92d4bec",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-01T22:24:29Z",
+      "side": 1,
+      "message": "Is this advocating for or against a particular usage pattern? I can’t tell why this comment is here. This comment should tell me how to use the interface. Unless it’s very relevant, it shouldn’t opine on abuses of an interface, although it could say something like “this common pattern is bad, do that other thing instead.”",
+      "range": {
+        "startLine": 181,
+        "startChar": 58,
+        "endLine": 181,
+        "endChar": 71
+      },
+      "revId": "42a9829d19d97eef4970aeb328fceb7116c47ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55187e4_67d05890",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-01T22:24:29Z",
+      "side": 1,
+      "message": "This isn’t an interface contract. The caller is supposed to pass the correct size, period. If they don’t, all bets are off. I don’t think you need to say anything about “wrong |size|” at all.",
+      "range": {
+        "startLine": 191,
+        "startChar": 30,
+        "endLine": 191,
+        "endChar": 58
+      },
+      "revId": "42a9829d19d97eef4970aeb328fceb7116c47ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1abc1e2_e0bcc22e",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-01T22:24:29Z",
+      "side": 1,
+      "message": "I’m a little fearful of this union. Some innocent person might want to make FileDescriptor non-POD.",
+      "revId": "42a9829d19d97eef4970aeb328fceb7116c47ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
