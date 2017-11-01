@@ -46,6 +46,30 @@
       "revId": "79ca9c3dcbe804aa865fe29328d2bf2ef62ea29f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec56512_9a8af922",
+        "filename": "base/ios/callback_counter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-01T19:55:00Z",
+      "side": 1,
+      "message": "This looks like \"When in doubt\" case. The readability improvement by using default argument is questionable to me. But I will leave the decision up to you, as this is quite borderline case.",
+      "parentUuid": "a846b061_54d4161a",
+      "range": {
+        "startLine": 23,
+        "startChar": 33,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "79ca9c3dcbe804aa865fe29328d2bf2ef62ea29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
