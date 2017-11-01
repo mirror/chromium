@@ -18,10 +18,6 @@ class MojoPrivateApiTest : public ApiTestBase {
  public:
   MojoPrivateApiTest() = default;
 
-  gin::ModuleRegistry* module_registry() {
-    return gin::ModuleRegistry::From(env()->context()->v8_context());
-  }
-
   scoped_refptr<const Extension> CreateExtension() override {
     std::unique_ptr<base::DictionaryValue> manifest =
         DictionaryBuilder()
@@ -40,36 +36,13 @@ class MojoPrivateApiTest : public ApiTestBase {
   DISALLOW_COPY_AND_ASSIGN(MojoPrivateApiTest);
 };
 
-TEST_F(MojoPrivateApiTest, Define) {
-  ASSERT_NO_FATAL_FAILURE(RunTest("mojo_private_unittest.js", "testDefine"));
-  EXPECT_EQ(1u, module_registry()->available_modules().count("testModule"));
-}
-
-TEST_F(MojoPrivateApiTest, DefineRegistersModule) {
-  ASSERT_NO_FATAL_FAILURE(
-      RunTest("mojo_private_unittest.js", "testDefineRegistersModule"));
-  EXPECT_EQ(1u, module_registry()->available_modules().count("testModule"));
-  EXPECT_EQ(1u, module_registry()->available_modules().count("dependency"));
-}
-
-TEST_F(MojoPrivateApiTest, DefineModuleDoesNotExist) {
-  ASSERT_NO_FATAL_FAILURE(
-      RunTest("mojo_private_unittest.js", "testDefineModuleDoesNotExist"));
-  EXPECT_EQ(0u, module_registry()->available_modules().count("testModule"));
-  EXPECT_EQ(0u,
-            module_registry()->available_modules().count("does not exist!"));
-  EXPECT_EQ(1u, module_registry()->unsatisfied_dependencies().count(
-                    "does not exist!"));
-}
-
 TEST_F(MojoPrivateApiTest, RequireAsync) {
+  env()->RegisterModule("add",
+                        "define('add', [], function() {"
+                        "  return { Add: function(x, y) { return x + y; } };"
+                        "});");
   ASSERT_NO_FATAL_FAILURE(
       RunTest("mojo_private_unittest.js", "testRequireAsync"));
-}
-
-TEST_F(MojoPrivateApiTest, DefineAndRequire) {
-  ASSERT_NO_FATAL_FAILURE(
-      RunTest("mojo_private_unittest.js", "testDefineAndRequire"));
 }
 
 }  // namespace extensions
