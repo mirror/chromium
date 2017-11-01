@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71494805_b782ef54",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T22:57:40Z",
+      "side": 1,
+      "message": "Can we do this before landing the CL?  I\u0027m uncomfortable with having potentially unlimited size for PageStates after Daniel\u0027s work to limit the size of unique name.",
+      "revId": "ded04f5a08378a1a8b6b2bf9546f9f70656a999e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d4b45f_e459ef57",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T22:57:40Z",
+      "side": 1,
+      "message": "Undo?",
+      "revId": "ded04f5a08378a1a8b6b2bf9546f9f70656a999e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
