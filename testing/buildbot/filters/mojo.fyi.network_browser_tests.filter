@@ -2498,8 +2498,6 @@
 -DownloadTest.CrxInstallDenysPermissions
 -DownloadTest.CrxInvalid
 -DownloadTest.CrxLargeTheme
--DownloadTest.DangerousFileWithSBDisabledBeforeCompletion
--DownloadTest.DangerousFileWithSBDisabledBeforeStart
 -DownloadTest.DontCloseNewTab2
 -DownloadTest.DontCloseNewTab3
 -DownloadTest.DownloadAndWait
@@ -2517,8 +2515,6 @@
 -DownloadTest.DownloadTest_Renaming
 -DownloadTest.DownloadUrl
 -DownloadTest.DownloadUrlToPath
--DownloadTest.FeedbackServiceDiscardDownload
--DownloadTest.FeedbackServiceKeepDownload
 -DownloadTest.HiddenDownload
 -DownloadTest.IncognitoDownload
 -DownloadTest.IncognitoDownloadShelfVisibility
@@ -2528,8 +2524,6 @@
 -DownloadTest.SafeSupportedFile
 -DownloadTest.TestMultipleDownloadsRequests
 -DownloadTest.TransientDownload
--DownloadTestWithFakeSafeBrowsing.NoUncommonDownloadReportWithoutUserProceed
--DownloadTestWithFakeSafeBrowsing.SendUncommonDownloadReportIfUserProceed
 -ErrorPageAutoReloadTest.AutoReload
 -ErrorPageAutoReloadTest.IgnoresSameDocumentNavigation
 -ErrorPageAutoReloadTest.ManualReloadNotSuppressed
