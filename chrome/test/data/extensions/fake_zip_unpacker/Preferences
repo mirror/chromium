@@ -1,0 +1,36 @@
+{
+   "extensions": {
+      "settings": {
+         "oedeeodfidgoollimchfdnbmhcpnklnd": {
+            "location": 10,
+            "path": "oedeeodfidgoollimchfdnbmhcpnklnd/0.76.1.0",
+            "granted_permissions": {
+              "api": ["tabs"],
+              "explicit_host": ["file://*", "http://*.google.com/*", "https://*.google.com/*", "http://*.news.com/*"]
+            },
+            "state": 1,
+            "newAllowFileAccess": true,
+            "manifest": {
+              "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDuUZGKCDbff6IRaxa4Pue7PPkxwPaNhGT3JEqppEsNWFjM80imEdqMbf3lrWqEfaHgaNku7nlpwPO1mu3/4Hr+XdNa5MhfnOnuPee4hyTLwOs3Vzz81wpbdzUxZSi2OmqMyI5oTaBYICfNHLwcuc65N5dbt6WKGeKgTpp4v7j7zwIDAQAB",
+              "version": "0.76.1.0",
+              "name": "My extension 1",
+              "description": "The first extension that I made.",
+              "icons": {
+                "128": "icon_128.png"
+              },
+              "default_locale": "en_US",
+              "background": {
+                "page": "backgroundpage.html"
+              },
+              "permissions": ["tabs", "http://*.google.com/*", "https://*.google.com/*"],
+              "content_scripts": [
+                {
+                  "matches": ["file://*", "http://*.google.com/*", "https://*.google.com/*"],
+                  "js": ["script1.js"],
+                }
+              ],
+            }
+         }
+      }
+   }
+}
