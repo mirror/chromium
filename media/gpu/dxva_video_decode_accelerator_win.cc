@@ -1923,7 +1923,7 @@ void DXVAVideoDecodeAccelerator::DoDecode(const gfx::ColorSpace& color_space) {
   TRACE_COUNTER1("DXVA Decoding", "TotalPacketsBeforeDecode",
                  inputs_before_decode_);
 
-  inputs_before_decode_ = 0;
+  inputs_before_decode_--;
 
   RETURN_AND_NOTIFY_ON_FAILURE(ProcessOutputSample(output_sample, color_space),
                                "Failed to process output sample.",
@@ -2210,6 +2210,15 @@ void DXVAVideoDecodeAccelerator::NotifyPictureReady(
     Picture picture(picture_buffer_id, input_buffer_id, gfx::Rect(0, 0),
                     color_space, allow_overlay);
     client_->PictureReady(picture);
+  }
+
+  // If we have accumulated more inputs than the outputs, we should try reading
+  // as much outputs as possible until MF_E_TRANSFORM_NEED_MORE_INPUT is
+  // returned.
+  if (inputs_before_decode_) {
+    decoder_thread_task_runner_->PostTask(
+        FROM_HERE, base::Bind(&DXVAVideoDecodeAccelerator::DoDecode,
+                              base::Unretained(this), color_space));
   }
 }
 
