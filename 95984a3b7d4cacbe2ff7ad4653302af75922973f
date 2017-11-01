@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fbda29f1_6f44b06d",
+        "filename": "third_party/WebKit/Source/modules/payments/BasicCardHelper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-01T13:35:44Z",
+      "side": 1,
+      "message": "@rouslan, thank you for your quick fix,",
+      "parentUuid": "e11b137b_af826ad1",
+      "revId": "95984a3b7d4cacbe2ff7ad4653302af75922973f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bc131f2_53a9cdfa",
         "filename": "third_party/WebKit/Source/modules/payments/BasicCardHelper.h",
         "patchSetId": 11
@@ -48,6 +66,24 @@
       "writtenOn": "2017-11-01T00:35:58Z",
       "side": 1,
       "message": "Nit: ParseBasiccardData\n\nIs it not warned by the presubmit script?",
+      "revId": "95984a3b7d4cacbe2ff7ad4653302af75922973f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecbdfaec_c9a5167a",
+        "filename": "third_party/WebKit/Source/modules/payments/BasicCardHelper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-01T13:35:44Z",
+      "side": 1,
+      "message": "presubmit script do not warn this since I guess it is the convention for IDL interfaces, I will update it in a separate CL,",
+      "parentUuid": "9bc131f2_53a9cdfa",
       "revId": "95984a3b7d4cacbe2ff7ad4653302af75922973f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -68,6 +104,24 @@
       "revId": "95984a3b7d4cacbe2ff7ad4653302af75922973f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04439b2_43dc7203",
+        "filename": "third_party/WebKit/Source/modules/payments/BasicCardHelper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-01T13:35:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c11754c7_bf41fc66",
+      "revId": "95984a3b7d4cacbe2ff7ad4653302af75922973f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
