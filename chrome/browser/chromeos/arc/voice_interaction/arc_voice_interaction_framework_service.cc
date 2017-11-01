@@ -268,12 +268,6 @@ void ArcVoiceInteractionFrameworkService::CaptureFullscreen(
                  base::Passed(std::move(old_layer_owner))));
 }
 
-void ArcVoiceInteractionFrameworkService::SetVoiceInteractionRunning(
-    bool running) {
-  // TODO(xiaohuic): Deprecated, and to be removed.
-  NOTREACHED();
-}
-
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
     ash::VoiceInteractionState state) {
   DCHECK_NE(state_, state);

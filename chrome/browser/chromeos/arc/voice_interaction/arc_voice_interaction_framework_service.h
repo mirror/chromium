@@ -66,7 +66,6 @@ class ArcVoiceInteractionFrameworkService
   // TODO(kaznacheev) remove usages of this obsolete method from the container.
   void OnMetalayerClosed() override;
   void SetMetalayerEnabled(bool enabled) override;
-  void SetVoiceInteractionRunning(bool running) override;
   void SetVoiceInteractionState(ash::VoiceInteractionState state) override;
 
   void ShowMetalayer();
