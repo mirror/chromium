@@ -16,6 +16,24 @@
       "revId": "108d9061d51eeec660c5b429e4d6611646e8eef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f719ebc4_66de5ad9",
+        "filename": "chrome/browser/ui/cocoa/extensions/extension_uninstall_dialog_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-01T20:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecc453a7_681a6e7b",
+      "revId": "108d9061d51eeec660c5b429e4d6611646e8eef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
