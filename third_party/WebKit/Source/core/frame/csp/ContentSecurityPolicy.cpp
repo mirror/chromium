@@ -1049,10 +1049,6 @@ const KURL ContentSecurityPolicy::Url() const {
   return execution_context_->Url();
 }
 
-KURL ContentSecurityPolicy::CompleteURL(const String& url) const {
-  return execution_context_->CompleteURL(url);
-}
-
 void ContentSecurityPolicy::EnforceSandboxFlags(SandboxFlags mask) {
   sandbox_mask_ |= mask;
 }
@@ -1331,10 +1327,15 @@ void ContentSecurityPolicy::PostViolationReport(
         DCHECK(!context_frame ||
                GetDirectiveType(violation_data.effectiveDirective()) ==
                    DirectiveType::kFrameAncestors);
-        KURL url = context_frame
-                       ? frame->GetDocument()->CompleteURLWithOverride(
-                             report_endpoint, KURL(violation_data.blockedURI()))
-                       : CompleteURL(report_endpoint);
+        KURL url =
+            context_frame
+                ? frame->GetDocument()->CompleteURLWithOverride(
+                      report_endpoint, KURL(violation_data.blockedURI()))
+                // We use the FallbackBaseURL to ensure that we don't
+                // respect base elements when determining the report
+                // endpoint URL
+                : frame->GetDocument()->CompleteURLWithOverride(
+                      report_endpoint, frame->GetDocument()->FallbackBaseURL());
         PingLoader::SendViolationReport(
             frame, url, report,
             PingLoader::kContentSecurityPolicyViolationReport);
