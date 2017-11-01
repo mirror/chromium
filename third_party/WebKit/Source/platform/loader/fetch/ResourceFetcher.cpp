@@ -655,6 +655,15 @@ Resource* ResourceFetcher::RequestResource(
   TRACE_EVENT1("blink", "ResourceFetcher::requestResource", "url",
                UrlForTraceEvent(params.Url()));
 
+  // TODO(crbug.com/123004): Remove once we have enough stats on data URIs that
+  // contain fragments ('#' characters).
+  if (context_) {
+    const KURL& url = params.Url();
+    if (url.ProtocolIsData() && url.HasFragmentIdentifier()) {
+      context_->RecordDataUriWithOctothorpe();
+    }
+  }
+
   ResourceRequestBlockedReason blocked_reason =
       ResourceRequestBlockedReason::kNone;
 
