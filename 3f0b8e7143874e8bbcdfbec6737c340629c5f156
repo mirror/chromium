@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ede7752_b3c22111",
+        "filename": "third_party/WebKit/Source/devtools/front_end/components/Linkifier.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-01T20:48:27Z",
+      "side": 1,
+      "message": "I\u0027m sorry for the drive-by, but I would hate to see an onUpdate added into this already complex signature. I\u0027m concerned about the life time of that listener as well.",
+      "revId": "3f0b8e7143874e8bbcdfbec6737c340629c5f156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
