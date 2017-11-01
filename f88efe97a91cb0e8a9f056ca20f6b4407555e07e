@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db08ad7e_4f248c7d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T16:09:08Z",
+      "side": 1,
+      "message": "Should we set sChromeHomeNeedsUpdate back to false at th end of this block?",
+      "range": {
+        "startLine": 217,
+        "startChar": 62,
+        "endLine": 217,
+        "endChar": 0
+      },
+      "revId": "f88efe97a91cb0e8a9f056ca20f6b4407555e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
