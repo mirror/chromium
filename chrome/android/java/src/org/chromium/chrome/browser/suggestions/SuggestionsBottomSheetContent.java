@@ -4,14 +4,18 @@
 
 package org.chromium.chrome.browser.suggestions;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 
 import org.chromium.base.CollectionUtil;
 import org.chromium.chrome.R;
@@ -25,7 +29,8 @@ import org.chromium.chrome.browser.ntp.LogoDelegateImpl;
 import org.chromium.chrome.browser.ntp.LogoView;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageAdapter;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
-import org.chromium.chrome.browser.omnibox.LocationBar;
+import org.chromium.chrome.browser.omnibox.LocationBarPhone;
+import org.chromium.chrome.browser.omnibox.UrlFocusChangeListener;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService.TemplateUrlServiceObserver;
@@ -46,7 +51,11 @@ import java.util.List;
  */
 public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetContent,
                                                       BottomSheetNewTabController.Observer,
-                                                      TemplateUrlServiceObserver {
+                                                      TemplateUrlServiceObserver,
+                                                      UrlFocusChangeListener {
+
+    public static final long ANIMATION_DURATION_MS = 150L;
+
     private final View mView;
     private final SuggestionsRecyclerView mRecyclerView;
     private final ContextMenuManager mContextMenuManager;
@@ -59,6 +68,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     private final BottomSheet mSheet;
     private final LogoView mLogoView;
     private final LogoDelegateImpl mLogoDelegate;
+    private final LocationBarPhone mLocationBar;
     private final ViewGroup mControlContainerView;
     private final View mToolbarPullHandle;
     private final View mToolbarShadow;
@@ -66,6 +76,11 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     private boolean mNewTabShown;
     private boolean mSearchProviderHasLogo = true;
     private float mLastSheetHeightFraction = 1f;
+    private final int mToolbarHeight;
+    private final float mMaxToolbarOffset;
+    private int mScrollY;
+    private ValueAnimator mAnimator;
+    private final Interpolator mInterpolator = new DecelerateInterpolator();
 
     /**
      * Whether {@code mView} is currently attached to the window. This is used in place of
@@ -94,6 +109,10 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         mView.setBackgroundColor(backgroundColor);
         mRecyclerView = mView.findViewById(R.id.recycler_view);
         mRecyclerView.setBackgroundColor(backgroundColor);
+        mToolbarHeight = resources.getDimensionPixelSize(R.dimen.bottom_control_container_height);
+        mMaxToolbarOffset = resources.getDimensionPixelSize(R.dimen.ntp_logo_height)
+                + resources.getDimensionPixelSize(R.dimen.ntp_logo_margin_top_modern)
+                + resources.getDimensionPixelSize(R.dimen.ntp_logo_margin_bottom_modern);
 
         TouchEnabledDelegate touchEnabledDelegate = activity.getBottomSheet()::setTouchEnabled;
         mContextMenuManager = new ContextMenuManager(
@@ -174,13 +193,13 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
             }
         };
 
-        final LocationBar locationBar = (LocationBar) sheet.findViewById(R.id.location_bar);
+        mLocationBar = sheet.findViewById(R.id.location_bar);
         mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             @SuppressLint("ClickableViewAccessibility")
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (locationBar != null && locationBar.isUrlBarFocused()) {
-                    locationBar.setUrlBarFocus(false);
+                if (mLocationBar != null && mLocationBar.isUrlBarFocused()) {
+                    mLocationBar.setUrlBarFocus(false);
                 }
 
                 // Never intercept the touch event.
@@ -214,6 +233,16 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                 updateLogoTransition();
             }
         });
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                mScrollY += dy;
+                updateLogoTransition();
+            }
+        });
+
+        mLocationBar.addUrlFocusChangeListener(this);
     }
 
     @Override
@@ -253,6 +282,11 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         mTileGroupDelegate.destroy();
         TemplateUrlService.getInstance().removeObserver(this);
         mSheet.getNewTabController().removeObserver(this);
+        mLocationBar.removeUrlFocusChangeListener(this);
+        if (mAnimator != null) {
+            mAnimator.removeAllUpdateListeners();
+            mAnimator.cancel();
+        }
     }
 
     @Override
@@ -266,13 +300,20 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     }
 
     @Override
+    public void scrollToTop() {
+        mRecyclerView.smoothScrollToPosition(0);
+    }
+
+    @Override
     public void onNewTabShown() {
         mNewTabShown = true;
+        updateSpacing();
     }
 
     @Override
     public void onNewTabHidden() {
         mNewTabShown = false;
+        updateSpacing();
     }
 
     @Override
@@ -280,6 +321,35 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         updateSearchProviderHasLogo();
         loadSearchProviderLogo();
         updateLogoTransition();
+    }
+
+    @Override
+    public void onUrlFocusChange(final boolean hasFocus) {
+        boolean isAnimating = mAnimator != null && mAnimator.isRunning();
+        float scrollBasedFraction = Math.min(1, mScrollY / mMaxToolbarOffset);
+
+        final float startFraction;
+        if (isAnimating) {
+            startFraction = (float) mAnimator.getAnimatedValue();
+        } else if (hasFocus) {
+            startFraction = scrollBasedFraction;
+        } else {
+            startFraction = 1.0f;
+        }
+
+        final float endFraction;
+        if (hasFocus) {
+            endFraction = 1.0f;
+        } else {
+            endFraction = scrollBasedFraction;
+        }
+
+        if (isAnimating) mAnimator.cancel();
+        mAnimator = ValueAnimator.ofFloat(startFraction, endFraction);
+        mAnimator.setDuration(ANIMATION_DURATION_MS);
+        mAnimator.setInterpolator(mInterpolator);
+        mAnimator.addUpdateListener(animator -> updateLogoTransition());
+        mAnimator.start();
     }
 
     private void maybeUpdateContextualSuggestions() {
@@ -302,13 +372,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     private void loadSearchProviderLogo() {
         if (!mSearchProviderHasLogo) return;
 
-        boolean isShowingLogo = mLogoView.showSearchProviderInitialView();
-
-        // Doodles appear too small in the sheet to be useful, so only fetch a search provider logo
-        // if the default logo isn't shown, which effectively disables non-3p (Google) doodles.
-        // TODO(https://crbug.com/773657): Make doodles work in the smaller view; until that
-        // happens, ensure that any third-party doodles look acceptable.
-        if (isShowingLogo) return;
+        mLogoView.showSearchProviderInitialView();
 
         mLogoDelegate.getSearchProviderLogo(new LogoObserver() {
             @Override
@@ -322,55 +386,71 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     }
 
     private void updateLogoTransition() {
-        boolean showLogo = mSearchProviderHasLogo && mNewTabShown && mSheet.isSheetOpen()
-                && !mActivity.getTabModelSelector().isIncognitoSelected() && mIsAttachedToWindow
-                && !mSheet.isSmallScreen()
-                && mActivity.getTabModelSelector().getModel(false).getCount() > 0;
+        boolean showLogo = shouldShowLogo();
 
+        // If the logo is not shown, reset all transitions.
         if (!showLogo) {
+            mLogoView.setTranslationY(0);
             mLogoView.setVisibility(View.GONE);
             mControlContainerView.setTranslationY(0);
             mToolbarPullHandle.setTranslationY(0);
             mToolbarShadow.setTranslationY(0);
-            mRecyclerView.setTranslationY(0);
             ViewUtils.setAncestorsShouldClipChildren(mControlContainerView, true);
             return;
         }
 
-        mLogoView.setVisibility(View.VISIBLE);
         ViewUtils.setAncestorsShouldClipChildren(mControlContainerView, false);
 
-        ViewGroup.MarginLayoutParams logoParams =
-                (ViewGroup.MarginLayoutParams) mLogoView.getLayoutParams();
-        float maxToolbarOffset = logoParams.height + logoParams.topMargin + logoParams.bottomMargin;
+        // Calculate the transition fraction for hiding the logo: 0 means the logo is fully visible,
+        // 1 means it is fully invisible. When the URL focus animation is running, that determines
+        // the logo movement. Otherwise, the logo moves at the same speed as the scrolling of the
+        // RecyclerView.
+        final float transitionFraction;
+        boolean isAnimating = mAnimator != null && mAnimator.isRunning();
+        if (isAnimating) {
+            transitionFraction = (float) mAnimator.getAnimatedValue();
+        } else if (mLocationBar.hasFocus()) {
+            transitionFraction = 1.0f;
+        } else {
+            transitionFraction = Math.min(1, mScrollY / mMaxToolbarOffset);
+        }
+
+        mLogoView.setTranslationY(-mMaxToolbarOffset * transitionFraction);
+        mLogoView.setVisibility(View.VISIBLE);
 
         // Transform the sheet height fraction back to pixel scale.
         float rangePx =
                 (mSheet.getFullRatio() - mSheet.getPeekRatio()) * mSheet.getSheetContainerHeight();
         float sheetHeightPx = mLastSheetHeightFraction * rangePx;
 
-        // Calculate the transition fraction for hiding the logo: 0 means the logo is fully visible,
-        // 1 means it is fully invisible.
-        // The transition starts when the sheet is `2 * maxToolbarOffset` from the bottom or the
-        // top. This makes the toolbar stay vertically centered in the sheet during the
-        // bottom transition.
-        float transitionFraction =
-                Math.max(Math.max(1 - sheetHeightPx / (2 * maxToolbarOffset),
-                                 1 + (sheetHeightPx - rangePx) / (2 * maxToolbarOffset)),
-                        0);
+        // The toolbar follows the logo, except it sticks to the top and bottom of the sheet when it
+        // reaches those edges.
+        float toolbarOffsetPx =
+                Math.min(sheetHeightPx, mMaxToolbarOffset * (1.0f - transitionFraction));
+        mControlContainerView.setTranslationY(toolbarOffsetPx);
+        mToolbarPullHandle.setTranslationY(-toolbarOffsetPx);
+        mToolbarShadow.setTranslationY(-toolbarOffsetPx);
 
-        mLogoView.setTranslationY(logoParams.topMargin * -transitionFraction);
-        mLogoView.setAlpha(Math.max(0.0f, 1.0f - (transitionFraction * 3.0f)));
-
-        float toolbarOffset = maxToolbarOffset * (1.0f - transitionFraction);
-        mControlContainerView.setTranslationY(toolbarOffset);
-        mToolbarPullHandle.setTranslationY(-toolbarOffset);
-        mToolbarShadow.setTranslationY(-toolbarOffset);
-        mRecyclerView.setTranslationY(toolbarOffset);
+        if (isAnimating || mLocationBar.hasFocus()) {
+            mRecyclerView.setAlpha(1.0f - transitionFraction);
+        } else {
+            mRecyclerView.setAlpha(1.0f);
+        }
     }
 
-    @Override
-    public void scrollToTop() {
-        mRecyclerView.smoothScrollToPosition(0);
+    private void updateSpacing() {
+        int newPadding = mToolbarHeight;
+        if (shouldShowLogo()) newPadding += (int) mMaxToolbarOffset;
+        int left = mRecyclerView.getPaddingLeft();
+        int right = mRecyclerView.getPaddingRight();
+        int bottom = mRecyclerView.getPaddingBottom();
+        mRecyclerView.setPadding(left, newPadding, right, bottom);
+
+        mRecyclerView.scrollToPosition(0);
+    }
+
+    private boolean shouldShowLogo() {
+        return mSearchProviderHasLogo && mNewTabShown && mSheet.isSheetOpen()
+                && !mActivity.getTabModelSelector().isIncognitoSelected() && mIsAttachedToWindow;
     }
 }
