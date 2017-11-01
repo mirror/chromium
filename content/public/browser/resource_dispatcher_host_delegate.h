@@ -147,6 +147,9 @@ class CONTENT_EXPORT ResourceDispatcherHostDelegate {
   // resource scheduling via protocol handlers.
   virtual bool ShouldUseResourceScheduler() const;
 
+  // Whether or not to allow load and render MHTML page from http/https URLs.
+  virtual bool AllowRenderingMhtmlOverHttp(net::URLRequest* request) const;
+
  protected:
   virtual ~ResourceDispatcherHostDelegate();
 };

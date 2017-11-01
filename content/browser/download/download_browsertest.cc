@@ -98,6 +98,23 @@ const std::string kOriginOne = "one.example";
 const std::string kOriginTwo = "two.example";
 const std::string kOriginThree = "example.com";
 
+class TestResourceDispatcherHostDelegate
+    : public ResourceDispatcherHostDelegate {
+ public:
+  TestResourceDispatcherHostDelegate() = default;
+
+  bool AllowRenderingMhtmlOverHttp(net::URLRequest* request) const override {
+    return allowed_;
+  }
+
+  void SetDelegate() { ResourceDispatcherHost::Get()->SetDelegate(this); }
+
+  void set_allowed(bool allowed) { allowed_ = allowed; }
+
+ private:
+  bool allowed_ = false;
+};
+
 class MockDownloadItemObserver : public DownloadItem::Observer {
  public:
   MockDownloadItemObserver() {}
@@ -714,6 +731,14 @@ class DownloadContentTest : public ContentBrowserTest {
                              real_host);
     host_resolver()->AddRule(TestDownloadHttpResponse::kTestDownloadHostName,
                              real_host);
+
+    test_resource_dispatcher_host_elegate_.reset(
+        new TestResourceDispatcherHostDelegate());
+    content::BrowserThread::PostTask(
+        content::BrowserThread::IO, FROM_HERE,
+        base::BindOnce(
+            &TestResourceDispatcherHostDelegate::SetDelegate,
+            base::Unretained(test_resource_dispatcher_host_elegate_.get())));
   }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
@@ -877,12 +902,18 @@ class DownloadContentTest : public ContentBrowserTest {
     return inject_error_callback_;
   }
 
+  TestResourceDispatcherHostDelegate* test_resource_dispatcher_host_elegate() {
+    return test_resource_dispatcher_host_elegate_.get();
+  }
+
  private:
   // Location of the downloads directory for these tests
   base::ScopedTempDir downloads_directory_;
   std::unique_ptr<TestShellDownloadManagerDelegate> test_delegate_;
   TestDownloadResponseHandler test_response_handler_;
   TestDownloadHttpResponse::InjectErrorCallback inject_error_callback_;
+  std::unique_ptr<TestResourceDispatcherHostDelegate>
+      test_resource_dispatcher_host_elegate_;
 };
 
 // Test fixture for parallel downloading.
@@ -3133,6 +3164,23 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, FetchErrorResponseBodyResumption) {
         base::ReadFileToString(items[0]->GetTargetFilePath(), &file_content));
     EXPECT_EQ(std::string(), file_content);
   }
+}
+
+IN_PROC_BROWSER_TEST_F(DownloadContentTest, ForceDownloadMhtml) {
+  // Force downloading the MHTML.
+  test_resource_dispatcher_host_elegate()->set_allowed(false);
+
+  NavigateToURLAndWaitForDownload(
+      shell(), embedded_test_server()->GetURL("/download/hello.mhtml"),
+      DownloadItem::COMPLETE);
+}
+
+IN_PROC_BROWSER_TEST_F(DownloadContentTest, AllowRenderMhtml) {
+  // Allows loading the MHTML, instead of downloading it.
+  test_resource_dispatcher_host_elegate()->set_allowed(true);
+
+  NavigateToURLBlockUntilNavigationsComplete(
+      shell(), embedded_test_server()->GetURL("/download/hello.mhtml"), 1);
 }
 
 }  // namespace content
