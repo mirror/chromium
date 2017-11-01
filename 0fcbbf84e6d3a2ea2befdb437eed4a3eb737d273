@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b913d21e_61547060",
+        "filename": "ui/views/animation/flood_fill_ink_drop_ripple.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-11-01T18:55:23Z",
+      "side": 1,
+      "message": "nit: I suggest making this a private member function of FloodFillInkDropRipple so it can have access to |duration_factor_| and |use_transform_...| to avoid passing them in.",
+      "revId": "0fcbbf84e6d3a2ea2befdb437eed4a3eb737d273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399ba686_700e6188",
+        "filename": "ui/views/animation/flood_fill_ink_drop_ripple.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-11-01T18:55:23Z",
+      "side": 1,
+      "message": "nit: 1 -\u003e 1.f",
+      "revId": "0fcbbf84e6d3a2ea2befdb437eed4a3eb737d273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b32525cc_d5134da9",
+        "filename": "ui/views/animation/flood_fill_ink_drop_ripple.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-11-01T18:55:23Z",
+      "side": 1,
+      "message": "nit: trasform -\u003e transform",
+      "revId": "0fcbbf84e6d3a2ea2befdb437eed4a3eb737d273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1de502f_4aa98737",
+        "filename": "ui/views/animation/flood_fill_ink_drop_ripple.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-11-01T18:55:23Z",
+      "side": 1,
+      "message": "nit: the word \"duration\" is unnecessary on the first line:\n\nfade out animation duration to hidden state -\u003e fade out animation to hidden state",
+      "revId": "0fcbbf84e6d3a2ea2befdb437eed4a3eb737d273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d50c38_31408568",
+        "filename": "ui/views/animation/flood_fill_ink_drop_ripple.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-11-01T18:55:23Z",
+      "side": 1,
+      "message": "nit: May be call it |use_hide_transform_duration_for_fade_out_|? Current name does not specify which transform value.",
+      "revId": "0fcbbf84e6d3a2ea2befdb437eed4a3eb737d273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
