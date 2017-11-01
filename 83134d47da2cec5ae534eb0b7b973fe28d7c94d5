@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f31c5751_83424ccf",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-01T22:26:45Z",
+      "side": 1,
+      "message": "Is this a leak? Who releases this pointer? Do we need to own this pointer if IOSCaptivePortalBlockingPage releases self on close? Please document or fix the leak.",
+      "range": {
+        "startLine": 64,
+        "startChar": 32,
+        "endLine": 64,
+        "endChar": 61
+      },
+      "revId": "83134d47da2cec5ae534eb0b7b973fe28d7c94d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414848af_610a8b96",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-01T22:26:45Z",
+      "side": 1,
+      "message": "s/completed page load/finished navigation",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 14
+      },
+      "revId": "83134d47da2cec5ae534eb0b7b973fe28d7c94d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707eb8d6_f5f2d8b8",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-01T22:26:45Z",
+      "side": 1,
+      "message": "Please document in the comments why his variable is needed and why CreateCaptivePortalBlockingPage(web_state_) is not called inside StartDataRequest",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "83134d47da2cec5ae534eb0b7b973fe28d7c94d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76c88e0_9a7b9b84",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-01T22:26:45Z",
+      "side": 1,
+      "message": "Why do we need html_copy?",
+      "range": {
+        "startLine": 115,
+        "startChar": 14,
+        "endLine": 115,
+        "endChar": 23
+      },
+      "revId": "83134d47da2cec5ae534eb0b7b973fe28d7c94d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb0cb37_b0c86916",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-01T22:26:45Z",
+      "side": 1,
+      "message": "nit: Do we need this local variable?",
+      "range": {
+        "startLine": 128,
+        "startChar": 29,
+        "endLine": 128,
+        "endChar": 35
+      },
+      "revId": "83134d47da2cec5ae534eb0b7b973fe28d7c94d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
