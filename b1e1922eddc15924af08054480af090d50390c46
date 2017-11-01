@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4df315bc_2886a5f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T15:00:38Z",
+      "side": 1,
+      "message": "you should always expand CL description to explain what/how you\u0027re fixing. Otherwise it\u0027s harder for reviewers and when checking history to see what changed.\n\nbasically somethign like:\n\n\"Previously this was inadvertently just reporting important storage size\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "b1e1922eddc15924af08054480af090d50390c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
