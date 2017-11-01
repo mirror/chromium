@@ -35,8 +35,10 @@ void FullscreenNotificationBlocker::CheckState() {
 bool FullscreenNotificationBlocker::ShouldShowNotificationAsPopup(
     const message_center::Notification& notification) const {
   bool enabled = !is_fullscreen_mode_;
-  if (is_fullscreen_mode_ && notification.delegate())
-    enabled = notification.delegate()->ShouldDisplayOverFullscreen();
+  if (is_fullscreen_mode_) {
+    enabled = notification.fullscreen_visibility() !=
+              message_center::FullscreenVisibility::NONE;
+  }
 
   if (enabled && !is_fullscreen_mode_) {
     UMA_HISTOGRAM_ENUMERATION("Notifications.Display_Windowed",
