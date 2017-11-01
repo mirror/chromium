@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7e8fcfe_89f4dd7c",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-01T14:54:56Z",
+      "side": 1,
+      "message": "Not related to this CL itself. But as in our UMA audit, I\u0027m wondering if we should continue keeping this metric; maybe we should watch if there is any unusual change after this refactoring lands.",
+      "revId": "91229355cb74cf407cbf0128be5aaecd24616796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df61f6b_344e1809",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-01T14:54:56Z",
+      "side": 1,
+      "message": "Why do you need this boolean variable? I think (!resource_provider_) itself is a sufficient predicate to do what you intend to do, right?",
+      "revId": "91229355cb74cf407cbf0128be5aaecd24616796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
