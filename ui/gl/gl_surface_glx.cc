@@ -28,8 +28,10 @@ extern "C" {
 #include "ui/gfx/x/x11_connection.h"
 #include "ui/gfx/x/x11_types.h"
 #include "ui/gl/gl_bindings.h"
+#include "ui/gl/gl_context.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_visual_picker_glx.h"
+#include "ui/gl/gpu_timing.h"
 #include "ui/gl/sync_control_vsync_provider.h"
 
 namespace gl {
@@ -282,7 +284,6 @@ class SGIVideoSyncProviderThreadShim {
 
       TRACE_EVENT_INSTANT0("gpu", "vblank", TRACE_EVENT_SCOPE_THREAD);
       now = base::TimeTicks::Now();
-
       glXMakeContextCurrent(display_, 0, 0, nullptr);
     }
 
@@ -545,6 +546,45 @@ GLXDrawable NativeViewGLSurfaceGLX::GetDrawableHandle() const {
   return glx_window_;
 }
 
+std::unique_ptr<GPUTimer> NativeViewGLSurfaceGLX::CreateGPUTimer() {
+  if (!gpu_timing_client_)
+    gpu_timing_client_ = context_->CreateGPUTimingClient();
+
+  if (!free_gpu_timers_.empty()) {
+    std::unique_ptr<GPUTimer> gpu_timer = std::move(free_gpu_timers_.back());
+    free_gpu_timers_.pop_back();
+    return gpu_timer;
+  }
+  return gpu_timing_client_->CreateGPUTimer(false);
+}
+
+void NativeViewGLSurfaceGLX::FreeGPUTimer(std::unique_ptr<GPUTimer> gpu_timer) {
+  gpu_timer->Reset();
+  free_gpu_timers_.push_back(std::move(gpu_timer));
+}
+
+void NativeViewGLSurfaceGLX::PreSwapBuffers() {
+  std::unique_ptr<GPUTimer> gpu_timer = CreateGPUTimer();
+  gpu_timer->QueryTimeStamp();
+  gpu_timers_.push_back(std::move(gpu_timer));
+}
+
+void NativeViewGLSurfaceGLX::PostSwapBuffers() {
+  DCHECK(!gpu_timers_.empty());
+  ++swap_buffers_count_;
+  while (!gpu_timers_.empty()) {
+    if (!gpu_timers_.front()->IsAvailable())
+      break;
+    std::unique_ptr<GPUTimer> gpu_timer = std::move(gpu_timers_.front());
+    gpu_timers_.pop_front();
+    // int count = swap_buffers_count_ - gpu_timers_.size();
+    int64_t start, end;
+    gpu_timer->GetStartEndTimestamps(&start, &end);
+    // base::TimeTicks timestamp = base::TimeTicks::FromInternalValue(start);
+    FreeGPUTimer(std::move(gpu_timer));
+  }
+}
+
 bool NativeViewGLSurfaceGLX::Initialize(GLSurfaceFormat format) {
   XWindowAttributes attributes;
   if (!XGetWindowAttributes(g_display, parent_window_, &attributes)) {
@@ -606,6 +646,17 @@ bool NativeViewGLSurfaceGLX::Initialize(GLSurfaceFormat format) {
 }
 
 void NativeViewGLSurfaceGLX::Destroy() {
+  const bool has_context = !!context_;
+  for (auto& gpu_timer : gpu_timers_)
+    gpu_timer->Destroy(has_context);
+  gpu_timers_.clear();
+
+  for (auto& gpu_timer : free_gpu_timers_)
+    gpu_timer->Destroy(has_context);
+  free_gpu_timers_.clear();
+
+  gpu_timing_client_ = nullptr;
+
   vsync_provider_.reset();
   if (glx_window_) {
     glXDestroyWindow(g_display, glx_window_);
@@ -634,10 +685,14 @@ bool NativeViewGLSurfaceGLX::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult NativeViewGLSurfaceGLX::SwapBuffers() {
+gfx::SwapResult NativeViewGLSurfaceGLX::SwapBuffers(
+    const PresentationCallback& callback) {
+  // TODO(penghuang): Provide presentation feedback. https://crbug.com/776877
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceGLX:RealSwapBuffers", "width",
                GetSize().width(), "height", GetSize().height());
+  PreSwapBuffers();
   glXSwapBuffers(g_display, GetDrawableHandle());
+  PostSwapBuffers();
   return gfx::SwapResult::SWAP_ACK;
 }
 
@@ -667,17 +722,28 @@ unsigned long NativeViewGLSurfaceGLX::GetCompatibilityKey() {
   return visual_id_;
 }
 
-gfx::SwapResult NativeViewGLSurfaceGLX::PostSubBuffer(int x,
-                                                      int y,
-                                                      int width,
-                                                      int height) {
+gfx::SwapResult NativeViewGLSurfaceGLX::PostSubBuffer(
+    int x,
+    int y,
+    int width,
+    int height,
+    const PresentationCallback& callback) {
+  // TODO(penghuang): Provide presentation feedback. https://crbug.com/776877
   DCHECK(g_driver_glx.ext.b_GLX_MESA_copy_sub_buffer);
+  PreSwapBuffers();
   glXCopySubBufferMESA(g_display, GetDrawableHandle(), x, y, width, height);
+  PostSwapBuffers();
   return gfx::SwapResult::SWAP_ACK;
 }
 
 gfx::VSyncProvider* NativeViewGLSurfaceGLX::GetVSyncProvider() {
   return vsync_provider_.get();
+}
+
+bool NativeViewGLSurfaceGLX::OnMakeCurrent(GLContext* context) {
+  DCHECK(context == context_ || !context || !context_);
+  context_ = context;
+  return GLSurfaceGLX::OnMakeCurrent(context);
 }
 
 NativeViewGLSurfaceGLX::~NativeViewGLSurfaceGLX() {
@@ -748,7 +814,8 @@ bool UnmappedNativeViewGLSurfaceGLX::IsOffscreen() {
   return true;
 }
 
-gfx::SwapResult UnmappedNativeViewGLSurfaceGLX::SwapBuffers() {
+gfx::SwapResult UnmappedNativeViewGLSurfaceGLX::SwapBuffers(
+    const PresentationCallback& callback) {
   NOTREACHED() << "Attempted to call SwapBuffers on an unmapped window.";
   return gfx::SwapResult::SWAP_FAILED;
 }

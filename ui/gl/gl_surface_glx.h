@@ -11,6 +11,7 @@
 #include <string>
 
 #include "base/compiler_specific.h"
+#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/native_widget_types.h"
@@ -20,6 +21,9 @@
 #include "ui/gl/gl_surface.h"
 
 namespace gl {
+
+class GPUTimer;
+class GPUTimingClient;
 
 // Base class for GLX surfaces.
 class GL_EXPORT GLSurfaceGLX : public GLSurface {
@@ -72,15 +76,20 @@ class GL_EXPORT NativeViewGLSurfaceGLX : public GLSurfaceGLX {
               ColorSpace color_space,
               bool has_alpha) override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(const PresentationCallback& callback) override;
   gfx::Size GetSize() override;
   void* GetHandle() override;
   bool SupportsPostSubBuffer() override;
   void* GetConfig() override;
   GLSurfaceFormat GetFormat() override;
   unsigned long GetCompatibilityKey() override;
-  gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
+  gfx::SwapResult PostSubBuffer(int x,
+                                int y,
+                                int width,
+                                int height,
+                                const PresentationCallback& callback) override;
   gfx::VSyncProvider* GetVSyncProvider() override;
+  bool OnMakeCurrent(GLContext* context) override;
 
   VisualID GetVisualID() const { return visual_id_; }
 
@@ -102,6 +111,19 @@ class GL_EXPORT NativeViewGLSurfaceGLX : public GLSurfaceGLX {
   // The handle for the drawable to make current or swap.
   GLXDrawable GetDrawableHandle() const;
 
+  // Return a GPUTimer in |free_gpu_timers_|, if |free_gpu_timers_| is empty,
+  // create a new one.
+  std::unique_ptr<GPUTimer> CreateGPUTimer();
+
+  // Free a GPUTimer created by |CreateGPUTimer|.
+  void FreeGPUTimer(std::unique_ptr<GPUTimer> gpu_timer);
+
+  // This function should be called before glXSwapBuffers().
+  void PreSwapBuffers();
+
+  // This function should be called after glXSwapBuffers().
+  void PostSwapBuffers();
+
   // Window passed in at creation. Always valid.
   gfx::AcceleratedWidget parent_window_;
 
@@ -117,6 +139,15 @@ class GL_EXPORT NativeViewGLSurfaceGLX : public GLSurfaceGLX {
 
   std::unique_ptr<gfx::VSyncProvider> vsync_provider_;
 
+  GLContext* context_ = nullptr;
+
+  scoped_refptr<GPUTimingClient> gpu_timing_client_;
+  base::circular_deque<std::unique_ptr<GPUTimer>> gpu_timers_;
+  std::vector<std::unique_ptr<GPUTimer>> free_gpu_timers_;
+
+  // A counter for |SwapBuffers| and |PostSubBuffer|.
+  uint32_t swap_buffers_count_ = 0;
+
   DISALLOW_COPY_AND_ASSIGN(NativeViewGLSurfaceGLX);
 };
 
@@ -129,7 +160,7 @@ class GL_EXPORT UnmappedNativeViewGLSurfaceGLX : public GLSurfaceGLX {
   bool Initialize(GLSurfaceFormat format) override;
   void Destroy() override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(const PresentationCallback& callback) override;
   gfx::Size GetSize() override;
   void* GetHandle() override;
   void* GetConfig() override;
