@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca01975a_b7de0870",
+        "filename": "content/common/child_process_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-01T22:50:32Z",
+      "side": 1,
+      "message": "nit: Maybe elaborate a bit more since this comment is confusing in isolation from the bug. How about:\n\n // We want to bind this interface as early as possible, but the\n // constructor is too early. Subclasses may not be fully initialized at\n // that point and thus may be unable to properly fulfill the \n // BindInterface call. Instead we bind here since the subclass constructor\n // has already run and this is the first potential use of the interface.",
+      "revId": "1beb352282009409b9b32b8912c09f4cc36bd35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
