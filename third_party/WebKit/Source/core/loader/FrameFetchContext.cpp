@@ -78,6 +78,7 @@
 #include "platform/loader/fetch/UniqueIdentifier.h"
 #include "platform/loader/fetch/fetch_initiator_type_names.h"
 #include "platform/mhtml/MHTMLArchive.h"
+#include "platform/network/NetworkStateNotifier.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"
 #include "platform/weborigin/SchemeRegistry.h"
@@ -188,7 +189,8 @@ struct FrameFetchContext::FrozenState final
               float device_pixel_ratio,
               const String& user_agent,
               bool is_main_frame,
-              bool is_svg_image_chrome_client)
+              bool is_svg_image_chrome_client,
+              bool save_data)
       : referrer_policy(referrer_policy),
         outgoing_referrer(outgoing_referrer),
         url(url),
@@ -203,7 +205,8 @@ struct FrameFetchContext::FrozenState final
         device_pixel_ratio(device_pixel_ratio),
         user_agent(user_agent),
         is_main_frame(is_main_frame),
-        is_svg_image_chrome_client(is_svg_image_chrome_client) {}
+        is_svg_image_chrome_client(is_svg_image_chrome_client),
+        save_data(save_data) {}
 
   const ReferrerPolicy referrer_policy;
   const String outgoing_referrer;
@@ -220,6 +223,7 @@ struct FrameFetchContext::FrozenState final
   const String user_agent;
   const bool is_main_frame;
   const bool is_svg_image_chrome_client;
+  const bool save_data;
 
   void Trace(blink::Visitor* visitor) {
     visitor->Trace(content_security_policy);
@@ -339,7 +343,13 @@ void FrameFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
   if (IsReloadLoadType(MasterDocumentLoader()->LoadType()))
     request.ClearHTTPHeaderField(HTTPNames::Save_Data);
 
-  if (GetSettings() && GetSettings()->GetDataSaverEnabled())
+  Document* document = document_ ? document_.Get() : GetFrame()->GetDocument();
+
+  bool save_data =
+      IsDetached() ? frozen_state_->save_data : document->SaveData();
+  // LOG(WARNING) << "xxx save_data=" << save_data
+  //            << " url=" << request.Url().GetString();
+  if (save_data)
     request.SetHTTPHeaderField(HTTPNames::Save_Data, "on");
 
   if (GetLocalFrameClient()->IsClientLoFiActiveForFrame()) {
@@ -1167,7 +1177,7 @@ FetchContext* FrameFetchContext::Detach() {
         GetContentSecurityPolicy(), GetSiteForCookies(), GetRequestorOrigin(),
         GetRequestorOriginForFrameLoading(), GetClientHintsPreferences(),
         GetDevicePixelRatio(), GetUserAgent(), IsMainFrame(),
-        IsSVGImageChromeClient());
+        IsSVGImageChromeClient(), GetNetworkStateNotifier().SaveData());
   } else {
     // Some getters are unavailable in this case.
     frozen_state_ = new FrozenState(
@@ -1176,7 +1186,8 @@ FetchContext* FrameFetchContext::Detach() {
         GetContentSecurityPolicy(), GetSiteForCookies(),
         SecurityOrigin::CreateUnique(), SecurityOrigin::CreateUnique(),
         GetClientHintsPreferences(), GetDevicePixelRatio(), GetUserAgent(),
-        IsMainFrame(), IsSVGImageChromeClient());
+        IsMainFrame(), IsSVGImageChromeClient(),
+        GetNetworkStateNotifier().SaveData());
   }
 
   // This is needed to break a reference cycle in which off-heap

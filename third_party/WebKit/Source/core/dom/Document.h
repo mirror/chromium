@@ -907,6 +907,8 @@ class CORE_EXPORT Document : public ContainerNode,
 
   const KURL SiteForCookies() const;
 
+  bool SaveData() const { return save_data_; }
+
   // The following implements the rule from HTML 4 for what valid names are.
   // To get this right for all the XML cases, we probably have to improve this
   // or move it and make it sensitive to the type of document.
@@ -1772,6 +1774,8 @@ class CORE_EXPORT Document : public ContainerNode,
   // the document to recorde UKM.
   std::unique_ptr<ukm::UkmRecorder> ukm_recorder_;
   int64_t ukm_source_id_;
+
+  const bool save_data_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;
