@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "fbc858ed_4ed17436",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-01T16:52:22Z",
+      "side": 1,
+      "message": "nit: \nif (!package_apps.size())\n    ....",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd00b25_a45ed620",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-01T16:52:22Z",
+      "side": 1,
+      "message": "nit: const or inline at L44",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 20
+      },
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e145f776_ac08f6dd",
         "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
         "patchSetId": 5
@@ -19,6 +65,75 @@
     },
     {
       "key": {
+        "uuid": "9306f1a8_5ae8e94e",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-01T16:52:22Z",
+      "side": 1,
+      "message": "would it be possible to call MaybeNotifyArcVpnProviderUpdate?\nBoth are almost identical. Or extract common code to separate function if possible.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 61
+      },
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503543cd_84adeb94",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-01T16:52:22Z",
+      "side": 1,
+      "message": "nit: not needed in this case.",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc09d8f_af804eca",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-01T16:52:22Z",
+      "side": 1,
+      "message": "nit: all 3 args should be passed by ref:\n\nconst std::string\u0026 ...",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b948cff_f37a5582",
         "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.h",
         "patchSetId": 5
@@ -30,6 +145,29 @@
       "writtenOn": "2017-11-01T16:37:37Z",
       "side": 1,
       "message": "nit: move {} to cc",
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c6265b_ef4f8263",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-01T16:52:22Z",
+      "side": 1,
+      "message": "If we don\u0027t plan to change these fields they can be \nconst std::string ...",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 15
+      },
       "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +208,52 @@
     },
     {
       "key": {
+        "uuid": "526fe96f_e7071513",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-01T16:52:22Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "range": {
+        "startLine": 35,
+        "startChar": 59,
+        "endLine": 35,
+        "endChar": 60
+      },
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2783318a_f8c1d860",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-01T16:52:22Z",
+      "side": 1,
+      "message": "nit: this can be const (looks like)",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53521e18_879496fe",
         "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_unittest.cc",
         "patchSetId": 5
@@ -81,6 +265,52 @@
       "writtenOn": "2017-11-01T16:37:37Z",
       "side": 1,
       "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7dae153_9aaafcdf",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-01T16:52:22Z",
+      "side": 1,
+      "message": "Just curious if this would possible to remove \n\nstd::vector\u003carc::mojom::AppInfo\u003e apps;\n    apps.push_back(app_info);\n\nand use \napp_instance()-\u003eSendPackageAppListRefreshed(package_name, {app_info});",
+      "range": {
+        "startLine": 91,
+        "startChar": 62,
+        "endLine": 91,
+        "endChar": 66
+      },
+      "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7acbd9e_ad144fd0",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-01T16:52:22Z",
+      "side": 1,
+      "message": "nit: Please change check order here and below.\nEXPECT_EQ(1u, ...)",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 11
+      },
       "revId": "de2d9e98131a8ab8d01bfec3a47c5a67fd680dc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
