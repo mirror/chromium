@@ -24,8 +24,13 @@ GetBrowserTaskSchedulerInitParamsFromVariations() {
   if (!::variations::GetVariationParams(kFieldTrialName, &variation_params))
     return nullptr;
 
-  return GetTaskSchedulerInitParams(
-      "", variation_params, base::SchedulerBackwardCompatibility::INIT_COM_STA);
+  std::unique_ptr<base::TaskScheduler::InitParams> init_params =
+      GetTaskSchedulerInitParams(
+          "", variation_params,
+          base::SchedulerBackwardCompatibility::INIT_COM_STA);
+  init_params->shared_worker_pool_environment =
+      base::TaskScheduler::InitParams::SharedWorkerPoolEnvironment::COM_MTA;
+  return init_params;
 }
 
 }  // namespace task_scheduler_util
