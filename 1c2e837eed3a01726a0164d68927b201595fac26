@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45bbf9c9_07e26e8a",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-01T14:44:43Z",
+      "side": 1,
+      "message": "I tried it before but I was getting compile error. Now that I retried it I realized I was missing a Member before. Does this look okay now?",
+      "parentUuid": "b050466f_998ed73c",
+      "range": {
+        "startLine": 264,
+        "startChar": 7,
+        "endLine": 264,
+        "endChar": 13
+      },
+      "revId": "1c2e837eed3a01726a0164d68927b201595fac26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8ccc4b5_0f4859d2",
         "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "40374f0a_8c2a1959",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-01T14:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8ccc4b5_0f4859d2",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 216,
+        "endChar": 44
+      },
+      "revId": "1c2e837eed3a01726a0164d68927b201595fac26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdf7c83a_56b21fa4",
         "filename": "third_party/WebKit/Source/core/input/PointerEventManagerTest.cpp",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "1c2e837eed3a01726a0164d68927b201595fac26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08aca980_aa33a2a0",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManagerTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-01T14:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdf7c83a_56b21fa4",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 31
+      },
+      "revId": "1c2e837eed3a01726a0164d68927b201595fac26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
