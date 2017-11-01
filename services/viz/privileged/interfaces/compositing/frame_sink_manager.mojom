@@ -108,4 +108,6 @@ interface FrameSinkManagerClient {
   // Tells the client to update the currently active handle.
   SwitchActiveAggregatedHitTestRegionList(FrameSinkId frame_sink_id,
                                           uint8 active_handle_index);
+
+  FrameTokenUpdate(FrameSinkId frame_sink_id, uint32 frame_token);    
 };

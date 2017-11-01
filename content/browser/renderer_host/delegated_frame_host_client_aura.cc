@@ -85,6 +85,10 @@ bool DelegatedFrameHostClientAura::IsAutoResizeEnabled() const {
   return render_widget_host_view_->host_->auto_resize_enabled();
 }
 
+void DelegatedFrameHostClientAura::FrameTokenUpdate(uint32_t frame_token) {
+  render_widget_host_view_->FrameTokenUpdate(frame_token);
+}
+
 std::unique_ptr<ui::CompositorLock>
 DelegatedFrameHostClientAura::GetCompositorLock(
     ui::CompositorLockClient* client) {
