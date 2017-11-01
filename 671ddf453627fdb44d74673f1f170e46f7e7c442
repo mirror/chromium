@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adafd350_12f214a1",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-01T17:04:19Z",
+      "side": 1,
+      "message": "Do you have a package with this pushed already? Otherwise we could wait and do it in the next roll.",
+      "revId": "671ddf453627fdb44d74673f1f170e46f7e7c442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e449e2da_746d637b",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-01T17:04:19Z",
+      "side": 1,
+      "message": "Could we put it in a location similar to COMPILER_RT_BUILD_DIR instead? It would be nice not to add more direct sub-dirs to third_party/ if we can avoid it.",
+      "revId": "671ddf453627fdb44d74673f1f170e46f7e7c442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da98f43_744c6d41",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-01T17:04:19Z",
+      "side": 1,
+      "message": "This will only work in bootstrap builds, but I suppose we wouldn\u0027t be in this if-statement otherwise?",
+      "revId": "671ddf453627fdb44d74673f1f170e46f7e7c442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
