@@ -333,6 +333,19 @@ bundle_data("unit_tests_bundle_data") {
   ]
 }
 
+if (is_ios) {
+  bundle_data("countryinfo_test_bundle_data") {
+    testonly = true
+    sources = [
+      "//third_party/libaddressinput/src/testdata/countryinfo.txt",
+    ]
+    outputs = [
+      "{{bundle_resources_dir}}/" +
+          "{{source_root_relative_dir}}/{{source_file_part}}",
+    ]
+  }
+}
+
 source_set("unit_tests") {
   testonly = true
   sources = [
@@ -399,6 +412,10 @@ source_set("unit_tests") {
     sources += [ "autofill_assistant_unittest.cc" ]
   }
 
+  data = [
+    "//third_party/libaddressinput/src/testdata/",
+  ]
+
   deps = [
     ":browser",
     ":test_support",
@@ -435,4 +452,7 @@ source_set("unit_tests") {
     "//ui/base",
     "//url",
   ]
+  if (is_ios) {
+    deps += [ ":countryinfo_test_bundle_data" ]
+  }
 }
