@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "08bc067f_fef082d4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-01T13:15:01Z",
+      "side": 1,
+      "message": "Let\u0027s keep NameForQueueType separate - we will need it, for example, for tracing.\n\nLet\u0027s introduce ReportingMessageForQueueType as a separate standalone function, similar to ReportingMessageForFrameType.",
+      "range": {
+        "startLine": 14,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 61
+      },
+      "revId": "55a113f140f16c5883812bc33fe645ac9e0e6f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0f2e80_85c6bca5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-01T13:15:01Z",
+      "side": 1,
+      "message": "nit: UpdateStatusFromTaskQueue? We\u0027re not doing anything to the task queue itself.",
+      "range": {
+        "startLine": 201,
+        "startChar": 40,
+        "endLine": 201,
+        "endChar": 55
+      },
+      "revId": "55a113f140f16c5883812bc33fe645ac9e0e6f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba577e9d_42ef8a15",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-01T13:15:01Z",
+      "side": 1,
+      "message": "std::array comment applies here too. That\u0027s one more reason to incorporate NONE into frame type.",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 19
+      },
+      "revId": "55a113f140f16c5883812bc33fe645ac9e0e6f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "657afc17_a637aa30",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5

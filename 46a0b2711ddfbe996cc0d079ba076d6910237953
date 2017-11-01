@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "dff18b49_9e3f9e64",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-01T13:15:01Z",
+      "side": 1,
+      "message": "I\u0027ve been thinking about expanding the status quo to incorporate NONE and DETACHED for tasks which are global (and not tied to a frame) and frames which do not have visibility status due to being detached (but we still have to run tasks from it) respectively.\n\nI believe that now we have a compelling reason to do so.",
+      "parentUuid": "867256f9_f9d3f10b",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 45
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a12addd_5b13eee1",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
