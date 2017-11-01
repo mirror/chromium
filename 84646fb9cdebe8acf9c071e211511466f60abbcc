@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfbdbbed_ed8aa5a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T17:55:30Z",
+      "side": 1,
+      "message": "Actually... they aren\u0027t. They create a new Document: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/DocumentLoader.cpp?rcl\u003d73b6e8740d40deefa0ee829325c88028f4cdbb6a\u0026l\u003d1153\n\nYes, this is extremely confusing.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "revId": "84646fb9cdebe8acf9c071e211511466f60abbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
