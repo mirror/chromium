@@ -237,13 +237,23 @@ syncer::SyncDataList ExtensionSyncService::GetAllSyncData(
   return ToSyncerSyncDataList(sync_data_list);
 }
 
+bool ExtensionSyncService::ShouldSyncExtensionData(
+    const std::string& id) const {
+  // Component extensions in general should not sync enable/disable status, as
+  // those don't have UI to enable/disable it. However, some component
+  // extensions like the Hotword extension, can be disabled programatticaly.
+  // So we only block sync of Zip Unpacker here as a fix for crbug.com/643060.
+  return id != extension_misc::kZIPUnpackerExtensionId;
+}
+
 syncer::SyncError ExtensionSyncService::ProcessSyncChanges(
     const base::Location& from_here,
     const syncer::SyncChangeList& change_list) {
   for (const syncer::SyncChange& sync_change : change_list) {
     std::unique_ptr<ExtensionSyncData> extension_sync_data(
         ExtensionSyncData::CreateFromSyncChange(sync_change));
-    if (extension_sync_data)
+    if (extension_sync_data &&
+        ShouldSyncExtensionData(extension_sync_data->id()))
       ApplySyncData(*extension_sync_data);
   }
 
