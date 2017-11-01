@@ -355,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "09472e45_8b101016",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-01T21:20:52Z",
+      "side": 1,
+      "message": "I think you has resolved it by using\nNSURLRequest* test_req \u003d [NSURLRequest\n        requestWithURL:[NSURL URLWithString:@\"test.example.com\"]];",
+      "parentUuid": "6f7d7087_0273fc1f",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f47d8ac5_078bcb37",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 2
@@ -485,6 +509,30 @@
       "side": 1,
       "message": "What would that sort of test look like?",
       "parentUuid": "e6dfa550_5d4a8b5e",
+      "range": {
+        "startLine": 34,
+        "startChar": 45,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "224c97f9_9ebca05a",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-01T21:20:52Z",
+      "side": 1,
+      "message": "We should set the metrics callback delegate. Send a request and check that all values in NSURLSessionTaskTransactionMetrics make sense. Ideally, we should mock the implementation that calculates metrics in order to set specific values but it may not be straightforward.",
+      "parentUuid": "6f77a7b9_34ca23b4",
       "range": {
         "startLine": 34,
         "startChar": 45,

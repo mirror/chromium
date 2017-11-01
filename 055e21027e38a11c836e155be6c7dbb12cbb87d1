@@ -46,6 +46,30 @@
       "revId": "055e21027e38a11c836e155be6c7dbb12cbb87d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c97b3a_17e820c0",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-01T21:20:52Z",
+      "side": 1,
+      "message": "You need to find a place for the |CronetMetrics| class. It should not be in Cronet.h (at least not in the current form). It also should not be defined in the test, because you want to test the real implementation. Currently, I can break |CronetMetrics| in Cronet.mm but the tests will still continue to pass.",
+      "parentUuid": "60a9bf06_dc1768f1",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "055e21027e38a11c836e155be6c7dbb12cbb87d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
