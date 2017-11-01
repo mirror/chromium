@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "789be43e_746253bc",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-01T07:00:52Z",
+      "side": 1,
+      "message": "either description is wrong, or enum is outdated",
+      "revId": "d24e893f855850d23f7698057df539174f67a8ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
