@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c984d18_091d5ed2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-01T22:52:32Z",
+      "side": 1,
+      "message": "I\u0027ve filed a bug to track this here: crbug.com/780642. I\u0027d like to keep this small since we are going to try to have it merged into 63.",
+      "parentUuid": "817a0452_bbcd3e70",
+      "range": {
+        "startLine": 279,
+        "startChar": 16,
+        "endLine": 279,
+        "endChar": 35
+      },
+      "revId": "e28f373c8ec5f0f34409418b7352b78b4cdbbd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18a536f4_ac1fa18f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-01T21:34:44Z",
       "side": 1,
       "message": "I don\u0027t recall if this would cause an NPE if sChromeHomeEnabled \u003d\u003d null.  Does that try to auto-box it to a boolean to compare the two primitives?\n\nmight want to add sChromeHomeEnabled \u003d\u003d null || enabled !\u003d sChromeHomeEnabled to be extra cautious.",
+      "range": {
+        "startLine": 310,
+        "startChar": 33,
+        "endLine": 310,
+        "endChar": 40
+      },
+      "revId": "e28f373c8ec5f0f34409418b7352b78b4cdbbd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4003d1_3458e5ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-01T22:52:32Z",
+      "side": 1,
+      "message": "It should auto-unbox, but added anyway. Done.",
+      "parentUuid": "18a536f4_ac1fa18f",
       "range": {
         "startLine": 310,
         "startChar": 33,
