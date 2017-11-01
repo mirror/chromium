@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61e2a77f_9ee561bc",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-01T15:10:26Z",
+      "side": 1,
+      "message": "This metric is interesting IMHO since it can be used to investigate platforms and configurations that are failing to initiate gpu-acceleration.",
+      "parentUuid": "b7e8fcfe_89f4dd7c",
+      "revId": "91229355cb74cf407cbf0128be5aaecd24616796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2df61f6b_344e1809",
         "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-01T14:54:56Z",
       "side": 1,
       "message": "Why do you need this boolean variable? I think (!resource_provider_) itself is a sufficient predicate to do what you intend to do, right?",
+      "revId": "91229355cb74cf407cbf0128be5aaecd24616796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc54bd3_7ac6e4d1",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-01T15:10:26Z",
+      "side": 1,
+      "message": "There is a subtlety.  The code needs to differentiate between No resource_provider because the context was lost and no resource_provider because it has not yet been lazily created.  Basically, we want to avoid trying to lazily create a resource_provider in cases where it needs to be coordinated with a context restoration.",
+      "parentUuid": "2df61f6b_344e1809",
       "revId": "91229355cb74cf407cbf0128be5aaecd24616796",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
