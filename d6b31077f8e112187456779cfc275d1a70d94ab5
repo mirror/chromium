@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c84592af_7eb0a0be",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T17:36:12Z",
+      "side": 1,
+      "message": "We don\u0027t want to change the behavior. Filters that rely on full resolution contents should still get it. It\u0027s only when blur is the first filter that contents is passed through when we can use this optimization.\n\nFYI, I missed that this vector is reverse compared to Skia so it actually needs to be the last filter and not the first. Updated the CL.",
+      "parentUuid": "79487795_13c40525",
+      "range": {
+        "startLine": 852,
+        "startChar": 40,
+        "endLine": 852,
+        "endChar": 45
+      },
+      "revId": "d6b31077f8e112187456779cfc275d1a70d94ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfc40b26_ada62a3b",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-01T16:35:23Z",
       "side": 1,
       "message": "How does it look if we continuous dividing the layer scale by 2, until the effective filter.amount() \u003c\u003d kMinBlurAmountForLayerScaleAdjustment?",
+      "range": {
+        "startLine": 857,
+        "startChar": 4,
+        "endLine": 857,
+        "endChar": 7
+      },
+      "revId": "d6b31077f8e112187456779cfc275d1a70d94ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893dbd86_6a30ee66",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T17:36:12Z",
+      "side": 1,
+      "message": "We\u0027ll get aliasing if not using mipmaps. Divide by 2 can be done using bilerp without aliasing artifacts so that\u0027s as far as we can go as part of compositing for now.\n\nThe idea is to follow up with more down-scaling so we can get to the performance of my prototype (faster than no blur). Likely by keeping the 2x down-scaling here and just compute the mips in GLRenderer before passing the contents to skia so that skia can skip all down/up-scaling and compositing the result is more efficient.",
+      "parentUuid": "dfc40b26_ada62a3b",
       "range": {
         "startLine": 857,
         "startChar": 4,
