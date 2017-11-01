@@ -22,6 +22,30 @@
       "revId": "6c4ad9b4a92bd9fdee8c0ff8280ccf27ab86f1e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2cb82e_3b2a387b",
+        "filename": "android_webview/javatests/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-01T21:16:58Z",
+      "side": 1,
+      "message": "browser/test should be used. Found that chrome tests also use classes from test (such as ChildProcessAllocatorSettings). So should have both test and test/util.",
+      "parentUuid": "e6b6baaf_5639845b",
+      "range": {
+        "startLine": 21,
+        "startChar": 75,
+        "endLine": 21,
+        "endChar": 79
+      },
+      "revId": "6c4ad9b4a92bd9fdee8c0ff8280ccf27ab86f1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
