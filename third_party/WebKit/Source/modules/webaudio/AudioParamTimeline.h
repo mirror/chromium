@@ -182,8 +182,6 @@ class AudioParamTimeline {
     Vector<float>& Curve() { return curve_; }
     float InitialValue() const { return initial_value_; }
     double CallTime() const { return call_time_; }
-    bool NeedsTimeClampCheck() const { return needs_time_clamp_check_; }
-    void ClearTimeClampCheck() { needs_time_clamp_check_ = false; }
 
     double CurvePointsPerSecond() const { return curve_points_per_second_; }
     float CurveEndValue() const { return curve_end_value_; }
@@ -274,10 +272,6 @@ class AudioParamTimeline {
     // scheduled cancel time.
     std::unique_ptr<ParamEvent> saved_event_;
 
-    // True if the start time needs to be checked against current time
-    // to implement clamping.
-    bool needs_time_clamp_check_;
-
     // True if a default value has been assigned to the CancelValues event.
     bool has_default_cancelled_value_;
   };
@@ -367,10 +361,10 @@ class AudioParamTimeline {
                       size_t current_frame,
                       double sample_rate) const;
 
-  // Clamp event times to current time, if needed.
-  void ClampToCurrentTime(int number_of_events,
-                          size_t start_frame,
-                          double sample_rate);
+  // Clamp times to current time, if needed for any new events.  Note,
+  // this method can mutate |events_|, so do call this only in safe
+  // places.
+  void ClampNewEventsToCurrentTime(double current_time);
 
   // Handle the case where the last event in the timeline is in the
   // past.  Returns false if any event is not in the past. Otherwise,
@@ -461,9 +455,19 @@ class AudioParamTimeline {
                            size_t end_frame,
                            unsigned write_index);
 
+  // When cancelling events, update |new_event_indices_| to account
+  // for all of the events that are removed.
+  void UpdateNewEventIndices(size_t);
+
   // Vector of all automation events for the AudioParam.  Access must
   // be locked via m_eventsLock.
   Vector<std::unique_ptr<ParamEvent>> events_;
+
+  // Vector of indices of where new events have been placed.  As new
+  // events are added, records the index into |events_| where the
+  // event was placed.  Access must be locked via |events_lock_|.
+  // Must be maintained togehter with |events_|.
+  Vector<size_t> new_event_indices_;
 
   mutable Mutex events_lock_;
 

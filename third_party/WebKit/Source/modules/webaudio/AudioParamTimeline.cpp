@@ -292,7 +292,6 @@ AudioParamTimeline::ParamEvent::ParamEvent(
       curve_points_per_second_(curve_points_per_second),
       curve_end_value_(curve_end_value),
       saved_event_(std::move(saved_event)),
-      needs_time_clamp_check_(true),
       has_default_cancelled_value_(false) {
   curve_ = curve;
 }
@@ -311,7 +310,6 @@ AudioParamTimeline::ParamEvent::ParamEvent(ParamEvent::Type type,
       curve_points_per_second_(0),
       curve_end_value_(0),
       saved_event_(nullptr),
-      needs_time_clamp_check_(true),
       has_default_cancelled_value_(false) {
   DCHECK_EQ(type, ParamEvent::kSetValue);
 }
@@ -334,7 +332,6 @@ AudioParamTimeline::ParamEvent::ParamEvent(ParamEvent::Type type,
       curve_points_per_second_(0),
       curve_end_value_(0),
       saved_event_(nullptr),
-      needs_time_clamp_check_(true),
       has_default_cancelled_value_(false) {
   DCHECK(type == ParamEvent::kLinearRampToValue ||
          type == ParamEvent::kExponentialRampToValue);
@@ -355,7 +352,6 @@ AudioParamTimeline::ParamEvent::ParamEvent(ParamEvent::Type type,
       curve_points_per_second_(0),
       curve_end_value_(0),
       saved_event_(nullptr),
-      needs_time_clamp_check_(true),
       has_default_cancelled_value_(false) {
   DCHECK_EQ(type, ParamEvent::kSetTarget);
 }
@@ -377,7 +373,6 @@ AudioParamTimeline::ParamEvent::ParamEvent(ParamEvent::Type type,
       curve_points_per_second_(curve_points_per_second),
       curve_end_value_(curve_end_value),
       saved_event_(nullptr),
-      needs_time_clamp_check_(true),
       has_default_cancelled_value_(false) {
   DCHECK_EQ(type, ParamEvent::kSetValueCurve);
   unsigned curve_length = curve.size();
@@ -400,7 +395,6 @@ AudioParamTimeline::ParamEvent::ParamEvent(
       curve_points_per_second_(0),
       curve_end_value_(0),
       saved_event_(std::move(saved_event)),
-      needs_time_clamp_check_(true),
       has_default_cancelled_value_(false) {
   DCHECK_EQ(type, ParamEvent::kCancelValues);
 }
@@ -571,6 +565,7 @@ void AudioParamTimeline::InsertEvent(std::unique_ptr<ParamEvent> event,
     if (events_[i]->Time() == insert_time &&
         events_[i]->GetType() == event->GetType()) {
       events_[i] = std::move(event);
+      new_event_indices_.push_back(i);
       return;
     }
 
@@ -579,6 +574,7 @@ void AudioParamTimeline::InsertEvent(std::unique_ptr<ParamEvent> event,
   }
 
   events_.insert(i, std::move(event));
+  new_event_indices_.push_back(i);
 }
 
 bool AudioParamTimeline::HasValues() const {
@@ -614,6 +610,9 @@ void AudioParamTimeline::CancelScheduledValues(
   for (unsigned i = 0; i < events_.size(); ++i) {
     if (events_[i]->Time() >= start_time) {
       events_.EraseAt(i, events_.size() - i);
+      // Now remove these from |new_event_indices_|, if any, starting
+      // from the end.
+      UpdateNewEventIndices(i);
       break;
     }
   }
@@ -727,6 +726,9 @@ void AudioParamTimeline::CancelAndHoldAtTime(double cancel_time,
   if (cancelled_event_index < events_.size()) {
     events_.EraseAt(cancelled_event_index,
                     events_.size() - cancelled_event_index);
+    // Now remove these from |new_event_indices_|, if any, starting
+    // from the end.
+    UpdateNewEventIndices(cancelled_event_index);
   }
 
   // Insert the new event, if any.
@@ -818,9 +820,12 @@ float AudioParamTimeline::ValuesForFrameRangeImpl(size_t start_frame,
 
   int number_of_events = events_.size();
 
+  if (new_event_indices_.size() > 0) {
+    ClampNewEventsToCurrentTime(start_frame / sample_rate);
+  }
+
   if (number_of_events > 0) {
     double current_time = start_frame / sample_rate;
-    ClampToCurrentTime(number_of_events, start_frame, sample_rate);
 
     if (HandleAllEventsInThePast(current_time, sample_rate, default_value,
                                  number_of_values, values))
@@ -985,8 +990,12 @@ float AudioParamTimeline::ValuesForFrameRangeImpl(size_t start_frame,
   // remove them so we don't have to check them ever again.  (This MUST be
   // running with the m_events lock so we can safely modify the m_events
   // array.)
-  if (last_skipped_event_index > 0)
+  if (last_skipped_event_index > 0) {
+    // |new_event_indices_| should be empty here so we don't have to
+    // do any updates due to this mutation of |events_|.
+    DCHECK_EQ(new_event_indices_.size(), 0u);
     events_.EraseAt(0, last_skipped_event_index - 1);
+  }
 
   // If there's any time left after processing the last event then just
   // propagate the last value to the end of the values buffer.
@@ -1068,41 +1077,25 @@ bool AudioParamTimeline::IsEventCurrent(const ParamEvent* event,
   return true;
 }
 
-void AudioParamTimeline::ClampToCurrentTime(int number_of_events,
-                                            size_t start_frame,
-                                            double sample_rate) {
-  if (number_of_events > 0) {
-    bool clamped_some_event_time = false;
-    double current_time = start_frame / sample_rate;
+void AudioParamTimeline::ClampNewEventsToCurrentTime(double current_time) {
+  bool clamped_some_event_time = false;
 
-    // Look at all the events in the timeline and check to see if any needs
-    // to clamp the start time to the current time.
-    for (int k = 0; k < number_of_events; ++k) {
-      ParamEvent* event = events_[k].get();
-
-      // We're examining the event for the first time and the event time is
-      // in the past so clamp the event time to the current time (start of
-      // the rendering quantum).
-      if (event->NeedsTimeClampCheck()) {
-        if (event->Time() < current_time) {
-          event->SetTime(current_time);
-          clamped_some_event_time = true;
-        }
-
-        // In all cases, we can clear the flag because the event is either
-        // in the future, or we've already checked it (just now).
-        event->ClearTimeClampCheck();
-      }
-    }
-
-    if (clamped_some_event_time) {
-      // If we clamped some event time to current time, we need to
-      // sort the event list in time order again, but it must be
-      // stable!
-      std::stable_sort(events_.begin(), events_.end(),
-                       ParamEvent::EventPreceeds);
+  for (auto index : new_event_indices_) {
+    ParamEvent* event = events_[index].get();
+    if (event->Time() < current_time) {
+      event->SetTime(current_time);
+      clamped_some_event_time = true;
     }
   }
+
+  if (clamped_some_event_time) {
+    // If we clamped some event time to current time, we need to
+    // sort the event list in time order again, but it must be
+    // stable!
+    std::stable_sort(events_.begin(), events_.end(), ParamEvent::EventPreceeds);
+  }
+
+  new_event_indices_.clear();
 }
 
 bool AudioParamTimeline::HandleAllEventsInThePast(double current_time,
@@ -1192,7 +1185,6 @@ void AudioParamTimeline::ProcessSetTargetFollowedByRamp(
     // Clear the clamp check because this doesn't need it.
     events_[event_index] =
         ParamEvent::CreateSetValueEvent(value, current_frame / sample_rate);
-    events_[event_index]->ClearTimeClampCheck();
 
     // Update our pointer to the current event because we just changed it.
     event = events_[event_index].get();
@@ -1884,6 +1876,17 @@ void AudioParamTimeline::WarnSetterOverlapsEvent(
                              param_name + ".value setter called at time " +
                                  String::Number(context.currentTime(), 16) +
                                  " overlaps event " + message));
+}
+
+void AudioParamTimeline::UpdateNewEventIndices(size_t cancelled_event_index) {
+  Vector<size_t> valid_indices;
+
+  for (auto event_index : new_event_indices_) {
+    if (event_index < cancelled_event_index) {
+      valid_indices.push_back(event_index);
+    }
+  }
+  new_event_indices_.swap(valid_indices);
 }
 
 }  // namespace blink
