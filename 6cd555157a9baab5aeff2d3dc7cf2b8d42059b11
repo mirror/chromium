@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a0b7185_48da0ed4",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_misc.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with this code. What thread does it run on?",
+      "range": {
+        "startLine": 302,
+        "startChar": 2,
+        "endLine": 306,
+        "endChar": 14
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8585108_cebb9fb2",
+        "filename": "chrome/services/file_util/file_util_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "MakeUnique?",
+      "range": {
+        "startLine": 36,
+        "startChar": 21,
+        "endLine": 36,
+        "endChar": 25
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9aad63b_debe38a6",
+        "filename": "chrome/services/file_util/public/cpp/zip_file_creator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "Please add a comment as to why the unretained is safe here.",
+      "range": {
+        "startLine": 56,
+        "startChar": 49,
+        "endLine": 56,
+        "endChar": 71
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3832a0_13bfa886",
+        "filename": "chrome/services/file_util/public/cpp/zip_file_creator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "Why does this code need to run on the ui thread?",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 50
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffbaef7c_295ae0c3",
+        "filename": "chrome/services/file_util/public/cpp/zip_file_creator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "optional: I wouldn\u0027t bother with any namespace here.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4684c804_28d41715",
+        "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "no {}",
+      "range": {
+        "startLine": 56,
+        "startChar": 49,
+        "endLine": 56,
+        "endChar": 50
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a135777_3f6c8e29",
+        "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "Reusing error in multiple places may lead to potentially using the testing the wrong value, better to keep an error code next to each call.",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888e4059_79522cf2",
+        "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "initialize to nullptr",
+      "range": {
+        "startLine": 78,
+        "startChar": 32,
+        "endLine": 78,
+        "endChar": 42
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb083b6_c5e2f7e7",
+        "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "If there is an error, shouldn\u0027t you return?",
+      "range": {
+        "startLine": 98,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 39
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee6445b_9b2550c5",
+        "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you only do this if is_directory is true?",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 69
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8894e751_ee26252b",
+        "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "Why do you need a member for this?",
+      "range": {
+        "startLine": 127,
+        "startChar": 13,
+        "endLine": 127,
+        "endChar": 28
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683cbe2d_965cec73",
+        "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "Please add descriptions.",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 51
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e05bb0_26221ca3",
+        "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "I\u0027m surprised you can run the callback with false here. What is callback?",
+      "range": {
+        "startLine": 169,
+        "startChar": 6,
+        "endLine": 169,
+        "endChar": 37
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62be521_12e1c8c8",
+        "filename": "chrome/services/file_util/zip_file_creator_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T20:43:53Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need Impl in the name here.",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
