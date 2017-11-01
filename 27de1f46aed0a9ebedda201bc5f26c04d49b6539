@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3572bfc3_d2ee6a03",
+        "filename": "base/android/java/src/org/chromium/base/SystemMessageHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T21:51:34Z",
+      "side": 1,
+      "message": "why are these checks necessary?",
+      "revId": "27de1f46aed0a9ebedda201bc5f26c04d49b6539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "097baf08_5fe917fd",
         "filename": "base/message_loop/message_loop.h",
         "patchSetId": 9
@@ -31,6 +48,23 @@
       "side": 1,
       "message": "The TYPE_JAVA MessageLoop uses the same MessageLoopForUI as the TYPE_UI does. So it\u0027s perfectly valid for a TYPE_JAVA loop to call MessageLoopForUI::current.\n\nThis is used by java_handler_thread_helpers.cc",
       "parentUuid": "097baf08_5fe917fd",
+      "revId": "27de1f46aed0a9ebedda201bc5f26c04d49b6539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce053231_428eef39",
+        "filename": "base/message_loop/message_pump_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T21:51:34Z",
+      "side": 1,
+      "message": "this doesn\u0027t look safe. you have to clear the native pointer that java is holding, there is no guarantee how long the java object will be alive for, and the message pump could be deleted after this.\n\nAnd then I guess the 0 checks in java make sense..",
       "revId": "27de1f46aed0a9ebedda201bc5f26c04d49b6539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
