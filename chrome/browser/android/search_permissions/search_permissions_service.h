@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_ANDROID_SEARCH_GEOLOCATION_SEARCH_GEOLOCATION_SERVICE_H_
-#define CHROME_BROWSER_ANDROID_SEARCH_GEOLOCATION_SEARCH_GEOLOCATION_SERVICE_H_
+#ifndef CHROME_BROWSER_ANDROID_SEARCH_PERMISSIONS_SEARCH_PERMISSIONS_SERVICE_H_
+#define CHROME_BROWSER_ANDROID_SEARCH_PERMISSIONS_SEARCH_PERMISSIONS_SERVICE_H_
 
 #include "base/callback_forward.h"
 #include "base/memory/singleton.h"
@@ -13,7 +13,7 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "url/origin.h"
 
-namespace content{
+namespace content {
 class BrowserContext;
 }
 
@@ -58,6 +58,7 @@ class SearchGeolocationService : public KeyedService {
         content::BrowserContext* context);
 
     static Factory* GetInstance();
+
    private:
     friend struct base::DefaultSingletonTraits<Factory>;
 
@@ -153,4 +154,4 @@ class SearchGeolocationService : public KeyedService {
   std::unique_ptr<SearchEngineDelegate> delegate_;
 };
 
-#endif  // CHROME_BROWSER_ANDROID_SEARCH_GEOLOCATION_SEARCH_GEOLOCATION_SERVICE_H_
+#endif  // CHROME_BROWSER_ANDROID_SEARCH_PERMISSIONS_SEARCH_PERMISSIONS_SERVICE_H_
