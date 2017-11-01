@@ -1,0 +1,19 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+
+# These flags should come after the sanitizer flags are passed to clang or else
+# they will not have the intended effect.
+cflags_for_nontargeted_code = [
+  "-fno-sanitize=undefined",
+
+  # Don't add coverage instrumentation
+  "-fno-sanitize=fuzzer",
+  "-fno-sanitize=fuzzer-no-link",
+  "-fno-sanitize-coverage=trace-pc-guard",
+
+  # Since we aren't instrumenting with coverage, code size is less of a
+  # concern, so use a more aggressive optimization level than
+  # optimize_for_fuzzing (O1). When given multiple optimiation flags clang
+  # obeys the later one, so as long as this comes after O1, this should
+  # work.
+  "-O2",
+]
