@@ -15,8 +15,8 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string16.h"
-#include "device/hid/public/interfaces/hid.mojom.h"
 #include "device/usb/public/interfaces/device_manager.mojom.h"
+#include "services/device/public/interfaces/hid.mojom.h"
 
 namespace content {
 class BrowserContext;
@@ -24,8 +24,8 @@ class WebContents;
 }
 
 namespace device {
-class HidDeviceFilter;
 class UsbDevice;
+class HidDeviceFilter;
 }
 
 namespace extensions {
