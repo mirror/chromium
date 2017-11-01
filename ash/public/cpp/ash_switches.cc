@@ -60,6 +60,10 @@ const char kAshEnableNightLight[] = "ash-enable-night-light";
 const char kAshEnablePaletteOnAllDisplays[] =
     "ash-enable-palette-on-all-displays";
 
+// Enables the sidebar.
+const char kAshSidebarEnabled[] = "enable-ash-sidebar";
+const char kAshSidebarDisabled[] = "disable-ash-sidebar";
+
 // Enables the split view on tablet mode.
 const char kAshEnableTabletSplitView[] = "enable-tablet-splitview";
 
@@ -172,6 +176,11 @@ const char kUseIMEService[] = "use-ime-service";
 bool IsNightLightEnabled() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       kAshEnableNightLight);
+}
+
+bool IsSidebarEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kAshSidebarEnabled);
 }
 
 bool IsUsingMdLogin() {
