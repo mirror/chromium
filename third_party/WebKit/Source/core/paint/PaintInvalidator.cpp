@@ -17,6 +17,7 @@
 #include "core/paint/ObjectPaintProperties.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintLayerScrollableArea.h"
+#include "core/paint/ng/ng_paint_fragment.h"
 #include "platform/graphics/paint/GeometryMapper.h"
 #include "platform/wtf/Optional.h"
 
@@ -549,6 +550,24 @@ void PaintInvalidator::InvalidatePaint(
         !context.painting_layer->SubtreeIsInvisible()) {
       context.subtree_flags |=
           PaintInvalidatorContext::kSubtreeInvalidationChecking;
+    }
+  }
+
+  if (RuntimeEnabledFeatures::LayoutNGEnabled() &&
+      object.IsLayoutNGBlockFlow()) {
+    // If the LayoutObject has a paint framgnet, it means this LayoutObject and
+    // its descendants are painted by NG painter.
+    // In the inline NG paint phase, this is a block flow with inline children.
+    if (NGPaintFragment* paint_fragment =
+            ToLayoutBlockFlow(object).PaintFragment()) {
+      // At this point, PaintInvalidator has updated VisualRect of the
+      // LayoutObject and its descendants. Update NGPaintFragment from the
+      // LayoutObject.
+      //
+      // TODO(kojii): When we have NGPaintFragment, we should walk
+      // NGPaintFragment tree instead, computes VisualRect from fragments,
+      // and update LayoutObject from it if needed for compat.
+      paint_fragment->UpdateVisualRectFromLayoutObject();
     }
   }
 
