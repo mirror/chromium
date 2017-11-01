@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "498a26d4_82b0a563",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-01T12:22:53Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure what you mean by \"these states\". I added a field to the dump details struct for the following cases:\n - NoPath\n - EmptyDump\n - ValidDump\nDoes that address your concern? I could add a separate status for every error condition but it seemed like overkill.\n\nSidebar: Yes I believe so. Probably ssid can chime in but I think people have been looking at the Tab.RendererDetailedExitStatus for OOM rate. Yeah probably WebViews are skewed if that\u0027s the case.",
+      "parentUuid": "a838c464_d3dbdc4f",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 10
+      },
+      "revId": "9adc80b769526c4288c22aa8720d2044f7119dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3d1ff77_fa4988f7",
         "filename": "components/crash/content/browser/crash_dump_manager_android.h",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-31T13:34:36Z",
       "side": 1,
       "message": "why does this become public? It doesn\u0027t seem to be used in any additional places yet.",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 17
+      },
+      "revId": "9adc80b769526c4288c22aa8720d2044f7119dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744dabf1_dfe8b96e",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-01T12:22:53Z",
+      "side": 1,
+      "message": "I made it public because I had the unit test test this. I could opt to friend the test harness instead if you prefer.",
+      "parentUuid": "f3d1ff77_fa4988f7",
       "range": {
         "startLine": 37,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6f607da7_c8a303a7",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-01T12:22:53Z",
+      "side": 1,
+      "message": "SGTM. Renamed to CrashDumpDetails and OnCrashDumpProcessed.",
+      "parentUuid": "eee6c684_b2063046",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "9adc80b769526c4288c22aa8720d2044f7119dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15877aed_b4aea7d4",
         "filename": "components/metrics/stability_metrics_helper.cc",
         "patchSetId": 18
@@ -91,6 +163,30 @@
       "revId": "9adc80b769526c4288c22aa8720d2044f7119dc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d8275f_9e4297de",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-01T12:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15877aed_b4aea7d4",
+      "range": {
+        "startLine": 170,
+        "startChar": 2,
+        "endLine": 170,
+        "endChar": 72
+      },
+      "revId": "9adc80b769526c4288c22aa8720d2044f7119dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
