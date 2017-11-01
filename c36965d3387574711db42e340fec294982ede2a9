@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61d3d03a_fbb314dd",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-01T00:54:27Z",
+      "side": 1,
+      "message": "\"Error\" is the name of the native class Error (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error). I am surprised that JS Compiler understands that this is the local Error class and not the native one (does it?).\n\nEither way, I suggest avoiding shadowing native classes in local scopes. Maybe rename Error to ValidationError or something to that effect?",
+      "revId": "c36965d3387574711db42e340fec294982ede2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
