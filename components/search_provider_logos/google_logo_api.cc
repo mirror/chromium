@@ -44,12 +44,14 @@ GURL GetGoogleDoodleURL(const GURL& google_base_url) {
   return google_base_url.ReplaceComponents(replacements);
 }
 
-AppendQueryparamsToLogoURL GetGoogleAppendQueryparamsCallback(
-    bool gray_background) {
+GURL AppendPreliminaryParamsToGoogleLogoURL(bool gray_background,
+                                            const GURL& google_base_url) {
   if (base::FeatureList::IsEnabled(features::kUseDdljsonApi))
-    return base::Bind(&GoogleNewAppendQueryparamsToLogoURL, gray_background);
+    return GoogleNewAppendQueryparamsToLogoURL(gray_background,
+                                               google_base_url);
 
-  return base::Bind(&GoogleLegacyAppendQueryparamsToLogoURL, gray_background);
+  return GoogleLegacyAppendQueryparamsToLogoURL(gray_background,
+                                                google_base_url);
 }
 
 ParseLogoResponse GetGoogleParseLogoResponseCallback(const GURL& base_url) {
@@ -64,34 +66,20 @@ const char kResponsePreamble[] = ")]}'";
 }
 
 GURL GoogleLegacyAppendQueryparamsToLogoURL(bool gray_background,
-                                            const GURL& logo_url,
-                                            const std::string& fingerprint) {
+                                            const GURL& logo_url) {
   // Note: we can't just use net::AppendQueryParameter() because it escapes
   // ":" to "%3A", but the server requires the colon not to be escaped.
   // See: http://crbug.com/413845
-
-  // TODO(newt): Switch to using net::AppendQueryParameter once it no longer
-  // escapes ":"
   std::string query(logo_url.query());
-  if (!query.empty())
+  if (!query.empty()) {
     query += "&";
-
-  query += "async=";
-  std::vector<base::StringPiece> params;
-  std::string fingerprint_param;
-  if (!fingerprint.empty()) {
-    fingerprint_param = "es_dfp:" + fingerprint;
-    params.push_back(fingerprint_param);
   }
 
-  params.push_back("cta:1");
-
+  query += "async=cta:1";
   if (gray_background) {
-    params.push_back("transp:1");
-    params.push_back("graybg:1");
+    query += ",transp:1,graybg:1";
   }
 
-  query += base::JoinString(params, ",");
   GURL::Replacements replacements;
   replacements.SetQueryStr(query);
   return logo_url.ReplaceComponents(replacements);
@@ -194,27 +182,54 @@ std::unique_ptr<EncodedLogo> GoogleLegacyParseLogoResponse(
 }
 
 GURL GoogleNewAppendQueryparamsToLogoURL(bool gray_background,
-                                         const GURL& logo_url,
-                                         const std::string& fingerprint) {
+                                         const GURL& logo_url) {
   // Note: we can't just use net::AppendQueryParameter() because it escapes
   // ":" to "%3A", but the server requires the colon not to be escaped.
   // See: http://crbug.com/413845
+  std::string query(logo_url.query());
+  if (!query.empty()) {
+    query += "&";
+  }
+
+  query += "async=ntp:1";
+  if (gray_background) {
+    query += ",graybg:1";
+  }
+
+  GURL::Replacements replacements;
+  replacements.SetQueryStr(query);
+  return logo_url.ReplaceComponents(replacements);
+}
+
+GURL GoogleAppendFingerprintParamToLogoURL(const GURL& logo_url,
+                                           const std::string& fingerprint) {
+  if (fingerprint.empty()) {
+    return logo_url;
+  }
+
+  std::string fingerprint_param = "es_dfp:" + fingerprint;
+  std::string async_param_name = "async";
 
   std::string query(logo_url.query());
-  if (!query.empty())
-    query += "&";
+  if (!query.empty()) {
+    size_t last_param_position = query.find_last_of("=");
+    DCHECK_NE(last_param_position, std::string::npos)
+        << "No properly formed param in query";
+    int query_key_start_pos = last_param_position - async_param_name.length();
 
-  query += "async=";
+    bool last_param_is_async =
+        last_param_position >= async_param_name.length() &&
+        query.compare(query_key_start_pos, async_param_name.length(),
+                      async_param_name) == 0;
 
-  std::vector<std::string> params;
-  params.push_back("ntp:1");
-  if (gray_background) {
-    params.push_back("graybg:1");
+    if (last_param_is_async) {
+      query += "," + fingerprint_param;
+    } else {
+      query += "&" + async_param_name + "=" + fingerprint_param;
+    }
+  } else {
+    query += async_param_name + "=" + fingerprint_param;
   }
-  if (!fingerprint.empty()) {
-    params.push_back("es_dfp:" + fingerprint);
-  }
-  query += base::JoinString(params, ",");
 
   GURL::Replacements replacements;
   replacements.SetQueryStr(query);
