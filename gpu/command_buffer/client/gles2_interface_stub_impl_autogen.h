@@ -1220,6 +1220,17 @@ void GLES2InterfaceStub::RasterCHROMIUM(const cc::DisplayItemList* /* list */,
                                         GLfloat /* post_translate_y */,
                                         GLfloat /* post_scale */) {}
 void GLES2InterfaceStub::EndRasterCHROMIUM() {}
+void GLES2InterfaceStub::CreateTransferCacheEntryCHROMIUM(
+    uint64_t /* handle_id */,
+    uint32_t /* handle_shm_id */,
+    uint32_t /* handle_shm_offset */,
+    uint32_t /* type */,
+    size_t /* size */,
+    void* /* data */) {}
+void GLES2InterfaceStub::DeleteTransferCacheEntryCHROMIUM(
+    uint64_t /* handle_id */) {}
+void GLES2InterfaceStub::UnlockTransferCacheEntryCHROMIUM(
+    uint64_t /* handle_id */) {}
 void GLES2InterfaceStub::TexStorage2DImageCHROMIUM(GLenum /* target */,
                                                    GLenum /* internalFormat */,
                                                    GLenum /* bufferUsage */,

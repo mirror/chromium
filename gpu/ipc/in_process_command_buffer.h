@@ -32,6 +32,7 @@
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/image_manager.h"
 #include "gpu/command_buffer/service/service_discardable_manager.h"
+#include "gpu/command_buffer/service/service_transfer_cache.h"
 #include "gpu/config/gpu_feature_info.h"
 #include "gpu/gpu_export.h"
 #include "gpu/ipc/service/image_transport_surface_delegate.h"
@@ -232,6 +233,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
     ServiceDiscardableManager* discardable_manager() {
       return &discardable_manager_;
     }
+    ServiceTransferCache* transfer_cache() { return &transfer_cache_; }
     gles2::ShaderTranslatorCache* shader_translator_cache() {
       return &shader_translator_cache_;
     }
@@ -251,6 +253,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
     GpuProcessActivityFlags activity_flags_;
     gles2::ImageManager image_manager_;
     ServiceDiscardableManager discardable_manager_;
+    ServiceTransferCache transfer_cache_;
     gles2::ShaderTranslatorCache shader_translator_cache_;
     gles2::FramebufferCompletenessCache framebuffer_completeness_cache_;
   };
