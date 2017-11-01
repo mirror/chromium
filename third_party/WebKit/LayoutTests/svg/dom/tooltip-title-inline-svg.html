@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<svg width="100" height="100">
+    <title>Top Level Title</title>
+    <rect width="50" height="50" fill="green">
+        <title>Second Level Title</title>
+    </rect>
+</svg>
+<object type="image/svg+xml" data="tooltip-title-external-svg.svg">
+    Browser does not support SVG
+</object>
+<script>
+testTooltipText(75, 75, "Top Level Title", "Tooltip title of title child under SVG root");
+testTooltipText(25, 25, "Second Level Title", "Tooltip title of title child under an element");
+testTooltipText(175, 25, "", "Tooltip title of title child under SVG root added as an object");
+testTooltipText(125, 25, "Second Level Title Under SVG Object", "Tooltip title of title child under an element as part of external SVG object");
+
+function testTooltipText(x, y, expectedText, description) {
+    if (!window.eventSender || !window.testRunner)
+        return;
+    eventSender.dragMode = false;
+    eventSender.mouseMoveTo(x,y);
+    test(function () {
+        assert_equals(testRunner.tooltipText, expectedText);
+    }, description);
+}
+</script>
