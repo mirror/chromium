@@ -2698,7 +2698,10 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
   last_surface_properties_ = new_surface_properties;
 
   last_received_content_source_id_ = frame.metadata.content_source_id;
+
+#if defined(OS_MACOSX) || defined(OS_IOS) || defined(OS_ANDROID)
   uint32_t frame_token = frame.metadata.frame_token;
+#endif
 
   // |has_damage| is not transmitted.
   frame.metadata.begin_frame_ack.has_damage = true;
@@ -2742,8 +2745,10 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
   if (delegate_)
     delegate_->DidReceiveCompositorFrame();
 
+#if defined(OS_MACOSX) || defined(OS_IOS) || defined(OS_ANDROID)
   if (frame_token)
     DidProcessFrame(frame_token);
+#endif
 }
 
 void RenderWidgetHostImpl::DidProcessFrame(uint32_t frame_token) {
@@ -2753,7 +2758,6 @@ void RenderWidgetHostImpl::DidProcessFrame(uint32_t frame_token) {
                                     bad_message::RWH_INVALID_FRAME_TOKEN);
     return;
   }
-
   last_received_frame_token_ = frame_token;
 
   while (queued_messages_.size() &&

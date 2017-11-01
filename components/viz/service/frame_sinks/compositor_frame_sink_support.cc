@@ -203,6 +203,8 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
     surface_manager_->SurfaceDamageExpected(current_surface->surface_id(),
                                             last_begin_frame_args_);
   }
+
+  uint32_t frame_token = frame.metadata.frame_token;
   bool result = current_surface->QueueFrame(
       std::move(frame), frame_index,
       base::BindOnce(&CompositorFrameSinkSupport::DidReceiveCompositorFrameAck,
@@ -228,6 +230,10 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
 
   if (begin_frame_source_)
     begin_frame_source_->DidFinishFrame(this);
+
+  if (frame_token)
+    frame_sink_manager_->UpdateFrameTokenInCompositorFrame(frame_sink_id_,
+                                                           frame_token);
 
   return true;
 }
