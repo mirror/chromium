@@ -154,6 +154,7 @@ AutofillAgent::AutofillAgent(content::RenderFrame* render_frame,
       is_generation_popup_possibly_visible_(false),
       is_user_gesture_required_(true),
       is_secure_context_required_(false),
+      focus_requires_scroll_(true),
       page_click_tracker_(new PageClickTracker(render_frame, this)),
       binding_(this),
       weak_ptr_factory_(this) {
@@ -218,6 +219,19 @@ void AutofillAgent::WillSubmitForm(const WebFormElement& form) {
 }
 
 void AutofillAgent::DidChangeScrollOffset() {
+  if (!focus_requires_scroll_ && is_popup_possibly_visible_ &&
+      element_.Focused()) {
+    FormData form;
+    FormFieldData field;
+    if (form_util::FindFormAndFieldForFormControlElement(element_, &form,
+                                                         &field)) {
+      GetAutofillDriver()->TextFieldDidChange(
+          form, field,
+          render_frame()->GetRenderView()->ElementBoundsInWindow(element_),
+          base::TimeTicks::Now());
+    }
+  }
+
   if (IsKeyboardAccessoryEnabled())
     return;
 
@@ -686,6 +700,11 @@ void AutofillAgent::ShowSuggestions(const WebFormControlElement& element,
 
 void AutofillAgent::SetSecureContextRequired(bool required) {
   is_secure_context_required_ = required;
+}
+
+void AutofillAgent::SetFocusRequiresScroll(bool require) {
+  focus_requires_scroll_ = require;
+  page_click_tracker_->SetFocusRequiresScroll(require);
 }
 
 void AutofillAgent::QueryAutofillSuggestions(
