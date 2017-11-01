@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ad21021_5c551a5c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-01T18:41:26Z",
+      "side": 1,
+      "message": "not sure if this line is too long.",
+      "range": {
+        "startLine": 10,
+        "startChar": 71,
+        "endLine": 10,
+        "endChar": 73
+      },
+      "revId": "583344c97cbc4631ff22ab1e4212ee59dafffd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204ac641_4b7bb649",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2220,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-01T18:41:26Z",
+      "side": 1,
+      "message": "why not weak?\n\nalso, could this transition to the error state incorrectly @1862 if it transitions to some other state while this is pending?  A badly timed Reset, for example, seems like it might.",
+      "range": {
+        "startLine": 2220,
+        "startChar": 28,
+        "endLine": 2220,
+        "endChar": 50
+      },
+      "revId": "583344c97cbc4631ff22ab1e4212ee59dafffd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
