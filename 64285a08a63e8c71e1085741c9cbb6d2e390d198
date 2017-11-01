@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9c33000_43d2a477",
+        "filename": "device/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-01T15:02:31Z",
+      "side": 1,
+      "message": "This should be removed after u2f servicification done.",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 6,
+        "endChar": 39
+      },
+      "revId": "64285a08a63e8c71e1085741c9cbb6d2e390d198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6c1659_e8f4db56",
+        "filename": "services/device/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-01T15:02:31Z",
+      "side": 1,
+      "message": "See https://cs.chromium.org/chromium/src/device/BUILD.gn?rcl\u003dd3547f5d67f6103e3f5c302a55ac843eef0e1421\u0026l\u003d148,\nWhen the is_ios is true, the usb_test_gadget is not compiled, but hid_connection_unittests depends on it. I think it is an error.\nSo I move the \"if(!is_ios)\" inside the \"if(!is_linux_without_udev \u0026\u0026 !is_android)\".",
+      "range": {
+        "startLine": 150,
+        "startChar": 11,
+        "endLine": 150,
+        "endChar": 17
+      },
+      "revId": "64285a08a63e8c71e1085741c9cbb6d2e390d198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faff485e_b013334f",
+        "filename": "services/device/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-01T15:02:31Z",
+      "side": 1,
+      "message": "Should I move the //device/test/usb_test_gadget into a separated target in //device/BUILD.gn, and let this depends on that?",
+      "range": {
+        "startLine": 152,
+        "startChar": 9,
+        "endLine": 154,
+        "endChar": 50
+      },
+      "revId": "64285a08a63e8c71e1085741c9cbb6d2e390d198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
