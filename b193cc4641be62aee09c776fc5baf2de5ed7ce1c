@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6aceb059_7ded0cfe",
+        "filename": "third_party/WebKit/Source/core/layout/shapes/Shape.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-01T20:06:04Z",
+      "side": 1,
+      "message": "Yes. It\u0027s terrible code. There was a comment recently on the internal chat about dealing with it, and the number of hoops to jump through to get the raster image seems extreme. But I think BandAid is best in this case.",
+      "parentUuid": "126823e0_84e27ca9",
+      "range": {
+        "startLine": 261,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 21
+      },
+      "revId": "b193cc4641be62aee09c776fc5baf2de5ed7ce1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "531facfb_4be5d58b",
         "filename": "third_party/WebKit/Source/core/layout/shapes/ShapeOutsideInfo.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-01T19:49:03Z",
       "side": 1,
       "message": "A bit odd place/thing to log console messages for, but there\u0027s one here already so...",
+      "range": {
+        "startLine": 179,
+        "startChar": 30,
+        "endLine": 179,
+        "endChar": 47
+      },
+      "revId": "b193cc4641be62aee09c776fc5baf2de5ed7ce1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f306a33_0049261e",
+        "filename": "third_party/WebKit/Source/core/layout/shapes/ShapeOutsideInfo.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-01T20:06:04Z",
+      "side": 1,
+      "message": "I thought so too but again I\u0027m sticking with the existing code patterns.",
+      "parentUuid": "531facfb_4be5d58b",
       "range": {
         "startLine": 179,
         "startChar": 30,
