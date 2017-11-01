@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4323f82_5b96283d",
+        "filename": "gpu/ipc/service/image_transport_surface_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-01T23:35:28Z",
+      "side": 1,
+      "message": "I still get the log spam in WebVR unless I use \"false\" here.",
+      "range": {
+        "startLine": 36,
+        "startChar": 54,
+        "endLine": 36,
+        "endChar": 58
+      },
+      "revId": "d6f8c8ebb290985dc9d0dde383208dec197a0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
