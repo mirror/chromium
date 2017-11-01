@@ -93,6 +93,24 @@
     },
     {
       "key": {
+        "uuid": "40864826_4f26dcbd",
+        "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-01T20:43:57Z",
+      "side": 1,
+      "message": "I don\u0027t get a RenderViewHostChanged callback when I do this without the kSimplePage. I\u0027m not sure what rules WebContents swaps render views for.",
+      "parentUuid": "04c83abd_993e7edc",
+      "revId": "be205d97a1753572c5e28fa58aaaacf3d50c8f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e6bc0a2_48b386f4",
         "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
         "patchSetId": 9
@@ -104,6 +122,24 @@
       "writtenOn": "2017-11-01T20:11:37Z",
       "side": 1,
       "message": "Is there a way to add a similar test for the case that the new process is hung, given the discussion we\u0027ve had about that behavior?  Or is that hard to set up in the test?",
+      "revId": "be205d97a1753572c5e28fa58aaaacf3d50c8f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850cf6ad_6d66fb11",
+        "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-01T20:43:57Z",
+      "side": 1,
+      "message": "There really isn\u0027t an API into the RWHI that simulates it being hung; nor is the timer mockable. We could add that to the public API surface but that is kind of ugly.",
+      "parentUuid": "5e6bc0a2_48b386f4",
       "revId": "be205d97a1753572c5e28fa58aaaacf3d50c8f48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
