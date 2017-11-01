@@ -19,32 +19,39 @@ namespace search_provider_logos {
 // Google domain.
 GURL GetGoogleDoodleURL(const GURL& google_base_url);
 
-// These return the correct callbacks for appending queryparams and parsing the
-// response ("Legacy" or "New"), based on the value of features::kUseDdljsonApi.
-AppendQueryparamsToLogoURL GetGoogleAppendQueryparamsCallback(
-    bool gray_background);
+// Implements AppendQueryparamsToLogoURL, defined in logo_common.h, for both
+// "Legacy" and "New" APIs. Using this relies on the caller having prepared the
+// |logo_url| by calling AppendPreliminaryParamsToGoogleLogoURL() for example.
+GURL GoogleAppendFingerprintParamToLogoURL(const GURL& logo_url,
+                                           const std::string& fingerprint);
+
+// Appends the correct queryparams ("Legacy" or "New"), based on the value of
+// features::kUseDdljsonApi by delegating to GoogleNewAppendQueryparamsToLogoURL
+// GoogleLegacyAppendQueryparamsToLogoURL.
+GURL AppendPreliminaryParamsToGoogleLogoURL(bool gray_background,
+                                            const GURL& logo_url);
+
+// Returns the correct callbacks for parsing the response ("Legacy" or "New"),
+// based on the value of features::kUseDdljsonApi.
 ParseLogoResponse GetGoogleParseLogoResponseCallback(const GURL& base_url);
 
-// Implements AppendQueryparamsToLogoURL, defined in logo_tracker.h, for Google
-// doodles (old newtab_mobile API).
+// Builds the persistent API URL for Google doodles (old newtab_mobile API).
 GURL GoogleLegacyAppendQueryparamsToLogoURL(bool gray_background,
-                                            const GURL& logo_url,
-                                            const std::string& fingerprint);
+                                            const GURL& logo_url);
 
-// Implements ParseLogoResponse, defined in logo_tracker.h, for Google doodles
+// Implements ParseLogoResponse, defined in logo_common.h, for Google doodles
 // (old newtab_mobile API).
 std::unique_ptr<EncodedLogo> GoogleLegacyParseLogoResponse(
     std::unique_ptr<std::string> response,
     base::Time response_time,
     bool* parsing_failed);
 
-// Implements AppendQueryparamsToLogoURL, defined in logo_tracker.h, for Google
-// or third-party doodles (new ddljson API).
+// Builds the persistent API URL for Google or third-party doodles
+// (new ddljson API).
 GURL GoogleNewAppendQueryparamsToLogoURL(bool gray_background,
-                                         const GURL& logo_url,
-                                         const std::string& fingerprint);
+                                         const GURL& logo_url);
 
-// Implements ParseLogoResponse, defined in logo_tracker.h, for Google or
+// Implements ParseLogoResponse, defined in logo_common.h, for Google or
 // third-party doodles (new ddljson API).
 std::unique_ptr<EncodedLogo> GoogleNewParseLogoResponse(
     const GURL& base_url,
