@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce7a9186_969d7b02",
+        "filename": "components/user_manager/scoped_user_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-01T19:15:30Z",
+      "side": 1,
+      "message": "Note: Although probably we\u0027d like to migrate chromeos::ScopedUserManagerEnabler to here, \"restoring previous UserManager\" feature is not yet implemented. Let\u0027s postpone it until necessary.",
+      "revId": "a8b67bac992ef2b67eca1ca39cec39f9c63bc1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6101c8_e78a0e99",
+        "filename": "components/user_manager/scoped_user_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-01T19:15:30Z",
+      "side": 1,
+      "message": "Note: now this class owns the UserManager instance similar to other Scope* cases in chrome.",
+      "revId": "a8b67bac992ef2b67eca1ca39cec39f9c63bc1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
