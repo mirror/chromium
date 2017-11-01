@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11514b74_eb97714b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/ImpressionTracker.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-01T13:53:28Z",
+      "side": 1,
+      "message": "Thanks for the heads-up! I replied on the CL.",
+      "parentUuid": "55f68da8_806bb757",
+      "range": {
+        "startLine": 20,
+        "startChar": 87,
+        "endLine": 20,
+        "endChar": 90
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af294a1c_aa4145c3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/ImpressionTracker.java",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-30T23:48:39Z",
       "side": 1,
       "message": "Are there any major pitfalls in enabling listener change on-the-fly? At first glance it seems that this method would work fine.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d1db047_5f93c1cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/ImpressionTracker.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-01T13:53:28Z",
+      "side": 1,
+      "message": "Yeah, I think it would -- it\u0027s mostly that the way it\u0027s currently used, there never is any need to change the listener on the fly, so this way we would learn if someone forgets to null out the listener after they\u0027re done with this object (at least once they try to reattach a listener). I don\u0027t feel strongly about it though, if you would like to change the behavior.",
+      "parentUuid": "af294a1c_aa4145c3",
       "range": {
         "startLine": 48,
         "startChar": 0,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "669c6d02_eccafb5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/OneShotImpressionTracker.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-01T13:53:28Z",
+      "side": 1,
+      "message": "True. ImpressionFilter? I\u0027m bad at naming things :)",
+      "parentUuid": "4e851946_65bfb3bf",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1308deb_aeb50d93",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItem.java",
         "patchSetId": 13
@@ -115,6 +187,30 @@
       "revId": "0702003be75f154757090978b73b2ffdc14e8994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3747cf93_b3591efe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItem.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-01T13:53:28Z",
+      "side": 1,
+      "message": "Yeah, good idea.",
+      "parentUuid": "d1308deb_aeb50d93",
+      "range": {
+        "startLine": 63,
+        "startChar": 40,
+        "endLine": 63,
+        "endChar": 58
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "624c44f6_b14e9f02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-01T13:53:28Z",
+      "side": 1,
+      "message": "Curse you, clang-format!\n\nDone.",
+      "parentUuid": "71e5dfbb_1dc6c4e4",
+      "range": {
+        "startLine": 73,
+        "startChar": 45,
+        "endLine": 73,
+        "endChar": 46
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cd8e207_1d9bb5f2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 13
@@ -161,6 +281,30 @@
       "revId": "0702003be75f154757090978b73b2ffdc14e8994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f9b4388_d4466c59",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-01T13:53:28Z",
+      "side": 1,
+      "message": "\u003e I see two issues in this assert:\n\u003e 1. It assumes parity between onViewRecycled an onBindViewHolder calls, which is not obvious from the documentation I\u0027ve seen so far.\n\nOn RecyclerView.Adapter? AFAIK, onViewRecycled() is guaranteed to be called before any view holder is bound again, so they should be symmetric.\n\n\u003e 2. It assumes that Views bound to Preference objects will not get recycled. SignInPreference.onPreferenceFragmentDestroyed is invoked only when MainPreferences fragment is destroyed, so SigninPromoController.detach() won\u0027t be called if the promo is hidden by scrolling/navigating to Settings subscreen.\n\u003e It looks like both cases may trigger this assert.\n\u003e This being said, I have to admit that my knowledge about RecyclerView/Preferences is pretty limited. Am I missing something?\n\nHm, good point. It looks like Preference will directly reuse a previously bound view. I added a call to detach() before setting the promo view up again.",
+      "parentUuid": "3cd8e207_1d9bb5f2",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 42
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
