@@ -255,6 +255,7 @@ ProcessManager::~ProcessManager() {
 }
 
 void ProcessManager::Shutdown() {
+  CHECK(all_extension_frames_.empty());
   extension_registry_->RemoveObserver(this);
   CloseBackgroundHosts();
   DCHECK(background_hosts_.empty());
