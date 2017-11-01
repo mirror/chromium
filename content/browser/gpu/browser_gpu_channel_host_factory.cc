@@ -44,7 +44,7 @@ void TimedOut() {
 }
 }  // namespace
 
-BrowserGpuChannelHostFactory* BrowserGpuChannelHostFactory::instance_ = NULL;
+BrowserGpuChannelHostFactory* BrowserGpuChannelHostFactory::instance_ = nullptr;
 
 class BrowserGpuChannelHostFactory::EstablishRequest
     : public base::RefCountedThreadSafe<EstablishRequest> {
@@ -214,7 +214,7 @@ void BrowserGpuChannelHostFactory::Initialize(bool establish_gpu_channel) {
 void BrowserGpuChannelHostFactory::Terminate() {
   DCHECK(instance_);
   delete instance_;
-  instance_ = NULL;
+  instance_ = nullptr;
 }
 
 BrowserGpuChannelHostFactory::BrowserGpuChannelHostFactory()
@@ -249,7 +249,7 @@ BrowserGpuChannelHostFactory::~BrowserGpuChannelHostFactory() {
   shutdown_event_->Signal();
   if (gpu_channel_) {
     gpu_channel_->DestroyChannel();
-    gpu_channel_ = NULL;
+    gpu_channel_ = nullptr;
   }
 }
 
@@ -280,7 +280,7 @@ void BrowserGpuChannelHostFactory::EstablishGpuChannel(
     DCHECK(!pending_request_.get());
     // Recreate the channel if it has been lost.
     gpu_channel_->DestroyChannel();
-    gpu_channel_ = NULL;
+    gpu_channel_ = nullptr;
   }
 
   if (!gpu_channel_.get() && !pending_request_.get()) {
@@ -324,7 +324,7 @@ gpu::GpuChannelHost* BrowserGpuChannelHostFactory::GetGpuChannel() {
   if (gpu_channel_.get() && !gpu_channel_->IsLost())
     return gpu_channel_.get();
 
-  return NULL;
+  return nullptr;
 }
 
 void BrowserGpuChannelHostFactory::GpuChannelEstablished() {
@@ -340,7 +340,7 @@ void BrowserGpuChannelHostFactory::GpuChannelEstablished() {
         pending_request_->channel_handle(), shutdown_event_.get(),
         gpu_memory_buffer_manager_.get());
   }
-  pending_request_ = NULL;
+  pending_request_ = nullptr;
   timeout_.Stop();
 
   std::vector<gpu::GpuChannelEstablishedCallback> established_callbacks;

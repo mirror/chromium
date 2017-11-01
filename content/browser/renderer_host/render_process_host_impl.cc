@@ -362,7 +362,7 @@ class SiteProcessMap : public base::SupportsUserData::Data {
     SiteToProcessMap::iterator i = map_.find(site);
     if (i != map_.end())
       return i->second;
-    return NULL;
+    return nullptr;
   }
 
   void RemoveProcess(RenderProcessHost* host) {
@@ -3420,7 +3420,7 @@ RenderProcessHost* RenderProcessHost::GetExistingProcessHost(
     return suitable_renderers[random_index];
   }
 
-  return NULL;
+  return nullptr;
 }
 
 // static
@@ -3468,7 +3468,7 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSite(
     RecordAction(
         base::UserMetricsAction("BindingsMismatch_GetProcessHostPerSite"));
     map->RemoveProcess(host);
-    host = NULL;
+    host = nullptr;
   }
 
   return host;
