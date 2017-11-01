@@ -1165,7 +1165,7 @@ void HTMLDocumentParser::SuspendScheduledTasks() {
   DCHECK(!tasks_were_suspended_);
   tasks_were_suspended_ = true;
   if (parser_scheduler_)
-    parser_scheduler_->Suspend();
+    parser_scheduler_->Pause();
 }
 
 void HTMLDocumentParser::ResumeScheduledTasks() {

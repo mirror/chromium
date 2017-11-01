@@ -92,7 +92,7 @@ BaseAudioContext* BaseAudioContext::Create(
 // Constructor for rendering to the audio hardware.
 BaseAudioContext::BaseAudioContext(Document* document,
                                    enum ContextType context_type)
-    : SuspendableObject(document),
+    : PausableObject(document),
       destination_node_(nullptr),
       is_cleared_(false),
       is_resolving_resume_promises_(false),
@@ -981,7 +981,7 @@ const AtomicString& BaseAudioContext::InterfaceName() const {
 }
 
 ExecutionContext* BaseAudioContext::GetExecutionContext() const {
-  return SuspendableObject::GetExecutionContext();
+  return PausableObject::GetExecutionContext();
 }
 
 void BaseAudioContext::StartRendering() {
@@ -1012,7 +1012,7 @@ void BaseAudioContext::Trace(blink::Visitor* visitor) {
   visitor->Trace(periodic_wave_triangle_);
   visitor->Trace(worklet_messaging_proxy_);
   EventTargetWithInlineData::Trace(visitor);
-  SuspendableObject::Trace(visitor);
+  PausableObject::Trace(visitor);
 }
 
 void BaseAudioContext::TraceWrappers(

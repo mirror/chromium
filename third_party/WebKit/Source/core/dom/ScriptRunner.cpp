@@ -75,7 +75,7 @@ void ScriptRunner::PostTask(const WebTraceLocation& web_trace_location) {
       WTF::Bind(&ScriptRunner::ExecuteTask, WrapWeakPersistent(this)));
 }
 
-void ScriptRunner::Suspend() {
+void ScriptRunner::Pause() {
 #ifndef NDEBUG
   // Resume will re-post tasks for all available scripts.
   number_of_extra_tasks_ += async_scripts_to_execute_soon_.size() +

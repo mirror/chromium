@@ -59,7 +59,7 @@ RTCDataChannel* RTCDataChannel::Create(
     std::unique_ptr<WebRTCDataChannelHandler> handler) {
   DCHECK(handler);
   RTCDataChannel* channel = new RTCDataChannel(context, std::move(handler));
-  channel->SuspendIfNeeded();
+  channel->PauseIfNeeded();
 
   return channel;
 }
@@ -78,7 +78,7 @@ RTCDataChannel* RTCDataChannel::Create(
     return nullptr;
   }
   RTCDataChannel* channel = new RTCDataChannel(context, std::move(handler));
-  channel->SuspendIfNeeded();
+  channel->PauseIfNeeded();
 
   return channel;
 }
@@ -86,7 +86,7 @@ RTCDataChannel* RTCDataChannel::Create(
 RTCDataChannel::RTCDataChannel(
     ExecutionContext* context,
     std::unique_ptr<WebRTCDataChannelHandler> handler)
-    : SuspendableObject(context),
+    : PausableObject(context),
       handler_(std::move(handler)),
       ready_state_(kReadyStateConnecting),
       binary_type_(kBinaryTypeArrayBuffer),
@@ -300,11 +300,11 @@ const AtomicString& RTCDataChannel::InterfaceName() const {
 }
 
 ExecutionContext* RTCDataChannel::GetExecutionContext() const {
-  return SuspendableObject::GetExecutionContext();
+  return PausableObject::GetExecutionContext();
 }
 
-// SuspendableObject
-void RTCDataChannel::Suspend() {
+// PausableObject
+void RTCDataChannel::Pause() {
   scheduled_event_timer_.Stop();
 }
 
@@ -380,7 +380,7 @@ void RTCDataChannel::ScheduledEventTimerFired(TimerBase*) {
 void RTCDataChannel::Trace(blink::Visitor* visitor) {
   visitor->Trace(scheduled_events_);
   EventTargetWithInlineData::Trace(visitor);
-  SuspendableObject::Trace(visitor);
+  PausableObject::Trace(visitor);
 }
 
 }  // namespace blink

@@ -141,7 +141,7 @@ MediaRecorder* MediaRecorder::Create(ExecutionContext* context,
                                      ExceptionState& exception_state) {
   MediaRecorder* recorder = new MediaRecorder(
       context, stream, MediaRecorderOptions(), exception_state);
-  recorder->SuspendIfNeeded();
+  recorder->PauseIfNeeded();
 
   return recorder;
 }
@@ -152,7 +152,7 @@ MediaRecorder* MediaRecorder::Create(ExecutionContext* context,
                                      ExceptionState& exception_state) {
   MediaRecorder* recorder =
       new MediaRecorder(context, stream, options, exception_state);
-  recorder->SuspendIfNeeded();
+  recorder->PauseIfNeeded();
 
   return recorder;
 }
@@ -161,7 +161,7 @@ MediaRecorder::MediaRecorder(ExecutionContext* context,
                              MediaStream* stream,
                              const MediaRecorderOptions& options,
                              ExceptionState& exception_state)
-    : SuspendableObject(context),
+    : PausableObject(context),
       stream_(stream),
       mime_type_(options.hasMimeType() ? options.mimeType() : kDefaultMimeType),
       stopped_(true),
@@ -303,11 +303,11 @@ const AtomicString& MediaRecorder::InterfaceName() const {
 }
 
 ExecutionContext* MediaRecorder::GetExecutionContext() const {
-  return SuspendableObject::GetExecutionContext();
+  return PausableObject::GetExecutionContext();
 }
 
-void MediaRecorder::Suspend() {
-  dispatch_scheduled_event_runner_->Suspend();
+void MediaRecorder::Pause() {
+  dispatch_scheduled_event_runner_->Pause();
 }
 
 void MediaRecorder::Resume() {
@@ -390,7 +390,7 @@ void MediaRecorder::Trace(blink::Visitor* visitor) {
   visitor->Trace(dispatch_scheduled_event_runner_);
   visitor->Trace(scheduled_events_);
   EventTargetWithInlineData::Trace(visitor);
-  SuspendableObject::Trace(visitor);
+  PausableObject::Trace(visitor);
 }
 
 }  // namespace blink

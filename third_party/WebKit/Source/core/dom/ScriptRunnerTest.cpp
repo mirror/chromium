@@ -420,7 +420,7 @@ TEST_F(ScriptRunnerTest, ResumeAndSuspend_InOrder) {
   script_runner_->NotifyScriptReady(script_loader3, ScriptRunner::kInOrder);
 
   platform_->RunSingleTask();
-  script_runner_->Suspend();
+  script_runner_->Pause();
   script_runner_->Resume();
   platform_->RunUntilIdle();
 
@@ -452,7 +452,7 @@ TEST_F(ScriptRunnerTest, ResumeAndSuspend_Async) {
   }));
 
   platform_->RunSingleTask();
-  script_runner_->Suspend();
+  script_runner_->Pause();
   script_runner_->Resume();
   platform_->RunUntilIdle();
 
