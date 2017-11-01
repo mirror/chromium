@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c929a15a_6acbf191",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-01T22:49:57Z",
+      "side": 1,
+      "message": "Don\u0027t we need two separate strings, one for official build and one for Chromium build? Similar to the old UI? See [1] and [2].\n\n[1] https://cs.chromium.org/chromium/src/chrome/app/google_chrome_strings.grd?q\u003dIDS_EXTENSIONS_INCOGNITO_WARNING\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d593\n[2] https://cs.chromium.org/chromium/src/chrome/app/chromium_strings.grd?q\u003dIDS_EXTENSIONS_INCOGNITO_WARNING\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d583",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 27
+      },
+      "revId": "6636142b5c40024fc5e643bc21d5c5dba3e0aeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
