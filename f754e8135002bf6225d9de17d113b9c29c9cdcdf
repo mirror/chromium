@@ -33,6 +33,24 @@
       "revId": "f754e8135002bf6225d9de17d113b9c29c9cdcdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fd4b3d_2c9a9970",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-01T20:38:57Z",
+      "side": 1,
+      "message": "Similar things have been discussed before, I presume your concern is that we are bloating all RenderFrameProxy objects with things that are only needed by the relatively small subset that also have ChildFrameCompositingHelper objects?\n\nThat sounds like a reasonable suggestion, to have these in the helper with appropriate accessor methods. In practice the number of RenderFrameProxy objects that don\u0027t embed surfaces is likely to be something like quadratic to the number of RFP objects that do.",
+      "parentUuid": "6822abd6_84448b49",
+      "revId": "f754e8135002bf6225d9de17d113b9c29c9cdcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
