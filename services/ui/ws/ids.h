@@ -29,6 +29,9 @@ const Id kInvalidTransportId = 0;
 // A client id used to indicate WindowServer.
 const ClientSpecificId kWindowServerClientId = 1;
 
+// A window id used to indicate the embed window in the embedded tree.
+const ClientSpecificId kEmbedWindowId = 1;
+
 // Every window has a unique id associated with it (WindowId). The id is a
 // combination of the id assigned to the client (the high order bits) and
 // a unique id for the window. Each client (WindowTree) refers to the window
