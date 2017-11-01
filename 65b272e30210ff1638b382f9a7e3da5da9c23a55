@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c8e3980_774eaac8",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T13:13:43Z",
+      "side": 1,
+      "message": "optional: try TransposeRect and see if you can simplify further.",
+      "revId": "65b272e30210ff1638b382f9a7e3da5da9c23a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae41e522_901d8f2f",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T13:13:43Z",
+      "side": 1,
+      "message": "swap the arguments (1st argument is expected value, while the 2nd one is actual)",
+      "revId": "65b272e30210ff1638b382f9a7e3da5da9c23a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc00d325_17f65adf",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T13:13:43Z",
+      "side": 1,
+      "message": "workarea_bounds",
+      "revId": "65b272e30210ff1638b382f9a7e3da5da9c23a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
