@@ -14,8 +14,16 @@
 #include "components/search_provider_logos/logo_service_impl.h"
 #include "net/url_request/url_request_context_getter.h"
 
+#if defined(OS_ANDROID)
+#include "chrome/browser/android/feature_utilities.h"
+#endif
+
 using search_provider_logos::LogoService;
 using search_provider_logos::LogoServiceImpl;
+
+#if defined(OS_ANDROID)
+using chrome::android::GetIsChromeHomeEnabled;
+#endif  // defined(OS_ANDROID)
 
 namespace {
 
@@ -49,12 +57,7 @@ KeyedService* LogoServiceFactory::BuildServiceInstanceFor(
   Profile* profile = static_cast<Profile*>(context);
   DCHECK(!profile->IsOffTheRecord());
 #if defined(OS_ANDROID)
-  // TODO(https://crbug.com/776725): Update LogoServiceImpl to request the
-  // latest value instead of caching it. Depending on the UI mode (ChromeHome
-  // enabled or not), the background where the logo is used changes from gray to
-  // white. This value can change at runtime, so we should stop using a value
-  // determined at factory instantiation time.
-  bool use_gray_background = true;
+  bool use_gray_background = !GetIsChromeHomeEnabled();
 #else
   bool use_gray_background = false;
 #endif
