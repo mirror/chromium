@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de82d9b3_cb9e45fa",
+        "filename": "ash/public/cpp/window_properties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-11-01T19:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55ab4b7d_0ca4b886",
+      "revId": "983f0321909e7f1c7906eb871ca724b078543df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "719c51c2_ab8cf5be",
         "filename": "ash/wm/toplevel_window_event_handler.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "983f0321909e7f1c7906eb871ca724b078543df0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a680407c_fa7d2342",
+        "filename": "ash/wm/toplevel_window_event_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-11-01T19:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "719c51c2_ab8cf5be",
+      "revId": "983f0321909e7f1c7906eb871ca724b078543df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
