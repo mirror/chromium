@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d02a2880_a1cb8266",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-01T10:30:19Z",
+      "side": 1,
+      "message": "Same here: This changes simply to:\n\n  builder-\u003eAddActions(notification);",
+      "range": {
+        "startLine": 89,
+        "startChar": 22,
+        "endLine": 89,
+        "endChar": 34
+      },
+      "revId": "8118165f84de359d0547f36b7bf9824adc5a8bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e2279c_6a24e7ff",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-01T10:30:19Z",
+      "side": 1,
+      "message": "What I\u0027ve done, when more than one member of a notification is needed inside the function, is to switch to passing in the notification object itself. Here it would be:\n\nvoid AddActions(const message_center::Notification\u0026 notification);",
+      "range": {
+        "startLine": 86,
+        "startChar": 30,
+        "endLine": 86,
+        "endChar": 36
+      },
+      "revId": "8118165f84de359d0547f36b7bf9824adc5a8bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
