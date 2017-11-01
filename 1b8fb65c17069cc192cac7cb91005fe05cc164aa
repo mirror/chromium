@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d075ead_952bd1bd",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-01T00:52:42Z",
+      "side": 0,
+      "message": "Can we mark the value in enums.xml as deprecated?",
+      "range": {
+        "startLine": 651,
+        "startChar": 51,
+        "endLine": 651,
+        "endChar": 65
+      },
+      "revId": "1b8fb65c17069cc192cac7cb91005fe05cc164aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
