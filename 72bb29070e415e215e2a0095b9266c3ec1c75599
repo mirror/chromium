@@ -22,6 +22,30 @@
       "revId": "72bb29070e415e215e2a0095b9266c3ec1c75599",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b956f801_7645ddfe",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-01T18:20:56Z",
+      "side": 0,
+      "message": "A couple of paths can now result in double Detach/Attach. For instance, the destructor calls detach, but now the bubble is also detached when hidden. I preferred bailing here to guarding multiple spots with is_attached().",
+      "parentUuid": "e7e4bb49_5cda0a6e",
+      "range": {
+        "startLine": 485,
+        "startChar": 2,
+        "endLine": 485,
+        "endChar": 8
+      },
+      "revId": "72bb29070e415e215e2a0095b9266c3ec1c75599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

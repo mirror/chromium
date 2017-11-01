@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9bb7f954_5dcefcaf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-01T18:20:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a29ebdeb_a7b959f7",
+      "range": {
+        "startLine": 17,
+        "startChar": 21,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "b3d62fc1e30d509475fbefe34e006b67c2d7e82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f5efd4d_08cbb912",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "b3d62fc1e30d509475fbefe34e006b67c2d7e82c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d74f84_d3ed60a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-01T18:20:56Z",
+      "side": 1,
+      "message": "Hmm, I thought I tested that enough, but it turns out I hadn\u0027t: the active space only changes when if Chrome is the active app, so I needed two windows.\n\nIt looks like adding NSWindowCollectionBehaviorTransient to the status bubble\u0027s collectionBehavior does the trick (thakis@ mentioned this possibility back in 2009, but it wasn\u0027t supported on 10.5… crbug.com/28107#c5), so I did that.\n\nIt works with that system preference turned on. Are there any other combinations that you want to try?",
+      "parentUuid": "5f5efd4d_08cbb912",
+      "range": {
+        "startLine": 17,
+        "startChar": 34,
+        "endLine": 18,
+        "endChar": 71
+      },
+      "revId": "b3d62fc1e30d509475fbefe34e006b67c2d7e82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
