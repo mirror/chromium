@@ -412,7 +412,6 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   void didUpdateMainThreadScrollingReasons() override;
   void didChangeScrollbarsHidden(bool) override;
   void DidChangeLayerOpacity(float old_opacity, float new_opacity) override;
-  void DidChangeLayerTransform() override;
 
   // Triggers a call to SwitchToLayer.
   void SwitchCCLayerForTest();
@@ -478,7 +477,7 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   float GetBrightnessForAnimation() const override;
   float GetGrayscaleForAnimation() const override;
   SkColor GetColorForAnimation() const override;
-  float GetTemperatureFromAnimation() const override;
+  float GetTemperatureForAnimation() const override;
   float GetDeviceScaleFactor() const override;
   ui::Layer* GetLayer() override;
   cc::Layer* GetCcLayer() const override;
@@ -486,6 +485,8 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   LayerAnimatorCollection* GetLayerAnimatorCollection() override;
   int GetFrameNumber() const override;
   float GetRefreshRate() const override;
+  void OnTargetChangedForProperties(
+      LayerAnimationElement::AnimatableProperties properties) override;
 
   // Creates a corresponding composited layer for |type_|.
   void CreateCcLayer();

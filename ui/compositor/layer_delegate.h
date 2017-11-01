@@ -32,7 +32,7 @@ class COMPOSITOR_EXPORT LayerDelegate {
   virtual void OnLayerBoundsChanged(const gfx::Rect& old_bounds);
 
   // Invoked when the transform has changed.
-  virtual void OnLayerTransformed();
+  virtual void OnLayerTargetTransformChanged();
 
   // Invoked when the layer's opacity has changed.
   virtual void OnLayerOpacityChanged(float old_opacity, float new_opacity);

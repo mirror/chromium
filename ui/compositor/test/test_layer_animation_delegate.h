@@ -49,7 +49,7 @@ class TestLayerAnimationDelegate : public LayerAnimationDelegate {
   float GetBrightnessForAnimation() const override;
   float GetGrayscaleForAnimation() const override;
   SkColor GetColorForAnimation() const override;
-  float GetTemperatureFromAnimation() const override;
+  float GetTemperatureForAnimation() const override;
   float GetDeviceScaleFactor() const override;
   LayerAnimatorCollection* GetLayerAnimatorCollection() override;
   ui::Layer* GetLayer() override;
@@ -57,6 +57,8 @@ class TestLayerAnimationDelegate : public LayerAnimationDelegate {
   LayerThreadedAnimationDelegate* GetThreadedAnimationDelegate() override;
   int GetFrameNumber() const override;
   float GetRefreshRate() const override;
+  void OnTargetChangedForProperties(
+      LayerAnimationElement::AnimatableProperties properties) override;
 
  private:
   void CreateCcLayer();

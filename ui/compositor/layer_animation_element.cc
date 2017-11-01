@@ -277,7 +277,7 @@ class TemperatureTransition : public LayerAnimationElement {
  protected:
   std::string DebugName() const override { return "TemperatureTransition"; }
   void OnStart(LayerAnimationDelegate* delegate) override {
-    start_ = delegate->GetTemperatureFromAnimation();
+    start_ = delegate->GetTemperatureForAnimation();
   }
 
   bool OnProgress(double t, LayerAnimationDelegate* delegate) override {
@@ -508,7 +508,7 @@ LayerAnimationElement::TargetValue::TargetValue(
       brightness(delegate ? delegate->GetBrightnessForAnimation() : 0.0f),
       grayscale(delegate ? delegate->GetGrayscaleForAnimation() : 0.0f),
       color(delegate ? delegate->GetColorForAnimation() : SK_ColorTRANSPARENT),
-      temperature(delegate ? delegate->GetTemperatureFromAnimation() : 0.0f) {}
+      temperature(delegate ? delegate->GetTemperatureForAnimation() : 0.0f) {}
 
 // LayerAnimationElement -------------------------------------------------------
 

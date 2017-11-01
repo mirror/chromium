@@ -90,9 +90,13 @@ class AURA_EXPORT WindowObserver {
                                       float old_opacity,
                                       float new_opacity) {}
 
-  // Invoked when SetTransform() is invoked on |window|.
-  virtual void OnWindowTransforming(Window* window) {}
-  virtual void OnWindowTransformed(Window* window) {}
+  // Invoked when SetTransform() is invoked on |window|, before the transform is
+  // actually changed.
+  virtual void OnWindowTargetTransformChanging(Window* window) {}
+
+  // Invoked when the target transform of |window| changes, even if the change
+  // does not come from Window::SetTransform().
+  virtual void OnWindowTargetTransformChanged(Window* window) {}
 
   // Invoked when |window|'s position among its siblings in the stacking order
   // has changed.

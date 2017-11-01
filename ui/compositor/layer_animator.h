@@ -198,7 +198,7 @@ class COMPOSITOR_EXPORT LayerAnimator : public base::RefCounted<LayerAnimator>,
 
   // This is similar to StopAnimating, but aborts rather than finishes the
   // animations and notifies all observers.
-  void AbortAllAnimations() { StopAnimatingInternal(true); }
+  void AbortAllAnimations();
 
   // These functions are used for adding or removing observers from the observer
   // list. The observers are notified when animations end.
@@ -297,9 +297,6 @@ class COMPOSITOR_EXPORT LayerAnimator : public base::RefCounted<LayerAnimator>,
   // Finishes any running animation with zero duration.
   void FinishAnyAnimationWithZeroDuration();
 
-  // Clears the running animations and the queue. No sequences are progressed.
-  void ClearAnimations();
-
   // Returns the running animation animating the given property, if any.
   RunningAnimation* GetRunningAnimation(
       LayerAnimationElement::AnimatableProperty property);
@@ -356,6 +353,9 @@ class COMPOSITOR_EXPORT LayerAnimator : public base::RefCounted<LayerAnimator>,
   void PurgeDeletedAnimations();
 
   LayerAnimatorCollection* GetLayerAnimatorCollection();
+
+  void NotifyTargetChangedForProperties(
+      const LayerAnimationElement::TargetValue& previous_target);
 
   // cc::AnimationDelegate implementation.
   void NotifyAnimationStarted(base::TimeTicks monotonic_time,

@@ -41,7 +41,7 @@ class PointTransformer : public aura::WindowObserver {
 
  private:
   // aura::WindowObserver interface.
-  void OnWindowTransformed(aura::Window* window) override;
+  void OnWindowTargetTransformChanged(aura::Window* window) override;
 
   aura::Window* root_window_;
   gfx::Transform root_to_screen_;
