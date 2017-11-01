@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0b827c3_d55eeb1e",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T20:07:02Z",
+      "side": 0,
+      "message": "It was bugging me that this didn\u0027t really conform to the section about having simple interfaces above, so I reworked this.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 43
+      },
+      "revId": "67b9d2c3efddfae1b7f9396aa9157b7c5dce4ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2cebd8_d06706d9",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T20:07:02Z",
+      "side": 0,
+      "message": "I removed the bad because it\u0027s pretty obvious.",
+      "revId": "67b9d2c3efddfae1b7f9396aa9157b7c5dce4ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
