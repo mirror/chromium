@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0358bd62_61682113",
+        "filename": "base/allocator/partition_allocator/spin_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-01T00:35:56Z",
+      "side": 1,
+      "message": "Performance is going to be really bad when spinning on these platforms. That\u0027s probably not desirable? (Does PPC really not have a yield?)",
+      "revId": "579cbe4e45865da7d62d36c03b7b19febcb2e13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ef60250_664b96e6",
         "filename": "tools/gn/substitution_writer.cc",
         "patchSetId": 1
