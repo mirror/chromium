@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0b3e4b6_07b0e882",
+        "filename": "url/origin.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-01T17:59:22Z",
+      "side": 1,
+      "message": "Origins are immutable objects, aren\u0027t they? I don\u0027t see any way to create one and then assign host, port, etc afterwards.\n\nMaybe the constructor should be made private, and we should instead have Origin::Create(...) and Origin::CreateUnique(), with the understanding that CreateUnique is more expensive than a simple default initialization?",
+      "parentUuid": "4c6b9610_08ffabb2",
+      "revId": "6e240e7bd0a1b9265d2991d35b9ef6ba6acb3476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13fe3da5_6ce66313",
         "filename": "url/origin.h",
         "patchSetId": 5
