@@ -1727,7 +1727,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     }
     newPageOffset = newPage.frame.origin.y;
 
-    [tab view].frame = _contentArea.bounds;
+    webState->GetView().frame = _contentArea.bounds;
     newPage.image = [tab updateSnapshotWithOverlay:YES visibleFrameOnly:YES];
     [animationParentView addSubview:newPage];
     CGPoint origin = [self lastTapPoint];
@@ -3362,8 +3362,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (CGRect)snapshotContentAreaForTab:(Tab*)tab {
   CGRect pageContentArea = _contentArea.bounds;
-  if ([_model webUsageEnabled])
-    pageContentArea = tab.view.bounds;
+  if ([_model webUsageEnabled] && tab.webState) {
+    pageContentArea = tab.webState->GetView().bounds;
+  }
   CGFloat headerHeight = [self headerHeightForTab:tab];
   id nativeController = [self nativeControllerForTab:tab];
   if ([nativeController respondsToSelector:@selector(toolbarHeight)])
