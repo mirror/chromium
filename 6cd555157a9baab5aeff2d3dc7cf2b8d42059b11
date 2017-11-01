@@ -520,6 +520,30 @@
     },
     {
       "key": {
+        "uuid": "c510fa4f_e7d0bd9b",
+        "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T23:35:04Z",
+      "side": 1,
+      "message": "Definitely not! Thanks for the explanation.",
+      "parentUuid": "c71ff970_a5074cca",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 69
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8894e751_ee26252b",
         "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
         "patchSetId": 19
@@ -697,6 +721,30 @@
       "side": 1,
       "message": "It is. zip::Zip() returns a boolean that reflects if the ZIP operation succeeded.\nNow using a local var for clarity.",
       "parentUuid": "bc1a5b66_d518dbe4",
+      "range": {
+        "startLine": 169,
+        "startChar": 6,
+        "endLine": 169,
+        "endChar": 37
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ed4ebcd_e9c4fee1",
+        "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T23:35:04Z",
+      "side": 1,
+      "message": "My mistake. Feel free to put it back to how it way.",
+      "parentUuid": "cbfe26ad_a0a71739",
       "range": {
         "startLine": 169,
         "startChar": 6,
