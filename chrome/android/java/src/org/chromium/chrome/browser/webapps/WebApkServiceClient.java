@@ -70,6 +70,8 @@ public class WebApkServiceClient {
         final ApiUseCallback connectionCallback = new ApiUseCallback() {
             @Override
             public void useApi(IWebApkApi api) throws RemoteException {
+                if (api == null) return;
+
                 int smallIconId = api.getSmallIconId();
                 // Prior to Android M, the small icon had to be from the resources of the app whose
                 // NotificationManager is used in {@link NotificationManager#notify()}. On Android
@@ -103,6 +105,8 @@ public class WebApkServiceClient {
         final ApiUseCallback connectionCallback = new ApiUseCallback() {
             @Override
             public void useApi(IWebApkApi api) throws RemoteException {
+                if (api == null) return;
+
                 api.cancelNotification(platformTag, platformID);
             }
         };
