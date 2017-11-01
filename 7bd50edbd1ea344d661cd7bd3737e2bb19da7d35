@@ -1,0 +1,675 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "288019b3_0696c785",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "I am wondering if there is a better name than proposed_page...\nAt this point it is either written in DB or not.",
+      "range": {
+        "startLine": 216,
+        "startChar": 27,
+        "endLine": 216,
+        "endChar": 40
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad11dd24_45e269aa",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Can we put this method above the one before it?\nIt would follow the logical order of calls we make...",
+      "range": {
+        "startLine": 227,
+        "startChar": 32,
+        "endLine": 227,
+        "endChar": 51
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a073831_4eb96c72",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "try to separate methods that are semantic helpers (InsertPage, BuildArchiver)\nfrom methods that are test/execution utilities: Pump, Reset, ...",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 15
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086eb183_f6d5f078",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "268f810c_15be8f0b",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2269306_1a944032",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "This one is actually used, but I think you should pull it out from the directory, where you expect the file to have been saved (based on the most recent date).",
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa48e125_ab344ad6",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "not used?",
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610081f3_1b563b6e",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "nit: empty line missing",
+      "range": {
+        "startLine": 188,
+        "startChar": 31,
+        "endLine": 188,
+        "endChar": 0
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0718eae_3bbb0343",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Could we have a constant for empty request origin, or at least add a /* request_origin */?",
+      "range": {
+        "startLine": 259,
+        "startChar": 60,
+        "endLine": 259,
+        "endChar": 62
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8518898c_c3293353",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Will this work with OnceCallback?",
+      "range": {
+        "startLine": 260,
+        "startChar": 44,
+        "endLine": 260,
+        "endChar": 58
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c3e3cf_e0cf1aa8",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "separate patch idea...\n\nfile_test_util()-\u003eGetFileCountInDir()\nfile_test_util()-\u003eFileExists()\nfile_test_util()-\u003eGetFileSize()",
+      "range": {
+        "startLine": 262,
+        "startChar": 17,
+        "endLine": 262,
+        "endChar": 55
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7d651a_8d0fd506",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "ASSERT_TRUE, given what you do in the next line.",
+      "range": {
+        "startLine": 265,
+        "startChar": 2,
+        "endLine": 265,
+        "endChar": 13
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26fa369e_f2617bc7",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "would .get() instead of * work?",
+      "range": {
+        "startLine": 266,
+        "startChar": 32,
+        "endLine": 266,
+        "endChar": 46
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64429dd3_a2aec96d",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Looks like Callback definition could be done inside of the SavePage test method, as in without callback. Result could be offline_id, but it could be returned by pointer.",
+      "range": {
+        "startLine": 284,
+        "startChar": 3,
+        "endLine": 290,
+        "endChar": 60
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7685ee7c_50467d8b",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "ASSERT_TRUE  applies everywhere were you are going to be .get()ting from that pointer in next line",
+      "range": {
+        "startLine": 295,
+        "startChar": 2,
+        "endLine": 295,
+        "endChar": 13
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7687d567_8dd0b729",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "same here, please consider changing to .get(), applies everywhere.",
+      "range": {
+        "startLine": 296,
+        "startChar": 32,
+        "endLine": 296,
+        "endChar": 46
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d562809_07b55c10",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Marking as reviewed for equivalence.",
+      "range": {
+        "startLine": 303,
+        "startChar": 38,
+        "endLine": 303,
+        "endChar": 73
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b8a50d3_fce7ddca",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Marking as reviewed for equivalence.",
+      "range": {
+        "startLine": 333,
+        "startChar": 38,
+        "endLine": 333,
+        "endChar": 70
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad64ac2_efb5411b",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Marking as reviewed for equivalence.",
+      "range": {
+        "startLine": 342,
+        "startChar": 38,
+        "endLine": 342,
+        "endChar": 71
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "597eb1f0_8909844f",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Marking as reviewed for equivalence.",
+      "range": {
+        "startLine": 352,
+        "startChar": 7,
+        "endLine": 352,
+        "endChar": 48
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "645c66c8_2980cab9",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Marking as reviewed for equivalence.",
+      "range": {
+        "startLine": 362,
+        "startChar": 38,
+        "endLine": 362,
+        "endChar": 67
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "087beb04_1580334c",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Marking as reviewed for equivalence.",
+      "range": {
+        "startLine": 372,
+        "startChar": 38,
+        "endLine": 372,
+        "endChar": 77
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2012a355_cfac13c6",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Move the missing test here from the bottom of the file.",
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae93a57b_deacb371",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "rename it to first_archiver or delayed_archiver.\nThe reason to call PumpLoop was not obvious here.",
+      "range": {
+        "startLine": 402,
+        "startChar": 27,
+        "endLine": 402,
+        "endChar": 39
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc50bae0_ba9909f8",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 407,
+        "startChar": 35,
+        "endLine": 407,
+        "endChar": 54
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b47052a_970f64f3",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Is this actually needed? It does not seem so from the other tests...",
+      "range": {
+        "startLine": 411,
+        "startChar": 2,
+        "endLine": 411,
+        "endChar": 13
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5df3b1_0b764351",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "It would  be perfectly fine to run that verification after both items are in the store, probably even better, because you would catch accidental overwrites.",
+      "range": {
+        "startLine": 415,
+        "startChar": 0,
+        "endLine": 422,
+        "endChar": 49
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae3832f_c464989b",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Did you consider wrapping this in a method?",
+      "range": {
+        "startLine": 450,
+        "startChar": 3,
+        "endLine": 453,
+        "endChar": 13
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ccc4b8_9757a096",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "This test is missing verification. Please update.",
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2150de5_dd7099fe",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "Can we mark the new tests somehow, or at least move them to the end of the file?",
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26318646_5f5e8b19",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-01T22:24:40Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 474,
+        "startChar": 38,
+        "endLine": 474,
+        "endChar": 73
+      },
+      "revId": "7bd50edbd1ea344d661cd7bd3737e2bb19da7d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
