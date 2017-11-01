@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5e6246b_fbff358f",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T17:41:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ae784e2_a4d46ed2",
+      "revId": "a56c99af57b91868da57923260f85a0c7dc30a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55764e5b_472580b2",
         "filename": "chrome/browser/vr/ui_scene_manager.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-01T16:41:20Z",
       "side": 1,
       "message": "What about putting incognito into the model, but not necessarily using it for actual incognito yet?",
+      "revId": "a56c99af57b91868da57923260f85a0c7dc30a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d6571d_eb38e1fa",
+        "filename": "chrome/browser/vr/ui_scene_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T17:41:46Z",
+      "side": 1,
+      "message": "Done, though I was a bit concerned about brittleness setting both incognito bits in the ui scene manager unit tests. To mitigate that, I\u0027ve added a SetIncognito function on UiSceneManagerTest that does the same thing that Ui does and converted the existing unit tests to use it.",
+      "parentUuid": "55764e5b_472580b2",
       "revId": "a56c99af57b91868da57923260f85a0c7dc30a13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
