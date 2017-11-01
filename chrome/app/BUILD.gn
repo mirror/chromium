@@ -386,6 +386,7 @@ static_library("test_support") {
 
 chrome_packaged_services = [
   ":chrome_manifest",
+  ":chrome_renderer_manifest",
   "//chrome/profiling:manifest",
   "//services/proxy_resolver:proxy_resolver_manifest",
   "//services/preferences:local_state_manifest",
@@ -416,6 +417,10 @@ if (!is_android) {
 
 service_manifest("chrome_manifest") {
   source = "chrome_manifest.json"
+}
+
+service_manifest("chrome_renderer_manifest") {
+  source = "chrome_renderer_manifest.json"
 }
 
 service_manifest("chrome_content_packaged_services_manifest_overlay_for_mash") {
