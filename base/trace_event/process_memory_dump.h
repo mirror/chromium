@@ -159,19 +159,13 @@ class BASE_EXPORT ProcessMemoryDump {
   // the memory usage of |target| to |source|. |importance| is optional and
   // relevant only for the cases of co-ownership, where it acts as a z-index:
   // the owner with the highest importance will be attributed |target|'s memory.
+  // If an edge is present, its importance will not be updated unless
+  // |importance| is larger.
   void AddOwnershipEdge(const MemoryAllocatorDumpGuid& source,
                         const MemoryAllocatorDumpGuid& target,
                         int importance);
   void AddOwnershipEdge(const MemoryAllocatorDumpGuid& source,
                         const MemoryAllocatorDumpGuid& target);
-
-  // Adds or overrides an ownership edge with the semantics: if the edge is
-  // not present it will be added. If an edge is present, the edge will be
-  // overriden but its importance will not be updated unless |importance|
-  // is larger.
-  void AddOwnershipEdgeIfImportant(const MemoryAllocatorDumpGuid& source,
-                                   const MemoryAllocatorDumpGuid& target,
-                                   int importance);
 
   // Adds edges that can be overriden by a later or earlier call to
   // AddOwnershipEdge() with the same source and target with a different

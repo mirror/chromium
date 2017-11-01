@@ -384,25 +384,12 @@ void ProcessMemoryDump::AddOwnershipEdge(const MemoryAllocatorDumpGuid& source,
                                          int importance) {
   // This will either override an existing edge or create a new one.
   auto it = allocator_dumps_edges_.find(source);
+  int max_importance = importance;
   if (it != allocator_dumps_edges_.end()) {
     DCHECK_EQ(target.ToUint64(), it->second.target.ToUint64());
+    max_importance = std::max(importance, it->second.importance);
   }
-  allocator_dumps_edges_[source] = {source, target, importance,
-                                    false /* overridable */};
-}
-
-void ProcessMemoryDump::AddOwnershipEdgeIfImportant(
-    const MemoryAllocatorDumpGuid& source,
-    const MemoryAllocatorDumpGuid& target,
-    int importance) {
-  // This will either override an existing edge or create a new one.
-  auto it = allocator_dumps_edges_.find(source);
-  int actual_importance = importance;
-  if (it != allocator_dumps_edges_.end()) {
-    DCHECK_EQ(target.ToUint64(), it->second.target.ToUint64());
-    actual_importance = std::max(actual_importance, it->second.importance);
-  }
-  allocator_dumps_edges_[source] = {source, target, actual_importance,
+  allocator_dumps_edges_[source] = {source, target, max_importance,
                                     false /* overridable */};
 }
 
@@ -473,7 +460,7 @@ void ProcessMemoryDump::CreateSharedMemoryOwnershipEdgeInternal(
   // GetOrCreaetGlobalDump() in PMD since we need to change the behavior of the
   // created global dump.
   // Create an edge that overrides the edge created by SharedMemoryTracker.
-  AddOwnershipEdgeIfImportant(local_shm_guid, global_shm_guid, importance);
+  AddOwnershipEdge(local_shm_guid, global_shm_guid, importance);
 }
 
 void ProcessMemoryDump::AddSuballocation(const MemoryAllocatorDumpGuid& source,
