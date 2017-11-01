@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed123591_4415acb9",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5368,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-01T23:52:09Z",
+      "side": 1,
+      "message": "You can imagine that we can present the UI locally here in the future.",
+      "revId": "1069b32837fdd3a63a10a6389fc004c2532628ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
