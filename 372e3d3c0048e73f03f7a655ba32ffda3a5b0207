@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d2e6dc8_f7f4ea31",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-01T19:53:18Z",
+      "side": 1,
+      "message": "nit: I am OK at this moment with this impl. But it seems ideally we should dispatch this event only in case package_name represented VPN. If this sounds reasonable then TODO is OK for me.",
+      "range": {
+        "startLine": 123,
+        "startChar": 13,
+        "endLine": 123,
+        "endChar": 36
+      },
+      "revId": "372e3d3c0048e73f03f7a655ba32ffda3a5b0207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f269ed6d_f7ba3042",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-01T19:53:18Z",
+      "side": 1,
+      "message": "nit: \u003d default?",
+      "range": {
+        "startLine": 157,
+        "startChar": 58,
+        "endLine": 157,
+        "endChar": 59
+      },
+      "revId": "372e3d3c0048e73f03f7a655ba32ffda3a5b0207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c135f8_dd1eeb3f",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-01T19:53:18Z",
+      "side": 1,
+      "message": "nit: const if possible",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 15
+      },
+      "revId": "372e3d3c0048e73f03f7a655ba32ffda3a5b0207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
