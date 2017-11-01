@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c4f8793_bf4263c0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-01T23:44:10Z",
+      "side": 1,
+      "message": "please also update: chrome/browser/about_flags.cc. see https://cs.chromium.org/chromium/src/chrome/browser/about_flags.cc?type\u003dcs\u0026q\u003dkMemlogModeAll\u0026sq\u003dpackage:chromium\u0026l\u003d1054",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ee80ec_57e83e4a",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-01T23:44:10Z",
+      "side": 1,
+      "message": "msvc won\u0027t compile if you don\u0027t have a return after the end of the switch statement [or else a default: case].",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a4e023_c10e7ad6",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-01T23:44:10Z",
+      "side": 1,
+      "message": "should this be FakeBackgroundProfilingTriggers?",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39865cf_2257376a",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-01T23:44:10Z",
+      "side": 1,
+      "message": "please file a bug for all TODOs and include a link in the TODO itself.\n\ne.g. // TODO(ajwong): ..... https://crbug.com/######.\n\nOtherwise, it\u0027s too easy for TODOs to get lost. In this case, a single bug can probably cover both TODOs.",
+      "range": {
+        "startLine": 364,
+        "startChar": 17,
+        "endLine": 364,
+        "endChar": 18
+      },
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c6d279_2231f134",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-01T23:44:10Z",
+      "side": 1,
+      "message": "I think you want 33333?",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459367ff_edfe3101",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-01T23:44:10Z",
+      "side": 1,
+      "message": "maybe s/StartProfilingchild/StartProfilingNonRendererChild/ ?",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6e9df6_a7428c96",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-01T23:44:10Z",
+      "side": 1,
+      "message": "Please document the lifetime semantics of this raw pointers.",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
