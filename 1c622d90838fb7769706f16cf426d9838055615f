@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f087f5e0_cd333cfc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-01T16:45:34Z",
+      "side": 1,
+      "message": "should we only be calling this if the value did in fact change?\n\nI find the apis in the class to be somewhat confusing.  sChromeHomeEnabled is initalized in isChromeHomeEnabled (although not set to false for tablets in the initial if check).  The fact that cacheChromeHomeEnabled calls isChromeHomeEnabled is the only thing that ensure sChromeHomeEnabled is non-null at this point, which seems non-obvious at first read.\n\nMaybe we should do:\n\nBoolean oldValue \u003d sChromeHomeEnabled;\nsChromeHomeEnabled \u003d null;\ncacheChromeHomeEnabled();  // Internally initializes sChromeHomeEnabled.\nassert sChromeHomeEnabled !\u003d null;\nif (ApiCompatibilityUtils.objectEquals(oldValue, sChromeHomeEnabled)) {\n    // notify...\n}\nsChromeHomeNeedsUpdate \u003d false;\n\nReally it\u0027s more about adding the comment about initialization that would clarify it for me.\n\nThe other option is to not use sChromeHomeEnabled ever outside of isChromeHomeEnabled().  And instead just use isChromeHomeEnabled() here instead of the value.",
+      "range": {
+        "startLine": 217,
+        "startChar": 12,
+        "endLine": 217,
+        "endChar": 41
+      },
+      "revId": "1c622d90838fb7769706f16cf426d9838055615f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
