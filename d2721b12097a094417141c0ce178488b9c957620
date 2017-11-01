@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26fe5a9d_b4452abc",
+        "filename": "media/mojo/services/video_decode_stats_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-01T18:45:04Z",
+      "side": 1,
+      "message": "I think you should use either uint64_t or uint32_t consistently. (Either is fine.)",
+      "revId": "d2721b12097a094417141c0ce178488b9c957620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
