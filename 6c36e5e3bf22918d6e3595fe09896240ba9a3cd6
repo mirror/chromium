@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36d9188e_ef6ef919",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-01T20:41:31Z",
+      "side": 1,
+      "message": "Is a count of 1 (or even 0) much faster?\n\nMaybe add a note in the CL description (or the code if preferred) about why 3 is a good choice.",
+      "revId": "6c36e5e3bf22918d6e3595fe09896240ba9a3cd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
