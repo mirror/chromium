@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17c6ea3d_7fa22960",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_features.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T07:24:07Z",
+      "side": 1,
+      "message": "constexpr char kLowMainThreadLoadThresholdParameterName[] \u003d \"...\";\n\n(The constants are not actually constant, as the pointer value can be assigned)",
+      "revId": "2badf10fda35190af446ff51b8c2d7cc42dd9e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50a8f11_daa148ca",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T07:24:07Z",
+      "side": 1,
+      "message": "Nit: personally I think this would read a bit more clearly as:\n\nSetMainThreadLoadIsLow\nor\nSetMainThreadLoadFactorIsLow (to make it clear this isn\u0027t relating to \u0027loading a subresource\u0027 but the idea of \u0027load\u0027 as CPU usage)\n\nSimilarly, the bool variable would be named to match either:\nmain_thread_load_is_low\nor\nmain_thread_load_factor_is_low",
+      "revId": "2badf10fda35190af446ff51b8c2d7cc42dd9e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6eb426_38e03c24",
+        "filename": "services/resource_coordinator/public/interfaces/signals.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T07:24:07Z",
+      "side": 1,
+      "message": "This kind of goes along with my question in the strongly-typed CU CL: will this become scoped to specific CU types in the future as well?\n\nAlso same comment about naming here.",
+      "revId": "2badf10fda35190af446ff51b8c2d7cc42dd9e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
