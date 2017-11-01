@@ -1286,13 +1286,15 @@ Response InspectorDOMAgent::getBoxModel(
     Maybe<int> node_id,
     Maybe<int> backend_node_id,
     Maybe<String> object_id,
+    Maybe<bool> cssPixels,
     std::unique_ptr<protocol::DOM::BoxModel>* model) {
   Node* node = nullptr;
   Response response = AssertNode(node_id, backend_node_id, object_id, node);
   if (!response.isSuccess())
     return response;
 
-  bool result = InspectorHighlight::GetBoxModel(node, model);
+  bool result =
+      InspectorHighlight::GetBoxModel(node, cssPixels.fromMaybe(false), model);
   if (!result)
     return Response::Error("Could not compute box model.");
   return Response::OK();

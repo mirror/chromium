@@ -187,6 +187,7 @@ class CORE_EXPORT InspectorDOMAgent final
       protocol::Maybe<int> node_id,
       protocol::Maybe<int> backend_node_id,
       protocol::Maybe<String> object_id,
+      protocol::Maybe<bool> cssPixels,
       std::unique_ptr<protocol::DOM::BoxModel>*) override;
   protocol::Response getNodeForLocation(
       int x,

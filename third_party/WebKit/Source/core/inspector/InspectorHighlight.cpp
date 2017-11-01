@@ -6,12 +6,14 @@
 
 #include "core/dom/PseudoElement.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/VisualViewport.h"
 #include "core/geometry/DOMRect.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutGrid.h"
 #include "core/layout/LayoutInline.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/shapes/ShapeOutsideInfo.h"
+#include "core/page/Page.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/PlatformChromeClient.h"
 #include "platform/graphics/Path.h"
@@ -438,6 +440,7 @@ std::unique_ptr<protocol::DictionaryValue> InspectorHighlight::AsProtocolValue()
 // static
 bool InspectorHighlight::GetBoxModel(
     Node* node,
+    bool cssPixels,
     std::unique_ptr<protocol::DOM::BoxModel>* model) {
   LayoutObject* layout_object = node->GetLayoutObject();
   LocalFrameView* view = node->GetDocument().View();
@@ -447,6 +450,18 @@ bool InspectorHighlight::GetBoxModel(
   FloatQuad content, padding, border, margin;
   if (!BuildNodeQuads(node, &content, &padding, &border, &margin))
     return false;
+
+  if (cssPixels) {
+    float scale = 1 / view->GetPage()->GetVisualViewport().Scale();
+    AdjustFloatQuadForAbsoluteZoom(content, *layout_object);
+    AdjustFloatQuadForAbsoluteZoom(padding, *layout_object);
+    AdjustFloatQuadForAbsoluteZoom(border, *layout_object);
+    AdjustFloatQuadForAbsoluteZoom(margin, *layout_object);
+    content.Scale(scale, scale);
+    padding.Scale(scale, scale);
+    border.Scale(scale, scale);
+    margin.Scale(scale, scale);
+  }
 
   IntRect bounding_box =
       view->ContentsToRootFrame(layout_object->AbsoluteBoundingBoxRect());
