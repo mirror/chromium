@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e185ad37_7fb0dc7e",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-01T21:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ada32955_9212b9cf",
+      "revId": "6280861f084f12fa284c91203faccb00d34cedc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89fccb9a_854b2429",
         "filename": "content/renderer/renderer_blink_platform_impl.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9536b7e9_b4122efc",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-01T21:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89fccb9a_854b2429",
+      "revId": "6280861f084f12fa284c91203faccb00d34cedc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0b894b3_0711cbde",
         "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
         "patchSetId": 11
@@ -50,6 +86,24 @@
       "revId": "6280861f084f12fa284c91203faccb00d34cedc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d0d6cf6_686f357d",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-01T21:02:59Z",
+      "side": 1,
+      "message": "Good point, these classes are abstract anyways.",
+      "parentUuid": "e0b894b3_0711cbde",
+      "revId": "6280861f084f12fa284c91203faccb00d34cedc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

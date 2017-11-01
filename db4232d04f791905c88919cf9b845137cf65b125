@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5fd0de2f_076c56e0",
+        "filename": "content/browser/service_worker/link_header_support.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-01T21:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0fa8820_fe926c39",
+      "range": {
+        "startLine": 147,
+        "startChar": 12,
+        "endLine": 147,
+        "endChar": 22
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "886087f3_40abfdad",
         "filename": "content/renderer/renderer_blink_platform_impl.h",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-13T18:02:36Z",
       "side": 1,
       "message": "This should be changed to a forward declaration, like TrialPolicy?",
+      "range": {
+        "startLine": 23,
+        "startChar": 39,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d2d2b3_6761dfc4",
+        "filename": "content/renderer/renderer_blink_platform_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-01T21:02:59Z",
+      "side": 1,
+      "message": "Removed the policy entirely from this header.",
+      "parentUuid": "886087f3_40abfdad",
       "range": {
         "startLine": 23,
         "startChar": 39,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "412c7fe3_6c661847",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-01T21:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f69f6e8_fd1b228c",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 36
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97366b89_2d0a62ea",
         "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "db4232d04f791905c88919cf9b845137cf65b125",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a65603_cfa6fb3e",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-01T21:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97366b89_2d0a62ea",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "45030d32_d66994ed",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-01T21:02:59Z",
+      "side": 1,
+      "message": "Didn\u0027t realize I could just return nullptr and I would get that to consider the unique_ptr(nullptr_t) constructor. This looks much better, thanks.",
+      "parentUuid": "1e8289ca_d1110214",
+      "range": {
+        "startLine": 287,
+        "startChar": 14,
+        "endLine": 287,
+        "endChar": 24
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18b8105f_8681afd6",
         "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.cc",
         "patchSetId": 13
@@ -137,6 +257,30 @@
       "revId": "db4232d04f791905c88919cf9b845137cf65b125",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a4d81a_a5efe6fd",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-01T21:02:59Z",
+      "side": 1,
+      "message": "Does not actually make sense to be null. Unless there was an allocation error.",
+      "parentUuid": "18b8105f_8681afd6",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "27da5176_7f575bb3",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-01T21:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1edf12f4_f6c8922c",
+      "range": {
+        "startLine": 683,
+        "startChar": 18,
+        "endLine": 683,
+        "endChar": 27
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "045ced1e_e1690625",
         "filename": "third_party/WebKit/public/platform/Platform.h",
         "patchSetId": 13
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "eb8a61e9_c82fc144",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-01T21:02:59Z",
+      "side": 1,
+      "message": "Added.",
+      "parentUuid": "045ced1e_e1690625",
+      "range": {
+        "startLine": 685,
+        "startChar": 26,
+        "endLine": 685,
+        "endChar": 48
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7e46507_b581e7dc",
         "filename": "third_party/WebKit/public/platform/Platform.h",
         "patchSetId": 13
@@ -206,6 +398,30 @@
       "revId": "db4232d04f791905c88919cf9b845137cf65b125",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6fe554_acc8e11a",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-01T21:02:59Z",
+      "side": 1,
+      "message": "Deleted, but the validator function above is also a \"create\" function and was renamed accordingly.",
+      "parentUuid": "b7e46507_b581e7dc",
+      "range": {
+        "startLine": 686,
+        "startChar": 26,
+        "endLine": 686,
+        "endChar": 37
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
