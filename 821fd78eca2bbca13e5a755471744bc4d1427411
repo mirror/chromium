@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "00cae854_bfe413e9",
+        "filename": "third_party/WebKit/Source/core/exported/WebHistoryItem.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-11-01T21:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65454e79_03160e29",
+      "revId": "821fd78eca2bbca13e5a755471744bc4d1427411",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c87ded19_a0f51cec",
         "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
         "patchSetId": 7
@@ -74,6 +92,24 @@
       "revId": "821fd78eca2bbca13e5a755471744bc4d1427411",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6b9666_a6a2dfe5",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-11-01T21:49:13Z",
+      "side": 1,
+      "message": "Added a TODO for the other side as well.",
+      "parentUuid": "646d94eb_1efce601",
+      "revId": "821fd78eca2bbca13e5a755471744bc4d1427411",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
