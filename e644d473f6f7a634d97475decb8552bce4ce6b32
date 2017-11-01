@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "950a596d_9bf4b330",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-01T00:15:08Z",
+      "side": 1,
+      "message": "This isn\u0027t accurate; it measures DecodeTask(), of which there can be many per decoder thread. The current trace basically measures how often a flush happens, which is admittedly not all that useful.\n\nI get the impression that the original traces were meant to trace zero-duration events rather than anything performance related. Perhaps DecodeTask() should still be traced, but as an async event?",
+      "range": {
+        "startLine": 11,
+        "startChar": 56,
+        "endLine": 12,
+        "endChar": 21
+      },
+      "revId": "e644d473f6f7a634d97475decb8552bce4ce6b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
