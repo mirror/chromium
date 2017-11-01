@@ -612,10 +612,6 @@
       status: "experimental",
     },
     {
-      name: "MediaStreamSpeech",
-      status: "experimental",
-    },
-    {
       name: "MediaStreamTrackContentHint",
       status: "experimental",
     },
