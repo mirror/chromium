@@ -42,8 +42,9 @@
 namespace {
 
 // static
-gfx::ICCProfile GetICCProfileFromBestMonitor() {
-  gfx::ICCProfile icc_profile;
+scoped_refptr<gfx::ICCProfile> GetICCProfileFromBestMonitor() {
+  scoped_refptr<gfx::ICCProfile> icc_profile =
+      gfx::ICCProfile::FromData(0, nullptr);
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kHeadless))
     return icc_profile;
   Atom property = gfx::GetAtom("_ICC_PROFILE");
@@ -404,9 +405,10 @@ std::vector<display::Display> DesktopScreenX11::BuildDisplaysFromXRandRInfo() {
       // TODO(ccameron): Populate this based on this specific display.
       // http://crbug.com/735613
       if (!display::Display::HasForceColorProfile()) {
-        gfx::ICCProfile icc_profile = GetICCProfileFromBestMonitor();
-        icc_profile.HistogramDisplay(display.id());
-        display.set_color_space(icc_profile.GetColorSpace());
+        scoped_refptr<gfx::ICCProfile> icc_profile =
+            GetICCProfileFromBestMonitor();
+        icc_profile->HistogramDisplay(display.id());
+        display.set_color_space(icc_profile->GetColorSpace());
       }
 
       displays.push_back(display);

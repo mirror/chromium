@@ -959,8 +959,8 @@ sk_sp<SkColorSpace> ColorTransformInternal::GetSkColorSpaceIfNecessary(
       color_space.transfer_ != ColorSpace::TransferID::ICC_BASED) {
     return nullptr;
   }
-  DCHECK(color_space.icc_profile_sk_color_space_);
-  return color_space.icc_profile_sk_color_space_;
+  DCHECK(color_space.icc_profile_);
+  return color_space.icc_profile_->GetSkColorSpace();
 }
 ColorTransformInternal::ColorTransformInternal(const ColorSpace& src,
                                                const ColorSpace& dst,

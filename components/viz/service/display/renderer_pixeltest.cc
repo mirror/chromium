@@ -3634,11 +3634,11 @@ class ColorTransformPixelTest
     dst_color_space_ = std::tr1::get<1>(GetParam());
     if (!src_color_space_.IsValid()) {
       src_color_space_ =
-          gfx::ICCProfileForTestingNoAnalyticTrFn().GetColorSpace();
+          gfx::ICCProfileForTestingNoAnalyticTrFn()->GetColorSpace();
     }
     if (!dst_color_space_.IsValid()) {
       dst_color_space_ =
-          gfx::ICCProfileForTestingNoAnalyticTrFn().GetColorSpace();
+          gfx::ICCProfileForTestingNoAnalyticTrFn()->GetColorSpace();
     }
   }
   gfx::ColorSpace src_color_space_;

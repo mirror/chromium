@@ -11,6 +11,7 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "third_party/skia/include/core/SkColorSpace.h"
 #include "ui/gfx/color_space_export.h"
@@ -23,7 +24,6 @@ struct ParamTraits;
 namespace gfx {
 
 class ICCProfile;
-class ICCProfileCache;
 
 // Used to represet a color space for the purpose of color conversion.
 // This is designed to be safe and compact enough to send over IPC
@@ -193,10 +193,9 @@ class COLOR_SPACE_EXPORT ColorSpace {
   // range, and unspecified spaces.
   sk_sp<SkColorSpace> ToSkColorSpace() const;
 
-  // Populate |icc_profile| with an ICC profile that represents this color
-  // space. Returns false if this space is not representable.
-  bool GetICCProfile(ICCProfile* icc_profile) const;
-  bool GetICCProfileData(std::vector<char>* data) const;
+  // Return an ICC profile that represents this color space. Returns nullptr
+  // if this space is not representable.
+  scoped_refptr<ICCProfile> GetICCProfile() const;
 
   void GetPrimaryMatrix(SkMatrix44* to_XYZD50) const;
   bool GetTransferFunction(SkColorSpaceTransferFn* fn) const;
@@ -229,11 +228,9 @@ class COLOR_SPACE_EXPORT ColorSpace {
 
   // This is used to look up the ICCProfile from which this ColorSpace was
   // created, if possible.
-  uint64_t icc_profile_id_ = 0;
-  sk_sp<SkColorSpace> icc_profile_sk_color_space_;
+  scoped_refptr<ICCProfile> icc_profile_;
 
   friend class ICCProfile;
-  friend class ICCProfileCache;
   friend class ColorTransform;
   friend class ColorTransformInternal;
   friend class ColorSpaceWin;
