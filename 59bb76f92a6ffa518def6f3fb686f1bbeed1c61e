@@ -22,6 +22,30 @@
       "revId": "59bb76f92a6ffa518def6f3fb686f1bbeed1c61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20935835_6650ff4d",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-01T00:51:11Z",
+      "side": 1,
+      "message": "I think it will guarantee since the loading buffer is set to have view size zero, which must have dimension difference if the query has answer card result. This change is to let loading buffer to load view from size zero to its preferred size (it is the same effect for loading the first answer card when opening launcher and typing the query).\n\nWe may want to use DidFirstVisuallyNonEmptyPaint() signal to wait until is painted to layout, however, it is generated only when the webview is added as child view, and not invisible from my investigation. I am blocked with this. We don\u0027t want to show the view until DidFirstVisuallyNonEmptyPaint() is received, but looks like it has to been shown to get DidFirstVisuallyNonEmptyPaint.",
+      "parentUuid": "09e57e91_1d5c2efb",
+      "range": {
+        "startLine": 52,
+        "startChar": 53,
+        "endLine": 52,
+        "endChar": 79
+      },
+      "revId": "59bb76f92a6ffa518def6f3fb686f1bbeed1c61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
