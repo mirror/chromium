@@ -44,7 +44,7 @@ def _RunUseCounterChecks(input_api, output_api):
             message_type = output_api.PresubmitPromptWarning
 
         return [message_type(
-            'Largest found CSSProperty bucket Id (%d) does not match '
+            'Largest found CSSPropertyValue bucket Id (%d) does not match '
             'maximumCSSSampleId (%d)' % (
                 largest_found_bucket, expected_max_bucket),
             items=[use_counter_cpp_file.LocalPath()])]

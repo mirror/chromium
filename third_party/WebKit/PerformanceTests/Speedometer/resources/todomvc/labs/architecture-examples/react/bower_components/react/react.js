@@ -134,7 +134,7 @@ var shorthandPropertyExpansions = {
   }
 };
 
-var CSSProperty = {
+var CSSPropertyValue = {
   isUnitlessNumber: isUnitlessNumber,
   shorthandPropertyExpansions: shorthandPropertyExpansions
 };
@@ -163,7 +163,7 @@ module.exports = CSSProperty;
 
 "use strict";
 
-var CSSProperty = require("./CSSProperty");
+var CSSPropertyValue = require("./CSSProperty");
 
 var dangerousStyleValue = require("./dangerousStyleValue");
 var escapeTextForBrowser = require("./escapeTextForBrowser");
@@ -9896,7 +9896,7 @@ module.exports = createObjectFrom;
 
 "use strict";
 
-var CSSProperty = require("./CSSProperty");
+var CSSPropertyValue = require("./CSSProperty");
 
 /**
  * Convert a value into the proper css writable value. The `styleName` name
