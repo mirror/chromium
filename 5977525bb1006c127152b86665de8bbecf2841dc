@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a170731c_ba9c4b43",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-11-01T17:29:44Z",
+      "side": 1,
+      "message": "Hadn\u0027t thought about it but CONTINUE_ON_SHUTDOWN definitely makes sense.\n\nI don\u0027t think this constitute as a blocking operation because it actually does work for the duration of the function call, instead of just hogging the thread waiting for something else. FWIW, fdoray@ agrees with me.",
+      "parentUuid": "e627dbd6_a554e505",
+      "revId": "5977525bb1006c127152b86665de8bbecf2841dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69217a93_f7489bd6",
         "filename": "chrome/common/conflicts/module_watcher_win.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "5977525bb1006c127152b86665de8bbecf2841dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874e0843_e9c900ff",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-11-01T17:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69217a93_f7489bd6",
+      "revId": "5977525bb1006c127152b86665de8bbecf2841dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f087b99f_243b4c68",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-11-01T17:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaa595db_b25be729",
+      "revId": "5977525bb1006c127152b86665de8bbecf2841dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52e8892d_9b5da5e3",
         "filename": "chrome/common/conflicts/module_watcher_win.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "5977525bb1006c127152b86665de8bbecf2841dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1498fd52_4ee1b3c1",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-11-01T17:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52e8892d_9b5da5e3",
+      "revId": "5977525bb1006c127152b86665de8bbecf2841dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
