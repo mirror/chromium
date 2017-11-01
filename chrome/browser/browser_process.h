@@ -91,6 +91,10 @@ namespace network_time {
 class NetworkTimeTracker;
 }
 
+namespace optimization_guide {
+class OptimizationGuideService;
+}
+
 namespace physical_web {
 class PhysicalWebDataSource;
 }
@@ -237,6 +241,11 @@ class BrowserProcess {
   // in the system status tray. Returns NULL if status icons are not supported
   // on this platform (or this is a unit test).
   virtual StatusTray* status_tray() = 0;
+
+  // Returns the service used to provide hints for what optimizations can be
+  // performed on slow page loads.
+  virtual optimization_guide::OptimizationGuideService*
+  optimization_guide_service() = 0;
 
   // Returns the SafeBrowsing service.
   virtual safe_browsing::SafeBrowsingService* safe_browsing_service() = 0;

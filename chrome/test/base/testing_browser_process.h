@@ -82,6 +82,8 @@ class TestingBrowserProcess : public BrowserProcess {
   void set_background_mode_manager_for_test(
       std::unique_ptr<BackgroundModeManager> manager) override;
   StatusTray* status_tray() override;
+  optimization_guide::OptimizationGuideService* optimization_guide_service()
+      override;
   safe_browsing::SafeBrowsingService* safe_browsing_service() override;
   safe_browsing::ClientSideDetectionService* safe_browsing_detection_service()
       override;
@@ -175,6 +177,8 @@ class TestingBrowserProcess : public BrowserProcess {
       print_preview_dialog_controller_;
 #endif
 
+  std::unique_ptr<optimization_guide::OptimizationGuideService>
+      optimization_guide_service_;
   scoped_refptr<safe_browsing::SafeBrowsingService> sb_service_;
   std::unique_ptr<subresource_filter::ContentRulesetService>
       subresource_filter_ruleset_service_;

@@ -28,8 +28,13 @@ namespace net {
 class URLRequest;
 }
 
+namespace optimization_guide {
+class OptimizationGuideService;
+}
+
 namespace previews {
 class PreviewsOptOutStore;
+class PreviewsOptimizationGuide;
 class PreviewsUIService;
 
 typedef base::Callback<bool(PreviewsType)> PreviewsIsEnabledCallback;
@@ -42,7 +47,8 @@ class PreviewsIOData : public PreviewsDecider,
  public:
   PreviewsIOData(
       const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner,
-      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner);
+      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
+      optimization_guide::OptimizationGuideService* optmization_guide_service);
   ~PreviewsIOData() override;
 
   // PreviewsBlacklistDelegate:
@@ -104,6 +110,7 @@ class PreviewsIOData : public PreviewsDecider,
   base::WeakPtr<PreviewsUIService> previews_ui_service_;
 
   std::unique_ptr<PreviewsBlackList> previews_black_list_;
+  std::unique_ptr<PreviewsOptimizationGuide> previews_optimization_guide_;
 
   // The UI and IO thread task runners. |ui_task_runner_| is used to post
   // tasks to |previews_ui_service_|, and |io_task_runner_| is used to post from

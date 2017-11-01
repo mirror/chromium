@@ -141,7 +141,7 @@ class PreviewsUIServiceTest : public testing::Test {
     logger_ptr_ = logger.get();
 
     set_io_data(base::WrapUnique(
-        new PreviewsIOData(loop_.task_runner(), loop_.task_runner())));
+        new PreviewsIOData(loop_.task_runner(), loop_.task_runner(), nullptr)));
     set_ui_service(base::WrapUnique(new TestPreviewsUIService(
         io_data(), loop_.task_runner(), nullptr, std::move(logger))));
     base::RunLoop().RunUntilIdle();

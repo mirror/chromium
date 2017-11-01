@@ -14,9 +14,12 @@
 #include "base/metrics/histogram.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/stringprintf.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/default_clock.h"
+#include "components/optimization_guide/optimization_guide_service.h"
 #include "components/previews/core/previews_experiments.h"
 #include "components/previews/core/previews_opt_out_store.h"
+#include "components/previews/core/previews_optimization_guide.h"
 #include "components/previews/core/previews_ui_service.h"
 #include "net/base/load_flags.h"
 #include "net/nqe/network_quality_estimator.h"
@@ -62,10 +65,19 @@ bool AllowedOnReload(PreviewsType type) {
 
 PreviewsIOData::PreviewsIOData(
     const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner,
-    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
+    const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
+    optimization_guide::OptimizationGuideService* optimization_guide_service)
     : ui_task_runner_(ui_task_runner),
       io_task_runner_(io_task_runner),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  if (params::AreOptimizationHintsEnabled()) {
+    scoped_refptr<base::SequencedTaskRunner> background_task_runner =
+        base::CreateSequencedTaskRunnerWithTraits(
+            {base::MayBlock(), base::TaskPriority::BACKGROUND});
+    previews_optimization_guide_.reset(new PreviewsOptimizationGuide(
+        background_task_runner, io_task_runner_, optimization_guide_service));
+  }
+}
 
 PreviewsIOData::~PreviewsIOData() {}
 
@@ -228,6 +240,14 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
         PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER, request.url(),
         base::Time::Now(), type);
     return false;
+  }
+
+  if (params::AreOptimizationHintsEnabled()) {
+    if (type == PreviewsType::NOSCRIPT) {
+      if (!previews_optimization_guide_->IsWhitelisted(request, type)) {
+        return false;
+      }
+    }
   }
 
   LogPreviewDecisionMade(PreviewsEligibilityReason::ALLOWED, request.url(),

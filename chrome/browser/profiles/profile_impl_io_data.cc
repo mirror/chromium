@@ -177,7 +177,8 @@ void ProfileImplIOData::Handle::Init(
 
   io_data_->set_previews_io_data(base::MakeUnique<previews::PreviewsIOData>(
       BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)));
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+      g_browser_process->optimization_guide_service()));
   PreviewsServiceFactory::GetForProfile(profile_)->Initialize(
       io_data_->previews_io_data(),
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO), profile_path);

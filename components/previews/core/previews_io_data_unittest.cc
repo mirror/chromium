@@ -31,6 +31,7 @@
 #include "components/previews/core/previews_features.h"
 #include "components/previews/core/previews_logger.h"
 #include "components/previews/core/previews_opt_out_store.h"
+#include "components/previews/core/previews_optimization_guide.h"
 #include "components/previews/core/previews_ui_service.h"
 #include "components/variations/variations_associated_data.h"
 #include "net/base/load_flags.h"
@@ -255,11 +256,19 @@ class TestPreviewsOptOutStore : public PreviewsOptOutStore {
   void ClearBlackList(base::Time begin_time, base::Time end_time) override {}
 };
 
+class TestPreviewsOptimizationGuide : public PreviewsOptimizationGuide {
+ public:
+  TestPreviewsOptimizationGuide() {}
+  ~TestPreviewsOptimizationGuide() {}
+};
+
 class PreviewsIODataTest : public testing::Test {
  public:
   PreviewsIODataTest()
       : field_trial_list_(nullptr),
-        io_data_(loop_.task_runner(), loop_.task_runner()),
+        io_data_(loop_.task_runner(),
+                 loop_.task_runner(),
+                 new TestPreviewsOptimizationGuide),
         context_(true) {
     context_.set_network_quality_estimator(&network_quality_estimator_);
     context_.Init();

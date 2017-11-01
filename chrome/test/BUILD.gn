@@ -124,6 +124,7 @@ static_library("test_support") {
     "//components/network_session_configurator/common",
     "//components/network_time:network_time_test_support",
     "//components/omnibox/browser:test_support",
+    "//components/optimization_guide",
     "//components/password_manager/core/browser:test_support",
     "//components/prefs:test_support",
     "//components/rappor:test_support",

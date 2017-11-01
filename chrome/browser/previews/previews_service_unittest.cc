@@ -20,6 +20,7 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/previews/core/previews_features.h"
 #include "components/previews/core/previews_io_data.h"
+#include "components/previews/core/previews_optimization_guide.h"
 #include "components/previews/core/previews_ui_service.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/browser_thread.h"
@@ -36,7 +37,8 @@ class TestPreviewsIOData : public previews::PreviewsIOData {
       : previews::PreviewsIOData(content::BrowserThread::GetTaskRunnerForThread(
                                      content::BrowserThread::UI),
                                  content::BrowserThread::GetTaskRunnerForThread(
-                                     content::BrowserThread::UI)) {}
+                                     content::BrowserThread::UI),
+                                 nullptr /* previews_optimization_guide */) {}
   ~TestPreviewsIOData() override {}
 
   void Initialize(

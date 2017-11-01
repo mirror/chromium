@@ -165,6 +165,10 @@ bool IsNoScriptPreviewsEnabled() {
   return base::FeatureList::IsEnabled(features::kNoScriptPreviews);
 }
 
+bool AreOptimizationHintsEnabled() {
+  return base::FeatureList::IsEnabled(features::kOptimizationHints);
+}
+
 int OfflinePreviewsVersion() {
   return GetParamValueAsInt(kClientSidePreviewsFieldTrial, kVersion, 0);
 }
