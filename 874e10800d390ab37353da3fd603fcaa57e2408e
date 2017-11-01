@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0b5a71b_17b1f89d",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T00:17:04Z",
+      "side": 1,
+      "message": "I think we want \u003e\u003d",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef141975_e6cd2e6c",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T00:17:04Z",
+      "side": 1,
+      "message": "I think this is no longer content widths, but view width. Perhaps just\n\nvoid set_min_width(int min_width) { min_width_ \u003d min_width; }\n\n(i.e. no comment - the one on the data member is fine)",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3230dea1_2058dd8d",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T00:17:04Z",
+      "side": 1,
+      "message": "with the above, nit: remove blank line",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef55d963_b653ae73",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T00:17:04Z",
+      "side": 1,
+      "message": "nit: const method",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d99a3ea_38af9038",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T00:17:04Z",
+      "side": 1,
+      "message": "nit: views::Combobox:",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1902579_23a54758",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T00:17:04Z",
+      "side": 1,
+      "message": "nit: blank line before",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01960b9_e4b0ba4d",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T00:17:04Z",
+      "side": 1,
+      "message": "hmmmm - do we need |initial_selection_width_|? (Can PermissionSelectorRow::GetInitialSelectionWidth() just call `combobox_-\u003eGetPreferredSize().width()` or `combobox_-\u003eCombobox::GetPreferredSize().width()` ?) We\u0027d only need this if we had to capture the width before setting set_size_to_largest_label(false), but we want it afterwards either way.",
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91a2e673_f7ef97ba",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T00:17:04Z",
+      "side": 1,
+      "message": "nit: remove `Content`",
+      "range": {
+        "startLine": 434,
+        "startChar": 42,
+        "endLine": 434,
+        "endChar": 49
+      },
+      "revId": "874e10800d390ab37353da3fd603fcaa57e2408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
