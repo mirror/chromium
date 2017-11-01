@@ -52,6 +52,24 @@
       "revId": "fbf59fdc6ba9b494dc59be9f7de7d9efcf46deb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a75e688_9fd264d6",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_test_template.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-01T20:04:54Z",
+      "side": 1,
+      "message": "I\u0027ve switched to using the inline lambda.\n\n(Out of curiosity I tried if lambda capture would work, along the lines of [\u0026destroyed](const gpu::SyncToken\u0026) { destroyed \u003d true; } which seemed equivalent since the destroyed pointer is unretained, but the capture makes the lambda incompatible with the expected function pointer.)",
+      "parentUuid": "563ac1b7_cbadc3a6",
+      "revId": "fbf59fdc6ba9b494dc59be9f7de7d9efcf46deb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
