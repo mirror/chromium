@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bc14a22_1291ee50",
+        "filename": "ios/web_view/internal/language/web_view_url_language_histogram_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-01T06:49:12Z",
+      "side": 1,
+      "message": "It is two characters too long to fit.",
+      "parentUuid": "3f8be9b4_260bdbb8",
+      "revId": "bdd2bffa82f8dba69d8b696bdac9cee5bd2928cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b6d2c6b_3b275aaa",
         "filename": "ios/web_view/internal/language/web_view_url_language_histogram_factory.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "164ccf18_54d52aae",
+        "filename": "ios/web_view/internal/language/web_view_url_language_histogram_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-01T06:49:12Z",
+      "side": 1,
+      "message": "Discussed offline:\nIf we rely on lazy initialization, the dependency manager won\u0027t know about this factory at the point that it registers preferences (i.e. it won\u0027t call our RegisterBrowserStatePrefs).",
+      "parentUuid": "8b6d2c6b_3b275aaa",
+      "revId": "bdd2bffa82f8dba69d8b696bdac9cee5bd2928cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86e98c37_db3a4fc0",
         "filename": "ios/web_view/internal/language/web_view_url_language_histogram_factory.h",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-01T06:33:38Z",
       "side": 1,
       "message": "ditto",
+      "revId": "bdd2bffa82f8dba69d8b696bdac9cee5bd2928cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3a4ca7d_72bae5d4",
+        "filename": "ios/web_view/internal/language/web_view_url_language_histogram_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-01T06:49:12Z",
+      "side": 1,
+      "message": "It is one character too long to fit.",
+      "parentUuid": "86e98c37_db3a4fc0",
       "revId": "bdd2bffa82f8dba69d8b696bdac9cee5bd2928cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
