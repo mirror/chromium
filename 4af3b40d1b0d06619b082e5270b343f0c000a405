@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a107e62_642f1750",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "Would it be possible to use std::make_unique, here and in other places where we construct unique_ptr?",
+      "revId": "4af3b40d1b0d06619b082e5270b343f0c000a405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f051623_f6f69030",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "As the encoder thread is a member of this class, we should not need the weak ptr to post to it. |this| will be alive for the entire lifetime of encoder_task_runner_.",
+      "revId": "4af3b40d1b0d06619b082e5270b343f0c000a405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa60e68_f29d2794",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "This should be declared before the factory to ensure proper construction/destruction order.",
+      "revId": "4af3b40d1b0d06619b082e5270b343f0c000a405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a859d803_16c6dad9",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "Nit: I\u0027d suggest s/mismatches/size mismatch/ here and in other similar messages.",
+      "revId": "4af3b40d1b0d06619b082e5270b343f0c000a405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5d2f23_f446fd24",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "Nit: should we say size mismatch?",
+      "revId": "4af3b40d1b0d06619b082e5270b343f0c000a405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee5618c_58cb0a2d",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "Should we be also checking AcTable sizes?",
+      "range": {
+        "startLine": 130,
+        "startChar": 38,
+        "endLine": 130,
+        "endChar": 53
+      },
+      "revId": "4af3b40d1b0d06619b082e5270b343f0c000a405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679e32d7_00863361",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "Please use size.GetArea().",
+      "revId": "4af3b40d1b0d06619b082e5270b343f0c000a405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95dcdde_60d687c7",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "4af3b40d1b0d06619b082e5270b343f0c000a405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407fb8a3_b7e5d745",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "Please document |size|.",
+      "revId": "4af3b40d1b0d06619b082e5270b343f0c000a405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc625f08_c1f3a6b3",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "Please document.",
+      "revId": "4af3b40d1b0d06619b082e5270b343f0c000a405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

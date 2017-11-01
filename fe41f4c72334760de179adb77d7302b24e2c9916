@@ -411,6 +411,30 @@
     },
     {
       "key": {
+        "uuid": "191ff749_f348e9c9",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "What I meant was, we already have an \"input_size\" variable above, which could be used instead of the above call.",
+      "parentUuid": "ddf859a2_ee791f28",
+      "range": {
+        "startLine": 141,
+        "startChar": 32,
+        "endLine": 141,
+        "endChar": 66
+      },
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd82ad1b_c338f200",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
         "patchSetId": 16
@@ -487,6 +511,24 @@
       "side": 1,
       "message": "But BitstreamBuffer is an output buffer here. I think making it pointer type would be consistent with the \"pass input argument as const....\u0026 and pass output argument as points rule\"",
       "parentUuid": "1ade74fe_661b60a3",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27772432_22ccbbe0",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "As far as I can see, we are not modifying any members in the BistreamBuffer class itself, so it could be const\u0026.",
+      "parentUuid": "ecbf8ab2_73f33999",
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -779,6 +821,24 @@
       "side": 1,
       "message": "I would prefer to have a separate (nested) class for those methods running on encoder_task_runner to make it super clear. It\u0027s also suggested by dalecurtis@ in https://chromium-review.googlesource.com/c/chromium/src/+/712134/10/media/gpu/vaapi_jpeg_encode_accelerator.cc#63",
       "parentUuid": "1462526d_b6fe99a5",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2ebdde2_c24a3c95",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ca6a8bba_06b5ff98",
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -1533,6 +1593,24 @@
     },
     {
       "key": {
+        "uuid": "3ce6ef6b_65039a06",
+        "filename": "media/gpu/vaapi_wrapper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "I think we always have the profile available when we need this, could we use that instead, possibly passing it to GetVaEntryPoint() if needed?",
+      "parentUuid": "346a58f7_c7f19ea7",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cca1a59_77e4c50d",
         "filename": "media/gpu/vaapi_wrapper.h",
         "patchSetId": 16
@@ -1562,6 +1640,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "7cca1a59_77e4c50d",
+      "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8fc1f097_df584d01",
+        "filename": "media/gpu/vaapi_wrapper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-01T09:06:46Z",
+      "side": 1,
+      "message": "I think this might have been missed?",
+      "parentUuid": "99ba4478_f584789e",
       "revId": "fe41f4c72334760de179adb77d7302b24e2c9916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
