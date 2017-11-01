@@ -53,11 +53,11 @@ class ChromeBrowserState;
 - (void)addAccountWithCompletion:(signin_ui::CompletionCallback)completion;
 
 // Cancels any current process. Calls the completion callback when done.
-- (void)cancel;
+- (void)cancelWithCompletion:(ProceduralBlock)completion;
 
 // Cancels any current process and dismisses any UI. Calls the completion
 // callback when done.
-- (void)cancelAndDismiss;
+- (void)cancelAndDismissWithCompletion:(ProceduralBlock)completion;
 
 @end
 
