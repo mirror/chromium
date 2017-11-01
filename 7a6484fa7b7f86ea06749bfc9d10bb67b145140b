@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "329cfd09_440fdbed",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-01T19:34:52Z",
+      "side": 0,
+      "message": "danakj: I am not disagreeing with your opinion on AURA and these prefs, but I don\u0027t want that to be part of this CL. So this CL simply moving logic around processes, but not changing them.",
+      "range": {
+        "startLine": 815,
+        "startChar": 12,
+        "endLine": 815,
+        "endChar": 20
+      },
+      "revId": "7a6484fa7b7f86ea06749bfc9d10bb67b145140b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

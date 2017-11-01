@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6512834c_d2bd4841",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-01T19:34:52Z",
+      "side": 1,
+      "message": "junov: if there is no context_provide attached to |image|, should we also set gpu_compositing to false?",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 59
+      },
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
