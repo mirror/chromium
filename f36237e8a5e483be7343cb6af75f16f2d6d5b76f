@@ -34,6 +34,24 @@
       "revId": "f36237e8a5e483be7343cb6af75f16f2d6d5b76f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe8f813_08290c2e",
+        "filename": "base/i18n/time_formatting_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-01T18:18:16Z",
+      "side": 1,
+      "message": "\u003e I just took an ample precaution (I was not sure how unittests is run) because adoptDefault() is not thread-safe. I\u0027ll get rid of it if unnecessary.\n\nIt’s not necessary.\n\nIn this case, each use of ScopedRestoreDefaultTimezone would get its own lock, so it’s not protecting you against other instances of ScopedRestoreDefaultTimezone, or other callers into icu::TimeZone::adoptDefault.\n\nBut don’t worry, tests aren’t run simultaneously in multiple threads. The code should be fine as-is if you just tear out the bsae::Lock and base::AutoLocks. (You can remove the #include then too.)",
+      "parentUuid": "e4793e8e_ffac70fc",
+      "revId": "f36237e8a5e483be7343cb6af75f16f2d6d5b76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
