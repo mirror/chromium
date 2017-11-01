@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fe179fd_89396e24",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-01T20:29:06Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 16,
+        "startChar": 21,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "f381cc39f7df899218245130b6f9b3735283894e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7ce3b5_bf017c6a",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-01T20:29:06Z",
+      "side": 1,
+      "message": "Great timing. I was just looking at why we were issuing predictions/classifications for non-focusable fields.\n\nWas there a reason you proposed putting this at the end of the loop instead of the beginning?",
+      "revId": "f381cc39f7df899218245130b6f9b3735283894e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
