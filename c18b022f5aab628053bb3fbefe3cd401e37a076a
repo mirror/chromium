@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "25d887df_5dfb6179",
+        "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-01T17:23:35Z",
+      "side": 1,
+      "message": "Does this test not work without PlzNavigate?  I\u0027m curious why - I don\u0027t see a reason why it shouldn\u0027t just work (assuming slow_response isn\u0027t needed -- see below).\n\nIf you do need to restrict this to run only with PlzNavigate, it\u0027s enabled by default now, and for tests that only work with it, it might be better to just add\n  if (!IsBrowserSideNavigationEnabled())\n      return;\nto the beginning of the test.  This will just skip this test on the bots that still run tests without PlzNavigate.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 71
+      },
+      "revId": "c18b022f5aab628053bb3fbefe3cd401e37a076a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb1d7fff_b88b79e6",
         "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
         "patchSetId": 7
@@ -42,6 +65,29 @@
         "startChar": 10,
         "endLine": 98,
         "endChar": 67
+      },
+      "revId": "c18b022f5aab628053bb3fbefe3cd401e37a076a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62dd5787_b224455c",
+        "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-01T17:23:35Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand why the slow_response/slow_observer are needed.  This is typically used to interleave other things that need to happen at certain points of the navigation (e.g., once request is sent but before response is received, etc.), but here, there\u0027s nothing else happening.  It seems that for the purposes of the test, we just need a cross-process navigation to complete, which can just be done with something like ui_test_utils::NavigateToURL(\n    browser(), embedded_test_server()-\u003eGetURL(\"foo.com\", \"/title1.html\"));\nAnd then we can just check whether the hung dialog is gone.  Would that work?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 74
       },
       "revId": "c18b022f5aab628053bb3fbefe3cd401e37a076a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
