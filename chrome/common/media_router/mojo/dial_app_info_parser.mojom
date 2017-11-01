@@ -1,0 +1,60 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// DIAL app info parsing interface provided by the utility process and exposed
+// by mojo policy control to the chrome browser process.
+
+module chrome.mojom;
+
+import "mojo/common/values.mojom";
+
+// Error encountered while parsing DIAL app info XML text.
+enum DialAppInfoParsingError {
+  NONE,
+  INVALID_XML,
+  INVALID_SERVICE,
+  GET_RESPONSE_MISSING_NAME_VALUE,
+  GET_RESPONSE_HAS_INVALID_STATE_VALUE,
+  UTILITY_PROCESS_ERROR
+};
+
+// Possible states of a DIAL application.
+enum DialAppState {
+  // The app is running.
+  RUNNING,
+
+  // The app is not running.
+  STOPPED,
+
+  // An error was encountered getting the state.
+  // TODO(mfoltz): Remove this, as it's not part of the spec.
+  ERROR
+};
+
+struct DialAppInfo {
+  // The application name. Mandatory.
+  string name;
+
+  // The reported state of the application.
+  DialAppState state;
+
+  // Extra data used to determine Netflix app status. This Field is optional for
+  // other apps.
+  string? capabilities;
+};
+
+interface DialAppInfoParser {
+  // Parses |app_info_xml_data| to get app info data. If parsing succeeds,
+  // invokes callback with valid |app_info|. Otherwise invokes callback with
+  // nullptr.
+  // |app_info|: app info object. Empty if parsing fails.
+  // |parsing_error|: error encountered while parsing DIAL app info.
+  // Spec for DIAL app info:
+  // https://community.arubanetworks.com/aruba/attachments/aruba/
+  // unified-wired-wireless-access/26971/1/DIAL-2ndScreenProtocol-1.6.4.pdf
+  // Annex A: Application resource XML Schema.
+  ParseDialAppInfo(string app_info_xml_data)
+      => (DialAppInfo? app_info,
+          DialAppInfoParsingError parsing_error);
+};
