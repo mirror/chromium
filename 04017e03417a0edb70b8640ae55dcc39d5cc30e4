@@ -46,6 +46,30 @@
       "revId": "04017e03417a0edb70b8640ae55dcc39d5cc30e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf57e25_397f01d7",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-01T21:28:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "46608436_34e00697",
+      "range": {
+        "startLine": 1059,
+        "startChar": 28,
+        "endLine": 1059,
+        "endChar": 35
+      },
+      "revId": "04017e03417a0edb70b8640ae55dcc39d5cc30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
