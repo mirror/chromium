@@ -51,6 +51,8 @@ if (is_chromeos) {
     sources = [
       "fake_user_manager.cc",
       "fake_user_manager.h",
+      "scoped_user_manager.cc",
+      "scoped_user_manager.h",
     ]
     deps = [
       ":user_manager",
