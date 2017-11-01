@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef7fd2eb_09f45170",
+        "filename": "chrome/browser/ui/chrome_pages.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T03:57:42Z",
+      "side": 1,
+      "message": "auto displayer \u003d std::make_unique\u003c..\u003e",
+      "range": {
+        "startLine": 373,
+        "startChar": 6,
+        "endLine": 373,
+        "endChar": 22
+      },
+      "revId": "a59ea90615e4f82c41686efecfcea0bca6354da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7197fb_ada3101f",
+        "filename": "chrome/browser/ui/chrome_pages.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T03:57:42Z",
+      "side": 1,
+      "message": "declare const? (here and below)",
+      "revId": "a59ea90615e4f82c41686efecfcea0bca6354da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73896da_51373283",
+        "filename": "chrome/browser/ui/chrome_pages.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T03:57:42Z",
+      "side": 1,
+      "message": "It took my brain a long time to realise that the case for this being false is essentially linked to whether ScopedTabbedBrowserDisplayer had to create a new Browser*. Can we mention that in the comment?\n\nE.g.\n\n // If ScopedTabbedBrowserDisplayer had to create a (non-incognito) Browser*, it\n // won\u0027t have any tabs yet.  ...\n\n\nUnless there\u0027s another use-case this is supporting, but I couldn\u0027t think of one. It\u0027s hard to think about cases when a tab strip model is empty, except when tabs are being closed. (E.g. I think hosted app windows and popups just have a single tab, in the model, but return false from `browser-\u003eCanSupportWindowFeature(Browser::FEATURE_TABSTRIP) and have no AvatarButton.",
+      "revId": "a59ea90615e4f82c41686efecfcea0bca6354da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce79efc_7f0f7322",
+        "filename": "chrome/browser/ui/chrome_pages.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T03:57:42Z",
+      "side": 1,
+      "message": "(aside: should this be renamed? I think the cases where the signin flow is shown hanging off the avatar button are becoming rarer. Certainly, BrowserView::ShowAvatarBubbleFromAvatarButton calls ShowModalSignin(..) in some paths, so it\u0027s a bit confusing.)",
+      "range": {
+        "startLine": 391,
+        "startChar": 23,
+        "endLine": 391,
+        "endChar": 55
+      },
+      "revId": "a59ea90615e4f82c41686efecfcea0bca6354da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
