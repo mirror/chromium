@@ -129,6 +129,12 @@ viz::FrameSinkId WindowPortMus::GetFrameSinkId() const {
   return viz::FrameSinkId(0, server_id());
 }
 
+bool WindowPortMus::IsChildSurface() const {
+  if (embed_frame_sink_id_.is_valid())
+    return true;
+  return false;
+}
+
 WindowPortMus::ServerChangeIdType WindowPortMus::ScheduleChange(
     const ServerChangeType type,
     const ServerChangeData& data) {

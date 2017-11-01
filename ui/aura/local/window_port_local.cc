@@ -158,6 +158,10 @@ viz::FrameSinkId WindowPortLocal::GetFrameSinkId() const {
   return frame_sink_id_;
 }
 
+bool WindowPortLocal::IsChildSurface() const {
+  return false;
+}
+
 void WindowPortLocal::OnWindowAddedToRootWindow() {
   if (frame_sink_id_.is_valid())
     window_->layer()->GetCompositor()->AddFrameSink(frame_sink_id_);

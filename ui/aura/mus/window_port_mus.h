@@ -97,6 +97,7 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
   // Returns either the FrameSinkId set by window server or its server_id with
   // the client id part 0.
   viz::FrameSinkId GetFrameSinkId() const override;
+  bool IsChildSurface() const override;
 
  private:
   friend class WindowPortMusTestApi;

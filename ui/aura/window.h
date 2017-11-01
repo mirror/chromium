@@ -345,6 +345,9 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // return a valid FrameSinkId.
   viz::FrameSinkId GetFrameSinkId() const;
 
+  // Returns whether this window is an embed window.
+  bool IsChildSurface() const;
+
  protected:
   // Deletes (or removes if not owned by parent) all child windows. Intended for
   // use from the destructor.

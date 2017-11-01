@@ -71,6 +71,10 @@ viz::FrameSinkId WindowPortForShutdown::GetFrameSinkId() const {
   return frame_sink_id_;
 }
 
+bool WindowPortForShutdown::IsChildSurface() const {
+  return false;
+}
+
 void WindowPortForShutdown::OnWindowAddedToRootWindow() {}
 
 void WindowPortForShutdown::OnWillRemoveWindowFromRootWindow() {}

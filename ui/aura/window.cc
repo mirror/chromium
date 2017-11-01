@@ -1045,6 +1045,10 @@ viz::FrameSinkId Window::GetFrameSinkId() const {
   return port_->GetFrameSinkId();
 }
 
+bool Window::IsChildSurface() const {
+  return port_->IsChildSurface();
+}
+
 void Window::OnPaintLayer(const ui::PaintContext& context) {
   Paint(context);
 }

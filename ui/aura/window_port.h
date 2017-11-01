@@ -101,6 +101,9 @@ class AURA_EXPORT WindowPort {
   // This can return invalid FrameSinkId.
   virtual viz::FrameSinkId GetFrameSinkId() const = 0;
 
+  // Returns whether this window is an embed window.
+  virtual bool IsChildSurface() const = 0;
+
   virtual void OnWindowAddedToRootWindow() = 0;
   virtual void OnWillRemoveWindowFromRootWindow() = 0;
 
