@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06369d84_0b37a3ef",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-01T00:12:56Z",
+      "side": 1,
+      "message": "\"Used to indicate detailed error types for respondWith with FetchEvent and PaymentRequestEvent in ServiceWorker.\"",
+      "revId": "d944b19b0c5d4651ff475f6388c6a0fb6299e617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
