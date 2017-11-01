@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23c64c35_1ab2e3eb",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 4341,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-01T23:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a0aac04_6eec8e9b",
+      "range": {
+        "startLine": 4341,
+        "startChar": 72,
+        "endLine": 4341,
+        "endChar": 79
+      },
+      "revId": "7c6679ebbdd926cb7ce8c6a1146b1fb13f4e9b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76ccc7e2_39e8cfa0",
         "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view_browsertest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "7c6679ebbdd926cb7ce8c6a1146b1fb13f4e9b85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ca4890_f21adaf7",
+        "filename": "chrome/browser/ui/views/extensions/extension_uninstall_dialog_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-01T23:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76ccc7e2_39e8cfa0",
+      "range": {
+        "startLine": 331,
+        "startChar": 10,
+        "endLine": 331,
+        "endChar": 15
+      },
+      "revId": "7c6679ebbdd926cb7ce8c6a1146b1fb13f4e9b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
