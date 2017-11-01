@@ -111,6 +111,24 @@
     },
     {
       "key": {
+        "uuid": "60a1992c_e3c5892b",
+        "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T22:03:07Z",
+      "side": 1,
+      "message": "Try switching sample.html (which doesn\u0027t exist) to simple.html (which is in chrome/test/data) and see if that helps.",
+      "parentUuid": "40864826_4f26dcbd",
+      "revId": "be205d97a1753572c5e28fa58aaaacf3d50c8f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e6bc0a2_48b386f4",
         "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
         "patchSetId": 9
@@ -143,6 +161,24 @@
       "revId": "be205d97a1753572c5e28fa58aaaacf3d50c8f48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19bee992_db0ae7bb",
+        "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T22:03:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "850cf6ad_6d66fb11",
+      "revId": "be205d97a1753572c5e28fa58aaaacf3d50c8f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
