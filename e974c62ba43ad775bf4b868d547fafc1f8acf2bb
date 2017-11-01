@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "926d7fd9_05884537",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T17:35:09Z",
+      "side": 1,
+      "message": "nit: Consider early return to save indenting the big else below.",
+      "revId": "e974c62ba43ad775bf4b868d547fafc1f8acf2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451d09d5_23e3ac1e",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T17:35:09Z",
+      "side": 1,
+      "message": "the non-tail default\n-\u003e\none of the non-tail default matches",
+      "range": {
+        "startLine": 416,
+        "startChar": 17,
+        "endLine": 416,
+        "endChar": 37
+      },
+      "revId": "e974c62ba43ad775bf4b868d547fafc1f8acf2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6819d40a_d3cea029",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T17:35:09Z",
+      "side": 1,
+      "message": "non-default\n-\u003e\nnot a legal default match\n(that\u0027s the usually phrasing used through the code when referring to this concept)",
+      "range": {
+        "startLine": 417,
+        "startChar": 9,
+        "endLine": 417,
+        "endChar": 20
+      },
+      "revId": "e974c62ba43ad775bf4b868d547fafc1f8acf2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50aec50_e1f13712",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T17:35:09Z",
+      "side": 1,
+      "message": "so we move the default match up explicitly\n-\u003e\nto do so\n\n(or some other phrasing, as this code doesn\u0027t actually move it up explicitly.  That happens elsewhere as a consequence of marking that non-default.)",
+      "range": {
+        "startLine": 417,
+        "startChar": 21,
+        "endLine": 417,
+        "endChar": 63
+      },
+      "revId": "e974c62ba43ad775bf4b868d547fafc1f8acf2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e944b6_809bb83c",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T17:35:09Z",
+      "side": 1,
+      "message": "Please also check here that allowed_to_be_default is false on all these tail suggestions.",
+      "revId": "e974c62ba43ad775bf4b868d547fafc1f8acf2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
