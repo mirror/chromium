@@ -31,14 +31,13 @@ import javax.annotation.Nullable;
  * Such apps are implemented as service workers according to the Payment
  * Handler API specification.
  *
- * @see https://w3c.github.io/webpayments-payment-handler/
+ * @see https://w3c.github.io/payment-handler/
  */
-public class ServiceWorkerPaymentApp extends PaymentInstrument implements PaymentApp {
+public class ServiceWorkerPaymentApp extends PaymentInstrument {
     private final static String BASIC_CARD_PAYMENT_METHOD = "basic-card";
 
     private final WebContents mWebContents;
     private final long mRegistrationId;
-    private final Drawable mIcon;
     private final Set<String> mMethodNames;
     private final Capabilities[] mCapabilities;
     private final boolean mCanPreselect;
@@ -49,7 +48,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
      * This class represents capabilities of a payment instrument. It is currently only used for
      * 'basic-card' payment instrument.
      */
-    protected static class Capabilities {
+    /* package */ static class Capabilities {
         // Stores mojom::BasicCardNetwork.
         private int[] mSupportedCardNetworks;
 
@@ -109,23 +108,20 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
      *                                       method for now).
      * @param preferredRelatedApplicationIds A set of preferred related application Ids.
      */
-    public ServiceWorkerPaymentApp(WebContents webContents, long registrationId, URI scope,
+    /* package */ ServiceWorkerPaymentApp(WebContents webContents, long registrationId, URI scope,
             String label, @Nullable String sublabel, @Nullable String tertiarylabel,
             @Nullable Drawable icon, String[] methodNames, Capabilities[] capabilities,
             String[] preferredRelatedApplicationIds) {
         super(scope.toString(), label, sublabel, tertiarylabel, icon);
         mWebContents = webContents;
         mRegistrationId = registrationId;
-        mIcon = icon;
 
         // Sublabel and/or icon are set to null if fetching or processing the corresponding web app
         // manifest failed. Then do not preselect this payment app.
         mCanPreselect = !TextUtils.isEmpty(sublabel) && icon != null;
 
         mMethodNames = new HashSet<>();
-        for (int i = 0; i < methodNames.length; i++) {
-            mMethodNames.add(methodNames[i]);
-        }
+        Collections.addAll(mMethodNames, methodNames);
 
         mCapabilities = Arrays.copyOf(capabilities, capabilities.length);
 
@@ -146,7 +142,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
             // Do not list this app if 'basic-card' is the only supported payment method with
             // unmatched capabilities.
             new Handler().post(() -> {
-                List<PaymentInstrument> instruments = new ArrayList();
+                List<PaymentInstrument> instruments = new ArrayList<>();
                 callback.onInstrumentsReady(ServiceWorkerPaymentApp.this, instruments);
             });
             return;
@@ -154,7 +150,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
 
         if (mIsIncognito) {
             new Handler().post(() -> {
-                List<PaymentInstrument> instruments = new ArrayList();
+                List<PaymentInstrument> instruments = new ArrayList<>();
                 instruments.add(ServiceWorkerPaymentApp.this);
                 callback.onInstrumentsReady(ServiceWorkerPaymentApp.this, instruments);
             });
@@ -164,7 +160,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
         ServiceWorkerPaymentAppBridge.canMakePayment(mWebContents, mRegistrationId, origin,
                 iframeOrigin, new HashSet<>(methodDataMap.values()),
                 new HashSet<>(modifiers.values()), (boolean canMakePayment) -> {
-                    List<PaymentInstrument> instruments = new ArrayList();
+                    List<PaymentInstrument> instruments = new ArrayList<>();
                     if (canMakePayment) {
                         instruments.add(ServiceWorkerPaymentApp.this);
                     }
