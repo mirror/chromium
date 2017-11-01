@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0548adb_94bde6ac",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-01T21:57:29Z",
+      "side": 1,
+      "message": "I went and re-verified the need for this, and indeed, it makes a pretty big power difference. The cache doesn\u0027t need to be very smart -- it only matters when we\u0027re running on battery power (so, effectively, when there is just 1 monitor and so 1 ICCProfile that we need to remember.",
+      "revId": "9ec4d086e0c736cbde1bcd462cbb522a5a15dd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ae6215_1d735559",
+        "filename": "ui/gfx/ipc/color/gfx_param_traits.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-01T21:57:29Z",
+      "side": 1,
+      "message": "I didn\u0027t update this in the last patch, which was a bug. The next patch will remove ICC_BASED entirely.",
+      "revId": "9ec4d086e0c736cbde1bcd462cbb522a5a15dd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
