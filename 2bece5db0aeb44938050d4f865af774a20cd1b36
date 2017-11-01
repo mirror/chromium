@@ -22,6 +22,30 @@
       "revId": "2bece5db0aeb44938050d4f865af774a20cd1b36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a8cae83_e7cf1f7a",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-01T19:28:38Z",
+      "side": 1,
+      "message": "Addressed this offline but the RenderFrameHostTester is the public API of TestRenderFrameHost (I know, confusing :)",
+      "parentUuid": "11483a3e_65a81478",
+      "range": {
+        "startLine": 124,
+        "startChar": 44,
+        "endLine": 124,
+        "endChar": 52
+      },
+      "revId": "2bece5db0aeb44938050d4f865af774a20cd1b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
