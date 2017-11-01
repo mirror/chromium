@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5feff847_fe43c800",
+        "filename": "content/public/common/resource_request_completion_status.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-01T05:04:24Z",
+      "side": 1,
+      "message": "Since only one of error_code and cors_error can be valid at the same time, we can define them as an union, that would help us to use these error values correctly.\n\nIt would be something like this?\n\nenum ErrorType {\n  kNet,\n  kCORS,\n};\n\nunion Error {\n  int net,\n  network::mojom::CORSError cors\n};\n\nstruct ResourceRequestCompletionStatus {\n  ...\n  ErrorType error_type;\n  Error error;\n};",
+      "parentUuid": "f8140b31_defa0451",
+      "revId": "6a39d25c4005991f67f8c1e80444c9a3829e466f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62f7c7e2_c532e55c",
         "filename": "content/renderer/loader/cors_url_loader.h",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "6a39d25c4005991f67f8c1e80444c9a3829e466f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a6c583_0e076fd8",
+        "filename": "content/renderer/loader/cors_url_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-01T05:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62f7c7e2_c532e55c",
+      "revId": "6a39d25c4005991f67f8c1e80444c9a3829e466f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
