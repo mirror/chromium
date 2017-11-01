@@ -329,7 +329,7 @@ AppsGridView::AppsGridView(ContentsView* contents_view,
 
   if (is_fullscreen_app_list_enabled_ && !folder_delegate_) {
     suggestions_container_ = new SuggestionsContainerView(
-        contents_view_, nullptr, &pagination_model_);
+        contents_view_, &pagination_model_);
     AddChildView(suggestions_container_);
     UpdateSuggestions();
 

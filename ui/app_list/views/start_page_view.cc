@@ -19,7 +19,6 @@
 #include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/app_list_view_delegate.h"
 #include "ui/app_list/search_result.h"
-#include "ui/app_list/views/all_apps_tile_item_view.h"
 #include "ui/app_list/views/app_list_main_view.h"
 #include "ui/app_list/views/app_list_view.h"
 #include "ui/app_list/views/contents_view.h"
@@ -69,12 +68,7 @@ StartPageView::StartPageView(AppListMainView* app_list_main_view,
       instant_container_(new views::View),
       is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
   suggestions_container_ = new SuggestionsContainerView(
-      app_list_main_view->contents_view(),
-      is_fullscreen_app_list_enabled_
-          ? nullptr
-          : new AllAppsTileItemView(app_list_main_view_->contents_view(),
-                                    app_list_view),
-      nullptr);
+      app_list_main_view->contents_view(), nullptr);
 
   search_box_spacer_view_->SetPreferredSize(gfx::Size(
       is_fullscreen_app_list_enabled_ ? kStartPageSearchBoxWidthFullscreen
@@ -146,10 +140,6 @@ void StartPageView::UpdateForTesting() {
 const std::vector<SearchResultTileItemView*>& StartPageView::tile_views()
     const {
   return suggestions_container_->tile_views();
-}
-
-TileItemView* StartPageView::all_apps_button() const {
-  return suggestions_container_->all_apps_button();
 }
 
 void StartPageView::OnShown() {

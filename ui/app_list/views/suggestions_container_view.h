@@ -12,18 +12,15 @@
 
 namespace app_list {
 
-class AllAppsTileItemView;
 class AppListViewDelegate;
 class ContentsView;
 class SearchResultTileItemView;
 class TileItemView;
 
-// A container that holds the suggested app tiles. If fullscreen app list is not
-// enabled, it also holds the all apps button.
+// A container that holds the suggested app tiles.
 class SuggestionsContainerView : public SearchResultContainerView {
  public:
   SuggestionsContainerView(ContentsView* contents_view,
-                           AllAppsTileItemView* all_apps_button,
                            PaginationModel* pagination_model);
   ~SuggestionsContainerView() override;
 
@@ -32,8 +29,6 @@ class SuggestionsContainerView : public SearchResultContainerView {
   const std::vector<SearchResultTileItemView*>& tile_views() const {
     return search_result_tile_views_;
   }
-
-  AllAppsTileItemView* all_apps_button() { return all_apps_button_; }
 
   // Overridden from SearchResultContainerView:
   int DoUpdate() override;
@@ -52,7 +47,6 @@ class SuggestionsContainerView : public SearchResultContainerView {
   AppListViewDelegate* view_delegate_ = nullptr;
 
   std::vector<SearchResultTileItemView*> search_result_tile_views_;
-  AllAppsTileItemView* all_apps_button_ = nullptr;
 
   PaginationModel* const pagination_model_;  // Owned by AppsGridView.
 

@@ -78,15 +78,15 @@ void CheckView(views::View* subview) {
   EXPECT_FALSE(subview->bounds().IsEmpty());
 }
 
-void SimulateClick(views::View* view) {
-  gfx::Point center = view->GetLocalBounds().CenterPoint();
-  view->OnMousePressed(ui::MouseEvent(
-      ui::ET_MOUSE_PRESSED, center, center, ui::EventTimeForNow(),
-      ui::EF_LEFT_MOUSE_BUTTON, ui::EF_LEFT_MOUSE_BUTTON));
-  view->OnMouseReleased(ui::MouseEvent(
-      ui::ET_MOUSE_RELEASED, center, center, ui::EventTimeForNow(),
-      ui::EF_LEFT_MOUSE_BUTTON, ui::EF_LEFT_MOUSE_BUTTON));
-}
+// void SimulateClick(views::View* view) {
+//   gfx::Point center = view->GetLocalBounds().CenterPoint();
+//   view->OnMousePressed(ui::MouseEvent(
+//       ui::ET_MOUSE_PRESSED, center, center, ui::EventTimeForNow(),
+//       ui::EF_LEFT_MOUSE_BUTTON, ui::EF_LEFT_MOUSE_BUTTON));
+//   view->OnMouseReleased(ui::MouseEvent(
+//       ui::ET_MOUSE_RELEASED, center, center, ui::EventTimeForNow(),
+//       ui::EF_LEFT_MOUSE_BUTTON, ui::EF_LEFT_MOUSE_BUTTON));
+// }
 
 class TestStartPageSearchResult : public TestSearchResult {
  public:
@@ -1433,58 +1433,58 @@ TEST_F(AppListViewTest, StartPageTest) {
   if (features::IsFullscreenAppListEnabled())
     return;
 
-  EXPECT_FALSE(view_->GetWidget()->IsVisible());
-  EXPECT_EQ(-1, GetPaginationModel()->total_pages());
-  AppListTestModel* model = delegate_->GetTestModel();
-  model->PopulateApps(3);
+  // EXPECT_FALSE(view_->GetWidget()->IsVisible());
+  // EXPECT_EQ(-1, GetPaginationModel()->total_pages());
+  // AppListTestModel* model = delegate_->GetTestModel();
+  // model->PopulateApps(3);
 
-  Show();
+  // Show();
 
-  AppListMainView* main_view = view_->app_list_main_view();
-  StartPageView* start_page_view =
-      main_view->contents_view()->start_page_view();
-  // Checks on the main view.
-  EXPECT_NO_FATAL_FAILURE(CheckView(main_view));
-  EXPECT_NO_FATAL_FAILURE(CheckView(main_view->contents_view()));
-  EXPECT_NO_FATAL_FAILURE(CheckView(start_page_view));
+  // AppListMainView* main_view = view_->app_list_main_view();
+  // StartPageView* start_page_view =
+  //     main_view->contents_view()->start_page_view();
+  // // Checks on the main view.
+  // EXPECT_NO_FATAL_FAILURE(CheckView(main_view));
+  // EXPECT_NO_FATAL_FAILURE(CheckView(main_view->contents_view()));
+  // EXPECT_NO_FATAL_FAILURE(CheckView(start_page_view));
 
-  // Show the start page view.
-  EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
-  gfx::Size view_size(view_->GetPreferredSize());
+  // // Show the start page view.
+  // EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
+  // gfx::Size view_size(view_->GetPreferredSize());
 
-  // The "All apps" button should have its "parent background color" set
-  // to the tiles container's background color.
-  TileItemView* all_apps_button = start_page_view->all_apps_button();
-  EXPECT_TRUE(all_apps_button->visible());
-  EXPECT_EQ(kLabelBackgroundColor, all_apps_button->parent_background_color());
+  // // The "All apps" button should have its "parent background color" set
+  // // to the tiles container's background color.
+  // TileItemView* all_apps_button = start_page_view->all_apps_button();
+  // EXPECT_TRUE(all_apps_button->visible());
+  // EXPECT_EQ(kLabelBackgroundColor, all_apps_button->parent_background_color());
 
-  // Simulate clicking the "All apps" button. Check that we navigate to the
-  // apps grid view.
-  SimulateClick(all_apps_button);
-  main_view->contents_view()->Layout();
-  EXPECT_TRUE(IsStateShown(AppListModel::STATE_APPS));
+  // // Simulate clicking the "All apps" button. Check that we navigate to the
+  // // apps grid view.
+  // SimulateClick(all_apps_button);
+  // main_view->contents_view()->Layout();
+  // EXPECT_TRUE(IsStateShown(AppListModel::STATE_APPS));
 
-  // Hiding and showing the search box should not affect the app list's
-  // preferred size. This is a regression test for http://crbug.com/386912.
-  EXPECT_EQ(view_size.ToString(), view_->GetPreferredSize().ToString());
+  // // Hiding and showing the search box should not affect the app list's
+  // // preferred size. This is a regression test for http://crbug.com/386912.
+  // EXPECT_EQ(view_size.ToString(), view_->GetPreferredSize().ToString());
 
-  // Check tiles hide and show on deletion and addition.
-  EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
-  model->results()->Add(std::make_unique<TestStartPageSearchResult>());
-  start_page_view->UpdateForTesting();
-  EXPECT_EQ(1u, GetVisibleViews(start_page_view->tile_views()));
-  model->results()->DeleteAll();
-  start_page_view->UpdateForTesting();
-  EXPECT_EQ(0u, GetVisibleViews(start_page_view->tile_views()));
+  // // Check tiles hide and show on deletion and addition.
+  // EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
+  // model->results()->Add(std::make_unique<TestStartPageSearchResult>());
+  // start_page_view->UpdateForTesting();
+  // EXPECT_EQ(1u, GetVisibleViews(start_page_view->tile_views()));
+  // model->results()->DeleteAll();
+  // start_page_view->UpdateForTesting();
+  // EXPECT_EQ(0u, GetVisibleViews(start_page_view->tile_views()));
 
-  // Tiles should not update when the start page is not active but should be
-  // correct once the start page is shown.
-  EXPECT_TRUE(SetAppListState(AppListModel::STATE_APPS));
-  model->results()->Add(std::make_unique<TestStartPageSearchResult>());
-  start_page_view->UpdateForTesting();
-  EXPECT_EQ(0u, GetVisibleViews(start_page_view->tile_views()));
-  EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
-  EXPECT_EQ(1u, GetVisibleViews(start_page_view->tile_views()));
+  // // Tiles should not update when the start page is not active but should be
+  // // correct once the start page is shown.
+  // EXPECT_TRUE(SetAppListState(AppListModel::STATE_APPS));
+  // model->results()->Add(std::make_unique<TestStartPageSearchResult>());
+  // start_page_view->UpdateForTesting();
+  // EXPECT_EQ(0u, GetVisibleViews(start_page_view->tile_views()));
+  // EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
+  // EXPECT_EQ(1u, GetVisibleViews(start_page_view->tile_views()));
 }
 
 // Tests switching rapidly between multiple pages of the launcher.
