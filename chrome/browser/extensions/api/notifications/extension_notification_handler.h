@@ -20,6 +20,8 @@ class ExtensionNotificationHandler : public NotificationHandler {
   ExtensionNotificationHandler();
   ~ExtensionNotificationHandler() override;
 
+  static std::string GetExtensionId(const GURL& url);
+
   // NotificationHandler implementation.
   void OnShow(Profile* profile, const std::string& notification_id) override;
   void OnClose(Profile* profile,
@@ -32,8 +34,6 @@ class ExtensionNotificationHandler : public NotificationHandler {
                const base::Optional<int>& action_index,
                const base::Optional<base::string16>& reply) override;
   void OpenSettings(Profile* profile) override;
-  bool ShouldDisplayOnFullScreen(Profile* profile,
-                                 const std::string& origin) override;
 
  protected:
   // Overriden in unit tests.
