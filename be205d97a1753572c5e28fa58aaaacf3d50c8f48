@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "321374fb_355b49f6",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T20:11:37Z",
+      "side": 1,
+      "message": "Can you add some comments in this function?  I wouldn\u0027t be able to tell by reading the code that the intention is to dismiss the dialog regardless, and restart the timer if the new process happens to be unresponsive as well.",
+      "revId": "be205d97a1753572c5e28fa58aaaacf3d50c8f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d185c67c_3512c734",
+        "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T20:11:37Z",
+      "side": 1,
+      "message": "Can we do this without a data URL, and without a viewport?  (Looking for a minimal repro.)",
+      "revId": "be205d97a1753572c5e28fa58aaaacf3d50c8f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb97ffa_a9ed4181",
+        "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T20:11:37Z",
+      "side": 1,
+      "message": "nit: Add comment like:\nVerify that a cross-process navigation will dismiss the hung renderer dialog so that we do not kill the new (responsive) process.",
+      "revId": "be205d97a1753572c5e28fa58aaaacf3d50c8f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a5036b_836f29de",
+        "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T20:11:37Z",
+      "side": 1,
+      "message": "nit: HungRendererWithCrossProcessNavigation",
+      "range": {
+        "startLine": 65,
+        "startChar": 23,
+        "endLine": 65,
+        "endChar": 49
+      },
+      "revId": "be205d97a1753572c5e28fa58aaaacf3d50c8f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c83abd_993e7edc",
+        "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T20:11:37Z",
+      "side": 1,
+      "message": "I think we can use an embedded_test_server() URL here as well, as long as we use a different host than example.com.  That way we don\u0027t need to declare kSimplePage (which seemed like it included some unnecessary things anyway, like meta viewport).",
+      "revId": "be205d97a1753572c5e28fa58aaaacf3d50c8f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e6bc0a2_48b386f4",
+        "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T20:11:37Z",
+      "side": 1,
+      "message": "Is there a way to add a similar test for the case that the new process is hung, given the discussion we\u0027ve had about that behavior?  Or is that hard to set up in the test?",
+      "revId": "be205d97a1753572c5e28fa58aaaacf3d50c8f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

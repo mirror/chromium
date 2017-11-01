@@ -88,6 +88,24 @@
       "revId": "bcbd9bd93eeb85ab51e7ca49644bae6246084347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4caae55e_46a84bc1",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-01T20:11:37Z",
+      "side": 1,
+      "message": "Thanks for changing to an approach where the dialog is always dismissed.  (IIUC, we will now restart the timer if the new process is unresponsive as well, so that it will show up again for the new process if needed.)",
+      "parentUuid": "e68dcb99_e1c7d4a6",
+      "revId": "bcbd9bd93eeb85ab51e7ca49644bae6246084347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
