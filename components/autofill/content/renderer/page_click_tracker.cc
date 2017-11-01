@@ -50,6 +50,7 @@ PageClickTracker::PageClickTracker(content::RenderFrame* render_frame,
                                    PageClickListener* listener)
     : focused_node_was_last_clicked_(false),
       was_focused_before_now_(false),
+      focus_requires_scroll_(true),
       listener_(listener),
       render_frame_(render_frame) {}
 
@@ -59,7 +60,7 @@ PageClickTracker::~PageClickTracker() {
 void PageClickTracker::FocusedNodeChanged(const WebNode& node) {
   was_focused_before_now_ = false;
 
-  if (IsKeyboardAccessoryEnabled() &&
+  if ((IsKeyboardAccessoryEnabled() || !focus_requires_scroll_) &&
       WebUserGestureIndicator::IsProcessingUserGesture()) {
     focused_node_was_last_clicked_ = true;
     DoFocusChangeComplete();
@@ -67,6 +68,18 @@ void PageClickTracker::FocusedNodeChanged(const WebNode& node) {
 }
 
 void PageClickTracker::DidCompleteFocusChangeInFrame() {
+  if (!focus_requires_scroll_) {
+    WebElement focused_element =
+        render_frame()->GetWebFrame()->GetDocument().FocusedElement();
+    if (focused_node_was_last_clicked_ && !focused_element.IsNull()) {
+      const WebFormControlElement control =
+          GetTextFormControlElement(focused_element);
+      if (!control.IsNull()) {
+        listener_->FormControlElementClicked(control, was_focused_before_now_);
+      }
+    }
+    return;
+  }
   if (IsKeyboardAccessoryEnabled())
     return;
 
@@ -78,8 +91,12 @@ void PageClickTracker::DidReceiveLeftMouseDownOrGestureTapInNode(
   DCHECK(!node.IsNull());
   focused_node_was_last_clicked_ = node.Focused();
 
-  if (IsKeyboardAccessoryEnabled())
+  if (IsKeyboardAccessoryEnabled() || !focus_requires_scroll_)
     DoFocusChangeComplete();
+}
+
+void PageClickTracker::SetFocusRequiresScroll(bool require) {
+  focus_requires_scroll_ = require;
 }
 
 void PageClickTracker::DoFocusChangeComplete() {
