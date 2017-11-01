@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25429f96_91a72e80",
+        "filename": "third_party/WebKit/Source/core/layout/AdjustForAbsoluteZoom.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-11-01T16:52:56Z",
+      "side": 1,
+      "message": "Retain copyright header when moving code.\n(copy header from computedstyle.h)",
+      "revId": "1e9795bcc487f4275a798b2386c675023a6c7999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
