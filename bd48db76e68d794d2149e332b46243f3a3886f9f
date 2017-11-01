@@ -916,6 +916,24 @@
       "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffeca87_2802eaf0",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-01T00:54:52Z",
+      "side": 1,
+      "message": "Unit test added, though I\u0027m not sure how to make this conditional on runtime support short of annoying conditionals in the template.",
+      "parentUuid": "6b22a3ae_406cdeda",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
