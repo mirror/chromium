@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da90c77c_f78fbbbf",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIterator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-01T02:04:23Z",
+      "side": 1,
+      "message": "There is similar code in another patch:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/746181\nCould you share it?",
+      "revId": "310003de0be0d3663a64ada863cab96caf25207f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
