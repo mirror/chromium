@@ -43,7 +43,7 @@ include_rules = [
   "+ppapi/shared_impl",
   "+rlz",
   "+sandbox/win/src",  # The path doesn't say it, but this is the Windows sandbox.
-  "+services/data_decoder/public/cpp",
+  "+services/data_decoder/public",
   "+services/device/public/cpp/device_features.h",
   "+services/identity/public",
   "+services/metrics/public",
@@ -189,5 +189,5 @@ specific_include_rules = {
   ],
   "mash_service_registry.cc": [
     "+mash/quick_launch/quick_launch.h",
-  ]
+  ],
 }
