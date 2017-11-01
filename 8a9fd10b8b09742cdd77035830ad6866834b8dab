@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5be2bd86_e70f2f0a",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T15:16:54Z",
+      "side": 1,
+      "message": "Should we have an about://flags for the ranker integration too?",
+      "range": {
+        "startLine": 1042,
+        "startChar": 0,
+        "endLine": 1043,
+        "endChar": 65
+      },
+      "revId": "8a9fd10b8b09742cdd77035830ad6866834b8dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
