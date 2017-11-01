@@ -16,6 +16,24 @@
       "revId": "310003de0be0d3663a64ada863cab96caf25207f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47283ffa_c299b5a6",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIterator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-01T07:03:10Z",
+      "side": 1,
+      "message": "Discussed offline.\nI will make SimplifiedBackwardsTextIterator to utilize TextIteratorState[1]\nand make TextIteratorState::EmitText() to handle text-security.\n\n[1] http://crrev.com/c/748845",
+      "parentUuid": "da90c77c_f78fbbbf",
+      "revId": "310003de0be0d3663a64ada863cab96caf25207f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
