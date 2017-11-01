@@ -206,10 +206,12 @@ using SerializeFunction = size_t (*)(const PaintOp* op,
 static const SerializeFunction g_serialize_functions[kNumOpTypes] = {TYPES(M)};
 #undef M
 
-using DeserializeFunction = PaintOp* (*)(const volatile void* input,
-                                         size_t input_size,
-                                         void* output,
-                                         size_t output_size);
+using DeserializeFunction =
+    PaintOp* (*)(const volatile void* input,
+                 size_t input_size,
+                 void* output,
+                 size_t output_size,
+                 const PaintOp::DeserializeOptions& options);
 
 #define M(T) &T::Deserialize,
 static const DeserializeFunction g_deserialize_functions[kNumOpTypes] = {
@@ -582,7 +584,8 @@ template <typename T>
 T* SimpleDeserialize(const volatile void* input,
                      size_t input_size,
                      void* output,
-                     size_t output_size) {
+                     size_t output_size,
+                     const PaintOp::DeserializeOptions& options) {
   if (input_size < sizeof(T))
     return nullptr;
   memcpy(output, const_cast<void*>(input), sizeof(T));
@@ -599,7 +602,8 @@ T* SimpleDeserialize(const volatile void* input,
 PaintOp* AnnotateOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
-                                 size_t output_size) {
+                                 size_t output_size,
+                                 const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(AnnotateOp));
   AnnotateOp* op = new (output) AnnotateOp;
 
@@ -619,7 +623,8 @@ PaintOp* AnnotateOp::Deserialize(const volatile void* input,
 PaintOp* ClipPathOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
-                                 size_t output_size) {
+                                 size_t output_size,
+                                 const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(ClipPathOp));
   ClipPathOp* op = new (output) ClipPathOp;
 
@@ -639,26 +644,31 @@ PaintOp* ClipPathOp::Deserialize(const volatile void* input,
 PaintOp* ClipRectOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
-                                 size_t output_size) {
+                                 size_t output_size,
+                                 const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(ClipRectOp));
-  return SimpleDeserialize<ClipRectOp>(input, input_size, output, output_size);
+  return SimpleDeserialize<ClipRectOp>(input, input_size, output, output_size,
+                                       options);
 }
 
 PaintOp* ClipRRectOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
-                                  size_t output_size) {
+                                  size_t output_size,
+                                  const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(ClipRRectOp));
-  return SimpleDeserialize<ClipRRectOp>(input, input_size, output, output_size);
+  return SimpleDeserialize<ClipRRectOp>(input, input_size, output, output_size,
+                                        options);
 }
 
 PaintOp* ConcatOp::Deserialize(const volatile void* input,
                                size_t input_size,
                                void* output,
-                               size_t output_size) {
+                               size_t output_size,
+                               const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(ConcatOp));
-  auto* op =
-      SimpleDeserialize<ConcatOp>(input, input_size, output, output_size);
+  auto* op = SimpleDeserialize<ConcatOp>(input, input_size, output, output_size,
+                                         options);
   if (op)
     PaintOpReader::FixupMatrixPostSerialization(&op->matrix);
   return op;
@@ -667,15 +677,18 @@ PaintOp* ConcatOp::Deserialize(const volatile void* input,
 PaintOp* DrawColorOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
-                                  size_t output_size) {
+                                  size_t output_size,
+                                  const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(DrawColorOp));
-  return SimpleDeserialize<DrawColorOp>(input, input_size, output, output_size);
+  return SimpleDeserialize<DrawColorOp>(input, input_size, output, output_size,
+                                        options);
 }
 
 PaintOp* DrawDRRectOp::Deserialize(const volatile void* input,
                                    size_t input_size,
                                    void* output,
-                                   size_t output_size) {
+                                   size_t output_size,
+                                   const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(DrawDRRectOp));
   DrawDRRectOp* op = new (output) DrawDRRectOp;
 
@@ -694,7 +707,8 @@ PaintOp* DrawDRRectOp::Deserialize(const volatile void* input,
 PaintOp* DrawImageOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
-                                  size_t output_size) {
+                                  size_t output_size,
+                                  const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(DrawImageOp));
   DrawImageOp* op = new (output) DrawImageOp;
 
@@ -714,7 +728,8 @@ PaintOp* DrawImageOp::Deserialize(const volatile void* input,
 PaintOp* DrawImageRectOp::Deserialize(const volatile void* input,
                                       size_t input_size,
                                       void* output,
-                                      size_t output_size) {
+                                      size_t output_size,
+                                      const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(DrawImageRectOp));
   DrawImageRectOp* op = new (output) DrawImageRectOp;
 
@@ -735,7 +750,8 @@ PaintOp* DrawImageRectOp::Deserialize(const volatile void* input,
 PaintOp* DrawIRectOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
-                                  size_t output_size) {
+                                  size_t output_size,
+                                  const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(DrawIRectOp));
   DrawIRectOp* op = new (output) DrawIRectOp;
 
@@ -753,7 +769,8 @@ PaintOp* DrawIRectOp::Deserialize(const volatile void* input,
 PaintOp* DrawLineOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
-                                 size_t output_size) {
+                                 size_t output_size,
+                                 const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(DrawLineOp));
   DrawLineOp* op = new (output) DrawLineOp;
 
@@ -774,7 +791,8 @@ PaintOp* DrawLineOp::Deserialize(const volatile void* input,
 PaintOp* DrawOvalOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
-                                 size_t output_size) {
+                                 size_t output_size,
+                                 const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(DrawOvalOp));
   DrawOvalOp* op = new (output) DrawOvalOp;
 
@@ -792,7 +810,8 @@ PaintOp* DrawOvalOp::Deserialize(const volatile void* input,
 PaintOp* DrawPathOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
-                                 size_t output_size) {
+                                 size_t output_size,
+                                 const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(DrawPathOp));
   DrawPathOp* op = new (output) DrawPathOp;
 
@@ -810,7 +829,8 @@ PaintOp* DrawPathOp::Deserialize(const volatile void* input,
 PaintOp* DrawRecordOp::Deserialize(const volatile void* input,
                                    size_t input_size,
                                    void* output,
-                                   size_t output_size) {
+                                   size_t output_size,
+                                   const DeserializeOptions& options) {
   // TODO(enne): these must be flattened and not sent directly.
   // TODO(enne): could also consider caching these service side.
   return nullptr;
@@ -819,7 +839,8 @@ PaintOp* DrawRecordOp::Deserialize(const volatile void* input,
 PaintOp* DrawRectOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
-                                 size_t output_size) {
+                                 size_t output_size,
+                                 const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(DrawRectOp));
   DrawRectOp* op = new (output) DrawRectOp;
 
@@ -837,7 +858,8 @@ PaintOp* DrawRectOp::Deserialize(const volatile void* input,
 PaintOp* DrawRRectOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
-                                  size_t output_size) {
+                                  size_t output_size,
+                                  const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(DrawRRectOp));
   DrawRRectOp* op = new (output) DrawRRectOp;
 
@@ -855,7 +877,8 @@ PaintOp* DrawRRectOp::Deserialize(const volatile void* input,
 PaintOp* DrawTextBlobOp::Deserialize(const volatile void* input,
                                      size_t input_size,
                                      void* output,
-                                     size_t output_size) {
+                                     size_t output_size,
+                                     const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(DrawTextBlobOp));
   DrawTextBlobOp* op = new (output) DrawTextBlobOp;
 
@@ -875,39 +898,48 @@ PaintOp* DrawTextBlobOp::Deserialize(const volatile void* input,
 PaintOp* NoopOp::Deserialize(const volatile void* input,
                              size_t input_size,
                              void* output,
-                             size_t output_size) {
+                             size_t output_size,
+                             const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(NoopOp));
-  return SimpleDeserialize<NoopOp>(input, input_size, output, output_size);
+  return SimpleDeserialize<NoopOp>(input, input_size, output, output_size,
+                                   options);
 }
 
 PaintOp* RestoreOp::Deserialize(const volatile void* input,
                                 size_t input_size,
                                 void* output,
-                                size_t output_size) {
+                                size_t output_size,
+                                const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(RestoreOp));
-  return SimpleDeserialize<RestoreOp>(input, input_size, output, output_size);
+  return SimpleDeserialize<RestoreOp>(input, input_size, output, output_size,
+                                      options);
 }
 
 PaintOp* RotateOp::Deserialize(const volatile void* input,
                                size_t input_size,
                                void* output,
-                               size_t output_size) {
+                               size_t output_size,
+                               const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(RotateOp));
-  return SimpleDeserialize<RotateOp>(input, input_size, output, output_size);
+  return SimpleDeserialize<RotateOp>(input, input_size, output, output_size,
+                                     options);
 }
 
 PaintOp* SaveOp::Deserialize(const volatile void* input,
                              size_t input_size,
                              void* output,
-                             size_t output_size) {
+                             size_t output_size,
+                             const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(SaveOp));
-  return SimpleDeserialize<SaveOp>(input, input_size, output, output_size);
+  return SimpleDeserialize<SaveOp>(input, input_size, output, output_size,
+                                   options);
 }
 
 PaintOp* SaveLayerOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
-                                  size_t output_size) {
+                                  size_t output_size,
+                                  const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(SaveLayerOp));
   SaveLayerOp* op = new (output) SaveLayerOp;
 
@@ -925,28 +957,32 @@ PaintOp* SaveLayerOp::Deserialize(const volatile void* input,
 PaintOp* SaveLayerAlphaOp::Deserialize(const volatile void* input,
                                        size_t input_size,
                                        void* output,
-                                       size_t output_size) {
+                                       size_t output_size,
+                                       const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(SaveLayerAlphaOp));
   return SimpleDeserialize<SaveLayerAlphaOp>(input, input_size, output,
-                                             output_size);
+                                             output_size, options);
 }
 
 PaintOp* ScaleOp::Deserialize(const volatile void* input,
                               size_t input_size,
                               void* output,
-                              size_t output_size) {
+                              size_t output_size,
+                              const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(ScaleOp));
 
-  return SimpleDeserialize<ScaleOp>(input, input_size, output, output_size);
+  return SimpleDeserialize<ScaleOp>(input, input_size, output, output_size,
+                                    options);
 }
 
 PaintOp* SetMatrixOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
-                                  size_t output_size) {
+                                  size_t output_size,
+                                  const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(SetMatrixOp));
-  auto* op =
-      SimpleDeserialize<SetMatrixOp>(input, input_size, output, output_size);
+  auto* op = SimpleDeserialize<SetMatrixOp>(input, input_size, output,
+                                            output_size, options);
   if (op)
     PaintOpReader::FixupMatrixPostSerialization(&op->matrix);
   return op;
@@ -955,9 +991,11 @@ PaintOp* SetMatrixOp::Deserialize(const volatile void* input,
 PaintOp* TranslateOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
-                                  size_t output_size) {
+                                  size_t output_size,
+                                  const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(TranslateOp));
-  return SimpleDeserialize<TranslateOp>(input, input_size, output, output_size);
+  return SimpleDeserialize<TranslateOp>(input, input_size, output, output_size,
+                                        options);
 }
 
 void AnnotateOp::Raster(const AnnotateOp* op,
@@ -1268,7 +1306,8 @@ PaintOp* PaintOp::Deserialize(const volatile void* input,
                               size_t input_size,
                               void* output,
                               size_t output_size,
-                              size_t* read_bytes) {
+                              size_t* read_bytes,
+                              const DeserializeOptions& options) {
   DCHECK_GE(output_size, sizeof(LargestPaintOp));
 
   uint32_t first_word = reinterpret_cast<const volatile uint32_t*>(input)[0];
@@ -1282,7 +1321,8 @@ PaintOp* PaintOp::Deserialize(const volatile void* input,
   if (type > static_cast<uint8_t>(PaintOpType::LastPaintOpType))
     return nullptr;
   *read_bytes = skip;
-  return g_deserialize_functions[type](input, skip, output, output_size);
+  return g_deserialize_functions[type](input, skip, output, output_size,
+                                       options);
 }
 
 // static
