@@ -188,7 +188,6 @@ class PerfRasterBufferProviderHelper {
       const Resource* resource,
       uint64_t resource_content_id,
       uint64_t previous_content_id) = 0;
-  virtual void ReleaseBufferForRaster(std::unique_ptr<RasterBuffer> buffer) = 0;
 };
 
 class PerfRasterTaskImpl : public PerfTileTask {
@@ -206,10 +205,7 @@ class PerfRasterTaskImpl : public PerfTileTask {
   void RunOnWorkerThread() override {}
 
   // Overridden from TileTask:
-  void OnTaskCompleted() override {
-    if (helper_)
-      helper_->ReleaseBufferForRaster(std::move(raster_buffer_));
-  }
+  void OnTaskCompleted() override { raster_buffer_ = nullptr; }
 
  protected:
   ~PerfRasterTaskImpl() override {}
@@ -378,9 +374,6 @@ class RasterBufferProviderPerfTest
       uint64_t previous_content_id) override {
     return raster_buffer_provider_->AcquireBufferForRaster(
         resource, resource_content_id, previous_content_id);
-  }
-  void ReleaseBufferForRaster(std::unique_ptr<RasterBuffer> buffer) override {
-    raster_buffer_provider_->ReleaseBufferForRaster(std::move(buffer));
   }
 
   void RunMessageLoopUntilAllTasksHaveCompleted() {
