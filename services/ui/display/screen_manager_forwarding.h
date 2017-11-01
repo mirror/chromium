@@ -12,8 +12,8 @@
 #include "base/macros.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/display/screen_manager.h"
-#include "services/ui/public/interfaces/display/test_display_controller.mojom.h"
 #include "ui/display/mojo/native_display_delegate.mojom.h"
+#include "ui/display/mojo/test_display_controller.mojom.h"
 #include "ui/display/types/native_display_observer.h"
 
 namespace display {
