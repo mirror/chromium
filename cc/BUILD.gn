@@ -616,6 +616,7 @@ cc_test("cc_unittests") {
     "layers/viewport_unittest.cc",
     "paint/discardable_image_map_unittest.cc",
     "paint/display_item_list_unittest.cc",
+    "paint/oop_pixeltest.cc",
     "paint/paint_image_unittest.cc",
     "paint/paint_op_buffer_unittest.cc",
     "paint/paint_shader_unittest.cc",
