@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3eca932_67028328",
+        "filename": "chrome/browser/ui/views/arrow_border.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T23:42:01Z",
+      "side": 1,
+      "message": "optional: Seems like duplication to have these two blocks when they both start with exactly the same thing. Could you reset the clipRect on line 77 ish and then do away with the enclosing blocks?",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "3cf5142346d1acfbef8167c07b03c11a65ad9724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
