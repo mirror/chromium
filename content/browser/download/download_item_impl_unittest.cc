@@ -279,7 +279,7 @@ class DownloadItemTest : public testing::Test {
       std::unique_ptr<DownloadCreateInfo> info) {
     DownloadItemImpl* download =
         new DownloadItemImpl(mock_delegate(), next_download_id_++,
-                             *(info.get()), net::NetLogWithSource());
+                             *(info.get()));
     allocated_downloads_[download] = base::WrapUnique(download);
     return download;
   }
@@ -298,7 +298,7 @@ class DownloadItemTest : public testing::Test {
     create_info_->download_id = ++next_download_id_;
     DownloadItemImpl* download =
         new DownloadItemImpl(mock_delegate(), create_info_->download_id,
-                             *create_info_, net::NetLogWithSource());
+                             *create_info_);
     allocated_downloads_[download] = base::WrapUnique(download);
     return download;
   }
