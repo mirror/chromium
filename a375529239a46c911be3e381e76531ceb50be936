@@ -46,6 +46,30 @@
       "revId": "a375529239a46c911be3e381e76531ceb50be936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5edf61_1da0548f",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-01T18:52:52Z",
+      "side": 1,
+      "message": "Oh, and I missed the second half of your comment, sorry! I remember seeing a comment by ccameron@ about certain CALayer properties being expensive to set, and I\u0027ve seen evidence of this myself (or at least evidence that setting a layer property can have side effects like starting a transaction even when the value doesn\u0027t change).\n\nIt would be nice to get rid of, though. ccameron@, do you know if it\u0027s actually worth it in this case?",
+      "parentUuid": "3755aed8_5337e30a",
+      "range": {
+        "startLine": 267,
+        "startChar": 7,
+        "endLine": 267,
+        "endChar": 24
+      },
+      "revId": "a375529239a46c911be3e381e76531ceb50be936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
