@@ -16,6 +16,24 @@
       "revId": "27de1f46aed0a9ebedda201bc5f26c04d49b6539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849641aa_41977620",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-01T21:23:22Z",
+      "side": 1,
+      "message": "The TYPE_JAVA MessageLoop uses the same MessageLoopForUI as the TYPE_UI does. So it\u0027s perfectly valid for a TYPE_JAVA loop to call MessageLoopForUI::current.\n\nThis is used by java_handler_thread_helpers.cc",
+      "parentUuid": "097baf08_5fe917fd",
+      "revId": "27de1f46aed0a9ebedda201bc5f26c04d49b6539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
