@@ -68,6 +68,29 @@
       "revId": "27ce5fef9681deb295b9dae223556424b58b3ec7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d183912e_e152db16",
+        "filename": "chrome/browser/ui/android/infobars/survey_infobar.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-01T18:02:22Z",
+      "side": 1,
+      "message": "you\u0027ll want to convert from a vanilla JavaRef to a ScopedJavaGlobalRef here (in the constructor).  After returning from the Create call below, the passed in JavaParamRef will drop it\u0027s GC reference count and open it to be possibly be garbage collected by the time you call GetSurveyInfoBarDelegate().\n\nBy having it a GlobalRef, it will retain a reference until this class is deleted and then allowing it to be GC\u0027d.",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "27ce5fef9681deb295b9dae223556424b58b3ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
