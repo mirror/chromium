@@ -22,7 +22,7 @@ public interface PaymentApp {
     /**
      * The interface for the requester of instruments.
      */
-    public interface InstrumentsCallback {
+    /* package */ interface InstrumentsCallback {
         /**
          * Called by this app to provide a list of instruments asynchronously.
          *
