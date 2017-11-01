@@ -255,6 +255,9 @@ ProcessManager::~ProcessManager() {
 }
 
 void ProcessManager::Shutdown() {
+  // All render frames should have been deleted by shutdown.
+  DCHECK(all_extension_frames_.empty());
+
   extension_registry_->RemoveObserver(this);
   CloseBackgroundHosts();
   DCHECK(background_hosts_.empty());
@@ -266,6 +269,8 @@ void ProcessManager::RegisterRenderFrameHost(
     content::WebContents* web_contents,
     content::RenderFrameHost* render_frame_host,
     const Extension* extension) {
+  DCHECK(render_frame_host->IsRenderFrameLive());
+
   ExtensionRenderFrameData* data = &all_extension_frames_[render_frame_host];
   data->view_type = GetViewType(web_contents);
 
