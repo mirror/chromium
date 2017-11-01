@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b050466f_998ed73c",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-01T14:33:10Z",
+      "side": 1,
+      "message": "We probably want this as a HeapVector no?",
+      "range": {
+        "startLine": 264,
+        "startChar": 7,
+        "endLine": 264,
+        "endChar": 13
+      },
+      "revId": "1c2e837eed3a01726a0164d68927b201595fac26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ccc4b5_0f4859d2",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-01T14:33:10Z",
+      "side": 1,
+      "message": "Remove are_",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 216,
+        "endChar": 44
+      },
+      "revId": "1c2e837eed3a01726a0164d68927b201595fac26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf7c83a_56b21fa4",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManagerTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-01T14:33:10Z",
+      "side": 1,
+      "message": "Spell count out.",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 31
+      },
+      "revId": "1c2e837eed3a01726a0164d68927b201595fac26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
