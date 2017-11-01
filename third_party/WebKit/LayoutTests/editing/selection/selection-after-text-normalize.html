@@ -4,8 +4,8 @@
 <script src="../assert_selection.js"></script>
 <div id="sample"></div>
 <script>
-function assemble(seleciton, source) {
-    let sample = seleciton.document.body;
+function assemble(selection, source) {
+    let sample = selection.document.body;
     let expectedEnd;
     let expectedStart;
     let sampleText = '';
@@ -38,8 +38,8 @@ function assemble(seleciton, source) {
             break;
         }
     }
-    seleciton.collapse(startNode, startOffset);
-    seleciton.extend(endNode, endOffset);
+    selection.collapse(startNode, startOffset);
+    selection.extend(endNode, endOffset);
     sample.normalize();
 }
 

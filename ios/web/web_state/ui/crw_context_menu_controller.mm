@@ -217,7 +217,7 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
     [self cancelAllTouches];
   } else {
     // There is no link or image under user's gesture. Do not cancel all touches
-    // to allow system text seletion UI.
+    // to allow system text selection UI.
   }
 
   if ([_delegate respondsToSelector:@selector(webView:handleContextMenu:)]) {

@@ -47,9 +47,9 @@ Tester.prototype.sendMessage = function(data) {
   }
 };
 
-Tester.prototype.sendWaitForInputResponse_ = function(setSelction) {
-  LOG('Tester.sendWaitForInputResponse_, setSelction: ' + setSelction);
-  if (setSelction) {
+Tester.prototype.sendWaitForInputResponse_ = function(setSelection) {
+  LOG('Tester.sendWaitForInputResponse_, setSelection: ' + setSelection);
+  if (setSelection) {
     this.sendMessage(
         ['response-waitForOnInputAndSelect', this.inputState_.lastInputValue]);
     this.inputElement1_.setSelectionRange(6, 6);

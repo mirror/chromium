@@ -61,10 +61,10 @@ for (var i = 0; i < allSpans.length; ++i) {
 
         // Checks havings the same selection.
         debug(allSpans[i].textContent + ' --> ' + allSpans[j].textContent);
-        shouldBe("internals.treeScopeRootNode(window.getSelection().anchorNode)", 
-                 "internals.treeScopeRootNode(window.getSelection().focusNode)"); 
+        shouldBe("internals.treeScopeRootNode(window.getSelection().anchorNode)",
+                 "internals.treeScopeRootNode(window.getSelection().focusNode)");
 
-        // clear seleciton.
+        // clear selection.
         window.getSelection().removeAllRanges();
     }
 }
@@ -79,8 +79,8 @@ for (var i = 0; i < allSpans.length; ++i) {
 
     // Checks havings the same selection.
     debug(allSpans[i].textContent + ": double click");
-    shouldBe("internals.treeScopeRootNode(window.getSelection().anchorNode)", 
-             "internals.treeScopeRootNode(window.getSelection().focusNode)"); 
+    shouldBe("internals.treeScopeRootNode(window.getSelection().anchorNode)",
+             "internals.treeScopeRootNode(window.getSelection().focusNode)");
 
     window.getSelection().removeAllRanges();
 }
