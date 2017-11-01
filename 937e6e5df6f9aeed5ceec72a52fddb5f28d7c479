@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c1dbf5a_d744d2cd",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-01T17:46:43Z",
+      "side": 1,
+      "message": "I guess this doesn\u0027t need to be forwarded to SimpleDeserialize?",
+      "range": {
+        "startLine": 588,
+        "startChar": 21,
+        "endLine": 588,
+        "endChar": 64
+      },
+      "revId": "937e6e5df6f9aeed5ceec72a52fddb5f28d7c479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
