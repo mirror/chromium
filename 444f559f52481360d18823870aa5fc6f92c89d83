@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ebd7e8a_82d25d2b",
+        "filename": "base/message_loop/message_pump_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T18:19:51Z",
+      "side": 1,
+      "message": "Can you separate refactoring from functional changes in different CLs?",
+      "range": {
+        "startLine": 37,
+        "startChar": 45,
+        "endLine": 37,
+        "endChar": 46
+      },
+      "revId": "444f559f52481360d18823870aa5fc6f92c89d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606a9540_73754d8e",
+        "filename": "base/message_loop/message_pump_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T18:19:51Z",
+      "side": 1,
+      "message": "Is the claim here that the message loop can be aborted outside of a running task? The aborts before were placed after running tasks to see if those tasks aborted.",
+      "revId": "444f559f52481360d18823870aa5fc6f92c89d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
