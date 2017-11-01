@@ -22,6 +22,30 @@
       "revId": "a375529239a46c911be3e381e76531ceb50be936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3755aed8_5337e30a",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-01T18:27:11Z",
+      "side": 1,
+      "message": "I think that\u0027s a documentation error (it only works in Swift)?",
+      "parentUuid": "0be088b3_637983fa",
+      "range": {
+        "startLine": 267,
+        "startChar": 7,
+        "endLine": 267,
+        "endChar": 24
+      },
+      "revId": "a375529239a46c911be3e381e76531ceb50be936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
