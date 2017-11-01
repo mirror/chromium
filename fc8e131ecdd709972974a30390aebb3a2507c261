@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56354ad0_f348e632",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2939,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-01T03:14:01Z",
+      "side": 1,
+      "message": "shall we just always return css pixels? In what case would I want anything else? Btw, what are the units returned by default?",
+      "range": {
+        "startLine": 2939,
+        "startChar": 31,
+        "endLine": 2939,
+        "endChar": 40
+      },
+      "revId": "fc8e131ecdd709972974a30390aebb3a2507c261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
