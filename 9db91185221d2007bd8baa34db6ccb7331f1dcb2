@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4523d58d_41804d4e",
+        "filename": "components/machine_intelligence/binary_classifier_predictor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-01T21:05:35Z",
+      "side": 1,
+      "message": "const ref?",
+      "revId": "9db91185221d2007bd8baa34db6ccb7331f1dcb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7114a8_fcd68df1",
+        "filename": "components/machine_intelligence/binary_classifier_predictor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-01T21:05:35Z",
+      "side": 1,
+      "message": "const ref?",
+      "revId": "9db91185221d2007bd8baa34db6ccb7331f1dcb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23a49a4_c719bd9c",
+        "filename": "components/machine_intelligence/binary_classifier_predictor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-01T21:05:35Z",
+      "side": 1,
+      "message": "plz use MakeUnique here too.",
+      "revId": "9db91185221d2007bd8baa34db6ccb7331f1dcb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
