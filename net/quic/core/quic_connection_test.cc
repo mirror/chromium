@@ -41,6 +41,7 @@
 #include "testing/gmock_mutant.h"
 
 using std::string;
+using testing::_;
 using testing::AnyNumber;
 using testing::AtLeast;
 using testing::DoAll;
@@ -52,7 +53,6 @@ using testing::Return;
 using testing::SaveArg;
 using testing::SetArgPointee;
 using testing::StrictMock;
-using testing::_;
 
 namespace net {
 namespace test {
@@ -1361,15 +1361,15 @@ TEST_P(QuicConnectionTest, PacketsInOrder) {
   EXPECT_CALL(visitor_, OnSuccessfulVersionNegotiation(_));
 
   ProcessPacket(1);
-  EXPECT_EQ(1u, outgoing_ack()->largest_observed);
+  EXPECT_EQ(1u, LargestAcked(*outgoing_ack()));
   EXPECT_EQ(1u, outgoing_ack()->packets.NumIntervals());
 
   ProcessPacket(2);
-  EXPECT_EQ(2u, outgoing_ack()->largest_observed);
+  EXPECT_EQ(2u, LargestAcked(*outgoing_ack()));
   EXPECT_EQ(1u, outgoing_ack()->packets.NumIntervals());
 
   ProcessPacket(3);
-  EXPECT_EQ(3u, outgoing_ack()->largest_observed);
+  EXPECT_EQ(3u, LargestAcked(*outgoing_ack()));
   EXPECT_EQ(1u, outgoing_ack()->packets.NumIntervals());
 }
 
@@ -1377,17 +1377,17 @@ TEST_P(QuicConnectionTest, PacketsOutOfOrder) {
   EXPECT_CALL(visitor_, OnSuccessfulVersionNegotiation(_));
 
   ProcessPacket(3);
-  EXPECT_EQ(3u, outgoing_ack()->largest_observed);
+  EXPECT_EQ(3u, LargestAcked(*outgoing_ack()));
   EXPECT_TRUE(IsMissing(2));
   EXPECT_TRUE(IsMissing(1));
 
   ProcessPacket(2);
-  EXPECT_EQ(3u, outgoing_ack()->largest_observed);
+  EXPECT_EQ(3u, LargestAcked(*outgoing_ack()));
   EXPECT_FALSE(IsMissing(2));
   EXPECT_TRUE(IsMissing(1));
 
   ProcessPacket(1);
-  EXPECT_EQ(3u, outgoing_ack()->largest_observed);
+  EXPECT_EQ(3u, LargestAcked(*outgoing_ack()));
   EXPECT_FALSE(IsMissing(2));
   EXPECT_FALSE(IsMissing(1));
 }
@@ -1396,14 +1396,14 @@ TEST_P(QuicConnectionTest, DuplicatePacket) {
   EXPECT_CALL(visitor_, OnSuccessfulVersionNegotiation(_));
 
   ProcessPacket(3);
-  EXPECT_EQ(3u, outgoing_ack()->largest_observed);
+  EXPECT_EQ(3u, LargestAcked(*outgoing_ack()));
   EXPECT_TRUE(IsMissing(2));
   EXPECT_TRUE(IsMissing(1));
 
   // Send packet 3 again, but do not set the expectation that
   // the visitor OnStreamFrame() will be called.
   ProcessDataPacket(3);
-  EXPECT_EQ(3u, outgoing_ack()->largest_observed);
+  EXPECT_EQ(3u, LargestAcked(*outgoing_ack()));
   EXPECT_TRUE(IsMissing(2));
   EXPECT_TRUE(IsMissing(1));
 }
@@ -1412,16 +1412,16 @@ TEST_P(QuicConnectionTest, PacketsOutOfOrderWithAdditionsAndLeastAwaiting) {
   EXPECT_CALL(visitor_, OnSuccessfulVersionNegotiation(_));
 
   ProcessPacket(3);
-  EXPECT_EQ(3u, outgoing_ack()->largest_observed);
+  EXPECT_EQ(3u, LargestAcked(*outgoing_ack()));
   EXPECT_TRUE(IsMissing(2));
   EXPECT_TRUE(IsMissing(1));
 
   ProcessPacket(2);
-  EXPECT_EQ(3u, outgoing_ack()->largest_observed);
+  EXPECT_EQ(3u, LargestAcked(*outgoing_ack()));
   EXPECT_TRUE(IsMissing(1));
 
   ProcessPacket(5);
-  EXPECT_EQ(5u, outgoing_ack()->largest_observed);
+  EXPECT_EQ(5u, LargestAcked(*outgoing_ack()));
   EXPECT_TRUE(IsMissing(1));
   EXPECT_TRUE(IsMissing(4));
 
@@ -2488,9 +2488,7 @@ TEST_P(QuicConnectionTest, NoLimitPacketsPerNack) {
 
   // Ack 15, nack 1-14.
 
-  QuicAckFrame nack;
-  nack.packets.Add(15);
-  nack.largest_observed = 15;
+  QuicAckFrame nack = InitAckFrame({{15, 16}});
 
   // 14 packets have been NACK'd and lost.
   LostPacketVector lost_packets;
@@ -2586,9 +2584,7 @@ TEST_P(QuicConnectionTest, DontLatchUnackedPacket) {
   SendStreamDataToPeer(1, "bar", 9, NO_FIN, nullptr);  // Packet 7
 
   EXPECT_CALL(*send_algorithm_, OnCongestionEvent(true, _, _, _, _));
-  frame = InitAckFrame(4);
-  frame.packets.Add(7);
-  frame.largest_observed = 7;
+  frame = InitAckFrame({{1, 5}, {7, 8}});
   ProcessAckPacket(&frame);
 
   EXPECT_EQ(6u, stop_waiting()->least_unacked);
@@ -3197,11 +3193,11 @@ TEST_P(QuicConnectionTest, MtuDiscoveryFailed) {
                                                  mtu_discovery_packets.end());
       ack.packets.AddRange(1, min_packet);
       ack.packets.AddRange(max_packet + 1, creator_->packet_number() + 1);
-      ack.largest_observed = creator_->packet_number();
+      ack.deprecated_largest_observed = creator_->packet_number();
 
     } else {
       ack.packets.AddRange(1, creator_->packet_number() + 1);
-      ack.largest_observed = creator_->packet_number();
+      ack.deprecated_largest_observed = creator_->packet_number();
     }
 
     ProcessAckPacket(&ack);
@@ -4428,7 +4424,7 @@ TEST_P(QuicConnectionTest, BundleAckForSecondCHLO) {
   EXPECT_EQ(1u, writer_->stream_frames().size());
   EXPECT_EQ(1u, writer_->padding_frames().size());
   EXPECT_FALSE(writer_->ack_frames().empty());
-  EXPECT_EQ(2u, writer_->ack_frames().front().largest_observed);
+  EXPECT_EQ(2u, LargestAcked(writer_->ack_frames().front()));
   EXPECT_FALSE(connection_.GetAckAlarm()->IsSet());
 }
 
@@ -4457,7 +4453,7 @@ TEST_P(QuicConnectionTest, BundleAckForSecondCHLOTwoPacketReject) {
   EXPECT_EQ(1u, writer_->stream_frames().size());
   EXPECT_EQ(1u, writer_->padding_frames().size());
   EXPECT_FALSE(writer_->ack_frames().empty());
-  EXPECT_EQ(2u, writer_->ack_frames().front().largest_observed);
+  EXPECT_EQ(2u, LargestAcked(writer_->ack_frames().front()));
   EXPECT_FALSE(connection_.GetAckAlarm()->IsSet());
 }
 
@@ -4507,7 +4503,7 @@ TEST_P(QuicConnectionTest, BundleAckWithDataOnIncomingAck) {
     EXPECT_FALSE(writer_->stop_waiting_frames().empty());
   }
   EXPECT_FALSE(writer_->ack_frames().empty());
-  EXPECT_EQ(3u, writer_->ack_frames().front().largest_observed);
+  EXPECT_EQ(3u, LargestAcked(writer_->ack_frames().front()));
   EXPECT_EQ(1u, writer_->stream_frames().size());
   EXPECT_FALSE(connection_.GetAckAlarm()->IsSet());
 }
@@ -4772,10 +4768,7 @@ TEST_P(QuicConnectionTest, CheckSendStats) {
   connection_.GetRetransmissionAlarm()->Fire();
 
   // Retransmit due to explicit nacks.
-  QuicAckFrame nack_three;
-  nack_three.packets.Add(2);
-  nack_three.packets.Add(4);
-  nack_three.largest_observed = 4;
+  QuicAckFrame nack_three = InitAckFrame({{2, 3}, {4, 5}});
 
   LostPacketVector lost_packets;
   lost_packets.push_back(LostPacket(1, kMaxPacketSize));

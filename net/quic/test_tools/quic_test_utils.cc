@@ -45,7 +45,7 @@ QuicAckFrame InitAckFrame(const std::vector<QuicAckBlock>& ack_blocks) {
     end_of_previous_block = block.limit;
   }
 
-  ack.largest_observed = ack.packets.Max();
+  ack.deprecated_largest_observed = ack.packets.Max();
 
   return ack;
 }
@@ -57,7 +57,7 @@ QuicAckFrame InitAckFrame(QuicPacketNumber largest_acked) {
 QuicAckFrame MakeAckFrameWithAckBlocks(size_t num_ack_blocks,
                                        QuicPacketNumber least_unacked) {
   QuicAckFrame ack;
-  ack.largest_observed = 2 * num_ack_blocks + least_unacked;
+  ack.deprecated_largest_observed = 2 * num_ack_blocks + least_unacked;
   // Add enough received packets to get num_ack_blocks ack blocks.
   for (QuicPacketNumber i = 2; i < 2 * num_ack_blocks + 1; i += 2) {
     ack.packets.Add(least_unacked + i);

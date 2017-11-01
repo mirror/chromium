@@ -536,7 +536,7 @@ bool QuicPacketCreator::AddFrame(const QuicFrame& frame,
 
   if (frame.type == ACK_FRAME) {
     packet_.has_ack = true;
-    packet_.largest_acked = frame.ack_frame->largest_observed;
+    packet_.largest_acked = LargestAcked(*frame.ack_frame);
   }
   if (frame.type == STOP_WAITING_FRAME) {
     packet_.has_stop_waiting = true;

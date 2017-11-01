@@ -1339,8 +1339,8 @@ bool QuicFramer::ProcessAckFrame(QuicDataReader* reader,
       ExtractBits(frame_type, kQuicSequenceNumberLengthNumBits,
                   kLargestAckedOffset));
 
-  if (!reader->ReadBytesToUInt64(largest_acked_length,
-                                 &ack_frame->largest_observed)) {
+  QuicPacketNumber largest_acked;
+  if (!reader->ReadBytesToUInt64(largest_acked_length, &largest_acked)) {
     set_detailed_error("Unable to read largest acked.");
     return false;
   }
@@ -1373,18 +1373,19 @@ bool QuicFramer::ProcessAckFrame(QuicDataReader* reader,
   }
 
   if (FLAGS_quic_reloadable_flag_sanitize_framer_addrange_input &&
-      first_block_length > ack_frame->largest_observed + 1) {
+      first_block_length > largest_acked + 1) {
     QUIC_FLAG_COUNT_N(quic_reloadable_flag_sanitize_framer_addrange_input, 1,
                       2);
     set_detailed_error(QuicStrCat("Underflow with first ack block length ",
                                   first_block_length, " largest acked is ",
-                                  ack_frame->largest_observed + 1, ".")
+                                  largest_acked + 1, ".")
                            .c_str());
     return false;
   }
-  QuicPacketNumber first_received =
-      ack_frame->largest_observed + 1 - first_block_length;
-  ack_frame->packets.AddRange(first_received, ack_frame->largest_observed + 1);
+
+  QuicPacketNumber first_received = largest_acked + 1 - first_block_length;
+  ack_frame->deprecated_largest_observed = largest_acked;
+  ack_frame->packets.AddRange(first_received, largest_acked + 1);
 
   if (num_ack_blocks > 0) {
     for (size_t i = 0; i < num_ack_blocks; ++i) {
@@ -1440,7 +1441,7 @@ bool QuicFramer::ProcessTimestampsInAckFrame(uint8_t num_received_packets,
       return false;
     }
     QuicPacketNumber seq_num =
-        ack_frame->largest_observed - delta_from_largest_observed;
+        LargestAcked(*ack_frame) - delta_from_largest_observed;
 
     // Time delta from the framer creation.
     uint32_t time_delta_us;
@@ -1461,7 +1462,7 @@ bool QuicFramer::ProcessTimestampsInAckFrame(uint8_t num_received_packets,
             "Unable to read sequence delta in received packets.");
         return false;
       }
-      seq_num = ack_frame->largest_observed - delta_from_largest_observed;
+      seq_num = LargestAcked(*ack_frame) - delta_from_largest_observed;
 
       // Time delta from the previous timestamp.
       uint64_t incremental_time_delta_us;
@@ -1823,7 +1824,7 @@ size_t QuicFramer::GetAckFrameSize(
 
   AckFrameInfo ack_info = GetAckFrameInfo(ack);
   QuicPacketNumberLength largest_acked_length =
-      GetMinPacketNumberLength(transport_version_, ack.largest_observed);
+      GetMinPacketNumberLength(transport_version_, LargestAcked(ack));
   QuicPacketNumberLength ack_block_length =
       GetMinPacketNumberLength(transport_version_, ack_info.max_block_length);
 
@@ -2059,7 +2060,7 @@ void QuicFramer::set_version(const QuicTransportVersion version) {
 bool QuicFramer::AppendAckFrameAndTypeByte(const QuicAckFrame& frame,
                                            QuicDataWriter* writer) {
   const AckFrameInfo new_ack_info = GetAckFrameInfo(frame);
-  QuicPacketNumber largest_acked = frame.largest_observed;
+  QuicPacketNumber largest_acked = LargestAcked(frame);
   QuicPacketNumberLength largest_acked_length =
       GetMinPacketNumberLength(transport_version_, largest_acked);
   QuicPacketNumberLength ack_block_length = GetMinPacketNumberLength(
@@ -2253,7 +2254,7 @@ bool QuicFramer::AppendTimestampsToAckFrame(const QuicAckFrame& frame,
   PacketTimeVector::const_iterator it = frame.received_packet_times.begin();
   QuicPacketNumber packet_number = it->first;
   QuicPacketNumber delta_from_largest_observed =
-      frame.largest_observed - packet_number;
+      LargestAcked(frame) - packet_number;
 
   DCHECK_GE(std::numeric_limits<uint8_t>::max(), delta_from_largest_observed);
   if (delta_from_largest_observed > std::numeric_limits<uint8_t>::max()) {
@@ -2277,7 +2278,7 @@ bool QuicFramer::AppendTimestampsToAckFrame(const QuicAckFrame& frame,
 
   for (++it; it != frame.received_packet_times.end(); ++it) {
     packet_number = it->first;
-    delta_from_largest_observed = frame.largest_observed - packet_number;
+    delta_from_largest_observed = LargestAcked(frame) - packet_number;
 
     if (delta_from_largest_observed > std::numeric_limits<uint8_t>::max()) {
       return false;
