@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95188da6_0a2532c7",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-01T23:50:37Z",
+      "side": 1,
+      "message": "If we post to the worklet thread before walking over the animators_ it seems like we no longer need the lock (all of the locked methods would be on the worklet thread) and we save posting and waiting for a task per animator. I think this will be necessary in the longrun too in order to aggregate all of the mutators output and send back a single message rather than risk having animators update at different rates.",
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
