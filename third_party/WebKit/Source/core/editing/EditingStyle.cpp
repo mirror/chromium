@@ -1369,9 +1369,10 @@ void EditingStyle::MergeStyleFromRulesForSerialization(Element* element) {
       if (ToCSSPrimitiveValue(value).IsPercentage()) {
         if (const CSSValue* computed_property_value =
                 computed_style_for_element->GetPropertyCSSValue(
-                    CSSPropertyAPI::Get(property.Id())))
+                    CSSPropertyAPI::Get(property.Id()))) {
           from_computed_style->AddRespectingCascade(
-              CSSProperty(property.Id(), *computed_property_value));
+              CSSPropertyValue(property.Id(), *computed_property_value));
+        }
       }
     }
   }
