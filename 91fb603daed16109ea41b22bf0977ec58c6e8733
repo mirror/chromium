@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87030570_ab5b26e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T17:10:38Z",
+      "side": 1,
+      "message": "\u003e This is a transitional phase though, right? Eventually (when we have proper content_public) we\u0027d allow that?\n\nYeah this description isn\u0027t quite right. Goal is same as production code, that content should have control over what can and cannot be imported by embedders.",
+      "parentUuid": "21b26645_381e49ce",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 66
+      },
+      "revId": "91fb603daed16109ea41b22bf0977ec58c6e8733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98d775f1_495e92b3",
         "filename": "android_webview/DEPS",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-01T14:53:29Z",
       "side": 1,
       "message": "this should really have a comment explaining why it\u0027s here. It\u0027s confusing that aw isn\u0027t allowed to use \"content public\" it\u0027s just that in this case content/public isn\u0027t really public.\n\nHmm, is there a saner way to do the split?\nCause even if you\u0027re going to split the java parts, content/public/test (the c++ version) is fine for aw to depend on. There isn\u0027t actually that much java code tehre - it might just be saner to fix it now - what do you think?",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "91fb603daed16109ea41b22bf0977ec58c6e8733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63048c8_756912c5",
+        "filename": "android_webview/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T17:10:38Z",
+      "side": 1,
+      "message": "\u003e this should really have a comment explaining why it\u0027s here. It\u0027s confusing that aw isn\u0027t allowed to use \"content public\" it\u0027s just that in this case content/public isn\u0027t really public.\n\u003e \n\u003e Hmm, is there a saner way to do the split?\n\u003e Cause even if you\u0027re going to split the java parts, content/public/test (the c++ version) is fine for aw to depend on. There isn\u0027t actually that much java code tehre - it might just be saner to fix it now - what do you think?\n\nshould put this next to +content/public/test/android/javatests in android_webview/javatests/DEPS to make this clearer, ditto for chrome",
+      "parentUuid": "98d775f1_495e92b3",
       "range": {
         "startLine": 21,
         "startChar": 4,
