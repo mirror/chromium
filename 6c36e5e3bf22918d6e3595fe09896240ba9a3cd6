@@ -16,6 +16,24 @@
       "revId": "6c36e5e3bf22918d6e3595fe09896240ba9a3cd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93089401_66130f33",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-01T22:41:42Z",
+      "side": 1,
+      "message": "Added comment.\n\nCount of 0 is an invalid value and would be ignored, see [1].\nCount of 1 (or in general a very low value) would make the first meaningful paint less \"meaningful\" since it would contain very little content. In our case the list is pretty much the only thing on the page (we already use a CSS shim for the toolbar). I chose 3 after experimenting with a few values, as a middle ground between showing something meaningful fast VS total time to render everything. This trade-off of item-count is also explained at [2]. Note that we have 2 dom-repeats (apps + extensions) so there would be roughly 6 items shown on the first frame that has any cards rendered.\n\n\n[1] https://github.com/Polymer/polymer/blob/1.x/src/lib/template/dom-repeat.html#L344\n[2] https://github.com/Polymer/polymer/issues/2537#issuecomment-153950331",
+      "parentUuid": "36d9188e_ef6ef919",
+      "revId": "6c36e5e3bf22918d6e3595fe09896240ba9a3cd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
