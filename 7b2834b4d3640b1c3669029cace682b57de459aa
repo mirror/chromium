@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0d4715c5_8b890d35",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T07:14:07Z",
+      "side": 1,
+      "message": "My interpretation of the style guidelines [1] is:\n\n#1 {1, 2, 3} to call a initializer_list ctor overload is OK\n#2 SomeClass{arg1, arg2, arg3} is not OK as this is using uniform initialization syntax.\n#3 {arg1, arg2, arg3} (using a non-initializer list ctor overload) is also not OK.\n\nIt\u0027s kind of annoying, because #1 looks an awful lot like #3...\n\n[1] https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization",
+      "parentUuid": "f304d88f_80fee1b9",
+      "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed114ad5_cdd586c3",
         "filename": "components/favicon/core/favicon_driver_impl.cc",
         "patchSetId": 13
