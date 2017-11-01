@@ -59,7 +59,7 @@ class CommonSwitches {
 #endif  // defined(GOOGLE_CHROME_BUILD)
         native_crx_bindings(switches::kNativeCrxBindings,
                             kNativeCrxBindingsFieldTrial,
-                            FeatureSwitch::DEFAULT_DISABLED),
+                            FeatureSwitch::DEFAULT_ENABLED),
         yield_between_content_script_runs(
             switches::kYieldBetweenContentScriptRuns,
             kYieldBetweenContentScriptRunsFieldTrial,
