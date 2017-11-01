@@ -10,7 +10,6 @@
 
 @protocol ApplicationCommands;
 @protocol SettingsMainPageCommands;
-@class SigninInteractionController;
 namespace ios {
 class ChromeBrowserState;
 }  // namespace ios
