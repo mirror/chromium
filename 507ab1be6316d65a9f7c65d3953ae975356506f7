@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd036446_662bff0c",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T03:02:49Z",
+      "side": 1,
+      "message": "Funny story, this method is dead code :) Removed.",
+      "parentUuid": "d6bc67e7_1631ad58",
+      "range": {
+        "startLine": 71,
+        "startChar": 28,
+        "endLine": 71,
+        "endChar": 41
+      },
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f9d4eac_46b4ef0c",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-30T21:47:45Z",
       "side": 1,
       "message": "Looks like mesh and model terms are now used interchangeably in a bunch of spots.  Is this intentional?",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed7d295_cea17411",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T03:02:49Z",
+      "side": 1,
+      "message": "Nope! That\u0027s some sloppy sed\u0027ing there.",
+      "parentUuid": "9f9d4eac_46b4ef0c",
       "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9035d849_fa8ae859",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T03:02:49Z",
+      "side": 1,
+      "message": "This does seem pretty silly, yeah :)",
+      "parentUuid": "96f44def_54e5d7c3",
+      "range": {
+        "startLine": 595,
+        "startChar": 36,
+        "endLine": 595,
+        "endChar": 58
+      },
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f0f38c4_e2b6d514",
         "filename": "chrome/browser/vr/controller_mesh.cc",
         "patchSetId": 3
@@ -76,6 +142,24 @@
       "writtenOn": "2017-10-30T21:47:45Z",
       "side": 1,
       "message": "This is odd.  Does MakeFromBitmap not grab the color type from the bitmap?  This code looks a little bit like TexturedElement\u0027s passing of color type to GL.  Maybe this should work the same way?  It seems crazy to have to swap bytes.",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04fb4e1f_0cd63ce3",
+        "filename": "chrome/browser/vr/controller_mesh.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T03:02:49Z",
+      "side": 1,
+      "message": "I was pretty surprised by this, too, but we were tripping this DCHECK on linux. Apparently we decode BGRA on linux and so I had to do this crummy swizzling. There is a decode fn that takes a color type, but reading the comments, I think this is the right one.",
+      "parentUuid": "3f0f38c4_e2b6d514",
       "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "c450a35a_f1c3e54f",
+        "filename": "chrome/browser/vr/elements/ui_element_name.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T03:02:49Z",
+      "side": 1,
+      "message": "sg, done.",
+      "parentUuid": "7bd44f9a_9f354ef1",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42fc7803_9fd2f7ab",
         "filename": "chrome/browser/vr/model/model.h",
         "patchSetId": 3
@@ -110,6 +212,24 @@
       "writtenOn": "2017-10-30T21:47:45Z",
       "side": 1,
       "message": "Why not do this now?  UiInputManager::CLICKED explicitly makes no sense in the model, and the logic populating the model should make sure it never makes it in here.",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc83d5b_9fba6a75",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T03:02:49Z",
+      "side": 1,
+      "message": "This is related to me using this struct in UiInputManager (which needs the extra state). I\u0027ve broken this out into separate files so that it\u0027s clearer what\u0027s input (i.e., the controller) and what\u0027s output (i.e., the reticle). I then pass these along to the UiInterface.",
+      "parentUuid": "42fc7803_9fd2f7ab",
       "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "cde96344_7329b002",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T03:02:49Z",
+      "side": 1,
+      "message": "Whoops. I actually meant to update this after our conversation last week and forgot.",
+      "parentUuid": "f0bb099f_f38e6ee1",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b250af3_1263cf34",
         "filename": "chrome/browser/vr/testapp/BUILD.gn",
         "patchSetId": 3
@@ -144,6 +282,24 @@
       "writtenOn": "2017-10-30T21:47:45Z",
       "side": 1,
       "message": "Shouldn\u0027t this be a public dep of vr_common lib rather than brought in here?",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87954245_19cc9a56",
+        "filename": "chrome/browser/vr/testapp/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T03:02:49Z",
+      "side": 1,
+      "message": "much better. thanks!",
+      "parentUuid": "9b250af3_1263cf34",
       "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "988ec94a_b2a30b49",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T03:02:49Z",
+      "side": 1,
+      "message": "Might be silly, but I thought it\u0027d be nice if the resource faded in when it was available. You\u0027re probably right that it can just be slow in the testapp. Removed.",
+      "parentUuid": "3f828d02_134d1c84",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "613108c0_7d647d00",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 3
@@ -181,6 +355,24 @@
       "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7b9752_c31d41a9",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T03:02:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "613108c0_7d647d00",
+      "revId": "507ab1be6316d65a9f7c65d3953ae975356506f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
