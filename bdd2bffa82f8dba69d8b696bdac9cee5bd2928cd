@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f8be9b4_260bdbb8",
+        "filename": "ios/web_view/internal/language/web_view_url_language_histogram_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-01T06:33:38Z",
+      "side": 1,
+      "message": "nit: does it fit in previous line?",
+      "revId": "bdd2bffa82f8dba69d8b696bdac9cee5bd2928cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b6d2c6b_3b275aaa",
+        "filename": "ios/web_view/internal/language/web_view_url_language_histogram_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-01T06:33:38Z",
+      "side": 1,
+      "message": "nit: actually I don\u0027t even see the necessity to expose this method (only for the PreMainMessageLoopRun init, but we can always do lazy initialization), but it seems others are following the same pattern, so I think it\u0027s fine. :D",
+      "revId": "bdd2bffa82f8dba69d8b696bdac9cee5bd2928cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86e98c37_db3a4fc0",
+        "filename": "ios/web_view/internal/language/web_view_url_language_histogram_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-01T06:33:38Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bdd2bffa82f8dba69d8b696bdac9cee5bd2928cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
