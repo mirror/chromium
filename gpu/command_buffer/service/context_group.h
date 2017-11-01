@@ -30,6 +30,7 @@ class ImageFactory;
 struct GpuPreferences;
 class TransferBufferManager;
 class ServiceDiscardableManager;
+class ServiceTransferCache;
 
 namespace gles2 {
 
@@ -69,7 +70,8 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
                gpu::ImageFactory* image_factory,
                ProgressReporter* progress_reporter,
                const GpuFeatureInfo& gpu_feature_info,
-               ServiceDiscardableManager* discardable_manager);
+               ServiceDiscardableManager* discardable_manager,
+               ServiceTransferCache* transfer_cache);
 
   // This should only be called by GLES2Decoder. This must be paired with a
   // call to destroy if it succeeds.
@@ -203,6 +205,8 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
     return discardable_manager_;
   }
 
+  ServiceTransferCache* transfer_cache() const { return transfer_cache_; }
+
   uint32_t GetMemRepresented() const;
 
   // Loses all the context associated with this group.
@@ -319,6 +323,7 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
   GpuFeatureInfo gpu_feature_info_;
 
   ServiceDiscardableManager* discardable_manager_;
+  ServiceTransferCache* transfer_cache_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextGroup);
 };

@@ -16185,6 +16185,153 @@ static_assert(sizeof(EndRasterCHROMIUM) == 4,
 static_assert(offsetof(EndRasterCHROMIUM, header) == 0,
               "offset of EndRasterCHROMIUM header should be 0");
 
+struct CreateTransferCacheEntryCHROMIUM {
+  typedef CreateTransferCacheEntryCHROMIUM ValueType;
+  static const CommandId kCmdId = kCreateTransferCacheEntryCHROMIUM;
+  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
+  static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
+
+  static uint32_t ComputeSize() {
+    return static_cast<uint32_t>(sizeof(ValueType));  // NOLINT
+  }
+
+  void SetHeader() { header.SetCmd<ValueType>(); }
+
+  void Init(uint64_t _handle_id,
+            uint32_t _handle_shm_id,
+            uint32_t _handle_shm_offset,
+            uint32_t _type,
+            uint32_t _data_shm_id,
+            uint32_t _data_shm_offset,
+            uint32_t _data_size) {
+    SetHeader();
+    handle_id = _handle_id;
+    handle_shm_id = _handle_shm_id;
+    handle_shm_offset = _handle_shm_offset;
+    type = _type;
+    data_shm_id = _data_shm_id;
+    data_shm_offset = _data_shm_offset;
+    data_size = _data_size;
+  }
+
+  void* Set(void* cmd,
+            uint64_t _handle_id,
+            uint32_t _handle_shm_id,
+            uint32_t _handle_shm_offset,
+            uint32_t _type,
+            uint32_t _data_shm_id,
+            uint32_t _data_shm_offset,
+            uint32_t _data_size) {
+    static_cast<ValueType*>(cmd)->Init(_handle_id, _handle_shm_id,
+                                       _handle_shm_offset, _type, _data_shm_id,
+                                       _data_shm_offset, _data_size);
+    return NextCmdAddress<ValueType>(cmd);
+  }
+
+  gpu::CommandHeader header;
+  uint32_t handle_id;
+  uint32_t handle_shm_id;
+  uint32_t handle_shm_offset;
+  uint32_t type;
+  uint32_t data_shm_id;
+  uint32_t data_shm_offset;
+  uint32_t data_size;
+};
+
+static_assert(sizeof(CreateTransferCacheEntryCHROMIUM) == 32,
+              "size of CreateTransferCacheEntryCHROMIUM should be 32");
+static_assert(offsetof(CreateTransferCacheEntryCHROMIUM, header) == 0,
+              "offset of CreateTransferCacheEntryCHROMIUM header should be 0");
+static_assert(
+    offsetof(CreateTransferCacheEntryCHROMIUM, handle_id) == 4,
+    "offset of CreateTransferCacheEntryCHROMIUM handle_id should be 4");
+static_assert(
+    offsetof(CreateTransferCacheEntryCHROMIUM, handle_shm_id) == 8,
+    "offset of CreateTransferCacheEntryCHROMIUM handle_shm_id should be 8");
+static_assert(offsetof(CreateTransferCacheEntryCHROMIUM, handle_shm_offset) ==
+                  12,
+              "offset of CreateTransferCacheEntryCHROMIUM handle_shm_offset "
+              "should be 12");
+static_assert(offsetof(CreateTransferCacheEntryCHROMIUM, type) == 16,
+              "offset of CreateTransferCacheEntryCHROMIUM type should be 16");
+static_assert(
+    offsetof(CreateTransferCacheEntryCHROMIUM, data_shm_id) == 20,
+    "offset of CreateTransferCacheEntryCHROMIUM data_shm_id should be 20");
+static_assert(
+    offsetof(CreateTransferCacheEntryCHROMIUM, data_shm_offset) == 24,
+    "offset of CreateTransferCacheEntryCHROMIUM data_shm_offset should be 24");
+static_assert(
+    offsetof(CreateTransferCacheEntryCHROMIUM, data_size) == 28,
+    "offset of CreateTransferCacheEntryCHROMIUM data_size should be 28");
+
+struct DeleteTransferCacheEntryCHROMIUM {
+  typedef DeleteTransferCacheEntryCHROMIUM ValueType;
+  static const CommandId kCmdId = kDeleteTransferCacheEntryCHROMIUM;
+  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
+  static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
+
+  static uint32_t ComputeSize() {
+    return static_cast<uint32_t>(sizeof(ValueType));  // NOLINT
+  }
+
+  void SetHeader() { header.SetCmd<ValueType>(); }
+
+  void Init(uint64_t _handle_id) {
+    SetHeader();
+    handle_id = _handle_id;
+  }
+
+  void* Set(void* cmd, uint64_t _handle_id) {
+    static_cast<ValueType*>(cmd)->Init(_handle_id);
+    return NextCmdAddress<ValueType>(cmd);
+  }
+
+  gpu::CommandHeader header;
+  uint32_t handle_id;
+};
+
+static_assert(sizeof(DeleteTransferCacheEntryCHROMIUM) == 8,
+              "size of DeleteTransferCacheEntryCHROMIUM should be 8");
+static_assert(offsetof(DeleteTransferCacheEntryCHROMIUM, header) == 0,
+              "offset of DeleteTransferCacheEntryCHROMIUM header should be 0");
+static_assert(
+    offsetof(DeleteTransferCacheEntryCHROMIUM, handle_id) == 4,
+    "offset of DeleteTransferCacheEntryCHROMIUM handle_id should be 4");
+
+struct UnlockTransferCacheEntryCHROMIUM {
+  typedef UnlockTransferCacheEntryCHROMIUM ValueType;
+  static const CommandId kCmdId = kUnlockTransferCacheEntryCHROMIUM;
+  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
+  static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
+
+  static uint32_t ComputeSize() {
+    return static_cast<uint32_t>(sizeof(ValueType));  // NOLINT
+  }
+
+  void SetHeader() { header.SetCmd<ValueType>(); }
+
+  void Init(uint64_t _handle_id) {
+    SetHeader();
+    handle_id = _handle_id;
+  }
+
+  void* Set(void* cmd, uint64_t _handle_id) {
+    static_cast<ValueType*>(cmd)->Init(_handle_id);
+    return NextCmdAddress<ValueType>(cmd);
+  }
+
+  gpu::CommandHeader header;
+  uint32_t handle_id;
+};
+
+static_assert(sizeof(UnlockTransferCacheEntryCHROMIUM) == 8,
+              "size of UnlockTransferCacheEntryCHROMIUM should be 8");
+static_assert(offsetof(UnlockTransferCacheEntryCHROMIUM, header) == 0,
+              "offset of UnlockTransferCacheEntryCHROMIUM header should be 0");
+static_assert(
+    offsetof(UnlockTransferCacheEntryCHROMIUM, handle_id) == 4,
+    "offset of UnlockTransferCacheEntryCHROMIUM handle_id should be 4");
+
 struct TexStorage2DImageCHROMIUM {
   typedef TexStorage2DImageCHROMIUM ValueType;
   static const CommandId kCmdId = kTexStorage2DImageCHROMIUM;

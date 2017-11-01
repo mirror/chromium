@@ -72,7 +72,8 @@ ContextGroup::ContextGroup(
     gpu::ImageFactory* image_factory,
     ProgressReporter* progress_reporter,
     const GpuFeatureInfo& gpu_feature_info,
-    ServiceDiscardableManager* discardable_manager)
+    ServiceDiscardableManager* discardable_manager,
+    ServiceTransferCache* transfer_cache)
     : gpu_preferences_(gpu_preferences),
       mailbox_manager_(mailbox_manager),
       memory_tracker_(memory_tracker),
@@ -115,8 +116,10 @@ ContextGroup::ContextGroup(
       passthrough_resources_(new PassthroughResources),
       progress_reporter_(progress_reporter),
       gpu_feature_info_(gpu_feature_info),
-      discardable_manager_(discardable_manager) {
+      discardable_manager_(discardable_manager),
+      transfer_cache_(transfer_cache) {
   DCHECK(discardable_manager);
+  DCHECK(transfer_cache);
   DCHECK(feature_info_);
   DCHECK(mailbox_manager_);
   transfer_buffer_manager_ =
