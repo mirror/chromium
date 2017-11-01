@@ -11,7 +11,10 @@
 namespace net {
 
 Http2PushPromiseIndex::Http2PushPromiseIndex() {}
-Http2PushPromiseIndex::~Http2PushPromiseIndex() {}
+
+Http2PushPromiseIndex::~Http2PushPromiseIndex() {
+  DCHECK(unclaimed_pushed_streams_.empty());
+}
 
 base::WeakPtr<SpdySession> Http2PushPromiseIndex::Find(
     const SpdySessionKey& key,
