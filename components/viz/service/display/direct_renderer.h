@@ -55,9 +55,10 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
   bool use_partial_swap() const { return use_partial_swap_; }
 
   void SetVisible(bool visible);
-  void DecideRenderPassAllocationsForFrame(
-      const RenderPassList& render_passes_in_draw_order);
-  bool HasAllocatedResourcesForTesting(RenderPassId render_pass_id) const;
+  virtual void DecideRenderPassAllocationsForFrame(
+      const RenderPassList& render_passes_in_draw_order) = 0;
+  virtual bool HasAllocatedResourcesForTesting(
+      RenderPassId render_pass_id) const = 0;
   void DrawFrame(RenderPassList* render_passes_in_draw_order,
                  float device_scale_factor,
                  const gfx::Size& device_viewport_size);
@@ -72,6 +73,9 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
   // verify cases where the texture doesn't match the render pass size.
   void SetEnlargePassTextureAmountForTesting(const gfx::Size& amount) {
     enlarge_pass_texture_amount_ = amount;
+  }
+  const gfx::Size& GetEnlargePassTextureAmountForTesting() {
+    return enlarge_pass_texture_amount_;
   }
 
   // Public for tests that poke at internals.
@@ -141,7 +145,7 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
       bool use_render_pass_scissor);
   void DrawRenderPassAndExecuteCopyRequests(RenderPass* render_pass);
   void DrawRenderPass(const RenderPass* render_pass);
-  bool UseRenderPass(const RenderPass* render_pass);
+  virtual bool UseRenderPass(const RenderPass* render_pass) = 0;
 
   void DoDrawPolygon(const DrawPolygon& poly,
                      const gfx::Rect& render_pass_scissor,
@@ -207,9 +211,6 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
   // DirectComposition layers needed to be used.
   int frames_since_using_dc_layers_ = 0;
 
-  // A map from RenderPass id to the texture used to draw the RenderPass from.
-  base::flat_map<RenderPassId, std::unique_ptr<cc::ScopedResource>>
-      render_pass_textures_;
   // A map from RenderPass id to the single quad present in and replacing the
   // RenderPass.
   base::flat_map<RenderPassId, TileDrawQuad> render_pass_bypass_quads_;

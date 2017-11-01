@@ -69,6 +69,11 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
       const gpu::TextureInUseResponses& responses) override;
 
   virtual bool IsContextLost();
+  bool UseRenderPass(const RenderPass* render_pass) override;
+  void DecideRenderPassAllocationsForFrame(
+      const RenderPassList& render_passes_in_draw_order) override;
+  bool HasAllocatedResourcesForTesting(
+      RenderPassId render_pass_id) const override;
 
  protected:
   void DidChangeVisibility() override;
@@ -274,6 +279,10 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
                                int max_result,
                                unsigned query,
                                int multiplier);
+
+  // A map from RenderPass id to the texture used to draw the RenderPass from.
+  base::flat_map<RenderPassId, std::unique_ptr<cc::ScopedResource>>
+      render_pass_textures_;
 
   using OverlayResourceLock =
       std::unique_ptr<cc::DisplayResourceProvider::ScopedReadLockGL>;

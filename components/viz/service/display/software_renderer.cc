@@ -801,4 +801,119 @@ sk_sp<SkShader> SoftwareRenderer::GetBackgroundFilterShader(
                                            &filter_backdrop_transform);
 }
 
+void SoftwareRenderer::DecideRenderPassAllocationsForFrame(
+    const RenderPassList& render_passes_in_draw_order) {
+  render_pass_bypass_quads_.clear();
+
+  auto& root_render_pass = render_passes_in_draw_order.back();
+
+  struct RenderPassRequirements {
+    gfx::Size size;
+    cc::ResourceProvider::TextureHint hint;
+  };
+  base::flat_map<RenderPassId, RenderPassRequirements> render_passes_in_frame;
+  for (const auto& pass : render_passes_in_draw_order) {
+    if (pass != root_render_pass) {
+      if (const TileDrawQuad* tile_quad = CanPassBeDrawnDirectly(pass.get())) {
+        // If the render pass is drawn directly, it will not be drawn from as
+        // a render pass so it's not added to the map.
+        render_pass_bypass_quads_[pass->id] = *tile_quad;
+        continue;
+      }
+    }
+    render_passes_in_frame[pass->id] = {RenderPassTextureSize(pass.get()),
+                                        RenderPassTextureHint(pass.get())};
+  }
+
+  std::vector<RenderPassId> passes_to_delete;
+  for (const auto& pair : render_pass_textures_) {
+    auto it = render_passes_in_frame.find(pair.first);
+    if (it == render_passes_in_frame.end()) {
+      passes_to_delete.push_back(pair.first);
+      continue;
+    }
+
+    gfx::Size required_size = it->second.size;
+    cc::ResourceProvider::TextureHint required_hint = it->second.hint;
+    cc::ScopedResource* texture = pair.second.get();
+    DCHECK(texture);
+
+    bool size_appropriate = texture->size().width() >= required_size.width() &&
+                            texture->size().height() >= required_size.height();
+    bool hint_appropriate = (texture->hint() & required_hint) == required_hint;
+    if (texture->id() && (!size_appropriate || !hint_appropriate))
+      texture->Free();
+  }
+
+  // Delete RenderPass textures from the previous frame that will not be used
+  // again.
+  for (size_t i = 0; i < passes_to_delete.size(); ++i)
+    render_pass_textures_.erase(passes_to_delete[i]);
+
+  for (auto& pass : render_passes_in_draw_order) {
+    auto& resource = render_pass_textures_[pass->id];
+    if (!resource) {
+      resource = std::make_unique<cc::ScopedResource>(resource_provider_);
+
+      // |has_damage_from_contributing_content| is used to determine if previous
+      // contents can be reused when caching render pass and as a result needs
+      // to be true when a new resource is created to ensure that it is updated
+      // and not assumed to already contain correct contents.
+      pass->has_damage_from_contributing_content = true;
+    }
+  }
+}
+
+bool SoftwareRenderer::UseRenderPass(const RenderPass* render_pass) {
+  current_frame()->current_render_pass = render_pass;
+  current_frame()->current_texture = nullptr;
+  if (render_pass == current_frame()->root_render_pass) {
+    BindFramebufferToOutputSurface();
+
+    if (supports_dc_layers_) {
+      SetEnableDCLayers(using_dc_layers_);
+      output_surface_->SetDrawRectangle(current_frame()->root_damage_rect);
+    }
+    InitializeViewport(current_frame(), render_pass->output_rect,
+                       gfx::Rect(current_frame()->device_viewport_size),
+                       current_frame()->device_viewport_size);
+    return true;
+  }
+
+  cc::ScopedResource* texture = render_pass_textures_[render_pass->id].get();
+  DCHECK(texture);
+
+  gfx::Size size = RenderPassTextureSize(render_pass);
+  const gfx::Size enlarge_pass_texture_amount =
+      GetEnlargePassTextureAmountForTesting();
+  size.Enlarge(enlarge_pass_texture_amount.width(),
+               enlarge_pass_texture_amount.height());
+  if (!texture->id()) {
+    texture->Allocate(size, RenderPassTextureHint(render_pass),
+                      BackbufferFormat(),
+                      current_frame()->current_render_pass->color_space);
+  } else if (render_pass->cache_render_pass &&
+             !render_pass->has_damage_from_contributing_content) {
+    return false;
+  } else if (current_frame()->ComputeScissorRectForRenderPass().IsEmpty()) {
+    return false;
+  }
+  DCHECK(texture->id());
+
+  if (BindFramebufferToTexture(texture)) {
+    InitializeViewport(current_frame(), render_pass->output_rect,
+                       gfx::Rect(render_pass->output_rect.size()),
+                       texture->size());
+    return true;
+  }
+
+  return false;
+}
+
+bool SoftwareRenderer::HasAllocatedResourcesForTesting(
+    RenderPassId render_pass_id) const {
+  auto iter = render_pass_textures_.find(render_pass_id);
+  return iter != render_pass_textures_.end() && iter->second->id();
+}
+
 }  // namespace viz

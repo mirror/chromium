@@ -37,6 +37,11 @@ class VIZ_SERVICE_EXPORT SoftwareRenderer : public DirectRenderer {
   void SetDisablePictureQuadImageFiltering(bool disable) {
     disable_picture_quad_image_filtering_ = disable;
   }
+  bool UseRenderPass(const RenderPass* render_pass) override;
+  void DecideRenderPassAllocationsForFrame(
+      const RenderPassList& render_passes_in_draw_order) override;
+  bool HasAllocatedResourcesForTesting(
+      RenderPassId render_pass_id) const override;
 
  protected:
   bool CanPartialSwap() override;
@@ -86,6 +91,10 @@ class VIZ_SERVICE_EXPORT SoftwareRenderer : public DirectRenderer {
   sk_sp<SkShader> GetBackgroundFilterShader(
       const RenderPassDrawQuad* quad,
       SkShader::TileMode content_tile_mode) const;
+
+  // A map from RenderPass id to the texture used to draw the RenderPass from.
+  base::flat_map<RenderPassId, std::unique_ptr<cc::ScopedResource>>
+      render_pass_textures_;
 
   bool disable_picture_quad_image_filtering_ = false;
 
