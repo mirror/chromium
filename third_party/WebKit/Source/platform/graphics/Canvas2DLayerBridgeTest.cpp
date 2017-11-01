@@ -1068,9 +1068,7 @@ TEST_F(Canvas2DLayerBridgeTest, DISABLED_PrepareMailboxWhileBackgroundRendering)
 }
 
 TEST_F(Canvas2DLayerBridgeTest, DeleteGpuMemoryBufferAfterTeardown) {
-#if defined(OS_MACOSX) || defined(OS_CHROMEOS)
   ScopedCanvas2dImageChromiumForTest canvas_2d_image_chromium(true);
-#endif
   ScopedTestingPlatformSupport<FakePlatformSupport> platform;
 
   viz::TextureMailbox texture_mailbox;
@@ -1085,13 +1083,8 @@ TEST_F(Canvas2DLayerBridgeTest, DeleteGpuMemoryBufferAfterTeardown) {
 
   bool lost_resource = false;
   release_callback->Run(gpu::SyncToken(), lost_resource);
-#if defined(OS_MACOSX) || defined(OS_CHROMEOS)
   EXPECT_EQ(1u, gl_.CreateImageCount());
   EXPECT_EQ(1u, gl_.DestroyImageCount());
-#else
-  EXPECT_EQ(0u, gl_.CreateImageCount());
-  EXPECT_EQ(0u, gl_.DestroyImageCount());
-#endif
 }
 
 TEST_F(Canvas2DLayerBridgeTest, NoUnnecessaryFlushes) {
