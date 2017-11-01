@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include "bindings/core/v8/WindowProxyManager.h"
+#include "common/sandbox_flags.h"
 #include "core/dom/IncrementLoadEventDelayCount.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/exported/WebRemoteFrameImpl.h"
@@ -23,7 +24,6 @@
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "public/web/WebElement.h"
 #include "public/web/WebFrameOwnerProperties.h"
-#include "public/web/WebSandboxFlags.h"
 
 namespace blink {
 
