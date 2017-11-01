@@ -7,8 +7,10 @@
 #include "base/bind.h"
 #include "base/metrics/histogram_macros.h"
 #include "platform/WebFrameScheduler.h"
+#include "platform/instrumentation/resource_coordinator/RendererResourceCoordinator.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 #include "public/platform/scheduler/renderer_process_type.h"
+#include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 
 namespace blink {
 namespace scheduler {
@@ -19,6 +21,8 @@ namespace scheduler {
 #define EXTENSIONS_MAIN_THREAD_LOAD_METRIC_NAME \
   MAIN_THREAD_LOAD_METRIC_NAME ".Extension"
 #define PER_FRAME_TYPE_METRIC_NAME "RendererScheduler.TaskDurationPerFrameType"
+
+enum class MainThreadLoadState { LOW, HIGH, UNKNOWN };
 
 namespace {
 
@@ -134,7 +138,8 @@ RendererMetricsHelper::RendererMetricsHelper(
       visible_task_duration_reporter(TASK_DURATION_METRIC_NAME ".Visible"),
       hidden_music_task_duration_reporter(TASK_DURATION_METRIC_NAME
                                           ".HiddenMusic"),
-      frame_type_duration_reporter(PER_FRAME_TYPE_METRIC_NAME) {
+      frame_type_duration_reporter(PER_FRAME_TYPE_METRIC_NAME),
+      main_thread_load_state(MainThreadLoadState::UNKNOWN) {
   main_thread_load_tracker.Resume(now);
   if (renderer_backgrounded) {
     background_main_thread_load_tracker.Resume(now);
@@ -339,6 +344,22 @@ void RendererMetricsHelper::RecordMainThreadTaskLoad(base::TimeTicks time,
                                                      double load) {
   int load_percentage = static_cast<int>(load * 100);
   DCHECK_LE(load_percentage, 100);
+
+  if (::resource_coordinator::IsPageAlmostIdleSignalEnabled()) {
+    static int low_main_thread_load_threshold =
+        ::resource_coordinator::GetLowMainThreadLoadThreshold();
+
+    // Avoid sending duplicate IPCs when the state doesn't change.
+    if (load_percentage <= low_main_thread_load_threshold &&
+        main_thread_load_state != MainThreadLoadState::LOW) {
+      RendererResourceCoordinator::Get().SetMainThreadLoadIsLow(true);
+      main_thread_load_state = MainThreadLoadState::LOW;
+    } else if (load_percentage > low_main_thread_load_threshold &&
+               main_thread_load_state != MainThreadLoadState::HIGH) {
+      RendererResourceCoordinator::Get().SetMainThreadLoadIsLow(false);
+      main_thread_load_state = MainThreadLoadState::HIGH;
+    }
+  }
 
   UMA_HISTOGRAM_PERCENTAGE(MAIN_THREAD_LOAD_METRIC_NAME, load_percentage);
 

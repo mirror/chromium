@@ -33,6 +33,7 @@ class ProcessCoordinationUnitImpl
   void SetCPUUsage(double cpu_usage) override;
   void SetExpectedTaskQueueingDuration(base::TimeDelta duration) override;
   void SetLaunchTime(base::Time launch_time) override;
+  void SetMainThreadLoadIsLow(bool main_thread_load_is_low) override;
   void SetPID(int64_t pid) override;
 
   std::set<PageCoordinationUnitImpl*> GetAssociatedPageCoordinationUnits()

@@ -55,4 +55,11 @@ void RendererResourceCoordinator::SetExpectedTaskQueueingDuration(
   service_->SetExpectedTaskQueueingDuration(duration);
 }
 
+void RendererResourceCoordinator::SetMainThreadLoadIsLow(
+    bool main_thread_load_is_low) {
+  if (!service_)
+    return;
+  service_->SetMainThreadLoadIsLow(main_thread_load_is_low);
+}
+
 }  // namespace blink
