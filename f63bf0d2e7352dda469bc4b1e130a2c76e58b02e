@@ -16,6 +16,24 @@
       "revId": "f63bf0d2e7352dda469bc4b1e130a2c76e58b02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4263c9b6_5aa9acdc",
+        "filename": "testing/buildbot/chromium.webkit.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-01T00:00:51Z",
+      "side": 1,
+      "message": "Will fix, thanks!",
+      "parentUuid": "17e2f6cc_cfcee333",
+      "revId": "f63bf0d2e7352dda469bc4b1e130a2c76e58b02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
