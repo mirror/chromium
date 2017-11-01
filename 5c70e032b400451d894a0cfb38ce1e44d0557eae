@@ -22,6 +22,30 @@
       "revId": "5c70e032b400451d894a0cfb38ce1e44d0557eae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d235013_d3672f54",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2668,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-01T00:52:32Z",
+      "side": 1,
+      "message": "Ah, sorry, somehow that got dropped along the way. Will fix.",
+      "parentUuid": "9ac0db40_4753f42f",
+      "range": {
+        "startLine": 2668,
+        "startChar": 7,
+        "endLine": 2668,
+        "endChar": 16
+      },
+      "revId": "5c70e032b400451d894a0cfb38ce1e44d0557eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
