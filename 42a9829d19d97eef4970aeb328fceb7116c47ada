@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10b5fbec_20b0344d",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-01T22:46:52Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "9f5ba6d0_7b24641b",
+      "range": {
+        "startLine": 177,
+        "startChar": 49,
+        "endLine": 177,
+        "endChar": 65
+      },
+      "revId": "42a9829d19d97eef4970aeb328fceb7116c47ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6f5873c_5d607372",
         "filename": "base/memory/shared_memory_handle.h",
         "patchSetId": 22
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f4338522_2be5b5a9",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-01T22:46:52Z",
+      "side": 1,
+      "message": "Done. I didn\u0027t write this comment, it\u0027s just moved (from line 85 left side) as part of an attempt to unify the conditional sections.",
+      "parentUuid": "a6f5873c_5d607372",
+      "range": {
+        "startLine": 178,
+        "startChar": 51,
+        "endLine": 178,
+        "endChar": 61
+      },
+      "revId": "42a9829d19d97eef4970aeb328fceb7116c47ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "761df17f_f92d4bec",
         "filename": "base/memory/shared_memory_handle.h",
         "patchSetId": 22
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-01T22:24:29Z",
       "side": 1,
       "message": "Is this advocating for or against a particular usage pattern? I can’t tell why this comment is here. This comment should tell me how to use the interface. Unless it’s very relevant, it shouldn’t opine on abuses of an interface, although it could say something like “this common pattern is bad, do that other thing instead.”",
+      "range": {
+        "startLine": 181,
+        "startChar": 58,
+        "endLine": 181,
+        "endChar": 71
+      },
+      "revId": "42a9829d19d97eef4970aeb328fceb7116c47ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2785138d_1448b215",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-01T22:46:52Z",
+      "side": 1,
+      "message": "See previous, I didn\u0027t write this comment. I\u0027m interpreting it as a warning to not expect shared memory handles to work right when not following the usual \"ok to copy, but only consume from it once\" pattern, but I\u0027m not entirely sure.",
+      "parentUuid": "761df17f_f92d4bec",
       "range": {
         "startLine": 181,
         "startChar": 58,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f19416cc_b61d600b",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-01T22:46:52Z",
+      "side": 1,
+      "message": "See previous - should I remove it?",
+      "parentUuid": "f55187e4_67d05890",
+      "range": {
+        "startLine": 191,
+        "startChar": 30,
+        "endLine": 191,
+        "endChar": 58
+      },
+      "revId": "42a9829d19d97eef4970aeb328fceb7116c47ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1abc1e2_e0bcc22e",
         "filename": "base/memory/shared_memory_handle.h",
         "patchSetId": 22
@@ -108,6 +204,24 @@
       "revId": "42a9829d19d97eef4970aeb328fceb7116c47ada",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd04cae_2fb8fca6",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-01T22:46:52Z",
+      "side": 1,
+      "message": "Flattened into plain members. I was following the MacOS example, but I\u0027m not sure I like it myself, and I doubt they are common enough for the memory savings to be worthwhile.",
+      "parentUuid": "a1abc1e2_e0bcc22e",
+      "revId": "42a9829d19d97eef4970aeb328fceb7116c47ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
