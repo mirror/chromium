@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "357d7408_8948fa78",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyControllerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T15:36:50Z",
+      "side": 1,
+      "message": "nit: randomNumberToReturn",
+      "range": {
+        "startLine": 173,
+        "startChar": 35,
+        "endLine": 173,
+        "endChar": 49
+      },
+      "revId": "ce30c9c306828dafc204aa855b9b7c263cecf580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
