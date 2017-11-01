@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d143c5a_b9002557",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1532,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-01T16:54:42Z",
+      "side": 1,
+      "message": "I suppose we already enforce this invariant and kill the render process if violated, right?",
+      "revId": "5f936fa3f28ae0b5629171430b1849ef6defa707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
