@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//testing/test.gni")
+
 config("client_config") {
   include_dirs = [ ".." ]
 }
@@ -51,5 +53,48 @@ static_library("client") {
   if (is_win) {
     libs = [ "rpcrt4.lib" ]
     cflags = [ "/wd4201" ]  # nonstandard extension used : nameless struct/union.
+  }
+}
+
+source_set("client_test") {
+  testonly = true
+
+  deps = [
+    ":client",
+    "../compat",
+    "../handler:crashpad_handler",
+    "../test",
+    "../util",
+    "//base",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+
+  include_dirs = [ ".." ]
+
+  sources = [
+    "annotation_test.cc",
+    "annotation_list_test.cc",
+    "crash_report_database_test.cc",
+    "prune_crash_reports_test.cc",
+    "settings_test.cc",
+    "simple_address_range_bag_test.cc",
+    "simple_string_dictionary_test.cc",
+  ]
+
+  if (is_mac) {
+    sources += [
+      "capture_context_mac_test.cc",
+      "simulate_crash_mac_test.cc",
+    ]
+  }
+
+  if (is_win) {
+    data_deps = [
+      "../handler:crashpad_handler_console",
+    ]
+    sources += [
+      "crashpad_client_win_test.cc",
+    ]
   }
 }
