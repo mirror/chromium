@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "386630ce_e3619fc1",
+        "filename": "services/ui/ws/video_detector_impl.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T23:32:20Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 19
+      },
+      "revId": "3c5e4585f60201e0284ee7d7d54a58a14522fefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa50436d_1485fc01",
+        "filename": "services/ui/ws/video_detector_impl.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T23:32:20Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 2
+      },
+      "revId": "3c5e4585f60201e0284ee7d7d54a58a14522fefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
