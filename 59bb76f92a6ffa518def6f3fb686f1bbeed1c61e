@@ -94,6 +94,30 @@
       "revId": "59bb76f92a6ffa518def6f3fb686f1bbeed1c61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b85ab43_70d57b4b",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-01T17:33:36Z",
+      "side": 1,
+      "message": "I tried aura::client::kMirroringEnabledKey before, it didn\u0027t help. Here is what I did: https://chromium-review.googlesource.com/c/chromium/src/+/749250. There is no logging for DidFirstVisuallyNonEmptyPaint() unless I toggle the comment // UpdateResult().\n\n[1] comment might indicate it has to be painted on a frame widget to get DidFirstVisuallyNonEmptyPaint info?\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/749250",
+      "parentUuid": "33bbffa3_7f98f390",
+      "range": {
+        "startLine": 52,
+        "startChar": 53,
+        "endLine": 52,
+        "endChar": 79
+      },
+      "revId": "59bb76f92a6ffa518def6f3fb686f1bbeed1c61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
