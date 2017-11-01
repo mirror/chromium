@@ -22,6 +22,30 @@
       "revId": "8a9fd10b8b09742cdd77035830ad6866834b8dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b1482c_f275a998",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-01T17:18:40Z",
+      "side": 1,
+      "message": "I don\u0027t think we need more than one flag for people to flip.  The Ranker Integration is internal-only and I think of it as a disable flag that we\u0027ve got set default-disabled for now because we\u0027re being conservative with the rollout but will change to default-enable after the branch.",
+      "parentUuid": "5be2bd86_e70f2f0a",
+      "range": {
+        "startLine": 1042,
+        "startChar": 0,
+        "endLine": 1043,
+        "endChar": 65
+      },
+      "revId": "8a9fd10b8b09742cdd77035830ad6866834b8dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
