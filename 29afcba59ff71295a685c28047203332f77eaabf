@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "169e915a_c9b0e143",
+        "filename": "chrome/browser/safe_json_parser_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T22:15:12Z",
+      "side": 1,
+      "message": "Prefix section with where overrides come from.",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 16
+      },
+      "revId": "29afcba59ff71295a685c28047203332f77eaabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570038bc_50f39c10",
+        "filename": "chrome/browser/safe_json_parser_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T22:15:12Z",
+      "side": 1,
+      "message": "You should be able to replace this with:\nservice_start_counters_[identity.name()]++;",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 5
+      },
+      "revId": "29afcba59ff71295a685c28047203332f77eaabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b4edab2_c485cfda",
+        "filename": "chrome/browser/safe_json_parser_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T22:15:12Z",
+      "side": 1,
+      "message": "service_waiting_on_?",
+      "range": {
+        "startLine": 95,
+        "startChar": 14,
+        "endLine": 95,
+        "endChar": 32
+      },
+      "revId": "29afcba59ff71295a685c28047203332f77eaabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc8d44b_f01f1cc3",
+        "filename": "chrome/browser/safe_json_parser_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T22:15:12Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 2
+      },
+      "revId": "29afcba59ff71295a685c28047203332f77eaabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4671c1f1_02181e43",
+        "filename": "chrome/browser/safe_json_parser_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T22:15:12Z",
+      "side": 1,
+      "message": "prefx with where override comes from.",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 35
+      },
+      "revId": "29afcba59ff71295a685c28047203332f77eaabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37b56d0_460cc295",
+        "filename": "chrome/browser/safe_json_parser_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T22:15:12Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 2
+      },
+      "revId": "29afcba59ff71295a685c28047203332f77eaabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
