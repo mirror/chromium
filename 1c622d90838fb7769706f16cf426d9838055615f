@@ -22,6 +22,30 @@
       "revId": "1c622d90838fb7769706f16cf426d9838055615f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49e0090_44bc59f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-01T18:27:53Z",
+      "side": 1,
+      "message": "Yes, it makes sense to me to only call notifyChromeHomeStatusChanged if switching from enabled to disabled (or likewise).\n\nIn an attempt to make this more clear, I moved the \"sChromeHomeEnabled \u003d null\" to cacheChromeHomeEnabled. The idea is that if we are trying to re-cache the state, we should remove the old state. Unfortunately it\u0027s sChromeHomeEnabled is still modified by multiple methods. I\u0027ll update to your recommendation if you still don\u0027t like it.",
+      "parentUuid": "f087f5e0_cd333cfc",
+      "range": {
+        "startLine": 217,
+        "startChar": 12,
+        "endLine": 217,
+        "endChar": 41
+      },
+      "revId": "1c622d90838fb7769706f16cf426d9838055615f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
