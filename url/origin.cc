@@ -7,6 +7,10 @@
 #include <stdint.h>
 #include <string.h>
 
+#include <new>
+#include <tuple>
+#include <utility>
+
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "url/gurl.h"
@@ -34,23 +38,23 @@ GURL AddSuboriginToUrl(const GURL& url, const std::string& suborigin) {
 
 }  // namespace
 
-Origin::Origin() : unique_(true), suborigin_(std::string()) {}
+Origin::Origin() : unique_(true), nonce_(base::UnguessableToken::Create()) {}
 
 Origin Origin::Create(const GURL& url) {
   if (!url.is_valid() || (!url.IsStandard() && !url.SchemeIsBlob()))
     return Origin();
 
-  SchemeHostPort tuple;
+  SchemeHostPort scheme_host_port;
   std::string suborigin;
 
   if (url.SchemeIsFileSystem()) {
-    tuple = SchemeHostPort(*url.inner_url());
+    scheme_host_port = SchemeHostPort(*url.inner_url());
   } else if (url.SchemeIsBlob()) {
     // If we're dealing with a 'blob:' URL, https://url.spec.whatwg.org/#origin
     // defines the origin as the origin of the URL which results from parsing
     // the "path", which boils down to everything after the scheme. GURL's
     // 'GetContent()' gives us exactly that.
-    tuple = SchemeHostPort(GURL(url.GetContent()));
+    scheme_host_port = SchemeHostPort(GURL(url.GetContent()));
   } else if (url.SchemeIsSuborigin()) {
     GURL::Replacements replacements;
     if (url.scheme() == kHttpSuboriginScheme) {
@@ -69,35 +73,50 @@ Origin Origin::Create(const GURL& url) {
                              url.host().length() - suborigin_end - 1));
     replacements.SetHostStr(new_host);
 
-    tuple = SchemeHostPort(url.ReplaceComponents(replacements));
+    scheme_host_port = SchemeHostPort(url.ReplaceComponents(replacements));
 
     bool invalid_suborigin = no_dot || suborigin_end == 0;
-    if (invalid_suborigin || tuple.IsInvalid())
+    if (invalid_suborigin || scheme_host_port.IsInvalid())
       return Origin();
     suborigin = host.substr(0, suborigin_end);
   } else {
-    tuple = SchemeHostPort(url);
+    scheme_host_port = SchemeHostPort(url);
   }
 
-  if (tuple.IsInvalid())
+  if (scheme_host_port.IsInvalid())
     return Origin();
 
-  return Origin(std::move(tuple), std::move(suborigin));
+  return Origin(std::move(scheme_host_port), std::move(suborigin));
 }
 
-Origin::Origin(SchemeHostPort tuple, std::string suborigin)
-    : tuple_(std::move(tuple)),
-      unique_(false),
-      suborigin_(std::move(suborigin)) {
-  DCHECK(!tuple_.IsInvalid());
+Origin::Origin(SchemeHostPort scheme_host_port, std::string suborigin)
+    : unique_(false),
+      tuple_(std::move(scheme_host_port), std::move(suborigin)) {
+  DCHECK(!tuple_.scheme_host_port.IsInvalid());
 }
 
-Origin::Origin(const Origin&) = default;
-Origin& Origin::operator=(const Origin&) = default;
-Origin::Origin(Origin&&) = default;
-Origin& Origin::operator=(Origin&&) = default;
+Origin::Origin(const Origin& other) {
+  CopyConstructFrom(other);
+}
+
+Origin& Origin::operator=(const Origin& other) {
+  Cleanup();
+  CopyConstructFrom(other);
+  return *this;
+}
+
+Origin::Origin(Origin&& other) {
+  MoveConstructFrom(std::move(other));
+}
+
+Origin& Origin::operator=(Origin&& other) {
+  Cleanup();
+  MoveConstructFrom(std::move(other));
+  return *this;
+}
 
 Origin::~Origin() {
+  Cleanup();
 }
 
 // static
@@ -106,11 +125,11 @@ Origin Origin::UnsafelyCreateOriginWithoutNormalization(
     base::StringPiece host,
     uint16_t port,
     base::StringPiece suborigin) {
-  SchemeHostPort tuple(scheme.as_string(), host.as_string(), port,
-                       SchemeHostPort::CHECK_CANONICALIZATION);
-  if (tuple.IsInvalid())
+  SchemeHostPort scheme_host_port(scheme.as_string(), host.as_string(), port,
+                                  SchemeHostPort::CHECK_CANONICALIZATION);
+  if (scheme_host_port.IsInvalid())
     return Origin();
-  return Origin(std::move(tuple), suborigin.as_string());
+  return Origin(std::move(scheme_host_port), suborigin.as_string());
 }
 
 Origin Origin::CreateFromNormalizedTupleWithSuborigin(
@@ -118,11 +137,11 @@ Origin Origin::CreateFromNormalizedTupleWithSuborigin(
     std::string host,
     uint16_t port,
     std::string suborigin) {
-  SchemeHostPort tuple(std::move(scheme), std::move(host), port,
-                       SchemeHostPort::ALREADY_CANONICALIZED);
-  if (tuple.IsInvalid())
+  SchemeHostPort scheme_host_port(std::move(scheme), std::move(host), port,
+                                  SchemeHostPort::ALREADY_CANONICALIZED);
+  if (scheme_host_port.IsInvalid())
     return Origin();
-  return Origin(std::move(tuple), std::move(suborigin));
+  return Origin(std::move(scheme_host_port), std::move(suborigin));
 }
 
 std::string Origin::Serialize() const {
@@ -132,19 +151,14 @@ std::string Origin::Serialize() const {
   if (scheme() == kFileScheme)
     return "file://";
 
-  if (!suborigin_.empty()) {
-    GURL url_with_suborigin = AddSuboriginToUrl(tuple_.GetURL(), suborigin_);
-    return SchemeHostPort(url_with_suborigin).Serialize();
-  }
-
   return tuple_.Serialize();
 }
 
 Origin Origin::GetPhysicalOrigin() const {
-  if (suborigin_.empty())
+  if (unique_ || tuple_.suborigin.empty())
     return *this;
 
-  return Origin(tuple_, std::string());
+  return Origin(tuple_.scheme_host_port, std::string());
 }
 
 GURL Origin::GetURL() const {
@@ -154,19 +168,16 @@ GURL Origin::GetURL() const {
   if (scheme() == kFileScheme)
     return GURL("file:///");
 
-  GURL tuple_url(tuple_.GetURL());
-
-  if (!suborigin_.empty())
-    return AddSuboriginToUrl(tuple_url, suborigin_);
-
-  return tuple_url;
+  return tuple_.GetURL();
 }
 
 bool Origin::IsSameOriginWith(const Origin& other) const {
-  if (unique_ || other.unique_)
-    return false;
-
-  return tuple_.Equals(other.tuple_) && suborigin_ == other.suborigin_;
+  if (!unique_ && !other.unique_) {
+    return tuple_ == other.tuple_;
+  } else if (unique_ && other.unique_) {
+    return nonce_ == other.nonce_;
+  }
+  return false;
 }
 
 bool Origin::IsSamePhysicalOriginWith(const Origin& other) const {
@@ -174,12 +185,76 @@ bool Origin::IsSamePhysicalOriginWith(const Origin& other) const {
 }
 
 bool Origin::DomainIs(base::StringPiece canonical_domain) const {
-  return !unique_ && url::DomainIs(tuple_.host(), canonical_domain);
+  return !unique_ &&
+         url::DomainIs(tuple_.scheme_host_port.host(), canonical_domain);
 }
 
 bool Origin::operator<(const Origin& other) const {
-  return tuple_ < other.tuple_ ||
-         (tuple_.Equals(other.tuple_) && suborigin_ < other.suborigin_);
+  if (!unique_ && !other.unique_) {
+    return tuple_ < other.tuple_;
+  } else if (unique_ && other.unique_) {
+    return nonce_ < other.nonce_;
+  }
+  // non-unique always sorts before unique
+  return unique_ < other.unique_;
+}
+
+Origin::OriginTuple::OriginTuple(SchemeHostPort scheme_host_port,
+                                 std::string suborigin)
+    : scheme_host_port(std::move(scheme_host_port)),
+      suborigin(std::move(suborigin)) {}
+
+GURL Origin::OriginTuple::GetURL() const {
+  GURL tuple_url(scheme_host_port.GetURL());
+
+  if (!suborigin.empty())
+    return AddSuboriginToUrl(tuple_url, suborigin);
+
+  return tuple_url;
+}
+
+std::string Origin::OriginTuple::Serialize() const {
+  if (!suborigin.empty()) {
+    GURL url_with_suborigin =
+        AddSuboriginToUrl(scheme_host_port.GetURL(), suborigin);
+    return SchemeHostPort(url_with_suborigin).Serialize();
+  }
+  return scheme_host_port.Serialize();
+}
+
+bool Origin::OriginTuple::operator==(const OriginTuple& other) const {
+  return scheme_host_port.Equals(other.scheme_host_port) &&
+         suborigin == other.suborigin;
+}
+
+bool Origin::OriginTuple::operator<(const OriginTuple& other) const {
+  return std::tie(scheme_host_port, suborigin) <
+         std::tie(other.scheme_host_port, other.suborigin);
+}
+
+void Origin::Cleanup() {
+  if (!unique_)
+    tuple_.~OriginTuple();
+  // Nothing needed if |unique_| is true, since |nonce_| is a POD.
+}
+
+void Origin::CopyConstructFrom(const Origin& other) {
+  unique_ = other.unique_;
+  if (!unique_)
+    new (&tuple_) OriginTuple(other.tuple_);
+  else
+    nonce_ = other.nonce_;
+}
+
+void Origin::MoveConstructFrom(Origin&& other) {
+  unique_ = other.unique_;
+  if (!unique_) {
+    new (&tuple_) OriginTuple(std::move(other.tuple_));
+  } else {
+    // base::UnguessableToken is a POD so std::move() doesn't really do
+    // anything; use it anyway for consistency.
+    nonce_ = std::move(other.nonce_);
+  }
 }
 
 std::ostream& operator<<(std::ostream& out, const url::Origin& origin) {

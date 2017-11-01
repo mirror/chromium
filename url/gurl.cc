@@ -14,14 +14,13 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "base/trace_event/memory_usage_estimator.h"
+#include "url/empty_string.h"
 #include "url/url_canon_stdstring.h"
 #include "url/url_util.h"
 
 namespace {
 
-static base::LazyInstance<std::string>::Leaky empty_string =
-    LAZY_INSTANCE_INITIALIZER;
-static base::LazyInstance<GURL>::Leaky empty_gurl = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<GURL>::Leaky empty_gurl = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
@@ -167,7 +166,7 @@ const std::string& GURL::spec() const {
     return spec_;
 
   DCHECK(false) << "Trying to get the spec of an invalid URL!";
-  return empty_string.Get();
+  return url::internal::EmptyString();
 }
 
 bool GURL::operator<(const GURL& other) const {

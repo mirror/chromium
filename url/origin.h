@@ -11,6 +11,8 @@
 
 #include "base/strings/string16.h"
 #include "base/strings/string_piece.h"
+#include "base/unguessable_token.h"
+#include "url/empty_string.h"
 #include "url/scheme_host_port.h"
 #include "url/third_party/mozilla/url_parse.h"
 #include "url/url_canon.h"
@@ -21,7 +23,10 @@ class GURL;
 
 namespace url {
 
-// An Origin is a tuple of (scheme, host, port), as described in RFC 6454.
+// Per https://html.spec.whatwg.org/multipage/origin.html#origin, an origin is
+// either:
+// - a tuple origin of (scheme, host, port) as described in RFC 6454.
+// - an opaque origin with an internal globally unique identifier.
 //
 // TL;DR: If you need to make a security-relevant decision, use 'url::Origin'.
 // If you only need to extract the bits of a URL which are relevant for a
@@ -29,31 +34,43 @@ namespace url {
 //
 // STL;SDR: If you aren't making actual network connections, use 'url::Origin'.
 //
-// 'Origin', like 'SchemeHostPort', is composed of a tuple of (scheme, host,
-// port), but contains a number of additional concepts which make it appropriate
-// for use as a security boundary and access control mechanism between contexts.
-//
 // This class ought to be used when code needs to determine if two resources
 // are "same-origin", and when a canonical serialization of an origin is
-// required. Note that some origins are "unique", meaning that they are not
-// same-origin with any other origin (including themselves).
+// required. Note that the canonical serialization of an origin *must not* be
+// used to determine if two resources are same-origin.
+//
+// A tuple origin, like 'SchemeHostPort', is composed of a tuple of (scheme,
+// host, port), but contains a number of additional concepts which make it
+// appropriate for use as a security boundary and access control mechanism
+// between contexts. Two tuple origins are same-origin if the tuples are equal.
+// A tuple origin may also be re-created from its serialization.
+//
+// An opaque origin has an internal globally unique identifier. When creating a
+// new opaque origin from a URL, a fresh globally unique identifier is
+// generated. However, if an opaque origin is copied or moved, the internal
+// globally unique identifier is preserved. Two opaque origins are same-origin
+// iff the globally unique identifiers match. Unlike tuple origins, an opaque
+// origin cannot be re-created from its serialization, which is always the
+// string "null".
+//
+// IMPORTANT: Since opaque origins always serialize as the string "null", it is
+// *never* safe to use the serialization for security checks!
+//
+// A tuple origin and an opaque origin are never same-origin.
 //
 // There are a few subtleties to note:
 //
-// * Invalid and non-standard GURLs are parsed as unique origins. This includes
+// * Invalid and non-standard GURLs are parsed as opaque origins. This includes
 //   non-hierarchical URLs like 'data:text/html,...' and 'javascript:alert(1)'.
 //
 // * GURLs with schemes of 'filesystem' or 'blob' parse the origin out of the
 //   internals of the URL. That is, 'filesystem:https://example.com/temporary/f'
 //   is parsed as ('https', 'example.com', 443).
 //
-// * Unique origins all serialize to the string "null"; this means that the
-//   serializations of two unique origins are identical to each other, though
-//   the origins themselves are not "the same". This means that origins'
-//   serializations must not be relied upon for security checks.
-//
 // * GURLs with a 'file' scheme are tricky. They are parsed as ('file', '', 0),
 //   but their behavior may differ from embedder to embedder.
+//   TODO(dcheng): This behavior is not consistent with Blink's notion of file
+//   URLs, which always creates an opaque origin.
 //
 // * The host component of an IPv6 address includes brackets, just like the URL
 //   representation.
@@ -77,13 +94,13 @@ namespace url {
 //     }
 class URL_EXPORT Origin {
  public:
-  // Creates a unique Origin.
+  // Creates an opaque Origin.
   Origin();
 
   // Creates an Origin from |url|, as described at
   // https://url.spec.whatwg.org/#origin, with the following additions:
   //
-  // 1. If |url| is invalid or non-standard, a unique Origin is constructed.
+  // 1. If |url| is invalid or non-standard, an opaque Origin is constructed.
   // 2. 'filesystem' URLs behave as 'blob' URLs (that is, the origin is parsed
   //    out of everything in the URL which follows the scheme).
   // 3. 'file' URLs all parse as ("file", "", 0).
@@ -97,7 +114,7 @@ class URL_EXPORT Origin {
 
   // Creates an Origin from a |scheme|, |host|, |port| and |suborigin|. All the
   // parameters must be valid and canonicalized. Do not use this method to
-  // create unique origins. Use Origin() for that.
+  // create opaque origins. Use Origin() for that.
   //
   // This constructor should be used in order to pass 'Origin' objects back and
   // forth over IPC (as transitioning through GURL would risk potentially
@@ -121,14 +138,24 @@ class URL_EXPORT Origin {
 
   ~Origin();
 
-  // For unique origins, these return ("", "", 0).
-  const std::string& scheme() const { return tuple_.scheme(); }
-  const std::string& host() const { return tuple_.host(); }
-  uint16_t port() const { return tuple_.port(); }
+  // For opaque origins, these return ("", "", 0).
+  const std::string& scheme() const {
+    return !unique_ ? tuple_.scheme_host_port.scheme()
+                    : internal::EmptyString();
+  }
+  const std::string& host() const {
+    return !unique_ ? tuple_.scheme_host_port.host() : internal::EmptyString();
+  }
+  uint16_t port() const {
+    return !unique_ ? tuple_.scheme_host_port.port() : 0;
+  }
 
   // Note that an origin without a suborgin will return the empty string.
-  const std::string& suborigin() const { return suborigin_; }
+  const std::string& suborigin() const {
+    return !unique_ ? tuple_.suborigin : internal::EmptyString();
+  }
 
+  // TODO(dcheng): Rename this to opaque().
   bool unique() const { return unique_; }
 
   // An ASCII serialization of the Origin as per Section 6.2 of RFC 6454, with
@@ -144,7 +171,7 @@ class URL_EXPORT Origin {
   Origin GetPhysicalOrigin() const;
 
   // Two Origins are "same-origin" if their schemes, hosts, and ports are exact
-  // matches; and neither is unique. If either of the origins have suborigins,
+  // matches; and neither is opaque. If either of the origins have suborigins,
   // the suborigins also must be exact matches.
   bool IsSameOriginWith(const Origin& other) const;
   bool operator==(const Origin& other) const {
@@ -166,7 +193,7 @@ class URL_EXPORT Origin {
   // URL (e.g. with a path component).
   GURL GetURL() const;
 
-  // Same as GURL::DomainIs. If |this| origin is unique, then returns false.
+  // Same as GURL::DomainIs. If |this| origin is opaque, then returns false.
   bool DomainIs(base::StringPiece canonical_domain) const;
 
   // Allows Origin to be used as a key in STL (for example, a std::set or
@@ -174,12 +201,42 @@ class URL_EXPORT Origin {
   bool operator<(const Origin& other) const;
 
  private:
-  // |tuple| must be valid, implying that the created Origin is never unique.
-  Origin(SchemeHostPort tuple, std::string suborigin);
+  // TODO(dcheng): Make the storage more efficient: ideally this would hold one
+  // backing store for the string, and then offset + size pairs for scheme,
+  // host, port (?), and suborigin. This involves tradeoffs though: the scheme,
+  // host, and suborigin accessors will need to return StringPiece objects...
+  // but this makes map lookups on those origin components less efficient.
+  struct OriginTuple {
+    OriginTuple(SchemeHostPort scheme_host_port, std::string suborigin);
 
-  SchemeHostPort tuple_;
+    GURL GetURL() const;
+    std::string Serialize() const;
+
+    bool operator==(const OriginTuple& other) const;
+    bool operator<(const OriginTuple& other) const;
+
+    SchemeHostPort scheme_host_port;
+    std::string suborigin;
+  };
+
+  // |tuple| must be valid, implying that the created Origin is never an opaque
+  // origin.
+  Origin(SchemeHostPort scheme_host_port, std::string suborigin);
+
+  // Helpers for managing union for destroy, copy, and move.
+  void Cleanup();
+  void CopyConstructFrom(const Origin& other);
+  void MoveConstructFrom(Origin&& other);
+
   bool unique_;
-  std::string suborigin_;
+  union {
+    // The tuple is used for tuple origins (e.g. https://example.com:80). This
+    // is expected to be the common case.
+    OriginTuple tuple_;
+    // The nonce is used for maintaining identity of an opaque origin. This
+    // nonce is preserved when an opaque origin is copied or moved.
+    base::UnguessableToken nonce_;
+  };
 };
 
 URL_EXPORT std::ostream& operator<<(std::ostream& out, const Origin& origin);
