@@ -16,6 +16,24 @@
       "revId": "56b69dba31540f80c692a04e84adc9a2e031271c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe9c3b8_985afc69",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T17:49:57Z",
+      "side": 0,
+      "message": "Nope. When the URL bar is hidden in incognito mode, its descendants in the UiElement tree are also hidden because of the inherited opacity.",
+      "parentUuid": "0ffd7db6_343d1bd7",
+      "revId": "56b69dba31540f80c692a04e84adc9a2e031271c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
