@@ -508,13 +508,14 @@ void NetworkChangeNotifier::SetFactory(
 }
 
 // static
-NetworkChangeNotifier* NetworkChangeNotifier::Create() {
+std::unique_ptr<NetworkChangeNotifier> NetworkChangeNotifier::Create() {
   if (g_network_change_notifier_factory)
-    return g_network_change_notifier_factory->CreateInstance();
+    return std::unique_ptr<NetworkChangeNotifier>(
+        g_network_change_notifier_factory->CreateInstance());
 
 #if defined(OS_WIN)
-  NetworkChangeNotifierWin* network_change_notifier =
-      new NetworkChangeNotifierWin();
+  std::unqiue_ptr<NetworkChangeNotifier> network_change_notifier(
+      new NetworkChangeNotifierWin());
   network_change_notifier->WatchForAddressChange();
   return network_change_notifier;
 #elif defined(OS_CHROMEOS) || defined(OS_ANDROID)
@@ -527,9 +528,10 @@ NetworkChangeNotifier* NetworkChangeNotifier::Create() {
 #endif
   return NULL;
 #elif defined(OS_LINUX)
-  return new NetworkChangeNotifierLinux(std::unordered_set<std::string>());
+  return std::unique_ptr<NetworkChangeNotifier>(
+      new NetworkChangeNotifierLinux(std::unordered_set<std::string>()));
 #elif defined(OS_MACOSX)
-  return new NetworkChangeNotifierMac();
+  return std::unique_ptr<NetworkChangeNotifier>(new NetworkChangeNotifierMac());
 #else
   NOTIMPLEMENTED();
   return NULL;

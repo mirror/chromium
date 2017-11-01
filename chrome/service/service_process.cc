@@ -154,7 +154,7 @@ bool ServiceProcess::Initialize(base::MessageLoopForUI* message_loop,
 #endif  // defined(OS_LINUX) || defined(OS_OPENBSD)
   main_message_loop_ = message_loop;
   service_process_state_.reset(state);
-  network_change_notifier_.reset(net::NetworkChangeNotifier::Create());
+  network_change_notifier_ = net::NetworkChangeNotifier::Create();
 
   // Initialize TaskScheduler and redirect SequencedWorkerPool tasks to it.
   constexpr int kMaxBackgroundThreads = 1;
