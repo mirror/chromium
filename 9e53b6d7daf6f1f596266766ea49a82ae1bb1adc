@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0db0cf36_abb6101a",
+        "filename": "third_party/WebKit/public/platform/modules/manifest/manifest.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T07:04:59Z",
+      "side": 1,
+      "message": "Can you help me understand why this is specified as optional? It seems like we never take advantage of the optionality, unless I\u0027m missing something.",
+      "revId": "9e53b6d7daf6f1f596266766ea49a82ae1bb1adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
