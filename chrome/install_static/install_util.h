@@ -13,6 +13,8 @@
 #include <string>
 #include <vector>
 
+#include <objbase.h>
+
 namespace version_info {
 enum class Channel;
 }
@@ -75,6 +77,10 @@ std::wstring GetUninstallRegistryPath();
 // an empty string if this brand does not integrate with Google Update. This is
 // a simple convenience wrapper around InstallDetails.
 const wchar_t* GetAppGuid();
+
+// Returns the toast activator CLSID with which Chrome is registered with the
+// the Windows OS.
+const CLSID GetToastActivatorClsid();
 
 // Returns the unsuffixed application name of this program. This is the base of
 // the name registered with Default Programs. IMPORTANT: This must only be
