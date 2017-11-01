@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a326b76_6f9f2d26",
+        "filename": "components/download/in_progress_metadata/in_progress_metadata_conversions.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-01T23:16:32Z",
+      "side": 1,
+      "message": "private: disallow copy and assign and also constructor/destructor (can\u0027t instantiate the class).",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 2
+      },
+      "revId": "1ce8ae58c62027e71404a7e9a2f6e091396b1b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb213b3_4e1ee95d",
+        "filename": "components/download/in_progress_metadata/proto/download_entry.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-01T23:16:32Z",
+      "side": 1,
+      "message": "optional.  Never use required for protos.",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "1ce8ae58c62027e71404a7e9a2f6e091396b1b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5fe6aa_9fa77dea",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1731,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-01T23:16:32Z",
+      "side": 1,
+      "message": "Is there a state change place we could put this to catch all possible transitions?  Just curious.",
+      "range": {
+        "startLine": 1729,
+        "startChar": 2,
+        "endLine": 1731,
+        "endChar": 44
+      },
+      "revId": "1ce8ae58c62027e71404a7e9a2f6e091396b1b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608be8a9_8abb11b3",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2217,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-01T23:16:32Z",
+      "side": 1,
+      "message": "Is it possible to have a null entry here?",
+      "range": {
+        "startLine": 2212,
+        "startChar": 2,
+        "endLine": 2217,
+        "endChar": 63
+      },
+      "revId": "1ce8ae58c62027e71404a7e9a2f6e091396b1b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0766613c_7bfb67bb",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-01T23:16:32Z",
+      "side": 1,
+      "message": "Should this go inside DownloadItem, or should we pull all metadata interaction out?  I feel like one layer should be responsible for interacting with the metadata cache.  We have multiple now?",
+      "range": {
+        "startLine": 887,
+        "startChar": 0,
+        "endLine": 890,
+        "endChar": 58
+      },
+      "revId": "1ce8ae58c62027e71404a7e9a2f6e091396b1b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ccf809c_521f547d",
+        "filename": "content/public/browser/download_url_parameters.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-01T23:16:32Z",
+      "side": 1,
+      "message": "This feels a little specific.  Can we make this more general?  request_origin sounds like the origin of the website where the download started.  If that\u0027s not what this is, we should make sure it\u0027s unique.",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 242,
+        "endChar": 23
+      },
+      "revId": "1ce8ae58c62027e71404a7e9a2f6e091396b1b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
