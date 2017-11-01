@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d730a818_6db8f3b8",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_test_template.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T18:16:50Z",
+      "side": 1,
+      "message": "nit: if changing this to use a lambda then why not:\n\nbase::Bind([](bool* destroyed, const gpu::SyncToken\u0026 token) { *destroyed \u003d true; },\n           base::Unretained(\u0026destroyed))\n\nbelow instead of this temporary variable?",
+      "revId": "fbf59fdc6ba9b494dc59be9f7de7d9efcf46deb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
