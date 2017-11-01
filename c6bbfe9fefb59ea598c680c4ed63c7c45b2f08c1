@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f93167f_991750f3",
+        "filename": "components/previews/core/previews_experiments.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-01T21:46:56Z",
+      "side": 1,
+      "message": "Or should it be IsOptimizationHintsEnabled() ?  \n[I struggle with our plural naming.]",
+      "range": {
+        "startLine": 97,
+        "startChar": 5,
+        "endLine": 97,
+        "endChar": 8
+      },
+      "revId": "c6bbfe9fefb59ea598c680c4ed63c7c45b2f08c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
