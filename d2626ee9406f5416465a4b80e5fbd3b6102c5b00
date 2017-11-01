@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "9f85b10c_6611b0e2",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-11-01T21:34:01Z",
+      "side": 1,
+      "message": "I have filed crbug.com/780609 to track this.",
+      "parentUuid": "d0b0d41f_d97cb88a",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c18f85d_52c9003f",
         "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
         "patchSetId": 4
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "I checked on Mac. The manpage says realpath() returns char*, so still a bit confused as to why we need to cast.",
       "parentUuid": "fd2b944d_72f8c3f8",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40aeeff4_9fc7715b",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-11-01T21:34:01Z",
+      "side": 1,
+      "message": "I agree that it doesn\u0027t have a const, I really don\u0027t know why I included it. Removing the const_cast works fine.",
+      "parentUuid": "87520257_477d464a",
       "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
