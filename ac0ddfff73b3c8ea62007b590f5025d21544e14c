@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1051783_049d2648",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-01T04:39:01Z",
+      "side": 1,
+      "message": "Can you do an early return, not a MAYBE_?\n\n#include \"content/public/common/browser_side_navigation_policy.h\"\n\n// Flaky in this case; crbug.com/780371\nif (!content::IsBrowserSideNavigationEnabled())\n  return;\n\nThat way it\u0027ll get resolved when the non-browser-side-nav code path is removed in a few weeks.",
+      "range": {
+        "startLine": 616,
+        "startChar": 0,
+        "endLine": 616,
+        "endChar": 22
+      },
+      "revId": "ac0ddfff73b3c8ea62007b590f5025d21544e14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
