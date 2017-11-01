@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f0f6f9d_f71d4134",
+        "filename": "chrome/test/data/cld2_component/README.chromium",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T16:51:06Z",
+      "side": 0,
+      "message": "Can you motivate why it\u0027s safe to remove this file? Do you have backwards compatible tests are outlined below?",
+      "revId": "fb438d903dd6695fdb79d375016e5709129f707b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
