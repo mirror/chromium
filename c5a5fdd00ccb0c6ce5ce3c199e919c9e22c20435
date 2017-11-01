@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05623fe8_0da18b90",
+        "filename": "chrome/browser/themes/browser_theme_pack.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-01T18:48:10Z",
+      "side": 1,
+      "message": "This is OK, but note that it is only defined behavior because integer overflow for *unsigned* ints is defined. If these were signed ints, this check would not work.",
+      "revId": "c5a5fdd00ccb0c6ce5ce3c199e919c9e22c20435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
