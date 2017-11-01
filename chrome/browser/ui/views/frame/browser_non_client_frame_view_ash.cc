@@ -319,9 +319,17 @@ void BrowserNonClientFrameViewAsh::Layout() {
   if (profile_indicator_icon())
     LayoutProfileIndicatorIcon();
   BrowserNonClientFrameView::Layout();
+  int inset = GetTopInset(true);
+  // When immersive fullscreen revealed, the top view inset property should
+  // still be 0. http://crbug.com/778840.
+  const ImmersiveModeController* const immersive_controller =
+      browser_view()->immersive_mode_controller();
+  if (immersive_controller->IsEnabled() && immersive_controller->IsRevealed()) {
+    inset = 0;
+  }
   frame()->GetNativeWindow()->SetProperty(
       aura::client::kTopViewInset,
-      browser_view()->IsTabStripVisible() ? 0 : GetTopInset(true));
+      browser_view()->IsTabStripVisible() ? 0 : inset);
 }
 
 const char* BrowserNonClientFrameViewAsh::GetClassName() const {
