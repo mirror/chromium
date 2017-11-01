@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb353143_d25fcc4e",
+        "filename": "base/ios/callback_counter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-01T19:38:21Z",
+      "side": 1,
+      "message": "Default arguments are discouraged. Consider function overloading.",
+      "range": {
+        "startLine": 23,
+        "startChar": 33,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "79ca9c3dcbe804aa865fe29328d2bf2ef62ea29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
