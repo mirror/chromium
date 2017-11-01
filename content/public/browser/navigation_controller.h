@@ -14,6 +14,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "base/strings/string16.h"
+#include "base/unguessable_token.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/global_request_id.h"
@@ -194,6 +195,13 @@ class NavigationController {
 
     // Indicates whether or not this navigation was initiated via context menu.
     bool started_from_context_menu;
+
+    // For automation driver-initiated navigations over the devtools protocol,
+    // |devtools_navigation_token_| is used to tag the navigation. This
+    // navigation token is then sent into the renderer and lands on the
+    // DocumentLoader. That way subsequent Blink-level frame lifecycle events
+    // can be associated with the concrete navigation.
+    base::UnguessableToken devtools_navigation_token;
 
     explicit LoadURLParams(const GURL& url);
     ~LoadURLParams();

@@ -271,7 +271,8 @@ NavigationEntryImpl::NavigationEntryImpl(
       frame_tree_node_id_(-1),
       reload_type_(ReloadType::NONE),
       started_from_context_menu_(false),
-      ssl_error_(false) {
+      ssl_error_(false),
+      devtools_navigation_token_(base::UnguessableToken::Create()) {
 #if defined(OS_ANDROID)
   has_user_gesture_ = false;
 #endif
