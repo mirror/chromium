@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9c61db9_53fa6cd0",
+        "filename": "media/audio/win/audio_low_latency_output_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-01T17:28:04Z",
+      "side": 1,
+      "message": "What happened to CreateDefaultClient call?",
+      "revId": "949224b603328994c8c3d08bd7a72c50f391e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
