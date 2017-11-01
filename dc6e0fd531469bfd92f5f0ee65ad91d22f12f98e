@@ -70,6 +70,24 @@
       "revId": "dc6e0fd531469bfd92f5f0ee65ad91d22f12f98e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5726e8a1_191d8d6f",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-01T22:29:25Z",
+      "side": 1,
+      "message": "Sorry for the delay, sgtm, the reason I prefixed the \"Signin\" is that I wanted to clarify this is a button to add account for signin page, but it seems that this is the only place \"Add account\" is meaningful.",
+      "parentUuid": "6c3434bb_4d6c3466",
+      "revId": "dc6e0fd531469bfd92f5f0ee65ad91d22f12f98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
