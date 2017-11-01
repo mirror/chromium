@@ -68,6 +68,52 @@
       "revId": "c8d0e218a22ff5c3b8ae006abe4bd520b82b60cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6722d3_e0dfd32c",
+        "filename": "services/metrics/ukm_interface.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T22:43:25Z",
+      "side": 1,
+      "message": "Given the directory I would expect this to be in the \u0027metrics\u0027 namespace.",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 14
+      },
+      "revId": "c8d0e218a22ff5c3b8ae006abe4bd520b82b60cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a64784a6_06ef5e8c",
+        "filename": "services/metrics/ukm_interface.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T22:43:25Z",
+      "side": 1,
+      "message": "One of the reasons for the \u0027mojom\u0027 interface is so that you can name the implementation to match the interface name. In other words typically this would be named UkmRecorderInterface.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "c8d0e218a22ff5c3b8ae006abe4bd520b82b60cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
