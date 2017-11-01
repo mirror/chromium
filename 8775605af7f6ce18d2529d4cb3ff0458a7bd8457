@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ffbcc30_74a8bffd",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-01T17:29:31Z",
+      "side": 1,
+      "message": "On a second thought, could this and the other histogram be FirefoxImporter.Passwords.... The current name could give a false impression that we are trying to measure the actions of Firefox.",
+      "range": {
+        "startLine": 351,
+        "startChar": 25,
+        "endLine": 351,
+        "endChar": 49
+      },
+      "revId": "8775605af7f6ce18d2529d4cb3ff0458a7bd8457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
