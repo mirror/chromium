@@ -36,4 +36,18 @@ void NGPaintFragment::PopulateDescendants(bool stop_at_block_layout_root) {
   SetVisualRect({{}, PhysicalFragment().Size().ToLayoutSize()});
 }
 
+void NGPaintFragment::AddOutlineRects(
+    Vector<LayoutRect>* outline_rects,
+    const LayoutPoint& additional_offset) const {
+  DCHECK(outline_rects);
+
+  // TODO(layout-dev): This isn't correct but is close enough until we have
+  // the right set of rects for outlines.
+  for (const std::unique_ptr<const NGPaintFragment>& child : children_) {
+    LayoutRect outline_rect = child->VisualRect();
+    outline_rect.MoveBy(additional_offset);
+    outline_rects->push_back(outline_rect);
+  }
+}
+
 }  // namespace blink
