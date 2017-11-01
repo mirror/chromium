@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af6d6f27_b5bc0656",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T12:50:13Z",
+      "side": 1,
+      "message": "nit: /*xx\u003d*/ or define constant",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08418bc_0285e34a",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T12:50:13Z",
+      "side": 1,
+      "message": "nit: make_unique",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9814977_db8ede1f",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T12:50:13Z",
+      "side": 1,
+      "message": "ClearCaliibrationDataInMap ?",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ac8799_4e15cc24",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T12:50:13Z",
+      "side": 1,
+      "message": "move this to separate test file.",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e108d74_0ad64cd7",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T12:50:13Z",
+      "side": 1,
+      "message": "does this have to be virtual?",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce48337f_6f2143cb",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T12:50:13Z",
+      "side": 1,
+      "message": "can this be const method?",
+      "range": {
+        "startLine": 213,
+        "startChar": 65,
+        "endLine": 213,
+        "endChar": 66
+      },
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1dc3c6_a577e649",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T12:50:13Z",
+      "side": 1,
+      "message": "dotto",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8cf0bb1_81bf2171",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T12:50:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
