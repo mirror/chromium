@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfdccc35_a0faa14f",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-01T06:30:14Z",
+      "side": 1,
+      "message": "i\u0027m getting a DCHECK in this call\u0027s RunUntilIdle call:\n\n  [ RUN      ] ArcPowerBridgeTest.DifferentWakeLocks\n  [134299:134299:1031/231729.445182:10907563459045:FATAL:binding_state.cc(90)] Check failed: !router_. \n  #0 0x7fa6c5f33d9c base::debug::StackTrace::StackTrace()\n  #1 0x7fa6c5f5a36c logging::LogMessage::~LogMessage()\n  #2 0x7fa6c49ffdee mojo::internal::BindingStateBase::BindInternal()\n  #3 0x000002673373 mojo::internal::BindingState\u003c\u003e::Bind()\n  #4 0x000002672643 device::TestWakeLockProvider::OnBindInterface()\n  ...\n\ni\u0027m guessing that i\u0027m not doing something that i need to be doing in TestWakeLockProvider\u0027s OnBindInterface, and sending a second request to the same provider causes trouble as a result.",
+      "revId": "9ce4621e6aeed6b2665bb470af3917e8785773f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
