@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18c7330c_275dc6ff",
+        "filename": "chrome/browser/vr/elements/button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T20:21:35Z",
+      "side": 1,
+      "message": "I think the button should own an invisible hit target, not be one. That way, the hit target can exist slightly in front of the maximum extent of the button when it expands. This will fix the reticle sorting issues and the semantic weirdnesses of being a visible InvisibleHitTarget.",
+      "revId": "5f3557fccd9fa21dff0509fb1609cded88ff9b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c96c833_d254bcf9",
+        "filename": "chrome/browser/vr/ui_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T20:21:35Z",
+      "side": 1,
+      "message": "Please add a TODO and bug for the correct solution which is to refer to elements in this test by name/class pairs. When we do this, we will be able to account for these unnamed elements in the sort order. (Also, this bug should block the declarative scene config work).",
+      "revId": "5f3557fccd9fa21dff0509fb1609cded88ff9b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7c4110_3a05583b",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-01T20:21:35Z",
+      "side": 1,
+      "message": "If these are truly canonical button colors, then perhaps we should set up the bindings in the button constructor and rename the member on ColorScheme to something more generic.\n\nAlternatively, we might make a struct for button colors and the ColorScheme could own several. This fn could then take a pointer to, for example, \u0026ColorScheme::close_button_colors.\n\nMy preference is for the latter.",
+      "revId": "5f3557fccd9fa21dff0509fb1609cded88ff9b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
