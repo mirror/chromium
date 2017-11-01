@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a39b7379_05d63493",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-11-01T21:35:12Z",
+      "side": 1,
+      "message": "Seems that it is not. The normal name is register which contains packed floats (or other types). I renamed this constants.",
+      "parentUuid": "e423ca87_eb75ad56",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5ea6621_25af8827",
         "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d33df6_59f04833",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-11-01T21:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5ea6621_25af8827",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f0533322_8af4cc8e",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-11-01T21:35:12Z",
+      "side": 1,
+      "message": "\u003e Can these two block be unified in some way?\n\nAll these fours blocks can be unified with macros. Have a look and say if you like that approach better.\n\n\u003e The only difference between lines 49-55 and lines 59-65 is the use of store vs storeu.  I thought there was no longer a penalty between store and storeu?\n\nIt is true that there are no longer a penalty between store and storeu when they are used with aligned addresses. But unfortunately reality is not that simple. If a compiler does not know that addresses are correctly aligned but assumes that they are unaligned, the compiler may replace _mm256_loadu_ps with two _mm_loadu_ps for cache performance reasons, for instance, depending on the compiler and compiler flags. One of the best portable methods to tell the compiler that the addresses are actually correctly aligned is to use store instead of storeu.\n\n\u003e Not sure what the compiler will do, but would it help to put the pointer updates between the computation of m_dest and the store of m_dest to memory?\n\u003e \n\u003e Same comment for lines 70-89 below.",
+      "parentUuid": "24fbc8c2_942c9a12",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf90d326_2b74329b",
         "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc359604_23784736",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-11-01T21:35:12Z",
+      "side": 1,
+      "message": "\u003e Is this guaranteed by C++ to actually work? No aliasing issues and such?\n\nNot all aliasings are allowed in C++, but in the of SSE and AVX, aliasing between __m128, __m256 and packed types (such as float) are explicitly allowed. So no issues in this case.",
+      "parentUuid": "bf90d326_2b74329b",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ea0be351_04d5b4a0",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-11-01T21:35:12Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "8efa542b_292ae496",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "721bf065_67354d65",
         "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ab78da_1904fc78",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-11-01T21:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "721bf065_67354d65",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5e52fd38_0e0908c5",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-11-01T21:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "914ed426_48fbeae4",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddcc402b_0f784a45",
         "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6332e30_db5ed59c",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathCommon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-11-01T21:35:12Z",
+      "side": 1,
+      "message": "\u003e Unlike the other routines with only required source1 to aligned, this requires everything to be aligned. Too many cases to manage?\n\nI assume that that is the original reason behind this logic which I did not modify.\n\n\u003e Would it be worthwhile to allow this and use the unaligned load/store instructions in this case?\n\nYeah, why not. Done.",
+      "parentUuid": "ddcc402b_0f784a45",
+      "revId": "a09813a392f5ca7891b4004366bbbf9f10e30183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
