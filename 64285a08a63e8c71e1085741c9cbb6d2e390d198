@@ -68,6 +68,47 @@
       "revId": "64285a08a63e8c71e1085741c9cbb6d2e390d198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ed55f2_148a1377",
+        "filename": "services/device/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-01T19:50:40Z",
+      "side": 1,
+      "message": "Yes, I think the best way of handling this is to make a new target for the test gadget code in //device/BUILD.gn:\n\nsource_set(\"usb_test_gadget\") {\n  sources \u003d [\n    \"test/usb_test_gadget.h\",\n    \"test/usb_test_gadget_impl.cc\",\n  ]\n\n  deps \u003d [\n    \"//device/base\",\n    \"//device/usb\",\n    \"//net:test_support\",\n  ]\n}",
+      "parentUuid": "faff485e_b013334f",
+      "range": {
+        "startLine": 152,
+        "startChar": 9,
+        "endLine": 154,
+        "endChar": 50
+      },
+      "revId": "64285a08a63e8c71e1085741c9cbb6d2e390d198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec676b9_7342c72b",
+        "filename": "services/device/hid/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-01T19:50:40Z",
+      "side": 1,
+      "message": "Since nothing should depend on //services/device/hid directly anymore these no longer need to be public deps.",
+      "revId": "64285a08a63e8c71e1085741c9cbb6d2e390d198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
