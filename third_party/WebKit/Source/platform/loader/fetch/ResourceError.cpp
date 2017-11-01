@@ -64,6 +64,10 @@ ResourceError ResourceError::CancelledDueToAccessCheckError(
   return error;
 }
 
+ResourceError ResourceError::FailureError(const KURL& url) {
+  return WebURLError(url, false, net::ERR_FAILED);
+}
+
 ResourceError ResourceError::CacheMissError(const KURL& url) {
   return WebURLError(url, false, net::ERR_CACHE_MISS);
 }

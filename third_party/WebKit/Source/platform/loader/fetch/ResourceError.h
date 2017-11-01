@@ -60,6 +60,7 @@ class PLATFORM_EXPORT ResourceError final {
       ResourceRequestBlockedReason,
       const String& localized_description);
 
+  static ResourceError FailureError(const KURL&);
   static ResourceError CacheMissError(const KURL&);
   static ResourceError TimeoutError(const KURL&);
 

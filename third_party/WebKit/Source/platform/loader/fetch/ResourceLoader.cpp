@@ -538,7 +538,7 @@ void ResourceLoader::DidReceiveResponse(
       // handled a request.
       if (!Context().ShouldLoadNewResource(resource_type)) {
         // Cancel the request if we should not trigger a reload now.
-        HandleError(ResourceError::CancelledError(response.Url()));
+        HandleError(ResourceError::FailureError(response.Url()));
         return;
       }
       last_request.SetServiceWorkerMode(
@@ -598,7 +598,7 @@ void ResourceLoader::DidReceiveResponse(
 
   if (response.HttpStatusCode() >= 400 &&
       !resource_->ShouldIgnoreHTTPStatusCodeErrors())
-    HandleError(ResourceError::CancelledError(response.Url()));
+    HandleError(ResourceError::FailureError(response.Url()));
 }
 
 void ResourceLoader::DidReceiveResponse(const WebURLResponse& response) {
