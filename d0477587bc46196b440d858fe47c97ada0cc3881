@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72aaff17_e2440c7c",
+        "filename": "chrome/browser/push_messaging/push_messaging_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-01T15:38:29Z",
+      "side": 1,
+      "message": "Ugh, following this through I see this call is always made on Android but only for testing purposes, specifically only to separate out the two sendPushAndWaitForCallback()s on lines 262 and 265 in PushMessagingTest#testDefaultNotification.\n\nThere\u0027s a comment in PushMessagingServiceObserver.java saying the whole class can go when push messaging receipts are implemented. Is there a bug for that? Would be so nice to get rid of this useless-except-for-test-purposes code!",
+      "range": {
+        "startLine": 421,
+        "startChar": 0,
+        "endLine": 421,
+        "endChar": 70
+      },
+      "revId": "d0477587bc46196b440d858fe47c97ada0cc3881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
