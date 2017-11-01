@@ -22,6 +22,30 @@
       "revId": "79ca9c3dcbe804aa865fe29328d2bf2ef62ea29f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a846b061_54d4161a",
+        "filename": "base/ios/callback_counter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-01T19:52:13Z",
+      "side": 1,
+      "message": "I read the style guide before about that,It\u0027s not conclusive in the case of the default argument. it bans it in case of virtual functions,\n\"Compared to overloading the function, default arguments have a cleaner syntax, with less boilerplate and a clearer distinction between \u0027required\u0027 and \u0027optional\u0027 arguments.\"\nand the decision is \"In some other cases, default arguments can improve the readability of their function declarations enough to overcome the downsides above, so they are allowed. When in doubt, use overloads.\" \nI think this case is one of them.",
+      "parentUuid": "fb353143_d25fcc4e",
+      "range": {
+        "startLine": 23,
+        "startChar": 33,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "79ca9c3dcbe804aa865fe29328d2bf2ef62ea29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
