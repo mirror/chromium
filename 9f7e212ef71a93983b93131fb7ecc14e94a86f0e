@@ -70,6 +70,24 @@
       "revId": "9f7e212ef71a93983b93131fb7ecc14e94a86f0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe13e67_26b228cd",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-01T01:05:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6b2bebc7_7c9d558f",
+      "revId": "9f7e212ef71a93983b93131fb7ecc14e94a86f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
