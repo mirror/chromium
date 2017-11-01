@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "445059c3_58b83a47",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 6246,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-01T18:06:36Z",
+      "side": 1,
+      "message": "This is the only relevant change re: JS",
+      "revId": "ccae31df03031d28638b148866c3a0c4599b394c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
