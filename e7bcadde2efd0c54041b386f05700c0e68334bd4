@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33809a0f_6b6df5e7",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-01T20:34:28Z",
+      "side": 1,
+      "message": "Do we explicitly not clean this up in the destruction? Can we add a comment as to why?",
+      "range": {
+        "startLine": 811,
+        "startChar": 40,
+        "endLine": 811,
+        "endChar": 64
+      },
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46b154da_a3c073de",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-01T20:34:28Z",
+      "side": 1,
+      "message": "Have you considered using data: URL here? \u0027about:blank\u0027 is special, so I wonder if it might be masking potential problems.",
+      "range": {
+        "startLine": 838,
+        "startChar": 41,
+        "endLine": 838,
+        "endChar": 52
+      },
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55afb6cc_5ef4e223",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-01T20:34:28Z",
+      "side": 1,
+      "message": "What causes the RunUntilIdle to exit after the first initial empty document binding? It isn\u0027t clear to me why we expect to be idle between this call and the next one. It seems to me that all tasks that are queued up before this function call will be processed in its first iteration and there is no explicit action between the two calls to ExpectPendingInterfaceRequestsFromSources.",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
