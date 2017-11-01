@@ -192,12 +192,12 @@ void SuspendableScriptExecutor::Run() {
   ExecutionContext* context = GetExecutionContext();
   DCHECK(context);
   if (!context->IsContextSuspended()) {
-    SuspendIfNeeded();
+    PauseIfNeeded();
     ExecuteAndDestroySelf();
     return;
   }
   StartOneShot(0, BLINK_FROM_HERE);
-  SuspendIfNeeded();
+  PauseIfNeeded();
 }
 
 void SuspendableScriptExecutor::RunAsync(BlockingOption blocking) {
@@ -208,7 +208,7 @@ void SuspendableScriptExecutor::RunAsync(BlockingOption blocking) {
     ToDocument(GetExecutionContext())->IncrementLoadEventDelayCount();
 
   StartOneShot(0, BLINK_FROM_HERE);
-  SuspendIfNeeded();
+  PauseIfNeeded();
 }
 
 void SuspendableScriptExecutor::ExecuteAndDestroySelf() {
@@ -237,7 +237,7 @@ void SuspendableScriptExecutor::ExecuteAndDestroySelf() {
 
 void SuspendableScriptExecutor::Dispose() {
   // Remove object as a ContextLifecycleObserver.
-  SuspendableObject::ClearContext();
+  PausableObject::ClearContext();
   keep_alive_.Clear();
   Stop();
 }
