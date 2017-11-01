@@ -1,0 +1,43 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [800, 600],
+      "contentsOpaque": true,
+      "backgroundColor": "#FFFFFF",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow DIV",
+          "rect": [8, 8, 105, 112],
+          "reason": "paint property change"
+        },
+        {
+          "object": "LayoutTextControl INPUT id='target'",
+          "rect": [8, 8, 105, 112],
+          "reason": "paint property change"
+        },
+        {
+          "object": "LayoutBlockFlow DIV",
+          "rect": [8, 8, 105, 50],
+          "reason": "paint property change"
+        },
+        {
+          "object": "LayoutTextControl INPUT id='target'",
+          "rect": [8, 8, 105, 50],
+          "reason": "paint property change"
+        },
+        {
+          "object": "LayoutBlockFlow DIV",
+          "rect": [10, 8, 1, 107],
+          "reason": "paint property change"
+        },
+        {
+          "object": "LayoutBlockFlow DIV",
+          "rect": [10, 8, 1, 50],
+          "reason": "paint property change"
+        }
+      ]
+    }
+  ]
+}
+
