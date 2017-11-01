@@ -1188,7 +1188,16 @@ public class TabPersistentStore extends TabPersister {
     }
 
     private void onStateLoaded() {
-        if (mObserver != null) mObserver.onStateLoaded();
+        if (mObserver != null) {
+            ThreadUtils.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    // mergeState() starts an AsyncTask to call this and this calls
+                    // onTabStateInitialized which should be called from the UI thread.
+                    mObserver.onStateLoaded();
+                }
+            });
+        }
     }
 
     private void loadNextTab() {
