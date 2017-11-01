@@ -399,6 +399,7 @@ bool FFmpegVideoDecoder::FFmpegDecode(
       reinterpret_cast<VideoFrame*>(av_buffer_get_opaque(av_frame_->buf[0]));
   frame->set_timestamp(
       base::TimeDelta::FromMicroseconds(av_frame_->reordered_opaque));
+  frame->metadata()->SetBoolean(VideoFrameMetadata::POWER_EFFICIENT, false);
   *has_produced_frame = true;
   output_cb_.Run(frame);
 

@@ -138,11 +138,15 @@ TEST_F(ProtoUtilsTest, PipelineStatisticsConversion) {
   original.audio_bytes_decoded = 123;
   original.video_bytes_decoded = 456;
   original.video_frames_decoded = 789;
+  original.video_frames_decoded_power_efficient = 0;
   original.video_frames_dropped = 21;
   original.audio_memory_usage = 32;
   original.video_memory_usage = 43;
   original.video_keyframe_distance_average = base::TimeDelta::Max();
   original.video_frame_duration_average = base::TimeDelta::Max();
+#ifdef ARCH_CPU_64_BITS
+  original.padding_field_for_tests = 0;
+#endif  // ARCH_CPU_64_BITS
 
   // There is no convert-to-proto function, so just do that here.
   pb::PipelineStatistics pb_stats;
