@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2dc5dc7_5e3d6850",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T12:55:15Z",
+      "side": 1,
+      "message": "Can we have a README.md in the `storage` directory?",
+      "revId": "d45040149462332bb0b0914628433f323984f22a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
