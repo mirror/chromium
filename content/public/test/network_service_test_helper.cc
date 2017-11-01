@@ -4,6 +4,9 @@
 
 #include "content/public/test/network_service_test_helper.h"
 
+#include <utility>
+#include <vector>
+
 #include "base/bind.h"
 #include "base/feature_list.h"
 #include "content/public/common/content_features.h"
@@ -27,6 +30,14 @@ class NetworkServiceTestHelper::NetworkServiceTestImpl
       test_host_resolver_.host_resolver()->AddRule(rule->host_pattern,
                                                    rule->replacement);
     }
+    std::move(callback).Run();
+  }
+
+  void SimulateNetworkChange(mojom::ConnectionType type,
+                             SimulateNetworkChangeCallback callback) override {
+    DCHECK(net::NetworkChangeNotifier::HasNetworkChangeNotifier());
+    net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+        net::NetworkChangeNotifier::ConnectionType(type));
     std::move(callback).Run();
   }
 

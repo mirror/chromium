@@ -40,21 +40,30 @@ NetworkConnectionTracker::NetworkConnectionTracker(
           new base::ObserverListThreadSafe<NetworkConnectionObserver>(
               base::ObserverListBase<
                   NetworkConnectionObserver>::NOTIFY_EXISTING_ONLY)),
+      has_network_service_(network_service != nullptr),
       binding_(this) {
-  // Get NetworkChangeManagerPtr.
-  mojom::NetworkChangeManagerPtr manager_ptr;
-  mojom::NetworkChangeManagerRequest request(mojo::MakeRequest(&manager_ptr));
-  network_service->GetNetworkChangeManager(std::move(request));
+  if (has_network_service_) {
+    // Get NetworkChangeManagerPtr.
+    mojom::NetworkChangeManagerPtr manager_ptr;
+    mojom::NetworkChangeManagerRequest request(mojo::MakeRequest(&manager_ptr));
+    network_service->GetNetworkChangeManager(std::move(request));
 
-  // Request notification from NetworkChangeManagerPtr.
-  mojom::NetworkChangeManagerClientPtr client_ptr;
-  mojom::NetworkChangeManagerClientRequest client_request(
-      mojo::MakeRequest(&client_ptr));
-  binding_.Bind(std::move(client_request));
-  manager_ptr->RequestNotifications(std::move(client_ptr));
+    // Request notification from NetworkChangeManagerPtr.
+    mojom::NetworkChangeManagerClientPtr client_ptr;
+    mojom::NetworkChangeManagerClientRequest client_request(
+        mojo::MakeRequest(&client_ptr));
+    binding_.Bind(std::move(client_request));
+    manager_ptr->RequestNotifications(std::move(client_ptr));
+  } else {
+    // This is temporary until Network Service is available.
+    DCHECK(net::NetworkChangeNotifier::HasNetworkChangeNotifier());
+    net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
+  }
 }
 
 NetworkConnectionTracker::~NetworkConnectionTracker() {
+  if (!has_network_service_)
+    net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
   network_change_observer_list_->AssertEmpty();
 }
 
@@ -67,6 +76,11 @@ bool NetworkConnectionTracker::GetConnectionType(
       base::subtle::NoBarrier_Load(&connection_type_);
   if (type_value != kConnectionTypeInvalid) {
     *type = static_cast<mojom::ConnectionType>(type_value);
+    return true;
+  }
+  if (!has_network_service_) {
+    *type =
+        mojom::ConnectionType(net::NetworkChangeNotifier::GetConnectionType());
     return true;
   }
   base::AutoLock lock(lock_);
@@ -134,6 +148,15 @@ void NetworkConnectionTracker::OnNetworkChanged(mojom::ConnectionType type) {
                                 static_cast<base::subtle::Atomic32>(type));
   network_change_observer_list_->Notify(
       FROM_HERE, &NetworkConnectionObserver::OnConnectionChanged, type);
+}
+
+void NetworkConnectionTracker::OnNetworkChanged(
+    net::NetworkChangeNotifier::ConnectionType type) {
+  base::subtle::NoBarrier_Store(&connection_type_,
+                                static_cast<base::subtle::Atomic32>(type));
+  network_change_observer_list_->Notify(
+      FROM_HERE, &NetworkConnectionObserver::OnConnectionChanged,
+      mojom::ConnectionType(type));
 }
 
 }  // namespace content
