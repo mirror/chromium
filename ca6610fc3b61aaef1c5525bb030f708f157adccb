@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ef44fc51_98a4c03b",
+        "filename": "content/renderer/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-01T13:35:22Z",
+      "side": 1,
+      "message": "Sorry, I just meant the changes to this file.",
+      "parentUuid": "7346abb7_8255c9cd",
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "871d303f_f4a81292",
         "filename": "content/renderer/DEPS",
         "patchSetId": 2
@@ -100,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "2516f473_f961d96f",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-01T13:35:22Z",
+      "side": 1,
+      "message": "I have some TODOs for myself annotating the ones I can see. Are there others? I wanted to get it building first.",
+      "parentUuid": "b05c9752_ed0fae83",
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f62529e_90982929",
         "filename": "third_party/libaom/BUILD.gn",
         "patchSetId": 2
@@ -123,6 +159,122 @@
     },
     {
       "key": {
+        "uuid": "f36c337b_622577af",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-01T13:35:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7f62529e_90982929",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da288f70_3e83055a",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-01T13:35:22Z",
+      "side": 1,
+      "message": "I think libaom got a lot better about this.",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 14
+      },
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "676dd5ee_ff49fb14",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-01T13:35:22Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a problem in libaom but I have not audited the code yet. They were probably all in vp8 in libvpx, so it should be fine.",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 14
+      },
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1811128_b4e09528",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-01T13:35:22Z",
+      "side": 1,
+      "message": "This is probably still true",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 14
+      },
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "956dce74_6e8d93fe",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-01T13:35:22Z",
+      "side": 1,
+      "message": "Didn\u0027t want to remove it and get build errors right off the bat. Once there are trybots I\u0027d be more willing to.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 52
+      },
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e7a61ef_90b57647",
         "filename": "third_party/libaom/BUILD.gn",
         "patchSetId": 2
@@ -137,6 +289,24 @@
       "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53edbc96_a54571fb",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-01T13:35:22Z",
+      "side": 1,
+      "message": "x86 has it by default. i would like to delete this target but i think webrtc uses it. not a concern for av1 at the moment (arm devices without neon are not worth supporting in my opinion). if we decide we definitely do not want it, i\u0027m happy to remove it in a followup.\n\nx86 and arm have very different approaches towards extensions. x86 added them piecemeal and you always need to have detection on. arm only had one (that we care about) extension - neon. i don\u0027t *think* there are any more supported devices which have armv7a but no neon, but each time i try to remove it i get pushback.\n\nIt works by reading /proc/cpuinfo, or we might have needed to add a shim layer for the sandbox. I think they ended up allowing access to /proc/cpuinfo though.\n\nThat information is used by the RTCD header files (RunTime Cpu Detection) at library initialization to set function pointers.",
+      "parentUuid": "3e7a61ef_90b57647",
+      "revId": "ca6610fc3b61aaef1c5525bb030f708f157adccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
