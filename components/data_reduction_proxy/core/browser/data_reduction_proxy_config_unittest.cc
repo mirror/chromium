@@ -438,6 +438,8 @@ TEST_F(DataReductionProxyConfigTest, WarmupURL) {
       histogram_tester.ExpectUniqueSample(
           "DataReductionProxy.WarmupURL.FetchInitiated", 1, 1);
     }
+    histogram_tester.ExpectTotalCount(
+        "DataReductionProxy.WarmupURL.FetchAttemptEvent", 1);
 
     // Set the connection type to 4G so that warm up URL is fetched even if
     // the test device does not have connectivity.
@@ -454,6 +456,10 @@ TEST_F(DataReductionProxyConfigTest, WarmupURL) {
       histogram_tester.ExpectTotalCount(
           "DataReductionProxy.WarmupURL.FetchSuccessful", 0);
     }
+    // Calling NotifyObserversOfNetworkChangeForTests sends two network change
+    // notifications.
+    histogram_tester.ExpectTotalCount(
+        "DataReductionProxy.WarmupURL.FetchAttemptEvent", 3);
 
     // Warm up URL should not be fetched since the device does not have
     // connectivity.
@@ -470,6 +476,10 @@ TEST_F(DataReductionProxyConfigTest, WarmupURL) {
       histogram_tester.ExpectTotalCount(
           "DataReductionProxy.WarmupURL.FetchSuccessful", 0);
     }
+    // Calling NotifyObserversOfNetworkChangeForTests sends two network change
+    // notifications.
+    histogram_tester.ExpectTotalCount(
+        "DataReductionProxy.WarmupURL.FetchAttemptEvent", 5);
   }
 }
 
