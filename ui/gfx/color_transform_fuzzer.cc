@@ -71,13 +71,13 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   if (size < 128 || size > kSizeLimit)
     return 0;
 
-  gfx::ICCProfile profile =
-      gfx::ICCProfile::FromData(reinterpret_cast<const char*>(data), size);
-  if (!profile.GetColorSpace().IsValid())
+  scoped_refptr<gfx::ICCProfile> profile =
+      gfx::ICCProfile::FromData(data, size);
+  if (!profile->GetColorSpace().IsValid())
     return 0;
-  test = profile.GetColorSpace();
+  test = profile->GetColorSpace();
 
-  const size_t hash = Hash(reinterpret_cast<const char*>(data), size);
+  const size_t hash = Hash(data, size);
   srgb = CreateRGBColorSpace(hash);
   GeneratePixels(hash);
 

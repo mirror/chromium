@@ -29,8 +29,8 @@ struct GFX_IPC_COLOR_EXPORT ParamTraits<gfx::ColorSpace> {
 };
 
 template <>
-struct GFX_IPC_COLOR_EXPORT ParamTraits<gfx::ICCProfile> {
-  typedef gfx::ICCProfile param_type;
+struct GFX_IPC_COLOR_EXPORT ParamTraits<scoped_refptr<gfx::ICCProfile>> {
+  typedef scoped_refptr<gfx::ICCProfile> param_type;
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,
                    base::PickleIterator* iter,
