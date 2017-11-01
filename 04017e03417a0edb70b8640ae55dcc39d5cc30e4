@@ -22,6 +22,30 @@
       "revId": "04017e03417a0edb70b8640ae55dcc39d5cc30e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46608436_34e00697",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-11-01T21:23:39Z",
+      "side": 1,
+      "message": "Yes, you got it right.\n\nCurrently all calls (Inflate and InflateBack) will fall into the NEON optimized code path. We do that by removing the vanilla C inffast() from zlib and replacing it for the optimized version.\n\nThis change will instead only use the NEON code (i.e. inflate_fast_chunky) for Inflate(), keep the original inffast() around, that would be used by InflateBack.",
+      "parentUuid": "d0bf47e0_1e22dcbf",
+      "range": {
+        "startLine": 1059,
+        "startChar": 28,
+        "endLine": 1059,
+        "endChar": 35
+      },
+      "revId": "04017e03417a0edb70b8640ae55dcc39d5cc30e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
