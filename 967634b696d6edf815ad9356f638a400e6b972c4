@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4572b982_2264cb9b",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-01T12:49:50Z",
+      "side": 1,
+      "message": "Correct.\n\nStill, I\u0027m not a big fan of having to rely on such lengthy explanations to ensure the test actually verifies that no race conditions exist.\n\nOne thing I can think of to make this test more bulletproof is to actually invoke the closure below, synchronously, just before DCPL, instead of Post\u0027ing it.\n\nI think old_interface_provider-\u003eGetInterface() always PostTasks some Watcher task to do the actual dispatch. If that\u0027s true, having a pending dispatch of an interface request in the message loop when DCPL is executed is probably the closest it can get.",
+      "parentUuid": "85c2022f_2a6f1b88",
+      "revId": "967634b696d6edf815ad9356f638a400e6b972c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbd970e6_ff37c8a1",
         "filename": "content/browser/frame_host/render_frame_host_interface_provider_unittest.cc",
         "patchSetId": 14
@@ -81,6 +99,30 @@
       "revId": "967634b696d6edf815ad9356f638a400e6b972c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10caee20_05312871",
+        "filename": "content/browser/frame_host/render_frame_host_interface_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-01T12:49:50Z",
+      "side": 1,
+      "message": "Agreed, deleted the unit test.",
+      "parentUuid": "4b5de15a_2ae29273",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 1
+      },
+      "revId": "967634b696d6edf815ad9356f638a400e6b972c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

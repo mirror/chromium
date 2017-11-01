@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "03c27731_db69719c",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-01T12:49:50Z",
+      "side": 1,
+      "message": "Thanks! :-)",
+      "parentUuid": "d33e948a_f2198538",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "024e726b_fdcfe809",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 10
@@ -204,6 +222,24 @@
       "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f296ef6d_dea6166f",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-01T12:49:50Z",
+      "side": 1,
+      "message": "Now that we decided to enforce this, test done.",
+      "parentUuid": "cbffae62_2d68d7f1",
+      "revId": "7f189837d3d575cc229b01268f3a70d272fc1a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
