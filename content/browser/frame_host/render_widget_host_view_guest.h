@@ -24,6 +24,10 @@
 #include "ui/gfx/geometry/vector2d_f.h"
 #include "ui/gfx/native_widget_types.h"
 
+namespace base {
+class UnguessableToken;
+}
+
 namespace content {
 class BrowserPluginGuest;
 class RenderWidgetHost;
@@ -147,6 +151,8 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
  private:
   friend class RenderWidgetHostView;
 
+  void Init();
+
   void SendSurfaceInfoToEmbedderImpl(
       const viz::SurfaceInfo& surface_info,
       const viz::SurfaceSequence& sequence) override;
@@ -172,6 +178,10 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
 
   bool HasEmbedderChanged() override;
 
+#if defined(USE_AURA)
+  void OnGotEmbedToken(const base::UnguessableToken& token);
+#endif
+
   // BrowserPluginGuest and RenderWidgetHostViewGuest's lifetimes are not tied
   // to one another, therefore we access |guest_| through WeakPtr.
   base::WeakPtr<BrowserPluginGuest> guest_;
@@ -179,12 +189,15 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
   // The platform view for this RenderWidgetHostView.
   // RenderWidgetHostViewGuest mostly only cares about stuff related to
   // compositing, the rest are directly forwarded to this |platform_view_|.
+  // This is null in mus.
   base::WeakPtr<RenderWidgetHostViewBase> platform_view_;
 
   // When true the guest will forward its selection updates to the owner RWHV.
   // The guest may forward its updates only when there is an ongoing IME
   // session.
-  bool should_forward_text_selection_;
+  bool should_forward_text_selection_ = false;
+
+  base::WeakPtrFactory<RenderWidgetHostViewGuest> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostViewGuest);
 };
