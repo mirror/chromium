@@ -384,7 +384,7 @@ void XMLHttpRequest::InitResponseDocument() {
     response_document_ = XMLDocument::Create(init);
 
   // FIXME: Set Last-Modified.
-  response_document_->SetSecurityOrigin(GetSecurityOrigin());
+  response_document_->SetSecurityOrigin(GetSecurityOrigin()->IsolatedCopy());
   response_document_->SetContextFeatures(GetDocument()->GetContextFeatures());
   response_document_->SetMimeType(FinalResponseMIMETypeWithFallback());
 }
