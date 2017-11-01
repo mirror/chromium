@@ -22,6 +22,53 @@
       "revId": "de6495fb3cb416daa8f644fb1d26284ddf7929a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d409c000_1aee2ad9",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-01T20:15:48Z",
+      "side": 1,
+      "message": "I think this is pretty clear.",
+      "parentUuid": "58d98105_a4999443",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 74
+      },
+      "revId": "de6495fb3cb416daa8f644fb1d26284ddf7929a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f89ec91b_dd36aa2d",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-01T20:15:48Z",
+      "side": 1,
+      "message": "Sounds painful!",
+      "range": {
+        "startLine": 108,
+        "startChar": 36,
+        "endLine": 108,
+        "endChar": 46
+      },
+      "revId": "de6495fb3cb416daa8f644fb1d26284ddf7929a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
