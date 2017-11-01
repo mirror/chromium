@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "7b63a54f_a7c18887",
+        "filename": "ios/chrome/browser/translate/translate_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-01T21:53:21Z",
+      "side": 1,
+      "message": "Fair enough - done in crrev.com/c/749605. Sorry about the round trip.",
+      "parentUuid": "100379c5_4bb09a65",
+      "range": {
+        "startLine": 329,
+        "startChar": 8,
+        "endLine": 329,
+        "endChar": 34
+      },
+      "revId": "6c6c34c2ddd8107138776e20816b69c80e80f1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20a97faa_235fb4d9",
         "filename": "ios/chrome/browser/translate/translate_egtest.mm",
         "patchSetId": 7
