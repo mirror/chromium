@@ -172,6 +172,23 @@ public class StandardNotificationBuilderTest {
     }
 
     @Test
+    @MinAndroidSdkLevel(Build.VERSION_CODES.KITKAT_WATCH)
+    @SmallTest
+    @Feature({"Browser", "Notifications"})
+    public void testShowsTimestampWhenTimestampProvided() {
+        Context context = InstrumentationRegistry.getTargetContext();
+        NotificationBuilderBase notificationBuilder =
+                new StandardNotificationBuilder(context, ChannelDefinitions.CHANNEL_ID_SITES);
+
+        notificationBuilder.setTimestamp(System.currentTimeMillis());
+        Notification notification = notificationBuilder.build();
+
+        boolean timestampIsShown = NotificationTestUtil.getExtras(notification)
+                                           .getBoolean(Notification.EXTRA_SHOW_WHEN);
+        Assert.assertTrue(timestampIsShown);
+    }
+
+    @Test
     @SmallTest
     @Feature({"Browser", "Notifications"})
     public void testSetSmallIcon() {
