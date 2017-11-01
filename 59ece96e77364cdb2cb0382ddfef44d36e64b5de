@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e6e4008_511615e6",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T18:44:21Z",
+      "side": 1,
+      "message": "\"set them\" ?",
+      "revId": "59ece96e77364cdb2cb0382ddfef44d36e64b5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
