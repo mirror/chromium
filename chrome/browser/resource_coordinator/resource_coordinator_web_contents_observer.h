@@ -44,8 +44,6 @@ class ResourceCoordinatorWebContentsObserver
   void DidUpdateFaviconURL(
       const std::vector<content::FaviconURL>& candidates) override;
 
-  void EnsureUkmRecorderInterface();
-  void MaybeSetUkmRecorderInterface(bool ukm_recorder_already_initialized);
   void UpdateUkmRecorder(int64_t navigation_id);
   ukm::SourceId ukm_source_id() const { return ukm_source_id_; }
 
@@ -70,8 +68,6 @@ class ResourceCoordinatorWebContentsObserver
   // supposed to happen.
   bool first_time_favicon_set_ = false;
   bool first_time_title_set_ = false;
-
-  resource_coordinator::mojom::ServiceCallbacksPtr service_callbacks_;
 
   DISALLOW_COPY_AND_ASSIGN(ResourceCoordinatorWebContentsObserver);
 };
