@@ -30,6 +30,7 @@
 #include "build/build_config.h"
 #include "content/child/child_thread_impl.h"
 #include "content/child/memory/child_memory_coordinator_impl.h"
+#include "content/child/service_factory.h"
 #include "content/common/associated_interface_registry_impl.h"
 #include "content/common/content_export.h"
 #include "content/common/frame.mojom.h"
@@ -53,6 +54,7 @@
 #include "net/base/network_change_notifier.h"
 #include "net/nqe/effective_connection_type.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
+#include "services/service_manager/public/interfaces/service_factory.mojom.h"
 #include "third_party/WebKit/public/platform/WebConnectionType.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 #include "third_party/WebKit/public/web/WebMemoryStatistics.h"
@@ -632,6 +634,9 @@ class CONTENT_EXPORT RenderThreadImpl
 
   void OnRendererInterfaceRequest(mojom::RendererAssociatedRequest request);
 
+  void BindServiceFactoryRequest(
+      service_manager::mojom::ServiceFactoryRequest request);
+
   std::unique_ptr<discardable_memory::ClientDiscardableSharedMemoryManager>
       discardable_shared_memory_manager_;
 
@@ -827,6 +832,10 @@ class CONTENT_EXPORT RenderThreadImpl
   int32_t client_id_;
 
   mojom::FrameSinkProviderPtr frame_sink_provider_;
+
+  std::unique_ptr<ServiceFactory> service_factory_;
+  mojo::BindingSet<service_manager::mojom::ServiceFactory>
+      service_factory_bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderThreadImpl);
 };

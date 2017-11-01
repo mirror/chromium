@@ -17,6 +17,7 @@
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/vpn_service_proxy.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_loader_throttle.h"
 #include "media/audio/audio_manager.h"
 #include "media/base/cdm_factory.h"
@@ -491,6 +492,10 @@ base::string16 ContentBrowserClient::GetAppContainerSidForSandboxType(
       L"924012148-129201922");
 }
 #endif  // defined(OS_WIN)
+
+std::string ContentBrowserClient::GetEmbedderRendererServiceName() {
+  return mojom::kRendererServiceName;
+}
 
 std::unique_ptr<base::Value> ContentBrowserClient::GetServiceManifestOverlay(
     base::StringPiece name) {

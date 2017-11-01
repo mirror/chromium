@@ -2052,6 +2052,17 @@ void RenderProcessHostImpl::BindInterface(
   child_connection_->BindInterface(interface_name, std::move(interface_pipe));
 }
 
+void RenderProcessHostImpl::BindEmbedderInterface(
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  service_manager::Identity child_identity = GetChildIdentity();
+  service_manager::Identity embedder_child_identity(
+      GetContentClient()->browser()->GetEmbedderRendererServiceName(),
+      child_identity.user_id(), child_identity.instance());
+  child_connection_->BindEmbedderInterface(
+      embedder_child_identity, interface_name, std::move(interface_pipe));
+}
+
 const service_manager::Identity& RenderProcessHostImpl::GetChildIdentity()
     const {
   return child_connection_->child_identity();
