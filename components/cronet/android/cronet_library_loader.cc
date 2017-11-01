@@ -97,7 +97,7 @@ void CronetInitOnInitThread(JNIEnv* env, const JavaParamRef<jclass>& jcaller) {
   DCHECK(!g_network_change_notifier);
   net::NetworkChangeNotifier::SetFactory(
       new net::NetworkChangeNotifierFactoryAndroid());
-  g_network_change_notifier = net::NetworkChangeNotifier::Create();
+  g_network_change_notifier = net::NetworkChangeNotifier::Create().release();
 }
 
 ScopedJavaLocalRef<jstring> GetCronetVersion(

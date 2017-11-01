@@ -91,8 +91,7 @@ NetworkServiceImpl::NetworkServiceImpl(
     // TODO(xunjieli): Figure out what to do for these 3 platforms.
     NOTIMPLEMENTED();
 #else
-    network_change_notifier =
-        base::WrapUnique(net::NetworkChangeNotifier::Create());
+    network_change_notifier = net::NetworkChangeNotifier::Create();
 #endif
   }
   network_change_manager_ = std::make_unique<NetworkChangeManagerImpl>(

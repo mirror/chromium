@@ -257,13 +257,13 @@ class NET_EXPORT NetworkChangeNotifier {
   // The method will take over the ownership of |factory| object.
   static void SetFactory(NetworkChangeNotifierFactory* factory);
 
-  // Creates the process-wide, platform-specific NetworkChangeNotifier.  The
-  // caller owns the returned pointer.  You may call this on any thread.  You
+  // Creates the process-wide, platform-specific NetworkChangeNotifier. The
+  // caller owns the returned pointer. You may call this on any thread. You
   // may also avoid creating this entirely (in which case nothing will be
   // monitored), but if you do create it, you must do so before any other
   // threads try to access the API below, and it must outlive all other threads
   // which might try to use it.
-  static NetworkChangeNotifier* Create();
+  static std::unique_ptr<NetworkChangeNotifier> Create();
 
   // Returns whether the process-wide, platform-specific NetworkChangeNotifier
   // has been created.
