@@ -6,18 +6,18 @@
 
 namespace gfx {
 
-ICCProfile ICCProfileForTestingAdobeRGB();
-ICCProfile ICCProfileForTestingColorSpin();
-ICCProfile ICCProfileForTestingGenericRGB();
-ICCProfile ICCProfileForTestingSRGB();
+scoped_refptr<ICCProfile> ICCProfileForTestingAdobeRGB();
+scoped_refptr<ICCProfile> ICCProfileForTestingColorSpin();
+scoped_refptr<ICCProfile> ICCProfileForTestingGenericRGB();
+scoped_refptr<ICCProfile> ICCProfileForTestingSRGB();
 
 // A profile that does not have an analytic transfer function.
-ICCProfile ICCProfileForTestingNoAnalyticTrFn();
+scoped_refptr<ICCProfile> ICCProfileForTestingNoAnalyticTrFn();
 
 // A profile that is A2B only.
-ICCProfile ICCProfileForTestingA2BOnly();
+scoped_refptr<ICCProfile> ICCProfileForTestingA2BOnly();
 
 // A profile that with an approxmation that shoots above 1.
-ICCProfile ICCProfileForTestingOvershoot();
+scoped_refptr<ICCProfile> ICCProfileForTestingOvershoot();
 
 }  // namespace gfx
