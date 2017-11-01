@@ -56,6 +56,24 @@
     },
     {
       "key": {
+        "uuid": "3d934d6c_5b1802fa",
+        "filename": "services/device/public/interfaces/wake_lock.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-01T19:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1741ab8_63708600",
+      "revId": "501d73b3745161140f77b8ef3ec456486e831ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25c6c1f5_244d5f87",
         "filename": "services/device/wake_lock/power_save_blocker/power_save_blocker.h",
         "patchSetId": 2
