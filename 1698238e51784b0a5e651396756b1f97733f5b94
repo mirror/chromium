@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c214dbc_560c946f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "You might want to `DCHECK(parent);` so we are more likely to catch issues in tests.",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ec0939_48b0b6a6",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "It would be a good idea to rename this in a follow-up as it becomes a bit confusing :)",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2288b03_25a12d32",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "For readability, I would recommend to make this look more like a state machine:\n```\nswitch (state_) {\n  case State::kHidden:\n    [..]\n    break;\n  case State::kPlaying:\n    [..]\n    break;\n  case State::kCoolingDown:\n    // Do nothing.\n    break;\n}\n```",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c85103b_8a7ae27a",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "What are we showing if the metadata are loading but the player isn\u0027t in the playing state?",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55451772_3081917e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "Note: this is very surprising that there is no simpler system to do this :(",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5399027_8479c31e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "What would happen if the element is removed from the DOM? Would we clean up? What if the src is changed?",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cef07af_90deabc0",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "I think you can use DCHECK_NE() which will give a slightly better error message.",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7cf335_48dfdc5d",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "I think this class deserves some unit tests :)",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337eb026_c71b26ee",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be `override`?",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b914fd4_d4a1e689",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "Sounds like you could move this the whole `protected` into the `private` section as the nested class should have private access anyway.",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0a0013_07dee8b0",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "Because it\u0027s only used by the nested class, maybe we do not need this accessor.",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be90267_de38706f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "Setting all four positions to 0 seems unexpected to me unless the object size is 0. What\u0027s the intent?",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff66487a_712a099d",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "OOC, why setting no background image over display:none or opacity:0?",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8dba2e_fb4a246b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls_loading.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T11:28:01Z",
+      "side": 1,
+      "message": "For this file, I will have to rubberstamp as I really can\u0027t review CSS that complex :)",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
