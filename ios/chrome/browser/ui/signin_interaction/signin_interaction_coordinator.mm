@@ -108,12 +108,12 @@
                        [self callbackToClearStateWithCompletion:completion]];
 }
 
-- (void)cancel {
-  [self.controller cancel];
+- (void)cancelWithCompletion:(ProceduralBlock)completion {
+  [self.controller cancelWithCompletion:completion];
 }
 
-- (void)cancelAndDismiss {
-  [self.controller cancelAndDismiss];
+- (void)cancelAndDismissWithCompletion:(ProceduralBlock)completion {
+  [self.controller cancelAndDismissWithCompletion:completion];
 }
 
 - (BOOL)isActive {
