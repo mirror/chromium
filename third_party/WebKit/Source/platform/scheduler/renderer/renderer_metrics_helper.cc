@@ -413,6 +413,5 @@ void RendererMetricsHelper::RecordBackgroundMainThreadTaskLoad(
                  "RendererScheduler.RendererMainThreadLoad.Background",
                  load_percentage);
 }
-
 }  // namespace scheduler
 }  // namespace blink

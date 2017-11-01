@@ -40,6 +40,23 @@ enum class FrameType {
   COUNT = 12
 };
 
+// This enum is used for histogram and should not be renumbered.
+// It tracks the following possible transitions:
+// -> BACKGROUNDED (-> [STOPPED_* -> RESUMED])? -> FOREGROUNDED
+enum class BackgroundedRendererTransition {
+  // Renderer is backgrounded
+  BACKGROUNDED = 0,
+  // Renderer is stopped after being backgrounded for a while
+  STOPPED_AFTER_DELAY = 1,
+  // Renderer is stopped due to critical resources, reserved for future use.
+  STOPPED_DUE_TO_CRITICAL = 2,
+  // Renderer is resumed after being stopped
+  RESUMED = 3,
+  // Renderer is foregrounded
+  FOREGROUNDED = 4,
+  COUNT = 5
+};
+
 PLATFORM_EXPORT FrameType
 GetFrameType(const WebFrameScheduler& frame_scheduler);
 
