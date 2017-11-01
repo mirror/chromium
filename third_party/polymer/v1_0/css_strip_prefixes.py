@@ -49,19 +49,45 @@ CSS_PROPERTIES_TO_REMOVE = [
 ]
 
 
+CSS_MULTI_LINE_RULES_TO_REMOVE = [
+  '-moz-placeholder',
+  '-ms-input-placeholder',
+  '-webkit-keyframes',
+]
+
+
 # Regex to detect a CSS line of interest (helps avoiding edge cases, like
 # removing the 1st line of a multi-line CSS rule).
-CSS_LINE_REGEX = '^\s*[^;\s]+:\s*[^;]+;\s*(/\*.+/*/)*\s*$';
+CSS_LINE_REGEX = '^\s*[^;\s]+:\s*[^;]+;\s*(/\*.+/*/)*\s*$'
+
+
+# Regex to detect the end of a CSS multi line block.
+CSS_CLOSING_BRACKET= '\s*}\s*$'
+
+bracket_nesting_level = 0
 
 
 def ProcessFile(filename):
+  global bracket_nesting_level
   # Gather indices of lines to be removed.
   indices_to_remove = [];
   with open(filename) as f:
     lines = f.readlines()
     for i, line in enumerate(lines):
-      if ShouldRemoveLine(line):
+      if bracket_nesting_level == 0:
+        if ShouldRemoveLine(line):
+          indices_to_remove.append(i)
+        elif ShouldRemoveMultiLine(line):
+          print line
+          bracket_nesting_level += 1
+          indices_to_remove.append(i)
+      else:
+        if re.search('{', line):
+          bracket_nesting_level += 1
+        if re.search('}', line):
+          bracket_nesting_level -= 1
         indices_to_remove.append(i)
+
 
   if len(indices_to_remove):
     print 'stripping CSS from: ' + filename
@@ -77,6 +103,10 @@ def ProcessFile(filename):
     for l in lines:
       f.write(l)
   return
+
+
+def ShouldRemoveMultiLine(line):
+  return any(re.search(p, line) for p in CSS_MULTI_LINE_RULES_TO_REMOVE)
 
 
 def ShouldRemoveLine(line):
