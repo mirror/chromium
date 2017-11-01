@@ -16,6 +16,24 @@
       "revId": "9ce4621e6aeed6b2665bb470af3917e8785773f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f851235_d94f7152",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-01T16:57:25Z",
+      "side": 1,
+      "message": "The check indicates that TestWakeLockProvider::binding_ is bound by the time you call Bind(). This is not OK, and you have two good options to solve it:\n\n1) Explicitly Close() binding_ before re-binding it.\n2) Use a BindingSet instead.\n\n#1 is fine if you don\u0027t care about any of InterfacePtrs remaining valid concurrently. #2 is probably a safer general-purpose solution for the test fixture in case you do ever want that support.\n\nAs an aside, I also would discourage use of RunUntilIdle() in favor of waiting for more specific events if possible. Makes the test expectations clearer, and avoids any potential problems from inconsistency between the scheduling environment\u0027s notion of \"idle\" vs the actual state of the process. Of course you can also ignore this comment, but if I had my druthers RunUntilIdle would not even exist... :)",
+      "parentUuid": "cfdccc35_a0faa14f",
+      "revId": "9ce4621e6aeed6b2665bb470af3917e8785773f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
