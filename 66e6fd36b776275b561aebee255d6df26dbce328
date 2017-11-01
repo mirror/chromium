@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "754e93d8_003697f8",
+        "filename": "ios/web/net/wk_cookie_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-01T16:09:09Z",
+      "side": 1,
+      "message": "not in my next CL but eventually",
+      "parentUuid": "398fad51_5ce70cd6",
+      "revId": "66e6fd36b776275b561aebee255d6df26dbce328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2799d82_684e8538",
         "filename": "ios/web/net/wk_cookie_util.h",
         "patchSetId": 4
@@ -84,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "99f40249_d7479d3c",
+        "filename": "ios/web/net/wk_cookie_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-01T16:09:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3f2a9128_9fa37479",
+      "range": {
+        "startLine": 17,
+        "startChar": 19,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "66e6fd36b776275b561aebee255d6df26dbce328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f7fbac8_0957512a",
         "filename": "ios/web/net/wk_cookie_util.mm",
         "patchSetId": 4
@@ -119,6 +161,30 @@
       "side": 1,
       "message": "In download code I need WKHTTPCookieStore, not WKSystemCookieStore.",
       "parentUuid": "3f7fbac8_0957512a",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "66e6fd36b776275b561aebee255d6df26dbce328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60989e64_c122defe",
+        "filename": "ios/web/net/wk_cookie_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-01T16:09:09Z",
+      "side": 1,
+      "message": "it depends on when do you want to execute the callbacks for cookies operation. WKHTTPCookieStore does its callbacks on main thread. Also WKHTTPCookieStore doesn\u0027t have CookieForURL (so if you want to put cookies for request u will have to manually make a callback for that).",
+      "parentUuid": "f46cc257_9017a8ef",
       "range": {
         "startLine": 17,
         "startChar": 0,
