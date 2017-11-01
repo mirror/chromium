@@ -4,3 +4,9 @@ include_rules = [
   "+third_party/re2",
   "+ui/gfx",
 ]
+
+specific_include_rules = {
+  "touch_device_manager_test_api.cc": [
+    "+ui/events/devices/touchscreen_device.h",
+  ]
+}

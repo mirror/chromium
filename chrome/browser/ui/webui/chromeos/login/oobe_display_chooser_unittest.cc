@@ -17,6 +17,7 @@
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/screen.h"
 #include "ui/display/test/display_manager_test_api.h"
+#include "ui/display/test/touch_device_manager_test_api.h"
 #include "ui/events/devices/device_data_manager.h"
 #include "ui/events/devices/touchscreen_device.h"
 
@@ -78,8 +79,9 @@ TEST_F(OobeDisplayChooserTest, PreferTouchAsPrimary) {
   base::RunLoop().RunUntilIdle();
 
   // Associate touchscreen device with display
-  display_info[1].AddTouchDevice(
-      display::TouchDeviceIdentifier::FromDevice(touchscreen));
+  display::test::TouchDeviceManagerTestApi(
+      display_manager()->touch_device_manager())
+      .Associate(&display_info[1], touchscreen);
   display_manager()->OnNativeDisplaysChanged(display_info);
   base::RunLoop().RunUntilIdle();
 
@@ -113,8 +115,9 @@ TEST_F(OobeDisplayChooserTest, DontSwitchFromTouch) {
   base::RunLoop().RunUntilIdle();
 
   // Associate touchscreen device with display
-  display_info[1].AddTouchDevice(
-      display::TouchDeviceIdentifier::FromDevice(touchscreen));
+  display::test::TouchDeviceManagerTestApi(
+      display_manager()->touch_device_manager())
+      .Associate(&display_info[1], touchscreen);
   display_manager()->OnNativeDisplaysChanged(display_info);
   base::RunLoop().RunUntilIdle();
 

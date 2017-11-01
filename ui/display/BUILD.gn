@@ -111,6 +111,8 @@ static_library("test_support") {
     "test/display_test_util.h",
     "test/test_screen.cc",
     "test/test_screen.h",
+    "test/touch_device_manager_test_api.cc",
+    "test/touch_device_manager_test_api.h",
     "win/test/screen_util_win.cc",
     "win/test/screen_util_win.h",
   ]
@@ -123,6 +125,7 @@ static_library("test_support") {
     "//base",
     "//testing/gmock",
     "//ui/display/types",
+    "//ui/events/devices",
     "//ui/gfx",
     "//ui/gfx:test_support",
     "//ui/gfx/geometry",
