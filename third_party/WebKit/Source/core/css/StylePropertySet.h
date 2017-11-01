@@ -24,7 +24,7 @@
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
 #include "core/css/CSSPrimitiveValue.h"
-#include "core/css/CSSProperty.h"
+#include "core/css/CSSPropertyValue.h"
 #include "core/css/PropertySetCSSStyleDeclaration.h"
 #include "core/css/parser/CSSParserMode.h"
 #include "platform/wtf/ListHashSet.h"
@@ -69,8 +69,8 @@ class CORE_EXPORT StylePropertySet
     const CSSValue& Value() const { return PropertyValue(); }
 
     // FIXME: Remove this.
-    CSSProperty ToCSSProperty() const {
-      return CSSProperty(PropertyMetadata(), PropertyValue());
+    CSSPropertyValue ToCSSPropertyValue() const {
+      return CSSPropertyValue(PropertyMetadata(), PropertyValue());
     }
 
     const StylePropertyMetadata& PropertyMetadata() const;
@@ -175,7 +175,7 @@ class CSSLazyPropertyParser
 class CORE_EXPORT ImmutableStylePropertySet : public StylePropertySet {
  public:
   ~ImmutableStylePropertySet();
-  static ImmutableStylePropertySet* Create(const CSSProperty* properties,
+  static ImmutableStylePropertySet* Create(const CSSPropertyValue* properties,
                                            unsigned count,
                                            CSSParserMode);
 
@@ -194,7 +194,9 @@ class CORE_EXPORT ImmutableStylePropertySet : public StylePropertySet {
   void* storage_;
 
  private:
-  ImmutableStylePropertySet(const CSSProperty*, unsigned count, CSSParserMode);
+  ImmutableStylePropertySet(const CSSPropertyValue*,
+                            unsigned count,
+                            CSSParserMode);
 };
 
 inline const Member<const CSSValue>* ImmutableStylePropertySet::ValueArray()
@@ -220,14 +222,14 @@ class CORE_EXPORT MutableStylePropertySet : public StylePropertySet {
  public:
   ~MutableStylePropertySet() {}
   static MutableStylePropertySet* Create(CSSParserMode);
-  static MutableStylePropertySet* Create(const CSSProperty* properties,
+  static MutableStylePropertySet* Create(const CSSPropertyValue* properties,
                                          unsigned count);
 
   unsigned PropertyCount() const { return property_vector_.size(); }
 
   // Returns whether this style set was changed.
-  bool AddParsedProperties(const HeapVector<CSSProperty, 256>&);
-  bool AddRespectingCascade(const CSSProperty&);
+  bool AddParsedProperties(const HeapVector<CSSPropertyValue, 256>&);
+  bool AddRespectingCascade(const CSSPropertyValue&);
 
   struct SetResult {
     bool did_parse;
@@ -250,7 +252,7 @@ class CORE_EXPORT MutableStylePropertySet : public StylePropertySet {
   bool SetProperty(CSSPropertyID,
                    CSSValueID identifier,
                    bool important = false);
-  bool SetProperty(const CSSProperty&, CSSProperty* slot = 0);
+  bool SetProperty(const CSSPropertyValue&, CSSPropertyValue* slot = 0);
 
   template <typename T>  // CSSPropertyID or AtomicString
   bool RemoveProperty(T property, String* return_text = 0);
@@ -274,7 +276,7 @@ class CORE_EXPORT MutableStylePropertySet : public StylePropertySet {
  private:
   explicit MutableStylePropertySet(CSSParserMode);
   explicit MutableStylePropertySet(const StylePropertySet&);
-  MutableStylePropertySet(const CSSProperty* properties, unsigned count);
+  MutableStylePropertySet(const CSSPropertyValue* properties, unsigned count);
 
   bool RemovePropertyAtIndex(int, String* return_text);
 
@@ -282,14 +284,14 @@ class CORE_EXPORT MutableStylePropertySet : public StylePropertySet {
   bool RemoveShorthandProperty(const AtomicString& custom_property_name) {
     return false;
   }
-  CSSProperty* FindCSSPropertyWithID(
+  CSSPropertyValue* FindCSSPropertyWithID(
       CSSPropertyID,
       const AtomicString& custom_property_name = g_null_atom);
   Member<PropertySetCSSStyleDeclaration> cssom_wrapper_;
 
   friend class StylePropertySet;
 
-  HeapVector<CSSProperty, 4> property_vector_;
+  HeapVector<CSSPropertyValue, 4> property_vector_;
 };
 
 DEFINE_TYPE_CASTS(MutableStylePropertySet,

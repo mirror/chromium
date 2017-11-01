@@ -18,8 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef CSSProperty_h
-#define CSSProperty_h
+#ifndef CSSPropertyValue_h
+#define CSSPropertyValue_h
 
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSValue.h"
@@ -57,16 +57,16 @@ struct StylePropertyMetadata {
   unsigned inherited_ : 1;
 };
 
-class CSSProperty {
+class CSSPropertyValue {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
-  CSSProperty(CSSPropertyID property_id,
-              const CSSValue& value,
-              bool important = false,
-              bool is_set_from_shorthand = false,
-              int index_in_shorthands_vector = 0,
-              bool implicit = false)
+  CSSPropertyValue(CSSPropertyID property_id,
+                   const CSSValue& value,
+                   bool important = false,
+                   bool is_set_from_shorthand = false,
+                   int index_in_shorthands_vector = 0,
+                   bool implicit = false)
       : metadata_(property_id,
                   is_set_from_shorthand,
                   index_in_shorthands_vector,
@@ -76,7 +76,7 @@ class CSSProperty {
         value_(value) {}
 
   // FIXME: Remove this.
-  CSSProperty(StylePropertyMetadata metadata, const CSSValue& value)
+  CSSPropertyValue(StylePropertyMetadata metadata, const CSSValue& value)
       : metadata_(metadata), value_(value) {}
 
   CSSPropertyID Id() const {
@@ -90,7 +90,7 @@ class CSSProperty {
 
   const StylePropertyMetadata& Metadata() const { return metadata_; }
 
-  bool operator==(const CSSProperty& other) const;
+  bool operator==(const CSSPropertyValue& other) const;
 
   void Trace(blink::Visitor* visitor) { visitor->Trace(value_); }
 
@@ -101,6 +101,6 @@ class CSSProperty {
 
 }  // namespace blink
 
-WTF_ALLOW_MOVE_AND_INIT_WITH_MEM_FUNCTIONS(blink::CSSProperty);
+WTF_ALLOW_MOVE_AND_INIT_WITH_MEM_FUNCTIONS(blink::CSSPropertyValue);
 
-#endif  // CSSProperty_h
+#endif  // CSSPropertyValue_h
