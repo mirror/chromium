@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab0ca027_c0291e2f",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T03:20:12Z",
+      "side": 1,
+      "message": "I think the static cast should be here. Something like\n\n    // The bubble may be PageInfoBubbleView or InternalPageInfoBubbleView. The\n    // latter is only used for kInternal, so it is safe to static_cast here.\n    static_cast\u003cPageInfoBubbleView*\u003e(PageInfoBubbleView::GetPageInfoBubble())\n        -\u003eSetIdentityInfo(identity);",
+      "revId": "455b8e049a12bf9a9c21a33ca50d8c608cd9b493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

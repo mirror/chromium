@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4838b251_e9cac48f",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T03:20:12Z",
+      "side": 1,
+      "message": "\u003e I think the problem is InternalPageInfoBubbleView, which inherits from views::BubbleDialogDelegateView only but is also assigned to |g_page_info_bubble| :( Actually, I\u0027m not sure why the static_cast works in GetPageInfoBubbleForTesting() exactly..?\n\u003e \n\u003e If that\u0027s not OK, maybe we can try doing something similar to PageInfoBubbleViewTestApi and create our own PIBV? (The PIBV unit test.)\n\nohhhhhh. Let\u0027s move the static_cast into the test file and delete this method. Putting this into release code feels too much like we can make a guarantee about the type. Whereas, if we put it closer to where the page is actually summoned, there\u0027s a better chance. And yeah... it does look like the test is making an illegal static_cast for the kInternal test case, but since kInternal is excluded from \u003eSetIdentityInfo(..) it\u0027s not causing weird behaviour.",
+      "parentUuid": "93f31052_45e3d950",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ed7e670_b8cf8a49",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
         "patchSetId": 5
@@ -104,6 +122,24 @@
       "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d87c857_7d9e2009",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T03:20:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a8242ca_237c931f",
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +260,30 @@
       "side": 1,
       "message": "I changed it to Insecure, and HTTPS-\u003eSecure to match.",
       "parentUuid": "bfff0bc3_0bbcdfe6",
+      "range": {
+        "startLine": 134,
+        "startChar": 17,
+        "endLine": 134,
+        "endChar": 24
+      },
+      "revId": "2c654ddbb6244af701ad87525d15f3589feda432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9d036f1_090298e3",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T03:20:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "690e77f3_ed9dd48a",
       "range": {
         "startLine": 134,
         "startChar": 17,
