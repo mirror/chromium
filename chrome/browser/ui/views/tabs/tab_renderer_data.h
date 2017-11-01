@@ -50,6 +50,9 @@ struct CHROME_VIEWS_EXPORT TabRendererData {
   bool blocked = false;
   bool app = false;
   TabAlertState alert_state = TabAlertState::NONE;
+  bool was_active_at_least_once = false;
+  bool is_navigation_delayed = false;
+  bool created_by_session_restore = false;
 };
 
 #endif  // CHROME_BROWSER_UI_VIEWS_TABS_TAB_RENDERER_DATA_H_
