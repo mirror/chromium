@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecc453a7_681a6e7b",
+        "filename": "chrome/browser/ui/cocoa/extensions/extension_uninstall_dialog_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T04:20:41Z",
+      "side": 1,
+      "message": "this should go out of scope before calling OnDialogClosed(..) -- lots of stuff happens there. i.e.\n\nNSModalResponse response;\n{\n  base::MessageLoop::ScopedNestableTaskAllower allow_nested(base::MessageLoop::current());\n  response \u003d [alert runModal];\n}\n\n..",
+      "revId": "108d9061d51eeec660c5b429e4d6611646e8eef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
