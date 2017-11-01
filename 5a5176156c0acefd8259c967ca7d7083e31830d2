@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0b2175a_c55392ef",
+        "filename": "third_party/libprotobuf-mutator/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-01T21:23:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90282f60_f96c04f1",
+      "revId": "5a5176156c0acefd8259c967ca7d7083e31830d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57d6d6a5_653dfb98",
         "filename": "third_party/libprotobuf-mutator/BUILD.gn",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "7f77f98d_7eebdb14",
+        "filename": "third_party/libprotobuf-mutator/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-01T21:23:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57d6d6a5_653dfb98",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 54
+      },
+      "revId": "5a5176156c0acefd8259c967ca7d7083e31830d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c8b156f_fd719d55",
         "filename": "third_party/libprotobuf-mutator/BUILD.gn",
         "patchSetId": 4
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "9b8f1e44_9780a0e8",
+        "filename": "third_party/libprotobuf-mutator/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-01T21:23:06Z",
+      "side": 1,
+      "message": "hmm...I think the only we can do this is if everything gets sanitized with ASan.\nDo you think having two separate configs is not worth the performance benefits?",
+      "parentUuid": "1c8b156f_fd719d55",
+      "revId": "5a5176156c0acefd8259c967ca7d7083e31830d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d185185b_46211cc6",
         "filename": "third_party/protobuf/BUILD.gn",
         "patchSetId": 4
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-01T20:14:01Z",
       "side": 1,
       "message": "libprotobuf-mutator depends on protobuf\nSo it looks weird that we use config from there.\n\nAlso maybe \"nontargeted_config\" could be part of some fuzzing",
+      "revId": "5a5176156c0acefd8259c967ca7d7083e31830d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83584552_55210120",
+        "filename": "third_party/protobuf/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-01T21:23:06Z",
+      "side": 1,
+      "message": "\u003e libprotobuf-mutator depends on protobuf\n\u003e So it looks weird that we use config from there.\n\nAgreed. I\u0027ve moved the config to //build/config/sanitizers\n\u003e \n\u003e Also maybe \"nontargeted_config\" could be part of some fuzzing\n\nIn theory yes. \nIn practice I\u0027ve looked at what depends on the protobuf library and there are no fuzzers that aren\u0027t based on libprotobuf-mutator. So this won\u0027t break anything for now.\n\nUnfortunately there is no good way to tell if libprotobuf-mutator is being built, use_libfuzzer is the best option available.",
+      "parentUuid": "d185185b_46211cc6",
       "revId": "5a5176156c0acefd8259c967ca7d7083e31830d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
