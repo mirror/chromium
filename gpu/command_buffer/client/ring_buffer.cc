@@ -11,18 +11,19 @@
 #include <algorithm>
 
 #include "base/logging.h"
+#include "base/numerics/safe_conversions.h"
 #include "gpu/command_buffer/client/cmd_buffer_helper.h"
 
 namespace gpu {
 
 RingBuffer::RingBuffer(unsigned int alignment,
                        Offset base_offset,
-                       unsigned int size,
+                       size_t size,
                        CommandBufferHelper* helper,
                        void* base)
     : helper_(helper),
       base_offset_(base_offset),
-      size_(size),
+      size_(base::checked_cast<unsigned int>(size)),
       free_offset_(0),
       in_use_offset_(0),
       alignment_(alignment),
@@ -171,7 +172,8 @@ unsigned int RingBuffer::GetTotalFreeSizeNoWaiting() {
   unsigned int largest_free_size = GetLargestFreeSizeNoWaiting();
   if (free_offset_ > in_use_offset_) {
     // It's free from free_offset_ to size_ and from 0 to in_use_offset_.
-    return size_ - free_offset_ + in_use_offset_;
+    return base::checked_cast<unsigned int>(size_) - free_offset_ +
+           in_use_offset_;
   } else {
     return largest_free_size;
   }
