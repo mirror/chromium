@@ -70,6 +70,30 @@
       "revId": "59bb76f92a6ffa518def6f3fb686f1bbeed1c61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33bbffa3_7f98f390",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-01T16:02:21Z",
+      "side": 1,
+      "message": "Only tracing in code would tell the truth. I agree with Vadim from just looking at the code, i.e. setting views::WebView bounds does not necessary changes the WebContents.\n\nWebView::OnBoundsChanged would get this size change. But holder_-\u003eSetNativeViewSize() at the end does not necessary change the hosted WebContentsView to an empty size.\n\nHave you tried to the hacky way to set aura::client::kMirroringEnabledKey window property to see whether that\u0027s enough to trigger DidFirstVisuallyNonEmptyPaint() ?",
+      "parentUuid": "a1b9c202_31fbdd92",
+      "range": {
+        "startLine": 52,
+        "startChar": 53,
+        "endLine": 52,
+        "endChar": 79
+      },
+      "revId": "59bb76f92a6ffa518def6f3fb686f1bbeed1c61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
