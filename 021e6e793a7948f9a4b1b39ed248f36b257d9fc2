@@ -16,6 +16,24 @@
       "revId": "021e6e793a7948f9a4b1b39ed248f36b257d9fc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d27f991_059248a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-11-01T17:56:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fc80802_77d5d80a",
+      "revId": "021e6e793a7948f9a4b1b39ed248f36b257d9fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
