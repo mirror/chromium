@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ba74834_19d8e7d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-11-01T16:06:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7f58608_9666e1f3",
+      "range": {
+        "startLine": 454,
+        "startChar": 16,
+        "endLine": 454,
+        "endChar": 28
+      },
+      "revId": "f1ad22e8664788a35423b68ed0a92342c5927ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42e7c4c2_e2a6c2b0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f8844523_fd6861da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-11-01T16:06:34Z",
+      "side": 1,
+      "message": "This isn\u0027t a temporary solution - we should figure out how to do it properly. My current mental model was just \"Detached Tabs are ones that are not part of the TabModel, but will be put back into the TabModel once it is saved and loaded\", so a TabModel doesn\u0027t own any detached Tabs it has the only purpose for the detached Tab is so that it can save them.\n\nOwnership wise I don\u0027t think this changes anything. The Tab going into fullscreen will move from ChromeTabbedActivity with TabModelImpl to FullscreenActivity with SingleTabModel - the Tab is owned by the FullscreenActivity and SingleTabModel, but is \"detached\" to the TabModelImpl. Maybe the term \"detached Tab\" is confusing and something like \"extra Tab to save\" may make it clearer?\n\nI could just leave the solution as Ted had originally suggested (but with different terminology) of:\n\nTab#detach() {\n    ...\n    model.detachTab(tab);\n    if (keepTabInPersistentState) model.setExtraTabToSave(tab);\n    ...\n}\n\nThis would add \u0027setExtraTabToSave\u0027 and \u0027getExtraTabToSave\u0027 to the TabModel interface, which seems a bit ugly - though in this solution I am adding \u0027detachTab\u0027 to the TabModel interface which seems to be confusing.\n\n(also, sorry for the oversight about other Tab reparenting flows - I knew I\u0027d have to support them, but was looking for feedback on my specific usecase).",
+      "parentUuid": "a6a18845_ce1c74b3",
+      "range": {
+        "startLine": 461,
+        "startChar": 16,
+        "endLine": 461,
+        "endChar": 25
+      },
+      "revId": "f1ad22e8664788a35423b68ed0a92342c5927ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01b26004_ac5bc372",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java",
         "patchSetId": 1
@@ -83,6 +131,30 @@
       "writtenOn": "2017-10-31T21:16:52Z",
       "side": 1,
       "message": "javadoc for these, most people won\u0027t know what the detached tab means (vs a normally removed tab)",
+      "range": {
+        "startLine": 473,
+        "startChar": 15,
+        "endLine": 473,
+        "endChar": 29
+      },
+      "revId": "f1ad22e8664788a35423b68ed0a92342c5927ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e4a49f_336fb411",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-11-01T16:06:34Z",
+      "side": 1,
+      "message": "Sorry - I\u0027d missed the @Override annotation - the javadoc is in TabModel.",
+      "parentUuid": "01b26004_ac5bc372",
       "range": {
         "startLine": 473,
         "startChar": 15,
