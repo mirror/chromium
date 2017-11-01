@@ -472,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "08a68bba_cfb6c3ee",
+        "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T22:59:28Z",
+      "side": 1,
+      "message": "Could you rename to better reflect that? Maybe just Entry?",
+      "parentUuid": "cf739108_2f5e5e33",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 69
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8894e751_ee26252b",
         "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
         "patchSetId": 19
@@ -601,6 +625,30 @@
       "side": 1,
       "message": "Callback is the callback of the chrome.mojom.CreateZipFile().\nI commented the param and added a comment. These paths are expected to be relative to |source_dir|, if there are not, the API is not used properly and that\u0027s an error.",
       "parentUuid": "c5e05bb0_26221ca3",
+      "range": {
+        "startLine": 169,
+        "startChar": 6,
+        "endLine": 169,
+        "endChar": 37
+      },
+      "revId": "6cd555157a9baab5aeff2d3dc7cf2b8d42059b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc1a5b66_d518dbe4",
+        "filename": "chrome/services/file_util/zip_file_creator_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T22:59:28Z",
+      "side": 1,
+      "message": "That makes sense, but then isn\u0027t the |callback| parameter on 178 the same callback that expects a boolean success argument?",
+      "parentUuid": "b6b6f907_361aee7f",
       "range": {
         "startLine": 169,
         "startChar": 6,
