@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c8b22b6_f6a42173",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-01T21:52:21Z",
+      "side": 1,
+      "message": "Yes, in a separate CL we\u0027ll make it possible to look up a MediaRouteProvider by presentation ID.",
+      "parentUuid": "4b68bae5_9b8bb8a7",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 38
+      },
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cb75cce_30bc4223",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 22
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2b29beb4_0395dcf3",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-01T21:52:21Z",
+      "side": 1,
+      "message": "Right, this can be invoked by the extension via [1]. This is called when the extension event page is awakened, and should pass the DCHECK because the Mojo pointer should\u0027ve been removed from the map when the extension went to sleep before that.\n\nIn this case, even if the map somehow already contains a Mojo pointer for the MRP, we\u0027d just destroy the old Mojo pointer and store the new one in its place so it wouldn\u0027t be a problem.\n\n[1] https://cs.chromium.org/chromium/src/chrome/renderer/resources/extensions/media_router_bindings.js?sq\u003dpackage:chromium\u0026l\u003d327",
+      "parentUuid": "7cb75cce_30bc4223",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "109e9497_81474c77",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 22
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-01T01:38:22Z",
       "side": 1,
       "message": "Similarly, is there an instance where we\u0027d expect to hit this in normal operation? Same question  for many of the other Mojo message handlers that currently do this check.",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cc7a50_f787c786",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-01T21:52:21Z",
+      "side": 1,
+      "message": "These could happen due to a race condition between MediaRouter and the component extension MediaRouteProvider, in which MRP may respond to a query right after MediaRouter deletes it.",
+      "parentUuid": "109e9497_81474c77",
       "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "641b1cb6_e07bd0b7",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-01T21:52:21Z",
+      "side": 1,
+      "message": "This could happen if the caller of these methods passed in a MediaSink/MediaRoute/presentation ID that is not associated with a MediaRouteProvider. For example if the caller passed in the ID of a sink that no longer exists due to a race between user input and update propagation to WebUI, this is where that\u0027d get rejected.\n\nThe case with Mojo connection error that you mentioned can be handled by this, but I\u0027m not expecting that to happen.",
+      "parentUuid": "0379bfb0_a8af0c71",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 70
+      },
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "561dc13c_6a357600",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 22
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "ca502066_adb1d929",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-01T21:52:21Z",
+      "side": 1,
+      "message": "Did you mean empty()? In that case we can\u0027t do that because cached_route_list_ might be a nullopt.",
+      "parentUuid": "561dc13c_6a357600",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1327ad36_1b1c7d2e",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 22
@@ -110,6 +212,24 @@
       "writtenOn": "2017-11-01T01:38:22Z",
       "side": 1,
       "message": "What is the value in making this optional? Is there a difference between no value and an empty list?",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229b3b8f_bd65a172",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-01T21:52:21Z",
+      "side": 1,
+      "message": "No value means we haven\u0027t received an update from MRPs, whereas an empty list means that an MRP reported that it has no routes. MediaRouter notifies observers in NotifyOfExistingRoutesIfRegistered() in the latter case.",
+      "parentUuid": "1327ad36_1b1c7d2e",
       "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "25e24bf6_881cf00e",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-01T21:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ca4ebf7_590a56ed",
+      "range": {
+        "startLine": 117,
+        "startChar": 52,
+        "endLine": 117,
+        "endChar": 66
+      },
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d382c2a5_351d2df1",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
         "patchSetId": 22
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "a31c61f9_c5cc0825",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-01T21:52:21Z",
+      "side": 1,
+      "message": "Added a comment. MediaSinks are Cast destinations (e.g. a ChromeCast device) and MediaRoutes are Cast sessions (more or less).",
+      "parentUuid": "d382c2a5_351d2df1",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1e2a157_1f7dc688",
         "filename": "chrome/common/media_router/mojo/media_router.mojom",
         "patchSetId": 22
@@ -167,6 +329,24 @@
       "writtenOn": "2017-11-01T01:38:22Z",
       "side": 1,
       "message": "If possible, let\u0027s add some comments about MediaRouteProvider and MediaRouter and their relationship to each other. My understanding from the discussion we had today is \"MediaRouter\" is the more trusted controller interface, while MediaRouteProvider could be implemented by a component extension (and so is less trusted). Is this accurate?",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652c1cea_56b9eb82",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-01T21:52:21Z",
+      "side": 1,
+      "message": "Added a comment that hopefully clarifies the MediaRouter-MediaRouteProvider relationship a bit better.\n\nMediaRouteProvider is implemented in a component extension but I hadn\u0027t really thought about it being less trusted, since all the data that MediaRouter has comes from MediaRouteProvider.\n\nOn a side note, we are currently working on porting component extension MRPs into the browser process, with the goal of eliminating/minimizing the component extension. I forgot to mention this yesterday, but this CL is a step towards getting there.",
+      "parentUuid": "a1e2a157_1f7dc688",
       "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
