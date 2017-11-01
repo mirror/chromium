@@ -204,6 +204,9 @@ class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
                                 uint32_t link_mask,
                                 uint32_t protection_mask);
 
+  // Callback to report |file_size_bytes| of the first file read by FileIO.
+  void OnFirstFileRead(int file_size_bytes);
+
   const std::string key_system_;
   const CdmConfig cdm_config_;
 
@@ -234,6 +237,9 @@ class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
   // Keep track of video frame natural size from the latest configuration
   // as the CDM doesn't provide it.
   gfx::Size natural_size_;
+
+  int last_read_file_size_kb_ = 0;
+  bool file_size_uma_reported_ = false;
 
   // Used to keep track of promises while the CDM is processing the request.
   CdmPromiseAdapter cdm_promise_adapter_;
