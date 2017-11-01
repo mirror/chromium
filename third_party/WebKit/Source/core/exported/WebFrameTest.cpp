@@ -12067,4 +12067,47 @@ TEST_F(WebFrameTest, ExecuteCommandProducesUserGesture) {
   EXPECT_TRUE(frame->GetFrame()->HasBeenActivated());
 }
 
+class NoOpenerTargetedNavigationWebViewClient
+    : public FrameTestHelpers::TestWebViewClient {
+ public:
+  NoOpenerTargetedNavigationWebViewClient() {}
+  ~NoOpenerTargetedNavigationWebViewClient() override {}
+
+  // WebViewClient overrides.
+  WebView* CreateView(WebLocalFrame* creator,
+                      const WebURLRequest& request,
+                      const WebWindowFeatures& features,
+                      const WebString& name,
+                      WebNavigationPolicy policy,
+                      bool suppress_opener,
+                      WebSandboxFlags) {
+    create_view_called_++;
+    suppress_opener_ = suppress_opener;
+    return nullptr;
+  }
+
+  int create_view_called_ = 0;
+  bool suppress_opener_ = false;
+};
+
+TEST_F(WebFrameTest, NoOpenerTargetedNavigation) {
+  RegisterMockedHttpURLLoad("noopener-targeted-navigation.html");
+  NoOpenerTargetedNavigationWebViewClient web_view_client;
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(
+      base_url_ + "noopener-targeted-navigation.html", nullptr,
+      &web_view_client);
+  WebLocalFrameImpl* frame = web_view_helper.LocalMainFrame();
+
+  frame->ExecuteScript(WebScriptSource(
+      "document.getElementById('targetedNavigation').click();"));
+  EXPECT_EQ(0, web_view_client.create_view_called_);
+  EXPECT_FALSE(web_view_client.suppress_opener_);
+
+  frame->ExecuteScript(WebScriptSource(
+      "document.getElementById('targetedNavigationNoOpener').click();"));
+  EXPECT_EQ(1, web_view_client.create_view_called_);
+  EXPECT_TRUE(web_view_client.suppress_opener_);
+}
+
 }  // namespace blink

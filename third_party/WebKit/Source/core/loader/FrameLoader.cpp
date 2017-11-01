@@ -838,11 +838,17 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
 
   // Form submissions appear to need their special-case of finding the target at
   // schedule rather than at fire.
-  Frame* target_frame = request.Form()
-                            ? nullptr
-                            : frame_->FindFrameForNavigation(
-                                  AtomicString(request.FrameName()), *frame_,
-                                  request.GetResourceRequest().Url());
+  auto& target_name = request.FrameName();
+  bool is_self_top_parent = EqualIgnoringASCIICase(target_name, "_self") ||
+                            EqualIgnoringASCIICase(target_name, "_current") ||
+                            EqualIgnoringASCIICase(target_name, "_top") ||
+                            EqualIgnoringASCIICase(target_name, "_parent");
+  Frame* target_frame =
+      (request.Form() ||
+       (!is_self_top_parent && request.GetShouldSetOpener() == kNeverSetOpener))
+          ? nullptr
+          : frame_->FindFrameForNavigation(AtomicString(target_name), *frame_,
+                                           request.GetResourceRequest().Url());
 
   NavigationPolicy policy = NavigationPolicyForRequest(request);
   if (target_frame && target_frame != frame_ &&
