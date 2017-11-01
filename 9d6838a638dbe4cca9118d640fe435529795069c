@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9b5d748_94a55461",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-01T23:34:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdf6546d_5b06b238",
+      "range": {
+        "startLine": 198,
+        "startChar": 28,
+        "endLine": 198,
+        "endChar": 32
+      },
+      "revId": "9d6838a638dbe4cca9118d640fe435529795069c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "106c9e26_cc39a142",
         "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "9d6838a638dbe4cca9118d640fe435529795069c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74340d0b_d643607b",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-01T23:34:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "106c9e26_cc39a142",
+      "range": {
+        "startLine": 202,
+        "startChar": 80,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "9d6838a638dbe4cca9118d640fe435529795069c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
