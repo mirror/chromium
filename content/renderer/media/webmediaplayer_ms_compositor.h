@@ -66,6 +66,7 @@ class CONTENT_EXPORT WebMediaPlayerMSCompositor
 
   // Statistical data
   gfx::Size GetCurrentSize();
+  gfx::Rect GetCurrentVisibleRect();
   base::TimeDelta GetCurrentTime();
   size_t total_frame_count();
   size_t dropped_frame_count();

@@ -36,10 +36,18 @@ namespace media {
 
 namespace {
 
-gfx::Size GetRotatedVideoSize(VideoRotation rotation, gfx::Size natural_size) {
+gfx::Size GetRotatedVideoNaturalSize(VideoRotation rotation,
+                                     gfx::Size natural_size) {
   if (rotation == VIDEO_ROTATION_90 || rotation == VIDEO_ROTATION_270)
     return gfx::Size(natural_size.height(), natural_size.width());
   return natural_size;
+}
+
+gfx::Rect GetRotatedVideoVisibleRect(VideoRotation rotation,
+                                     gfx::Rect visible_rect) {
+  if (rotation == VIDEO_ROTATION_90 || rotation == VIDEO_ROTATION_270)
+    return gfx::Rect(visible_rect.height(), visible_rect.width());
+  return visible_rect;
 }
 
 }  // namespace
@@ -945,9 +953,12 @@ void PipelineImpl::RendererWrapper::ReportMetadata() {
       for (auto* stream : streams) {
         if (stream->type() == DemuxerStream::VIDEO && !metadata.has_video) {
           metadata.has_video = true;
-          metadata.natural_size = GetRotatedVideoSize(
+          metadata.natural_size = GetRotatedVideoNaturalSize(
               stream->video_decoder_config().video_rotation(),
               stream->video_decoder_config().natural_size());
+          metadata.visible_rect = GetRotatedVideoVisibleRect(
+              stream->video_decoder_config().video_rotation(),
+              stream->video_decoder_config().visible_rect());
           metadata.video_decoder_config = stream->video_decoder_config();
         }
         if (stream->type() == DemuxerStream::AUDIO && !metadata.has_audio) {

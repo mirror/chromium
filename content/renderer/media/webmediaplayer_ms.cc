@@ -552,17 +552,15 @@ blink::WebSize WebMediaPlayerMS::NaturalSize() const {
 
 blink::WebSize WebMediaPlayerMS::VisibleRect() const {
   DCHECK(thread_checker_.CalledOnValidThread());
-  scoped_refptr<media::VideoFrame> video_frame =
-      compositor_->GetCurrentFrameWithoutUpdatingStatistics();
-  if (!video_frame)
+  if (!video_frame_provider_)
     return blink::WebSize();
 
-  const gfx::Rect& visible_rect = video_frame->visible_rect();
+  const gfx::Rect& current_size = compositor_->GetCurrentVisibleRect();
   if (video_rotation_ == media::VIDEO_ROTATION_90 ||
       video_rotation_ == media::VideoRotation::VIDEO_ROTATION_270) {
-    return blink::WebSize(visible_rect.height(), visible_rect.width());
+    return blink::WebSize(current_size.height(), current_size.width());
   }
-  return blink::WebSize(visible_rect.width(), visible_rect.height());
+  return blink::WebSize(current_size.width(), current_size.height());
 }
 
 bool WebMediaPlayerMS::Paused() const {

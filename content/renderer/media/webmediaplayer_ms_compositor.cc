@@ -175,6 +175,12 @@ gfx::Size WebMediaPlayerMSCompositor::GetCurrentSize() {
   return current_frame_ ? current_frame_->natural_size() : gfx::Size();
 }
 
+gfx::Rect WebMediaPlayerMSCompositor::GetCurrentVisibleRect() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  base::AutoLock auto_lock(current_frame_lock_);
+  return current_frame_ ? current_frame_->visible_rect() : gfx::Rect();
+}
+
 base::TimeDelta WebMediaPlayerMSCompositor::GetCurrentTime() {
   DCHECK(thread_checker_.CalledOnValidThread());
   base::AutoLock auto_lock(current_frame_lock_);
