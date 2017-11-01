@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ed8343c_2981c520",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DOMStorageItemsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-11-01T00:32:30Z",
+      "side": 1,
+      "message": "I restructured the code, hope new flow is more linear.",
+      "parentUuid": "f015eb3c_bbdf0131",
+      "revId": "55e0fedb4011512df1d408d9d144a461dea711f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74c53520_f1ac49a4",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/DOMStorageItemsView.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "55e0fedb4011512df1d408d9d144a461dea711f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b25ab6_ac91b283",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DOMStorageItemsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-11-01T00:32:30Z",
+      "side": 1,
+      "message": "SourceFrame.JSONView.parseJSON used inside is async. I feel like current implementation is a cleaner way to encapsulate details.",
+      "parentUuid": "74c53520_f1ac49a4",
+      "revId": "55e0fedb4011512df1d408d9d144a461dea711f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
