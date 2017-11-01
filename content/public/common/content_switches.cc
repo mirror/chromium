@@ -882,8 +882,6 @@ const char kUtilityProcess[]                = "utility";
 // This flag specifies the directory that can be accessed.
 const char kUtilityProcessAllowedDir[]      = "utility-allowed-dir";
 
-const char kUtilityProcessRunningElevated[] = "utility-run-elevated";
-
 // Causes the utility process to display a dialog on launch.
 const char kUtilityStartupDialog[] = "utility-startup-dialog";
 
