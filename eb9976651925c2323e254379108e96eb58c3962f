@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "686b6ad0_26a0bb6a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-01T01:23:47Z",
+      "side": 1,
+      "message": "nit: this is needed only when OutOfFlowPositionedDescendants() is not empty, correct? Can we add \"if\"? Fine to do in following patch.",
+      "revId": "eb9976651925c2323e254379108e96eb58c3962f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
