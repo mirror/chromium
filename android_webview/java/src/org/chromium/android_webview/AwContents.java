@@ -1617,7 +1617,7 @@ public class AwContents implements SmartClipProvider {
         mimeType = fixupMimeType(mimeType);
         LoadUrlParams loadUrlParams;
         baseUrl = fixupBase(baseUrl);
-        historyUrl = fixupHistory(historyUrl);
+        historyUrl = baseUrl; //fixupHistory(historyUrl);
 
         if (baseUrl.startsWith("data:")) {
             // For backwards compatibility with WebViewClassic, we use the value of |encoding|
