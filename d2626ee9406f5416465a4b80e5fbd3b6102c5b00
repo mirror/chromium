@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d0b0d41f_d97cb88a",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-01T20:49:07Z",
+      "side": 1,
+      "message": "Sure. Probably something we should file a bug and look into, as this could have passed try bots, landed, and broken the main waterfall. In the meanwhile, let\u0027s try to be extra careful.",
+      "parentUuid": "8540bbd2_0646b214",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c18f85d_52c9003f",
         "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
         "patchSetId": 4
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "I don\u0027t think so, I tried it and was getting a compile error. Specifically FreeDeleter depends on being able to cast the pointer in the unique_ptr to void*, so if the type is const char*, the cast will fail at that point.",
       "parentUuid": "4df5dfa2_23a7a75e",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87520257_477d464a",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-01T20:49:07Z",
+      "side": 1,
+      "message": "I checked on Mac. The manpage says realpath() returns char*, so still a bit confused as to why we need to cast.",
+      "parentUuid": "fd2b944d_72f8c3f8",
       "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

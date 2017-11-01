@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2d79fca_5efb785f",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-01T20:49:07Z",
+      "side": 1,
+      "message": "We tend to not write (0 \u003d\u003d foo).",
+      "revId": "afba4acf64335ce7e954795b647d212ebe47203c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
