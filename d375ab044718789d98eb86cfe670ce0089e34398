@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4985735_1521528c",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-01T09:16:27Z",
+      "side": 1,
+      "message": "support",
+      "revId": "d375ab044718789d98eb86cfe670ce0089e34398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
