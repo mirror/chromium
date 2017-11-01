@@ -117,6 +117,24 @@
       "revId": "c8e9bc612a66c84e4eeaffc3a3a9ca74f663c06a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34e36ad_438527dd",
+        "filename": "chrome/install_static/install_constants.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-01T21:18:25Z",
+      "side": 1,
+      "message": "I\u0027m less concerned about consistency if there\u0027s a better way for certain members. The POD thing is an issue, though. I\u0027d have thought a CLSID is a POD type:\n\ntypedef struct _GUID {\n    unsigned long  Data1;\n    unsigned short Data2;\n    unsigned short Data3;\n    unsigned char  Data4[ 8 ];\n} GUID;\ntypedef GUID CLSID;\n\nDo you see what makes that non-POD?",
+      "parentUuid": "cb02e418_ee351cd2",
+      "revId": "c8e9bc612a66c84e4eeaffc3a3a9ca74f663c06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
