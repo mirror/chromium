@@ -232,8 +232,6 @@ void ArcNavigationThrottle::OnAppCandidatesReceived(
     return;
   }
 
-  Resume();
-
   // If one of the apps is marked as preferred, use it right away without
   // showing the UI.
   const size_t index = FindPreferredApp(handlers, url);
@@ -252,22 +250,39 @@ void ArcNavigationThrottle::OnAppCandidatesReceived(
 
     if (!instance) {
       close_reason = CloseReason::ERROR;
+      Resume();
     } else {
-      if (!ArcIntentHelperBridge::IsIntentHelperPackage(package_name))
+      if (!ArcIntentHelperBridge::IsIntentHelperPackage(package_name)) {
+        CancelDeferredNavigation(
+            content::NavigationThrottle::CANCEL_AND_IGNORE);
         instance->HandleUrl(url.spec(), package_name);
 
-      // Make intent picker's icon visible if there are installed apps that can
-      // handle the current URL, this enables the user to still access ARC's
-      // apps even if they marked an app or Chrome as preferred before.
-      Browser* browser =
-          chrome::FindBrowserWithWebContents(handle->GetWebContents());
-      if (browser)
-        chrome::SetIntentPickerViewVisibility(browser, true);
+        // Close the current tab since a preferred/verified app is already
+        // handling the navigation if the navigation created a new tab.
+        content::WebContents* tab = handle->GetWebContents();
+        if (tab) {
+          if (tab->GetController().IsInitialNavigation()) {
+            tab->Close();
+          } else {
+            // Make intent picker's icon visible if there are installed apps
+            // that can handle the current URL, this enables the user to still
+            // access ARC's apps even if they marked an app or Chrome as
+            // preferred before.
+            Browser* browser =
+                chrome::FindBrowserWithWebContents(handle->GetWebContents());
+            if (browser)
+              chrome::SetIntentPickerViewVisibility(browser, true);
+          }
+        }
+      } else {
+        Resume();
+      }
     }
 
     Platform platform = GetDestinationPlatform(package_name, close_reason);
     RecordUma(close_reason, platform);
   } else {
+    Resume();
     auto* intent_helper_bridge = ArcIntentHelperBridge::GetForBrowserContext(
         handle->GetWebContents()->GetBrowserContext());
     if (!intent_helper_bridge) {
