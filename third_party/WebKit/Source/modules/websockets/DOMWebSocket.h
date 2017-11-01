@@ -34,7 +34,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <memory>
-#include "core/dom/SuspendableObject.h"
+#include "core/dom/PausableObject.h"
 #include "core/dom/events/EventListener.h"
 #include "core/dom/events/EventTarget.h"
 #include "core/typed_arrays/ArrayBufferViewHelpers.h"
@@ -62,7 +62,7 @@ class StringOrStringSequence;
 
 class MODULES_EXPORT DOMWebSocket : public EventTargetWithInlineData,
                                     public ActiveScriptWrappable<DOMWebSocket>,
-                                    public SuspendableObject,
+                                    public PausableObject,
                                     public WebSocketChannelClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(DOMWebSocket);
@@ -120,9 +120,9 @@ class MODULES_EXPORT DOMWebSocket : public EventTargetWithInlineData,
   const AtomicString& InterfaceName() const override;
   ExecutionContext* GetExecutionContext() const override;
 
-  // SuspendableObject functions.
+  // PausableObject functions.
   void ContextDestroyed(ExecutionContext*) override;
-  void Suspend() override;
+  void Pause() override;
   void Resume() override;
 
   // ScriptWrappable functions.
@@ -164,7 +164,7 @@ class MODULES_EXPORT DOMWebSocket : public EventTargetWithInlineData,
 
     bool IsEmpty() const;
 
-    void Suspend();
+    void Pause();
     void Resume();
     void ContextDestroyed();
 

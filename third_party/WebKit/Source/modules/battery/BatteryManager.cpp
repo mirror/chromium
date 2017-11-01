@@ -15,15 +15,14 @@ namespace blink {
 
 BatteryManager* BatteryManager::Create(ExecutionContext* context) {
   BatteryManager* battery_manager = new BatteryManager(context);
-  battery_manager->SuspendIfNeeded();
+  battery_manager->PauseIfNeeded();
   return battery_manager;
 }
 
 BatteryManager::~BatteryManager() {}
 
 BatteryManager::BatteryManager(ExecutionContext* context)
-    : SuspendableObject(context),
-      PlatformEventController(ToDocument(context)) {}
+    : PausableObject(context), PlatformEventController(ToDocument(context)) {}
 
 ScriptPromise BatteryManager::StartRequest(ScriptState* script_state) {
   if (!battery_property_) {
@@ -96,7 +95,7 @@ bool BatteryManager::HasLastData() {
   return BatteryDispatcher::Instance().LatestData();
 }
 
-void BatteryManager::Suspend() {
+void BatteryManager::Pause() {
   has_event_listener_ = false;
   StopUpdating();
 }
@@ -122,7 +121,7 @@ void BatteryManager::Trace(blink::Visitor* visitor) {
   visitor->Trace(battery_property_);
   PlatformEventController::Trace(visitor);
   EventTargetWithInlineData::Trace(visitor);
-  SuspendableObject::Trace(visitor);
+  PausableObject::Trace(visitor);
 }
 
 }  // namespace blink

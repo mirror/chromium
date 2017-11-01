@@ -56,7 +56,7 @@ void ScriptedAnimationController::TraceWrappers(
   visitor->TraceWrappers(callback_collection_);
 }
 
-void ScriptedAnimationController::Suspend() {
+void ScriptedAnimationController::Pause() {
   ++suspend_count_;
 }
 

@@ -34,7 +34,7 @@
 
 namespace blink {
 
-class SuspendableObject;
+class PausableObject;
 class ContextLifecycleObserver;
 class ExecutionContext;
 
@@ -43,10 +43,10 @@ class CORE_EXPORT ContextLifecycleNotifier
   WTF_MAKE_NONCOPYABLE(ContextLifecycleNotifier);
 
  public:
-  void NotifyResumingSuspendableObjects();
-  void NotifySuspendingSuspendableObjects();
+  void NotifyResumingPausableObjects();
+  void NotifySuspendingPausableObjects();
 
-  unsigned SuspendableObjectCount() const;
+  unsigned PausableObjectCount() const;
 
  protected:
   // Need a default constructor to link core and modules separately.
@@ -57,7 +57,7 @@ class CORE_EXPORT ContextLifecycleNotifier
   ContextLifecycleNotifier() {}
 
 #if DCHECK_IS_ON()
-  bool Contains(SuspendableObject*) const;
+  bool Contains(PausableObject*) const;
 #endif
 };
 

@@ -86,7 +86,7 @@ class HTMLParserScheduler final
      */
   void ForceResumeAfterYield();
 
-  void Suspend();
+  void Pause();
   void Resume();
 
   void Detach();  // Clear active tasks if any.

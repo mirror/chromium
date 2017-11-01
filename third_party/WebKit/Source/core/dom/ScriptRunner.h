@@ -61,7 +61,7 @@ class CORE_EXPORT ScriptRunner final
     return !pending_in_order_scripts_.IsEmpty() ||
            !pending_async_scripts_.IsEmpty();
   }
-  void Suspend();
+  void Pause();
   void Resume();
   void NotifyScriptReady(ScriptLoader*, AsyncExecutionType);
   void NotifyScriptStreamerFinished();
