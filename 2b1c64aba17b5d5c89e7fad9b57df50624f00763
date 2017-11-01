@@ -16,6 +16,24 @@
       "revId": "2b1c64aba17b5d5c89e7fad9b57df50624f00763",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ea9e43_bf4a3509",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-11-01T18:21:45Z",
+      "side": 1,
+      "message": "Done, is it faster that way?",
+      "parentUuid": "70ff6c96_32ed6047",
+      "revId": "2b1c64aba17b5d5c89e7fad9b57df50624f00763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
