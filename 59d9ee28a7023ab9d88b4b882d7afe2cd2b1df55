@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1910c12b_7b0957a8",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T20:07:12Z",
+      "side": 1,
+      "message": "Please put this in the changelist description too",
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e7e69ae_088681f6",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T20:07:12Z",
+      "side": 1,
+      "message": "Can you add this TODO to the list in the changelist description?",
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3836dc0_dd6d9362",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T20:07:12Z",
+      "side": 1,
+      "message": "nit: URL",
+      "range": {
+        "startLine": 197,
+        "startChar": 10,
+        "endLine": 197,
+        "endChar": 13
+      },
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a5e295_01625215",
+        "filename": "components/omnibox/browser/history_quick_provider.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T20:07:12Z",
+      "side": 1,
+      "message": "the description",
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f3574f_204d9ecb",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T20:07:12Z",
+      "side": 1,
+      "message": "even smaller than a nit: put \"the tab is switch to\" phrase before the \"the current tab is closed\" phrase in the above list, as the switching is the most important item.\n\nAlso, \"false\" -\u003e \"returns false\"",
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f639b799_7a54e0ba",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T20:07:12Z",
+      "side": 1,
+      "message": "Can you simply say at the beginning of the comment:\n// Only close the current tab if it\u0027s the new tab page.\nThat makes everything clearer.\n\nThen you can add\n// Look at |permanent_text_| to do this identification.\n(and you don\u0027t need the existing comment)\n\nAlso, please add a TODO here (and revise the changelist description) that conceptually we want to do this on all new tab pages (including those that are replaced by an extension), not just the built-in NTP.",
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70fa4af_ac68faaa",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T20:07:12Z",
+      "side": 1,
+      "message": "\u003e Again, not quite accurate, but see if you like the new version.\n\nI still don\u0027t like the \"searching of\" in the comment, as it doesn\u0027t necessarily search all open tabs for suggestions...  Perhaps\nsearching of\n-\u003e\nidentifying\n\nThanks by the way for the string and variable names.  Those look good.",
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

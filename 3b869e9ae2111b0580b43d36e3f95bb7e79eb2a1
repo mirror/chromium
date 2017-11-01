@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c36ad5bf_78bf3806",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 3050,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T20:07:12Z",
+      "side": 1,
+      "message": "Please change this name too.",
+      "range": {
+        "startLine": 3050,
+        "startChar": 18,
+        "endLine": 3050,
+        "endChar": 24
+      },
+      "revId": "3b869e9ae2111b0580b43d36e3f95bb7e79eb2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a557a40_a8a06f38",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2152,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T20:07:12Z",
+      "side": 1,
+      "message": "nit: the URL may not be the part that matches the user\u0027s input.  I\u0027d suggest removing this phrase.",
+      "range": {
+        "startLine": 2152,
+        "startChar": 51,
+        "endLine": 2152,
+        "endChar": 69
+      },
+      "revId": "3b869e9ae2111b0580b43d36e3f95bb7e79eb2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faae419f_ae2ccd63",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-01T20:07:12Z",
+      "side": 1,
+      "message": "Here you use a brace around a single one-line command.  Just above, you have a five line comment and a single one-line command and don\u0027t use a brace.  Please be consistent, or at least lean toward putting a brace on longer things.",
+      "revId": "3b869e9ae2111b0580b43d36e3f95bb7e79eb2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
