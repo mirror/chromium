@@ -607,4 +607,5 @@ std::string SubstitutionWriter::GetLinkerSubstitution(
       NOTREACHED();
       return std::string();
   }
+  return result;
 }
