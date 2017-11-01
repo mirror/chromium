@@ -22,6 +22,30 @@
       "revId": "6fb3ce5ec6641eaaf53f9b5affe335e0076cbd48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654eac36_7e904787",
+        "filename": "base/ios/callback_counter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-01T16:19:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cd2ad0d_837ddc87",
+      "range": {
+        "startLine": 23,
+        "startChar": 26,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "6fb3ce5ec6641eaaf53f9b5affe335e0076cbd48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
