@@ -61,7 +61,7 @@ void TimeZoneMonitor::NotifyClients() {
 #endif
 
   clients_.ForAllPtrs(
-      [&zone_id_str](device::mojom::TimeZoneMonitorClient* client) {
+      [&zone_id_str](device::mojom::TimeZoneMonitorClientProxy* client) {
         client->OnTimeZoneChange(zone_id_str);
       });
 }

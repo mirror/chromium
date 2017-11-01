@@ -150,7 +150,7 @@ ui::InputController* InputDeviceController::GetInputController() {
 }
 
 void InputDeviceController::NotifyObservers() {
-  observers_.ForAllPtrs([this](mojom::KeyboardDeviceObserver* observer) {
+  observers_.ForAllPtrs([this](mojom::KeyboardDeviceObserverProxy* observer) {
     NotifyObserver(observer);
   });
 }

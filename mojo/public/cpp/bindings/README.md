@@ -941,9 +941,10 @@ class TableImpl : public db::mojom::Table {
   // db::mojom::Table:
   void AddRow(int32_t key, const std::string& data) override {
     rows_.insert({key, data});
-    listeners_.ForEach([key, &data](db::mojom::TableListener* listener) {
-      listener->OnRowAdded(key, data);
-    });
+    listeners_.ForAllPtrs(
+        [key, &data](db::mojom::TableListenerProxy* listener) {
+          listener->OnRowAdded(key, data);
+        });
   }
 
   void AddListener(db::mojom::TableListenerPtr listener) {

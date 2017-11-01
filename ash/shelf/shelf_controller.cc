@@ -249,7 +249,7 @@ void ShelfController::ShelfItemAdded(int index) {
   // Pass null images to avoid transport costs; clients don't use images.
   ShelfItem item = model_.items()[index];
   item.image = gfx::ImageSkia();
-  observers_.ForAllPtrs([index, item](mojom::ShelfObserver* observer) {
+  observers_.ForAllPtrs([index, item](mojom::ShelfObserverProxy* observer) {
     observer->OnShelfItemAdded(index, item);
   });
 }
@@ -258,7 +258,7 @@ void ShelfController::ShelfItemRemoved(int index, const ShelfItem& old_item) {
   if (applying_remote_shelf_model_changes_ || !should_synchronize_shelf_models_)
     return;
 
-  observers_.ForAllPtrs([old_item](mojom::ShelfObserver* observer) {
+  observers_.ForAllPtrs([old_item](mojom::ShelfObserverProxy* observer) {
     observer->OnShelfItemRemoved(old_item.id);
   });
 }
@@ -268,9 +268,10 @@ void ShelfController::ShelfItemMoved(int start_index, int target_index) {
     return;
 
   const ShelfItem& item = model_.items()[target_index];
-  observers_.ForAllPtrs([item, target_index](mojom::ShelfObserver* observer) {
-    observer->OnShelfItemMoved(item.id, target_index);
-  });
+  observers_.ForAllPtrs(
+      [item, target_index](mojom::ShelfObserverProxy* observer) {
+        observer->OnShelfItemMoved(item.id, target_index);
+      });
 }
 
 void ShelfController::ShelfItemChanged(int index, const ShelfItem& old_item) {
@@ -280,7 +281,7 @@ void ShelfController::ShelfItemChanged(int index, const ShelfItem& old_item) {
   // Pass null images to avoid transport costs; clients don't use images.
   ShelfItem item = model_.items()[index];
   item.image = gfx::ImageSkia();
-  observers_.ForAllPtrs([item](mojom::ShelfObserver* observer) {
+  observers_.ForAllPtrs([item](mojom::ShelfObserverProxy* observer) {
     observer->OnShelfItemUpdated(item);
   });
 }
@@ -291,7 +292,7 @@ void ShelfController::ShelfItemDelegateChanged(const ShelfID& id,
   if (applying_remote_shelf_model_changes_ || !should_synchronize_shelf_models_)
     return;
 
-  observers_.ForAllPtrs([id, delegate](mojom::ShelfObserver* observer) {
+  observers_.ForAllPtrs([id, delegate](mojom::ShelfObserverProxy* observer) {
     observer->OnShelfItemDelegateChanged(
         id, delegate ? delegate->CreateInterfacePtrAndBind()
                      : mojom::ShelfItemDelegatePtr());

@@ -52,6 +52,8 @@ class PtrSet {
  private:
   class Element {
    public:
+    using Proxy = typename Interface::Proxy_;
+
     explicit Element(Ptr<Interface> ptr)
         : ptr_(std::move(ptr)), weak_ptr_factory_(this) {
       ptr_.set_connection_error_handler(base::Bind(&DeleteElement, this));
@@ -67,7 +69,7 @@ class PtrSet {
       DeleteElement(this);
     }
 
-    Interface* get() { return ptr_.get(); }
+    Proxy* get() { return ptr_.get(); }
 
     base::WeakPtr<Element> GetWeakPtr() {
       return weak_ptr_factory_.GetWeakPtr();

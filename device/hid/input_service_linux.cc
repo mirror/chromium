@@ -224,9 +224,10 @@ void InputServiceLinux::GetDevices(GetDevicesCallback callback) {
 
 void InputServiceLinux::AddDevice(mojom::InputDeviceInfoPtr info) {
   auto* device_info = info.get();
-  clients_.ForAllPtrs([device_info](mojom::InputDeviceManagerClient* client) {
-    client->InputDeviceAdded(device_info->Clone());
-  });
+  clients_.ForAllPtrs(
+      [device_info](mojom::InputDeviceManagerClientProxy* client) {
+        client->InputDeviceAdded(device_info->Clone());
+      });
 
   devices_[info->id] = std::move(info);
 }
@@ -234,7 +235,7 @@ void InputServiceLinux::AddDevice(mojom::InputDeviceInfoPtr info) {
 void InputServiceLinux::RemoveDevice(const std::string& id) {
   devices_.erase(id);
 
-  clients_.ForAllPtrs([id](mojom::InputDeviceManagerClient* client) {
+  clients_.ForAllPtrs([id](mojom::InputDeviceManagerClientProxy* client) {
     client->InputDeviceRemoved(id);
   });
 }

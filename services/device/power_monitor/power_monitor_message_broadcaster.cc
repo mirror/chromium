@@ -39,19 +39,20 @@ void PowerMonitorMessageBroadcaster::AddClient(
 }
 
 void PowerMonitorMessageBroadcaster::OnPowerStateChange(bool on_battery_power) {
-  clients_.ForAllPtrs([&on_battery_power](mojom::PowerMonitorClient* client) {
-    client->PowerStateChange(on_battery_power);
-  });
+  clients_.ForAllPtrs(
+      [&on_battery_power](mojom::PowerMonitorClientProxy* client) {
+        client->PowerStateChange(on_battery_power);
+      });
 }
 
 void PowerMonitorMessageBroadcaster::OnSuspend() {
   clients_.ForAllPtrs(
-      [](mojom::PowerMonitorClient* client) { client->Suspend(); });
+      [](mojom::PowerMonitorClientProxy* client) { client->Suspend(); });
 }
 
 void PowerMonitorMessageBroadcaster::OnResume() {
   clients_.ForAllPtrs(
-      [](mojom::PowerMonitorClient* client) { client->Resume(); });
+      [](mojom::PowerMonitorClientProxy* client) { client->Resume(); });
 }
 
 }  // namespace device

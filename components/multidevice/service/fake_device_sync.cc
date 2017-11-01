@@ -11,15 +11,16 @@ FakeDeviceSync::FakeDeviceSync() {}
 FakeDeviceSync::~FakeDeviceSync() {}
 
 void FakeDeviceSync::ForceEnrollmentNow() {
-  observers_.ForAllPtrs([this](
-                            device_sync::mojom::DeviceSyncObserver* observer) {
-    observer->OnEnrollmentFinished(should_enroll_successfully_ /* success */);
-  });
+  observers_.ForAllPtrs(
+      [this](device_sync::mojom::DeviceSyncObserverProxy* observer) {
+        observer->OnEnrollmentFinished(
+            should_enroll_successfully_ /* success */);
+      });
 }
 
 void FakeDeviceSync::ForceSyncNow() {
   observers_.ForAllPtrs(
-      [this](device_sync::mojom::DeviceSyncObserver* observer) {
+      [this](device_sync::mojom::DeviceSyncObserverProxy* observer) {
         observer->OnDevicesSynced(should_sync_successfully_ /* success */);
       });
 }

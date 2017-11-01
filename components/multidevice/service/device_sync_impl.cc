@@ -39,19 +39,21 @@ DeviceSyncImpl::DeviceSyncImpl(
 DeviceSyncImpl::~DeviceSyncImpl() {}
 
 void DeviceSyncImpl::ForceEnrollmentNow() {
-  observers_.ForAllPtrs([](device_sync::mojom::DeviceSyncObserver* observer) {
-    // TODO(hsuregan): Actually enroll observers, and pass the success/failure
-    // status to observer->OnEnrollmentFinished().
-    observer->OnEnrollmentFinished(true /* success */);
-  });
+  observers_.ForAllPtrs(
+      [](device_sync::mojom::DeviceSyncObserverProxy* observer) {
+        // TODO(hsuregan): Actually enroll observers, and pass the
+        // success/failure status to observer->OnEnrollmentFinished().
+        observer->OnEnrollmentFinished(true /* success */);
+      });
 }
 
 void DeviceSyncImpl::ForceSyncNow() {
-  observers_.ForAllPtrs([](device_sync::mojom::DeviceSyncObserver* observer) {
-    // TODO(hsuregan): Actually sync observers, and pass the success/failure
-    // status to observer->OnEnrollmentFinished().
-    observer->OnDevicesSynced(true /* success */);
-  });
+  observers_.ForAllPtrs(
+      [](device_sync::mojom::DeviceSyncObserverProxy* observer) {
+        // TODO(hsuregan): Actually sync observers, and pass the success/failure
+        // status to observer->OnEnrollmentFinished().
+        observer->OnDevicesSynced(true /* success */);
+      });
 }
 
 void DeviceSyncImpl::AddObserver(

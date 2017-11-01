@@ -31,7 +31,7 @@ void UserDisplayManager::DisableAutomaticNotification() {
 
 void UserDisplayManager::CallOnDisplaysChanged() {
   display_manager_observers_.ForAllPtrs(
-      [this](mojom::DisplayManagerObserver* observer) {
+      [this](mojom::DisplayManagerObserverProxy* observer) {
         CallOnDisplaysChanged(observer);
       });
 }

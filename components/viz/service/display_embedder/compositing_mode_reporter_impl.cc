@@ -17,7 +17,7 @@ void CompositingModeReporterImpl::BindRequest(
 
 void CompositingModeReporterImpl::SetUsingSoftwareCompositing() {
   gpu_ = false;
-  watchers_.ForAllPtrs([](mojom::CompositingModeWatcher* watcher) {
+  watchers_.ForAllPtrs([](mojom::CompositingModeWatcherProxy* watcher) {
     watcher->CompositingModeFallbackToSoftware();
   });
 }

@@ -193,15 +193,15 @@ void LevelDBWrapperImpl::Put(
   if (!has_old_item) {
     // We added a new key/value pair.
     observers_.ForAllPtrs(
-        [&key, &value, &source](mojom::LevelDBObserver* observer) {
+        [&key, &value, &source](mojom::LevelDBObserverProxy* observer) {
           observer->KeyAdded(key, value, source);
         });
   } else {
     // We changed the value for an existing key.
-    observers_.ForAllPtrs(
-        [&key, &value, &source, &old_value](mojom::LevelDBObserver* observer) {
-          observer->KeyChanged(key, value, old_value, source);
-        });
+    observers_.ForAllPtrs([&key, &value, &source,
+                           &old_value](mojom::LevelDBObserverProxy* observer) {
+      observer->KeyChanged(key, value, old_value, source);
+    });
   }
   std::move(callback).Run(true);
 }
@@ -232,7 +232,7 @@ void LevelDBWrapperImpl::Delete(
   map_->erase(found);
   bytes_used_ -= key.size() + old_value.size();
   observers_.ForAllPtrs(
-      [&key, &source, &old_value](mojom::LevelDBObserver* observer) {
+      [&key, &source, &old_value](mojom::LevelDBObserverProxy* observer) {
         observer->KeyDeleted(key, old_value, source);
       });
   std::move(callback).Run(true);
@@ -259,10 +259,9 @@ void LevelDBWrapperImpl::DeleteAll(const std::string& source,
 
   map_->clear();
   bytes_used_ = 0;
-  observers_.ForAllPtrs(
-      [&source](mojom::LevelDBObserver* observer) {
-        observer->AllDeleted(source);
-      });
+  observers_.ForAllPtrs([&source](mojom::LevelDBObserverProxy* observer) {
+    observer->AllDeleted(source);
+  });
   std::move(callback).Run(true);
 }
 

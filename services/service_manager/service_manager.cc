@@ -1082,9 +1082,10 @@ void ServiceManager::OnInstanceUnreachable(Instance* instance) {
 }
 
 void ServiceManager::OnInstanceStopped(const Identity& identity) {
-  listeners_.ForAllPtrs([&identity](mojom::ServiceManagerListener* listener) {
-    listener->OnServiceStopped(identity);
-  });
+  listeners_.ForAllPtrs(
+      [&identity](mojom::ServiceManagerListenerProxy* listener) {
+        listener->OnServiceStopped(identity);
+      });
   if (!instance_quit_callback_.is_null())
     instance_quit_callback_.Run(identity);
 }
@@ -1101,21 +1102,22 @@ void ServiceManager::EraseInstanceIdentity(Instance* instance) {
 void ServiceManager::NotifyServiceStarted(const Identity& identity,
                                           base::ProcessId pid) {
   listeners_.ForAllPtrs(
-      [&identity, pid](mojom::ServiceManagerListener* listener) {
+      [&identity, pid](mojom::ServiceManagerListenerProxy* listener) {
         listener->OnServiceStarted(identity, pid);
       });
 }
 
 void ServiceManager::NotifyServiceFailedToStart(const Identity& identity) {
-  listeners_.ForAllPtrs([&identity](mojom::ServiceManagerListener* listener) {
-    listener->OnServiceFailedToStart(identity);
-  });
+  listeners_.ForAllPtrs(
+      [&identity](mojom::ServiceManagerListenerProxy* listener) {
+        listener->OnServiceFailedToStart(identity);
+      });
 }
 
 void ServiceManager::NotifyServicePIDReceived(const Identity& identity,
                                               base::ProcessId pid) {
   listeners_.ForAllPtrs(
-      [&identity, pid](mojom::ServiceManagerListener* listener) {
+      [&identity, pid](mojom::ServiceManagerListenerProxy* listener) {
         listener->OnServicePIDReceived(identity, pid);
       });
 }
@@ -1149,7 +1151,7 @@ ServiceManager::Instance* ServiceManager::CreateInstance(
   identity_to_instance_->Insert(target, instance_type, raw_instance);
 
   mojom::RunningServiceInfoPtr info = raw_instance->CreateRunningServiceInfo();
-  listeners_.ForAllPtrs([&info](mojom::ServiceManagerListener* listener) {
+  listeners_.ForAllPtrs([&info](mojom::ServiceManagerListenerProxy* listener) {
     listener->OnServiceCreated(info.Clone());
   });
 
