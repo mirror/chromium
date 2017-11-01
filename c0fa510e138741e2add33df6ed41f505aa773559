@@ -1,0 +1,322 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d43cad7_1bba372c",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "Not a huge deal, but what about making the test class a friend? I think that will generate less code for non-test cases.",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af46f49_18975e4d",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143d0941_227e9eb6",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "There is opertor\u003c\u003d for TimeDelta. Rather than doing a conversion back to double, compare against a TimeDelta?\n\nconstexpr base::TimeDelta kOneSecond \u003d ...;",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 65
+      },
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975af7e5_46bd1bc2",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "You could probably just use uint32_t for these variables and kMinFramesPerSecond to avoid having to do static_cast\u003csize_t\u003e in a bunch of places? kMinFramesPerSecond is smaller than UINT32_MAX.",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25dab4d_932b3341",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "A suggestion is you could dependency inject an class to give you the time like:\n\nclass TimeProvider {\n public:\n  virtual base::TimeTicks() GetNow() {\n    return base::TimeTicks::Now();\n  }\n}\n\nSo your test would inject a subclass that overrides it, probably with TestMockTimeTaskRunner::NowTicks().",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d95ac1_855aa140",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "I don\u0027t think you should need this. Your tests should use something like TestMockTimeTaskRunner which will give you control over time with regards to posted tasks.",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fa1d91_c69ff467",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "nit: The constants should be defined above methods (also in other files).\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a751f502_ba72291b",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "nit: You can probably just put the 1000 in the other constant and get rid of kVideoTimeoutMs?",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e51c8b_5828d2e4",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "This should be a base::flat_map too. Alternatively can last_drawn_frame_index_ just be part of ClientInfo? No need to have two maps with the same keys.",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b35e68_50a89a32",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like you\u0027re erasing map entries here (unless it\u0027s reused)? This will rapidly fill up.",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b19f72_63ce11fc",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "nit: No (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d0217f_ff6c86f9",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "TestObserver should be in an anonymous namespace.",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a9eb6c_4e592174",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "nit: default",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c9829f_ef1048ff",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "Not needed if there is no implementation.",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73aef0b_e471bd31",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "nit: Ordering again. Although you can also shove all these constants in the anonymous namespace at the top of the file?",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883ec180_601d8460",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "Take a look at TestMockTimeTaskRunner.",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455be823_a6a60694",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "Maybe two clients, one smaller in the other dimension, to test that neither of them are detected as video?",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75acf122_1344128b",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-01T21:24:06Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
