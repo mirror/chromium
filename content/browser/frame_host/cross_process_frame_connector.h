@@ -131,6 +131,7 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   void OnSatisfySequence(const viz::SurfaceSequence& sequence);
   void OnRequireSequence(const viz::SurfaceId& id,
                          const viz::SurfaceSequence& sequence);
+  void OnUpdateFrameSinkId(const viz::FrameSinkId& frame_sink_id);
 
   void SetRect(const gfx::Rect& frame_rect);
 

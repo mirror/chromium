@@ -182,6 +182,11 @@ void RenderWidgetHostViewChildFrame::SetFrameConnectorDelegate(
 #endif
 }
 
+void RenderWidgetHostViewChildFrame::SetFrameSinkId(
+    const viz::FrameSinkId& frame_sink_id) {
+  frame_sink_id_ = frame_sink_id;
+}
+
 void RenderWidgetHostViewChildFrame::OnManagerWillDestroy(
     TouchSelectionControllerClientManager* manager) {
   // We get the manager via the observer callback instead of through the
