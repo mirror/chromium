@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e11b137b_af826ad1",
+        "filename": "third_party/WebKit/Source/modules/payments/BasicCardHelper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-01T11:20:43Z",
+      "side": 1,
+      "message": "Should be fixed in https://crrev.com/c/749142, which is in CQ now.",
+      "parentUuid": "24d52315_8177e306",
+      "revId": "95984a3b7d4cacbe2ff7ad4653302af75922973f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bc131f2_53a9cdfa",
         "filename": "third_party/WebKit/Source/modules/payments/BasicCardHelper.h",
         "patchSetId": 11
