@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f76643d1_30eca9dc",
+        "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialFunctions.h.tmpl",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-01T01:08:46Z",
+      "side": 1,
+      "message": "Conceptually they are the computed values if you a) specify \"initial\" as the value for a property, or b) don\u0027t specify a value for the property. They are intimately linked to the ComputedStyle class by it and things that set stuff on ComputedStyle being the primary (only?) consumers. I\u0027m not fussed on changing the name, but I think containing the substring \"ComputedStyle\" is the right way to go.",
+      "parentUuid": "f7c13b1e_c37764e4",
+      "revId": "415cf47dbb4f399155e12db88c01044a5e758e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b284db5f_8291c7f9",
         "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialFunctions.h.tmpl",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "415cf47dbb4f399155e12db88c01044a5e758e76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b0f7a27_a98f94b3",
+        "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialFunctions.h.tmpl",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-01T01:08:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b284db5f_8291c7f9",
+      "revId": "415cf47dbb4f399155e12db88c01044a5e758e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1f872419_6b7aecfa",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-01T01:08:46Z",
+      "side": 1,
+      "message": "Unfortunately it needs some kind of prefix because otherwise the function names conflict with type names in a lot of cases :/ If you have a suggestion for a better prefix I\u0027m all ears...",
+      "parentUuid": "dab13cdb_c2ca6cbd",
+      "revId": "415cf47dbb4f399155e12db88c01044a5e758e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a24eded7_b8362f6d",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "415cf47dbb4f399155e12db88c01044a5e758e76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2681ad33_7f4113cc",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-01T01:08:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a24eded7_b8362f6d",
+      "revId": "415cf47dbb4f399155e12db88c01044a5e758e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
