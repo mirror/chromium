@@ -24,5 +24,8 @@ _ChromeAppModeStart_v4
 # Entry point for the keychain reauthorization stub.
 _KeychainReauthorizeIfNeededAtUpdate
 
+# Thread local storage.
+__ZTWN3WTF16g_is_main_threadE
+
 # _ChromeMain must be listed last.  That's the whole point of this file.
 _ChromeMain
