@@ -138,6 +138,7 @@ TEST_F(ProtoUtilsTest, PipelineStatisticsConversion) {
   original.audio_bytes_decoded = 123;
   original.video_bytes_decoded = 456;
   original.video_frames_decoded = 789;
+  original.video_frames_decoded_power_efficient = 0;
   original.video_frames_dropped = 21;
   original.audio_memory_usage = 32;
   original.video_memory_usage = 43;
@@ -161,7 +162,14 @@ TEST_F(ProtoUtilsTest, PipelineStatisticsConversion) {
 
   // If this fails, did media::PipelineStatistics add/change fields that are not
   // being set by media::remoting::ConvertProtoToPipelineStatistics()?
-  EXPECT_EQ(0, memcmp(&original, &converted, sizeof(converted)));
+  // This is using `real_size` because at the moment the struct has some padding
+  // in 64 bits architecture. This test should be updated to remove this if and
+  // when there is no more padding.
+  size_t real_size = sizeof(converted);
+#ifdef ARCH_CPU_64_BITS
+  real_size -= 4;  // Padding is currently 32 bits, 4 octets.
+#endif  // ARCH_CPU_64_BITS
+  EXPECT_EQ(0, memcmp(&original, &converted, real_size));
 }
 
 TEST_F(ProtoUtilsTest, VideoDecoderConfigConversionTest) {
