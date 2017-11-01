@@ -16,6 +16,24 @@
       "revId": "4ae30b9bb61de40a7c691840a49274f099eba801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd3b2e22_9c69cc98",
+        "filename": "storage/browser/fileapi/async_file_util_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-01T22:59:45Z",
+      "side": 1,
+      "message": "Done. Now just CloseFileOnTaskRunner.",
+      "parentUuid": "28ef0532_e3a11af6",
+      "revId": "4ae30b9bb61de40a7c691840a49274f099eba801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
