@@ -182,8 +182,8 @@ void XMLHttpRequestProgressEventThrottle::Resume() {
     return;
 
   // Do not dispatch events inline here, since ExecutionContext is iterating
-  // over the list of SuspendableObjects to resume them, and any activated JS
-  // event-handler could insert new SuspendableObjects to the list.
+  // over the list of PausableObjects to resume them, and any activated JS
+  // event-handler could insert new PausableObjects to the list.
   StartOneShot(0, BLINK_FROM_HERE);
 }
 

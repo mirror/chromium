@@ -21,7 +21,7 @@ IntersectionObserverController* IntersectionObserverController::Create(
 
 IntersectionObserverController::IntersectionObserverController(
     Document* document)
-    : SuspendableObject(document), callback_fired_while_suspended_(false) {}
+    : PausableObject(document), callback_fired_while_suspended_(false) {}
 
 IntersectionObserverController::~IntersectionObserverController() {}
 
@@ -98,7 +98,7 @@ void IntersectionObserverController::RemoveTrackedObserversForRoot(
 void IntersectionObserverController::Trace(blink::Visitor* visitor) {
   visitor->Trace(tracked_intersection_observers_);
   visitor->Trace(pending_intersection_observers_);
-  SuspendableObject::Trace(visitor);
+  PausableObject::Trace(visitor);
 }
 
 }  // namespace blink

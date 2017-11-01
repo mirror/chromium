@@ -113,7 +113,7 @@ void FontFaceSet::Trace(blink::Visitor* visitor) {
   visitor->Trace(failed_fonts_);
   visitor->Trace(ready_);
   visitor->Trace(async_runner_);
-  SuspendableObject::Trace(visitor);
+  PausableObject::Trace(visitor);
   EventTargetWithInlineData::Trace(visitor);
   FontFace::LoadFontCallback::Trace(visitor);
 }

@@ -101,7 +101,7 @@ void ScriptedIdleTaskController::V8IdleTask::invoke(IdleDeadline* deadline) {
 
 ScriptedIdleTaskController::ScriptedIdleTaskController(
     ExecutionContext* context)
-    : SuspendableObject(context),
+    : PausableObject(context),
       scheduler_(Platform::Current()->CurrentThread()->Scheduler()),
       next_callback_id_(0),
       suspended_(false) {
@@ -112,7 +112,7 @@ ScriptedIdleTaskController::~ScriptedIdleTaskController() {}
 
 void ScriptedIdleTaskController::Trace(blink::Visitor* visitor) {
   visitor->Trace(idle_tasks_);
-  SuspendableObject::Trace(visitor);
+  PausableObject::Trace(visitor);
 }
 
 void ScriptedIdleTaskController::TraceWrappers(

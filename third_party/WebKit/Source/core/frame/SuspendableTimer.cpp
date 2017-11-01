@@ -38,7 +38,7 @@ const double kNextFireIntervalInvalid = -1.0;
 SuspendableTimer::SuspendableTimer(ExecutionContext* context,
                                    TaskType task_type)
     : TimerBase(context->GetTaskRunner(task_type)),
-      SuspendableObject(context),
+      PausableObject(context),
       next_fire_interval_(kNextFireIntervalInvalid),
       repeat_interval_(0) {
   DCHECK(context);

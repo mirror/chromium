@@ -71,7 +71,7 @@ MediaDevices* MediaDevices::Create(ExecutionContext* context) {
 }
 
 MediaDevices::MediaDevices(ExecutionContext* context)
-    : SuspendableObject(context),
+    : PausableObject(context),
       observing_(false),
       stopped_(false),
       dispatch_scheduled_event_runner_(AsyncMethodRunner<MediaDevices>::Create(
@@ -154,7 +154,7 @@ const AtomicString& MediaDevices::InterfaceName() const {
 }
 
 ExecutionContext* MediaDevices::GetExecutionContext() const {
-  return SuspendableObject::GetExecutionContext();
+  return PausableObject::GetExecutionContext();
 }
 
 void MediaDevices::RemoveAllEventListeners() {
@@ -254,7 +254,7 @@ void MediaDevices::Trace(blink::Visitor* visitor) {
   visitor->Trace(dispatch_scheduled_event_runner_);
   visitor->Trace(scheduled_events_);
   EventTargetWithInlineData::Trace(visitor);
-  SuspendableObject::Trace(visitor);
+  PausableObject::Trace(visitor);
 }
 
 }  // namespace blink

@@ -32,7 +32,7 @@
 #define SourceBuffer_h
 
 #include <memory>
-#include "core/dom/SuspendableObject.h"
+#include "core/dom/PausableObject.h"
 #include "core/typed_arrays/ArrayBufferViewHelpers.h"
 #include "modules/EventTargetModules.h"
 #include "modules/mediasource/TrackDefaultList.h"
@@ -56,7 +56,7 @@ class WebSourceBuffer;
 
 class SourceBuffer final : public EventTargetWithInlineData,
                            public ActiveScriptWrappable<SourceBuffer>,
-                           public SuspendableObject,
+                           public PausableObject,
                            public WebSourceBufferClient {
   USING_GARBAGE_COLLECTED_MIXIN(SourceBuffer);
   DEFINE_WRAPPERTYPEINFO();
@@ -103,7 +103,7 @@ class SourceBuffer final : public EventTargetWithInlineData,
   // ScriptWrappable
   bool HasPendingActivity() const final;
 
-  // SuspendableObject
+  // PausableObject
   void Suspend() override;
   void Resume() override;
   void ContextDestroyed(ExecutionContext*) override;

@@ -22,8 +22,7 @@ BatteryManager* BatteryManager::Create(ExecutionContext* context) {
 BatteryManager::~BatteryManager() {}
 
 BatteryManager::BatteryManager(ExecutionContext* context)
-    : SuspendableObject(context),
-      PlatformEventController(ToDocument(context)) {}
+    : PausableObject(context), PlatformEventController(ToDocument(context)) {}
 
 ScriptPromise BatteryManager::StartRequest(ScriptState* script_state) {
   if (!battery_property_) {
@@ -122,7 +121,7 @@ void BatteryManager::Trace(blink::Visitor* visitor) {
   visitor->Trace(battery_property_);
   PlatformEventController::Trace(visitor);
   EventTargetWithInlineData::Trace(visitor);
-  SuspendableObject::Trace(visitor);
+  PausableObject::Trace(visitor);
 }
 
 }  // namespace blink

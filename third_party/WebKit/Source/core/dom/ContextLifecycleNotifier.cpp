@@ -27,19 +27,18 @@
 
 #include "core/dom/ContextLifecycleNotifier.h"
 
-#include "core/dom/SuspendableObject.h"
+#include "core/dom/PausableObject.h"
 #include "platform/wtf/AutoReset.h"
 
 namespace blink {
 
-void ContextLifecycleNotifier::NotifyResumingSuspendableObjects() {
+void ContextLifecycleNotifier::NotifyResumingPausableObjects() {
   AutoReset<IterationState> scope(&iteration_state_, kAllowingNone);
   for (ContextLifecycleObserver* observer : observers_) {
     if (observer->ObserverType() !=
-        ContextLifecycleObserver::kSuspendableObjectType)
+        ContextLifecycleObserver::kPausableObjectType)
       continue;
-    SuspendableObject* suspendable_object =
-        static_cast<SuspendableObject*>(observer);
+    PausableObject* suspendable_object = static_cast<PausableObject*>(observer);
 #if DCHECK_IS_ON()
     DCHECK_EQ(suspendable_object->GetExecutionContext(), Context());
     DCHECK(suspendable_object->SuspendIfNeededCalled());
@@ -48,14 +47,13 @@ void ContextLifecycleNotifier::NotifyResumingSuspendableObjects() {
   }
 }
 
-void ContextLifecycleNotifier::NotifySuspendingSuspendableObjects() {
+void ContextLifecycleNotifier::NotifySuspendingPausableObjects() {
   AutoReset<IterationState> scope(&iteration_state_, kAllowingNone);
   for (ContextLifecycleObserver* observer : observers_) {
     if (observer->ObserverType() !=
-        ContextLifecycleObserver::kSuspendableObjectType)
+        ContextLifecycleObserver::kPausableObjectType)
       continue;
-    SuspendableObject* suspendable_object =
-        static_cast<SuspendableObject*>(observer);
+    PausableObject* suspendable_object = static_cast<PausableObject*>(observer);
 #if DCHECK_IS_ON()
     DCHECK_EQ(suspendable_object->GetExecutionContext(), Context());
     DCHECK(suspendable_object->SuspendIfNeededCalled());
@@ -64,12 +62,12 @@ void ContextLifecycleNotifier::NotifySuspendingSuspendableObjects() {
   }
 }
 
-unsigned ContextLifecycleNotifier::SuspendableObjectCount() const {
+unsigned ContextLifecycleNotifier::PausableObjectCount() const {
   DCHECK(!IsIteratingOverObservers());
   unsigned suspendable_objects = 0;
   for (ContextLifecycleObserver* observer : observers_) {
     if (observer->ObserverType() !=
-        ContextLifecycleObserver::kSuspendableObjectType)
+        ContextLifecycleObserver::kPausableObjectType)
       continue;
     suspendable_objects++;
   }
@@ -77,14 +75,13 @@ unsigned ContextLifecycleNotifier::SuspendableObjectCount() const {
 }
 
 #if DCHECK_IS_ON()
-bool ContextLifecycleNotifier::Contains(SuspendableObject* object) const {
+bool ContextLifecycleNotifier::Contains(PausableObject* object) const {
   DCHECK(!IsIteratingOverObservers());
   for (ContextLifecycleObserver* observer : observers_) {
     if (observer->ObserverType() !=
-        ContextLifecycleObserver::kSuspendableObjectType)
+        ContextLifecycleObserver::kPausableObjectType)
       continue;
-    SuspendableObject* suspendable_object =
-        static_cast<SuspendableObject*>(observer);
+    PausableObject* suspendable_object = static_cast<PausableObject*>(observer);
     if (suspendable_object == object)
       return true;
   }

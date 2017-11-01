@@ -2685,7 +2685,7 @@ void Document::Shutdown() {
   if (frame_->Client()->GetSharedWorkerRepositoryClient())
     frame_->Client()->GetSharedWorkerRepositoryClient()->DocumentDetached(this);
 
-  // FIXME: consider using SuspendableObject.
+  // FIXME: consider using PausableObject.
   if (scripted_animation_controller_)
     scripted_animation_controller_->ClearDocumentPointer();
   scripted_animation_controller_.Clear();

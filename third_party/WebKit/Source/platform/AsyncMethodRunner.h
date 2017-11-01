@@ -68,7 +68,7 @@ class AsyncMethodRunner final
 
   // If it's scheduled to run the method, cancel it and remember to schedule
   // it again when resume() is called. Mainly for implementing
-  // SuspendableObject::suspend().
+  // PausableObject::suspend().
   void Suspend() {
     if (suspended_)
       return;

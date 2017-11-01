@@ -293,7 +293,7 @@ XMLHttpRequest::XMLHttpRequest(
     v8::Isolate* isolate,
     bool is_isolated_world,
     scoped_refptr<SecurityOrigin> isolated_world_security_origin)
-    : SuspendableObject(context),
+    : PausableObject(context),
       timeout_milliseconds_(0),
       state_(kUnsent),
       length_downloaded_to_file_(0),
@@ -1958,7 +1958,7 @@ const AtomicString& XMLHttpRequest::InterfaceName() const {
 }
 
 ExecutionContext* XMLHttpRequest::GetExecutionContext() const {
-  return SuspendableObject::GetExecutionContext();
+  return PausableObject::GetExecutionContext();
 }
 
 void XMLHttpRequest::ReportMemoryUsageToV8() {
@@ -1989,7 +1989,7 @@ void XMLHttpRequest::Trace(blink::Visitor* visitor) {
   visitor->Trace(blob_loader_);
   XMLHttpRequestEventTarget::Trace(visitor);
   DocumentParserClient::Trace(visitor);
-  SuspendableObject::Trace(visitor);
+  PausableObject::Trace(visitor);
 }
 
 void XMLHttpRequest::TraceWrappers(
