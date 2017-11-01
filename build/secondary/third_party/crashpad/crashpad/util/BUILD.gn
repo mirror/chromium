@@ -291,11 +291,11 @@ static_library("util") {
 
   deps = [
     "//base",
-    "//third_party/crashpad/crashpad/third_party/zlib",
+    "../third_party/zlib",
   ]
 
   public_deps = [
-    "//third_party/crashpad/crashpad/compat",
+    "../compat",
   ]
 
   if (is_win) {
@@ -319,7 +319,8 @@ static_library("util") {
   }
 }
 
-test("crashpad_util_test") {
+source_set("util_test") {
+  testonly = true
   sources = [
     "file/delimited_file_reader_test.cc",
     "file/directory_reader_test.cc",
@@ -349,6 +350,7 @@ test("crashpad_util_test") {
     "net/http_body_test_util.h",
     "net/http_multipart_builder_test.cc",
     "net/http_transport_test.cc",
+    "net/url_test.cc",
     "numeric/checked_address_range_test.cc",
     "numeric/checked_range_test.cc",
     "numeric/in_range_cast_test.cc",
@@ -407,14 +409,13 @@ test("crashpad_util_test") {
 
   deps = [
     ":util",
+    "../client",
+    "../compat",
+    "../test",
+    "../third_party/zlib",
     "//base",
     "//testing/gmock",
     "//testing/gtest",
-    "//third_party/crashpad/crashpad/client",
-    "//third_party/crashpad/crashpad/compat",
-    "//third_party/crashpad/crashpad/test:crashpad_gmock_main",
-    "//third_party/crashpad/crashpad/test:crashpad_test",
-    "//third_party/crashpad/crashpad/third_party/zlib",
   ]
 
   if (is_win) {
