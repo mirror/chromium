@@ -13,8 +13,10 @@ NetworkChangeNotifierFactoryAndroid::NetworkChangeNotifierFactoryAndroid() {}
 
 NetworkChangeNotifierFactoryAndroid::~NetworkChangeNotifierFactoryAndroid() {}
 
-NetworkChangeNotifier* NetworkChangeNotifierFactoryAndroid::CreateInstance() {
-  return new NetworkChangeNotifierAndroid(&delegate_, nullptr);
+std::unique_ptr<NetworkChangeNotifier>
+NetworkChangeNotifierFactoryAndroid::CreateInstance() {
+  return std::unique_ptr<NetworkChangeNotifier>(
+      new NetworkChangeNotifierAndroid(&delegate_, nullptr));
 }
 
 }  // namespace net
