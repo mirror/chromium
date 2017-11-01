@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c06c7758_40759985",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-11-01T20:13:06Z",
+      "side": 1,
+      "message": "nitty-nit: roll is confusing, is there a script you are running to \"roll\" it?\nI propose this title:\n\nUpdate buildbucket.config to match latest tryjob builders.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "68877309a0c272f65ccc41451387cb568f6fb0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
