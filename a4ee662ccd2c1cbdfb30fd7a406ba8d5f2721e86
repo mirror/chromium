@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caf163c1_c46e23bf",
+        "filename": "cc/paint/oop_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T18:08:42Z",
+      "side": 1,
+      "message": "nit: add gl-\u003eTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);\nThis disables mipmapping and ensures the texture is complete. It\u0027s technically not required to do rendering to it, but some drivers have trouble / become inefficient if we don\u0027t do that.",
+      "revId": "a4ee662ccd2c1cbdfb30fd7a406ba8d5f2721e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189a5174_28ac85b1",
+        "filename": "cc/paint/oop_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T18:08:42Z",
+      "side": 1,
+      "message": "nit: colors.reserve(width*height);",
+      "revId": "a4ee662ccd2c1cbdfb30fd7a406ba8d5f2721e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17215be_a2e2bbbe",
+        "filename": "cc/paint/oop_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T18:08:42Z",
+      "side": 1,
+      "message": "nit: helper function MakeColorPaintFlags would be more readable, and then I don\u0027t think you need make_pair, just {SkRect::MakeXYWH(0, 0, 5, 5), MakeColorPaintFlags(255, 0, 0, 255)}",
+      "revId": "a4ee662ccd2c1cbdfb30fd7a406ba8d5f2721e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
