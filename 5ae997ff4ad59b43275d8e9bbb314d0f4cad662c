@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7519aef_f6c79e63",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T15:19:42Z",
+      "side": 1,
+      "message": "nit: These don\u0027t need to be modified in this CL.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 54
+      },
+      "revId": "5ae997ff4ad59b43275d8e9bbb314d0f4cad662c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
