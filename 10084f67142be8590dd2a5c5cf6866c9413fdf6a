@@ -566,6 +566,24 @@
     },
     {
       "key": {
+        "uuid": "f4a5253b_6ad266a5",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-01T22:53:14Z",
+      "side": 1,
+      "message": "So it sounds like this part doesn\u0027t apply: \"If this can be reached by a caller passing an unexpected |where| value...\". I haven\u0027t used enough IDL to know if translation is ironclad. \n(If the \"if...\" didn\u0027t apply then the rest doesn\u0027t apply :) ).",
+      "parentUuid": "5e0cac81_05663124",
+      "revId": "10084f67142be8590dd2a5c5cf6866c9413fdf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "066c23e5_11b2450a",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 7
