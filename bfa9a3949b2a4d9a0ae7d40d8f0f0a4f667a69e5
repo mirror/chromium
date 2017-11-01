@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eba4485b_d0439766",
+        "filename": "third_party/WebKit/public/platform/ScopedVirtualTimePauser.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-01T23:31:53Z",
+      "side": 1,
+      "message": "ScopedVirtualTimePauser \u003d\u003e WebScopedVirtualTimePauser\n\nAll public APIs should have a Web prefix.",
+      "revId": "bfa9a3949b2a4d9a0ae7d40d8f0f0a4f667a69e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558f4c6a_848d2f93",
+        "filename": "third_party/WebKit/public/platform/ScopedVirtualTimePauser.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-01T23:31:53Z",
+      "side": 1,
+      "message": "We shouldn\u0027t expose WTF to a publicly-exposed class, since it\u0027s exposed to Chromium.\n\nMaybe would it be better to add these functions to WebFrameScheduler etc?",
+      "revId": "bfa9a3949b2a4d9a0ae7d40d8f0f0a4f667a69e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
