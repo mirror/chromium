@@ -3675,7 +3675,9 @@ InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
   }
 
   // Run animations which need to respond to updated scroll offset.
-  mutator_host_->TickScrollAnimations(CurrentBeginFrameArgs().frame_time);
+  mutator_host_->TickScrollAnimations(
+      CurrentBeginFrameArgs().frame_time,
+      active_tree_->property_trees()->scroll_tree);
 
   return scroll_result;
 }
@@ -3958,7 +3960,8 @@ bool LayerTreeHostImpl::AnimateScrollbars(base::TimeTicks monotonic_time) {
 }
 
 bool LayerTreeHostImpl::AnimateLayers(base::TimeTicks monotonic_time) {
-  const bool animated = mutator_host_->TickAnimations(monotonic_time);
+  const bool animated = mutator_host_->TickAnimations(
+      monotonic_time, active_tree_->property_trees()->scroll_tree);
 
   // TODO(crbug.com/551134): Only do this if the animations are on the active
   // tree, or if they are on the pending tree waiting for some future time to
@@ -4421,7 +4424,8 @@ void LayerTreeHostImpl::SetTreeLayerScrollOffsetMutated(
   property_trees->scroll_tree.OnScrollOffsetAnimated(
       element_id, scroll_node_index, scroll_offset, tree);
   // Run animations which need to respond to updated scroll offset.
-  mutator_host_->TickScrollAnimations(CurrentBeginFrameArgs().frame_time);
+  mutator_host_->TickScrollAnimations(CurrentBeginFrameArgs().frame_time,
+                                      property_trees->scroll_tree);
 }
 
 void LayerTreeHostImpl::SetNeedUpdateGpuRasterizationStatus() {
