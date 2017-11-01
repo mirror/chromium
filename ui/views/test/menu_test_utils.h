@@ -73,7 +73,7 @@ class TestMenuDelegate : public MenuDelegate {
 };
 
 // Test api which caches the currently active MenuController. Can be used to
-// toggle visibility, and to clear seletion states, without performing full
+// toggle visibility, and to clear selection states, without performing full
 // shutdown. This is used to simulate menus with varing states, such as during
 // drags, without performing the entire operation. Used to test strange shutdown
 // ordering.

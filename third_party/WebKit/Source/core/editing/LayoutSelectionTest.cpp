@@ -306,7 +306,7 @@ TEST_F(LayoutSelectionTest, FirstLetter) {
   TEST_NO_NEXT_LAYOUT_OBJECT();
 }
 
-TEST_F(LayoutSelectionTest, FirstLetterClearSeletion) {
+TEST_F(LayoutSelectionTest, FirstLetterClearSelection) {
   InsertStyleElement("div::first-letter { color: red; }");
   Selection().SetSelection(SetSelectionTextToBody("fo^o<div>bar</div>b|az"));
   Selection().CommitAppearanceIfNeeded();
@@ -333,7 +333,7 @@ TEST_F(LayoutSelectionTest, FirstLetterClearSeletion) {
   TEST_NO_NEXT_LAYOUT_OBJECT();
 }
 
-TEST_F(LayoutSelectionTest, FirstLetterUpdateSeletion) {
+TEST_F(LayoutSelectionTest, FirstLetterUpdateSelection) {
   SetBodyContent(
       "<style>div::first-letter { color: red; }</style>"
       "foo<div>bar</div>baz");

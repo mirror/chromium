@@ -287,9 +287,9 @@ Element* RootEditableElementOfSelection(const FrameSelection& frameSelection) {
   // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited. see http://crbug.com/590369 for more details.
   frameSelection.GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-  const VisibleSelection& visibleSeleciton =
+  const VisibleSelection& visibleSelection =
       frameSelection.ComputeVisibleSelectionInDOMTree();
-  return RootEditableElementOf(visibleSeleciton.Start());
+  return RootEditableElementOf(visibleSelection.Start());
 }
 
 std::pair<ContainerNode*, PlainTextRange> PlainTextRangeForEphemeralRange(
