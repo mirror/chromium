@@ -52,6 +52,24 @@
       "revId": "f36237e8a5e483be7343cb6af75f16f2d6d5b76f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9199ade8_1df1d2dd",
+        "filename": "base/i18n/time_formatting_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-01T18:29:01Z",
+      "side": 1,
+      "message": "Thanks a lot ! Removed lock.",
+      "parentUuid": "ebe8f813_08290c2e",
+      "revId": "f36237e8a5e483be7343cb6af75f16f2d6d5b76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
