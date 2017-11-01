@@ -341,13 +341,13 @@ PermissionSelectorRow::~PermissionSelectorRow() {
   // which means the Combobox gets destroyed after its ComboboxModel, which
   // causes an explosion when the Combobox attempts to stop observing the
   // ComboboxModel. This hack ensures the Combobox is deleted before its
-  // ComboboxModel.
+  // ComboboxModel. Deleting the Combobox has the side-effect of removing it
+  // from the View tree, ensuring it will not be deleted again by ~View().
   //
   // Technically, the MenuButton has the same problem, but MenuButton doesn't
   // use its model in its destructor.
-  if (combobox_) {
-    combobox_->parent()->RemoveChildView(combobox_);
-  }
+  if (combobox_)
+    delete combobox_;
 }
 
 // static
