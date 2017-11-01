@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe129d8b_0807c5ff",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-01T22:08:55Z",
+      "side": 1,
+      "message": "nit: I feel like if you are passing in type to this method, you shouldn\u0027t call it only for NOSCRIPT. It makes more sense to me to keep all the previews types together (so maybe handle all the types within IsWhitelisted). This looks like we might want to wait on that behavior though.",
+      "revId": "6c406b16e5e9460ac7c1c9f7d93927163e9a9ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e360db82_902e04cc",
+        "filename": "components/previews/core/previews_io_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-01T22:08:55Z",
+      "side": 1,
+      "message": "comment",
+      "revId": "6c406b16e5e9460ac7c1c9f7d93927163e9a9ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
