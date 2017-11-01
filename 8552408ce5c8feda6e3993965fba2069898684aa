@@ -16,6 +16,24 @@
       "revId": "8552408ce5c8feda6e3993965fba2069898684aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00268f2a_c3102640",
+        "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-11-01T15:56:49Z",
+      "side": 1,
+      "message": "The former. This fails compilation and prints a line with the suggested fix that can be easily copied into your editor of choice. Looks like the following:\n\n../../base/android/java/src/org/chromium/base/PathUtils.java:123: error: [NoSynchronizedMethodCheck] Used synchronized modifier in public method setPrivateDataDirectorySuffix\n    public static synchronized void setPrivateDataDirectorySuffix(String suffix) {\n                                    ^\n    (see https://stackoverflow.com/questions/20906548/why-is-synchronized-block-better-than-synchronized-method)\n  Did you mean \u0027public static void setPrivateDataDirectorySuffix(String suffix) {\u0027?\n1 error",
+      "parentUuid": "224f6ddc_c2dfbe24",
+      "revId": "8552408ce5c8feda6e3993965fba2069898684aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
