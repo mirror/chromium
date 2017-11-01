@@ -1263,9 +1263,9 @@ TEST_F(HistoryURLProviderTest, MatchURLFormatting) {
   ExpectFormattedFullMatch("WWW.hij", L"www.hij.com/\x2026\x0000", 0, 7);
 
   // Verify that matching in the subdomain-only preserves the subdomain.
-  ExpectFormattedFullMatch("ww", L"www.abc.def.com/\x2026\x0000", 0, 2);
-  ExpectFormattedFullMatch("https://ww",
-                           L"https://www.abc.def.com/\x2026\x0000", 0, 10);
+  ExpectFormattedFullMatch("ww", L"www.hij.com/\x2026\x0000", 0, 2);
+  ExpectFormattedFullMatch("https://ww", L"https://www.hij.com/\x2026\x0000", 0,
+                           10);
 
   // Test individual feature flags as a sanity check.
   feature_list.reset(new base::test::ScopedFeatureList);
