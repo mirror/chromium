@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15505c6c_8b7ddb93",
+        "filename": "chrome/android/webapk/libs/common/src/org/chromium/webapk/lib/common/WebApkMetaDataKeys.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T20:09:46Z",
+      "side": 1,
+      "message": "nit: rename to SHARE_TARGET (and update the constant value) to echo Matt\u0027s concerns over on https://chromium-review.googlesource.com/c/chromium/src/+/646368/4/chrome/android/webapk/shell_apk/unbound_manifest_config.json",
+      "range": {
+        "startLine": 34,
+        "startChar": 31,
+        "endLine": 34,
+        "endChar": 45
+      },
+      "revId": "69e1ab0431c28eefc7b0716ff6bb70dd80a3f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1b0b04_95e3d4b3",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T20:09:46Z",
+      "side": 1,
+      "message": "share_target (throughout)",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "69e1ab0431c28eefc7b0716ff6bb70dd80a3f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b29935_956557a7",
+        "filename": "chrome/android/webapk/shell_apk/proguard.flags",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T20:09:46Z",
+      "side": 1,
+      "message": "Add the comment I should\u0027ve. Something like:\n\n// We need to keep all ShareActivity instances because the AndroidManifest can be populated with multiple instances of ShareActivity but we only compile classes.dex once across all WebApks. The only disadvantage of keeping unused Activity instances is size but this size is minimal (O(10s of bytes) IIRC)",
+      "range": {
+        "startLine": 2,
+        "startChar": 16,
+        "endLine": 2,
+        "endChar": 24
+      },
+      "revId": "69e1ab0431c28eefc7b0716ff6bb70dd80a3f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c40c9e7_176c70c7",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/HostBrowserLauncher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T20:09:46Z",
+      "side": 1,
+      "message": "I wouldn\u0027t want us to hold onto this for too long but since this object is only ever owned by the parent activity, it seems ok",
+      "range": {
+        "startLine": 46,
+        "startChar": 21,
+        "endLine": 46,
+        "endChar": 36
+      },
+      "revId": "69e1ab0431c28eefc7b0716ff6bb70dd80a3f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2f9f75_7698c221",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ShareActivity0.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T20:09:46Z",
+      "side": 1,
+      "message": "my mistake - these should all be 2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "69e1ab0431c28eefc7b0716ff6bb70dd80a3f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5829a56a_cd52260d",
+        "filename": "chrome/android/webapk/shell_apk/unbound_manifest_config.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T20:09:46Z",
+      "side": 1,
+      "message": "looks like you have some tabs in here :/",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 1
+      },
+      "revId": "69e1ab0431c28eefc7b0716ff6bb70dd80a3f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
