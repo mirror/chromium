@@ -82,6 +82,7 @@
 #include "device/gamepad/public/cpp/gamepads.h"
 #include "device/sensors/public/cpp/motion_data.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/config/gpu_feature_info.h"
 #include "gpu/config/gpu_info.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "ipc/ipc_sync_message_filter.h"
@@ -742,9 +743,14 @@ bool RendererBlinkPlatformImpl::IsThreadedCompositingEnabled() {
 }
 
 bool RendererBlinkPlatformImpl::IsGPUCompositingEnabled() {
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  return !command_line.HasSwitch(switches::kDisableGpuCompositing);
+  RenderThreadImpl* thread = RenderThreadImpl::current();
+  scoped_refptr<gpu::GpuChannelHost> host;
+  if (thread)
+    host = thread->EstablishGpuChannelSync();
+  return host &&
+         host->gpu_feature_info()
+                 .status_values[gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING] ==
+             gpu::kGpuFeatureStatusEnabled;
 }
 
 bool RendererBlinkPlatformImpl::IsThreadedAnimationEnabled() {
