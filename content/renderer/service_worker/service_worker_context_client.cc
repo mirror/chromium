@@ -8,6 +8,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/compiler_specific.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -1371,14 +1372,17 @@ void ServiceWorkerContextClient::SendWorkerStarted() {
 void ServiceWorkerContextClient::SetRegistrationInServiceWorkerGlobalScope(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
   DCHECK(worker_task_runner_->RunsTasksInCurrentSequence());
+  // Prepare to be used by
+  // provider_context_->GetOrCreateRegistrationForServiceWorkerGlobalScope().
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
           sender_.get(), main_thread_task_runner_.get());
+  ALLOW_UNUSED_LOCAL(dispatcher);
 
   // Register a registration and its version attributes with the dispatcher
   // living on the worker thread.
   proxy_->SetRegistration(WebServiceWorkerRegistrationImpl::CreateHandle(
-      dispatcher->GetOrCreateRegistrationForServiceWorkerGlobalScope(
+      provider_context_->GetOrCreateRegistrationForServiceWorkerGlobalScope(
           std::move(info), io_thread_task_runner_)));
 }
 
