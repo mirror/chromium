@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/download/test_download_http_response.h"
+#include "content/public/test/test_download_http_response.h"
 
 #include <inttypes.h>
 
@@ -18,6 +18,7 @@
 #include "net/http/http_byte_range.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_util.h"
+#include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
 
@@ -450,6 +451,32 @@ std::string TestDownloadHttpResponse::GetCommonEntityHeaders() {
   }
   headers.append("\r\n");
   return headers;
+}
+
+// static
+std::unique_ptr<net::test_server::HttpResponse>
+TestDownloadResponseHandler::HandleTestDownloadRequest(
+    const TestDownloadHttpResponse::OnResponseSentCallback& callback,
+    const net::test_server::HttpRequest& request) {
+  return TestDownloadHttpResponse::Create(request, callback);
+}
+
+TestDownloadResponseHandler::TestDownloadResponseHandler() = default;
+TestDownloadResponseHandler::~TestDownloadResponseHandler() = default;
+
+void TestDownloadResponseHandler::RegisterToTestServer(
+    net::test_server::EmbeddedTestServer* server) {
+  DCHECK(!server->Started())
+      << "Register request handler before starting the server";
+  server->RegisterRequestHandler(base::Bind(
+      &content::TestDownloadResponseHandler::HandleTestDownloadRequest,
+      base::Bind(&content::TestDownloadResponseHandler::OnRequestCompleted,
+                 base::Unretained(this))));
+}
+
+void TestDownloadResponseHandler::OnRequestCompleted(
+    std::unique_ptr<TestDownloadHttpResponse::CompletedRequest> request) {
+  completed_requests_.push_back(std::move(request));
 }
 
 }  // namespace content

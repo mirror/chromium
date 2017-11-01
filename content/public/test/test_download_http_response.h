@@ -2,14 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_DOWNLOAD_TEST_DOWNLOAD_HTTP_RESPONSE_H_
-#define CONTENT_BROWSER_DOWNLOAD_TEST_DOWNLOAD_HTTP_RESPONSE_H_
+#ifndef CONTENT_PUBLIC_TEST_TEST_DOWNLOAD_HTTP_RESPONSE_H_
+#define CONTENT_PUBLIC_TEST_TEST_DOWNLOAD_HTTP_RESPONSE_H_
 
 #include <set>
 #include <string>
 
 #include "base/containers/queue.h"
 #include "net/http/http_response_info.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/http_response.h"
 
@@ -241,6 +242,43 @@ class TestDownloadHttpResponse : public net::test_server::HttpResponse {
   DISALLOW_COPY_AND_ASSIGN(TestDownloadHttpResponse);
 };
 
+// Class for creating and monitoring the completed response from the server.
+//
+// Example usage with TestDownloadHttpResponse:
+//
+//   test_response_handler->RegisterToTestServer(embedded_test_server());
+//   EXPECT_TRUE(embedded_test_server()->Start());
+//   GURL url = embedded_test_server()->GetURL("/random-url");
+//
+//   content::TestDownloadHttpResponse::Parameters parameters;
+//   // Tweak the |parameters| here.
+//   content::TestDownloadHttpResponse::StartServing(parameters, url);
+
+class TestDownloadResponseHandler {
+ public:
+  static std::unique_ptr<net::test_server::HttpResponse>
+  HandleTestDownloadRequest(
+      const TestDownloadHttpResponse::OnResponseSentCallback& callback,
+      const net::test_server::HttpRequest& request);
+
+  TestDownloadResponseHandler();
+  ~TestDownloadResponseHandler();
+
+  // Register to the embedded test |server|.
+  void RegisterToTestServer(net::test_server::EmbeddedTestServer* server);
+
+  void OnRequestCompleted(
+      std::unique_ptr<TestDownloadHttpResponse::CompletedRequest> request);
+
+  using CompletedRequests =
+      std::vector<std::unique_ptr<TestDownloadHttpResponse::CompletedRequest>>;
+  CompletedRequests const& completed_requests() { return completed_requests_; }
+
+ private:
+  CompletedRequests completed_requests_;
+  DISALLOW_COPY_AND_ASSIGN(TestDownloadResponseHandler);
+};
+
 }  // namespace content
 
-#endif  // CONTENT_BROWSER_DOWNLOAD_TEST_DOWNLOAD_HTTP_RESPONSE_H_
+#endif  // CONTENT_PUBLIC_TEST_TEST_DOWNLOAD_HTTP_RESPONSE_H_

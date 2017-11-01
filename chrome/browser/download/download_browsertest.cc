@@ -103,6 +103,8 @@
 #include "content/public/common/quarantine.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/download_test_observer.h"
+#include "content/public/test/slow_download_http_response.h"
+#include "content/public/test/test_download_http_response.h"
 #include "content/public/test/test_download_request_handler.h"
 #include "content/public/test/test_file_error_injector.h"
 #include "content/public/test/test_navigation_observer.h"
@@ -505,6 +507,10 @@ class DownloadTest : public InProcessBrowserTest {
     return GetDownloadDirectory(browser).Append(file.BaseName());
   }
 
+  content::TestDownloadResponseHandler* test_response_handler() {
+    return &test_response_handler_;
+  }
+
   // Must be called after browser creation.  Creates a temporary
   // directory for downloads that is auto-deleted on destruction.
   // Returning false indicates a failure of the function, and should be asserted
@@ -709,13 +715,22 @@ class DownloadTest : public InProcessBrowserTest {
                    SizeTestType type,
                    const std::string& partial_indication,
                    const std::string& total_indication) {
+    embedded_test_server()->ServeFilesFromDirectory(GetTestDataDirectory());
+    embedded_test_server()->RegisterRequestHandler(base::Bind(
+        &content::SlowDownloadHttpResponse::HandleSlowDownloadRequest));
+    EXPECT_TRUE(embedded_test_server()->Start());
+
     base::ScopedAllowBlockingForTesting allow_blocking;
     EXPECT_TRUE(type == SIZE_TEST_TYPE_UNKNOWN || type == SIZE_TEST_TYPE_KNOWN);
     if (type != SIZE_TEST_TYPE_KNOWN && type != SIZE_TEST_TYPE_UNKNOWN)
       return false;
-    GURL url(type == SIZE_TEST_TYPE_KNOWN ?
-             net::URLRequestSlowDownloadJob::kKnownSizeUrl :
-             net::URLRequestSlowDownloadJob::kUnknownSizeUrl);
+    GURL url(type == SIZE_TEST_TYPE_KNOWN
+                 ? embedded_test_server()->GetURL(
+                       content::SlowDownloadHttpResponse::kKnownSizeUrl)
+                 : embedded_test_server()->GetURL(
+                       content::SlowDownloadHttpResponse::kUnknownSizeUrl));
+    GURL finish_url = embedded_test_server()->GetURL(
+        content::SlowDownloadHttpResponse::kFinishDownloadUrl);
 
     // TODO(ahendrickson) -- |expected_title_in_progress| and
     // |expected_title_finished| need to be checked.
@@ -744,7 +759,7 @@ class DownloadTest : public InProcessBrowserTest {
 
     // Allow the request to finish.  We do this by loading a second URL in a
     // separate tab.
-    GURL finish_url(net::URLRequestSlowDownloadJob::kFinishDownloadUrl);
+
     ui_test_utils::NavigateToURLWithDisposition(
         browser, finish_url, WindowOpenDisposition::NEW_FOREGROUND_TAB,
         ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
@@ -767,8 +782,8 @@ class DownloadTest : public InProcessBrowserTest {
       return false;
 
     // Check the file contents.
-    size_t file_size = net::URLRequestSlowDownloadJob::kFirstDownloadSize +
-                       net::URLRequestSlowDownloadJob::kSecondDownloadSize;
+    size_t file_size = content::SlowDownloadHttpResponse::kFirstDownloadSize +
+                       content::SlowDownloadHttpResponse::kSecondDownloadSize;
     std::string expected_contents(file_size, '*');
     EXPECT_TRUE(VerifyFile(download_path, expected_contents, file_size));
 
@@ -1029,8 +1044,7 @@ class DownloadTest : public InProcessBrowserTest {
   }
 
   // This method:
-  // * Starts a mock download by navigating browser() to a URLRequestMockHTTPJob
-  //   mock URL.
+  // * Starts a mock download by navigating to embedded test server URL.
   // * Injects |error| on the first write using |error_injector|.
   // * Waits for the download to be interrupted.
   // * Clears the errors on |error_injector|.
@@ -1048,7 +1062,13 @@ class DownloadTest : public InProcessBrowserTest {
         new DownloadTestObserverResumable(DownloadManagerForBrowser(browser()),
                                           1));
 
-    GURL url = URLRequestMockHTTPJob::GetMockUrl(kDownloadTest1Path);
+    if (!embedded_test_server()->Started()) {
+      embedded_test_server()->ServeFilesFromDirectory(GetTestDataDirectory());
+      EXPECT_TRUE(embedded_test_server()->Start());
+    }
+
+    GURL url =
+        embedded_test_server()->GetURL("/" + std::string(kDownloadTest1Path));
     ui_test_utils::NavigateToURL(browser(), url);
     observer->WaitForFinished();
 
@@ -1080,6 +1100,7 @@ class DownloadTest : public InProcessBrowserTest {
   // Location of the downloads directory for these tests
   base::ScopedTempDir downloads_directory_;
 
+  content::TestDownloadResponseHandler test_response_handler_;
   std::unique_ptr<DownloadTestFileActivityObserver> file_activity_observer_;
   extensions::ScopedIgnoreContentVerifierForTest ignore_content_verifier_;
 };
@@ -1778,21 +1799,35 @@ ServerRedirectRequestHandler(const net::test_server::HttpRequest& request) {
 }
 
 IN_PROC_BROWSER_TEST_F(DownloadTest, DownloadHistoryCheck) {
-  GURL download_url(net::URLRequestSlowDownloadJob::kKnownSizeUrl);
+  // Rediret to the actual download URL.
+  embedded_test_server()->RegisterRequestHandler(
+      base::Bind(&ServerRedirectRequestHandler));
+  embedded_test_server()->RegisterRequestHandler(base::Bind(
+      &content::SlowDownloadHttpResponse::HandleSlowDownloadRequest));
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  GURL download_url = embedded_test_server()->GetURL(
+      content::SlowDownloadHttpResponse::kKnownSizeUrl);
+  GURL redirect_url =
+      embedded_test_server()->GetURL("/redirect?" + download_url.spec());
+
+  // Inject an error.
+  using TestFileErrorInjector = content::TestFileErrorInjector;
+  scoped_refptr<TestFileErrorInjector> injector(
+      TestFileErrorInjector::Create(DownloadManagerForBrowser(browser())));
+  TestFileErrorInjector::FileErrorInfo error_info = {
+      TestFileErrorInjector::FILE_OPERATION_STREAM_COMPLETE, 0,
+      content::DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED};
+  error_info.stream_offset = 0;
+  error_info.stream_bytes_written = 1024;
+  injector->InjectError(error_info);
+
   base::FilePath file(net::GenerateFileName(download_url,
                                             std::string(),
                                             std::string(),
                                             std::string(),
                                             std::string(),
                                             std::string()));
-
-  // We use the server so that we can get a redirect and test url_chain
-  // persistence.
-  embedded_test_server()->RegisterRequestHandler(
-      base::Bind(&ServerRedirectRequestHandler));
-  ASSERT_TRUE(embedded_test_server()->Start());
-  GURL redirect_url =
-      embedded_test_server()->GetURL("/redirect?" + download_url.spec());
 
   // Download the url and wait until the object has been stored.
   base::Time start(base::Time::Now());
@@ -1834,8 +1869,12 @@ IN_PROC_BROWSER_TEST_F(DownloadTest, DownloadHistoryCheck) {
       new content::DownloadTestObserverInterrupted(
           DownloadManagerForBrowser(browser()), 1,
           content::DownloadTestObserver::ON_DANGEROUS_DOWNLOAD_FAIL));
-  ui_test_utils::NavigateToURL(
-      browser(), GURL(net::URLRequestSlowDownloadJob::kErrorDownloadUrl));
+
+  // Finsih the download.
+  GURL finish_url = embedded_test_server()->GetURL(
+      content::SlowDownloadHttpResponse::kFinishDownloadUrl);
+  ui_test_utils::NavigateToURL(browser(), finish_url);
+
   download_observer->WaitForFinished();
   EXPECT_EQ(1u, download_observer->NumDownloadsSeenInState(
       DownloadItem::INTERRUPTED));
@@ -3114,11 +3153,13 @@ IN_PROC_BROWSER_TEST_F(DownloadTest, MAYBE_DownloadTest_PercentComplete) {
   // Write a huge file. Make sure the test harness can supply "Content-Length"
   // header to indicate the file size, or the download will not have valid
   // percentage progression.
-  GURL url = GURL("http://example.com/large_file");
-  content::TestDownloadRequestHandler request_handler(url);
-  content::TestDownloadRequestHandler::Parameters parameters;
+  test_response_handler()->RegisterToTestServer(embedded_test_server());
+  EXPECT_TRUE(embedded_test_server()->Start());
+  GURL url = embedded_test_server()->GetURL("/large_file");
+
+  content::TestDownloadHttpResponse::Parameters parameters;
   parameters.size = 1024 * 1024 * 32; /* 32MB file. */
-  request_handler.StartServing(parameters);
+  content::TestDownloadHttpResponse::StartServing(parameters, url);
 
   // Ensure that we have enough disk space to download the large file.
   {

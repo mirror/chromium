@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/download/slow_download_http_response.h"
+#include "content/public/test/slow_download_http_response.h"
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
@@ -27,9 +27,10 @@ void SendResponseBody(const net::test_server::SendBytesCallback& send,
                       : SlowDownloadHttpResponse::kFirstDownloadSize;
   std::string response(data_size, '*');
 
-  if (finish_download)
+  if (finish_download) {
+    LOG(ERROR) << "@@@ " << __func__ << ", finish download!";
     send.Run(response, done);
-  else
+  } else
     send.Run(response, base::Bind(&SendResponseBodyDone, send, done));
 }
 
@@ -69,6 +70,7 @@ SlowDownloadHttpResponse::HandleSlowDownloadRequest(
       request.relative_url != kFinishDownloadUrl) {
     return nullptr;
   }
+  LOG(ERROR) << "@@@ " << __func__;
   auto response =
       std::make_unique<SlowDownloadHttpResponse>(request.relative_url);
   return std::move(response);
@@ -82,6 +84,7 @@ SlowDownloadHttpResponse::~SlowDownloadHttpResponse() = default;
 void SlowDownloadHttpResponse::SendResponse(
     const net::test_server::SendBytesCallback& send,
     const net::test_server::SendCompleteCallback& done) {
+  LOG(ERROR) << "@@@ " << __func__;
   std::string response;
   response.append("HTTP/1.1 200 OK\r\n");
   if (base::LowerCaseEqualsASCII(kFinishDownloadUrl, url_)) {

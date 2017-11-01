@@ -40,8 +40,6 @@
 #include "content/browser/download/download_resource_handler.h"
 #include "content/browser/download/download_task_runner.h"
 #include "content/browser/download/parallel_download_utils.h"
-#include "content/browser/download/slow_download_http_response.h"
-#include "content/browser/download/test_download_http_response.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/download_danger_type.h"
@@ -54,6 +52,8 @@
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/public/test/download_test_observer.h"
+#include "content/public/test/slow_download_http_response.h"
+#include "content/public/test/test_download_http_response.h"
 #include "content/public/test/test_file_error_injector.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
@@ -656,32 +656,6 @@ class TestRequestPauseHandler {
   base::OnceClosure resume_callback_;
 };
 
-// Class for creating and monitoring the completed response from the server.
-class TestDownloadResponseHandler {
- public:
-  static std::unique_ptr<net::test_server::HttpResponse>
-  HandleTestDownloadRequest(
-      const TestDownloadHttpResponse::OnResponseSentCallback& callback,
-      const net::test_server::HttpRequest& request) {
-    return TestDownloadHttpResponse::Create(request, callback);
-  }
-
-  TestDownloadResponseHandler() = default;
-
-  void OnRequestCompleted(
-      std::unique_ptr<TestDownloadHttpResponse::CompletedRequest> request) {
-    completed_requests_.push_back(std::move(request));
-  }
-
-  using CompletedRequests =
-      std::vector<std::unique_ptr<TestDownloadHttpResponse::CompletedRequest>>;
-  CompletedRequests const& completed_requests() { return completed_requests_; }
-
- private:
-  CompletedRequests completed_requests_;
-  DISALLOW_COPY_AND_ASSIGN(TestDownloadResponseHandler);
-};
-
 class DownloadContentTest : public ContentBrowserTest {
  protected:
   void SetUpOnMainThread() override {
@@ -700,10 +674,7 @@ class DownloadContentTest : public ContentBrowserTest {
     embedded_test_server()->ServeFilesFromDirectory(test_data_dir);
     embedded_test_server()->RegisterRequestHandler(
         base::Bind(&SlowDownloadHttpResponse::HandleSlowDownloadRequest));
-    embedded_test_server()->RegisterRequestHandler(
-        base::Bind(&TestDownloadResponseHandler::HandleTestDownloadRequest,
-                   base::Bind(&TestDownloadResponseHandler::OnRequestCompleted,
-                              base::Unretained(&test_response_handler_))));
+    test_response_handler_->RegisterToTestServer(embedded_test_server());
     ASSERT_TRUE(embedded_test_server()->Start());
     const std::string real_host =
         embedded_test_server()->host_port_pair().host();
