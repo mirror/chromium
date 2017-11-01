@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "f2c94e27_c817cc12",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T20:35:16Z",
+      "side": 1,
+      "message": "Should we call DisableGpuCompositing instead so that other clients are notified?",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2caa8a_c33103c1",
+        "filename": "content/renderer/pepper/ppb_graphics_3d_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T20:35:16Z",
+      "side": 1,
+      "message": "This is not aura-specific. If GPU compositing is disabled, we can\u0027t consume the PPB_Graphics3D_Impl\u0027s output.",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19cc444b_6b663c83",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T20:35:16Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to do that here. The browser will notify (or has already notified) the renderer. @danakj: thoughts?",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4d2f40_3fd89c5a",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2104,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T20:35:16Z",
+      "side": 1,
+      "message": "nit: can you comment that EstablishGpuChannelSync may have modified is_gpu_compositing_disabled_?",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6512834c_d2bd4841",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
         "patchSetId": 14
