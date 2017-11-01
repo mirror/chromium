@@ -16,6 +16,24 @@
       "revId": "9e53b6d7daf6f1f596266766ea49a82ae1bb1adc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78de8dff_63e57081",
+        "filename": "third_party/WebKit/public/platform/modules/manifest/manifest.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-11-01T22:50:39Z",
+      "side": 1,
+      "message": "Correct. I\u0027m afraid I was cargo-culting. Other URLs from the manifest are marked as optional (start_url, scope), but they actually are always present, as we pass empty if they\u0027re missing or invalid.\n\nI\u0027m not sure it\u0027s worth being technically correct with this one parameter and marking it as not optional. It might given an impression that start_url and scope are optional, but splash_screen_url is not, while actually start_url is the one required.\n\nHow would you recommend to proceed?",
+      "parentUuid": "0db0cf36_abb6101a",
+      "revId": "9e53b6d7daf6f1f596266766ea49a82ae1bb1adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
