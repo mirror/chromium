@@ -1,3 +1,4 @@
 include_rules = [
-  "+content/public/test/android/javatests",
+  "-content/public/test",
+  "+content/public/test/android/javatests/src/org/chromium/content/browser/test",
 ]
