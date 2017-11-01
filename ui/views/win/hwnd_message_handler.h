@@ -415,6 +415,9 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
     // word of WPARAM could be set when the window is minimized or restored.
     CR_MESSAGE_HANDLER_EX(WM_NCACTIVATE, OnNCActivate)
 
+    CR_MESSAGE_HANDLER_EX(WM_TIMER, OnTimer)
+    CR_MESSAGE_HANDLER_EX(DM_POINTERHITTEST, OnPointerHitTest)
+
     // This list is in _ALPHABETICAL_ order! OR I WILL HURT YOU.
     CR_MSG_WM_ACTIVATEAPP(OnActivateApp)
     CR_MSG_WM_APPCOMMAND(OnAppCommand)
@@ -605,6 +608,9 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   // if they request its location.
   void DestroyAXSystemCaret();
 
+  LRESULT OnTimer(UINT message, WPARAM w_param, LPARAM l_param);
+  LRESULT OnPointerHitTest(UINT message, WPARAM w_param, LPARAM l_param);
+
   HWNDMessageHandlerDelegate* delegate_;
 
   std::unique_ptr<FullscreenHandler> fullscreen_handler_;
@@ -737,8 +743,7 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   // This class provides functionality to register the legacy window as a
   // Direct Manipulation consumer. This allows us to support smooth scroll
   // in Chrome on Windows 10.
-  std::unique_ptr<gfx::win::DirectManipulationHelper>
-      direct_manipulation_helper_;
+  gfx::win::DirectManipulationHelper* direct_manipulation_helper_;
 
   // The location where the user clicked on the caption. We cache this when we
   // receive the WM_NCLBUTTONDOWN message. We use this in the subsequent

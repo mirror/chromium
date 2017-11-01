@@ -140,7 +140,7 @@ bool LegacyRenderWidgetHostHWND::Init() {
   // Direct Manipulation is enabled on Windows 10+. The CreateInstance function
   // returns NULL if Direct Manipulation is not available.
   direct_manipulation_helper_ =
-      gfx::win::DirectManipulationHelper::CreateInstance();
+      gfx::win::DirectManipulationHelper::GetInstance();
   if (direct_manipulation_helper_)
     direct_manipulation_helper_->Initialize(hwnd());
 
@@ -278,11 +278,11 @@ LRESULT LegacyRenderWidgetHostHWND::OnMouseRange(UINT message,
     }
   }
 
-  if (direct_manipulation_helper_ &&
-      (message == WM_MOUSEWHEEL || message == WM_MOUSEHWHEEL)) {
-    direct_manipulation_helper_->HandleMouseWheel(hwnd(), message, w_param,
-        l_param);
-  }
+  // if (direct_manipulation_helper_ &&
+  //     (message == WM_MOUSEWHEEL || message == WM_MOUSEHWHEEL)) {
+  //   direct_manipulation_helper_->HandleMouseWheel(hwnd(), message, w_param,
+  //       l_param);
+  // }
   return ret;
 }
 

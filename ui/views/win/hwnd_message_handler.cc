@@ -416,7 +416,7 @@ void HWNDMessageHandler::Init(HWND parent, const gfx::Rect& bounds) {
   // Direct Manipulation is enabled on Windows 10+. The CreateInstance function
   // returns NULL if Direct Manipulation is not available.
   direct_manipulation_helper_ =
-      gfx::win::DirectManipulationHelper::CreateInstance();
+      gfx::win::DirectManipulationHelper::GetInstance();
   if (direct_manipulation_helper_)
     direct_manipulation_helper_->Initialize(hwnd());
 
@@ -2518,13 +2518,13 @@ void HWNDMessageHandler::OnWindowPosChanged(WINDOWPOS* window_pos) {
     SetDwmFrameExtension(DwmFrameState::ON);
   if (window_pos->flags & SWP_SHOWWINDOW) {
     delegate_->HandleVisibilityChanged(true);
-    if (direct_manipulation_helper_)
-      direct_manipulation_helper_->Activate(hwnd());
+    // if (direct_manipulation_helper_)
+    //   direct_manipulation_helper_->Activate(hwnd());
     SetDwmFrameExtension(DwmFrameState::ON);
   } else if (window_pos->flags & SWP_HIDEWINDOW) {
     delegate_->HandleVisibilityChanged(false);
-    if (direct_manipulation_helper_)
-      direct_manipulation_helper_->Deactivate(hwnd());
+    // if (direct_manipulation_helper_)
+    //   direct_manipulation_helper_->Deactivate(hwnd());
   }
 
   SetMsgHandled(FALSE);
@@ -2676,12 +2676,6 @@ LRESULT HWNDMessageHandler::HandleMouseEventInternal(UINT message,
 
   if (!ref.get())
     return 0;
-
-  if (direct_manipulation_helper_ && track_mouse &&
-      (message == WM_MOUSEWHEEL || message == WM_MOUSEHWHEEL)) {
-    direct_manipulation_helper_->HandleMouseWheel(hwnd(), message, w_param,
-        l_param);
-  }
 
   if (!handled && message == WM_NCLBUTTONDOWN && w_param != HTSYSMENU &&
       w_param != HTCAPTION &&
@@ -3032,6 +3026,27 @@ void HWNDMessageHandler::OnBackgroundFullscreen() {
   fullscreen_handler()->MarkFullscreen(false);
 }
 
+LRESULT HWNDMessageHandler::OnTimer(UINT message,
+                                    WPARAM w_param,
+                                    LPARAM l_param) {
+  LOG(ERROR) << "OnTimer";
+  if (direct_manipulation_helper_) {
+    direct_manipulation_helper_->OnTimer(w_param);
+  }
+
+  return 0;
+}
+
+LRESULT HWNDMessageHandler::OnPointerHitTest(UINT message,
+                                             WPARAM w_param,
+                                             LPARAM l_param) {
+  LOG(ERROR) << "OnPointerHitTest";
+  if (direct_manipulation_helper_) {
+    direct_manipulation_helper_->OnPointerHitTest(w_param);
+  }
+
+  return 0;
+}
 void HWNDMessageHandler::DestroyAXSystemCaret() {
   ax_system_caret_ = nullptr;
 }
