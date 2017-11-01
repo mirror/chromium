@@ -443,7 +443,12 @@ class BASE_EXPORT MessageLoopForUI : public MessageLoop {
   static MessageLoopForUI* current() {
     MessageLoop* loop = MessageLoop::current();
     DCHECK(loop);
+#if defined(OS_ANDROID)
+    DCHECK(loop->IsType(MessageLoop::TYPE_UI) ||
+           loop->IsType(MessageLoop::TYPE_JAVA));
+#else
     DCHECK(loop->IsType(MessageLoop::TYPE_UI));
+#endif
     return static_cast<MessageLoopForUI*>(loop);
   }
 
