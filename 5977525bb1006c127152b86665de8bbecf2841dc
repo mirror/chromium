@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "88f2c887_00d4dc56",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-01T21:10:44Z",
+      "side": 1,
+      "message": "Do you *know* that the TH32 api doesn\u0027t hog a thread waiting for something else (like a lock, perhaps)? Is that not enough to warrant MayBlock? I defer to fdoray@ since he knows better than I how the API is supposed to be used, but I can\u0027t say for sure that the TH32 functions are any less blocking than CreateFile -- I have no idea what they do. :-)",
+      "parentUuid": "a170731c_ba9c4b43",
+      "revId": "5977525bb1006c127152b86665de8bbecf2841dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69217a93_f7489bd6",
         "filename": "chrome/common/conflicts/module_watcher_win.cc",
         "patchSetId": 1
