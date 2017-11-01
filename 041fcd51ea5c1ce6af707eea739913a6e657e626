@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3988cf80_223d894d",
+        "filename": "components/machine_intelligence/generic_logistic_regression_inference.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-01T14:14:00Z",
+      "side": 1,
+      "message": "per style guide, this should go just after generic_logistic_regression_inference.h\n\nhttps://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes",
+      "revId": "041fcd51ea5c1ce6af707eea739913a6e657e626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
