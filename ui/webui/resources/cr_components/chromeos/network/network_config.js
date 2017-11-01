@@ -923,8 +923,10 @@ Polymer({
    * @private
    */
   shareIsEnabled_: function() {
-    if (this.guid || !this.shareAllowEnable)
+    if (!this.shareAllowEnable ||
+        this.networkProperties.Source != CrOnc.Source.NONE) {
       return false;
+    }
 
     if (this.security_ == CrOnc.Security.WPA_EAP) {
       var eap = this.getEap_(this.configProperties_);
