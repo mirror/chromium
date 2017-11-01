@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7365de2b_30fb3680",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/OffscreenCanvas-commit-copyImage.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-01T19:17:24Z",
+      "side": 1,
+      "message": "Instead of drawing a single rectangle, please draw four rects of different colors in the corners of the canvas. That way, we can verify that the image was not flipped or anything like that.",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 14
+      },
+      "revId": "9747a48d6ebd23fab151c5ebdc3dc810cd73ec89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
