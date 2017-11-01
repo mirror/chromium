@@ -579,5 +579,10 @@
     "prefix": "mouseevent_fractional",
     "base": "fast/events",
     "args": ["--enable-blink-features=FractionalMouseEvent"]
+  },
+  {
+    "prefix": "modern-media-controls",
+    "base": "media/controls/modern",
+    "args": ["--enable-features=UseModernMediaControls"]
   }
 ]
