@@ -300,7 +300,7 @@ class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory>
   CreateSubresourceLoaderFactory(const GURL& controller_origin) {
     auto connector = base::MakeRefCounted<ControllerServiceWorkerConnector>(
-        &fake_container_host_);
+        &fake_container_host_, nullptr /* controller */);
     return std::make_unique<ServiceWorkerSubresourceLoaderFactory>(
         connector, loader_factory_getter_, controller_origin,
         base::MakeRefCounted<

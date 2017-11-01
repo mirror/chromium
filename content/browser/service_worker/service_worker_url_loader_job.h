@@ -83,7 +83,12 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob : public mojom::URLLoader,
   void FallbackToNetwork();
   void FallbackToNetworkOrRenderer();
   void ForwardToServiceWorker();
-  bool ShouldFallbackToNetwork();
+  bool ShouldFallbackToNetwork() {
+    return response_type_ == ResponseType::FALLBACK_TO_NETWORK;
+  }
+  bool ShouldForwardToServiceWorker() {
+    return response_type_ == ResponseType::FORWARD_TO_SERVICE_WORKER;
+  }
   void FailDueToLostController();
   ui::PageTransition GetPageTransition();
   size_t GetURLChainSize() const;
