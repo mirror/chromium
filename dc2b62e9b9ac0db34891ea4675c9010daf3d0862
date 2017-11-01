@@ -88,6 +88,24 @@
       "revId": "dc2b62e9b9ac0db34891ea4675c9010daf3d0862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ddc9e7_f2b72c91",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-01T21:25:46Z",
+      "side": 1,
+      "message": "Am I right in thinking that doesn\u0027t apply in this case?",
+      "parentUuid": "4088594b_bd91990e",
+      "revId": "dc2b62e9b9ac0db34891ea4675c9010daf3d0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
