@@ -133,6 +133,9 @@ struct TypeConverter<PaymentOptionsPtr, blink::PaymentOptions> {
 }  // namespace mojo
 
 namespace blink {
+
+const size_t kMaxListSize = 1024;
+
 namespace {
 
 // If the website does not call complete() 60 seconds after show() has been
@@ -141,7 +144,6 @@ static const int kCompleteTimeoutSeconds = 60;
 
 static const size_t kMaxStringLength = 1024;
 static const size_t kMaxJSONStringLength = 1048576;
-static const size_t kMaxListSize = 1024;
 
 // Validates ShippingOption or PaymentItem, which happen to have identical
 // fields, except for "id", which is present only in ShippingOption.

@@ -9,12 +9,12 @@
 
 namespace blink {
 
+extern const size_t kMaxListSize;
+
 namespace {
 
 using ::payments::mojom::blink::BasicCardNetwork;
 using ::payments::mojom::blink::BasicCardType;
-
-static const size_t kMaxListSize = 1024;
 
 const struct {
   const payments::mojom::BasicCardNetwork code;
