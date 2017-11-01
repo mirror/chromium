@@ -1932,6 +1932,12 @@ void RenderFrameHostImpl::OnContextMenu(const ContextMenuParams& params) {
   validated_params.x = transformed_point.x();
   validated_params.y = transformed_point.y();
 
+  validated_params.selection_start_offset =
+      std::max(validated_params.selection_start_offset, 0);
+  if (validated_params.selection_text.size() == 0) {
+    validated_params.selection_start_offset = 0;
+  }
+
   delegate_->ShowContextMenu(this, validated_params);
 }
 

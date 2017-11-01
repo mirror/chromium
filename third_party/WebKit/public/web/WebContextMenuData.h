@@ -200,6 +200,9 @@ struct WebContextMenuData {
   // Selection in viewport coordinates.
   WebRect selection_rect;
 
+  // Start position of selection text.
+  int selection_start_offset;
+
   WebMenuSourceType source_type;
 
   WebContextMenuData()
