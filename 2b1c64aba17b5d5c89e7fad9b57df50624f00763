@@ -34,6 +34,24 @@
       "revId": "2b1c64aba17b5d5c89e7fad9b57df50624f00763",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb1bb9ff_f264a1e1",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-01T19:02:12Z",
+      "side": 1,
+      "message": "Probably in par performance-wise. But it looks nicer to put a var in a minimum scope it is used.",
+      "parentUuid": "08ea9e43_bf4a3509",
+      "revId": "2b1c64aba17b5d5c89e7fad9b57df50624f00763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
