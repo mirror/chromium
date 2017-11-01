@@ -491,13 +491,13 @@ std::unique_ptr<blink::WebInputEvent> TransformScreenToWidgetCoordinates(
 
 gfx::ColorSpace GetTestingColorSpace(const std::string& name) {
   if (name == "genericRGB") {
-    return gfx::ICCProfileForTestingGenericRGB().GetColorSpace();
+    return gfx::ICCProfileForTestingGenericRGB()->GetColorSpace();
   } else if (name == "sRGB") {
     return gfx::ColorSpace::CreateSRGB();
   } else if (name == "test" || name == "colorSpin") {
-    return gfx::ICCProfileForTestingColorSpin().GetColorSpace();
+    return gfx::ICCProfileForTestingColorSpin()->GetColorSpace();
   } else if (name == "adobeRGB") {
-    return gfx::ICCProfileForTestingAdobeRGB().GetColorSpace();
+    return gfx::ICCProfileForTestingAdobeRGB()->GetColorSpace();
   } else if (name == "reset") {
     return display::Display::GetForcedColorProfile();
   }
