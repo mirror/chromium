@@ -16,6 +16,24 @@
       "revId": "0c8a8f1165b6e77f2e38f141765011afb5c71148",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd94a84_ec99fe50",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-01T18:06:07Z",
+      "side": 1,
+      "message": "OK Jeremy.",
+      "parentUuid": "6ecd4d89_cfcfa90a",
+      "revId": "0c8a8f1165b6e77f2e38f141765011afb5c71148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
