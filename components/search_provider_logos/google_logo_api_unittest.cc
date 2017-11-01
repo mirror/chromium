@@ -50,15 +50,20 @@ TEST(GoogleNewLogoApiTest, AppendsQueryParams) {
 
   EXPECT_EQ(
       GURL("https://base.doo/target?async=ntp:1"),
-      GoogleNewAppendQueryparamsToLogoURL(false, logo_url, std::string()));
-  EXPECT_EQ(GURL("https://base.doo/target?async=ntp:1,graybg:1"),
-            GoogleNewAppendQueryparamsToLogoURL(true, logo_url, std::string()));
+      GoogleAppendFingerprintParamToLogoURL(
+          GoogleNewAppendQueryparamsToLogoURL(false, logo_url), std::string()));
+  EXPECT_EQ(
+      GURL("https://base.doo/target?async=ntp:1,graybg:1"),
+      GoogleAppendFingerprintParamToLogoURL(
+          GoogleNewAppendQueryparamsToLogoURL(true, logo_url), std::string()));
   EXPECT_EQ(
       GURL("https://base.doo/target?async=ntp:1,es_dfp:fingerprint"),
-      GoogleNewAppendQueryparamsToLogoURL(false, logo_url, "fingerprint"));
+      GoogleAppendFingerprintParamToLogoURL(
+          GoogleNewAppendQueryparamsToLogoURL(false, logo_url), "fingerprint"));
   EXPECT_EQ(
       GURL("https://base.doo/target?async=ntp:1,graybg:1,es_dfp:fingerprint"),
-      GoogleNewAppendQueryparamsToLogoURL(true, logo_url, "fingerprint"));
+      GoogleAppendFingerprintParamToLogoURL(
+          GoogleNewAppendQueryparamsToLogoURL(true, logo_url), "fingerprint"));
 }
 
 TEST(GoogleNewLogoApiTest, ResolvesRelativeUrl) {

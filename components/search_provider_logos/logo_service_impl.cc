@@ -146,12 +146,12 @@ LogoServiceImpl::LogoServiceImpl(
     TemplateURLService* template_url_service,
     std::unique_ptr<image_fetcher::ImageDecoder> image_decoder,
     scoped_refptr<net::URLRequestContextGetter> request_context_getter,
-    bool use_gray_background)
+    base::RepeatingCallback<bool()> requested_logo_type_getter)
     : LogoService(),
       cache_directory_(cache_directory),
       template_url_service_(template_url_service),
       request_context_getter_(request_context_getter),
-      use_gray_background_(use_gray_background),
+      requested_logo_type_getter_(std::move(requested_logo_type_getter)),
       image_decoder_(std::move(image_decoder)) {}
 
 LogoServiceImpl::~LogoServiceImpl() = default;
@@ -246,6 +246,7 @@ void LogoServiceImpl::GetLogo(LogoCallbacks callbacks) {
         std::move(logo_cache), std::move(clock));
   }
 
+  bool use_gray_background = requested_logo_type_getter_.Run();
   if (use_fixed_logo) {
     logo_tracker_->SetServerAPI(
         logo_url, base::Bind(&search_provider_logos::ParseFixedLogoResponse),
@@ -253,18 +254,23 @@ void LogoServiceImpl::GetLogo(LogoCallbacks callbacks) {
   } else if (is_google) {
     // TODO(treib): Get rid of this Google special case after
     // features::kUseDdljsonApi has launched.
+    GURL prefilled_url =
+        AppendPreliminaryParamsToGoogleLogoURL(use_gray_background, doodle_url);
     logo_tracker_->SetServerAPI(
-        doodle_url,
-        search_provider_logos::GetGoogleParseLogoResponseCallback(base_url),
-        search_provider_logos::GetGoogleAppendQueryparamsCallback(
-            use_gray_background_));
+        prefilled_url,
+        search_provider_logos::GetGoogleParseLogoResponseCallback(
+            prefilled_url),
+        base::Bind(
+            &search_provider_logos::GoogleAppendFingerprintParamToLogoURL));
   } else {
+    GURL prefilled_url =
+        GoogleNewAppendQueryparamsToLogoURL(use_gray_background, doodle_url);
     logo_tracker_->SetServerAPI(
-        doodle_url,
+        prefilled_url,
         base::Bind(&search_provider_logos::GoogleNewParseLogoResponse,
                    base_url),
-        base::Bind(&search_provider_logos::GoogleNewAppendQueryparamsToLogoURL,
-                   use_gray_background_));
+        base::Bind(
+            &search_provider_logos::GoogleAppendFingerprintParamToLogoURL));
   }
 
   logo_tracker_->GetLogo(std::move(callbacks));

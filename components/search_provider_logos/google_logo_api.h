@@ -21,15 +21,14 @@ GURL GetGoogleDoodleURL(const GURL& google_base_url);
 
 // These return the correct callbacks for appending queryparams and parsing the
 // response ("Legacy" or "New"), based on the value of features::kUseDdljsonApi.
-AppendQueryparamsToLogoURL GetGoogleAppendQueryparamsCallback(
-    bool gray_background);
+GURL AppendPreliminaryParamsToGoogleLogoURL(bool gray_background,
+                                            const GURL& logo_url);
 ParseLogoResponse GetGoogleParseLogoResponseCallback(const GURL& base_url);
 
 // Implements AppendQueryparamsToLogoURL, defined in logo_tracker.h, for Google
 // doodles (old newtab_mobile API).
 GURL GoogleLegacyAppendQueryparamsToLogoURL(bool gray_background,
-                                            const GURL& logo_url,
-                                            const std::string& fingerprint);
+                                            const GURL& logo_url);
 
 // Implements ParseLogoResponse, defined in logo_tracker.h, for Google doodles
 // (old newtab_mobile API).
@@ -38,11 +37,13 @@ std::unique_ptr<EncodedLogo> GoogleLegacyParseLogoResponse(
     base::Time response_time,
     bool* parsing_failed);
 
+GURL GoogleAppendFingerprintParamToLogoURL(const GURL& logo_url,
+                                           const std::string& fingerprint);
+
 // Implements AppendQueryparamsToLogoURL, defined in logo_tracker.h, for Google
 // or third-party doodles (new ddljson API).
 GURL GoogleNewAppendQueryparamsToLogoURL(bool gray_background,
-                                         const GURL& logo_url,
-                                         const std::string& fingerprint);
+                                         const GURL& logo_url);
 
 // Implements ParseLogoResponse, defined in logo_tracker.h, for Google or
 // third-party doodles (new ddljson API).
