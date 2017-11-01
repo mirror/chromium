@@ -3066,6 +3066,10 @@ void ChromeContentBrowserClient::BindInterfaceRequest(
     gpu_binder_registry_.TryBindInterface(interface_name, interface_pipe);
 }
 
+std::string ChromeContentBrowserClient::GetEmbedderRendererServiceName() {
+  return chrome::mojom::kRendererServiceName;
+}
+
 void ChromeContentBrowserClient::RegisterInProcessServices(
     StaticServiceMap* services) {
   {
