@@ -3,16 +3,6 @@
     {
       "name": "LayoutView #document",
       "bounds": [800, 600],
-      "backgroundColor": "#FFFFFF"
-    },
-    {
-      "name": "Scrolling Layer",
-      "bounds": [800, 600],
-      "drawsContent": false
-    },
-    {
-      "name": "Scrolling Contents Layer",
-      "bounds": [800, 600],
       "contentsOpaque": true,
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
@@ -22,7 +12,7 @@
           "reason": "subtree"
         },
         {
-          "object": "LayoutBlockFlow DIV id='inner-editor'",
+          "object": "LayoutBlockFlow DIV",
           "rect": [11, 11, 42, 13],
           "reason": "subtree"
         },
@@ -36,19 +26,11 @@
   ],
   "objectPaintInvalidations": [
     {
-      "object": "LayoutBlockFlow HTML",
-      "reason": "selection"
-    },
-    {
-      "object": "LayoutBlockFlow BODY",
-      "reason": "selection"
-    },
-    {
       "object": "LayoutTextControl INPUT id='target'",
       "reason": "subtree"
     },
     {
-      "object": "LayoutBlockFlow DIV id='inner-editor'",
+      "object": "LayoutBlockFlow DIV",
       "reason": "subtree"
     },
     {

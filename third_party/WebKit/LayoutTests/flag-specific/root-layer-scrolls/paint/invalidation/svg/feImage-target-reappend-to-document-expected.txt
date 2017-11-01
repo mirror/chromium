@@ -3,16 +3,6 @@
     {
       "name": "LayoutView #document",
       "bounds": [800, 600],
-      "backgroundColor": "#FFFFFF"
-    },
-    {
-      "name": "Scrolling Layer",
-      "bounds": [800, 600],
-      "drawsContent": false
-    },
-    {
-      "name": "Scrolling Contents Layer",
-      "bounds": [800, 600],
       "contentsOpaque": true,
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
@@ -24,7 +14,7 @@
         {
           "object": "LayoutSVGRect rect",
           "rect": [0, 0, 110, 110],
-          "reason": "style change"
+          "reason": "full"
         }
       ]
     }
@@ -40,7 +30,7 @@
     },
     {
       "object": "LayoutSVGRect rect",
-      "reason": "style change"
+      "reason": "full"
     }
   ]
 }

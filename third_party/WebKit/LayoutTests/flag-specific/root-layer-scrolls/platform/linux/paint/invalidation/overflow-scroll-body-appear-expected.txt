@@ -2,37 +2,20 @@
   "layers": [
     {
       "name": "LayoutView #document",
-      "bounds": [800, 600],
+      "bounds": [2008, 2096],
+      "contentsOpaque": true,
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
+        {
+          "object": "LayoutView #document",
+          "rect": [0, 0, 2008, 2096],
+          "reason": "style change"
+        },
         {
           "object": "LayoutView #document",
           "rect": [0, 585, 785, 15],
           "reason": "scroll control"
         },
-        {
-          "object": "LayoutView #document",
-          "rect": [785, 0, 15, 585],
-          "reason": "scroll control"
-        },
-        {
-          "object": "LayoutView #document",
-          "rect": [785, 585, 15, 15],
-          "reason": "scroll control"
-        }
-      ]
-    },
-    {
-      "name": "Scrolling Layer",
-      "bounds": [785, 585],
-      "drawsContent": false
-    },
-    {
-      "name": "Scrolling Contents Layer",
-      "bounds": [2008, 2096],
-      "contentsOpaque": true,
-      "backgroundColor": "#FFFFFF",
-      "paintInvalidations": [
         {
           "object": "LayoutBlockFlow BODY",
           "rect": [8, 16, 784, 2072],
@@ -64,6 +47,16 @@
           "reason": "geometry"
         },
         {
+          "object": "LayoutView #document",
+          "rect": [785, 0, 15, 585],
+          "reason": "scroll control"
+        },
+        {
+          "object": "LayoutView #document",
+          "rect": [785, 585, 15, 15],
+          "reason": "scroll control"
+        },
+        {
           "object": "LayoutText #text",
           "rect": [507, 52, 4, 19],
           "reason": "geometry"
@@ -79,6 +72,10 @@
     {
       "object": "LayoutView #document",
       "reason": "geometry"
+    },
+    {
+      "object": "LayoutView #document",
+      "reason": "style change"
     },
     {
       "object": "LayoutBlockFlow BODY",

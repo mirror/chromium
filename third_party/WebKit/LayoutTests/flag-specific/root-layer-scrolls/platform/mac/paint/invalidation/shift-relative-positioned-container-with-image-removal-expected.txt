@@ -2,16 +2,6 @@
   "layers": [
     {
       "name": "LayoutView #document",
-      "bounds": [800, 600],
-      "backgroundColor": "#FFFFFF"
-    },
-    {
-      "name": "Scrolling Layer",
-      "bounds": [785, 600],
-      "drawsContent": false
-    },
-    {
-      "name": "Scrolling Contents Layer",
       "bounds": [785, 735],
       "contentsOpaque": true,
       "backgroundColor": "#FFFFFF",
@@ -19,7 +9,7 @@
         {
           "object": "LayoutView #document",
           "rect": [0, 735, 785, 98],
-          "reason": "background on scrolling contents layer"
+          "reason": "incremental"
         },
         {
           "object": "LayoutBlockFlow (relative positioned) DIV class='relative paddingTop'",
@@ -78,8 +68,8 @@
       "reason": "disappeared"
     },
     {
-      "object": "Scrolling Contents Layer",
-      "reason": "background on scrolling contents layer"
+      "object": "LayoutView #document",
+      "reason": "incremental"
     },
     {
       "object": "LayoutBlockFlow (relative positioned) DIV class='relative paddingTop'",
