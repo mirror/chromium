@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "087b18a5_e2f72ef4",
+        "filename": "ash/mus/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T16:36:07Z",
+      "side": 1,
+      "message": "This should go away?",
+      "revId": "e36ff9e73d1b6a7b6efbc1960b1755ad1e4434cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d4406b4_30eb2aec",
+        "filename": "ash/mus/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T16:36:07Z",
+      "side": 1,
+      "message": "and this?",
+      "revId": "e36ff9e73d1b6a7b6efbc1960b1755ad1e4434cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
