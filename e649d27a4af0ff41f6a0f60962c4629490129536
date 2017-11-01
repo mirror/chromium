@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6a7df16_6f40cb0d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-01T00:37:02Z",
+      "side": 1,
+      "message": "Could you try on creating a zip file in Files app, then add Test: line like \"manually create a zip file on Files app\"?",
+      "revId": "e649d27a4af0ff41f6a0f60962c4629490129536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
