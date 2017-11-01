@@ -210,14 +210,6 @@ bool CSSParser::ParseColor(Color& color, const String& string, bool strict) {
   if (string.IsEmpty())
     return false;
 
-  // The regular color parsers don't resolve named colors, so explicitly
-  // handle these first.
-  Color named_color;
-  if (named_color.SetNamedColor(string)) {
-    color = named_color;
-    return true;
-  }
-
   const CSSValue* value = CSSParserFastPaths::ParseColor(
       string, strict ? kHTMLStandardMode : kHTMLQuirksMode);
   // TODO(timloh): Why is this always strict mode?
