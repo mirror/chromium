@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e33f1a6a_da7a59c9",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 6167,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-01T14:15:24Z",
+      "side": 1,
+      "message": "I think I might be missing many steps. This is just a POC.",
+      "revId": "fd6a7ab54ee7e0bfc66dba6c2f5ca4292b5ef8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

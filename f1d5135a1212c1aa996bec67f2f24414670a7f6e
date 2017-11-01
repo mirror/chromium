@@ -318,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "32c693b5_8368f94f",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-01T14:15:24Z",
+      "side": 1,
+      "message": "Thanks for explaining.",
+      "parentUuid": "260284de_1c2abeb2",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec0a692f_8d32f44f",
         "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
         "patchSetId": 18
@@ -389,6 +407,30 @@
     },
     {
       "key": {
+        "uuid": "2fb32f9b_3c10bed5",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-01T14:15:24Z",
+      "side": 1,
+      "message": "I did investigate this and found out that:\na) For Plugin to Plugin/Frame (or changes in elements attributes): Calling SetPersistedPlugin(nullptr) deletes current plugin. NeedsPluginUpdate() is also set which will request the new object.\n\nb) Frame -\u003e Frame/Plugin: We destroy the frame view. Then if the new embed params needs a frame, LoadOrRedirectSubframe takes care of cleanup through navigation and swapping. If we go for a plugin, the frame stays alive. I tested this with youtube embed and IMG urls.\n\nI filed a bug for b). (https://crbug.com/776510).\n\nNow all this being said, the rest of frame-based embeds rely on LoadOrRedirectSubframe to navigate the ContentFrame to a new origin. That being said removal of ContentFrame here might not be necessary. So to go form PDF1 to PDF2 we might as well navigate the frame.\n\nThe challenge however is that we can only navigate the WebLocalFrame (form outside blink). So perhaps the MimeHandlerView* should first see if the ContentFrame is local or remote. If remote it should send the navigation request to the browser. Also this means I might need to have a content/ layer interface to make this happen.",
+      "parentUuid": "a43c22f4_e1e3fca6",
+      "range": {
+        "startLine": 714,
+        "startChar": 0,
+        "endLine": 718,
+        "endChar": 60
+      },
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af39059a_efe24b5b",
         "filename": "third_party/WebKit/Source/core/html/PluginDocument.cpp",
         "patchSetId": 18
@@ -436,6 +478,24 @@
       "side": 1,
       "message": "Presumably this is still used for Flash?\n\nWhat I\u0027m saying is we don\u0027t really have a plugin in the traditional sense here, when the owning frame is a plugin frame. So rather than having to plumb this intercepted stream from the browser down to the renderer and then back up, it would be better not to have to write this code at all. So if it would be possible to make a plugin frame just load, say, about:blank to start and figure out all the resource stuff at another level, that seems like it\u0027d be better.",
       "parentUuid": "6af510a7_3d3a98e6",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033cacf8_c48f84b9",
+        "filename": "third_party/WebKit/Source/core/html/PluginDocument.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-01T14:15:24Z",
+      "side": 1,
+      "message": "\u003e Presumably this is still used for Flash?\n\u003e \nI am not sure, but you are correct as in PluginDocument is not solely for PDF [1].\n\n\u003e What I\u0027m saying is we don\u0027t really have a plugin in the traditional sense here, when the owning frame is a plugin frame. So rather than having to plumb this intercepted stream from the browser down to the renderer and then back up, it would be better not to have to write this code at all. So if it would be possible to make a plugin frame just load, say, about:blank to start and figure out all the resource stuff at another level, that seems like it\u0027d be better.\n\nAfter a frame is navigated to a PDF (\u0027iframe or tab\u0027) it will request to load the URL. Then we send back response and from the mime type decide to create a PluginDocument; hence the rest of the data ending up here).\n\nAlternatively, I did this (as a model approach):\nAfter committing navigation the RenderFrameImpl will not send the request to load the PDF file. Instead it will let MHVM \"override the navigation\" by loading an HTML string into the\nframe. The string adds the \u003cembed\u003e tag and the \u003cembed\u003e will request resource. Therefore there will be one loading paths for all kinds of pdf (iframe.src \u003d PDF vs embed.src \u003d PDF).\n\n1-https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/DOMImplementation.cpp?rcl\u003dbc8001c8622567483513c7c9a89a6981e6897fa7\u0026l\u003d277",
+      "parentUuid": "6eb52da0_25f92d56",
       "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
