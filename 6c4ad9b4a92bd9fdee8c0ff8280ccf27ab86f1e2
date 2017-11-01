@@ -46,6 +46,30 @@
       "revId": "6c4ad9b4a92bd9fdee8c0ff8280ccf27ab86f1e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f62163_14bde7a1",
+        "filename": "android_webview/javatests/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T21:22:09Z",
+      "side": 1,
+      "message": "\u003e browser/test should be used. Found that chrome tests also use classes from test (such as ChildProcessAllocatorSettings). So should have both test and test/util.\n\nOh, that first line should be to exclude content/public/android/javatests instead. So for java test files, content/public/test is the public one, and content/public/android/javatests, not sure if intentional, but pretty close to ideal already",
+      "parentUuid": "2b2cb82e_3b2a387b",
+      "range": {
+        "startLine": 21,
+        "startChar": 75,
+        "endLine": 21,
+        "endChar": 79
+      },
+      "revId": "6c4ad9b4a92bd9fdee8c0ff8280ccf27ab86f1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
