@@ -4,6 +4,7 @@
 
 #include "net/disk_cache/simple/simple_file_tracker.h"
 
+#include <algorithm>
 #include <memory>
 #include <utility>
 
@@ -122,6 +123,63 @@ void SimpleFileTracker::Close(const SimpleSynchronousEntry* owner,
   // The destructor of file_to_close will close it if needed. Thing to watch
   // for impl with stealing: race between bookkeeping above and actual
   // close --- the FD is still alive for it.
+}
+
+void SimpleFileTracker::Doom(const SimpleSynchronousEntry* owner,
+                             EntryFileKey* key) {
+  base::AutoLock hold_lock(lock_);
+  auto iter = tracked_files_.find(key->entry_hash);
+  DCHECK(iter != tracked_files_.end());
+  uint32_t new_doom_gen = FindFreeDoomGeneration(iter->second);
+
+  // Update external key.
+  key->doom_generation = new_doom_gen;
+
+  // Update our own.
+  for (TrackedFiles& cand : iter->second) {
+    if (cand.owner == owner)
+      cand.key.doom_generation = new_doom_gen;
+  }
+}
+
+uint32_t SimpleFileTracker::FindFreeDoomGeneration(
+    const std::vector<TrackedFiles>& active) {
+  uint32_t max_doom_gen = 0;
+  for (const TrackedFiles& cand : active) {
+    max_doom_gen = std::max(max_doom_gen, cand.key.doom_generation);
+  }
+
+  if (max_doom_gen != std::numeric_limits<uint32_t>::max())
+    return max_doom_gen + 1;
+
+  // Theoretically, in an incredibly pathological case just bumping
+  // doom_generation may get us all the way up to the numeric limit.
+  // All this stuff below is handling for that.  Further, if one were to somehow
+  // get 4 billion live versions, we wouldn't be able to allocate a new ID, so
+  // would risk potentially mixing up files from different URLs. That would be
+  // extra-dangerous. (Note that 0 is also unusable here)
+  CHECK_LT(active.size(), std::numeric_limits<uint32_t>::max() - 1);
+
+  if (active.size() < 2) {
+    // max_uint32 is the only thing in use, so may as well pick 1 as next.
+    return 1;
+  }
+
+  // Can look for gaps.
+  std::vector<uint32_t> live_doom_generations;
+  for (const TrackedFiles& cand : active)
+    if (cand.key.doom_generation != 0)
+      live_doom_generations.push_back(cand.key.doom_generation);
+  std::sort(live_doom_generations.begin(), live_doom_generations.end());
+
+  for (size_t c = 0; c < live_doom_generations.size() - 1; ++c) {
+    if ((live_doom_generations[c] + 1) != live_doom_generations[c + 1])
+      return live_doom_generations[c] + 1;
+  }
+
+  // If nothing was found above, then 1 is fine, since everything must have been
+  // packed towards the max, living the room at beginning of range.
+  return 1;
 }
 
 bool SimpleFileTracker::IsEmptyForTesting() {
