@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "070bfefb_2d2c6bb9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-01T22:20:58Z",
+      "side": 1,
+      "message": "nit: STOPPED_DUE_TO_RESOURCES (or STOPPED_DUE_TO_CRITICAL_RESOURCES). Without a comment it\u0027s rather hard to understand what is critical here.",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "d01e6d9ea7243053fd7563bc0629f8abc5319618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
