@@ -13,6 +13,7 @@
 @protocol ApplicationCommands;
 @class GenericChromeCommand;
 @class Tab;
+@protocol SyncPresenter;
 
 namespace ios {
 class ChromeBrowserState;
@@ -53,6 +54,7 @@ bool ShouldShowSyncSettings(SyncSetupService::SyncServiceState syncState);
 // Returns true if an infobar was brought up.
 bool DisplaySyncErrors(ios::ChromeBrowserState* browser_state,
                        Tab* tab,
+                       id<SyncPresenter> presenter,
                        id<ApplicationCommands> dispatcher);
 
 // Returns true if |errorState| corresponds to a transient sync error.
