@@ -245,6 +245,9 @@ void PaintAggregator::InvalidateScrollRect() {
 
 void PaintAggregator::InvalidateRectInternal(const pp::Rect& rect_old,
                                              bool check_scroll) {
+  if (rect_old.IsEmpty())
+    return;
+
   pp::Rect rect = rect_old;
   // Check if any rects that are ready to be painted overlap.
   for (size_t i = 0; i < update_.ready_rects.size(); ++i) {

@@ -142,6 +142,9 @@ void PaintManager::Invalidate() {
 void PaintManager::InvalidateRect(const pp::Rect& rect) {
   DCHECK(!in_paint_);
 
+  if (rect.IsEmpty())
+    return;
+
   if (graphics_.is_null() && !has_pending_resize_)
     return;
 
