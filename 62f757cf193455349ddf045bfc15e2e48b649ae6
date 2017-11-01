@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7af6565b_3822f308",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-01T20:55:23Z",
+      "side": 0,
+      "message": "Sounds like this canonicalization affects result?",
+      "range": {
+        "startLine": 593,
+        "startChar": 8,
+        "endLine": 593,
+        "endChar": 30
+      },
+      "revId": "62f757cf193455349ddf045bfc15e2e48b649ae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
