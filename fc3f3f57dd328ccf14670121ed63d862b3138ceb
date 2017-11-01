@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ded3c72_cf51fb3d",
+        "filename": "components/search_provider_logos/logo_service_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-01T23:24:39Z",
+      "side": 1,
+      "message": "Now there is! added a new test.",
+      "parentUuid": "d09010de_8c0a261a",
+      "range": {
+        "startLine": 293,
+        "startChar": 61,
+        "endLine": 293,
+        "endChar": 66
+      },
+      "revId": "fc3f3f57dd328ccf14670121ed63d862b3138ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2ea2c64_eddc5d71",
         "filename": "ios/chrome/browser/google/google_logo_service.mm",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "fc3f3f57dd328ccf14670121ed63d862b3138ceb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1afcac38_b4edf4c7",
+        "filename": "ios/chrome/browser/google/google_logo_service.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-01T23:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2ea2c64_eddc5d71",
+      "range": {
+        "startLine": 44,
+        "startChar": 63,
+        "endLine": 44,
+        "endChar": 68
+      },
+      "revId": "fc3f3f57dd328ccf14670121ed63d862b3138ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
