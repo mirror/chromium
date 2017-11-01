@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "954937a5_13324dad",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:09:47Z",
+      "side": 1,
+      "message": "TODO added.\n\nWe need make sure the the event is sent before package prefs is removed so that we are able to check if the package is VPN provider. Which is not the case right now.",
+      "parentUuid": "3d2e6dc8_f7f4ea31",
+      "range": {
+        "startLine": 123,
+        "startChar": 13,
+        "endLine": 123,
+        "endChar": 36
+      },
+      "revId": "372e3d3c0048e73f03f7a655ba32ffda3a5b0207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f269ed6d_f7ba3042",
         "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "372e3d3c0048e73f03f7a655ba32ffda3a5b0207",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075b797f_fd8ce74b",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:09:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f269ed6d_f7ba3042",
+      "range": {
+        "startLine": 157,
+        "startChar": 58,
+        "endLine": 157,
+        "endChar": 59
+      },
+      "revId": "372e3d3c0048e73f03f7a655ba32ffda3a5b0207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
