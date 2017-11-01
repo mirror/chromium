@@ -4,6 +4,8 @@
 
 #include "content/renderer/devtools/devtools_frontend_impl.h"
 
+#include <utility>
+
 #include "base/strings/utf_string_conversions.h"
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_thread_impl.h"
@@ -23,13 +25,25 @@ void DevToolsFrontendImpl::CreateMojoService(
 DevToolsFrontendImpl::DevToolsFrontendImpl(
     RenderFrame* render_frame,
     mojom::DevToolsFrontendAssociatedRequest request)
-    : RenderFrameObserver(render_frame), binding_(this, std::move(request)) {}
+    : RenderFrameObserver(render_frame),
+      binding_(this, std::move(request)),
+      weak_factory_(this) {}
 
 DevToolsFrontendImpl::~DevToolsFrontendImpl() {}
 
 void DevToolsFrontendImpl::DidClearWindowObject() {
-  if (!api_script_.empty())
-    render_frame()->ExecuteJavaScript(base::UTF8ToUTF16(api_script_));
+  if (!api_script_.empty()) {
+    // Postpone ExecuteJavaScript to make sure it executes *after* sending the
+    // DidCommitProvisionalLoad IPC back to the browser (i.e. after the browser
+    // is aware of the new origin the scripts should be able to access).
+    base::SequencedTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(&DevToolsFrontendImpl::ExecuteApiScript,
+                              weak_factory_.GetWeakPtr()));
+  }
+}
+
+void DevToolsFrontendImpl::ExecuteApiScript() {
+  render_frame()->ExecuteJavaScript(base::UTF8ToUTF16(api_script_));
 }
 
 void DevToolsFrontendImpl::OnDestruct() {
