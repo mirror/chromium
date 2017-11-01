@@ -471,7 +471,7 @@ RTCPeerConnection* RTCPeerConnection::Create(
 
   RTCPeerConnection* peer_connection = new RTCPeerConnection(
       context, configuration, constraints, exception_state);
-  peer_connection->SuspendIfNeeded();
+  peer_connection->PauseIfNeeded();
   if (exception_state.HadException())
     return nullptr;
 
@@ -482,7 +482,7 @@ RTCPeerConnection::RTCPeerConnection(ExecutionContext* context,
                                      const WebRTCConfiguration& configuration,
                                      WebMediaConstraints constraints,
                                      ExceptionState& exception_state)
-    : SuspendableObject(context),
+    : PausableObject(context),
       signaling_state_(kSignalingStateStable),
       ice_gathering_state_(kICEGatheringStateNew),
       ice_connection_state_(kICEConnectionStateNew),
@@ -1613,15 +1613,15 @@ const AtomicString& RTCPeerConnection::InterfaceName() const {
 }
 
 ExecutionContext* RTCPeerConnection::GetExecutionContext() const {
-  return SuspendableObject::GetExecutionContext();
+  return PausableObject::GetExecutionContext();
 }
 
-void RTCPeerConnection::Suspend() {
-  dispatch_scheduled_event_runner_->Suspend();
+void RTCPeerConnection::Pause() {
+  dispatch_scheduled_event_runner_->Pause();
 }
 
-void RTCPeerConnection::Resume() {
-  dispatch_scheduled_event_runner_->Resume();
+void RTCPeerConnection::Unpause() {
+  dispatch_scheduled_event_runner_->Unpause();
 }
 
 void RTCPeerConnection::ContextDestroyed(ExecutionContext*) {
@@ -1757,7 +1757,7 @@ void RTCPeerConnection::Trace(blink::Visitor* visitor) {
   visitor->Trace(dispatch_scheduled_event_runner_);
   visitor->Trace(scheduled_events_);
   EventTargetWithInlineData::Trace(visitor);
-  SuspendableObject::Trace(visitor);
+  PausableObject::Trace(visitor);
   MediaStreamObserver::Trace(visitor);
 }
 

@@ -69,12 +69,12 @@ void HTMLParserScheduler::Trace(blink::Visitor* visitor) {
   visitor->Trace(parser_);
 }
 
-bool HTMLParserScheduler::IsScheduledForResume() const {
+bool HTMLParserScheduler::IsScheduledForUnpause() const {
   return is_suspended_with_active_timer_ ||
          cancellable_continue_parse_task_handle_.IsActive();
 }
 
-void HTMLParserScheduler::ScheduleForResume() {
+void HTMLParserScheduler::ScheduleForUnpause() {
   DCHECK(!is_suspended_with_active_timer_);
   cancellable_continue_parse_task_handle_ =
       loading_task_runner_->PostCancellableTask(
@@ -82,7 +82,7 @@ void HTMLParserScheduler::ScheduleForResume() {
                                      WrapWeakPersistent(this)));
 }
 
-void HTMLParserScheduler::Suspend() {
+void HTMLParserScheduler::Pause() {
   DCHECK(!is_suspended_with_active_timer_);
   if (!cancellable_continue_parse_task_handle_.IsActive())
     return;
@@ -90,12 +90,12 @@ void HTMLParserScheduler::Suspend() {
   cancellable_continue_parse_task_handle_.Cancel();
 }
 
-void HTMLParserScheduler::Resume() {
+void HTMLParserScheduler::Unpause() {
   DCHECK(!cancellable_continue_parse_task_handle_.IsActive());
   if (!is_suspended_with_active_timer_)
     return;
   is_suspended_with_active_timer_ = false;
-  ScheduleForResume();
+  ScheduleForUnpause();
 }
 
 void HTMLParserScheduler::Detach() {
@@ -134,7 +134,7 @@ inline bool HTMLParserScheduler::ShouldYield(
 bool HTMLParserScheduler::YieldIfNeeded(const SpeculationsPumpSession& session,
                                         bool starting_script) {
   if (ShouldYield(session, starting_script)) {
-    ScheduleForResume();
+    ScheduleForUnpause();
     return true;
   }
 

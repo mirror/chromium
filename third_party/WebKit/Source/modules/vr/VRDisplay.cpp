@@ -89,7 +89,7 @@ VRDisplay::VRDisplay(
     device::mojom::blink::VRMagicWindowProviderPtr magic_window_provider,
     device::mojom::blink::VRDisplayHostPtr display,
     device::mojom::blink::VRDisplayClientRequest request)
-    : SuspendableObject(navigator_vr->GetDocument()),
+    : PausableObject(navigator_vr->GetDocument()),
       navigator_vr_(navigator_vr),
       capabilities_(new VRDisplayCapabilities()),
       eye_parameters_left_(new VREyeParameters()),
@@ -98,14 +98,14 @@ VRDisplay::VRDisplay(
       display_(std::move(display)),
       submit_frame_client_binding_(this),
       display_client_binding_(this, std::move(request)) {
-  SuspendIfNeeded();  // Initialize SuspendabaleObject.
+  PauseIfNeeded();  // Initialize SuspendabaleObject.
 }
 
 VRDisplay::~VRDisplay() {}
 
-void VRDisplay::Suspend() {}
+void VRDisplay::Pause() {}
 
-void VRDisplay::Resume() {
+void VRDisplay::Unpause() {
   RequestVSync();
 }
 
@@ -1004,7 +1004,7 @@ const AtomicString& VRDisplay::InterfaceName() const {
 }
 
 void VRDisplay::ContextDestroyed(ExecutionContext* context) {
-  SuspendableObject::ContextDestroyed(context);
+  PausableObject::ContextDestroyed(context);
   ForceExitPresent();
   scripted_animation_controller_.Clear();
 }
