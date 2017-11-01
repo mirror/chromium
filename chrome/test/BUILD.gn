@@ -2208,7 +2208,6 @@ test("browser_tests") {
         "../browser/chromeos/file_manager/mount_test_util.cc",
         "../browser/chromeos/file_manager/mount_test_util.h",
         "../browser/chromeos/file_manager/video_player_browsertest.cc",
-        "../browser/chromeos/file_manager/zip_file_creator_browsertest.cc",
         "../browser/chromeos/first_run/chromeos_first_run_browsertest.cc",
         "../browser/chromeos/first_run/drive_first_run_browsertest.cc",
         "../browser/chromeos/first_run/goodies_displayer_browsertest.cc",
@@ -2366,6 +2365,7 @@ test("browser_tests") {
         "//ash:test_support_with_content",
         "//ash/public/interfaces:test_interfaces",
         "//chrome/browser/chromeos:arc_test_support",
+        "//chrome/services/file_util/public/cpp:browser_tests",
         "//components/arc:arc_test_support",
         "//components/prefs",
         "//components/user_manager:test_support",
@@ -2400,9 +2400,8 @@ test("browser_tests") {
         sources -= [ "../browser/ui/views/select_file_dialog_extension_browsertest.cc" ]
       }
       if (is_win || is_linux) {
-        sources += [
-          "../browser/ui/views/ime/input_ime_apitest_nonchromeos.cc",
-        ]
+        sources +=
+            [ "../browser/ui/views/ime/input_ime_apitest_nonchromeos.cc" ]
       }
     }
     if (enable_desktop_in_product_help) {
