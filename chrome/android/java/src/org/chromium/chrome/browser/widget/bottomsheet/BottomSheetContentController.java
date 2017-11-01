@@ -519,6 +519,11 @@ public class BottomSheetContentController
         mSelectedItemId = navItemId;
         getMenu().findItem(mSelectedItemId).setChecked(true);
 
+        // Cancel clearing contents for switched tabbed mode if showing contents other than Home.
+        if (mShouldClearContentsOnNextContentChange && mSelectedItemId != getHomeContentId()) {
+            mShouldClearContentsOnNextContentChange = false;
+        }
+
         BottomSheetContent newContent = getSheetContentForId(mSelectedItemId);
         mBottomSheet.showContent(newContent);
     }
