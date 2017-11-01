@@ -1531,19 +1531,20 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                                  completion:nil];
 }
 
-- (void)showSyncSettings {
+// TODO(crbug.com/779791) : Remove show settings commands from MainController.
+- (void)showSyncSettingsFromViewController:
+    (UIViewController*)baseViewController {
   if (_settingsNavigationController) {
-    [_settingsNavigationController showSyncSettings];
+    [_settingsNavigationController showSyncSettingsFromViewController:nil];
     return;
   }
   _settingsNavigationController =
       [SettingsNavigationController newSyncController:_mainBrowserState
                                allowSwitchSyncAccount:YES
                                              delegate:self];
-  [[self topPresentedViewController]
-      presentViewController:_settingsNavigationController
-                   animated:YES
-                 completion:nil];
+  [baseViewController presentViewController:_settingsNavigationController
+                                   animated:YES
+                                 completion:nil];
 }
 
 - (void)showSyncPassphraseSettings {
