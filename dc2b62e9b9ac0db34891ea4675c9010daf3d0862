@@ -16,6 +16,24 @@
       "revId": "dc2b62e9b9ac0db34891ea4675c9010daf3d0862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a205b4_1b1a7219",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-01T19:54:45Z",
+      "side": 1,
+      "message": "I was also disappointed to find that the compiler couldn\u0027t figure this out itself. Overall I think this is fine. Clients should either be using a FooPtr or FooProxy*. If they are using a Foo* then they should have a good reason for needing to support direct calls to an implementation as that implies different semantics.",
+      "parentUuid": "965c44b8_489698bf",
+      "revId": "dc2b62e9b9ac0db34891ea4675c9010daf3d0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
