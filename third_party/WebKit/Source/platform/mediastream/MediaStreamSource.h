@@ -47,15 +47,11 @@
 
 namespace blink {
 
+class MediaStreamComponent;
+
 class PLATFORM_EXPORT MediaStreamSource final
     : public GarbageCollectedFinalized<MediaStreamSource> {
  public:
-  class PLATFORM_EXPORT Observer : public GarbageCollectedMixin {
-   public:
-    virtual ~Observer() {}
-    virtual void SourceChangedState() = 0;
-  };
-
   class ExtraData {
     USING_FAST_MALLOC(ExtraData);
 
@@ -82,7 +78,7 @@ class PLATFORM_EXPORT MediaStreamSource final
   void SetState(State);
   State GetState() const { return state_; }
 
-  void AddObserver(Observer*);
+  void AddComponent(MediaStreamComponent*);
 
   ExtraData* GetExtraData() const { return extra_data_.get(); }
   void SetExtraData(std::unique_ptr<ExtraData> extra_data) {
@@ -129,7 +125,7 @@ class PLATFORM_EXPORT MediaStreamSource final
   bool remote_;
   State state_;
   bool requires_consumer_;
-  HeapHashSet<WeakMember<Observer>> observers_;
+  HeapHashSet<WeakMember<MediaStreamComponent>> components_;
   Mutex audio_consumers_lock_;
   HashSet<AudioDestinationConsumer*> audio_consumers_;
   std::unique_ptr<ExtraData> extra_data_;

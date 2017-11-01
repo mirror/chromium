@@ -33,6 +33,8 @@
 #define MediaStreamComponent_h
 
 #include <memory>
+#include <utility>
+
 #include "platform/audio/AudioSourceProvider.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
@@ -52,11 +54,18 @@ class WebAudioSourceProvider;
 class PLATFORM_EXPORT MediaStreamComponent final
     : public GarbageCollectedFinalized<MediaStreamComponent> {
   USING_PRE_FINALIZER(MediaStreamComponent, Dispose);
-
- private:
-  static int GenerateUniqueId();
-
  public:
+  // Observer implementations are not allowed to invoke
+  // MediaStreamComponent::AddObserver().
+  class PLATFORM_EXPORT Observer : public GarbageCollectedMixin {
+   public:
+    virtual ~Observer() {}
+    virtual void DidBecomeMuted();
+    virtual void DidBecomeUnmuted();
+    virtual void DidEnd();
+    // virtual void SourceChangedState() = 0;
+  };
+
   // This class represents whatever data the Web layer uses to represent
   // a track. It needs to be able to answer the getSettings question.
   class TrackData {
@@ -90,6 +99,8 @@ class PLATFORM_EXPORT MediaStreamComponent final
   void SetEnabled(bool enabled) { enabled_ = enabled; }
   bool Muted() const { return muted_; }
   void SetMuted(bool muted) { muted_ = muted; }
+  bool IsEnded() const { return is_ended_; }
+  void SetEnded(bool is_ended) { is_ended_ = is_ended; }
   WebMediaStreamTrack::ContentHintType ContentHint() { return content_hint_; }
   void SetContentHint(WebMediaStreamTrack::ContentHintType);
   const WebMediaConstraints& Constraints() const { return constraints_; }
@@ -106,6 +117,8 @@ class PLATFORM_EXPORT MediaStreamComponent final
     track_data_ = std::move(track_data);
   }
   void GetSettings(WebMediaStreamTrack::Settings&);
+  void SourceChangedState();
+  void AddObserver(Observer*);
 
   DECLARE_TRACE();
 
@@ -115,11 +128,13 @@ class PLATFORM_EXPORT MediaStreamComponent final
                        MediaStreamSource*,
                        bool enabled,
                        bool muted,
+                       bool is_ended,
                        WebMediaStreamTrack::ContentHintType);
+
+  static int GenerateUniqueId();
 
   // AudioSourceProviderImpl wraps a WebAudioSourceProvider::provideInput()
   // calls into chromium to get a rendered audio stream.
-
   class PLATFORM_EXPORT AudioSourceProviderImpl final
       : public AudioSourceProvider {
    public:
@@ -145,8 +160,13 @@ class PLATFORM_EXPORT MediaStreamComponent final
   int unique_id_;
   bool enabled_;
   bool muted_;
+  bool is_ended_;
   WebMediaStreamTrack::ContentHintType content_hint_;
   WebMediaConstraints constraints_;
+  HeapHashSet<WeakMember<Observer>> observers_;
+#if DCHECK_IS_ON()
+  bool is_iterating_observers_ = false;
+#endif
   std::unique_ptr<TrackData> track_data_;
 };
 

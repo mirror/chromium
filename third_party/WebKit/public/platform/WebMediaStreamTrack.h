@@ -113,6 +113,7 @@ class WebMediaStreamTrack {
   BLINK_PLATFORM_EXPORT WebMediaStreamSource Source() const;
   BLINK_PLATFORM_EXPORT bool IsEnabled() const;
   BLINK_PLATFORM_EXPORT bool IsMuted() const;
+  BLINK_PLATFORM_EXPORT bool IsEnded() const;
   BLINK_PLATFORM_EXPORT ContentHintType ContentHint() const;
   BLINK_PLATFORM_EXPORT WebMediaConstraints Constraints() const;
   BLINK_PLATFORM_EXPORT void SetConstraints(const WebMediaConstraints&);

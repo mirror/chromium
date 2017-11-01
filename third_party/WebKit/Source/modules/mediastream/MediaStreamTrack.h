@@ -52,7 +52,7 @@ class MODULES_EXPORT MediaStreamTrack
     : public EventTargetWithInlineData,
       public ActiveScriptWrappable<MediaStreamTrack>,
       public ContextLifecycleObserver,
-      public MediaStreamSource::Observer {
+      public MediaStreamComponent::Observer {
   USING_GARBAGE_COLLECTED_MIXIN(MediaStreamTrack);
   DEFINE_WRAPPERTYPEINFO();
 
@@ -115,14 +115,15 @@ class MODULES_EXPORT MediaStreamTrack
 
   MediaStreamTrack(ExecutionContext*, MediaStreamComponent*);
 
-  // MediaStreamSourceObserver
-  void SourceChangedState() override;
+  // MediaStreamComponent::Observer
+  void DidBecomeMuted() override;
+  void DidBecomeUnmuted() override;
+  void DidEnd() override;
 
   void PropagateTrackEnded();
   void applyConstraintsImageCapture(ScriptPromiseResolver*,
                                     const MediaTrackConstraints&);
 
-  MediaStreamSource::State ready_state_;
   HeapHashSet<Member<MediaStream>> registered_media_streams_;
   bool is_iterating_registered_media_streams_;
   bool stopped_;

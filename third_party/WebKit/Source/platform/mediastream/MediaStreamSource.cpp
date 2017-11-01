@@ -29,6 +29,8 @@
  */
 
 #include "platform/mediastream/MediaStreamSource.h"
+
+#include "platform/mediastream/MediaStreamComponent.h"
 #include "platform/wtf/Assertions.h"
 #include "public/platform/WebMediaStreamSource.h"
 
@@ -58,37 +60,37 @@ MediaStreamSource::MediaStreamSource(const String& id,
       requires_consumer_(requires_consumer) {}
 
 void MediaStreamSource::SetState(State state) {
-  if (state_ != kStateEnded && state_ != state) {
+  if (state_ != state) {
     state_ = state;
 
-    // Observers may dispatch events which create and add new Observers;
+    // Components may dispatch events which create and add new Components;
     // take a snapshot so as to safely iterate.
-    HeapVector<Member<Observer>> observers;
-    CopyToVector(observers_, observers);
-    for (auto observer : observers)
-      observer->SourceChangedState();
+    HeapVector<Member<MediaStreamComponent>> components;
+    CopyToVector(components_, components);
+    for (auto component : components)
+      component->SourceChangedState();
 
-    // setState() will be invoked via the MediaStreamComponent::dispose()
-    // prefinalizer, allocating |observers|. Which means that |observers| will
+    // SetState() will be invoked via the MediaStreamComponent::Dispose()
+    // prefinalizer, allocating |components|. Which means that |components| will
     // live until the next GC (but be unreferenced by other heap objects),
-    // _but_ it will potentially contain references to Observers that were
+    // _but_ it will potentially contain references to Components that were
     // GCed after the MediaStreamComponent prefinalizer had completed.
     //
     // So, if the next GC is a conservative one _and_ it happens to find
-    // a reference to |observers| when scanning the stack, we're in trouble
+    // a reference to |components| when scanning the stack, we're in trouble
     // as it contains references to now-dead objects.
     //
     // Work around this by explicitly clearing the vector backing store.
     //
     // TODO(sof): consider adding run-time checks that disallows this kind
     // of dead object revivification by default.
-    for (size_t i = 0; i < observers.size(); ++i)
-      observers[i] = nullptr;
+    for (size_t i = 0; i < components.size(); ++i)
+      components[i] = nullptr;
   }
 }
 
-void MediaStreamSource::AddObserver(MediaStreamSource::Observer* observer) {
-  observers_.insert(observer);
+void MediaStreamSource::AddComponent(MediaStreamComponent* component) {
+  components_.insert(component);
 }
 
 void MediaStreamSource::AddAudioConsumer(AudioDestinationConsumer* consumer) {
@@ -131,7 +133,7 @@ void MediaStreamSource::ConsumeAudio(AudioBus* bus, size_t number_of_frames) {
 }
 
 DEFINE_TRACE(MediaStreamSource) {
-  visitor->Trace(observers_);
+  visitor->Trace(components_);
 }
 
 STATIC_ASSERT_ENUM(WebMediaStreamSource::kTypeAudio,
