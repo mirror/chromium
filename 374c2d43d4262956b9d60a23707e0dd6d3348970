@@ -16,6 +16,24 @@
       "revId": "374c2d43d4262956b9d60a23707e0dd6d3348970",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f12cb82_a2cefc3d",
+        "filename": "device/geolocation/geoposition.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-01T15:26:07Z",
+      "side": 0,
+      "message": "Hmm.. the newly created mojom::Geoposition are filled with zero, and can pass the ValidateGeoposition method. It leads to difference to the original.\n\nHow about I move the kBadxxx into geoposition.mojom, and replace all the mojom::Geoposition() by mojom::Geoposition(kBadLatitudeLongitude, kBadLatitudeLongitue, kBadAccuracy, ....)? \nSame for mojom::Geoposition::New().\n\nTim, Thanks!",
+      "parentUuid": "be5e7dd3_70a782f4",
+      "revId": "374c2d43d4262956b9d60a23707e0dd6d3348970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
