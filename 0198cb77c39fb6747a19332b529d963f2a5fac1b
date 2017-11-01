@@ -78,6 +78,48 @@
     },
     {
       "key": {
+        "uuid": "6b7dd58c_2c3110dc",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T17:38:00Z",
+      "side": 1,
+      "message": "We could mark it as StrictMode.noteSlowCall so most people don\u0027t call on UI thread.",
+      "parentUuid": "b3c8c95e_d46377fa",
+      "revId": "0198cb77c39fb6747a19332b529d963f2a5fac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4ed7de_81970431",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T17:38:00Z",
+      "side": 1,
+      "message": "Can just use getApplicationContext",
+      "parentUuid": "65457bae_e173a8a1",
+      "range": {
+        "startLine": 109,
+        "startChar": 40,
+        "endLine": 109,
+        "endChar": 55
+      },
+      "revId": "0198cb77c39fb6747a19332b529d963f2a5fac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6954863_fa9647cc",
         "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
         "patchSetId": 3
@@ -254,6 +296,30 @@
       "side": 1,
       "message": "There are certainly some randoms in there! But it looks like 99% are:\n- renderer\n- browser\n- gpu-process\n\nThere is also now \":decoder_service\" in our manifest. \n\nI\u0027ll defer to Yaron as to what we should put here (I\u0027m just guessing)",
       "parentUuid": "8bb98e95_1e2a67a8",
+      "range": {
+        "startLine": 111,
+        "startChar": 12,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "0198cb77c39fb6747a19332b529d963f2a5fac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "044cc476_d7434e62",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T17:38:00Z",
+      "side": 1,
+      "message": "Hrmm, my first answer was that you should map them them to known names to the extent possible. However sandboxed doesn\u0027t strictly mean renderer and privileged doesn\u0027t strictly mean gpu they\u0027re just both *mostly* true. The reality is that you need the command-line flags to know for certain so we probably have to leave this alone to avoid confusing crash triage. These shouldn\u0027t overlap with other crashes so I guess it\u0027s ok to triage separately. Certainly something we can revisit later and I\u0027d err on not introducing confusion so keep as-is",
+      "parentUuid": "4236aa19_92c474c1",
       "range": {
         "startLine": 111,
         "startChar": 12,

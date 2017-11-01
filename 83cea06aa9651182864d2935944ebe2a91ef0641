@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0adb0e49_b8dad6cb",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T17:38:00Z",
+      "side": 1,
+      "message": "ContextUtils feels like a random place for this. Until we have a better idea of how it\u0027d be re-used I\u0027d just put it in PureJavaExceptionReporter like Andrew suggested",
+      "range": {
+        "startLine": 109,
+        "startChar": 25,
+        "endLine": 109,
+        "endChar": 42
+      },
+      "revId": "83cea06aa9651182864d2935944ebe2a91ef0641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d583245_471a6682",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T17:38:00Z",
+      "side": 1,
+      "message": "just return the processInfo.processName immediately to short-circuit unnecessary iteration.",
+      "range": {
+        "startLine": 118,
+        "startChar": 33,
+        "endLine": 118,
+        "endChar": 34
+      },
+      "revId": "83cea06aa9651182864d2935944ebe2a91ef0641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
