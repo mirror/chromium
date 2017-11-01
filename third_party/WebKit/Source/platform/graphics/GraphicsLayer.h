@@ -262,7 +262,6 @@ class PLATFORM_EXPORT GraphicsLayer : public cc::LayerClient,
   void didUpdateMainThreadScrollingReasons() override;
   void didChangeScrollbarsHidden(bool) override;
   void DidChangeLayerOpacity(float, float) override {}
-  void DidChangeLayerTransform() override {}
 
   PaintController& GetPaintController() const;
 
