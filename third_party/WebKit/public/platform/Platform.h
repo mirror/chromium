@@ -560,7 +560,7 @@ class BLINK_PLATFORM_EXPORT Platform {
   // exists or not
   // NOTE: This function should not be called from core/ and modules/, but
   // called by platform/graphics/ is fine.
-  virtual bool IsGPUCompositingEnabled() { return true; }
+  virtual bool IsGpuCompositingDisabled() { return false; }
 
   // WebRTC ----------------------------------------------------------
 
