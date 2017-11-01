@@ -168,10 +168,11 @@ bool NotificationList::HasPopupNotifications(
   for (const auto& notification : notifications_) {
     if (notification->priority() < DEFAULT_PRIORITY)
       break;
-    if (!ShouldShowNotificationAsPopup(*notification.get(), blockers))
-      continue;
-    if (!notification->shown_as_popup())
+    if (!notification->shown_as_popup()) {
+      if (!ShouldShowNotificationAsPopup(*notification.get(), blockers))
+        continue;
       return true;
+    }
   }
   return false;
 }
