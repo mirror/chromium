@@ -317,7 +317,9 @@ static NSString* gUserAgentProduct = nil;
   if (!webView) {
     return nullptr;
   }
-  return webView->_webState.get();
+  web::WebState* webViewWebState = webView->_webState.get();
+  webViewWebState->SetHasOpener(initiatedByUser);
+  return webViewWebState;
 }
 
 - (void)closeWebState:(web::WebState*)webState {
