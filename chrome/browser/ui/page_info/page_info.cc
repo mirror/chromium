@@ -40,6 +40,8 @@
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate_factory.h"
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/page_info/page_info_ui.h"
 #include "chrome/browser/usb/usb_chooser_context.h"
 #include "chrome/browser/usb/usb_chooser_context_factory.h"
@@ -474,32 +476,8 @@ void PageInfo::OnRevokeSSLErrorBypassButtonPressed() {
 }
 
 void PageInfo::OpenSiteSettingsView() {
-  // By default, this opens the general Content Settings pane. If the
-  // |kSiteSettings| and/or |kSiteDetails| flags are enabled this opens a
-  // settings page specific to the current origin of the page. crbug.com/655876
-  url::Origin site_origin = url::Origin::Create(site_url());
-  std::string link_destination(chrome::kChromeUIContentSettingsURL);
-  // TODO(https://crbug.com/444047): Site Details should work with file:// urls
-  // when this bug is fixed, so add it to the whitelist when that happens.
-  if ((base::CommandLine::ForCurrentProcess()->HasSwitch(
-           switches::kEnableSiteSettings) ||
-       base::FeatureList::IsEnabled(features::kSiteDetails)) &&
-      !site_origin.unique() &&
-      (site_url().SchemeIsHTTPOrHTTPS() ||
-       site_url().SchemeIs(content_settings::kExtensionScheme))) {
-    std::string origin_string = site_origin.Serialize();
-    url::RawCanonOutputT<char> percent_encoded_origin;
-    url::EncodeURIComponent(origin_string.c_str(), origin_string.length(),
-                            &percent_encoded_origin);
-    link_destination = chrome::kChromeUISiteDetailsPrefixURL +
-                       std::string(percent_encoded_origin.data(),
-                                   percent_encoded_origin.length());
-  }
-  web_contents()->OpenURL(
-      content::OpenURLParams(GURL(link_destination), content::Referrer(),
-                             WindowOpenDisposition::NEW_FOREGROUND_TAB,
-                             ui::PAGE_TRANSITION_LINK, false));
-  RecordPageInfoAction(PageInfo::PAGE_INFO_SITE_SETTINGS_OPENED);
+  chrome::ShowSiteSettings(chrome::FindBrowserWithWebContents(web_contents()),
+                           site_url());
 }
 
 void PageInfo::OnChangePasswordButtonPressed(
