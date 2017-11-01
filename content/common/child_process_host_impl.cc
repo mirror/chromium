@@ -85,7 +85,6 @@ ChildProcessHostImpl::ChildProcessHostImpl(ChildProcessHostDelegate* delegate)
 #if defined(OS_WIN)
   AddFilter(new FontCacheDispatcher());
 #endif
-  content::BindInterface(this, &child_control_);
 }
 
 ChildProcessHostImpl::~ChildProcessHostImpl() {
@@ -137,6 +136,10 @@ bool ChildProcessHostImpl::InitChannel() {
   for (size_t i = 0; i < filters_.size(); ++i)
     filters_[i]->OnFilterAdded(channel_.get());
   delegate_->OnChannelInitialized(channel_.get());
+
+  // This cannot be called in the constructor because content::BindInterface()
+  // might not work yet.
+  content::BindInterface(this, &child_control_);
 
   // Make sure these messages get sent first.
 #if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
