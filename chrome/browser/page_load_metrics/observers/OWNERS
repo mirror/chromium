@@ -1,0 +1,8 @@
+per-file ukm_features.*=asvitkine@chromium.org
+per-file ukm_features.*=bmcquade@chromium.org
+per-file ukm_features.*=engedy@chromium.org
+per-file ukm_features.*=holte@chromium.org
+per-file ukm_features.*=msramek@chromium.org
+per-file ukm_features.*=rkaplow@chromium.org
+# Strict reviews needed for opt-in features measured in ukm use counter.
+# Must satisfy UKM privacy requirements.
