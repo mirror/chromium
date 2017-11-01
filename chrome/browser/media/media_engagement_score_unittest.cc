@@ -129,6 +129,9 @@ class MediaEngagementScoreTest : public ChromeRenderViewHostTestHarness {
     EXPECT_EQ(details->media_playbacks, score->media_playbacks());
     EXPECT_EQ(details->last_media_playback_time,
               score->last_media_playback_time().ToJsTime());
+    EXPECT_EQ(details->audible_playbacks, score->audible_playbacks());
+    EXPECT_EQ(details->significant_playbacks, score->significant_playbacks());
+    EXPECT_EQ(details->visits_with_video_tag, score->visits_with_video_tag());
   }
 
   void OverrideFieldTrial(int min_visits,
