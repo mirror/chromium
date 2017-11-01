@@ -18,6 +18,7 @@
 #include "url/origin.h"
 
 namespace storage {
+class AsyncFileUtil;
 class FileSystemContext;
 class FileSystemURL;
 }  // namespace storage
@@ -75,6 +76,9 @@ class CdmFileImpl final : public media::mojom::CdmFile {
                               const base::Closure& on_close_callback);
   void OnTempFileOpenedForWriting(base::File file,
                                   const base::Closure& on_close_callback);
+  void OnGetFileInfo(base::File::Error result,
+                     const base::File::Info& file_info);
+  void OnFileDeleted(base::File::Error delete_result);
   void OnFileRenamed(base::File::Error move_result);
 
   // Returns the FileSystemURL for the specified |file_name|.
@@ -95,6 +99,9 @@ class CdmFileImpl final : public media::mojom::CdmFile {
   const std::string file_system_id_;
   const std::string file_system_root_uri_;
   scoped_refptr<storage::FileSystemContext> file_system_context_;
+
+  // |file_util_| is obtained from |file_system_context_|.
+  storage::AsyncFileUtil* file_util_;
 
   // Keep track of which files are opened.
   LockState lock_state_ = LockState::kNone;

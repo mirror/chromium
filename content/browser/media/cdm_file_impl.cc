@@ -25,6 +25,9 @@ namespace {
 // so use it to prefix temporary files.
 const char kTemporaryFilePrefix[] = "_";
 
+// File size limit is 32MB.
+constexpr int64_t kMaxFileSizeBytes = 32 * 1024 * 1024;
+
 std::string GetTempFileName(const std::string& file_name) {
   DCHECK(!base::StartsWith(file_name, kTemporaryFilePrefix,
                            base::CompareCase::SENSITIVE));
@@ -165,6 +168,10 @@ CdmFileImpl::CdmFileImpl(
       file_system_context_(file_system_context),
       weak_factory_(this) {
   DVLOG(3) << __func__ << " " << file_name_;
+
+  file_util_ = file_system_context_->GetAsyncFileUtil(
+      storage::kFileSystemTypePluginPrivate);
+  DCHECK(file_util_);
 }
 
 CdmFileImpl::~CdmFileImpl() {
@@ -226,8 +233,6 @@ void CdmFileImpl::OpenFile(const std::string& file_name,
   DCHECK(pending_open_callback_);
 
   storage::FileSystemURL file_url = CreateFileSystemURL(file_name);
-  storage::AsyncFileUtil* file_util = file_system_context_->GetAsyncFileUtil(
-      storage::kFileSystemTypePluginPrivate);
   auto operation_context =
       std::make_unique<storage::FileSystemOperationContext>(
           file_system_context_.get());
@@ -237,9 +242,9 @@ void CdmFileImpl::OpenFile(const std::string& file_name,
   // As |this| may go away while the CreateOrOpen() is being processed, use
   // the static method OnFileOpened() to handle the response. If |this| has
   // been destroyed, it will clean up the base::File returned properly.
-  file_util->CreateOrOpen(std::move(operation_context), file_url, file_flags,
-                          base::Bind(&OnFileOpened, weak_factory_.GetWeakPtr(),
-                                     std::move(callback)));
+  file_util_->CreateOrOpen(std::move(operation_context), file_url, file_flags,
+                           base::Bind(&OnFileOpened, weak_factory_.GetWeakPtr(),
+                                      std::move(callback)));
 }
 
 void CdmFileImpl::OnFileOpenedForReading(
@@ -323,9 +328,6 @@ void CdmFileImpl::CommitWrite(CommitWriteCallback callback) {
   DCHECK(IsFileLockHeld(file_name_));
   DCHECK(IsFileLockHeld(temp_file_name_));
 
-  // TODO(jrummell): Verify that the written file does not exceed the file
-  // size limit of 32MB. If it does simply delete the written file and fail.
-
   // Fail if this is called out of order. We must have opened both the original
   // and the temporary file, and there should be no call in progress.
   if (lock_state_ != LockState::kFileAndTempFileLocked ||
@@ -343,19 +345,61 @@ void CdmFileImpl::CommitWrite(CommitWriteCallback callback) {
   // OpenFile() will be called after the file is renamed, so save |callback|.
   pending_open_callback_ = std::move(callback);
 
-  storage::FileSystemURL src_file_url = CreateFileSystemURL(temp_file_name_);
-  storage::FileSystemURL dest_file_url = CreateFileSystemURL(file_name_);
-  storage::AsyncFileUtil* file_util = file_system_context_->GetAsyncFileUtil(
-      storage::kFileSystemTypePluginPrivate);
+  // Start by checking that the newly written file does not exceed
+  // |kMaxFileSizeBytes|. If it does simply delete it and fail.
+  storage::FileSystemURL file_url = CreateFileSystemURL(temp_file_name_);
   auto operation_context =
       std::make_unique<storage::FileSystemOperationContext>(
           file_system_context_.get());
-  DVLOG(3) << "Renaming " << src_file_url.DebugString() << " to "
-           << dest_file_url.DebugString();
-  file_util->MoveFileLocal(
-      std::move(operation_context), src_file_url, dest_file_url,
+  file_util_->GetFileInfo(
+      std::move(operation_context), file_url,
+      storage::FileSystemOperation::GET_METADATA_FIELD_SIZE,
+      base::Bind(&CdmFileImpl::OnGetFileInfo, weak_factory_.GetWeakPtr()));
+}
+
+void CdmFileImpl::OnGetFileInfo(base::File::Error result,
+                                const base::File::Info& file_info) {
+  DVLOG(3) << __func__ << " " << temp_file_name_ << " size: " << file_info.size;
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_EQ(LockState::kFileAndTempFileLocked, lock_state_);
+  DCHECK(pending_open_callback_);
+
+  storage::FileSystemURL tmp_file_url = CreateFileSystemURL(temp_file_name_);
+  auto operation_context =
+      std::make_unique<storage::FileSystemOperationContext>(
+          file_system_context_.get());
+
+  if (result != base::File::FILE_OK || file_info.size > kMaxFileSizeBytes) {
+    // The temporary file is too large (or there's some problem with it), so
+    // simply delete it and return a failure.
+    DVLOG(3) << "Deleting " << tmp_file_url.DebugString();
+    file_util_->DeleteFile(
+        std::move(operation_context), tmp_file_url,
+        base::Bind(&CdmFileImpl::OnFileDeleted, weak_factory_.GetWeakPtr()));
+    return;
+  }
+
+  storage::FileSystemURL file_url = CreateFileSystemURL(file_name_);
+  DVLOG(3) << "Renaming " << tmp_file_url.DebugString() << " to "
+           << file_url.DebugString();
+  file_util_->MoveFileLocal(
+      std::move(operation_context), tmp_file_url, file_url,
       storage::FileSystemOperation::OPTION_NONE,
       base::Bind(&CdmFileImpl::OnFileRenamed, weak_factory_.GetWeakPtr()));
+}
+
+void CdmFileImpl::OnFileDeleted(base::File::Error delete_result) {
+  DVLOG(3) << __func__;
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_EQ(LockState::kFileAndTempFileLocked, lock_state_);
+  DCHECK(pending_open_callback_);
+
+  // Temporary file has been deleted, so we can release the lock on it.
+  ReleaseFileLock(temp_file_name_);
+  lock_state_ = LockState::kFileLocked;
+
+  // File has been deleted, so simply return an error.
+  std::move(pending_open_callback_).Run(base::File());
 }
 
 void CdmFileImpl::OnFileRenamed(base::File::Error move_result) {
