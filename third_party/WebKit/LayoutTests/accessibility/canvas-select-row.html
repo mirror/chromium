@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+
+<canvas role="treegrid">
+  <select role="row" id="row1">
+</canvas>
+
+<script>
+function axElementById(id) {
+    return accessibilityController.accessibleElementById(id);
+}
+
+test(function(t) {
+    var ax = axElementById("row1");
+    assert_equals(ax.role, "AXRole: AXRow");
+}, "An ARIA row in a select in a canvas does not crash");
+
+</script>
