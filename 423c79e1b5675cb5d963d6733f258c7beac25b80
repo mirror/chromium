@@ -52,6 +52,24 @@
       "revId": "423c79e1b5675cb5d963d6733f258c7beac25b80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88eda944_20152fe6",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-01T23:58:04Z",
+      "side": 0,
+      "message": "Sorry, you were right to be paranoid.  I\u0027m fixing two bugs that can result in invalid weak pointers at https://crrev.com/c/749902.",
+      "parentUuid": "4da75586_b7badd1e",
+      "revId": "423c79e1b5675cb5d963d6733f258c7beac25b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
