@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "3c0c61c7_535080f2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-11-01T00:34:58Z",
+      "side": 1,
+      "message": "It is actually transitions and not states, I will rename it to transitions. As these are all recorded when entering the equivalent state for the first time, and they indicate what the previous state was in some cases (RESUMED and RESUMED_-..., STOPPED_*)",
+      "parentUuid": "f3b03f19_de125ab1",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "e2ebf166eb258b10e4d9e7fb5bdd116ec27cf80b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd4a7f77_e625ec33",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
         "patchSetId": 2
@@ -106,6 +130,30 @@
       "side": 1,
       "message": "I believe that RESUMED is the correct word for the opposite of backgrounding.\nHowever, should we call RESUMED_AFTER_STOP RESTARTED?",
       "parentUuid": "003a89f6_85465bbf",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "e2ebf166eb258b10e4d9e7fb5bdd116ec27cf80b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "409646f7_39ff79a1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-11-01T00:34:58Z",
+      "side": 1,
+      "message": "I don\u0027t believe RESTARTED is relevant here at all since it was never DISCARDED. They are both resumed from stop without being discarded.",
+      "parentUuid": "afcd137c_0eeb139c",
       "range": {
         "startLine": 49,
         "startChar": 2,
