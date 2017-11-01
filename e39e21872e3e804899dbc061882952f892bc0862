@@ -113,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "307d867a_b28ebfa0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-01T22:45:44Z",
+      "side": 1,
+      "message": "the only way we use these is if we do have a session which will only be true for TWA. So these will be constructed but unused for WebAPKs.",
+      "parentUuid": "0a9823bd_d71b3c88",
+      "revId": "e39e21872e3e804899dbc061882952f892bc0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91fa1351_a7f61a92",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDelegateFactory.java",
         "patchSetId": 7
@@ -227,6 +245,30 @@
       "revId": "e39e21872e3e804899dbc061882952f892bc0862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc22177_12594dbb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-01T22:45:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7183b40_1daf0d74",
+      "range": {
+        "startLine": 120,
+        "startChar": 39,
+        "endLine": 120,
+        "endChar": 50
+      },
+      "revId": "e39e21872e3e804899dbc061882952f892bc0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
