@@ -216,7 +216,7 @@ class RendererWindowTreeClient : public ui::mojom::WindowTreeClient,
   mojo::Binding<ui::mojom::WindowTreeClient> binding_;
   mojo::Binding<mojom::RenderWidgetWindowTreeClient>
       render_widget_window_tree_client_binding_;
-  ui::ClientSpecificId next_window_id_ = 0;
+  ui::ClientSpecificId next_window_id_ = 1;
   uint32_t next_change_id_ = 0;
 
   // Set of MusEmbeddedFrames. They are owned by the corresponding
