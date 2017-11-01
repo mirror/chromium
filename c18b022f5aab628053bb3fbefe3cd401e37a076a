@@ -22,6 +22,30 @@
       "revId": "c18b022f5aab628053bb3fbefe3cd401e37a076a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7a9ce8_5b27bace",
+        "filename": "chrome/browser/ui/views/hung_renderer_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-01T16:52:02Z",
+      "side": 1,
+      "message": "Yes I believe it does. Charlie pointed me to this test pattern that I cloned from other browser tests.",
+      "parentUuid": "cb1d7fff_b88b79e6",
+      "range": {
+        "startLine": 98,
+        "startChar": 10,
+        "endLine": 98,
+        "endChar": 67
+      },
+      "revId": "c18b022f5aab628053bb3fbefe3cd401e37a076a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
