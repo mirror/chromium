@@ -106,4 +106,14 @@ WebSize MediaControlElementsHelper::GetSizeOrDefault(
   return WebSize(round(width / zoom_factor), round(height / zoom_factor));
 }
 
+// static
+HTMLDivElement* MediaControlElementsHelper::CreateDivWithId(
+    const AtomicString& id,
+    ContainerNode* parent) {
+  HTMLDivElement* element = HTMLDivElement::Create(parent->GetDocument());
+  element->setAttribute("id", id);
+  parent->AppendChild(element);
+  return element;
+}
+
 }  // namespace blink
