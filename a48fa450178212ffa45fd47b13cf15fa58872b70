@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4099c1d_5e2ae4b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 28
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "micro nit: remove the trailing space",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1929bd33_20f18899",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "nit: {} -\u003e \u003d default;",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7bfa66_535c65ed",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "I find the code a bit hard to follow, notably because it\u0027s ResetTempFiles() that initialises |temp_path_| that\u0027s critical in this function\u0027s logic. Could we make this more explicit by:\n\n\u003e if (!initialized_) {\n\u003e   directory_ \u003d DetermineImageDirectory();\n\u003e   if (!directory_.empty())\n\u003e     DeleteExistingImages();\n\u003e \n\u003e   initialized_ \u003d true;\n\u003e }",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8ec322_8a9eba21",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "Hmm. Could we create an intermediary directory?\n\n[USER_DATA_DIR]/Notification Resources/[HASH OF PROFILE AND ORIGIN]/***\n\nIs this what |dir_prefix_| does? Can we just hardcode that in this file?",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a77fac_776fc82a",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "This probably isn\u0027t long enough - the action center may queue notifications (and thus not read their image) if there\u0027s a large number of them being posted at once. How was this period determined?",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe33377_ce1a0957",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "We should probably be stricter here? ResetTempFiles() would try to create a directory from an empty root if this returns base::FilePath(), and RegisterTemporaryImage() would therefore end up writing to a temp directory *outside* of our control. Should we perhaps just not support images in that case?\n\n\u003e bool success \u003d base::PathService::Get(chrome::DIR_USER_DATA, \u0026data_dir);\n\u003e DCHECK(success);\n\u003e \n\u003e return data_dir;",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853aa218_9dd8c2d0",
+        "filename": "chrome/browser/notifications/notification_image_retainer.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "nit: already included",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318bf7ac_7728eaaf",
+        "filename": "chrome/browser/notifications/notification_image_retainer.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "Let\u0027s merge the interface and its implementation? The constructor doesn\u0027t do anything. We can continue to declare RegisterTemporaryImage as virtual so that tests can override it.",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e1c46e_7b9d62b5",
+        "filename": "chrome/browser/notifications/notification_image_retainer.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "Could you add unit tests for this class specifically? It has some important and non-trivial logic that we should verify.",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1674b36d_ac93fe73",
+        "filename": "chrome/browser/notifications/notification_image_retainer.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "nit: const gfx::Image\u0026",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8dd1ea5_c161874c",
+        "filename": "chrome/browser/notifications/notification_image_retainer.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "Since this class is still tightly coupled to notifications, I would extend on the \"such as the Action Center\" by explaining that it reads files *at some point in the future*, which is why we can\u0027t do a [write file] -\u003e [show notification] -\u003e [delete file] sequence.",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d481c8e8_4add250b",
+        "filename": "chrome/browser/notifications/notification_image_retainer.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "nit: pass and store this as a scoped_refptr\u003c\u003e",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b97b62_ea5e0b00",
+        "filename": "chrome/browser/notifications/notification_image_retainer.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "Should there be a method to explicitly say \"this file can be cleaned up now\"? The current design keeps at least the directories around until the next launch of Chrome, which can be an awfully long time for power users.",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34037f92_77f30e91",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "nit: unrelated?",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0747852e_3d91a2fc",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "nit: I still feel this doesn\u0027t have to implement the NotificationPlatformBridge interface. I see that you haven\u0027t responded to the previous comments yet, is that still pending?",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aea49ed_33da1be5",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "nit: please set this in the initialisation list (like task_runner_) and use std::make_unique\u003c\u003e",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8489fd70_38c1379b",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "nit: here to, scoped_refptr\u003c\u003e",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64478b0e_d40fd39f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "Can we shorten this to the following? Additional details could be added to the DeepCopy() declaration in its header file.\n\n// Make a deep copy of the notification as its resources cannot safely\n// be passed between threads.",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a256b9_945121fc",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "PostTaskToTaskRunnerThread\n\nEven if it doesn\u0027t do anything yet, we should maintain the thread contract. Personally I would keep the DCHECKs here for clarity.",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f755ac_839dbf2d",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "nit: just DCHECK this in the constructor",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2616514_9fb41349",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "nit: perhaps add more blank lines and comment to divide this into sections? If no icon was provided in the |notification|, could we bail out here instead of in the call?",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a665c5d9_785fa614",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": ":)",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a97d0b6a_93edc759",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "nit: please just store it as a member instead of passing it around everywhere. Reads much simpler :)",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef360cb1_853756d6",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T18:55:30Z",
+      "side": 1,
+      "message": "nit: could remove this and declare counter_ as:\n\n  int counter_ \u003d 0;",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
