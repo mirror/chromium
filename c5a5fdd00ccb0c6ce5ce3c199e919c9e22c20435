@@ -16,6 +16,24 @@
       "revId": "c5a5fdd00ccb0c6ce5ce3c199e919c9e22c20435",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f0d457_1fd1e28a",
+        "filename": "chrome/browser/themes/browser_theme_pack.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-01T18:52:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "05623fe8_0da18b90",
+      "revId": "c5a5fdd00ccb0c6ce5ce3c199e919c9e22c20435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
