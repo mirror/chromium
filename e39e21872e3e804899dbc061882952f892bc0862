@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9505c80b_c3031e56",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T17:19:48Z",
+      "side": 1,
+      "message": "Hrmm. At first blush I would think we don\u0027t need any special-casing for TWAs so I\u0027m inclined to believe this is ok. This code is more about \"if we\u0027re in chrome and load a page that can be loaded in a webapk and only it can handle the webapk, then just bounce directly to it\". Since these aren\u0027t \"webapks\" and won\u0027t pass validation, this should be null and short-circuit that code. I could imagine that if you have a TWA *and* a webapk with overlapping scope, this could break. Since the url would also be within TWA scope, you\u0027d probably get an intent picker to offer you to open the webapk or the TWA (that is unless, CCT\u0027s navigation overriding prevents it?). We\u0027d need to decide whether we want to squelch that or not.",
+      "parentUuid": "108be359_2b8fff58",
+      "range": {
+        "startLine": 522,
+        "startChar": 55,
+        "endLine": 522,
+        "endChar": 76
+      },
+      "revId": "e39e21872e3e804899dbc061882952f892bc0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2171ac9_86b952a1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationParams.java",
         "patchSetId": 7
