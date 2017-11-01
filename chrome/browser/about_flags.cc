@@ -3614,6 +3614,11 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_VALUE_TYPE(ash::switches::kAshEnableKeyboardShortcutViewer)},
 #endif  // OS_CHROMEOS
 
+    {"clipboard-content-setting",
+     flag_descriptions::kClipboardContentSettingName,
+     flag_descriptions::kClipboardContentSettingDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kClipboardContentSetting)},
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the
