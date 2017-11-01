@@ -22,6 +22,30 @@
       "revId": "c171eec280d7a3ab1c79b74fbfcf3a5127a7b97d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b75aa68_a11144b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-01T21:02:41Z",
+      "side": 1,
+      "message": "Added to third party the correct way. Thought honestly it seems like a lot for ~10 functional lines of code.",
+      "parentUuid": "5832018c_d922c6e2",
+      "range": {
+        "startLine": 113,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 31
+      },
+      "revId": "c171eec280d7a3ab1c79b74fbfcf3a5127a7b97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
