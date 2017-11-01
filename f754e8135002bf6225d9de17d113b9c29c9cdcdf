@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20ba50c0_e4a8f38e",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-11-01T16:42:47Z",
+      "side": 1,
+      "message": "view_ may also be null here.",
+      "revId": "f754e8135002bf6225d9de17d113b9c29c9cdcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6822abd6_84448b49",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-11-01T16:42:47Z",
+      "side": 1,
+      "message": "It seems to me that a lot of this members would make more sense to be in ChildFrameCompositingHelper instead of here. It doesn\u0027t need to be addressed in this CL though, since they are already there.\n\nkenrb@ may have some thoughts on this as well.",
+      "revId": "f754e8135002bf6225d9de17d113b9c29c9cdcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
