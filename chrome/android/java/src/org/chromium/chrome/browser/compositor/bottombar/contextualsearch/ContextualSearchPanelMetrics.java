@@ -10,6 +10,12 @@ import org.chromium.chrome.browser.contextualsearch.ContextualSearchHeuristics;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchRankerLogger;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchUma;
 import org.chromium.chrome.browser.contextualsearch.QuickActionCategory;
+import org.chromium.chrome.browser.feature_engagement.TrackerFactory;
+import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.components.feature_engagement.EventConstants;
+import org.chromium.components.feature_engagement.FeatureConstants;
+import org.chromium.components.feature_engagement.Tracker;
+import org.chromium.components.feature_engagement.TriggerState;
 
 /**
  * This class is responsible for all the logging related to Contextual Search.
@@ -60,8 +66,8 @@ public class ContextualSearchPanelMetrics {
      * @param toState The state that the panel is transitioning to.
      * @param reason The reason for the state change.
      */
-    public void onPanelStateChanged(PanelState fromState, PanelState toState,
-            StateChangeReason reason) {
+    public void onPanelStateChanged(
+            PanelState fromState, PanelState toState, StateChangeReason reason, Profile profile) {
         // Note: the logging within this function includes the promo, unless specifically
         // excluded.
         boolean isStartingSearch = isStartingNewContextualSearch(toState, reason);
@@ -149,6 +155,30 @@ public class ContextualSearchPanelMetrics {
             // complete record.
             if (mRankerLogger != null) mRankerLogger.writeLogAndReset();
             mRankerLogger = null;
+
+            // Notifications to Feature Engagement
+            Tracker tracker = TrackerFactory.getTrackerForProfile(profile);
+            if (mWasSearchContentViewSeen) {
+                tracker.notifyEvent(EventConstants.CONTEXTUAL_SEARCH_PANEL_OPENED);
+                tracker.notifyEvent(mWasActivatedByTap
+                                ? EventConstants.CONTEXTUAL_SEARCH_PANEL_OPENED_AFTER_TAP
+                                : EventConstants.CONTEXTUAL_SEARCH_PANEL_OPENED_AFTER_LONGPRESS);
+
+                // Log whether IPH for opening the panel has been shown before.
+                ContextualSearchUma.logPanelOpenedIPH(
+                        tracker.getTriggerState(
+                                FeatureConstants.CONTEXTUAL_SEARCH_PROMOTE_PANEL_OPEN_FEATURE)
+                        == TriggerState.HAS_BEEN_DISPLAYED);
+
+                // Log whether IPH for Contextual Search has been shown before.
+                ContextualSearchUma.logContextualSearchIPH(
+                        tracker.getTriggerState(
+                                FeatureConstants.CONTEXTUAL_SEARCH_WEB_SEARCH_FEATURE)
+                        == TriggerState.HAS_BEEN_DISPLAYED);
+            }
+            if (mWasContextualCardsDataShown) {
+                tracker.notifyEvent(EventConstants.CONTEXTUAL_SEARCH_PANEL_OPENED_FOR_ENTITY);
+            }
         }
 
         if (isExitingPanelOpenedBeyondPeeked) {
