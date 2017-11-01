@@ -672,6 +672,7 @@ source_set("common") {
     ":generate_aw_resources",
     ":generate_aw_strings",
     ":generate_components_strings",
+    ":mojom_constants",
     ":native_jni",
     "//android_webview:generate_components_strings",
     "//base",
@@ -988,4 +989,10 @@ if (public_android_sdk) {
     ]
     apk_name = "SystemWebView"
   }
+}
+
+mojom("mojom_constants") {
+  sources = [
+    "constants.mojom",
+  ]
 }

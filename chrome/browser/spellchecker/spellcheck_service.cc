@@ -196,7 +196,7 @@ void SpellcheckService::InitForRenderer(
   }
 
   spellcheck::mojom::SpellCheckerPtr spellchecker;
-  content::BindInterface(
+  content::BindEmbedderInterface(
       content::RenderProcessHost::FromRendererIdentity(renderer_identity),
       &spellchecker);
   spellchecker->Initialize(std::move(dictionaries), custom_words, enable);

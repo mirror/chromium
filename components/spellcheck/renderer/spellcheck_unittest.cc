@@ -54,7 +54,7 @@ class SpellCheckTest : public testing::Test {
   }
 
   void ReinitializeSpellCheck(const std::string& language) {
-    spell_check_.reset(new SpellCheck(nullptr));
+    spell_check_.reset(new SpellCheck(nullptr, nullptr));
     InitializeSpellCheck(language);
   }
 
