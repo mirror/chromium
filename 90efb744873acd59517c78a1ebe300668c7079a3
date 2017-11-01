@@ -46,6 +46,30 @@
       "revId": "90efb744873acd59517c78a1ebe300668c7079a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a258733d_f525772b",
+        "filename": "base/trace_event/trace_log.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-11-01T14:46:07Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "4c02aa42_d823447c",
+      "range": {
+        "startLine": 311,
+        "startChar": 22,
+        "endLine": 311,
+        "endChar": 46
+      },
+      "revId": "90efb744873acd59517c78a1ebe300668c7079a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
