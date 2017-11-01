@@ -71,6 +71,24 @@
       "revId": "9ce4621e6aeed6b2665bb470af3917e8785773f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c513942_b8166ea7",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-01T22:19:13Z",
+      "side": 1,
+      "message": "hmm, i\u0027m having a hard time removing the RunUntilIdle call here without reducing test coverage. the crux of the problem is that ArcPowerBridge may or may not acquire/release the provider\u0027s WakeLock, depending on whether it\u0027s the first/last ARC request or not. the tests know when the mojo request is expected or not, so it\u0027s pretty straightforward to pass that through to the helper methods, e.g.\n\n  void AcquireDisplayWakeLock(mojom::DisplayWakeLockType type,\n                              bool wait_for_service) {\n    power_bridge_-\u003eOnAcquireDisplayWakeLock(type);\n    if (wait_for_service) {\n      base::RunLoop run_loop;\n      wake_lock_provider_-\u003eSetWakeLockRequestedCallback(run_loop.QuitClosure());\n      run_loop.Run();\n    }\n  }\n\nwhen i do this, though, it seems like there\u0027s a chance that i\u0027ll miss catching bugs where ARC requests trigger mojo calls that shouldn\u0027t have happened. for example, if the ReleaseDisplayWakeLock call on line 99 below were to cause the lock to be canceled at the provider, i\u0027ll presumably fail to catch that if i don\u0027t run the message loop to completion before checking that the lock is still held at the provider on line 100.\n\ndoes that make sense? any suggestions? it feels like i\u0027d have a hard time catching this without RunUntilIdle unless i instrument ArcPowerBridge to expose extra info to tests, which i\u0027d prefer to avoid.",
+      "parentUuid": "59f9b857_01e31f1a",
+      "revId": "9ce4621e6aeed6b2665bb470af3917e8785773f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
