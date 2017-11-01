@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d655d67c_027b6867",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-11-01T16:52:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2d44aff_c01eefb7",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ea5f707_7224a252",
         "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-31T22:07:11Z",
       "side": 1,
       "message": "I\u0027m kind of worried that the trybots are all green, but this shouldn\u0027t work, since |res| has eben renamed to |len|.",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8540bbd2_0646b214",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-11-01T16:52:49Z",
+      "side": 1,
+      "message": "I agree that is concerning. I suspect that the fuzzing code is not built at as part of the trybots, does that sound like a reasonable explanation to you?",
+      "parentUuid": "3ea5f707_7224a252",
       "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6a27f35c_db52a186",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-11-01T16:52:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c18f85d_52c9003f",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb41192e_5cdcaaf2",
         "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e07fddcb_b61d80eb",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-11-01T16:52:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb41192e_5cdcaaf2",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4df5dfa2_23a7a75e",
         "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2b944d_72f8c3f8",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-11-01T16:52:49Z",
+      "side": 1,
+      "message": "I don\u0027t think so, I tried it and was getting a compile error. Specifically FreeDeleter depends on being able to cast the pointer in the unique_ptr to void*, so if the type is const char*, the cast will fail at that point.",
+      "parentUuid": "4df5dfa2_23a7a75e",
+      "revId": "d2626ee9406f5416465a4b80e5fbd3b6102c5b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
