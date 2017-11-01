@@ -461,6 +461,7 @@ bool WebUIBrowserTest::RunJavascriptUsingHandler(
     SetupHandlers();
 
   bool result = true;
+  error_messages_.Get().clear();
 
   for (size_t i = 0; i < libraries.size(); ++i)
     test_handler_->PreloadJavaScript(libraries[i], preload_host);
@@ -480,7 +481,6 @@ bool WebUIBrowserTest::RunJavascriptUsingHandler(
     LOG(ERROR) << "JS call assumed failed, because JS console error(s) found.";
 
     result = false;
-    error_messages_.Get().clear();
   }
   return result;
 }
