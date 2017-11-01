@@ -1488,6 +1488,7 @@ base::TimeTicks WebContentsImpl::GetLastHiddenTime() const {
 }
 
 void WebContentsImpl::WasShown() {
+  LOG(ERROR) << "was shown...";
   controller_.SetActive(true);
 
   if (auto* view = GetRenderWidgetHostView()) {
@@ -1511,6 +1512,7 @@ void WebContentsImpl::WasShown() {
 }
 
 void WebContentsImpl::WasHidden() {
+  LOG(ERROR) << "was hidden...";
   // If there are entities capturing screenshots or video (e.g., mirroring),
   // don't activate the "disable rendering" optimization.
   if (capturer_count_ == 0) {

@@ -197,7 +197,7 @@ void AnswerCardSearchProvider::DidStopLoading(
   current_navigation_context_ = 1 - current_navigation_context_;
 
   // Show the result.
-  UpdateResult();
+  // UpdateResult();
 
   answer_loaded_time_ = base::TimeTicks::Now();
   UMA_HISTOGRAM_TIMES("SearchAnswer.LoadingTime",

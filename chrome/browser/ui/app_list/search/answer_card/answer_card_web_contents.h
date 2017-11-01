@@ -44,6 +44,7 @@ class AnswerCardWebContents : public AnswerCardContents,
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
   void DidStopLoading() override;
+  void DidFirstVisuallyNonEmptyPaint() override;
   void DidGetUserInteraction(const blink::WebInputEvent::Type type) override;
   void RenderViewCreated(content::RenderViewHost* host) override;
   void RenderViewDeleted(content::RenderViewHost* host) override;

@@ -27,6 +27,8 @@
 #include "ui/views/controls/webview/webview.h"
 #include "ui/views/widget/widget.h"
 
+#include "ui/aura/client/aura_constants.h"
+
 namespace app_list {
 
 namespace {
@@ -177,6 +179,8 @@ void AnswerCardWebContents::LoadURL(const GURL& url) {
 
   web_contents_->GetRenderViewHost()->EnableAutoResize(
       gfx::Size(1, 1), gfx::Size(INT_MAX, INT_MAX));
+  web_contents_->GetNativeView()->SetProperty(
+      aura::client::kMirroringEnabledKey, true);
 }
 
 views::View* AnswerCardWebContents::GetView() {
@@ -226,6 +230,8 @@ bool AnswerCardWebContents::HandleContextMenu(
 
 void AnswerCardWebContents::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
+  web_contents_->GetNativeView()->SetProperty(
+      aura::client::kMirroringEnabledKey, true);
   bool has_answer_card = false;
   std::string result_title;
   std::string issued_query;
@@ -248,7 +254,14 @@ void AnswerCardWebContents::DidFinishNavigation(
 }
 
 void AnswerCardWebContents::DidStopLoading() {
+  web_contents_->GetNativeView()->SetProperty(
+      aura::client::kMirroringEnabledKey, true);
+  LOG(ERROR) << "*** did stop loading ***";
   delegate()->DidStopLoading(this);
+}
+
+void AnswerCardWebContents::DidFirstVisuallyNonEmptyPaint() {
+  LOG(ERROR) << "*** did first visually non empty paint ***";
 }
 
 void AnswerCardWebContents::DidGetUserInteraction(
