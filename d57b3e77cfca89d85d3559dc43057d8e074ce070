@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e49b928e_263116a1",
+        "filename": "chrome/browser/previews/previews_infobar_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-01T23:10:49Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer this in the logger with a new method. tbansal, wdyt?",
+      "revId": "d57b3e77cfca89d85d3559dc43057d8e074ce070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a087fa0_7a47d6bf",
+        "filename": "chrome/browser/previews/previews_infobar_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-01T23:10:49Z",
+      "side": 1,
+      "message": "Can you add a TODO comment above the on_dismiss_callback_ member in the h file to replace it with a direct call to the UI service?",
+      "revId": "d57b3e77cfca89d85d3559dc43057d8e074ce070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
