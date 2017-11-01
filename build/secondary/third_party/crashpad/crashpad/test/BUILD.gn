@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("crashpad_test") {
+import("//testing/test.gni")
+
+static_library("test") {
   testonly = true
   sources = [
     "errors.cc",
@@ -55,9 +57,52 @@ static_library("crashpad_test") {
     "test_paths_test_data_root.txt",
   ]
   include_dirs = [ ".." ]
+  defines = [ "CRASHPAD_IN_CHROMIUM" ]
   if (is_mac) {
     libs = [ "bsm" ]
   }
+}
+
+source_set("test_test") {
+  testonly = true
+
+  deps = [
+    ":test",
+    "../compat",
+    "../util",
+    "//base",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+
+  data_deps = [
+    ":crashpad_test_test_multiprocess_exec_test_child",
+  ]
+
+  include_dirs = [ ".." ]
+
+  sources = [
+    "hex_string_test.cc",
+    "mac/mach_multiprocess_test.cc",
+    "main_arguments_test.cc",
+    "multiprocess_exec_test.cc",
+    "scoped_temp_dir_test.cc",
+    "test_paths_test.cc",
+    "win/win_child_process_test.cc",
+    "win/win_multiprocess_test.cc",
+  ]
+
+  if (!is_win) {
+    sources += [
+      "multiprocess_posix_test.cc",
+    ]
+  }
+}
+
+executable("crashpad_test_test_multiprocess_exec_test_child") {
+  sources = [
+    "multiprocess_exec_test_child.cc",
+  ]
 }
 
 static_library("crashpad_gmock_main") {
@@ -70,7 +115,7 @@ static_library("crashpad_gmock_main") {
     "gtest_main.cc",
   ]
   deps = [
-    ":crashpad_test",
+    ":test",
     "//base",
     "//base/test:test_support",
     "//testing/gmock",
@@ -89,7 +134,7 @@ static_library("crashpad_gtest_main") {
     "gtest_main.cc",
   ]
   deps = [
-    ":crashpad_test",
+    ":test",
     "//base",
     "//base/test:test_support",
     "//testing/gtest",
