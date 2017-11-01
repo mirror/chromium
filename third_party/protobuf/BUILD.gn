@@ -167,6 +167,11 @@ component("protobuf_lite") {
     # Must be after no_chromium_code for warning flags to be ordered
     # correctly.
     ":protobuf_warnings",
+
+    # This config is useful when protobuf is being built as part of
+    # libprotobuf-mutator and thus only does anything when use_libfuzzer is
+    # true.
+    "//third_party/libprotobuf-mutator:nontargeted_part_of_libprotobuf_mutator_config",
   ]
 
   if (is_win) {
@@ -189,7 +194,6 @@ component("protobuf_lite") {
   }
 
   cflags = protobuf_lite_cflags
-
   if (is_component_build && is_desktop_linux) {
     deps += [ ":mirclient" ]
   }
@@ -360,6 +364,12 @@ static_library("protobuf_full") {
     # Must be after no_chromium_code for warning flags to be ordered
     # correctly.
     ":protobuf_warnings",
+
+    # This config is only applied when a libFuzzer target is being built. It is
+    # handles protobuf_full differently than other parts of libprotobuf-mutator
+    # because there will be spurious crashes if it is not instrumented using
+    # ASAN while the rest of the binary is.
+    "//third_party/libprotobuf-mutator:protobuf_full_when_part_of_libprotobuf_mutator_config",
   ]
   if (is_win) {
     configs -= [ "//build/config/win:lean_and_mean" ]
@@ -579,6 +589,8 @@ if (current_toolchain == host_toolchain) {
       # Must be after no_chromium_code for warning flags to be ordered
       # correctly.
       ":protobuf_warnings",
+
+      "//third_party/libprotobuf-mutator:nontargeted_part_of_libprotobuf_mutator_config",
     ]
     if (is_win) {
       # This is defined internally, don't warn on duplicate.
@@ -603,6 +615,7 @@ if (current_toolchain == host_toolchain) {
     configs += [ "//build/config/compiler:no_chromium_code" ]
 
     cflags = protobuf_lite_cflags
+    configs += [ "//third_party/libprotobuf-mutator:nontargeted_part_of_libprotobuf_mutator_config" ]
 
     deps = [
       ":protoc_lib",

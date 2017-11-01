@@ -1,14 +1,52 @@
 # Copyright 2017 The Chromium Authors. All rights reserved.
-
-import("//testing/libfuzzer/fuzzer_test.gni")
+import("//build/config/sanitizers/sanitizers.gni")
 
 config("include_config") {
   include_dirs = [ "src/" ]
 }
 
+# These flags should come after the sanitizer flags are passed to clang or else
+# they will not have the intended effect.
+cflags_for_nontargeted_code = [
+  "-fno-sanitize=undefined",
+
+  # Don't add coverage instrumentation
+  "-fno-sanitize=fuzzer",
+  "-fno-sanitize=fuzzer-no-link",
+  "-fno-sanitize-coverage=trace-pc-guard",
+
+  # Since we aren't instrumenting with coverage, code size is less of a
+  # concern, so use a more aggressive optimization level than
+  # optimize_for_fuzzing (O1). When given multiple optimiation flags clang
+  # obeys the later one, so as long as this comes after O1, this should
+  # work.
+  "-O2",
+]
+
+config("protobuf_full_when_part_of_libprotobuf_mutator_config") {
+  # Instrument using ASAN otherwise we get container overflow false
+  # positives
+  if (use_libfuzzer) {
+    cflags = cflags_for_nontargeted_code
+  }
+}
+
+config("nontargeted_part_of_libprotobuf_mutator_config") {
+  # Only remove ASAN and UBSAN instrumentation and not MSAN since it does not
+  # seem to work unless the whole binary is instrumented.
+  if (use_libfuzzer) {
+    cflags = [ "-fno-sanitize=address" ]
+    cflags += cflags_for_nontargeted_code
+  }
+}
+
 source_set("libprotobuf-mutator") {
   testonly = true
-  configs += [ ":include_config" ]
+  configs += [
+    ":include_config",
+    ":nontargeted_part_of_libprotobuf_mutator_config",
+  ]
+
   public_configs = [ ":include_config" ]
   sources = [
     "src/src/binary_format.cc",
@@ -22,7 +60,7 @@ source_set("libprotobuf-mutator") {
     "//third_party/protobuf:protobuf_full",
   ]
 
-  # Let ClusterFuzz builders know to not build targets that depend on 
+  # Let ClusterFuzz builders know to not build targets that depend on
   # libprotobuf-mutator for AFL.
   if (use_afl) {
     all_dependent_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]

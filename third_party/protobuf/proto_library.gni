@@ -349,6 +349,11 @@ template("proto_library") {
       configs += invoker.extra_configs
     }
 
+    # This config is useful when protobuf is being built as part of
+    # libprotobuf-mutator and thus only does anything when use_libfuzzer is
+    # true.
+    configs += [ "//third_party/libprotobuf-mutator:nontargeted_part_of_libprotobuf_mutator_config" ]
+
     public_configs = [ "//third_party/protobuf:using_proto" ]
 
     if (generate_cc || generate_with_plugin) {
