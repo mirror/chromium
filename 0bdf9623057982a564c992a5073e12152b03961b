@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e384266_0989e992",
+        "filename": "ios/web_view/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-01T18:22:35Z",
+      "side": 1,
+      "message": "Please move these lines above internal/autofill/web_view_personal_data_manager_factory.* to alphabetical order.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 49
+      },
+      "revId": "0bdf9623057982a564c992a5073e12152b03961b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4add90_e77e3319",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_suggestion.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-01T18:22:35Z",
+      "side": 1,
+      "message": "Copy the value from FormSuggestion obj?\nreturn [_formSuggestion.value copy];",
+      "revId": "0bdf9623057982a564c992a5073e12152b03961b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd610f63_b0a98056",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_suggestion.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-01T18:22:35Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0bdf9623057982a564c992a5073e12152b03961b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
