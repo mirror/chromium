@@ -381,6 +381,10 @@ uint64_t FrameSinkManagerImpl::GetActiveFrameIndex(
   return surface_manager_.GetSurfaceForId(surface_id)->GetActiveFrameIndex();
 }
 
+void FrameSinkManagerImpl::FrameTokenUpdate(const FrameSinkId& frame_sink_id, uint32_t frame_token) {
+  client_->FrameTokenUpdate(frame_sink_id, frame_token);
+}
+
 void FrameSinkManagerImpl::OnAggregatedHitTestRegionListUpdated(
     const FrameSinkId& frame_sink_id,
     mojo::ScopedSharedBufferHandle active_handle,

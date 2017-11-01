@@ -229,6 +229,9 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
   if (begin_frame_source_)
     begin_frame_source_->DidFinishFrame(this);
 
+  if (frame.metadata.frame_token)
+    frame_sink_manager_->FrameTokenUpdate(frame_sink_id_, frame.metadata.frame_token);
+
   return true;
 }
 

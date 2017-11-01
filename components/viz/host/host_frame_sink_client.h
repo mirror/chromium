@@ -15,6 +15,8 @@ class HostFrameSinkClient {
   // time.
   virtual void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) = 0;
 
+  virtual void FrameTokenUpdate(uint32_t frame_token) {};
+
  protected:
   virtual ~HostFrameSinkClient() {}
 };
