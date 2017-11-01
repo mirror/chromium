@@ -219,11 +219,6 @@ class WebContents : public PageNavigator,
   // NavigationController).
   virtual content::BrowserContext* GetBrowserContext() const = 0;
 
-  // Gets the URL that is currently being displayed, if there is one.
-  // This method is deprecated. DO NOT USE! Pick either |GetVisibleURL| or
-  // |GetLastCommittedURL| as appropriate.
-  virtual const GURL& GetURL() const = 0;
-
   // Gets the virtual URL currently being displayed in the URL bar, if there is
   // one. This URL might be a pending navigation that hasn't committed yet, so
   // it is not guaranteed to match the current page in this WebContents. A
