@@ -194,3 +194,30 @@ TEST(WebInputEventBuilderAndroidTest, CutCopyPasteKey) {
     EXPECT_EQ(entry.key, web_event.dom_key);
   }
 }
+
+TEST(WebInputEventBuilderAndroidTest, WebMouseEventCoordinates) {
+  ui::MotionEventAndroid::Pointer p0(
+      1, 13.7f, -7.13f, 5.3f, 1.2f, 0.1f, 0.2f,
+      ui::MotionEvent::MotionEvent::MotionEvent::TOOL_TYPE_MOUSE);
+  float raw_offset = -3.f;
+  int kAndroidButtonPrimary = 1;
+  int kAndroidActionButton = 0;
+  const float kPixToDip = 0.5f;
+
+  ui::MotionEventAndroid motion_event(
+      AttachCurrentThread(), nullptr, kPixToDip, 0.f, 0.f, 0.f, 0,
+      AMOTION_EVENT_ACTION_DOWN, 1, 0, -1, kAndroidActionButton,
+      kAndroidButtonPrimary, AMETA_ALT_ON, raw_offset, -raw_offset, false, &p0,
+      nullptr);
+
+  WebMouseEvent web_event = content::WebMouseEventBuilder::Build(
+      motion_event, blink::WebInputEvent::kMouseDown, 0, 1,
+      ui::MotionEvent::BUTTON_PRIMARY);
+  EXPECT_EQ(web_event.PositionInWidget().x, p0.pos_x_pixels * kPixToDip);
+  EXPECT_EQ(web_event.PositionInWidget().y, p0.pos_y_pixels * kPixToDip);
+  EXPECT_EQ(web_event.PositionInScreen().x,
+            (p0.pos_x_pixels + raw_offset) * kPixToDip);
+  EXPECT_EQ(web_event.PositionInScreen().y,
+            (p0.pos_y_pixels - raw_offset) * kPixToDip);
+  EXPECT_EQ(web_event.button, blink::WebPointerProperties::Button::kLeft);
+}
