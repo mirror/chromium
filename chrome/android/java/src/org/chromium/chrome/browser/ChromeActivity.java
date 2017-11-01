@@ -1209,18 +1209,10 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         // focus dependency is because doing it earlier can cause drawing bugs, e.g. crbug/673831.
         if (!mNativeInitialized || !hasWindowFocus()) return;
 
-        // The window background color is used as the resizing background color in Android N+
-        // multi-window mode. See crbug.com/602366.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            getWindow().setBackgroundDrawable(new ColorDrawable(
-                    ApiCompatibilityUtils.getColor(getResources(),
-                            R.color.resizing_background_color)));
-        } else {
             // Post the removeWindowBackground() call as a separate task, as doing it synchronously
             // here can cause redrawing glitches. See crbug.com/686662 for an example problem.
             Handler handler = new Handler();
             handler.post(() -> removeWindowBackground());
-        }
 
         mRemoveWindowBackgroundDone = true;
     }
