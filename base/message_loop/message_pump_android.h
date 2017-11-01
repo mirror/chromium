@@ -6,6 +6,7 @@
 #define BASE_MESSAGE_LOOP_MESSAGE_PUMP_ANDROID_H_
 
 #include <jni.h>
+#include <memory>
 
 #include "base/android/scoped_java_ref.h"
 #include "base/base_export.h"
@@ -30,6 +31,11 @@ class BASE_EXPORT MessagePumpForUI : public MessagePump {
   MessagePumpForUI();
   ~MessagePumpForUI() override;
 
+  void DoIdleWork(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
+  void DoRunLoopOnce(JNIEnv* env,
+                     const base::android::JavaParamRef<jobject>& obj,
+                     jboolean delayed);
+
   void Run(Delegate* delegate) override;
   void Quit() override;
   void ScheduleWork() override;
@@ -50,10 +56,12 @@ class BASE_EXPORT MessagePumpForUI : public MessagePump {
  private:
   JNIEnv* StartInternal();
 
-  RunLoop* run_loop_ = nullptr;
+  std::unique_ptr<RunLoop> run_loop_;
   base::android::ScopedJavaGlobalRef<jobject> system_message_handler_obj_;
   bool should_abort_ = false;
   bool quit_ = false;
+  Delegate* delegate_ = nullptr;
+  base::TimeTicks delayed_scheduled_time_;
 
   DISALLOW_COPY_AND_ASSIGN(MessagePumpForUI);
 };

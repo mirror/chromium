@@ -29,8 +29,9 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(OS_ANDROID)
+#include "base/android/java_handler_thread.h"
 #include "base/android/jni_android.h"
-#include "base/test/android/java_handler_thread_for_testing.h"
+#include "base/test/android/java_handler_thread_helpers.h"
 #endif
 
 #if defined(OS_WIN)
@@ -253,46 +254,33 @@ void PostNTasks(int posts_remaining) {
 }
 
 #if defined(OS_ANDROID)
-void AbortMessagePump() {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  jclass exception = env->FindClass(
-      "org/chromium/base/TestSystemMessageHandler$TestException");
-
-  env->ThrowNew(exception,
-                "This is a test exception that should be caught in "
-                "TestSystemMessageHandler.handleMessage");
-  static_cast<base::MessageLoopForUI*>(base::MessageLoop::current())->Abort();
+void DoNotRun() {
+  ASSERT_TRUE(false);
 }
 
 void RunTest_AbortDontRunMoreTasks(bool delayed, bool init_java_first) {
-  WaitableEvent test_done_event(WaitableEvent::ResetPolicy::MANUAL,
-                                WaitableEvent::InitialState::NOT_SIGNALED);
-
   std::unique_ptr<android::JavaHandlerThread> java_thread;
   if (init_java_first) {
-    java_thread =
-        android::JavaHandlerThreadForTesting::CreateJavaFirst(&test_done_event);
+    java_thread = android::JavaHandlerThreadHelpers::CreateJavaFirst();
   } else {
-    java_thread = android::JavaHandlerThreadForTesting::Create(
-        "JavaHandlerThreadForTesting from AbortDontRunMoreTasks",
-        &test_done_event);
+    java_thread = std::make_unique<android::JavaHandlerThread>(
+        "JavaHandlerThreadForTesting from AbortDontRunMoreTasks");
   }
   java_thread->Start();
 
+  auto target =
+      BindOnce(&android::JavaHandlerThreadHelpers::HandleJniExceptionAndAbort);
   if (delayed) {
     java_thread->message_loop()->task_runner()->PostDelayedTask(
-        FROM_HERE, BindOnce(&AbortMessagePump),
-        TimeDelta::FromMilliseconds(10));
+        FROM_HERE, std::move(target), TimeDelta::FromMilliseconds(10));
   } else {
-    java_thread->message_loop()->task_runner()->PostTask(
-        FROM_HERE, BindOnce(&AbortMessagePump));
+    java_thread->message_loop()->task_runner()->PostTask(FROM_HERE,
+                                                         std::move(target));
+    java_thread->message_loop()->task_runner()->PostTask(FROM_HERE,
+                                                         BindOnce(&DoNotRun));
   }
 
-  // Wait to ensure we catch the correct exception (and don't crash)
-  test_done_event.Wait();
-
   java_thread->Stop();
-  java_thread.reset();
 }
 
 TEST(MessageLoopTest, JavaExceptionAbort) {

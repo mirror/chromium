@@ -7,10 +7,11 @@ package org.chromium.base;
 import android.os.Handler;
 
 import org.chromium.base.annotations.CalledByNative;
+import org.chromium.base.annotations.CalledByNativeUnchecked;
 import org.chromium.base.annotations.JNINamespace;
 
 @JNINamespace("base")
-class JavaHandlerThreadTest {
+class JavaHandlerThreadHelpers {
     private static boolean sTaskExecuted;
     // This is executed as part of base_unittests. This tests that JavaHandlerThread can be used
     // by itself without attaching to its native peer.
@@ -44,5 +45,10 @@ class JavaHandlerThreadTest {
         }
 
         return thread;
+    }
+
+    @CalledByNativeUnchecked
+    private static void throwException() {
+        throw new RuntimeException("Test exception for base_unittests");
     }
 }
