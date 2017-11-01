@@ -402,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "20340341_efb2afbf",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-01T17:39:32Z",
+      "side": 1,
+      "message": "The main issue here is that SetUp() doesn\u0027t fully setup the test and TearDown() depends on the test case itself to initialize a variable.\n\nIt might be better to pull mock_feature_tracker_ out as a member and make it stack local instead to resolve this issue as mock_feature_tracker_ doesn\u0027t appear to be passed to any other component other than the test.\n\nThis also means each test needs a\nmock_feature_tracker.get()-\u003eRemoveSessionDurationObserver()",
+      "parentUuid": "45039e95_fda543fd",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 76
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de58947e_b1b5e9af",
         "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_factory.cc",
         "patchSetId": 27

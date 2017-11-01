@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "047f491f_d02ccb1f",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-01T17:39:32Z",
+      "side": 1,
+      "message": "The style guide is pretty clear about this:\nhttp://google.github.io/styleguide/cppguide.html#Conditionals\nand the consistency rule.\n\nGiven that a lot of Chromium code already presumes this, the consistency rule would say no braces. If you can make an argument that the component is independent, then the consistency rule doesn\u0027t apply and you can do what you want.",
+      "parentUuid": "c8a9fa08_0f9d9131",
+      "range": {
+        "startLine": 59,
+        "startChar": 33,
+        "endLine": 61,
+        "endChar": 5
+      },
+      "revId": "a452686035701c0f12687b0ca9a1c487e3d700b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3738cc5_2a476312",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
         "patchSetId": 29
