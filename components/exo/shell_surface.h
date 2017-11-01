@@ -10,6 +10,7 @@
 #include <string>
 
 #include "ash/wm/window_state_observer.h"
+#include "ash/wm/wm_event.h"
 #include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "base/optional.h"
@@ -30,6 +31,9 @@ namespace ash {
 class WindowResizer;
 namespace mojom {
 enum class WindowPinType;
+}
+namespace wm {
+class ClientControlledState;
 }
 }
 
@@ -286,10 +290,18 @@ class ShellSurface : public SurfaceTreeHost,
 
   Surface* surface_for_testing() { return root_surface(); }
 
+  class WidgetWrapper;
+
  private:
   struct Config;
   class ScopedConfigure;
   class ScopedAnimationsDisabled;
+  // class CustomClientControlledStateDelegate;
+  // class CustomWindowStateDelegate;
+  /*
+  friend class CustomClientControlledStateDelegate;
+  friend class CustomWindowStateDelegate;
+  */
 
   // Creates the |widget_| for |surface_|. |show_state| is the initial state
   // of the widget (e.g. maximized).
@@ -344,7 +356,16 @@ class ShellSurface : public SurfaceTreeHost,
   // crbug.com/765954
   void EnsureCompositorIsLockedForOrientationChange();
 
-  views::Widget* widget_ = nullptr;
+ public:
+  bool ToggleFullscreen(ash::mojom::WindowStateType current_state);
+  void SendWindowStateRequest(ash::mojom::WindowStateType current_state,
+                              ash::wm::WMEventType type);
+  void SendBoundsRequest(ash::mojom::WindowStateType current_state,
+                         const gfx::Rect& bounds);
+
+ private:
+  // views::Widget* widget_ = nullptr;
+  std::unique_ptr<WidgetWrapper> widget_wrapper_;
   aura::Window* parent_;
   const BoundsMode bounds_mode_;
   int64_t primary_display_id_;

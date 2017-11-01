@@ -499,6 +499,7 @@ void WindowState::SetBoundsDirectCrossFade(const gfx::Rect& new_bounds) {
 
   // Resize the window to the new size, which will force a layout and paint.
   SetBoundsDirect(new_bounds);
+  LOG(ERROR) << "Cross Fade new bounds=" << new_bounds.ToString();
 
   CrossFadeAnimation(window_, std::move(old_layer_owner), gfx::Tween::EASE_OUT);
 }
