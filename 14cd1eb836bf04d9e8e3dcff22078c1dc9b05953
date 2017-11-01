@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0130682d_3ca2b0a9",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-11-01T14:32:05Z",
+      "side": 1,
+      "message": "Is there a reason to re-implement this: https://cs.chromium.org/chromium/src/base/sys_info.h?q\u003dOperatingSystemVersionNumbers\u0026sq\u003dpackage:chromium\u0026l\u003d89 ?\n\n- Greg",
+      "revId": "14cd1eb836bf04d9e8e3dcff22078c1dc9b05953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
