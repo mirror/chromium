@@ -67,6 +67,24 @@
       "revId": "bbcd03d50c106530d2bc1f982513988bad366a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d0a76b_f5d1dc0a",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-01T18:18:02Z",
+      "side": 1,
+      "message": "I changed the code as the following:\n\n  PaintInvalidationReason reason;\n  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {\n    reason \u003d background_invalidation_type \u003d\u003d BackgroundInvalidationType::kFull ?\n        PaintInvalidationReason::kBackgroundOnScrollingContentsLayer :\n        PaintInvalidationReason::kIncremental;\n  } else {\n    // For SPv1 we need this reason for both full and incremental invalidation\n    // to let ObjectPaintInvalidator::SetBackingNeedsPaintInvalidationInRect()\n    // know we are invalidating on the scrolling contents backing.\n    reason \u003d PaintInvalidationReason::kBackgroundOnScrollingContentsLayer;\n...\n\n\nFor SPv1, incremental invalidation happens just by calling incrementallyInvalidatePaint(). The reason must be kBackgroundOnScrollingContentsLayer to let ObjectPaintInvalidator::SetBackingNeedsPaintInvalidationInRect() invalidate the correct backing.\n\nFor SPv175, we need kIncremental because raster invalidation happens later in PaintController which needs to know we are doing incremental invalidation. kBackgroundOnScrollingContentsLayer doesn\u0027t have anything special for SPv175, using it just for backward compatibility.\n\nWe still need to implement the feature for SPv2.",
+      "parentUuid": "50a62838_1e8765be",
+      "revId": "bbcd03d50c106530d2bc1f982513988bad366a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
