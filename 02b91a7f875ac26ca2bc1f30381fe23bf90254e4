@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a825d63_e9e81021",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamTimeline.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-01T15:50:50Z",
+      "side": 1,
+      "message": "Perhaps |new_event_indices_|?\n\nAlso is it possible for |events_| to be altered after an index is added to |new_events_|? In other words, is there any possibility these two can be out of sync?",
+      "range": {
+        "startLine": 463,
+        "startChar": 17,
+        "endLine": 463,
+        "endChar": 28
+      },
+      "revId": "02b91a7f875ac26ca2bc1f30381fe23bf90254e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
