@@ -18,6 +18,7 @@
 #include "base/bind_helpers.h"
 #include "base/callback_helpers.h"
 #include "base/environment.h"
+#include "base/files/file.h"
 #include "base/files/file_enumerator.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -46,7 +47,13 @@
 #if defined(OS_POSIX)
 #include <errno.h>
 #include <fcntl.h>
+#include <sys/ioctl.h>
+#include <sys/stat.h>
 #include <unistd.h>
+#endif
+
+#if defined(OS_LINUX)
+#include <linux/fs.h>
 #endif
 
 #if defined(OS_ANDROID)
@@ -1328,6 +1335,43 @@ TEST_F(FileUtilTest, DeleteDirRecursive) {
   EXPECT_FALSE(PathExists(file_name));
   EXPECT_FALSE(PathExists(subdir_path1));
   EXPECT_FALSE(PathExists(test_subdir));
+}
+
+// Tests recursive Delete() for a directory.
+TEST_F(FileUtilTest, DeleteDirRecursiveWithOpenFile) {
+  // Create a subdirectory and put a file and two directories inside.
+  FilePath test_subdir = temp_dir_.GetPath().Append(FPL("DeleteWithOpenFile"));
+  CreateDirectory(test_subdir);
+  ASSERT_TRUE(PathExists(test_subdir));
+
+  FilePath file_name1 = test_subdir.Append(FPL("Un-deletebale File.txt"));
+  File file1(file_name1,
+             File::FLAG_CREATE | File::FLAG_READ | File::FLAG_WRITE);
+  ASSERT_TRUE(PathExists(file_name1));
+
+  FilePath file_name2 = test_subdir.Append(FPL("Deleteable File.txt"));
+  CreateTextFile(file_name2, bogus_content);
+  ASSERT_TRUE(PathExists(file_name2));
+
+#if defined(OS_LINUX)
+  // On Windows, holding the file open in sufficient to make it un-deletable.
+  // The POSIX code is verifiable on Linux by creating an "immutable" file but
+  // this is best-effort because it's not supported by all file systems.
+  int flags;
+  CHECK_EQ(0, ioctl(file1.GetPlatformFile(), FS_IOC_GETFLAGS, &flags));
+  flags |= FS_IMMUTABLE_FL;
+  ioctl(file1.GetPlatformFile(), FS_IOC_SETFLAGS, &flags);
+#endif
+
+  // Delete recursively and check that at least the second file got deleted.
+  DeleteFile(test_subdir, true);
+  EXPECT_FALSE(PathExists(file_name2));
+
+#if defined(OS_LINUX)
+  // Make sure that the test can clean up after itself.
+  flags &= ~FS_IMMUTABLE_FL;
+  ioctl(file1.GetPlatformFile(), FS_IOC_SETFLAGS, &flags);
+#endif
 }
 
 TEST_F(FileUtilTest, MoveFileNew) {
