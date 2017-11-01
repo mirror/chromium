@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15628c2a_be0c9156",
+        "filename": "components/offline_pages/core/request_header/offline_page_navigation_ui_data.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-01T00:35:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9160adf6_b02345fe",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "2c110e3d6bfe93c47965f0f703f8713937aebd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f820270_66d941a6",
         "filename": "content/browser/download/download_browsertest.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-31T16:23:59Z",
       "side": 1,
       "message": "This isn\u0027t safe to call on the UI thread - should post a task over to the IO thread.",
+      "range": {
+        "startLine": 3161,
+        "startChar": 2,
+        "endLine": 3161,
+        "endChar": 24
+      },
+      "revId": "2c110e3d6bfe93c47965f0f703f8713937aebd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e8a7b6_a3ecc3aa",
+        "filename": "content/browser/download/download_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3161,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-01T00:35:46Z",
+      "side": 1,
+      "message": "Moved to the test fixture",
+      "parentUuid": "8f820270_66d941a6",
       "range": {
         "startLine": 3161,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bb400f37_bf73f271",
+        "filename": "content/browser/download/download_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3164,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-01T00:35:46Z",
+      "side": 1,
+      "message": "Yes, this blocks until the page stops loading. I think this is good enough to check if the loading is invoked instead of downloading. If the download starts, the loading will not kick off and thus this call will time out.\n\nThe MHTML download is not categorized as dangerous download. So it seems adding check for NumDangerousDownloadsSeen does not add additional benefit.",
+      "parentUuid": "cfa573f3_95d774d0",
+      "range": {
+        "startLine": 3164,
+        "startChar": 46,
+        "endLine": 3164,
+        "endChar": 47
+      },
+      "revId": "2c110e3d6bfe93c47965f0f703f8713937aebd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e26ab90a_e9aa03b3",
         "filename": "content/browser/download/download_browsertest.cc",
         "patchSetId": 11
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-31T16:25:24Z",
       "side": 1,
       "message": "For safety, need to restore the old RDH delegate, and wait until that\u0027s done.  Alternatively, could move it into the test fixture.",
+      "range": {
+        "startLine": 3165,
+        "startChar": 1,
+        "endLine": 3165,
+        "endChar": 0
+      },
+      "revId": "2c110e3d6bfe93c47965f0f703f8713937aebd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e974afd_e849ef50",
+        "filename": "content/browser/download/download_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3165,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-01T00:35:46Z",
+      "side": 1,
+      "message": "Moved to the test fixture.",
+      "parentUuid": "e26ab90a_e9aa03b3",
       "range": {
         "startLine": 3165,
         "startChar": 1,
