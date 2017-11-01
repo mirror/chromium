@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d501bde_758a3975",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_features.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-01T18:27:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17c6ea3d_7fa22960",
+      "revId": "2badf10fda35190af446ff51b8c2d7cc42dd9e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a50a8f11_daa148ca",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2f3ec8fc_50945bc1",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-01T18:27:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a50a8f11_daa148ca",
+      "revId": "2badf10fda35190af446ff51b8c2d7cc42dd9e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa6eb426_38e03c24",
         "filename": "services/resource_coordinator/public/interfaces/signals.mojom",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "2badf10fda35190af446ff51b8c2d7cc42dd9e03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14f139d_2fbd01d2",
+        "filename": "services/resource_coordinator/public/interfaces/signals.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-01T18:27:58Z",
+      "side": 1,
+      "message": "I think there\u0027s no need to do that. Right now it\u0027s used inside implementation only, maybe we can consider remove it from being a public interface.\n\nAddressed naming issue here.",
+      "parentUuid": "fa6eb426_38e03c24",
+      "revId": "2badf10fda35190af446ff51b8c2d7cc42dd9e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
