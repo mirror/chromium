@@ -52,6 +52,25 @@
       "revId": "9ce4621e6aeed6b2665bb470af3917e8785773f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f9b857_01e31f1a",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-01T21:48:34Z",
+      "side": 1,
+      "message": "In general yeah, RunLoop explicit QuitClosure invocation is the gist. In this case maybe it would be sufficient to add an API to TestWakeLockProvider like, SetOnWakeLockRequestedCallback, SetOnWakeLockCanceledCallback? Just closures that if non-null will be invoked when those messages are received? Not sure if that\u0027s sufficient, just a thought at a glance.\n\nI wouldn\u0027t try to treat Mojo-related tasks as anything special in the system. We certainly don\u0027t frame them as anything special, they\u0027re just tasks.",
+      "parentUuid": "d5ecc631_8acca7dc",
+      "tag": "mailMessageId\u003d\u003cCA+apAgHMp-C-g146CpHLZWCBcnx_OzN0dtmU+u5yBcsiXW9LtQ@mail.gmail.com\u003e",
+      "revId": "9ce4621e6aeed6b2665bb470af3917e8785773f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
