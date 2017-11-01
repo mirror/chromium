@@ -94,6 +94,7 @@ source_set("unit_tests") {
     "//third_party/ocmock",
     "//ui/base",
     "//ui/base:test_support",
+    "//url",
   ]
 }
 
