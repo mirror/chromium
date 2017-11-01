@@ -20,16 +20,22 @@ class HostContentSettingsMap;
 // Calculates and stores the Media Engagement Index score for a certain origin.
 class MediaEngagementScore final {
  public:
-  // The dictionary keys to store individual metrics. kVisitsKey will
-  // store the number of visits to an origin and kMediaPlaybacksKey
-  // will store the number of media playbacks on an origin.
-  // kLastMediaPlaybackTimeKey will store the timestamp of the last
-  // media playback on an origin. kHasHighScoreKey will store whether
-  // the score is considered high.
+  // The dictionary keys to store individual metrics. kVisitsKey will store the
+  // number of visits to an origin and kMediaPlaybacksKey will store the number
+  // of media playbacks on an origin. kLastMediaPlaybackTimeKey will store the
+  // timestamp of the last media playback on an origin. kHasHighScoreKey will
+  // store whether the score is considered high. kAudiblePlaybacksKey will
+  // store the number of audible playbacks on an origin.
+  // kSignificantPlaybacksKey will store the number of significant playbacks
+  // on an origin. kVisitsWithVideoTagKey will store the number of visits to
+  // an origin where at least one page had a video tag.
   static const char kVisitsKey[];
   static const char kMediaPlaybacksKey[];
   static const char kLastMediaPlaybackTimeKey[];
   static const char kHasHighScoreKey[];
+  static const char kAudiblePlaybacksKey[];
+  static const char kSignificantPlaybacksKey[];
+  static const char kVisitsWithVideoTagKey[];
 
   // Origins with a number of visits less than this number will recieve
   // a score of zero.
@@ -72,6 +78,24 @@ class MediaEngagementScore final {
     return last_media_playback_time_;
   }
 
+  // Get/increment thenumber of audible media playbacks this origin had.
+  int audible_playbacks() const { return audible_playbacks_; }
+  void IncrementAudiblePlaybacks() {
+    SetAudiblePlaybacks(audible_playbacks() + 1);
+  }
+
+  // Get/increment the number of significant media playbacks this origin had.
+  int significant_playbacks() const { return significant_playbacks_; }
+  void IncrementSignificantPlaybacks() {
+    SetSignificantPlaybacks(significant_playbacks() + 1);
+  }
+
+  // Get/increment the number of visits where at least one page had a video tag.
+  int visits_with_video_tag() const { return visits_with_video_tag_; }
+  void IncrementVisitsWithVideoTag() {
+    SetVisitsWithVideoTag(visits_with_video_tag() + 1);
+  }
+
   // Get a breakdown of the score that can be serialized by Mojo.
   media::mojom::MediaEngagementScoreDetailsPtr GetScoreDetails() const;
 
@@ -86,6 +110,12 @@ class MediaEngagementScore final {
 
   void SetVisits(int visits);
   void SetMediaPlaybacks(int media_playbacks);
+
+  void SetAudiblePlaybacks(int playbacks) { audible_playbacks_ = playbacks; }
+  void SetSignificantPlaybacks(int playbacks) {
+    significant_playbacks_ = playbacks;
+  }
+  void SetVisitsWithVideoTag(int visits) { visits_with_video_tag_ = visits; }
 
  private:
   friend class MediaEngagementServiceTest;
@@ -116,6 +146,15 @@ class MediaEngagementScore final {
 
   // The current engagement score.
   double actual_score_ = 0.0;
+
+  // The number of audible media playbacks this origin had.
+  int audible_playbacks_ = 0;
+
+  // The number of significant media playbacks this origin had.
+  int significant_playbacks_ = 0;
+
+  // The number of visits with a video tag this origin had.
+  int visits_with_video_tag_ = 0;
 
   // The last time media was played back on this origin.
   base::Time last_media_playback_time_;
