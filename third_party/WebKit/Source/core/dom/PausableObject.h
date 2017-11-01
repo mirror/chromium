@@ -46,14 +46,18 @@ class CORE_EXPORT PausableObject : public ContextLifecycleObserver {
 
   // These methods have an empty default implementation so that subclasses
   // which don't need special treatment can skip implementation.
-  // TODO(hajimehoshi): Rename Suspend to Pause (crbug/780378)
-  virtual void Suspend();
-  virtual void Resume();
+  void Pause() { Suspend(); }
+  void Unpause() { Resume(); }
 
   void DidMoveToNewExecutionContext(ExecutionContext*);
 
  protected:
   virtual ~PausableObject();
+
+  // TODO(hajimehoshi): Suspend/Resume are for backward compatibility. Replace
+  // them with Pause/Unpause. See crbug/780378
+  virtual void Suspend();
+  virtual void Resume();
 
  private:
 #if DCHECK_IS_ON()
