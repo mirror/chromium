@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/trace_event/trace_event.h"
 #include "media/base/scoped_callback_runner.h"
 
 namespace media {
@@ -163,6 +164,8 @@ void MojoCdmFileIO::DoRead(int64_t num_bytes) {
   DVLOG(3) << __func__ << " file: " << file_name_;
   DCHECK_EQ(State::kReading, state_);
 
+  TRACE_EVENT1("media", "MojoCdmFileIO::DoRead", "bytes to read", num_bytes);
+
   // We know how much data is available, so read the complete contents of the
   // file into a buffer and passing it back to |client_|. As these should be
   // small files, we don't worry about breaking it up into chunks to read it.
@@ -221,16 +224,19 @@ void MojoCdmFileIO::Write(const uint8_t* data, uint32_t data_size) {
   // won't be used again.
   state_ = State::kWriting;
   file_for_reading_.Close();
-  cdm_file_->OpenFileForWriting(base::BindOnce(
-      &MojoCdmFileIO::OnFileOpenedForWriting, weak_factory_.GetWeakPtr(),
-      std::vector<uint8_t>(data, data + data_size)));
+  cdm_file_->OpenFileForWriting(
+      base::BindOnce(&MojoCdmFileIO::DoWrite, weak_factory_.GetWeakPtr(),
+                     std::vector<uint8_t>(data, data + data_size)));
 }
 
-void MojoCdmFileIO::OnFileOpenedForWriting(const std::vector<uint8_t>& data,
-                                           base::File temporary_file) {
+void MojoCdmFileIO::DoWrite(const std::vector<uint8_t>& data,
+                            base::File temporary_file) {
   DVLOG(3) << __func__ << " file: " << file_name_ << ", result: "
            << base::File::ErrorToString(temporary_file.error_details());
   DCHECK_EQ(State::kWriting, state_);
+
+  TRACE_EVENT1("media", "MojoCdmFileIO::DoWrite", "bytes to write",
+               data.size());
 
   if (!temporary_file.IsValid()) {
     // Failed to open temporary file.
