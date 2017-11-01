@@ -16,6 +16,24 @@
       "revId": "dc6e0fd531469bfd92f5f0ee65ad91d22f12f98e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7de0abc_44471324",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-01T18:04:22Z",
+      "side": 1,
+      "message": "I chose the name to conform to SignOutAccountsButton. I interpreted the semantics as:\nSignOut -- displayed text description.\nAccounts -- the accounts screen.\nButton -- button.",
+      "parentUuid": "6f4d7297_1a3566bc",
+      "revId": "dc6e0fd531469bfd92f5f0ee65ad91d22f12f98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
