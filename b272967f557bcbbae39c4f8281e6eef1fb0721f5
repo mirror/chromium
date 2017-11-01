@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b68bae5_9b8bb8a7",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T01:38:22Z",
+      "side": 1,
+      "message": "I\u0027m assuming this will be useful later?",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 38
+      },
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb75cce_30bc4223",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T01:38:22Z",
+      "side": 1,
+      "message": "This can be called via the extension right?  Is there any instance where we would expect this to happen in practice?\n\nIn general, we don\u0027t trust any renderer (even component extension renderers), so we can\u0027t assume this that this condition is true. Will there be any issues with not handling this case explicitly? We often explicitly kill the bad process explicitly with mojo::ReportBadMessage() if the renderer does something that should be \u0027impossible\u0027.",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "109e9497_81474c77",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T01:38:22Z",
+      "side": 1,
+      "message": "Similarly, is there an instance where we\u0027d expect to hit this in normal operation? Same question  for many of the other Mojo message handlers that currently do this check.",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0379bfb0_a8af0c71",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T01:38:22Z",
+      "side": 1,
+      "message": "Does this need to be handled because of a race where the MRP is destroyed before CreateRoute runs? What scenarios can this happen in? Would it be due to the Mojo interface ptr being removed due to a connection error?\n\n(Similar question elsewhere this check was added)",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 70
+      },
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561dc13c_6a357600",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T01:38:22Z",
+      "side": 1,
+      "message": "Nit: cached_route_list_.emplace()",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1327ad36_1b1c7d2e",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T01:38:22Z",
+      "side": 1,
+      "message": "What is the value in making this optional? Is there a difference between no value and an empty list?",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca4ebf7_590a56ed",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T01:38:22Z",
+      "side": 1,
+      "message": "Nit: it\u0027s unclear what \u0027is invalidated\u0027 means here. It would be clearer to \u0027on connection error\u0027.",
+      "range": {
+        "startLine": 117,
+        "startChar": 52,
+        "endLine": 117,
+        "endChar": 66
+      },
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d382c2a5_351d2df1",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T01:38:22Z",
+      "side": 1,
+      "message": "Nit: it\u0027s not really clear what this is a query for (as an external reader). Consider adding a brief comment like the one on line 198 (I don\u0027t understand it means to query for media routers vs media sinks; I can guess, but I\u0027ll probably be wrong \u003d)",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e2a157_1f7dc688",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T01:38:22Z",
+      "side": 1,
+      "message": "If possible, let\u0027s add some comments about MediaRouteProvider and MediaRouter and their relationship to each other. My understanding from the discussion we had today is \"MediaRouter\" is the more trusted controller interface, while MediaRouteProvider could be implemented by a component extension (and so is less trusted). Is this accurate?",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
