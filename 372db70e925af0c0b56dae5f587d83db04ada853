@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a83312cd_454b5601",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1772,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-01T20:25:03Z",
+      "side": 1,
+      "message": "Oh yeah this was doing something that was probably not intended. Thanks for noticing, I fixed this.",
+      "parentUuid": "c7bfddec_64d465b5",
+      "revId": "372db70e925af0c0b56dae5f587d83db04ada853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3a3230a_2e487c14",
         "filename": "third_party/WebKit/Source/platform/graphics/test/MockPaintCanvas.h",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "372db70e925af0c0b56dae5f587d83db04ada853",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b3b6ae_ad234417",
+        "filename": "third_party/WebKit/Source/platform/graphics/test/MockPaintCanvas.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-01T20:25:03Z",
+      "side": 1,
+      "message": "Oh good catch. I should compile all targets before asking for review.",
+      "parentUuid": "d3a3230a_2e487c14",
+      "revId": "372db70e925af0c0b56dae5f587d83db04ada853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
