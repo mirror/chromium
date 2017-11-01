@@ -86,6 +86,9 @@ void ExpectEquality(const ExplodedFrameState& expected,
   EXPECT_EQ(expected.item_sequence_number, actual.item_sequence_number);
   EXPECT_EQ(expected.document_sequence_number, actual.document_sequence_number);
   EXPECT_EQ(expected.page_scale_factor, actual.page_scale_factor);
+  EXPECT_EQ(expected.scroll_anchor_selector, actual.scroll_anchor_selector);
+  EXPECT_EQ(expected.scroll_anchor_offset, actual.scroll_anchor_offset);
+  EXPECT_EQ(expected.scroll_anchor_simhash, actual.scroll_anchor_simhash);
   ExpectEquality(expected.http_body, actual.http_body);
   ExpectEquality(expected.children, actual.children);
 }
@@ -120,6 +123,9 @@ class PageStateSerializationTest : public testing::Test {
     frame_state->item_sequence_number = 1;
     frame_state->document_sequence_number = 2;
     frame_state->page_scale_factor = 2.0;
+    frame_state->scroll_anchor_selector = base::UTF8ToUTF16("#selector");
+    frame_state->scroll_anchor_offset = gfx::PointF(2.5, 3.5);
+    frame_state->scroll_anchor_simhash = 12345;
   }
 
   void PopulateHttpBody(
@@ -422,7 +428,7 @@ TEST_F(PageStateSerializationTest, LegacyEncodePageStateFrozen) {
 // IMPORTANT: this code dumps the serialization as the *current* version, so if
 // generating a backwards compat test for v23, the tree must be synced to a
 // revision where page_state_serialization.cc:kCurrentVersion == 23.
-#if 0
+#if 1
 TEST_F(PageStateSerializationTest, DumpExpectedPageStateForBackwardsCompat) {
   ExplodedPageState state;
   PopulatePageStateForBackwardsCompatTest(&state);
@@ -510,6 +516,10 @@ TEST_F(PageStateSerializationTest, BackwardsCompat_v25) {
 
 TEST_F(PageStateSerializationTest, BackwardsCompat_v26) {
   TestBackwardsCompat(26);
+}
+
+TEST_F(PageStateSerializationTest, BackwardsCompat_v27) {
+  TestBackwardsCompat(27);
 }
 
 // If any of the below tests fail, you likely made a backwards incompatible

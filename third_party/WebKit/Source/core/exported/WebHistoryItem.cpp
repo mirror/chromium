@@ -213,6 +213,19 @@ bool WebHistoryItem::DidSaveScrollOrScaleState() const {
   return private_->GetViewState();
 }
 
+ScrollAnchorData WebHistoryItem::ScrollAnchorData() const {
+  HistoryItem::ViewState* scroll_and_view_state = private_->GetViewState();
+  if (scroll_and_view_state) {
+    return scroll_and_view_state->scroll_anchor_data_;
+  }
+  return {WebString(), WebFloatPoint(), 0};
+}
+
+void WebHistoryItem::SetScrollAnchorData(
+    const struct ScrollAnchorData& scroll_anchor_data) {
+  private_->SetScrollAnchorData(scroll_anchor_data);
+}
+
 WebHistoryItem::WebHistoryItem(HistoryItem* item) : private_(item) {}
 
 WebHistoryItem& WebHistoryItem::operator=(HistoryItem* item) {
