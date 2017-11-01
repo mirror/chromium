@@ -17,12 +17,12 @@ namespace ui {
 namespace {
 
 void PrepareEmptyTestData(base::Pickle* pickle) {
-  std::map<base::string16, base::string16> data;
+  std::unordered_map<base::string16, base::string16> data;
   WriteCustomDataToPickle(data, pickle);
 }
 
 void PrepareTestData(base::Pickle* pickle) {
-  std::map<base::string16, base::string16> data;
+  std::unordered_map<base::string16, base::string16> data;
   data.insert(std::make_pair(ASCIIToUTF16("abc"), base::string16()));
   data.insert(std::make_pair(ASCIIToUTF16("de"), ASCIIToUTF16("1")));
   data.insert(std::make_pair(ASCIIToUTF16("f"), ASCIIToUTF16("23")));
@@ -54,7 +54,7 @@ TEST(CustomDataHelperTest, EmptyReadMap) {
   base::Pickle pickle;
   PrepareEmptyTestData(&pickle);
 
-  std::map<base::string16, base::string16> result;
+  std::unordered_map<base::string16, base::string16> result;
   ReadCustomDataIntoMap(pickle.data(), pickle.size(), &result);
   EXPECT_EQ(0u, result.size());
 }
@@ -101,10 +101,10 @@ TEST(CustomDataHelperTest, ReadMap) {
   base::Pickle pickle;
   PrepareTestData(&pickle);
 
-  std::map<base::string16, base::string16> result;
+  std::unordered_map<base::string16, base::string16> result;
   ReadCustomDataIntoMap(pickle.data(), pickle.size(), &result);
 
-  std::map<base::string16, base::string16> expected;
+  std::unordered_map<base::string16, base::string16> expected;
   expected.insert(std::make_pair(ASCIIToUTF16("abc"), base::string16()));
   expected.insert(std::make_pair(ASCIIToUTF16("de"), ASCIIToUTF16("1")));
   expected.insert(std::make_pair(ASCIIToUTF16("f"), ASCIIToUTF16("23")));
@@ -137,7 +137,7 @@ TEST(CustomDataHelperTest, BadReadTypes) {
 
 TEST(CustomDataHelperTest, BadPickle) {
   base::string16 result_data;
-  std::map<base::string16, base::string16> result_map;
+  std::unordered_map<base::string16, base::string16> result_map;
 
   base::Pickle malformed;
   malformed.WriteUInt32(1000);
