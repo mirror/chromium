@@ -34,6 +34,24 @@
       "revId": "9ce4621e6aeed6b2665bb470af3917e8785773f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ecc631_8acca7dc",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-01T21:42:13Z",
+      "side": 1,
+      "message": "thanks, BindingSet was an easy fix for this.\n\nre RunUntilIdle, is your preference to still use RunLoop but to call QuitClosure/Run instead? would you e.g. make the Acquire and Release helpers here take a bool param specifying whether they should expect a wake lock change in the service, and then pass the quit closure to TestWakeLockProvider so it can run it when it sees a change?\n\nor maybe there\u0027s a more-targeted way to wait for mojo-related tasks to finish here...",
+      "parentUuid": "9f851235_d94f7152",
+      "revId": "9ce4621e6aeed6b2665bb470af3917e8785773f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
