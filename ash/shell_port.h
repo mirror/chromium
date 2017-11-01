@@ -14,6 +14,7 @@
 #include "ash/wm/lock_state_observer.h"
 #include "base/observer_list.h"
 #include "base/optional.h"
+#include "services/viz/public/interfaces/compositing/video_detector_observer.mojom.h"
 #include "ui/aura/client/window_types.h"
 #include "ui/base/cursor/cursor_data.h"
 #include "ui/base/ui_base_types.h"
@@ -38,6 +39,10 @@ enum class CursorSize;
 namespace views {
 class PointerWatcher;
 enum class PointerWatcherEventTypes;
+}
+
+namespace viz {
+class HostFrameSinkManager;
 }
 
 namespace ash {
@@ -193,6 +198,11 @@ class ASH_EXPORT ShellPort {
   // Called any time the set up system modal and blocking containers needs to
   // sent to the server.
   virtual void UpdateSystemModalAndBlockingContainers() = 0;
+
+  // Adds an observer for viz::VideoDetector.
+  virtual void AddVideoDetectorObserver(
+      viz::mojom::VideoDetectorObserverPtr observer,
+      viz::HostFrameSinkManager* host_frame_sink_manager) = 0;
 
  protected:
   ShellPort();

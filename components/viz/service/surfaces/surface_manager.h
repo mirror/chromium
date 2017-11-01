@@ -189,6 +189,8 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
     return lifetime_type_ == LifetimeType::REFERENCES;
   }
 
+  void SurfaceWillBeDrawn(const SurfaceId& surface_id);
+
  private:
   friend class test::SurfaceSynchronizationTest;
   friend class test::SurfaceReferencesTest;
