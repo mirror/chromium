@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1cd3ce9d_a96b5781",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-01T22:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "576d3785_dd831003",
+      "revId": "1dfbd6b88216c98e3c4e0cf40e79b2cf319366f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0082eee_080fa193",
         "filename": "chrome/browser/component_updater/optimization_hints_component_installer.cc",
         "patchSetId": 3
