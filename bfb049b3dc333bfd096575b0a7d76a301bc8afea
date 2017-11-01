@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c386874a_f29da90a",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-01T00:49:25Z",
+      "side": 1,
+      "message": "s/insuring/ensuring/",
+      "revId": "bfb049b3dc333bfd096575b0a7d76a301bc8afea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa9203e3_e8a42489",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
         "patchSetId": 1
@@ -13,6 +30,24 @@
       "writtenOn": "2017-10-31T21:01:25Z",
       "side": 1,
       "message": "This is fine, but it\u0027s better to have an affirmative \"known-good\" list or lexical analysis than checking for \"known-bad\". Is it possible to capture all valid session names with a regular expression or the like?",
+      "revId": "bfb049b3dc333bfd096575b0a7d76a301bc8afea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2ed6c4_8094cee2",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-01T00:49:25Z",
+      "side": 1,
+      "message": "If the known-good is a simple set of characters, find_first_not_of() might be useful. (If it\u0027s much more involved then that, then a regex may be better).",
+      "parentUuid": "aa9203e3_e8a42489",
       "revId": "bfb049b3dc333bfd096575b0a7d76a301bc8afea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
