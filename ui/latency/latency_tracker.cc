@@ -25,6 +25,22 @@ std::string LatencySourceEventTypeToInputModalityString(
   }
 }
 
+// This UMA metric tracks the time from when the original wheel event is created
+// to when the scroll gesture results in final frame swap. All scroll events are
+// included in this metric.
+void RecordUmaEventLatencyScrollWheelTimeToScrollUpdateSwapBegin2Histogram(
+    const ui::LatencyInfo::LatencyComponent& start,
+    const ui::LatencyInfo::LatencyComponent& end) {
+  CONFIRM_VALID_TIMING(start, end);
+
+  const char histogram_name[] =
+      "Event.Latency.Scroll.Wheel.TimeToScrollUpdateSwapBegin2";
+  UMA_HISTOGRAM_CUSTOM_COUNTS(
+      histogram_name,
+      (end.last_event_time - start.first_event_time).InMicroseconds(), 1,
+      1000000, 100);
+}
+
 }  // namespace
 
 void LatencyTracker::OnGpuSwapBuffersCompleted(const LatencyInfo& latency) {
@@ -109,6 +125,11 @@ void LatencyTracker::ComputeEndToEndLatencyHistograms(
             ".TimeToScrollUpdateSwapBegin2",
         original_component, gpu_swap_begin_component);
 
+    if (input_modality == "Wheel") {
+      RecordUmaEventLatencyScrollWheelTimeToScrollUpdateSwapBegin2Histogram(
+          original_component, gpu_swap_begin_component);
+    }
+
     ReportRapporScrollLatency("Event.Latency.ScrollBegin." + input_modality +
                                   ".TimeToScrollUpdateSwapBegin2",
                               original_component, gpu_swap_begin_component);
@@ -129,6 +150,11 @@ void LatencyTracker::ComputeEndToEndLatencyHistograms(
         "Event.Latency.ScrollUpdate." + input_modality +
             ".TimeToScrollUpdateSwapBegin2",
         original_component, gpu_swap_begin_component);
+
+    if (input_modality == "Wheel") {
+      RecordUmaEventLatencyScrollWheelTimeToScrollUpdateSwapBegin2Histogram(
+          original_component, gpu_swap_begin_component);
+    }
 
     ReportRapporScrollLatency("Event.Latency.ScrollUpdate." + input_modality +
                                   ".TimeToScrollUpdateSwapBegin2",
@@ -169,6 +195,12 @@ void LatencyTracker::ComputeEndToEndLatencyHistograms(
       "Event.Latency." + scroll_name + "." + input_modality +
           ".TimeToHandled2_" + thread_name,
       original_component, rendering_scheduled_component);
+
+  if (input_modality == "Wheel") {
+    UMA_HISTOGRAM_SCROLL_LATENCY_LONG_2(
+        "Event.Latency.Scroll.Wheel.TimeToHandled2_" + thread_name,
+        original_component, rendering_scheduled_component);
+  }
 
   LatencyInfo::LatencyComponent renderer_swap_component;
   if (!latency.FindLatency(ui::INPUT_EVENT_LATENCY_RENDERER_SWAP_COMPONENT, 0,
