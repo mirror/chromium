@@ -1462,6 +1462,11 @@ IPC_MESSAGE_ROUTED3(FrameHostMsg_BeforeUnload_ACK,
 // Indicates that the current frame has swapped out, after a SwapOut message.
 IPC_MESSAGE_ROUTED0(FrameHostMsg_SwapOut_ACK)
 
+// Indicates that the FrameSinkId has been updated, such as when a frame is
+// embedded.
+IPC_MESSAGE_ROUTED1(FrameHostMsg_UpdateFrameSinkId,
+                    viz::FrameSinkId /* frame_sink_id */)
+
 // Tells the browser that a child's resize parameters have changed.
 IPC_MESSAGE_ROUTED3(FrameHostMsg_UpdateResizeParams,
                     gfx::Rect /* frame_rect */,
