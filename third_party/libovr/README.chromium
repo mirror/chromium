@@ -1,0 +1,16 @@
+Name: Oculus SDK for Windows
+Short Name: libovr
+URL: https://developer.oculus.com/downloads/package/oculus-sdk-for-windows/
+Version: 1.16.0
+License: By exception only
+License File: LICENSE
+Security Critical: yes
+License Android Compatible: no
+
+Description:
+The Oculus Windows API supports VR headsets from Oculus running on Windows.
+
+Local Modifications:
+Only includes headers and a loader shim.  Custom license in src\LICENSE.
+Removed WINCRYPT32API from OVR_CAPIShim.c in order to build with clang.
+Changed OVR_StereoProjection.h to #include "OVR_Math.h" to solve DEP issue.

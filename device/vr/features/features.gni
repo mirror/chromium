@@ -10,6 +10,7 @@ declare_args() {
   enable_gvr_services = is_android && !is_chromecast &&
                         (current_cpu == "arm" || current_cpu == "arm64")
   enable_openvr = false
+  enable_oculus_vr = false
 }
 
 declare_args() {
