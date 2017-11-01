@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1956019_6ed867a5",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-11-01T21:48:47Z",
+      "side": 1,
+      "message": "This should be control 0 and disabled 50 since the profiler is now enabled under control.",
+      "range": {
+        "startLine": 212,
+        "startChar": 34,
+        "endLine": 213,
+        "endChar": 56
+      },
+      "revId": "5a96b64ae224a10482a549e0506088739b925077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
