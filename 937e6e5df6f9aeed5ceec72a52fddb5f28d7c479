@@ -22,6 +22,30 @@
       "revId": "937e6e5df6f9aeed5ceec72a52fddb5f28d7c479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8c3a20_9f0bf1dd",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-01T18:16:02Z",
+      "side": 1,
+      "message": "Yeah, good point.",
+      "parentUuid": "4c1dbf5a_d744d2cd",
+      "range": {
+        "startLine": 588,
+        "startChar": 21,
+        "endLine": 588,
+        "endChar": 64
+      },
+      "revId": "937e6e5df6f9aeed5ceec72a52fddb5f28d7c479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
