@@ -34,6 +34,24 @@
       "revId": "8552408ce5c8feda6e3993965fba2069898684aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74164bf_b24a3826",
+        "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-01T16:00:57Z",
+      "side": 1,
+      "message": "Hrm, interesting. That suggested fix is somewhat incomplete assuming that the user wants some degree of synchronization in their method, but given the link there, I\u0027m ok with it.\n\nOn an unrelated note, this interface appears to be quite a bit more friendly and familiar than the findbugs one.",
+      "parentUuid": "00268f2a_c3102640",
+      "revId": "8552408ce5c8feda6e3993965fba2069898684aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
