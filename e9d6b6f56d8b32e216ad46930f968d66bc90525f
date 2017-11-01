@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e678985c_70a86c53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T22:07:57Z",
+      "side": 1,
+      "message": "Please add a comment w/ the bug number and what this is working around so that we remember why we had to add it in the first place.",
+      "range": {
+        "startLine": 523,
+        "startChar": 8,
+        "endLine": 525,
+        "endChar": 9
+      },
+      "revId": "e9d6b6f56d8b32e216ad46930f968d66bc90525f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
