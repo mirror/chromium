@@ -48,6 +48,7 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   int id() const { return id_; }
   ElementId element_id() const;
+  bool IsElementAttached(ElementId id) const;
 
   // Parent AnimationHost. AnimationPlayer can be detached from
   // AnimationTimeline.
@@ -63,7 +64,9 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   }
   void SetAnimationTimeline(AnimationTimeline* timeline);
 
-  AnimationTicker* animation_ticker() const { return animation_ticker_.get(); }
+  AnimationTicker* animation_ticker() const {
+    return animation_tickers_[0].get();
+  }
 
   // TODO(smcgruer): Only used by a ui/ unittest: remove.
   bool has_any_animation() const;
@@ -117,6 +120,9 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   void SetNeedsCommit();
 
   virtual bool IsWorkletAnimationPlayer() const;
+  void AddTicker(std::unique_ptr<AnimationTicker>);
+
+  void DebugElementToTickerMap();
 
  private:
   friend class base::RefCounted<AnimationPlayer>;
@@ -134,7 +140,15 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   explicit AnimationPlayer(int id);
   virtual ~AnimationPlayer();
 
-  std::unique_ptr<AnimationTicker> animation_ticker_;
+  AnimationTicker* GetUniqueTickerForSingleAnimationPlayer() const;
+  // Stores animation tickers for a certain element. Need to be reset before new
+  // tickers from a different element are added.
+  std::vector<std::unique_ptr<AnimationTicker>> animation_tickers_;
+  using ElementToTickerMap =
+      std::unordered_multimap<ElementId,
+                              std::unique_ptr<AnimationTicker>,
+                              ElementIdHash>;
+  ElementToTickerMap element_to_ticker_map_;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationPlayer);
 };

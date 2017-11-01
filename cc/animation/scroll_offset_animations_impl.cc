@@ -6,9 +6,9 @@
 
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_id_provider.h"
-#include "cc/animation/animation_player.h"
 #include "cc/animation/animation_timeline.h"
 #include "cc/animation/element_animations.h"
+#include "cc/animation/single_animation_player.h"
 #include "cc/animation/timing_function.h"
 
 namespace cc {
@@ -19,7 +19,7 @@ ScrollOffsetAnimationsImpl::ScrollOffsetAnimationsImpl(
       scroll_offset_timeline_(
           AnimationTimeline::Create(AnimationIdProvider::NextTimelineId())),
       scroll_offset_animation_player_(
-          AnimationPlayer::Create(AnimationIdProvider::NextPlayerId())) {
+          SingleAnimationPlayer::Create(AnimationIdProvider::NextPlayerId())) {
   scroll_offset_timeline_->set_is_impl_only(true);
   scroll_offset_animation_player_->set_animation_delegate(this);
 

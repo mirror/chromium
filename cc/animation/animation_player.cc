@@ -25,11 +25,7 @@ scoped_refptr<AnimationPlayer> AnimationPlayer::Create(int id) {
 }
 
 AnimationPlayer::AnimationPlayer(int id)
-    : animation_host_(),
-      animation_timeline_(),
-      animation_delegate_(),
-      id_(id),
-      animation_ticker_(new AnimationTicker(this)) {
+    : animation_host_(), animation_timeline_(), animation_delegate_(), id_(id) {
   DCHECK(id_);
 }
 
@@ -43,7 +39,11 @@ scoped_refptr<AnimationPlayer> AnimationPlayer::CreateImplInstance() const {
 }
 
 ElementId AnimationPlayer::element_id() const {
-  return animation_ticker_->element_id();
+  return animation_tickers_[0]->element_id();
+}
+
+bool AnimationPlayer::IsElementAttached(ElementId id) const {
+  return !!element_to_ticker_map_.count(id);
 }
 
 void AnimationPlayer::SetAnimationHost(AnimationHost* animation_host) {
@@ -56,27 +56,34 @@ void AnimationPlayer::SetAnimationTimeline(AnimationTimeline* timeline) {
 
   // We need to unregister player to manage ElementAnimations and observers
   // properly.
-  if (animation_ticker_->has_attached_element() &&
-      animation_ticker_->has_bound_element_animations())
+  if (animation_tickers_[0]->has_attached_element() &&
+      animation_tickers_[0]->has_bound_element_animations())
     UnregisterPlayer();
 
   animation_timeline_ = timeline;
 
   // Register player only if layer AND host attached.
-  if (animation_ticker_->has_attached_element() && animation_host_)
+  if (animation_tickers_[0]->has_attached_element() && animation_host_)
     RegisterPlayer();
 }
 
 bool AnimationPlayer::has_any_animation() const {
-  return animation_ticker_->has_any_animation();
+  return animation_tickers_[0]->has_any_animation();
 }
 
 scoped_refptr<ElementAnimations> AnimationPlayer::element_animations() const {
-  return animation_ticker_->element_animations();
+  return animation_tickers_[0]->element_animations();
 }
 
 void AnimationPlayer::AttachElement(ElementId element_id) {
-  animation_ticker_->AttachElement(element_id);
+  // for_each(animation_tickers_.begin(), animation_tickers_.end(), [&](auto& x)
+  // {
+  //  x->AttachElement(element_id);
+  //  element_to_ticker_map_.emplace(element_id, std::move(x));
+  //});
+  // animation_tickers_.clear();
+  // DebugElementToTickerMap();
+  animation_tickers_[0]->AttachElement(element_id);
 
   // Register player only if layer AND host attached.
   if (animation_host_)
@@ -84,68 +91,69 @@ void AnimationPlayer::AttachElement(ElementId element_id) {
 }
 
 void AnimationPlayer::DetachElement() {
-  DCHECK(animation_ticker_->has_attached_element());
+  DCHECK(animation_tickers_[0]->has_attached_element());
 
   if (animation_host_)
     UnregisterPlayer();
 
-  animation_ticker_->DetachElement();
+  animation_tickers_[0]->DetachElement();
 }
 
 void AnimationPlayer::RegisterPlayer() {
   DCHECK(animation_host_);
-  DCHECK(animation_ticker_->has_attached_element());
-  DCHECK(!animation_ticker_->has_bound_element_animations());
+  DCHECK(animation_tickers_[0]->has_attached_element());
+  DCHECK(!animation_tickers_[0]->has_bound_element_animations());
 
   // Create ElementAnimations or re-use existing.
-  animation_host_->RegisterPlayerForElement(animation_ticker_->element_id(),
+  animation_host_->RegisterPlayerForElement(animation_tickers_[0]->element_id(),
                                             this);
 }
 
 void AnimationPlayer::UnregisterPlayer() {
   DCHECK(animation_host_);
-  DCHECK(animation_ticker_->has_attached_element());
-  DCHECK(animation_ticker_->has_bound_element_animations());
+  DCHECK(animation_tickers_[0]->has_attached_element());
+  DCHECK(animation_tickers_[0]->has_bound_element_animations());
 
   // Destroy ElementAnimations or release it if it's still needed.
-  animation_host_->UnregisterPlayerForElement(animation_ticker_->element_id(),
-                                              this);
+  animation_host_->UnregisterPlayerForElement(
+      animation_tickers_[0]->element_id(), this);
 }
 
 void AnimationPlayer::AddAnimation(std::unique_ptr<Animation> animation) {
-  animation_ticker_->AddAnimation(std::move(animation));
+  animation_tickers_[0]->AddAnimation(std::move(animation));
 }
 
 void AnimationPlayer::PauseAnimation(int animation_id, double time_offset) {
-  animation_ticker_->PauseAnimation(animation_id, time_offset);
+  animation_tickers_[0]->PauseAnimation(animation_id, time_offset);
 }
 
 void AnimationPlayer::RemoveAnimation(int animation_id) {
-  animation_ticker_->RemoveAnimation(animation_id);
+  animation_tickers_[0]->RemoveAnimation(animation_id);
 }
 
 void AnimationPlayer::AbortAnimation(int animation_id) {
-  animation_ticker_->AbortAnimation(animation_id);
+  animation_tickers_[0]->AbortAnimation(animation_id);
 }
 
 void AnimationPlayer::AbortAnimations(TargetProperty::Type target_property,
                                       bool needs_completion) {
-  animation_ticker_->AbortAnimations(target_property, needs_completion);
+  animation_tickers_[0]->AbortAnimations(target_property, needs_completion);
 }
 
 void AnimationPlayer::PushPropertiesTo(AnimationPlayer* player_impl) {
-  animation_ticker_->PushPropertiesTo(player_impl->animation_ticker_.get());
+  animation_tickers_[0]->PushPropertiesTo(
+      player_impl->animation_tickers_[0].get());
 }
 
 void AnimationPlayer::Tick(base::TimeTicks monotonic_time) {
   DCHECK(!monotonic_time.is_null());
-  animation_ticker_->Tick(monotonic_time, nullptr);
+  animation_tickers_[0]->Tick(monotonic_time, nullptr);
 }
 
 void AnimationPlayer::UpdateState(bool start_ready_animations,
                                   AnimationEvents* events) {
-  animation_ticker_->UpdateState(start_ready_animations, events);
-  animation_ticker_->UpdateTickingState(UpdateTickingType::NORMAL);
+  animation_tickers_[0]->UpdateState(start_ready_animations, events);
+  animation_tickers_[0]->UpdateTickingState(UpdateTickingType::NORMAL);
 }
 
 void AnimationPlayer::AddToTicking() {
@@ -195,13 +203,13 @@ bool AnimationPlayer::NotifyAnimationFinishedForTesting(
     TargetProperty::Type target_property,
     int group_id) {
   AnimationEvent event(AnimationEvent::FINISHED,
-                       animation_ticker_->element_id(), group_id,
+                       animation_tickers_[0]->element_id(), group_id,
                        target_property, base::TimeTicks());
-  return animation_ticker_->NotifyAnimationFinished(event);
+  return animation_tickers_[0]->NotifyAnimationFinished(event);
 }
 
 size_t AnimationPlayer::TickingAnimationsCount() const {
-  return animation_ticker_->TickingAnimationsCount();
+  return animation_tickers_[0]->TickingAnimationsCount();
 }
 
 void AnimationPlayer::SetNeedsCommit() {
@@ -215,24 +223,42 @@ void AnimationPlayer::SetNeedsPushProperties() {
 }
 
 void AnimationPlayer::ActivateAnimations() {
-  animation_ticker_->ActivateAnimations();
-  animation_ticker_->UpdateTickingState(UpdateTickingType::NORMAL);
+  animation_tickers_[0]->ActivateAnimations();
+  animation_tickers_[0]->UpdateTickingState(UpdateTickingType::NORMAL);
 }
 
 Animation* AnimationPlayer::GetAnimation(
     TargetProperty::Type target_property) const {
-  return animation_ticker_->GetAnimation(target_property);
+  return animation_tickers_[0]->GetAnimation(target_property);
 }
 
 std::string AnimationPlayer::ToString() const {
   return base::StringPrintf(
       "AnimationPlayer{id=%d, element_id=%s, animations=[%s]}", id_,
-      animation_ticker_->element_id().ToString().c_str(),
-      animation_ticker_->AnimationsToString().c_str());
+      animation_tickers_[0]->element_id().ToString().c_str(),
+      animation_tickers_[0]->AnimationsToString().c_str());
 }
 
 bool AnimationPlayer::IsWorkletAnimationPlayer() const {
   return false;
+}
+
+void AnimationPlayer::AddTicker(std::unique_ptr<AnimationTicker> ticker) {
+  animation_tickers_.push_back(std::move(ticker));
+}
+
+AnimationTicker* AnimationPlayer::GetUniqueTickerForSingleAnimationPlayer()
+    const {
+  DCHECK(!animation_tickers_.empty());
+  return animation_tickers_[0].get();
+}
+
+void AnimationPlayer::DebugElementToTickerMap() {
+  for_each(element_to_ticker_map_.begin(), element_to_ticker_map_.end(),
+           [](ElementToTickerMap::value_type& x) {
+             LOG(ERROR) << "id: " << x.first.ToString()
+                        << " ticker: " << x.second->AnimationsToString();
+           });
 }
 
 }  // namespace cc

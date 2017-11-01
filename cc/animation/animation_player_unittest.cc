@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/animation/animation_player.h"
+#include "cc/animation/single_animation_player.h"
 
 #include "base/strings/stringprintf.h"
 #include "cc/animation/animation_delegate.h"
@@ -207,10 +207,10 @@ TEST_F(AnimationPlayerTest, AttachTwoPlayersToOneLayer) {
   client_impl_.RegisterElement(element_id_, ElementListType::PENDING);
   client_impl_.RegisterElement(element_id_, ElementListType::ACTIVE);
 
-  scoped_refptr<AnimationPlayer> player1 =
-      AnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
-  scoped_refptr<AnimationPlayer> player2 =
-      AnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
+  scoped_refptr<SingleAnimationPlayer> player1 =
+      SingleAnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
+  scoped_refptr<SingleAnimationPlayer> player2 =
+      SingleAnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
 
   host_->AddAnimationTimeline(timeline_);
 
@@ -417,15 +417,15 @@ TEST_F(AnimationPlayerTest, SwitchToLayer) {
 
 TEST_F(AnimationPlayerTest, ToString) {
   player_->AttachElement(element_id_);
-  EXPECT_EQ(
-      base::StringPrintf("AnimationPlayer{id=%d, element_id=%s, animations=[]}",
-                         player_->id(), element_id_.ToString().c_str()),
-      player_->ToString());
+  EXPECT_EQ(base::StringPrintf(
+                "SingleAnimationPlayer{id=%d, element_id=%s, animations=[]}",
+                player_->id(), element_id_.ToString().c_str()),
+            player_->ToString());
 
   player_->AddAnimation(
       Animation::Create(std::make_unique<FakeFloatAnimationCurve>(15), 42, 73,
                         TargetProperty::OPACITY));
-  EXPECT_EQ(base::StringPrintf("AnimationPlayer{id=%d, element_id=%s, "
+  EXPECT_EQ(base::StringPrintf("SingleAnimationPlayer{id=%d, element_id=%s, "
                                "animations=[Animation{id=42, "
                                "group=73, target_property_id=1, "
                                "run_state=WAITING_FOR_TARGET_AVAILABILITY}]}",
@@ -437,7 +437,7 @@ TEST_F(AnimationPlayerTest, ToString) {
                         TargetProperty::BOUNDS));
   EXPECT_EQ(
       base::StringPrintf(
-          "AnimationPlayer{id=%d, element_id=%s, "
+          "SingleAnimationPlayer{id=%d, element_id=%s, "
           "animations=[Animation{id=42, "
           "group=73, target_property_id=1, "
           "run_state=WAITING_FOR_TARGET_AVAILABILITY}, Animation{id=45, "
