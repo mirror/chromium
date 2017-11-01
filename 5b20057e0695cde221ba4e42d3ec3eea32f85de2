@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b755d125_76f427eb",
+        "filename": "android_webview/java/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T17:19:18Z",
+      "side": 1,
+      "message": "should add ContentSwitches.java explicitly with ! like below\n\nand the actual right solution for this is to move ContentSwitches to content_public/common, but don\u0027t have to do that in this CL",
+      "revId": "5b20057e0695cde221ba4e42d3ec3eea32f85de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478d013d_a786092b",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwLayoutSizer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-01T17:19:18Z",
+      "side": 1,
+      "message": "this cast shouldn\u0027t be needed?",
+      "range": {
+        "startLine": 99,
+        "startChar": 28,
+        "endLine": 99,
+        "endChar": 34
+      },
+      "revId": "5b20057e0695cde221ba4e42d3ec3eea32f85de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
