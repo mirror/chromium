@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12e75512_af03fa8f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-01T21:15:38Z",
+      "side": 1,
+      "message": "You see a black flash when the keyboard comes up or is hidden. I\u0027m easily able to repro on the stable build on google.com. More details on b/66834406.\n\nThanks for the inputs. And Theresa for narrowing down where the color was coming from. We spoke offline and decided the better thing to do here would be to keep white as the default and only apply the resize color override when in multi-window mode. In the process I noticed that removing the code that applied the override had no effect. I still see black during resize, same as the behaviour from the official build on the phone and verified on O and N. In that case, can we remove this logic altogether?",
+      "parentUuid": "54424476_6a0e3927",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "b5461e71a4fb5fb8275adfdf2ca2df0600fc61a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f2b2e06_f9bf71b0",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
         "patchSetId": 1
