@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "097baf08_5fe917fd",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T21:03:56Z",
+      "side": 1,
+      "message": "Can you explain this for me?",
+      "revId": "27de1f46aed0a9ebedda201bc5f26c04d49b6539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
