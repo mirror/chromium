@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95ce4a08_faa6c67a",
+        "filename": "services/device/public/interfaces/wake_lock.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-01T17:41:34Z",
+      "side": 1,
+      "message": "nit: I don\u0027t feel too strongly about it, but in general I try to discourage describing too many implementation details in public interface documentation. I might drop the \"Chrome OS-only\" detail in this case.",
+      "revId": "501d73b3745161140f77b8ef3ec456486e831ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25c6c1f5_244d5f87",
+        "filename": "services/device/wake_lock/power_save_blocker/power_save_blocker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-01T17:41:34Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "501d73b3745161140f77b8ef3ec456486e831ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
