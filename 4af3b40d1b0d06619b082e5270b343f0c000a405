@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "fe9cf634_7780df2e",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-01T19:38:49Z",
+      "side": 1,
+      "message": "Oh, despite marking this as Done. You didn\u0027t remove the WeakPtr, just changed the comment. nvm.",
+      "parentUuid": "473637c5_b4ca179f",
+      "revId": "4af3b40d1b0d06619b082e5270b343f0c000a405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aa60e68_f29d2794",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
         "patchSetId": 18
