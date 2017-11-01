@@ -34,6 +34,24 @@
       "revId": "310003de0be0d3663a64ada863cab96caf25207f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92875759_1290f194",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIterator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-01T18:08:57Z",
+      "side": 1,
+      "message": "Some while ago I removed TIBehavior from TITextState. Are we putting it back?\n\nDoesn\u0027t sound that bad, though, if it helps unifying the logic of:\n- emit x for text security\n- emit space for nbsp",
+      "parentUuid": "47283ffa_c299b5a6",
+      "revId": "310003de0be0d3663a64ada863cab96caf25207f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
