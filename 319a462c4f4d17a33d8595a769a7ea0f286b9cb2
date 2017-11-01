@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56d697a0_cd6103d4",
+        "filename": "chrome/app/chrome_exe_main_win.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-01T08:30:05Z",
+      "side": 1,
+      "message": "i\u0027m still not convinced that this super-early approach is the right thing. does it make sense to register when chrome is run with --uninstall to show the uninstall dialog? does it make sense to spin it up for a browser process that\u0027s going to rendezvous with another process?",
+      "revId": "319a462c4f4d17a33d8595a769a7ea0f286b9cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbd107e_f8f364db",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-01T08:30:05Z",
+      "side": 1,
+      "message": "i think i already commented on this -- global non-POD types with dtors are not allowed. that aside, what you have here will result in UnregisterActivator being called on the main thread (most likely) rather than on the MTA notification thread. that doesn\u0027t feel right. i think there should be a clear way that the thread is spun down, even if chrome never does it. can we have some sort of integration test that will spin up the thread, respond to activations, and tear it down?",
+      "revId": "319a462c4f4d17a33d8595a769a7ea0f286b9cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
