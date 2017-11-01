@@ -4,6 +4,7 @@
 
 #include "chrome/browser/vr/test/ui_pixel_test.h"
 
+#include "base/md5.h"
 #include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/vr/browser_ui_interface.h"
@@ -12,6 +13,7 @@
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
+#include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/skia/include/core/SkImageEncoder.h"
 #include "third_party/skia/include/core/SkStream.h"
@@ -24,6 +26,10 @@ namespace vr {
 UiPixelTest::UiPixelTest() : frame_buffer_size_(kPixelHalfScreen) {}
 
 UiPixelTest::~UiPixelTest() = default;
+
+void UiPixelTest::SetUpTestCase() {
+  // TODO(bsheedy): Load and store list of known good hashes
+}
 
 void UiPixelTest::SetUp() {
 // TODO(crbug/771794): Test temporarily disabled on Windows because it crashes
@@ -137,6 +143,30 @@ std::unique_ptr<SkBitmap> UiPixelTest::SaveCurrentFrameBufferToSkBitmap() {
   }
 
   return bitmap;
+}
+
+std::unique_ptr<base::MD5Digest> UiPixelTest::CalculateMd5FromSkBitmap(
+    const SkBitmap& bitmap) {
+  auto digest = std::make_unique<base::MD5Digest>();
+  base::MD5Sum(bitmap.getPixels(), bitmap.computeByteSize(), digest.get());
+  return digest;
+}
+
+void UiPixelTest::CaptureAndCompareFrameBufferToGolden() {
+  // std::string golden_digest = "bbd4b53d3e4ba19486c86610ad1ac029";
+  std::string golden_digest = "asdf";
+  auto bitmap = SaveCurrentFrameBufferToSkBitmap();
+  auto digest = CalculateMd5FromSkBitmap(*bitmap);
+  // TODO(bsheedy): Support outputting multiple files before failing?
+  if (golden_digest != base::MD5DigestToBase16(*digest)) {
+    // TODO(bsheedy): Save to a configurable directory instead of hard coding
+    std::string filename =
+        ::testing::UnitTest::GetInstance()->current_test_info()->name();
+    filename = filename + "_" + base::MD5DigestToBase16(*digest) + ".png";
+    filename = "./skia_gold_test_output/" + filename;
+    SaveSkBitmapToPng(*bitmap, filename);
+    GTEST_FATAL_FAILURE_("Generated image hash did not match golden hash");
+  }
 }
 
 bool UiPixelTest::SaveSkBitmapToPng(const SkBitmap& bitmap,
