@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "823353bb_e6499b97",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1347,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T18:05:56Z",
+      "side": 1,
+      "message": "\"able\"",
+      "revId": "26e4fc3f15f987fd4cbccf278cd11afab357254a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1f2f66_a6d0a07f",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T18:05:56Z",
+      "side": 1,
+      "message": "Should we put an un-deletable file on either side of the deletable file so the iteration order doesn\u0027t matter?",
+      "revId": "26e4fc3f15f987fd4cbccf278cd11afab357254a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed0c86a_8d89b6f1",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1366,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T18:05:56Z",
+      "side": 1,
+      "message": "Can you mention why we\u0027re checking this - ie we want to see that the delete didnt abort?",
+      "revId": "26e4fc3f15f987fd4cbccf278cd11afab357254a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
