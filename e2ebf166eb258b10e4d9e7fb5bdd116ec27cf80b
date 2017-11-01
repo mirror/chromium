@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "f4a1bd6a_078cc08a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-01T22:16:39Z",
+      "side": 1,
+      "message": "side-tracking: I quite liked the \"foreground-service\" idea and used it in frame type: https://chromium-review.googlesource.com/c/chromium/src/+/749461. Shubhie, Fadi, you\u0027re welcome to take a look at that CL, I\u0027d appreciate your thoughts.",
+      "parentUuid": "328a22d1_1929c633",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "e2ebf166eb258b10e4d9e7fb5bdd116ec27cf80b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd4a7f77_e625ec33",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
         "patchSetId": 2
