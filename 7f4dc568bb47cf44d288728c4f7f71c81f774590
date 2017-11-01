@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1cdadb3_7524c5dd",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-01T05:39:05Z",
+      "side": 1,
+      "message": "Should this also be removed?",
+      "revId": "7f4dc568bb47cf44d288728c4f7f71c81f774590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d8dc43_bcd0da0a",
+        "filename": "services/resource_coordinator/observers/tab_signal_generator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-01T05:39:05Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to observe page any more, right?",
+      "revId": "7f4dc568bb47cf44d288728c4f7f71c81f774590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
