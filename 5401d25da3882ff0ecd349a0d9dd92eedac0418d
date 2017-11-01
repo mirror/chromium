@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f412ea7_74be83ce",
+        "filename": "gpu/command_buffer/client/ring_buffer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-01T23:57:46Z",
+      "side": 1,
+      "message": "I don\u0027t think checked_cast is needed here (size_ is an Offset aka unsigned int), and we want to avoid the extra cost, because this is on the critical path. I think we can just remove the cast.",
+      "revId": "5401d25da3882ff0ecd349a0d9dd92eedac0418d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
