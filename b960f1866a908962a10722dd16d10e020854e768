@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44536860_6e0cd82e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-01T00:22:26Z",
+      "side": 1,
+      "message": "eventhandlers, setTimeout?",
+      "range": {
+        "startLine": 472,
+        "startChar": 46,
+        "endLine": 472,
+        "endChar": 54
+      },
+      "revId": "b960f1866a908962a10722dd16d10e020854e768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
