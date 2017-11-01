@@ -40,6 +40,25 @@ struct NotificationData {
   GURL origin;
 };
 
+class MockTempFileKeeper : public TempFileKeeper {
+ public:
+  MockTempFileKeeper() : counter_(0) {}
+
+  base::FilePath RegisterTemporaryImage(gfx::Image image,
+                                        const GURL& origin,
+                                        const base::string16& prefix) override {
+    base::string16 file = base::string16(L"c:\\temp\\img") +
+                          base::IntToString16(counter_++) +
+                          base::string16(L".tmp");
+    return base::FilePath(file);
+  }
+
+ private:
+  int counter_;
+
+  DISALLOW_COPY_AND_ASSIGN(MockTempFileKeeper);
+};
+
 bool FixedTime(base::Time* time) {
   base::Time::Exploded exploded = {0};
   exploded.year = 1998;
@@ -71,17 +90,22 @@ class NotificationTemplateBuilderTest : public ::testing::Test {
         message_center::NOTIFICATION_TYPE_SIMPLE, notification_data.id,
         base::UTF8ToUTF16(notification_data.title),
         base::UTF8ToUTF16(notification_data.message), gfx::Image() /* icon */,
+        base::UTF8ToUTF16(notification_data.message),
+        with_icon ? gfx::Image::CreateFrom1xBitmap(image) : gfx::Image(),
         base::string16() /* display_source */, origin_url,
         NotifierId(origin_url), RichNotificationData(), nullptr /* delegate */);
-    // TODO(finnur): Test with null timestamp.
-    base::Time timestamp;
-    ASSERT_TRUE(FixedTime(&timestamp));
-    notification.set_timestamp(timestamp);
     if (buttons.size())
       notification.set_buttons(buttons);
 
     template_ =
         NotificationTemplateBuilder::Build(notification_data.id, notification);
+    if (with_image)
+      notification.set_image(gfx::Image::CreateFrom1xBitmap(image));
+
+    MockTempFileKeeper temp_file_keeper;
+    template_ = NotificationTemplateBuilder::Build(
+        notification_data.id, *temp_file_keeper, notification);
+        notification_data.id, temp_file_keeper, notification);
     ASSERT_TRUE(template_);
 
     *xml_template = template_->GetNotificationTemplate();
@@ -245,6 +269,45 @@ TEST_F(NotificationTemplateBuilderTest, InlineRepliesTextTypeNotFirst) {
   <input id="userResponse" type="text" placeHolderContent="Reply here"/>
   <action activationType="foreground" content="Button1" arguments="buttonIndex=0"/>
   <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>
+ </actions>
+</toast>
+)";
+
+  EXPECT_EQ(xml_template, kExpectedXml);
+}
+
+TEST_F(NotificationTemplateBuilderTest, Images) {
+  NotificationData notification_data;
+  base::string16 xml_template;
+
+  SkBitmap icon;
+  icon.allocN32Pixels(64, 64);
+  icon.eraseARGB(255, 100, 150, 200);
+
+  std::vector<message_center::ButtonInfo> buttons;
+  message_center::ButtonInfo button(base::ASCIIToUTF16("Button1"));
+  button.type = message_center::ButtonType::TEXT;
+  button.placeholder = base::ASCIIToUTF16("Reply here");
+  button.icon = gfx::Image::CreateFrom1xBitmap(icon);
+  buttons.emplace_back(button);
+
+  ASSERT_NO_FATAL_FAILURE(
+      BuildTemplate(notification_data, buttons, true, true, &xml_template));
+
+  const wchar_t kExpectedXml[] =
+      LR"(<toast launch="notification_id" displayTimestamp="1998-09-04T01:02:03Z">
+ <visual>
+  <binding template="ToastGeneric">
+   <text>My Title</text>
+   <text>My Message</text>
+   <text placement="attribution">example.com</text>
+   <image placement="appLogoOverride" src="c:\temp\img0.tmp" hint-crop="circle"/>
+   <image placement="hero" src="c:\temp\img1.tmp"/>
+  </binding>
+ </visual>
+ <actions>
+  <input id="userResponse" type="text" placeHolderContent="Reply here"/>
+  <action activationType="foreground" content="Button1" arguments="buttonIndex=0" imageUri="c:\temp\img2.tmp"/>
  </actions>
 </toast>
 )";
