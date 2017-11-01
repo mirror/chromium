@@ -68,8 +68,6 @@ IPC_STRUCT_BEGIN(SpeechRecognitionHostMsg_StartRequest_Params)
   IPC_STRUCT_MEMBER(bool, continuous)
   // Whether the user requested interim results or not.
   IPC_STRUCT_MEMBER(bool, interim_results)
-  // Wheter the user has set an audio track as input or not.
-  IPC_STRUCT_MEMBER(bool, using_audio_track)
 IPC_STRUCT_END()
 
 
@@ -122,11 +120,5 @@ IPC_MESSAGE_ROUTED1(SpeechRecognitionMsg_SoundEnded, int /* request_id */)
 IPC_MESSAGE_ROUTED1(SpeechRecognitionMsg_AudioEnded, int /* request_id */)
 
 IPC_MESSAGE_ROUTED1(SpeechRecognitionMsg_Ended, int /* request_id */)
-
-IPC_MESSAGE_ROUTED4(SpeechRecognitionMsg_AudioReceiverReady,
-                    int /* request_id */,
-                    media::AudioParameters /* params */,
-                    base::SharedMemoryHandle /* memory */,
-                    base::SyncSocket::TransitDescriptor /* socket */)
 
 #endif  // CONTENT_COMMON_SPEECH_RECOGNITION_MESSAGES_H_
