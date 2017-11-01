@@ -38,8 +38,8 @@ var doc = function() {/*!
   <input type='text' id='singleLine' value='Single line field'><br>
   <label for='textarea'>textArea</label>
   <textarea id='textarea'>
-Line 1&#xa;
-line 2&#xa;
+Line 1&%23xa;
+line 2&%23xa;
 line 3
 </textarea>
 */};
@@ -138,7 +138,7 @@ TEST_F('EditingTest', 'RichTextMoveByLine', function() {
     <div id="go" role="textbox" contenteditable>
       <h2>hello</h2>
       <div><br></div>
-      <p>This is a <a href="#test">test</a> of rich text</p>
+      <p>This is a <a href="%23test">test</a> of rich text</p>
     </div>
     <script>
       var dir = 'forward';
@@ -329,7 +329,7 @@ TEST_F('EditingTest', 'RichTextMoveByCharacterEndOfLine', function() {
 TEST_F('EditingTest', 'RichTextLinkOutput', function() {
   var mockFeedback = this.createMockFeedback();
   this.runWithLoadedTree(function() {/*!
-    <div id="go" role="textbox" contenteditable>a <a href="#">test</a></div>
+    <div id="go" role="textbox" contenteditable>a <a href="%23test</a></div>
 
     <script>
       document.getElementById('go').addEventListener('click', function() {

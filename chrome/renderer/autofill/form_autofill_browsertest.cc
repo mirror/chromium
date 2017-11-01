@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/strings/string16.h"
+#include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/test/base/chrome_render_view_test.h"
@@ -1579,6 +1580,14 @@ class FormAutofillTest : public ChromeRenderViewTest {
     EXPECT_TRUE(phone.Value().IsEmpty());
     EXPECT_TRUE(phone.SuggestedValue().IsEmpty());
     EXPECT_FALSE(phone.IsAutofilled());
+  }
+
+  // RenderViewTest::LoadHTML loads HTML as a data URI, which requires encoding
+  // '#' characters as '%23'.
+  void LoadHTML(const char* html) override {
+    std::string html_string(html);
+    base::ReplaceChars(html_string, "#", "%23", &html_string);
+    ChromeRenderViewTest::LoadHTML(html_string.c_str());
   }
 
   static void FillFormIncludingNonFocusableElementsWrapper(

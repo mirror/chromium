@@ -53,13 +53,13 @@ BackgroundTest.prototype = {
 
   linksAndHeadingsDoc: function() {/*!
     <p>start</p>
-    <a href='#a'>alpha</a>
-    <a href='#b'>beta</a>
+    <a href='%23a'>alpha</a>
+    <a href='%23b'>beta</a>
     <p>
       <h1>charlie</h1>
       <a href='foo'>delta</a>
     </p>
-    <a href='#bar'>echo</a>
+    <a href='%23bar'>echo</a>
     <h2>foxtraut</h2>
     <p>end<span>of test</span></p>
   */},
@@ -1301,7 +1301,7 @@ TEST_F('BackgroundTest', 'BusyHeading', function() {
   var mockFeedback = this.createMockFeedback();
   this.runWithLoadedTree(function(root) {/*!
     <p>start</p>
-    <h2><a href="#">Lots</a><a href="#">going</a><a href="#">here</a></h2>
+    <h2><a href="%23">Lots</a><a href="%23">going</a><a href="%23">here</a></h2>
   */}, function(root) {
     // In the past, this would have inserted the 'heading 2' after the first
     // link's output. Make sure it goes to the end.
