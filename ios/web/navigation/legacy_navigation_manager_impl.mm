@@ -84,13 +84,18 @@ CRWSessionController* LegacyNavigationManagerImpl::GetSessionController()
 void LegacyNavigationManagerImpl::AddTransientItem(const GURL& url) {
   [session_controller_ addTransientItemWithURL:url];
 
-  // TODO(crbug.com/676129): Transient item is only supposed to be added for
-  // pending non-app-specific loads, but pending item can be null because of the
-  // bug. The workaround should be removed once the bug is fixed.
   NavigationItem* item = GetPendingItem();
+  // TODO(crbug.com/676129): Pending item can be null because of the
+  // bug. The workaround should be removed once the bug is fixed.
   if (!item)
     item = GetLastCommittedNonAppSpecificItem();
-  DCHECK(item->GetUserAgentType() != UserAgentType::NONE);
+  // App specific items are initially ignored to try to find a committed item
+  // with a valid UserAgentType (not equal to NONE). However, if no such item
+  // exist, the only committed items are App Specific pages and it is acceptable
+  // to use the special type UserAgentType::NONE.
+  if (!item)
+    item = GetLastCommittedItem();
+
   GetTransientItem()->SetUserAgentType(item->GetUserAgentType());
 }
 
