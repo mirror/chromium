@@ -24,6 +24,25 @@ namespace {
 
 using TabsStats = TabStatsDataStore::TabsStats;
 
+class TabStatsDataStoreTest : public TabStatsDataStore {
+ public:
+  explicit TabStatsDataStoreTest(PrefService* pref_service)
+      : TabStatsDataStore(pref_service) {}
+  ~TabStatsDataStoreTest() override {}
+
+  // Override these functions as the |web_contents| pointers are fake and
+  // shouldn't be used.
+
+  void OnTabAdded(const content::WebContents* web_contents) override {
+    tab_stats_mutable().total_tab_count++;
+    UpdateTotalTabCountMaxIfNeeded();
+  }
+
+  void OnTabRemoved(const content::WebContents* web_contents) override {
+    tab_stats_mutable().total_tab_count--;
+  }
+};
+
 class TabStatsTrackerBrowserTest : public InProcessBrowserTest {
  public:
   TabStatsTrackerBrowserTest() : tab_stats_tracker_(nullptr) {}
@@ -49,19 +68,30 @@ class TestTabStatsTracker : public TabStatsTracker {
     // while running the tests.
     EXPECT_TRUE(timer()->IsRunning());
     timer()->Stop();
+
+    reset_data_store(new TabStatsDataStoreTest(pref_service));
   }
   ~TestTabStatsTracker() override {}
 
   // Helper functions to update the number of tabs/windows.
 
   size_t AddTabs(size_t tab_count) {
-    tab_stats_data_store()->OnTabsAdded(tab_count);
+    for (size_t i = 0; i < tab_count; ++i) {
+      content::WebContents* fake_tab =
+          reinterpret_cast<content::WebContents*>(0xBEEF000 + i);
+      tab_stats_data_store()->OnTabAdded(fake_tab);
+      fake_tabs_.push_back(fake_tab);
+    }
     return tab_stats_data_store()->tab_stats().total_tab_count;
   }
 
   size_t RemoveTabs(size_t tab_count) {
     EXPECT_LE(tab_count, tab_stats_data_store()->tab_stats().total_tab_count);
-    tab_stats_data_store()->OnTabsRemoved(tab_count);
+    EXPECT_LE(tab_count, fake_tabs_.size());
+    for (size_t i = 0; i < tab_count; ++i) {
+      tab_stats_data_store()->OnTabRemoved(fake_tabs_.back());
+      fake_tabs_.pop_back();
+    }
     return tab_stats_data_store()->tab_stats().total_tab_count;
   }
 
@@ -103,6 +133,8 @@ class TestTabStatsTracker : public TabStatsTracker {
 
  private:
   PrefService* pref_service_;
+
+  std::vector<content::WebContents*> fake_tabs_;
 
   DISALLOW_COPY_AND_ASSIGN(TestTabStatsTracker);
 };
