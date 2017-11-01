@@ -52,6 +52,24 @@
       "revId": "dc6e0fd531469bfd92f5f0ee65ad91d22f12f98e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3434bb_4d6c3466",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-01T20:15:10Z",
+      "side": 1,
+      "message": "How about AddAccountButton? Given that the item type is \"ItemTypeAddAccount\", with nothing about \"SignIn\". I\u0027ve updated this already in this CL. Let me know if it sgty.",
+      "parentUuid": "c1b27037_888a2784",
+      "revId": "dc6e0fd531469bfd92f5f0ee65ad91d22f12f98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
