@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b895f20_d4f31ec1",
+        "filename": "ios/chrome/browser/translate/translate_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-01T22:12:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "016cdae6_d0984e56",
+      "range": {
+        "startLine": 866,
+        "startChar": 5,
+        "endLine": 866,
+        "endChar": 25
+      },
+      "revId": "d1a6241bb84e1d12dbbb950ca6af5e4a0c14cf85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82ac1be0_12d1d57c",
         "filename": "ios/chrome/browser/translate/translate_egtest.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "d1a6241bb84e1d12dbbb950ca6af5e4a0c14cf85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae13b47d_1fb5ee11",
+        "filename": "ios/chrome/browser/translate/translate_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-01T22:12:22Z",
+      "side": 1,
+      "message": "Ah - I misunderstood the pragma marks (not an objective C coder). Moved.",
+      "parentUuid": "82ac1be0_12d1d57c",
+      "range": {
+        "startLine": 871,
+        "startChar": 1,
+        "endLine": 871,
+        "endChar": 0
+      },
+      "revId": "d1a6241bb84e1d12dbbb950ca6af5e4a0c14cf85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
