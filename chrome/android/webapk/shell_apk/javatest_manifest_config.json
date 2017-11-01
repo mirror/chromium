@@ -1,4 +1,6 @@
 {
+  "short_name": "Test WebAPK",
+  "name": "Test WebAPK",
   "manifest_package": "org.chromium.webapk.test",
   "scope_url": "https://pwa.rocks/",
   "intent_filters": {

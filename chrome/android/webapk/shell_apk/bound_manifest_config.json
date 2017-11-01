@@ -1,4 +1,6 @@
 {
+  "short_name": "Bound WebAPK",
+  "name": "Bound WebAPK",
   "manifest_package": "org.chromium.webapk",
   "scope_url": "https://pwa.rocks/",
   "intent_filters": {
