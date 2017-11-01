@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d471e892_3326d180",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-01T23:03:23Z",
+      "side": 1,
+      "message": "no \"https://\" in TODO as per offline discussion",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 16
+      },
+      "revId": "ae27af1a7fc0ba0ad943325972934da24eafa3a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637d89ca_bc193689",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-01T23:03:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ae27af1a7fc0ba0ad943325972934da24eafa3a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e11338_97ddc200",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-01T23:03:23Z",
+      "side": 1,
+      "message": "GetStorageIdProfileSalt to be more accurate?",
+      "range": {
+        "startLine": 31,
+        "startChar": 21,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "ae27af1a7fc0ba0ad943325972934da24eafa3a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
