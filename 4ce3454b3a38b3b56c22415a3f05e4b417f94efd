@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ba601ce_025336d7",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-01T18:17:39Z",
+      "side": 1,
+      "message": "Note to self: Remove dom-if around simple span.",
+      "revId": "4ce3454b3a38b3b56c22415a3f05e4b417f94efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
