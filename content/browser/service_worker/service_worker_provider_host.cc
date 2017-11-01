@@ -329,6 +329,17 @@ void ServiceWorkerProviderHost::OnSkippedWaiting(
                                 true /* notify_controllerchange */);
 }
 
+mojom::ControllerServiceWorkerPtr
+ServiceWorkerProviderHost::GetControllerServiceWorkerPtr() {
+  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
+  DCHECK(controller_);
+  DCHECK(controller_->running_status() == EmbeddedWorkerStatus::STARTING ||
+         controller_->running_status() == EmbeddedWorkerStatus::RUNNING);
+  mojom::ControllerServiceWorkerPtr controller_ptr;
+  controller_->controller()->Clone(mojo::MakeRequest(&controller_ptr));
+  return controller_ptr;
+}
+
 void ServiceWorkerProviderHost::SetDocumentUrl(const GURL& url) {
   DCHECK(!url.has_ref());
   document_url_ = url;
@@ -899,8 +910,15 @@ void ServiceWorkerProviderHost::SendSetControllerServiceWorker(
       }
     }
   }
+
+  // S13nServiceWorker: Send the controller ptr too.
+  mojom::ControllerServiceWorkerPtr controller_ptr;
+  if (version && ServiceWorkerUtils::IsServicificationEnabled())
+    controller_ptr = GetControllerServiceWorkerPtr();
+
   container_->SetController(GetOrCreateServiceWorkerHandle(version),
-                            used_features, notify_controllerchange);
+                            std::move(controller_ptr), used_features,
+                            notify_controllerchange);
 }
 
 void ServiceWorkerProviderHost::Register(
