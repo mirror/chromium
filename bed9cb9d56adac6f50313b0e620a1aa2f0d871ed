@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8c9e20d_23b7af06",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-01T07:10:07Z",
+      "side": 0,
+      "message": "nit: To make patch small, please use |expanded_range| as parameters of\nSelectionTemplate\u003cT\u003e::Builder()",
+      "revId": "bed9cb9d56adac6f50313b0e620a1aa2f0d871ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
