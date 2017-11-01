@@ -61,9 +61,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         animation: container-rotate var(--paper-spinner-container-rotation-duration) linear infinite;
       }
 
-      @-webkit-keyframes container-rotate {
-        to { -webkit-transform: rotate(360deg) }
-      }
 
       @keyframes container-rotate {
         to { transform: rotate(360deg) }
@@ -126,16 +123,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         animation-name: fill-unfill-rotate, layer-4-fade-in-out;
       }
 
-      @-webkit-keyframes fill-unfill-rotate {
-        12.5% { -webkit-transform: rotate(135deg) } /* 0.5 * ARCSIZE */
-        25%   { -webkit-transform: rotate(270deg) } /* 1   * ARCSIZE */
-        37.5% { -webkit-transform: rotate(405deg) } /* 1.5 * ARCSIZE */
-        50%   { -webkit-transform: rotate(540deg) } /* 2   * ARCSIZE */
-        62.5% { -webkit-transform: rotate(675deg) } /* 2.5 * ARCSIZE */
-        75%   { -webkit-transform: rotate(810deg) } /* 3   * ARCSIZE */
-        87.5% { -webkit-transform: rotate(945deg) } /* 3.5 * ARCSIZE */
-        to    { -webkit-transform: rotate(1080deg) } /* 4   * ARCSIZE */
-      }
 
       @keyframes fill-unfill-rotate {
         12.5% { transform: rotate(135deg) } /* 0.5 * ARCSIZE */
@@ -148,14 +135,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         to    { transform: rotate(1080deg) } /* 4   * ARCSIZE */
       }
 
-      @-webkit-keyframes layer-1-fade-in-out {
-        0% { opacity: 1 }
-        25% { opacity: 1 }
-        26% { opacity: 0 }
-        89% { opacity: 0 }
-        90% { opacity: 1 }
-        to { opacity: 1 }
-      }
 
       @keyframes layer-1-fade-in-out {
         0% { opacity: 1 }
@@ -166,14 +145,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         to { opacity: 1 }
       }
 
-      @-webkit-keyframes layer-2-fade-in-out {
-        0% { opacity: 0 }
-        15% { opacity: 0 }
-        25% { opacity: 1 }
-        50% { opacity: 1 }
-        51% { opacity: 0 }
-        to { opacity: 0 }
-      }
 
       @keyframes layer-2-fade-in-out {
         0% { opacity: 0 }
@@ -184,14 +155,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         to { opacity: 0 }
       }
 
-      @-webkit-keyframes layer-3-fade-in-out {
-        0% { opacity: 0 }
-        40% { opacity: 0 }
-        50% { opacity: 1 }
-        75% { opacity: 1 }
-        76% { opacity: 0 }
-        to { opacity: 0 }
-      }
 
       @keyframes layer-3-fade-in-out {
         0% { opacity: 0 }
@@ -202,13 +165,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         to { opacity: 0 }
       }
 
-      @-webkit-keyframes layer-4-fade-in-out {
-        0% { opacity: 0 }
-        65% { opacity: 0 }
-        75% { opacity: 1 }
-        90% { opacity: 1 }
-        to { opacity: 0 }
-      }
 
       @keyframes layer-4-fade-in-out {
         0% { opacity: 0 }
@@ -282,11 +238,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         animation-name: right-spin;
       }
 
-      @-webkit-keyframes left-spin {
-        0% { -webkit-transform: rotate(130deg) }
-        50% { -webkit-transform: rotate(-5deg) }
-        to { -webkit-transform: rotate(130deg) }
-      }
 
       @keyframes left-spin {
         0% { transform: rotate(130deg) }
@@ -294,11 +245,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         to { transform: rotate(130deg) }
       }
 
-      @-webkit-keyframes right-spin {
-        0% { -webkit-transform: rotate(-130deg) }
-        50% { -webkit-transform: rotate(5deg) }
-        to { -webkit-transform: rotate(-130deg) }
-      }
 
       @keyframes right-spin {
         0% { transform: rotate(-130deg) }
@@ -310,10 +256,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         animation: container-rotate var(--paper-spinner-container-rotation-duration) linear infinite, fade-out var(--paper-spinner-cooldown-duration) cubic-bezier(0.4, 0.0, 0.2, 1);
       }
 
-      @-webkit-keyframes fade-out {
-        0% { opacity: 1 }
-        to { opacity: 0 }
-      }
 
       @keyframes fade-out {
         0% { opacity: 1 }
