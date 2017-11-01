@@ -96,6 +96,23 @@
     },
     {
       "key": {
+        "uuid": "0a9823bd_d71b3c88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T21:11:35Z",
+      "side": 1,
+      "message": "Nit: add TODO to not initialize these for webapk.\n\nHave you tested that none of this logic breaks when actually loading a webapk?",
+      "revId": "e39e21872e3e804899dbc061882952f892bc0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91fa1351_a7f61a92",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDelegateFactory.java",
         "patchSetId": 7
@@ -187,6 +204,29 @@
       "revId": "e39e21872e3e804899dbc061882952f892bc0862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7183b40_1daf0d74",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T21:11:35Z",
+      "side": 1,
+      "message": "Todo: make this right",
+      "range": {
+        "startLine": 120,
+        "startChar": 39,
+        "endLine": 120,
+        "endChar": 50
+      },
+      "revId": "e39e21872e3e804899dbc061882952f892bc0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
