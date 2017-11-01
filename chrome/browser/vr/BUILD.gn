@@ -172,6 +172,8 @@ static_library("vr_common") {
   ]
 }
 
+# TODO(bsheedy): Split out UI pixel tests so we only run the necessary tests
+# through the Gold Python wrapper
 test("vr_common_unittests") {
   sources = [
     "animation_player_unittest.cc",
@@ -230,6 +232,14 @@ test("vr_common_unittests") {
     "//ui/gfx:test_support",
     "//ui/gfx/geometry",
     "//ui/gl",
+  ]
+
+  # Needed for isolate script to execute
+  data = [
+    "//testing/scripts/common.py",
+    "//testing/xvfb.py",
+    "//testing/scripts/run_gold_test.py",
+    "//tools/perf/generate_legacy_perf_dashboard_json.py",
   ]
 
   if (is_android) {
