@@ -89,6 +89,25 @@
       "revId": "9ce4621e6aeed6b2665bb470af3917e8785773f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df34e66_e693775a",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-01T22:32:43Z",
+      "side": 1,
+      "message": "Sure, it makes sense, and I don\u0027t want to push back too hard on this because I know it\u0027s technically OK to use RunUntilIdle in this case with the state of the world as it is, and I see why this is annoying to change.\n\nI think the point remains true though that there is really no way to ever guarantee that \"run the message loop to completion\" is sufficient unless you\u0027re sure that all async work in the test environment goes through the same scheduler in the same process. (Of course, again, we know that\u0027s true in this case at the moment). So I try to discourage it but it\u0027s an understandable compromise. :)",
+      "parentUuid": "8c513942_b8166ea7",
+      "tag": "mailMessageId\u003d\u003cCA+apAgEkZRHsunuvFdRNBxXrcXZB7O+_NRgz-S8SzxCwFb-npA@mail.gmail.com\u003e",
+      "revId": "9ce4621e6aeed6b2665bb470af3917e8785773f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
