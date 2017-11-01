@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "b08fe9f2_68b4e4eb",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/HostBrowserLauncher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-01T21:16:00Z",
+      "side": 1,
+      "message": "I think we only need either |mParentActivity| or |mContext|, perhaps just keep |mContext|?",
+      "range": {
+        "startLine": 48,
+        "startChar": 20,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "69e1ab0431c28eefc7b0716ff6bb70dd80a3f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b2f9f75_7698c221",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ShareActivity0.java",
         "patchSetId": 4
@@ -133,6 +156,29 @@
         "startChar": 0,
         "endLine": 24,
         "endChar": 1
+      },
+      "revId": "69e1ab0431c28eefc7b0716ff6bb70dd80a3f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b96ee8_1d2e82d8",
+        "filename": "chrome/android/webapk/shell_apk/unbound_manifest_config.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-01T21:16:00Z",
+      "side": 1,
+      "message": "Nit: Maybe renaming to \"Share All\" \u0026 \"Share Title\"? I am open to any meaningful naming:)",
+      "range": {
+        "startLine": 25,
+        "startChar": 19,
+        "endLine": 25,
+        "endChar": 27
       },
       "revId": "69e1ab0431c28eefc7b0716ff6bb70dd80a3f4e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
