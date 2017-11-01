@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7869b669_2d15a69a",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-01T18:19:30Z",
+      "side": 1,
+      "message": "We can transpose work_area_bounds and location_in_screen here to make it both use x() to compare. But since the logic between line 627-628 and 635-636 is actually opposite, I will keep it at is. Thanks.",
+      "parentUuid": "0c8e3980_774eaac8",
+      "revId": "65b272e30210ff1638b382f9a7e3da5da9c23a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae41e522_901d8f2f",
         "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f7a733a8_7f9520de",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-01T18:19:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae41e522_901d8f2f",
+      "revId": "65b272e30210ff1638b382f9a7e3da5da9c23a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc00d325_17f65adf",
         "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "65b272e30210ff1638b382f9a7e3da5da9c23a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d197f683_3fc23707",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-01T18:19:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc00d325_17f65adf",
+      "revId": "65b272e30210ff1638b382f9a7e3da5da9c23a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
