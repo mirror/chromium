@@ -4,6 +4,7 @@ include_rules = [
   "+components/policy",
   "+components/signin/core/browser/android",
   "+components/spellcheck/browser",
+  "-content/public/test",
   "+jni",
   "+media/base/android/java",
 ]
