@@ -52,6 +52,24 @@
       "revId": "dc2b62e9b9ac0db34891ea4675c9010daf3d0862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26de50d_5604a5e3",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-01T20:39:57Z",
+      "side": 1,
+      "message": "I could have sworn there was a prohibition on using auto as a lambda function parameter type but I can\u0027t find it documented anywhere. I think that using auto* in this case is reasonable since it is comparable to the following which is allowed:\n\nfor (auto* observer : observers_)\n  observer-\u003eOnShelfItemAdded(index, item);",
+      "parentUuid": "301c0fd2_25247e8f",
+      "revId": "dc2b62e9b9ac0db34891ea4675c9010daf3d0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
