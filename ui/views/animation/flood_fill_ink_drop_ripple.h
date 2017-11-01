@@ -70,6 +70,13 @@ class VIEWS_EXPORT FloodFillInkDropRipple : public InkDropRipple {
   void SnapToActivated() override;
   ui::Layer* GetRootLayer() override;
 
+  void set_use_trasform_duration_for_hide_fade_out(bool value) {
+    use_transform_duration_for_hide_fade_out_ = value;
+  }
+  void set_duration_factor(float duration_factor) {
+    duration_factor_ = duration_factor;
+  }
+
  private:
   friend class test::FloodFillInkDropRippleTestApi;
 
@@ -137,6 +144,13 @@ class VIEWS_EXPORT FloodFillInkDropRipple : public InkDropRipple {
 
   // Ink drop opacity when it is visible.
   float visible_opacity_;
+
+  // Whether the fade out animation duration to hidden state should have the
+  // same duration as the associated scale transform animation.
+  bool use_transform_duration_for_hide_fade_out_;
+
+  // The factor used to scale down/up animation duration.
+  float duration_factor_;
 
   // The root layer that parents the animating layer. The root layer is used to
   // manipulate opacity and clipping bounds, and it child is used to manipulate
