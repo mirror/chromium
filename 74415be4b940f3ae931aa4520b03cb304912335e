@@ -16,6 +16,24 @@
       "revId": "74415be4b940f3ae931aa4520b03cb304912335e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f2e823_16d649a8",
+        "filename": "base/allocator/partition_allocator/spin_lock.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1155482
+      },
+      "writtenOn": "2017-11-01T21:41:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b0db84c_7286f53e",
+      "revId": "74415be4b940f3ae931aa4520b03cb304912335e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
