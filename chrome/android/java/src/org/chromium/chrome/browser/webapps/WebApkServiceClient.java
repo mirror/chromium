@@ -31,10 +31,14 @@ public class WebApkServiceClient {
 
         @Override
         public void onConnected(IBinder api) {
-            if (api == null) return;
+            if (api == null) {
+                WebApkUma.recordBindToWebApkServiceStatus(false);
+                return;
+            }
 
             try {
                 useApi(IWebApkApi.Stub.asInterface(api));
+                WebApkUma.recordBindToWebApkServiceStatus(true);
             } catch (RemoteException e) {
                 Log.w(TAG, "WebApkAPI use failed.", e);
             }

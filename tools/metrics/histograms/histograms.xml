@@ -91641,6 +91641,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WebApk.WebApkService.BindStatus" enum="BooleanSuccess">
+  <owner>hanxi@chromium.org</owner>
+  <owner>pkotwicz@chromium.org</owner>
+  <owner>yfriedman@chromium.org</owner>
+  <summary>Records whether Chrome can bind to the WebAPK service.</summary>
+</histogram>
+
 <histogram name="Webapp.Install.DisplayMode" enum="WebAppDisplayMode">
   <owner>piotrs@chromium.org</owner>
   <summary>

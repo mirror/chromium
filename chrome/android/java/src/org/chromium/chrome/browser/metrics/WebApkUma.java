@@ -162,6 +162,11 @@ public class WebApkUma {
                 TimeUnit.HOURS.toMillis(1), TimeUnit.DAYS.toMillis(30), TimeUnit.MILLISECONDS, 50);
     }
 
+    /** Records whether Chrome could bind to the WebAPK service. */
+    public static void recordBindToWebApkServiceStatus(boolean bindStatus) {
+        RecordHistogram.recordBooleanHistogram("WebApk.WebApkService.BindStatus", bindStatus);
+    }
+
     /**
      * Log necessary disk usage and cache size UMAs when WebAPK installation fails.
      */
