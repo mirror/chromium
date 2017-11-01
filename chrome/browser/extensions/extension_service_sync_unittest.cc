@@ -94,6 +94,7 @@ const char good_crx[] = "ldnnhddmnhbkjipkidpdiheffobcpfmf";
 const char page_action[] = "obcimlgaoabeegjmmpldobjndiealpln";
 const char permissions_increase[] = "pgdpcfcocojkjfbgpiianjngphoopgmo";
 const char theme2_crx[] = "pjpgmfcmabopnnfonnhmdjglfpjjfkbf";
+const char zip_unpacker[] = "oedeeodfidgoollimchfdnbmhcpnklnd";
 
 ExtensionSyncData GetDisableSyncData(const Extension& extension,
                                      int disable_reasons) {
@@ -252,6 +253,15 @@ class ExtensionServiceSyncTest
         .AppendASCII("1.0.0.0");
   }
 
+  // Paths to fake zip unpacker extension
+  base::FilePath fake_zip_unpacker_path() {
+    return data_dir()
+        .AppendASCII("fake_zip_unpacker")
+        .AppendASCII("Extensions")
+        .AppendASCII(zip_unpacker)
+        .AppendASCII("0.76.1.0");
+  }
+  
   ExtensionSyncService* extension_sync_service() {
     return ExtensionSyncService::Get(profile());
   }
@@ -379,6 +389,52 @@ TEST_F(ExtensionServiceSyncTest, DisableExtensionFromSync) {
   extension_sync_service()->ProcessSyncChanges(FROM_HERE, list);
 
   ASSERT_FALSE(service()->IsExtensionEnabled(good0));
+}
+
+TEST_F(ExtensionServiceSyncTest, DoNotDisableZipUnpackerExtensionFromSync) {
+  // Start the extensions service with one external extension already installed.
+  base::FilePath source_install_dir =
+      data_dir().AppendASCII("fake_zip_unpacker").AppendASCII("Extensions");
+  base::FilePath pref_path =
+      source_install_dir.DirName().Append(chrome::kPreferencesFilename);
+
+  InitializeInstalledExtensionService(pref_path, source_install_dir);
+
+  // Install a component extension.
+  std::string manifest;
+  ASSERT_TRUE(base::ReadFileToString(
+      fake_zip_unpacker_path().Append(extensions::kManifestFilename), &manifest)); 
+  service()->component_loader()->Add(manifest, fake_zip_unpacker_path());
+  ASSERT_FALSE(service()->is_ready());
+  service()->Init();
+  ASSERT_TRUE(service()->is_ready());
+  ASSERT_EQ(1u, loaded_.size());
+  
+  // The user has enabled sync.
+  browser_sync::ProfileSyncService* sync_service =
+      ProfileSyncServiceFactory::GetForProfile(profile());
+  sync_service->SetFirstSetupComplete();
+
+  // We start enabled.
+  const Extension* extension = service()->GetExtensionById(zip_unpacker, true);
+  ASSERT_TRUE(extension);
+  ASSERT_TRUE(service()->IsExtensionEnabled(zip_unpacker));
+
+  // Sync starts up.
+  extension_sync_service()->MergeDataAndStartSyncing(
+      syncer::EXTENSIONS, syncer::SyncDataList(),
+      base::MakeUnique<syncer::FakeSyncChangeProcessor>(),
+      base::MakeUnique<syncer::SyncErrorFactoryMock>());
+
+  // Then sync data arrives telling us to disable Zip Unpacker.
+  ExtensionSyncData disable_zip_unpacker(
+      *extension, false, extensions::disable_reason::DISABLE_USER_ACTION, false,
+      false, ExtensionSyncData::BOOLEAN_UNSET, false);
+  SyncChangeList list(
+      1, disable_zip_unpacker.GetSyncChange(SyncChange::ACTION_UPDATE));
+  extension_sync_service()->ProcessSyncChanges(FROM_HERE, list);
+
+  ASSERT_TRUE(service()->IsExtensionEnabled(zip_unpacker));
 }
 
 // Test that sync can enable and disable installed extensions.

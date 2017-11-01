@@ -1,0 +1,18 @@
+{
+  "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDuUZGKCDbff6IRaxa4Pue7PPkxwPaNhGT3JEqppEsNWFjM80imEdqMbf3lrWqEfaHgaNku7nlpwPO1mu3/4Hr+XdNa5MhfnOnuPee4hyTLwOs3Vzz81wpbdzUxZSi2OmqMyI5oTaBYICfNHLwcuc65N5dbt6WKGeKgTpp4v7j7zwIDAQAB",
+  "version": "0.76.1.0",
+  "manifest_version": 2,
+  "name": "fake zip unpacker",
+  "description": "",
+  "default_locale": "en_US",
+  "background": {
+	  "page": "backgroundpage.html"
+  },
+  "permissions": ["tabs", "http://*.google.com/*", "https://*.google.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["file://*", "http://*.google.com/*", "https://*.google.com/*"],
+      "js": ["script1.js"]
+    }
+  ]
+}

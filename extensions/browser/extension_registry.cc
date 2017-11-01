@@ -16,6 +16,10 @@ ExtensionRegistry::~ExtensionRegistry() {}
 
 // static
 ExtensionRegistry* ExtensionRegistry::Get(content::BrowserContext* context) {
+  const ExtensionRegistry* z = ExtensionRegistryFactory::GetForBrowserContext(context);
+  LOG(ERROR) << "created ";
+  z->enabled_extensions_.GetIDs();
+  z->disabled_extensions_.GetIDs();
   return ExtensionRegistryFactory::GetForBrowserContext(context);
 }
 
