@@ -22,6 +22,30 @@
       "revId": "542bf9f036c81c851cdccb3e465f675bcfb3dacc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9dfaa6_b9da2cf0",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1784,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T16:13:52Z",
+      "side": 1,
+      "message": "Because of the \u0027if\u0027 on line 1778 we know that !GuestMode::IsCrossProcessFrameGuest(this) is true.",
+      "parentUuid": "301cd210_5f099ad8",
+      "range": {
+        "startLine": 1784,
+        "startChar": 8,
+        "endLine": 1784,
+        "endChar": 29
+      },
+      "revId": "542bf9f036c81c851cdccb3e465f675bcfb3dacc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
