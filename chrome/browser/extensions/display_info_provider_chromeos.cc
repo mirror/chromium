@@ -23,6 +23,7 @@
 #include "ui/display/display_layout_builder.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/types/display_constants.h"
+#include "ui/display/unified_desktop_utils.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
 
@@ -40,7 +41,13 @@ display::Display GetDisplay(const std::string& display_id_str) {
   int64_t display_id;
   if (!base::StringToInt64(display_id_str, &display_id))
     return display::Display();
-  return ash::Shell::Get()->display_manager()->GetDisplayForId(display_id);
+  const auto* display_manager = ash::Shell::Get()->display_manager();
+  if (display_manager->IsInUnifiedMode() &&
+      display_id != display::DisplayManager::kUnifiedDisplayId) {
+    return display_manager->GetMirroringDisplayById(display_id);
+  }
+
+  return display_manager->GetDisplayForId(display_id);
 }
 
 // Checks if the given integer value is valid display rotation in degrees.
@@ -566,6 +573,7 @@ bool DisplayInfoProviderChromeOS::SetDisplayLayout(
 
   bool have_root = false;
   builder.ClearPlacements();
+  std::set<int64_t> placement_ids;
   for (const system_display::DisplayLayout& layout : layouts) {
     display::Display display = GetDisplay(layout.id);
     if (display.id() == display::kInvalidDisplayId) {
@@ -575,18 +583,45 @@ bool DisplayInfoProviderChromeOS::SetDisplayLayout(
     display::Display parent = GetDisplay(layout.parent_id);
     if (parent.id() == display::kInvalidDisplayId) {
       if (have_root) {
-        LOG(ERROR) << "Invalid layout: multople roots.";
+        LOG(ERROR) << "Invalid layout: multiple roots.";
         return false;
       }
       have_root = true;
       continue;  // No placement for root (primary) display.
     }
+
+    placement_ids.emplace(display.id());
     display::DisplayPlacement::Position position =
         GetDisplayPlacementPosition(layout.position);
     builder.AddDisplayPlacement(display.id(), parent.id(), position,
                                 layout.offset);
   }
   std::unique_ptr<display::DisplayLayout> layout = builder.Build();
+
+  if (display_manager->IsInUnifiedMode()) {
+    const display::DisplayIdList ids_list =
+        display_manager->GetCurrentDisplayIdList();
+    for (const auto& id : ids_list) {
+      // The primary ID is of that display which has no placement.
+      if (placement_ids.count(id) == 0) {
+        layout->primary_id = id;
+        break;
+      }
+    }
+
+    display::UnifiedDesktopLayoutMatrix matrix;
+    if (!display::BuildUnifiedDesktopMatrix(
+            display_manager->GetCurrentDisplayIdList(), *layout, &matrix)) {
+      LOG(ERROR) << "Invalid unified layout: No proper conversion to a matrix";
+      return false;
+    }
+
+    ash::Shell::Get()
+        ->display_configuration_controller()
+        ->SetUnifiedDesktopLayoutMatrix(matrix);
+    return true;
+  }
+
   if (!display::DisplayLayout::Validate(
           display_manager->GetCurrentDisplayIdList(), *layout)) {
     LOG(ERROR) << "Invalid layout: Validate failed.";
@@ -679,8 +714,8 @@ DisplayInfoProviderChromeOS::GetAllDisplaysInfo(bool single_unified) {
   } else {
     displays = display_manager->software_mirroring_display_list();
     CHECK_GT(displays.size(), 0u);
-    // Use first display as primary.
-    primary_id = displays[0].id();
+    primary_id =
+        display_manager->GetPrimaryMirroringDisplayForUnifiedDesktop()->id();
   }
 
   for (const display::Display& display : displays) {
