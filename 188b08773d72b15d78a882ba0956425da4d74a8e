@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33d9d2bb_03c9b698",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-01T22:16:40Z",
+      "side": 1,
+      "message": "Why is this public now?",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "188b08773d72b15d78a882ba0956425da4d74a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9156002_9c12467d",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-01T22:16:40Z",
+      "side": 1,
+      "message": "Update comment. It can probably be a lot more terse since now the enum names are pretty self-explanatory.",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 8
+      },
+      "revId": "188b08773d72b15d78a882ba0956425da4d74a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33814f69_415d73ce",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-01T22:16:40Z",
+      "side": 1,
+      "message": "optional: I think whichever caller is passing true here should just call SetObscured(false) themselves.",
+      "range": {
+        "startLine": 182,
+        "startChar": 43,
+        "endLine": 182,
+        "endChar": 48
+      },
+      "revId": "188b08773d72b15d78a882ba0956425da4d74a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fd309c_cb27af06",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-01T22:16:40Z",
+      "side": 1,
+      "message": "Add class-level comment, i.e. what does this dialog do?",
+      "revId": "188b08773d72b15d78a882ba0956425da4d74a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df000f0_0fdfe4d4",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-01T22:16:40Z",
+      "side": 1,
+      "message": "I think a good name would be \"ManagePasswordsView\" or \"ManagePasswordsBubble.\" It\u0027ll be a bit confusing with ManagePasswordsBubbleView until you\u0027re done dismantling that, but I think that\u0027s okay.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 25
+      },
+      "revId": "188b08773d72b15d78a882ba0956425da4d74a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
