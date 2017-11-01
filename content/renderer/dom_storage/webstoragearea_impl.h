@@ -32,10 +32,13 @@ class WebStorageAreaImpl : public blink::WebStorageArea {
   void SetItem(const blink::WebString& key,
                const blink::WebString& value,
                const blink::WebURL& page_url,
-               WebStorageArea::Result& result) override;
+               WebStorageArea::Result& result,
+               blink::ScopedVirtualTimePauser virtual_time_pauser) override;
   void RemoveItem(const blink::WebString& key,
-                  const blink::WebURL& page_url) override;
-  void Clear(const blink::WebURL& url) override;
+                  const blink::WebURL& page_url,
+                  blink::ScopedVirtualTimePauser virtual_time_pauser) override;
+  void Clear(const blink::WebURL& url,
+             blink::ScopedVirtualTimePauser virtual_time_pauser) override;
 
  private:
   int connection_id_;

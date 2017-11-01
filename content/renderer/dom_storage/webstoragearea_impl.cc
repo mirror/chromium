@@ -59,24 +59,31 @@ WebString WebStorageAreaImpl::GetItem(const WebString& key) {
       cached_area_->GetItem(connection_id_, key.Utf16()));
 }
 
-void WebStorageAreaImpl::SetItem(const WebString& key,
-                                 const WebString& value,
-                                 const WebURL& page_url,
-                                 WebStorageArea::Result& result) {
+void WebStorageAreaImpl::SetItem(
+    const WebString& key,
+    const WebString& value,
+    const WebURL& page_url,
+    WebStorageArea::Result& result,
+    blink::ScopedVirtualTimePauser virtual_time_pauser) {
   if (!cached_area_->SetItem(connection_id_, key.Utf16(), value.Utf16(),
-                             page_url))
+                             page_url, std::move(virtual_time_pauser)))
     result = kResultBlockedByQuota;
   else
     result = kResultOK;
 }
 
-void WebStorageAreaImpl::RemoveItem(const WebString& key,
-                                    const WebURL& page_url) {
-  cached_area_->RemoveItem(connection_id_, key.Utf16(), page_url);
+void WebStorageAreaImpl::RemoveItem(
+    const WebString& key,
+    const WebURL& page_url,
+    blink::ScopedVirtualTimePauser virtual_time_pauser) {
+  cached_area_->RemoveItem(connection_id_, key.Utf16(), page_url,
+                           std::move(virtual_time_pauser));
 }
 
-void WebStorageAreaImpl::Clear(const WebURL& page_url) {
-  cached_area_->Clear(connection_id_, page_url);
+void WebStorageAreaImpl::Clear(
+    const WebURL& page_url,
+    blink::ScopedVirtualTimePauser virtual_time_pauser) {
+  cached_area_->Clear(connection_id_, page_url, std::move(virtual_time_pauser));
 }
 
 }  // namespace content

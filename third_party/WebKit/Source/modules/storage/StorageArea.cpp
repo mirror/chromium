@@ -26,6 +26,7 @@
 
 #include "modules/storage/StorageArea.h"
 
+#include <memory>
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
@@ -38,11 +39,11 @@
 #include "modules/storage/StorageEvent.h"
 #include "modules/storage/StorageNamespace.h"
 #include "modules/storage/StorageNamespaceController.h"
+#include "platform/WebFrameScheduler.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/WebStorageArea.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
-#include <memory>
 
 namespace blink {
 
@@ -102,7 +103,9 @@ void StorageArea::SetItem(const String& key,
     return;
   }
   WebStorageArea::Result result = WebStorageArea::kResultOK;
-  storage_area_->SetItem(key, value, frame->GetDocument()->Url(), result);
+  storage_area_->SetItem(
+      key, value, frame->GetDocument()->Url(), result,
+      frame->FrameScheduler()->CreateScopedVirtualTimePauser());
   if (result != WebStorageArea::kResultOK)
     exception_state.ThrowDOMException(
         kQuotaExceededError,
@@ -116,7 +119,9 @@ void StorageArea::RemoveItem(const String& key,
     exception_state.ThrowSecurityError("access is denied for this document.");
     return;
   }
-  storage_area_->RemoveItem(key, frame->GetDocument()->Url());
+  storage_area_->RemoveItem(
+      key, frame->GetDocument()->Url(),
+      frame->FrameScheduler()->CreateScopedVirtualTimePauser());
 }
 
 void StorageArea::Clear(ExceptionState& exception_state, LocalFrame* frame) {
@@ -124,7 +129,9 @@ void StorageArea::Clear(ExceptionState& exception_state, LocalFrame* frame) {
     exception_state.ThrowSecurityError("access is denied for this document.");
     return;
   }
-  storage_area_->Clear(frame->GetDocument()->Url());
+  storage_area_->Clear(
+      frame->GetDocument()->Url(),
+      frame->FrameScheduler()->CreateScopedVirtualTimePauser());
 }
 
 bool StorageArea::Contains(const String& key,

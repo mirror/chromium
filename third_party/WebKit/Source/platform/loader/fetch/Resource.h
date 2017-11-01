@@ -27,7 +27,6 @@
 #include <memory>
 #include "platform/MemoryCoordinator.h"
 #include "platform/PlatformExport.h"
-#include "platform/ScopedVirtualTimePauser.h"
 #include "platform/SharedBuffer.h"
 #include "platform/Timer.h"
 #include "platform/WebTaskRunner.h"
@@ -50,6 +49,7 @@
 #include "platform/wtf/text/TextEncoding.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/CORSStatus.h"
+#include "public/platform/ScopedVirtualTimePauser.h"
 #include "public/platform/WebDataConsumerHandle.h"
 
 namespace blink {

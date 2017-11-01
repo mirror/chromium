@@ -174,11 +174,13 @@ TEST_F(DOMStorageCachedAreaTest, Basics) {
 
   const int kConnectionId = 1;
   EXPECT_EQ(0u, cached_area->GetLength(kConnectionId));
-  EXPECT_TRUE(cached_area->SetItem(kConnectionId, kKey, kValue, kPageUrl));
+  EXPECT_TRUE(cached_area->SetItem(kConnectionId, kKey, kValue, kPageUrl,
+                                   blink::ScopedVirtualTimePauser()));
   EXPECT_EQ(1u, cached_area->GetLength(kConnectionId));
   EXPECT_EQ(kKey, cached_area->GetKey(kConnectionId, 0).string());
   EXPECT_EQ(kValue, cached_area->GetItem(kConnectionId, kKey).string());
-  cached_area->RemoveItem(kConnectionId, kKey, kPageUrl);
+  cached_area->RemoveItem(kConnectionId, kKey, kPageUrl,
+                          blink::ScopedVirtualTimePauser());
   EXPECT_EQ(0u, cached_area->GetLength(kConnectionId));
 }
 
@@ -225,7 +227,8 @@ TEST_F(DOMStorageCachedAreaTest, Setters) {
   // SetItem, we expect a call to load followed by a call to set item
   // in the proxy.
   EXPECT_FALSE(IsPrimed(cached_area.get()));
-  EXPECT_TRUE(cached_area->SetItem(kConnectionId, kKey, kValue, kPageUrl));
+  EXPECT_TRUE(cached_area->SetItem(kConnectionId, kKey, kValue, kPageUrl,
+                                   blink::ScopedVirtualTimePauser()));
   EXPECT_TRUE(IsPrimed(cached_area.get()));
   EXPECT_TRUE(mock_proxy_->observed_load_area_);
   EXPECT_TRUE(mock_proxy_->observed_set_item_);
@@ -239,7 +242,7 @@ TEST_F(DOMStorageCachedAreaTest, Setters) {
   // there's no need to load the data prior to deleting it.
   ResetAll(cached_area.get());
   EXPECT_FALSE(IsPrimed(cached_area.get()));
-  cached_area->Clear(kConnectionId, kPageUrl);
+  cached_area->Clear(kConnectionId, kPageUrl, blink::ScopedVirtualTimePauser());
   EXPECT_TRUE(IsPrimed(cached_area.get()));
   EXPECT_TRUE(mock_proxy_->observed_clear_area_);
   EXPECT_EQ(kConnectionId, mock_proxy_->observed_connection_id_);
@@ -249,7 +252,8 @@ TEST_F(DOMStorageCachedAreaTest, Setters) {
   // RemoveItem with nothing to remove, expect just one call to load.
   ResetAll(cached_area.get());
   EXPECT_FALSE(IsPrimed(cached_area.get()));
-  cached_area->RemoveItem(kConnectionId, kKey, kPageUrl);
+  cached_area->RemoveItem(kConnectionId, kKey, kPageUrl,
+                          blink::ScopedVirtualTimePauser());
   EXPECT_TRUE(IsPrimed(cached_area.get()));
   EXPECT_TRUE(mock_proxy_->observed_load_area_);
   EXPECT_FALSE(mock_proxy_->observed_remove_item_);
@@ -262,7 +266,8 @@ TEST_F(DOMStorageCachedAreaTest, Setters) {
   mock_proxy_->load_area_return_values_[kKey] =
       base::NullableString16(kValue, false);
   EXPECT_FALSE(IsPrimed(cached_area.get()));
-  cached_area->RemoveItem(kConnectionId, kKey, kPageUrl);
+  cached_area->RemoveItem(kConnectionId, kKey, kPageUrl,
+                          blink::ScopedVirtualTimePauser());
   EXPECT_TRUE(IsPrimed(cached_area.get()));
   EXPECT_TRUE(mock_proxy_->observed_load_area_);
   EXPECT_TRUE(mock_proxy_->observed_remove_item_);
@@ -299,7 +304,7 @@ TEST_F(DOMStorageCachedAreaTest, MutationsAreIgnoredUntilClearCompletion) {
   const int kConnectionId = 4;
   scoped_refptr<DOMStorageCachedArea> cached_area =
       new DOMStorageCachedArea(kNamespaceId, kOrigin, mock_proxy_.get());
-  cached_area->Clear(kConnectionId, kPageUrl);
+  cached_area->Clear(kConnectionId, kPageUrl, blink::ScopedVirtualTimePauser());
   EXPECT_TRUE(IsIgnoringAllMutations(cached_area.get()));
   mock_proxy_->CompleteOnePendingCallback(true);
   EXPECT_FALSE(IsIgnoringAllMutations(cached_area.get()));
@@ -307,9 +312,9 @@ TEST_F(DOMStorageCachedAreaTest, MutationsAreIgnoredUntilClearCompletion) {
   // Verify that calling Clear twice works as expected, the first
   // completion callback should have been cancelled.
   ResetCacheOnly(cached_area.get());
-  cached_area->Clear(kConnectionId, kPageUrl);
+  cached_area->Clear(kConnectionId, kPageUrl, blink::ScopedVirtualTimePauser());
   EXPECT_TRUE(IsIgnoringAllMutations(cached_area.get()));
-  cached_area->Clear(kConnectionId, kPageUrl);
+  cached_area->Clear(kConnectionId, kPageUrl, blink::ScopedVirtualTimePauser());
   EXPECT_TRUE(IsIgnoringAllMutations(cached_area.get()));
   mock_proxy_->CompleteOnePendingCallback(true);
   EXPECT_TRUE(IsIgnoringAllMutations(cached_area.get()));
@@ -323,7 +328,8 @@ TEST_F(DOMStorageCachedAreaTest, KeyMutationsAreIgnoredUntilCompletion) {
       new DOMStorageCachedArea(kNamespaceId, kOrigin, mock_proxy_.get());
 
   // SetItem
-  EXPECT_TRUE(cached_area->SetItem(kConnectionId, kKey, kValue, kPageUrl));
+  EXPECT_TRUE(cached_area->SetItem(kConnectionId, kKey, kValue, kPageUrl,
+                                   blink::ScopedVirtualTimePauser()));
   mock_proxy_->CompleteOnePendingCallback(true);  // load completion
   EXPECT_FALSE(IsIgnoringAllMutations(cached_area.get()));
   EXPECT_TRUE(IsIgnoringKeyMutations(cached_area.get(), kKey));
@@ -334,14 +340,17 @@ TEST_F(DOMStorageCachedAreaTest, KeyMutationsAreIgnoredUntilCompletion) {
   EXPECT_FALSE(IsIgnoringKeyMutations(cached_area.get(), kKey));
 
   // RemoveItem
-  cached_area->RemoveItem(kConnectionId, kKey, kPageUrl);
+  cached_area->RemoveItem(kConnectionId, kKey, kPageUrl,
+                          blink::ScopedVirtualTimePauser());
   EXPECT_TRUE(IsIgnoringKeyMutations(cached_area.get(), kKey));
   mock_proxy_->CompleteOnePendingCallback(true);  // remove completion
   EXPECT_FALSE(IsIgnoringKeyMutations(cached_area.get(), kKey));
 
   // Multiple mutations to the same key.
-  EXPECT_TRUE(cached_area->SetItem(kConnectionId, kKey, kValue, kPageUrl));
-  cached_area->RemoveItem(kConnectionId, kKey, kPageUrl);
+  EXPECT_TRUE(cached_area->SetItem(kConnectionId, kKey, kValue, kPageUrl,
+                                   blink::ScopedVirtualTimePauser()));
+  cached_area->RemoveItem(kConnectionId, kKey, kPageUrl,
+                          blink::ScopedVirtualTimePauser());
   EXPECT_TRUE(IsIgnoringKeyMutations(cached_area.get(), kKey));
   mock_proxy_->CompleteOnePendingCallback(true);  // set completion
   EXPECT_TRUE(IsIgnoringKeyMutations(cached_area.get(), kKey));
@@ -349,7 +358,8 @@ TEST_F(DOMStorageCachedAreaTest, KeyMutationsAreIgnoredUntilCompletion) {
   EXPECT_FALSE(IsIgnoringKeyMutations(cached_area.get(), kKey));
 
   // A failed set item operation should Reset the cache.
-  EXPECT_TRUE(cached_area->SetItem(kConnectionId, kKey, kValue, kPageUrl));
+  EXPECT_TRUE(cached_area->SetItem(kConnectionId, kKey, kValue, kPageUrl,
+                                   blink::ScopedVirtualTimePauser()));
   EXPECT_TRUE(IsIgnoringKeyMutations(cached_area.get(), kKey));
   mock_proxy_->CompleteOnePendingCallback(false);
   EXPECT_FALSE(IsPrimed(cached_area.get()));

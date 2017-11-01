@@ -36,23 +36,31 @@ WebString LocalStorageArea::GetItem(const WebString& key) {
   return WebString::FromUTF16(cached_area_->GetItem(key.Utf16()));
 }
 
-void LocalStorageArea::SetItem(const WebString& key,
-                               const WebString& value,
-                               const WebURL& page_url,
-                               WebStorageArea::Result& result) {
-  if (!cached_area_->SetItem(key.Utf16(), value.Utf16(), page_url, id_))
+void LocalStorageArea::SetItem(
+    const WebString& key,
+    const WebString& value,
+    const WebURL& page_url,
+    WebStorageArea::Result& result,
+    blink::ScopedVirtualTimePauser virtual_time_pauser) {
+  if (!cached_area_->SetItem(key.Utf16(), value.Utf16(), page_url, id_,
+                             std::move(virtual_time_pauser)))
     result = kResultBlockedByQuota;
   else
     result = kResultOK;
 }
 
-void LocalStorageArea::RemoveItem(const WebString& key,
-                                  const WebURL& page_url) {
-  cached_area_->RemoveItem(key.Utf16(), page_url, id_);
+void LocalStorageArea::RemoveItem(
+    const WebString& key,
+    const WebURL& page_url,
+    blink::ScopedVirtualTimePauser virtual_time_pauser) {
+  cached_area_->RemoveItem(key.Utf16(), page_url, id_,
+                           std::move(virtual_time_pauser));
 }
 
-void LocalStorageArea::Clear(const WebURL& page_url) {
-  cached_area_->Clear(page_url, id_);
+void LocalStorageArea::Clear(
+    const WebURL& page_url,
+    blink::ScopedVirtualTimePauser virtual_time_pauser) {
+  cached_area_->Clear(page_url, id_, std::move(virtual_time_pauser));
 }
 
 }  // namespace content

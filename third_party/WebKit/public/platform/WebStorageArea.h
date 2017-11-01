@@ -31,6 +31,7 @@
 #ifndef WebStorageArea_h
 #define WebStorageArea_h
 
+#include "ScopedVirtualTimePauser.h"
 #include "WebCommon.h"
 #include "WebString.h"
 
@@ -66,21 +67,25 @@ class WebStorageArea {
   virtual void SetItem(const WebString& key,
                        const WebString& new_value,
                        const WebURL& page_url,
-                       Result& result) {
+                       Result& result,
+                       ScopedVirtualTimePauser virtual_time_pauser) {
     WebString unused;
     SetItem(key, new_value, page_url, result, unused);
   }
 
   // Remove the value associated with a particular key. |page_url| is the url
   // that should be used if a storage event fires.
-  virtual void RemoveItem(const WebString& key, const WebURL& page_url) {
+  virtual void RemoveItem(const WebString& key,
+                          const WebURL& page_url,
+                          ScopedVirtualTimePauser virtual_time_pauser) {
     WebString unused;
     RemoveItem(key, page_url, unused);
   }
 
   // Clear all key/value pairs. |page_url| is the url that should be used if a
   // storage event fires.
-  virtual void Clear(const WebURL& page_url) {
+  virtual void Clear(const WebURL& page_url,
+                     ScopedVirtualTimePauser virtual_time_pauser) {
     bool unused;
     Clear(page_url, unused);
   }
