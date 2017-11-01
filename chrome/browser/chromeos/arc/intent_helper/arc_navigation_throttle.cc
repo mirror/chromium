@@ -252,16 +252,15 @@ void ArcNavigationThrottle::OnAppCandidatesReceived(
     if (!instance) {
       close_reason = CloseReason::ERROR;
     } else {
-      if (!ArcIntentHelperBridge::IsIntentHelperPackage(package_name))
+      if (!ArcIntentHelperBridge::IsIntentHelperPackage(package_name)) {
         instance->HandleUrl(url.spec(), package_name);
 
-      // Make intent picker's icon visible if there are installed apps that can
-      // handle the current URL, this enables the user to still access ARC's
-      // apps even if they marked an app or Chrome as preferred before.
-      Browser* browser =
-          chrome::FindBrowserWithWebContents(handle->GetWebContents());
-      if (browser)
-        chrome::SetIntentPickerViewVisibility(browser, true);
+        // Close the current tab since a preferred/verified app is already
+        // handling the navigation.
+        content::WebContents* tab = handle->GetWebContents();
+        if (tab)
+          tab->Close();
+      }
     }
 
     Platform platform = GetDestinationPlatform(package_name, close_reason);
