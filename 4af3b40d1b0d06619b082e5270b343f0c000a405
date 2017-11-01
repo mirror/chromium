@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "473637c5_b4ca179f",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-01T19:36:44Z",
+      "side": 1,
+      "message": "This pretty sure this is not correct, you need the WeakPtr because this is not a thread you are shutting down / owned by this class. It\u0027s a task runner to a thread that belongs to the PostTask scheduler. It\u0027s possible that there are still tasks pending on the thread where destruction is occurring from the encoder.\n\nI.e., Encode(), ~VaapiJpegEncodeAccelerator(), will race with tasks coming back to the calling thread.",
+      "parentUuid": "7caf0454_c23d641d",
+      "revId": "4af3b40d1b0d06619b082e5270b343f0c000a405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5aa60e68_f29d2794",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
         "patchSetId": 18
