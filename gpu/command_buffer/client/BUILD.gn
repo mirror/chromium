@@ -59,11 +59,7 @@ source_set("client_sources") {
     "transfer_buffer.h",
   ]
 
-  configs += [
-    # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
-    "//build/config/compiler:no_size_t_to_int_warning",
-    "//gpu:gpu_implementation",
-  ]
+  configs += [ "//gpu:gpu_implementation" ]
 
   all_dependent_configs = [ "//third_party/khronos:khronos_headers" ]
 
@@ -87,11 +83,7 @@ source_set("gles2_cmd_helper_sources") {
     "gles2_cmd_helper_autogen.h",
   ]
 
-  configs += [
-    # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
-    "//build/config/compiler:no_size_t_to_int_warning",
-    "//gpu:gpu_implementation",
-  ]
+  configs += [ "//gpu:gpu_implementation" ]
 
   deps = [
     ":client_sources",
@@ -153,9 +145,6 @@ source_set("gles2_interface") {
 component("gles2_implementation") {
   sources = gles2_implementation_source_files
 
-  # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
-  configs += [ "//build/config/compiler:no_size_t_to_int_warning" ]
-
   defines = [ "GLES2_IMPL_IMPLEMENTATION" ]
   all_dependent_configs = [ "//third_party/khronos:khronos_headers" ]
 
@@ -180,9 +169,6 @@ component("gles2_implementation") {
 # Library emulates GLES2 using command_buffers.
 component("gles2_implementation_no_check") {
   sources = gles2_implementation_source_files
-
-  # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
-  configs += [ "//build/config/compiler:no_size_t_to_int_warning" ]
 
   defines = [
     "GLES2_IMPL_IMPLEMENTATION",
@@ -211,9 +197,6 @@ component("gles2_implementation_no_check") {
 component("gles2_c_lib") {
   sources = gles2_c_lib_source_files
   defines = [ "GLES2_C_LIB_IMPLEMENTATION" ]
-
-  # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
-  configs += [ "//build/config/compiler:no_size_t_to_int_warning" ]
 
   deps = [
     ":client",
