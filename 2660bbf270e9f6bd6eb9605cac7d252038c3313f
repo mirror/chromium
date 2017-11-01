@@ -260,6 +260,29 @@
     },
     {
       "key": {
+        "uuid": "cd5d411c_ef50d8a9",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-01T00:09:11Z",
+      "side": 1,
+      "message": "While we\u0027re here, this should be std::make_unique.",
+      "range": {
+        "startLine": 200,
+        "startChar": 6,
+        "endLine": 200,
+        "endChar": 22
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed200143_d371eede",
         "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
         "patchSetId": 27
@@ -307,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "8ae7c7b4_a849457e",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-01T00:09:11Z",
+      "side": 1,
+      "message": "I\u0027m a little confused here. Every test here creates a mock_feature_tracker_. This has the same effect of placing this variable in SetUp(). Each TEST_F gets a SetUp() and TearDown() call where everything is initialized and uninitialized.",
+      "parentUuid": "4ec9ebef_334f7d97",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 76
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de58947e_b1b5e9af",
         "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_factory.cc",
         "patchSetId": 27
@@ -351,6 +398,30 @@
       "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a49c89a9_ed111265",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_factory.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-01T00:09:11Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the SessionDurationUpdater just be registered once? If all the factories register it, then this pref will be registered multiple times.",
+      "parentUuid": "e835275c_fff97cf6",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -445,6 +516,30 @@
       "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c49c351c_7e8c5ee5",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-01T00:09:11Z",
+      "side": 1,
+      "message": "See IncognitoFeatureTrackerFactory\u0027s comment.",
+      "parentUuid": "388d98c6_cc391c8e",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
