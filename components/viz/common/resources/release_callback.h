@@ -13,8 +13,10 @@ struct SyncToken;
 
 namespace viz {
 
-typedef base::Callback<void(const gpu::SyncToken& sync_token, bool is_lost)>
-    ReleaseCallback;
+using ReleaseCallback =
+    base::Callback<void(const gpu::SyncToken& sync_token, bool is_lost)>;
+using OnceReleaseCallback =
+    base::OnceCallback<void(const gpu::SyncToken& sync_token, bool is_lost)>;
 
 }  // namespace viz
 
