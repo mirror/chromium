@@ -104,9 +104,8 @@ cr.define('extensions', function() {
      * @return {boolean}
      * @private
      */
-    computeErrorsHidden_: function() {
-      return !this.data.manifestErrors.length &&
-          !this.data.runtimeErrors.length;
+    shouldShowErrorsButton_: function() {
+      return this.data.manifestErrors.length || this.data.runtimeErrors.length;
     },
 
     /** @private */
