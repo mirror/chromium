@@ -741,8 +741,7 @@ void PpapiCdmAdapter::OnRejectPromise(uint32_t promise_id,
                                       uint32_t system_code,
                                       const char* error_message,
                                       uint32_t error_message_size) {
-  // UMA to investigate http://crbug.com/410630
-  // TODO(xhwang): Remove after bug is fixed.
+  // UMA to help track file related errors. See http://crbug.com/410630
   if (system_code == 0x27) {
     pp::UMAPrivate uma_interface(this);
     uma_interface.HistogramCustomCounts("Media.EME.CdmFileIO.FileSizeKBOnError",
