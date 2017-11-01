@@ -1892,43 +1892,42 @@ unsigned char overshoot_profile_data[] = {
     0x70, 0x00, 0x4d, 0x00, 0x6f, 0x00, 0x64, 0x00, 0x65, 0x00, 0x6c, 0x00,
     0x3e, 0x00, 0x0d, 0x00, 0x0a, 0x00, 0x00, 0x00};
 
-ICCProfile ICCProfileForTestingAdobeRGB() {
-  return ICCProfile::FromDataWithId(
+scoped_refptr<ICCProfile> ICCProfileForTestingAdobeRGB() {
+  return ICCProfile::FromData(
       reinterpret_cast<const char*>(adobe_rgb_profile_data),
-      arraysize(adobe_rgb_profile_data), ICCProfile::test_id_adobe_rgb_);
+      arraysize(adobe_rgb_profile_data));
 }
 
-ICCProfile ICCProfileForTestingGenericRGB() {
-  return ICCProfile::FromDataWithId(
+scoped_refptr<ICCProfile> ICCProfileForTestingGenericRGB() {
+  return ICCProfile::FromData(
       reinterpret_cast<const char*>(generic_rgb_profile_data),
-      arraysize(generic_rgb_profile_data), ICCProfile::test_id_generic_rgb_);
+      arraysize(generic_rgb_profile_data));
 }
 
-ICCProfile ICCProfileForTestingSRGB() {
-  return ICCProfile::FromDataWithId(
-      reinterpret_cast<const char*>(srgb_profile_data),
-      arraysize(srgb_profile_data), ICCProfile::test_id_srgb_);
+scoped_refptr<ICCProfile> ICCProfileForTestingSRGB() {
+  return ICCProfile::FromData(reinterpret_cast<const char*>(srgb_profile_data),
+                              arraysize(srgb_profile_data));
 }
 
-ICCProfile ICCProfileForTestingColorSpin() {
-  return ICCProfile::FromDataWithId(
+scoped_refptr<ICCProfile> ICCProfileForTestingColorSpin() {
+  return ICCProfile::FromData(
       reinterpret_cast<const char*>(colorspin_profile_data),
-      arraysize(colorspin_profile_data), ICCProfile::test_id_color_spin_);
+      arraysize(colorspin_profile_data));
 }
 
-ICCProfile ICCProfileForTestingNoAnalyticTrFn() {
+scoped_refptr<ICCProfile> ICCProfileForTestingNoAnalyticTrFn() {
   return ICCProfile::FromData(
       reinterpret_cast<const char*>(no_analytic_tr_fn_profile_data),
       arraysize(no_analytic_tr_fn_profile_data));
 }
 
-ICCProfile ICCProfileForTestingA2BOnly() {
+scoped_refptr<ICCProfile> ICCProfileForTestingA2BOnly() {
   return ICCProfile::FromData(
       reinterpret_cast<const char*>(a2b_only_profile_data),
       arraysize(a2b_only_profile_data));
 }
 
-ICCProfile ICCProfileForTestingOvershoot() {
+scoped_refptr<ICCProfile> ICCProfileForTestingOvershoot() {
   return ICCProfile::FromData(
       reinterpret_cast<const char*>(overshoot_profile_data),
       arraysize(overshoot_profile_data));
