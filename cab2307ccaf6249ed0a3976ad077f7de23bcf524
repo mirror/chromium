@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fbd75ce7_2d3f146a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-01T21:38:04Z",
+      "side": 1,
+      "message": "If you want to further isolate the logic, you could rename installHandler to installHandlerIfApplicable (or maybeInstallHandler) and have that internally check for the isolated process and only install the handler if it valid.",
+      "range": {
+        "startLine": 52,
+        "startChar": 37,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "cab2307ccaf6249ed0a3976ad077f7de23bcf524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49c30212_5334b7df",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
         "patchSetId": 5
