@@ -22,6 +22,30 @@
       "revId": "b61ee4a3bd160d3153418e8a407379c205700179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1ae727_eae090c8",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-01T21:07:28Z",
+      "side": 1,
+      "message": "You\u0027re right that based on the interface comments, GetBoundsForNode should be a superset of GetForegroundBoundsForNode... I don\u0027t really know why it isn\u0027t. I figured the prudent thing to do here was to restore the old functionality exactly, and it seems to work.",
+      "parentUuid": "c191c407_8780d533",
+      "range": {
+        "startLine": 744,
+        "startChar": 22,
+        "endLine": 744,
+        "endChar": 48
+      },
+      "revId": "b61ee4a3bd160d3153418e8a407379c205700179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
