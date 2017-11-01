@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4116a9d6_515b27ce",
+        "filename": "ui/base/resource/data_pack_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-01T16:49:54Z",
+      "side": 1,
+      "message": "Can we also expect this to use the same resource to verify the alias was used? i.e.\nbase::StringPiece data2;\npack.GetStringPiece(1, \u0026data);\npack.GetStringPiece(10, \u0026data2);\nEXPECT_EQ(data1.data(), data2.data());",
+      "revId": "e94c4d9ab3c918797118783d6a035d24bf4e0d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
