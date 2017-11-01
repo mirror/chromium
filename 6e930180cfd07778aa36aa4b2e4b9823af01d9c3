@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82b378b2_9bd20c07",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T18:40:55Z",
+      "side": 0,
+      "message": "I think we should keep UseRenderPass in the parent class, and just delegate the pieces we need. There\u0027s lots of non-resource-id-specific code in here. Instead maybe this can be like\n\n \nbool AllocateForRenderPassId(render_pass-\u003eid, size, ...);\nif (!allocated) {\n  if .... return false ...\n}\n\nif (BindFramebufferToRenderPass(render_pass-\u003eid)) {\n  InitializeViewport..\n}\n\nWhich changes any \"resource\" related lines to delegate to the subclass, and makes them about the renderpass id instead of the resource id?",
+      "revId": "6e930180cfd07778aa36aa4b2e4b9823af01d9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

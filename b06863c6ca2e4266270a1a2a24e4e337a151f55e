@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a2cbd40_2733d644",
+        "filename": "components/viz/service/display/direct_renderer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-01T18:40:55Z",
+      "side": 1,
+      "message": "The member var can be protected instead. ForTesting() methods can only be called from inside tests.",
+      "revId": "b06863c6ca2e4266270a1a2a24e4e337a151f55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
