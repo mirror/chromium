@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbc493ff_17f5ae9e",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T22:48:37Z",
+      "side": 1,
+      "message": "hm - I\u0027d always assumed this was a known-trait of deleting a View*, so don\u0027t bother mentioning it .. but I just looked for documentation about it, and the implementation of View::~View() is really all there is :/",
+      "revId": "7ec2cd1facfd7f397189223ed7846b6daecb89d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d9dc21_28ce8b20",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-01T22:48:37Z",
+      "side": 1,
+      "message": "nit: this `if` isn\u0027t necessary (`delete nullptr` is well-defined)",
+      "revId": "7ec2cd1facfd7f397189223ed7846b6daecb89d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
