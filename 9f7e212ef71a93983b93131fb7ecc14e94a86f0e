@@ -52,6 +52,24 @@
       "revId": "9f7e212ef71a93983b93131fb7ecc14e94a86f0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2bebc7_7c9d558f",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-01T00:55:00Z",
+      "side": 1,
+      "message": "Interesting. Prefs definitely need to be registered as foreign if you go the other way (expose as public in chrome/browser, then try to read from ash). But it sounds like I was wrong. So this code looks good.",
+      "parentUuid": "755c7873_e49c1f59",
+      "revId": "9f7e212ef71a93983b93131fb7ecc14e94a86f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
