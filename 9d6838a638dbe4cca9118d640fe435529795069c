@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdf6546d_5b06b238",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-01T05:22:05Z",
+      "side": 1,
+      "message": "Should this be using TimeTicks?  I believe that TimeTicks is generally preferred for measuring durations.",
+      "range": {
+        "startLine": 198,
+        "startChar": 28,
+        "endLine": 198,
+        "endChar": 32
+      },
+      "revId": "9d6838a638dbe4cca9118d640fe435529795069c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106c9e26_cc39a142",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-01T05:22:05Z",
+      "side": 1,
+      "message": "nit: UMA_HISTOGRAM_* macros expand to a fair bit of generated code, so it\u0027s best to create a small wrapper function for repeated invocations, e.g. something like RecordHomescreenDialogDuration(data_timeout_ms_);",
+      "range": {
+        "startLine": 202,
+        "startChar": 80,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "9d6838a638dbe4cca9118d640fe435529795069c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8a3429_d3db9504",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 91133,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-01T05:22:05Z",
+      "side": 1,
+      "message": "nit: Would \"Duration\" be a more appropriate name?  \"Timeout\" usually makes me think that some process failed because it exceeded a time limit, which doesn\u0027t seem to match the histogram description.",
+      "range": {
+        "startLine": 91133,
+        "startChar": 46,
+        "endLine": 91133,
+        "endChar": 53
+      },
+      "revId": "9d6838a638dbe4cca9118d640fe435529795069c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
