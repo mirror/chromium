@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "253ee21e_6e5d3567",
+        "filename": "third_party/WebKit/Source/core/css/cssom/ComputedStylePropertyMap.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-01T21:59:17Z",
+      "side": 1,
+      "message": "nit: I would change this TODO to something like: Pseudo-element support requires reintroducing Element.pseudo(...). See https://github.com/w3c/css-houdini-drafts/issues/350#issuecomment-294690156",
+      "revId": "9b925ef2441896584fd2fee472641048d7023e1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
