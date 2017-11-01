@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90282f60_f96c04f1",
+        "filename": "third_party/libprotobuf-mutator/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-11-01T20:14:01Z",
+      "side": 1,
+      "message": "Should this stuff be a generic config and live somewhere at \n//build/config/sanitizers/",
+      "revId": "5a5176156c0acefd8259c967ca7d7083e31830d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d6d6a5_653dfb98",
+        "filename": "third_party/libprotobuf-mutator/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-11-01T20:14:01Z",
+      "side": 1,
+      "message": "naming is to unnececary long\nthis config has nothing libprotobuf mutator specific\n\nso maybe something like which lives in //build/config/sanitizers/ ?\nconfig(\"no_fuzzing_config\") {\n  if (use_libfuzzer) {\n    cflags \u003d cflags_for_nontargeted_code\n  }\n}",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 54
+      },
+      "revId": "5a5176156c0acefd8259c967ca7d7083e31830d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8b156f_fd719d55",
+        "filename": "third_party/libprotobuf-mutator/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-11-01T20:14:01Z",
+      "side": 1,
+      "message": "Maybe just keep single config and do not make exception for asan?",
+      "revId": "5a5176156c0acefd8259c967ca7d7083e31830d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d185185b_46211cc6",
+        "filename": "third_party/protobuf/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-11-01T20:14:01Z",
+      "side": 1,
+      "message": "libprotobuf-mutator depends on protobuf\nSo it looks weird that we use config from there.\n\nAlso maybe \"nontargeted_config\" could be part of some fuzzing",
+      "revId": "5a5176156c0acefd8259c967ca7d7083e31830d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
