@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("handler_lib") {
+import("//testing/test.gni")
+
+static_library("handler") {
   sources = [
     "crash_report_upload_thread.cc",
     "crash_report_upload_thread.h",
@@ -37,6 +39,32 @@ static_library("handler_lib") {
   }
 }
 
+source_set("handler_test") {
+  testonly = true
+
+  if (is_win) {
+    deps = [
+      ":handler",
+      "../client",
+      "../compat",
+      "../test",
+      "../util",
+      "//base",
+      "//testing/gtest",
+    ]
+
+    data_deps = [
+      ":crashpad_handler_test_extended_handler",
+    ]
+
+    include_dirs = [ ".." ]
+
+    sources = [
+      "crashpad_handler_test.cc",
+    ]
+  }
+}
+
 executable("crashpad_handler") {
   sources = [
     "main.cc",
@@ -45,7 +73,7 @@ executable("crashpad_handler") {
   include_dirs = [ ".." ]
 
   deps = [
-    ":handler_lib",
+    ":handler",
     "../compat",
     "//base",
     "//build/win:default_exe_manifest",
@@ -61,7 +89,58 @@ executable("crashpad_handler") {
   }
 
   if (is_win) {
-    configs -= [ "//build/config/win:console" ]
-    configs += [ "//build/config/win:windowed" ]
+    configs -= [
+      "//build/config/win:console",
+    ]
+    configs += [
+      "//build/config/win:windowed",
+    ]
   }
+}
+
+executable("crashpad_handler_test_extended_handler") {
+  testonly = true
+
+  deps = [
+    ":handler",
+    "../compat",
+    "../minidump:minidump_test_lib",
+    "../tools:tool_support",
+    "//base",
+  ]
+
+  include_dirs = [ ".." ]
+
+  sources = [
+    "crashpad_handler_test_extended_handler.cc",
+  ]
+}
+
+if (is_win) {
+  executable("crashpad_handler_com") {
+    # Avoid .exp, .ilk, and .lib file collisions with crashpad_handler.exe by
+    # having this target produce crashpad_handler_com.com. Don’t use this target
+    # directly. Instead, use crashpad_handler_console.
+    output_extension = "com"
+
+    deps = [
+      ":handler",
+      "../compat",
+      "//base",
+      "//build/win:default_exe_manifest",
+    ]
+
+    include_dirs = [ ".." ]
+
+    sources = [
+      "main.cc",
+    ]
+  }
+
+  copy("crashpad_handler_console") {
+    deps = [ ":crashpad_handler_com" ]
+    sources = [ "$root_out_dir/crashpad_handler_com.com" ]
+    outputs = [ "$root_out_dir/crashpad_handler.com" ]
+  }
+
 }
