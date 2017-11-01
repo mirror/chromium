@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ed7bf065_7c661797",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-01T22:04:15Z",
+      "side": 1,
+      "message": "Yes, we need a separate GN target for each individual fuzz target.\n\nYou can do something like a foreach loop, if it makes sense, e.g.: https://cs.chromium.org/chromium/src/third_party/boringssl/BUILD.gn?l\u003d229\n\ngroup(\"fuzzers\") is needed only for discovering the fuzz targets landed with a new BUILD.gn file created, so it won\u0027t help here",
+      "parentUuid": "762bf3e7_4e681001",
+      "revId": "3953f2623ea621241f9d77fc8f451ea3477b957e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f54cd1c7_e00c95c4",
         "filename": "third_party/zlib/contrib/tests/fuzzers/inflate_fuzzer.cc",
         "patchSetId": 2
