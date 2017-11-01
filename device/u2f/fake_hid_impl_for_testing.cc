@@ -89,7 +89,7 @@ void FakeHidManager::Connect(const std::string& device_guid,
 
 void FakeHidManager::AddDevice(device::mojom::HidDeviceInfoPtr device) {
   device::mojom::HidDeviceInfo* device_info = device.get();
-  clients_.ForAllPtrs([device_info](device::mojom::HidManagerClient* client) {
+  clients_.ForAllPtrs([device_info](auto* client) {
     client->DeviceAdded(device_info->Clone());
   });
 
@@ -102,7 +102,7 @@ void FakeHidManager::RemoveDevice(const std::string device_guid) {
     return;
 
   device::mojom::HidDeviceInfo* device_info = it->second.get();
-  clients_.ForAllPtrs([device_info](device::mojom::HidManagerClient* client) {
+  clients_.ForAllPtrs([device_info](auto* client) {
     client->DeviceRemoved(device_info->Clone());
   });
   devices_.erase(it);

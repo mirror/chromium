@@ -12,10 +12,8 @@
 
 namespace resource_coordinator {
 
-#define DISPATCH_TAB_SIGNAL(observers, METHOD, ...)              \
-  observers.ForAllPtrs([&](mojom::TabSignalObserver* observer) { \
-    observer->METHOD(__VA_ARGS__);                               \
-  });
+#define DISPATCH_TAB_SIGNAL(observers, METHOD, ...) \
+  observers.ForAllPtrs([&](auto* observer) { observer->METHOD(__VA_ARGS__); });
 
 TabSignalGeneratorImpl::TabSignalGeneratorImpl() = default;
 
