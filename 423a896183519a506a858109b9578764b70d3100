@@ -34,6 +34,24 @@
       "revId": "423a896183519a506a858109b9578764b70d3100",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c9ea6f_9c32b109",
+        "filename": "content/public/test/test_download_http_response.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-01T23:46:06Z",
+      "side": 1,
+      "message": "Ah, i didn\u0027t see the content/.../download_browsertest.cc file earlier.\nYes, that would be cool. However, there is a special -1 offset case, so you need to handle that separately.\nThis could be another CL as that will touch a lot of tests.",
+      "parentUuid": "b87439eb_c0b56a52",
+      "revId": "423a896183519a506a858109b9578764b70d3100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
