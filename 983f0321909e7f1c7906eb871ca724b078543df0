@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55ab4b7d_0ca4b886",
+        "filename": "ash/public/cpp/window_properties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-01T00:47:05Z",
+      "side": 1,
+      "message": "nit: Sort this one too, like you did in the .cc",
+      "revId": "983f0321909e7f1c7906eb871ca724b078543df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719c51c2_ab8cf5be",
+        "filename": "ash/wm/toplevel_window_event_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-01T00:47:05Z",
+      "side": 1,
+      "message": "nit: position_managed or similar",
+      "revId": "983f0321909e7f1c7906eb871ca724b078543df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
