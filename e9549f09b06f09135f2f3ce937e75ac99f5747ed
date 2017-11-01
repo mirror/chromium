@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17d63a5f_a287e7de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-01T05:36:22Z",
+      "side": 1,
+      "message": "CdmFileImpl to be precise since we have two sides of \"CdmFile\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "e9549f09b06f09135f2f3ce937e75ac99f5747ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a28928_e9f08a05",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-01T05:36:22Z",
+      "side": 1,
+      "message": "Here and everywhere else. Mb is for MegaBits while MB is for MegaBytes.",
+      "range": {
+        "startLine": 7,
+        "startChar": 50,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "e9549f09b06f09135f2f3ce937e75ac99f5747ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a502b596_497ac28d",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-01T05:36:22Z",
+      "side": 1,
+      "message": "nit: will temp_file_url / file_url be more readable? e.g. on line 380, it\u0027s a bit odd that we \"delete the src file\".",
+      "range": {
+        "startLine": 367,
+        "startChar": 25,
+        "endLine": 367,
+        "endChar": 37
+      },
+      "revId": "e9549f09b06f09135f2f3ce937e75ac99f5747ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56901c61_f43c9dad",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-01T05:36:22Z",
+      "side": 1,
+      "message": "nit: Move this down to line 384.",
+      "revId": "e9549f09b06f09135f2f3ce937e75ac99f5747ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471e44fc_552966d0",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-01T05:36:22Z",
+      "side": 1,
+      "message": "nit: is it possible to store a storage::AsyncFileUtil* file_util_ member in the class instead of creating one every time? We have this same code in 3 places. Similar for the OperationContext...",
+      "range": {
+        "startLine": 369,
+        "startChar": 2,
+        "endLine": 370,
+        "endChar": 45
+      },
+      "revId": "e9549f09b06f09135f2f3ce937e75ac99f5747ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf69bf36_649d8232",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-01T05:36:22Z",
+      "side": 1,
+      "message": "per comments in the previous CL, having more explicit states would probably be easier to read; or at least makes it easy to track what operation |pending_open_callback_| is for, e.g. kInitializing, kFileOpened, kOpeningTempFile, kTempFileOpened, kCommittingWrite... Then we can convert LockState to two boolean (is_file_locked_ and is_temp_file_locked_), and we should be able to DCHECK each boolean in a particular state.\n\nThis should be in a different CL though. WDYT?",
+      "revId": "e9549f09b06f09135f2f3ce937e75ac99f5747ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8077c0_1ac72c16",
+        "filename": "content/browser/media/cdm_file_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-01T05:36:22Z",
+      "side": 1,
+      "message": "Maybe FILE_ERROR_SECURITY? But to be honest, I don\u0027t think we should get into these kind of details. We probably should just return a base::File() for all error cases. The client side won\u0027t check these errors anyways.",
+      "range": {
+        "startLine": 405,
+        "startChar": 34,
+        "endLine": 405,
+        "endChar": 53
+      },
+      "revId": "e9549f09b06f09135f2f3ce937e75ac99f5747ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba01b5f8_17fa9a50",
+        "filename": "content/browser/media/cdm_storage_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-01T05:36:22Z",
+      "side": 1,
+      "message": "nit: 34 * 1024 * 1024",
+      "range": {
+        "startLine": 351,
+        "startChar": 31,
+        "endLine": 351,
+        "endChar": 39
+      },
+      "revId": "e9549f09b06f09135f2f3ce937e75ac99f5747ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc678068_80eaedef",
+        "filename": "content/browser/media/cdm_storage_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-01T05:36:22Z",
+      "side": 1,
+      "message": "memcmp?",
+      "revId": "e9549f09b06f09135f2f3ce937e75ac99f5747ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
