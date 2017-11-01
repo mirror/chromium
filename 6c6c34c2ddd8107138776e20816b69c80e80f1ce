@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "100379c5_4bb09a65",
+        "filename": "ios/chrome/browser/translate/translate_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-01T15:55:38Z",
+      "side": 1,
+      "message": "Current formatting looks ugly. How about pulling the code to a method then? A method will also prevent code duplication.",
+      "parentUuid": "65b3d442_f4398df9",
+      "range": {
+        "startLine": 329,
+        "startChar": 8,
+        "endLine": 329,
+        "endChar": 34
+      },
+      "revId": "6c6c34c2ddd8107138776e20816b69c80e80f1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20a97faa_235fb4d9",
         "filename": "ios/chrome/browser/translate/translate_egtest.mm",
         "patchSetId": 7
