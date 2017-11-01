@@ -46,8 +46,8 @@ class BASE_EXPORT ProcessMemoryDump {
 
     MemoryAllocatorDumpGuid source;
     MemoryAllocatorDumpGuid target;
-    int importance;
-    bool overridable;
+    int importance = 0;
+    bool overridable = false;
   };
 
   // Maps allocator dumps absolute names (allocator_name/heap/subheap) to
@@ -164,6 +164,14 @@ class BASE_EXPORT ProcessMemoryDump {
                         int importance);
   void AddOwnershipEdge(const MemoryAllocatorDumpGuid& source,
                         const MemoryAllocatorDumpGuid& target);
+
+  // Adds or overrides an ownership edge with the semantics: if the edge is
+  // not present it will be added. If an edge is present, the edge will be
+  // overriden but its importance will not be updated unless |importance|
+  // is larger.
+  void AddOwnershipEdgeIfImportant(const MemoryAllocatorDumpGuid& source,
+                                   const MemoryAllocatorDumpGuid& target,
+                                   int importance);
 
   // Adds edges that can be overriden by a later or earlier call to
   // AddOwnershipEdge() with the same source and target with a different
