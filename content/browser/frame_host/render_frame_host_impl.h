@@ -857,8 +857,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
                        CreateNewWindowCallback callback) override;
   void IssueKeepAliveHandle(mojom::KeepAliveHandleRequest request) override;
   void DidCommitProvisionalLoad(
-      std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
-          validated_params) override;
+      mojom::DidCommitProvisionalLoadParamsPtr validated_params) override;
 
   // Registers Mojo interfaces that this frame host makes available.
   void RegisterMojoInterfaces();
@@ -981,7 +980,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Returns ownership of the NavigationHandle associated with a navigation that
   // just committed.
   std::unique_ptr<NavigationHandleImpl> TakeNavigationHandleForCommit(
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params);
+      const mojom::DidCommitProvisionalLoadParams& params);
 
   // Called by |beforeunload_timeout_| when the beforeunload timeout fires.
   void BeforeUnloadTimeout();

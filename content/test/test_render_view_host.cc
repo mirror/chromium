@@ -39,7 +39,7 @@
 
 namespace content {
 
-void InitNavigateParams(FrameHostMsg_DidCommitProvisionalLoad_Params* params,
+void InitNavigateParams(mojom::DidCommitProvisionalLoadParams* params,
                         int nav_entry_id,
                         bool did_create_new_entry,
                         const GURL& url,

@@ -55,7 +55,7 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
                             const base::string16& error_description) override;
   void DidNavigate(
       RenderFrameHostImpl* render_frame_host,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+      const mojom::DidCommitProvisionalLoadParams& params,
       std::unique_ptr<NavigationHandleImpl> navigation_handle) override;
   bool NavigateToPendingEntry(FrameTreeNode* frame_tree_node,
                               const FrameNavigationEntry& frame_entry,
@@ -138,7 +138,7 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
 
   void RecordNavigationMetrics(
       const LoadCommittedDetails& details,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+      const mojom::DidCommitProvisionalLoadParams& params,
       SiteInstance* site_instance);
 
   // Called when a navigation has started in a main frame, to update the pending

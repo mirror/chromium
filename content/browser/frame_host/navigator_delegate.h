@@ -26,6 +26,10 @@ class RenderFrameHostImpl;
 struct LoadCommittedDetails;
 struct OpenURLParams;
 
+namespace mojom {
+class DidCommitProvisionalLoadParams;
+}
+
 // A delegate API used by Navigator to notify its embedder of navigation
 // related events.
 class CONTENT_EXPORT NavigatorDelegate {
@@ -65,11 +69,11 @@ class CONTENT_EXPORT NavigatorDelegate {
   virtual void DidNavigateMainFramePostCommit(
       RenderFrameHostImpl* render_frame_host,
       const LoadCommittedDetails& details,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params) {}
+      const mojom::DidCommitProvisionalLoadParams& params) {}
   virtual void DidNavigateAnyFramePostCommit(
       RenderFrameHostImpl* render_frame_host,
       const LoadCommittedDetails& details,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params) {}
+      const mojom::DidCommitProvisionalLoadParams& params) {}
 
   virtual void SetMainFrameMimeType(const std::string& mime_type) {}
   virtual bool CanOverscrollContent() const;

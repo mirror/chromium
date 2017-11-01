@@ -77,7 +77,7 @@ class CONTENT_EXPORT Navigator : public base::RefCounted<Navigator> {
   // not attempt to access the RenderFrameHost's NavigationsHandle.
   virtual void DidNavigate(
       RenderFrameHostImpl* render_frame_host,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+      const mojom::DidCommitProvisionalLoadParams& params,
       std::unique_ptr<NavigationHandleImpl> navigation_handle) {}
 
   // Called by the NavigationController to cause the Navigator to navigate

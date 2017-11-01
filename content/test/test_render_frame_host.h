@@ -77,7 +77,7 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
                                    const GURL& url);
 
   using ModificationCallback =
-      base::Callback<void(FrameHostMsg_DidCommitProvisionalLoad_Params*)>;
+      base::Callback<void(mojom::DidCommitProvisionalLoadParams*)>;
 
   void SendNavigate(int nav_entry_id,
                     bool did_create_new_entry,
@@ -87,8 +87,7 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
       bool did_create_new_entry,
       const GURL& url,
       const ModificationCallback& callback);
-  void SendNavigateWithParams(
-      FrameHostMsg_DidCommitProvisionalLoad_Params* params);
+  void SendNavigateWithParams(mojom::DidCommitProvisionalLoadParamsPtr params);
 
   // Simulates a navigation to |url| failing with the error code |error_code|.
   // DEPRECATED: use NavigationSimulator instead.
