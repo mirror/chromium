@@ -16,6 +16,24 @@
       "revId": "06221bafb58d41bd8bf4cb9b93f40919b70e5ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054735f3_d06b6fca",
+        "filename": "third_party/protobuf/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1138896
+      },
+      "writtenOn": "2017-11-01T22:29:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52d35beb_d85f0cf0",
+      "revId": "06221bafb58d41bd8bf4cb9b93f40919b70e5ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
