@@ -53,6 +53,74 @@
     },
     {
       "key": {
+        "uuid": "aa6fdbd3_c72e4c83",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T13:06:26Z",
+      "side": 1,
+      "message": "this copies the content. does it make sense to pass a reference?",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2007ecb5_396ae1ce",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T13:06:26Z",
+      "side": 1,
+      "message": "can this be const?",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c179082e_2dccc338",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T13:06:26Z",
+      "side": 1,
+      "message": "can this be const?",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f523831d_913ebe61",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T13:06:26Z",
+      "side": 1,
+      "message": "return reference?",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27ac8799_4e15cc24",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 6
@@ -138,6 +206,40 @@
       "writtenOn": "2017-11-01T12:50:13Z",
       "side": 1,
       "message": "ditto",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23951712_10dc33d4",
+        "filename": "ui/display/manager/chromeos/touch_transform_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T13:06:26Z",
+      "side": 1,
+      "message": "remove const",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff124549_0fe1b702",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-01T13:06:26Z",
+      "side": 1,
+      "message": "nit: empty()",
       "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
