@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0252ad6f_d0db5fa8",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-01T16:05:56Z",
+      "side": 1,
+      "message": "There are two OnNetworkChanged() methods, which I find a bit odd looking. Everything seems to work though.",
+      "revId": "72c6a34573c08722c9912aa4f64a31b66f377bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
