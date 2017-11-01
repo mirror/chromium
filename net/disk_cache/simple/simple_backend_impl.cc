@@ -309,6 +309,10 @@ void SimpleBackendImpl::OnDoomComplete(uint64_t entry_hash) {
     closure.Run();
 }
 
+bool SimpleBackendImpl::IsPendingDoomForChecking(uint64_t entry_hash) const {
+  return entries_pending_doom_.find(entry_hash) != entries_pending_doom_.end();
+}
+
 void SimpleBackendImpl::DoomEntries(std::vector<uint64_t>* entry_hashes,
                                     const net::CompletionCallback& callback) {
   CHECK(io_thread_checker_.CalledOnValidThread());
@@ -322,7 +326,8 @@ void SimpleBackendImpl::DoomEntries(std::vector<uint64_t>* entry_hashes,
   // 1. The entry is either open or pending doom, and so it should be doomed
   //    individually to avoid flakes.
   // 2. The entry is not in use at all, so we can call
-  //    SimpleSynchronousEntry::DoomEntrySet and delete the files en masse.
+  //    SimpleSynchronousEntry::DeleteEntrySetFiles and delete the files en
+  // masse.
   for (int i = mass_doom_entry_hashes->size() - 1; i >= 0; --i) {
     const uint64_t entry_hash = (*mass_doom_entry_hashes)[i];
     CHECK(active_entries_.count(entry_hash) == 0 ||
@@ -362,15 +367,12 @@ void SimpleBackendImpl::DoomEntries(std::vector<uint64_t>* entry_hashes,
   // base::Passed before mass_doom_entry_hashes.get().
   std::vector<uint64_t>* mass_doom_entry_hashes_ptr =
       mass_doom_entry_hashes.get();
-  PostTaskAndReplyWithResult(worker_pool_.get(),
-                             FROM_HERE,
-                             base::Bind(&SimpleSynchronousEntry::DoomEntrySet,
-                                        mass_doom_entry_hashes_ptr,
-                                        path_),
-                             base::Bind(&SimpleBackendImpl::DoomEntriesComplete,
-                                        AsWeakPtr(),
-                                        base::Passed(&mass_doom_entry_hashes),
-                                        barrier_callback));
+  PostTaskAndReplyWithResult(
+      worker_pool_.get(), FROM_HERE,
+      base::Bind(&SimpleSynchronousEntry::DeleteEntrySetFiles,
+                 mass_doom_entry_hashes_ptr, path_),
+      base::Bind(&SimpleBackendImpl::DoomEntriesComplete, AsWeakPtr(),
+                 base::Passed(&mass_doom_entry_hashes), barrier_callback));
 }
 
 net::CacheType SimpleBackendImpl::GetCacheType() const {

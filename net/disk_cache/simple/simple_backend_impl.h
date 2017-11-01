@@ -95,6 +95,10 @@ class NET_EXPORT_PRIVATE SimpleBackendImpl : public Backend,
   // doom completed.
   void OnDoomComplete(uint64_t entry_hash);
 
+  // Returns true if OnDoomStart(entry_hash) has been called, but
+  // OnDoomComplete(entry_hash) has not been.
+  bool IsPendingDoomForChecking(uint64_t entry_hash) const;
+
   // SimpleIndexDelegate:
   void DoomEntries(std::vector<uint64_t>* entry_hashes,
                    const CompletionCallback& callback) override;
