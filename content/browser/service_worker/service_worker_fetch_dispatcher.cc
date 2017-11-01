@@ -468,20 +468,46 @@ class ServiceWorkerFetchDispatcher::URLLoaderAssets
   DISALLOW_COPY_AND_ASSIGN(URLLoaderAssets);
 };
 
+// S13nServiceWorker
 ServiceWorkerFetchDispatcher::ServiceWorkerFetchDispatcher(
-    std::unique_ptr<ServiceWorkerFetchRequest> request,
-    ServiceWorkerVersion* version,
+    std::unique_ptr<ResourceRequest> request,
+    mojom::FetchEventInfoPtr fetch_event_info,
+    scoped_refptr<ServiceWorkerVersion> version,
+    const base::Optional<base::TimeDelta>& timeout,
+    const net::NetLogWithSource& net_log,
+    const base::Closure& prepare_callback,
+    const FetchCallback& fetch_callback)
+    : request_(std::move(request)),
+      fetch_event_info_(std::move(fetch_event_info)),
+      version_(std::move(version)),
+      resource_type_(request_->resource_type),
+      net_log_(net_log),
+      prepare_callback_(prepare_callback),
+      fetch_callback_(fetch_callback),
+      timeout_(timeout),
+      did_complete_(false),
+      weak_factory_(this) {
+  net_log_.BeginEvent(net::NetLogEventType::SERVICE_WORKER_DISPATCH_FETCH_EVENT,
+                      net::NetLog::StringCallback(
+                          "event_type", ServiceWorkerMetrics::EventTypeToString(
+                                            GetEventType())));
+}
+
+// non-S13nServiceWorker
+ServiceWorkerFetchDispatcher::ServiceWorkerFetchDispatcher(
+    std::unique_ptr<ServiceWorkerFetchRequest> legacy_request,
+    scoped_refptr<ServiceWorkerVersion> version,
     ResourceType resource_type,
     const base::Optional<base::TimeDelta>& timeout,
     const net::NetLogWithSource& net_log,
     const base::Closure& prepare_callback,
     const FetchCallback& fetch_callback)
-    : version_(version),
+    : legacy_request_(std::move(legacy_request)),
+      version_(std::move(version)),
+      resource_type_(resource_type),
       net_log_(net_log),
       prepare_callback_(prepare_callback),
       fetch_callback_(fetch_callback),
-      request_(std::move(request)),
-      resource_type_(resource_type),
       timeout_(timeout),
       did_complete_(false),
       weak_factory_(this) {
@@ -577,7 +603,7 @@ void ServiceWorkerFetchDispatcher::DispatchFetchEvent() {
                        std::move(response_callback)),
         *timeout_, ServiceWorkerVersion::CONTINUE_ON_TIMEOUT);
     event_finish_id = version_->StartRequestWithCustomTimeout(
-        FetchTypeToWaitUntilEventType(request_->fetch_type),
+        FetchTypeToWaitUntilEventType(GetFetchType()),
         base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback), *timeout_,
         ServiceWorkerVersion::CONTINUE_ON_TIMEOUT);
   } else {
@@ -587,7 +613,7 @@ void ServiceWorkerFetchDispatcher::DispatchFetchEvent() {
                        weak_factory_.GetWeakPtr(),
                        std::move(response_callback)));
     event_finish_id = version_->StartRequest(
-        FetchTypeToWaitUntilEventType(request_->fetch_type),
+        FetchTypeToWaitUntilEventType(GetFetchType()),
         base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   }
 
@@ -605,12 +631,23 @@ void ServiceWorkerFetchDispatcher::DispatchFetchEvent() {
   // unretained raw pointer of |version_| to OnFetchEventFinished callback.
   // Pass |url_loader_assets_| to the callback to keep the URL loader related
   // assets alive while the FetchEvent is ongoing in the service worker.
-  version_->event_dispatcher()->DispatchFetchEvent(
-      *request_, std::move(preload_handle_),
-      std::move(mojo_response_callback_ptr),
-      base::BindOnce(&ServiceWorkerFetchDispatcher::OnFetchEventFinished,
-                     base::Unretained(version_.get()), event_finish_id,
-                     url_loader_assets_));
+  if (request_) {
+    // S13nServiceWorker
+    version_->event_dispatcher()->DispatchFetchEvent(
+        *request_, std::move(fetch_event_info_), std::move(preload_handle_),
+        std::move(mojo_response_callback_ptr),
+        base::BindOnce(&ServiceWorkerFetchDispatcher::OnFetchEventFinished,
+                       base::Unretained(version_.get()), event_finish_id,
+                       url_loader_assets_));
+  } else {
+    // non-S13nServiceWorker
+    version_->event_dispatcher()->DispatchLegacyFetchEvent(
+        *legacy_request_, std::move(preload_handle_),
+        std::move(mojo_response_callback_ptr),
+        base::BindOnce(&ServiceWorkerFetchDispatcher::OnFetchEventFinished,
+                       base::Unretained(version_.get()), event_finish_id,
+                       url_loader_assets_));
+  }
 }
 
 void ServiceWorkerFetchDispatcher::DidFailToDispatch(
@@ -668,7 +705,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreload(
   if (!version_->navigation_preload_state().enabled)
     return false;
   // TODO(horo): Currently NavigationPreload doesn't support request body.
-  if (!request_->blob_uuid.empty())
+  if (!legacy_request_->blob_uuid.empty())
     return false;
 
   ResourceRequestInfoImpl* original_info =
@@ -762,7 +799,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreloadWithURLLoader(
   if (!version_->navigation_preload_state().enabled)
     return false;
   // TODO(horo): Currently NavigationPreload doesn't support request body.
-  if (!request_->blob_uuid.empty())
+  if (request_->request_body)
     return false;
 
   ResourceRequest resource_request(original_request);
@@ -822,9 +859,14 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreloadWithURLLoader(
   return true;
 }
 
+ServiceWorkerFetchType ServiceWorkerFetchDispatcher::GetFetchType() const {
+  return fetch_event_info_ ? fetch_event_info_->fetch_type
+                           : legacy_request_->fetch_type;
+}
+
 ServiceWorkerMetrics::EventType ServiceWorkerFetchDispatcher::GetEventType()
     const {
-  if (request_->fetch_type == ServiceWorkerFetchType::FOREIGN_FETCH)
+  if (GetFetchType() == ServiceWorkerFetchType::FOREIGN_FETCH)
     return ServiceWorkerMetrics::EventType::FOREIGN_FETCH;
   return ResourceTypeToEventType(resource_type_);
 }
