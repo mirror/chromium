@@ -39,6 +39,30 @@
       "revId": "b176d6d9ddd4adc21bf3a87154f678530ebb311e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf34f312_e4125d84",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceError.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-01T05:57:19Z",
+      "side": 1,
+      "message": "Done - I moved the logic to the non-default constructor.",
+      "parentUuid": "01f4423f_8065d6fd",
+      "range": {
+        "startLine": 112,
+        "startChar": 7,
+        "endLine": 112,
+        "endChar": 37
+      },
+      "revId": "b176d6d9ddd4adc21bf3a87154f678530ebb311e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
