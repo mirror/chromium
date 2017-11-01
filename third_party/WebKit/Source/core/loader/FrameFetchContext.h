@@ -229,6 +229,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   Member<DocumentLoader> document_loader_;
   Member<Document> document_;
 
+  const bool save_data_;
+
   // Non-null only when detached.
   Member<const FrozenState> frozen_state_;
 };

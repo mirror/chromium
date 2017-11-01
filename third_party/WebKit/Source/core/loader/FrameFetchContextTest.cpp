@@ -50,6 +50,7 @@
 #include "platform/loader/fetch/UniqueIdentifier.h"
 #include "platform/loader/fetch/fetch_initiator_type_names.h"
 #include "platform/loader/testing/MockResource.h"
+#include "platform/network/NetworkStateNotifier.h"
 #include "platform/testing/HistogramTester.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
@@ -122,6 +123,16 @@ class FixedPolicySubresourceFilter : public WebDocumentSubresourceFilter {
 class FrameFetchContextTest : public ::testing::Test {
  protected:
   void SetUp() override {
+    dummy_page_holder = DummyPageHolder::Create(IntSize(500, 500));
+    dummy_page_holder->GetPage().SetDeviceScaleFactorDeprecated(1.0);
+    document = &dummy_page_holder->GetDocument();
+    fetch_context =
+        static_cast<FrameFetchContext*>(&document->Fetcher()->Context());
+    owner = DummyFrameOwner::Create();
+    FrameFetchContext::ProvideDocumentToContext(*fetch_context, document.Get());
+  }
+
+  void RecreateFetchContext() {
     dummy_page_holder = DummyPageHolder::Create(IntSize(500, 500));
     dummy_page_holder->GetPage().SetDeviceScaleFactorDeprecated(1.0);
     document = &dummy_page_holder->GetDocument();
@@ -803,8 +814,9 @@ TEST_F(FrameFetchContextTest, SetFirstPartyCookieAndRequestorOrigin) {
 
 // Tests if "Save-Data" header is correctly added on the first load and reload.
 TEST_F(FrameFetchContextTest, EnableDataSaver) {
-  Settings* settings = document->GetFrame()->GetSettings();
-  settings->SetDataSaverEnabled(true);
+  GetNetworkStateNotifier().SetSaveDataOverride(true);
+  RecreateFetchContext();
+
   ResourceRequest resource_request("http://www.example.com");
   fetch_context->AddAdditionalRequestHeaders(resource_request,
                                              kFetchMainResource);
@@ -819,6 +831,9 @@ TEST_F(FrameFetchContextTest, EnableDataSaver) {
 
 // Tests if "Save-Data" header is not added when the data saver is disabled.
 TEST_F(FrameFetchContextTest, DisabledDataSaver) {
+  GetNetworkStateNotifier().SetSaveDataOverride(false);
+  RecreateFetchContext();
+
   ResourceRequest resource_request("http://www.example.com");
   fetch_context->AddAdditionalRequestHeaders(resource_request,
                                              kFetchMainResource);
@@ -827,25 +842,28 @@ TEST_F(FrameFetchContextTest, DisabledDataSaver) {
 
 // Tests if reload variants can reflect the current data saver setting.
 TEST_F(FrameFetchContextTest, ChangeDataSaverConfig) {
-  Settings* settings = document->GetFrame()->GetSettings();
-  settings->SetDataSaverEnabled(true);
+  GetNetworkStateNotifier().SetSaveDataOverride(true);
+  RecreateFetchContext();
   ResourceRequest resource_request("http://www.example.com");
   fetch_context->AddAdditionalRequestHeaders(resource_request,
                                              kFetchMainResource);
   EXPECT_EQ("on", resource_request.HttpHeaderField("Save-Data"));
 
-  settings->SetDataSaverEnabled(false);
+  GetNetworkStateNotifier().SetSaveDataOverride(false);
+  RecreateFetchContext();
   document->Loader()->SetLoadType(kFrameLoadTypeReload);
   fetch_context->AddAdditionalRequestHeaders(resource_request,
                                              kFetchMainResource);
   EXPECT_EQ(String(), resource_request.HttpHeaderField("Save-Data"));
 
-  settings->SetDataSaverEnabled(true);
+  GetNetworkStateNotifier().SetSaveDataOverride(true);
+  RecreateFetchContext();
   fetch_context->AddAdditionalRequestHeaders(resource_request,
                                              kFetchMainResource);
   EXPECT_EQ("on", resource_request.HttpHeaderField("Save-Data"));
 
-  settings->SetDataSaverEnabled(false);
+  GetNetworkStateNotifier().SetSaveDataOverride(false);
+  RecreateFetchContext();
   document->Loader()->SetLoadType(kFrameLoadTypeReload);
   fetch_context->AddAdditionalRequestHeaders(resource_request,
                                              kFetchMainResource);
@@ -959,8 +977,7 @@ TEST_F(FrameFetchContextTest, AddAdditionalRequestHeadersWhenDetached) {
   ResourceRequest request(KURL(NullURL(), "https://localhost/"));
   request.SetHTTPMethod("PUT");
 
-  Settings* settings = document->GetFrame()->GetSettings();
-  settings->SetDataSaverEnabled(true);
+  GetNetworkStateNotifier().SetSaveDataOverride(true);
   document->SetSecurityOrigin(SecurityOrigin::Create(KURL(NullURL(), origin)));
   document->SetURL(document_url);
   document->SetReferrerPolicy(kReferrerPolicyOrigin);

@@ -25,6 +25,7 @@ class DataSaverBrowserTest : public InProcessBrowserTest {
     prefs->SetBoolean(prefs::kDataSaverEnabled, enabled);
     // Give the setting notification a chance to propagate.
     content::RunAllPendingInMessageLoop();
+    base::RunLoop().RunUntilIdle();
   }
 
   void VerifySaveDataHeader(const std::string& expected_header_value) {
