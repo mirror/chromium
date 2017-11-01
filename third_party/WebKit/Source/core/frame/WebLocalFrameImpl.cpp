@@ -2073,7 +2073,8 @@ WebLocalFrameImpl::MaybeRenderFallbackContent(const WebURLError& error) const {
   if (!GetFrame()->Loader().GetProvisionalDocumentLoader())
     return NoLoadInProgress;
 
-  GetFrame()->Loader().GetProvisionalDocumentLoader()->LoadFailed(error);
+  GetFrame()->Loader().GetProvisionalDocumentLoader()->LoadFailed(
+      ResourceError(error, error.unreachable_url));
   return FallbackRendered;
 }
 

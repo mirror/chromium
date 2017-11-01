@@ -79,7 +79,6 @@ struct WebURLError {
 #if INSIDE_BLINK
   BLINK_PLATFORM_EXPORT WebURLError(const ResourceError&);
   BLINK_PLATFORM_EXPORT WebURLError& operator=(const ResourceError&);
-  BLINK_PLATFORM_EXPORT operator ResourceError() const;
 #endif
 };
 
