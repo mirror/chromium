@@ -86,6 +86,13 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
         data_reduction_proxy_settings =
             DataReductionProxyChromeSettingsFactory::GetForBrowserContext(
                 web_contents()->GetBrowserContext());
+
+    // Retrieve PreviewsUIService* from |web_contents| if available.
+    PreviewsService* previews_service = PreviewsServiceFactory::GetForProfile(
+        Profile::FromBrowserContext(web_contents->GetBrowserContext()));
+    previews::PreviewsUIService* previews_ui_service =
+        previews_service ? previews_service->previews_ui_service() : nullptr;
+
     PreviewsInfoBarDelegate::Create(
         web_contents(), previews::PreviewsType::OFFLINE,
         base::Time() /* previews_freshness */, false /* is_reload */,
@@ -94,7 +101,8 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
         base::Bind(&AddPreviewNavigationCallback,
                    web_contents()->GetBrowserContext(),
                    navigation_handle->GetRedirectChain()[0],
-                   previews::PreviewsType::OFFLINE));
+                   previews::PreviewsType::OFFLINE),
+        previews_ui_service);
     // Don't try to show other infobars if this is an offline preview.
     return;
   }
@@ -105,12 +113,20 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
   if (headers && data_reduction_proxy::IsLitePagePreview(*headers)) {
     base::Time previews_freshness;
     headers->GetDateValue(&previews_freshness);
+
+    // Retrieve PreviewsUIService* associated with |web_contents| if available.
+    PreviewsService* previews_service = PreviewsServiceFactory::GetForProfile(
+        Profile::FromBrowserContext(web_contents()->GetBrowserContext()));
+    previews::PreviewsUIService* previews_ui_service =
+        previews_service ? previews_service->previews_ui_service() : nullptr;
+
     PreviewsInfoBarDelegate::Create(
         web_contents(), previews::PreviewsType::LITE_PAGE, previews_freshness,
         true /* is_data_saver_user */, is_reload,
         base::Bind(&AddPreviewNavigationCallback,
                    web_contents()->GetBrowserContext(),
                    navigation_handle->GetRedirectChain()[0],
-                   previews::PreviewsType::LITE_PAGE));
+                   previews::PreviewsType::LITE_PAGE),
+        previews_ui_service);
   }
 }

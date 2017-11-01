@@ -17,6 +17,10 @@ namespace content {
 class WebContents;
 }
 
+namespace previews {
+class PreviewsUIService;
+}
+
 // Shows an infobar that lets the user know that a preview page has been loaded,
 // and gives the user a link to reload the original page. This infobar will only
 // be shown once per page load. Records UMA data for user interactions with the
@@ -59,7 +63,10 @@ class PreviewsInfoBarDelegate : public ConfirmInfoBarDelegate {
       base::Time previews_freshness,
       bool is_data_saver_user,
       bool is_reload,
-      const OnDismissPreviewsInfobarCallback& on_dismiss_callback);
+      // TODO(ryansturm): Replace |on_dismiss_callback| with direct call to
+      // |previews_ui_service|.
+      const OnDismissPreviewsInfobarCallback& on_dismiss_callback,
+      previews::PreviewsUIService* previews_ui_service);
 
   // ConfirmInfoBarDelegate overrides:
   int GetIconId() const override;
