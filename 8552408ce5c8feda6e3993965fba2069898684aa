@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c895dc0e_c76b42b4",
+        "filename": "third_party/guava/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-11-01T17:39:33Z",
+      "side": 1,
+      "message": "All compile_java targets depend on errorprone_plugin_java which depends on auto_service_java which depends on guava_java.\n\nEverything including and after errorprone_plugin_java is build-only, but testonly \u003d true prevents any non-test targets from depending on testonly targets. So while errorprone_plugin_java etc. will not bloat our apk size, they cannot be testonly targets since compile_java depends on them.\n\nIf someone accidentally adds a guava_java dependency, we already have binary size sheriffing and alerts. This was done after discussing with agrieve@ and estevenson@ offline. Making guava_java not testonly \u003d true is necessary short of adding a buildonly \u003d true gn arg, which might be something good to think about in the future, or using something more hacky like input_jars_paths.",
+      "parentUuid": "bf81c483_1a1ed5e4",
+      "revId": "8552408ce5c8feda6e3993965fba2069898684aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "224f6ddc_c2dfbe24",
         "filename": "tools/android/errorprone_plugin/src/org/chromium/tools/errorprone/plugin/NoSynchronizedMethodCheck.java",
         "patchSetId": 12
