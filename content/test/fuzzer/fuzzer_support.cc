@@ -18,6 +18,11 @@ void RenderViewTestAdapter::SetUp() {
   RenderViewTest::SetUp();
 }
 
+void RenderViewTestAdapter::LoadHTMLWithUrlOverride(const char* html,
+                                                    const char* url) {
+  RenderViewTest::LoadHTMLWithUrlOverride(html, url);
+}
+
 Env::Env() {
   base::CommandLine::Init(0, nullptr);
   base::FeatureList::InitializeInstance(std::string(), std::string());

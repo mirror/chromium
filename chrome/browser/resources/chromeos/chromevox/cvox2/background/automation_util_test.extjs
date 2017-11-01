@@ -41,7 +41,7 @@ AutomationUtilE2ETest.prototype = {
   },
 
   basicDoc: function() {/*!
-    <p><a href='#'></a>hello</p>
+    <p><a href='%23'></a>hello</p>
     <h1><ul><li>a</ul><div role="group"><button></button></div></h1>
   */},
 

@@ -19,8 +19,8 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   if (env == nullptr)
     env = new Env();
 
-  env->adapter->LoadHTML(std::string(reinterpret_cast<const char*>(data), size),
-                         "http://www.example.org");
+  env->adapter->LoadHTMLWithUrlOverride(reinterpret_cast<const char*>(data),
+                                        "http://www.example.org");
   return 0;
 }
 

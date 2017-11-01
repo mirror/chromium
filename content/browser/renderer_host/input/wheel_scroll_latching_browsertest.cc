@@ -105,7 +105,10 @@ class WheelScrollLatchingBrowserTest : public ContentBrowserTest {
   }
 
   void LoadURL() {
-    const GURL data_url(kWheelEventLatchingDataURL);
+    // To include '#' in a URI (even data URIs), it must be encoded as %23.
+    std::string data_url_string(kWheelEventLatchingDataURL);
+    base::ReplaceChars(data_url_string, "#", "%23", &data_url_string);
+    const GURL data_url(data_url_string.c_str());
     NavigateToURL(shell(), data_url);
 
     RenderWidgetHostImpl* host = GetWidgetHost();
