@@ -85,4 +85,19 @@ TEST_P(GLES2DecoderTestWithBlendEquationAdvanced, BlendBarrierKHRValidArgs) {
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
 }
+
+TEST_P(GLES3DecoderTestWithEXTWindowRectangles,
+       WindowRectanglesEXTImmediateValidArgs) {
+  cmds::WindowRectanglesEXTImmediate& cmd =
+      *GetImmediateAs<cmds::WindowRectanglesEXTImmediate>();
+  SpecializedSetup<cmds::WindowRectanglesEXTImmediate, 0>(true);
+  GLint temp[4 * 2] = {
+      0,
+  };
+  EXPECT_CALL(*gl_,
+              WindowRectanglesEXT(GL_INCLUSIVE_EXT, 2, PointsToArray(temp, 4)));
+  cmd.Init(GL_INCLUSIVE_EXT, 2, &temp[0]);
+  EXPECT_EQ(error::kNoError, ExecuteImmediateCmd(cmd, sizeof(temp)));
+  EXPECT_EQ(GL_NO_ERROR, GetGLError());
+}
 #endif  // GPU_COMMAND_BUFFER_SERVICE_GLES2_CMD_DECODER_UNITTEST_EXTENSIONS_AUTOGEN_H_

@@ -1805,6 +1805,9 @@ GL_FUNCTIONS = [
                  'extensions': ['GL_ARB_sync'] }],
   'arguments':
     'GLsync sync, GLbitfield flags, GLuint64 timeout', },
+{ 'return_type': 'void',
+  'names': ['glWindowRectanglesEXT'],
+  'arguments': 'GLenum mode, GLsizei n, const GLint* box', },
 ]
 
 OSMESA_FUNCTIONS = [

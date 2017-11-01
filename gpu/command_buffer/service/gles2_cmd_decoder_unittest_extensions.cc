@@ -1744,6 +1744,27 @@ INSTANTIATE_TEST_CASE_P(Service,
                         GLES2DecoderTestWithCHROMIUMRasterTransport,
                         ::testing::Bool());
 
+class GLES3DecoderTestWithEXTWindowRectangles : public GLES3DecoderTest {
+ public:
+  GLES3DecoderTestWithEXTWindowRectangles() {}
+  void SetUp() override {
+    InitState init;
+    init.context_type = CONTEXT_TYPE_OPENGLES3;
+    init.gl_version = "opengl es 3.0";
+    init.has_alpha = true;
+    init.has_depth = true;
+    init.request_alpha = true;
+    init.request_depth = true;
+    init.bind_generates_resource = true;
+    init.extensions = "GL_EXT_window_rectangles";
+    InitDecoder(init);
+  }
+};
+
+INSTANTIATE_TEST_CASE_P(Service,
+                        GLES3DecoderTestWithEXTWindowRectangles,
+                        ::testing::Bool());
+
 #include "gpu/command_buffer/service/gles2_cmd_decoder_unittest_extensions_autogen.h"
 
 }  // namespace gles2

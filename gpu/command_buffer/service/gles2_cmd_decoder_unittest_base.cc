@@ -428,6 +428,13 @@ void GLES2DecoderTestBase::InitDecoderWithWorkarounds(
           line_width_range, line_width_range + arraysize(line_width_range)))
       .RetiresOnSaturation();
 
+  if (group_->feature_info()->feature_flags().ext_window_rectangles) {
+    static GLint max_window_rectangles = 4;
+    EXPECT_CALL(*gl_, GetIntegerv(GL_MAX_WINDOW_RECTANGLES_EXT, _))
+        .WillOnce(SetArgPointee<1>(max_window_rectangles))
+        .RetiresOnSaturation();
+  }
+
   SetupInitCapabilitiesExpectations(group_->feature_info()->IsES3Capable());
   SetupInitStateExpectations(group_->feature_info()->IsES3Capable());
 
@@ -2163,6 +2170,11 @@ void GLES2DecoderTestBase::SetupInitStateManualExpectations(bool es3_capable) {
     EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_IMAGE_HEIGHT, 0))
         .Times(1)
         .RetiresOnSaturation();
+    if (group_->feature_info()->feature_flags().ext_window_rectangles) {
+      EXPECT_CALL(*gl_, WindowRectanglesEXT(GL_EXCLUSIVE_EXT, 0, nullptr))
+          .Times(1)
+          .RetiresOnSaturation();
+    }
   }
 }
 
