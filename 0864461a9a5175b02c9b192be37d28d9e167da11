@@ -22,6 +22,93 @@
       "revId": "0864461a9a5175b02c9b192be37d28d9e167da11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fe336d_b0de3945",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T14:57:34Z",
+      "side": 1,
+      "message": "I think this works! I would just add a comment explaining why the visible display frame left/top is added.",
+      "parentUuid": "3205438d_846b5b7a",
+      "range": {
+        "startLine": 618,
+        "startChar": 8,
+        "endLine": 619,
+        "endChar": 95
+      },
+      "revId": "0864461a9a5175b02c9b192be37d28d9e167da11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc92b9fe_97475179",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T14:57:34Z",
+      "side": 1,
+      "message": "I\u0027m struggling a little bit with keeping this feature constants straight without going and reading the descriptions. Can we call them something like:\n\nCONTEXTUAL_SEARCH_FEATURE -\u003e CONTEXTUAL_SEARCH_WEB_SEARCH_FEATURE\nCONTEXTUAL_SEARCH_TAP_FEATURE -\u003e CONTEXTUAL_SEARCH_PROMOTE_TAP_FEATURE\nCONTEXTUAL_SEARCH_PANEL_FEATURE -\u003e CONTEXTUAL_SEARCH_PROMOTE_PANEL_OPEN_FEATURE",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 67
+      },
+      "revId": "0864461a9a5175b02c9b192be37d28d9e167da11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb78bdf_a284c552",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T14:57:34Z",
+      "side": 1,
+      "message": "nit: This can be condensed to:\n\nint stringId \u003d mFeatureName.equals(FeatureConstants.CONTEXTUAL_SEARCH_PANEL_FEATURE) ? R.string.contextual_search_iph_entity : R.string.contextual_search_iph_entitysearch_result;",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 9
+      },
+      "revId": "0864461a9a5175b02c9b192be37d28d9e167da11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52d3f22_742431f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-01T14:57:34Z",
+      "side": 1,
+      "message": "nit: Let\u0027s call this method onPanelFinishedShowing() as well.",
+      "revId": "0864461a9a5175b02c9b192be37d28d9e167da11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
