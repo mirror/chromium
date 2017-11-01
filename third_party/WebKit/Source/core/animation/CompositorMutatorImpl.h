@@ -11,6 +11,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/ThreadingPrimitives.h"
 
 namespace blink {
 
@@ -47,7 +48,9 @@ class CORE_EXPORT CompositorMutatorImpl final : public CompositorMutator {
 
   using CompositorAnimators =
       HashSet<CrossThreadPersistent<CompositorAnimator>>;
+  Mutex animators_lock_;
   CompositorAnimators animators_;
+  bool has_animators_;
 
   CompositorMutatorClient* client_;
 };
