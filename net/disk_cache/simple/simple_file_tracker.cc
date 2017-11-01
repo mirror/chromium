@@ -124,6 +124,57 @@ void SimpleFileTracker::Close(const SimpleSynchronousEntry* owner,
   // close --- the FD is still alive for it.
 }
 
+void SimpleFileTracker::Doom(const SimpleSynchronousEntry* owner,
+                             EntryFileKey* key) {
+  base::AutoLock hold_lock(lock_);
+  uint32_t max_doom_gen = 0;
+  auto iter = tracked_files_.find(key->entry_hash);
+  DCHECK(iter != tracked_files_.end());
+  for (const TrackedFiles& cand : iter->second)
+    max_doom_gen = std::max(max_doom_gen, cand.key.doom_generation);
+
+  uint32_t new_doom_gen = 1;
+  // Theoretically, in an incredibly pathological case just bumping
+  // doom_generation may get us all the way up to the numeric limit.
+  // Handle the separately by looking for gaps.
+  if (max_doom_gen == std::numeric_limits<uint32_t>::max()) {
+    // If one were to somehow get 4 billion live versions, we wouldn't be able
+    // to allocate a new ID, so would risk potentially mixing up files from
+    // different URLs. That would be extra-dangerous.
+    CHECK_LT(iter->second.size(), std::numeric_limits<uint32_t>::max() - 1);
+
+    if (iter->second.size() >= 2) {
+      // max_uint32 is in use, and there are at least 2 entries (which the
+      // code below will rely on).
+      std::vector<uint32_t> live_doom_generations;
+      for (const TrackedFiles& cand : iter->second)
+        live_doom_generations.push_back(cand.key.doom_generation);
+      std::sort(live_doom_generations.begin(), live_doom_generations.end());
+
+      for (size_t c = 0; c < live_doom_generations.size() - 1; ++c) {
+        if ((live_doom_generations[c] + 1) != live_doom_generations[c + 1]) {
+          new_doom_gen = live_doom_generations[c] + 1;
+          break;
+        }
+      }
+      // if nothing was found above, then 1 is fine, since everything must have
+      // been packed towards the max, living the room there.
+    }
+    // else the only thing we found is max_uint32, so 1 is fine.
+  } else {
+    new_doom_gen = max_doom_gen + 1;
+  }
+
+  // Update external key.
+  key->doom_generation = new_doom_gen;
+
+  // Update our own.
+  for (TrackedFiles& cand : iter->second) {
+    if (cand.owner == owner)
+      cand.key.doom_generation = new_doom_gen;
+  }
+}
+
 bool SimpleFileTracker::IsEmptyForTesting() {
   base::AutoLock hold_lock(lock_);
   return tracked_files_.empty();

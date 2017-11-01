@@ -218,4 +218,6 @@ TEST_F(SimpleFileTrackerTest, PointerStability) {
   EXPECT_TRUE(file_tracker_.IsEmptyForTesting());
 }
 
+TEST_F(SimpleFileTrackerTest, Doom) {}
+
 }  // namespace disk_cache
