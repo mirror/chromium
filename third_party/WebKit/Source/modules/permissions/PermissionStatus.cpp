@@ -28,7 +28,7 @@ PermissionStatus* PermissionStatus::CreateAndListen(
     MojoPermissionDescriptor descriptor) {
   PermissionStatus* permission_status =
       new PermissionStatus(execution_context, status, std::move(descriptor));
-  permission_status->SuspendIfNeeded();
+  permission_status->PauseIfNeeded();
   permission_status->StartListening();
   return permission_status;
 }
@@ -36,7 +36,7 @@ PermissionStatus* PermissionStatus::CreateAndListen(
 PermissionStatus::PermissionStatus(ExecutionContext* execution_context,
                                    MojoPermissionStatus status,
                                    MojoPermissionDescriptor descriptor)
-    : SuspendableObject(execution_context),
+    : PausableObject(execution_context),
       status_(status),
       descriptor_(std::move(descriptor)),
       binding_(this) {}
@@ -52,7 +52,7 @@ const AtomicString& PermissionStatus::InterfaceName() const {
 }
 
 ExecutionContext* PermissionStatus::GetExecutionContext() const {
-  return SuspendableObject::GetExecutionContext();
+  return PausableObject::GetExecutionContext();
 }
 
 bool PermissionStatus::HasPendingActivity() const {
@@ -63,7 +63,7 @@ void PermissionStatus::Resume() {
   StartListening();
 }
 
-void PermissionStatus::Suspend() {
+void PermissionStatus::Pause() {
   StopListening();
 }
 
@@ -112,7 +112,7 @@ void PermissionStatus::OnPermissionStatusChange(MojoPermissionStatus status) {
 
 void PermissionStatus::Trace(blink::Visitor* visitor) {
   EventTargetWithInlineData::Trace(visitor);
-  SuspendableObject::Trace(visitor);
+  PausableObject::Trace(visitor);
 }
 
 }  // namespace blink

@@ -5,7 +5,7 @@
 #ifndef PermissionStatus_h
 #define PermissionStatus_h
 
-#include "core/dom/SuspendableObject.h"
+#include "core/dom/PausableObject.h"
 #include "core/dom/events/EventTarget.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
@@ -23,7 +23,7 @@ class ScriptPromiseResolver;
 // ExecutionContext.
 class PermissionStatus final : public EventTargetWithInlineData,
                                public ActiveScriptWrappable<PermissionStatus>,
-                               public SuspendableObject,
+                               public PausableObject,
                                public mojom::blink::PermissionObserver {
   USING_GARBAGE_COLLECTED_MIXIN(PermissionStatus);
   DEFINE_WRAPPERTYPEINFO();
@@ -50,8 +50,8 @@ class PermissionStatus final : public EventTargetWithInlineData,
   // ScriptWrappable implementation.
   bool HasPendingActivity() const final;
 
-  // SuspendableObject implementation.
-  void Suspend() override;
+  // PausableObject implementation.
+  void Pause() override;
   void Resume() override;
   void ContextDestroyed(ExecutionContext*) override;
 

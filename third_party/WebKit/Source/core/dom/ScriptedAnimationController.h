@@ -75,7 +75,7 @@ class CORE_EXPORT ScriptedAnimationController
   // https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model
   void ServiceScriptedAnimations(double monotonic_time_now);
 
-  void Suspend();
+  void Pause();
   void Resume();
 
   void DispatchEventsAndCallbacksForPrinting();

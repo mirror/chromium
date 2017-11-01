@@ -24,42 +24,59 @@
  *
  */
 
-#ifndef SuspendableObject_h
-#define SuspendableObject_h
+#include "core/dom/PausableObject.h"
 
-#include "core/CoreExport.h"
-#include "core/dom/ContextLifecycleObserver.h"
-#include "platform/wtf/Assertions.h"
+#include "core/dom/ExecutionContext.h"
+#include "platform/InstanceCounters.h"
 
 namespace blink {
 
-class CORE_EXPORT SuspendableObject : public ContextLifecycleObserver {
- public:
-  explicit SuspendableObject(ExecutionContext*);
-
-  // suspendIfNeeded() should be called exactly once after object construction
-  // to synchronize the suspend state with that in ExecutionContext.
-  void SuspendIfNeeded();
+PausableObject::PausableObject(ExecutionContext* execution_context)
+    : ContextLifecycleObserver(execution_context, kPausableObjectType)
 #if DCHECK_IS_ON()
-  bool SuspendIfNeededCalled() const { return suspend_if_needed_called_; }
+      ,
+      suspend_if_needed_called_(false)
 #endif
+{
+  DCHECK(!execution_context || execution_context->IsContextThread());
+  InstanceCounters::IncrementCounter(InstanceCounters::kPausableObjectCounter);
+}
 
-  // These methods have an empty default implementation so that subclasses
-  // which don't need special treatment can skip implementation.
-  virtual void Suspend();
-  virtual void Resume();
+PausableObject::~PausableObject() {
+  InstanceCounters::DecrementCounter(InstanceCounters::kPausableObjectCounter);
 
-  void DidMoveToNewExecutionContext(ExecutionContext*);
-
- protected:
-  virtual ~SuspendableObject();
-
- private:
 #if DCHECK_IS_ON()
-  bool suspend_if_needed_called_;
+  DCHECK(suspend_if_needed_called_);
 #endif
-};
+}
+
+void PausableObject::PauseIfNeeded() {
+#if DCHECK_IS_ON()
+  DCHECK(!suspend_if_needed_called_);
+  suspend_if_needed_called_ = true;
+#endif
+  if (ExecutionContext* context = GetExecutionContext())
+    context->SuspendPausableObjectIfNeeded(this);
+}
+
+void PausableObject::Pause() {}
+
+void PausableObject::Resume() {}
+
+void PausableObject::DidMoveToNewExecutionContext(ExecutionContext* context) {
+  SetContext(context);
+
+  if (context->IsContextDestroyed()) {
+    ContextDestroyed(context);
+    return;
+  }
+
+  if (context->IsContextSuspended()) {
+    Pause();
+    return;
+  }
+
+  Resume();
+}
 
 }  // namespace blink
-
-#endif  // SuspendableObject_h

@@ -92,7 +92,7 @@ OfflineAudioContext* OfflineAudioContext::Create(
   OfflineAudioContext* audio_context =
       new OfflineAudioContext(document, number_of_channels, number_of_frames,
                               sample_rate, exception_state);
-  audio_context->SuspendIfNeeded();
+  audio_context->PauseIfNeeded();
 
 #if DEBUG_AUDIONODE_REFERENCES
   fprintf(stderr, "[%16p]: OfflineAudioContext::OfflineAudioContext()\n",
@@ -385,7 +385,7 @@ bool OfflineAudioContext::HandlePreOfflineRenderTasks() {
   GetDeferredTaskHandler().HandleDeferredTasks();
   HandleStoppableSourceNodes();
 
-  return ShouldSuspend();
+  return ShouldPause();
 }
 
 void OfflineAudioContext::HandlePostOfflineRenderTasks() {
@@ -449,7 +449,7 @@ void OfflineAudioContext::RejectPendingResolvers() {
   RejectPendingDecodeAudioDataResolvers();
 }
 
-bool OfflineAudioContext::ShouldSuspend() {
+bool OfflineAudioContext::ShouldPause() {
   DCHECK(IsAudioThread());
 
   // Note that the GraphLock is required before this check. Since this needs

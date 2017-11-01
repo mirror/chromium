@@ -82,7 +82,7 @@ void HTMLParserScheduler::ScheduleForResume() {
                                      WrapWeakPersistent(this)));
 }
 
-void HTMLParserScheduler::Suspend() {
+void HTMLParserScheduler::Pause() {
   DCHECK(!is_suspended_with_active_timer_);
   if (!cancellable_continue_parse_task_handle_.IsActive())
     return;
