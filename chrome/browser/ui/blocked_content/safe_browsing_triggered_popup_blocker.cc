@@ -9,9 +9,9 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
-#include "chrome/browser/ui/blocked_content/console_logger.h"
 #include "components/safe_browsing/db/util.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
+#include "content/public/browser/console_logger.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/web_contents.h"
@@ -48,7 +48,7 @@ SafeBrowsingTriggeredPopupBlocker::PageData::~PageData() {
 std::unique_ptr<SafeBrowsingTriggeredPopupBlocker>
 SafeBrowsingTriggeredPopupBlocker::MaybeCreate(
     content::WebContents* web_contents,
-    std::unique_ptr<ConsoleLogger> logger) {
+    std::unique_ptr<content::ConsoleLogger> logger) {
   if (!base::FeatureList::IsEnabled(kAbusiveExperienceEnforce))
     return nullptr;
 
@@ -91,7 +91,7 @@ bool SafeBrowsingTriggeredPopupBlocker::ShouldApplyStrongPopupBlocker(
 SafeBrowsingTriggeredPopupBlocker::SafeBrowsingTriggeredPopupBlocker(
     content::WebContents* web_contents,
     subresource_filter::SubresourceFilterObserverManager* observer_manager,
-    std::unique_ptr<ConsoleLogger> logger)
+    std::unique_ptr<content::ConsoleLogger> logger)
     : content::WebContentsObserver(web_contents),
       scoped_observer_(this),
       logger_(std::move(logger)),

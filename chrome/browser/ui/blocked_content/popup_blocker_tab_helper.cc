@@ -14,7 +14,6 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/subresource_filter/chrome_subresource_filter_client.h"
 #include "chrome/browser/ui/blocked_content/blocked_window_params.h"
-#include "chrome/browser/ui/blocked_content/console_logger.h"
 #include "chrome/browser/ui/blocked_content/popup_tracker.h"
 #include "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h"
 #include "chrome/browser/ui/browser_navigator.h"
@@ -25,6 +24,7 @@
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.h"
 #include "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h"
+#include "content/public/browser/console_logger.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
@@ -57,7 +57,7 @@ PopupBlockerTabHelper::PopupBlockerTabHelper(content::WebContents* web_contents)
       safe_browsing_triggered_popup_blocker_(
           SafeBrowsingTriggeredPopupBlocker::MaybeCreate(
               web_contents,
-              base::MakeUnique<ConsoleLogger>())) {}
+              base::MakeUnique<content::ConsoleLogger>())) {}
 
 PopupBlockerTabHelper::~PopupBlockerTabHelper() {
 }

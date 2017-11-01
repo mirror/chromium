@@ -125,6 +125,8 @@ static_library("test_support") {
     "../public/test/test_browser_thread.h",
     "../public/test/test_browser_thread_bundle.cc",
     "../public/test/test_browser_thread_bundle.h",
+    "../public/test/test_console_logger.cc",
+    "../public/test/test_console_logger.h",
     "../public/test/test_content_client_initializer.cc",
     "../public/test/test_content_client_initializer.h",
     "../public/test/test_download_request_handler.cc",

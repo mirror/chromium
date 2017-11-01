@@ -88,6 +88,8 @@ source_set("browser_sources") {
     "child_process_security_policy.h",
     "client_certificate_delegate.h",
     "color_chooser.h",
+    "console_logger.cc",
+    "console_logger.h",
     "content_browser_client.cc",
     "content_browser_client.h",
     "context_factory.h",
