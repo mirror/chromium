@@ -7,6 +7,7 @@ include_rules = [
   "+components/safe_browsing/android/java",
   "+components/variations/android/java",
 
+  "-content/public/test",
   "+content/public/test/android/javatests",
   "-content/public/android/java",
   "+content/public/android/java/src/org/chromium/content_public",
