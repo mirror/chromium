@@ -83,6 +83,13 @@ def _ParseArgs(args):
   parser.add_option('--proguard-file-main-dex',
                     help='Path to proguard.txt generated file for main dex')
 
+  parser.add_option('--apk-pak-info-out',
+                    help='Path to store the combined pak.info files.')
+  parser.add_option('--assets',
+                    help='All compressed assets')
+  parser.add_option('--uncompressed-assets',
+                    help='All uncompressed assets')
+
   parser.add_option(
       '--v14-skip',
       action="store_true",
@@ -141,6 +148,17 @@ def _ParseArgs(args):
         build_utils.ParseGnList(options.extra_r_text_files))
   else:
     options.extra_r_text_files = []
+
+  if options.assets:
+    options.assets = build_utils.ParseGnList(options.assets)
+  else:
+    options.assets = []
+
+  if options.uncompressed_assets:
+    options.uncompressed_assets = (
+        build_utils.ParseGnList(options.uncompressed_assets))
+  else:
+    options.uncompressed_assets = []
 
   return options
 
@@ -362,6 +380,17 @@ def _ExtractPackageFromManifest(manifest_path):
   return doc.getroot().get('package')
 
 
+def _MergePakInfoFiles(pak_info_path, asset_list):
+  lines = set()
+  for asset_details in asset_list:
+    src = asset_details.split(':')[0]
+    if src.endswith('.pak'):
+      with open(src + '.info', 'r') as src_info_file:
+        lines.update(src_info_file.readlines())
+  with open(pak_info_path, 'w') as merged_info_file:
+    merged_info_file.writelines(sorted(lines))
+
+
 def _OnStaleMd5(options):
   aapt = options.aapt_path
   with build_utils.TempDir() as temp_dir:
@@ -508,6 +537,10 @@ def _OnStaleMd5(options):
     if options.r_text_out:
       shutil.copyfile(r_txt_path, options.r_text_out)
 
+    if options.apk_pak_info_out:
+      _MergePakInfoFiles(options.apk_pak_info_out,
+                         options.assets + options.uncompressed_assets)
+
 
 def main(args):
   args = build_utils.ExpandFileArgs(args)
@@ -520,6 +553,7 @@ def main(args):
     options.proguard_file_main_dex,
     options.r_text_out,
     options.srcjar_out,
+    options.apk_pak_info_out,
   ]
   output_paths = [x for x in possible_output_paths if x]
 

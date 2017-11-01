@@ -2042,6 +2042,9 @@ if (enable_java_templates) {
       if (enable_multidex) {
         proguard_file_main_dex = _generated_proguard_main_dex_config
       }
+      if (_proguard_enabled) {
+        apk_path = _final_apk_path
+      }
 
       build_config = _build_config
       deps = [

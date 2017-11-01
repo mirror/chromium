@@ -1556,6 +1556,17 @@ if (enable_java_templates) {
         ]
       }
 
+      if (defined(invoker.apk_path)) {
+        _apk_pak_info_path = "${invoker.apk_path}.pak.info"
+        outputs += [ _apk_pak_info_path ]
+        args += [
+          "--apk-pak-info-out",
+          rebase_path(_apk_pak_info_path, root_build_dir),
+          "--assets=@FileArg($_rebased_build_config:assets)",
+          "--uncompressed-assets=@FileArg($_rebased_build_config:uncompressed_assets)",
+        ]
+      }
+
       if (defined(invoker.args)) {
         args += invoker.args
       }
