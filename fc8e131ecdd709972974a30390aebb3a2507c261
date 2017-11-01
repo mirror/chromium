@@ -22,6 +22,30 @@
       "revId": "fc8e131ecdd709972974a30390aebb3a2507c261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75302734_12485280",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2939,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-01T22:07:28Z",
+      "side": 1,
+      "message": "The alternative is device pixels. Screencast needs them to draw highlights over the remote DOM.",
+      "parentUuid": "56354ad0_f348e632",
+      "range": {
+        "startLine": 2939,
+        "startChar": 31,
+        "endLine": 2939,
+        "endChar": 40
+      },
+      "revId": "fc8e131ecdd709972974a30390aebb3a2507c261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
