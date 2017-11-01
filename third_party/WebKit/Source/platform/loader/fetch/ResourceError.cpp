@@ -42,7 +42,7 @@ constexpr char kThrottledErrorDescription[] =
 }  // namespace
 
 ResourceError ResourceError::CancelledError(const KURL& url) {
-  return WebURLError(url, false, net::ERR_ABORTED);
+  return ResourceError(Domain::kNet, net::ERR_ABORTED, url);
 }
 
 ResourceError ResourceError::CancelledDueToAccessCheckError(
@@ -84,6 +84,18 @@ ResourceError::ResourceError(Domain domain, int error_code, const KURL& url)
           WebString::FromASCII(net::ErrorToString(error_code_));
     }
   }
+}
+
+ResourceError::ResourceError(const WebURLError& error, const KURL& url) {
+  if (!error.reason)
+    return;
+
+  DCHECK_NE(error.domain, Domain::kEmpty);
+  domain_ = error.domain;
+  error_code_ = error.reason;
+  failing_url_ = url;
+  stale_copy_in_cache_ = error.stale_copy_in_cache;
+  is_access_check_ = error.is_web_security_violation;
 }
 
 ResourceError ResourceError::Copy() const {

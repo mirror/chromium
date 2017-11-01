@@ -64,6 +64,7 @@ class PLATFORM_EXPORT ResourceError final {
 
   ResourceError() = default;
   ResourceError(Domain, int error_code, const KURL& failing_url);
+  ResourceError(const WebURLError&, const KURL&);
 
   // Makes a deep copy. Useful for when you need to use a ResourceError on
   // another thread.
