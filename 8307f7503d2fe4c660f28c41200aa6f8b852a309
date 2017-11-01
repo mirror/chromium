@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3c9f2e4_f3f263d8",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-01T08:26:03Z",
+      "side": 1,
+      "message": "Added DCHECKs down where they are used.",
+      "parentUuid": "cc569444_e2c7079e",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60f9794f_a5941c51",
         "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-01T06:33:45Z",
       "side": 1,
       "message": "Should we have DCHECKs to make sure we always take this path in S13nServiceWorker case, and below in non-s13n case for now? Hm maybe not for testing?",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd55b287_9bc105e1",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-01T08:26:03Z",
+      "side": 1,
+      "message": "Yea I have to update some tests. How\u0027s this? I added some more DCHECKs and a TODO for better DCHECKs.",
+      "parentUuid": "60f9794f_a5941c51",
       "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493a6ff8_b86e467e",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-01T08:26:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "788bf893_041a936a",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +147,30 @@
     },
     {
       "key": {
+        "uuid": "23d58d8b_552ee46f",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1570,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-01T08:26:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1da916a2_db80affb",
+      "range": {
+        "startLine": 1570,
+        "startChar": 31,
+        "endLine": 1570,
+        "endChar": 41
+      },
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ba12ebc_6c565a6f",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 8
@@ -110,6 +188,24 @@
     },
     {
       "key": {
+        "uuid": "37fcd7f0_f24cbf95",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-01T08:26:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ba12ebc_6c565a6f",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7db70f09_5403562d",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 8
@@ -121,6 +217,24 @@
       "writtenOn": "2017-11-01T06:33:45Z",
       "side": 1,
       "message": "if this is only for s13n code (at least for now) I feel we should just DCHECK(!foreign_fetch)",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4506c720_7232be79",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-01T08:26:03Z",
+      "side": 1,
+      "message": "Ah right. I will just get rid of fetch_event_info-\u003efetch_type since it\u0027s always FETCH. Actually I\u0027ll just get rid of fetch_event_info since client_id is always empty still.",
+      "parentUuid": "7db70f09_5403562d",
       "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +258,24 @@
     },
     {
       "key": {
+        "uuid": "b8532555_7e8c74c1",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-01T08:26:03Z",
+      "side": 1,
+      "message": "Oops of course. Done.",
+      "parentUuid": "6e7709d7_4d2f3119",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f2781e1_ff12dffa",
         "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 8
@@ -161,6 +293,24 @@
     },
     {
       "key": {
+        "uuid": "66020704_3bca5b87",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-01T08:26:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f2781e1_ff12dffa",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "609af864_d1b0513f",
         "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 8
@@ -172,6 +322,24 @@
       "writtenOn": "2017-11-01T07:42:49Z",
       "side": 1,
       "message": "std::string() /* client_id */\n\nor \n\nconst std::string client_id;\nauto info \u003d mojom::FetchEventInfo::New(client_id, ...);",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "228f30dc_9e489da0",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-01T08:26:03Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "609af864_d1b0513f",
       "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -195,6 +363,24 @@
     },
     {
       "key": {
+        "uuid": "851447d5_1b1284e7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-event.https.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-01T08:26:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab15ad63_444a6231",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bee07ca9_f8a580ad",
         "filename": "third_party/WebKit/Source/platform/exported/WebHTTPBody.cpp",
         "patchSetId": 8
@@ -206,6 +392,24 @@
       "writtenOn": "2017-11-01T06:33:45Z",
       "side": 1,
       "message": "Is this one used?",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7fd9f1f_012466c6",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPBody.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-01T08:26:03Z",
+      "side": 1,
+      "message": "Nope, removed.",
+      "parentUuid": "bee07ca9_f8a580ad",
       "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
