@@ -79,16 +79,17 @@ IN_PROC_BROWSER_TEST_F(PreviewsBrowserTest, NoScriptPreviewsDisabled) {
 }
 
 // Flaky on Win/Mac. See crbug.com/779934 for detail.
-#if defined(OS_MACOSX) || defined(OS_WIN)
-#define MAYBE_NoScriptPreviewsEnabled DISABLED_NoScriptPreviewsEnabled
-#else
-#define MAYBE_NoScriptPreviewsEnabled NoScriptPreviewsEnabled
-#endif
+//#if defined(OS_MACOSX) || defined(OS_WIN)
+//#define MAYBE_NoScriptPreviewsEnabled DISABLED_NoScriptPreviewsEnabled
+//#else
+//#define MAYBE_NoScriptPreviewsEnabled NoScriptPreviewsEnabled
+//#endif
 
 // Loads a webpage that has both script and noscript tags and also requests
 // a script resource. Verifies that the noscript tag is evaluated and the
 // script resource is not loaded.
-IN_PROC_BROWSER_TEST_F(PreviewsBrowserTest, MAYBE_NoScriptPreviewsEnabled) {
+//IN_PROC_BROWSER_TEST_F(PreviewsBrowserTest, MAYBE_NoScriptPreviewsEnabled) {
+IN_PROC_BROWSER_TEST_F(PreviewsBrowserTest, NoScriptPreviewsEnabled) {
   EnableNoScriptPreviews();
   ui_test_utils::NavigateToURL(browser(), test_url());
 
