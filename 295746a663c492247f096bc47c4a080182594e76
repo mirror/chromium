@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d15d18ce_bcc3d20a",
+        "filename": "ash/mus/bridge/shell_port_mash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T22:05:11Z",
+      "side": 1,
+      "message": "Remove this line given the comment is wrong.",
+      "range": {
+        "startLine": 152,
+        "startChar": 5,
+        "endLine": 152,
+        "endChar": 28
+      },
+      "revId": "295746a663c492247f096bc47c4a080182594e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
