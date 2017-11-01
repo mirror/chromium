@@ -1124,7 +1124,9 @@ void WindowTreeClient::OnEmbed(
   DCHECK(!tree_ptr_);
   tree_ptr_ = std::move(tree);
 
+  // Embed window has window id 1.
   is_from_embed_ = true;
+  next_window_id_ = 2;
 
   if (window_manager_delegate_) {
     tree_ptr_->GetWindowManagerClient(
@@ -1784,6 +1786,7 @@ void WindowTreeClient::WmSetCanFocus(Id window_id, bool can_focus) {
 void WindowTreeClient::WmCreateTopLevelWindow(
     uint32_t change_id,
     ClientSpecificId requesting_client_id,
+    ClientSpecificId requesting_window_id,
     const std::unordered_map<std::string, std::vector<uint8_t>>&
         transport_properties) {
   std::map<std::string, std::vector<uint8_t>> properties =
@@ -1799,14 +1802,16 @@ void WindowTreeClient::WmCreateTopLevelWindow(
   Window* window = window_manager_delegate_->OnWmCreateTopLevelWindow(
       window_type, &properties);
   if (!window) {
-    window_manager_client_->OnWmCreatedTopLevelWindow(change_id,
-                                                      kInvalidServerId);
+    window_manager_client_->OnWmCreatedTopLevelWindow(
+        change_id, kInvalidServerId, requesting_client_id,
+        requesting_window_id);
     return;
   }
   embedded_windows_[requesting_client_id].insert(window);
   if (window_manager_client_) {
     window_manager_client_->OnWmCreatedTopLevelWindow(
-        change_id, WindowMus::Get(window)->server_id());
+        change_id, WindowMus::Get(window)->server_id(), requesting_client_id,
+        requesting_window_id);
   }
 }
 
