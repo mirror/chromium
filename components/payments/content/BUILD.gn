@@ -70,6 +70,7 @@ source_set("unit_tests") {
     "payment_request_spec_unittest.cc",
     "payment_request_state_unittest.cc",
     "payment_response_helper_unittest.cc",
+    "service_worker_payment_instrument_unittest.cc",
   ]
 
   deps = [
