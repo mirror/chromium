@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de62cfd0_50113d91",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-01T05:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea261a5_bd6eefee",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 13
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85d4d3e3_ca391bf5",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
         "patchSetId": 3
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "9ba4dbc5_4c1f7a6d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-01T05:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d4d3e3_ca391bf5",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 11
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "373d3bbb_05845507",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-01T05:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3e7fc08_fa8ea010",
+      "range": {
+        "startLine": 104,
+        "startChar": 12,
+        "endLine": 104,
+        "endChar": 28
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97369256_5bb60265",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-27T19:59:15Z",
       "side": 1,
       "message": "nit: return std::string();",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 15
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e88cffb_c6c3d3e8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-01T05:42:00Z",
+      "side": 1,
+      "message": "Actually, let\u0027s make it return const char*.",
+      "parentUuid": "97369256_5bb60265",
       "range": {
         "startLine": 128,
         "startChar": 13,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b1103df4_558daac5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-01T05:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf871898_f9b8f048",
+      "range": {
+        "startLine": 194,
+        "startChar": 2,
+        "endLine": 194,
+        "endChar": 40
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6e99f0c_021d955e",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.h",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4287ba9f_b063310a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-01T05:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6e99f0c_021d955e",
+      "range": {
+        "startLine": 101,
+        "startChar": 5,
+        "endLine": 101,
+        "endChar": 6
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "867256f9_f9d3f10b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-01T05:42:00Z",
+      "side": 1,
+      "message": "Ack\nFrameType is a cross product of enums, so introducing NONE/OTHER would cause GetFrameType to require considering special cases. In an ideal world NONE/OTHER would have been element 0 and the cross product would have just shifted by 1. For now, using Optional.",
+      "parentUuid": "24b67d98_bc89470b",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 45
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a12addd_5b13eee1",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "f9eb6204_8ebb4b88",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 104805,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-01T05:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a12addd_5b13eee1",
+      "range": {
+        "startLine": 104805,
+        "startChar": 33,
+        "endLine": 104805,
+        "endChar": 0
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af5f5aa8_482a097d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -206,6 +398,30 @@
       "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f64109_2738fc8b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 104827,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-01T05:42:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af5f5aa8_482a097d",
+      "range": {
+        "startLine": 104825,
+        "startChar": 0,
+        "endLine": 104827,
+        "endChar": 77
+      },
+      "revId": "46a0b2711ddfbe996cc0d079ba076d6910237953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

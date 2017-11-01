@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "657afc17_a637aa30",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 68029,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-01T05:42:00Z",
+      "side": 1,
+      "message": "Here\u0027s the histograms added (sorry that they got lost in the bunch of changes from the rebase).",
+      "revId": "55a113f140f16c5883812bc33fe645ac9e0e6f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
