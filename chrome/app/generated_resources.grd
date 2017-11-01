@@ -3287,6 +3287,9 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       <message name="IDS_UTILITY_PROCESS_DIAL_DEVICE_DESCRIPTION_PARSER_NAME" desc="The name of the utility process used for parsing XML of uPnP device descriptions of DIAL devices.">
         DIAL Device Description Parser
       </message>
+      <message name="IDS_UTILITY_PROCESS_DIAL_APP_INFO_PARSER_NAME" desc="The name of the utility process used for parsing XML of application information of DIAL devices.">
+        DIAL Application Info Parser
+      </message>
 
       <!-- Theme preview info bar -->
       <message name="IDS_THEME_INSTALL_INFOBAR_LABEL" desc="Text displayed on an infobar when a theme has been installed.">
