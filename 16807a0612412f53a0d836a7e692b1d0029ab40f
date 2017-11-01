@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a1d76df_4b5b040d",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T12:22:24Z",
+      "side": 1,
+      "message": "nit: drop {} for one-line statements",
+      "revId": "16807a0612412f53a0d836a7e692b1d0029ab40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d562882_1ec66949",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T12:22:24Z",
+      "side": 1,
+      "message": "I feel this is a bit of a UX question we\u0027ll want to raise with hwi@ in the UI review.\n\nMicrosoft has the following three entries:\n  1. Turn off notifications for this site\n  2. Go to notification settings **\n  3. Turn off notifications for this app **\n\n** added by the Action Center\n\nIt would be good to be close to that, but also to match the other Chrome platforms. For now, could we have a single entry that reads:\n\n  \"Go to site settings for this site\"\n\nWhich effectively maps to kNotificationSettings. (I.e. remove the option to disable them directly.)",
+      "revId": "16807a0612412f53a0d836a7e692b1d0029ab40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b27bf3_e1072519",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T12:22:24Z",
+      "side": 1,
+      "message": "It\u0027s a bit unfortunate that the context menu entries go into the \u003cactions\u003e section. Semantically I consider the context menu to be separate from that (visual vs. interaction), could we maybe maintain some of that in code? I\u0027m thinking:\n\nNotificationTemplateBuilder::Build()\n  - StartActionsElement()\n    - AddActions()\n    - AddContextMenu()\n  - EndActionsElement()\n\nWDYT?",
+      "revId": "16807a0612412f53a0d836a7e692b1d0029ab40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f577c8a_e6e88c52",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T12:22:24Z",
+      "side": 1,
+      "message": "Declared, but not used?",
+      "revId": "16807a0612412f53a0d836a7e692b1d0029ab40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e46fc9d_49cf6965",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-01T12:22:24Z",
+      "side": 1,
+      "message": "Personal preference, please ask Finnur to decide:\n\nI realise that you\u0027re doing this because of the i18n issues, but I also worry that this won\u0027t scale very well. For instance, Finnur is adding support for images in a different CL, which don\u0027t go in the \u003cactions\u003e section. Would we add another parameter to GetExpectedXml()?\n\nInstead, consider forcing a particular label for the context menu item for testing purposes in BuildTemplate():\n\n    NotificationTemplateBuilder::SetContextMenuLabelOverrideForTesting(\"site settings\");\n    auto foo \u003d NotificationTemplateBuilder::Build(..)\n\nThat\u0027ll enable the XML to continue to be inlined in the individual tests.",
+      "revId": "16807a0612412f53a0d836a7e692b1d0029ab40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
