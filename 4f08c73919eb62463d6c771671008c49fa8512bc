@@ -1,0 +1,267 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d10708cc_78d45f7b",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T14:58:24Z",
+      "side": 1,
+      "message": "nit: I assume this is only for testing? please remove this before you land the change",
+      "revId": "4f08c73919eb62463d6c771671008c49fa8512bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97a6dc0_9447ab90",
+        "filename": "base/memory/shared_memory_handle_android.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T14:58:24Z",
+      "side": 1,
+      "message": "nit: not need for base:: prefix here and below but maybe better to keep it for consistency if this is the common practice in shared memory code today",
+      "revId": "4f08c73919eb62463d6c771671008c49fa8512bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3cdcc7a_faf25a61",
+        "filename": "ui/gl/gl_image_ahardwarebuffer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T14:58:24Z",
+      "side": 1,
+      "message": "nit: not needed in new files",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "4f08c73919eb62463d6c771671008c49fa8512bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f563a371_a04f9446",
+        "filename": "ui/gl/gl_image_ahardwarebuffer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T14:58:24Z",
+      "side": 1,
+      "message": "nit: are these needed? just move gl_bindings.h here for GL_RGBA below instead?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 33
+      },
+      "revId": "4f08c73919eb62463d6c771671008c49fa8512bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433bff12_41328e9a",
+        "filename": "ui/gl/gl_image_ahardwarebuffer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T14:58:24Z",
+      "side": 1,
+      "message": "nit: not needed in new files",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "4f08c73919eb62463d6c771671008c49fa8512bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c002ac_2c9fc545",
+        "filename": "ui/gl/gl_image_ahardwarebuffer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T14:58:24Z",
+      "side": 1,
+      "message": "nit: unused?",
+      "revId": "4f08c73919eb62463d6c771671008c49fa8512bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caba0cf9_381cb9b3",
+        "filename": "ui/gl/gl_image_ahardwarebuffer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T14:58:24Z",
+      "side": 1,
+      "message": "nit: unused?",
+      "revId": "4f08c73919eb62463d6c771671008c49fa8512bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82082d5_7cda5a0f",
+        "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T14:58:24Z",
+      "side": 1,
+      "message": "nit: ASSERT_TRUE(base::AndroidHardwareBufferCompat::IsSupportAvailable()) as that makes it more clear what is wrong if someone runs this on a device where it\u0027s not supported.",
+      "revId": "4f08c73919eb62463d6c771671008c49fa8512bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744a040e_d0c1a8e7",
+        "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T14:58:24Z",
+      "side": 1,
+      "message": "nit: kBytesPerPixel",
+      "range": {
+        "startLine": 33,
+        "startChar": 14,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "4f08c73919eb62463d6c771671008c49fa8512bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c96963_171df7d8",
+        "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T14:58:24Z",
+      "side": 1,
+      "message": "nit: result?",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 11
+      },
+      "revId": "4f08c73919eb62463d6c771671008c49fa8512bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfe9c3b_f9afb25b",
+        "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T14:58:24Z",
+      "side": 1,
+      "message": "nit: int result \u003d base::AndroidH...",
+      "revId": "4f08c73919eb62463d6c771671008c49fa8512bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6bac973_b357e324",
+        "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T14:58:24Z",
+      "side": 1,
+      "message": "nit: static_cast\u003cvoid**\u003e(\u0026data)? or reinterpret_cast if needed..",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 23
+      },
+      "revId": "4f08c73919eb62463d6c771671008c49fa8512bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d06dc63_a5f4d68b",
+        "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-01T14:58:24Z",
+      "side": 1,
+      "message": "nit: kColor or maybe kTransparentBlack",
+      "range": {
+        "startLine": 81,
+        "startChar": 18,
+        "endLine": 81,
+        "endChar": 23
+      },
+      "revId": "4f08c73919eb62463d6c771671008c49fa8512bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
