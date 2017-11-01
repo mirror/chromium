@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15465b3f_64b74e32",
+        "filename": "ios/chrome/browser/payments/payment_request_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-11-01T20:18:56Z",
+      "side": 1,
+      "message": "Q: would it make sense to make these methods part of the PaymentRequest object directly instead?",
+      "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5428fb1d_54a90242",
+        "filename": "ios/chrome/browser/payments/payment_request_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-11-01T20:18:56Z",
+      "side": 1,
+      "message": "Does PlatformTest define SetUp()? If not, then it\u0027s not necessary to override this method, and if yes, it should probably be called as well?",
+      "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5af8c04_547e08de",
+        "filename": "ios/chrome/browser/payments/payment_request_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-11-01T20:18:56Z",
+      "side": 1,
+      "message": "nit: s/the output of/the return value of/ ?",
+      "range": {
+        "startLine": 82,
+        "startChar": 9,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
