@@ -22,6 +22,30 @@
       "revId": "ca4c99bd88ab9ec69e6a8248b081cea2f6a03f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40ff4bf_0b2e9d5c",
+        "filename": "services/data_decoder/public/cpp/safe_json_parser_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-01T17:29:58Z",
+      "side": 1,
+      "message": "Ah, didn\u0027t realize UnguessableToken had a ToString. That SGTM too",
+      "parentUuid": "cf0c07d9_d7f246ee",
+      "range": {
+        "startLine": 30,
+        "startChar": 37,
+        "endLine": 30,
+        "endChar": 55
+      },
+      "revId": "ca4c99bd88ab9ec69e6a8248b081cea2f6a03f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
