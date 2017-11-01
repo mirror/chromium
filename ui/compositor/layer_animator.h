@@ -297,9 +297,6 @@ class COMPOSITOR_EXPORT LayerAnimator : public base::RefCounted<LayerAnimator>,
   // Finishes any running animation with zero duration.
   void FinishAnyAnimationWithZeroDuration();
 
-  // Clears the running animations and the queue. No sequences are progressed.
-  void ClearAnimations();
-
   // Returns the running animation animating the given property, if any.
   RunningAnimation* GetRunningAnimation(
       LayerAnimationElement::AnimatableProperty property);

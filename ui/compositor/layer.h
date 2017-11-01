@@ -485,6 +485,7 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   LayerAnimatorCollection* GetLayerAnimatorCollection() override;
   int GetFrameNumber() const override;
   float GetRefreshRate() const override;
+  void OnTargetTransformChanged() override;
 
   // Creates a corresponding composited layer for |type_|.
   void CreateCcLayer();

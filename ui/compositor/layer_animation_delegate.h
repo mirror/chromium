@@ -48,6 +48,9 @@ class COMPOSITOR_EXPORT LayerAnimationDelegate {
   virtual int GetFrameNumber() const = 0;
   virtual float GetRefreshRate() const = 0;
 
+  // Invoked when the target transform of the animated layer has changed.
+  virtual void OnTargetTransformChanged() = 0;
+
  protected:
   virtual ~LayerAnimationDelegate() {}
 };

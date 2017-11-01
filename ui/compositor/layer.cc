@@ -1263,6 +1263,11 @@ float Layer::GetRefreshRate() const {
   return compositor ? compositor->refresh_rate() : 60.0;
 }
 
+void Layer::OnTargetTransformChanged() {
+  if (delegate_)
+    delegate_->OnLayerTargetTransformChanged();
+}
+
 ui::Layer* Layer::GetLayer() {
   return this;
 }

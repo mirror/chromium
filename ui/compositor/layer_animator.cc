@@ -64,7 +64,11 @@ LayerAnimator::~LayerAnimator() {
     if (running_animations_[i].is_sequence_alive())
       running_animations_[i].sequence()->OnAnimatorDestroyed();
   }
+  const bool was_animating_transform =
+      IsAnimatingProperty(LayerAnimationElement::TRANSFORM);
   ClearAnimationsInternal();
+  if (was_animating_transform && delegate_)
+    delegate_->OnTargetTransformChanged();
   delegate_ = NULL;
   DCHECK(!animation_player_->animation_timeline());
 }
@@ -86,25 +90,29 @@ LayerAnimator* LayerAnimator::CreateImplicitAnimator() {
 // It is worth noting that SetFoo avoids invoking the usual animation machinery
 // if the transition duration is zero -- in this case we just set the property
 // on the layer animation delegate immediately.
-#define ANIMATED_PROPERTY(type, property, name, member_type, member)    \
-  void LayerAnimator::Set##name(type value) {                           \
-    base::TimeDelta duration = GetTransitionDuration();                 \
-    if (duration.is_zero() && delegate() &&                             \
-        (preemption_strategy_ != ENQUEUE_NEW_ANIMATION)) {              \
-      StopAnimatingProperty(LayerAnimationElement::property);           \
-      delegate()->Set##name##FromAnimation(value);                      \
-      return;                                                           \
-    }                                                                   \
-    std::unique_ptr<LayerAnimationElement> element =                    \
-        LayerAnimationElement::Create##name##Element(value, duration);  \
-    element->set_tween_type(tween_type_);                               \
-    StartAnimation(new LayerAnimationSequence(std::move(element)));     \
-  }                                                                     \
-                                                                        \
-  member_type LayerAnimator::GetTarget##name() const {                  \
-    LayerAnimationElement::TargetValue target(delegate());              \
-    GetTargetValue(&target);                                            \
-    return target.member;                                               \
+#define ANIMATED_PROPERTY(type, property, name, member_type, member)   \
+  void LayerAnimator::Set##name(type value) {                          \
+    base::TimeDelta duration = GetTransitionDuration();                \
+    if (duration.is_zero() && delegate() &&                            \
+        (preemption_strategy_ != ENQUEUE_NEW_ANIMATION)) {             \
+      StopAnimatingProperty(LayerAnimationElement::property);          \
+      delegate()->Set##name##FromAnimation(value);                     \
+      if (LayerAnimationElement::property ==                           \
+          LayerAnimationElement::TRANSFORM) {                          \
+        delegate()->OnTargetTransformChanged();                        \
+      }                                                                \
+      return;                                                          \
+    }                                                                  \
+    std::unique_ptr<LayerAnimationElement> element =                   \
+        LayerAnimationElement::Create##name##Element(value, duration); \
+    element->set_tween_type(tween_type_);                              \
+    StartAnimation(new LayerAnimationSequence(std::move(element)));    \
+  }                                                                    \
+                                                                       \
+  member_type LayerAnimator::GetTarget##name() const {                 \
+    LayerAnimationElement::TargetValue target(delegate());             \
+    GetTargetValue(&target);                                           \
+    return target.member;                                              \
   }
 
 ANIMATED_PROPERTY(
@@ -199,6 +207,8 @@ void LayerAnimator::StartAnimation(LayerAnimationSequence* animation) {
   scoped_refptr<LayerAnimator> retain(this);
   if (animation_metrics_reporter_)
     animation->SetAnimationMetricsReporter(animation_metrics_reporter_);
+  const bool is_animating_transform =
+      animation->properties() & ui::LayerAnimationElement::TRANSFORM;
   OnScheduled(animation);
   if (!StartSequenceImmediately(animation)) {
     // Attempt to preempt a running animation.
@@ -219,10 +229,14 @@ void LayerAnimator::StartAnimation(LayerAnimationSequence* animation) {
   }
   FinishAnyAnimationWithZeroDuration();
   UpdateAnimationState();
+  if (is_animating_transform && delegate_)
+    delegate_->OnTargetTransformChanged();
 }
 
 void LayerAnimator::ScheduleAnimation(LayerAnimationSequence* animation) {
   scoped_refptr<LayerAnimator> retain(this);
+  const bool is_animating_transform =
+      animation->properties() & ui::LayerAnimationElement::TRANSFORM;
   OnScheduled(animation);
   if (is_animating()) {
     animation_queue_.push_back(make_linked_ptr(animation));
@@ -230,7 +244,11 @@ void LayerAnimator::ScheduleAnimation(LayerAnimationSequence* animation) {
   } else {
     StartSequenceImmediately(animation);
   }
+  if (is_animating_transform && delegate_)
+    delegate_->OnTargetTransformChanged();
   UpdateAnimationState();
+  if (is_animating_transform && delegate_)
+    delegate_->OnTargetTransformChanged();
 }
 
 void LayerAnimator::StartTogether(
@@ -495,6 +513,8 @@ void LayerAnimator::Step(base::TimeTicks now) {
 
 void LayerAnimator::StopAnimatingInternal(bool abort) {
   scoped_refptr<LayerAnimator> retain(this);
+  bool aborting_transform_animation =
+      abort && IsAnimatingProperty(LayerAnimationElement::TRANSFORM);
   while (is_animating() && delegate()) {
     // We're going to attempt to finish the first running animation. Let's
     // ensure that it's valid.
@@ -514,6 +534,8 @@ void LayerAnimator::StopAnimatingInternal(bool abort) {
 
     SAFE_INVOKE_VOID(FinishAnimation, running_animations_[0], abort);
   }
+  if (aborting_transform_animation && delegate_)
+    delegate_->OnTargetTransformChanged();
 }
 
 void LayerAnimator::UpdateAnimationState() {
@@ -627,11 +649,6 @@ void LayerAnimator::FinishAnyAnimationWithZeroDuration() {
   }
   ProcessQueue();
   UpdateAnimationState();
-}
-
-void LayerAnimator::ClearAnimations() {
-  scoped_refptr<LayerAnimator> retain(this);
-  ClearAnimationsInternal();
 }
 
 LayerAnimator::RunningAnimation* LayerAnimator::GetRunningAnimation(
