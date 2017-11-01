@@ -331,7 +331,7 @@ Screencast.ScreencastView = class extends UI.VBox {
     }
 
     this._node = node;
-    node.boxModel().then(model => {
+    node.boxModel(true).then(model => {
       if (!model || !this._pageScaleFactor) {
         this._repaint();
         return;
