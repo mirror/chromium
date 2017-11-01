@@ -116,6 +116,9 @@ class MockRenderProcessHost : public RenderProcessHost {
   void ResumeDeferredNavigation(const GlobalRequestID& request_id) override;
   void BindInterface(const std::string& interface_name,
                      mojo::ScopedMessagePipeHandle interface_pipe) override;
+  void BindEmbedderInterface(
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle interface_pipe) override;
   const service_manager::Identity& GetChildIdentity() const override;
   std::unique_ptr<base::SharedPersistentMemoryAllocator> TakeMetricsAllocator()
       override;

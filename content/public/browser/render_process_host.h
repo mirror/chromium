@@ -310,6 +310,10 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   virtual void BindInterface(const std::string& interface_name,
                              mojo::ScopedMessagePipeHandle interface_pipe) = 0;
 
+  virtual void BindEmbedderInterface(
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle interface_pipe) = 0;
+
   virtual const service_manager::Identity& GetChildIdentity() const = 0;
 
   // Extracts any persistent-memory-allocator used for renderer metrics.

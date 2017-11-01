@@ -442,6 +442,20 @@ class RendererLocalSurfaceIdProvider : public viz::LocalSurfaceIdProvider {
   RenderWidgetSurfaceProperties surface_properties_;
 };
 
+class RendererServiceFactory : public ServiceFactory {
+ public:
+  RendererServiceFactory() {}
+  ~RendererServiceFactory() override {}
+
+  // ServiceFactory overrides:
+  void RegisterServices(ServiceMap* services) override {
+    GetContentClient()->renderer()->RegisterServices(services);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(RendererServiceFactory);
+};
+
 // This factory is used to defer binding of the InterfacePtr to the compositor
 // thread.
 class UkmRecorderFactoryImpl : public cc::UkmRecorderFactory {
@@ -793,7 +807,8 @@ void RenderThreadImpl::Init(
 
   AddFilter((new ServiceWorkerContextMessageFilter())->GetFilter());
 
-// Register exported services:
+  // Register exported services:
+  service_factory_ = std::make_unique<RendererServiceFactory>();
 
 #if defined(USE_AURA)
   if (IsRunningInMash()) {
@@ -801,6 +816,10 @@ void RenderThreadImpl::Init(
   }
 #endif
 
+  registry->AddInterface(
+      base::Bind(&RenderThreadImpl::BindServiceFactoryRequest,
+                 base::Unretained(this)),
+      base::ThreadTaskRunnerHandle::Get());
   registry->AddInterface(base::Bind(&SharedWorkerFactoryImpl::Create),
                          base::ThreadTaskRunnerHandle::Get());
   GetServiceManagerConnection()->AddConnectionFilter(
@@ -2628,6 +2647,13 @@ bool RenderThreadImpl::NeedsToRecordFirstActivePaint(
     return false;
   base::TimeDelta passed = base::TimeTicks::Now() - was_backgrounded_time_;
   return passed.InMinutes() >= 5;
+}
+
+void RenderThreadImpl::BindServiceFactoryRequest(
+    service_manager::mojom::ServiceFactoryRequest request) {
+  DCHECK(service_factory_);
+  service_factory_bindings_.AddBinding(service_factory_.get(),
+                                       std::move(request));
 }
 
 }  // namespace content
