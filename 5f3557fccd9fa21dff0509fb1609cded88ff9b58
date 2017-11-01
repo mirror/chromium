@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "307d58a0_17fa4480",
+        "filename": "chrome/browser/vr/elements/button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-01T21:24:55Z",
+      "side": 1,
+      "message": "typos: \"foreground both move\"",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "5f3557fccd9fa21dff0509fb1609cded88ff9b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18c7330c_275dc6ff",
         "filename": "chrome/browser/vr/elements/button.h",
         "patchSetId": 1
@@ -30,6 +53,24 @@
       "writtenOn": "2017-11-01T20:21:35Z",
       "side": 1,
       "message": "Please add a TODO and bug for the correct solution which is to refer to elements in this test by name/class pairs. When we do this, we will be able to account for these unnamed elements in the sort order. (Also, this bug should block the declarative scene config work).",
+      "revId": "5f3557fccd9fa21dff0509fb1609cded88ff9b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329f2c57_b977b7f6",
+        "filename": "chrome/browser/vr/ui_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-01T21:24:55Z",
+      "side": 1,
+      "message": "Ian, it\u0027d be cool to know exactly how you\u0027d represent vector-binding created arrays of tree-based elements.  In that case there is no name, presumably.",
+      "parentUuid": "1c96c833_d254bcf9",
       "revId": "5f3557fccd9fa21dff0509fb1609cded88ff9b58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
