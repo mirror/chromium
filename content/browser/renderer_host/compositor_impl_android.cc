@@ -342,9 +342,10 @@ class AndroidOutputSurface : public viz::OutputSurface {
   void OnSwapBuffersCompleted(
       const std::vector<ui::LatencyInfo>& latency_info,
       gfx::SwapResult result,
+      uint32_t count,
       const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac) {
     RenderWidgetHostImpl::OnGpuSwapBuffersCompleted(latency_info);
-    client_->DidReceiveSwapBuffersAck();
+    client_->DidReceiveSwapBuffersAck(count);
     swap_buffers_callback_.Run();
   }
 

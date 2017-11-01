@@ -53,7 +53,8 @@ void GlRenderer::RenderFrame() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   surface_->SwapBuffersAsync(base::Bind(&GlRenderer::PostRenderFrameTask,
-                                        weak_ptr_factory_.GetWeakPtr()));
+                                        weak_ptr_factory_.GetWeakPtr()),
+                             gl::GLSurface::PresentationCallback());
 }
 
 void GlRenderer::PostRenderFrameTask(gfx::SwapResult result) {

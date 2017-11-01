@@ -634,10 +634,18 @@ bool NativeViewGLSurfaceGLX::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult NativeViewGLSurfaceGLX::SwapBuffers() {
+gfx::SwapResult NativeViewGLSurfaceGLX::SwapBuffers(
+    const PresentationCallback& callback) {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceGLX:RealSwapBuffers", "width",
                GetSize().width(), "height", GetSize().height());
   glXSwapBuffers(g_display, GetDrawableHandle());
+  // TODO(penghuang): Provide useful presentation feedback.
+  // https://crbug.com/776877
+  if (callback) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(callback, base::TimeTicks::Now(),
+                              base::TimeDelta::FromSeconds(1) / 60, 0));
+  }
   return gfx::SwapResult::SWAP_ACK;
 }
 
@@ -667,10 +675,13 @@ unsigned long NativeViewGLSurfaceGLX::GetCompatibilityKey() {
   return visual_id_;
 }
 
-gfx::SwapResult NativeViewGLSurfaceGLX::PostSubBuffer(int x,
-                                                      int y,
-                                                      int width,
-                                                      int height) {
+gfx::SwapResult NativeViewGLSurfaceGLX::PostSubBuffer(
+    int x,
+    int y,
+    int width,
+    int height,
+    const PresentationCallback& callback) {
+  // TODO(penghuang): Provide presentation feedback. https://crbug.com/776877
   DCHECK(g_driver_glx.ext.b_GLX_MESA_copy_sub_buffer);
   glXCopySubBufferMESA(g_display, GetDrawableHandle(), x, y, width, height);
   return gfx::SwapResult::SWAP_ACK;
@@ -748,7 +759,8 @@ bool UnmappedNativeViewGLSurfaceGLX::IsOffscreen() {
   return true;
 }
 
-gfx::SwapResult UnmappedNativeViewGLSurfaceGLX::SwapBuffers() {
+gfx::SwapResult UnmappedNativeViewGLSurfaceGLX::SwapBuffers(
+    const PresentationCallback& callback) {
   NOTREACHED() << "Attempted to call SwapBuffers on an unmapped window.";
   return gfx::SwapResult::SWAP_FAILED;
 }
