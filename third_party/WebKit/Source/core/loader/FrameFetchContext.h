@@ -229,6 +229,11 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   Member<DocumentLoader> document_loader_;
   Member<Document> document_;
 
+  // Value of save data is cached locally from NetworkStateNotifier where it is
+  // protected by mutex lock. Caching it locally makes it faster to read on each
+  // request.
+  const bool save_data_;
+
   // Non-null only when detached.
   Member<const FrozenState> frozen_state_;
 };
