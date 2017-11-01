@@ -52,6 +52,24 @@
       "revId": "9e53b6d7daf6f1f596266766ea49a82ae1bb1adc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277891a2_b634b48e",
+        "filename": "third_party/WebKit/public/platform/modules/manifest/manifest.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-11-01T23:11:03Z",
+      "side": 1,
+      "message": "Ack, will chase it down next! Thanks!",
+      "parentUuid": "e0cffbc1_15c804b0",
+      "revId": "9e53b6d7daf6f1f596266766ea49a82ae1bb1adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
