@@ -212,7 +212,7 @@ TEST_F(RenderViewHostTest, MessageWithBadHistoryItemFiles) {
 namespace {
 void SetBadFilePath(const GURL& url,
                     const base::FilePath& file_path,
-                    FrameHostMsg_DidCommitProvisionalLoad_Params* params) {
+                    mojom::DidCommitProvisionalLoadParams* params) {
   params->page_state =
       PageState::CreateForTesting(url, false, "data", &file_path);
 }

@@ -220,7 +220,7 @@ class CommitBeforeSwapAckSentHelper
   // DidCommitProvisionalLoadInterceptor:
   void WillDispatchDidCommitProvisionalLoad(
       RenderFrameHost* render_frame_host,
-      ::FrameHostMsg_DidCommitProvisionalLoad_Params*) override {
+      const mojom::DidCommitProvisionalLoadParams&) override {
     base::MessageLoop::ScopedNestableTaskAllower allow(
         base::MessageLoop::current());
     FrameWatcher(web_contents()).WaitFrames(1);

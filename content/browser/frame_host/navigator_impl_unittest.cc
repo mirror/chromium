@@ -1185,9 +1185,8 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
 }
 
 namespace {
-void SetWithinSameDocument(
-    const GURL& url,
-    FrameHostMsg_DidCommitProvisionalLoad_Params* params) {
+void SetWithinSameDocument(const GURL& url,
+                           mojom::DidCommitProvisionalLoadParams* params) {
   params->was_within_same_document = true;
   params->url = url;
   params->origin = url::Origin::Create(url);
@@ -1340,10 +1339,10 @@ TEST_F(NavigatorTestWithBrowserSideNavigation, FeaturePolicyNewChild) {
   TestRenderFrameHost* subframe_rfh =
       contents()->GetMainFrame()->AppendChild("child");
   // Simulate the navigation triggered by inserting a child frame into a page.
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  InitNavigateParams(&params, 1, false, kUrl2,
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  InitNavigateParams(params.get(), 1, false, kUrl2,
                      ui::PAGE_TRANSITION_AUTO_SUBFRAME);
-  subframe_rfh->SendNavigateWithParams(&params);
+  subframe_rfh->SendNavigateWithParams(std::move(params));
 
   FeaturePolicy* subframe_feature_policy = subframe_rfh->feature_policy();
   ASSERT_TRUE(subframe_feature_policy);

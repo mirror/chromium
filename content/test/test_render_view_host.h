@@ -17,6 +17,7 @@
 #include "components/viz/host/host_frame_sink_client.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
+#include "content/common/frame.mojom.h"
 #include "content/public/common/web_preferences.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/test_renderer_host.h"
@@ -36,8 +37,6 @@
 //
 // To use, derive your test base class from RenderViewHostImplTestHarness.
 
-struct FrameHostMsg_DidCommitProvisionalLoad_Params;
-
 namespace gfx {
 class Rect;
 }
@@ -51,7 +50,7 @@ struct FrameReplicationState;
 
 // Utility function to initialize FrameHostMsg_DidCommitProvisionalLoad_Params
 // with given parameters.
-void InitNavigateParams(FrameHostMsg_DidCommitProvisionalLoad_Params* params,
+void InitNavigateParams(mojom::DidCommitProvisionalLoadParams* params,
                         int nav_entry_id,
                         bool did_create_new_entry,
                         const GURL& url,
