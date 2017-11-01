@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a348f2ab_354b365d",
+        "filename": "ash/public/interfaces/vpn_list.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4e2549e_0c097d31",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb9a525e_709209bb",
         "filename": "ash/public/interfaces/vpn_list.mojom",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133def1f_5c8dc667",
+        "filename": "ash/public/interfaces/vpn_list.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb9a525e_709209bb",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "86ea0c53_2f352123",
+        "filename": "ash/public/interfaces/vpn_list.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38f153bf_229dd8b7",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1651711_194f9cae",
         "filename": "ash/public/interfaces/vpn_list.mojom",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-19T21:03:17Z",
       "side": 1,
       "message": "|package_name| or |app_id|? (What\u0027s the difference?)",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afaf9542_2d2f3e85",
+        "filename": "ash/public/interfaces/vpn_list.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Functionally passing package_name or appid would both when removing Arc app in this case. For other use case, we may removing both app and short cuts(means app_ids) at same time, so package_name is passed through removing interface via onPackageRemove(string package_name). I forward the package_name to ash in this case.",
+      "parentUuid": "a1651711_194f9cae",
       "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2715d813_1cce0b35",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83bd9aac_aee325ff",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bd02b90_8ab52896",
         "filename": "ash/system/network/vpn_list.h",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce52f04_471c0bc3",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bd02b90_8ab52896",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ec612377_e5b658ce",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c57fd89_89746f9a",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cae8644c_0a4f2e62",
         "filename": "ash/system/network/vpn_list.h",
         "patchSetId": 12
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "731ac18a_fc442f41",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cae8644c_0a4f2e62",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03c64645_a69e8d11",
         "filename": "ash/system/network/vpn_list.h",
         "patchSetId": 12
@@ -152,6 +296,24 @@
       "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3776e6e6_b7408682",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03c64645_a69e8d11",
+      "revId": "3f5c3db7432b7420f9e73e62e3e5a490fe27604c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

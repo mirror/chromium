@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15a7cffd_ded4b1e1",
+        "filename": "ash/public/interfaces/vpn_list.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2dfbe35_9b580c76",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d5e047f_b272d705",
         "filename": "ash/system/network/vpn_list.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e780554_327f0eaa",
+        "filename": "ash/system/network/vpn_list.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d5e047f_b272d705",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0231beb1_3304189e",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6858e88c_4308c72c",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dae876d_76d47e71",
         "filename": "ash/system/network/vpn_list.h",
         "patchSetId": 13
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "fbd355b0_62136b40",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dae876d_76d47e71",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16648245_693f66b9",
         "filename": "ash/system/network/vpn_list.h",
         "patchSetId": 13
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-19T21:03:17Z",
       "side": 1,
       "message": "We should rename vpn_providers_ something like extension_vpn_providers_, and generally replace \"third party\" with \"extension\" throughout to make the code more clear.",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e57e4c7_168c3f54",
+        "filename": "ash/system/network/vpn_list.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Agree as all Arc Vpn are also from third party. So the name \"third party vpn\" is becoming confusing.\n\nI change the vpn_providers_ to extension_vpn_providers_ here.\n\nFor the general \"thirde party\" to \"extension\" name change, as \"third party vpn\" lives in too many places. It may be safer to change the name in separate one bug/cl. crbug/779136 filed and assigned to me for now.",
+      "parentUuid": "16648245_693f66b9",
       "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "467f22fc_f2d879e0",
+        "filename": "ash/system/network/vpn_list_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "added in https://chromium-review.googlesource.com/c/chromium/src/+/703986",
+      "parentUuid": "1607a29c_2611d9e7",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f74189c_25d36ad3",
         "filename": "ash/system/network/vpn_list_view.cc",
         "patchSetId": 13
@@ -118,6 +226,24 @@
       "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdd20b9_cce97b8c",
+        "filename": "ash/system/network/vpn_list_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f74189c_25d36ad3",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "da2721f1_6c1f354d",
+        "filename": "ash/system/network/vpn_list_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e5054bb_5fc862c3",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dd81ab3_b4144266",
         "filename": "ash/system/network/vpn_list_view.cc",
         "patchSetId": 13
@@ -152,6 +296,24 @@
       "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87cf227b_b3aed501",
+        "filename": "ash/system/network/vpn_list_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dd81ab3_b4144266",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "0fa77d5d_e3afaf02",
+        "filename": "chromeos/network/network_state.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2bc2bfd_17c5e7e5",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9091b142_2bc4748a",
         "filename": "chromeos/network/network_state.h",
         "patchSetId": 13
@@ -221,6 +401,24 @@
       "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04941f4_84166b66",
+        "filename": "chromeos/network/network_state.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-01T20:41:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9091b142_2bc4748a",
+      "revId": "7c09eda18bb25eb579dfbeb3b8e436f101b73ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
