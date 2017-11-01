@@ -241,6 +241,7 @@ class WebLocalFrame : public WebFrame {
   };
   // On load failure, attempts to make frame's parent render fallback content.
   virtual FallbackContentResult MaybeRenderFallbackContent(
+      const WebURL&,
       const WebURLError&) const = 0;
 
   // Called when a navigation is blocked because a Content Security Policy (CSP)

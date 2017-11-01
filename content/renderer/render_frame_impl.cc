@@ -5453,7 +5453,7 @@ void RenderFrameImpl::OnFailedNavigation(
   // On load failure, a frame can ask its owner to render fallback content.
   // When that happens, don't load an error page.
   WebLocalFrame::FallbackContentResult fallback_result =
-      frame_->MaybeRenderFallbackContent(error);
+      frame_->MaybeRenderFallbackContent(common_params.url, error);
   if (fallback_result != WebLocalFrame::NoFallbackContent) {
     if (fallback_result == WebLocalFrame::NoLoadInProgress) {
       // If the frame wasn't loading but was fallback-eligible, the fallback

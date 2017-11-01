@@ -60,15 +60,6 @@ WebURLError& WebURLError::operator=(const ResourceError& error) {
   return *this;
 }
 
-WebURLError::operator ResourceError() const {
-  if (!reason)
-    return ResourceError();
-  ResourceError resource_error(domain, reason, unreachable_url);
-  resource_error.SetStaleCopyInCache(stale_copy_in_cache);
-  resource_error.SetIsAccessCheck(is_web_security_violation);
-  return resource_error;
-}
-
 std::ostream& operator<<(std::ostream& out, const WebURLError::Domain domain) {
   switch (domain) {
     case WebURLError::Domain::kEmpty:
