@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "833107ed_a727b5ea",
+        "filename": "media/remoting/proto_utils_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-01T20:42:50Z",
+      "side": 1,
+      "message": "We could even EXPECT_EQ() the `real_size` here to make sure if the size changes, it will fail the test.",
+      "revId": "8a2db95df86f30a05f5c30571a492be2f2eac12b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
