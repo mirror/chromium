@@ -2072,7 +2072,7 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 - (void)dismissSigninInteractionCoordinator {
   // The SigninInteractionCoordinator must not be destroyed at this point, as
   // it may dismiss the sign in UI in a future callback.
-  [self.signinInteractionCoordinator cancelAndDismiss];
+  [self.signinInteractionCoordinator cancelAndDismissWithCompletion:nil];
 }
 
 - (void)closeSettingsAnimated:(BOOL)animated
@@ -2270,7 +2270,7 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 
   // Cancel interaction with SSO.
   // First, cancel the signin interaction.
-  [self.signinInteractionCoordinator cancel];
+  [self.signinInteractionCoordinator cancelWithCompletion:nil];
 
   // Then, depending on what the SSO view controller is presented on, dismiss
   // it.
