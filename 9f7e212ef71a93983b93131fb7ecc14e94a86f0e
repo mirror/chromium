@@ -34,6 +34,24 @@
       "revId": "9f7e212ef71a93983b93131fb7ecc14e94a86f0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755c7873_e49c1f59",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-01T00:51:31Z",
+      "side": 1,
+      "message": "I tried registering the two as foreign prefs in chrome/browser/chromeos/preferences.cc (right spot?), but it crashes in --mash (works without it). It seems they are already registered as foreigners at [1], via mojo call from ash/session_controller.cc.\n\n[1] https://cs.chromium.org/chromium/src/services/preferences/shared_pref_registry.cc?rcl\u003d1836051712700b4abfd54361aab9a13f6203dac5\u0026l\u003d148",
+      "parentUuid": "d5d03f88_432b1bd3",
+      "revId": "9f7e212ef71a93983b93131fb7ecc14e94a86f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
