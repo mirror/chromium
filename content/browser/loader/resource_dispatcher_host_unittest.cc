@@ -171,7 +171,7 @@ static ResourceRequest CreateResourceRequest(const char* method,
       url::Origin::Create(url);  // ensure initiator is set
   request.referrer_policy = blink::kWebReferrerPolicyDefault;
   request.load_flags = 0;
-  request.origin_pid = 0;
+  request.plugin_child_id = 0;
   request.resource_type = type;
   request.request_context = 0;
   request.appcache_host_id = kAppCacheNoHostId;
@@ -1206,7 +1206,8 @@ void ResourceDispatcherHostTest::
                                                          const GURL& url,
                                                          ResourceType type) {
   ResourceRequest request = CreateResourceRequest("GET", type, url);
-  request.origin_pid = web_contents_->GetMainFrame()->GetProcess()->GetID();
+  DCHECK_EQ(web_contents_filter_->child_id(),
+            web_contents_->GetMainFrame()->GetProcess()->GetID());
   request.render_frame_id = web_contents_->GetMainFrame()->GetRoutingID();
   ResourceHostMsg_RequestResource msg(
       web_contents_->GetRenderViewHost()->GetRoutingID(), request_id, request,
