@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb4dc0a3_bd295053",
+        "filename": "tools/binary_size/libsupersize/integration_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-01T18:57:08Z",
+      "side": 1,
+      "message": "NIT: I thought \"idempotent\" means f(f(x)) \u003d f(x), but in our case we don\u0027t feed output back to input. Perhaps test_Consistency()?",
+      "range": {
+        "startLine": 210,
+        "startChar": 6,
+        "endLine": 210,
+        "endChar": 21
+      },
+      "revId": "0dd3eed7af0b94c1c3a85c5739d19d68946ddde4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
