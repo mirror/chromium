@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "762bf3e7_4e681001",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-01T21:58:20Z",
+      "side": 1,
+      "message": "Individual build targets seems to be the way this works.\nOur fuzzer setup will mutate input and narrow down into areas of interest. For example, when a new input buffer goes down a new code path, it tries to explore that.\nIf we batch too much together, we might blur the lines of what is interesting vs. what is different.\n\nThat said, gn does seem to support group(\"fuzzers\") { ... }. I have no idea what that does, though. Is it like a pseudo target so you can build all :zlib:fuzzers ?",
+      "parentUuid": "94af81a7_2cc35218",
+      "revId": "3953f2623ea621241f9d77fc8f451ea3477b957e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f54cd1c7_e00c95c4",
         "filename": "third_party/zlib/contrib/tests/fuzzers/inflate_fuzzer.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "3953f2623ea621241f9d77fc8f451ea3477b957e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141ebf3f_7432be9e",
+        "filename": "third_party/zlib/contrib/tests/fuzzers/inflate_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-01T21:58:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f54cd1c7_e00c95c4",
+      "revId": "3953f2623ea621241f9d77fc8f451ea3477b957e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
