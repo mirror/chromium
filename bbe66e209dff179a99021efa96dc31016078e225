@@ -22,6 +22,30 @@
       "revId": "bbe66e209dff179a99021efa96dc31016078e225",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c84d76b4_f3b2d48d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkServiceClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-01T17:24:50Z",
+      "side": 1,
+      "message": "Done.\n\nI will add a UMA metric in a follow up CL",
+      "parentUuid": "6340ce53_cb6d0d23",
+      "range": {
+        "startLine": 73,
+        "startChar": 30,
+        "endLine": 73,
+        "endChar": 31
+      },
+      "revId": "bbe66e209dff179a99021efa96dc31016078e225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
