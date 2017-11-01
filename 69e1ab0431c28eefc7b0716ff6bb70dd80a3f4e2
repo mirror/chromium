@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "a863b7e3_7b601f1b",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/HostBrowserLauncher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-01T21:22:51Z",
+      "side": 1,
+      "message": "You need the Activity instance for some of the API usage. Xi is right that you can just do parentActivity-\u003egetApplicationContext() (or even just use the activity context directly in some cases)",
+      "parentUuid": "b08fe9f2_68b4e4eb",
+      "range": {
+        "startLine": 48,
+        "startChar": 20,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "69e1ab0431c28eefc7b0716ff6bb70dd80a3f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b2f9f75_7698c221",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ShareActivity0.java",
         "patchSetId": 4
