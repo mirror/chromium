@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a05e8006_d156baba",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-01T14:23:46Z",
+      "side": 1,
+      "message": "nit: weird line-wrapping",
+      "range": {
+        "startLine": 1294,
+        "startChar": 20,
+        "endLine": 1294,
+        "endChar": 0
+      },
+      "revId": "d5ba1dd70f4987c7f9cadf474007f3c7b224d957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51888da8_5a4ea410",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-01T14:23:46Z",
+      "side": 1,
+      "message": "nit: I think this comment is unnecessary now",
+      "range": {
+        "startLine": 1212,
+        "startChar": 2,
+        "endLine": 1212,
+        "endChar": 38
+      },
+      "revId": "d5ba1dd70f4987c7f9cadf474007f3c7b224d957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7449bb_d995ef20",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-01T14:23:46Z",
+      "side": 1,
+      "message": "nit: use curly braces around the body when either the condition or body spans multiple lines. (In general it\u0027s fine to omit curly braces for when both condition and body are single-line, if that\u0027s what the surrounding code does.)",
+      "range": {
+        "startLine": 1221,
+        "startChar": 65,
+        "endLine": 1221,
+        "endChar": 0
+      },
+      "revId": "d5ba1dd70f4987c7f9cadf474007f3c7b224d957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a0938e_10aa53a5",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-01T14:23:46Z",
+      "side": 1,
+      "message": "nit: I\u0027d keep the comment from the old code line 464 explaining why we create a navigation handle here.",
+      "range": {
+        "startLine": 1224,
+        "startChar": 2,
+        "endLine": 1224,
+        "endChar": 24
+      },
+      "revId": "d5ba1dd70f4987c7f9cadf474007f3c7b224d957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed09d01_ec54c5e6",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-01T14:23:46Z",
+      "side": 1,
+      "message": "form-action \u003d\u003e frame-src",
+      "range": {
+        "startLine": 1254,
+        "startChar": 17,
+        "endLine": 1254,
+        "endChar": 21
+      },
+      "revId": "d5ba1dd70f4987c7f9cadf474007f3c7b224d957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa34bb2d_715acb3a",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-01T14:23:46Z",
+      "side": 1,
+      "message": "nit: delete apostrophe",
+      "range": {
+        "startLine": 1302,
+        "startChar": 63,
+        "endLine": 1302,
+        "endChar": 64
+      },
+      "revId": "d5ba1dd70f4987c7f9cadf474007f3c7b224d957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9a184f_9b163ea4",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-01T14:23:46Z",
+      "side": 1,
+      "message": "optional nit: could collapse into\nFrameTreeNode* ftn \u003d begin_params_.is_form_submission ? frame_tree_node() : frame_tree_node()-\u003eparent();",
+      "range": {
+        "startLine": 1304,
+        "startChar": 2,
+        "endLine": 1309,
+        "endChar": 3
+      },
+      "revId": "d5ba1dd70f4987c7f9cadf474007f3c7b224d957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa0465e_aad9dce7",
+        "filename": "content/browser/frame_host/navigation_request_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-01T14:23:46Z",
+      "side": 1,
+      "message": "nit: Add a comment above this class explaining that it allows tests to trigger reports to /report and wait for the report to be sent.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 67
+      },
+      "revId": "d5ba1dd70f4987c7f9cadf474007f3c7b224d957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b082c0e_ff1a31b6",
+        "filename": "content/browser/frame_host/navigation_request_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-01T14:23:46Z",
+      "side": 1,
+      "message": "It\u0027s technically against the style guide to have non-private data members. I\u0027d make these private (and add underscore suffixes to the names) and then have protected getters, even though it\u0027s a little annoying.\n\nnet::EmbeddedTestServer* test_server() { return test_server_.get(); }\nbool did_report() { return did_report_; }",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "d5ba1dd70f4987c7f9cadf474007f3c7b224d957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8ce31b_4e1efeaf",
+        "filename": "content/browser/frame_host/navigation_request_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-01T14:23:46Z",
+      "side": 1,
+      "message": "nit: add a comment above each test briefly describing what it tests, e.g.\n\"Tests that a form submission which is allowed by CSP completes successfully.\"",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 22
+      },
+      "revId": "d5ba1dd70f4987c7f9cadf474007f3c7b224d957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b31375_65f8bd82",
+        "filename": "content/browser/frame_host/navigation_request_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-01T14:23:46Z",
+      "side": 1,
+      "message": "To be really thorough, we might need to do something a little more complicated here. It\u0027s possible that there could be a bug where the form submission does succeed, but we don\u0027t catch that bug because the test finishes successfully before the form submission navigation commits.\n\nTo catch this, you could subclass WebContentsObserver and wait for its DidFinishNavigation event to fire, checking that the NavigationHandle passed to DidFinishNavigation has the expected net error code.",
+      "revId": "d5ba1dd70f4987c7f9cadf474007f3c7b224d957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2807488_3d2668b3",
+        "filename": "content/browser/frame_host/navigation_request_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-01T14:23:46Z",
+      "side": 1,
+      "message": "It might be worth adding a comment saying that this URL won\u0027t actually load because it\u0027s not the test server\u0027s port, but it doesn\u0027t matter for the purposes of this test. I\u0027d also suggest using, say, https://example.test/simple_page.html to make it clear that it\u0027s a test URL.\n\n(same in the tests below)",
+      "range": {
+        "startLine": 138,
+        "startChar": 7,
+        "endLine": 138,
+        "endChar": 20
+      },
+      "revId": "d5ba1dd70f4987c7f9cadf474007f3c7b224d957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
