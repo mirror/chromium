@@ -1371,14 +1371,11 @@ void ServiceWorkerContextClient::SendWorkerStarted() {
 void ServiceWorkerContextClient::SetRegistrationInServiceWorkerGlobalScope(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
   DCHECK(worker_task_runner_->RunsTasksInCurrentSequence());
-  ServiceWorkerDispatcher* dispatcher =
-      ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
-          sender_.get(), main_thread_task_runner_.get());
 
   // Register a registration and its version attributes with the dispatcher
   // living on the worker thread.
   proxy_->SetRegistration(WebServiceWorkerRegistrationImpl::CreateHandle(
-      dispatcher->GetOrCreateRegistrationForServiceWorkerGlobalScope(
+      provider_context_->GetOrCreateRegistrationForServiceWorkerGlobalScope(
           std::move(info), io_thread_task_runner_)));
 }
 
