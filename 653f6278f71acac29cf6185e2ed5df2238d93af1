@@ -769,6 +769,30 @@
     },
     {
       "key": {
+        "uuid": "b74f6201_a8ea43a2",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-01T18:56:41Z",
+      "side": 1,
+      "message": "\u003e By we you me your team or me?\n\nI think this will be resolved by Daniel\u0027s CL at https://crrev.com/c/745986",
+      "parentUuid": "bbc5d671_ceaeed41",
+      "range": {
+        "startLine": 95,
+        "startChar": 12,
+        "endLine": 95,
+        "endChar": 14
+      },
+      "revId": "653f6278f71acac29cf6185e2ed5df2238d93af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a56c2e49_1230ec2c",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
         "patchSetId": 29
