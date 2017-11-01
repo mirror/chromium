@@ -32,8 +32,6 @@
 
 namespace blink {
 
-class MediaStreamTrack;
-
 class SpeechRecognitionController final
     : public GarbageCollectedFinalized<SpeechRecognitionController>,
       public Supplement<Page> {
@@ -47,10 +45,9 @@ class SpeechRecognitionController final
              const String& lang,
              bool continuous,
              bool interim_results,
-             unsigned long max_alternatives,
-             MediaStreamTrack* audio_track) {
+             unsigned long max_alternatives) {
     client_->Start(recognition, grammars, lang, continuous, interim_results,
-                   max_alternatives, audio_track);
+                   max_alternatives);
   }
 
   void Stop(SpeechRecognition* recognition) { client_->Stop(recognition); }
