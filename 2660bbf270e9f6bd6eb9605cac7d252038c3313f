@@ -283,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "27806413_d0801608",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-01T01:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd5d411c_ef50d8a9",
+      "range": {
+        "startLine": 200,
+        "startChar": 6,
+        "endLine": 200,
+        "endChar": 22
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed200143_d371eede",
         "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
         "patchSetId": 27
@@ -342,6 +366,30 @@
       "side": 1,
       "message": "I\u0027m a little confused here. Every test here creates a mock_feature_tracker_. This has the same effect of placing this variable in SetUp(). Each TEST_F gets a SetUp() and TearDown() call where everything is initialized and uninitialized.",
       "parentUuid": "4ec9ebef_334f7d97",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 76
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45039e95_fda543fd",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-01T01:33:13Z",
+      "side": 1,
+      "message": "It\u0027s because the ordering of when the new_tab_params are set matters. I am setting different values for each test.\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/695851/27/chrome/browser/feature_engagement/feature_tracker.cc\n\nHasEnoughSessionTimeElapsed is called in the constructor which sets has_session_time_been_met_ to true. So when GetSessionTimeRequiredToShow is called in the test, it won\u0027t have to call it again. However, in our tests, we want to change the field trial params prior to the construction of the feature tracker so that GetSessionTimeRequiredToShow will get the correct session time required.",
+      "parentUuid": "8ae7c7b4_a849457e",
       "range": {
         "startLine": 199,
         "startChar": 2,
@@ -422,6 +470,30 @@
       "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "decf0ae1_43f42519",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_factory.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-01T01:33:13Z",
+      "side": 1,
+      "message": "Moved it back to the browser_prefs to initialize",
+      "parentUuid": "a49c89a9_ed111265",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -540,6 +612,30 @@
       "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05dd160_4f5daa89",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-01T01:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c49c351c_7e8c5ee5",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "2660bbf270e9f6bd6eb9605cac7d252038c3313f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

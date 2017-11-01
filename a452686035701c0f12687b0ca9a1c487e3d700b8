@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c577824_4106bbcd",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-01T01:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e4b70fb_7b73820e",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "a452686035701c0f12687b0ca9a1c487e3d700b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4564ea93_bf6441ff",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
         "patchSetId": 29
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-01T00:09:11Z",
       "side": 1,
       "message": "Now that both the conditional and statement are one line, no braces are required.\n\nThat being said, I personally prefer braces for all if statements. If Tommy doesn\u0027t have an opinion, feel free to do what you wish.\n\nKeep in mind other parts of Chromium may have stronger opinions.",
+      "range": {
+        "startLine": 59,
+        "startChar": 33,
+        "endLine": 61,
+        "endChar": 5
+      },
+      "revId": "a452686035701c0f12687b0ca9a1c487e3d700b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8a9fa08_0f9d9131",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-01T01:33:13Z",
+      "side": 1,
+      "message": "I think in another CL I had out, I was told that I should not have brackets :/ not quite sure. I\u0027ll make it without brackets to make it simliar to the rest of the code",
+      "parentUuid": "4564ea93_bf6441ff",
       "range": {
         "startLine": 59,
         "startChar": 33,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2e9b1cc6_35b29284",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-01T01:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3738cc5_2a476312",
+      "range": {
+        "startLine": 72,
+        "startChar": 33,
+        "endLine": 72,
+        "endChar": 40
+      },
+      "revId": "a452686035701c0f12687b0ca9a1c487e3d700b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab7a0ff7_952f2fa3",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
         "patchSetId": 29
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5366192f_f1272607",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-01T01:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab7a0ff7_952f2fa3",
+      "range": {
+        "startLine": 104,
+        "startChar": 31,
+        "endLine": 104,
+        "endChar": 38
+      },
+      "revId": "a452686035701c0f12687b0ca9a1c487e3d700b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf87f006_427450c8",
         "filename": "chrome/browser/feature_engagement/session_duration_updater_unittest.cc",
         "patchSetId": 29
@@ -114,6 +210,30 @@
       "revId": "a452686035701c0f12687b0ca9a1c487e3d700b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0adeca42_6c1d5eee",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-01T01:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf87f006_427450c8",
+      "range": {
+        "startLine": 52,
+        "startChar": 31,
+        "endLine": 52,
+        "endChar": 39
+      },
+      "revId": "a452686035701c0f12687b0ca9a1c487e3d700b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
