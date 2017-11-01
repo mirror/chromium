@@ -16,6 +16,24 @@
       "revId": "423a896183519a506a858109b9578764b70d3100",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87439eb_c0b56a52",
+        "filename": "content/public/test/test_download_http_response.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-11-01T22:45:23Z",
+      "side": 1,
+      "message": "Done, it\u0027s already using it.\n\nBut I didn\u0027t convert ErrorInjectionDownloadFile and ErrorInjectionDownloadFileFactory in content download_browsertests to use the new logic in test_file_error_injector in this patch, Shall I do that?",
+      "parentUuid": "87f38fc6_51600673",
+      "revId": "423a896183519a506a858109b9578764b70d3100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
