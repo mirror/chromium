@@ -26,9 +26,9 @@
 #include "net/quic/test_tools/simple_data_producer.h"
 
 using std::string;
+using testing::_;
 using testing::Return;
 using testing::Truly;
-using testing::_;
 
 namespace net {
 namespace test {
@@ -2097,7 +2097,7 @@ TEST_P(QuicFramerTest, AckFrameOneAckBlock) {
   EXPECT_EQ(0u, visitor_.stream_frames_.size());
   ASSERT_EQ(1u, visitor_.ack_frames_.size());
   const QuicAckFrame& frame = *visitor_.ack_frames_[0];
-  EXPECT_EQ(kSmallLargestObserved, frame.largest_observed);
+  EXPECT_EQ(kSmallLargestObserved, LargestAcked(frame));
   ASSERT_EQ(4660u, frame.packets.NumPacketsSlow());
 
   CheckFramingBoundaries(fragments, QUIC_INVALID_ACK_DATA);
@@ -2309,7 +2309,7 @@ TEST_P(QuicFramerTest, AckFrameOneAckBlockMaxLength) {
   EXPECT_EQ(0u, visitor_.stream_frames_.size());
   ASSERT_EQ(1u, visitor_.ack_frames_.size());
   const QuicAckFrame& frame = *visitor_.ack_frames_[0];
-  EXPECT_EQ(kPacketNumber, frame.largest_observed);
+  EXPECT_EQ(kPacketNumber, LargestAcked(frame));
   ASSERT_EQ(4660u, frame.packets.NumPacketsSlow());
 
   CheckFramingBoundaries(fragments, QUIC_INVALID_ACK_DATA);
@@ -2540,7 +2540,7 @@ TEST_P(QuicFramerTest, AckFrameTwoTimeStampsMultipleAckBlocks) {
   EXPECT_EQ(0u, visitor_.stream_frames_.size());
   ASSERT_EQ(1u, visitor_.ack_frames_.size());
   const QuicAckFrame& frame = *visitor_.ack_frames_[0];
-  EXPECT_EQ(kSmallLargestObserved, frame.largest_observed);
+  EXPECT_EQ(kSmallLargestObserved, LargestAcked(frame));
   ASSERT_EQ(4254u, frame.packets.NumPacketsSlow());
   EXPECT_EQ(4u, frame.packets.NumIntervals());
 
@@ -3876,10 +3876,8 @@ TEST_P(QuicFramerTest, BuildAckFramePacketOneAckBlock) {
   header.packet_number = kPacketNumber;
 
   // Use kSmallLargestObserved to make this test finished in a short time.
-  QuicAckFrame ack_frame;
-  ack_frame.largest_observed = kSmallLargestObserved;
+  QuicAckFrame ack_frame = InitAckFrame(kSmallLargestObserved);
   ack_frame.ack_delay_time = QuicTime::Delta::Zero();
-  ack_frame.packets.AddRange(1, kSmallLargestObserved + 1);
 
   QuicFrames frames = {QuicFrame(&ack_frame)};
 
@@ -3968,11 +3966,9 @@ TEST_P(QuicFramerTest, BuildAckFramePacketOneAckBlockMaxLength) {
   header.public_header.version_flag = false;
   header.packet_number = kPacketNumber;
 
-  QuicAckFrame ack_frame;
+  QuicAckFrame ack_frame = InitAckFrame(kPacketNumber);
   FLAGS_quic_reloadable_flag_quic_frames_deque2 = true;
-  ack_frame.largest_observed = kPacketNumber;
   ack_frame.ack_delay_time = QuicTime::Delta::Zero();
-  ack_frame.packets.AddRange(1, kPacketNumber + 1);
 
   QuicFrames frames = {QuicFrame(&ack_frame)};
 
@@ -4064,14 +4060,12 @@ TEST_P(QuicFramerTest, BuildAckFramePacketMultipleAckBlocks) {
   header.packet_number = kPacketNumber;
 
   // Use kSmallLargestObserved to make this test finished in a short time.
-  QuicAckFrame ack_frame;
-  ack_frame.largest_observed = kSmallLargestObserved;
+  QuicAckFrame ack_frame =
+      InitAckFrame({{1, 5},
+                    {10, 500},
+                    {900, kSmallMissingPacket},
+                    {kSmallMissingPacket + 1, kSmallLargestObserved + 1}});
   ack_frame.ack_delay_time = QuicTime::Delta::Zero();
-  ack_frame.packets.AddRange(1, 5);
-  ack_frame.packets.AddRange(10, 500);
-  ack_frame.packets.AddRange(900, kSmallMissingPacket);
-  ack_frame.packets.AddRange(kSmallMissingPacket + 1,
-                             kSmallLargestObserved + 1);
 
   QuicFrames frames = {QuicFrame(&ack_frame)};
 
@@ -4217,7 +4211,7 @@ TEST_P(QuicFramerTest, BuildAckFramePacketMaxAckBlocks) {
 
   // Use kSmallLargestObservedto make this test finished in a short time.
   QuicAckFrame ack_frame;
-  ack_frame.largest_observed = kSmallLargestObserved;
+  ack_frame.deprecated_largest_observed = kSmallLargestObserved;
   ack_frame.ack_delay_time = QuicTime::Delta::Zero();
   // 300 ack blocks.
   for (size_t i = 2; i < 2 * 300; i += 2) {
@@ -5230,7 +5224,7 @@ TEST_P(QuicFramerTest, AckTruncationLargePacket) {
       QuicEncryptedPacket(buffer, encrypted_length, false)));
   ASSERT_EQ(1u, visitor_.ack_frames_.size());
   QuicAckFrame& processed_ack_frame = *visitor_.ack_frames_[0];
-  EXPECT_EQ(600u, processed_ack_frame.largest_observed);
+  EXPECT_EQ(600u, LargestAcked(processed_ack_frame));
   ASSERT_EQ(256u, processed_ack_frame.packets.NumPacketsSlow());
   EXPECT_EQ(90u, processed_ack_frame.packets.Min());
   EXPECT_EQ(600u, processed_ack_frame.packets.Max());
@@ -5262,7 +5256,7 @@ TEST_P(QuicFramerTest, AckTruncationSmallPacket) {
       QuicEncryptedPacket(buffer, encrypted_length, false)));
   ASSERT_EQ(1u, visitor_.ack_frames_.size());
   QuicAckFrame& processed_ack_frame = *visitor_.ack_frames_[0];
-  EXPECT_EQ(600u, processed_ack_frame.largest_observed);
+  EXPECT_EQ(600u, LargestAcked(processed_ack_frame));
   ASSERT_EQ(239u, processed_ack_frame.packets.NumPacketsSlow());
   EXPECT_EQ(124u, processed_ack_frame.packets.Min());
   EXPECT_EQ(600u, processed_ack_frame.packets.Max());
@@ -5275,9 +5269,7 @@ TEST_P(QuicFramerTest, CleanTruncation) {
   header.public_header.version_flag = false;
   header.packet_number = kPacketNumber;
 
-  QuicAckFrame ack_frame;
-  ack_frame.largest_observed = 201;
-  ack_frame.packets.AddRange(1, ack_frame.largest_observed);
+  QuicAckFrame ack_frame = InitAckFrame(201);
 
   // Create a packet with just the ack.
   QuicFrames frames = {QuicFrame(&ack_frame)};

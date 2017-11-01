@@ -172,3 +172,8 @@ QUIC_FLAG(bool,
 // If true, allow a new BBR connection option to use a slower STARTUP once loss
 // occurs
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_slower_startup, false)
+
+// Deprecate QuicAckFrame.largest_observed since it is redundant.
+QUIC_FLAG(bool,
+          FLAGS_quic_reloadable_flag_quic_deprecate_largest_observed,
+          false)

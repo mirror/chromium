@@ -245,10 +245,7 @@ QuicConnection::QuicConnection(
           &arena_)),
       visitor_(nullptr),
       debug_visitor_(nullptr),
-      packet_generator_(connection_id_,
-                        &framer_,
-                        random_generator_,
-                        this),
+      packet_generator_(connection_id_, &framer_, random_generator_, this),
       idle_network_timeout_(QuicTime::Delta::Infinite()),
       handshake_timeout_(QuicTime::Delta::Infinite()),
       time_of_last_received_packet_(clock_->ApproximateNow()),
@@ -799,18 +796,17 @@ bool QuicConnection::OnPingFrame(const QuicPingFrame& frame) {
 }
 
 const char* QuicConnection::ValidateAckFrame(const QuicAckFrame& incoming_ack) {
-  if (incoming_ack.largest_observed > packet_generator_.packet_number()) {
+  if (LargestAcked(incoming_ack) > packet_generator_.packet_number()) {
     QUIC_DLOG(WARNING) << ENDPOINT << "Peer's observed unsent packet:"
-                       << incoming_ack.largest_observed << " vs "
+                       << LargestAcked(incoming_ack) << " vs "
                        << packet_generator_.packet_number();
     // We got an error for data we have not sent.  Error out.
     return "Largest observed too high.";
   }
 
-  if (incoming_ack.largest_observed <
-      sent_packet_manager_.GetLargestObserved()) {
+  if (LargestAcked(incoming_ack) < sent_packet_manager_.GetLargestObserved()) {
     QUIC_LOG(INFO) << ENDPOINT << "Peer's largest_observed packet decreased:"
-                   << incoming_ack.largest_observed << " vs "
+                   << LargestAcked(incoming_ack) << " vs "
                    << sent_packet_manager_.GetLargestObserved()
                    << " packet_number:" << last_header_.packet_number
                    << " largest seen with ack:" << largest_seen_packet_with_ack_
@@ -820,12 +816,14 @@ const char* QuicConnection::ValidateAckFrame(const QuicAckFrame& incoming_ack) {
     return "Largest observed too low.";
   }
 
+  // TODO(wub): Remove this check along with
+  // FLAGS_quic_reloadable_flag_quic_deprecate_largest_observed.
   if (!incoming_ack.packets.Empty() &&
-      incoming_ack.packets.Max() != incoming_ack.largest_observed) {
+      incoming_ack.packets.Max() != LargestAcked(incoming_ack)) {
     QUIC_BUG << ENDPOINT
              << "Peer last received packet: " << incoming_ack.packets.Max()
              << " which is not equal to largest observed: "
-             << incoming_ack.largest_observed;
+             << incoming_ack.deprecated_largest_observed;
     return "Last received packet not equal to largest observed.";
   }
 
