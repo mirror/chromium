@@ -720,6 +720,14 @@ std::vector<gfx::Size> ConvertToFaviconSizes(
   return result;
 }
 
+bool DidNavigationCommit(WebLocalFrame* frame) {
+  DocumentState* document_state =
+      DocumentState::FromDocumentLoader(frame->GetDocumentLoader());
+  NavigationStateImpl* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
+  return navigation_state->request_committed();
+}
+
 }  // namespace
 
 class RenderFrameImpl::FrameURLLoaderFactory
@@ -2148,6 +2156,12 @@ void RenderFrameImpl::OnJavaScriptExecuteRequest(
     const base::string16& jscript,
     int id,
     bool notify_result) {
+  // No javascript should execute before the browser is notified about the
+  // commit via SendDidCommitProvisionalLoad - otherwise, the browser might
+  // think the page is still at the previous origin, and therefore might reject
+  // requests for capabilities (like localStorage) bound to the new origin.
+  DCHECK(DidNavigationCommit(frame_)) << jscript;
+
   TRACE_EVENT_INSTANT0("test_tracing", "OnJavaScriptExecuteRequest",
                        TRACE_EVENT_SCOPE_THREAD);
 
@@ -2163,6 +2177,10 @@ void RenderFrameImpl::OnJavaScriptExecuteRequestForTests(
     int id,
     bool notify_result,
     bool has_user_gesture) {
+  // TODO(https://crbug.com/766329): DCHECK(DidNavigationCommit(frame_))
+  // just like we already do in OnJavaScriptExecuteRequest and
+  // OnJavaScriptExecuteRequestInIsolatedWorld.
+
   TRACE_EVENT_INSTANT0("test_tracing", "OnJavaScriptExecuteRequestForTests",
                        TRACE_EVENT_SCOPE_THREAD);
 
@@ -2182,6 +2200,12 @@ void RenderFrameImpl::OnJavaScriptExecuteRequestInIsolatedWorld(
     int id,
     bool notify_result,
     int world_id) {
+  // No javascript should execute before the browser is notified about the
+  // commit via SendDidCommitProvisionalLoad - otherwise, the browser might
+  // think the page is still at the previous origin, and therefore might reject
+  // requests for capabilities (like localStorage) bound to the new origin.
+  DCHECK(DidNavigationCommit(frame_)) << jscript;
+
   TRACE_EVENT_INSTANT0("test_tracing",
                        "OnJavaScriptExecuteRequestInIsolatedWorld",
                        TRACE_EVENT_SCOPE_THREAD);
