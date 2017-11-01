@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b582c51a_320f5162",
+        "filename": "chrome/browser/fullscreen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T15:45:05Z",
+      "side": 1,
+      "message": "implementation",
+      "range": {
+        "startLine": 12,
+        "startChar": 42,
+        "endLine": 12,
+        "endChar": 57
+      },
+      "revId": "a17113996d6fb216ae41d373fcb6653947a84a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
