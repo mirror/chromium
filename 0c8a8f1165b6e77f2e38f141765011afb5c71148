@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ecd4d89_cfcfa90a",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-01T16:41:35Z",
+      "side": 1,
+      "message": "This member should be static.",
+      "revId": "0c8a8f1165b6e77f2e38f141765011afb5c71148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
