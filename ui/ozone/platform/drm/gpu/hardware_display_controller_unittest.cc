@@ -42,7 +42,10 @@ class HardwareDisplayControllerTest : public testing::Test {
   void SetUp() override;
   void TearDown() override;
 
-  void PageFlipCallback(gfx::SwapResult);
+  void PageFlipCallback(gfx::SwapResult,
+                        base::TimeTicks,
+                        base::TimeDelta,
+                        uint32_t flags);
 
  protected:
   std::unique_ptr<ui::HardwareDisplayController> controller_;
@@ -74,7 +77,10 @@ void HardwareDisplayControllerTest::TearDown() {
   drm_ = nullptr;
 }
 
-void HardwareDisplayControllerTest::PageFlipCallback(gfx::SwapResult result) {
+void HardwareDisplayControllerTest::PageFlipCallback(gfx::SwapResult result,
+                                                     base::TimeTicks timestamp,
+                                                     base::TimeDelta refres,
+                                                     uint32_t flags) {
   page_flips_++;
   last_swap_result_ = result;
 }

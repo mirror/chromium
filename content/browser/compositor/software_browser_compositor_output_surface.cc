@@ -28,6 +28,7 @@ SoftwareBrowserCompositorOutputSurface::SoftwareBrowserCompositorOutputSurface(
     : BrowserCompositorOutputSurface(std::move(software_device),
                                      update_vsync_parameters_callback),
       task_runner_(std::move(task_runner)),
+      refresh_(base::TimeDelta::FromSeconds(1) / 60),
       weak_factory_(this) {}
 
 SoftwareBrowserCompositorOutputSurface::
@@ -85,18 +86,31 @@ void SoftwareBrowserCompositorOutputSurface::SwapBuffers(
                      frame.latency_info));
 
   gfx::VSyncProvider* vsync_provider = software_device()->GetVSyncProvider();
-  if (vsync_provider)
-    vsync_provider->GetVSyncParameters(update_vsync_parameters_callback_);
+  if (vsync_provider) {
+    vsync_provider->GetVSyncParameters(
+        base::Bind(&SoftwareBrowserCompositorOutputSurface::UpdateVSyncCallback,
+                   weak_factory_.GetWeakPtr()));
+  }
 
+  ++swap_count_;
   task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(
           &SoftwareBrowserCompositorOutputSurface::SwapBuffersCallback,
-          weak_factory_.GetWeakPtr()));
+          weak_factory_.GetWeakPtr(), swap_count_));
 }
 
-void SoftwareBrowserCompositorOutputSurface::SwapBuffersCallback() {
-  client_->DidReceiveSwapBuffersAck();
+void SoftwareBrowserCompositorOutputSurface::SwapBuffersCallback(
+    uint32_t count) {
+  client_->DidReceiveSwapBuffersAck(count);
+  client_->DidPresentation(count, base::TimeTicks::Now(), refresh_, 0u);
+}
+
+void SoftwareBrowserCompositorOutputSurface::UpdateVSyncCallback(
+    const base::TimeTicks timebase,
+    const base::TimeDelta interval) {
+  refresh_ = interval;
+  update_vsync_parameters_callback_.Run(timebase, interval);
 }
 
 bool SoftwareBrowserCompositorOutputSurface::IsDisplayedAsOverlayPlane() const {
