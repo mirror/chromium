@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2910dc41_10fad58b",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2034,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-11-01T17:47:36Z",
+      "side": 1,
+      "message": "Awesome!",
+      "parentUuid": "a02aa88f_efaa1d71",
+      "range": {
+        "startLine": 2034,
+        "startChar": 79,
+        "endLine": 2034,
+        "endChar": 0
+      },
+      "revId": "faa3662d3d1a0a47c0167aeca9e681c167f76f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b61046f_70a5da7d",
         "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Sure, that is what VerifyReferrerChainEntry(...) function do in the following lines.",
       "parentUuid": "5b61046f_70a5da7d",
+      "range": {
+        "startLine": 2046,
+        "startChar": 38,
+        "endLine": 2046,
+        "endChar": 0
+      },
+      "revId": "faa3662d3d1a0a47c0167aeca9e681c167f76f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1f57a2e_1167f4c2",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-11-01T17:47:36Z",
+      "side": 1,
+      "message": "Ah, sorry, hadn\u0027t noticed that part. Thanks!",
+      "parentUuid": "ed36afd0_d418ed17",
       "range": {
         "startLine": 2046,
         "startChar": 38,
