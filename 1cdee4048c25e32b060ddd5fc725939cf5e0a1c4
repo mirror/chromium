@@ -93,6 +93,30 @@
       "revId": "1cdee4048c25e32b060ddd5fc725939cf5e0a1c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3fa1268_14b32fa1",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-01T16:59:52Z",
+      "side": 1,
+      "message": "I was thinking to move both compositor player creation and its attachment to timeline\non start as opposed to them happening on creation. See Animation::CreateCompositorPlayer() \nwhen animation both creates and attaches its compositor player.\n\nNote that during construction blink::Animation only tries to attach compositor_player_ \nto compositor timeline if one already exists. Actually I think that is almost always \na no-op!\n\nblink::Animation does not in fact create compositor player until later during \npre-commit and only once it has established that the animation can actually\nrun on compositor  [1]. This is effectively what I am suggesting to do here too.\n\nThis is option (2) and I think compatible with what blink::Animation is doing.\n\n\n[1] https://codesearch.chromium.org/chromium/src/third_party/WebKit/Source/core/animation/Animation.cpp?type\u003dcs\u0026l\u003d330 is doing so in",
+      "parentUuid": "d0ca8aa1_aad3452f",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 74
+      },
+      "revId": "1cdee4048c25e32b060ddd5fc725939cf5e0a1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
