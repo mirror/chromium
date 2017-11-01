@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05b7c8cc_78de2f7a",
+        "filename": "services/device/public/interfaces/wake_lock.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-01T19:05:20Z",
+      "side": 1,
+      "message": "i\u0027m fine to go with whatever you prefer here! would you recommend keeping a sentence like, \"On some platforms, this is treated identically to PreventDisplaySleep.\"?",
+      "parentUuid": "95ce4a08_faa6c67a",
+      "revId": "501d73b3745161140f77b8ef3ec456486e831ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25c6c1f5_244d5f87",
         "filename": "services/device/wake_lock/power_save_blocker/power_save_blocker.h",
         "patchSetId": 2
