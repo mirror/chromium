@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f402131_2249c9f2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/empty_offset_mapping_builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-01T23:13:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4ca250b_f783633e",
+      "revId": "6f58719bdc4f0fe3509f316e40393dde051f424a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fdbdfd7_0500d19e",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/empty_offset_mapping_builder.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "6f58719bdc4f0fe3509f316e40393dde051f424a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f71f4e_94559ec1",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/empty_offset_mapping_builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-01T23:13:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fdbdfd7_0500d19e",
+      "revId": "6f58719bdc4f0fe3509f316e40393dde051f424a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e65fbe10_f2e84f93",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-01T23:13:39Z",
+      "side": 1,
+      "message": "Yeah. Why not.",
+      "parentUuid": "21791ce2_c32853f3",
+      "revId": "6f58719bdc4f0fe3509f316e40393dde051f424a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f6bc612_d22681fb",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_builder.h",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "69e6173a_0bad38dc",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-01T23:13:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f6bc612_d22681fb",
+      "revId": "6f58719bdc4f0fe3509f316e40393dde051f424a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "def9a05d_49007a28",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_builder.h",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "6f58719bdc4f0fe3509f316e40393dde051f424a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3de38b8_c731e5a7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-01T23:13:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "def9a05d_49007a28",
+      "revId": "6f58719bdc4f0fe3509f316e40393dde051f424a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
