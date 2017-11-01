@@ -234,6 +234,10 @@ void ChromePasswordProtectionService::ShowModalWarning(
   if (IsModalWarningShowingInWebContents(web_contents))
     return;
 
+  // Exit fullscreen if this |web_contents| is showing in fullscreen mode.
+  if (web_contents->IsFullscreenForCurrentTab())
+    web_contents->ExitFullscreen(true);
+
   UpdateSecurityState(SB_THREAT_TYPE_PASSWORD_REUSE, web_contents);
   ShowPasswordReuseModalWarningDialog(
       web_contents, this,
