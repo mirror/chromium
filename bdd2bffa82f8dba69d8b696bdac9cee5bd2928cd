@@ -127,6 +127,30 @@
       "revId": "bdd2bffa82f8dba69d8b696bdac9cee5bd2928cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a55e88_72b86770",
+        "filename": "ios/web_view/internal/language/web_view_url_language_histogram_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-01T22:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76eb2682_38e8a602",
+      "range": {
+        "startLine": 38,
+        "startChar": 40,
+        "endLine": 38,
+        "endChar": 49
+      },
+      "revId": "bdd2bffa82f8dba69d8b696bdac9cee5bd2928cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
