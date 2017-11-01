@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b3256f5_4143b525",
+        "filename": "base/i18n/time_formatting_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-01T18:13:37Z",
+      "side": 1,
+      "message": "What’s the point of this lock? It doesn’t seem to provide anything useful in this test.",
+      "revId": "f36237e8a5e483be7343cb6af75f16f2d6d5b76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
