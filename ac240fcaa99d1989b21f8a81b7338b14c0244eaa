@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c691f1f_36a68a22",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-01T17:06:03Z",
+      "side": 1,
+      "message": "Example: Let\u0027s say you\u0027re reading an article (web page) that has lots of links to docs.google.com. When your device has Docs app, every time you click one of the links, the article page is closed.",
+      "parentUuid": "f8ab912b_2a373867",
+      "revId": "ac240fcaa99d1989b21f8a81b7338b14c0244eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6747c121_affcf18a",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
         "patchSetId": 1
