@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2bc6adb_95f6ac7b",
+        "filename": "cc/animation/worklet_animation_player.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-01T14:37:52Z",
+      "side": 1,
+      "message": "nit: Please also add a TODO to support the offsetting current time by animation start \ntime and playback rate [1]. That needs some refactoring done first though. \n\n[1] https://w3c.github.io/web-animations/#the-current-time-of-an-animation",
+      "range": {
+        "startLine": 60,
+        "startChar": 21,
+        "endLine": 60,
+        "endChar": 73
+      },
+      "revId": "1cdee4048c25e32b060ddd5fc725939cf5e0a1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71f39a6_0eff129a",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-01T14:37:52Z",
+      "side": 1,
+      "message": "It seems odd that we need to force style during animation construction\nas opposed to animation play. I think this is many a sideeffect of creating\ncompositor_player_ here.\n\nWhat if we postpone creation of compositor_player_ to when it actually \nstarts on compositor i.e., WorkletAnimation::StartOnCompositor.\n\nI believe that is only called when layout is clean.",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 74
+      },
+      "revId": "1cdee4048c25e32b060ddd5fc725939cf5e0a1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
