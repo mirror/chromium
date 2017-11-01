@@ -70,6 +70,46 @@
     },
     {
       "key": {
+        "uuid": "1da916a2_db80affb",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1570,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-01T07:42:49Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 1570,
+        "startChar": 31,
+        "endLine": 1570,
+        "endChar": 41
+      },
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba12ebc_6c565a6f",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-01T07:42:49Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7db70f09_5403562d",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 8
@@ -115,6 +155,40 @@
       "writtenOn": "2017-11-01T06:33:45Z",
       "side": 1,
       "message": "Should we file a bug for this one to make sure we block on this?",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609af864_d1b0513f",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-01T07:42:49Z",
+      "side": 1,
+      "message": "std::string() /* client_id */\n\nor \n\nconst std::string client_id;\nauto info \u003d mojom::FetchEventInfo::New(client_id, ...);",
+      "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab15ad63_444a6231",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-event.https.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-01T07:42:49Z",
+      "side": 1,
+      "message": "indent",
       "revId": "8307f7503d2fe4c660f28c41200aa6f8b852a309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
