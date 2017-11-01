@@ -70,6 +70,24 @@
       "revId": "dc2b62e9b9ac0db34891ea4675c9010daf3d0862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4088594b_bd91990e",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-01T21:19:26Z",
+      "side": 1,
+      "message": "AIUI, using generic lambdas is blocked on a clang bug: see https://chromium-review.googlesource.com/c/chromium/src/+/594468#message-f6f8ef63d31aaf53827b757ada748fea63df5623",
+      "parentUuid": "b26de50d_5604a5e3",
+      "revId": "dc2b62e9b9ac0db34891ea4675c9010daf3d0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
