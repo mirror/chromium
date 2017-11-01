@@ -73,6 +73,9 @@ Polymer({
     };
 
     this.$.networkConfig.init();
+
+    var dialog = /** @type {!CrDialogElement} */ (this.$.dialog);
+    dialog.showModal();
   },
 
   /** @private */
