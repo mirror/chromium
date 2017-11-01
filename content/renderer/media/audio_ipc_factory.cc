@@ -82,15 +82,15 @@ void AudioIPCFactory::RegisterRemoteFactoryOnIOThread(
     mojom::RendererAudioOutputStreamFactoryPtrInfo factory_ptr_info) {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
   DCHECK(UsingMojoFactories());
-  std::pair<StreamFactoryMap::iterator, bool> emplace_result =
-      factory_ptrs_.emplace(frame_id,
-                            mojo::MakeProxy(std::move(factory_ptr_info)));
 
-  DCHECK(emplace_result.second) << "Attempt to register a factory for a "
-                                   "frame which already has a factory "
-                                   "registered.";
+  // The RendererAudioOutputStreamFactory interface request might never be
+  // dispatched and bound to an implementation in the browser process if the
+  // RenderFrame navigates away to a different document soon after issuing the
+  // request. Hence the factory is re-requested on each non-same-document
+  // navigation.
+  factory_ptrs_[frame_id] = mojo::MakeProxy(std::move(factory_ptr_info));
 
-  auto& emplaced_factory = emplace_result.first->second;
+  auto& emplaced_factory = factory_ptrs_[frame_id];
   DCHECK(emplaced_factory.is_bound())
       << "Factory is not bound to a remote implementation.";
 

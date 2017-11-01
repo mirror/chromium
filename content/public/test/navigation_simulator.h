@@ -15,6 +15,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/referrer.h"
 #include "net/base/host_port_pair.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "ui/base/page_transition_types.h"
 
 class GURL;
@@ -189,6 +190,16 @@ class NavigationSimulator : public WebContentsObserver {
   // commits. They should be specified before calling |Fail| or |Commit|.
   virtual void SetSocketAddress(const net::HostPortPair& socket_address);
 
+  // Sets the InterfaceProvider interface request to provide as an argument to
+  // DidCommitProvisionalLoad for non-same-document navigations. If not called,
+  // a stub will be passed in (with no interface requests ever arriving).
+  //
+  // The interface connection would normally be created by the RenderFrame, with
+  // its client end bound to |remote_interfaces_|, to allow the new document to
+  // allow it to access access services exposed by the RenderFrameHost.
+  virtual void SetInterfaceProviderRequest(
+      service_manager::mojom::InterfaceProviderRequest request);
+
   // --------------------------------------------------------------------------
 
   // Gets the last throttle check result computed by the navigation throttles.
@@ -298,6 +309,7 @@ class NavigationSimulator : public WebContentsObserver {
   ui::PageTransition transition_;
   ReloadType reload_type_ = ReloadType::NONE;
   bool has_user_gesture_ = true;
+  service_manager::mojom::InterfaceProviderRequest interface_provider_request_;
 
   // These are used to sanity check the content/public/ API calls emitted as
   // part of the navigation.
