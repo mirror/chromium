@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d8283e8_97b39f07",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/base-uri/report-uri-does-not-respect-base-uri.sub.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-01T21:06:35Z",
+      "side": 1,
+      "message": "s/than/then",
+      "range": {
+        "startLine": 9,
+        "startChar": 58,
+        "endLine": 9,
+        "endChar": 63
+      },
+      "revId": "525828db2abded86bad68973302b3cf3e5d20736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4653e89_06451b47",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/base-uri/report-uri-does-not-respect-base-uri.sub.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-01T21:06:35Z",
+      "side": 1,
+      "message": "Can this be moved into the HEAD? IIRC, HTML5 wants it there.",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "525828db2abded86bad68973302b3cf3e5d20736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062bddd3_18b72a28",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/base-uri/report-uri-does-not-respect-base-uri.sub.html.sub.headers",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-01T21:06:35Z",
+      "side": 1,
+      "message": "Unless there\u0027s some reason this line should be here, could you please get rid of it? Every one of its directives is invalid and yet I see it getting copy/pasted around the world.",
+      "range": {
+        "startLine": 3,
+        "startChar": 15,
+        "endLine": 3,
+        "endChar": 47
+      },
+      "revId": "525828db2abded86bad68973302b3cf3e5d20736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51474afe_b514cf5d",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-01T21:06:35Z",
+      "side": 1,
+      "message": "Nit: Missing period at end of comment sentence.",
+      "range": {
+        "startLine": 1336,
+        "startChar": 31,
+        "endLine": 1336,
+        "endChar": 0
+      },
+      "revId": "525828db2abded86bad68973302b3cf3e5d20736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
