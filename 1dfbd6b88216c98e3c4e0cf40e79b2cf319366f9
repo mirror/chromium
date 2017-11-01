@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "05e0e631_965a4124",
+        "filename": "chrome/browser/component_updater/optimization_hints_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-01T17:10:36Z",
+      "side": 1,
+      "message": "it means that we don\u0027t require extra encryption over the wire. i.e. it\u0027s public data.",
+      "parentUuid": "f0082eee_080fa193",
+      "range": {
+        "startLine": 58,
+        "startChar": 48,
+        "endLine": 58,
+        "endChar": 73
+      },
+      "revId": "1dfbd6b88216c98e3c4e0cf40e79b2cf319366f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c9be4cf_bd090ffd",
         "filename": "chrome/browser/component_updater/optimization_hints_component_installer.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "1dfbd6b88216c98e3c4e0cf40e79b2cf319366f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a5c1ee9_12e0af3f",
+        "filename": "chrome/browser/component_updater/optimization_hints_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-01T17:10:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c9be4cf_bd090ffd",
+      "range": {
+        "startLine": 106,
+        "startChar": 43,
+        "endLine": 106,
+        "endChar": 60
+      },
+      "revId": "1dfbd6b88216c98e3c4e0cf40e79b2cf319366f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f1f682e9_0339d097",
+        "filename": "chrome/browser/component_updater/optimization_hints_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-01T17:10:36Z",
+      "side": 1,
+      "message": "spoke about this offline. probably not needed since we\u0027ll be going with a content::NotificationObserver to pass things through to previews",
+      "parentUuid": "d3c07288_08b5c1a4",
+      "range": {
+        "startLine": 136,
+        "startChar": 7,
+        "endLine": 136,
+        "endChar": 20
+      },
+      "revId": "1dfbd6b88216c98e3c4e0cf40e79b2cf319366f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9073c30c_0bf65440",
         "filename": "chrome/browser/component_updater/optimization_hints_component_installer_unittest.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3590d097_7c96a989",
+        "filename": "chrome/browser/component_updater/optimization_hints_component_installer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-01T17:10:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9073c30c_0bf65440",
+      "range": {
+        "startLine": 112,
+        "startChar": 7,
+        "endLine": 112,
+        "endChar": 37
+      },
+      "revId": "1dfbd6b88216c98e3c4e0cf40e79b2cf319366f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc11d3e4_eb14bc6f",
         "filename": "chrome/browser/optimization_guide/optimization_guide_service.h",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "1dfbd6b88216c98e3c4e0cf40e79b2cf319366f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2e8a5b_e838df7f",
+        "filename": "chrome/browser/optimization_guide/optimization_guide_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-01T17:10:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc11d3e4_eb14bc6f",
+      "range": {
+        "startLine": 20,
+        "startChar": 47,
+        "endLine": 20,
+        "endChar": 62
+      },
+      "revId": "1dfbd6b88216c98e3c4e0cf40e79b2cf319366f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
