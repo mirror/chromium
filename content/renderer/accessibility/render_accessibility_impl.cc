@@ -276,7 +276,10 @@ void RenderAccessibilityImpl::HandleAXEvent(
   acc_event.id = obj.AxID();
   acc_event.event_type = event;
 
-  if (blink::WebUserGestureIndicator::IsProcessingUserGesture())
+  DCHECK(render_frame_);
+
+  if (blink::WebUserGestureIndicator::IsProcessingUserGesture(
+          render_frame_->GetWebFrame()))
     acc_event.event_from = ui::AX_EVENT_FROM_USER;
   else if (during_action_)
     acc_event.event_from = ui::AX_EVENT_FROM_ACTION;
