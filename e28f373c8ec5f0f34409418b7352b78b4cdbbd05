@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "817a0452_bbcd3e70",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-01T21:34:44Z",
+      "side": 1,
+      "message": "I find it odd (and likely a source of confusion here) to have isChromeHomeEnabled and then a few lines down call isChromeHomeEnabled().  I don\u0027t know if we need to address it in this CL, but I think this logic has gotten complex and ripe for a clean up.  We also probably should move it out of FeatureUtilities altogether as it is now quite a lot of code.",
+      "range": {
+        "startLine": 279,
+        "startChar": 16,
+        "endLine": 279,
+        "endChar": 35
+      },
+      "revId": "e28f373c8ec5f0f34409418b7352b78b4cdbbd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a536f4_ac1fa18f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-01T21:34:44Z",
+      "side": 1,
+      "message": "I don\u0027t recall if this would cause an NPE if sChromeHomeEnabled \u003d\u003d null.  Does that try to auto-box it to a boolean to compare the two primitives?\n\nmight want to add sChromeHomeEnabled \u003d\u003d null || enabled !\u003d sChromeHomeEnabled to be extra cautious.",
+      "range": {
+        "startLine": 310,
+        "startChar": 33,
+        "endLine": 310,
+        "endChar": 40
+      },
+      "revId": "e28f373c8ec5f0f34409418b7352b78b4cdbbd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
