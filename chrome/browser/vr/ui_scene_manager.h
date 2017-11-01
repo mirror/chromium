@@ -145,6 +145,7 @@ class UiSceneManager {
   bool showing_web_vr_splash_screen() const {
     return showing_web_vr_splash_screen_;
   }
+  bool incognito() const { return incognito_; }
 
  private:
   void Create2dBrowsingSubtreeRoots(Model* model);
@@ -207,7 +208,6 @@ class UiSceneManager {
   Rect* ceiling_ = nullptr;
   Grid* floor_ = nullptr;
   UiElement* close_button_ = nullptr;
-  UiElement* voice_search_button_ = nullptr;
   UrlBar* url_bar_ = nullptr;
   TransientElement* webvr_url_toast_transient_parent_ = nullptr;
   WebVrUrlToast* webvr_url_toast_ = nullptr;

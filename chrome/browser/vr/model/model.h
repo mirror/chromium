@@ -28,6 +28,8 @@ struct Model {
   ControllerModel controller;
   ReticleModel reticle;
 
+  bool experimental_vr_features_enabled = false;
+
   std::vector<OmniboxSuggestion> omnibox_suggestions;
 };
 

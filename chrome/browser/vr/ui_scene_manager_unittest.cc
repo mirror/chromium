@@ -225,6 +225,31 @@ TEST_F(UiSceneManagerTest, UiUpdatesForIncognito) {
   EXPECT_EQ(initial_background, no_longer_incognito_again_background);
 }
 
+TEST_F(UiSceneManagerTest, VoiceSearchHiddenInIncognito) {
+  MakeManager(kNotInCct, kNotInWebVr);
+
+  std::set<UiElementName> names = {kVoiceSearchButton};
+  model_->experimental_vr_features_enabled = true;
+  EXPECT_TRUE(AnimateBy(MsToDelta(300)));
+
+  EXPECT_TRUE(VerifyVisibility(names, true));
+
+  manager_->SetIncognito(true);
+  EXPECT_TRUE(AnimateBy(MsToDelta(300)));
+  EXPECT_TRUE(VerifyVisibility(names, false));
+
+  // If experimental VR features are disabled, then we should never show the
+  // button, regardless of whether or not we're in incognito mode.
+  model_->experimental_vr_features_enabled = false;
+  manager_->SetIncognito(false);
+  EXPECT_TRUE(AnimateBy(MsToDelta(300)));
+  EXPECT_TRUE(VerifyVisibility(names, false));
+
+  manager_->SetIncognito(true);
+  EXPECT_TRUE(AnimateBy(MsToDelta(300)));
+  EXPECT_TRUE(VerifyVisibility(names, false));
+}
+
 TEST_F(UiSceneManagerTest, WebVrAutopresented) {
   MakeAutoPresentedManager();
 

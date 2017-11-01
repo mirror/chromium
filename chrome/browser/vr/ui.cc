@@ -15,6 +15,7 @@
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/ui_scene_manager.h"
 #include "chrome/browser/vr/vr_shell_renderer.h"
+#include "chrome/common/chrome_features.h"
 
 namespace vr {
 
@@ -33,6 +34,8 @@ Ui::Ui(UiBrowserInterface* browser,
       weak_ptr_factory_(this) {
   model_->started_for_autopresentation =
       ui_initial_state.web_vr_autopresentation_expected;
+  model_->experimental_vr_features_enabled =
+      base::FeatureList::IsEnabled(features::kExperimentalVRFeatures);
 }
 
 Ui::~Ui() = default;
