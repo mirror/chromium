@@ -63,7 +63,6 @@
 #include "core/paint/FirstMeaningfulPaintDetector.h"
 #include "core/probe/CoreProbes.h"
 #include "core/svg/graphics/SVGImageChromeClient.h"
-#include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "core/timing/PerformanceBase.h"
 #include "platform/WebFrameScheduler.h"
@@ -660,13 +659,18 @@ void FrameFetchContext::DidLoadResource(Resource* resource) {
 }
 
 void FrameFetchContext::AddResourceTiming(const ResourceTimingInfo& info) {
-  Document* initiator_document = document_ && info.IsMainResource()
-                                     ? document_->ParentDocument()
-                                     : document_.Get();
-  if (!initiator_document || !initiator_document->domWindow())
+  if (!document_)
     return;
-  DOMWindowPerformance::performance(*initiator_document->domWindow())
-      ->AddResourceTiming(info);
+
+  DCHECK(document_->GetFrame());
+  Frame* initiator_frame = document_ && info.IsMainResource()
+                               ? document_->GetFrame()->Tree().Parent()
+                               : document_->GetFrame();
+
+  if (!initiator_frame)
+    return;
+
+  initiator_frame->AddResourceTiming(info);
 }
 
 bool FrameFetchContext::AllowImage(bool images_enabled, const KURL& url) const {
