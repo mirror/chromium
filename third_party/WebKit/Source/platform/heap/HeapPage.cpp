@@ -654,7 +654,7 @@ void NormalPageArena::AllocatePage() {
   page->Link(&first_page_);
 
   GetThreadState()->Heap().HeapStats().IncreaseAllocatedSpace(page->size());
-#if DCHECK_IS_ON() || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER)
+  //#if DCHECK_IS_ON() || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER)
   // Allow the following addToFreeList() to add the newly allocated memory
   // to the free list.
   ASAN_UNPOISON_MEMORY_REGION(page->Payload(), page->PayloadSize());
@@ -662,7 +662,7 @@ void NormalPageArena::AllocatePage() {
   for (size_t i = 0; i < page->PayloadSize(); i++)
     address[i] = kReuseAllowedZapValue;
   ASAN_POISON_MEMORY_REGION(page->Payload(), page->PayloadSize());
-#endif
+  //#endif
   AddToFreeList(page->Payload(), page->PayloadSize());
 }
 
@@ -1113,7 +1113,7 @@ void FreeList::AddToFreeList(Address address, size_t size) {
   }
   entry = new (NotNull, address) FreeListEntry(size);
 
-#if DCHECK_IS_ON() || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER)
+  //#if DCHECK_IS_ON() || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER)
   // The following logic delays reusing free lists for (at least) one GC
   // cycle or coalescing. This is helpful to detect use-after-free errors
   // that could be caused by lazy sweeping etc.
@@ -1147,7 +1147,7 @@ void FreeList::AddToFreeList(Address address, size_t size) {
 // We reach here only when all the values in the memory region are
 // reuseAllowedZapValue. In this case, we are allowed to add the memory
 // region to the free list and reuse it for another object.
-#endif
+  //#endif
   ASAN_POISON_MEMORY_REGION(address, size);
 
   int index = BucketIndexForSize(size);
@@ -1156,8 +1156,8 @@ void FreeList::AddToFreeList(Address address, size_t size) {
     biggest_free_list_index_ = index;
 }
 
-#if DCHECK_IS_ON() || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER) || \
-    defined(MEMORY_SANITIZER)
+//#if DCHECK_IS_ON() || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER) || \
+//    defined(MEMORY_SANITIZER)
 NO_SANITIZE_MEMORY
 void NEVER_INLINE
 FreeList::GetAllowedAndForbiddenCounts(Address address,
@@ -1191,7 +1191,7 @@ void NEVER_INLINE FreeList::CheckFreedMemoryIsZapped(Address address,
            address[i] == kReuseForbiddenZapValue);
   }
 }
-#endif
+//#endif
 
 size_t FreeList::FreeListSize() const {
   size_t free_size = 0;
@@ -1432,10 +1432,10 @@ void NormalPage::SweepAndCompact(CompactionContext& context) {
 // As compaction is under way, leave the freed memory accessible
 // while compacting the rest of the page. We just zap the payload
 // to catch out other finalizers trying to access it.
-#if DCHECK_IS_ON() || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER) || \
-    defined(MEMORY_SANITIZER)
+      //#if DCHECK_IS_ON() || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER) || \
+    //defined(MEMORY_SANITIZER)
       FreeList::ZapFreedMemory(payload, payload_size);
-#endif
+      //#endif
       header_address += size;
       continue;
     }
@@ -1489,8 +1489,8 @@ void NormalPage::SweepAndCompact(CompactionContext& context) {
         marked_object_size);
   }
 
-#if DCHECK_IS_ON() || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER) || \
-    defined(MEMORY_SANITIZER)
+  //#if DCHECK_IS_ON() || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER) || \
+    //defined(MEMORY_SANITIZER)
   // Zap the unused portion, until it is either compacted into or freed.
   if (current_page != this) {
     FreeList::ZapFreedMemory(Payload(), PayloadSize());
@@ -1498,7 +1498,7 @@ void NormalPage::SweepAndCompact(CompactionContext& context) {
     FreeList::ZapFreedMemory(Payload() + allocation_point,
                              PayloadSize() - allocation_point);
   }
-#endif
+  //#endif
 }
 
 void NormalPage::MakeConsistentForMutator() {

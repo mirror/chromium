@@ -104,7 +104,7 @@ const uint8_t kReuseForbiddenZapValue = 0x2c;
   ASAN_UNPOISON_MEMORY_REGION(address, size);        \
   FreeList::CheckFreedMemoryIsZapped(address, size); \
   ASAN_POISON_MEMORY_REGION(address, size)
-#elif DCHECK_IS_ON() || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER)
+#else
 #define SET_MEMORY_INACCESSIBLE(address, size) \
   FreeList::ZapFreedMemory(address, size);     \
   ASAN_POISON_MEMORY_REGION(address, size)
@@ -115,14 +115,14 @@ const uint8_t kReuseForbiddenZapValue = 0x2c;
   ASAN_UNPOISON_MEMORY_REGION(address, size);        \
   FreeList::CheckFreedMemoryIsZapped(address, size); \
   ASAN_POISON_MEMORY_REGION(address, size)
-#else
-#define SET_MEMORY_INACCESSIBLE(address, size) memset((address), 0, (size))
-#define SET_MEMORY_ACCESSIBLE(address, size) \
-  do {                                       \
-  } while (false)
-#define CHECK_MEMORY_INACCESSIBLE(address, size) \
-  do {                                           \
-  } while (false)
+//#else
+//#define SET_MEMORY_INACCESSIBLE(address, size) memset((address), 0, (size))
+//#define SET_MEMORY_ACCESSIBLE(address, size) \
+//  do {                                       \
+//  } while (false)
+//#define CHECK_MEMORY_INACCESSIBLE(address, size) \
+//  do {                                           \
+//  } while (false)
 #endif
 
 class NormalPageArena;
@@ -692,12 +692,12 @@ class FreeList {
   // Returns true if the freelist snapshot is captured.
   bool TakeSnapshot(const String& dump_base_name);
 
-#if DCHECK_IS_ON() || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER) || \
-    defined(MEMORY_SANITIZER)
+  //#if DCHECK_IS_ON() || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER) || \
+    //defined(MEMORY_SANITIZER)
   static void GetAllowedAndForbiddenCounts(Address, size_t, size_t&, size_t&);
   static void ZapFreedMemory(Address, size_t);
   static void CheckFreedMemoryIsZapped(Address, size_t);
-#endif
+  //#endif
 
  private:
   int biggest_free_list_index_;
