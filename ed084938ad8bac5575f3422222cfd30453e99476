@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a04c5e6_d724f9c9",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-01T15:42:15Z",
+      "side": 1,
+      "message": "In general you don\u0027t want this code depending upon *all* of metrics. I think you\u0027re adding this purely for the createservice function. Please specify the one file you care about here, not the whole directory.",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "ed084938ad8bac5575f3422222cfd30453e99476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
