@@ -1988,6 +1988,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kDropSyncCredentialDescription, kOsAll,
      FEATURE_VALUE_TYPE(password_manager::features::kDropSyncCredential)},
 #if !defined(OS_ANDROID)
+#if defined(OS_CHROMEOS)
+    {"enable-ash-sidebar", flag_descriptions::kAshSidebarName,
+     flag_descriptions::kAshSidebarDescription, kOsCrOS,
+     ENABLE_DISABLE_VALUE_TYPE(ash::switches::kAshSidebarEnabled,
+                               ash::switches::kAshSidebarDisabled)},
+#endif  // OS_CHROMEOS
     {"enable-message-center-new-style-notification",
      flag_descriptions::kMessageCenterNewStyleNotificationName,
      flag_descriptions::kMessageCenterNewStyleNotificationDescription,
