@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f8ab72e_42a5d99e",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T22:59:10Z",
+      "side": 1,
+      "message": "nit: move down to below ResetCachedPreferredSize() (match declaration order in .h)",
+      "revId": "af5b98d31da42912e9690efee6bd424412c545fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69040ee9_022a6c3b",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T22:59:10Z",
+      "side": 1,
+      "message": "nit: comma after \"spacing\"",
+      "revId": "af5b98d31da42912e9690efee6bd424412c545fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
