@@ -318,7 +318,7 @@ void QuicPacketGenerator::ReserializeAllFrames(
   packet_creator_.ReserializeAllFrames(retransmission, buffer, buffer_len);
 }
 
-void QuicPacketGenerator::UpdateSequenceNumberLength(
+void QuicPacketGenerator::UpdatePacketNumberLength(
     QuicPacketNumber least_packet_awaited_by_peer,
     QuicPacketCount max_packets_in_flight) {
   return packet_creator_.UpdatePacketNumberLength(least_packet_awaited_by_peer,

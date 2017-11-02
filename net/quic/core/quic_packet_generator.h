@@ -147,8 +147,8 @@ class QUIC_EXPORT_PRIVATE QuicPacketGenerator {
 
   // Update the packet number length to use in future packets as soon as it
   // can be safely changed.
-  void UpdateSequenceNumberLength(QuicPacketNumber least_packet_awaited_by_peer,
-                                  QuicPacketCount max_packets_in_flight);
+  void UpdatePacketNumberLength(QuicPacketNumber least_packet_awaited_by_peer,
+                                QuicPacketCount max_packets_in_flight);
 
   // Set the minimum number of bytes for the connection id length;
   void SetConnectionIdLength(uint32_t length);

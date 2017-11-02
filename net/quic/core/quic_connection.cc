@@ -1646,7 +1646,7 @@ bool QuicConnection::WritePacket(SerializedPacket* packet) {
 
   // The packet number length must be updated after OnPacketSent, because it
   // may change the packet number length in packet.
-  packet_generator_.UpdateSequenceNumberLength(
+  packet_generator_.UpdatePacketNumberLength(
       sent_packet_manager_.GetLeastUnacked(),
       sent_packet_manager_.EstimateMaxPacketsInFlight(max_packet_length()));
 
