@@ -409,7 +409,6 @@ component("color_space") {
     "color_space_win.h",
     "icc_profile.cc",
     "icc_profile.h",
-    "icc_profile_mac.mm",
     "skia_color_space_util.cc",
     "skia_color_space_util.h",
   ]
@@ -417,12 +416,6 @@ component("color_space") {
     "//base",
     "//skia",
   ]
-  if (is_mac) {
-    libs = [
-      "CoreFoundation.framework",
-      "CoreGraphics.framework",
-    ]
-  }
   if (use_x11) {
     deps = [
       "//ui/gfx/x",

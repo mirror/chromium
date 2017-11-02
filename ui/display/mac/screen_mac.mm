@@ -14,6 +14,7 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/mac/mac_util.h"
+#include "base/mac/scoped_cftyperef.h"
 #include "base/mac/scoped_nsobject.h"
 #include "base/mac/sdk_forward_declarations.h"
 #include "base/macros.h"
@@ -53,6 +54,18 @@ NSScreen* GetMatchingScreen(const gfx::Rect& match_rect) {
   return max_screen;
 }
 
+scoped_refptr<gfx::ICCProfile> GetScreenColorProfile(NSScreen* screen) {
+  CGColorSpaceRef cg_color_space = [[screen colorSpace] CGColorSpace];
+  if (!cg_color_space)
+    return nullptr;
+  base::ScopedCFTypeRef<CFDataRef> cf_icc_profile(
+      CGColorSpaceCopyICCProfile(cg_color_space));
+  if (!cf_icc_profile)
+    return nullptr;
+  return gfx::ICCProfile::FromData(CFDataGetBytePtr(cf_icc_profile),
+                                   CFDataGetLength(cf_icc_profile));
+}
+
 Display BuildDisplayForScreen(NSScreen* screen) {
   NSRect frame = [screen frame];
 
@@ -79,16 +92,13 @@ Display BuildDisplayForScreen(NSScreen* screen) {
     scale = Display::GetForcedDeviceScaleFactor();
 
   display.set_device_scale_factor(scale);
-
   if (!Display::HasForceColorProfile()) {
-    // On Sierra, we need to operate in a single screen's color space because
-    // IOSurfaces do not opt-out of color correction.
-    // https://crbug.com/654488
-    CGColorSpaceRef color_space = [[screen colorSpace] CGColorSpace];
-    gfx::ICCProfile icc_profile =
-        gfx::ICCProfile::FromCGColorSpace(color_space);
-    icc_profile.HistogramDisplay(display.id());
-    display.set_color_space(icc_profile.GetColorSpace());
+    scoped_refptr<gfx::ICCProfile> icc_profile = GetScreenColorProfile(screen);
+    if (icc_profile) {
+      icc_profile->AddToDisplayCache();
+      icc_profile->HistogramDisplay(display.id());
+      display.set_color_space(icc_profile->GetColorSpace());
+    }
   }
   display.set_color_depth(NSBitsPerPixelFromDepth([screen depth]));
   display.set_depth_per_component(NSBitsPerSampleFromDepth([screen depth]));

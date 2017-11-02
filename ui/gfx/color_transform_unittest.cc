@@ -148,8 +148,8 @@ TEST(SimpleColorSpace, SRGBFromICCAndNotICC) {
   ColorTransform::TriStim value_fromicc;
   ColorTransform::TriStim value_default;
 
-  ICCProfile srgb_icc_profile = ICCProfileForTestingSRGB();
-  ColorSpace srgb_fromicc = srgb_icc_profile.GetColorSpace();
+  scoped_refptr<ICCProfile> srgb_icc_profile = ICCProfileForTestingSRGB();
+  ColorSpace srgb_fromicc = srgb_icc_profile->GetColorSpace();
   ColorSpace srgb_default = gfx::ColorSpace::CreateSRGB();
   ColorSpace xyzd50 = gfx::ColorSpace::CreateXYZD50();
 
@@ -191,9 +191,9 @@ TEST(SimpleColorSpace, SRGBFromICCAndNotICC) {
 }
 
 TEST(SimpleColorSpace, BT709toSRGBICC) {
-  ICCProfile srgb_icc = ICCProfileForTestingSRGB();
+  scoped_refptr<ICCProfile> srgb_icc = ICCProfileForTestingSRGB();
   ColorSpace bt709 = ColorSpace::CreateREC709();
-  ColorSpace sRGB = srgb_icc.GetColorSpace();
+  ColorSpace sRGB = srgb_icc->GetColorSpace();
   std::unique_ptr<ColorTransform> t(ColorTransform::NewColorTransform(
       bt709, sRGB, ColorTransform::Intent::INTENT_ABSOLUTE));
 
@@ -218,8 +218,8 @@ TEST(SimpleColorSpace, BT709toSRGBICC) {
 
 TEST(SimpleColorSpace, ICCProfileOnlyXYZ) {
   const float kEpsilon = 2.5f / 255.f;
-  ICCProfile icc_profile = ICCProfileForTestingNoAnalyticTrFn();
-  ColorSpace icc_space = icc_profile.GetColorSpace();
+  scoped_refptr<ICCProfile> icc_profile = ICCProfileForTestingNoAnalyticTrFn();
+  ColorSpace icc_space = icc_profile->GetColorSpace();
   ColorSpace xyzd50 = ColorSpace::CreateXYZD50();
 
   ColorTransform::TriStim input_value(127.f / 255, 187.f / 255, 157.f / 255);
@@ -250,10 +250,10 @@ TEST(SimpleColorSpace, ICCProfileOnlyXYZ) {
 
 TEST(SimpleColorSpace, ICCProfileOnlyColorSpin) {
   const float kEpsilon = 2.5f / 255.f;
-  ICCProfile icc_profile = ICCProfileForTestingNoAnalyticTrFn();
-  ColorSpace icc_space = icc_profile.GetColorSpace();
+  scoped_refptr<ICCProfile> icc_profile = ICCProfileForTestingNoAnalyticTrFn();
+  ColorSpace icc_space = icc_profile->GetColorSpace();
   ColorSpace colorspin = ICCProfileForTestingColorSpin()
-                             .GetColorSpace()
+                             ->GetColorSpace()
                              .GetParametricApproximation();
 
   ColorTransform::TriStim input_value(0.25f, 0.5f, 0.75f);
@@ -284,13 +284,13 @@ TEST(SimpleColorSpace, ICCProfileOnlyColorSpin) {
 }
 
 TEST(SimpleColorSpace, GetColorSpace) {
-  ICCProfile srgb_icc = ICCProfileForTestingSRGB();
-  ColorSpace sRGB = srgb_icc.GetColorSpace();
+  scoped_refptr<ICCProfile> srgb_icc = ICCProfileForTestingSRGB();
+  ColorSpace sRGB = srgb_icc->GetColorSpace();
   ColorSpace sRGB2 = sRGB;
   const float kEpsilon = 1.5f / 255.f;
 
   // Prevent sRGB2 from using a cached ICC profile.
-  sRGB2.icc_profile_id_ = 0;
+  sRGB2.icc_profile_ = nullptr;
 
   std::unique_ptr<ColorTransform> t(ColorTransform::NewColorTransform(
       sRGB, sRGB2, ColorTransform::Intent::INTENT_ABSOLUTE));
@@ -332,7 +332,7 @@ TEST(SimpleColorSpace, ToUndefined) {
   EXPECT_EQ(video_to_null->NumberOfStepsForTesting(), 1u);
 
   // Test with an ICC profile that can't be represented as matrix+transfer.
-  ColorSpace luttrcicc = ICCProfileForTestingNoAnalyticTrFn().GetColorSpace();
+  ColorSpace luttrcicc = ICCProfileForTestingNoAnalyticTrFn()->GetColorSpace();
   std::unique_ptr<ColorTransform> luttrcicc_to_null(
       ColorTransform::NewColorTransform(
           luttrcicc, null, ColorTransform::Intent::INTENT_PERCEPTUAL));
@@ -343,7 +343,7 @@ TEST(SimpleColorSpace, ToUndefined) {
   EXPECT_GT(luttrcicc_to_nonnull->NumberOfStepsForTesting(), 0u);
 
   // Test with an ICC profile that can.
-  ColorSpace adobeicc = ICCProfileForTestingAdobeRGB().GetColorSpace();
+  ColorSpace adobeicc = ICCProfileForTestingAdobeRGB()->GetColorSpace();
   std::unique_ptr<ColorTransform> adobeicc_to_null(
       ColorTransform::NewColorTransform(
           adobeicc, null, ColorTransform::Intent::INTENT_PERCEPTUAL));

@@ -70,6 +70,7 @@ component("display") {
   if (is_mac) {
     libs = [
       "AppKit.framework",
+      "CoreFoundation.framework",
       "CoreGraphics.framework",
     ]
   }
