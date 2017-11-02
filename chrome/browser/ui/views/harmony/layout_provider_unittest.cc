@@ -259,30 +259,39 @@ TEST_F(LayoutProviderTest, FontSizeRelativeToBase) {
   const int twelve = gfx::FontList().GetFontSize();
 #endif
 
-  EXPECT_EQ(twelve, GetFont(CONTEXT_BODY_TEXT_SMALL, kStyle).GetFontSize());
-  EXPECT_EQ(twelve, GetFont(views::style::CONTEXT_LABEL, kStyle).GetFontSize());
+  views::View view;
   EXPECT_EQ(twelve,
-            GetFont(views::style::CONTEXT_TEXTFIELD, kStyle).GetFontSize());
+            GetFont(view, CONTEXT_BODY_TEXT_SMALL, kStyle).GetFontSize());
   EXPECT_EQ(twelve,
-            GetFont(views::style::CONTEXT_BUTTON, kStyle).GetFontSize());
+            GetFont(view, views::style::CONTEXT_LABEL, kStyle).GetFontSize());
+  EXPECT_EQ(
+      twelve,
+      GetFont(view, views::style::CONTEXT_TEXTFIELD, kStyle).GetFontSize());
+  EXPECT_EQ(twelve,
+            GetFont(view, views::style::CONTEXT_BUTTON, kStyle).GetFontSize());
 
 #if defined(OS_MACOSX)
   // We never exposed UI on Mac using these constants so it doesn't matter that
   // they are different. They only need to match under Harmony.
-  EXPECT_EQ(twelve + 9, GetFont(CONTEXT_HEADLINE, kStyle).GetFontSize());
+  EXPECT_EQ(twelve + 9, GetFont(view, CONTEXT_HEADLINE, kStyle).GetFontSize());
+  EXPECT_EQ(
+      twelve + 2,
+      GetFont(view, views::style::CONTEXT_DIALOG_TITLE, kStyle).GetFontSize());
   EXPECT_EQ(twelve + 2,
-            GetFont(views::style::CONTEXT_DIALOG_TITLE, kStyle).GetFontSize());
-  EXPECT_EQ(twelve + 2, GetFont(CONTEXT_BODY_TEXT_LARGE, kStyle).GetFontSize());
-  EXPECT_EQ(twelve, GetFont(CONTEXT_DEPRECATED_SMALL, kStyle).GetFontSize());
+            GetFont(view, CONTEXT_BODY_TEXT_LARGE, kStyle).GetFontSize());
+  EXPECT_EQ(twelve,
+            GetFont(view, CONTEXT_DEPRECATED_SMALL, kStyle).GetFontSize());
 #else
   // E.g. Headline should give a 20pt font.
-  EXPECT_EQ(twelve + 8, GetFont(CONTEXT_HEADLINE, kStyle).GetFontSize());
+  EXPECT_EQ(twelve + 8, GetFont(view, CONTEXT_HEADLINE, kStyle).GetFontSize());
   // Titles should be 15pt. Etc.
-  EXPECT_EQ(twelve + 3,
-            GetFont(views::style::CONTEXT_DIALOG_TITLE, kStyle).GetFontSize());
-  EXPECT_EQ(twelve + 1, GetFont(CONTEXT_BODY_TEXT_LARGE, kStyle).GetFontSize());
+  EXPECT_EQ(
+      twelve + 3,
+      GetFont(view, views::style::CONTEXT_DIALOG_TITLE, kStyle).GetFontSize());
+  EXPECT_EQ(twelve + 1,
+            GetFont(view, CONTEXT_BODY_TEXT_LARGE, kStyle).GetFontSize());
   EXPECT_EQ(twelve - 1,
-            GetFont(CONTEXT_DEPRECATED_SMALL, kStyle).GetFontSize());
+            GetFont(view, CONTEXT_DEPRECATED_SMALL, kStyle).GetFontSize());
 #endif
 }
 
@@ -310,21 +319,24 @@ TEST_F(LayoutProviderTest, TypographyLineHeight) {
                             {CONTEXT_BODY_TEXT_LARGE, 2, 4},
                             {CONTEXT_BODY_TEXT_SMALL, 4, 5}};
 
+  views::View view;
   for (size_t i = 0; i < arraysize(kExpectedIncreases); ++i) {
     SCOPED_TRACE(testing::Message() << "Testing index: " << i);
     const auto& increase = kExpectedIncreases[i];
-    const gfx::FontList& font = views::style::GetFont(increase.context, kStyle);
-    int line_spacing = views::style::GetLineHeight(increase.context, kStyle);
+    const gfx::FontList& font =
+        views::style::GetFont(view, increase.context, kStyle);
+    int line_spacing =
+        views::style::GetLineHeight(view, increase.context, kStyle);
     EXPECT_GE(increase.max, line_spacing - font.GetHeight());
     EXPECT_LE(increase.min, line_spacing - font.GetHeight());
   }
 
   // Buttons should specify zero line height (i.e. use the font's height) so
   // buttons have flexibility to configure their own spacing.
-  EXPECT_EQ(0,
-            views::style::GetLineHeight(views::style::CONTEXT_BUTTON, kStyle));
-  EXPECT_EQ(
-      0, views::style::GetLineHeight(views::style::CONTEXT_BUTTON_MD, kStyle));
+  EXPECT_EQ(0, views::style::GetLineHeight(view, views::style::CONTEXT_BUTTON,
+                                           kStyle));
+  EXPECT_EQ(0, views::style::GetLineHeight(
+                   view, views::style::CONTEXT_BUTTON_MD, kStyle));
 }
 
 // Ensure that line heights reported in a default bot configuration match the
@@ -337,8 +349,9 @@ TEST_F(LayoutProviderTest, ExplicitTypographyLineHeight) {
   std::unique_ptr<views::LayoutProvider> layout_provider =
       ChromeLayoutProvider::CreateLayoutProvider();
 
+  views::View view;
   constexpr int kStyle = views::style::STYLE_PRIMARY;
-  if (views::style::GetFont(views::style::CONTEXT_DIALOG_TITLE, kStyle)
+  if (views::style::GetFont(view, views::style::CONTEXT_DIALOG_TITLE, kStyle)
           .GetFontSize() != kHarmonyTitleSize) {
     LOG(WARNING) << "Skipping: Test machine not in default configuration.";
     return;
@@ -356,8 +369,9 @@ TEST_F(LayoutProviderTest, ExplicitTypographyLineHeight) {
 
   for (size_t i = 0; i < arraysize(kHarmonyHeights); ++i) {
     SCOPED_TRACE(testing::Message() << "Testing index: " << i);
-    EXPECT_EQ(kHarmonyHeights[i].line_height,
-              views::style::GetLineHeight(kHarmonyHeights[i].context, kStyle));
+    EXPECT_EQ(
+        kHarmonyHeights[i].line_height,
+        views::style::GetLineHeight(view, kHarmonyHeights[i].context, kStyle));
 
     views::Label label(base::ASCIIToUTF16("test"), kHarmonyHeights[i].context);
     label.SizeToPreferredSize();
@@ -367,8 +381,8 @@ TEST_F(LayoutProviderTest, ExplicitTypographyLineHeight) {
   // TODO(tapted): Pass in contexts to StyledLabel instead. Currently they are
   // stuck on style::CONTEXT_LABEL. That only matches the default line height in
   // HarmonyTypographyProvider::GetLineHeight(), which is body text.
-  EXPECT_EQ(kBodyLineHeight,
-            views::style::GetLineHeight(views::style::CONTEXT_LABEL, kStyle));
+  EXPECT_EQ(kBodyLineHeight, views::style::GetLineHeight(
+                                 view, views::style::CONTEXT_LABEL, kStyle));
   views::StyledLabel styled_label(base::ASCIIToUTF16("test"), nullptr);
   constexpr int kStyledLabelWidth = 200;  // Enough to avoid wrapping.
   styled_label.SizeToFit(kStyledLabelWidth);

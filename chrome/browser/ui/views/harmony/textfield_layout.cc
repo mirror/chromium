@@ -27,10 +27,11 @@ void AddLabelAndField(GridLayout* layout,
   constexpr int kFontContext = views::style::CONTEXT_LABEL;
   constexpr int kFontStyle = views::style::STYLE_PRIMARY;
 
+  views::Label* label = new views::Label(label_text, kFontContext, kFontStyle);
   int row_height = views::LayoutProvider::GetControlHeightForFont(
-      kFontContext, kFontStyle, field_font);
+      *label, kFontContext, kFontStyle, field_font);
   layout->StartRow(kFixed, column_set_id, row_height);
-  layout->AddView(new views::Label(label_text, kFontContext, kFontStyle));
+  layout->AddView(label);
   layout->AddView(field);
 }
 

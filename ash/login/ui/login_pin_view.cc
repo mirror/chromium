@@ -107,10 +107,10 @@ class DigitPinButton : public BasePinButton {
   DigitPinButton(int value, const LoginPinView::OnPinKey& on_key)
       : BasePinButton(base::Bind(on_key, value)) {
     set_id(GetViewIdForPinNumber(value));
-    const gfx::FontList& base_font_list = views::Label::GetDefaultFontList();
     views::Label* label = new views::Label(GetButtonLabelForNumber(value),
                                            views::style::CONTEXT_BUTTON,
                                            views::style::STYLE_PRIMARY);
+    const gfx::FontList& base_font_list = label->GetDefaultFontList();
     views::Label* sub_label = new views::Label(
         GetButtonSubLabelForNumber(value), views::style::CONTEXT_BUTTON,
         views::style::STYLE_PRIMARY);
