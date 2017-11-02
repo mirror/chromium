@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a044aaa6_3854d058",
+        "filename": "content/browser/service_worker/service_worker_response_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-02T10:28:24Z",
+      "side": 1,
+      "message": "This will (likely) have a new address every time it\u0027s called so lookups will fail. Making it static should work I guess.",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 17,
+        "endChar": 21
+      },
+      "revId": "d511827b993dbbec2cb9b27e0773ec51737c5138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
