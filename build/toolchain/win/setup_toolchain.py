@@ -142,8 +142,7 @@ def _LoadToolchainEnv(cpu, sdk_dir):
     # Chromium requires the 10.0.15063.468 SDK - previous versions don't have
     # all of the required declarations and 10.0.16299.0 has some
     # incompatibilities (crbug.com/773476).
-    args = [script_path, 'amd64_x86' if cpu == 'x86' else 'amd64',
-            '10.0.15063.0']
+    args = [script_path, 'amd64_x86' if cpu == 'x86' else 'amd64']
     variables = _LoadEnvFromBat(args)
   return _ExtractImportantEnvironment(variables)
 

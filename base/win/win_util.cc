@@ -29,6 +29,7 @@
 #include <windows.ui.viewmanagement.h>
 #include <winstring.h>
 #include <wrl/client.h>
+#include <wrl/event.h>
 #include <wrl/wrappers/corewrappers.h>
 
 #include <memory>
