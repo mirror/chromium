@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a77ad2bd_e3c054b1",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-02T20:49:34Z",
+      "side": 1,
+      "message": "I am wondering if it makes sense to move the functions here to a separate file, e.g. offline_file_utils.h/cc. That way we can test them in isolation, and from the discussions we\u0027ve already had:\n* we need to be able to delete a file\n* we need to be able to compute hash\n* we need to be able to move a file.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 9
+      },
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ff1f350_551690ac",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
         "patchSetId": 3
