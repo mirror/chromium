@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "4fd0f9d8_63f98ee4",
+        "filename": "chrome/browser/extensions/api/notifications/notifications_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-02T20:00:27Z",
+      "side": 1,
+      "message": "Forgive me since I\u0027ve been out of the notifications code for quite a while now, but this feels like the wrong model.\n\nYou\u0027re setting essentially a permanent bit of data on a notification which only has transient effects.  I\u0027d worry that this would cause unexpected effects.  Suppose the notification was redrawn due to an update.  Would it be reshown over top level windows?  Would it be reshown over top level windows of another app?\n\nEven if this is not the case today, it seems like it\u0027d be especially prone to regressions in this type of area.\n\nWould it be more reliable to have a common subcalss of Delegate for all the Ash notifiers that has a struct like this in its constructor, so that the decision could be made on the fly?",
+      "revId": "d2f06341b7a16eaaabd4458f65164b88ce2be62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e616327f_8e4b861a",
         "filename": "chrome/browser/notifications/fullscreen_notification_blocker.cc",
         "patchSetId": 9
