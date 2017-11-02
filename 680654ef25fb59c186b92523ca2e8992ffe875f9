@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3aca6e6_845e97a4",
+        "filename": "chrome/browser/previews/previews_infobar_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-02T00:48:19Z",
+      "side": 1,
+      "message": "Add method comments on what on_dismiss_callback means.",
+      "range": {
+        "startLine": 68,
+        "startChar": 46,
+        "endLine": 68,
+        "endChar": 65
+      },
+      "revId": "680654ef25fb59c186b92523ca2e8992ffe875f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db21393c_a6e0a7bb",
+        "filename": "chrome/browser/previews/previews_infobar_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-02T00:48:19Z",
+      "side": 1,
+      "message": "s/MockedPreviewsIsEnabled/IsPreviewsEnabled/",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 81,
+        "endChar": 28
+      },
+      "revId": "680654ef25fb59c186b92523ca2e8992ffe875f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838310c9_1018b352",
+        "filename": "chrome/browser/previews/previews_infobar_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-02T00:48:19Z",
+      "side": 1,
+      "message": "It is not clear what this means. May be add a comment on why no initialization needs to be done, and why overriding is necessary.",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 18
+      },
+      "revId": "680654ef25fb59c186b92523ca2e8992ffe875f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7342b33f_cf0ec11c",
+        "filename": "chrome/browser/previews/previews_infobar_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-02T00:48:19Z",
+      "side": 1,
+      "message": "Why not call it event_type_\nand the one below:\nevent_description_",
+      "range": {
+        "startLine": 155,
+        "startChar": 14,
+        "endLine": 155,
+        "endChar": 23
+      },
+      "revId": "680654ef25fb59c186b92523ca2e8992ffe875f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10189adc_f89c3e88",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-02T00:48:19Z",
+      "side": 1,
+      "message": "Is it possible to keep the first 2 in the .cc file?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "680654ef25fb59c186b92523ca2e8992ffe875f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd124704_53e9d88d",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-02T00:48:19Z",
+      "side": 1,
+      "message": "Add static to all of them.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 50
+      },
+      "revId": "680654ef25fb59c186b92523ca2e8992ffe875f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205afc77_b119e452",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-02T00:48:19Z",
+      "side": 1,
+      "message": "Move last one to anonymous namespace in reviews_infobar_delegate.cc.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 50
+      },
+      "revId": "680654ef25fb59c186b92523ca2e8992ffe875f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
