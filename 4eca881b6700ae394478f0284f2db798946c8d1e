@@ -16,6 +16,24 @@
       "revId": "4eca881b6700ae394478f0284f2db798946c8d1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31db5946_41a2e3b0",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-02T22:24:47Z",
+      "side": 1,
+      "message": "Yes, the original design wanted it fixed height, unless the message is long, which is why i put it here, but SizeToFit will suffice for now (or forever). Done.",
+      "parentUuid": "45889c93_150a8b86",
+      "revId": "4eca881b6700ae394478f0284f2db798946c8d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
