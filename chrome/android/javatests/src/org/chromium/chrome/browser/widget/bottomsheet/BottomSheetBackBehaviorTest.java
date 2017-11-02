@@ -340,11 +340,6 @@ public class BottomSheetBackBehaviorTest {
     /** Wait until Chrome doesn't have window focus. */
     private void waitForClose() {
         // It takes some time for Chrome to completely close.
-        CriteriaHelper.pollUiThread(new Criteria() {
-            @Override
-            public boolean isSatisfied() {
-                return !mActivity.hasWindowFocus();
-            }
-        });
+        CriteriaHelper.pollUiThread(() -> !mActivity.hasWindowFocus());
     }
 }
