@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "58eeef2e_a5c4f9a6",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-02T10:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d4715c5_8b890d35",
+      "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed114ad5_cdd586c3",
         "filename": "components/favicon/core/favicon_driver_impl.cc",
         "patchSetId": 13
@@ -69,6 +87,24 @@
       "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e141c488_70421c81",
+        "filename": "components/favicon/core/favicon_driver_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-02T10:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed114ad5_cdd586c3",
+      "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -92,6 +128,30 @@
       "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef1e43f_1bcaec8a",
+        "filename": "components/history/core/browser/history_backend_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2156,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-02T10:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e77a61a_9a402ff4",
+      "range": {
+        "startLine": 2156,
+        "startChar": 40,
+        "endLine": 2156,
+        "endChar": 42
+      },
+      "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -126,6 +186,24 @@
       "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b46d732_814d9a42",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_utils.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-02T10:39:31Z",
+      "side": 1,
+      "message": "Ack, reverted and deferring iOS work.",
+      "parentUuid": "fb777cd0_d8cf02b2",
+      "revId": "7b2834b4d3640b1c3669029cace682b57de459aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
