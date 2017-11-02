@@ -16,6 +16,40 @@
       "revId": "4576590038f52a4bed0b4225780974e4a93c6a2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c823725_29a5d1fb",
+        "filename": "extensions/renderer/bindings/argument_spec.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-02T19:59:06Z",
+      "side": 1,
+      "message": "nit: having to look at the code to deal with enums to figure out why the string is non-empty is slightly odd. WDYT of something like:\n\nif (!enum_values_.empty() || out_value) {\n  std::string str;\n  CHECK(...);\n\n  if (!enum_values.empty() \u0026\u0026 enum_values_.count(str) \u003d\u003d 0) {\n    ...\n  }\n\n  if (out_value)\n    *out_value \u003d ...;\n}\n\nPossibly factoring out the if condition into a named boolean if the condition seems too weird.",
+      "revId": "4576590038f52a4bed0b4225780974e4a93c6a2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0d8d2a_9728d1f1",
+        "filename": "extensions/renderer/bindings/argument_spec_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-02T19:59:06Z",
+      "side": 1,
+      "message": "You probably don\u0027t want to do the general JS \u003d\u003d stuff (which is what Value::Equals does). If you just want to see if they\u0027re the same value in the heap (by identity), then this should suffice:\n\nEXPECT_TRUE(value_out \u003d\u003d value_in);",
+      "revId": "4576590038f52a4bed0b4225780974e4a93c6a2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
