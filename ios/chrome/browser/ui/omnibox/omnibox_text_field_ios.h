@@ -17,6 +17,8 @@ typedef enum {
   OMNIBOX_TEXT_FIELD_FADE_STYLE_OUT
 } OmniboxTextFieldFadeStyle;
 
+@class LocationbarAnimationConfigurator;
+
 // UITextField subclass to allow for adjusting borders.
 @interface OmniboxTextFieldIOS : UITextField
 
@@ -121,12 +123,9 @@ typedef enum {
 @property(nonatomic, strong) UIColor* selectedTextBackgroundColor;
 @property(nonatomic, strong) UIColor* placeholderTextColor;
 @property(nonatomic, assign) BOOL incognito;
-// UIViewPropertyAnimator for expanding the location bar.
+// AnimationConfigurator for animating the location bar.
 @property(nonatomic, strong)
-    UIViewPropertyAnimator* omniboxExpanderAnimator API_AVAILABLE(ios(10.0));
-// UIViewPropertyAnimator for contracting the location bar.
-@property(nonatomic, strong)
-    UIViewPropertyAnimator* omniboxContractorAnimator API_AVAILABLE(ios(10.0));
+    LocationbarAnimationConfigurator* locationbarAnimationConfigurator;
 
 @end
 

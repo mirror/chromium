@@ -8,6 +8,8 @@
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller.h"
 
+@class LocationbarAnimationConfigurator;
+
 @interface ToolbarController (Protected)
 
 // Animation key used for toolbar transition animations.
@@ -17,13 +19,9 @@ extern NSString* const kToolbarTransitionAnimationKey;
 // kToolbarTransitionAnimationKey.
 @property(nonatomic, readonly) NSMutableArray* transitionLayers;
 
-// UIViewPropertyAnimator for expanding the location bar.
+// AnimationConfigurator for animating the location bar.
 @property(nonatomic, strong)
-    UIViewPropertyAnimator* omniboxExpanderAnimator API_AVAILABLE(ios(10.0));
-
-// UIViewPropertyAnimator for contracting the location bar.
-@property(nonatomic, strong)
-    UIViewPropertyAnimator* omniboxContractorAnimator API_AVAILABLE(ios(10.0));
+    LocationbarAnimationConfigurator* locationbarAnimationConfigurator;
 
 // Update share button visibility and |standardButtons_| array.
 - (void)updateStandardButtons;

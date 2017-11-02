@@ -15,6 +15,7 @@
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #import "ios/chrome/browser/ui/animation_util.h"
+#import "ios/chrome/browser/ui/animations/locationbar_animation_configurator.h"
 #include "ios/chrome/browser/ui/bubble/bubble_util.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
@@ -87,10 +88,7 @@ using ios::material::TimingFunction;
   ToolsPopupController* toolsPopupController_;
 
   // Backing object for |self.omniboxExpanderAnimator|.
-  API_AVAILABLE(ios(10.0)) UIViewPropertyAnimator* _omniboxExpanderAnimator;
-
-  // Backing object for |self.omniboxContractorAnimator|.
-  API_AVAILABLE(ios(10.0)) UIViewPropertyAnimator* _omniboxContractorAnimator;
+  LocationbarAnimationConfigurator* _locationbarAnimationConfigurator;
 }
 
 // Returns the background image that should be used for |style|.
@@ -289,6 +287,11 @@ using ios::material::TimingFunction;
                       selector:@selector(applicationDidEnterBackground:)
                           name:UIApplicationDidEnterBackgroundNotification
                         object:nil];
+
+    _locationbarAnimationConfigurator =
+        [[LocationbarAnimationConfigurator alloc] init];
+    [self.locationbarAnimationConfigurator.fadingTrailingButtons
+        addObjectsFromArray:standardButtons_];
   }
   return self;
 }
@@ -739,23 +742,15 @@ using ios::material::TimingFunction;
     [self fadeInStandardControls];
 }
 
-- (UIViewPropertyAnimator*)omniboxExpanderAnimator {
-  return _omniboxExpanderAnimator;
+- (LocationbarAnimationConfigurator*)locationbarAnimationConfigurator {
+  return _locationbarAnimationConfigurator;
 }
 
-- (void)setOmniboxExpanderAnimator:
-    (UIViewPropertyAnimator*)omniboxExpanderAnimator {
-  _omniboxExpanderAnimator = omniboxExpanderAnimator;
+- (void)setLocationbarAnimationConfigurator:
+    (LocationbarAnimationConfigurator*)locationbarAnimationConfigurator {
+  _locationbarAnimationConfigurator = locationbarAnimationConfigurator;
 }
 
-- (UIViewPropertyAnimator*)omniboxContractorAnimator {
-  return _omniboxContractorAnimator;
-}
-
-- (void)setOmniboxContractorAnimator:
-    (UIViewPropertyAnimator*)omniboxContractorAnimator {
-  _omniboxContractorAnimator = omniboxContractorAnimator;
-}
 
 #pragma mark - Private Methods
 #pragma mark Animations
@@ -808,34 +803,6 @@ using ios::material::TimingFunction;
                    }];
 }
 
-- (void)configureFadeOutAnimation API_AVAILABLE(ios(10.0)) {
-  __weak NSArray* weakStandardButtons = standardButtons_;
-  __weak UIView* weakShadowView = shadowView_;
-  __weak UIView* weakFullBleedShadowView = fullBleedShadowView_;
-  [self.omniboxExpanderAnimator addAnimations:^{
-    // Animate the opacity of the buttons to 0 and 10 pixels in the
-    // leading-to-trailing direction.
-    for (UIButton* button in weakStandardButtons) {
-      if (![button isHidden])
-        button.alpha = 0;
-      button.frame = CGRectOffset(button.frame, kButtonFadeOutXOffset, 0);
-    }
-
-    // Fade to the full bleed shadow.
-    weakShadowView.alpha = 0;
-    weakFullBleedShadowView.alpha = 1;
-  }];
-
-  // After the animation is done and the buttons are hidden, move the buttons
-  // back to the position they originally were.
-  [self.omniboxExpanderAnimator
-      addCompletion:^(UIViewAnimatingPosition finalPosition) {
-        for (UIButton* button in weakStandardButtons) {
-          button.frame = CGRectOffset(button.frame, -kButtonFadeOutXOffset, 0);
-        }
-      }];
-}
-
 - (void)fadeInStandardControls {
   for (UIButton* button in standardButtons_) {
     [self fadeInView:button
@@ -850,22 +817,6 @@ using ios::material::TimingFunction;
                      [shadowView_ setAlpha:self.backgroundView.alpha];
                      [fullBleedShadowView_ setAlpha:0];
                    }];
-}
-
-- (void)configureFadeInAnimation API_AVAILABLE(ios(10.0)) {
-  // First shift the Buttons by |kButtonFadeOutXOffset| so then the
-  // PropertyAnimator can move them in into their final position.
-  for (UIButton* button in standardButtons_) {
-    button.alpha = 0;
-    button.frame = CGRectOffset(button.frame, kButtonFadeOutXOffset, 0);
-  }
-  __weak NSArray* weakStandardButtons = standardButtons_;
-  [self.omniboxContractorAnimator addAnimations:^{
-    for (UIButton* button in weakStandardButtons) {
-      button.alpha = 1.0;
-      button.frame = CGRectOffset(button.frame, -kButtonFadeOutXOffset, 0);
-    }
-  }];
 }
 
 - (CAAnimation*)transitionAnimationForButton:(UIButton*)button

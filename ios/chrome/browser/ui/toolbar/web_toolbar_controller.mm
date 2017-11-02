@@ -39,6 +39,7 @@
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/ui/animation_util.h"
+#import "ios/chrome/browser/ui/animations/locationbar_animation_configurator.h"
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
@@ -541,6 +542,15 @@ using ios::material::TimingFunction;
                            action:@selector(displayTabSwitcher)
                  forControlEvents:UIControlEventTouchUpInside];
   }
+
+  // This would happen on ViewDidLoad in the future.
+  [self.locationbarAnimationConfigurator.fadingLeadingButtons
+      addObjectsFromArray:@[ _backButton, _forwardButton ]];
+  [self.locationbarAnimationConfigurator.fadingTrailingViews
+      addObject:self.cancelButton];
+  self.locationbarAnimationConfigurator.animatingLocationBar = _omniBox;
+  self.locationbarAnimationConfigurator.animatingBackground =
+      _omniboxBackground;
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (DragAndDropIsEnabled()) {
@@ -1781,10 +1791,6 @@ using ios::material::TimingFunction;
   if (IsIPadIdiom())
     return [self layoutOmnibox];
 
-  // Return if PropertyAnimator is already running.
-  if (self.omniboxExpanderAnimator.isRunning)
-    return;
-
   CGRect newOmniboxFrame = [self newOmniboxFrame];
   // Determine the starting and ending bounds and position for |_omniBox|.
   // Increasing the height of _omniBox results in the text inside it jumping
@@ -1819,139 +1825,40 @@ using ios::material::TimingFunction;
   // toolbar and is clipped.
   backgroundToBounds = CGRectInset(backgroundToBounds, -2, -2);
 
-  if (_incognito)
-    _incognitoIcon.frame = CGRectMake(
-        _incognitoIcon.frame.origin.x + kPositionAnimationLeadingOffset,
-        _incognitoIcon.frame.origin.y, _incognitoIcon.frame.size.width,
-        _incognitoIcon.frame.size.height);
+  CGFloat omniboxLeadingPadding = 10;
+  if (_incognito) {
+    self.locationbarAnimationConfigurator.incognitoIcon = _incognitoIcon;
+    omniboxLeadingPadding =
+        omniboxLeadingPadding + _incognitoIcon.frame.size.width;
+  }
 
-  // Create animator and add animations.
-  self.omniboxExpanderAnimator = [[UIViewPropertyAnimator alloc]
-      initWithDuration:ios::material::kDuration1
-                 curve:UIViewAnimationCurveEaseInOut
-            animations:^{
-              CGFloat omniboxLeadingPadding = 10;
+  self.locationbarAnimationConfigurator.finalLocationBarFrame = CGRectMake(
+      newOmniboxFrame.origin.x + omniboxLeadingPadding, _omniBox.frame.origin.y,
+      toBounds.size.width - 10, toBounds.size.height);
+  self.locationbarAnimationConfigurator.finalBackgroundFrame =
+      CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y,
+                 backgroundToBounds.size.width, backgroundToBounds.size.height);
 
-              // Incognito.
-              if (_incognito) {
-                _incognitoIcon.alpha = 1;
-                _incognitoIcon.frame =
-                    CGRectMake(_incognitoIcon.frame.origin.x -
-                                   kPositionAnimationLeadingOffset,
-                               _incognitoIcon.frame.origin.y,
-                               _incognitoIcon.frame.size.width,
-                               _incognitoIcon.frame.size.height);
-                omniboxLeadingPadding =
-                    omniboxLeadingPadding + _incognitoIcon.frame.size.width;
-              }
-
-              // Omnibox and OmniboxBackground.
-              _omniBox.frame =
-                  CGRectMake(newOmniboxFrame.origin.x + omniboxLeadingPadding,
-                             _omniBox.frame.origin.y, toBounds.size.width - 10,
-                             toBounds.size.height);
-              _omniboxBackground.frame = CGRectMake(
-                  self.view.bounds.origin.x, self.view.bounds.origin.y,
-                  backgroundToBounds.size.width,
-                  backgroundToBounds.size.height);
-            }];
-
-  // Perfom cancel button animation on completion.
-  [_cancelButton setHidden:NO];
-  __weak UIButton* weakCancelButton = _cancelButton;
-  _cancelButton.alpha = 0;
-  [self.omniboxExpanderAnimator addCompletion:^(
-                                    UIViewAnimatingPosition finalPosition) {
-    CGRect finalCancelButtonFrame = weakCancelButton.frame;
-    weakCancelButton.frame = CGRectLayoutOffset(
-        weakCancelButton.frame, kPositionAnimationLeadingOffset);
-    // Create and start the cancel button animation.
-    [UIViewPropertyAnimator
-        runningPropertyAnimatorWithDuration:0.2
-                                      delay:0.1
-                                    options:UIViewAnimationOptionCurveEaseOut
-                                 animations:^{
-                                   weakCancelButton.alpha = 1.0;
-                                   weakCancelButton.frame =
-                                       finalCancelButtonFrame;
-                                 }
-                                 completion:nil];
-  }];
-
-  // Add standard Toolbar buttons animations.
-  [self configureFadeOutAnimation];
-
-  // Add navigation buttons animations.
-  [self configureFadeOutNavigationControlsAnimation];
-
-  // Set the _omnibox animator.
-  _omniBox.omniboxExpanderAnimator = self.omniboxExpanderAnimator;
-
-  [self.omniboxExpanderAnimator startAnimation];
+  // This would be moved to viewDidLoad once we know when the Omnibox has been
+  // setup.
+  _omniBox.locationbarAnimationConfigurator =
+      self.locationbarAnimationConfigurator;
+  [self.locationbarAnimationConfigurator runAnimation];
 }
 
 - (void)contractOmnibox API_AVAILABLE(ios(10.0)) {
   if (IsIPadIdiom())
     return [self layoutOmnibox];
 
-  // Return if PropertyAnimator is already running.
-  if (self.omniboxContractorAnimator.isRunning)
-    return;
-
   CGRect newOmniboxFrame = [self newOmniboxFrame];
+  self.locationbarAnimationConfigurator.finalLocationBarFrame =
+      CGRectMake(newOmniboxFrame.origin.x, _omniBox.frame.origin.y,
+                 newOmniboxFrame.size.width - 10, newOmniboxFrame.size.height);
+  self.locationbarAnimationConfigurator.finalBackgroundFrame = CGRectMake(
+      newOmniboxFrame.origin.x, newOmniboxFrame.origin.y + StatusBarHeight(),
+      newOmniboxFrame.size.width - 10, newOmniboxFrame.size.height);
 
-  __weak UIButton* weakCancelButton = _cancelButton;
-  self.omniboxContractorAnimator = [[UIViewPropertyAnimator alloc]
-      initWithDuration:ios::material::kDuration1
-                 curve:UIViewAnimationCurveEaseInOut
-            animations:^{
-
-              if (_incognito) {
-                _incognitoIcon.alpha = 0;
-                _incognitoIcon.frame =
-                    CGRectMake(_incognitoIcon.frame.origin.x +
-                                   kPositionAnimationLeadingOffset,
-                               _incognitoIcon.frame.origin.y,
-                               _incognitoIcon.frame.size.width,
-                               _incognitoIcon.frame.size.height);
-              }
-
-              // Cancel Button.
-              weakCancelButton.alpha = 0;
-              weakCancelButton.frame =
-                  CGRectMake(weakCancelButton.frame.origin.x +
-                                 kPositionAnimationLeadingOffset,
-                             weakCancelButton.frame.origin.y,
-                             weakCancelButton.frame.size.width,
-                             weakCancelButton.frame.size.height);
-
-              // Omnibox and OmniboxBackground bounds.
-              _omniBox.frame = CGRectMake(
-                  newOmniboxFrame.origin.x, _omniBox.frame.origin.y,
-                  newOmniboxFrame.size.width - 10, newOmniboxFrame.size.height);
-              _omniboxBackground.frame = CGRectMake(
-                  newOmniboxFrame.origin.x,
-                  newOmniboxFrame.origin.y + StatusBarHeight(),
-                  newOmniboxFrame.size.width - 10, newOmniboxFrame.size.height);
-
-            }];
-
-  // Hide cancel button on completion.
-  [self.omniboxContractorAnimator
-      addCompletion:^(UIViewAnimatingPosition finalPosition) {
-        weakCancelButton.hidden = YES;
-      }];
-
-  // Add standard Toolbar buttons animations.
-  [self configureFadeInAnimation];
-
-  // Add navigation buttons animations.
-  [self configureFadeInNavigationControlsAnimation];
-
-  // Set the _omnibox animator.
-  _omniBox.omniboxContractorAnimator = self.omniboxContractorAnimator;
-
-  [self.omniboxContractorAnimator startAnimation];
+  [self.locationbarAnimationConfigurator runAnimation];
 }
 
 - (void)animateMaterialOmnibox {
@@ -2286,31 +2193,6 @@ using ios::material::TimingFunction;
   }
 }
 
-- (void)configureFadeInNavigationControlsAnimation API_AVAILABLE(ios(10.0)) {
-  CGRect finalBackButtonFrame = _backButton.frame;
-  CGRect shifted =
-      CGRectLayoutOffset(_backButton.frame, kPositionAnimationLeadingOffset);
-  _backButton.frame = shifted;
-  __weak UIButton* weakBackButton = _backButton;
-  [self.omniboxContractorAnimator addAnimations:^{
-    weakBackButton.alpha = 1.0;
-    weakBackButton.frame = finalBackButtonFrame;
-  }
-                                    delayFactor:ios::material::kDuration1];
-
-  if ([_forwardButton isEnabled]) {
-    CGRect finalForwardButtonFrame = _forwardButton.frame;
-    _forwardButton.frame = CGRectLayoutOffset(_forwardButton.frame,
-                                              kPositionAnimationLeadingOffset);
-    __weak UIButton* weakForwardButton = _forwardButton;
-    [self.omniboxContractorAnimator addAnimations:^{
-      weakForwardButton.alpha = 1.0;
-      weakForwardButton.frame = finalForwardButtonFrame;
-    }
-                                      delayFactor:ios::material::kDuration3];
-  }
-}
-
 - (void)fadeOutNavigationControls {
   [CATransaction begin];
   [CATransaction setAnimationDuration:ios::material::kDuration2];
@@ -2351,35 +2233,6 @@ using ios::material::TimingFunction;
   [[_forwardButton layer] addAnimation:shiftForwardButton
                                 forKey:@"shiftButton"];
   [CATransaction commit];
-}
-
-- (void)configureFadeOutNavigationControlsAnimation API_AVAILABLE(ios(10.0)) {
-  // Animate the navigation buttons 10 pixels to the left and opacity to 0;
-  CGRect originalBackFrame = _backButton.frame;
-  __weak UIButton* weakBackButton = _backButton;
-  [self.omniboxExpanderAnimator addAnimations:^{
-    weakBackButton.alpha = 0.0;
-    weakBackButton.frame = CGRectLayoutOffset(weakBackButton.frame,
-                                              kPositionAnimationLeadingOffset);
-  }];
-  [self.omniboxExpanderAnimator
-      addCompletion:^(UIViewAnimatingPosition finalPosition) {
-        weakBackButton.frame = originalBackFrame;
-      }];
-
-  if ([_forwardButton isEnabled]) {
-    CGRect originalForwardFrame = _forwardButton.frame;
-    __weak UIButton* weakForwardButton = _forwardButton;
-    [self.omniboxExpanderAnimator addAnimations:^{
-      weakForwardButton.alpha = 0.0;
-      weakForwardButton.frame = CGRectLayoutOffset(
-          weakForwardButton.frame, kPositionAnimationLeadingOffset);
-    }];
-    [self.omniboxExpanderAnimator
-        addCompletion:^(UIViewAnimatingPosition finalPosition) {
-          weakForwardButton.frame = originalForwardFrame;
-        }];
-  }
 }
 
 #pragma mark Omnibox Cancel Button.
