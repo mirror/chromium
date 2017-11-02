@@ -58,7 +58,7 @@ void PausableObject::PauseIfNeeded() {
   pause_if_needed_called_ = true;
 #endif
   if (ExecutionContext* context = GetExecutionContext())
-    context->SuspendSuspendableObjectIfNeeded(this);
+    context->SuspendPausableObjectIfNeeded(this);
 }
 
 void PausableObject::Suspend() {}
@@ -74,11 +74,11 @@ void PausableObject::DidMoveToNewExecutionContext(ExecutionContext* context) {
   }
 
   if (context->IsContextSuspended()) {
-    Suspend();
+    Pause();
     return;
   }
 
-  Resume();
+  Unpause();
 }
 
 }  // namespace blink

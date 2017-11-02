@@ -73,13 +73,13 @@ ExecutionContext* ExecutionContext::ForRelevantRealm(
   return ToExecutionContext(info.Holder()->CreationContext());
 }
 
-void ExecutionContext::SuspendSuspendableObjects() {
+void ExecutionContext::SuspendPausableObjects() {
   DCHECK(!is_context_paused_);
   NotifySuspendingSuspendableObjects();
   is_context_paused_ = true;
 }
 
-void ExecutionContext::ResumeSuspendableObjects() {
+void ExecutionContext::ResumePausableObjects() {
   DCHECK(is_context_paused_);
   is_context_paused_ = false;
   NotifyResumingSuspendableObjects();
@@ -91,17 +91,16 @@ void ExecutionContext::NotifyContextDestroyed() {
 }
 
 void ExecutionContext::SuspendScheduledTasks() {
-  SuspendSuspendableObjects();
+  SuspendPausableObjects();
   TasksWereSuspended();
 }
 
 void ExecutionContext::ResumeScheduledTasks() {
-  ResumeSuspendableObjects();
+  ResumePausableObjects();
   TasksWereResumed();
 }
 
-void ExecutionContext::SuspendSuspendableObjectIfNeeded(
-    SuspendableObject* object) {
+void ExecutionContext::SuspendPausableObjectIfNeeded(PausableObject* object) {
 #if DCHECK_IS_ON()
   DCHECK(Contains(object));
 #endif

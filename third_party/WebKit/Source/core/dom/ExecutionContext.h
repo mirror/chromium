@@ -137,16 +137,16 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
 
   virtual void RemoveURLFromMemoryCache(const KURL&);
 
-  void SuspendSuspendableObjects();
-  void ResumeSuspendableObjects();
-  void StopSuspendableObjects();
+  void SuspendPausableObjects();
+  void ResumePausableObjects();
+  void StopPausableObjects();
   void NotifyContextDestroyed() override;
 
   void SuspendScheduledTasks();
   void ResumeScheduledTasks();
 
   // TODO(haraken): Remove these methods by making the customers inherit from
-  // SuspendableObject. SuspendableObject is a standard way to observe context
+  // PausableObject. PausableObject is a standard way to observe context
   // suspension/resumption.
   virtual bool TasksNeedSuspension() { return false; }
   virtual void TasksWereSuspended() {}
@@ -157,9 +157,8 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
   bool IsContextDestroyed() const { return is_context_destroyed_; }
 
   // Called after the construction of an PausableObject to synchronize
-  // suspend
-  // state.
-  void SuspendSuspendableObjectIfNeeded(PausableObject*);
+  // pause state.
+  void SuspendPausableObjectIfNeeded(PausableObject*);
 
   // Gets the next id in a circular sequence from 1 to 2^31-1.
   int CircularSequentialID();
