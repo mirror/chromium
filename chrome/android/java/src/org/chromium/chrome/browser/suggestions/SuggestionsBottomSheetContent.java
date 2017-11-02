@@ -206,7 +206,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         };
 
         mLocationBar = sheet.findViewById(R.id.location_bar);
-        mView.setOnTouchListener(new View.OnTouchListener() {
+        View.OnTouchListener touchListener = new View.OnTouchListener() {
             @Override
             @SuppressLint("ClickableViewAccessibility")
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -217,7 +217,9 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                 // Never intercept the touch event.
                 return false;
             }
-        });
+        };
+        mView.setOnTouchListener(touchListener);
+        mRecyclerView.setOnTouchListener(touchListener);
 
         mLogoView = mView.findViewById(R.id.search_provider_logo);
         mControlContainerView = (ViewGroup) activity.findViewById(R.id.control_container);
@@ -331,6 +333,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     public void onTemplateURLServiceChanged() {
         updateSearchProviderHasLogo();
         loadSearchProviderLogo();
+        updateSpacing();
         updateLogoTransition();
     }
 
