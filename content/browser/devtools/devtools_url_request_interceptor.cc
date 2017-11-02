@@ -49,6 +49,9 @@ class DevToolsURLRequestInterceptorUserData
 
 }  // namespace
 
+InterceptedRequestInfo::InterceptedRequestInfo() = default;
+InterceptedRequestInfo::~InterceptedRequestInfo() = default;
+
 // static
 bool DevToolsURLRequestInterceptor::IsNavigationRequest(
     ResourceType resource_type) {
