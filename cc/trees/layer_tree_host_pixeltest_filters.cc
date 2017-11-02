@@ -1104,6 +1104,56 @@ TEST_F(BackgroundFilterWithDeviceScaleFactorTest, HiDpi_Software) {
       base::FilePath(FILE_PATH_LITERAL("offset_background_filter_2x.png")));
 }
 
+// Check that blur optimizations don't break alpha threshold filters
+// that are applied before blur. Expected output is a dark green color
+// and incorrect blur optimizations will likely result in bright green.
+class BlurFilterWithAlphaThreshold : public LayerTreeHostFiltersPixelTest {
+ protected:
+  void RunPixelTestType(PixelTestType test_type, base::FilePath image_name) {
+    gfx::Rect rect(200, 200);
+    std::vector<scoped_refptr<SolidColorLayer>> children;
+    scoped_refptr<SolidColorLayer> parent_layer =
+        CreateSolidColorLayer(rect, SK_ColorTRANSPARENT);
+    parent_layer->SetOpacity(0.9f);  // Force render surface.
+    for (int y = 0; y < rect.height(); ++y) {
+      for (int x = 0; x < rect.width(); ++x) {
+        if ((y + x) % 2)
+          continue;
+        scoped_refptr<SolidColorLayer> child =
+            CreateSolidColorLayer(gfx::Rect(x, y, 1, 1), SK_ColorGREEN);
+        parent_layer->AddChild(child);
+        children.push_back(std::move(child));
+      }
+    }
+
+    scoped_refptr<SolidColorLayer> filter_layer =
+        CreateSolidColorLayer(rect, SK_ColorTRANSPARENT);
+    filter_layer->AddChild(parent_layer);
+
+    FilterOperations filters;
+    FilterOperation::ShapeRects alpha_shape = {rect};
+    filters.Append(
+        FilterOperation::CreateAlphaThresholdFilter(alpha_shape, 1.f, 0.f));
+    filters.Append(FilterOperation::CreateBlurFilter(
+        5.f, SkBlurImageFilter::kClamp_TileMode));
+    filter_layer->SetFilters(filters);
+
+    RunPixelTest(test_type, filter_layer, image_name);
+  }
+};
+
+TEST_F(BlurFilterWithAlphaThreshold, GL) {
+  RunPixelTestType(PIXEL_TEST_GL,
+                   base::FilePath(FILE_PATH_LITERAL(
+                       "blur_filter_with_alpha_threshold_gl.png")));
+}
+
+TEST_F(BlurFilterWithAlphaThreshold, Software) {
+  RunPixelTestType(PIXEL_TEST_SOFTWARE,
+                   base::FilePath(FILE_PATH_LITERAL(
+                       "blur_filter_with_alpha_threshold_sw.png")));
+}
+
 }  // namespace
 }  // namespace cc
 
