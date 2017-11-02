@@ -347,7 +347,6 @@ TEST_F(MediaEngagementServiceTest, CleanupOriginsOnHistoryDeletion) {
   EXPECT_TRUE(GetActualScore(origin4));
 
   {
-    base::HistogramTester histogram_tester;
     MediaEngagementChangeWaiter waiter(profile());
 
     base::CancelableTaskTracker task_tracker;
@@ -370,17 +369,9 @@ TEST_F(MediaEngagementServiceTest, CleanupOriginsOnHistoryDeletion) {
     ExpectScores(origin3, 0.0, 1, 0, TimeNotSet());
     ExpectScores(origin4, 0.4, MediaEngagementScore::GetScoreMinVisits(), 2,
                  TimeNotSet());
-
-    histogram_tester.ExpectTotalCount(
-        MediaEngagementService::kHistogramURLsDeletedScoreReductionName, 3);
-    histogram_tester.ExpectBucketCount(
-        MediaEngagementService::kHistogramURLsDeletedScoreReductionName, 0, 2);
-    histogram_tester.ExpectBucketCount(
-        MediaEngagementService::kHistogramURLsDeletedScoreReductionName, 8, 1);
   }
 
   {
-    base::HistogramTester histogram_tester;
     MediaEngagementChangeWaiter waiter(profile());
 
     // Expire origin1b.
@@ -402,15 +393,9 @@ TEST_F(MediaEngagementServiceTest, CleanupOriginsOnHistoryDeletion) {
     ExpectScores(origin3, 0.0, 1, 0, TimeNotSet());
     ExpectScores(origin4, 0.4, MediaEngagementScore::GetScoreMinVisits(), 2,
                  TimeNotSet());
-
-    histogram_tester.ExpectTotalCount(
-        MediaEngagementService::kHistogramURLsDeletedScoreReductionName, 1);
-    histogram_tester.ExpectBucketCount(
-        MediaEngagementService::kHistogramURLsDeletedScoreReductionName, 17, 1);
   }
 
   {
-    base::HistogramTester histogram_tester;
     MediaEngagementChangeWaiter waiter(profile());
 
     // Expire origin3.
@@ -434,11 +419,6 @@ TEST_F(MediaEngagementServiceTest, CleanupOriginsOnHistoryDeletion) {
     ExpectScores(origin3, 0.0, 0, 0, TimeNotSet());
     ExpectScores(origin4, 0.4, MediaEngagementScore::GetScoreMinVisits(), 2,
                  TimeNotSet());
-
-    histogram_tester.ExpectTotalCount(
-        MediaEngagementService::kHistogramURLsDeletedScoreReductionName, 1);
-    histogram_tester.ExpectBucketCount(
-        MediaEngagementService::kHistogramURLsDeletedScoreReductionName, 0, 1);
   }
 }
 
