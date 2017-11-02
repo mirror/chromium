@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1444be74_dc21ded1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T17:26:13Z",
+      "side": 1,
+      "message": "s/funny/something more descriptive/\ne.g.\nSystem Tray: Fix focus rectangle for tray_info_label",
+      "revId": "8c726618bd6428d26d16f20974595646152cbd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b988e1_c10bff08",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T17:26:13Z",
+      "side": 1,
+      "message": "Which bug?",
+      "revId": "8c726618bd6428d26d16f20974595646152cbd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
