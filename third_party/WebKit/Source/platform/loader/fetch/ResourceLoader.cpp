@@ -598,7 +598,7 @@ void ResourceLoader::DidReceiveResponse(
 
   if (response.HttpStatusCode() >= 400 &&
       !resource_->ShouldIgnoreHTTPStatusCodeErrors())
-    HandleError(ResourceError::CancelledError(response.Url()));
+    HandleError(ResourceError::Failure(response.Url()));
 }
 
 void ResourceLoader::DidReceiveResponse(const WebURLResponse& response) {

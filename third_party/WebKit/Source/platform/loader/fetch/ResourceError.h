@@ -61,6 +61,7 @@ class PLATFORM_EXPORT ResourceError final {
 
   static ResourceError CacheMissError(const KURL&);
   static ResourceError TimeoutError(const KURL&);
+  static ResourceError Failure(const KURL&);
 
   ResourceError() = default;
   ResourceError(Domain, int error_code, const KURL& failing_url);

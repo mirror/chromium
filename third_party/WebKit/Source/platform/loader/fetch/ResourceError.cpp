@@ -72,6 +72,10 @@ ResourceError ResourceError::TimeoutError(const KURL& url) {
   return ResourceError(Domain::kNet, net::ERR_TIMED_OUT, url);
 }
 
+ResourceError ResourceError::Failure(const KURL& url) {
+  return ResourceError(Domain::kNet, net::ERR_FAILED, url);
+}
+
 ResourceError::ResourceError(Domain domain, int error_code, const KURL& url)
     : domain_(domain), error_code_(error_code), failing_url_(url) {
   DCHECK_NE(domain, Domain::kEmpty);
