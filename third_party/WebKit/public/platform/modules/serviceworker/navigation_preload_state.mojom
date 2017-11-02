@@ -1,0 +1,15 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module blink.mojom;
+
+// Describes the navigation preload state with a service worker:
+// https://w3c.github.io/ServiceWorker/#dictdef-navigationpreloadstate
+struct NavigationPreloadState {
+  // Whether navigation preload is enabled.
+  bool enabled = false;
+
+  // The contents of navigation preload.
+  string header = "true";
+};
