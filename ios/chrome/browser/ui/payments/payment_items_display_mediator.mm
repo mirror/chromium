@@ -13,6 +13,7 @@
 #include "components/payments/core/payment_item.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/payments/payment_request.h"
+#import "ios/chrome/browser/payments/payment_request_util.h"
 #import "ios/chrome/browser/ui/payments/cells/price_item.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -45,13 +46,8 @@
 #pragma mark - PaymentItemsDisplayViewControllerDataSource
 
 - (BOOL)canPay {
-  return self.paymentRequest->selected_payment_method() != nullptr &&
-         (self.paymentRequest->selected_shipping_option() != nullptr ||
-          ![self requestShipping]) &&
-         (self.paymentRequest->selected_shipping_profile() != nullptr ||
-          ![self requestShipping]) &&
-         (self.paymentRequest->selected_contact_profile() != nullptr ||
-          ![self requestContactInfo]);
+  DCHECK(self.paymentRequest);
+  return payment_request_util::CanPay(*self.paymentRequest);
 }
 
 - (CollectionViewItem*)totalItem {
@@ -88,18 +84,6 @@
     [lineItems addObject:item];
   }
   return lineItems;
-}
-
-#pragma mark - Helper methods
-
-- (BOOL)requestShipping {
-  return self.paymentRequest->request_shipping();
-}
-
-- (BOOL)requestContactInfo {
-  return self.paymentRequest->request_payer_name() ||
-         self.paymentRequest->request_payer_email() ||
-         self.paymentRequest->request_payer_phone();
 }
 
 @end
