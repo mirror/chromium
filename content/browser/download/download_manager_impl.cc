@@ -22,6 +22,8 @@
 #include "base/supports_user_data.h"
 #include "base/synchronization/lock.h"
 #include "build/build_config.h"
+#include "components/download/in_progress_metadata/download_entry.h"
+#include "components/download/in_progress_metadata/in_progress_metadata_cache.h"
 #include "content/browser/byte_stream.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/download/download_create_info.h"
@@ -213,6 +215,14 @@ void InterceptNavigationResponse(
       base::BindOnce(std::move(callback), std::move(resource_downloader)));
 }
 
+active_downloads::DownloadEntry DownloadUrlParametersToDownloadEntry(
+    const DownloadUrlParameters* params) {
+  active_downloads::DownloadEntry download_entry;
+  download_entry.guid = params->guid();
+  download_entry.request_origin = params->request_origin();
+  return download_entry;
+}
+
 class DownloadItemFactoryImpl : public DownloadItemFactory {
  public:
   DownloadItemFactoryImpl() {}
@@ -281,6 +291,48 @@ base::FilePath GetTemporaryDownloadDirectory() {
   return base::nix::GetXDGDirectory(env.get(), "XDG_DATA_HOME", ".local/share");
 }
 #endif
+
+// Responsible for persisting the in-progress metadata associated with a
+// download.
+class InProgressDownloadItemObserver : public DownloadItem::Observer {
+ public:
+  explicit InProgressDownloadItemObserver(
+      active_downloads::InProgressMetadataCache* metadata_cache);
+  ~InProgressDownloadItemObserver() override;
+
+ private:
+  // DownloadItem::Observer
+  void OnDownloadUpdated(DownloadItem* download) override;
+  void OnDownloadRemoved(DownloadItem* download) override;
+
+  // The persistent cache to store in-progress metadata.
+  active_downloads::InProgressMetadataCache* metadata_cache_;
+
+  DISALLOW_COPY_AND_ASSIGN(InProgressDownloadItemObserver);
+};
+
+InProgressDownloadItemObserver::InProgressDownloadItemObserver(
+    active_downloads::InProgressMetadataCache* metadata_cache)
+    : metadata_cache_(metadata_cache) {}
+
+InProgressDownloadItemObserver::~InProgressDownloadItemObserver() = default;
+
+void InProgressDownloadItemObserver::OnDownloadUpdated(DownloadItem* download) {
+  switch (download->GetState()) {
+    case DownloadItem::DownloadState::COMPLETE:
+    case DownloadItem::DownloadState::CANCELLED:
+      metadata_cache_->RemoveMetadata(download->GetGuid());
+      break;
+    case DownloadItem::DownloadState::IN_PROGRESS:
+    case DownloadItem::DownloadState::INTERRUPTED:
+    default:
+      break;
+  }
+}
+
+void InProgressDownloadItemObserver::OnDownloadRemoved(DownloadItem* download) {
+  metadata_cache_->RemoveMetadata(download->GetGuid());
+}
 
 }  // namespace
 
@@ -481,6 +533,11 @@ void DownloadManagerImpl::StartDownloadWithId(
                           &default_download_directory, &skip_dir_check);
   }
 #endif
+
+  if (delegate_) {
+    download->AddObserver(
+        new InProgressDownloadItemObserver(delegate_->GetMetadataCache()));
+  }
 
   std::unique_ptr<DownloadFile> download_file;
 
@@ -874,6 +931,11 @@ void DownloadManagerImpl::ShowDownloadInShell(DownloadItemImpl* download) {
 void DownloadManagerImpl::BeginDownloadInternal(
     std::unique_ptr<content::DownloadUrlParameters> params,
     uint32_t id) {
+  active_downloads::InProgressMetadataCache* metadata_cache =
+      GetBrowserContext()->GetDownloadManagerDelegate()->GetMetadataCache();
+  metadata_cache->AddOrUpdateMetadata(
+      DownloadUrlParametersToDownloadEntry(params.get()));
+
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     std::unique_ptr<ResourceRequest> request = CreateResourceRequest(
         params.get());
