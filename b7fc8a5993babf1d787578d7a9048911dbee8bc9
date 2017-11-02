@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c8df3ab_85039354",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_property_names.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-02T03:14:50Z",
+      "side": 1,
+      "message": "I wonder if it\u0027s possible to use the @template_expander thing for this (like in generate_header)?",
+      "revId": "b7fc8a5993babf1d787578d7a9048911dbee8bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401c5d24_1dcb8fee",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSPropertyNames.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-02T03:14:50Z",
+      "side": 1,
+      "message": "wow wait so this Jinja template is to generate a gperf template? my mind is blown.",
+      "revId": "b7fc8a5993babf1d787578d7a9048911dbee8bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
