@@ -105,6 +105,30 @@
       "revId": "0b3e9edc344af025fbf88c68372623eacdfacb91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6441b431_317a852d",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T18:18:26Z",
+      "side": 1,
+      "message": "On other platforms chrome://interstitials is WebUI because the page renders actual user interface in web contents area. I think implementing chrome://interstitials on iOS as WebUI is totally fine, but looks like we don\u0027t even need this page. It sounds like on other platforms chrome://interstitials/captiveportal is actually WebUI, which is not the case for iOS. \n\nWebUI has very specific purpose and it\u0027s not the right tool for all chrome:// pages. chrome://newtab for example is not WebUI on iOS, it\u0027s a native user interface.\n\nSuggested alternatives will indeed require a check on every page load but that\u0027s pretty cheap check, so I would not worry about the performance (we already do this \"check\" for a few other pages).",
+      "parentUuid": "eb58d3c4_8cce92e9",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "0b3e9edc344af025fbf88c68372623eacdfacb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
