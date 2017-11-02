@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5fd8ceea_d8f340cb",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-02T07:33:03Z",
+      "side": 1,
+      "message": "Done, I think this made it clearer but I returned the unclamped size and had to clamp it in both methods after adding/generating label size.",
+      "parentUuid": "aa4c72ad_4706b426",
+      "revId": "c445881a6488406bc0f98062ad73ac39c5cedda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6c427d0_5cdd81a8",
         "filename": "ui/views/controls/button/label_button.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "12f07a5f_98cb34c4",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-02T07:33:03Z",
+      "side": 1,
+      "message": "Yeah not really a big fan with this, but since the existing code respects both GetInsets() and border()-\u003eGetMinimumSize(), keep as is?",
+      "parentUuid": "f6c427d0_5cdd81a8",
+      "revId": "c445881a6488406bc0f98062ad73ac39c5cedda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b29caccb_f7b4fbfb",
         "filename": "ui/views/controls/button/label_button.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "c445881a6488406bc0f98062ad73ac39c5cedda1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f0465b_6f280e8e",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-02T07:33:03Z",
+      "side": 1,
+      "message": "Done, this new test tests both larger-and-smaller-than-label checkbox icons.",
+      "parentUuid": "b29caccb_f7b4fbfb",
+      "revId": "c445881a6488406bc0f98062ad73ac39c5cedda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
