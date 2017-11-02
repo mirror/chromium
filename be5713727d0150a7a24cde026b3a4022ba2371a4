@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47dc9b42_d79cef9a",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-02T21:44:12Z",
+      "side": 1,
+      "message": "Instead of doing this here, would it be simpler to do this at [1]? Also note that detail_view.js already has codepath to do navigate to the list, at [2]. Perhaps just call that method from [1]?\n\nThen we don\u0027t need to check for currentPage_ and extensionId every time an item is removed.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/detail_view.js?l\u003d155\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/detail_view.js?l\u003d32",
+      "revId": "be5713727d0150a7a24cde026b3a4022ba2371a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
