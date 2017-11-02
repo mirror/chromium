@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17814322_f3e9c1ba",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-02T00:16:14Z",
+      "side": 1,
+      "message": "Should the nav preload functions also have DCHECKS like the ones in line 265-267? +leon",
+      "revId": "4cc71419a015459cd432adcdba11e3f59f29b365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc451619_6f6feea8",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/navigation_preload_state.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-02T00:16:14Z",
+      "side": 1,
+      "message": "// Describes the state for service worker navigation preload:",
+      "revId": "4cc71419a015459cd432adcdba11e3f59f29b365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928b6039_73ee8f58",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/navigation_preload_state.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-02T00:16:14Z",
+      "side": 1,
+      "message": "// The value for the \"Service-Worker-Navigation-Preload\" HTTP header.",
+      "revId": "4cc71419a015459cd432adcdba11e3f59f29b365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
