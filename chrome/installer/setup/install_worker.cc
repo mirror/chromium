@@ -165,6 +165,30 @@ void AddFirewallRulesWorkItems(const InstallerState& installer_state,
                  is_new_install));
 }
 
+// Adds work items to |list| to register a COM server with the OS, which is used
+// to handle the Windows toast notifications.
+void AddNativeNotificationWorkItems(const InstallerState& installer_state,
+                                    WorkItemList* list) {
+  HKEY root = installer_state.root_key();
+
+  // TODO: change to the code commented out below.
+  const wchar_t* toast_activator_clsid =
+      L"{635EFA6F-08D6-4EC9-BD14-8A0FDE975159}";
+
+  // wchar_t toast_activator_clsid[MAX_PATH];
+  // StringFromGUID2(install_static::GetToastActivatorClsid(),
+  //                toast_activator_clsid, arraysize(toast_activator_clsid));
+
+  base::string16 registry_path(L"Software\\Classes\\CLSID\\");
+  registry_path.append(toast_activator_clsid).append(L"\\LocalServer32");
+
+  list->AddCreateRegKeyWorkItem(root, registry_path, WorkItem::kWow64Default);
+
+  list->AddSetRegValueWorkItem(
+      root, registry_path, WorkItem::kWow64Default, L"",
+      installer_state.target_path().Append(kChromeExe).value(), true);
+}
+
 // This is called when an MSI installation is run. It may be that a user is
 // attempting to install the MSI on top of a non-MSI managed installation. If
 // so, try and remove any existing "Add/Remove Programs" entry, as we want the
@@ -743,6 +767,8 @@ void AddInstallWorkItems(const InstallationState& original_state,
                         install_list);
   AddFirewallRulesWorkItems(installer_state, dist, current_version == nullptr,
                             install_list);
+
+  AddNativeNotificationWorkItems(installer_state, install_list);
 
   InstallUtil::AddUpdateDowngradeVersionItem(installer_state.system_install(),
                                              current_version, new_version, dist,
