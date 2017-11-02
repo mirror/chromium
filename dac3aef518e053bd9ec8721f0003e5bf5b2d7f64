@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "449bcd5d_ecbc80a9",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-02T22:53:19Z",
+      "side": 0,
+      "message": "Note to reviewers: In these cases I generally got rid of the Create... helper functions, for a few reasons.\n\n1) Something I\u0027ve learned from Paymentsland is that if your test needs a certain setup, that helper method should belong in that specific test class, not the class responsible for storing the data.  For instance, the TestPersonalDataManager in AutofillMetricsTest has a CreateAmbiguousProfiles() helper function, but what\u0027s \"ambiguous\" depends highly on the test, not on PersonalDataManager, so it belongs with AutofillMetricsTest.   (Those changes aren\u0027t in this CL.)\n\n2) Most of these helper methods were only called once anyway, so separating them out into helper methods isn\u0027t useful.\n\n3) As for the one method that was actually called 5-6 times, CreateTestCreditCardsYearAndMonth(), the tests themselves asserted on the ...0007 guid even though setting it was hidden away in the helper method.  That should stay in clear view in the test setup, so there\u0027s no confusion about where that value is coming from.\n\nHappy to discuss if needed!",
+      "revId": "dac3aef518e053bd9ec8721f0003e5bf5b2d7f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
