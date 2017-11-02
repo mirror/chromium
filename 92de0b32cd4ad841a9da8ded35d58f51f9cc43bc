@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc13eed_63bd65e5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-02T19:15:45Z",
+      "side": 1,
+      "message": "Maybe create a helper function which contains the macro invocation, and just pass value being recorded?",
+      "range": {
+        "startLine": 1285,
+        "startChar": 6,
+        "endLine": 1286,
+        "endChar": 61
+      },
+      "revId": "92de0b32cd4ad841a9da8ded35d58f51f9cc43bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
