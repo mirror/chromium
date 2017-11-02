@@ -217,8 +217,7 @@ void DeleteSelectionCommand::SetStartingSelectionOnSmartDelete(
   SelectionInDOMTree::Builder builder;
   builder.SetAffinity(new_base.Affinity())
       .SetBaseAndExtentDeprecated(new_base.DeepEquivalent(),
-                                  new_extent.DeepEquivalent())
-      .SetIsDirectional(StartingSelection().IsDirectional());
+                                  new_extent.DeepEquivalent());
   const VisibleSelection& visible_selection =
       CreateVisibleSelection(builder.Build());
   SetStartingSelection(
@@ -1078,7 +1077,6 @@ void DeleteSelectionCommand::DoApply(EditingState* editing_state) {
   TextAffinity affinity = selection_to_delete_.Affinity();
 
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-
   Position downstream_end =
       MostForwardCaretPosition(selection_to_delete_.End());
   bool root_will_stay_open_without_placeholder =
@@ -1110,7 +1108,6 @@ void DeleteSelectionCommand::DoApply(EditingState* editing_state) {
   InitializePositionData(editing_state);
   if (editing_state->IsAborted())
     return;
-
   bool line_break_before_start = LineBreakExistsAtVisiblePosition(
       PreviousPositionOf(CreateVisiblePosition(upstream_start_)));
 
@@ -1130,7 +1127,6 @@ void DeleteSelectionCommand::DoApply(EditingState* editing_state) {
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
     SelectionInDOMTree::Builder builder;
     builder.SetAffinity(affinity);
-    builder.SetIsDirectional(EndingSelection().IsDirectional());
     if (ending_position_.IsNotNull())
       builder.Collapse(ending_position_);
     const VisibleSelection& visible_selection =
@@ -1194,7 +1190,6 @@ void DeleteSelectionCommand::DoApply(EditingState* editing_state) {
 
   SelectionInDOMTree::Builder builder;
   builder.SetAffinity(affinity);
-  builder.SetIsDirectional(EndingSelection().IsDirectional());
   if (ending_position_.IsNotNull())
     builder.Collapse(ending_position_);
   const VisibleSelection& visible_selection =

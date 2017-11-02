@@ -47,8 +47,9 @@ class SelectionModifier {
   // |frame| is used for providing settings.
   SelectionModifier(const LocalFrame& /* frame */,
                     const VisibleSelection&,
-                    LayoutUnit);
-  SelectionModifier(const LocalFrame&, const VisibleSelection&);
+                    LayoutUnit,
+                    bool);
+  SelectionModifier(const LocalFrame&, const VisibleSelection&, bool);
 
   LayoutUnit XPosForVerticalArrowNavigation() const {
     return x_pos_for_vertical_arrow_navigation_;
@@ -99,6 +100,9 @@ class SelectionModifier {
   Member<LocalFrame> frame_;
   VisibleSelection selection_;
   LayoutUnit x_pos_for_vertical_arrow_navigation_;
+  // TODO(editing-dev): we should find a way to avoid passing is_directional.
+  // is_directional_ is used in function IsBaseStart.
+  bool is_directional_;
 
   DISALLOW_COPY_AND_ASSIGN(SelectionModifier);
 };
