@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9350106a_5c4d8d91",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-02T10:51:58Z",
+      "side": 1,
+      "message": "This can be a class method. Calling an instance method from init is in general bad (what if a subclass overrides the method |signinClient|).",
+      "range": {
+        "startLine": 114,
+        "startChar": 27,
+        "endLine": 114,
+        "endChar": 40
+      },
+      "revId": "8eeef3e03fda930a3efd45da35391345bdb99b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f945e7_84d0ef39",
+        "filename": "ios/web_view/internal/signin/ios_web_view_signin_client.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-02T10:51:58Z",
+      "side": 1,
+      "message": "May be a good idea to DCHECK here that authentication_controller_ is nil to avoid double setting it by mistake. If you do that, then you need to move this function to the .mm file.",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 33
+      },
+      "revId": "8eeef3e03fda930a3efd45da35391345bdb99b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d6e9f2_ed3fbbd3",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-02T10:51:58Z",
+      "side": 1,
+      "message": "Missing a call to |callback| with an error (do not forget to address this in a follow-up CL).",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 15
+      },
+      "revId": "8eeef3e03fda930a3efd45da35391345bdb99b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
