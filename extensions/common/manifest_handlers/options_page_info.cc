@@ -216,7 +216,7 @@ bool OptionsPageManifestHandler::Validate(
   base::FilePath path = extension->GetResource(options_path).GetFilePath();
   if (path.empty() || !base::PathExists(path)) {
     *error = l10n_util::GetStringFUTF8(IDS_EXTENSION_LOAD_OPTIONS_PAGE_FAILED,
-                                       options_path.LossyDisplayName());
+                                       options_path);
     return false;
   }
   return true;

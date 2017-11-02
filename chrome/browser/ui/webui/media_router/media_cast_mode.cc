@@ -16,7 +16,7 @@ std::string MediaCastModeToDescription(MediaCastMode mode,
   switch (mode) {
     case MediaCastMode::PRESENTATION:
       return l10n_util::GetStringFUTF8(IDS_MEDIA_ROUTER_PRESENTATION_CAST_MODE,
-                                       base::UTF8ToUTF16(host));
+                                       host);
     case MediaCastMode::TAB_MIRROR:
       return l10n_util::GetStringUTF8(IDS_MEDIA_ROUTER_TAB_MIRROR_CAST_MODE);
     case MediaCastMode::DESKTOP_MIRROR:

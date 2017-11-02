@@ -183,8 +183,7 @@ void PasswordsPrivateDelegateImpl::SetPasswordList(
 
     if (!form->federation_origin.unique()) {
       entry.federation_text.reset(new std::string(l10n_util::GetStringFUTF8(
-          IDS_PASSWORDS_VIA_FEDERATION,
-          base::UTF8ToUTF16(form->federation_origin.host()))));
+          IDS_PASSWORDS_VIA_FEDERATION, form->federation_origin.host())));
     }
 
     current_entries_.push_back(std::move(entry));

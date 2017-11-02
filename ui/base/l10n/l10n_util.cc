@@ -286,6 +286,10 @@ void AdjustParagraphDirectionality(base::string16* paragraph) {
 #endif
 }
 
+void AdjustParagraphDirectionality(std::string* paragraph) {
+  NOTREACHED();
+}
+
 struct AvailableLocalesTraits
     : base::internal::DestructorAtExitLazyInstanceTraits<
           std::vector<std::string>> {
@@ -691,7 +695,13 @@ bool IsValidLocaleSyntax(const std::string& locale) {
 }
 
 std::string GetStringUTF8(int message_id) {
+#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
+  // Linux Pango workaround that probably isn't needed.
   return base::UTF16ToUTF8(GetStringUTF16(message_id));
+#else
+  return ui::ResourceBundle::GetSharedInstance().GetLocalizedStringUTF8(
+      message_id);
+#endif
 }
 
 base::string16 GetStringUTF16(int message_id) {
@@ -702,15 +712,39 @@ base::string16 GetStringUTF16(int message_id) {
   return str;
 }
 
-base::string16 GetStringFUTF16(int message_id,
-                               const std::vector<base::string16>& replacements,
-                               std::vector<size_t>* offsets) {
+template <class T>
+T GetString(int message_id);
+
+template <>
+std::string GetString(int message_id) {
+  return GetStringUTF8(message_id);
+}
+
+template <>
+base::string16 GetString(int message_id) {
+  return GetStringUTF16(message_id);
+}
+
+template <class T>
+T Placeholder();
+template <>
+std::string Placeholder() {
+  return "$";
+}
+template <>
+base::string16 Placeholder() {
+  return base::ASCIIToUTF16("$");
+}
+
+template <class T>
+T GetStringF(int message_id,
+             const std::vector<T>& replacements,
+             std::vector<size_t>* offsets) {
   // TODO(tc): We could save a string copy if we got the raw string as
   // a StringPiece and were able to call ReplaceStringPlaceholders with
   // a StringPiece format string and base::string16 substitution strings.  In
   // practice, the strings should be relatively short.
-  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-  const base::string16& format_string = rb.GetLocalizedString(message_id);
+  const T& format_string = GetString<T>(message_id);
 
 #ifndef NDEBUG
   // Make sure every replacement string is being used, so we don't just
@@ -722,7 +756,7 @@ base::string16 GetStringFUTF16(int message_id,
     for (size_t i = 0; i < 9; ++i) {
       bool placeholder_should_exist = replacements.size() > i;
 
-      base::string16 placeholder = base::ASCIIToUTF16("$");
+      T placeholder = Placeholder<T>();
       placeholder += (L'1' + i);
       size_t pos = format_string.find(placeholder);
       if (placeholder_should_exist) {
@@ -738,37 +772,53 @@ base::string16 GetStringFUTF16(int message_id,
   }
 #endif
 
-  base::string16 formatted = base::ReplaceStringPlaceholders(
-      format_string, replacements, offsets);
+  T formatted =
+      base::ReplaceStringPlaceholders(format_string, replacements, offsets);
   AdjustParagraphDirectionality(&formatted);
 
   return formatted;
 }
 
-std::string GetStringFUTF8(int message_id,
-                           const base::string16& a) {
-  return base::UTF16ToUTF8(GetStringFUTF16(message_id, a));
+base::string16 GetStringFUTF16(int message_id,
+                               const std::vector<base::string16>& replacements,
+                               std::vector<size_t>* offsets) {
+  return GetStringF(message_id, replacements, offsets);
+}
+
+std::string GetStringFUTF8R(int message_id,
+                            const std::vector<std::string>& replacements,
+                            std::vector<size_t>* offsets) {
+  return GetStringF(message_id, replacements, offsets);
+}
+
+std::string GetStringFUTF8(int message_id, const std::string& a) {
+  return GetStringFUTF8R(message_id, {a}, nullptr);
+}
+
+UI_BASE_EXPORT std::string GetStringFUTF8(int message_id,
+                                          const base::FilePath& file) {
+  return GetStringFUTF8(message_id, base::UTF16ToUTF8(file.LossyDisplayName()));
 }
 
 std::string GetStringFUTF8(int message_id,
-                           const base::string16& a,
-                           const base::string16& b) {
-  return base::UTF16ToUTF8(GetStringFUTF16(message_id, a, b));
+                           const std::string& a,
+                           const std::string& b) {
+  return GetStringFUTF8R(message_id, {a, b}, nullptr);
 }
 
 std::string GetStringFUTF8(int message_id,
-                           const base::string16& a,
-                           const base::string16& b,
-                           const base::string16& c) {
-  return base::UTF16ToUTF8(GetStringFUTF16(message_id, a, b, c));
+                           const std::string& a,
+                           const std::string& b,
+                           const std::string& c) {
+  return GetStringFUTF8R(message_id, {a, b, c}, nullptr);
 }
 
 std::string GetStringFUTF8(int message_id,
-                           const base::string16& a,
-                           const base::string16& b,
-                           const base::string16& c,
-                           const base::string16& d) {
-  return base::UTF16ToUTF8(GetStringFUTF16(message_id, a, b, c, d));
+                           const std::string& a,
+                           const std::string& b,
+                           const std::string& c,
+                           const std::string& d) {
+  return GetStringFUTF8R(message_id, {a, b, c, d}, nullptr);
 }
 
 base::string16 GetStringFUTF16(int message_id,

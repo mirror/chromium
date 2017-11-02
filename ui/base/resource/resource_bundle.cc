@@ -542,10 +542,10 @@ base::StringPiece ResourceBundle::GetRawDataResourceForScale(
   return base::StringPiece();
 }
 
-base::string16 ResourceBundle::GetLocalizedString(int message_id) {
-  base::string16 string;
-  if (delegate_ && delegate_->GetLocalizedString(message_id, &string))
-    return string;
+bool ResourceBundle::GetOverriddenLocalizedString(int message_id,
+                                                  base::string16* string) {
+  if (delegate_ && delegate_->GetLocalizedString(message_id, string))
+    return true;
 
   // Ensure that ReloadLocaleResources() doesn't drop the resources while
   // we're using them.
@@ -553,51 +553,86 @@ base::string16 ResourceBundle::GetLocalizedString(int message_id) {
 
   IdToStringMap::const_iterator it =
       overridden_locale_strings_.find(message_id);
-  if (it != overridden_locale_strings_.end())
-    return it->second;
+  if (it != overridden_locale_strings_.end()) {
+    *string = it->second;
+    return true;
+  }
 
   // If for some reason we were unable to load the resources , return an empty
   // string (better than crashing).
   if (!locale_resources_data_.get()) {
     LOG(WARNING) << "locale resources are not loaded";
-    return base::string16();
+    return true;
   }
+  return false;
+}
 
-  base::StringPiece data;
-  ResourceHandle::TextEncodingType encoding =
-      locale_resources_data_->GetTextEncodingType();
+void ResourceBundle::GetLocalizedStringData(
+    int message_id,
+    base::StringPiece* data,
+    ResourceHandle::TextEncodingType* encoding) {
+  *encoding = locale_resources_data_->GetTextEncodingType();
   if (!locale_resources_data_->GetStringPiece(static_cast<uint16_t>(message_id),
-                                              &data)) {
+                                              data)) {
     if (secondary_locale_resources_data_.get() &&
         secondary_locale_resources_data_->GetStringPiece(
-            static_cast<uint16_t>(message_id), &data)) {
+            static_cast<uint16_t>(message_id), data)) {
       // Fall back on the secondary locale pak if it exists.
-      encoding = secondary_locale_resources_data_->GetTextEncodingType();
+      *encoding = secondary_locale_resources_data_->GetTextEncodingType();
     } else {
       // Fall back on the main data pack (shouldn't be any strings here except
       // in unittests).
-      data = GetRawDataResource(message_id);
-      if (data.empty()) {
+      *data = GetRawDataResource(message_id);
+      if (data->empty()) {
         LOG(WARNING) << "unable to find resource: " << message_id;
         NOTREACHED();
-        return base::string16();
+        return;
       }
     }
   }
 
   // Strings should not be loaded from a data pack that contains binary data.
-  DCHECK(encoding == ResourceHandle::UTF16 || encoding == ResourceHandle::UTF8)
+  DCHECK(*encoding == ResourceHandle::UTF16 ||
+         *encoding == ResourceHandle::UTF8)
       << "requested localized string from binary pack file";
+}
 
-  // Data pack encodes strings as either UTF8 or UTF16.
-  base::string16 msg;
+base::string16 ResourceBundle::GetLocalizedString(int message_id) {
+  base::string16 string;
+  if (GetOverriddenLocalizedString(message_id, &string))
+    return string;
+
+  base::StringPiece data;
+  ResourceHandle::TextEncodingType encoding;
+  GetLocalizedStringData(message_id, &data, &encoding);
+
   if (encoding == ResourceHandle::UTF16) {
-    msg = base::string16(reinterpret_cast<const base::char16*>(data.data()),
-                         data.length() / 2);
-  } else if (encoding == ResourceHandle::UTF8) {
-    msg = base::UTF8ToUTF16(data);
+    auto* string_data = reinterpret_cast<const base::char16*>(data.data());
+    return base::string16(string_data, data.length() / 2);
   }
-  return msg;
+  if (encoding == ResourceHandle::UTF8)
+    return base::UTF8ToUTF16(data);
+
+  return base::string16();
+}
+
+std::string ResourceBundle::GetLocalizedStringUTF8(int message_id) {
+  base::string16 string_utf16;
+  if (GetOverriddenLocalizedString(message_id, &string_utf16))
+    return base::UTF16ToUTF8(string_utf16);
+
+  base::StringPiece data;
+  ResourceHandle::TextEncodingType encoding;
+  GetLocalizedStringData(message_id, &data, &encoding);
+
+  if (encoding == ResourceHandle::UTF16) {
+    auto* string_data = reinterpret_cast<const base::char16*>(data.data());
+    return base::UTF16ToUTF8(base::string16(string_data, data.length() / 2));
+  }
+  if (encoding == ResourceHandle::UTF8)
+    return data.as_string();
+
+  return std::string();
 }
 
 base::RefCountedMemory* ResourceBundle::LoadLocalizedResourceBytes(

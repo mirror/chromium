@@ -258,8 +258,8 @@ bool ProfileAttributesStorage::IsDefaultProfileName(
   }
 
   // Check whether it's one of the "Person %d" style names.
-  std::string default_name_format = l10n_util::GetStringFUTF8(
-      IDS_NEW_NUMBERED_PROFILE_NAME, base::ASCIIToUTF16("%d"));
+  std::string default_name_format =
+      l10n_util::GetStringFUTF8(IDS_NEW_NUMBERED_PROFILE_NAME, "%d");
 
   int generic_profile_number;  // Unused. Just a placeholder for sscanf.
   int assignments = sscanf(base::UTF16ToUTF8(name).c_str(),

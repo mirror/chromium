@@ -128,9 +128,9 @@ bool PluginsHandler::Validate(const Extension* extension,
              plugins->begin();
          plugin != plugins->end(); ++plugin) {
       if (!base::PathExists(plugin->path)) {
-        *error =
-            l10n_util::GetStringFUTF8(IDS_EXTENSION_LOAD_PLUGIN_PATH_FAILED,
-                                      plugin->path.LossyDisplayName());
+        *error = l10n_util::GetStringFUTF8(
+            IDS_EXTENSION_LOAD_PLUGIN_PATH_FAILED,
+            base::UTF16ToUTF8(plugin->path.LossyDisplayName()));
         return false;
       }
     }

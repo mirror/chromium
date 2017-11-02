@@ -243,8 +243,9 @@ IssueInfo MediaRouterFileDialog::CreateIssue(
     case MediaRouterFileDialog::FILE_EMPTY:
     case MediaRouterFileDialog::FILE_TYPE_NOT_SUPPORTED:
     case MediaRouterFileDialog::READ_FAILURE:
-      issue_title = l10n_util::GetStringFUTF8(
-          IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_ERROR, GetFileName(file_info));
+      issue_title =
+          l10n_util::GetStringFUTF8(IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_ERROR,
+                                    base::UTF16ToUTF8(GetFileName(file_info)));
       break;
     case MediaRouterFileDialog::FILE_OK:
       // Create issue shouldn't be called with FILE_OK, but to ensure things

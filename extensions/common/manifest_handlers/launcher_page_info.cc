@@ -62,7 +62,7 @@ bool LauncherPageHandler::Validate(
   const base::FilePath path = extension->GetResource(info->page).GetFilePath();
   if (!base::PathExists(path)) {
     *error = l10n_util::GetStringFUTF8(IDS_EXTENSION_LOAD_LAUNCHER_PAGE_FAILED,
-                                       base::UTF8ToUTF16(info->page));
+                                       info->page);
     return false;
   }
 

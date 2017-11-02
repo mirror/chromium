@@ -22,6 +22,10 @@
 #include "ui/base/l10n/l10n_util_mac.h"
 #endif  // OS_MACOSX
 
+namespace base {
+class FilePath;
+}
+
 namespace l10n_util {
 
 // Takes normalized locale as |locale|. Returns language part (before '-').
@@ -135,20 +139,21 @@ UI_BASE_EXPORT base::string16 GetStringFUTF16(int message_id,
                                               const base::string16& c,
                                               const base::string16& d,
                                               const base::string16& e);
+UI_BASE_EXPORT std::string GetStringFUTF8(int message_id, const std::string& a);
 UI_BASE_EXPORT std::string GetStringFUTF8(int message_id,
-                                          const base::string16& a);
+                                          const base::FilePath& file);
 UI_BASE_EXPORT std::string GetStringFUTF8(int message_id,
-                                          const base::string16& a,
-                                          const base::string16& b);
+                                          const std::string& a,
+                                          const std::string& b);
 UI_BASE_EXPORT std::string GetStringFUTF8(int message_id,
-                                          const base::string16& a,
-                                          const base::string16& b,
-                                          const base::string16& c);
+                                          const std::string& a,
+                                          const std::string& b,
+                                          const std::string& c);
 UI_BASE_EXPORT std::string GetStringFUTF8(int message_id,
-                                          const base::string16& a,
-                                          const base::string16& b,
-                                          const base::string16& c,
-                                          const base::string16& d);
+                                          const std::string& a,
+                                          const std::string& b,
+                                          const std::string& c,
+                                          const std::string& d);
 
 // Variants that return the offset(s) of the replaced parameters. The
 // vector based version returns offsets ordered by parameter. For example if

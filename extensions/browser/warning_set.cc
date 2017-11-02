@@ -194,7 +194,7 @@ std::string Warning::GetLocalizedMessage(const ExtensionSet* extensions) const {
   // These parameters may be unsafe (URLs and Extension names) and need
   // to be HTML-escaped before being embedded in the UI. Also extension IDs
   // are translated to full extension names.
-  std::vector<base::string16> final_parameters;
+  std::vector<std::string> final_parameters;
   for (size_t i = 0; i < message_parameters_.size(); ++i) {
     std::string message = message_parameters_[i];
     if (base::StartsWith(message, kTranslate, base::CompareCase::SENSITIVE)) {
@@ -203,7 +203,7 @@ std::string Warning::GetLocalizedMessage(const ExtensionSet* extensions) const {
           extensions->GetByID(extension_id);
       message = extension ? extension->name() : extension_id;
     }
-    final_parameters.push_back(base::UTF8ToUTF16(net::EscapeForHTML(message)));
+    final_parameters.push_back(net::EscapeForHTML(message));
   }
 
   static_assert(kMaxNumberOfParameters == 4u,

@@ -204,9 +204,9 @@ bool ThemeHandler::Validate(const Extension* extension,
           base::FilePath image_path = extension->path().Append(
               base::FilePath::FromUTF8Unsafe(val));
           if (!base::PathExists(image_path)) {
-            *error =
-                l10n_util::GetStringFUTF8(IDS_EXTENSION_INVALID_IMAGE_PATH,
-                                          image_path.LossyDisplayName());
+            *error = l10n_util::GetStringFUTF8(
+                IDS_EXTENSION_INVALID_IMAGE_PATH,
+                base::UTF16ToUTF8(image_path.LossyDisplayName()));
             return false;
           }
         }

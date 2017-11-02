@@ -21,6 +21,7 @@
 #include "base/strings/string16.h"
 #include "base/strings/string_piece.h"
 #include "ui/base/layout.h"
+#include "ui/base/resource/resource_handle.h"
 #include "ui/base/ui_base_export.h"
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/image/image.h"
@@ -237,9 +238,15 @@ class UI_BASE_EXPORT ResourceBundle {
   base::StringPiece GetRawDataResourceForScale(int resource_id,
                                                ScaleFactor scale_factor) const;
 
+  bool GetOverriddenLocalizedString(int message_id, base::string16* string);
+  void GetLocalizedStringData(int message_id,
+                              base::StringPiece* data,
+                              ResourceHandle::TextEncodingType* encoding);
+
   // Get a localized string given a message id.  Returns an empty
   // string if the message_id is not found.
   base::string16 GetLocalizedString(int message_id);
+  std::string GetLocalizedStringUTF8(int message_id);
 
   // Get a localized resource (for example, localized image logo) given a
   // resource id.

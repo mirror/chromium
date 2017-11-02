@@ -258,8 +258,8 @@ void SupervisedUserInterstitial::CommandReceived(const std::string& command) {
 
   if (command == "\"feedback\"") {
     bool is_child_account = profile_->IsChild();
-    base::string16 reason =
-        l10n_util::GetStringUTF16(supervised_user_error_page::GetBlockMessageID(
+    std::string reason =
+        l10n_util::GetStringUTF8(supervised_user_error_page::GetBlockMessageID(
             reason_, is_child_account, second_custodian.empty()));
     std::string message = l10n_util::GetStringFUTF8(
         IDS_BLOCK_INTERSTITIAL_DEFAULT_FEEDBACK_TEXT, reason);

@@ -427,9 +427,9 @@ void CookiesViewHandler::SendLocalDataList(const CookieTreeNode* parent) {
       if (category->GetDetailedInfo().node_type ==
               CookieTreeNode::DetailedInfo::TYPE_COOKIES &&
           item_count > 1) {
-        description +=
-            l10n_util::GetStringFUTF8(IDS_SETTINGS_COOKIES_PLURAL_COOKIES,
-                                      base::FormatNumber(item_count));
+        description += l10n_util::GetStringFUTF8(
+            IDS_SETTINGS_COOKIES_PLURAL_COOKIES,
+            base::UTF16ToUTF8(base::FormatNumber(item_count)));
       } else {
         description += l10n_util::GetStringUTF8(ids_value);
       }

@@ -282,8 +282,7 @@ bool BackgroundManifestHandler::Validate(
     if (!base::PathExists(
             extension->GetResource(background_scripts[i]).GetFilePath())) {
       *error = l10n_util::GetStringFUTF8(
-          IDS_EXTENSION_LOAD_BACKGROUND_SCRIPT_FAILED,
-          base::UTF8ToUTF16(background_scripts[i]));
+          IDS_EXTENSION_LOAD_BACKGROUND_SCRIPT_FAILED, background_scripts[i]);
       return false;
     }
   }
@@ -297,9 +296,9 @@ bool BackgroundManifestHandler::Validate(
         BackgroundInfo::GetBackgroundURL(extension));
     const base::FilePath path = extension->GetResource(page_path).GetFilePath();
     if (path.empty() || !base::PathExists(path)) {
-      *error =
-          l10n_util::GetStringFUTF8(IDS_EXTENSION_LOAD_BACKGROUND_PAGE_FAILED,
-                                    page_path.LossyDisplayName());
+      *error = l10n_util::GetStringFUTF8(
+          IDS_EXTENSION_LOAD_BACKGROUND_PAGE_FAILED,
+          base::UTF16ToUTF8(page_path.LossyDisplayName()));
       return false;
     }
   }

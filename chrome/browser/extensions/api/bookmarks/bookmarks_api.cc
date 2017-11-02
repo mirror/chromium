@@ -78,13 +78,13 @@ base::FilePath GetDefaultFilepathForBookmarkExport() {
 
   // Concatenate a date stamp to the filename.
 #if defined(OS_POSIX)
-  base::FilePath::StringType filename =
-      l10n_util::GetStringFUTF8(IDS_EXPORT_BOOKMARKS_DEFAULT_FILENAME,
-                                base::TimeFormatShortDateNumeric(time));
+  base::FilePath::StringType filename = l10n_util::GetStringFUTF8(
+      IDS_EXPORT_BOOKMARKS_DEFAULT_FILENAME,
+      base::UTF16ToUTF8(base::TimeFormatShortDateNumeric(time)));
 #elif defined(OS_WIN)
-  base::FilePath::StringType filename =
-      l10n_util::GetStringFUTF16(IDS_EXPORT_BOOKMARKS_DEFAULT_FILENAME,
-                                 base::TimeFormatShortDateNumeric(time));
+  base::FilePath::StringType filename = l10n_util::GetStringFUTF16(
+      IDS_EXPORT_BOOKMARKS_DEFAULT_FILENAME,
+      base::UTF16ToUTF8(base::TimeFormatShortDateNumeric(time)));
 #endif
 
   base::i18n::ReplaceIllegalCharactersInPath(&filename, '_');

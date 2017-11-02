@@ -311,15 +311,14 @@ static bool IsScriptValid(const base::FilePath& path,
   if (!base::PathExists(path) ||
       !base::ReadFileToString(path, &content)) {
     *error = l10n_util::GetStringFUTF8(
-        message_id,
-        relative_path.LossyDisplayName());
+        message_id, base::UTF16ToUTF8(relative_path.LossyDisplayName()));
     return false;
   }
 
   if (!base::IsStringUTF8(content)) {
     *error = l10n_util::GetStringFUTF8(
         IDS_EXTENSION_BAD_FILE_ENCODING,
-        relative_path.LossyDisplayName());
+        base::UTF16ToUTF8(relative_path.LossyDisplayName()));
     return false;
   }
 
