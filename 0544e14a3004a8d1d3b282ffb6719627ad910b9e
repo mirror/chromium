@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee1b73c0_42070de4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T22:36:30Z",
+      "side": 1,
+      "message": "Yoda talk to make!",
+      "revId": "0544e14a3004a8d1d3b282ffb6719627ad910b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b61042f_230f55f4",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T22:36:30Z",
+      "side": 1,
+      "message": "This method is never called.",
+      "revId": "0544e14a3004a8d1d3b282ffb6719627ad910b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3718412_511eef7e",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T22:36:30Z",
+      "side": 1,
+      "message": "Let\u0027s keep State on IO.",
+      "revId": "0544e14a3004a8d1d3b282ffb6719627ad910b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
