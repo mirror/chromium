@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3340213_a9bed350",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1931,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-02T18:35:40Z",
+      "side": 1,
+      "message": "@grunell - let\u0027s discuss this offline? I think there are related issues here (RTCPeerConnectionHandler living longer than it should).",
+      "revId": "1898ec6411682f74e7416a5f67c241b26adf4517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
