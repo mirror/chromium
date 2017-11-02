@@ -239,7 +239,7 @@ def _CreateJavaLibrariesList(library_paths):
 def _CreateLocalePaksAssetJavaList(assets):
   """Returns a java literal array from a list of assets in the form src:dst."""
   names_only = (a.split(':')[1][:-4] for a in assets if a.endswith('.pak'))
-  locales_only = (a for a in names_only if '-' in a or len(a) == 2)
+  locales_only = (a for a in names_only if '-' in a or len(a) <= 3)
   return '{%s}' % ','.join(sorted('"%s"' % a for a in locales_only))
 
 
