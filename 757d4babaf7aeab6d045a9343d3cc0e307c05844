@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0812e211_03f8bb97",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T22:48:05Z",
+      "side": 1,
+      "message": "Why this check?",
+      "revId": "757d4babaf7aeab6d045a9343d3cc0e307c05844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
