@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df493e98_8df3f913",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-02T19:00:35Z",
+      "side": 1,
+      "message": "So there might be two kinds of addresses here, one is IP address + port, and the other is DNS hostname + port, right? Can we have the logic something like this?\n\nvar validIPHostnameRegex\u003d\"...\"\nvar validDNSHostnameRegex\u003d\"...\"\nreturn validIPHostnameRegex.test(address) || validDNSHostnameRegex.test(address);",
+      "revId": "63b553adfc819922d20b4fb85e7aac81a07b9b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
