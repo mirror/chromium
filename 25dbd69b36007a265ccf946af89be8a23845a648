@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b27468c_77fcba0a",
+        "filename": "chrome/renderer/extensions/tabs_hooks_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T23:20:08Z",
+      "side": 1,
+      "message": "This delegate is inert at this point and isn\u0027t installed in ExtensionBindingsSystem right? Can you explicitly add that info in the CL description?",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "25dbd69b36007a265ccf946af89be8a23845a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63846ec_91741123",
+        "filename": "chrome/renderer/extensions/tabs_hooks_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T23:20:08Z",
+      "side": 1,
+      "message": "messaging_util::ExtractIntegerId(arguments[0])\n\nAlso, it feels more natural to look at arg 0 first and then at arg1 in line 162 above. But then again you want tab_id to be as close as its usage, so up to you.",
+      "range": {
+        "startLine": 182,
+        "startChar": 15,
+        "endLine": 182,
+        "endChar": 39
+      },
+      "revId": "25dbd69b36007a265ccf946af89be8a23845a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0e58b8e_988bca92",
+        "filename": "extensions/renderer/messaging_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T23:20:08Z",
+      "side": 1,
+      "message": "nit: should this be \"Flags for ... \"",
+      "range": {
+        "startLine": 45,
+        "startChar": 3,
+        "endLine": 45,
+        "endChar": 17
+      },
+      "revId": "25dbd69b36007a265ccf946af89be8a23845a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed53ef3d_8c63a862",
+        "filename": "extensions/renderer/messaging_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T23:20:08Z",
+      "side": 1,
+      "message": "nitty nit: PARSE_CHANNEL_NAME, PARSE_FRAME_ID ... CHECK_ generally raises attention :\\",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 8
+      },
+      "revId": "25dbd69b36007a265ccf946af89be8a23845a648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
