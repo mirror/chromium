@@ -154,20 +154,19 @@ bool CertificateProviderInternalReportCertificatesFunction::
   for (const api_cp::Hash hash : info.supported_hashes) {
     switch (hash) {
       case api_cp::HASH_MD5_SHA1:
-        out_info->supported_hashes.push_back(
-            net::SSLPrivateKey::Hash::MD5_SHA1);
+        out_info->supported_algorithms.push_back(SSL_SIGN_RSA_PKCS1_MD5_SHA1);
         break;
       case api_cp::HASH_SHA1:
-        out_info->supported_hashes.push_back(net::SSLPrivateKey::Hash::SHA1);
+        out_info->supported_algorithms.push_back(SSL_SIGN_RSA_PKCS1_SHA1);
         break;
       case api_cp::HASH_SHA256:
-        out_info->supported_hashes.push_back(net::SSLPrivateKey::Hash::SHA256);
+        out_info->supported_algorithms.push_back(SSL_SIGN_RSA_PKCS1_SHA256);
         break;
       case api_cp::HASH_SHA384:
-        out_info->supported_hashes.push_back(net::SSLPrivateKey::Hash::SHA384);
+        out_info->supported_algorithms.push_back(SSL_SIGN_RSA_PKCS1_SHA384);
         break;
       case api_cp::HASH_SHA512:
-        out_info->supported_hashes.push_back(net::SSLPrivateKey::Hash::SHA512);
+        out_info->supported_algorithms.push_back(SSL_SIGN_RSA_PKCS1_SHA512);
         break;
       case api_cp::HASH_NONE:
         NOTREACHED();

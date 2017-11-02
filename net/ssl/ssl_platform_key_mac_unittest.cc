@@ -18,7 +18,7 @@
 #include "net/test/keychain_test_util_mac.h"
 #include "net/test/test_data_directory.h"
 #include "testing/gtest/include/gtest/gtest.h"
-
+#include "third_party/boringssl/src/include/openssl/ssl.h"
 namespace net {
 
 namespace {
@@ -72,12 +72,14 @@ TEST_P(SSLPlatformKeyMacTest, KeyMatches) {
       CreateSSLPrivateKeyForSecIdentity(cert.get(), sec_identity.get());
   ASSERT_TRUE(key);
 
-  // All Mac keys are expected to have the same hash preferences.
-  std::vector<SSLPrivateKey::Hash> expected_hashes = {
-      SSLPrivateKey::Hash::SHA512, SSLPrivateKey::Hash::SHA384,
-      SSLPrivateKey::Hash::SHA256, SSLPrivateKey::Hash::SHA1,
+  // All Mac keys are expected to have the same preferences.
+  std::vector<uint16_t> expected = {
+      SSL_SIGN_RSA_PKCS1_SHA512, SSL_SIGN_ECDSA_SECP521R1_SHA512,
+      SSL_SIGN_RSA_PKCS1_SHA384, SSL_SIGN_ECDSA_SECP384R1_SHA384,
+      SSL_SIGN_RSA_PKCS1_SHA256, SSL_SIGN_ECDSA_SECP256R1_SHA256,
+      SSL_SIGN_RSA_PKCS1_SHA1,   SSL_SIGN_ECDSA_SHA1,
   };
-  EXPECT_EQ(expected_hashes, key->GetDigestPreferences());
+  EXPECT_EQ(expected, key->GetPreferences());
 
   TestSSLPrivateKeyMatches(key.get(), pkcs8);
 }

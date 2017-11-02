@@ -227,12 +227,14 @@ IN_PROC_BROWSER_TEST_F(SSLClientCertificateSelectorCocoaTest, Accept) {
   EXPECT_EQ(client_cert1_, results.cert);
   ASSERT_TRUE(results.key);
 
-  // All Mac keys are expected to have the same hash preferences.
-  std::vector<net::SSLPrivateKey::Hash> expected_hashes = {
-      net::SSLPrivateKey::Hash::SHA512, net::SSLPrivateKey::Hash::SHA384,
-      net::SSLPrivateKey::Hash::SHA256, net::SSLPrivateKey::Hash::SHA1,
+  // All Mac keys are expected to have the same preferences.
+  std::vector<uint16_t> expected = {
+      SSL_SIGN_RSA_PKCS1_SHA512, SSL_SIGN_ECDSA_SECP521R1_SHA512,
+      SSL_SIGN_RSA_PKCS1_SHA384, SSL_SIGN_ECDSA_SECP384R1_SHA384,
+      SSL_SIGN_RSA_PKCS1_SHA256, SSL_SIGN_ECDSA_SECP256R1_SHA256,
+      SSL_SIGN_RSA_PKCS1_SHA1,   SSL_SIGN_ECDSA_SHA1,
   };
-  EXPECT_EQ(expected_hashes, results.key->GetDigestPreferences());
+  EXPECT_EQ(expected, results.key->GetPreferences());
 
   TestSSLPrivateKeyMatches(results.key.get(), pkcs8_key1_);
 }

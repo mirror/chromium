@@ -25,6 +25,7 @@
 #include "third_party/boringssl/src/include/openssl/mem.h"
 #include "third_party/boringssl/src/include/openssl/nid.h"
 #include "third_party/boringssl/src/include/openssl/rsa.h"
+#include "third_party/boringssl/src/include/openssl/ssl.h"
 
 using base::android::JavaRef;
 using base::android::ScopedJavaGlobalRef;
@@ -72,52 +73,33 @@ void LeakEngine(const JavaRef<jobject>& private_key) {
 
 class SSLPlatformKeyAndroid : public ThreadedSSLPrivateKey::Delegate {
  public:
-  SSLPlatformKeyAndroid(int type,
-                        const JavaRef<jobject>& key,
+  SSLPlatformKeyAndroid(const JavaRef<jobject>& key,
                         size_t max_length,
                         android::AndroidRSA* legacy_rsa)
-      : type_(type), max_length_(max_length), legacy_rsa_(legacy_rsa) {
+      : max_length_(max_length), legacy_rsa_(legacy_rsa) {
     key_.Reset(key);
   }
 
   ~SSLPlatformKeyAndroid() override {}
 
-  std::vector<SSLPrivateKey::Hash> GetDigestPreferences() override {
-    static const SSLPrivateKey::Hash kHashes[] = {
-        SSLPrivateKey::Hash::SHA512, SSLPrivateKey::Hash::SHA384,
-        SSLPrivateKey::Hash::SHA256, SSLPrivateKey::Hash::SHA1};
-    return std::vector<SSLPrivateKey::Hash>(kHashes,
-                                            kHashes + arraysize(kHashes));
+  std::vector<uint16_t> GetPreferences() override {
+    return {
+        SSL_SIGN_RSA_PKCS1_SHA512, SSL_SIGN_ECDSA_SECP521R1_SHA512,
+        SSL_SIGN_RSA_PKCS1_SHA384, SSL_SIGN_ECDSA_SECP384R1_SHA384,
+        SSL_SIGN_RSA_PKCS1_SHA256, SSL_SIGN_ECDSA_SECP256R1_SHA256,
+        SSL_SIGN_RSA_PKCS1_SHA1,   SSL_SIGN_ECDSA_SHA1,
+    };
   }
 
-  Error SignDigest(SSLPrivateKey::Hash hash,
+  Error SignDigest(uint16_t algorithm,
                    const base::StringPiece& input_in,
                    std::vector<uint8_t>* signature) override {
     base::StringPiece input = input_in;
 
     // Prepend the DigestInfo for RSA.
     bssl::UniquePtr<uint8_t> digest_info_storage;
-    if (type_ == EVP_PKEY_RSA) {
-      int hash_nid = NID_undef;
-      switch (hash) {
-        case SSLPrivateKey::Hash::MD5_SHA1:
-          hash_nid = NID_md5_sha1;
-          break;
-        case SSLPrivateKey::Hash::SHA1:
-          hash_nid = NID_sha1;
-          break;
-        case SSLPrivateKey::Hash::SHA256:
-          hash_nid = NID_sha256;
-          break;
-        case SSLPrivateKey::Hash::SHA384:
-          hash_nid = NID_sha384;
-          break;
-        case SSLPrivateKey::Hash::SHA512:
-          hash_nid = NID_sha512;
-          break;
-      }
-      DCHECK_NE(NID_undef, hash_nid);
-
+    if (SSL_get_signature_algorithm_key_type(algorithm) == EVP_PKEY_RSA) {
+      int hash_nid = EVP_MD_type(SSL_get_signature_algorithm_digest(algorithm));
       uint8_t* digest_info;
       size_t digest_info_len;
       int is_alloced;
@@ -155,7 +137,6 @@ class SSLPlatformKeyAndroid : public ThreadedSSLPrivateKey::Delegate {
   }
 
  private:
-  int type_;
   ScopedJavaGlobalRef<jobject> key_;
   size_t max_length_;
   android::AndroidRSA* legacy_rsa_;
@@ -205,7 +186,7 @@ scoped_refptr<SSLPrivateKey> WrapJavaPrivateKey(
   }
 
   return base::MakeRefCounted<ThreadedSSLPrivateKey>(
-      std::make_unique<SSLPlatformKeyAndroid>(type, key, max_length, sys_rsa),
+      std::make_unique<SSLPlatformKeyAndroid>(key, max_length, sys_rsa),
       GetSSLPlatformKeyTaskRunner());
 }
 
