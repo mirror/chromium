@@ -23,6 +23,14 @@ enum SandboxType {
   // Do not apply any sandboxing to the process.
   SANDBOX_TYPE_NO_SANDBOX = SANDBOX_TYPE_FIRST_TYPE,
 
+  // Do not apply any sandboxing and elevate the privileges of the process.
+  // On non Windows platforms it's equivalent to SANDBOX_TYPE_NO_SANDBOX.
+  SANDBOX_TYPE_NO_SANDBOX_AND_ELEVATED_PRIVILEGES
+#if !defined(OS_WIN)
+  = SANDBOX_TYPE_NO_SANDBOX
+#endif
+  ,
+
   // Renderer or worker process. Most common case.
   SANDBOX_TYPE_RENDERER,
 
@@ -59,6 +67,7 @@ enum SandboxType {
 inline bool IsUnsandboxedSandboxType(SandboxType sandbox_type) {
   // TODO(tsepez): Sandbox network process.
   return sandbox_type == SANDBOX_TYPE_NO_SANDBOX ||
+         sandbox_type == SANDBOX_TYPE_NO_SANDBOX_AND_ELEVATED_PRIVILEGES ||
          sandbox_type == SANDBOX_TYPE_NETWORK;
 }
 
