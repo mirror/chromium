@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59c78b0f_1a23f229",
+        "filename": "components/exo/sub_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-02T22:01:03Z",
+      "side": 1,
+      "message": "What about there are some pending states in parent or other siblings? Should we commit them with this sub subsurface?\n\nI was thinking about using SurfaceTreeHost for async subsurfaces. When a subsurface is async, we add surface tree host in the subsurface, and embed the CompositorFrame in parent Frame.",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 32
+      },
+      "revId": "c509a47348cd5fde0bb2ab00810b929703b07ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
