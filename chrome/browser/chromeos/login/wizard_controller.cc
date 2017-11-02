@@ -446,6 +446,10 @@ BaseScreen* WizardController::CreateScreen(OobeScreen screen) {
   } else if (screen == OobeScreen::SCREEN_WAIT_FOR_CONTAINER_READY) {
     return new WaitForContainerReadyScreen(
         this, oobe_ui_->GetWaitForContainerReadyScreenView());
+  } else if (screen == OobeScreen::SCREEN_UPDATE_REQUIRED) {
+    return nullptr;
+    //     new WaitForContainerReadyScreen(
+    //        this, oobe_ui_->GetWaitForContainerReadyScreenView());
   }
 
   return nullptr;
@@ -664,6 +668,12 @@ void WizardController::ShowWaitForContainerReadyScreen() {
 
   UpdateStatusAreaVisibilityForScreen(
       OobeScreen::SCREEN_WAIT_FOR_CONTAINER_READY);
+  SetCurrentScreen(GetScreen(OobeScreen::SCREEN_WAIT_FOR_CONTAINER_READY));
+}
+
+void WizardController::ShowUpdateRequiredScreen() {
+  //  UpdateStatusAreaVisibilityForScreen(
+  //      OobeScreen::SCREEN_WAIT_FOR_CONTAINER_READY);
   SetCurrentScreen(GetScreen(OobeScreen::SCREEN_WAIT_FOR_CONTAINER_READY));
 }
 

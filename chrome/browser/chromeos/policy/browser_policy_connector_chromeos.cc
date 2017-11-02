@@ -31,6 +31,7 @@
 #include "chrome/browser/chromeos/policy/device_local_account_policy_service.h"
 #include "chrome/browser/chromeos/policy/device_network_configuration_updater.h"
 #include "chrome/browser/chromeos/policy/enrollment_config.h"
+#include "chrome/browser/chromeos/policy/minimum_version_policy_handler.h"
 #include "chrome/browser/chromeos/policy/remote_commands/affiliated_remote_commands_invalidator.h"
 #include "chrome/browser/chromeos/policy/server_backed_state_keys_broker.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
@@ -202,6 +203,10 @@ void BrowserPolicyConnectorChromeOS::Init(
 
   bluetooth_policy_handler_ =
       base::MakeUnique<BluetoothPolicyHandler>(chromeos::CrosSettings::Get());
+
+  minimum_version_policy_handler_ =
+      base::MakeUnique<MinimumVersionPolicyHandler>(
+          chromeos::CrosSettings::Get());
 }
 
 void BrowserPolicyConnectorChromeOS::PreShutdown() {

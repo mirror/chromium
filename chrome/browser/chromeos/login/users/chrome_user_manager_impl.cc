@@ -253,6 +253,11 @@ ChromeUserManagerImpl::ChromeUserManagerImpl()
     return;
   }
 
+  g_browser_process->platform_part()
+      ->browser_policy_connector_chromeos()
+      ->GetMinimumVersionPolicyHandler()
+      ->AddObserver(this);
+
   avatar_policy_observer_ =
       base::MakeUnique<policy::CloudExternalDataPolicyObserver>(
           cros_settings_, device_local_account_policy_service,
@@ -274,6 +279,11 @@ ChromeUserManagerImpl::~ChromeUserManagerImpl() {}
 void ChromeUserManagerImpl::Shutdown() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   ChromeUserManager::Shutdown();
+
+  g_browser_process->platform_part()
+      ->browser_policy_connector_chromeos()
+      ->GetMinimumVersionPolicyHandler()
+      ->RemoveObserver(this);
 
   local_accounts_subscription_.reset();
 
@@ -1186,6 +1196,17 @@ bool ChromeUserManagerImpl::IsGaiaUserAllowed(
                                      nullptr);
 }
 
+void ChromeUserManagerImpl::OnMinimumVersionStateChanged() {
+  NotifyUsersSignInConstraintsChanged();
+}
+
+bool ChromeUserManagerImpl::MinVersionConstraintsSatisfied() const {
+  return g_browser_process->platform_part()
+      ->browser_policy_connector_chromeos()
+      ->GetMinimumVersionPolicyHandler()
+      ->RequirementsAreSatisfied();
+}
+
 bool ChromeUserManagerImpl::IsUserAllowed(
     const user_manager::User& user) const {
   DCHECK(user.GetType() == user_manager::USER_TYPE_REGULAR ||
@@ -1200,6 +1221,9 @@ bool ChromeUserManagerImpl::IsUserAllowed(
       !AreSupervisedUsersAllowed())
     return false;
   if (user.HasGaiaAccount() && !IsGaiaUserAllowed(user))
+    return false;
+  if (!MinVersionConstraintsSatisfied() &&
+      user.GetType() != user_manager::USER_TYPE_GUEST)
     return false;
   return true;
 }
