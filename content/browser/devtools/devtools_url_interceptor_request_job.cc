@@ -81,11 +81,11 @@ DevToolsURLInterceptorRequestJob::DevToolsURLInterceptorRequestJob(
     scoped_refptr<DevToolsURLRequestInterceptor::State>
         devtools_url_request_interceptor_state,
     const std::string& interception_id,
+    intptr_t owning_entry_id,
     net::URLRequest* original_request,
     net::NetworkDelegate* original_network_delegate,
     const base::UnguessableToken& devtools_token,
-    const base::UnguessableToken& target_id,
-    base::WeakPtr<protocol::NetworkHandler> network_handler,
+    DevToolsURLRequestInterceptor::RequestInterceptedCallback callback,
     bool is_redirect,
     ResourceType resource_type)
     : net::URLRequestJob(original_request, original_network_delegate),
@@ -98,12 +98,11 @@ DevToolsURLInterceptorRequestJob::DevToolsURLInterceptorRequestJob(
                        original_request->priority(),
                        original_request->context()),
       waiting_for_user_response_(WaitingForUserResponse::NOT_WAITING),
-      intercepting_requests_(true),
       killed_(false),
       interception_id_(interception_id),
+      owning_entry_id_(owning_entry_id),
       devtools_token_(devtools_token),
-      target_id_(target_id),
-      network_handler_(network_handler),
+      callback_(callback),
       is_redirect_(is_redirect),
       resource_type_(resource_type),
       weak_ptr_factory_(this) {
@@ -125,7 +124,7 @@ void DevToolsURLInterceptorRequestJob::SetExtraRequestHeaders(
 
 void DevToolsURLInterceptorRequestJob::Start() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (is_redirect_ || !intercepting_requests_) {
+  if (is_redirect_ || callback_.is_null()) {
     // If this is a fetch in response to a redirect, we have already sent the
     // Network.requestIntercepted event and the user opted to allow it so
     // there's no need to send another. We can just start the SubRequest.
@@ -136,10 +135,8 @@ void DevToolsURLInterceptorRequestJob::Start() {
   }
   waiting_for_user_response_ =
       WaitingForUserResponse::WAITING_FOR_INTERCEPTION_RESPONSE;
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&protocol::NetworkHandler::RequestIntercepted,
-                     network_handler_, BuildRequestInfo()));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(callback_, BuildRequestInfo()));
 }
 
 void DevToolsURLInterceptorRequestJob::Kill() {
@@ -245,7 +242,7 @@ void DevToolsURLInterceptorRequestJob::OnAuthRequired(
   DCHECK_EQ(request, sub_request_->request());
   auth_info_ = auth_info;
 
-  if (!intercepting_requests_) {
+  if (callback_.is_null()) {
     // This should trigger default auth behavior.
     // See comment in ProcessAuthRespose.
     NotifyHeadersComplete();
@@ -270,10 +267,8 @@ void DevToolsURLInterceptorRequestJob::OnAuthRequired(
           .SetScheme(auth_info->scheme)
           .SetRealm(auth_info->realm)
           .Build();
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&protocol::NetworkHandler::RequestIntercepted,
-                     network_handler_, std::move(request_info)));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(callback_, std::move(request_info)));
 }
 
 void DevToolsURLInterceptorRequestJob::OnCertificateRequested(
@@ -332,7 +327,7 @@ void DevToolsURLInterceptorRequestJob::OnReceivedRedirect(
   DCHECK(sub_request_);
   DCHECK_EQ(request, sub_request_->request());
   // If we're not intercepting results then just exit.
-  if (!intercepting_requests_) {
+  if (callback_.is_null()) {
     *defer_redirect = false;
     return;
   }
@@ -362,15 +357,13 @@ void DevToolsURLInterceptorRequestJob::OnReceivedRedirect(
       protocol::Object::fromValue(headers_dict.get(), nullptr);
   request_info->http_status_code = redirectinfo.status_code;
   request_info->redirect_url = redirectinfo.new_url.spec();
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&protocol::NetworkHandler::RequestIntercepted,
-                     network_handler_, std::move(request_info)));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(callback_, std::move(request_info)));
 }
 
 void DevToolsURLInterceptorRequestJob::StopIntercepting() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  intercepting_requests_ = false;
+  callback_.Reset();
 
   // Allow the request to continue if we're waiting for user input.
   switch (waiting_for_user_response_) {
