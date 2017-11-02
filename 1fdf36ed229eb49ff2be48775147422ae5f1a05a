@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce122545_979d7a0c",
+        "filename": "third_party/WebKit/Source/devtools/devtools-node-modules",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T00:46:58Z",
+      "side": 1,
+      "message": "Revert this? Seems odd to have it here.",
+      "revId": "1fdf36ed229eb49ff2be48775147422ae5f1a05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ceec859_f3177bd8",
+        "filename": "third_party/WebKit/Source/platform/exported/WebSecurityOrigin.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T00:46:58Z",
+      "side": 1,
+      "message": "Nit: combine the two lines with *this \u003d SecurityOrigin::FromUrlOrigin(origin);\n\nThen we don\u0027t have to call one origin and the other security_origin.",
+      "revId": "1fdf36ed229eb49ff2be48775147422ae5f1a05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84138781_a5d1ecd9",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T00:46:58Z",
+      "side": 1,
+      "message": "Per the review feedback on my CL, I think I\u0027m going to revert the StringPiece change. So this should use as_string(). Sorry for the back and forth here.",
+      "revId": "1fdf36ed229eb49ff2be48775147422ae5f1a05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497a1600_de9a9688",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T00:46:58Z",
+      "side": 1,
+      "message": "Nit: For consistency, name this CreateFromUrlOrigin (and move this above the ToUrlOrigin method to keep it grouped near the other Create helpers)",
+      "revId": "1fdf36ed229eb49ff2be48775147422ae5f1a05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
