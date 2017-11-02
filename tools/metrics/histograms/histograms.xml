@@ -68008,6 +68008,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="RendererScheduler.BackgroundedRendererTransition"
+    enum="BackgroundedRendererTransition">
+  <owner>fmeawad@chromium.org</owner>
+  <owner>panicker@chromium.org</owner>
+  <summary>
+    Tracks the transitions of the renderer scheduler when it is backgrounded.
+    Once it is backgrounded, it can be stopped after a timeout, stopped due to
+    critical resources, resumed or foregrounded.
+  </summary>
+</histogram>
+
 <histogram name="RendererScheduler.BackgroundRendererMainThreadLoad" units="%">
   <obsolete>
     Replaced with RendererScheduler.BackgroundRendererMainThreadLoad2 as of May
@@ -85883,7 +85894,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     name="TabManager.Experimental.SessionRestore.ForegroundTab.FirstContentfulPaint"
     units="ms">
   <owner>fmeawad@chromium.org</owner>
-  <owner>ducbui@google.com</owner>
   <summary>
     Elapsed time between the start of the loading and the first contentful paint
     of foreground tabs when the browser loads tabs in session restore.
@@ -85894,7 +85904,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     name="TabManager.Experimental.SessionRestore.ForegroundTab.FirstMeaningfulPaint"
     units="ms">
   <owner>fmeawad@chromium.org</owner>
-  <owner>ducbui@google.com</owner>
   <summary>
     Elapsed time between the start of the loading and the first meaningful paint
     of foreground tabs when the browser loads tabs in session restore.
@@ -85905,7 +85914,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     name="TabManager.Experimental.SessionRestore.ForegroundTab.FirstPaint"
     units="ms">
   <owner>fmeawad@chromium.org</owner>
-  <owner>ducbui@google.com</owner>
   <summary>
     Elapsed time between the start of the loading and the first paint of
     foreground tabs when the browser loads tabs in session restore.
