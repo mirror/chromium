@@ -22,6 +22,30 @@
       "revId": "f3513e06e8ae25d4a55d64d069655170d00aba6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb08f71_65ace48c",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-02T17:09:47Z",
+      "side": 1,
+      "message": "Yup, and that check is incorrect and always false. I\u0027ve notified Theresa about it.\n\nUgly |int() thing is how jinja does casts: https://stackoverflow.com/questions/12623768/compare-two-variables-in-jinja2-template",
+      "parentUuid": "d7ff2f29_ed3dd2f6",
+      "range": {
+        "startLine": 401,
+        "startChar": 33,
+        "endLine": 401,
+        "endChar": 34
+      },
+      "revId": "f3513e06e8ae25d4a55d64d069655170d00aba6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
