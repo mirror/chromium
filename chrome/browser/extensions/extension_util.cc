@@ -21,6 +21,7 @@
 #include "chrome/browser/ui/webui/extensions/extension_icon_source.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/extensions/sync_helper.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/site_instance.h"
@@ -228,6 +229,12 @@ bool IsAppLaunchableWithoutEnabling(const std::string& extension_id,
 
 bool ShouldSync(const Extension* extension,
                 content::BrowserContext* context) {
+#if defined(OS_CHROMEOS)
+  if (extension->id() == extension_misc::kZIPUnpackerExtensionId) {
+    LOG(ERROR) << "block sync zip unpacker";
+    return false;
+  }
+#endif
   return sync_helper::IsSyncable(extension) &&
          !ExtensionPrefs::Get(context)->DoNotSync(extension->id());
 }

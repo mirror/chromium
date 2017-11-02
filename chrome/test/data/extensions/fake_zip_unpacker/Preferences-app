@@ -1,0 +1,126 @@
+{
+    "extensions": {
+        "settings": {
+            "oedeeodfidgoollimchfdnbmhcpnklnd": {
+                "ack_external": true,
+                "active_permissions": {
+                    "api": [
+                        "app.window.alwaysOnTop",
+                        "fileSystem",
+                        "fileSystemProvider",
+                        "fileSystem.retainEntries",
+                        "notifications",
+                        "storage"
+                    ],
+                    "manifest_permissions": []
+                },
+                "commands": {},
+                "content_settings": [],
+                "creation_flags": 137,
+                "events": [
+                    "app.runtime.onLaunched",
+                    "fileSystemProvider.onCloseFileRequested",
+                    "fileSystemProvider.onGetMetadataRequested",
+                    "fileSystemProvider.onOpenFileRequested",
+                    "fileSystemProvider.onReadDirectoryRequested",
+                    "fileSystemProvider.onReadFileRequested",
+                    "fileSystemProvider.onUnmountRequested",
+                    "runtime.onSuspend"
+                ],
+                "file_entries": {
+                    "AAAA:example.zip": {
+                        "is_directory": false,
+                        "path": "/special/drive-user%40example.com-hash/root/example.zip",
+                        "sequence_number": 1
+                    }
+                },
+                "from_bookmark": false,
+                "from_webstore": true,
+                "granted_permissions": {
+                    "api": [
+                        "app.window.alwaysOnTop",
+                        "fileSystem",
+                        "fileSystemProvider",
+                        "fileSystem.retainEntries",
+                        "notifications",
+                        "storage"
+                    ],
+                    "manifest_permissions": []
+                },
+                "incognito_content_settings": [],
+                "incognito_preferences": {},
+                "initial_keybindings_set": true,
+                "install_time": "13153998044811054",
+                "is_active": true,
+                "last_launch_time": "13153992371497081",
+                "lastpingday": "13153993200864415",
+                "location": 10,
+                "manifest": {
+                    "app": {
+                        "background": {
+                            "scripts": [
+                                "js/unpacker.js",
+                                "js/app.js",
+                                "js/background.js",
+                                "js/decompressor.js",
+                                "js/passphrase-manager.js",
+                                "js/request.js",
+                                "js/types.js",
+                                "js/volume.js"
+                            ]
+                        }
+                    },
+                    "current_locale": "en_US",
+                    "default_locale": "en",
+                    "description": "Open ZIP files in Files app.",
+                    "display_in_launcher": false,
+                    "file_handlers": {
+                        "zip": {
+                            "extensions": [
+                                "zip"
+                            ],
+                            "types": [
+                                "application/zip"
+                            ]
+                        }
+                    },
+                    "file_system_provider_capabilities": {
+                        "multipleMounts": true,
+                        "source": "file"
+                    },
+                    "icons": {
+                        "128": "icons/icon128.png",
+                        "16": "icons/icon16.png",
+                        "32": "icons/icon32.png",
+                        "64": "icons/icon64.png",
+                        "96": "icons/icon96.png"
+                    },
+                    "key": "KEY",
+                    "manifest_version": 2,
+                    "minimum_chrome_version": "44.0.2400.0",
+                    "name": "ZIP unpacker",
+                    "permissions": [
+                        "fileSystemProvider",
+                        {
+                            "fileSystem": [
+                                "retainEntries"
+                            ]
+                        },
+                        "notifications",
+                        "storage",
+                        "alwaysOnTopWindows"
+                    ],
+                    "update_url": "https://clients2.google.com/service/update2/crx",
+                    "version": "0.76.1.0"
+                },
+                "path": "oedeeodfidgoollimchfdnbmhcpnklnd/0.76.1.0",
+                "preferences": {},
+                "regular_only_preferences": {},
+                "running": true,
+                "state": 1,
+                "was_installed_by_default": true,
+                "was_installed_by_oem": false
+            }
+        }
+    }
+}

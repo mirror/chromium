@@ -82,6 +82,12 @@ bool IsSyncable(const Extension* extension) {
 bool IsSyncableComponentExtension(const Extension* extension) {
   if (!Manifest::IsComponentLocation(extension->location()))
     return false;
+  // Component extensions in general should not sync enable/disable status, as
+  // those don't have UI to enable/disable it. However, some component
+  // extensions like the Hotword extension, can be disabled programatticaly.
+  // So we only block sync of Zip Unpacker here as a fix for crbug.com/643060.
+  // if (extension->id() == extension_misc::kZIPUnpackerExtensionId)
+  //   return false;
   return (extension->id() == extensions::kWebStoreAppId) ||
          (extension->id() == extension_misc::kChromeAppId);
 }
