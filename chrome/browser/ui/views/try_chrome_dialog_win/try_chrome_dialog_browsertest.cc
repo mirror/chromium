@@ -26,7 +26,7 @@ using ::testing::Range;
 // will be improved to support this so we can get coverage on other platforms.
 // See http://crbug.com/45115 for details.
 #if defined(OS_WIN)
-#include "chrome/browser/ui/views/try_chrome_dialog.h"
+#include "chrome/browser/ui/views/try_chrome_dialog_win/try_chrome_dialog.h"
 
 #include "ui/aura/window.h"
 #include "ui/gfx/win/singleton_hwnd.h"
