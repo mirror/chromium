@@ -76,6 +76,7 @@ import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.ViewHighlighter;
 import org.chromium.chrome.browser.widget.findinpage.FindToolbarManager;
 import org.chromium.chrome.browser.widget.findinpage.FindToolbarObserver;
+import org.chromium.chrome.browser.widget.textbubble.TextBubble;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.FeatureConstants;
@@ -596,7 +597,8 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         // TODO(shaktisahu): Find out if the download menu button is enabled (crbug/712438).
         ChromeActivity activity = tab.getActivity();
         if (!(activity instanceof ChromeTabbedActivity) || DeviceFormFactor.isTablet()
-                || activity.isInOverviewMode() || !DownloadUtils.isAllowedToDownloadPage(tab)) {
+                || activity.isInOverviewMode() || !DownloadUtils.isAllowedToDownloadPage(tab)
+                || TextBubble.mayOverlapInfobars()) {
             return;
         }
 

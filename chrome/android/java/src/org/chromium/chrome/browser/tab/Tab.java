@@ -1612,9 +1612,11 @@ public class Tab
     }
 
     private void maybeShowDataSaverInProductHelp(final Tracker tracker) {
-        if (!tracker.shouldTriggerHelpUI(FeatureConstants.DATA_SAVER_DETAIL_FEATURE)) return;
+        if (!(getActivity() instanceof ChromeTabbedActivity) || TextBubble.mayOverlapInfobars()) {
+            return;
+        }
 
-        if (!(getActivity() instanceof ChromeTabbedActivity)) return;
+        if (!tracker.shouldTriggerHelpUI(FeatureConstants.DATA_SAVER_DETAIL_FEATURE)) return;
 
         ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(getActivity(),
                 getActivity().getToolbarManager().getMenuButton(),
@@ -3205,6 +3207,8 @@ public class Tab
 
     @CalledByNative
     private void showMediaDownloadInProductHelp(int x, int y, int width, int height) {
+        if (getInfoBarContainer() != null && getInfoBarContainer().hasInfoBars()) return;
+
         // If we are not currently showing the widget, ask the tracker if we can show it.
         if (mDownloadIPHBubble == null) {
             Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());

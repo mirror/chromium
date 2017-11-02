@@ -25,7 +25,11 @@ import android.widget.TextView;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ObserverList;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.infobar.InfoBarContainer;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.AccessibilityUtil;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.MathUtils;
 
 import java.util.HashSet;
@@ -90,6 +94,9 @@ public class TextBubble implements OnTouchListener {
             sBubbles.remove(TextBubble.this);
         }
     };
+
+    // Whether infobars were suppressed due to an existing bubble.
+    private static boolean sInfoBarsWereHidden;
 
     /**
      * How long to wait before automatically dismissing the bubble.  {@link #NO_TIMEOUT} is the
@@ -160,6 +167,42 @@ public class TextBubble implements OnTouchListener {
                 ApiCompatibilityUtils.getColor(mContext.getResources(), R.color.google_blue_500));
     }
 
+    /**
+     * Determine whether one or more infobars may overlap with the text bubbles.
+     * @return Whether any of the active bubbles intersect with infobar container.
+     */
+    public static boolean mayOverlapInfobars() {
+        for (TextBubble bubble : sBubbles) {
+            if (bubble.mayIntersectInfobarContainer()) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Specifies that one or more infobars were hidden due to a pre-existing bubble.
+     * @param hidden True if infobars were hidden, false otherwise.
+     */
+    public static void setInfoBarsWereHidden(boolean hidden) {
+        sInfoBarsWereHidden = hidden;
+    }
+
+    private InfoBarContainer getInfoBarContainer() {
+        ChromeActivity activity = (ChromeActivity) mContext;
+        if (activity == null) return null;
+
+        Tab tab = activity.getActivityTab();
+        return tab.getInfoBarContainer();
+    }
+
+    private boolean mayIntersectInfobarContainer() {
+        InfoBarContainer infoBarContainer = getInfoBarContainer();
+        if (infoBarContainer == null || !infoBarContainer.hasInfoBars()) return false;
+
+        // Currently we are not checking the exact intersection. For most parts if chrome home is
+        // enabled, it will overlap with the infobars.
+        return FeatureUtilities.isChromeHomeEnabled();
+    }
+
     /** Shows the bubble. Will have no effect if the bubble is already showing. */
     public void show() {
         if (mPopupWindow.isShowing()) return;
@@ -191,6 +234,10 @@ public class TextBubble implements OnTouchListener {
      */
     public void dismiss() {
         mPopupWindow.dismiss();
+        if (sInfoBarsWereHidden && getInfoBarContainer() != null) {
+            getInfoBarContainer().setIsObscuredByOtherView(false);
+        }
+        sInfoBarsWereHidden = false;
     }
 
     /**
