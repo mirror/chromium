@@ -50,6 +50,7 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateContextProviderImpl(
   attributes.bind_generates_resource = false;
   attributes.lose_context_when_out_of_memory = true;
   attributes.buffer_preserved = false;
+  attributes.enable_swap_timestamps = true;
 
   GURL url("chrome://gpu/VizProcessTransportFactory::CreateContextProvider");
   return base::MakeRefCounted<ui::ContextProviderCommandBuffer>(

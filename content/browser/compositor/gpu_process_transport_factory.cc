@@ -165,6 +165,7 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateContextCommon(
   attributes.bind_generates_resource = false;
   attributes.lose_context_when_out_of_memory = true;
   attributes.buffer_preserved = false;
+  attributes.enable_swap_timestamps = true;
 
   constexpr bool automatic_flushes = false;
 
