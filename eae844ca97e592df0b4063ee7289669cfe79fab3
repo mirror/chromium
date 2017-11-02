@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aac3b3d_db08e390",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-02T18:26:19Z",
+      "side": 1,
+      "message": "Hmmm... might it be better to change the predicted type to UNKNOWN_TYPE/NO_SERVER_DATA here.\n\ni.e., we\u0027re predicting that the field is of type X but that we should only fill it explicitly (i.e., that leaving it empty on fill is OK).\n\nSeeing it empty doesn\u0027t confirm that it\u0027s of type X, but it does confirm our bet that it can be left empty. Tweaking the predicted type for logging seems a more accurate interpretation.",
+      "revId": "eae844ca97e592df0b4063ee7289669cfe79fab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
