@@ -34,6 +34,24 @@
       "revId": "be5713727d0150a7a24cde026b3a4022ba2371a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa917ad5_6c7fd5a4",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-02T23:34:36Z",
+      "side": 1,
+      "message": "These are good points that I had not thought about. Convinced that adding it here is more appropriate. Or we could add it to both (if it makes the UI more snappy).",
+      "parentUuid": "6a713b1b_8bcf53b7",
+      "revId": "be5713727d0150a7a24cde026b3a4022ba2371a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
