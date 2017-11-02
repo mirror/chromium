@@ -58,15 +58,28 @@ class ArcIntentHelperBridgeFactory
   ~ArcIntentHelperBridgeFactory() override = default;
 };
 
+// Base URL for the Chrome settings pages.
+const char kSettingsPageBase[] = "chrome://settings";
+
+// Mapping from the mojom enum values to the URL components.
+const char* kSettingsPageMapping[] = {
+    "",                     // MAIN
+    "power",                // POWER
+    "bluetoothDevices",     // BLUETOOTH
+    "dateTime",             // DATETIME
+    "display",              // DISPLAY
+    "networks/?type=WiFi",  // WIFI
+    "languages",            // LANGUAGES
+    "privacy",              // PRIVACY
+    "help",                 // HELP
+    "multidevice",          // MULTIDEVICE
+};
+
 }  // namespace
 
 // static
 const char ArcIntentHelperBridge::kArcIntentHelperPackageName[] =
     "org.chromium.arc.intent_helper";
-
-// static
-const char ArcIntentHelperBridge::kMultideviceSettingsUrl[] =
-    "chrome://settings/multidevice";
 
 // static
 ArcIntentHelperBridge* ArcIntentHelperBridge::GetForBrowserContext(
@@ -134,9 +147,20 @@ void ArcIntentHelperBridge::OnOpenUrl(const std::string& url) {
   open_url_delegate_->OpenUrl(gurl);
 }
 
-void ArcIntentHelperBridge::OnOpenChromeSettingsMultideviceUrl() {
+void ArcIntentHelperBridge::OnOpenChromeSettingsMultideviceUrlDeprecated() {
+  OnOpenChromeSettings(mojom::SettingsPage::MULTIDEVICE);
+}
+
+void ArcIntentHelperBridge::OnOpenChromeSettings(mojom::SettingsPage page) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  open_url_delegate_->OpenUrl(GURL(kMultideviceSettingsUrl));
+
+  const size_t page_index = static_cast<size_t>(page);
+  if (arraysize(kSettingsPageMapping) <= page_index) {
+    LOG(ERROR) << "Invalid settings page index: " << page;
+    return;
+  }
+  open_url_delegate_->OpenUrl(
+      GURL(kSettingsPageBase).Resolve(kSettingsPageMapping[page_index]));
 }
 
 void ArcIntentHelperBridge::OpenWallpaperPicker() {

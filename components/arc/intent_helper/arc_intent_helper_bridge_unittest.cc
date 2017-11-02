@@ -303,8 +303,8 @@ TEST_F(ArcIntentHelperTest, TestOnOpenUrl_ChromeScheme) {
 // Tests that OnOpenChromeSettingsMultideviceUrl opens the multidevice settings
 // section in the Chrome browser.
 TEST_F(ArcIntentHelperTest, TestOnOpenChromeSettingsMultideviceUrl) {
-  instance_->OnOpenChromeSettingsMultideviceUrl();
-  EXPECT_EQ(GURL(ArcIntentHelperBridge::kMultideviceSettingsUrl),
+  instance_->OnOpenChromeSettingsMultideviceUrlDeprecated();
+  EXPECT_EQ(GURL("chrome://settings/multidevice"),
             test_open_url_delegate_->TakeLastOpenedUrl());
 }
 
