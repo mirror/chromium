@@ -1823,7 +1823,8 @@ void WebLocalFrameImpl::DidFail(const ResourceError& error,
                                 HistoryCommitType commit_type) {
   if (!Client())
     return;
-  WebURLError web_error = error;
+  DCHECK(!error.IsNull());
+  WebURLError web_error = *error.ToNullableWebURLError();
   WebHistoryCommitType web_commit_type =
       static_cast<WebHistoryCommitType>(commit_type);
 
