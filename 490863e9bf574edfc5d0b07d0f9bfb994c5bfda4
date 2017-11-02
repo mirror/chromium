@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a71a1047_2e65713e",
+        "filename": "chrome/browser/ui/views/frame/avatar_button_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-02T22:53:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cfd4803b_9010ff73",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42df46b0_4d5df1e4",
         "filename": "chrome/browser/ui/views/frame/avatar_button_manager.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f826591_603e0fd4",
+        "filename": "chrome/browser/ui/views/frame/avatar_button_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-02T22:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42df46b0_4d5df1e4",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0da8b2e0_5a05e642",
+        "filename": "chrome/browser/ui/views/frame/avatar_button_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-02T22:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8eb55b8_42dc5af6",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af2c34a4_b41268f7",
         "filename": "chrome/browser/ui/views/frame/avatar_button_manager.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8272a9_4c29c567",
+        "filename": "chrome/browser/ui/views/frame/avatar_button_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-02T22:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af2c34a4_b41268f7",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2ab3e83f_57972605",
+        "filename": "chrome/browser/ui/views/frame/avatar_button_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-02T22:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33c9d7ab_63e8b5da",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0d78992_95ec671d",
         "filename": "chrome/browser/ui/views/profiles/avatar_button.cc",
         "patchSetId": 5
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6592259b_f2a39988",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-02T22:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0d78992_95ec671d",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee8a3aca_c423711d",
         "filename": "chrome/browser/ui/views/profiles/avatar_button.h",
         "patchSetId": 5
@@ -118,6 +226,24 @@
       "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08a082e_1b969628",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-02T22:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee8a3aca_c423711d",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
