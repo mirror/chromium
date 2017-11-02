@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5952d20_34f5ed23",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_client_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-02T14:34:40Z",
+      "side": 1,
+      "message": "Actually I realized this is wrong and doesn\u0027t count the synchronous cases :) PTAL.",
+      "parentUuid": "fc98696c_862247b0",
+      "revId": "a9cbefd372d823d0d1dd063859dcc5be3eb55b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0e891f6_054e33e6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "a9cbefd372d823d0d1dd063859dcc5be3eb55b10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d76c8e4_b99b9cad",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 82705,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-02T14:34:40Z",
+      "side": 1,
+      "message": "They will only be present on Android. I added a note about SafetyNet here.",
+      "parentUuid": "e0e891f6_054e33e6",
+      "revId": "a9cbefd372d823d0d1dd063859dcc5be3eb55b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
