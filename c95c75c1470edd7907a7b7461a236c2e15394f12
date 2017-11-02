@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7eba51f_53026faf",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-11-02T18:26:45Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "c95c75c1470edd7907a7b7461a236c2e15394f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30ff1d1_7c055a46",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-11-02T18:26:45Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c95c75c1470edd7907a7b7461a236c2e15394f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
