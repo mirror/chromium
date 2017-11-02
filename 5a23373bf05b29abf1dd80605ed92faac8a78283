@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef0d6955_4e124548",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-02T19:49:39Z",
+      "side": 1,
+      "message": "nit: could it make sense to call AutoResizeCompositor() ?",
+      "revId": "5a23373bf05b29abf1dd80605ed92faac8a78283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
