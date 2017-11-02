@@ -128,10 +128,16 @@ void SetWindowState(aura::Window* window, ui::WindowShowState state) {
 void Unminimize(aura::Window* window) {
   DCHECK_EQ(window->GetProperty(aura::client::kShowStateKey),
             ui::SHOW_STATE_MINIMIZED);
+  LOG(ERROR) << "PreMinimizeShowState="
+             << window->GetProperty(aura::client::kPreMinimizedShowStateKey);
   window->SetProperty(
       aura::client::kShowStateKey,
       window->GetProperty(aura::client::kPreMinimizedShowStateKey));
-  window->ClearProperty(aura::client::kPreMinimizedShowStateKey);
+
+  if (window->GetProperty(aura::client::kShowStateKey) !=
+      ui::SHOW_STATE_MINIMIZED) {
+    window->ClearProperty(aura::client::kPreMinimizedShowStateKey);
+  }
 }
 
 aura::Window* GetActivatableWindow(aura::Window* window) {
