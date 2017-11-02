@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8182e084_ddccf18f",
+        "filename": "chrome/browser/search_engines/template_url_service_sync_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-02T11:34:36Z",
+      "side": 1,
+      "message": "I think the following conditions make sense in general:\n- expect 0 calls,\n- expect 1 call,\n- expect \u003e 0 calls (just to make some tests pass)\n\nTherefore, I suggest to change *AtLeast functions and drop the second parameter that is always 1 anyway.",
+      "range": {
+        "startLine": 233,
+        "startChar": 5,
+        "endLine": 233,
+        "endChar": 42
+      },
+      "revId": "05795e204947ac4ec0b1ca9a7aa5eff855ce2178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455e3afc_7e82caf5",
+        "filename": "chrome/browser/search_engines/template_url_service_sync_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-02T11:34:36Z",
+      "side": 1,
+      "message": "Notifify?",
+      "range": {
+        "startLine": 235,
+        "startChar": 40,
+        "endLine": 235,
+        "endChar": 48
+      },
+      "revId": "05795e204947ac4ec0b1ca9a7aa5eff855ce2178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3efc9e_8cdad6e3",
+        "filename": "chrome/browser/search_engines/template_url_service_sync_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1529,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-02T11:34:36Z",
+      "side": 1,
+      "message": "isn\u0027t it called below?",
+      "range": {
+        "startLine": 1529,
+        "startChar": 16,
+        "endLine": 1529,
+        "endChar": 34
+      },
+      "revId": "05795e204947ac4ec0b1ca9a7aa5eff855ce2178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96aee689_8c4a1409",
+        "filename": "components/search_engines/template_url_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-02T11:34:36Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 45,
+        "startChar": 1,
+        "endLine": 45,
+        "endChar": 8
+      },
+      "revId": "05795e204947ac4ec0b1ca9a7aa5eff855ce2178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd909e0a_ea528d54",
+        "filename": "components/search_engines/template_url_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-02T11:34:36Z",
+      "side": 1,
+      "message": "https://www.chromium.org/developers/coding-style/cpp-dos-and-donts?pli\u003d1#TOC-Variable-initialization\n\nUse assignment syntax.",
+      "range": {
+        "startLine": 1136,
+        "startChar": 2,
+        "endLine": 1136,
+        "endChar": 32
+      },
+      "revId": "05795e204947ac4ec0b1ca9a7aa5eff855ce2178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ca6285_4efb290b",
+        "filename": "components/search_engines/template_url_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2251,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-02T11:34:36Z",
+      "side": 1,
+      "message": "I understand that ApplyDefaultSearchChange notifies observers itself. Can we make a comment why we don\u0027t need to touch |should_notify| here?\nIn addition it could be good to clarify in the .h file that if a method returns false it can mean that some changes have been made but the observers have already been notified.",
+      "range": {
+        "startLine": 2251,
+        "startChar": 8,
+        "endLine": 2251,
+        "endChar": 32
+      },
+      "revId": "05795e204947ac4ec0b1ca9a7aa5eff855ce2178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
