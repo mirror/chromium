@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b26703c_56c12041",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-11-02T13:22:21Z",
+      "side": 1,
+      "message": "Good catch, thanks. ChromeOS has that setting as well.",
+      "parentUuid": "33cdbd0c_60fd0f0b",
+      "range": {
+        "startLine": 873,
+        "startChar": 34,
+        "endLine": 873,
+        "endChar": 44
+      },
+      "revId": "b1e1bc694d074285b344c7a731732926d3dfc077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bca8360_7d430909",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "b1e1bc694d074285b344c7a731732926d3dfc077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68bdca7c_d9d3938f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10589,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-11-02T13:22:21Z",
+      "side": 1,
+      "message": "Sure, done. Had chosen this name because it matches the name of the preference (which is kPromptForDownload), and that seemed to be the way other policy/preference pairs were implemented.",
+      "parentUuid": "0bca8360_7d430909",
+      "range": {
+        "startLine": 10589,
+        "startChar": 15,
+        "endLine": 10589,
+        "endChar": 32
+      },
+      "revId": "b1e1bc694d074285b344c7a731732926d3dfc077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b1080c72_162a943f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10595,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-11-02T13:22:21Z",
+      "side": 1,
+      "message": "Ah, I misread the explanation for per_profile above. Fixed.",
+      "parentUuid": "8cb7340f_58b24603",
+      "range": {
+        "startLine": 10595,
+        "startChar": 9,
+        "endLine": 10595,
+        "endChar": 28
+      },
+      "revId": "b1e1bc694d074285b344c7a731732926d3dfc077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e471c3c8_83724921",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "b1e1bc694d074285b344c7a731732926d3dfc077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a816c4_323b9080",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10601,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-11-02T13:22:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e471c3c8_83724921",
+      "range": {
+        "startLine": 10601,
+        "startChar": 6,
+        "endLine": 10601,
+        "endChar": 22
+      },
+      "revId": "b1e1bc694d074285b344c7a731732926d3dfc077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
