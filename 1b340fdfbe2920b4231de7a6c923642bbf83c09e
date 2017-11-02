@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b31ea739_ed5ad7f5",
+        "filename": "build/secondary/third_party/crashpad/crashpad/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-02T20:36:33Z",
+      "side": 1,
+      "message": "\u003e Depending on //third_party/crashpad/crashpad is shorthand for //third_party/crashpad/crashpad:crashpad rather than for just the first target defined, so I think you can just omit this.\n\nGreat, that works. Something (the GN style guide? past experience with make?) made me think that the first target was special.",
+      "parentUuid": "60841c47_f544a0e5",
+      "revId": "1b340fdfbe2920b4231de7a6c923642bbf83c09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64c0b495_cff07303",
         "filename": "build/secondary/third_party/crashpad/crashpad/handler/BUILD.gn",
         "patchSetId": 1
@@ -155,6 +173,24 @@
       "side": 1,
       "message": "Yeah I don\u0027t have a good answer for this (I think it has come up before, but  I cannot find the bug). I agree that proper dependency tracking is more important than code duplication.",
       "parentUuid": "85616945_d4ad5e39",
+      "revId": "1b340fdfbe2920b4231de7a6c923642bbf83c09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb140dc_8f040854",
+        "filename": "build/secondary/third_party/crashpad/crashpad/tools/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-02T20:36:33Z",
+      "side": 1,
+      "message": "I found forward_variables_from which seemed promising, but I’d need “invoker” to make it work, and that’s not defined in a “config.”\n\nDirk, when you review this change, this question is still open.",
+      "parentUuid": "aa7ad736_c8170d41",
       "revId": "1b340fdfbe2920b4231de7a6c923642bbf83c09e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
