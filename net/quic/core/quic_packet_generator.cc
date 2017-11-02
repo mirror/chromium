@@ -359,4 +359,9 @@ bool QuicPacketGenerator::HasRetransmittableFrames() const {
          packet_creator_.HasPendingRetransmittableFrames();
 }
 
+bool QuicPacketGenerator::HasPendingStreamFramesOfStream(
+    QuicStreamId id) const {
+  return packet_creator_.HasPendingStreamFramesOfStream(id);
+}
+
 }  // namespace net

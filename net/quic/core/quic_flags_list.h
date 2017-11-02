@@ -190,3 +190,9 @@ QUIC_FLAG(bool,
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_window,
           false)
+
+// If true, OnStreamFrameDiscarded is not called on stream cancellation, and
+// canceled stream is immediately closed.
+QUIC_FLAG(bool,
+          FLAGS_quic_reloadable_flag_quic_remove_on_stream_frame_discarded,
+          false)

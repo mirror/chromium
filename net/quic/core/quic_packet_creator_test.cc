@@ -796,6 +796,7 @@ TEST_P(QuicPacketCreatorTest, AddFrameAndFlush) {
   const size_t max_plaintext_size =
       client_framer_.GetMaxPlaintextSize(creator_.max_packet_length());
   EXPECT_FALSE(creator_.HasPendingFrames());
+  EXPECT_FALSE(creator_.HasPendingStreamFramesOfStream(kCryptoStreamId));
   EXPECT_EQ(max_plaintext_size -
                 GetPacketHeaderSize(
                     client_framer_.transport_version(),
@@ -808,6 +809,7 @@ TEST_P(QuicPacketCreatorTest, AddFrameAndFlush) {
   QuicAckFrame ack_frame(InitAckFrame(10u));
   EXPECT_TRUE(creator_.AddSavedFrame(QuicFrame(&ack_frame)));
   EXPECT_TRUE(creator_.HasPendingFrames());
+  EXPECT_FALSE(creator_.HasPendingStreamFramesOfStream(kCryptoStreamId));
 
   QuicFrame frame;
   MakeIOVector("test", &iov_);
@@ -817,6 +819,7 @@ TEST_P(QuicPacketCreatorTest, AddFrameAndFlush) {
   size_t consumed = frame.stream_frame->data_length;
   EXPECT_EQ(4u, consumed);
   EXPECT_TRUE(creator_.HasPendingFrames());
+  EXPECT_TRUE(creator_.HasPendingStreamFramesOfStream(kCryptoStreamId));
 
   QuicPaddingFrame padding_frame;
   EXPECT_TRUE(creator_.AddSavedFrame(QuicFrame(padding_frame)));
@@ -840,6 +843,7 @@ TEST_P(QuicPacketCreatorTest, AddFrameAndFlush) {
   DeleteSerializedPacket();
 
   EXPECT_FALSE(creator_.HasPendingFrames());
+  EXPECT_FALSE(creator_.HasPendingStreamFramesOfStream(kCryptoStreamId));
   EXPECT_EQ(max_plaintext_size -
                 GetPacketHeaderSize(
                     client_framer_.transport_version(),
