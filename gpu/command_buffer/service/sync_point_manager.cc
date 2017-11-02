@@ -211,13 +211,13 @@ void SyncPointClientState::Destroy() {
 }
 
 bool SyncPointClientState::Wait(const SyncToken& sync_token,
-                                const base::Closure& callback) {
+                                base::OnceClosure callback) {
   DCHECK(sync_point_manager_);  // not destroyed
   // Validate that this Wait call is between BeginProcessingOrderNumber() and
   // FinishProcessingOrderNumber(), or else we may deadlock.
   DCHECK(order_data_->IsProcessingOrderNumber());
   return sync_point_manager_->Wait(sync_token, order_data_->sequence_id(),
-                                   order_data_->current_order_num(), callback);
+                                   order_data_->current_order_num(), std::move(callback));
 }
 
 bool SyncPointClientState::WaitNonThreadSafe(

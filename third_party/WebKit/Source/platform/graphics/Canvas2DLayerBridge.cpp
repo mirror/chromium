@@ -1012,7 +1012,7 @@ bool Canvas2DLayerBridge::PrepareTextureMailbox(
                 context_provider_wrapper_, WTF::Passed(std::move(info)),
                 out_mailbox->mailbox());
   *out_release_callback = viz::SingleReleaseCallback::Create(
-      ConvertToBaseCallback(std::move(func)));
+      std::move(func));
   return true;
 }
 

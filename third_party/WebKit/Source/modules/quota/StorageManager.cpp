@@ -136,9 +136,9 @@ PermissionService& StorageManager::GetPermissionService(
   if (!permission_service_) {
     ConnectToPermissionService(execution_context,
                                mojo::MakeRequest(&permission_service_));
-    permission_service_.set_connection_error_handler(ConvertToBaseCallback(
+    permission_service_.set_connection_error_handler(
         WTF::Bind(&StorageManager::PermissionServiceConnectionError,
-                  WrapWeakPersistent(this))));
+                  WrapWeakPersistent(this)));
   }
   return *permission_service_;
 }

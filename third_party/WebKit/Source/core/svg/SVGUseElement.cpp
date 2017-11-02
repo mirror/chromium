@@ -312,8 +312,8 @@ Element* SVGUseElement::ResolveTargetElement(ObserveBehavior observe_behavior) {
       return GetTreeScope().getElementById(element_identifier);
     return ObserveTarget(target_id_observer_, GetTreeScope(),
                          element_identifier,
-                         WTF::Bind(&SVGUseElement::InvalidateShadowTree,
-                                   WrapWeakPersistent(this)));
+                         WTF::BindRepeating(&SVGUseElement::InvalidateShadowTree,
+                                            WrapWeakPersistent(this)));
   }
   if (!ResourceIsValid())
     return nullptr;

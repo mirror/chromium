@@ -517,7 +517,7 @@ void GLManager::DestroyImage(int32_t id) {
   image_manager_.RemoveImage(id);
 }
 
-void GLManager::SignalQuery(uint32_t query, const base::Closure& callback) {
+void GLManager::SignalQuery(uint32_t query, base::OnceClosure callback) {
   NOTIMPLEMENTED();
 }
 

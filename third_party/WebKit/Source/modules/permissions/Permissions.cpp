@@ -290,8 +290,8 @@ PermissionService& Permissions::GetService(
     ExecutionContext* execution_context) {
   if (!service_) {
     ConnectToPermissionService(execution_context, mojo::MakeRequest(&service_));
-    service_.set_connection_error_handler(ConvertToBaseCallback(WTF::Bind(
-        &Permissions::ServiceConnectionError, WrapWeakPersistent(this))));
+    service_.set_connection_error_handler(WTF::Bind(
+        &Permissions::ServiceConnectionError, WrapWeakPersistent(this)));
   }
   return *service_;
 }

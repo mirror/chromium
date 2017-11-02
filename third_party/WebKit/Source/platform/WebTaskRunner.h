@@ -78,7 +78,9 @@ class BLINK_PLATFORM_EXPORT WebTaskRunner
 
   // For same-thread posting. Must be called from the associated WebThread.
   void PostTask(const WebTraceLocation&, WTF::Closure);
-  void PostDelayedTask(const WebTraceLocation&, WTF::Closure, TimeDelta delay);
+  virtual bool PostDelayedTask(const base::Location&,
+                               base::OnceClosure,
+                               base::TimeDelta) = 0;
 
   // For same-thread cancellable task posting. Returns a TaskHandle object for
   // cancellation.
@@ -93,10 +95,6 @@ class BLINK_PLATFORM_EXPORT WebTaskRunner
   friend ThreadSafeRefCounted<WebTaskRunner>;
   WebTaskRunner() = default;
   virtual ~WebTaskRunner();
-
-  virtual bool PostDelayedTask(const base::Location&,
-                               base::OnceClosure,
-                               base::TimeDelta) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WebTaskRunner);

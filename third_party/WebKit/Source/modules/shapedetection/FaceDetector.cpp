@@ -40,8 +40,8 @@ FaceDetector::FaceDetector(ExecutionContext* context,
   provider->CreateFaceDetection(mojo::MakeRequest(&face_service_),
                                 std::move(face_detector_options));
 
-  face_service_.set_connection_error_handler(ConvertToBaseCallback(WTF::Bind(
-      &FaceDetector::OnFaceServiceConnectionError, WrapWeakPersistent(this))));
+  face_service_.set_connection_error_handler(WTF::Bind(
+      &FaceDetector::OnFaceServiceConnectionError, WrapWeakPersistent(this)));
 }
 
 ScriptPromise FaceDetector::DoDetect(ScriptPromiseResolver* resolver,
@@ -54,9 +54,9 @@ ScriptPromise FaceDetector::DoDetect(ScriptPromiseResolver* resolver,
   }
   face_service_requests_.insert(resolver);
   face_service_->Detect(std::move(bitmap),
-                        ConvertToBaseCallback(WTF::Bind(
+                        WTF::Bind(
                             &FaceDetector::OnDetectFaces, WrapPersistent(this),
-                            WrapPersistent(resolver))));
+                            WrapPersistent(resolver)));
   return promise;
 }
 

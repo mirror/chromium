@@ -387,7 +387,7 @@ void AutoplayUmaHelper::MaybeStartRecordingMutedVideoPlayMethodBecomeVisible() {
 
   muted_video_play_method_visibility_observer_ = new ElementVisibilityObserver(
       element_,
-      WTF::Bind(&AutoplayUmaHelper::
+      WTF::BindRepeating(&AutoplayUmaHelper::
                     OnVisibilityChangedForMutedVideoPlayMethodBecomeVisible,
                 WrapWeakPersistent(this)));
   muted_video_play_method_visibility_observer_->Start();
@@ -420,7 +420,7 @@ void AutoplayUmaHelper::MaybeStartRecordingMutedVideoOffscreenDuration() {
   muted_video_offscreen_duration_visibility_observer_ =
       new ElementVisibilityObserver(
           element_,
-          WTF::Bind(&AutoplayUmaHelper::
+          WTF::BindRepeating(&AutoplayUmaHelper::
                         OnVisibilityChangedForMutedVideoOffscreenDuration,
                     WrapWeakPersistent(this)));
   muted_video_offscreen_duration_visibility_observer_->Start();
