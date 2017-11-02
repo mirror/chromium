@@ -42,8 +42,7 @@ ScriptPromise NavigationPreloadManager::setHeaderValue(
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
   registration_->WebRegistration()->SetNavigationPreloadHeader(
-      value, client->Provider(),
-      WTF::MakeUnique<SetNavigationPreloadHeaderCallbacks>(resolver));
+      value, WTF::MakeUnique<SetNavigationPreloadHeaderCallbacks>(resolver));
   return promise;
 }
 
