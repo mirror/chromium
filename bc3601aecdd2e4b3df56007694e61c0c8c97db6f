@@ -99,6 +99,40 @@
     },
     {
       "key": {
+        "uuid": "91b66f76_576605aa",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-02T20:56:49Z",
+      "side": 1,
+      "message": "nit: document what an empty parameter to |callback| means.",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b938d96_df7c37dd",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-02T20:56:49Z",
+      "side": 1,
+      "message": "The digest algorithm should be encoded into the file_hash string or into the Offline pages DB so that we can update the algorithm and still be able to verify existing pages.",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41bbb40a_b2c7d957",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.h",
         "patchSetId": 3
@@ -116,6 +150,40 @@
         "endLine": 69,
         "endChar": 24
       },
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec92295e_4da28930",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-02T20:56:49Z",
+      "side": 1,
+      "message": "This implementation is subject to races, so it will not be secure as soon as we use a file that is not in Chrome\u0027s data dir. This should be documented in a very obvious place to prevent future errors.",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7eca0b9_a0c4a1a8",
+        "filename": "components/offline_pages/core/model/create_archive_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-02T20:56:49Z",
+      "side": 1,
+      "message": "s/Secure hash/Digest",
       "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
