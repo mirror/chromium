@@ -25,6 +25,13 @@
 
 namespace ash {
 
+namespace {
+
+// Width of the preferred bubble size.
+constexpr int kBubblePreferredWidthDp = 380;
+
+}  // namespace
+
 // View which contains two text (one title) and a close button for closing the
 // bubble. Controlled by PaletteWelcomeBubble and anchored to a PaletteTray.
 class PaletteWelcomeBubble::WelcomeBubbleView
@@ -66,6 +73,7 @@ class PaletteWelcomeBubble::WelcomeBubbleView
     auto* content = new views::Label(l10n_util::GetStringUTF16(
         IDS_ASH_STYLUS_WARM_WELCOME_BUBBLE_DESCRIPTION));
     content->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    content->SetMultiLine(true);
     AddChildView(content);
 
     views::BubbleDialogDelegateView::CreateBubble(this);
@@ -86,7 +94,8 @@ class PaletteWelcomeBubble::WelcomeBubbleView
 
   // views::View:
   gfx::Size CalculatePreferredSize() const override {
-    return BubbleDialogDelegateView::CalculatePreferredSize();
+    return gfx::Size(kBubblePreferredWidthDp,
+                     GetLayoutManager()->GetPreferredSize(this).height());
   }
 
  private:
