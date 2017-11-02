@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bcfdac5d_12f6640b",
+        "filename": "ios/web_view/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-02T23:33:14Z",
+      "side": 1,
+      "message": "Done. I filed a bug https://bugs.chromium.org/p/chromium/issues/detail?id\u003d781054",
+      "parentUuid": "384117d9_93a6846d",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 49
+      },
+      "revId": "325ec4fde489aa957a522f9007ce88da2115c03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fbb70eb_7e349968",
         "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "325ec4fde489aa957a522f9007ce88da2115c03e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b4b95a_e6745657",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-02T23:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fbb70eb_7e349968",
+      "range": {
+        "startLine": 11,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "325ec4fde489aa957a522f9007ce88da2115c03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5b6745cf_3a3d3837",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-02T23:33:14Z",
+      "side": 1,
+      "message": "I exposed this for unit testing. Is that OK?",
+      "parentUuid": "26818bf6_d4f9da4d",
+      "range": {
+        "startLine": 31,
+        "startChar": 33,
+        "endLine": 31,
+        "endChar": 55
+      },
+      "revId": "325ec4fde489aa957a522f9007ce88da2115c03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ae6c0ce_5262de10",
         "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "70ae081d_6edc3c66",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-02T23:33:14Z",
+      "side": 1,
+      "message": "that\u0027s fair. I\u0027ll send out another CL for this.",
+      "parentUuid": "4ae6c0ce_5262de10",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "325ec4fde489aa957a522f9007ce88da2115c03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d3b3a91_2d2e2bb9",
         "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "325ec4fde489aa957a522f9007ce88da2115c03e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d35cf7_3466cba4",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-02T23:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d3b3a91_2d2e2bb9",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 13
+      },
+      "revId": "325ec4fde489aa957a522f9007ce88da2115c03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
