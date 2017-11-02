@@ -22,6 +22,30 @@
       "revId": "3e595b4c6a3efb4eedb6b49995bb676a71efd06c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "751ec63a_10af9e04",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-02T17:41:01Z",
+      "side": 1,
+      "message": "\u003e Does the focus ring still look okay with the changed size?\n\nIt looks the same; it\u0027s always been 41px wide. I\u0027m not sure why width: 17px used to work.",
+      "parentUuid": "4f2c2fcc_a1fb53f8",
+      "range": {
+        "startLine": 314,
+        "startChar": 14,
+        "endLine": 314,
+        "endChar": 0
+      },
+      "revId": "3e595b4c6a3efb4eedb6b49995bb676a71efd06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
