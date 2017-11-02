@@ -106,6 +106,24 @@
       "revId": "dc2b62e9b9ac0db34891ea4675c9010daf3d0862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8df2737_391dc06d",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T00:09:11Z",
+      "side": 1,
+      "message": "I think it doesn\u0027t apply here because ForAllPtrs isn\u0027t constexpr. However, that doesn\u0027t change the fact that generic lambdas are not yet allowed. I think it would be better to check with a C++ styleguide OWNER if you\u0027d like to proceed as is with generic lambdas.\n\nAlso, this requires that the caller of ForAllPtrs() use generic lambdas (or write *Proxy), right? So it seems like it\u0027d be very easy to not have the efficient pattern.",
+      "parentUuid": "39ddc9e7_f2b72c91",
+      "revId": "dc2b62e9b9ac0db34891ea4675c9010daf3d0862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
