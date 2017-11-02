@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94c84e07_abf480cf",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3084,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T20:42:01Z",
+      "side": 1,
+      "message": "Nit: please use emplace instead of insert + std::make_pair",
+      "revId": "145d5e3911720f29750275545f9e2ba1b6404373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b04527_227f2068",
+        "filename": "services/metrics/metrics_mojo_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T20:42:01Z",
+      "side": 1,
+      "message": "Nit: no \u0027is\u0027\n\nAlso, does that mean there\u0027s a plan to change this?",
+      "range": {
+        "startLine": 16,
+        "startChar": 52,
+        "endLine": 17,
+        "endChar": 51
+      },
+      "revId": "145d5e3911720f29750275545f9e2ba1b6404373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e2df43_9e0ac90f",
+        "filename": "services/metrics/ukm_recorder_interface.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T20:42:01Z",
+      "side": 1,
+      "message": "Is this cast needed? Since this isn\u0027t narrowing, it seems like it should Just Work without the cast.",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 45
+      },
+      "revId": "145d5e3911720f29750275545f9e2ba1b6404373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
