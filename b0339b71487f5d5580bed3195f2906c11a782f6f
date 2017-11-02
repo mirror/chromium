@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "937016e2_77443752",
+        "filename": "ui/app_list/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-02T21:27:00Z",
+      "side": 0,
+      "message": "removed use_aura and toolkit_views, they are true for OS_CHROMEOS",
+      "revId": "b0339b71487f5d5580bed3195f2906c11a782f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5373d4_c20abffd",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-02T21:27:00Z",
+      "side": 0,
+      "message": "We could not say 2 landscape app list pages any more. It should be vertical. I am just removing this comment since it is pretty intuitive.",
+      "revId": "b0339b71487f5d5580bed3195f2906c11a782f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d11c74_4cf7278f",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-02T21:27:00Z",
+      "side": 0,
+      "message": "dead code",
+      "revId": "b0339b71487f5d5580bed3195f2906c11a782f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2a7bd6_91859560",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-02T21:27:00Z",
+      "side": 0,
+      "message": "dead code",
+      "revId": "b0339b71487f5d5580bed3195f2906c11a782f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80099309_c584c09f",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-02T21:27:00Z",
+      "side": 0,
+      "message": "dead code",
+      "revId": "b0339b71487f5d5580bed3195f2906c11a782f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fadc2c95_0aed5779",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-02T21:27:00Z",
+      "side": 0,
+      "message": "This test is originally for linux and windows. A reshow of launcher should not show apps grid view or folder view on Chrome OS.",
+      "revId": "b0339b71487f5d5580bed3195f2906c11a782f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
