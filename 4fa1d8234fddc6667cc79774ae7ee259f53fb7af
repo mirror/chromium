@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0dcbbf77_edef94cf",
+        "filename": "third_party/WebKit/Source/core/streams/CommonOperations.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-11-02T07:02:06Z",
+      "side": 1,
+      "message": "By removing the word \"Assert\" I was able to fit it all on one line.",
+      "parentUuid": "64d4ac2f_9d52bdb9",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 18
+      },
+      "revId": "4fa1d8234fddc6667cc79774ae7ee259f53fb7af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09c8a355_725f99a7",
         "filename": "third_party/WebKit/Source/core/streams/CommonStrings.js",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-01T06:09:51Z",
       "side": 1,
       "message": "Is it preferable to split the string literal for the formatting reason?",
+      "revId": "4fa1d8234fddc6667cc79774ae7ee259f53fb7af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f771a8b6_585c0c88",
+        "filename": "third_party/WebKit/Source/core/streams/CommonStrings.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-11-02T07:02:06Z",
+      "side": 1,
+      "message": "I\u0027m not sure. I tried it in PS4 and I think it looks okay. Let me know what you think.",
+      "parentUuid": "09c8a355_725f99a7",
       "revId": "4fa1d8234fddc6667cc79774ae7ee259f53fb7af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
