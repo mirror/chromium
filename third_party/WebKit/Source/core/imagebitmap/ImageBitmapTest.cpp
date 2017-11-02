@@ -677,8 +677,10 @@ TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionImageData) {
         NOTREACHED();
     }
 
-    SkImageInfo image_info =
-        SkImageInfo::Make(1, 1, color_type, SkAlphaType::kUnpremul_SkAlphaType);
+    SkImageInfo image_info = SkImageInfo::Make(
+        1, 1,
+        (color_type == kN32_SkColorType) ? kRGBA_8888_SkColorType : color_type,
+        SkAlphaType::kUnpremul_SkAlphaType);
     std::unique_ptr<uint8_t[]> converted_pixel(
         new uint8_t[image_info.bytesPerPixel()]());
     converted_image->readPixels(
