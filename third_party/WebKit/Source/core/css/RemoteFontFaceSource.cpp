@@ -96,9 +96,8 @@ void RemoteFontFaceSource::NotifyFinished(Resource* unused_resource) {
   }
 
   CSSFontFace::LoadFinishReason load_finish_reason =
-      font_->GetResourceError().IsCancellation()
-          ? CSSFontFace::LoadFinishReason::WasCancelled
-          : CSSFontFace::LoadFinishReason::NormalFinish;
+      font_->WasCanceled() ? CSSFontFace::LoadFinishReason::WasCancelled
+                           : CSSFontFace::LoadFinishReason::NormalFinish;
   font_->RemoveClient(this);
   font_ = nullptr;
 
