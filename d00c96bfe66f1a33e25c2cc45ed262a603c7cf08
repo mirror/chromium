@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b2a740e_e092fe17",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-02T01:30:07Z",
+      "side": 1,
+      "message": "You don\u0027t need to exclude OS_IOS here (or anywhere else in the chrome/ directory).  We don\u0027t compile anything from chrome/ on iOS.",
+      "revId": "d00c96bfe66f1a33e25c2cc45ed262a603c7cf08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
