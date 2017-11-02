@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aafbb85_ae2e59ed",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-02T16:04:30Z",
+      "side": 1,
+      "message": "Without the change in this line, at least the following 17 tests crash due to the new DCHECK:\nSpdyNetworkTransactionTest.GoAwayOnPushStreamIdLesserOrEqualThanLastAccepted\nSpdyNetworkTransactionTest.ResetPushWithTransferEncoding\nSpdyNetworkTransactionTest.ServerPushOnPushedStream\nSpdyNetworkTransactionTest.ServerPushServerAborted\nSpdyNetworkTransactionTest.ServerPushUpdatesPriority\nSpdyNetworkTransactionTest.TestRawHeaderSizeSuccessfullPushHeadersFirst\nSpdySessionTest.CancelPushAfterExpired\nSpdySessionTest.CancelPushAfterSessionGoesAway\nSpdySessionTest.CancelPushBeforeClaimed\nSpdySessionTest.DeleteExpiredPushStreams\nSpdySessionTest.IgnoreReservedRemoteStreamsCount\nSpdySessionTest.MetricsCollectionOnPushStreams\nSpdySessionTest.PushedStreamShouldNotCountToClientConcurrencyLimit\nSpdySessionTest.RejectPushedStreamExceedingConcurrencyLimit\nSpdyStreamTest.HeadersMustHaveStatusOnPushedStream\nSpdyStreamTest.HeadersMustPreceedDataOnPushedStream\nSpdyStreamTest.UpperCaseHeadersOnPush",
+      "range": {
+        "startLine": 630,
+        "startChar": 14,
+        "endLine": 630,
+        "endChar": 0
+      },
+      "revId": "eb6cdc0e3b49c3a7d84287700f4c1731f90c4f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5daa1318_69881c95",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-02T16:04:30Z",
+      "side": 1,
+      "message": "Without this change, SpdyNetworkTransactionTest.ServerPushDuplicate crashes.",
+      "range": {
+        "startLine": 653,
+        "startChar": 2,
+        "endLine": 665,
+        "endChar": 14
+      },
+      "revId": "eb6cdc0e3b49c3a7d84287700f4c1731f90c4f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
