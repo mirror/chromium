@@ -6249,6 +6249,12 @@ void Document::UpdateSecurityOrigin(scoped_refptr<SecurityOrigin> origin) {
   DidUpdateSecurityOrigin();
 }
 
+void Document::UpdateSecurityOriginFromExecutionContext(
+    ExecutionContext& source) {
+  SetSecurityOriginFromExecutionContext(source);
+  DidUpdateSecurityOrigin();
+}
+
 String Document::origin() const {
   return GetSecurityOrigin()->ToString();
 }
