@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90c308ec_2302d1b3",
+        "filename": "services/metrics/metrics_mojo_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-02T18:28:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04459ff2_eb1c2e0d",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "c8d0e218a22ff5c3b8ae006abe4bd520b82b60cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf82bcda_274309d6",
         "filename": "services/metrics/metrics_mojo_service.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "c8d0e218a22ff5c3b8ae006abe4bd520b82b60cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04032390_8070e14e",
+        "filename": "services/metrics/metrics_mojo_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-02T18:28:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf82bcda_274309d6",
+      "range": {
+        "startLine": 29,
+        "startChar": 22,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "c8d0e218a22ff5c3b8ae006abe4bd520b82b60cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
