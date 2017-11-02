@@ -34,6 +34,24 @@
       "revId": "2ec883baa185dd4ed877fbbfeaaa7aea51385b02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a06e67_57843675",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-02T17:08:32Z",
+      "side": 0,
+      "message": "I see. We could still narrow down the values of the NavigationThrottle::CheckResult to PROCEED, DEFER, CANCEL, BLOCK. I\u0027m not really sure we want BLOCK_REQUEST, BLOCK_REQUEST_AND_COLLAPSE and BLOCK_RESPONSE.",
+      "parentUuid": "ea4c79a5_877177a0",
+      "revId": "2ec883baa185dd4ed877fbbfeaaa7aea51385b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
