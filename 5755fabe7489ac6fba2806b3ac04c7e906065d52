@@ -39,6 +39,86 @@
       "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2ddf92_0cd0aff9",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SmartSelectionMetricsLoggerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-02T17:53:06Z",
+      "side": 1,
+      "message": "make it clear this is in 10s",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655c7ee9_25c9071b",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SmartSelectionMetricsLoggerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-02T17:53:06Z",
+      "side": 1,
+      "message": "these two cases are repeated",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 71
+      },
+      "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad310fcc_02c90285",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SmartSelectionMetricsLoggerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-02T17:53:06Z",
+      "side": 1,
+      "message": "so this is one of the broken cases, right? say so",
+      "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969291a2_436aa2f8",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SmartSelectionMetricsLoggerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-02T17:53:06Z",
+      "side": 1,
+      "message": "again, document broken case",
+      "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
