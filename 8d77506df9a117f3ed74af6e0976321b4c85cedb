@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3866ff1b_dea81765",
+        "filename": "build/android/gyp/write_build_config.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-11-02T15:43:31Z",
+      "side": 1,
+      "message": "Nit: maybe add a todo or file a bug for re-working this so that the \u003c\u003d 3 check isn\u0027t necessary?",
+      "range": {
+        "startLine": 242,
+        "startChar": 55,
+        "endLine": 242,
+        "endChar": 66
+      },
+      "revId": "8d77506df9a117f3ed74af6e0976321b4c85cedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
