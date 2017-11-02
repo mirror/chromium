@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b539f781_2a7f60bb",
+        "filename": "ios/chrome/browser/ui/animations/locationbar_animation_configurator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-02T13:55:10Z",
+      "side": 1,
+      "message": "Instead of this being a configurator that owns and exposes an property animator, can it just be an property animator subclass?",
+      "range": {
+        "startLine": 10,
+        "startChar": 46,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "b9a1e8652ad3efe4b9f5851ba607b64df753af63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
