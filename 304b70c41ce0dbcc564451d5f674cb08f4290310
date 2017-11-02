@@ -16,6 +16,24 @@
       "revId": "304b70c41ce0dbcc564451d5f674cb08f4290310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f70c3f1_f1454210",
+        "filename": "content/public/test/network_service_test_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-02T00:58:21Z",
+      "side": 1,
+      "message": "If we\u0027re going to use a production sandbox, eventually we won\u0027t have access to the path with the test cert, so this will need to change, at some point, regardless.\n\nThis is just intended as an interim hack that will presumably eventually go away, so I can land my proxy CLs from a couple months back, before I get back to SimpleURLLoader.",
+      "parentUuid": "0e523f7f_f5654fc5",
+      "revId": "304b70c41ce0dbcc564451d5f674cb08f4290310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
