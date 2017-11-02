@@ -177,11 +177,11 @@ class ShutdownNotifierFactory
 
 }  // namespace
 
-AvatarButton::AvatarButton(views::ButtonListener* listener,
+AvatarButton::AvatarButton(views::MenuButtonListener* listener,
                            AvatarButtonStyle button_style,
                            Profile* profile,
                            AvatarButtonManager* manager)
-    : LabelButton(listener, base::string16()),
+    : MenuButton(base::string16(), listener, false),
       error_controller_(this, profile),
       profile_(profile),
       profile_observer_(this),
@@ -300,7 +300,7 @@ void AvatarButton::OnGestureEvent(ui::GestureEvent* event) {
   if (event->type() == ui::ET_GESTURE_LONG_PRESS)
     NotifyClick(*event);
   else
-    LabelButton::OnGestureEvent(event);
+    MenuButton::OnGestureEvent(event);
 }
 
 gfx::Size AvatarButton::GetMinimumSize() const {
@@ -311,16 +311,16 @@ gfx::Size AvatarButton::GetMinimumSize() const {
     return gfx::Size(kCondensibleButtonMinWidth, 20);
   }
 
-  return LabelButton::GetMinimumSize();
+  return MenuButton::GetMinimumSize();
 }
 
 gfx::Size AvatarButton::CalculatePreferredSize() const {
   if (render_native_nav_buttons_)
-    return LabelButton::CalculatePreferredSize();
+    return MenuButton::CalculatePreferredSize();
 
   // TODO(estade): Calculate the height instead of hardcoding to 20 for the
   // not-condensible case.
-  gfx::Size size(LabelButton::CalculatePreferredSize().width(), 20);
+  gfx::Size size(MenuButton::CalculatePreferredSize().width(), 20);
 
   if (IsCondensible()) {
     // Returns the normal size of the button (when it does not overlap the
@@ -338,13 +338,13 @@ gfx::Size AvatarButton::CalculatePreferredSize() const {
 std::unique_ptr<views::InkDropMask> AvatarButton::CreateInkDropMask() const {
   if (button_style_ == AvatarButtonStyle::THEMED)
     return AvatarButtonThemedBorder::CreateInkDropMask(size());
-  return LabelButton::CreateInkDropMask();
+  return MenuButton::CreateInkDropMask();
 }
 
 std::unique_ptr<views::InkDropHighlight> AvatarButton::CreateInkDropHighlight()
     const {
   if (button_style_ == AvatarButtonStyle::THEMED)
-    return LabelButton::CreateInkDropHighlight();
+    return MenuButton::CreateInkDropHighlight();
 
   auto ink_drop_highlight = base::MakeUnique<views::InkDropHighlight>(
       size(), 0, gfx::RectF(GetLocalBounds()).CenterPoint(),
@@ -355,13 +355,14 @@ std::unique_ptr<views::InkDropHighlight> AvatarButton::CreateInkDropHighlight()
 }
 
 void AvatarButton::NotifyClick(const ui::Event& event) {
-  LabelButton::NotifyClick(event);
+  MenuButton::NotifyClick(event);
 
   views::Widget* bubble_widget = ProfileChooserView::GetCurrentBubbleWidget();
   if (bubble_widget && !widget_observer_.IsObserving(bubble_widget)) {
     widget_observer_.Add(bubble_widget);
-    AnimateInkDrop(views::InkDropState::ACTIVATED,
-                   ui::LocatedEvent::FromIfValid(&event));
+    const ui::LocatedEvent* located_event =
+        ui::LocatedEvent::FromIfValid(&event);
+    IncrementPressedLocked(false, located_event);
   }
 }
 
@@ -369,7 +370,7 @@ bool AvatarButton::ShouldEnterPushedState(const ui::Event& event) {
   if (ProfileChooserView::IsShowing())
     return false;
 
-  return LabelButton::ShouldEnterPushedState(event);
+  return MenuButton::ShouldEnterPushedState(event);
 }
 
 bool AvatarButton::ShouldUseFloodFillInkDrop() const {
@@ -406,7 +407,7 @@ void AvatarButton::OnProfileSupervisedUserIdChanged(
 }
 
 void AvatarButton::OnWidgetDestroying(views::Widget* widget) {
-  AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
+  DecrementPressedLocked();
   if (render_native_nav_buttons_)
     SchedulePaint();
   widget_observer_.Remove(widget);
