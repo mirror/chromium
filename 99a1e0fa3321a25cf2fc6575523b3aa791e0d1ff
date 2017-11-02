@@ -246,6 +246,30 @@
       "revId": "99a1e0fa3321a25cf2fc6575523b3aa791e0d1ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c78051c2_cc6bb585",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-02T23:24:48Z",
+      "side": 1,
+      "message": "It gets set in SimulateGattConnection.\n\nIsGattServicesDiscoveryComplete is still false by the end of the test...to make it true we would have to set a response on the fake peripheral and trigger it to be fired.",
+      "parentUuid": "eca844c5_f71979c9",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "99a1e0fa3321a25cf2fc6575523b3aa791e0d1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
