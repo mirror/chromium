@@ -25,6 +25,7 @@
 #include "ios/web/public/web_thread.h"
 #include "ios/web_view/internal/content_settings/web_view_cookie_settings_factory.h"
 #include "ios/web_view/internal/content_settings/web_view_host_content_settings_map_factory.h"
+#include "ios/web_view/internal/language/web_view_url_language_histogram_factory.h"
 #include "ios/web_view/internal/pref_names.h"
 #include "ios/web_view/internal/signin/web_view_account_fetcher_service_factory.h"
 #include "ios/web_view/internal/signin/web_view_account_tracker_service_factory.h"
@@ -135,6 +136,7 @@ void WebViewBrowserState::RegisterPrefs(
   WebViewSigninClientFactory::GetInstance();
   WebViewSigninErrorControllerFactory::GetInstance();
   WebViewSigninManagerFactory::GetInstance();
+  WebViewUrlLanguageHistogramFactory::GetInstance();
 
   BrowserStateDependencyManager::GetInstance()
       ->RegisterBrowserStatePrefsForServices(this, pref_registry);
