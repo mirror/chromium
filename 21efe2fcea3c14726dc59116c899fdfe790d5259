@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed1e3a16_ab77549d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T16:10:24Z",
+      "side": 1,
+      "message": "\u003cwebview\u003e fullscreen doesn\u0027t go through its RenderWidgetHostView, so this seems fine. Unfortunately, I see that all of \u003cwebview\u003e fullscreen tests are disabled (WebViewInteractiveTest.Fullscreen*) due to flakes on different bots. But you can run them locally if you want to be sure.",
+      "parentUuid": "2d7cb568_3cb4ae67",
+      "revId": "21efe2fcea3c14726dc59116c899fdfe790d5259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33c54571_cda5b16b",
         "filename": "content/browser/web_contents/web_contents_view_aura.cc",
         "patchSetId": 20
