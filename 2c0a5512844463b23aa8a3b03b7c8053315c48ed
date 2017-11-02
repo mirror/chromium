@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5bf0b1e_29a01a50",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListItem.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1230334
+      },
+      "writtenOn": "2017-11-02T08:03:05Z",
+      "side": 1,
+      "message": "When list-position-style change from outside to inside, we need to restore logicalHeight. So added isinside().",
+      "revId": "2c0a5512844463b23aa8a3b03b7c8053315c48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45224879_a642bec8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListItem.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1230334
+      },
+      "writtenOn": "2017-11-02T08:03:05Z",
+      "side": 1,
+      "message": "We shouldn\u0027t use FirstLineBoxBaseline here. FirstLineBoxBaseline is the baseline of root. We should compute marker_inline_box\u0027s baseline instead.\n\nBaselinePosition is workable when marker is image. However, when marker is text, BaselinePosition contains lineheight information. So use marker_font_metrics.Ascent when marker is text.",
+      "revId": "2c0a5512844463b23aa8a3b03b7c8053315c48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
