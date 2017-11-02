@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7e3dc02_d9b6e1d5",
+        "filename": "third_party/WebKit/Source/core/css/cssom/ComputedStylePropertyMap.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-11-02T02:21:21Z",
+      "side": 1,
+      "message": "i raise up new issue (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d780687).",
+      "parentUuid": "1985166d_34b52eb2",
+      "revId": "539137da7c51f274d4cefab66706a800ec042f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b71d46e3_d056a7cb",
         "filename": "third_party/WebKit/Source/core/css/cssom/ElementComputedStyleMap.h",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-02T01:50:45Z",
       "side": 1,
       "message": "I don\u0027t understand why this works. I\u0027m assuming its some ImplementedAs magic that gets the target element through to ElementComputedStyleMap::computedStyleMap? It\u0027s been a while since I worked with IDL. Do you know how this works, or did you just copy a similar pattern from elsewhere (a perfectly valid strategy :P)?",
+      "revId": "539137da7c51f274d4cefab66706a800ec042f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f683b4b_74a236ea",
+        "filename": "third_party/WebKit/Source/core/css/cssom/ElementComputedStyleMap.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-11-02T02:21:21Z",
+      "side": 1,
+      "message": "actuall i was not sure about idl\u0027s that works.\nbut i did sure it will be work well after see V8Window.cpp code.\n(https://cs.chromium.org/chromium/src/out/Debug/gen/blink/bindings/core/v8/V8Window.cpp?type\u003dcs\u0026q\u003dgetComputedStyleMap\u0026sq\u003dpackage:chromium\u0026l\u003d5564)\n\nafter merged this patch, you can see similar code in V8 Element.cpp.",
+      "parentUuid": "b71d46e3_d056a7cb",
       "revId": "539137da7c51f274d4cefab66706a800ec042f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
