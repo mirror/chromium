@@ -11,6 +11,7 @@
 #include "net/quic/core/frames/quic_ack_frame.h"
 #include "net/quic/core/frames/quic_blocked_frame.h"
 #include "net/quic/core/frames/quic_connection_close_frame.h"
+#include "net/quic/core/frames/quic_connectivity_probing_frame.h"
 #include "net/quic/core/frames/quic_frame.h"
 #include "net/quic/core/frames/quic_goaway_frame.h"
 #include "net/quic/core/frames/quic_mtu_discovery_frame.h"
@@ -29,6 +30,7 @@ struct QUIC_EXPORT_PRIVATE QuicFrame {
   QuicFrame();
   explicit QuicFrame(QuicPaddingFrame padding_frame);
   explicit QuicFrame(QuicMtuDiscoveryFrame frame);
+  explicit QuicFrame(QuicConnectivityProbingFrame frame);
   explicit QuicFrame(QuicPingFrame frame);
 
   explicit QuicFrame(QuicStreamFrame* stream_frame);
@@ -48,6 +50,7 @@ struct QUIC_EXPORT_PRIVATE QuicFrame {
     // Frames smaller than a pointer are inline.
     QuicPaddingFrame padding_frame;
     QuicMtuDiscoveryFrame mtu_discovery_frame;
+    QuicConnectivityProbingFrame connectivity_probing_frame;
     QuicPingFrame ping_frame;
 
     // Frames larger than a pointer.
