@@ -768,7 +768,8 @@ bool LocationBarView::RefreshFindBarIcon() {
   const bool was_visible = find_bar_icon_->visible();
   find_bar_icon_->SetVisible(
       browser_->GetFindBarController()->find_bar()->IsFindBarVisible());
-  return was_visible != find_bar_icon_->visible();
+  return (was_visible != find_bar_icon_->visible()) ||
+         (find_bar_icon_->visible() && !find_bar_icon_->IsActivated());
 }
 
 void LocationBarView::RefreshTranslateIcon() {
