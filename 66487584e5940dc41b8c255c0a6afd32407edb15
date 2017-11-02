@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d9956f8_a7c79768",
+        "filename": "components/optimization_guide/optimization_guide_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-11-02T16:45:23Z",
+      "side": 1,
+      "message": "I\u0027m not sure about the long-term plan with this component, but if this class will remain a pure consumer, is it worth moving it directly into the ComponentInstallerPolicy object? That would enable you to remove a couple layers of indirection and avoid the new member in the browser process.",
+      "range": {
+        "startLine": 36,
+        "startChar": 32,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "66487584e5940dc41b8c255c0a6afd32407edb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
