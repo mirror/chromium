@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eb79eef_b594834c",
+        "filename": "net/disk_cache/OWNERS",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-02T11:47:08Z",
+      "side": 1,
+      "message": "do we allow non-committers in OWNERS?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "483f682f13dffce728697d0c58796569a29b42ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d41b428_09506d37",
+        "filename": "net/disk_cache/OWNERS",
+        "patchSetId": 12
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-02T11:47:08Z",
+      "side": 1,
+      "message": "nit: if we also remove net/disk_cache/simple/OWNERS, it would add clarity",
+      "revId": "483f682f13dffce728697d0c58796569a29b42ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
