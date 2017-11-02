@@ -171,21 +171,28 @@ cr.define('offlineInternals', function() {
 
   /**
    * Downloads all the stored page and request queue information into a file.
+   * Also translates all the fields representing datetime into human-readable
+   * date strings.
    * TODO(chili): Create a CSV writer that can abstract out the line joining.
    */
   function dumpAsJson() {
     var json = JSON.stringify(
-        {offlinePages: offlinePages, savePageRequests: savePageRequests}, null,
+        {offlinePages: offlinePages, savePageRequests: savePageRequests},
+        function(key, value) {
+          if (key.endsWith('Time'))
+            return new Date(value).toString();
+          return value;
+        },
         2);
 
     $('dump-box').value = json;
     $('dump-info').textContent = '';
-    $('dump').showModal();
+    $('dump-modal').showModal();
     $('dump-box').select();
   }
 
   function closeDump() {
-    $('dump').close();
+    $('dump-modal').close();
     $('dump-box').value = '';
   }
 
