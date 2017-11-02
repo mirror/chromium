@@ -313,6 +313,7 @@ test("components_unittests") {
       "//components/printing/browser",
       "//components/printing/common",
       "//components/printing/renderer",
+      "//components/printing/service:unit_tests",
     ]
   }
 
