@@ -1509,7 +1509,6 @@ void HTMLCanvasElement::CreateLayer() {
 }
 
 void HTMLCanvasElement::OnWebLayerReplaced() {
-  GraphicsLayer::RegisterContentsLayer(surface_layer_bridge_->GetWebLayer());
   SetNeedsCompositingUpdate();
 }
 
