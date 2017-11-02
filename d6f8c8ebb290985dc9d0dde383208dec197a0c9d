@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58f2a4af_00200eee",
+        "filename": "gpu/ipc/service/image_transport_surface_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-02T23:49:09Z",
+      "side": 1,
+      "message": "Latest patch set resolves this issue, but it required adding an attribute that is set by the client.",
+      "parentUuid": "b4323f82_5b96283d",
+      "range": {
+        "startLine": 36,
+        "startChar": 54,
+        "endLine": 36,
+        "endChar": 58
+      },
+      "revId": "d6f8c8ebb290985dc9d0dde383208dec197a0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eff7208a_e6af6562",
         "filename": "ui/gl/gl_surface_egl.h",
         "patchSetId": 2

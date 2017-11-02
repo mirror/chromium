@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e415340_f912fb95",
+        "filename": "gpu/command_buffer/common/gles2_cmd_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-02T23:49:09Z",
+      "side": 1,
+      "message": "Technically this should be called something like \"enable_swap_timestamps_if_supported\".\n\nIt\u0027s difficult to determine from sites that set this whether timestamps are 1) supported by the device and 2) the type of surface being created (e.g. offscreen vs. onscreen).\n\nWe can at least keep it false for WebVR, so it\u0027s disabled when the surface reports that it is supported.",
+      "revId": "8f0c47a85e7d9fdaf96e88ee083cfb145343eba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
