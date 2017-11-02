@@ -292,6 +292,29 @@
     },
     {
       "key": {
+        "uuid": "441aafcf_b6432c09",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_cache_storage.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-02T03:04:53Z",
+      "side": 1,
+      "message": "The \"ServiceWorkerCacheErrorType\" in enums.xml lacks some values. Can you add them?\n\n\u003cenum name\u003d\"ServiceWorkerCacheErrorType\"\u003e\n  \u003cint value\u003d\"0\" label\u003d\"OK\"/\u003e\n  \u003cint value\u003d\"1\" label\u003d\"Exists Error\"/\u003e\n  \u003cint value\u003d\"2\" label\u003d\"Storage Error\"/\u003e\n  \u003cint value\u003d\"3\" label\u003d\"Not Found Error\"/\u003e\n  \u003cint value\u003d\"4\" label\u003d\"Quota Exceeded Error\"/\u003e\n\u003c/enum\u003e",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 35
+      },
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a94e1a52_83725ba2",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_cache_storage.mojom",
         "patchSetId": 6
