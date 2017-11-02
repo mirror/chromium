@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "206f62a6_65055bff",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-02T14:10:56Z",
+      "side": 1,
+      "message": "Done (and agreed!)",
+      "parentUuid": "da1b4835_98684b31",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 12
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "314bc8a0_815b927d",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "02de2ef6_f830c145",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-02T14:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "314bc8a0_815b927d",
+      "range": {
+        "startLine": 103,
+        "startChar": 28,
+        "endLine": 103,
+        "endChar": 63
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54c95d77_f5d3f1e1",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd588178_1aadcb26",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-02T14:10:56Z",
+      "side": 1,
+      "message": "The problem with multimap is that there is no way to iterate over all keys with a certain value. SO suggests that when you want this, map\u003cK, list\u003cV\u003e\u003e is the way to go.",
+      "parentUuid": "54c95d77_f5d3f1e1",
+      "range": {
+        "startLine": 106,
+        "startChar": 18,
+        "endLine": 106,
+        "endChar": 27
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "1043f999_e2a11f9e",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-02T14:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8403c86a_aa63692a",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 62
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3547b54_f972d0e4",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 1
@@ -138,6 +234,30 @@
       "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9167abfc_6031685d",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-02T14:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3547b54_f972d0e4",
+      "range": {
+        "startLine": 112,
+        "startChar": 13,
+        "endLine": 112,
+        "endChar": 29
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "174f5741_3349b83e",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-02T14:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96e514b0_5e9071d9",
+      "range": {
+        "startLine": 116,
+        "startChar": 54,
+        "endLine": 116,
+        "endChar": 59
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9893741d_800bfcc0",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 1
@@ -184,6 +328,30 @@
       "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbe57de_708a898b",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-02T14:10:56Z",
+      "side": 1,
+      "message": "I feel like caching this property may end up being a premature optimisation tbh because almost all the time, this loop will only be excuted once or maybe twice so the cost should not be high.",
+      "parentUuid": "9893741d_800bfcc0",
+      "range": {
+        "startLine": 124,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 36
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "02f129aa_4c167616",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-02T14:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f71fe7d_64593a32",
+      "range": {
+        "startLine": 128,
+        "startChar": 32,
+        "endLine": 128,
+        "endChar": 47
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c20ba7f_7ba02b9c",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 1
@@ -230,6 +422,30 @@
       "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4afc273_c7b82e0e",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-02T14:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c20ba7f_7ba02b9c",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 11
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "51526ca9_d1fa1fa7",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-02T14:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c6d2663_b83a6d32",
+      "range": {
+        "startLine": 116,
+        "startChar": 27,
+        "endLine": 116,
+        "endChar": 76
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf69ea19_abd42d52",
         "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
         "patchSetId": 1
@@ -276,6 +516,30 @@
       "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3865a5f8_0c3510b3",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-02T14:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf69ea19_abd42d52",
+      "range": {
+        "startLine": 188,
+        "startChar": 1,
+        "endLine": 191,
+        "endChar": 65
+      },
+      "revId": "370668a18ed23a3d9a85e82eebfa0bb31895105f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
