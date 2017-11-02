@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ab890351_33fc7c56",
+        "filename": "DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-02T21:34:28Z",
+      "side": 1,
+      "message": "I put in on GitHub, so your patch should now work if you refer to this commit: \u00272a7c3d38915138189f4ac78e1188b58b2fbf5219\u0027",
+      "parentUuid": "141c6d0e_2f3c1720",
+      "range": {
+        "startLine": 395,
+        "startChar": 4,
+        "endLine": 395,
+        "endChar": 62
+      },
+      "revId": "2e93e73593a2f2d172bab55ef82c35b056249805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bddcc72_3c83e173",
         "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
         "patchSetId": 17
