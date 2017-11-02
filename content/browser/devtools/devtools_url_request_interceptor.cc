@@ -49,10 +49,18 @@ class DevToolsURLRequestInterceptorUserData
 
 }  // namespace
 
+// static
+bool DevToolsURLRequestInterceptor::IsNavigationRequest(
+    ResourceType resource_type) {
+  return resource_type == RESOURCE_TYPE_MAIN_FRAME ||
+         resource_type == RESOURCE_TYPE_SUB_FRAME;
+}
+
 DevToolsURLRequestInterceptor::DevToolsURLRequestInterceptor(
     BrowserContext* browser_context)
-    : browser_context_(browser_context), state_(new State()) {
+    : browser_context_(browser_context), weak_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  state_ = new State(weak_factory_.GetWeakPtr());
   browser_context_->SetUserData(
       kDevToolsURLRequestInterceptorKeyName,
       std::make_unique<DevToolsURLRequestInterceptorUserData>(this));
@@ -87,9 +95,8 @@ void DevToolsURLRequestInterceptor::StartInterceptingRequests(
                                  intercepted_patterns));
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &DevToolsURLRequestInterceptor::State::StartInterceptingRequestsOnIO,
-          state_, target_id, std::move(intercepted_page)));
+      base::BindOnce(&State::StartInterceptingRequestsOnIO, state_, target_id,
+                     std::move(intercepted_page)));
 }
 
 void DevToolsURLRequestInterceptor::StopInterceptingRequests(
@@ -101,16 +108,24 @@ void DevToolsURLRequestInterceptor::StopInterceptingRequests(
     return;
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &DevToolsURLRequestInterceptor::State::StopInterceptingRequestsOnIO,
-          state_, target_id));
+      base::BindOnce(&State::StopInterceptingRequestsOnIO, state_, target_id));
 }
 
 void DevToolsURLRequestInterceptor::ContinueInterceptedRequest(
     std::string interception_id,
     std::unique_ptr<Modifications> modifications,
     std::unique_ptr<ContinueInterceptedRequestCallback> callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (modifications->mark_as_canceled &&
+      *modifications->error_reason == net::ERR_CONNECTION_ABORTED) {
+    auto it = navigation_requests_.find(interception_id);
+    if (it != navigation_requests_.end()) {
+      canceled_navigation_requests_.insert(it->second);
+      // To successfully cancel navigation the request must succeed. We
+      // provide simple mock response to avoid pointless network fetch.
+      modifications->error_reason.reset();
+      modifications->raw_response = std::string("HTTP/1.1 200 OK\r\n\r\n");
+    }
+  }
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
@@ -144,11 +159,13 @@ DevToolsURLRequestInterceptor::Pattern::Pattern(
     base::flat_set<ResourceType> resource_types)
     : url_pattern(url_pattern), resource_types(std::move(resource_types)) {}
 
-DevToolsURLRequestInterceptor::State::State()
+DevToolsURLRequestInterceptor::State::State(
+    base::WeakPtr<DevToolsURLRequestInterceptor> interceptor)
     : target_registry_(new DevToolsTargetRegistry(
           content::BrowserThread::GetTaskRunnerForThread(
               content::BrowserThread::IO))),
-      next_id_(0) {}
+      next_id_(0),
+      interceptor_(std::move(interceptor)) {}
 
 DevToolsURLRequestInterceptor::State::~State() {}
 
@@ -231,6 +248,15 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
 
   bool is_redirect;
   std::string interception_id = GetIdForRequestOnIO(request, &is_redirect);
+
+  if (IsNavigationRequest(resource_request_info->GetResourceType())) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&DevToolsURLRequestInterceptor::NavigationStarted,
+                       interceptor_, interception_id,
+                       resource_request_info->GetGlobalRequestID()));
+  }
+
   DevToolsURLInterceptorRequestJob* job = new DevToolsURLInterceptorRequestJob(
       this, interception_id, request, network_delegate,
       target_info->devtools_token, target_info->devtools_target_id,
@@ -307,9 +333,16 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::GetJob(
 }
 
 void DevToolsURLRequestInterceptor::State::JobFinished(
-    const std::string& interception_id) {
+    const std::string& interception_id,
+    bool is_navigation) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   interception_id_to_job_map_.erase(interception_id);
+  if (!is_navigation)
+    return;
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&DevToolsURLRequestInterceptor::NavigationFinished,
+                     interceptor_, interception_id));
 }
 
 // static
@@ -322,6 +355,27 @@ DevToolsURLRequestInterceptor::FromBrowserContext(BrowserContext* context) {
   if (!interceptor_user_data)
     return nullptr;
   return interceptor_user_data->devtools_url_request_interceptor();
+}
+
+bool DevToolsURLRequestInterceptor::ShouldCancelNavigation(
+    const GlobalRequestID& global_request_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  auto it = canceled_navigation_requests_.find(global_request_id);
+  if (it == canceled_navigation_requests_.end())
+    return false;
+  canceled_navigation_requests_.erase(it);
+  return true;
+}
+
+void DevToolsURLRequestInterceptor::NavigationStarted(
+    const std::string& interception_id,
+    const GlobalRequestID& request_id) {
+  navigation_requests_[interception_id] = request_id;
+}
+
+void DevToolsURLRequestInterceptor::NavigationFinished(
+    const std::string& interception_id) {
+  navigation_requests_.erase(interception_id);
 }
 
 DevToolsURLRequestInterceptor::Modifications::Modifications(
