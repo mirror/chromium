@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "01ea86a9_b5a84215",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10589,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-02T13:39:54Z",
+      "side": 1,
+      "message": "Usually they do but they don\u0027t have to. I would rather err on the side of having a descriptive self-contained name for the policy as much as possible.",
+      "parentUuid": "68bdca7c_d9d3938f",
+      "range": {
+        "startLine": 10589,
+        "startChar": 15,
+        "endLine": 10589,
+        "endChar": 32
+      },
+      "revId": "b1e1bc694d074285b344c7a731732926d3dfc077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cb7340f_58b24603",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
