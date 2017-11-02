@@ -224,6 +224,8 @@ gpu::gles2::ContextCreationAttribHelper GetCompositorContextAttributes(
     attributes.blue_size = 5;
   }
 
+  attributes.enable_swap_timestamps = true;
+
   return attributes;
 }
 
