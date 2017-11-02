@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "118414a9_043d7096",
+        "filename": "chrome/profiling/memlog_stream_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-02T17:17:16Z",
+      "side": 1,
+      "message": "Can you put blanks above \u0026 below this class?",
+      "revId": "64b32fc258ddaf118f478d4760a2b861ec32e5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
