@@ -388,6 +388,16 @@ void BackgroundLoaderOffliner::ObserveResourceLoading(
     ++found_stats.requested;
   else
     ++found_stats.completed;
+
+  UpdateLoadingResourceProgress();
+}
+
+void BackgroundLoaderOffliner::UpdateLoadingResourceProgress() {
+  snapshot_controller_->UpdateLoadingResourceProgress(
+      stats_[ResourceDataType::IMAGE].requested,
+      stats_[ResourceDataType::IMAGE].completed,
+      stats_[ResourceDataType::TEXT_CSS].requested,
+      stats_[ResourceDataType::TEXT_CSS].completed);
 }
 
 void BackgroundLoaderOffliner::OnNetworkBytesChanged(int64_t bytes) {
