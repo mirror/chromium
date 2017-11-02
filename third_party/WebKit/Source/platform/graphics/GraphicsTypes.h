@@ -35,6 +35,11 @@
 
 namespace blink {
 
+enum AlphaDisposition {
+  kPremultiplyAlpha,
+  kDontPremultiplyAlpha,
+};
+
 enum ImageDataStorageFormat {
   kUint8ClampedArrayStorageFormat,
   kUint16ArrayStorageFormat,
