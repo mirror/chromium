@@ -16,6 +16,74 @@
       "revId": "0cfc17c043a23c3186b4df01755a033519759fbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8969305_7c8c3723",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-02T16:09:37Z",
+      "side": 1,
+      "message": "Please add a comment for this method.",
+      "revId": "0cfc17c043a23c3186b4df01755a033519759fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dddc9547_1c4ba0a3",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-02T16:09:37Z",
+      "side": 1,
+      "message": "It looks like this should be initialized to some kind of null value either here or in the constructor.",
+      "revId": "0cfc17c043a23c3186b4df01755a033519759fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef65b364_d08e6e71",
+        "filename": "content/public/browser/render_widget_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-02T16:09:37Z",
+      "side": 1,
+      "message": "Why is this in the public content API, rather than on RenderWidgetHostImpl?",
+      "revId": "0cfc17c043a23c3186b4df01755a033519759fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623bc1be_3a898843",
+        "filename": "content/public/browser/render_widget_host_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-02T16:09:37Z",
+      "side": 1,
+      "message": "Same question on why in content/public?",
+      "revId": "0cfc17c043a23c3186b4df01755a033519759fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
