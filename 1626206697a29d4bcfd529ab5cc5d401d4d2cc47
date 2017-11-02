@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1214ff10_475a50d7",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-02T09:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37101fcd_15c5168d",
+      "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7d17390_69bd1892",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7772fbbd_e000148a",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-02T09:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7d17390_69bd1892",
+      "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5fadba1d_ca23ae99",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-02T09:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47f35a8b_c8b08c03",
+      "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0dfd5bf_0f7c45ec",
         "filename": "chromeos/dbus/cryptohome_client.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-31T17:15:53Z",
       "side": 1,
       "message": "nit, but this method and the next have pretty ambiguous names. it might be better to rename them to something like e.g. CryptohomeAsyncCallStatus.",
+      "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66caf23f_693373f2",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-02T09:14:04Z",
+      "side": 1,
+      "message": "I agreed with you that AsyncCallStatus sounds ambiguous.\nHowever this is already a part of CryptohomeClient,\nand I\u0027m slightly worried about diverging the method name and signal name.\nWDYT? Or, maybe rename the signals, too?",
+      "parentUuid": "f0dfd5bf_0f7c45ec",
       "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e715ea22_687a2603",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-02T09:14:04Z",
+      "side": 1,
+      "message": "Thank you for explanation! Done.",
+      "parentUuid": "15df031c_1180d120",
+      "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e53727c2_a0d310c4",
         "filename": "chromeos/dbus/fake_cryptohome_client_unittest.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9393ce_246236e9",
+        "filename": "chromeos/dbus/fake_cryptohome_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-02T09:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e53727c2_a0d310c4",
+      "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
