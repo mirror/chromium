@@ -243,7 +243,7 @@ public class IntentHandler {
     // TODO(tedchoc): Remove this and directly reference the Launcher activity when that becomes
     //                publicly available.
     private static final String TAB_ACTIVITY_COMPONENT_CLASS_NAME =
-            "com.google.android.apps.chrome.Main";
+            "com.google.android.apps.chrome.IntentDispatcher";
 
     private static boolean sTestIntentsEnabled;
 
