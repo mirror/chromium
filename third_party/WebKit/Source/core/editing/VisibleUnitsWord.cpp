@@ -31,6 +31,8 @@
 #include "core/editing/VisibleUnits.h"
 
 #include "core/editing/EditingUtilities.h"
+#include "core/editing/EphemeralRange.h"
+#include "core/editing/TextOffsetMapping.h"
 #include "core/editing/VisiblePosition.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/text/TextBoundaries.h"
@@ -146,6 +148,22 @@ PositionTemplate<Strategy> StartOfWordAlgorithm(
 }
 
 }  // namespace
+
+EphemeralRangeInFlatTree ComputeWordAroundPosition(
+    const PositionInFlatTree& position,
+    AppendTrailingWhitespace append_trailing_whitespace) {
+  if (position.IsNull())
+    return {};
+  const TextOffsetMapping mapping(position,
+                                  TextIteratorBehavior::Builder()
+                                      .SetEmitsObjectReplacementCharacter(true)
+                                      .Build());
+  String text = mapping.GetText();
+  const auto start_end_pair = FindWordBoundary(
+      text.Characters16(), text.length(), mapping.ComputeTextOffset(position),
+      append_trailing_whitespace);
+  return mapping.ComputeRange(start_end_pair.first, start_end_pair.second);
+}
 
 Position EndOfWordPosition(const VisiblePosition& position, EWordSide side) {
   return EndOfWordAlgorithm<EditingStrategy>(position, side);

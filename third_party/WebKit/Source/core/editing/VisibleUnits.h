@@ -35,6 +35,7 @@
 
 namespace blink {
 
+enum class AppendTrailingWhitespace;
 class LayoutUnit;
 class LayoutObject;
 class Node;
@@ -132,6 +133,9 @@ PreviousPositionOf(const VisiblePositionInFlatTree&,
                    EditingBoundaryCrossingRule = kCanCrossEditingBoundary);
 
 // words
+CORE_EXPORT EphemeralRangeInFlatTree
+ComputeWordAroundPosition(const PositionInFlatTree&, AppendTrailingWhitespace);
+
 // TODO(yoichio): Replace |startOfWord| to |startOfWordPosition| because
 // returned Position should be canonicalized with |previousBoundary()| by
 // TextItetator.

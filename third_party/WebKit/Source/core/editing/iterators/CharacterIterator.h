@@ -72,7 +72,15 @@ class CORE_EXPORT CharacterIteratorAlgorithm {
   Node* CurrentContainer() const;
   int StartOffset() const;
   int EndOffset() const;
+
+  PositionTemplate<Strategy> ComputeFirstPosition() const;
+  PositionTemplate<Strategy> ComputeLastPosition() const;
+
+  // TDOO(editing-dev): We should rename |StartPosition()| to
+  // |ComputeStartPositionDeprecated()| and use |ComputeFirstPosition()|.
   PositionTemplate<Strategy> StartPosition() const;
+  // TDOO(editing-dev): We should rename |EndPosition()| to
+  // |ComputeEndPositionDeprecated()| and use |ComputeLastPosition()|.
   PositionTemplate<Strategy> EndPosition() const;
 
   EphemeralRangeTemplate<Strategy> CalculateCharacterSubrange(int offset,
@@ -93,6 +101,8 @@ extern template class CORE_EXTERN_TEMPLATE_EXPORT
 using CharacterIterator = CharacterIteratorAlgorithm<EditingStrategy>;
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT
+    CharacterIteratorAlgorithm<EditingInFlatTreeStrategy>;
+using CharacterIteratorInFlatTree =
     CharacterIteratorAlgorithm<EditingInFlatTreeStrategy>;
 
 CORE_EXPORT EphemeralRange CalculateCharacterSubrange(const EphemeralRange&,
