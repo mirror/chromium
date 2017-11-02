@@ -22,6 +22,30 @@
       "revId": "b240b346c29b0026b1685dceb37abcaf40a2c4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60e7439_6d04c3f2",
+        "filename": "components/url_pattern_index/url_pattern_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-02T13:35:41Z",
+      "side": 1,
+      "message": "Hm, how do you propose avoiding the copy (assuming we keep the elements sorted)?",
+      "parentUuid": "3fd9df75_a54fe765",
+      "range": {
+        "startLine": 409,
+        "startChar": 52,
+        "endLine": 409,
+        "endChar": 57
+      },
+      "revId": "b240b346c29b0026b1685dceb37abcaf40a2c4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

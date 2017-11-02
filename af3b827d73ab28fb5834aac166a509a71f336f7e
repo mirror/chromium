@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb4887fe_875ee0b5",
+        "filename": "components/url_pattern_index/url_pattern_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-02T13:35:41Z",
+      "side": 1,
+      "message": "I wonder if we could just persist a single flat::UrlRule* max_priority_rule, and update it accordingly?",
+      "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8710e389_e6564c3e",
+        "filename": "components/url_pattern_index/url_pattern_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-02T13:35:41Z",
+      "side": 1,
+      "message": "Can you s/rules/fallback_rules here?",
+      "range": {
+        "startLine": 661,
+        "startChar": 25,
+        "endLine": 661,
+        "endChar": 30
+      },
+      "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194a7c57_806aaa98",
+        "filename": "components/url_pattern_index/url_pattern_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-02T13:35:41Z",
+      "side": 1,
+      "message": "Can you include a comment here that the \"min_element\" is the \"first element\" in the descending ordering? It\u0027s a bit unintuitive since it really pulls the element with the max priority.",
+      "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7379d3f_754e9bc5",
+        "filename": "components/url_pattern_index/url_pattern_index.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-02T13:35:41Z",
+      "side": 1,
+      "message": "nit: Can you use an enum class?",
+      "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e6e383c_e06bab23",
+        "filename": "components/url_pattern_index/url_pattern_index.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-02T13:35:41Z",
+      "side": 1,
+      "message": "I\u0027d prefer not to use default args here, and just update all callsites.",
+      "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ecdd204_06b1d730",
+        "filename": "components/url_pattern_index/url_pattern_index.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-02T13:35:41Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
