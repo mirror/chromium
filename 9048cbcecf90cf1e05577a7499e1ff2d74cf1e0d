@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ed4a5a1_c3c00dd5",
+        "filename": "services/service_manager/sandbox/sandbox_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-02T17:38:17Z",
+      "side": 1,
+      "message": "Anyone thinks it would be a good idea to make this an enum class since I am there?",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "9048cbcecf90cf1e05577a7499e1ff2d74cf1e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
