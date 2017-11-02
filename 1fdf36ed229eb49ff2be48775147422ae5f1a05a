@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "3593518d_4f93a8d9",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T09:12:26Z",
+      "side": 1,
+      "message": "The CL in https://chromium-review.googlesource.com/c/chromium/src/+/745986/5/url/origin.h#119\n\nInternally, url::Origin always needs to construct a std::string anyway, so we don\u0027t reduce the number of string copies by using base::StringPiece. And if we use base::StringPiece, it prevents the creation function from using move semantics, so it ends up being less efficient if we already have an rvalue std::string. \n\nThe other reason to use base::StringPiece would be to avoid code bloat from creating temporary std::strings. But CreateFromNormalizedTupleWithSubOrigin() is not called very much, so I think there\u0027s not much of a gain in the end. To avoid code bloat, we could add an overload for const char* and std::string, but that\u0027s pretty annoying to maintain two copies of the same function.",
+      "parentUuid": "9bc55d75_664dacef",
+      "revId": "1fdf36ed229eb49ff2be48775147422ae5f1a05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57ba0aa0_a2d00d00",
         "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.h",
         "patchSetId": 5
@@ -82,6 +100,24 @@
       "writtenOn": "2017-11-02T01:06:39Z",
       "side": 1,
       "message": "Another option is to use:\n\n  operator url::Origin();\n\nWe\u0027re doing this for KURL \u003d\u003e GURL conversion.\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/weborigin/KURL.h?q\u003dkurl.h\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d220\n\nDaniel: Which do you prefer?",
+      "revId": "1fdf36ed229eb49ff2be48775147422ae5f1a05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b7b3de_f628fedc",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T09:12:26Z",
+      "side": 1,
+      "message": "I think it\u0027s nicer to have it be explicit. If we change our decision later, it\u0027s easy to go from explicit -\u003e implicit conversion, but it\u0027s harder to go the other way. And it makes it clear when we\u0027re doing something that creates objects (whereas it\u0027s harder to tell with the implicit conversions).",
+      "parentUuid": "57ba0aa0_a2d00d00",
       "revId": "1fdf36ed229eb49ff2be48775147422ae5f1a05a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
