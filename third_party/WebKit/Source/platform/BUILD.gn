@@ -1130,6 +1130,7 @@ jumbo_component("platform") {
     "graphics/paint/PaintController.cpp",
     "graphics/paint/PaintController.h",
     "graphics/paint/PaintControllerDebugData.cpp",
+    "graphics/paint/PaintFilter.h",
     "graphics/paint/PaintFlags.h",
     "graphics/paint/PaintPropertyNode.cpp",
     "graphics/paint/PaintPropertyNode.h",
