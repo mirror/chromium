@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "497ea630_9abfdcc8",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-11-02T22:59:47Z",
+      "side": 1,
+      "message": "Calling VerifySynchronizationSources twice doesn\u0027t hit this (I guess the tests have the header?), but I agree this is a bug - I\u0027ll use value_or in rtc_rtp_source.cc.",
+      "parentUuid": "78023a2d_223c2d29",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e8fd162_aaef61a1",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
         "patchSetId": 9
@@ -213,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "5edf1860_acf9a654",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-11-02T22:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0ae2cc5_8c90c3dc",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20f20548_3993c789",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
         "patchSetId": 9
@@ -263,6 +299,24 @@
       "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46775ad4_ba5efaed",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-11-02T22:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "197334dd_9330aa8c",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
