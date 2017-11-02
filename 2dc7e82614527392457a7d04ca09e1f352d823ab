@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71143317_aecebdd2",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T00:48:02Z",
+      "side": 1,
+      "message": "s/initiatedByUser/true\n\n|HasOpener| means that this WebState is a child web state. |initiatedByUser| means that child web state was open as a result of user interaction, bot a page popup.",
+      "range": {
+        "startLine": 321,
+        "startChar": 32,
+        "endLine": 321,
+        "endChar": 47
+      },
+      "revId": "2dc7e82614527392457a7d04ca09e1f352d823ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
