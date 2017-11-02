@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aa087fc_698cf201",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-02T23:54:03Z",
+      "side": 1,
+      "message": "s/scope exit/destruction",
+      "range": {
+        "startLine": 93,
+        "startChar": 42,
+        "endLine": 93,
+        "endChar": 52
+      },
+      "revId": "10bcd2069d49e984ecb905a7c3f63f876cb876ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb1e7d4_4d4c8034",
+        "filename": "ui/base/resource/data_pack.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-02T23:54:03Z",
+      "side": 1,
+      "message": "This won\u0027t catch errors closing the file (neither did the old code). Can we ensure the file closed successfully before returning at this point?",
+      "revId": "10bcd2069d49e984ecb905a7c3f63f876cb876ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b15809a_ab7b347c",
+        "filename": "ui/base/resource/data_pack.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-02T23:54:03Z",
+      "side": 1,
+      "message": "nit: This seems like a case where we should friend the unit test class rather than make the methods public.",
+      "revId": "10bcd2069d49e984ecb905a7c3f63f876cb876ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
