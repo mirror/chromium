@@ -138,6 +138,12 @@ void MigrateProfileToDice(PrefService* user_prefs) {
 #endif
 }
 
+void UndoDiceMigrationForTesting(PrefService* user_prefs) {
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  user_prefs->SetBoolean(kDiceMigrationCompletePref, false);
+#endif
+}
+
 bool IsDiceFixAuthErrorsEnabled() {
   AccountConsistencyMethod method = GetAccountConsistencyMethod();
   return (method == AccountConsistencyMethod::kDiceFixAuthErrors) ||
