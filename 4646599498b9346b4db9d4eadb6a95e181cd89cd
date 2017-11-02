@@ -34,6 +34,24 @@
       "revId": "4646599498b9346b4db9d4eadb6a95e181cd89cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6274c1e_3a85f1d8",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_client_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-02T14:54:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d45f150_772a31c0",
+      "revId": "4646599498b9346b4db9d4eadb6a95e181cd89cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
