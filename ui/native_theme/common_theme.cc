@@ -203,6 +203,14 @@ SkColor GetAuraColor(NativeTheme::ColorId color_id,
     case NativeTheme::kColorId_SeparatorColor:
       return kSeparatorColor;
 
+    // TabbedPane
+    case NativeTheme::kColorId_TabTitleColorActive:
+      return SkColorSetRGB(0x42, 0x85, 0xf4);
+    case NativeTheme::kColorId_TabTitleColorInactive:
+      return SkColorSetRGB(0x75, 0x75, 0x75);
+    case NativeTheme::kColorId_TabBottomBorder:
+      return SkColorSetA(SK_ColorBLACK, 0x1e);
+
     // Textfield
     case NativeTheme::kColorId_TextfieldDefaultColor:
       return kTextfieldDefaultColor;
