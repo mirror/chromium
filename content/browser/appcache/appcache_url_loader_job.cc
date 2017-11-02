@@ -132,6 +132,7 @@ void AppCacheURLLoaderJob::Start(mojom::URLLoaderRequest request,
 AppCacheURLLoaderJob::AppCacheURLLoaderJob(
     AppCacheURLLoaderRequest* appcache_request,
     AppCacheStorage* storage,
+    base::WeakPtr<AppCacheRequestHandler> request_handler,
     LoaderCallback loader_callback)
     : storage_(storage->GetWeakPtr()),
       start_time_tick_(base::TimeTicks::Now()),
@@ -144,11 +145,14 @@ AppCacheURLLoaderJob::AppCacheURLLoaderJob(
       appcache_request_(appcache_request->GetWeakPtr()),
       is_main_resource_load_(IsResourceTypeFrame(
           appcache_request->GetResourceRequest()->resource_type)),
+      request_handler_(std::move(request_handler)),
       weak_factory_(this) {}
 
 void AppCacheURLLoaderJob::CallLoaderCallback() {
   DCHECK(loader_callback_);
   DCHECK(!binding_.is_bound());
+  DCHECK(request_handler_);
+  request_handler_->ShouldCreateSubresourceLoader();
   std::move(loader_callback_)
       .Run(base::BindOnce(&AppCacheURLLoaderJob::Start, GetDerivedWeakPtr()));
   DCHECK(binding_.is_bound());

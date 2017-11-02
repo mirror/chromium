@@ -69,6 +69,7 @@ class CONTENT_EXPORT AppCacheURLLoaderJob : public AppCacheJob,
 
   AppCacheURLLoaderJob(AppCacheURLLoaderRequest* appcache_request,
                        AppCacheStorage* storage,
+                       base::WeakPtr<AppCacheRequestHandler> request_handler,
                        LoaderCallback loader_callback);
 
   // Invokes the loader callback which is expected to setup the mojo binding.
@@ -128,6 +129,8 @@ class CONTENT_EXPORT AppCacheURLLoaderJob : public AppCacheJob,
 
   bool is_deleting_soon_ = false;
   bool is_main_resource_load_;
+
+  base::WeakPtr<AppCacheRequestHandler> request_handler_;
 
   base::WeakPtrFactory<AppCacheURLLoaderJob> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(AppCacheURLLoaderJob);
