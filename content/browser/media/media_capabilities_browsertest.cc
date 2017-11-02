@@ -93,6 +93,12 @@ IN_PROC_BROWSER_TEST_F(MediaCapabilitiesTest, VideoDecodeTypes) {
   EXPECT_EQ(kSupported,
             CanDecodeVideo("'video/webm; codecs=\"vp09.00.10.08\"'"));
 
+  // MP3 and VP09 available in MP4 container irrespective of
+  // USE_PROPRIETARY_CODECS.
+  EXPECT_EQ(kSupported, CanDecodeAudio("'audio/mpeg; codecs=\"mp4a.69\"'"));
+  EXPECT_EQ(kSupported,
+            CanDecodeVideo("'video/mp4; codecs=\"vp09.00.10.08\"'"));
+
   // Supported when built with USE_PROPRIETARY_CODECS
   EXPECT_EQ(kPropSupported,
             CanDecodeVideo("'video/mp4; codecs=\"avc1.42E01E\"'"));
@@ -102,8 +108,6 @@ IN_PROC_BROWSER_TEST_F(MediaCapabilitiesTest, VideoDecodeTypes) {
             CanDecodeVideo("'video/mp4; codecs=\"avc1.42701E\"'"));
   EXPECT_EQ(kPropSupported,
             CanDecodeVideo("'video/mp4; codecs=\"avc1.42F01E\"'"));
-  EXPECT_EQ(kPropSupported,
-            CanDecodeVideo("'video/mp4; codecs=\"vp09.00.10.08\"'"));
 
   // Test a handful of invalid strings.
   EXPECT_EQ(kUnsupported, CanDecodeVideo("'video/webm; codecs=\"theora\"'"));
@@ -131,7 +135,6 @@ IN_PROC_BROWSER_TEST_F(MediaCapabilitiesTest, AudioDecodeTypes) {
   EXPECT_EQ(kSupported, CanDecodeAudio("'audio/flac'"));
 
   // Supported when built with USE_PROPRIETARY_CODECS
-  EXPECT_EQ(kPropSupported, CanDecodeAudio("'audio/mpeg; codecs=\"mp4a.69\"'"));
   EXPECT_EQ(kPropSupported,
             CanDecodeAudio("'audio/mp4; codecs=\"mp4a.40.02\"'"));
   EXPECT_EQ(kPropSupported, CanDecodeAudio("'audio/aac'"));
@@ -139,7 +142,7 @@ IN_PROC_BROWSER_TEST_F(MediaCapabilitiesTest, AudioDecodeTypes) {
   // TODO(chcunningham): Differentiate kFile vs kMediaSource support for
   // FLAC-in-MP4, making MSE support for this contingent upon at least
   // base::FeatureList::IsEnabled(kMseFlacInIsobmff) and kPropSupported.
-  EXPECT_EQ(kPropSupported, CanDecodeAudio("'audio/mp4; codecs=\"flac\"'"));
+  EXPECT_EQ(kSupported, CanDecodeAudio("'audio/mp4; codecs=\"flac\"'"));
 
   // Test a handful of invalid strings.
   EXPECT_EQ(kUnsupported, CanDecodeAudio("'audio/wav; codecs=\"mp3\"'"));
