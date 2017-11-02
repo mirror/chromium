@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70532236_f1b15241",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-02T22:15:11Z",
+      "side": 1,
+      "message": "Just that it\u0027s kind of a weird pattern to have the CertVerifier interface decide which implementation of it should be used at the chrome layer. (And since I changed the initialization style in profile_io_data.cc I wanted to make the one here match too.)",
+      "parentUuid": "1d4d7ab1_d188143a",
+      "range": {
+        "startLine": 796,
+        "startChar": 31,
+        "endLine": 796,
+        "endChar": 44
+      },
+      "revId": "e64f84fce4fa5b5da0ec1c39fd14298a94910c89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1cdafda_aea2e96e",
         "filename": "chrome/browser/profiles/profile_io_data.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-02T15:22:36Z",
       "side": 1,
       "message": "Was hoping to see this method removed in this CL.  Guess not yet.  :(",
+      "range": {
+        "startLine": 1101,
+        "startChar": 38,
+        "endLine": 1101,
+        "endChar": 65
+      },
+      "revId": "e64f84fce4fa5b5da0ec1c39fd14298a94910c89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9850e3a_93e9805a",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-02T22:15:11Z",
+      "side": 1,
+      "message": "I am working on a followup for that also, just figured it would be cleaner to do separately. :)",
+      "parentUuid": "f1cdafda_aea2e96e",
       "range": {
         "startLine": 1101,
         "startChar": 38,
