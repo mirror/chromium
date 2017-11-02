@@ -10,7 +10,9 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/notifications/notification_image_retainer.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/message_center/notification.h"
 
@@ -24,6 +26,26 @@ const char kNotificationId[] = "notification_id";
 const char kNotificationTitle[] = "My Title";
 const char kNotificationMessage[] = "My Message";
 const char kNotificationOrigin[] = "https://example.com";
+const char kProfileId[] = "Default";
+
+class MockNotificationImageRetainer : public NotificationImageRetainer {
+ public:
+  MockNotificationImageRetainer() : NotificationImageRetainer(nullptr) {}
+
+  base::FilePath RegisterTemporaryImage(const gfx::Image& image,
+                                        const std::string& profile_id,
+                                        const GURL& origin) override {
+    base::string16 file = base::string16(L"c:\\temp\\img") +
+                          base::IntToString16(counter_++) +
+                          base::string16(L".tmp");
+    return base::FilePath(file);
+  }
+
+ private:
+  int counter_ = 0;
+
+  DISALLOW_COPY_AND_ASSIGN(MockNotificationImageRetainer);
+};
 
 bool FixedTime(base::Time* time) {
   base::Time::Exploded exploded = {0};
@@ -64,8 +86,10 @@ class NotificationTemplateBuilderTest : public ::testing::Test {
   // must be wrapped in ASSERT_NO_FATAL_FAILURE().
   void VerifyXml(const message_center::Notification& notification,
                  const base::string16& xml_template) {
-    template_ =
-        NotificationTemplateBuilder::Build(kNotificationId, notification);
+    MockNotificationImageRetainer image_retainer;
+    template_ = NotificationTemplateBuilder::Build(
+        kNotificationId, &image_retainer, kProfileId, notification);
+
     ASSERT_TRUE(template_);
 
     EXPECT_EQ(template_->GetNotificationTemplate(), xml_template);
@@ -239,6 +263,46 @@ TEST_F(NotificationTemplateBuilderTest, Silent) {
   </binding>
  </visual>
  <audio silent="true"/>
+</toast>
+)";
+
+  ASSERT_NO_FATAL_FAILURE(VerifyXml(*notification, kExpectedXml));
+}
+
+TEST_F(NotificationTemplateBuilderTest, Images) {
+  std::unique_ptr<message_center::Notification> notification =
+      InitializeBasicNotification();
+
+  SkBitmap icon;
+  icon.allocN32Pixels(64, 64);
+  icon.eraseARGB(255, 100, 150, 200);
+
+  notification->set_icon(gfx::Image::CreateFrom1xBitmap(icon));
+  notification->set_image(gfx::Image::CreateFrom1xBitmap(icon));
+
+  std::vector<message_center::ButtonInfo> buttons;
+  message_center::ButtonInfo button(base::ASCIIToUTF16("Button1"));
+  button.type = message_center::ButtonType::TEXT;
+  button.placeholder = base::ASCIIToUTF16("Reply here");
+  button.icon = gfx::Image::CreateFrom1xBitmap(icon);
+  buttons.emplace_back(button);
+  notification->set_buttons(buttons);
+
+  const wchar_t kExpectedXml[] =
+      LR"(<toast launch="notification_id" displayTimestamp="1998-09-04T01:02:03Z">
+ <visual>
+  <binding template="ToastGeneric">
+   <text>My Title</text>
+   <text>My Message</text>
+   <text placement="attribution">example.com</text>
+   <image placement="appLogoOverride" src="c:\temp\img0.tmp" hint-crop="circle"/>
+   <image placement="hero" src="c:\temp\img1.tmp"/>
+  </binding>
+ </visual>
+ <actions>
+  <input id="userResponse" type="text" placeHolderContent="Reply here"/>
+  <action activationType="foreground" content="Button1" arguments="buttonIndex=0" imageUri="c:\temp\img2.tmp"/>
+ </actions>
 </toast>
 )";
 
