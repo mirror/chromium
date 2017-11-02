@@ -1239,10 +1239,10 @@ void Shell::OnSessionStateChanged(session_manager::SessionState state) {
   if ((state == session_manager::SessionState::LOGGED_IN_NOT_ACTIVE ||
        state == session_manager::SessionState::ACTIVE) &&
       keyboard::IsKeyboardEnabled()) {
-    if (GetAshConfig() != Config::MASH) {
-      // Recreate the keyboard after initial login and after multiprofile login.
-      CreateKeyboard();
-    }
+    // NOTE: keyboard::IsKeyboardEnabled() is false in --mash (but may not
+    //       be in unit tests. crbug.com/646565.
+    // Recreate the keyboard after initial login and after multiprofile login.
+    CreateKeyboard();
   }
 
   shell_port_->UpdateSystemModalAndBlockingContainers();
