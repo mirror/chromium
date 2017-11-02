@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77b3ce3b_51bd9b08",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_client_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-02T14:44:30Z",
+      "side": 1,
+      "message": "CheckUrlForSubresourceFilter also returns true if the list is not yet available. What happens in that case? Is the check not performed at all or is it performed at a later stage and we should be recording the metric then?",
+      "revId": "4646599498b9346b4db9d4eadb6a95e181cd89cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
