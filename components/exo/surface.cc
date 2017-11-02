@@ -384,6 +384,11 @@ void Surface::PlaceSubSurfaceBelow(Surface* sub_surface, Surface* sibling) {
   sub_surfaces_changed_ = true;
 }
 
+void Surface::OnSubSurfaceCommit() {
+  if (delegate_)
+    delegate_->OnSurfaceCommit();
+}
+
 void Surface::SetViewport(const gfx::Size& viewport) {
   TRACE_EVENT1("exo", "Surface::SetViewport", "viewport", viewport.ToString());
 

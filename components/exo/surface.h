@@ -118,6 +118,7 @@ class Surface final : public ui::PropertyHandler {
   void SetSubSurfacePosition(Surface* sub_surface, const gfx::Point& position);
   void PlaceSubSurfaceAbove(Surface* sub_surface, Surface* reference);
   void PlaceSubSurfaceBelow(Surface* sub_surface, Surface* sibling);
+  void OnSubSurfaceCommit();
 
   // This sets the surface viewport for scaling.
   void SetViewport(const gfx::Size& viewport);
