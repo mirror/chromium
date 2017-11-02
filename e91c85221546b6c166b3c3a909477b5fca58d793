@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "277f461a_e1596f36",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-02T17:03:48Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 6
+      },
+      "revId": "e91c85221546b6c166b3c3a909477b5fca58d793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6eeca29_368fb55b",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-02T17:03:48Z",
+      "side": 1,
+      "message": "This is shadowing the parameter |delay|. Maybe rename to delayInterval ?",
+      "range": {
+        "startLine": 208,
+        "startChar": 8,
+        "endLine": 208,
+        "endChar": 13
+      },
+      "revId": "e91c85221546b6c166b3c3a909477b5fca58d793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7823df0_970286e2",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-02T17:03:48Z",
+      "side": 1,
+      "message": "NSTimeInterval",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 208,
+        "endChar": 7
+      },
+      "revId": "e91c85221546b6c166b3c3a909477b5fca58d793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
