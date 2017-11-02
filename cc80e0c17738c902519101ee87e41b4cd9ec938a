@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "66d01731_8c39dd90",
+        "filename": "device/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-02T15:32:25Z",
+      "side": 1,
+      "message": "serial",
+      "range": {
+        "startLine": 130,
+        "startChar": 59,
+        "endLine": 130,
+        "endChar": 66
+      },
+      "revId": "cc80e0c17738c902519101ee87e41b4cd9ec938a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26d40ba4_ef8966db",
         "filename": "device/BUILD.gn",
         "patchSetId": 8
@@ -13,6 +36,30 @@
       "writtenOn": "2017-11-02T09:21:53Z",
       "side": 1,
       "message": "Hi, Reilly, \nIn PatchSet7, the fuchsia trybot complains \u0027device_unittest\u0027 cannot find target \u0027//device/serial\u0027. I found the target \u0027//device/serial\u0027 is only defined on win, linux and mac, But not in fuchsia! See https://cs.chromium.org/chromium/src/device/serial/BUILD.gn?rcl\u003d099fdab2c8b5e3e17cd3808f22790f7b51ca1927\u0026l\u003d18\n\nIt\u0027s so strange that only PatchSet7 complains this! I assume all the trybots for fuchsia should had encountered this error, but they hadn\u0027t. \nAnyway, I put the unittest of Serial inside the \"if ( is_win || is_linux || is_mac)\" condition. \n\nComments? thanks!",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 3
+      },
+      "revId": "cc80e0c17738c902519101ee87e41b4cd9ec938a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c5f9a6_25bcebcc",
+        "filename": "device/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-02T15:32:25Z",
+      "side": 1,
+      "message": "lgtm",
+      "parentUuid": "26d40ba4_ef8966db",
       "range": {
         "startLine": 130,
         "startChar": 4,
