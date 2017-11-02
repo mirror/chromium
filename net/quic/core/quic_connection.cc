@@ -1580,6 +1580,9 @@ bool QuicConnection::WritePacket(SerializedPacket* packet) {
   }
 
   if (result.status == WRITE_STATUS_BLOCKED) {
+    // Ensure the writer is still write blocked, otherwise QUIC may continue
+    // trying to write when it will not be able to.
+    DCHECK(writer_->IsWriteBlocked());
     visitor_->OnWriteBlocked();
     // If the socket buffers the data, then the packet should not
     // be queued and sent again, which would result in an unnecessary
