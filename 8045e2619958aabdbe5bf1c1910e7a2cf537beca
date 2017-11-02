@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a6fbdfb_0b9d5514",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-02T10:41:38Z",
+      "side": 1,
+      "message": "Actually, I\u0027d like to propose to get rid of a list of supported frame types and incorporate this logic into ReportingMessageForFrameType.\n\nconst char* ReportingMessageForFrameType(FrameType type) {\n  switch (type) {\n    case A:\n      return \"Metric.A\";\n    case B:\n      return \"Metric.B\";\n    case C:\n    case D:\n    case E:\n      return \"Metric.Other\";\n  }\n}\n\nIn this we don\u0027t have to worry about special cases and even can group different groups into one: \n\ncase BACKGROUND:\ncase BACKGROUND_EXEMPT:\n  return \"Metric.Background\";\n\nWith this I suggest that we have an array of eqts for each frame type / queue type (extra 20-30 bytes per process are simply not worth it) and do the aggregation per reporting message in EndStep.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 52
+      },
+      "revId": "8045e2619958aabdbe5bf1c1910e7a2cf537beca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
