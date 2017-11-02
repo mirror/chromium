@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15d416e3_e2525905",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-02T03:14:14Z",
+      "side": 1,
+      "message": "Is this the right feature flag to test? Should it be ext_color_buffer_half_float or one of the other extensions that are tested by the WebGL DrawingBuffer code?",
+      "range": {
+        "startLine": 378,
+        "startChar": 36,
+        "endLine": 378,
+        "endChar": 68
+      },
+      "revId": "b67f79ec5c1f7183c623bf0251e9d631484f971d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
