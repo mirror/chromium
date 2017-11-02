@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f569bb17_e0d3f6b9",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T22:56:37Z",
+      "side": 1,
+      "message": "fetch_in_progress_ \u003d false;",
+      "revId": "757d4babaf7aeab6d045a9343d3cc0e307c05844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0812e211_03f8bb97",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
         "patchSetId": 2
