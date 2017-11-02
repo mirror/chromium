@@ -70,6 +70,24 @@
       "revId": "304b70c41ce0dbcc564451d5f674cb08f4290310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99b306d_2516f1b9",
+        "filename": "content/public/test/network_service_test_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-02T17:08:34Z",
+      "side": 1,
+      "message": "sounds good to commit now as is then to unblock you",
+      "parentUuid": "504d5211_4eb60fa2",
+      "revId": "304b70c41ce0dbcc564451d5f674cb08f4290310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
