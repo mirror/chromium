@@ -683,6 +683,85 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginTest,
             new_shell->web_contents()->GetMainFrame()->GetProcess());
 }
 
+// Verify that when a process has a pending SiteProcessCountTracker entry for
+// an isolated origin, and a navigation to a non-isolated origin reuses that
+// process, future isolated origin subframe navigations shouldn't reuse that
+// process.  See https://crbug.com/780661.
+IN_PROC_BROWSER_TEST_F(IsolatedOriginTest,
+                       IsolatedSubframeDoesNotReuseUnsuitableProcess) {
+  // This test requires PlzNavigate.
+  if (!IsBrowserSideNavigationEnabled())
+    return;
+
+  // Set the process limit to 1.
+  RenderProcessHost::SetMaxRendererProcessCount(1);
+
+  // Start from an about:blank page, where the SiteInstance will not have a
+  // site assigned, but will have an associated process.
+  EXPECT_TRUE(NavigateToURL(shell(), GURL(url::kAboutBlankURL)));
+  SiteInstanceImpl* starting_site_instance = static_cast<SiteInstanceImpl*>(
+      shell()->web_contents()->GetMainFrame()->GetSiteInstance());
+  EXPECT_FALSE(starting_site_instance->HasSite());
+  EXPECT_TRUE(starting_site_instance->HasProcess());
+  EXPECT_TRUE(web_contents()->GetMainFrame()->GetProcess()->IsUnused());
+
+  // Inject and click a link to an isolated origin URL which never sends back a
+  // response.  Note that setting location.href won't work here, as that goes
+  // through OpenURL instead of OnBeginNavigation when starting from an
+  // about:blank page, and that doesn't trigger this bug.
+  GURL hung_isolated_url(
+      embedded_test_server()->GetURL("isolated.foo.com", "/hung"));
+  TestNavigationManager manager(shell()->web_contents(), hung_isolated_url);
+  EXPECT_TRUE(ExecuteScript(shell()->web_contents(),
+                            "var link = document.createElement('a');"
+                            "link.href = '" + hung_isolated_url.spec() + "';"
+                            "document.body.appendChild(link);"
+                            "link.click();"));
+
+  // Wait for the request and send it.  This will place
+  // isolated.foo.com on the list of pending sites for this tab's process.
+  EXPECT_TRUE(manager.WaitForRequestStart());
+  manager.ResumeNavigation();
+
+  // Open a new, unrelated tab and navigate it to an unisolated URL. This
+  // should reuse the first process, which is still considered unused at this
+  // point, and mark it as used.
+  Shell* new_shell = CreateBrowser();
+  GURL foo_url(embedded_test_server()->GetURL("www.foo.com",
+                                              "/page_with_iframe.html"));
+  EXPECT_TRUE(NavigateToURL(new_shell, foo_url));
+
+  // Navigate iframe on second tab to isolated.foo.com.  This should *not*
+  // reuse the first process, even though isolated.foo.com is still in its list
+  // of pending sites (from the hung navigation in the first tab).
+  GURL isolated_url(
+      embedded_test_server()->GetURL("isolated.foo.com", "/title1.html"));
+  NavigateIframeToURL(new_shell->web_contents(), "test_iframe", isolated_url);
+
+  FrameTreeNode* root =
+      static_cast<WebContentsImpl*>(new_shell->web_contents())
+          ->GetFrameTree()
+          ->root();
+  FrameTreeNode* child = root->child_at(0);
+
+  // foo.com and its isolated origin iframe should end up in different
+  // processes.
+  EXPECT_NE(child->current_frame_host()->GetProcess(),
+            root->current_frame_host()->GetProcess());
+
+  // Manipulating cookies from the main frame should not result in a renderer
+  // kill.
+  EXPECT_TRUE(ExecuteScript(root->current_frame_host(),
+                            "document.cookie = 'foo=bar';"));
+
+  std::string cookie;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      root->current_frame_host(),
+      "window.domAutomationController.send(document.cookie);",
+      &cookie));
+  EXPECT_EQ("foo=bar", cookie);
+}
+
 // Check that subdomains on an isolated origin (e.g., bar.isolated.foo.com)
 // also end up in the isolated origin's SiteInstance.
 IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, IsolatedOriginWithSubdomain) {

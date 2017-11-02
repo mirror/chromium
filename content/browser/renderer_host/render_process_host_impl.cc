@@ -829,6 +829,11 @@ class SiteProcessCountTracker : public base::SupportsUserData::Data,
         NOTREACHED();
         continue;
       }
+
+      if (!RenderProcessHostImpl::IsSuitableHost(
+              host, host->GetBrowserContext(), site_url))
+        continue;
+
       if (host->VisibleWidgetCount())
         foreground_processes->insert(host);
       else
