@@ -271,6 +271,7 @@ class CORE_EXPORT WebLocalFrameImpl final
                 WebHistoryLoadType,
                 bool is_client_redirect) override;
   FallbackContentResult MaybeRenderFallbackContent(
+      const WebURL&,
       const WebURLError&) const override;
   void ReportContentSecurityPolicyViolation(
       const blink::WebContentSecurityPolicyViolation&) override;
