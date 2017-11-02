@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b27af618_df62a864",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-02T10:50:13Z",
+      "side": 1,
+      "message": "Aah, so baking \"graybg:\" into the intermediate URL causes the cache to be flushed, I totally missed that. That\u0027s kinda neat, but also quite subtle...\nMaybe we should just make LogoTracker aware of the graybg flag (again)? I.e. pass it as an extra param to SetServerAPI. Then LogoTracker can detect the change and clear the cache, but it\u0027ll be more explicit, and also the messy query parsing won\u0027t be required anymore. WDYT?",
+      "parentUuid": "4e0f7a3e_9ffabead",
+      "range": {
+        "startLine": 69,
+        "startChar": 45,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16119479_af5cd6fe",
         "filename": "components/search_provider_logos/google_logo_api.cc",
         "patchSetId": 12
