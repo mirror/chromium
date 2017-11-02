@@ -93,6 +93,30 @@
       "revId": "720c54e2f274ede745ab3c2743f28fd5d1091b89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8bb4c69c_55285917",
+        "filename": "components/browser_watcher/watcher_metrics_provider_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-11-02T15:00:15Z",
+      "side": 1,
+      "message": "The problem is that in the case of an overflow, you won\u0027t know if it was at \"max\" upon entry to this method or if many registry entries brought it to that point.  Do you care?\n\nI suppose you could grab the snapshot twice to keep the values upon entry and the value before the current increment.",
+      "parentUuid": "ff3d41b2_edc2ae50",
+      "range": {
+        "startLine": 134,
+        "startChar": 59,
+        "endLine": 134,
+        "endChar": 68
+      },
+      "revId": "720c54e2f274ede745ab3c2743f28fd5d1091b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
