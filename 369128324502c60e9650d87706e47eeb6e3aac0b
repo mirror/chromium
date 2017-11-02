@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c796dc2_2b9f21de",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-02T23:57:05Z",
+      "side": 1,
+      "message": "Nit (optional):\n\nreturn key.endsWith(\u0027Time\u0027) ? new Date(value).toString() : value;\n\nOr even shorter with the arrow syntax\n\nJSON.stringify(\n        {offlinePages: offlinePages, savePageRequests: savePageRequests},\n        (k, v) \u003d\u003e k.endsWith(\u0027Time\u0027) ? new Date(v).toString() : v);",
+      "revId": "369128324502c60e9650d87706e47eeb6e3aac0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
