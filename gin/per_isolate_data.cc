@@ -8,7 +8,6 @@
 
 #include "base/logging.h"
 #include "base/single_thread_task_runner.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "gin/public/gin_embedders.h"
 
 using v8::ArrayBuffer;
@@ -29,8 +28,7 @@ PerIsolateData::PerIsolateData(
     : isolate_(isolate),
       allocator_(allocator),
       access_mode_(access_mode),
-      task_runner_(
-          task_runner ? task_runner : base::ThreadTaskRunnerHandle::Get()) {
+      task_runner_(std::move(task_runner)) {
   isolate_->SetData(kEmbedderNativeGin, this);
 }
 
