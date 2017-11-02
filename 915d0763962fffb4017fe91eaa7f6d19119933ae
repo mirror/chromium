@@ -93,6 +93,30 @@
       "revId": "915d0763962fffb4017fe91eaa7f6d19119933ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95225fe1_900900f0",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-02T14:25:37Z",
+      "side": 1,
+      "message": "We will need to have hooks to react to scroller no longer being\ncomposited at some point in future. \n\nBut for now I was just mainly concerned with creation time issue \nwhich I think is more common and possible to happen when doing\ndemos and testing thing.",
+      "parentUuid": "3af2f5d6_1f7b2209",
+      "range": {
+        "startLine": 93,
+        "startChar": 35,
+        "endLine": 93,
+        "endChar": 63
+      },
+      "revId": "915d0763962fffb4017fe91eaa7f6d19119933ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
