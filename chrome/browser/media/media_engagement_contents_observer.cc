@@ -66,7 +66,7 @@ MediaEngagementContentsObserver::MediaEngagementContentsObserver(
     MediaEngagementService* service)
     : WebContentsObserver(web_contents),
       service_(service),
-      playback_timer_(new base::Timer(true, false)) {}
+      task_runner_(nullptr) {}
 
 MediaEngagementContentsObserver::~MediaEngagementContentsObserver() = default;
 
@@ -74,7 +74,6 @@ void MediaEngagementContentsObserver::WebContentsDestroyed() {
   // Commit a visit if we have not had a playback.
   MaybeCommitPendingData(kVisitEnd);
 
-  playback_timer_->Stop();
   RecordUkmMetrics();
   ClearPlayerStates();
   service_->contents_observers_.erase(this);
@@ -84,6 +83,7 @@ void MediaEngagementContentsObserver::WebContentsDestroyed() {
 void MediaEngagementContentsObserver::ClearPlayerStates() {
   player_states_.clear();
   significant_players_.clear();
+  player_timers_.clear();
 }
 
 void MediaEngagementContentsObserver::RecordUkmMetrics() {
@@ -165,7 +165,6 @@ void MediaEngagementContentsObserver::DidFinishNavigation(
     return;
   }
 
-  playback_timer_->Stop();
   ClearPlayerStates();
 
   url::Origin new_origin = url::Origin::Create(navigation_handle->GetURL());
@@ -214,7 +213,7 @@ void MediaEngagementContentsObserver::MediaStartedPlaying(
   state.has_video = media_player_info.has_video;
 
   MaybeInsertRemoveSignificantPlayer(media_player_id);
-  UpdateTimer();
+  UpdateTimer(media_player_id);
   RecordEngagementScoreToHistogramAtPlayback(media_player_id);
 }
 
@@ -242,7 +241,7 @@ void MediaEngagementContentsObserver::MediaMutedStatusChanged(
     bool muted) {
   GetPlayerState(id).muted = muted;
   MaybeInsertRemoveSignificantPlayer(id);
-  UpdateTimer();
+  UpdateTimer(id);
   RecordEngagementScoreToHistogramAtPlayback(id);
 }
 
@@ -252,7 +251,7 @@ void MediaEngagementContentsObserver::MediaResized(const gfx::Size& size,
       (size.width() >= kSignificantSize.width() &&
        size.height() >= kSignificantSize.height());
   MaybeInsertRemoveSignificantPlayer(id);
-  UpdateTimer();
+  UpdateTimer(id);
 }
 
 void MediaEngagementContentsObserver::MediaStoppedPlaying(
@@ -260,11 +259,7 @@ void MediaEngagementContentsObserver::MediaStoppedPlaying(
     const MediaPlayerId& media_player_id) {
   GetPlayerState(media_player_id).playing = false;
   MaybeInsertRemoveSignificantPlayer(media_player_id);
-  UpdateTimer();
-}
-
-void MediaEngagementContentsObserver::DidUpdateAudioMutingState(bool muted) {
-  UpdateTimer();
+  UpdateTimer(media_player_id);
 }
 
 std::vector<MediaEngagementContentsObserver::InsignificantPlaybackReason>
@@ -305,11 +300,19 @@ bool MediaEngagementContentsObserver::IsPlayerStateComplete(
           state.significant_size.has_value());
 }
 
-void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
-  DCHECK(!significant_playback_recorded_);
+void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime(
+    const MediaPlayerId& id) {
+  player_timers_.erase(id);
 
-  // Do not record significant playback if the tab did not make
-  // a sound in the last two seconds.
+  // Check that the tab is not muted.
+  if (web_contents()->IsAudioMuted())
+    return;
+
+  // Record significant audible playback.
+  audible_players_[id] = true;
+
+// Do not record significant playback if the tab did not make
+// a sound in the last two seconds.
 #if defined(OS_ANDROID)
 // Skipping WasRecentlyAudible check on Android (not available).
 #else
@@ -317,13 +320,16 @@ void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
     return;
 #endif
 
-  significant_playback_recorded_ = true;
+  // If this is our first significant playback then we should record it.
+  if (!significant_playback_recorded_) {
+    // A playback always comes after a visit so the visit should always be
+    // pending to commit.
+    DCHECK(pending_data_to_commit_.has_value());
+    pending_data_to_commit_ = true;
+    MaybeCommitPendingData(kSignificantMediaPlayback);
+  }
 
-  // A playback always comes after a visit so the visit should always be pending
-  // to commit.
-  DCHECK(pending_data_to_commit_.has_value());
-  pending_data_to_commit_ = true;
-  MaybeCommitPendingData(kSignificantMediaPlayback);
+  significant_playback_recorded_ = true;
 }
 
 void MediaEngagementContentsObserver::RecordInsignificantReasons(
@@ -421,37 +427,40 @@ void MediaEngagementContentsObserver::MaybeInsertRemoveSignificantPlayer(
   }
 }
 
-bool MediaEngagementContentsObserver::AreConditionsMet() const {
-  if (significant_players_.empty())
-    return false;
+void MediaEngagementContentsObserver::UpdateTimer(const MediaPlayerId& id) {
+  bool has_timer = player_timers_.find(id) != player_timers_.end();
 
-  return !web_contents()->IsAudioMuted();
-}
-
-void MediaEngagementContentsObserver::UpdateTimer() {
-  if (significant_playback_recorded_)
+  // If we are have already been found to be significant then we don't need
+  // to do anything.
+  if (audible_players_.find(id) == audible_players_.end())
     return;
 
-  if (AreConditionsMet()) {
-    if (playback_timer_->IsRunning())
+  // If we meet all the reqirements for being significant then start a timer.
+  if (significant_players_.find(id) != significant_players_.end()) {
+    if (has_timer)
       return;
 
-    playback_timer_->Start(
+    std::unique_ptr<base::Timer> new_timer =
+        base::MakeUnique<base::Timer>(true, false);
+    if (task_runner_)
+      new_timer->SetTaskRunner(task_runner_);
+
+    new_timer->Start(
         FROM_HERE,
         MediaEngagementContentsObserver::kSignificantMediaPlaybackTime,
         base::Bind(
             &MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime,
-            base::Unretained(this)));
-  } else {
-    if (!playback_timer_->IsRunning())
-      return;
-    playback_timer_->Stop();
+            base::Unretained(this), id));
+
+    player_timers_[id] = std::move(new_timer);
+  } else if (has_timer) {
+    player_timers_.erase(id);
   }
 }
 
-void MediaEngagementContentsObserver::SetTimerForTest(
-    std::unique_ptr<base::Timer> timer) {
-  playback_timer_ = std::move(timer);
+void MediaEngagementContentsObserver::SetTaskRunnerForTest(
+    scoped_refptr<base::SequencedTaskRunner> task_runner) {
+  task_runner_ = std::move(task_runner);
 }
 
 void MediaEngagementContentsObserver::ReadyToCommitNavigation(
