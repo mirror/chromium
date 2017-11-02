@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "afa56a02_3914b07d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-02T08:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fe179fd_89396e24",
+      "range": {
+        "startLine": 16,
+        "startChar": 21,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "f381cc39f7df899218245130b6f9b3735283894e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a7ce3b5_bf017c6a",
         "filename": "components/autofill/core/browser/credit_card_field.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-01T20:29:06Z",
       "side": 1,
       "message": "Great timing. I was just looking at why we were issuing predictions/classifications for non-focusable fields.\n\nWas there a reason you proposed putting this at the end of the loop instead of the beginning?",
+      "revId": "f381cc39f7df899218245130b6f9b3735283894e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf3918d_b9a3ba2d",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-02T08:41:43Z",
+      "side": 1,
+      "message": "Rational is that website can hide expiration and CVC until number is filled, so I prefer to try to parse them before skipping.\nBut rational in the other direction could be that a hidden field between expiration month and year will still make the parsing to fail, so I don\u0027t know what is better.\nIt may even be better to skip them sooner, so other parser would be fixed as well.",
+      "parentUuid": "6a7ce3b5_bf017c6a",
       "revId": "f381cc39f7df899218245130b6f9b3735283894e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
