@@ -10,6 +10,11 @@ FindBarIcon::FindBarIcon() : BubbleIconView(nullptr, 0) {}
 
 FindBarIcon::~FindBarIcon() {}
 
+bool FindBarIcon::IsActivated() {
+  return GetInkDrop()->GetTargetInkDropState() ==
+         views::InkDropState::ACTIVATED;
+}
+
 void FindBarIcon::OnExecuting(ExecuteSource execute_source) {}
 
 views::BubbleDialogDelegateView* FindBarIcon::GetBubble() const {
