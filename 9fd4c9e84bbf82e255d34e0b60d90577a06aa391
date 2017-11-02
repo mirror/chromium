@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49e43490_221a8299",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-02T22:05:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19680552_db2514ac",
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b389294_b2579e88",
         "filename": "device/vr/openvr/openvr_helpers.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "37a72a7c_53d81640",
+        "filename": "device/vr/openvr/openvr_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-02T22:05:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b389294_b2579e88",
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c90e631_78de33d4",
         "filename": "device/vr/openvr/openvr_helpers.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c584fd13_37aba2b6",
+        "filename": "device/vr/openvr/openvr_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-02T22:05:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c90e631_78de33d4",
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "bef117a1_193b86ce",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-02T22:05:01Z",
+      "side": 1,
+      "message": "Switched to the typed helper.  It doesn\u0027t expose an error message, but if we are only logging to DLOG(ERROR), it will work fine.",
+      "parentUuid": "8f2ff55f_ef32cfb4",
+      "range": {
+        "startLine": 118,
+        "startChar": 19,
+        "endLine": 119,
+        "endChar": 69
+      },
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ad84f9d_71cbf511",
         "filename": "device/vr/vr_service.mojom",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a15a3c_8c1849fe",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-02T22:05:01Z",
+      "side": 1,
+      "message": "switched argument order to match.  Added todo(676224).  It would make sense to rename the other method, but I\u0027ll postpone for this CL.",
+      "parentUuid": "3ad84f9d_71cbf511",
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "0143bfc2_d8de01a2",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-02T22:05:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9461e915_36d4ec61",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 11
+      },
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f111623_b6f2a53b",
         "filename": "third_party/openvr/BUILD.gn",
         "patchSetId": 3
@@ -127,6 +247,24 @@
       "writtenOn": "2017-11-02T19:58:49Z",
       "side": 1,
       "message": "We already have a jsoncpp in third_party... any chance we can patch openvr to just use that one instead?\n\n(separate CL for this one is fine)",
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb2f2ba_e0c9c932",
+        "filename": "third_party/openvr/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-02T22:05:01Z",
+      "side": 1,
+      "message": "We could - I filed 780987 for this.\n\nIt looks like there are two other jsoncpp\u0027s in third_party - protobuf/conformance and jsoncpp.",
+      "parentUuid": "1f111623_b6f2a53b",
       "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

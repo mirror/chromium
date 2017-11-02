@@ -426,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "091d8d06_24db616f",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-02T22:05:01Z",
+      "side": 1,
+      "message": "They have something they call \"running start\", which is basically tracking how long you take between WaitGetPoses returning and SubmitFrame, plus how long they take between SubmitFrame and being ready to scan out, and waking you up at the right time before vsync to minimize latency.  This is typically useful for apps that render very quickly (ie - need less than 11ms/frame).",
+      "parentUuid": "bb87f220_379e3c3c",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 76
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34f58403_c3f417b4",
         "filename": "device/vr/openvr/openvr_render_loop.cc",
         "patchSetId": 2
