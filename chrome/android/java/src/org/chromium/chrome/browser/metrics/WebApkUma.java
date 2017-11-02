@@ -4,12 +4,14 @@
 
 package org.chromium.chrome.browser.metrics;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.provider.Settings;
+import android.text.TextUtils;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.metrics.RecordHistogram;
@@ -58,6 +60,14 @@ public class WebApkUma {
     public static final int GOOGLE_PLAY_INSTALL_REQUEST_FAILED_NETWORK_ERROR = 13;
     public static final int GOOGLE_PLAY_INSTALL_REQUSET_FAILED_RESOLVE_ERROR = 14;
     public static final int GOOGLE_PLAY_INSTALL_RESULT_MAX = 14;
+
+    // This enum is used to back UMA histograms, and should therefore be treated as append-only.
+    private static final int PERMISSION_OTHER = 0;
+    private static final int PERMISSION_ACCESS_COURSE_LOCATION = 1;
+    private static final int PERMISSION_ACCESS_FINE_LOCATION = 2;
+    private static final int PERMISSION_MICROPHONE = 3;
+    private static final int PERMISSION_CAMERA = 4;
+    private static final int PERMISSION_MAX = 5;
 
     public static final String HISTOGRAM_UPDATE_REQUEST_SENT =
             "WebApk.Update.RequestSent";
@@ -151,6 +161,40 @@ public class WebApkUma {
                 ? "WebApk.ShellApkVersion.BrowserApk"
                 : "WebApk.ShellApkVersion.UnboundApk";
         RecordHistogram.recordSparseSlowlyHistogram(name, shellApkVersion);
+    }
+
+    /**
+     * Records the requests of Android runtime permissions which haven't been granted to Chrome when
+     * Chrome is running in WebAPK runtime.
+     */
+    public static void recordAndroidRuntimePermissionPromptInWebApkAsync(
+            final String[] permissions) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                for (String permission : permissions) {
+                    RecordHistogram.recordEnumeratedHistogram("WebApk.Permission.DoublePrompt",
+                            getPermissionType(permission), PERMISSION_MAX);
+                }
+                return null;
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private static int getPermissionType(String permission) {
+        if (TextUtils.equals(permission, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            return PERMISSION_ACCESS_COURSE_LOCATION;
+        }
+        if (TextUtils.equals(permission, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            return PERMISSION_ACCESS_FINE_LOCATION;
+        }
+        if (TextUtils.equals(permission, Manifest.permission.RECORD_AUDIO)) {
+            return PERMISSION_MICROPHONE;
+        }
+        if (TextUtils.equals(permission, Manifest.permission.CAMERA)) {
+            return PERMISSION_CAMERA;
+        }
+        return PERMISSION_OTHER;
     }
 
     /**
