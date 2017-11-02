@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "79e271e8_7c39e075",
+        "filename": "ui/display/manager/chromeos/touch_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T17:06:48Z",
+      "side": 1,
+      "message": "\u003e Places this is being used usually need a copy or have to modify it.\n\nCaller can create a copy when necessary.\n\nActually, this isn\u0027t basically same as TouchDeviceManager::touch_associations() ? any reason to provide test specific API?",
+      "parentUuid": "9df0b415_ae46ca71",
+      "revId": "8862bb2aaf8c45bdb4742363167e3675e8213d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27ac8799_4e15cc24",
         "filename": "ui/display/manager/chromeos/touch_device_manager.h",
         "patchSetId": 6
