@@ -19,6 +19,7 @@ import android.provider.MediaStore;
 import android.speech.RecognizerResultsIntent;
 import android.text.TextUtils;
 import android.util.Pair;
+import android.webkit.URLUtil;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ContextUtils;
@@ -991,7 +992,9 @@ public class IntentHandler {
      */
     public static String getUrlFromGoogleChromeSchemeUrl(String url) {
         if (url.toLowerCase(Locale.US).startsWith(GOOGLECHROME_NAVIGATE_PREFIX)) {
-            return url.substring(GOOGLECHROME_NAVIGATE_PREFIX.length());
+            String parsedUrl = url.substring(GOOGLECHROME_NAVIGATE_PREFIX.length());
+            String guessUrl = URLUtil.guessUrl(parsedUrl);
+            if (URLUtil.isHttpsUrl(guessUrl) || URLUtil.isHttpUrl(guessUrl)) return parsedUrl;
         }
 
         return null;
