@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f788083_4f9fb5fa",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-02T00:01:52Z",
+      "side": 1,
+      "message": "EXPECT_EQ?",
+      "revId": "ab1c2da1e556d14f3c7a679a3d50e3d079c18b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
