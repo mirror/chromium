@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f686593_a7b18f33",
+        "filename": "chrome/browser/chromeos/login/users/multi_profile_user_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-02T15:18:57Z",
+      "side": 1,
+      "message": "Non-POD types aren\u0027t allowed to be globals.",
+      "range": {
+        "startLine": 109,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 13
+      },
+      "revId": "ff245f2c0f5a9fa09bff553b39c2f25e964ff264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b846eb0a_427213f4",
+        "filename": "chrome/browser/chromeos/policy/policy_cert_verifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-02T15:18:57Z",
+      "side": 1,
+      "message": "Publicly exposing WeakPtrs to the world is an anti-pattern.  I find it rather surprising we\u0027re exercising this path in a unit test, but given that I\u0027m too cowardly to push back on rewriting those tests, could we instead just destroy the cert_verifier_ in the test after shutting down the threads, or does it DCHECK if destroyed when not on a messageloop?",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "ff245f2c0f5a9fa09bff553b39c2f25e964ff264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d39e15_6b8133ff",
+        "filename": "chrome/browser/profiles/profile_io_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-02T15:18:57Z",
+      "side": 1,
+      "message": "nit:  This is a struct, so remove the trailing underscore.",
+      "range": {
+        "startLine": 344,
+        "startChar": 48,
+        "endLine": 344,
+        "endChar": 69
+      },
+      "revId": "ff245f2c0f5a9fa09bff553b39c2f25e964ff264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
