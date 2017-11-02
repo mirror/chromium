@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30e1fc6e_e852e937",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_feature.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-02T03:51:57Z",
+      "side": 1,
+      "message": "Don\u0027t think we need to keep calling this WebFeaturePolicyFeature?  ... oh ok I saw the other change.",
+      "revId": "1e5ad493d1ae4503c10c69dff9d85855daf1944c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5242d668_92538bcd",
+        "filename": "third_party/WebKit/public/platform/WebSecurityOrigin.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-02T03:51:57Z",
+      "side": 1,
+      "message": "These change don\u0027t seem necessary",
+      "revId": "1e5ad493d1ae4503c10c69dff9d85855daf1944c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
