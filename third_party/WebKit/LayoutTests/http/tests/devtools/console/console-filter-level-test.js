@@ -22,6 +22,8 @@
     console.warn("def warn");
   `);
 
+  Console.ConsoleView.instance()._setMuteThrottlerForTest(true);
+
   function dumpVisibleMessages() {
     var menuText = Console.ConsoleView.instance()._filter._levelMenuButton._text;
     TestRunner.addResult('Level menu: ' + menuText);
