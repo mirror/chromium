@@ -16,6 +16,11 @@ void SetCommandLineFlagsForSandboxType(base::CommandLine* command_line,
     case SANDBOX_TYPE_NO_SANDBOX:
       command_line->AppendSwitch(switches::kNoSandbox);
       break;
+#if defined(OS_WIN)
+    case SANDBOX_TYPE_NO_SANDBOX_AND_ELEVATED_PRIVILEGES:
+      command_line->AppendSwitch(switches::kNoSandboxAndElevatedPrivileges);
+      break;
+#endif
     case SANDBOX_TYPE_RENDERER:
       DCHECK(command_line->GetSwitchValueASCII(switches::kProcessType) ==
              switches::kRendererProcess);
@@ -78,6 +83,11 @@ SandboxType SandboxTypeFromCommandLine(const base::CommandLine& command_line) {
   if (command_line.HasSwitch(switches::kNoSandbox))
     return SANDBOX_TYPE_NO_SANDBOX;
 
+#if defined(OS_WIN)
+  if (command_line.HasSwitch(switches::kNoSandboxAndElevatedPrivileges))
+    return SANDBOX_TYPE_NO_SANDBOX_AND_ELEVATED_PRIVILEGES;
+#endif
+
   std::string process_type =
       command_line.GetSwitchValueASCII(switches::kProcessType);
   if (process_type.empty())
@@ -108,6 +118,10 @@ SandboxType SandboxTypeFromCommandLine(const base::CommandLine& command_line) {
 SandboxType UtilitySandboxTypeFromString(const std::string& sandbox_string) {
   if (sandbox_string == switches::kNoneSandbox)
     return SANDBOX_TYPE_NO_SANDBOX;
+#if defined(OS_WIN)
+  if (sandbox_string == switches::kNoneSandboxAndElevatedPrivileges)
+    return SANDBOX_TYPE_NO_SANDBOX_AND_ELEVATED_PRIVILEGES;
+#endif
   if (sandbox_string == switches::kNetworkSandbox)
     return SANDBOX_TYPE_NETWORK;
   if (sandbox_string == switches::kPpapiSandbox)
