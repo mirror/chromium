@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab10bcc6_51f178c4",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T00:36:54Z",
+      "side": 1,
+      "message": "Returning unowned pointer can lead to memory leaks if misused. How about moving Show() call here and returning void?",
+      "revId": "0b3e9edc344af025fbf88c68372623eacdfacb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd24e8b3_a11e58b0",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T00:36:54Z",
+      "side": 1,
+      "message": "Sorry, but I got this question in my head only now. Why do we need to use WebUI for Captive Portal interstitial? WebUI is user interface rendered in the web contents area and we don\u0027t have any user interface to render. Can we just load about://blank and then show interstitial on top? It seems to me that |captive_portal_blocking_page_needs_display_| workaround is only needed because we trying to use WebUI when WebUI may not be the best solution.",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "0b3e9edc344af025fbf88c68372623eacdfacb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
