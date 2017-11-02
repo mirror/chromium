@@ -857,7 +857,6 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
       needs_horizontal_scrollbar != had_horizontal_scrollbar;
   bool vertical_scrollbar_should_change =
       needs_vertical_scrollbar != had_vertical_scrollbar;
-
   bool scrollbars_will_change =
       !scrollbars_are_frozen &&
       (horizontal_scrollbar_should_change || vertical_scrollbar_should_change);
@@ -912,6 +911,11 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
       if (parent && parent->IsFlexibleBox())
         ToLayoutFlexibleBox(parent)->ClearCachedMainSizeForChild(Box());
     }
+  } else {
+    if (!needs_horizontal_scrollbar)
+      scrollbar_manager_.DetachHorizontalScrollbar();
+    if (!needs_vertical_scrollbar)
+      scrollbar_manager_.DetachVerticalScrollbar();
   }
 
   {
@@ -2154,6 +2158,13 @@ void PaintLayerScrollableArea::ScrollbarManager::SetHasVerticalScrollbar(
     if (!DelayScrollOffsetClampScope::ClampingIsDelayed())
       DestroyScrollbar(kVerticalScrollbar);
   }
+}
+
+void PaintLayerScrollableArea::ScrollbarManager::DetachHorizontalScrollbar() {
+  h_bar_is_attached_ = 0;
+}
+void PaintLayerScrollableArea::ScrollbarManager::DetachVerticalScrollbar() {
+  v_bar_is_attached_ = 0;
 }
 
 Scrollbar* PaintLayerScrollableArea::ScrollbarManager::CreateScrollbar(
