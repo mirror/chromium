@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "fceb5180_8e279e52",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-02T21:48:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4395ea07_40c55c30",
+      "range": {
+        "startLine": 94,
+        "startChar": 26,
+        "endLine": 94,
+        "endChar": 38
+      },
+      "revId": "bc501c3164eab1a8710e353547249700484da54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e82985e_ec9245b8",
         "filename": "content/renderer/media_recorder/audio_track_recorder.h",
         "patchSetId": 3
@@ -250,6 +274,30 @@
       "side": 1,
       "message": "The mix of EXPECT and actions intends to be written as\nnear-prose :-) -- but it might not be attained. Since \nthese are test cases anyway I don\u0027t mind leaving it as-is.",
       "parentUuid": "b481dd73_dcee9cb7",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 357,
+        "endChar": 41
+      },
+      "revId": "bc501c3164eab1a8710e353547249700484da54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e82c2e1_591f0400",
+        "filename": "content/renderer/media_recorder/audio_track_recorder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-02T21:48:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1fb1fc90_7bd5082a",
       "range": {
         "startLine": 339,
         "startChar": 0,
