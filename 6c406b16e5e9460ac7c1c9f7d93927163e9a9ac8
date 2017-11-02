@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "83a13f82_e166c628",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-02T23:42:21Z",
+      "side": 1,
+      "message": "Yea. That\u0027s more or less what I figured. For now this seems fine.",
+      "parentUuid": "a90c1ad3_4d96190f",
+      "revId": "6c406b16e5e9460ac7c1c9f7d93927163e9a9ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e360db82_902e04cc",
         "filename": "components/previews/core/previews_io_data.h",
         "patchSetId": 4

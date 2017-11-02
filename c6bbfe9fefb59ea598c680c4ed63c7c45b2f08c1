@@ -116,6 +116,24 @@
       "revId": "c6bbfe9fefb59ea598c680c4ed63c7c45b2f08c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4101ea_0a6602c1",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-02T23:42:21Z",
+      "side": 1,
+      "message": "I feel like my comment got lost in translation since you had uploaded a new patch before I published. My thoughts were:\n\nAfter the EXPECT_FALSE, you would verify the histogram has no results in it (with total count).\nAfter the EXPECT_TRUE, you would verify ExpectUniqueSample to make sure only the Allowed bucket had any hits.\n\nI\u0027m fine with it as is really, it just didn\u0027t make sense when ExpectUniqueSample was called on an empty histogram.",
+      "parentUuid": "977a0873_239db2c7",
+      "revId": "c6bbfe9fefb59ea598c680c4ed63c7c45b2f08c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
