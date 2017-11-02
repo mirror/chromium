@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "227f3502_953775be",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-02T17:25:58Z",
+      "side": 1,
+      "message": "nit: You have an extra space in the middle of auto-resize.",
+      "range": {
+        "startLine": 170,
+        "startChar": 27,
+        "endLine": 170,
+        "endChar": 39
+      },
+      "revId": "a149cbe2486ee9386387f88f4de3bbb8f182ed71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
