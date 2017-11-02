@@ -36,6 +36,7 @@ Ui::Ui(UiBrowserInterface* browser,
       ui_initial_state.web_vr_autopresentation_expected;
   model_->experimental_features_enabled =
       base::FeatureList::IsEnabled(features::kExperimentalVRFeatures);
+  model_->voice_input_enabled = ui_initial_state.voice_input_enabled;
 }
 
 Ui::~Ui() = default;
@@ -109,6 +110,10 @@ void Ui::SetSpeechRecognitionEnabled(bool enabled) {
 
 void Ui::OnSpeechRecognitionStateChanged(int new_state) {
   model_->speech_recognition_state = new_state;
+}
+
+void Ui::SetVoiceInputEnabled(bool enabled) {
+  model_->voice_input_enabled = enabled;
 }
 
 void Ui::SetOmniboxSuggestions(

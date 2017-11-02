@@ -271,6 +271,13 @@ void VrGLThread::OnSpeechRecognitionStateChanged(int new_state) {
                  browser_ui_, new_state));
 }
 
+void VrGLThread::SetVoiceInputEnabled(bool enabled) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetVoiceInputEnabled,
+                            browser_ui_, enabled));
+}
+
 bool VrGLThread::OnMainThread() const {
   return main_thread_task_runner_->BelongsToCurrentThread();
 }

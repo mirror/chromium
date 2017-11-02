@@ -33,6 +33,7 @@ struct UiInitialState {
   bool in_web_vr = false;
   bool web_vr_autopresentation_expected = false;
   bool browsing_disabled = false;
+  bool voice_input_enabled = true;
 };
 
 // This class manages all GLThread owned objects and GL rendering for VrShell.
@@ -69,6 +70,7 @@ class Ui : public BrowserUiInterface, public UiInterface {
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void OnSpeechRecognitionStateChanged(int new_state) override;
+  void SetVoiceInputEnabled(bool enabled) override;
 
   // UiInterface
   bool ShouldRenderWebVr() override;

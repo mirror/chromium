@@ -35,6 +35,7 @@ class BrowserUiInterface {
                                       UiUnsupportedMode reason) = 0;
   virtual void SetSpeechRecognitionEnabled(bool enabled) = 0;
   virtual void OnSpeechRecognitionStateChanged(int new_state) = 0;
+  virtual void SetVoiceInputEnabled(bool enabled) = 0;
 
   // Tab handling.
   virtual void AppendToTabList(bool incognito,

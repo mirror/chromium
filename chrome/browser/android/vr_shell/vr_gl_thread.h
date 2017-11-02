@@ -78,6 +78,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
                               vr::UiUnsupportedMode reason) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void OnSpeechRecognitionStateChanged(int new_state) override;
+  void SetVoiceInputEnabled(bool enabled) override;
 
  protected:
   void Init() override;
