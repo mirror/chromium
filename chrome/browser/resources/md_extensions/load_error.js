@@ -10,6 +10,7 @@ cr.define('extensions', function() {
     /**
      * Attempts to load the previously-attempted unpacked extension.
      * @param {string} retryId
+     * @return {!Promise}
      */
     retryLoadUnpacked(retryId) {}
   }
@@ -38,8 +39,11 @@ cr.define('extensions', function() {
 
     /** @private */
     onRetryTap_: function() {
-      this.delegate.retryLoadUnpacked(this.loadError.retryGuid);
       this.close();
+      this.delegate.retryLoadUnpacked(this.loadError.retryGuid)
+          .catch(loadError => {
+            this.fire('load-error', loadError);
+          });
     },
 
     /** @private */
