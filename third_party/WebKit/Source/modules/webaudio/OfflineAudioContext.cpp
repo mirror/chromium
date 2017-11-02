@@ -385,7 +385,7 @@ bool OfflineAudioContext::HandlePreOfflineRenderTasks() {
   GetDeferredTaskHandler().HandleDeferredTasks();
   HandleStoppableSourceNodes();
 
-  return ShouldSuspend();
+  return ShouldPause();
 }
 
 void OfflineAudioContext::HandlePostOfflineRenderTasks() {
@@ -449,7 +449,7 @@ void OfflineAudioContext::RejectPendingResolvers() {
   RejectPendingDecodeAudioDataResolvers();
 }
 
-bool OfflineAudioContext::ShouldSuspend() {
+bool OfflineAudioContext::ShouldPause() {
   DCHECK(IsAudioThread());
 
   // Note that the GraphLock is required before this check. Since this needs

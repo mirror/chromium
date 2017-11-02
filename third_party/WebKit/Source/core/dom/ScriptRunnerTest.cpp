@@ -420,8 +420,8 @@ TEST_F(ScriptRunnerTest, ResumeAndSuspend_InOrder) {
   script_runner_->NotifyScriptReady(script_loader3, ScriptRunner::kInOrder);
 
   platform_->RunSingleTask();
-  script_runner_->Suspend();
-  script_runner_->Resume();
+  script_runner_->Pause();
+  script_runner_->Unpause();
   platform_->RunUntilIdle();
 
   // Make sure elements are correct and in right order.
@@ -452,8 +452,8 @@ TEST_F(ScriptRunnerTest, ResumeAndSuspend_Async) {
   }));
 
   platform_->RunSingleTask();
-  script_runner_->Suspend();
-  script_runner_->Resume();
+  script_runner_->Pause();
+  script_runner_->Unpause();
   platform_->RunUntilIdle();
 
   // Make sure elements are correct.

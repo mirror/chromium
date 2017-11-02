@@ -108,7 +108,7 @@ class MODULES_EXPORT OfflineAudioContext final : public BaseAudioContext {
   OfflineAudioDestinationHandler& DestinationHandler();
 
   // Check if the rendering needs to be suspended.
-  bool ShouldSuspend();
+  bool ShouldPause();
 
   // This map is to store the timing of scheduled suspends (frame) and the
   // associated promise resolver. This storage can only be modified by the
