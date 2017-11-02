@@ -1,5 +1,7 @@
 specific_include_rules = {
   ".*\.cc": [
     "+content/network",
+    "+components/network_session_configurator",
+    "+components/prefs",  # TODO: This should probably be removed.
   ],
 }

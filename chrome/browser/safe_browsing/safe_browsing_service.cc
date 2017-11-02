@@ -96,6 +96,39 @@ class SafeBrowsingServiceFactoryImpl : public SafeBrowsingServiceFactory {
 static base::LazyInstance<SafeBrowsingServiceFactoryImpl>::Leaky
     g_safe_browsing_service_factory_impl = LAZY_INSTANCE_INITIALIZER;
 
+// Class to own the NetworkContext wrapping a safe browsing service's
+// URLRequestContext
+// TODO(rdsmith): Shift this over to requesting a NetworkContext from the
+// NetworkService when the NetworkService can vend NetworkContexts.
+//
+// Created on the UI thread, but must be initialized and destroyed on the IO
+// thread.
+class SafeBrowsingService::NetworkContextOwner {
+ public:
+  NetworkContextOwner() { DCHECK_CURRENTLY_ON(BrowserThread::UI); }
+
+  ~NetworkContextOwner() { DCHECK_CURRENTLY_ON(BrowserThread::IO); }
+
+  void Initialize(content::mojom::NetworkContextRequest network_context_request,
+                  scoped_refptr<net::URLRequestContextGetter> context_getter) {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    context_getter_ = std::move(context_getter);
+    network_context_ = base::MakeUnique<content::NetworkContext>(
+        std::move(network_context_request),
+        context_getter_->GetURLRequestContext());
+  }
+
+ private:
+  // Reference to the URLRequestContextGetter for the URLRequestContext used by
+  // NetworkContext. Depending on the embedder's implementation, this may be
+  // needed to keep the URLRequestContext alive until the NetworkContext is
+  // destroyed.
+  scoped_refptr<net::URLRequestContextGetter> context_getter_;
+  std::unique_ptr<content::mojom::NetworkContext> network_context_;
+
+  DISALLOW_COPY_AND_ASSIGN(NetworkContextOwner);
+};
+
 // static
 base::FilePath SafeBrowsingService::GetCookieFilePathForTesting() {
   return base::FilePath(SafeBrowsingService::GetBaseFilename().value() +
@@ -133,6 +166,7 @@ SafeBrowsingService::~SafeBrowsingService() {
   // We should have already been shut down. If we're still enabled, then the
   // database isn't going to be closed properly, which could lead to corruption.
   DCHECK(!enabled_);
+  DCHECK(!network_context_owner_);
 }
 
 void SafeBrowsingService::Initialize() {
@@ -195,6 +229,11 @@ void SafeBrowsingService::ShutDown() {
       base::BindOnce(&SafeBrowsingURLRequestContextGetter::ServiceShuttingDown,
                      url_request_context_getter_));
 
+  BrowserThread::DeleteSoon(BrowserThread::IO, FROM_HERE,
+                            std::move(network_context_owner_));
+
+  network_context_.reset();
+
   // Release the URLRequestContextGetter after passing it to the IOThread.  It
   // has to be released now rather than in the destructor because it can only
   // be deleted on the IOThread, and the SafeBrowsingService outlives the IO
@@ -218,6 +257,21 @@ scoped_refptr<net::URLRequestContextGetter>
 SafeBrowsingService::url_request_context() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   return url_request_context_getter_;
+}
+
+content::mojom::NetworkContext* SafeBrowsingService::GetNetworkContext() {
+  // Create the NetworkContext as needed.
+  if (!network_context_) {
+    DCHECK(!network_context_owner_);
+    network_context_owner_ = base::MakeUnique<NetworkContextOwner>();
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&NetworkContextOwner::Initialize,
+                       base::Unretained(network_context_owner_.get()),
+                       MakeRequest(&network_context_),
+                       url_request_context_getter_));
+  }
+  return network_context_.get();
 }
 
 void SafeBrowsingService::DisableQuicOnIOThread() {
@@ -433,6 +487,9 @@ void SafeBrowsingService::StopOnIOThread(bool shutdown) {
   ui_manager_->StopOnIOThread(shutdown);
 
   services_delegate_->StopOnIOThread(shutdown);
+
+  if (shutdown)
+    network_context_owner_.reset();
 
   if (enabled_) {
     enabled_ = false;

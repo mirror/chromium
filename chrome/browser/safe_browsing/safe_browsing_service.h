@@ -26,6 +26,8 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
+#include "content/public/common/network_service.mojom.h"
+#include "content/public/network/network_context.h"
 
 #if defined(FULL_SAFE_BROWSING)
 #include "chrome/browser/safe_browsing/incident_reporting/delayed_analysis_callback.h"
@@ -141,6 +143,7 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   }
 
   scoped_refptr<net::URLRequestContextGetter> url_request_context();
+  content::mojom::NetworkContext* GetNetworkContext();
 
   // Called on IO thread thread when QUIC should be disabled (e.g. because of
   // policy). This should not be necessary anymore when http://crbug.com/678653
@@ -228,6 +231,8 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   std::unique_ptr<ServicesDelegate> services_delegate_;
 
  private:
+  class NetworkContextOwner;
+
   friend class SafeBrowsingServiceFactoryImpl;
   friend struct content::BrowserThread::DeleteOnThread<
       content::BrowserThread::UI>;
@@ -293,6 +298,18 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   // |url_request_context_|. Accessed on UI thread.
   scoped_refptr<SafeBrowsingURLRequestContextGetter>
       url_request_context_getter_;
+
+  // This is the NetworkContext used to make requests for the
+  // SafeBrowsingService.
+  content::mojom::NetworkContextPtr network_context_;
+
+  // NetworkContext that wraps access to the URLRequestContext.
+  // Must be destroyed on the IO thread.
+  // TODO: When the NetworkService is available and provides the
+  // functionality, source this from the NetworkService, remove the
+  // url_request_context_getter_ above and do all network operations through
+  // the NetworkContextPtr
+  std::unique_ptr<NetworkContextOwner> network_context_owner_;
 
 #if defined(SAFE_BROWSING_DB_LOCAL)
   // Handles interaction with SafeBrowsing servers. Accessed on IO thread.
