@@ -119,6 +119,7 @@ class SavePackageTest : public RenderViewHostImplTestHarness {
     // to create a ResourceDispatcherHostImpl so that our SavePackage objects
     // can initialize correctly.
     rdh_.reset(new ResourceDispatcherHostImpl);
+    rdh_->SetDelegate(nullptr);
     // Initialize the SaveFileManager instance which we will use for the tests.
     save_file_manager_ = new SaveFileManager();
     return RenderViewHostImplTestHarness::CreateBrowserContext();

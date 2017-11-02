@@ -861,6 +861,7 @@ class ResourceDispatcherHostTest : public testing::Test, public IPC::Sender {
         send_data_received_acks_(false),
         auto_advance_(false) {
     host_.SetLoaderDelegate(&loader_delegate_);
+    host_.SetDelegate(nullptr);
     browser_context_.reset(new TestBrowserContext());
     BrowserContext::EnsureResourceContextInitialized(browser_context_.get());
     content::RunAllTasksUntilIdle();
