@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/network/network_context.h"
+#include "content/public/network/network_context.h"
 
 #include "base/command_line.h"
 #include "base/files/file_util.h"
@@ -21,6 +21,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/prefs/pref_service_factory.h"
 #include "content/network/cache_url_loader.h"
+#include "content/network/cookie_manager_impl.h"
 #include "content/network/http_server_properties_pref_delegate.h"
 #include "content/network/network_service_impl.h"
 #include "content/network/network_service_url_loader_factory_impl.h"
