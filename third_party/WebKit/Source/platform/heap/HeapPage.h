@@ -248,6 +248,7 @@ class PLATFORM_EXPORT HeapObjectHeader {
 
   // Returns true if magic number is valid.
   bool IsValid() const;
+  bool IsZapped() const;
 
   static const uint32_t kZappedMagic = 0xDEAD4321;
 
@@ -432,7 +433,7 @@ class BasePage {
   virtual bool Contains(Address) = 0;
 #endif
   virtual size_t size() = 0;
-  virtual bool IsLargeObjectPage() { return false; }
+  virtual bool IsLargeObjectPage() const { return false; }
 
   Address GetAddress() { return reinterpret_cast<Address>(this); }
   PageMemory* Storage() const { return storage_; }
@@ -455,9 +456,12 @@ class BasePage {
 
   bool IsIncrementalMarking() const { return incremental_marking_; }
 
+  uint32_t GetMagic() const { return magic_; }
+
  private:
-  PageMemory* storage_;
-  BaseArena* arena_;
+  uint32_t const magic_;
+  PageMemory* const storage_;
+  BaseArena* const arena_;
   BasePage* next_;
 
   // Track the sweeping state of a page. Set to false at the start of a sweep,
@@ -540,9 +544,9 @@ class NormalPage final : public BasePage {
   };
 
   void SweepAndCompact(CompactionContext&);
+  PLATFORM_EXPORT HeapObjectHeader* FindHeaderFromAddress(Address);
 
  private:
-  HeapObjectHeader* FindHeaderFromAddress(Address);
   void PopulateObjectStartBitMap();
 
   bool object_start_bit_map_computed_;
@@ -609,7 +613,7 @@ class LargeObjectPage final : public BasePage {
         kAllocationGranularity;
     return sizeof(LargeObjectPage) + padding_size;
   }
-  bool IsLargeObjectPage() override { return true; }
+  bool IsLargeObjectPage() const override { return true; }
 
   HeapObjectHeader* GetHeapObjectHeader() {
     Address header_address = GetAddress() + PageHeaderSize();
@@ -865,6 +869,7 @@ PLATFORM_EXPORT ALWAYS_INLINE BasePage* PageFromObject(const void* object) {
   Address address = reinterpret_cast<Address>(const_cast<void*>(object));
   BasePage* page = reinterpret_cast<BasePage*>(BlinkPageAddress(address) +
                                                kBlinkGuardPageSize);
+  CHECK(page->GetMagic() == 0x12345678);
 #if DCHECK_IS_ON()
   DCHECK(page->Contains(address));
 #endif
@@ -883,6 +888,14 @@ NO_SANITIZE_ADDRESS inline size_t HeapObjectHeader::size() const {
 NO_SANITIZE_ADDRESS inline bool HeapObjectHeader::IsValid() const {
 #if defined(ARCH_CPU_64_BITS)
   return GetMagic() == magic_;
+#else
+  return true;
+#endif
+}
+
+NO_SANITIZE_ADDRESS inline bool HeapObjectHeader::IsZapped() const {
+#if defined(ARCH_CPU_64_BITS)
+  return kZappedMagic == magic_;
 #else
   return true;
 #endif

@@ -247,6 +247,7 @@ class PLATFORM_EXPORT ThreadState {
   void SetGCState(GCState);
   GCState GcState() const { return gc_state_; }
   bool IsInGC() const { return GcState() == kGCRunning; }
+  bool IsMarkingInProgress() const { return GcState() == kIncrementalMarkingStepScheduled || GcState() == kIncrementalMarkingStepScheduled; }
   bool IsSweepingInProgress() const {
     return GcState() == kSweeping ||
            GcState() == kSweepingAndPreciseGCScheduled ||
@@ -291,6 +292,7 @@ class PLATFORM_EXPORT ThreadState {
   void MarkPhaseVisitRoots();
   bool MarkPhaseAdvanceMarking(double deadline_seconds);
   void MarkPhaseEpilogue();
+  void MarkPhaseAbort();
   void CompleteSweep();
   void PreSweep(BlinkGC::GCType);
   void PostSweep();
@@ -519,6 +521,8 @@ class PLATFORM_EXPORT ThreadState {
   }
 
   int GcAge() const { return gc_age_; }
+
+  Visitor* CurrentVisitor() { return current_gc_data_.visitor.get(); }
 
  private:
   template <typename T>

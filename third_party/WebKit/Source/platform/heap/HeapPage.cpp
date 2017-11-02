@@ -273,6 +273,7 @@ Address BaseArena::LazySweep(size_t allocation_size, size_t gc_info_index) {
 
 void BaseArena::SweepUnsweptPage() {
   BasePage* page = first_unswept_page_;
+  CHECK(page->GetMagic() == 0x12345678);
   if (page->IsEmpty()) {
     page->Unlink(&first_unswept_page_);
     page->RemoveFromHeap();
@@ -1187,8 +1188,11 @@ void NEVER_INLINE FreeList::ZapFreedMemory(Address address, size_t size) {
 void NEVER_INLINE FreeList::CheckFreedMemoryIsZapped(Address address,
                                                      size_t size) {
   for (size_t i = 0; i < size; i++) {
-    DCHECK(address[i] == kReuseAllowedZapValue ||
-           address[i] == kReuseForbiddenZapValue);
+    if (address[i] != kReuseAllowedZapValue && address[i] != kReuseForbiddenZapValue) {
+      fprintf(stderr, "%x\n", address[i]);
+    }
+    //DCHECK(address[i] == kReuseAllowedZapValue ||
+    //       address[i] == kReuseForbiddenZapValue);
   }
 }
 #endif
@@ -1264,7 +1268,8 @@ bool FreeList::TakeSnapshot(const String& dump_base_name) {
 }
 
 BasePage::BasePage(PageMemory* storage, BaseArena* arena)
-    : storage_(storage),
+    : magic_(0x12345678),
+      storage_(storage),
       arena_(arena),
       next_(nullptr),
       swept_(true),
@@ -1560,6 +1565,7 @@ void NormalPage::PopulateObjectStartBitMap() {
   for (Address header_address = start; header_address < PayloadEnd();) {
     HeapObjectHeader* header =
         reinterpret_cast<HeapObjectHeader*>(header_address);
+    CHECK(header->IsValid() || header->IsZapped());
     size_t object_offset = header_address - start;
     DCHECK(!(object_offset & kAllocationMask));
     size_t object_start_number = object_offset / kAllocationGranularity;

@@ -239,6 +239,8 @@ class PLATFORM_EXPORT ThreadHeap {
     // threads.
     if (!ThreadState::Current())
       return true;
+    if (ThreadState::Current()->IsMarkingInProgress())
+      return true;
     DCHECK(&ThreadState::Current()->Heap() ==
            &PageFromObject(object)->Arena()->GetThreadState()->Heap());
     return ObjectAliveTrait<T>::IsHeapObjectAlive(object);
@@ -289,6 +291,8 @@ class PLATFORM_EXPORT ThreadHeap {
     BasePage* page = PageFromObject(object_pointer);
     // Page has been swept and it is still alive.
     if (page->HasBeenSwept())
+      return false;
+    if (!page->Arena()->GetThreadState()->IsSweepingInProgress())
       return false;
     DCHECK(page->Arena()->GetThreadState()->IsSweepingInProgress());
 
