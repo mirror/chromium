@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13fa6fcb_ae238b50",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-02T13:32:03Z",
+      "side": 1,
+      "message": "When we get here, the following would hold:\n\nsize_available_ !\u003d Image::kSizeUnavailable || all_data_received\n\n(else we\u0027d have returned on line 425)\n\nSo there ought to be no need to check more than the RHS here. Also, I think this should generalize to the !IsSVGImage case too, no?",
+      "range": {
+        "startLine": 436,
+        "startChar": 11,
+        "endLine": 436,
+        "endChar": 74
+      },
+      "revId": "b3e244f0cc39309d8c64185580d8f56e90c61585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
