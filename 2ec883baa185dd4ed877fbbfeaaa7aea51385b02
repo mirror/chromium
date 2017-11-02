@@ -16,6 +16,24 @@
       "revId": "2ec883baa185dd4ed877fbbfeaaa7aea51385b02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea4c79a5_877177a0",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-02T16:43:35Z",
+      "side": 0,
+      "message": "We have started making distinctions between explicitly blocked navigations, which should never be allowed to succeed in the future and transient errors, such has the ones coming from the network stack. Currently, this is implemented by looking at the error code being ERR_BLOCKED_BY_CLIENT, which is why the DCHECK is here to ensure we know when things change, so it did its job well : ).\n\nBecause of our desire to disallow reloads and avoid security bugs we\u0027ve seen with back/forward to such blocked navigations, we do want to keep knowing that we have blocked the navigation. Due to that, I don\u0027t think option 4 is something we should consider, as working with error codes is prone to bugs. We should keep browser side the return value of the NavigationThrottle and know for sure it was blocked, regardless of which error code it was blocked with. However, we haven\u0027t had the time to implement this yet and I think it will nicely fit with having Mojo interfaces for navigation and extending the lifetime of NavigationRequest until commit. This allows us to preserve the throttle result and construct the proper NavigationEntry at commit time.\n\nIf we want to allow this CL to make progress, I\u0027m think adding the new error code to the DCHECK is the right approach, as long as we also add it in the other locations where we make decisions about blocked navigations. It should be easy to just grep content/browser/frame_host/ for ERR_BLOCKED_BY_CLIENT to find them.",
+      "parentUuid": "613b7146_e83a644b",
+      "revId": "2ec883baa185dd4ed877fbbfeaaa7aea51385b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

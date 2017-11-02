@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6ca4c303_24ec4b1e",
+        "filename": "chrome/browser/policy/policy_blacklist_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-02T16:43:35Z",
+      "side": 1,
+      "message": "If these return default values, it is best to not implement them at all.",
+      "revId": "7cdbe82ac101ffccb4d1eac9e5c1ad94493444fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2519c2d1_e916a5ce",
         "filename": "components/policy/core/browser/url_blacklist_manager.h",
         "patchSetId": 5
