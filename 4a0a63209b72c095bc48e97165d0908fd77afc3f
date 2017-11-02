@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c63878dc_11744f2d",
+        "filename": "components/download/internal/in_progress_metadata_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-02T16:48:48Z",
+      "side": 1,
+      "message": "Is this correct? You are posting a task to another thread, and use the weak_ptr from the current thread, how does that guarantee the thread safety?",
+      "revId": "4a0a63209b72c095bc48e97165d0908fd77afc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5893b864_368cc8c3",
         "filename": "components/download/internal/in_progress_metadata_cache.cc",
         "patchSetId": 7
