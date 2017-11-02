@@ -116,8 +116,7 @@ class QuicDispatcher : public QuicTimeWaitListManager::Visitor,
   // outside of this class.
   void OnPacket() override;
   // Called when the public header has been parsed.
-  bool OnUnauthenticatedPublicHeader(
-      const QuicPacketPublicHeader& header) override;
+  bool OnUnauthenticatedPublicHeader(const QuicPacketHeader& header) override;
   // Called when the private header has been parsed of a data packet that is
   // destined for the time wait manager.
   bool OnUnauthenticatedHeader(const QuicPacketHeader& header) override;
@@ -263,7 +262,7 @@ class QuicDispatcher : public QuicTimeWaitListManager::Visitor,
   // looked up, and the session was not found in the active list of sessions.
   // Returns false if processing should stop after this call.
   virtual bool OnUnauthenticatedUnknownPublicHeader(
-      const QuicPacketPublicHeader& header);
+      const QuicPacketHeader& header);
 
   // Called when a new connection starts to be handled by this dispatcher.
   // Either this connection is created or its packets is buffered while waiting
@@ -297,7 +296,7 @@ class QuicDispatcher : public QuicTimeWaitListManager::Visitor,
 
   typedef QuicUnorderedSet<QuicConnectionId> QuicConnectionIdSet;
 
-  bool HandlePacketForTimeWait(const QuicPacketPublicHeader& header);
+  bool HandlePacketForTimeWait(const QuicPacketHeader& header);
 
   // Attempts to reject the connection statelessly, if stateless rejects are
   // possible and if the current packet contains a CHLO message.  Determines a

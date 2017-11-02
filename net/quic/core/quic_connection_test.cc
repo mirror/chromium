@@ -854,9 +854,9 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
                                    QuicFrame frame,
                                    EncryptionLevel level) {
     QuicPacketHeader header;
-    header.public_header.connection_id = connection_id_;
-    header.public_header.packet_number_length = packet_number_length_;
-    header.public_header.connection_id_length = connection_id_length_;
+    header.connection_id = connection_id_;
+    header.packet_number_length = packet_number_length_;
+    header.connection_id_length = connection_id_length_;
     header.packet_number = number;
     QuicFrames frames;
     frames.push_back(frame);
@@ -965,9 +965,9 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
     QuicPacketHeader header;
     // Set connection_id to peer's in memory representation as this data packet
     // is created by peer_framer.
-    header.public_header.connection_id = connection_id_;
-    header.public_header.packet_number_length = packet_number_length_;
-    header.public_header.connection_id_length = connection_id_length_;
+    header.connection_id = connection_id_;
+    header.packet_number_length = packet_number_length_;
+    header.connection_id_length = connection_id_length_;
     header.packet_number = number;
 
     QuicFrames frames;
@@ -982,7 +982,7 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
     QuicPacketHeader header;
     // Set connection_id to peer's in memory representation as this connection
     // close packet is created by peer_framer.
-    header.public_header.connection_id = connection_id_;
+    header.connection_id = connection_id_;
     header.packet_number = number;
 
     QuicConnectionCloseFrame qccf;
@@ -1277,8 +1277,8 @@ TEST_P(QuicConnectionTest, IncreaseServerMaxPacketSize) {
   connection_.SetMaxPacketLength(1000);
 
   QuicPacketHeader header;
-  header.public_header.connection_id = connection_id_;
-  header.public_header.version_flag = true;
+  header.connection_id = connection_id_;
+  header.version_flag = true;
   header.packet_number = 1;
 
   QuicFrames frames;
@@ -1310,8 +1310,8 @@ TEST_P(QuicConnectionTest, IncreaseServerMaxPacketSizeWhileWriterLimited) {
   EXPECT_EQ(1000u, connection_.max_packet_length());
 
   QuicPacketHeader header;
-  header.public_header.connection_id = connection_id_;
-  header.public_header.version_flag = true;
+  header.connection_id = connection_id_;
+  header.version_flag = true;
   header.packet_number = 1;
 
   QuicFrames frames;
@@ -4534,9 +4534,7 @@ TEST_P(QuicConnectionTest, SendWhenDisconnected) {
 TEST_P(QuicConnectionTest, PublicReset) {
   QuicPublicResetPacket header;
   // Public reset packet in only built by server.
-  header.public_header.connection_id = connection_id_;
-  header.public_header.reset_flag = true;
-  header.public_header.version_flag = false;
+  header.connection_id = connection_id_;
   std::unique_ptr<QuicEncryptedPacket> packet(
       framer_.BuildPublicResetPacket(header));
   std::unique_ptr<QuicReceivedPacket> received(
@@ -4600,8 +4598,8 @@ TEST_P(QuicConnectionTest, ServerSendsVersionNegotiationPacket) {
   peer_framer_.set_version_for_tests(QUIC_VERSION_UNSUPPORTED);
 
   QuicPacketHeader header;
-  header.public_header.connection_id = connection_id_;
-  header.public_header.version_flag = true;
+  header.connection_id = connection_id_;
+  header.version_flag = true;
   header.packet_number = 12;
 
   QuicFrames frames;
@@ -4635,8 +4633,8 @@ TEST_P(QuicConnectionTest, ServerSendsVersionNegotiationPacketSocketBlocked) {
   peer_framer_.set_version_for_tests(QUIC_VERSION_UNSUPPORTED);
 
   QuicPacketHeader header;
-  header.public_header.connection_id = connection_id_;
-  header.public_header.version_flag = true;
+  header.connection_id = connection_id_;
+  header.version_flag = true;
   header.packet_number = 12;
 
   QuicFrames frames;
@@ -4677,8 +4675,8 @@ TEST_P(QuicConnectionTest,
   peer_framer_.set_version_for_tests(QUIC_VERSION_UNSUPPORTED);
 
   QuicPacketHeader header;
-  header.public_header.connection_id = connection_id_;
-  header.public_header.version_flag = true;
+  header.connection_id = connection_id_;
+  header.version_flag = true;
   header.packet_number = 12;
 
   QuicFrames frames;
@@ -4715,9 +4713,9 @@ TEST_P(QuicConnectionTest, ClientHandlesVersionNegotiation) {
   // Now force another packet.  The connection should transition into
   // NEGOTIATED_VERSION state and tell the packet creator to StopSendingVersion.
   QuicPacketHeader header;
-  header.public_header.connection_id = connection_id_;
+  header.connection_id = connection_id_;
   header.packet_number = 12;
-  header.public_header.version_flag = false;
+  header.version_flag = false;
   QuicFrames frames;
   frames.push_back(QuicFrame(&frame1_));
   std::unique_ptr<QuicPacket> packet(ConstructPacket(header, frames));
@@ -4797,9 +4795,9 @@ TEST_P(QuicConnectionTest, CheckSendStats) {
 TEST_P(QuicConnectionTest, ProcessFramesIfPacketClosedConnection) {
   // Construct a packet with stream frame and connection close frame.
   QuicPacketHeader header;
-  header.public_header.connection_id = connection_id_;
+  header.connection_id = connection_id_;
   header.packet_number = 1;
-  header.public_header.version_flag = false;
+  header.version_flag = false;
 
   QuicConnectionCloseFrame qccf;
   qccf.error_code = QUIC_PEER_GOING_AWAY;

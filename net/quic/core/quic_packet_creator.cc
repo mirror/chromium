@@ -470,18 +470,18 @@ SerializedPacket QuicPacketCreator::NoPacket() {
 }
 
 void QuicPacketCreator::FillPacketHeader(QuicPacketHeader* header) {
-  header->public_header.connection_id = connection_id_;
-  header->public_header.connection_id_length = connection_id_length_;
-  header->public_header.reset_flag = false;
-  header->public_header.version_flag = send_version_in_packet_;
+  header->connection_id = connection_id_;
+  header->connection_id_length = connection_id_length_;
+  header->reset_flag = false;
+  header->version_flag = send_version_in_packet_;
   if (IncludeNonceInPublicHeader()) {
     DCHECK_EQ(Perspective::IS_SERVER, framer_->perspective());
-    header->public_header.nonce = &diversification_nonce_;
+    header->nonce = &diversification_nonce_;
   } else {
-    header->public_header.nonce = nullptr;
+    header->nonce = nullptr;
   }
   header->packet_number = ++packet_.packet_number;
-  header->public_header.packet_number_length = packet_.packet_number_length;
+  header->packet_number_length = packet_.packet_number_length;
 }
 
 bool QuicPacketCreator::ShouldRetransmit(const QuicFrame& frame) {

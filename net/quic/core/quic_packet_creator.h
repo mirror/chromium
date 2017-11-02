@@ -240,7 +240,7 @@ class QUIC_EXPORT_PRIVATE QuicPacketCreator {
   void ClearPacket();
 
   // Returns true if a diversification nonce should be included in the current
-  // packet's public header.
+  // packet's header.
   bool IncludeNonceInPublicHeader();
 
   // Returns true if |frame| starts with CHLO.
@@ -253,8 +253,8 @@ class QUIC_EXPORT_PRIVATE QuicPacketCreator {
 
   // Controls whether version should be included while serializing the packet.
   bool send_version_in_packet_;
-  // If true, then |nonce_for_public_header_| will be included in the public
-  // header of all packets created at the initial encryption level.
+  // If true, then |diversification_nonce_| will be included in the header of
+  // all packets created at the initial encryption level.
   bool have_diversification_nonce_;
   DiversificationNonce diversification_nonce_;
   // Maximum length including headers and encryption (UDP payload length.)
