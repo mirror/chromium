@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f7d959cb_158ca94d",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-02T20:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70ee80ec_57e83e4a",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5a4e023_c10e7ad6",
         "filename": "chrome/browser/profiling_host/background_profiling_triggers.h",
         "patchSetId": 6
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8793fca4_80795f6c",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-02T20:28:52Z",
+      "side": 1,
+      "message": "Fixed.\n\n\nSo...I ended up with TestBackgroundProfilingTriggers and BackgroundProfilingTriggersTest which was driving my eyes wild. Agreed that the convention in Chrome is supposed to be TestXXXX, but that\u0027s sorta since Chrome didn\u0027t understand the evolved testing lingo back in the day.  FakeXXX is appropriate since this is a functional class that just has bits of underlying structure cut out for faster runs and data access. (As opposed to MockXXX which would imply the class has no behavior and is only meant to be scripted).",
+      "parentUuid": "ec98a5e6_bf4beae6",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26de2e56_1491884f",
         "filename": "chrome/browser/profiling_host/background_profiling_triggers_unittest.cc",
         "patchSetId": 6
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1b6e253a_a8aea4f3",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-02T20:28:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "26de2e56_1491884f",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4c78b7_4cd5bacb",
         "filename": "chrome/browser/profiling_host/background_profiling_triggers_unittest.cc",
         "patchSetId": 6
@@ -102,6 +156,24 @@
       "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83567e63_5ad74e7d",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-02T20:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a4c78b7_4cd5bacb",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "a0d75a40_b1d42672",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-02T20:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c39865cf_2257376a",
+      "range": {
+        "startLine": 364,
+        "startChar": 17,
+        "endLine": 364,
+        "endChar": 18
+      },
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0d21de5_50c51964",
         "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
         "patchSetId": 6
@@ -139,6 +235,24 @@
       "writtenOn": "2017-11-02T15:29:08Z",
       "side": 1,
       "message": "not in your code, but...\nThis should be moved down into the anonymous space.\n(no need to exposed it, it\u0027s local only).",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e77ecb_c72ff31a",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-02T20:28:52Z",
+      "side": 1,
+      "message": "Agreed that it is could be scoped just to the translation unit, but since it\u0027s being exposed by the class for testing, I think it makes more sense to leave it as a private static member.",
+      "parentUuid": "f0d21de5_50c51964",
       "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -162,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "b966b507_fc8f1a90",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-02T20:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3c6d279_2231f134",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "459367ff_edfe3101",
         "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
         "patchSetId": 6
@@ -179,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "28300f7b_c79cff5d",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-02T20:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "459367ff_edfe3101",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d6e9df6_a7428c96",
         "filename": "chrome/browser/profiling_host/profiling_process_host.h",
         "patchSetId": 6
@@ -190,6 +340,24 @@
       "writtenOn": "2017-11-01T23:44:10Z",
       "side": 1,
       "message": "Please document the lifetime semantics of this raw pointers.",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb632e8_3acfa0ac",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-02T20:28:52Z",
+      "side": 1,
+      "message": "Complexified the types for clarity...",
+      "parentUuid": "6d6e9df6_a7428c96",
       "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -213,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "6e7d67ca_19581a63",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-02T20:28:52Z",
+      "side": 1,
+      "message": "That actually has different semantics...\n\nYou want convenience using directives like this to be at the global scope or function scope generally I think...",
+      "parentUuid": "5298c2a7_e86b2a6b",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "161fb3b3_e7c678e7",
         "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
         "patchSetId": 6
@@ -227,6 +413,24 @@
       "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b65d6ec_1a2878a0",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-02T20:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "161fb3b3_e7c678e7",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
