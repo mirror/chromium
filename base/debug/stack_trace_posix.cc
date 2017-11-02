@@ -565,24 +565,12 @@ class SandboxSymbolizeHelper {
     // std::vector<MappedMemoryRegion> using a const_iterator does not allocate
     // dynamic memory, hence it is async-signal-safe.
     std::vector<MappedMemoryRegion>::const_iterator it;
-    bool is_first = true;
-    for (it = instance->regions_.begin(); it != instance->regions_.end();
-         ++it, is_first = false) {
-      const MappedMemoryRegion& region = *it;
+    for (unsigned i = 0; i != instance->regions_.size(); ++i) {
+      const MappedMemoryRegion& region = instance->regions_[i];
       if (region.start <= pc && pc < region.end) {
         start_address = region.start;
-        // Don't subtract 'start_address' from the first entry:
-        // * If a binary is compiled w/o -pie, then the first entry in
-        //   process maps is likely the binary itself (all dynamic libs
-        //   are mapped higher in address space). For such a binary,
-        //   instruction offset in binary coincides with the actual
-        //   instruction address in virtual memory (as code section
-        //   is mapped to a fixed memory range).
-        // * If a binary is compiled with -pie, all the modules are
-        //   mapped high at address space (in particular, higher than
-        //   shadow memory of the tool), so the module can't be the
-        //   first entry.
-        base_address = (is_first ? 0U : start_address) - region.offset;
+        base_address =
+            (i == 0 || i == 1) ? 0U : (start_address - region.offset);
         if (file_path && file_path_size > 0) {
           strncpy(file_path, region.path.c_str(), file_path_size);
           // Ensure null termination.
