@@ -35,12 +35,14 @@ cr.define('extensions', function() {
     behaviors: [I18nBehavior],
 
     properties: {
-      /** @type {extensions.Toolbar} */
-      toolbar: Object,
-
       // This is not typed because it implements multiple interfaces, and is
       // passed to different elements as different types.
-      delegate: Object,
+      delegate: {
+        type: Object,
+        value: function() {
+          return extensions.Service.getInstance();
+        },
+      },
 
       isGuest_: {
         type: Boolean,
@@ -76,21 +78,17 @@ cr.define('extensions', function() {
        */
       detailViewItem_: Object,
 
-      /** @type {!Array<!chrome.developerPrivate.ExtensionInfo>} */
-      extensions: {
+      /** @private {!Array<!chrome.developerPrivate.ExtensionInfo>} */
+      extensionsAndApps_: {
         type: Array,
-        value: function() {
-          return [];
-        },
+        observer: 'onExtensionsAndAppsChanged_',
       },
 
-      /** @type {!Array<!chrome.developerPrivate.ExtensionInfo>} */
-      apps: {
-        type: Array,
-        value: function() {
-          return [];
-        },
-      },
+      /** @private {!Array<!chrome.developerPrivate.ExtensionInfo>} */
+      extensions_: Array,
+
+      /** @private {!Array<!chrome.developerPrivate.ExtensionInfo>} */
+      apps_: Array,
 
       /**
        * Prevents page content from showing before data is first loaded.
@@ -143,15 +141,30 @@ cr.define('extensions', function() {
     navigationListener_: null,
 
     /** @override */
-    created: function() {
-      this.readyPromiseResolver = new PromiseResolver();
-    },
-
-    /** @override */
     ready: function() {
-      this.toolbar =
-          /** @type {extensions.Toolbar} */ (this.$$('extensions-toolbar'));
-      this.readyPromiseResolver.resolve();
+      if (loadTimeData.getBoolean('isGuest')) {
+        this.initPage();
+        return;
+      }
+
+      let service = extensions.Service.getInstance();
+
+      let onProfileStateChanged = profileInfo => {
+        this.inDevMode = profileInfo.inDeveloperMode;
+      };
+      service.getProfileStateChangedTarget().addListener(onProfileStateChanged);
+      service.getProfileConfiguration().then(onProfileStateChanged);
+
+      service.getExtensionsInfo().then(extensionsAndApps => {
+        extensionsAndApps.sort(compareExtensions);
+        this.extensionsAndApps_ = extensionsAndApps;
+        this.initPage();
+
+        service.getItemStateChangedTarget().addListener(
+            this.onItemStateChanged_.bind(this));
+      });
+
+      // TODO(dpapad): Add event listeners for events fired from Service.
 
       // <if expr="chromeos">
       extensions.KioskBrowserProxyImpl.getInstance()
@@ -187,6 +200,48 @@ cr.define('extensions', function() {
     },
 
     /**
+     * @param {!chrome.developerPrivate.EventData} eventData
+     * @private
+     */
+    onItemStateChanged_: function(eventData) {
+      const currentIndex =
+          this.extensionsAndApps_.findIndex(i => i.id == eventData.item_id);
+
+      const EventType = chrome.developerPrivate.EventType;
+      switch (eventData.event_type) {
+        case EventType.VIEW_REGISTERED:
+        case EventType.VIEW_UNREGISTERED:
+        case EventType.INSTALLED:
+        case EventType.LOADED:
+        case EventType.UNLOADED:
+        case EventType.ERROR_ADDED:
+        case EventType.ERRORS_REMOVED:
+        case EventType.PREFS_CHANGED:
+          // |extensionInfo| can be undefined in the case of an extension
+          // being unloaded right before uninstallation. There's nothing to do
+          // here.
+          if (!eventData.extensionInfo)
+            break;
+
+          if (currentIndex >= 0) {
+            this.extensionsAndApps_[currentIndex] = eventData.extensionInfo;
+            this.updateItem_(eventData.extensionInfo);
+          } else {
+            this.extensionsAndApps_.push(eventData.extensionInfo);
+            this.addItem_(eventData.extensionInfo);
+          }
+          break;
+        case EventType.UNINSTALLED:
+          let item = this.extensionsAndApps_[currentIndex];
+          this.extensionsAndApps_.splice(currentIndex, 1);
+          this.removeItem_(item);
+          break;
+        default:
+          assertNotReached();
+      }
+    },
+
+    /**
      * @param {!CustomEvent} event
      * @private
      */
@@ -215,10 +270,10 @@ cr.define('extensions', function() {
         case ExtensionType.HOSTED_APP:
         case ExtensionType.LEGACY_PACKAGED_APP:
         case ExtensionType.PLATFORM_APP:
-          return 'apps';
+          return 'apps_';
         case ExtensionType.EXTENSION:
         case ExtensionType.SHARED_MODULE:
-          return 'extensions';
+          return 'extensions_';
         case ExtensionType.THEME:
           assertNotReached(
               'Don\'t send themes to the chrome://extensions page');
@@ -244,26 +299,25 @@ cr.define('extensions', function() {
      * @private
      */
     getData_: function(id) {
-      return this.extensions[this.getIndexInList_('extensions', id)] ||
-          this.apps[this.getIndexInList_('apps', id)];
+      return this.extensions_[this.getIndexInList_('extensions_', id)] ||
+          this.apps_[this.getIndexInList_('apps_', id)];
     },
 
     /**
-     * Categorizes |items| to apps and extensions and initializes those lists.
-     * This is faster than calling |addItem| multiple times.
-     * @param {!Array<!chrome.developerPrivate.ExtensionInfo>} items
+     * Categorizes |extensionsAndApps_| to apps and extensions and initializes
+     * those lists.
+     * @private
      */
-    initAppsAndExtensions(items) {
-      items.sort(compareExtensions);
+    onExtensionsAndAppsChanged_: function() {
       let apps = [];
       let extensions = [];
-      for (let i of items) {
-        let list = this.getListId_(i) === 'apps' ? apps : extensions;
+      for (let i of this.extensionsAndApps_) {
+        let list = this.getListId_(i) === 'apps_' ? apps : extensions;
         list.push(i);
       }
 
-      this.apps = apps;
-      this.extensions = extensions;
+      this.apps_ = apps;
+      this.extensions_ = extensions;
     },
 
     /**
@@ -271,8 +325,9 @@ cr.define('extensions', function() {
      * into its sorted position in the relevant section.
      * @param {!chrome.developerPrivate.ExtensionInfo} item The extension
      *     the new element is representing.
+     * @private
      */
-    addItem: function(item) {
+    addItem_: function(item) {
       const listId = this.getListId_(item);
       // We should never try and add an existing item.
       assert(this.getIndexInList_(listId, item.id) == -1);
@@ -287,8 +342,9 @@ cr.define('extensions', function() {
     /**
      * @param {!chrome.developerPrivate.ExtensionInfo} item The data for the
      *     item to update.
+     * @private
      */
-    updateItem: function(item) {
+    updateItem_: function(item) {
       const listId = this.getListId_(item);
       const index = this.getIndexInList_(listId, item.id);
       // We should never try and update a non-existent item.
@@ -313,8 +369,9 @@ cr.define('extensions', function() {
     /**
      * @param {!chrome.developerPrivate.ExtensionInfo} item The data for the
      *     item to remove.
+     * @private
      */
-    removeItem: function(item) {
+    removeItem_: function(item) {
       const listId = this.getListId_(item);
       const index = this.getIndexInList_(listId, item.id);
       // We should never try and remove a non-existent item.
