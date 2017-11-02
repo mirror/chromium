@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f712321_78eb47a7",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-02T17:21:04Z",
+      "side": 1,
+      "message": "CRBProtocolObservers does support removing observers while iterating, so no need to special case here.",
+      "revId": "bd921b995f2b750f4d38bbc51591dad2b5751182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fbf0b65_c25e7a48",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 5314,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-02T17:21:04Z",
+      "side": 1,
+      "message": "Since I use a single WebStateObserver with a pointer to the CRBProtocolObservers, there is no need to unregister it (as an optimisation I could unregister it if _observers is empty, but I\u0027m not sure this is worth the effort).",
+      "revId": "bd921b995f2b750f4d38bbc51591dad2b5751182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
