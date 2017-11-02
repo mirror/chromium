@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_ANDROID_SEARCH_GEOLOCATION_SEARCH_GEOLOCATION_SERVICE_H_
-#define CHROME_BROWSER_ANDROID_SEARCH_GEOLOCATION_SEARCH_GEOLOCATION_SERVICE_H_
+#ifndef CHROME_BROWSER_ANDROID_SEARCH_PERMISSIONS_SEARCH_PERMISSIONS_SERVICE_H_
+#define CHROME_BROWSER_ANDROID_SEARCH_PERMISSIONS_SEARCH_PERMISSIONS_SERVICE_H_
 
 #include "base/callback_forward.h"
 #include "base/memory/singleton.h"
@@ -13,7 +13,7 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "url/origin.h"
 
-namespace content{
+namespace content {
 class BrowserContext;
 }
 
@@ -31,7 +31,7 @@ class Profile;
 // Glossary:
 //     DSE: Default Search Engine
 //     CCTLD: Country Code Top Level Domain (e.g. google.com.au)
-class SearchGeolocationService : public KeyedService {
+class SearchPermissionsService : public KeyedService {
  public:
   // Delegate for search engine related functionality. Can be overridden for
   // testing.
@@ -54,10 +54,11 @@ class SearchGeolocationService : public KeyedService {
   // Factory implementation will not create a service in incognito.
   class Factory : public BrowserContextKeyedServiceFactory {
    public:
-    static SearchGeolocationService* GetForBrowserContext(
+    static SearchPermissionsService* GetForBrowserContext(
         content::BrowserContext* context);
 
     static Factory* GetInstance();
+
    private:
     friend struct base::DefaultSingletonTraits<Factory>;
 
@@ -72,7 +73,7 @@ class SearchGeolocationService : public KeyedService {
         user_prefs::PrefRegistrySyncable* registry) override;
   };
 
-  explicit SearchGeolocationService(Profile* profile);
+  explicit SearchPermissionsService(Profile* profile);
 
   // Returns whether the DSE geolocation setting is applicable for geolocation
   // requests for the given top level origin.
@@ -92,12 +93,12 @@ class SearchGeolocationService : public KeyedService {
   void Shutdown() override;
 
  private:
-  friend class SearchGeolocationServiceTest;
+  friend class SearchPermissionsServiceTest;
   FRIEND_TEST_ALL_PREFIXES(GeolocationPermissionContextTests,
                            SearchGeolocationInIncognito);
   struct PrefValue;
 
-  ~SearchGeolocationService() override;
+  ~SearchPermissionsService() override;
 
   // When the DSE CCTLD changes (either by changing their DSE or by changing
   // their CCTLD, and their DSE supports geolocation:
@@ -153,4 +154,4 @@ class SearchGeolocationService : public KeyedService {
   std::unique_ptr<SearchEngineDelegate> delegate_;
 };
 
-#endif  // CHROME_BROWSER_ANDROID_SEARCH_GEOLOCATION_SEARCH_GEOLOCATION_SERVICE_H_
+#endif  // CHROME_BROWSER_ANDROID_SEARCH_PERMISSIONS_SEARCH_PERMISSIONS_SERVICE_H_
