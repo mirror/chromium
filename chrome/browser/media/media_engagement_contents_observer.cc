@@ -66,7 +66,8 @@ MediaEngagementContentsObserver::MediaEngagementContentsObserver(
     MediaEngagementService* service)
     : WebContentsObserver(web_contents),
       service_(service),
-      playback_timer_(new base::Timer(true, false)) {}
+      playback_timer_(new base::Timer(true, false)),
+      task_runner_(nullptr) {}
 
 MediaEngagementContentsObserver::~MediaEngagementContentsObserver() = default;
 
@@ -84,6 +85,7 @@ void MediaEngagementContentsObserver::WebContentsDestroyed() {
 void MediaEngagementContentsObserver::ClearPlayerStates() {
   player_states_.clear();
   significant_players_.clear();
+  player_timers_.clear();
 }
 
 void MediaEngagementContentsObserver::RecordUkmMetrics() {
@@ -213,7 +215,7 @@ void MediaEngagementContentsObserver::MediaStartedPlaying(
   state.has_video = media_player_info.has_video;
 
   MaybeInsertRemoveSignificantPlayer(media_player_id);
-  UpdateTimer();
+  UpdatePlayerTimer(media_player_id);
   RecordEngagementScoreToHistogramAtPlayback(media_player_id);
 }
 
@@ -241,7 +243,7 @@ void MediaEngagementContentsObserver::MediaMutedStatusChanged(
     bool muted) {
   GetPlayerState(id).muted = muted;
   MaybeInsertRemoveSignificantPlayer(id);
-  UpdateTimer();
+  UpdatePlayerTimer(id);
   RecordEngagementScoreToHistogramAtPlayback(id);
 }
 
@@ -251,7 +253,7 @@ void MediaEngagementContentsObserver::MediaResized(const gfx::Size& size,
       (size.width() >= kSignificantSize.width() &&
        size.height() >= kSignificantSize.height());
   MaybeInsertRemoveSignificantPlayer(id);
-  UpdateTimer();
+  UpdatePlayerTimer(id);
 }
 
 void MediaEngagementContentsObserver::MediaStoppedPlaying(
@@ -259,11 +261,11 @@ void MediaEngagementContentsObserver::MediaStoppedPlaying(
     const MediaPlayerId& media_player_id) {
   GetPlayerState(media_player_id).playing = false;
   MaybeInsertRemoveSignificantPlayer(media_player_id);
-  UpdateTimer();
+  UpdatePlayerTimer(media_player_id);
 }
 
 void MediaEngagementContentsObserver::DidUpdateAudioMutingState(bool muted) {
-  UpdateTimer();
+  UpdatePageTimer();
 }
 
 std::vector<MediaEngagementContentsObserver::InsignificantPlaybackReason>
@@ -304,17 +306,34 @@ bool MediaEngagementContentsObserver::IsPlayerStateComplete(
           state.significant_size.has_value());
 }
 
-void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
+bool MediaEngagementContentsObserver::WasRecentlyAudible() const {
+#if defined(OS_ANDROID)
+  // Skipping WasRecentlyAudible check on Android (not available).
+  return true;
+#else
+  return web_contents()->WasRecentlyAudible();
+#endif
+}
+
+void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTimeForPlayer(
+    const MediaPlayerId& id) {
+  player_timers_.erase(id);
+
+  // Check that the tab is not muted.
+  if (web_contents()->IsAudioMuted() || !WasRecentlyAudible())
+    return;
+
+  // Record significant audible playback.
+  audible_players_[id] = true;
+}
+
+void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTimeForPage() {
   DCHECK(!significant_playback_recorded_);
 
   // Do not record significant playback if the tab did not make
   // a sound in the last two seconds.
-#if defined(OS_ANDROID)
-// Skipping WasRecentlyAudible check on Android (not available).
-#else
-  if (!web_contents()->WasRecentlyAudible())
+  if (!WasRecentlyAudible())
     return;
-#endif
 
   significant_playback_recorded_ = true;
 
@@ -417,6 +436,40 @@ void MediaEngagementContentsObserver::MaybeInsertRemoveSignificantPlayer(
   }
 }
 
+void MediaEngagementContentsObserver::UpdatePlayerTimer(
+    const MediaPlayerId& id) {
+  UpdatePageTimer();
+
+  bool has_timer = player_timers_.find(id) != player_timers_.end();
+
+  // If we are have already been found to be significant then we don't need
+  // to do anything.
+  if (audible_players_.find(id) == audible_players_.end())
+    return;
+
+  // If we meet all the reqirements for being significant then start a timer.
+  if (significant_players_.find(id) != significant_players_.end()) {
+    if (has_timer)
+      return;
+
+    std::unique_ptr<base::Timer> new_timer =
+        base::MakeUnique<base::Timer>(true, false);
+    if (task_runner_)
+      new_timer->SetTaskRunner(task_runner_);
+
+    new_timer->Start(
+        FROM_HERE,
+        MediaEngagementContentsObserver::kSignificantMediaPlaybackTime,
+        base::Bind(&MediaEngagementContentsObserver::
+                       OnSignificantMediaPlaybackTimeForPlayer,
+                   base::Unretained(this), id));
+
+    player_timers_[id] = std::move(new_timer);
+  } else if (has_timer) {
+    player_timers_.erase(id);
+  }
+}
+
 bool MediaEngagementContentsObserver::AreConditionsMet() const {
   if (significant_players_.empty())
     return false;
@@ -424,7 +477,7 @@ bool MediaEngagementContentsObserver::AreConditionsMet() const {
   return !web_contents()->IsAudioMuted();
 }
 
-void MediaEngagementContentsObserver::UpdateTimer() {
+void MediaEngagementContentsObserver::UpdatePageTimer() {
   if (significant_playback_recorded_)
     return;
 
@@ -432,12 +485,15 @@ void MediaEngagementContentsObserver::UpdateTimer() {
     if (playback_timer_->IsRunning())
       return;
 
+    if (task_runner_)
+      playback_timer_->SetTaskRunner(task_runner_);
+
     playback_timer_->Start(
         FROM_HERE,
         MediaEngagementContentsObserver::kSignificantMediaPlaybackTime,
-        base::Bind(
-            &MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime,
-            base::Unretained(this)));
+        base::Bind(&MediaEngagementContentsObserver::
+                       OnSignificantMediaPlaybackTimeForPage,
+                   base::Unretained(this)));
   } else {
     if (!playback_timer_->IsRunning())
       return;
@@ -445,9 +501,9 @@ void MediaEngagementContentsObserver::UpdateTimer() {
   }
 }
 
-void MediaEngagementContentsObserver::SetTimerForTest(
-    std::unique_ptr<base::Timer> timer) {
-  playback_timer_ = std::move(timer);
+void MediaEngagementContentsObserver::SetTaskRunnerForTest(
+    scoped_refptr<base::SequencedTaskRunner> task_runner) {
+  task_runner_ = std::move(task_runner);
 }
 
 void MediaEngagementContentsObserver::ReadyToCommitNavigation(
