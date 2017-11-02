@@ -47,54 +47,70 @@
     },
 
     function allLevels(next) {
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleViewFilter.levelFilterSetting().set(Console.ConsoleFilter.allLevelsFilterValue());
-      dumpVisibleMessages();
-      next();
     },
 
     function defaultLevels(next) {
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleViewFilter.levelFilterSetting().set(Console.ConsoleFilter.defaultLevelsFilterValue());
-      dumpVisibleMessages();
-      next();
     },
 
     function verbose(next) {
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleViewFilter.levelFilterSetting().set({ verbose: true });
-      dumpVisibleMessages();
-      next();
     },
 
     function info(next) {
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleViewFilter.levelFilterSetting().set({ info: true });
-      dumpVisibleMessages();
-      next();
     },
 
     function warningsAndErrors(next) {
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleViewFilter.levelFilterSetting().set({ warning: true, error: true });
-      dumpVisibleMessages();
-      next();
     },
 
     function abcMessagePlain(next) {
       Console.ConsoleViewFilter.levelFilterSetting().set({ verbose: true });
       Console.ConsoleView.instance()._filter._textFilterUI.setValue('abc');
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter._onFilterChanged();
-      dumpVisibleMessages();
-      next();
     },
 
     function abcMessageRegex(next) {
       Console.ConsoleView.instance()._filter._textFilterUI.setValue('/ab[a-z]/');
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter._onFilterChanged();
-      dumpVisibleMessages();
-      next();
     },
 
     function abcMessageRegexWarning(next) {
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleViewFilter.levelFilterSetting().set({ warning: true });
-      dumpVisibleMessages();
-      next();
     }
   ];
 

@@ -70,6 +70,8 @@ Console.ConsoleView = class extends UI.VBox {
     this._visibleViewMessages = [];
     this._urlToMessageCount = {};
     this._hiddenByFilterCount = 0;
+    /** @type {!Map<!Console.ConsoleViewMessage, boolean>} */
+    this._shouldBeVisibleCache = new Map();
 
     /** @type {!Map<string, !Array<!Console.ConsoleViewMessage>>} */
     this._groupableMessages = new Map();
@@ -232,7 +234,9 @@ Console.ConsoleView = class extends UI.VBox {
   _onFilterChanged() {
     this._filter._currentFilter.levelsMask = this._isSidebarOpen ? Console.ConsoleFilter.allLevelsFilterValue() :
                                                                    this._filter._messageLevelFiltersSetting.get();
-    this._updateMessageList();
+    this._shouldBeVisibleCache.clear();
+    this._cancelBuildVisibleCache();
+    this._innerBuildVisibleCache(0);
   }
 
   /**
@@ -526,6 +530,8 @@ Console.ConsoleView = class extends UI.VBox {
    * @return {boolean}
    */
   _shouldMessageBeVisible(viewMessage) {
+    if (this._shouldBeVisibleCache.has(viewMessage))
+      return this._shouldBeVisibleCache.get(viewMessage);
     return this._filter.shouldBeVisible(viewMessage) &&
         (!this._isSidebarOpen || this._sidebar.shouldBeVisible(viewMessage));
   }
@@ -590,6 +596,7 @@ Console.ConsoleView = class extends UI.VBox {
 
   _consoleCleared() {
     this._currentMatchRangeIndex = -1;
+    this._shouldBeVisibleCache.clear();
     this._consoleMessages = [];
     this._groupableMessages.clear();
     this._groupableMessageTitle.clear();
@@ -697,6 +704,36 @@ Console.ConsoleView = class extends UI.VBox {
     }
 
     return false;
+  }
+
+  /**
+   * @param {number} startIndex
+   */
+  _innerBuildVisibleCache(startIndex) {
+    var startTime = Date.now();
+    for (var i = startIndex; i < this._consoleMessages.length && Date.now() - startTime < 100; ++i) {
+      var viewMessage = this._consoleMessages[i];
+      this._shouldBeVisibleCache.set(viewMessage, this._shouldMessageBeVisible(viewMessage));
+    }
+
+    if (i >= this._consoleMessages.length) {
+      this._cancelBuildVisibleCache();
+      this._updateMessageList();
+      this._onFilterChangeCompleted();
+      return;
+    }
+    this._innerBuildVisibleCacheTimeout = setTimeout(this._innerBuildVisibleCache.bind(this, i), 100);
+  }
+
+  _cancelBuildVisibleCache() {
+    if (this._innerBuildVisibleCacheTimeout) {
+      clearTimeout(this._innerBuildVisibleCacheTimeout);
+      delete this._innerBuildVisibleCacheTimeout;
+    }
+  }
+
+  _onFilterChangeCompleted() {
+    // This method is sniffed in tests.
   }
 
   _updateMessageList() {

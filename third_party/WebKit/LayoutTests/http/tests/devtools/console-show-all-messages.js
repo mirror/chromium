@@ -35,21 +35,27 @@
 
     function testPageOnlyMessages(next) {
       ConsoleTestRunner.changeExecutionContext('top');
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleConsoleMessageText();
+        next();
+      });
       filterByExecutionContextSetting.set(true);
-      dumpVisibleConsoleMessageText();
-      next();
     },
 
     function testFrameOnlyMessages(next) {
       ConsoleTestRunner.changeExecutionContext('myIFrame');
-      dumpVisibleConsoleMessageText();
-      next();
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleConsoleMessageText();
+        next();
+      });
     },
 
     function testAllMessagesWithFrameContext(next) {
       filterByExecutionContextSetting.set(false);
-      dumpVisibleConsoleMessageText();
-      next();
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleConsoleMessageText();
+        next();
+      });
     }
   ]);
 })();

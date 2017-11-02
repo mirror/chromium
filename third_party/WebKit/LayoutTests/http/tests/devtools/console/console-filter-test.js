@@ -77,82 +77,108 @@
       next();
     },
     function allLevelsFilter(next) {
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleViewFilter.levelFilterSetting().set(Console.ConsoleFilter.allLevelsFilterValue());
-      dumpVisibleMessages();
-      next();
     },
     function addURL1Filter(next) {
       TestRunner.addResult('Blocking messages from ' + url1);
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter.addMessageURLFilter(url1);
-      dumpVisibleMessages();
-      next();
     },
     function addURL2Filter(next) {
       TestRunner.addResult('Blocking messages from ' + url2);
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter.addMessageURLFilter(url2);
-      dumpVisibleMessages();
-      next();
     },
     function removeURL1Filter(next) {
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter.removeMessageURLFilter(url1);
-      dumpVisibleMessages();
-      next();
     },
     function restoreURL1Filter(next) {
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter.addMessageURLFilter(url1);
-      dumpVisibleMessages();
-      next();
     },
     function removeAllFilters(next) {
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter.removeMessageURLFilter();
-      dumpVisibleMessages();
-      next();
     },
     function checkTextFilter(next) {
       Console.ConsoleView.instance()._filter._textFilterUI.setValue('outer');
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter._onFilterChanged();
-      dumpVisibleMessages();
-      next();
     },
     function checkMultiTextFilter(next)
     {
       Console.ConsoleView.instance()._filter._textFilterUI.setValue("Group /[2-3]top/");
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter._onFilterChanged();
-      dumpVisibleMessages();
-      next();
     },
     function checkTextUrlFilter(next)
     {
       Console.ConsoleView.instance()._filter._textFilterUI.setValue("url:log-source");
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter._onFilterChanged();
-      dumpVisibleMessages();
-      next();
     },
     function checkNegativeTextUrlFilter(next)
     {
       Console.ConsoleView.instance()._filter._textFilterUI.setValue("-url:log-source");
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter._onFilterChanged();
-      dumpVisibleMessages();
-      next();
     },
     function checkSourceFilter(next)
     {
       Console.ConsoleView.instance()._filter._textFilterUI.setValue("source:violation");
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter._onFilterChanged();
-      dumpVisibleMessages();
-      next();
     },
     function checkContextTextFilter(next)
     {
       Console.ConsoleView.instance()._filter._textFilterUI.setValue("context:context");
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter._onFilterChanged();
-      dumpVisibleMessages();
-      next();
     },
     function checkResetFilter(next) {
+      TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+        dumpVisibleMessages();
+        next();
+      });
       Console.ConsoleView.instance()._filter.reset();
-      dumpVisibleMessages();
-      next();
     }
   ]);
 })();

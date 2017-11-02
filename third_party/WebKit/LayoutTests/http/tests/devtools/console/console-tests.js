@@ -40,7 +40,9 @@
     console.count("title");
   `);
 
+  TestRunner.addSniffer(Console.ConsoleView.prototype, '_onFilterChangeCompleted', () => {
+    ConsoleTestRunner.dumpConsoleMessagesWithClasses();
+    TestRunner.completeTest();
+  });
   Console.ConsoleViewFilter.levelFilterSetting().set(Console.ConsoleFilter.allLevelsFilterValue());
-  ConsoleTestRunner.dumpConsoleMessagesWithClasses();
-  TestRunner.completeTest();
 })();
