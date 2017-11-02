@@ -33,6 +33,24 @@
       "revId": "bfa9a3949b2a4d9a0ae7d40d8f0f0a4f667a69e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14923a46_a6dcd24c",
+        "filename": "third_party/WebKit/public/platform/ScopedVirtualTimePauser.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-02T13:56:38Z",
+      "side": 1,
+      "message": "What about base::WeakPtr? Can we use that here?",
+      "parentUuid": "558f4c6a_848d2f93",
+      "revId": "bfa9a3949b2a4d9a0ae7d40d8f0f0a4f667a69e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
