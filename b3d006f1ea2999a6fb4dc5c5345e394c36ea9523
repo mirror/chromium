@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8bea935_afb71ede",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-11-02T08:04:28Z",
+      "side": 1,
+      "message": "Ideally we\u0027d be able to distinguish File/Samba IO error from a dbus error.\n\nThis really should not happen should it? It would be a coding error if the dbus message did not contain the correct fields. What do other implementations do when something like PopInt32 fails?",
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d66d4b_f1db9744",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-11-02T08:04:28Z",
+      "side": 1,
+      "message": "Ideally this wouldn\u0027t be overlapping with the file IO error so we can tell this is an internal error rather than a server communication error.",
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e78e57e_e5866b66",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-11-02T08:04:28Z",
+      "side": 1,
+      "message": "OpenDirectory() no quotes.",
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047f681f_1c7bc386",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-11-02T08:04:28Z",
+      "side": 1,
+      "message": "removes.... from the list of valid mounts. Subsequent operations on mount_id will fail.",
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38da8d8_e6d9848f",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-11-02T08:04:28Z",
+      "side": 1,
+      "message": "Can\u0027t this be private?",
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
