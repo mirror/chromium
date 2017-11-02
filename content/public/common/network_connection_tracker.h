@@ -25,6 +25,8 @@ namespace content {
 // This class subscribes to network change events from
 // mojom::NetworkChangeManager and propogates these notifications to its
 // NetworkConnectionObservers registered through AddObserver()/RemoveObserver().
+// TODO(xunjieli): Remove dependency on net::NetworkChangeNotifier once
+// Network Service is available everywhere.
 class CONTENT_EXPORT NetworkConnectionTracker
     : public mojom::NetworkChangeManagerClient {
  public:

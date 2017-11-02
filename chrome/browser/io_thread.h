@@ -225,6 +225,9 @@ class IOThread : public content::BrowserThreadDelegate {
       content::URLRequestContextBuilderMojo* builder,
       std::unique_ptr<net::ProxyConfigService> proxy_config_service) const;
 
+  // Gets a pointer to the NetworkService. Can only be called on the ui thread.
+  content::mojom::NetworkService* GetNetworkServiceOnUIThread();
+
  private:
   friend class test::IOThreadPeer;
 
@@ -338,6 +341,10 @@ class IOThread : public content::BrowserThreadDelegate {
 
   // True if QUIC is initially enabled.
   bool is_quic_allowed_on_init_;
+
+  // NetworkService ptr.
+  content::mojom::NetworkServicePtr ui_thread_network_service_;
+  content::mojom::NetworkServiceRequest network_service_request_;
 
   base::WeakPtrFactory<IOThread> weak_factory_;
 
