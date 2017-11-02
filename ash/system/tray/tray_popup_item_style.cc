@@ -67,7 +67,7 @@ SkColor TrayPopupItemStyle::GetIconColor() const {
 void TrayPopupItemStyle::SetupLabel(views::Label* label) const {
   label->SetEnabledColor(GetTextColor());
 
-  const gfx::FontList& base_font_list = views::Label::GetDefaultFontList();
+  const gfx::FontList& base_font_list = label->GetDefaultFontList();
   switch (font_style_) {
     case FontStyle::TITLE:
       label->SetFontList(base_font_list.Derive(1, gfx::Font::NORMAL,

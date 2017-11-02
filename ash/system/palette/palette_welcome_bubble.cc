@@ -51,7 +51,7 @@ class PaletteWelcomeBubble::WelcomeBubbleView
     auto* title = new views::Label(
         l10n_util::GetStringUTF16(IDS_ASH_STYLUS_WARM_WELCOME_BUBBLE_TITLE));
     title->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    title->SetFontList(views::Label::GetDefaultFontList().Derive(
+    title->SetFontList(title->GetDefaultFontList().Derive(
         0, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::BOLD));
     header->AddChildView(title);
     box_layout->SetFlexForView(title, 1);

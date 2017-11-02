@@ -50,8 +50,8 @@ class PermissionSelectorRow {
                         views::GridLayout* layout);
   virtual ~PermissionSelectorRow();
 
-  // Retrieve the minimum height a |PermissionSelectorRow| can be.
-  static int MinHeightForPermissionRow();
+  // Retrieve the minimum height a |PermissionSelectorRow| can be in |view|.
+  static int MinHeightForPermissionRow(const views::View& view);
 
   void AddObserver(PermissionSelectorRowObserver* observer);
 

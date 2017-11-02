@@ -85,7 +85,7 @@ class LoginShelfButton : public views::LabelButton {
     SetTextColor(views::Button::STATE_NORMAL, kButtonColor);
     SetTextColor(views::Button::STATE_HOVERED, kButtonColor);
     SetTextColor(views::Button::STATE_PRESSED, kButtonColor);
-    label()->SetFontList(views::Label::GetDefaultFontList().Derive(
+    label()->SetFontList(label()->GetDefaultFontList().Derive(
         1, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::NORMAL));
   }
 

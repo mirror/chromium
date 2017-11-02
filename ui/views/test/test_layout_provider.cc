@@ -40,11 +40,13 @@ int TestLayoutProvider::GetSnappedDialogWidth(int min_width) const {
   return snapped_dialog_width_ ? snapped_dialog_width_ : min_width;
 }
 
-const gfx::FontList& TestLayoutProvider::GetFont(int context, int style) const {
+const gfx::FontList& TestLayoutProvider::GetFont(const View& view,
+                                                 int context,
+                                                 int style) const {
   auto it = fonts_.find({context, style});
   return it != fonts_.end()
              ? it->second
-             : DefaultTypographyProvider::GetFont(context, style);
+             : DefaultTypographyProvider::GetFont(view, context, style);
 }
 
 }  // namespace test

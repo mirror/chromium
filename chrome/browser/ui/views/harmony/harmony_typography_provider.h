@@ -22,11 +22,15 @@ class HarmonyTypographyProvider : public views::TypographyProvider {
 #endif
 
   // TypographyProvider:
-  const gfx::FontList& GetFont(int context, int style) const override;
-  SkColor GetColor(int context,
-                   int style,
-                   const ui::NativeTheme& theme) const override;
-  int GetLineHeight(int context, int style) const override;
+  const gfx::FontList& GetFont(const views::View& view,
+                               int context,
+                               int style) const override;
+  SkColor GetColor(const views::View& view,
+                   int context,
+                   int style) const override;
+  int GetLineHeight(const views::View& view,
+                    int context,
+                    int style) const override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(HarmonyTypographyProvider);

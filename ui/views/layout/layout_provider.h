@@ -108,9 +108,11 @@ class VIEWS_EXPORT LayoutProvider {
   // This should never return nullptr.
   static LayoutProvider* Get();
 
-  // Calculates the control height based on the |font|'s reported glyph height,
-  // the default line spacing and DISTANCE_CONTROL_VERTICAL_TEXT_PADDING.
-  static int GetControlHeightForFont(int context,
+  // Calculates the |control| height based on the |font|'s reported glyph
+  // height, the default line spacing and
+  // DISTANCE_CONTROL_VERTICAL_TEXT_PADDING.
+  static int GetControlHeightForFont(const View& control,
+                                     int context,
                                      int style,
                                      const gfx::FontList& font);
 
