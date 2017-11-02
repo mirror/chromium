@@ -80,14 +80,14 @@ class MediaEngagementScore final {
 
   // Get/increment thenumber of audible media playbacks this origin had.
   int audible_playbacks() const { return audible_playbacks_; }
-  void IncrementAudiblePlaybacks() {
-    SetAudiblePlaybacks(audible_playbacks() + 1);
+  void IncrementAudiblePlaybacks(int amount = 1) {
+    SetAudiblePlaybacks(audible_playbacks() + amount);
   }
 
   // Get/increment the number of significant media playbacks this origin had.
   int significant_playbacks() const { return significant_playbacks_; }
-  void IncrementSignificantPlaybacks() {
-    SetSignificantPlaybacks(significant_playbacks() + 1);
+  void IncrementSignificantPlaybacks(int amount = 1) {
+    SetSignificantPlaybacks(significant_playbacks() + amount);
   }
 
   // Get/increment the number of visits where at least one page had a video tag.
