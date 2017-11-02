@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0b9305b9_35cbbbff",
+        "filename": "components/autofill/core/browser/autofill_credit_card_policy_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-11-02T20:10:25Z",
+      "side": 1,
+      "message": "That makes sense. Thanks for clarification.",
+      "parentUuid": "7a510007_cab055ae",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 74
+      },
+      "revId": "a6e0aa5b87ab416c578e4056fee968428efc82de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6725080f_20057ed7",
         "filename": "components/autofill/core/browser/autofill_policy_handler.cc",
         "patchSetId": 10
@@ -141,6 +165,30 @@
       "revId": "a6e0aa5b87ab416c578e4056fee968428efc82de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33536e61_8b6ada77",
+        "filename": "components/autofill/core/browser/autofill_policy_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-11-02T20:10:25Z",
+      "side": 1,
+      "message": "I have https://chromium-review.googlesource.com/c/chromium/src/+/738592 to disable syncing autofill data if disabled by policy. Will land it after this CL has landed.",
+      "parentUuid": "79276445_1e7a420e",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 55
+      },
+      "revId": "a6e0aa5b87ab416c578e4056fee968428efc82de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
