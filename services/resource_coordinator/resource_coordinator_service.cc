@@ -8,6 +8,7 @@
 
 #include "services/resource_coordinator/memory_instrumentation/coordinator_impl.h"
 #include "services/resource_coordinator/observers/metrics_collector.h"
+#include "services/resource_coordinator/observers/process_host_signal_observer.h"
 #include "services/resource_coordinator/observers/tab_signal_generator_impl.h"
 #include "services/resource_coordinator/service_callbacks_impl.h"
 #include "services/resource_coordinator/tracing/agent_registry.h"
@@ -50,6 +51,14 @@ void ResourceCoordinatorService::OnStart() {
                  base::Unretained(tab_signal_generator_impl.get())));
   coordination_unit_manager_.RegisterObserver(
       std::move(tab_signal_generator_impl));
+
+  auto process_host_signals_observer =
+      base::MakeUnique<ProcessHostSignalsObserver>();
+  registry_.AddInterface(
+      base::Bind(&ProcessHostSignalsObserver::BindToInterface,
+                 base::Unretained(process_host_signals_observer.get())));
+  coordination_unit_manager_.RegisterObserver(
+      std::move(process_host_signals_observer));
 
   coordination_unit_manager_.RegisterObserver(
       std::make_unique<MetricsCollector>());

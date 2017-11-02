@@ -35,6 +35,16 @@ CoordinationUnitBase* CoordinationUnitBase::AddNewCoordinationUnit(
 }
 
 // static
+CoordinationUnitBase* CoordinationUnitBase::GetCoordinationUnit(
+    const CoordinationUnitID& id) {
+  auto child_iter = g_cu_map().find(id);
+  if (child_iter != g_cu_map().end())
+    return child_iter->second.get();
+
+  return nullptr;
+}
+
+// static
 std::vector<CoordinationUnitBase*>
 CoordinationUnitBase::GetCoordinationUnitsOfType(CoordinationUnitType type) {
   std::vector<CoordinationUnitBase*> results;

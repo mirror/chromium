@@ -103,6 +103,7 @@
         "resource_coordinator": [
           "coordination_unit",
           "coordination_unit_introspector",
+          "process_host_signals",
           "service_callbacks",
           "tab_signal",
           "tracing"

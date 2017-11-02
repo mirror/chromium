@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/callback.h"
+#include "base/supports_user_data.h"
 #include "base/observer_list.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
@@ -23,12 +24,14 @@ namespace resource_coordinator {
 // CoordinationUnitBase implements shared functionality among different types of
 // coordination units. A specific type of coordination unit will derive from
 // this class and can override shared funtionality when needed.
-class CoordinationUnitBase {
+class CoordinationUnitBase : public base::SupportsUserData {
  public:
   // Add the newly created coordination unit to the global coordination unit
   // storage.
   static CoordinationUnitBase* AddNewCoordinationUnit(
       std::unique_ptr<CoordinationUnitBase> new_cu);
+  static CoordinationUnitBase* GetCoordinationUnit(
+      const CoordinationUnitID& id);
   static void AssertNoActiveCoordinationUnits();
   static void ClearAllCoordinationUnits();
 
@@ -36,7 +39,7 @@ class CoordinationUnitBase {
   virtual void RecalculateProperty(const mojom::PropertyType property_type) {}
 
   CoordinationUnitBase(const CoordinationUnitID& id);
-  virtual ~CoordinationUnitBase();
+  ~CoordinationUnitBase() override;
 
   void Destruct();
   void BeforeDestroyed();

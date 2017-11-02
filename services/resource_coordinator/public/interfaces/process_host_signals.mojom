@@ -1,0 +1,17 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module resource_coordinator.mojom;
+
+import "coordination_unit.mojom";
+import "mojo/common/values.mojom";
+import "signals.mojom";
+
+interface ProcessHostSignals {
+  ShouldHaveBackgroundPriority(bool background_priority);
+};
+
+interface ProcessHostSignalsObserver {
+  AddProcessHostSignalObserver(ProcessHostSignals observer, CoordinationUnitID id);
+};
