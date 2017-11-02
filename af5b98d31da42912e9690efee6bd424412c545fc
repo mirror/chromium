@@ -33,6 +33,24 @@
       "revId": "af5b98d31da42912e9690efee6bd424412c545fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24422d3_596437d7",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-02T23:02:33Z",
+      "side": 1,
+      "message": "Assuming you mean before \"image\" to, illustrate how confusing this can be.",
+      "parentUuid": "69040ee9_022a6c3b",
+      "revId": "af5b98d31da42912e9690efee6bd424412c545fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
