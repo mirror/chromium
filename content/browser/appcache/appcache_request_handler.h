@@ -93,6 +93,12 @@ class CONTENT_EXPORT AppCacheRequestHandler
   base::Optional<SubresourceLoaderParams> MaybeCreateSubresourceLoaderParams()
       override;
 
+  // Called by AppCacheURLLoaderJob to indicate that this handler should
+  // return non-null SubresourceLoaderParams.
+  void ShouldCreateSubresourceLoader() {
+    should_create_subresource_loader_ = true;
+  }
+
   // These methods are used for subresource loading by the
   // AppCacheSubresourceURLFactory::SubresourceLoader class.
   // Internally they use same methods used by the network library based impl,
@@ -254,12 +260,19 @@ class CONTENT_EXPORT AppCacheRequestHandler
 
   LoaderCallback loader_callback_;
 
+  // This is flipped to true if AppCache wants to handle subresource requests
+  // (i.e. when |loader_callback_| is fired with non-null callback for
+  // non-error cases.
+  bool should_create_subresource_loader_ = false;
+
   // Points to the getter for the network URL loader.
   scoped_refptr<URLLoaderFactoryGetter> network_url_loader_factory_getter_;
 
   // The AppCache host instance. We pass this to the
   // AppCacheSubresourceURLFactory instance on creation.
   base::WeakPtr<AppCacheHost> appcache_host_;
+
+  base::WeakPtrFactory<AppCacheRequestHandler> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(AppCacheRequestHandler);
 };
