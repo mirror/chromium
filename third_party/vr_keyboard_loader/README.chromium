@@ -1,0 +1,17 @@
+Name: GVR Keyboard Loader
+Short Name: gvr-keyboard-loader
+URL: NA
+Version: 0
+Security Critical: yes
+License: TODO(ymalik): Figure out what this should be before landing.
+
+Description:
+Chrome VR dynamically loads the keyboard API packaged as part of the GVR
+keyboard APK.
+
+The BUILD.gn file generates the java files for the GvrKeyboardLoader aidl
+interface that allow access to the GvrKeyboardLoader interface in the GVR
+Keybard APK.
+
+Local Modifications:
+None.
