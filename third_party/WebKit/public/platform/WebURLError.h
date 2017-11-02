@@ -31,12 +31,9 @@
 #ifndef WebURLError_h
 #define WebURLError_h
 
-#include "WebString.h"
 #include "WebURL.h"
 
 namespace blink {
-
-class ResourceError;
 
 // TODO(yhirano): Change this to a class.
 struct WebURLError {
@@ -66,7 +63,7 @@ struct WebURLError {
     kTrue,
   };
 
-  WebURLError() = default;
+  WebURLError() = delete;
   WebURLError(Domain domain, int reason, const WebURL& url)
       : domain_(domain), reason_(reason), url_(url) {}
   WebURLError(Domain domain,
@@ -80,12 +77,6 @@ struct WebURLError {
         is_web_security_violation_(is_web_security_violation ==
                                    IsWebSecurityViolation::kTrue),
         url_(url) {}
-
-#if INSIDE_BLINK
-  BLINK_PLATFORM_EXPORT WebURLError(const ResourceError&);
-  BLINK_PLATFORM_EXPORT WebURLError& operator=(const ResourceError&);
-  BLINK_PLATFORM_EXPORT operator ResourceError() const;
-#endif
 
   Domain domain() const { return domain_; }
   int reason() const { return reason_; }

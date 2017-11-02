@@ -11733,7 +11733,8 @@ TEST_P(ParameterizedWebFrameTest, FallbackForNonexistentProvisionalNavigation) {
   // caller won't attempt to replace the correctly empty frame with an error
   // page.
   EXPECT_EQ(WebLocalFrame::NoLoadInProgress,
-            child->MaybeRenderFallbackContent(WebURLError()));
+            child->MaybeRenderFallbackContent(WebURLError(
+                WebURLError::Domain::kNet, net::ERR_FAILED, request.Url())));
 }
 
 TEST_P(ParameterizedWebFrameTest, AltTextOnAboutBlankPage) {
