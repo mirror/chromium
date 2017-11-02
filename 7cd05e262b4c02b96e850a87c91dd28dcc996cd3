@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "201724fa_bf57f190",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-02T21:23:01Z",
+      "side": 1,
+      "message": "It might be better to comment somewhere (here or in the service_worker_payment_app_factory?) that we do not copy supported cards and networks from the java to native side, so it does not filter payment handlers based on capabilities. Instead, we rely on getInstrument in ServiceWorkerPaymentApp.\n\nOr add a \u0027TODO\u0027 to refactor it in the future?",
+      "range": {
+        "startLine": 174,
+        "startChar": 34,
+        "endLine": 174,
+        "endChar": 74
+      },
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
