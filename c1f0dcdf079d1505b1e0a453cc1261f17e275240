@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7f81de7_88786e58",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-02T23:35:40Z",
+      "side": 1,
+      "message": "nit: I\u0027m not totally aware of this API, but before we were doing join string with \", \". Is that space necessary?",
+      "revId": "c1f0dcdf079d1505b1e0a453cc1261f17e275240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
