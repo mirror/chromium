@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "276c62a9_72bd23fd",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-02T12:04:29Z",
+      "side": 1,
+      "message": "to: hiroshige@\nI\u0027m not sure if this is the right thing to do. Because of the state mismatch between ImageResource and ImageResourceContent, we don\u0027t know if the resource has a ResourceError for sure. What do you think?",
+      "range": {
+        "startLine": 111,
+        "startChar": 11,
+        "endLine": 111,
+        "endChar": 24
+      },
+      "revId": "92927289edab9e7126782252ff456205b66295a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
