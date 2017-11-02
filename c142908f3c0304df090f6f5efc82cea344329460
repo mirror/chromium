@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "84983fa3_13ba57b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-02T01:42:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d6f1e5d_421f7da5",
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d7772c0_b692109c",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "358ee239_b9837751",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3601,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-02T01:42:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5d7772c0_b692109c",
+      "range": {
+        "startLine": 3601,
+        "startChar": 6,
+        "endLine": 3601,
+        "endChar": 20
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2e7c39e_0627315e",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-31T07:25:38Z",
       "side": 1,
       "message": "Why this change? Is it related to this CL or caused by rebase?",
+      "range": {
+        "startLine": 3642,
+        "startChar": 22,
+        "endLine": 3642,
+        "endChar": 24
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d722aa08_4c54d53b",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3642,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-02T01:42:35Z",
+      "side": 1,
+      "message": "Fixed- erroneous key strokes",
+      "parentUuid": "c2e7c39e_0627315e",
       "range": {
         "startLine": 3642,
         "startChar": 22,
@@ -111,6 +177,54 @@
     },
     {
       "key": {
+        "uuid": "4759ae1c_85ef1feb",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2540,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-02T01:42:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f96cc321_80c72023",
+      "range": {
+        "startLine": 2540,
+        "startChar": 28,
+        "endLine": 2540,
+        "endChar": 34
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "643ec271_996d597c",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2540,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-02T01:42:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e90aed1_85660271",
+      "range": {
+        "startLine": 2540,
+        "startChar": 63,
+        "endLine": 2540,
+        "endChar": 68
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0cb577a_37de335d",
         "filename": "chrome/common/chrome_features.cc",
         "patchSetId": 2
@@ -157,6 +271,54 @@
     },
     {
       "key": {
+        "uuid": "94f65273_7a5a125c",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-02T01:42:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97cff200_fd8b3267",
+      "range": {
+        "startLine": 443,
+        "startChar": 70,
+        "endLine": 443,
+        "endChar": 79
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cb35c0d_13ccbc77",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-02T01:42:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0cb577a_37de335d",
+      "range": {
+        "startLine": 443,
+        "startChar": 63,
+        "endLine": 443,
+        "endChar": 69
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9af9870_56edd40c",
         "filename": "chrome/common/chrome_features.cc",
         "patchSetId": 2
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "e593154b_5a92c9f0",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-02T01:42:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9af9870_56edd40c",
+      "range": {
+        "startLine": 445,
+        "startChar": 18,
+        "endLine": 445,
+        "endChar": 19
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acf1186c_585c0fe0",
         "filename": "chrome/common/chrome_features.h",
         "patchSetId": 2
@@ -191,6 +377,30 @@
       "writtenOn": "2017-10-31T07:25:38Z",
       "side": 1,
       "message": "nit: Similarly here. Should it be kNativeSamba, or maybe kNativeSambaClient, or kNativeSmbClient? We should be consistent with one version.",
+      "range": {
+        "startLine": 233,
+        "startChar": 27,
+        "endLine": 233,
+        "endChar": 37
+      },
+      "revId": "c142908f3c0304df090f6f5efc82cea344329460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cc363d2_a3ec88a7",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-02T01:42:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "acf1186c_585c0fe0",
       "range": {
         "startLine": 233,
         "startChar": 27,
