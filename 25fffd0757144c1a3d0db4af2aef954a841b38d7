@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "175f522b_5a198af9",
+        "filename": "build/android/buildhooks/java/org/chromium/build/Callback.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-11-02T15:35:16Z",
+      "side": 1,
+      "message": "This is done because buildhooks shouldn\u0027t depend on base. We should probably add a comment explaining why we can\u0027t use the base callback.",
+      "parentUuid": "f25958b5_27aec017",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "25fffd0757144c1a3d0db4af2aef954a841b38d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05602234_1341fe1e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
         "patchSetId": 12
