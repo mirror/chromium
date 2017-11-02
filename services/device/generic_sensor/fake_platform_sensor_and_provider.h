@@ -55,6 +55,23 @@ class FakePlatformSensorProvider : public PlatformSensorProvider {
   DISALLOW_COPY_AND_ASSIGN(FakePlatformSensorProvider);
 };
 
+// Mock for PlatformSensor's client interface that is used to deliver
+// error and data changes notifications.
+class MockPlatformSensorClient : public PlatformSensor::Client {
+ public:
+  explicit MockPlatformSensorClient(scoped_refptr<PlatformSensor> sensor);
+  ~MockPlatformSensorClient() override;
+
+  // PlatformSensor::Client interface.
+  MOCK_METHOD1(OnSensorReadingChanged, void(mojom::SensorType type));
+  MOCK_METHOD0(OnSensorError, void());
+  MOCK_METHOD0(IsSuspended, bool());
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockPlatformSensorClient);
+  scoped_refptr<PlatformSensor> sensor_;
+};
+
 }  // namespace device
 
 #endif  // SERVICES_DEVICE_GENERIC_SENSOR_FAKE_PLATFORM_SENSOR_AND_PROVIDER_H_
