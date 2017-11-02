@@ -159,7 +159,7 @@ class GPU_EXPORT SyncPointClientState
   // This behaves similarly to SyncPointManager::Wait but uses the order data
   // to guarantee no deadlocks with other clients. Must be called on order
   // number processing thread.
-  bool Wait(const SyncToken& sync_token, const base::Closure& callback);
+  bool Wait(const SyncToken& sync_token, base::OnceClosure callback);
 
   // Like Wait but runs the callback on the given task runner's thread. Must be
   // called on order number processing thread.

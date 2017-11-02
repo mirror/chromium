@@ -28,7 +28,7 @@ class GPU_EXPORT GpuInProcessThreadService
       const GpuFeatureInfo& gpu_feature_info);
 
   // gpu::InProcessCommandBuffer::Service implementation.
-  void ScheduleTask(const base::Closure& task) override;
+  void ScheduleTask(base::OnceClosure task) override;
   void ScheduleDelayedWork(const base::Closure& task) override;
   bool UseVirtualizedGLContexts() override;
   gpu::SyncPointManager* sync_point_manager() override;

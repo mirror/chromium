@@ -1180,14 +1180,13 @@ void WebGLRenderingContextBase::InitializeNewContext() {
                        scissor_box_[3]);
 
   GetDrawingBuffer()->ContextProvider()->SetLostContextCallback(
-      ConvertToBaseCallback(WTF::Bind(
+      WTF::BindRepeating(
           &WebGLRenderingContextBase::ForceLostContext,
           WrapWeakPersistent(this), WebGLRenderingContextBase::kRealLostContext,
-          WebGLRenderingContextBase::kAuto)));
+          WebGLRenderingContextBase::kAuto));
   GetDrawingBuffer()->ContextProvider()->SetErrorMessageCallback(
-      ConvertToBaseCallback(
-          WTF::Bind(&WebGLRenderingContextBase::OnErrorMessage,
-                    WrapWeakPersistent(this))));
+      WTF::BindRepeating(&WebGLRenderingContextBase::OnErrorMessage,
+                WrapWeakPersistent(this)));
 
   // If WebGL 2, the PRIMITIVE_RESTART_FIXED_INDEX should be always enabled.
   // See the section <Primitive Restart is Always Enabled> in WebGL 2 spec:
@@ -1293,9 +1292,9 @@ void WebGLRenderingContextBase::DestroyContext() {
   WTF::Closure null_closure;
   WTF::Function<void(const char*, int32_t)> null_function;
   GetDrawingBuffer()->ContextProvider()->SetLostContextCallback(
-      ConvertToBaseCallback(std::move(null_closure)));
+      std::move(null_closure));
   GetDrawingBuffer()->ContextProvider()->SetErrorMessageCallback(
-      ConvertToBaseCallback(std::move(null_function)));
+      std::move(null_function));
 
   DCHECK(GetDrawingBuffer());
   drawing_buffer_->BeginDestruction();

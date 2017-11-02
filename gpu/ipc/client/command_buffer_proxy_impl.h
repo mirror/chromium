@@ -114,7 +114,7 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
                       size_t height,
                       unsigned internal_format) override;
   void DestroyImage(int32_t id) override;
-  void SignalQuery(uint32_t query, const base::Closure& callback) override;
+  void SignalQuery(uint32_t query, base::OnceClosure callback) override;
   void SetLock(base::Lock* lock) override;
   void EnsureWorkVisible() override;
   gpu::CommandBufferNamespace GetNamespaceID() const override;
@@ -167,7 +167,7 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
 
  private:
   typedef std::map<int32_t, scoped_refptr<gpu::Buffer>> TransferBufferMap;
-  typedef base::hash_map<uint32_t, base::Closure> SignalTaskMap;
+  typedef base::hash_map<uint32_t, base::OnceClosure> SignalTaskMap;
 
   void CheckLock() {
     if (lock_) {

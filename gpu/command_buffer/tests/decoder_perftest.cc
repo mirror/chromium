@@ -269,7 +269,7 @@ class RecordReplayContext : public GpuControl {
 
   void DestroyImage(int32_t id) override { NOTIMPLEMENTED(); }
 
-  void SignalQuery(uint32_t query, const base::Closure& callback) override {
+  void SignalQuery(uint32_t query, base::OnceClosure callback) override {
     NOTIMPLEMENTED();
   }
 

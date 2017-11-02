@@ -60,8 +60,8 @@ void WebGraphicsContext3DProviderImpl::SetErrorMessageCallback(
 
 void WebGraphicsContext3DProviderImpl::SignalQuery(
     uint32_t query,
-    const base::Closure& callback) {
-  provider_->ContextSupport()->SignalQuery(query, callback);
+    base::OnceClosure callback) {
+  provider_->ContextSupport()->SignalQuery(query, std::move(callback));
 }
 
 void WebGraphicsContext3DProviderImpl::OnContextLost() {

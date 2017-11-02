@@ -519,9 +519,9 @@ void InProcessCommandBuffer::OnContextLost() {
 }
 
 void InProcessCommandBuffer::QueueTask(bool out_of_order,
-                                       const base::Closure& task) {
+                                       base::OnceClosure task) {
   if (out_of_order) {
-    service_->ScheduleTask(task);
+    service_->ScheduleTask(std::move(task));
     return;
   }
   // Release the |task_queue_lock_| before calling ScheduleTask because
@@ -529,7 +529,7 @@ void InProcessCommandBuffer::QueueTask(bool out_of_order,
   uint32_t order_num = sync_point_order_data_->GenerateUnprocessedOrderNumber();
   {
     base::AutoLock lock(task_queue_lock_);
-    task_queue_.push(std::make_unique<GpuTask>(task, order_num));
+    task_queue_.push(std::make_unique<GpuTask>(std::move(task), order_num));
   }
   service_->ScheduleTask(base::Bind(
       &InProcessCommandBuffer::ProcessTasksOnGpuThread, gpu_thread_weak_ptr_));
@@ -965,11 +965,11 @@ void InProcessCommandBuffer::SignalSyncTokenOnGpuThread(
 }
 
 void InProcessCommandBuffer::SignalQuery(unsigned query_id,
-                                         const base::Closure& callback) {
+                                         base::OnceClosure callback) {
   CheckSequencedThread();
-  QueueTask(false, base::Bind(&InProcessCommandBuffer::SignalQueryOnGpuThread,
-                              base::Unretained(this), query_id,
-                              WrapCallback(callback)));
+  QueueTask(false, base::BindOnce(&InProcessCommandBuffer::SignalQueryOnGpuThread,
+                                  base::Unretained(this), query_id,
+                                  WrapCallback(std::move(callback))));
 }
 
 void InProcessCommandBuffer::SignalQueryOnGpuThread(
@@ -1153,41 +1153,29 @@ namespace {
 
 void PostCallback(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-    const base::Closure& callback) {
+    base::OnceClosure callback) {
   // The task_runner.get() check is to support using InProcessCommandBuffer on
   // a thread without a message loop.
   if (task_runner.get() && !task_runner->BelongsToCurrentThread()) {
-    task_runner->PostTask(FROM_HERE, callback);
+    task_runner->PostTask(FROM_HERE, std::move(callback));
   } else {
-    callback.Run();
+    std::move(callback).Run();
   }
-}
-
-void RunOnTargetThread(std::unique_ptr<base::Closure> callback) {
-  DCHECK(callback.get());
-  callback->Run();
 }
 
 }  // anonymous namespace
 
-base::Closure InProcessCommandBuffer::WrapCallback(
-    const base::Closure& callback) {
-  // Make sure the callback gets deleted on the target thread by passing
-  // ownership.
-  std::unique_ptr<base::Closure> scoped_callback(new base::Closure(callback));
-  base::Closure callback_on_client_thread =
-      base::Bind(&RunOnTargetThread, base::Passed(&scoped_callback));
-  base::Closure wrapped_callback =
-      base::Bind(&PostCallback, base::ThreadTaskRunnerHandle::IsSet()
-                                    ? base::ThreadTaskRunnerHandle::Get()
-                                    : nullptr,
-                 callback_on_client_thread);
-  return wrapped_callback;
+base::OnceClosure InProcessCommandBuffer::WrapCallback(
+    base::OnceClosure callback) {
+  return base::BindOnce(&PostCallback, base::ThreadTaskRunnerHandle::IsSet()
+                        ? base::ThreadTaskRunnerHandle::Get()
+                        : nullptr,
+                        std::move(callback));
 }
 
-InProcessCommandBuffer::GpuTask::GpuTask(const base::Closure& callback,
+InProcessCommandBuffer::GpuTask::GpuTask(base::OnceClosure callback,
                                          uint32_t order_number)
-    : callback(callback), order_number(order_number) {}
+    : callback(std::move(callback)), order_number(order_number) {}
 
 InProcessCommandBuffer::GpuTask::~GpuTask() {}
 
