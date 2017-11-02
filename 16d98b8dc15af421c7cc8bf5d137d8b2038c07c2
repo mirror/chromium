@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5b7f1d71_db1c9e3d",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-02T12:00:36Z",
+      "side": 1,
+      "message": "They are initialized now, see my change to this file in this CL.",
+      "parentUuid": "553a2501_b91ee6cb",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 13
+      },
+      "revId": "16d98b8dc15af421c7cc8bf5d137d8b2038c07c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c047071_c90b7b62",
         "filename": "components/signin/core/browser/gaia_cookie_manager_service_unittest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-02T10:41:55Z",
       "side": 1,
       "message": "Should this also compare the \".valid\" value (the reconcilor uses that in its compare listed accounts function)?",
+      "range": {
+        "startLine": 72,
+        "startChar": 33,
+        "endLine": 72,
+        "endChar": 47
+      },
+      "revId": "16d98b8dc15af421c7cc8bf5d137d8b2038c07c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe5424e_b0503a2a",
+        "filename": "components/signin/core/browser/gaia_cookie_manager_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-02T12:00:36Z",
+      "side": 1,
+      "message": "I copied this logic from the existing \u003d\u003d operator.\nBasically this operator was never used in production, only in tests, and I thought that its behavior was strange, so I moved it to test code.",
+      "parentUuid": "8c047071_c90b7b62",
       "range": {
         "startLine": 72,
         "startChar": 33,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "35bac938_bba839d8",
+        "filename": "google_apis/gaia/gaia_auth_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-02T12:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b09d95f_9b2b2b66",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 15
+      },
+      "revId": "16d98b8dc15af421c7cc8bf5d137d8b2038c07c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d268cb8_42d12977",
         "filename": "google_apis/gaia/gaia_auth_util.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "16d98b8dc15af421c7cc8bf5d137d8b2038c07c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca68e307_c993222d",
+        "filename": "google_apis/gaia/gaia_auth_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-02T12:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d268cb8_42d12977",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "16d98b8dc15af421c7cc8bf5d137d8b2038c07c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
