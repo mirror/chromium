@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2d6cf30_32d7561c",
+        "filename": "content/browser/compositor/software_browser_compositor_output_surface.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-02T20:21:42Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem super useful, and misleading. Should we just have a sentinel value (0), or a flag in the callback, so that the client can know that the value is unknown/incorrect?",
+      "revId": "c4bfaf1ac952a3f2db58e7cf2daeb20808f701d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2186b3_a2ecd03a",
+        "filename": "gpu/ipc/common/gpu_messages.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-02T20:21:42Z",
+      "side": 1,
+      "message": "Should this be coalesced with GpuCommandBufferMsg_UpdateVSyncParameters? They seem to have a similar purpose. I would like to avoid sending extra IPCs per frame, they have a non-trivial power cost.",
+      "revId": "c4bfaf1ac952a3f2db58e7cf2daeb20808f701d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba7188b_9098e355",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-02T20:21:42Z",
+      "side": 1,
+      "message": "Can you clarify that the callback may not be called if we don\u0027t have timing information?\nOr should we guarantee that the callback is called, but then provide a way to say that the timing info is invalid? (e.g. a flag)",
+      "revId": "c4bfaf1ac952a3f2db58e7cf2daeb20808f701d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8f37ea_e8011a92",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-02T20:21:42Z",
+      "side": 1,
+      "message": "That seems useless to do.",
+      "revId": "c4bfaf1ac952a3f2db58e7cf2daeb20808f701d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
