@@ -168,10 +168,6 @@ const QuicTag kBWS2 = TAG('B', 'W', 'S', '2');  // Server bw resumption v2.
 const QuicTag kMTUH = TAG('M', 'T', 'U', 'H');  // High-target MTU discovery.
 const QuicTag kMTUL = TAG('M', 'T', 'U', 'L');  // Low-target MTU discovery.
 
-// Tags for async signing experiments
-const QuicTag kASYN = TAG('A', 'S', 'Y', 'N');  // Perform asynchronous signing
-const QuicTag kSYNC = TAG('S', 'Y', 'N', 'C');  // Perform synchronous signing
-
 // Proof types (i.e. certificate types)
 // NOTE: although it would be silly to do so, specifying both kX509 and kX59R
 // is allowed and is equivalent to specifying only kX509.
