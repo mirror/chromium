@@ -1308,6 +1308,9 @@ extern const char kEnableNewAppMenuIconDescription[];
 extern const char kOmniboxEntitySuggestionsName[];
 extern const char kOmniboxEntitySuggestionsDescription[];
 
+extern const char kOmniboxTabSwitchSuggestionsName[];
+extern const char kOmniboxTabSwitchSuggestionsDescription[];
+
 extern const char kOmniboxTailSuggestionsName[];
 extern const char kOmniboxTailSuggestionsDescription[];
 
