@@ -16,6 +16,24 @@
       "revId": "6615a8a6515e3befb64ad927dd81a6e094397847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd202a18_bffe890a",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-02T22:47:28Z",
+      "side": 1,
+      "message": "Renamed. I prefer having constants at the top of the file if its optional :-P",
+      "parentUuid": "bbbe52f4_c1d722a2",
+      "revId": "6615a8a6515e3befb64ad927dd81a6e094397847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
