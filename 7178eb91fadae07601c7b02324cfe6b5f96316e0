@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c5f4cebc_2264e6e6",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-02T21:57:28Z",
+      "side": 1,
+      "message": "was making a different change, didn\u0027t undo this part. Removed",
+      "parentUuid": "d4c8d58e_81adccb3",
+      "revId": "7178eb91fadae07601c7b02324cfe6b5f96316e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47892545_5d2fa8eb",
         "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
         "patchSetId": 2
