@@ -16,6 +16,24 @@
       "revId": "b1e13e7005f64e864591e349d98654cb82e1b4c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3476b7f8_346c7e37",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-02T02:00:57Z",
+      "side": 1,
+      "message": "Yes - SetIdentityInfo() is private. Thank you for double checking though :)",
+      "parentUuid": "07848bae_768ad268",
+      "revId": "b1e13e7005f64e864591e349d98654cb82e1b4c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
