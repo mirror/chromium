@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d112a55d_8d365bd2",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-02T20:19:27Z",
+      "side": 1,
+      "message": "PcmAudioEncoder and OpusAudioEncoder seem to share\na lot of commong code, in particular all things \nrelated to the AudioConverter, AudioFifo, params and\npaused. Consider moving common functionality to \nAudioEncoder (which won\u0027t be purely abstract anymore).",
+      "range": {
+        "startLine": 94,
+        "startChar": 26,
+        "endLine": 94,
+        "endChar": 38
+      },
+      "revId": "bc501c3164eab1a8710e353547249700484da54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e82985e_ec9245b8",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-02T20:19:27Z",
+      "side": 1,
+      "message": "nit: s/the codec/|codec|/",
+      "range": {
+        "startLine": 70,
+        "startChar": 35,
+        "endLine": 70,
+        "endChar": 44
+      },
+      "revId": "bc501c3164eab1a8710e353547249700484da54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc022be1_1b660690",
+        "filename": "content/renderer/media_recorder/audio_track_recorder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-02T20:19:27Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 252,
+        "startChar": 30,
+        "endLine": 252,
+        "endChar": 36
+      },
+      "revId": "bc501c3164eab1a8710e353547249700484da54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a4cdaa_8bf00f73",
+        "filename": "content/renderer/media_recorder/audio_track_recorder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-02T20:19:27Z",
+      "side": 1,
+      "message": "This code looks similar to l.292-335. What about \nmerging both:\n\nTEST_P(AudioTrackRecorderTest, OnDataPcm) {\n  // common parts\n  if (opus) {\n    // opus parts\n  } else if (pcm) {\n    // pcm specific\n  } \n\n  // test epilogue\n}\n\nArguably it might look less good than what we have now.",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 357,
+        "endChar": 41
+      },
+      "revId": "bc501c3164eab1a8710e353547249700484da54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
