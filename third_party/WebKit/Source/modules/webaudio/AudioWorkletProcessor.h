@@ -18,6 +18,8 @@ namespace blink {
 class AudioBus;
 class AudioWorkletGlobalScope;
 class AudioWorkletProcessorDefinition;
+class MessagePort;
+class ExecutionContext;
 
 // AudioWorkletProcessor class represents the active instance created from
 // AudioWorkletProcessorDefinition. |AudioWorkletNodeHandler| invokes
@@ -29,13 +31,15 @@ class MODULES_EXPORT AudioWorkletProcessor : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static AudioWorkletProcessor* Create(AudioWorkletGlobalScope*,
-                                       const String& name);
+  static AudioWorkletProcessor* Create(ExecutionContext*);
+
+  AudioWorkletProcessor(AudioWorkletGlobalScope*);
+
   virtual ~AudioWorkletProcessor();
 
-  void SetInstance(v8::Isolate*, v8::Local<v8::Object> instance);
+  // void SetInstance(v8::Isolate*, v8::Local<v8::Object> instance);
 
-  v8::Local<v8::Object> InstanceLocal(v8::Isolate*);
+  // v8::Local<v8::Object> InstanceLocal(v8::Isolate*);
 
   // |AudioWorkletHandler| invokes this method to process audio.
   bool Process(
@@ -44,17 +48,23 @@ class MODULES_EXPORT AudioWorkletProcessor : public ScriptWrappable {
       HashMap<String, std::unique_ptr<AudioFloatArray>>* param_value_map,
       double current_time);
 
+  void SetName(String name) { name_ = name; }
   const String& Name() const { return name_; }
 
+  void SetPort(MessagePort* port) { processor_port_ = port; }
+
+  // IDL
+  MessagePort* port() const;
+
   void Trace(blink::Visitor*);
-  void TraceWrappers(const ScriptWrappableVisitor*) const;
+  // void TraceWrappers(const ScriptWrappableVisitor*) const;
 
  private:
-  AudioWorkletProcessor(AudioWorkletGlobalScope*, const String& name);
-
   Member<AudioWorkletGlobalScope> global_scope_;
-  TraceWrapperV8Reference<v8::Object> instance_;
-  const String name_;
+  Member<MessagePort> processor_port_;
+  // TraceWrapperV8Reference<v8::Object> instance_;
+  
+  String name_;
 };
 
 }  // namespace blink

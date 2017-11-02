@@ -20,6 +20,7 @@ class AudioWorkletProcessor;
 class AudioWorkletProcessorDefinition;
 class CrossThreadAudioWorkletProcessorInfo;
 class ExceptionState;
+class MessagePortChannel;
 struct GlobalScopeCreationParams;
 
 // This is constructed and destroyed on a worker thread, and all methods also
@@ -43,6 +44,10 @@ class MODULES_EXPORT AudioWorkletGlobalScope final
   // function may return nullptr when 1) a definition cannot be found or 2) a
   // new V8 object cannot be constructed for some reason.
   AudioWorkletProcessor* CreateInstance(const String& name, float sample_rate);
+
+  AudioWorkletProcessor* CreateProcessor(const String& name,
+                                         float sample_rate,
+                                         MessagePortChannel);
 
   // Invokes the JS audio processing function from an instance of
   // AudioWorkletProcessor, along with given AudioBuffer from the audio graph.
@@ -80,6 +85,7 @@ class MODULES_EXPORT AudioWorkletGlobalScope final
 
   ProcessorDefinitionMap processor_definition_map_;
   ProcessorInstances processor_instances_;
+
   double current_time_ = 0.0;
   float sample_rate_ = 0.0;
 };
