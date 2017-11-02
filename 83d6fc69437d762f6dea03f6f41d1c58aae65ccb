@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a09c66ad_adced940",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-02T17:03:48Z",
+      "side": 1,
+      "message": "All logic to determine whether there should be scrollbars must happen inside ComputeScrollbarExistence.",
+      "revId": "83d6fc69437d762f6dea03f6f41d1c58aae65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc80e457_3a1eae33",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-02T17:03:48Z",
+      "side": 1,
+      "message": "If scrollbars_will_change is false, then the code should not modify scrollbars.",
+      "revId": "83d6fc69437d762f6dea03f6f41d1c58aae65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "505be5b8_6d593a06",
+        "filename": "third_party/WebKit/Source/core/paint/ScrollbarManager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-02T17:03:48Z",
+      "side": 1,
+      "message": "The concept of \"detaching a scrollbar\" should not be visible or noticeable outside of ScrollbarManager.",
+      "revId": "83d6fc69437d762f6dea03f6f41d1c58aae65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
