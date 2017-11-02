@@ -267,7 +267,7 @@ FAIL RTCRtpReceiver interface: attribute rtcpTransport assert_true: The prototyp
 FAIL RTCRtpReceiver interface: operation getCapabilities(DOMString) assert_own_property: interface object missing static operation expected property "getCapabilities" missing
 FAIL RTCRtpReceiver interface: operation getParameters() assert_own_property: interface prototype object missing non-static operation expected property "getParameters" missing
 PASS RTCRtpReceiver interface: operation getContributingSources()
-FAIL RTCRtpReceiver interface: operation getSynchronizationSources() assert_own_property: interface prototype object missing non-static operation expected property "getSynchronizationSources" missing
+PASS RTCRtpReceiver interface: operation getSynchronizationSources()
 FAIL RTCRtpReceiver interface: operation getStats() assert_own_property: interface prototype object missing non-static operation expected property "getStats" missing
 FAIL RTCRtpReceiver must be primary interface of new RTCPeerConnection().addTransceiver('audio').receiver assert_equals: Unexpected exception when evaluating object expected null but got object "TypeError: (intermediate value).addTransceiver is not a function"
 FAIL Stringification of new RTCPeerConnection().addTransceiver('audio').receiver assert_equals: Unexpected exception when evaluating object expected null but got object "TypeError: (intermediate value).addTransceiver is not a function"
@@ -288,15 +288,15 @@ PASS RTCRtpContributingSource interface: existence and properties of interface p
 PASS RTCRtpContributingSource interface: attribute timestamp
 PASS RTCRtpContributingSource interface: attribute source
 FAIL RTCRtpContributingSource interface: attribute audioLevel assert_true: The prototype object must have a property "audioLevel" expected true got false
-FAIL RTCRtpSynchronizationSource interface: existence and properties of interface object assert_own_property: self does not have own property "RTCRtpSynchronizationSource" expected property "RTCRtpSynchronizationSource" missing
-FAIL RTCRtpSynchronizationSource interface object length assert_own_property: self does not have own property "RTCRtpSynchronizationSource" expected property "RTCRtpSynchronizationSource" missing
-FAIL RTCRtpSynchronizationSource interface object name assert_own_property: self does not have own property "RTCRtpSynchronizationSource" expected property "RTCRtpSynchronizationSource" missing
-FAIL RTCRtpSynchronizationSource interface: existence and properties of interface prototype object assert_own_property: self does not have own property "RTCRtpSynchronizationSource" expected property "RTCRtpSynchronizationSource" missing
-FAIL RTCRtpSynchronizationSource interface: existence and properties of interface prototype object's "constructor" property assert_own_property: self does not have own property "RTCRtpSynchronizationSource" expected property "RTCRtpSynchronizationSource" missing
-FAIL RTCRtpSynchronizationSource interface: attribute timestamp assert_own_property: self does not have own property "RTCRtpSynchronizationSource" expected property "RTCRtpSynchronizationSource" missing
-FAIL RTCRtpSynchronizationSource interface: attribute source assert_own_property: self does not have own property "RTCRtpSynchronizationSource" expected property "RTCRtpSynchronizationSource" missing
-FAIL RTCRtpSynchronizationSource interface: attribute audioLevel assert_own_property: self does not have own property "RTCRtpSynchronizationSource" expected property "RTCRtpSynchronizationSource" missing
-FAIL RTCRtpSynchronizationSource interface: attribute voiceActivityFlag assert_own_property: self does not have own property "RTCRtpSynchronizationSource" expected property "RTCRtpSynchronizationSource" missing
+PASS RTCRtpSynchronizationSource interface: existence and properties of interface object
+PASS RTCRtpSynchronizationSource interface object length
+PASS RTCRtpSynchronizationSource interface object name
+PASS RTCRtpSynchronizationSource interface: existence and properties of interface prototype object
+PASS RTCRtpSynchronizationSource interface: existence and properties of interface prototype object's "constructor" property
+PASS RTCRtpSynchronizationSource interface: attribute timestamp
+PASS RTCRtpSynchronizationSource interface: attribute source
+PASS RTCRtpSynchronizationSource interface: attribute audioLevel
+FAIL RTCRtpSynchronizationSource interface: attribute voiceActivityFlag assert_true: The prototype object must have a property "voiceActivityFlag" expected true got false
 FAIL RTCRtpTransceiver interface: existence and properties of interface object assert_own_property: self does not have own property "RTCRtpTransceiver" expected property "RTCRtpTransceiver" missing
 FAIL RTCRtpTransceiver interface object length assert_own_property: self does not have own property "RTCRtpTransceiver" expected property "RTCRtpTransceiver" missing
 FAIL RTCRtpTransceiver interface object name assert_own_property: self does not have own property "RTCRtpTransceiver" expected property "RTCRtpTransceiver" missing
