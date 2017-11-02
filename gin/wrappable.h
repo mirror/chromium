@@ -103,11 +103,10 @@ class Wrappable : public WrappableBase {
 };
 
 template <typename T>
-struct ToV8ReturnsMaybe<
-    T*,
-    typename std::enable_if<
-        std::is_convertible<T*, WrappableBase*>::value>::type> {
-  static const bool value = true;
+struct ToV8Options<T*,
+                   typename std::enable_if<
+                       std::is_convertible<T*, WrappableBase*>::value>::type> {
+  static const ConversionOptions value = ConversionOptions::RETURNS_MAYBE;
 };
 
 // This converter handles any subclass of Wrappable.

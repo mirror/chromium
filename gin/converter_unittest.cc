@@ -11,6 +11,7 @@
 #include "base/compiler_specific.h"
 #include "gin/public/isolate_holder.h"
 #include "gin/test/v8_test.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "v8/include/v8.h"
 
@@ -116,16 +117,36 @@ TEST_F(ConverterTest, Vector) {
   expected.push_back(0);
   expected.push_back(1);
 
-  auto maybe = Converter<std::vector<int>>::ToV8(
+  auto js_value = Converter<std::vector<int>>::ToV8(
       instance_->isolate()->GetCurrentContext(), expected);
-  Local<Value> js_value;
-  EXPECT_TRUE(maybe.ToLocal(&js_value));
   Local<Array> js_array2 = Local<Array>::Cast(js_value);
   EXPECT_EQ(3u, js_array2->Length());
   for (size_t i = 0; i < expected.size(); ++i) {
     EXPECT_TRUE(Integer::New(instance_->isolate(), expected[i])
                     ->StrictEquals(js_array2->Get(static_cast<int>(i))));
   }
+}
+
+TEST_F(ConverterTest, VectorOfVectors) {
+  HandleScope handle_scope(instance_->isolate());
+
+  std::vector<std::vector<int>> vector_of_vectors = {
+      {1, 2, 3}, {4, 5, 6},
+  };
+
+  v8::Local<v8::Value> v8_value =
+      ConvertToV8(instance_->isolate()->GetCurrentContext(), vector_of_vectors);
+  std::vector<std::vector<int>> out_value;
+  ASSERT_TRUE(ConvertFromV8(instance_->isolate(), v8_value, &out_value));
+  EXPECT_THAT(out_value, testing::ContainerEq(vector_of_vectors));
+}
+
+TEST_F(ConverterTest, ConvertToV8WithContext) {
+  HandleScope handle_scope(instance_->isolate());
+  v8::Local<v8::Context> context = instance_->isolate()->GetCurrentContext();
+
+  v8::Local<v8::Value> int_val = ConvertToV8(context, 42);
+  EXPECT_EQ(42, int_val->Int32Value());
 }
 
 }  // namespace gin
