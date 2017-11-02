@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49bf9c11_424e6030",
+        "filename": "third_party/zlib/contrib/tests/fuzzers/deflate_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-11-02T16:12:33Z",
+      "side": 1,
+      "message": "Missing period at the end of comment?",
+      "revId": "739f0424f12d5bcefa2d8899f078013c877469df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e185987c_bc265329",
+        "filename": "third_party/zlib/contrib/tests/fuzzers/deflate_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-11-02T16:12:33Z",
+      "side": 1,
+      "message": "Maybe in future we should add tests for other levels? It seems that 3/6/9 are commonly used and they do stress different parts of the code.\n\nFrom the manual:\nCompression levels.\n#define Z_NO_COMPRESSION         0\n#define Z_BEST_SPEED             1\n#define Z_BEST_COMPRESSION       9\n#define Z_DEFAULT_COMPRESSION  (-1)\n\nRef: https://www.zlib.net/manual.html",
+      "revId": "739f0424f12d5bcefa2d8899f078013c877469df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
