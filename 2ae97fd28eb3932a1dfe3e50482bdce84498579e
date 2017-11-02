@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5b23a11_4b993d35",
+        "filename": "components/autofill/core/common/signatures_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-02T21:01:32Z",
+      "side": 1,
+      "message": "You can do this in a single pass/loop, but your current implementation is probably easier to read. For your consideration...\n\n  string result;\n  result.reserve(input_utf8.length());\n  size_t start \u003d std::string::npos;\n  for (size_t i \u003d 0; i \u003c input_utf8.length(); ++i) {\n    const char c \u003d input_utf8[i];\n    result.push_back(c);\n    if (std::isdigit(c)) {\n      if (start \u003d\u003d std::string::npos)\n        start \u003d result.length() - 1;\n    } else if (start !\u003d std::string::npos) {\n      if (result.length() - start \u003e 5)\n        result.resize(start);\n      start \u003d std::string::npos;\n    }\n  }\n\nYou can probably also skip the creation of input_utf8 and just read/copy from the string16 input.",
+      "revId": "2ae97fd28eb3932a1dfe3e50482bdce84498579e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
