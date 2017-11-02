@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "79e61b50_a6494384",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionEventProxyImpl.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T18:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55283297_f880c7a8",
+      "range": {
+        "startLine": 58,
+        "startChar": 38,
+        "endLine": 58,
+        "endChar": 50
+      },
+      "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e2ddf92_0cd0aff9",
         "filename": "content/public/android/junit/src/org/chromium/content/browser/SmartSelectionMetricsLoggerTest.java",
         "patchSetId": 22
@@ -62,6 +86,30 @@
       "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b86123_12b42a9c",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SmartSelectionMetricsLoggerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T18:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e2ddf92_0cd0aff9",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "e312345e_9f5ca6b1",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SmartSelectionMetricsLoggerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T18:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "655c7ee9_25c9071b",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 71
+      },
+      "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad310fcc_02c90285",
         "filename": "content/public/android/junit/src/org/chromium/content/browser/SmartSelectionMetricsLoggerTest.java",
         "patchSetId": 22
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "a2b5cb7d_12c1beda",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SmartSelectionMetricsLoggerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T18:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad310fcc_02c90285",
+      "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "969291a2_436aa2f8",
         "filename": "content/public/android/junit/src/org/chromium/content/browser/SmartSelectionMetricsLoggerTest.java",
         "patchSetId": 22
@@ -119,6 +209,24 @@
       "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19682c5c_abae5890",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SmartSelectionMetricsLoggerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T18:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "969291a2_436aa2f8",
+      "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
