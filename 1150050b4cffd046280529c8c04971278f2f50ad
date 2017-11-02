@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b70bede_d39428aa",
+        "filename": "chrome/browser/ui/views/frame/avatar_button_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-02T23:16:08Z",
+      "side": 1,
+      "message": "nit: not needed (or remove fwd decl)",
+      "revId": "1150050b4cffd046280529c8c04971278f2f50ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9419407e_81d5ccee",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-02T23:16:08Z",
+      "side": 1,
+      "message": "nit: dcheck this instead of using a conditional\n(afaict, this is just called once per bubble, and the bubble should exist)",
+      "revId": "1150050b4cffd046280529c8c04971278f2f50ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f21333_7dbe0c2f",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-02T23:16:08Z",
+      "side": 1,
+      "message": "nit: comment \"Shows the button in a pressed state while the bubble is open.\" or similar",
+      "revId": "1150050b4cffd046280529c8c04971278f2f50ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
