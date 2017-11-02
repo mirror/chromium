@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "5a4e76cf_04c8caf7",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-02T00:55:54Z",
+      "side": 1,
+      "message": "It would probably work to put WaitGetPoses inside SubmitFrame (and just ignore the pose you get) and throttle that way, but yeah, best to keep things simple for now at least.\n\nHow does WaitGetPoses know when to start rendering with minimal latency? It is doing something like tracking how long you take to submit frames? (we were thinking of doing something similar ourselves for android webVR scheduling)",
+      "parentUuid": "fc9c0dd2_4e671ff6",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 76
+      },
+      "revId": "2bbfbe302807934759af4aa2b1d9c0ede6572b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34f58403_c3f417b4",
         "filename": "device/vr/openvr/openvr_render_loop.cc",
         "patchSetId": 2
