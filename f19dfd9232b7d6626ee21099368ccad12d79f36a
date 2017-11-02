@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b421e5e_d5a64d40",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 94064,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-02T18:36:14Z",
+      "side": 1,
+      "message": "Is this emitted even if no sound is playing?",
+      "revId": "f19dfd9232b7d6626ee21099368ccad12d79f36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
