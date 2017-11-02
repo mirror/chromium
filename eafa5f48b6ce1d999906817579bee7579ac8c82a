@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e1053435_abc9fcb2",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-02T11:56:50Z",
+      "side": 1,
+      "message": "Could we just not have the |dispatcher| variable?",
+      "revId": "eafa5f48b6ce1d999906817579bee7579ac8c82a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4606b6ef_bc96c743",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 5
@@ -13,6 +30,24 @@
       "writtenOn": "2017-11-02T10:26:53Z",
       "side": 1,
       "message": "Hm, I see... so with this change provider context can live a lot longer than the client context that minted this one, but that\u0027s actually already happening with webserviceworkerproviderimpl.",
+      "revId": "eafa5f48b6ce1d999906817579bee7579ac8c82a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad256157_59fb7c0c",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-02T11:56:50Z",
+      "side": 1,
+      "message": "Could we make this a WeakPtr? It looks like we only keep context_ around in able to remove ourselves from it, but if it\u0027s already done we don\u0027t need to worry about that.\n\nI think of anything with a scoped_refptr to the ProviderContext as a \"provider\", and RegistrationImpl isn\u0027t really a provider.",
+      "parentUuid": "4606b6ef_bc96c743",
       "revId": "eafa5f48b6ce1d999906817579bee7579ac8c82a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
