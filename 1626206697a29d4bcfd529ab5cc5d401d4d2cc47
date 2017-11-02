@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "44ea1aa1_db9e0625",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-02T14:51:48Z",
+      "side": 1,
+      "message": "i think it\u0027s fine to leave it like this if you\u0027d rather not diverge from the signal names. the classes that implement the Observer interface all look like they\u0027re scoped to encrypted home dirs, so i think there\u0027s not much risk of confusion.",
+      "parentUuid": "66caf23f_693373f2",
+      "revId": "1626206697a29d4bcfd529ab5cc5d401d4d2cc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15df031c_1180d120",
         "filename": "chromeos/dbus/fake_cryptohome_client.h",
         "patchSetId": 3
