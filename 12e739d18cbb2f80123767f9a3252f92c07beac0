@@ -96,6 +96,23 @@
     },
     {
       "key": {
+        "uuid": "e7e069f2_a05398f4",
+        "filename": "components/payments/content/service_worker_payment_instrument_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-02T15:57:18Z",
+      "side": 1,
+      "message": "Are the constructor/destructor required by the compiler?",
+      "revId": "12e739d18cbb2f80123767f9a3252f92c07beac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "095848d6_384c8f05",
         "filename": "components/payments/content/service_worker_payment_instrument_unittest.cc",
         "patchSetId": 4
@@ -143,6 +160,23 @@
     },
     {
       "key": {
+        "uuid": "c4008b4a_7f48a968",
+        "filename": "components/payments/content/service_worker_payment_instrument_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-02T15:57:18Z",
+      "side": 1,
+      "message": "Can you make this a content::TestBrowserContext member (no std::unique_ptr)?",
+      "revId": "12e739d18cbb2f80123767f9a3252f92c07beac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bea45da4_dc6d4fe6",
         "filename": "components/payments/content/service_worker_payment_instrument_unittest.cc",
         "patchSetId": 4
@@ -187,6 +221,23 @@
       "revId": "12e739d18cbb2f80123767f9a3252f92c07beac0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0722cac2_0cf50079",
+        "filename": "components/payments/content/service_worker_payment_instrument_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-02T15:57:18Z",
+      "side": 1,
+      "message": "Looks like IsValidForModifier is not unit-tested?",
+      "revId": "12e739d18cbb2f80123767f9a3252f92c07beac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
