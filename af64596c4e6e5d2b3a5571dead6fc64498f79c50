@@ -16,6 +16,24 @@
       "revId": "af64596c4e6e5d2b3a5571dead6fc64498f79c50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400258a7_7bd665be",
+        "filename": "content/renderer/pepper/ppb_graphics_3d_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T21:39:28Z",
+      "side": 1,
+      "message": "This can still be set to false if we pass in commandline switch kDisablePepper3d",
+      "parentUuid": "bffc5285_5fc0e15e",
+      "revId": "af64596c4e6e5d2b3a5571dead6fc64498f79c50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
