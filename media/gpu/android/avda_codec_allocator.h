@@ -73,6 +73,9 @@ class MEDIA_GPU_EXPORT CodecConfig
   std::vector<uint8_t> csd0;
   std::vector<uint8_t> csd1;
 
+  VideoColorSpace color_space;
+  base::Optional<HDRMetadata> hdr_metadata;
+
  protected:
   friend class base::RefCountedThreadSafe<CodecConfig>;
   virtual ~CodecConfig();
@@ -127,6 +130,8 @@ class MEDIA_GPU_EXPORT AVDACodecAllocator {
           const base::android::JavaRef<jobject>& media_crypto,
           const std::vector<uint8_t>& csd0,
           const std::vector<uint8_t>& csd1,
+          const VideoColorSpace& color_space,
+          const base::Optional<HDRMetadata>& hdr_metadata,
           bool allow_adaptive_playback)>;
 
   // Make sure the construction threads are started for |client|.  If the
