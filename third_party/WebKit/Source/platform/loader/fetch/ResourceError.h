@@ -33,6 +33,7 @@
 #include "platform/PlatformExport.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebURLError.h"
 
@@ -41,7 +42,7 @@ namespace blink {
 enum class ResourceRequestBlockedReason;
 
 class PLATFORM_EXPORT ResourceError final {
-  DISALLOW_NEW();
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
   using Domain = WebURLError::Domain;
@@ -61,15 +62,16 @@ class PLATFORM_EXPORT ResourceError final {
 
   static ResourceError CacheMissError(const KURL&);
   static ResourceError TimeoutError(const KURL&);
+  static ResourceError Failure(const KURL&);
 
-  ResourceError() = default;
+  ResourceError() = delete;
+  // |error_code| must not be 0.
   ResourceError(Domain, int error_code, const KURL& failing_url);
+  ResourceError(const WebURLError&);
 
   // Makes a deep copy. Useful for when you need to use a ResourceError on
   // another thread.
   ResourceError Copy() const;
-
-  bool IsNull() const { return domain_ == Domain::kEmpty; }
 
   Domain GetDomain() const { return domain_; }
   int ErrorCode() const { return error_code_; }
@@ -99,11 +101,13 @@ class PLATFORM_EXPORT ResourceError final {
   }
   bool ShouldCollapseInitiator() const { return should_collapse_initiator_; }
 
+  operator WebURLError() const;
+
   static bool Compare(const ResourceError&, const ResourceError&);
 
  private:
-  Domain domain_ = Domain::kEmpty;
-  int error_code_ = 0;
+  Domain domain_;
+  int error_code_;
   KURL failing_url_;
   String localized_description_;
   bool is_access_check_ = false;
