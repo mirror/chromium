@@ -725,6 +725,29 @@
     },
     {
       "key": {
+        "uuid": "c9b79e17_72c7ebfe",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2195,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-02T23:15:40Z",
+      "side": 1,
+      "message": "nit: ![self.toolsPopupCoordinator isShowingToolsMenuPopup]",
+      "range": {
+        "startLine": 2195,
+        "startChar": 16,
+        "endLine": 2195,
+        "endChar": 74
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24167cbf_465c3d47",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h",
         "patchSetId": 5
