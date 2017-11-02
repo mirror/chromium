@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfd4803b_9010ff73",
+        "filename": "chrome/browser/ui/views/frame/avatar_button_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-02T20:55:50Z",
+      "side": 1,
+      "message": "aside: I wonder if this could just live on AvatarButton (not important for this CL)",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42df46b0_4d5df1e4",
+        "filename": "chrome/browser/ui/views/frame/avatar_button_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-02T20:55:50Z",
+      "side": 1,
+      "message": "nit: use event-\u003eAsMouseEvent()",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8eb55b8_42dc5af6",
+        "filename": "chrome/browser/ui/views/frame/avatar_button_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-02T20:55:50Z",
+      "side": 1,
+      "message": "Declare member |view_| as |AvatarButton* avatar_button_ \u003d nullptr;| to avoid this static cast.",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af2c34a4_b41268f7",
+        "filename": "chrome/browser/ui/views/frame/avatar_button_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-02T20:55:50Z",
+      "side": 1,
+      "message": "nit: remove if not needed",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c9d7ab_63e8b5da",
+        "filename": "chrome/browser/ui/views/frame/avatar_button_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-02T20:55:50Z",
+      "side": 1,
+      "message": "nit: not needed, menu_button_listener.h has a fwd decl. (revert preprocessor block change)",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d78992_95ec671d",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-02T20:55:50Z",
+      "side": 1,
+      "message": "Can ProfileChooserView (or this AvatarButton class, I suppose) hold a MenuButton::PressedLock object to avoid exposing [In|De]crementPressedLocked? Moving it to ProfileChooserView should more straightforwardly tie the lock to the lifetime of the bubble, and would probably better match the pattern of typical MenuButton menu controllers.",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8a3aca_c423711d",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-02T20:55:50Z",
+      "side": 1,
+      "message": "nit: Maybe \"OnAvatarBubbleShown\", \"OnProfileChooserViewShown\", On*Created, or similar?",
+      "revId": "490863e9bf574edfc5d0b07d0f9bfb994c5bfda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
