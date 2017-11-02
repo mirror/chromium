@@ -67,6 +67,15 @@ AtomicString HTMLSlotElement::NormalizeSlotName(const AtomicString& name) {
 }
 
 const HeapVector<Member<Node>>& HTMLSlotElement::AssignedNodes() const {
+  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled()) {
+    if (!SupportsDistribution()) {
+      DCHECK(assigned_nodes_.IsEmpty());
+      return assigned_nodes_;
+    }
+    ContainingShadowRoot()->GetSlotAssignment().ResolveAssignmentNg();
+    return assigned_nodes_;
+  }
+
   DCHECK(!NeedsDistributionRecalc());
   DCHECK(IsInShadowTree() || assigned_nodes_.IsEmpty());
   return assigned_nodes_;
@@ -116,6 +125,11 @@ void HTMLSlotElement::AppendDistributedNodesFrom(const HTMLSlotElement& other) {
   distributed_nodes_.AppendVector(other.distributed_nodes_);
   for (const auto& node : other.distributed_nodes_)
     distributed_indices_.Set(node.Get(), index++);
+}
+
+void HTMLSlotElement::ClearAssignedNodes() {
+  DCHECK(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
+  assigned_nodes_.clear();
 }
 
 void HTMLSlotElement::ClearDistribution() {
@@ -372,7 +386,7 @@ void HTMLSlotElement::DidSlotChangeAfterRemovedFromShadowTree() {
 void HTMLSlotElement::DidSlotChangeAfterRenaming() {
   DCHECK(SupportsDistribution());
   EnqueueSlotChangeEvent();
-  ContainingShadowRoot()->Owner()->SetNeedsDistributionRecalc();
+  SetNeedsDistributionRecalcWillBeSetNeedsAssignmentRecalc();
   CheckSlotChange(SlotChangeType::kSuppressSlotChangeEvent);
 }
 
@@ -384,11 +398,19 @@ void HTMLSlotElement::LazyReattachDistributedNodesNaive() {
     node->LazyReattachIfAttached();
 }
 
+void HTMLSlotElement::
+    SetNeedsDistributionRecalcWillBeSetNeedsAssignmentRecalc() {
+  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled())
+    ContainingShadowRoot()->GetSlotAssignment().SetNeedsAssignmentRecalc();
+  else
+    ContainingShadowRoot()->Owner()->SetNeedsDistributionRecalc();
+}
+
 void HTMLSlotElement::DidSlotChange(SlotChangeType slot_change_type) {
   DCHECK(SupportsDistribution());
   if (slot_change_type == SlotChangeType::kSignalSlotChangeEvent)
     EnqueueSlotChangeEvent();
-  ContainingShadowRoot()->Owner()->SetNeedsDistributionRecalc();
+  SetNeedsDistributionRecalcWillBeSetNeedsAssignmentRecalc();
   // Check slotchange recursively since this slotchange may cause another
   // slotchange.
   CheckSlotChange(SlotChangeType::kSuppressSlotChangeEvent);
