@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "249595d3_b803282a",
+        "filename": "base/process/process.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-11-02T14:53:48Z",
+      "side": 1,
+      "message": "Good point.  It should be the same for all.  Fixed.",
+      "parentUuid": "05a78cd0_d3f7ff10",
+      "revId": "bce1b2b02aec1ecf73863c6c69970a94fd560731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3b625df_5ba25219",
         "filename": "base/process/process_win.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a4a97dd7_bfa81592",
+        "filename": "base/process/process_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-11-02T14:53:48Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s worth the effort.  It would mean adding a mutable flag to track it and even though could miss things if the Process object were duplicated.\n\nI\u0027ll add a comment about it.",
+      "parentUuid": "b3b625df_5ba25219",
+      "revId": "bce1b2b02aec1ecf73863c6c69970a94fd560731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dc01403_ff1018ea",
         "filename": "base/process/process_win.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-02T14:00:33Z",
       "side": 1,
       "message": "Is this only something we care about on Windows?",
+      "revId": "bce1b2b02aec1ecf73863c6c69970a94fd560731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b16e775_b7d30b52",
+        "filename": "base/process/process_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-11-02T14:53:48Z",
+      "side": 1,
+      "message": "For now, yes.",
+      "parentUuid": "9dc01403_ff1018ea",
       "revId": "bce1b2b02aec1ecf73863c6c69970a94fd560731",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
