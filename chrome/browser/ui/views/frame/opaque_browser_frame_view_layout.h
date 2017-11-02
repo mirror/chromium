@@ -159,6 +159,11 @@ class OpaqueBrowserFrameViewLayout : public views::LayoutManager {
   // minimal frame.
   int minimum_size_for_buttons_;
 
+  // Whether any of the window control buttons were packed on the
+  // leading or trailing sides.
+  bool has_leading_buttons_;
+  bool has_trailing_buttons_;
+
  private:
   // Determines whether the incognito icon should be shown on the right side of
   // the tab strip (instead of the usual left).
@@ -200,10 +205,6 @@ class OpaqueBrowserFrameViewLayout : public views::LayoutManager {
 
   // The layout of the window icon, if visible.
   gfx::Rect window_icon_bounds_;
-
-  // Whether any of the window control buttons were packed on the leading.
-  bool has_leading_buttons_;
-  bool has_trailing_buttons_;
 
   // Extra offset from the top of the frame to the top of the window control
   // buttons. Configurable based on platform and whether we are under test.
