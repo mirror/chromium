@@ -52,6 +52,24 @@
       "revId": "8d9aae0f7a396a715719ec4c98453ed87d8f0c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329782fb_f3c0bfe8",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-02T02:45:14Z",
+      "side": 1,
+      "message": "Thank you! I\u0027ll check the [SecureContext] attribute.\n\nmkwst@: Is [SecureContext] already shipped? According to the feature dash board and crbug, it\u0027s still in development:\n- https://www.chromestatus.com/feature/5655692241272832\n- https://bugs.chromium.org/p/chromium/issues/detail?id\u003d534788",
+      "parentUuid": "25771e3a_59e6d4f6",
+      "revId": "8d9aae0f7a396a715719ec4c98453ed87d8f0c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
