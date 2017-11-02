@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11b2e5c2_f472af18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-02T18:14:08Z",
+      "side": 1,
+      "message": "Is there a bug to keep track of this?\n\nHow did you test this CL?",
+      "revId": "ec5082a297b964369a06a1b4b301493de435ae0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
