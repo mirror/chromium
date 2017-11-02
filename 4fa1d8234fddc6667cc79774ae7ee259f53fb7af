@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "e2fd1657_4ff670e6",
+        "filename": "third_party/WebKit/Source/core/streams/CommonStrings.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-02T08:15:26Z",
+      "side": 1,
+      "message": "It looks nice. If it\u0027s not a too heavy burden and doesn\u0027t hurt performance, I prefer it.",
+      "parentUuid": "f771a8b6_585c0c88",
+      "revId": "4fa1d8234fddc6667cc79774ae7ee259f53fb7af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d9df9e6_cd8034b4",
         "filename": "third_party/WebKit/Source/core/streams/ReadableStream.js",
         "patchSetId": 1
