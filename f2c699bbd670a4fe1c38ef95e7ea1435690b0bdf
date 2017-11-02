@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99ca43e7_f928cfc1",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T22:50:48Z",
+      "side": 1,
+      "message": "Nit: let\u0027s just use content_frame_ directly? Or just use ContentFrame() throughout. Either way, it\u0027s not needed to store this in a stack var, since that usually implies something complicated is going to happen with |subframe| \u003d).",
+      "revId": "f2c699bbd670a4fe1c38ef95e7ea1435690b0bdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
