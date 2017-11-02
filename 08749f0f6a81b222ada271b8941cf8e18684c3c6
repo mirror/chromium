@@ -16,6 +16,41 @@
       "revId": "08749f0f6a81b222ada271b8941cf8e18684c3c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618ac512_fd7abac0",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-02T20:47:02Z",
+      "side": 1,
+      "message": "I think the next step is https://chromium-review.googlesource.com/c/chromium/tools/build/+/752181/1/scripts/slave/recipe_modules/chromium/gclient_config.py, which sets it on our bots. We don\u0027t want to change the default here, because that\u0027ll change dev default as well, and they don\u0027t need telemetry deps.",
+      "parentUuid": "24f449bd_bdd2db4d",
+      "revId": "08749f0f6a81b222ada271b8941cf8e18684c3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "061fa218_541c6094",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-02T20:47:02Z",
+      "side": 1,
+      "message": "Shouldn\u0027t there be a \u0027condition\u0027 field here? Or am I misunderstanding?",
+      "revId": "08749f0f6a81b222ada271b8941cf8e18684c3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
