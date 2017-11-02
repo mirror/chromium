@@ -5,6 +5,7 @@
 #include "content/public/browser/network_service_instance.h"
 
 #include "base/feature_list.h"
+#include "content/browser/network_service_client.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/network_service.mojom.h"
@@ -23,6 +24,12 @@ mojom::NetworkService* GetNetworkService() {
   if (!g_network_service->is_bound()) {
     ServiceManagerConnection::GetForProcess()->GetConnector()->BindInterface(
         mojom::kNetworkServiceName, g_network_service);
+
+    mojom::NetworkServiceClientPtr client_ptr;
+    CR_DEFINE_STATIC_LOCAL(NetworkServiceClient, client,
+                           (mojo::MakeRequest(&client_ptr)));
+    (void)client;
+    g_network_service->get()->SetClient(std::move(client_ptr));
   }
   return g_network_service->get();
 }
