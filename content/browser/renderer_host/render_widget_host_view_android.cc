@@ -752,6 +752,14 @@ float RenderWidgetHostViewAndroid::GetBottomControlsHeight() const {
   return content_view_core_->GetBottomControlsHeightDip();
 }
 
+int RenderWidgetHostViewAndroid::GetMouseWheelTickMultiplier() const {
+  if (!content_view_core_)
+    return 0.f;
+
+  // The height of the browser controls.
+  return content_view_core_->GetMouseWheelTickMultiplier();
+}
+
 void RenderWidgetHostViewAndroid::UpdateCursor(const WebCursor& cursor) {
   CursorInfo cursor_info;
   cursor.GetCursorInfo(&cursor_info);
@@ -2168,6 +2176,7 @@ bool RenderWidgetHostViewAndroid::OnMouseEvent(
 
 bool RenderWidgetHostViewAndroid::OnMouseWheelEvent(
     const ui::MotionEventAndroid& event) {
+  LOG(ERROR) << "GOT WHEEL: " << event.ticks_y();
   SendMouseWheelEvent(WebMouseWheelEventBuilder::Build(
       event.ticks_x(), event.ticks_y(), event.GetTickMultiplier(),
       event.time_sec(), event.GetX(0), event.GetY(0)));

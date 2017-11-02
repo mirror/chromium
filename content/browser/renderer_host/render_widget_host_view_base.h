@@ -194,6 +194,9 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // The height of the bottom bar.
   virtual float GetBottomControlsHeight() const;
 
+  // Gets the number of pixels one mouse wheel tick should scroll.
+  virtual int GetMouseWheelTickMultiplier() const;
+
   // Called prior to forwarding input event messages to the renderer, giving
   // the view a chance to perform in-process event filtering or processing.
   // Return values of |NOT_CONSUMED| or |UNKNOWN| will result in |input_event|
