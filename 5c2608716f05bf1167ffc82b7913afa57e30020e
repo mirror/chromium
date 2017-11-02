@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5150b146_afc33f1e",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-11-02T21:51:02Z",
+      "side": 1,
+      "message": "IIRC this might potentially lead to problems. Let\u0027s say the app disables audio track (which kicks off AudioRendererImpl flush + restart) and then performs a seek. AudioRendererImpl flush will leave it in a Flushed state until we buffer enough data to reach HAVE_ENOUGH on audio stream. If the RendererImpl::Flush happens in that time window between AudioRendererImpl::Flush and audio HAVE_ENOUGH, then we\u0027ll try to flush audio renderer again through FlushInternal on line 211 below and that trigger DCHECK at https://cs.chromium.org/chromium/src/media/renderers/audio_renderer_impl.cc?rcl\u003dffcd7c9b932aa2425528aefd46db02736aff6f37\u0026l\u003d275, because audio renderer is not in kPlaying state yet. That\u0027s why I went through this dance with pending/deferred actions in the first place.\nBut now I wonder if we can simply allow A/VRenderer::Flush to be a no-op if the corresponding renderer is already in the kFlushed or kFlushing state. That should be safe, right?",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 80
+      },
+      "revId": "5c2608716f05bf1167ffc82b7913afa57e30020e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
