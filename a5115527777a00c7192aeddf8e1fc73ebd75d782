@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60758025_10d72e40",
+        "filename": "tools/cygprofile/cyglog_to_orderfile.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-02T18:18:21Z",
+      "side": 1,
+      "message": "nit: rstrip(\u0027\\n\u0027) tells better what we expect there, so we have a few uses of this pattern in tools/cygprofile, prefer it for consistency?",
+      "range": {
+        "startLine": 250,
+        "startChar": 15,
+        "endLine": 250,
+        "endChar": 33
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046dc553_b1c3d9ec",
+        "filename": "tools/cygprofile/cyglog_to_orderfile.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-02T18:18:21Z",
+      "side": 1,
+      "message": "nit: simply --output?",
+      "range": {
+        "startLine": 266,
+        "startChar": 23,
+        "endLine": 266,
+        "endChar": 40
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56feaffe_71957412",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-02T18:18:21Z",
+      "side": 1,
+      "message": "I usually try to assign a different name to an asset that I modify in scripts. Here it is probably fine .. we are changing the orderfile, then after the next sync will have to re-download it, no big deal.\n\nIf after reading the above you see an problem, feel free to address it :) Otherwise I\u0027m OK disregarding this intuition of mine.",
+      "range": {
+        "startLine": 161,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 31
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10385b02_5c9d2e58",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-02T18:18:21Z",
+      "side": 1,
+      "message": "confused with:\ntry:\n  X\nexcept OSError:\n  raise\n\nisn\u0027t this equivalent to just \u0027X\u0027? Is this to silence a lint warning or something of a sort?",
+      "range": {
+        "startLine": 166,
+        "startChar": 6,
+        "endLine": 166,
+        "endChar": 11
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935887e5_d9e14bfa",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-02T18:18:21Z",
+      "side": 1,
+      "message": "default values in arguments are error-prone. I would prefer StepRecorder._lightweight_instrumentation and never modify it outside __init__ since I think it\u0027s unlikely that we would want to change the flag value at runtime.",
+      "range": {
+        "startLine": 305,
+        "startChar": 43,
+        "endLine": 305,
+        "endChar": 76
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "536fbf34_e483a963",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-02T18:18:21Z",
+      "side": 1,
+      "message": "self._options.lightweight_instrumentation is more readable than self._options because the reader already has to know about having something called self._options, and benefits from knowing that it\u0027s not modified outside __init__",
+      "range": {
+        "startLine": 473,
+        "startChar": 13,
+        "endLine": 473,
+        "endChar": 49
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9db1524_7847b454",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-02T18:18:21Z",
+      "side": 1,
+      "message": "raise after the first iteration of the loop?",
+      "range": {
+        "startLine": 554,
+        "startChar": 6,
+        "endLine": 554,
+        "endChar": 13
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db6296e0_71a52b31",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-02T18:18:21Z",
+      "side": 1,
+      "message": "this function seems to be unused outside this file and its interface is harder to understand than its implamentation. So perhaps just something like WriteFile([s.offset for s in reached_symbols], output_filename) at callsites?",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 29
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5fdec8a_43587a16",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-02T18:18:21Z",
+      "side": 1,
+      "message": "any reason not to update MergeDumpsAndWriteSymbolOffsets() to be reusable here?",
+      "range": {
+        "startLine": 242,
+        "startChar": 4,
+        "endLine": 242,
+        "endChar": 29
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
