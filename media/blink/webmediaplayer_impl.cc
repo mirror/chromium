@@ -912,7 +912,8 @@ double WebMediaPlayerImpl::CurrentTime() const {
   // TODO(scherkus): Replace with an explicit ended signal to HTMLMediaElement,
   // see http://crbug.com/409280
   // Note: Duration() may be infinity.
-  return ended_ ? Duration() : GetCurrentTimeInternal().InSecondsF();
+  return (ended_ && !isinf(Duration())) ? Duration()
+                                        : GetCurrentTimeInternal().InSecondsF();
 }
 
 WebMediaPlayer::NetworkState WebMediaPlayerImpl::GetNetworkState() const {
@@ -2639,6 +2640,9 @@ bool WebMediaPlayerImpl::IsStreaming() const {
   return data_source_ && data_source_->IsStreaming();
 }
 
+bool WebMediaPlayerImpl::IsEnded() const {
+  return ended_;
+}
 bool WebMediaPlayerImpl::DoesOverlaySupportMetadata() const {
   return pipeline_metadata_.video_decoder_config.video_rotation() ==
          VIDEO_ROTATION_0;
