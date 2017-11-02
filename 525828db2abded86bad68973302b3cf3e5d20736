@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87c838e2_f5c349db",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/base-uri/report-uri-does-not-respect-base-uri.sub.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-02T23:43:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d8283e8_97b39f07",
+      "range": {
+        "startLine": 9,
+        "startChar": 58,
+        "endLine": 9,
+        "endChar": 63
+      },
+      "revId": "525828db2abded86bad68973302b3cf3e5d20736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4653e89_06451b47",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/base-uri/report-uri-does-not-respect-base-uri.sub.html",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "525828db2abded86bad68973302b3cf3e5d20736",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7affb47b_aae2b834",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/base-uri/report-uri-does-not-respect-base-uri.sub.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-02T23:43:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4653e89_06451b47",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "525828db2abded86bad68973302b3cf3e5d20736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bfa9d1a1_a4def0c7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/base-uri/report-uri-does-not-respect-base-uri.sub.html.sub.headers",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-02T23:43:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "062bddd3_18b72a28",
+      "range": {
+        "startLine": 3,
+        "startChar": 15,
+        "endLine": 3,
+        "endChar": 47
+      },
+      "revId": "525828db2abded86bad68973302b3cf3e5d20736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51474afe_b514cf5d",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "525828db2abded86bad68973302b3cf3e5d20736",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b67e298_7a8110e4",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-02T23:43:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51474afe_b514cf5d",
+      "range": {
+        "startLine": 1336,
+        "startChar": 31,
+        "endLine": 1336,
+        "endChar": 0
+      },
+      "revId": "525828db2abded86bad68973302b3cf3e5d20736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
