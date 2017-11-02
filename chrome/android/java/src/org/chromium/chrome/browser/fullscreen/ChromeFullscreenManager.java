@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.fullscreen;
 
 import android.app.Activity;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -32,6 +33,8 @@ import org.chromium.content.browser.ContentVideoView;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.common.BrowserControlsState;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 
 /**
@@ -47,7 +50,7 @@ public class ChromeFullscreenManager
 
     private final Activity mActivity;
     private final BrowserStateBrowserControlsVisibilityDelegate mBrowserVisibilityDelegate;
-    private final boolean mIsBottomControls;
+    @ControlsPosition private final int mControlsPosition;
     private final boolean mExitFullscreenOnStop;
 
     private ControlContainer mControlContainer;
@@ -69,6 +72,17 @@ public class ChromeFullscreenManager
     private boolean mBrowserControlsAndroidViewHidden;
 
     private final ArrayList<FullscreenListener> mListeners = new ArrayList<>();
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({CONTROLS_POSITION_TOP, CONTROLS_POSITION_BOTTOM, CONTROLS_POSITION_NONE})
+    public @interface ControlsPosition {}
+
+    /** Controls are at the top, eg normal ChromeTabbedActivity. */
+    public static final int CONTROLS_POSITION_TOP = 0;
+    /** Controls are at the bottom, eg ChromeTabbedActivity with Chrome Home enabled. */
+    public static final int CONTROLS_POSITION_BOTTOM = 1;
+    /** Controls are not present, eg FullscreenActivity. */
+    public static final int CONTROLS_POSITION_NONE = 2;
 
     /**
      * A listener that gets notified of changes to the fullscreen state.
@@ -118,25 +132,25 @@ public class ChromeFullscreenManager
     /**
      * Creates an instance of the fullscreen mode manager.
      * @param activity The activity that supports fullscreen.
-     * @param isBottomControls Whether or not the browser controls are at the bottom of the screen.
+     * @param controlsPosition Where the browser controls are.
      */
-    public ChromeFullscreenManager(Activity activity, boolean isBottomControls) {
-        this(activity, isBottomControls, true);
+    public ChromeFullscreenManager(Activity activity, @ControlsPosition int controlsPosition) {
+        this(activity, controlsPosition, true);
     }
 
     /**
      * Creates an instance of the fullscreen mode manager.
      * @param activity The activity that supports fullscreen.
-     * @param isBottomControls Whether or not the browser controls are at the bottom of the screen.
+     * @param controlsPosition Where the browser controls are.
      * @param exitFullscreenOnStop Whether fullscreen mode should exit on stop - should be
      *                             true for Activities that are not always fullscreen.
      */
-    public ChromeFullscreenManager(
-            Activity activity, boolean isBottomControls, boolean exitFullscreenOnStop) {
+    public ChromeFullscreenManager(Activity activity, @ControlsPosition int controlsPosition,
+            boolean exitFullscreenOnStop) {
         super(activity.getWindow());
 
         mActivity = activity;
-        mIsBottomControls = isBottomControls;
+        mControlsPosition = controlsPosition;
         mExitFullscreenOnStop = exitFullscreenOnStop;
         mBrowserVisibilityDelegate = new BrowserStateBrowserControlsVisibilityDelegate(
                 new Runnable() {
@@ -202,8 +216,11 @@ public class ChromeFullscreenManager
         int controlContainerHeight =
                 mActivity.getResources().getDimensionPixelSize(resControlContainerHeight);
 
-        mTopControlContainerHeight =    mIsBottomControls ? 0 : controlContainerHeight;
-        mBottomControlContainerHeight = mIsBottomControls ? controlContainerHeight : 0;
+        if (mControlsPosition == CONTROLS_POSITION_TOP) {
+            mTopControlContainerHeight = controlContainerHeight;
+        } else if (mControlsPosition == CONTROLS_POSITION_BOTTOM) {
+            mBottomControlContainerHeight = controlContainerHeight;
+        }
 
         mRendererTopContentOffset = mTopControlContainerHeight;
         updateControlOffset();
@@ -211,7 +228,7 @@ public class ChromeFullscreenManager
 
     @Override
     public boolean areBrowserControlsAtBottom() {
-        return mIsBottomControls;
+        return mControlsPosition == CONTROLS_POSITION_BOTTOM;
     }
 
     /**
@@ -379,10 +396,12 @@ public class ChromeFullscreenManager
     }
 
     private void updateControlOffset() {
+        if (mControlsPosition == CONTROLS_POSITION_NONE) return;
+
         float topOffsetRatio = 0;
 
         float rendererControlOffset;
-        if (mIsBottomControls) {
+        if (mControlsPosition == CONTROLS_POSITION_BOTTOM) {
             rendererControlOffset =
                     Math.abs(mRendererBottomControlOffset / getBottomControlsHeight());
         } else {
@@ -476,9 +495,12 @@ public class ChromeFullscreenManager
     private void updateVisuals() {
         TraceEvent.begin("FullscreenManager:updateVisuals");
 
-        // Use bottom controls height if top controls have no height.
-        float offset = getTopControlOffset();
-        if (mIsBottomControls) offset = getBottomControlOffset();
+        float offset = 0f;
+        if (mControlsPosition == CONTROLS_POSITION_BOTTOM) {
+            offset = getBottomControlOffset();
+        } else if (mControlsPosition == CONTROLS_POSITION_TOP) {
+            offset = getTopControlOffset();
+        }
 
         if (Float.compare(mPreviousControlOffset, offset) != 0) {
             mPreviousControlOffset = offset;
