@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f482fda_3c292652",
+        "filename": "chrome/common/extensions/docs/templates/json/chrome_sidenav.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-11-02T21:45:33Z",
+      "side": 0,
+      "message": "You refer to this document in your revised version, so don\u0027t remove it from the toc. I would, however, make a suggestion to change the title so it\u0027s clearer and I\u0027d move it down in the TOC to come after hosting.\n\nPerhaps call it something like:\n\nHosting Policy Changes",
+      "revId": "17321e34f830fb514c28d32b1b30ab6991637b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4551c479_aecf7c07",
+        "filename": "chrome/common/extensions/docs/templates/json/chrome_sidenav.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-11-02T21:45:33Z",
+      "side": 0,
+      "message": "As mentioned in previous comment, suggestion to move your content to here rather than creating a whole new doc.",
+      "revId": "17321e34f830fb514c28d32b1b30ab6991637b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce1e127_64d0a61c",
+        "filename": "chrome/common/extensions/docs/templates/json/chrome_sidenav.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-11-02T21:45:33Z",
+      "side": 0,
+      "message": "As mentioned in previous comment, you will need a redirect from this page to hosting.",
+      "revId": "17321e34f830fb514c28d32b1b30ab6991637b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

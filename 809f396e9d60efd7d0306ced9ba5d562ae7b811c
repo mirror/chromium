@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57e6e14a_9922d9a5",
+        "filename": "chrome/common/extensions/docs/templates/articles/hosting_updating.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-11-02T21:45:33Z",
+      "side": 1,
+      "message": "Suggestion to show this in a sample manifest.",
+      "revId": "809f396e9d60efd7d0306ced9ba5d562ae7b811c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520c5375_261f9d8e",
+        "filename": "chrome/common/extensions/docs/templates/json/chrome_sidenav.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-11-02T21:45:33Z",
+      "side": 1,
+      "message": "Main recommendation here is to not create a new document, but to replace existing extensions/hosting doc with new content. Also, you will want to add redirect from autoupdate to this doc. I can show you how to do that.\n\nTo get you started, this is the file that you would add the redirect to: https://cs.chromium.org/chromium/src/chrome/common/extensions/docs/templates/public/redirects.json",
+      "revId": "809f396e9d60efd7d0306ced9ba5d562ae7b811c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac11d8d_8e5a46aa",
+        "filename": "chrome/common/extensions/docs/templates/public/extensions/hosting_updating.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-11-02T21:45:33Z",
+      "side": 1,
+      "message": "Don\u0027t forget to remove this file, as you won\u0027t need it.",
+      "revId": "809f396e9d60efd7d0306ced9ba5d562ae7b811c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
