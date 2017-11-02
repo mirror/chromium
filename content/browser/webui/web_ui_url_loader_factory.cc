@@ -109,7 +109,8 @@ void ReadData(scoped_refptr<ResourceResponse> headers,
   CHECK_EQ(result, MOJO_RESULT_OK);
 
   client->OnStartLoadingResponseBody(std::move(data_pipe.consumer_handle));
-  ResourceRequestCompletionStatus status(net::OK);
+  ResourceRequestCompletionStatus status(
+      net::OK, headers->head.headers->response_code());
   status.encoded_data_length = output_size;
   status.encoded_body_length = output_size;
   client->OnComplete(status);

@@ -114,7 +114,10 @@ void CORSURLLoader::OnReceiveResponse(
             blink::WebHTTPHeaderMap(response_head.headers.get()),
             fetch_credentials_mode_, security_origin_);
     if (cors_error) {
-      HandleComplete(ResourceRequestCompletionStatus(*cors_error));
+      // TODO(toyoshim): Generate error_related_response_headers here.
+      ResourceRequestCompletionStatus status(
+          *cors_error, response_head.headers->response_code());
+      HandleComplete(ResourceRequestCompletionStatus(status));
       return;
     }
   }

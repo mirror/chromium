@@ -12,12 +12,17 @@ ResourceRequestCompletionStatus::ResourceRequestCompletionStatus() = default;
 ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(
     const ResourceRequestCompletionStatus& status) = default;
 
-ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(int error_code)
-    : error_code(error_code), completion_time(base::TimeTicks::Now()) {}
+ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(
+    int error_code,
+    int status_code)
+    : error_code(error_code),
+      completion_time(base::TimeTicks::Now()),
+      status_code(status_code) {}
 
 ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(
-    network::mojom::CORSError error)
-    : ResourceRequestCompletionStatus(net::ERR_FAILED) {
+    network::mojom::CORSError error,
+    int status_code)
+    : ResourceRequestCompletionStatus(net::ERR_FAILED, status_code) {
   cors_error = error;
 }
 
