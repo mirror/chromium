@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "27dfb22a_e404e785",
+        "filename": "third_party/WebKit/Source/core/css/cssom/ComputedStylePropertyMap.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-02T02:26:45Z",
+      "side": 1,
+      "message": "Awesome. Thank you!",
+      "parentUuid": "f7e3dc02_d9b6e1d5",
+      "revId": "539137da7c51f274d4cefab66706a800ec042f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b71d46e3_d056a7cb",
         "filename": "third_party/WebKit/Source/core/css/cssom/ElementComputedStyleMap.h",
         "patchSetId": 16
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "actuall i was not sure about idl\u0027s that works.\nbut i did sure it will be work well after see V8Window.cpp code.\n(https://cs.chromium.org/chromium/src/out/Debug/gen/blink/bindings/core/v8/V8Window.cpp?type\u003dcs\u0026q\u003dgetComputedStyleMap\u0026sq\u003dpackage:chromium\u0026l\u003d5564)\n\nafter merged this patch, you can see similar code in V8 Element.cpp.",
       "parentUuid": "b71d46e3_d056a7cb",
+      "revId": "539137da7c51f274d4cefab66706a800ec042f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd8f160_4f593d25",
+        "filename": "third_party/WebKit/Source/core/css/cssom/ElementComputedStyleMap.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-02T02:26:45Z",
+      "side": 1,
+      "message": "No worries. Thanks :)",
+      "parentUuid": "4f683b4b_74a236ea",
       "revId": "539137da7c51f274d4cefab66706a800ec042f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
