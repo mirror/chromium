@@ -735,15 +735,6 @@ void RenderWidgetHostImpl::SetImportance(ChildProcessImportance importance) {
 bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
   *resize_params = ResizeParams();
 
-  // TODO(fsamuel): We should have a single code path for propagation of
-  // ScreenInfo. Ideally we should always grab the ScreenInfo from the
-  // view, and in the case of top level pages, we grab ScreenInfo from
-  // the WebContentsView through the RenderWidgetHostView.
-  if (view_ && view_->IsRenderWidgetHostViewChildFrame())
-    view_->GetScreenInfo(&resize_params->screen_info);
-  else
-    GetScreenInfo(&resize_params->screen_info);
-
   if (delegate_) {
     resize_params->is_fullscreen_granted =
         delegate_->IsFullscreenForCurrentTab();
@@ -754,6 +745,7 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
   }
 
   if (view_) {
+    view_->GetScreenInfo(&resize_params->screen_info);
     resize_params->new_size = view_->GetRequestedRendererSize();
     // TODO(wjmaclean): Can we just get rid of physical_backing_size and just
     // deal with it on the renderer side? It seems to always be
