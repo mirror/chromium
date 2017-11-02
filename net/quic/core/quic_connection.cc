@@ -260,7 +260,7 @@ QuicConnection::QuicConnection(
       version_negotiation_state_(START_NEGOTIATION),
       perspective_(perspective),
       connected_(true),
-      can_truncate_connection_ids_(true),
+      can_truncate_connection_ids_(perspective == Perspective::IS_SERVER),
       mtu_discovery_target_(0),
       mtu_probe_count_(0),
       packets_between_mtu_probes_(kPacketsBetweenMtuProbesBase),
