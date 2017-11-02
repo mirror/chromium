@@ -35,6 +35,7 @@ void VideoDecodePerfHistory::BindRequest(
 }
 
 void VideoDecodePerfHistory::InitDatabase() {
+  DVLOG(2) << __func__;
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   if (db_init_status_ == PENDING)
@@ -53,9 +54,12 @@ void VideoDecodePerfHistory::OnDatabaseInit(bool success) {
 
   db_init_status_ = success ? COMPLETE : FAILED;
 
-  // Run all the deferred API calls as if they're just now coming in.
+  // Post all the deferred API calls as if they're just now coming in. Posting
+  // avoids subtle issues with deferred calls that may otherwise re-enter and
+  // potentially reinitialize the DB (e.g. ClearHistory).
   for (auto& deferred_call : init_deferred_api_calls_) {
-    std::move(deferred_call).Run();
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  std::move(deferred_call));
   }
   init_deferred_api_calls_.clear();
 }
@@ -197,6 +201,50 @@ void VideoDecodePerfHistory::ReportUkmMetrics(
     VideoDecodeStatsDB::DecodeStatsEntry* past_stats) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // TODO(chcunningham): Report metrics.
+}
+
+void VideoDecodePerfHistory::ClearHistory(base::OnceClosure callback) {
+  DVLOG(2) << __func__;
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  if (db_init_status_ == FAILED) {
+    DVLOG(3) << __func__ << " Can't clear history - No DB!";
+    std::move(callback).Run();
+    return;
+  }
+
+  // Defer this request until the DB is initialized.
+  if (db_init_status_ != COMPLETE) {
+    init_deferred_api_calls_.push_back(
+        base::BindOnce(&VideoDecodePerfHistory::ClearHistory,
+                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+    InitDatabase();
+    return;
+  }
+
+  // Set status to pending to prevent using the DB while destruction is ongoing.
+  // Once finished, we will re-initialize the DB and run any deferred API calls.
+  db_init_status_ = PENDING;
+  db_->DestroyStats(base::BindOnce(&VideoDecodePerfHistory::OnClearedHistory,
+                                   weak_ptr_factory_.GetWeakPtr(),
+                                   std::move(callback)));
+}
+
+void VideoDecodePerfHistory::OnClearedHistory(base::OnceClosure callback) {
+  DVLOG(2) << __func__;
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  // DB is effectively uninitialized while destructively clearing the history.
+  // During this period |db_init_status_| should be PENDING to prevent other
+  // APIs from racing to reinitialize.
+  DCHECK_EQ(db_init_status_, PENDING);
+  // With destructive clearing complete, reset to UNITINIALIZED so
+  // InitDatabase() will run initialization and any deferred API calls once
+  // complete.
+  db_init_status_ = UNINITIALIZED;
+  InitDatabase();
+
+  std::move(callback).Run();
 }
 
 }  // namespace media

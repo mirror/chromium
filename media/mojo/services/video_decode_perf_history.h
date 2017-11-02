@@ -67,10 +67,14 @@ class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
                       uint32_t frames_decoded,
                       uint32_t frames_dropped);
 
+  // Clear all history from the underlying database. Run |callback| when
+  // complete.
+  void ClearHistory(base::OnceClosure callback);
+
  private:
   friend class VideoDecodePerfHistoryTest;
 
-  // Track the status of database lazily initialization.
+  // Track the status of database lazy initialization.
   enum InitStatus {
     UNINITIALIZED,
     PENDING,
@@ -83,7 +87,8 @@ class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
   // lenient value after manual testing.
   static constexpr double kMaxSmoothDroppedFramesPercent = .10;
 
-  // Create and initialize the database.
+  // Create and initialize the database. Will return early if initialization is
+  // already PENDING.
   void InitDatabase();
 
   // Callback from |db_->Initialize()|.
@@ -112,6 +117,10 @@ class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
   void ReportUkmMetrics(const VideoDecodeStatsDB::VideoDescKey& video_key,
                         const VideoDecodeStatsDB::DecodeStatsEntry& new_stats,
                         VideoDecodeStatsDB::DecodeStatsEntry* past_stats);
+
+  // Internal callback for ClearHistory(). Reinitializes the database and runs
+  // |callback|.
+  void OnClearedHistory(base::OnceClosure callback);
 
   // Factory for creating |db_|.
   std::unique_ptr<VideoDecodeStatsDBFactory> db_factory_;
