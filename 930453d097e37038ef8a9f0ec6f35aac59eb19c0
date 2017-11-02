@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8300e1a_9f67913a",
+        "filename": "ash/root_window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "no const when returning non const internal state.",
+      "range": {
+        "startLine": 132,
+        "startChar": 11,
+        "endLine": 132,
+        "endChar": 18
+      },
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036879d4_97900de1",
+        "filename": "ash/sidebar/sidebar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "document this class.",
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc783f44_7bb11f4e",
+        "filename": "ash/sidebar/sidebar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "do you need this? Can\u0027t you get the root window from shelf?",
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6fd112_b38a8429",
+        "filename": "ash/sidebar/sidebar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "document ownership.",
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33ff48a_a0ea3982",
+        "filename": "ash/sidebar/sidebar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0585d482_24486327",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "constexpr (you have to change kNotificationWidth too though)",
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419a880f_dd1d4f5e",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "initialize them in initializer list?",
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f00c610f_897cac44",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "// View:",
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6679f96b_38472fcf",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "can this be null?",
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37350d4d_b0e8dc4a",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "// ButtonListener:",
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f677099_01ad4f8d",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "remove this",
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69791538_bb9b9071",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "how about\nSetSettingsVisible(mode \u003d\u003d MESSAGE_CENTER_SETTINGS) \n?",
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13947dc6_436fb6d1",
+        "filename": "ash/sidebar/sidebar_widget.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "move to private",
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ebfc0eb_4dd207d7",
+        "filename": "ash/sidebar/sidebar_widget.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T18:03:48Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
