@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_NETWORK_URL_LOADER_H_
-#define CONTENT_NETWORK_URL_LOADER_H_
+#ifndef CONTENT_NETWORK_URL_LOADER_IMPL_H_
+#define CONTENT_NETWORK_URL_LOADER_IMPL_H_
 
 #include <stdint.h>
 
@@ -33,19 +33,19 @@ namespace content {
 class NetworkContext;
 struct ResourceResponse;
 
-class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
-                                 public net::URLRequest::Delegate {
+class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
+                                     public net::URLRequest::Delegate {
  public:
-  URLLoader(NetworkContext* context,
-            mojom::URLLoaderRequest url_loader_request,
-            int32_t options,
-            const ResourceRequest& request,
-            bool report_raw_headers,
-            mojom::URLLoaderClientPtr url_loader_client,
-            const net::NetworkTrafficAnnotationTag& traffic_annotation,
-            uint32_t process_id,
-            uint32_t routing_id);
-  ~URLLoader() override;
+  URLLoaderImpl(NetworkContext* context,
+                mojom::URLLoaderRequest url_loader_request,
+                int32_t options,
+                const ResourceRequest& request,
+                bool report_raw_headers,
+                mojom::URLLoaderClientPtr url_loader_client,
+                const net::NetworkTrafficAnnotationTag& traffic_annotation,
+                uint32_t process_id,
+                uint32_t routing_id);
+  ~URLLoaderImpl() override;
 
   // Called when the associated NetworkContext is going away.
   void Cleanup();
@@ -72,7 +72,7 @@ class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
   void OnReadCompleted(net::URLRequest* url_request, int bytes_read) override;
 
   // Returns a WeakPtr so tests can validate that the object was destroyed.
-  base::WeakPtr<URLLoader> GetWeakPtrForTests();
+  base::WeakPtr<URLLoaderImpl> GetWeakPtrForTests();
 
  private:
   void ReadMore();
@@ -137,11 +137,11 @@ class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
   // as BodyReadFromNetBeforePaused.
   int64_t body_read_before_paused_ = -1;
 
-  base::WeakPtrFactory<URLLoader> weak_ptr_factory_;
+  base::WeakPtrFactory<URLLoaderImpl> weak_ptr_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(URLLoader);
+  DISALLOW_COPY_AND_ASSIGN(URLLoaderImpl);
 };
 
 }  // namespace content
 
-#endif  // CONTENT_NETWORK_URL_LOADER_H_
+#endif  // CONTENT_NETWORK_URL_LOADER_IMPL_H_
