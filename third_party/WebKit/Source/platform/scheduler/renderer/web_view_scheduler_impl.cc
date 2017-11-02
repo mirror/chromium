@@ -177,9 +177,9 @@ void WebViewSchedulerImpl::ReportIntervention(const std::string& message) {
   intervention_reporter_->ReportIntervention(WebString::FromUTF8(message));
 }
 
-void WebViewSchedulerImpl::EnableVirtualTime() {
+base::TimeDelta WebViewSchedulerImpl::EnableVirtualTime() {
   if (virtual_time_)
-    return;
+    return initial_virtual_time_ - base::TimeTicks::UnixEpoch();
 
   virtual_time_ = true;
   renderer_scheduler_->GetVirtualTimeDomain()->SetCanAdvanceVirtualTime(
@@ -198,6 +198,7 @@ void WebViewSchedulerImpl::EnableVirtualTime() {
   ApplyVirtualTimePolicy();
 
   initial_virtual_time_ = renderer_scheduler_->GetVirtualTimeDomain()->Now();
+  return initial_virtual_time_ - base::TimeTicks::UnixEpoch();
 }
 
 void WebViewSchedulerImpl::DisableVirtualTimeForTesting() {
