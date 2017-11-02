@@ -249,7 +249,6 @@ QuicConnection::QuicConnection(
       idle_network_timeout_(QuicTime::Delta::Infinite()),
       handshake_timeout_(QuicTime::Delta::Infinite()),
       time_of_last_received_packet_(clock_->ApproximateNow()),
-      time_of_last_sent_new_packet_(clock_->ApproximateNow()),
       last_send_for_timeout_(clock_->ApproximateNow()),
       sent_packet_manager_(
           perspective,
@@ -1643,9 +1642,6 @@ bool QuicConnection::WritePacket(SerializedPacket* packet) {
     debug_visitor_->OnPacketSent(*packet, packet->original_packet_number,
                                  packet->transmission_type, packet_send_time);
   }
-  if (packet->transmission_type == NOT_RETRANSMISSION) {
-    time_of_last_sent_new_packet_ = packet_send_time;
-  }
   // Only adjust the last sent time (for the purpose of tracking the idle
   // timeout) if this is the first retransmittable packet sent after a
   // packet is received. If it were updated on every sent packet, then
@@ -2171,8 +2167,6 @@ void QuicConnection::CheckForTimeout() {
 
 void QuicConnection::SetTimeoutAlarm() {
   QuicTime time_of_last_packet =
-      std::max(time_of_last_received_packet_, time_of_last_sent_new_packet_);
-  time_of_last_packet =
       std::max(time_of_last_received_packet_, last_send_for_timeout_);
 
   QuicTime deadline = time_of_last_packet + idle_network_timeout_;

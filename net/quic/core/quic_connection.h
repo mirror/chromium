@@ -1025,10 +1025,6 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // This is used for timeouts, and does not indicate the packet was processed.
   QuicTime time_of_last_received_packet_;
 
-  // The last time this connection began sending a new (non-retransmitted)
-  // packet.
-  QuicTime time_of_last_sent_new_packet_;
-
   // The the send time of the first retransmittable packet sent after
   // |time_of_last_received_packet_|.
   QuicTime last_send_for_timeout_;
