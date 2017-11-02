@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c797743c_a00248b8",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-02T01:43:27Z",
+      "side": 1,
+      "message": "The map looks confusing, because both key and value are pointer for the same object.\nCould you replace it by std::set\u003cFileStreamForwarderPtr\u003e instead?\nYou may need to tweak the custom deleter to avoid double free.",
+      "revId": "fb00678795fc857b3b0c50c71464f9f36b14bf87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4142efe1_717c13d2",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-02T01:43:27Z",
+      "side": 1,
+      "message": "(off-topic):\nCould you use base::ResetAndReturn instead, for readability?\n\nbase::Bind(base::ResetAndReturn(\u0026callback_), this, result)\n\nAlthough this should be safe (because the deletion is scheduled in the next task on IO thread), in general IMO it\u0027s better to call/PostTask() a completion callback at the end (also, specifically to avoid touching |this| (incl members) after the callback for potential crash risk). Working on this in another CL is also fine.\nActually I was confused whether this had race issue.",
+      "range": {
+        "startLine": 146,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 19
+      },
+      "revId": "fb00678795fc857b3b0c50c71464f9f36b14bf87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
