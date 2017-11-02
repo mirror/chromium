@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71c97fc9_ad26c607",
+        "filename": "gpu/command_buffer/service/context_state.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-02T20:38:03Z",
+      "side": 1,
+      "message": "nit: style guide omits the trailing _ for public fields",
+      "revId": "e2ee1c7782de88ebee34195f3441c68bb04431b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a705b5f8_85f557ec",
+        "filename": "gpu/command_buffer/service/create_gr_gl_interface.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-02T20:38:03Z",
+      "side": 1,
+      "message": "Could you remove this? Now that it\u0027s supported by the bindings, we don\u0027t need to pretend it\u0027s not there.",
+      "revId": "e2ee1c7782de88ebee34195f3441c68bb04431b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
