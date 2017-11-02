@@ -3574,6 +3574,7 @@ void LayerTreeHostImpl::UpdateImageDecodingHints(
 InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
     ScrollState* scroll_state) {
   DCHECK(scroll_state);
+  LOG(ERROR) << "BOKAN SCROLLBY: " << scroll_state->delta_y();
 
   TRACE_EVENT0("cc", "LayerTreeHostImpl::ScrollBy");
   ScrollTree& scroll_tree = active_tree_->property_trees()->scroll_tree;
