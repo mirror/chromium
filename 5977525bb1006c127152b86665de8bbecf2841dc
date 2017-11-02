@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5535adb7_886cb5ca",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-11-02T21:14:17Z",
+      "side": 1,
+      "message": "Yeah I am not familiar with the internals of TH32 function. It definitely have to take ownership of the loader lock, and maybe some other internal locks, but the documentation on MayBlock mentions that \"This trait isn\u0027t required for the mere use of locks.\".\n\nKnowing what it\u0027s supposed to do, I think it\u0027s pretty safe to say that TH32 function doesn\u0027t have to do disk IO (Contrary to CreateFile).",
+      "parentUuid": "88f2c887_00d4dc56",
+      "revId": "5977525bb1006c127152b86665de8bbecf2841dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69217a93_f7489bd6",
         "filename": "chrome/common/conflicts/module_watcher_win.cc",
         "patchSetId": 1
