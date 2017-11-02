@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "40a57d7b_cd332c04",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2009,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "We discussed this in person, and I think we\u0027re on the same page now, but I did write out the details below:\n\nI think it needs to be created and be a long-living object similar to the other coordinators which listen to their own dispatch command protocols (e.g. TabHistoryCoordinator). The reason being that because the coordinator/dispatcher pattern is loosely-coupled, there isn\u0027t necessarily a connection between a triggering event and the coordinator itself, just the dispatcher.\n\nIn the proposed alternative scenario - ToolBarController would get an action from the menu button, and create a Coordinator directly, but would need to know about the BVC which has critical information for the Coordinator (so a class which is hierarchically more a leaf - the Toolbar - would have to have a pointer to a more root class, the BVC). This could however be achieved more cleanly with a delegate protocol which the BVC would conform to, and this is similar to what I\u0027ve done in the next revision where the MenuCoordinator is owned by the ToolbarCoordinator but still has a pointer to the BVC for delegate callbacks.\n\nSecondly, if it was desired that the tools popup were triggered from another part of the UI other than the toolbar menu, the Coordinator and the plumbing for all of its delegates would have to be recreated, rather than a single call to the dispatcher for a coordinator that was already set up.\n\nIt\u0027s also worth noting that if we did not have a dispatcher pattern to adhere to, it would lead us to do something more like what you suggest I think, just instantiate a view controller (and/or Coordinator) at triggering time (or use a shared object). I think this is worthy for some discussion as a group (i.e. what are the use-cases for the dispatcher pattern).",
+      "parentUuid": "2ca05e5c_7f75f091",
+      "range": {
+        "startLine": 2009,
+        "startChar": 0,
+        "endLine": 2009,
+        "endChar": 70
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f386def6_0b04248e",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3bdca273_615d19cb",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2018,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "I share your instincts :-). We\u0027ve discussed this a little in person, but to document:\n\nWhen I started this refactor I tried to move away from notifications to have a single presentation delegate for the coordinator with four willShow/didShow/willHide/didHide methods. \n\nThere are two main reasons I didn\u0027t finish with that approach:\n\n1. There are two objects which directly configure the tools popup when they are notified about the presentation of its presentation: the BVC and the ToolsController.\n\nBoth need to do important things when they hear about a popup coming or going:\n\n• BVC configures other views, such as dismissing omnibox UI or ending editing states\n• ToolbarController sets the visibility of the tools button so that it matches the presentation of the tools popup.\n\nOne thought is to combine these into one delegate object, but the ToolbarController cannot be it because it would need information from the BVC which is higher in the hierarchy and it seems counter-productive to make a change that more tightly couples those classes. \n\nBVC is a better choice, we will need to expose a button from ToolbarController to the BVC, a button which is currently not a publicly exposed property. This seems like a small tradeoff to have all configuration code in one place, and so I have done this in the next revision.\n\n2. We already have other parts of the application dependent on didShow/didHide notifications. For example the FullScreen and Overscroll components (I have just renamed the notifications slightly in this refactor, but they are not a new concept); so we cannot remove the notifications altogether without a more significant refactor, and it seems to me to be a bad tradeoff to implement both a delegate pattern and have notifications for presentation events if we can help it.\n\nLet me know if I\u0027ve misunderstood anything here!",
+      "parentUuid": "f386def6_0b04248e",
+      "range": {
+        "startLine": 2018,
+        "startChar": 3,
+        "endLine": 2018,
+        "endChar": 39
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d2e91eb_07c6da38",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
@@ -83,6 +131,24 @@
       "writtenOn": "2017-10-30T22:29:43Z",
       "side": 1,
       "message": "Same thing with Toolbar, I think the coordinator should let the configurationProvider know a certain event has happened. It will help us make things cleaner, or at least tuck them away behind the Coordinator.",
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8a0c59_dc665e90",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "Happy to have a delegate protocol/methods for presentation, but we will need to keep the notifications for FullScreen and Overscroll.\n\nWhat do you think is a lesser sin:\n\n• Having both a presentation delegate and presentation notifications (duplicate mechanism for presentation event delivery)\n• Having BVC both listen to notifications, and be a delegate (for configuration) to the Coordinator\n\nI\u0027m not sure I have a strong opinion on which is preferable, so guidance would be good :-)",
+      "parentUuid": "1d2e91eb_07c6da38",
       "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -112,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "b5f50c08_cd9b4516",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2149,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "IMHO the delegate pattern is desired because we want to maintain the insulation from objects like BVC to be directly triggering the presentation of the tools menu - rather, any object can request the presentation via the dispatcher (which I believe is the goal of the dispatcher pattern here - to allow for greater decoupling - although I know there\u0027s a discussion to be had about the use of dispatcher with coordinators in this manner). Despite any object being the source of the event that triggers presentation, the Coordinator needs to find discover configuration details from its delegate at a time that\u0027s appropriate to it (rather than have these values pushed to it).\n\nGiven that we have a delegate pattern that is desirable(?) for the above reasons, how do we inform the object that the configuration should change or be updated?\n\nHere we are calling directly onto the Coordinator to refresh, and I think that\u0027s ok and comparable with the mechanisms that other \u0027dataSource\u0027 or \u0027delegate\u0027 objects do to trigger a refresh in their delegators - e.g. UITableView\u0027s reloadData method.\n\nSo this update relationship between the delegator and the delegate has common precedence and works well. In the presence of the dispatcher pattern it\u0027s tempting to think there\u0027s an argument to be made that an update method should exist on the dispatcher object, but I don\u0027t think that\u0027s correct unless absolutely necessary. This delegate/update issue is a convention between a delegate and delegator, and should be seen as separate from triggers to present and dismiss the UI through the dispatcher. I think we should resist adding an update method to the dispatcher protocol unless it is absolutely necessary.\n\nLet me know if I\u0027ve misunderstood!",
+      "parentUuid": "cefe5f10_57cf0143",
+      "range": {
+        "startLine": 2149,
+        "startChar": 26,
+        "endLine": 2149,
+        "endChar": 45
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "727ad104_f07137ea",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
@@ -123,6 +213,30 @@
       "writtenOn": "2017-10-30T18:10:58Z",
       "side": 1,
       "message": "Shouldn\u0027t this just be [_toolsPopupCoordinator stop]?",
+      "range": {
+        "startLine": 2179,
+        "startChar": 2,
+        "endLine": 2179,
+        "endChar": 38
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfeb0ff0_d743537d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2179,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "Ah that\u0027s interesting. I think I should adopt the start and stop methods for my coordinator (which would pretty much just be a rename or redirect to methods I have at the moment).\n\nHowever after I\u0027ve done that, wouldn\u0027t it still be preferable to use the dispatcher everywhere for present/dismiss (i.e. to prove decoupling)? Honestly open to discussion on this one, either way it\u0027s only a one line change... Thanks!",
+      "parentUuid": "727ad104_f07137ea",
       "range": {
         "startLine": 2179,
         "startChar": 2,
@@ -152,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "b39d33e4_b644077a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 4257,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "772b0932_81447c7e",
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c882f206_791525c6",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
@@ -172,6 +304,30 @@
       "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "328ba014_fb015300",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 4301,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "My guess is that you can close all tabs in the tab switcher, and you still have a tools menu button in that UI.\n\nBeyond guessing however, I just wanted to keep the existing behavior and not alter it with this refactor.",
+      "parentUuid": "c882f206_791525c6",
+      "range": {
+        "startLine": 4301,
+        "startChar": 8,
+        "endLine": 4301,
+        "endChar": 28
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -198,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "0be32632_12a8749e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 5022,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "The Coordinator is long lived so we can\u0027t just rely on its existence.\n\nIn the new revision the Coordinator is not owned by the BVC, and so it is given an id that conforms to a simple delegate protocol that can be asked about the presentation state.",
+      "parentUuid": "039bbede_623b2e96",
+      "range": {
+        "startLine": 5022,
+        "startChar": 6,
+        "endLine": 5022,
+        "endChar": 54
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b351d9b8_5a305644",
         "filename": "ios/chrome/browser/ui/fullscreen/BUILD.gn",
         "patchSetId": 5
@@ -218,6 +398,30 @@
       "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a99cdb3_e4f1aff5",
+        "filename": "ios/chrome/browser/ui/fullscreen/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "I dug in a bit - turns out that the ui/toolbar dependency was only used for the constants too. So I will remove that and this will be a straight 1-for-1 swap now. Hopefully that\u0027s ok.",
+      "parentUuid": "b351d9b8_5a305644",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -244,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "07944f74_8a2318f0",
+        "filename": "ios/chrome/browser/ui/popup_menu/popup_menu_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "d3262979_647d7a49",
+      "range": {
+        "startLine": 73,
+        "startChar": 31,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af9491fc_f6e92a62",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller_private.h",
         "patchSetId": 5
@@ -264,6 +492,30 @@
       "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd12ccca_fb9bf3d4",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller_private.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "Sure thing, thanks!",
+      "parentUuid": "af9491fc_f6e92a62",
+      "range": {
+        "startLine": 103,
+        "startChar": 10,
+        "endLine": 103,
+        "endChar": 29
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -290,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "62df8a56_db78f56f",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "Yeah I felt this too :-(\n\nI\u0027ve moved things around so it no longer needs to know about the Coordinator.\n\nThere is a new delegate that allows objects to learn whether the tools menu popup is being displayed, and it now uses this.",
+      "parentUuid": "b6969617_31b89ef4",
+      "range": {
+        "startLine": 47,
+        "startChar": 1,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d68f58ec_93d7b64f",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 5
@@ -310,6 +586,30 @@
       "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82534d3e_ea3fd47f",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "Thanks! Yes, propose we remove this now based on comments in the header!",
+      "parentUuid": "d68f58ec_93d7b64f",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 23
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -336,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "047fa09a_f510a47e",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "Sounds good, in the new revision these notifications will be handled by the ToolbarCoordinator, and then a simple method is triggered here in the toolbar controller. Thanks!",
+      "parentUuid": "03cdb8e5_39ad343b",
+      "range": {
+        "startLine": 292,
+        "startChar": 5,
+        "endLine": 292,
+        "endChar": 22
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "229de1e2_60fe4cd3",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 5
@@ -356,6 +680,30 @@
       "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ad70b4_7c190de2",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "I now have a simple delegate which just provides a state so we don\u0027t have the coordinator explicitly owned here. Thanks!",
+      "parentUuid": "229de1e2_60fe4cd3",
+      "range": {
+        "startLine": 655,
+        "startChar": 11,
+        "endLine": 655,
+        "endChar": 33
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -382,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "52750178_f2773ad4",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "24167cbf_465c3d47",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 58
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82afbb70_d18ba0c9",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h",
         "patchSetId": 5
@@ -402,6 +774,30 @@
       "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fed913a_22105781",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "82afbb70_d18ba0c9",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 4
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -499,6 +895,54 @@
     },
     {
       "key": {
+        "uuid": "c8a531b7_f6502011",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "Following on from our discussion in person, I\u0027ll rename things to ToolsMenuXXX where it is possible the underlying implementation is not a popup in the future, and ToolsMenuPopupXXX where the popup element is fundamental. Thanks!",
+      "parentUuid": "cfdf6bf0_3aa74223",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e373c5a4_8c92eab1",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5d6af13_bc82c79f",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 10
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73b111a9_5c68245f",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.mm",
         "patchSetId": 5
@@ -513,6 +957,24 @@
       "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d957b78_0afc15fd",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "Done - I\u0027ve added some comments to the method prototype in the header that describes this method as refreshing the UI of the presented menu. I want to be a little vague about what *exactly* it does so that there is flexibility to change the underlying implementation of the menu in the future (i.e. to replace the popup menu with something completely different for e.g.).\n\nThanks!",
+      "parentUuid": "73b111a9_5c68245f",
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -560,6 +1022,30 @@
       "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cdce5ff_7431b47c",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-02T18:19:27Z",
+      "side": 1,
+      "message": "To avoid truncating a long pointer to an incorrect BOOL value. I.e. on the off-chance you get a pointer with all lower value bits set to \u00270\u0027, just returning that pointer as a BOOL will truncate the higher level bits and essentially return \u0027NO\u0027 when it should return \u0027YES\u0027.\n\nI think I\u0027m right in that this is a case where such a problem could occur.\n\nAlthough the bang-bang is not unusual for this situation (https://cs.chromium.org/search/?q\u003dreturn+!!\u0026sq\u003dpackage:chromium\u0026type\u003dcs), I\u0027m always happy to make this more readable, e.g. \u0027return toolsPopupController_ ? YES : NO\u0027, or as Ed says \u0027return toolsPopupController_ !\u003d nil;\u0027. Let me know!",
+      "parentUuid": "a0b0612d_10281a96",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
+        "endChar": 32
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
