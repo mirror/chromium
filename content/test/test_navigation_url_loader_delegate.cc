@@ -67,6 +67,7 @@ void TestNavigationURLLoaderDelegate::OnResponseStarted(
     bool is_download,
     bool is_stream,
     base::Optional<SubresourceLoaderParams> subresource_loader_params) {
+  LOG(ERROR) << "TestNavigationURLLoaderDelegate::" << __func__;
   response_ = response;
   body_ = std::move(body);
   handle_ = std::move(consumer_handle);
