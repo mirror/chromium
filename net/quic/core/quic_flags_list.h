@@ -68,7 +68,7 @@ QUIC_FLAG(double, FLAGS_quic_bbr_cwnd_gain, 2.0f)
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_allow_one_address_change, false)
 
 // Support bandwidth resumption in QUIC BBR.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_bandwidth_resumption, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_bandwidth_resumption, true)
 
 // Add the equivalent number of bytes as 3 TCP TSO segments to QUIC's BBR CWND.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_add_tso_cwnd, false)
@@ -122,7 +122,7 @@ QUIC_FLAG(bool, FLAGS_quic_supports_tls_handshake, false)
 
 // Add 4 new ack decimation modes to QUIC that are entirely time based at 1/4
 // or 1/8 RTT.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_ack_decimation, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_ack_decimation, true)
 
 // If true, check for packet number underflow when reading ack blocks.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_sanitize_framer_addrange_input, true)
@@ -145,14 +145,14 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_tls13_cipher_suites, false)
 // If true, read and write QUIC version labels in network byte order.
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label,
-          false)
+          true)
 
 // If true, send stateless reset token in SHLO. This token is used in IETF
 // public reset packet.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_send_reset_token_in_shlo, false)
 
 // Default enable all cubic fixes in QUIC Cubic by default.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_cubic_fixes, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_cubic_fixes, true)
 
 // If true, enable QUIC v43.
 QUIC_FLAG(bool, FLAGS_quic_enable_version_43, false)
