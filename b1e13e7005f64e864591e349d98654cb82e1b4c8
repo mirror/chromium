@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07848bae_768ad268",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T01:52:01Z",
+      "side": 1,
+      "message": "do you still need this?",
+      "revId": "b1e13e7005f64e864591e349d98654cb82e1b4c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
