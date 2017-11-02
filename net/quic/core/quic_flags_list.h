@@ -84,10 +84,6 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_version_39, true)
 // reordering window for every spurious retransmit.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_fix_adaptive_time_loss, false)
 
-// If true, enable random padding of size [1, 256] when response body is
-// compressed for QUIC version >= 38.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_random_padding, true)
-
 // If true, export a varz mapping QUIC non 0-rtt handshake with corresponding
 // frontend service.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_account_handshake, true)
