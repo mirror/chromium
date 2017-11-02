@@ -2656,7 +2656,6 @@ void RenderFrameImpl::LoadNavigationErrorPage(
             : blink::WebFrameLoadType::kStandard;
   const blink::WebHistoryItem& history_item =
       entry ? entry->root() : blink::WebHistoryItem();
-  DCHECK_EQ(WebURLError::Domain::kNet, error.domain());
 
   // Requests blocked by the X-Frame-Options HTTP response header don't display
   // error pages but a blank page instead.
@@ -2834,8 +2833,7 @@ blink::WebPlugin* RenderFrameImpl::CreatePlugin(
 }
 
 void RenderFrameImpl::LoadErrorPage(int reason) {
-  blink::WebURLError error(blink::WebURLError::Domain::kNet, reason,
-                           frame_->GetDocument().Url());
+  blink::WebURLError error(reason, frame_->GetDocument().Url());
 
   std::string error_html;
   GetContentClient()->renderer()->GetNavigationErrorStrings(
@@ -5487,7 +5485,7 @@ void RenderFrameImpl::OnFailedNavigation(
 
   // Send the provisional load failure.
   WebURLError error(
-      WebURLError::Domain::kNet, error_code,
+      error_code,
       has_stale_copy_in_cache ? WebURLError::HasCopyInCache::kTrue
                               : WebURLError::HasCopyInCache::kFalse,
       WebURLError::IsWebSecurityViolation::kFalse, common_params.url);
