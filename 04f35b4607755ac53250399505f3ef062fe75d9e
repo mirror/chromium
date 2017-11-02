@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3166da94_dc112e1f",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-02T15:46:12Z",
+      "side": 1,
+      "message": "Need to remove base::WrapUnique here",
+      "range": {
+        "startLine": 86,
+        "startChar": 14,
+        "endLine": 86,
+        "endChar": 24
+      },
+      "revId": "04f35b4607755ac53250399505f3ef062fe75d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0695688_24060211",
+        "filename": "net/android/network_change_notifier_factory_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-02T15:46:12Z",
+      "side": 1,
+      "message": "std::make_unique (Same pattern as I suggested in net/base/network_change_notifier.cc, in the previous patch set)",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 38
+      },
+      "revId": "04f35b4607755ac53250399505f3ef062fe75d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
