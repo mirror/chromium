@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b066cab_3d63cad8",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_android_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-02T19:57:34Z",
+      "side": 1,
+      "message": "Please fix.",
+      "range": {
+        "startLine": 202,
+        "startChar": 10,
+        "endLine": 202,
+        "endChar": 49
+      },
+      "revId": "19cfeb9e2dba916807787b7bfc5cc3b134c53952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3493e313_c305754f",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_android_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-02T19:57:34Z",
+      "side": 1,
+      "message": "Using +-same_offset is confusing.  Please have two offset consts instead.",
+      "range": {
+        "startLine": 209,
+        "startChar": 7,
+        "endLine": 209,
+        "endChar": 17
+      },
+      "revId": "19cfeb9e2dba916807787b7bfc5cc3b134c53952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0feb588_8d893ed5",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_android_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-02T19:57:34Z",
+      "side": 1,
+      "message": "Add a TODO for more tests.",
+      "revId": "19cfeb9e2dba916807787b7bfc5cc3b134c53952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "009819b5_f9f567cc",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1886,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-02T19:57:34Z",
+      "side": 1,
+      "message": "Please also move timestamp calc to Build().",
+      "range": {
+        "startLine": 1886,
+        "startChar": 6,
+        "endLine": 1886,
+        "endChar": 62
+      },
+      "revId": "19cfeb9e2dba916807787b7bfc5cc3b134c53952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f40741f_0f21e954",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-02T19:57:34Z",
+      "side": 1,
+      "message": "Let\u0027s fix this past mistake: rename this to UpdateLeftClickCountAndPrevMouseDown.",
+      "range": {
+        "startLine": 1900,
+        "startChar": 34,
+        "endLine": 1900,
+        "endChar": 54
+      },
+      "revId": "19cfeb9e2dba916807787b7bfc5cc3b134c53952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
