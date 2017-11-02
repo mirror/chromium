@@ -1422,6 +1422,9 @@ extern const char kMacViewsNativeAppWindowsDescription[];
 extern const char kMacViewsTaskManagerName[];
 extern const char kMacViewsTaskManagerDescription[];
 
+extern const char kProfileChooserViewForMacOSName[];
+extern const char kProfileChooserViewForMacOSDescription[];
+
 extern const char kTabDetachingInFullscreenName[];
 extern const char kTabDetachingInFullscreenDescription[];
 
