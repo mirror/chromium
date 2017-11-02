@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "18438a51_30c606c0",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-02T05:18:43Z",
+      "side": 1,
+      "message": "Fixed, thank you for catching.",
+      "parentUuid": "4ac20b49_ada7c2a6",
+      "revId": "193595d03a5608d13faece9909a2d9512dffacb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ae9e584_37db32ff",
         "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
         "patchSetId": 34
@@ -33,6 +51,24 @@
       "revId": "193595d03a5608d13faece9909a2d9512dffacb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ad887d_c99a28dc",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-02T05:18:43Z",
+      "side": 1,
+      "message": "The comment wasn\u0027t updated properly, sorry. Fixed too.\n\nThe point moving to here assumes that this code no longer relies on descendants were updated beforehand, so this comment is wrong. This assumption isn\u0027t really proved yet due to the lack of bots, but I believe text/inline are fine and some adhoc simple tests look good. Inline block is a little gray, but I\u0027ll dig into it next.\n\n\u003e The LayoutText/LayoutInline could possibly obtain its containing block flow and from that the paint fragments for the text/inline?\n\nYes, LocalVisualRect() impl for LayoutText/LayoutInline does it. Not very performant atm because it find the block container and scans all children, but I\u0027ll add cache if the code lives long (I had a cache but removed to make the leak bot happy, I\u0027ll revisit.)",
+      "parentUuid": "6ae9e584_37db32ff",
+      "revId": "193595d03a5608d13faece9909a2d9512dffacb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
