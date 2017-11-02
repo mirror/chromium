@@ -24,6 +24,7 @@ namespace {
 void WaitForFence(EGLDisplay display, EGLSyncKHR fence) {
   eglClientWaitSyncKHR(display, fence, EGL_SYNC_FLUSH_COMMANDS_BIT_KHR,
                        EGL_FOREVER_KHR);
+  eglDestroySyncKHR(display, fence);
 }
 
 }  // namespace
@@ -238,7 +239,6 @@ EGLSyncKHR GbmSurfaceless::InsertFence(bool implicit) {
 }
 
 void GbmSurfaceless::FenceRetired(EGLSyncKHR fence, PendingFrame* frame) {
-  eglDestroySyncKHR(GetDisplay(), fence);
   frame->ready = true;
   SubmitFrame();
 }
