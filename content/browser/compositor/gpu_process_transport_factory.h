@@ -129,6 +129,15 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   // viz::ContextLostObserver implementation.
   void OnContextLost() override;
 
+  scoped_refptr<ui::ContextProviderCommandBuffer> CreateContextCommon(
+      scoped_refptr<gpu::GpuChannelHost> gpu_channel_host,
+      gpu::SurfaceHandle surface_handle,
+      bool need_alpha_channel,
+      bool need_stencil_bits,
+      bool support_locking,
+      ui::ContextProviderCommandBuffer* shared_context_provider,
+      ui::command_buffer_metrics::ContextType type);
+
   viz::FrameSinkIdAllocator frame_sink_id_allocator_;
 
 #if defined(OS_WIN)

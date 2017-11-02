@@ -251,6 +251,11 @@ bool PPB_Graphics3D_Impl::InitRaw(
       gpu::kGpuFeatureStatusBlacklisted) {
     return false;
   }
+  // This needs to be called after establishing a GPU channel, making sure
+  // blacklist decision from GPU process is included.
+  if (render_thread->IsGpuCompositingDisabled()) {
+    return false;
+  }
 
   has_alpha_ = requested_attribs.alpha_size > 0;
 
