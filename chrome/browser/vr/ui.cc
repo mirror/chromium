@@ -155,4 +155,9 @@ void Ui::OnWebVrTimedOut() {
   model_->web_vr_timeout_state = kWebVrTimedOut;
 }
 
+bool Ui::IsControllerVisible() const {
+  UiElement* controller_group = scene_->GetUiElementByName(kControllerGroup);
+  return controller_group && controller_group->GetTargetOpacity() > 0.0f;
+}
+
 }  // namespace vr
