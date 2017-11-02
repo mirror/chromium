@@ -43,6 +43,7 @@ source_set("struct_traits") {
     "//mojo/public/cpp/bindings",
     "//skia/public/interfaces",
     "//ui/gfx",
+    "//ui/gfx/image/mojo:struct_traits",
     "//ui/message_center",
     "//url/mojo:url_mojom_gurl",
   ]
