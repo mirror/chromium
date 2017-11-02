@@ -141,6 +141,9 @@ class CORE_EXPORT PaintLayerScrollableArea final
     void SetHasHorizontalScrollbar(bool has_scrollbar) override;
     void SetHasVerticalScrollbar(bool has_scrollbar) override;
 
+    void DetachHorizontalScrollbar() override;
+    void DetachVerticalScrollbar() override;
+
     void DestroyDetachedScrollbars();
 
    protected:

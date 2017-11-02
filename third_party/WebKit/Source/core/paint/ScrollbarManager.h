@@ -32,6 +32,9 @@ class CORE_EXPORT ScrollbarManager {
   virtual void SetHasHorizontalScrollbar(bool has_scrollbar) = 0;
   virtual void SetHasVerticalScrollbar(bool has_scrollbar) = 0;
 
+  virtual void DetachHorizontalScrollbar() {}
+  virtual void DetachVerticalScrollbar() {}
+
   virtual void Trace(blink::Visitor*);
 
  protected:
