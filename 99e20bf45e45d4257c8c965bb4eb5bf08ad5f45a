@@ -221,6 +221,24 @@
       "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f39762ad_a6a3264e",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-11-02T06:16:10Z",
+      "side": 1,
+      "message": "Thanks! It works :)",
+      "parentUuid": "7ba68fb8_4b8a18aa",
+      "revId": "99e20bf45e45d4257c8c965bb4eb5bf08ad5f45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
