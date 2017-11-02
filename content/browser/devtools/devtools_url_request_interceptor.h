@@ -30,11 +30,15 @@ class DevToolsURLInterceptorRequestJob;
 class FrameTreeNode;
 class ResourceRequestInfo;
 
+struct GlobalRequestID;
+
 // An interceptor that creates DevToolsURLInterceptorRequestJobs for requests
 // from pages where interception has been enabled via
 // Network.setRequestInterceptionEnabled.
 class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
  public:
+  static bool IsNavigationRequest(ResourceType resource_type);
+
   explicit DevToolsURLRequestInterceptor(BrowserContext* browser_context);
   ~DevToolsURLRequestInterceptor() override;
 
@@ -126,10 +130,13 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
                                     std::string id);
 
     // Must be called on the IO thread.
-    void JobFinished(const std::string& interception_id);
+    void JobFinished(const std::string& interception_id, bool is_navigation);
 
    private:
     friend class DevToolsURLRequestInterceptor;
+    friend class base::RefCountedThreadSafe<State>;
+
+    ~State();
 
     struct InterceptedPage {
       InterceptedPage(base::WeakPtr<protocol::NetworkHandler> network_handler,
@@ -154,6 +161,16 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
         std::unique_ptr<InterceptedPage> interceptedPage);
 
     void StopInterceptingRequestsOnIO(const base::UnguessableToken& target_id);
+
+    // UI thread methods.
+    void ContinueInterceptedRequestOnUI(
+        std::string interception_id,
+        std::unique_ptr<Modifications> modifications,
+        std::unique_ptr<ContinueInterceptedRequestCallback> callback);
+    void NavigationStartedOnUI(const std::string& interception_id,
+                               const GlobalRequestID& request_id);
+    void NavigationFinishedOnUI(const std::string& interception_id);
+    bool ShouldCancelNavigation(const GlobalRequestID& global_request_id);
 
     std::string GetIdForRequestOnIO(const net::URLRequest* request,
                                     bool* is_redirect);
@@ -181,17 +198,12 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
     base::flat_map<const net::URLRequest*, std::string> expected_redirects_;
     size_t next_id_;
 
-   private:
-    friend class base::RefCountedThreadSafe<State>;
-    ~State();
+    // UI thread state
+    base::flat_map<std::string, GlobalRequestID> navigation_requests_;
+    base::flat_set<GlobalRequestID> canceled_navigation_requests_;
+
     DISALLOW_COPY_AND_ASSIGN(State);
   };
-
-  // Must be called on the UI thread.
-  void ContinueInterceptedRequest(
-      std::string interception_id,
-      std::unique_ptr<Modifications> modifications,
-      std::unique_ptr<ContinueInterceptedRequestCallback> callback);
 
   // Must be called on the UI thread.
   void StartInterceptingRequests(
@@ -201,6 +213,16 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
 
   // Must be called on the UI thread.
   void StopInterceptingRequests(const FrameTreeNode* target_frame);
+
+  // Must be called on the UI thread.
+  void ContinueInterceptedRequest(
+      std::string interception_id,
+      std::unique_ptr<Modifications> modifications,
+      std::unique_ptr<ContinueInterceptedRequestCallback> callback);
+
+  bool ShouldCancelNavigation(const GlobalRequestID& global_request_id) {
+    return state_->ShouldCancelNavigation(global_request_id);
+  }
 
  private:
   BrowserContext* const browser_context_;

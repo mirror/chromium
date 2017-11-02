@@ -17,7 +17,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "content/browser/devtools/devtools_session.h"
-#include "content/browser/devtools/devtools_url_interceptor_request_job.h"
+#include "content/browser/devtools/devtools_url_request_interceptor.h"
 #include "content/browser/devtools/protocol/page.h"
 #include "content/browser/devtools/protocol/security.h"
 #include "content/browser/frame_host/frame_tree_node.h"
@@ -1091,8 +1091,6 @@ DispatchResponse NetworkHandler::SetRequestInterception(
     interception_enabled_ = true;
   } else {
     devtools_url_request_interceptor->StopInterceptingRequests(frame_tree_node);
-    navigation_requests_.clear();
-    canceled_navigation_requests_.clear();
     interception_enabled_ = false;
   }
   return Response::OK();
@@ -1162,17 +1160,6 @@ void NetworkHandler::ContinueInterceptedRequest(
     }
 
     mark_as_canceled = true;
-
-    if (error_reason.fromJust() == Network::ErrorReasonEnum::Aborted) {
-      auto it = navigation_requests_.find(interception_id);
-      if (it != navigation_requests_.end()) {
-        canceled_navigation_requests_.insert(it->second);
-        // To successfully cancel navigation the request must succeed. We
-        // provide simple mock response to avoid pointless network fetch.
-        error.reset();
-        raw_response = std::string("HTTP/1.1 200 OK\r\n\r\n");
-      }
-    }
   }
 
   devtools_url_request_interceptor->ContinueInterceptedRequest(
@@ -1224,24 +1211,15 @@ std::unique_ptr<NavigationThrottle> NetworkHandler::CreateThrottleForNavigation(
   return throttle;
 }
 
-void NetworkHandler::InterceptedNavigationRequest(
-    const GlobalRequestID& global_request_id,
-    const std::string& interception_id) {
-  navigation_requests_[interception_id] = global_request_id;
-}
-
-void NetworkHandler::InterceptedNavigationRequestFinished(
-    const std::string& interception_id) {
-  navigation_requests_.erase(interception_id);
-}
-
 bool NetworkHandler::ShouldCancelNavigation(
     const GlobalRequestID& global_request_id) {
-  auto it = canceled_navigation_requests_.find(global_request_id);
-  if (it == canceled_navigation_requests_.end())
+  WebContents* web_contents = WebContents::FromRenderFrameHost(host_);
+  if (!web_contents)
     return false;
-  canceled_navigation_requests_.erase(it);
-  return true;
+  DevToolsURLRequestInterceptor* interceptor =
+      DevToolsURLRequestInterceptor::FromBrowserContext(
+          web_contents->GetBrowserContext());
+  return interceptor && interceptor->ShouldCancelNavigation(global_request_id);
 }
 
 void NetworkHandler::AppendDevToolsHeaders(net::HttpRequestHeaders* headers) {
