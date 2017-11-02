@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe69652a_a673a546",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 1,
+      "message": "We may need |cmd-\u003eEndingSelectionIsDirectional()| here.",
+      "range": {
+        "startLine": 946,
+        "startChar": 52,
+        "endLine": 946,
+        "endChar": 70
+      },
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65061019_0a19376b",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 1,
+      "message": "We may need |cmd-\u003eStartingSelectionIsDirectional()| here.",
+      "range": {
+        "startLine": 990,
+        "startChar": 52,
+        "endLine": 990,
+        "endChar": 72
+      },
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b84afa6_2fd7a77d",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 1,
+      "message": "We may need |cmd-\u003eEndingSelectionIsDirectional()| here.",
+      "range": {
+        "startLine": 1014,
+        "startChar": 52,
+        "endLine": 1014,
+        "endChar": 72
+      },
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c09bd49_d11c8e95",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 1,
+      "message": "So the function may look like:\n\nbool FS::SetSelectionDeprecated(new_selection, passed_options) {\n  SetSelectionOptions::Builder builder(passed_options);\n  if (ShouldAlwaysUse...)\n    builder.SetIsDirectional(true);\n  SetSelectionOptions options \u003d builder.Build();\n\n  ...\n}",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 211,
+        "endChar": 53
+      },
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "757ecfe7_50cee753",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 1,
+      "message": "Can we get this information from SelectionModifier?",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 23
+      },
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a273aa1_a6340d01",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditCommand.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 1,
+      "message": "Meaning of |IsDirectional| is not clear for a command.\n\n|SelectionIsDirectional| seems better.",
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285c17b1_952984ca",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditCommand.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d01540b9_199f67eb",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1256,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 1,
+      "message": "It seems better to get this information from SelectionModifier.",
+      "range": {
+        "startLine": 1252,
+        "startChar": 0,
+        "endLine": 1256,
+        "endChar": 0
+      },
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b29dbf1_f923a2f8",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1952,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 1,
+      "message": "|Editor::mark_| can have its own directionality, which can be different from the current frame selection\u0027s directionality. So it seems that we also need to store another |Editor::mark_is_directional_|.\n\n... or does anyone really care about that?",
+      "range": {
+        "startLine": 1948,
+        "startChar": 0,
+        "endLine": 1952,
+        "endChar": 20
+      },
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c55bae_017d25d9",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 1,
+      "message": "SelectionModifier may change the directionality of selection, which used to be stored in |selection_to_delete|.\n\nCould you verify if there is any client of the directionality of |selection_to_delete|?",
+      "range": {
+        "startLine": 894,
+        "startChar": 26,
+        "endLine": 894,
+        "endChar": 45
+      },
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd3aa22_650ee9da",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 1042,
+        "startChar": 26,
+        "endLine": 1042,
+        "endChar": 45
+      },
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b42f80_f2e1b8dd",
+        "filename": "third_party/WebKit/Source/core/editing/commands/UndoStep.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 1,
+      "message": "Do we have any edit command that starts with a non-directional range selection, and ends with a directional range selection (since directionality makes sense only for range selection)?\n\nIf so, it seems that we need two values, for starting and ending selections, respectively, so that we can correctly recover the selection directionality after undo/redo.\n\nCould you investigate?",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 20
+      },
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

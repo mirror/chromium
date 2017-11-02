@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d888e3f_cad0d88f",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 0,
+      "message": "This part is to modify |pass_selection| for |ShouldAlwaysUseDirectionalSelection| behavior.\n\nSince we don\u0027t need to modify |passed_selection|, we can eliminate this part, and modify |options| instead.",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 53
+      },
+      "revId": "23c1566fcff5ea60c0d3fc2de833e4af09ebaaa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687e200d_74445dd5",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditCommand.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-02T19:14:43Z",
+      "side": 0,
+      "message": "nit: please keep this empty line.",
+      "revId": "23c1566fcff5ea60c0d3fc2de833e4af09ebaaa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
