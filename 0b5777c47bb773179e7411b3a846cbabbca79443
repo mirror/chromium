@@ -52,6 +52,24 @@
       "revId": "0b5777c47bb773179e7411b3a846cbabbca79443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecac8776_6fa2fc82",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-02T14:59:55Z",
+      "side": 1,
+      "message": "I think you\u0027d need to remove the CQ+2 label to stop it",
+      "parentUuid": "e2b9b608_b8c637c1",
+      "revId": "0b5777c47bb773179e7411b3a846cbabbca79443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
