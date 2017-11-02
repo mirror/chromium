@@ -23,10 +23,8 @@ class CONTENT_EXPORT WebRTCEventLogHost {
   ~WebRTCEventLogHost();
 
   // Starts an RTC event log for all current and future PeerConnections on the
-  // render process. A base file_path can be supplied, which will be extended to
-  // include several identifiers to ensure uniqueness. If a recording was
-  // already in progress, this call will return false and have no other effect.
-  bool StartWebRTCEventLog(const base::FilePath& file_path);
+  // render process.
+  bool StartWebRTCEventLog();
 
   // Stops recording an RTC event log for each PeerConnection on the render
   // process. If no recording was in progress, this call will return false.

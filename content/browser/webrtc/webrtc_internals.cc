@@ -88,7 +88,7 @@ WebRTCInternals::WebRTCInternals() : WebRTCInternals(500, true) {}
 WebRTCInternals::WebRTCInternals(int aggregate_updates_ms,
                                  bool should_block_power_saving)
     : audio_debug_recordings_(false),
-      event_log_recordings_(false),
+      event_log_recordings_(true),  // TODO(eladalon): !!! Undo
       selecting_event_log_(false),
       num_open_connections_(0),
       should_block_power_saving_(should_block_power_saving),
@@ -516,10 +516,9 @@ void WebRTCInternals::EnableEventLogRecordingsOnAllRenderProcessHosts() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   event_log_recordings_ = true;
-  for (RenderProcessHost::iterator i(
-           content::RenderProcessHost::AllHostsIterator());
-       !i.IsAtEnd(); i.Advance())
-    i.GetCurrentValue()->StartWebRTCEventLog(event_log_recordings_file_path_);
+  for (content::RenderProcessHost::AllHostsIterator(); !it.IsAtEnd(); it.Advance()) {
+    it.GetCurrentValue()->StartWebRTCEventLog();
+  }
 }
 #endif
 

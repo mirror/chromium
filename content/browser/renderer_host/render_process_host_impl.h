@@ -190,7 +190,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
 #if BUILDFLAG(ENABLE_WEBRTC)
   void EnableAudioDebugRecordings(const base::FilePath& file) override;
   void DisableAudioDebugRecordings() override;
-  bool StartWebRTCEventLog(const base::FilePath& file_path) override;
+  bool StartWebRTCEventLog(const base::FilePath& file_path, bool) override;
   bool StopWebRTCEventLog() override;
   void SetEchoCanceller3(bool enable) override;
   void SetWebRtcLogMessageCallback(
