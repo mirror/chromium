@@ -39,6 +39,30 @@
       "revId": "0b3e9edc344af025fbf88c68372623eacdfacb91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd36563_06219e4f",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T01:04:39Z",
+      "side": 1,
+      "message": "We probably don\u0027t even need to load about://blank. I see 2 alternative options to play with:\n1.) a subclass web::WebStatePolicyDecider which will reject the load and will present interstitial\n2.) a TabHelper which will present interstitial in DidStartNavigation",
+      "parentUuid": "bd24e8b3_a11e58b0",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "0b3e9edc344af025fbf88c68372623eacdfacb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
