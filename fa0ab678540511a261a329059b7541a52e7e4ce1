@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46a82dbf_3e6ce5e1",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-02T21:14:14Z",
+      "side": 1,
+      "message": "Is the functionality change here intentional (or irrelevant)? In WebSecurityOrigin(const url::Origin\u0026 origin), these were interpreted as UTF-8, but here you\u0027re using WTF::String(const char*), which will interpret the strings as Latin-1.\n\nI don\u0027t know what the expected encoding here is. If it\u0027s guaranteed to be ASCII, this is equivalent, but it\u0027s not apparent to me whether that is the case.",
+      "revId": "fa0ab678540511a261a329059b7541a52e7e4ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
