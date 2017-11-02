@@ -95,7 +95,7 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
             }
         }
 
-        if (frontInfoBar == null) return;
+        if (frontInfoBar == null || view == null || !view.isAttachedToWindow()) return;
 
         // Check if we need to log any IPH events based on the infobar.
         logEvent(frontInfoBar);
