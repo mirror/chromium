@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "358d1a29_f96b56e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-02T21:24:17Z",
+      "side": 1,
+      "message": "This seems reasonable, thank you.\n\nWhere did you test this?\n\nAlso, keep in mind work is in progress to remove egl fences and to move to fd fences when available: crrev.com/c/751268",
+      "revId": "2bd3103273ac4032311d83ae4592183b307a9afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
