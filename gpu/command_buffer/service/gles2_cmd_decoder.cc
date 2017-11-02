@@ -591,6 +591,9 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   void RestoreRenderbufferBindings() override;
   void RestoreTextureState(unsigned service_id) const override;
 
+  void ClearDeviceWindowRectangles() const;
+  void RestoreDeviceWindowRectangles() const override;
+
   void ClearAllAttributes() const override;
   void RestoreAllAttributes() const override;
 
@@ -1978,6 +1981,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                              GLint pixel_config);
   void DoEndRasterCHROMIUM();
 
+  void DoWindowRectanglesEXT(GLenum mode, GLsizei n, const volatile GLint* box);
+
   // Returns false if textures were replaced.
   bool PrepareTexturesForRender();
   void RestoreStateForTextures();
@@ -2661,6 +2666,7 @@ ScopedResolvedFramebufferBinder::ScopedResolvedFramebufferBinder(
                                 decoder_->offscreen_target_frame_buffer_->id());
     decoder_->state_.SetDeviceColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_TRUE);
     decoder->state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, false);
+    decoder->ClearDeviceWindowRectangles();
     api->glClearColorFn(0, 0, 0, 1);
     api->glClearFn(GL_COLOR_BUFFER_BIT);
     decoder_->RestoreClearState();
@@ -2699,6 +2705,7 @@ ScopedResolvedFramebufferBinder::ScopedResolvedFramebufferBinder(
   const int width = decoder_->offscreen_size_.width();
   const int height = decoder_->offscreen_size_.height();
   decoder->state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, false);
+  decoder->ClearDeviceWindowRectangles();
   decoder->BlitFramebufferHelper(0,
                                  0,
                                  width,
@@ -2721,6 +2728,7 @@ ScopedResolvedFramebufferBinder::~ScopedResolvedFramebufferBinder() {
   decoder_->RestoreCurrentFramebufferBindings();
   if (decoder_->state_.enable_flags.scissor_test) {
     decoder_->state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, true);
+    decoder_->RestoreDeviceWindowRectangles();
   }
 }
 
@@ -2931,6 +2939,7 @@ bool BackTexture::AllocateNativeGpuMemoryBuffer(const gfx::Size& size,
       api()->glClearColorFn(0, 0, 0, decoder_->BackBufferAlphaClearColor());
       decoder_->state_.SetDeviceColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
       decoder_->state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, false);
+      decoder_->ClearDeviceWindowRectangles();
       api()->glClearFn(GL_COLOR_BUFFER_BIT);
       decoder_->RestoreClearState();
     }
@@ -3027,6 +3036,7 @@ bool BackRenderbuffer::AllocateStorage(const gfx::Size& size,
       api()->glClearColorFn(0, 0, 0, decoder_->BackBufferAlphaClearColor());
       decoder_->state_.SetDeviceColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
       decoder_->state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, false);
+      decoder_->ClearDeviceWindowRectangles();
       api()->glClearFn(GL_COLOR_BUFFER_BIT);
       decoder_->RestoreClearState();
     }
@@ -3611,6 +3621,13 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
 
   api()->glGetFloatvFn(GL_ALIASED_LINE_WIDTH_RANGE, line_width_range_);
   state_.SetLineWidthBounds(line_width_range_[0], line_width_range_[1]);
+
+  if (feature_info_->feature_flags().ext_window_rectangles) {
+    GLint max_window_rectangles = -1;
+    api()->glGetIntegervFn(GL_MAX_WINDOW_RECTANGLES_EXT,
+                           &max_window_rectangles);
+    state_.SetMaxWindowRectangles(max_window_rectangles);
+  }
 
   state_.scissor_width = state_.viewport_width;
   state_.scissor_height = state_.viewport_height;
@@ -4321,6 +4338,7 @@ void GLES2DecoderImpl::DeleteFramebuffersHelper(
           framebuffer->DoUnbindGLAttachmentsForWorkaround(target);
 
         api()->glBindFramebufferEXTFn(target, GetBackbufferServiceId());
+        state_.UpdateWindowRectanglesForBoundDrawFramebufferClientID(0);
         framebuffer_state_.bound_draw_framebuffer = NULL;
         framebuffer_state_.clear_state_dirty = true;
       }
@@ -4522,6 +4540,7 @@ bool GLES2DecoderImpl::CheckFramebufferValid(
       api()->glClearDepthFn(1.0f);
       state_.SetDeviceDepthMask(GL_TRUE);
       state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, false);
+      ClearDeviceWindowRectangles();
       bool reset_draw_buffer = false;
       if ((backbuffer_needs_clear_bits_ & GL_COLOR_BUFFER_BIT) != 0 &&
           back_buffer_draw_buffer_ == GL_NONE) {
@@ -4972,6 +4991,7 @@ void GLES2DecoderImpl::Destroy(bool have_context) {
   state_.bound_uniform_buffer = nullptr;
   framebuffer_state_.bound_read_framebuffer = nullptr;
   framebuffer_state_.bound_draw_framebuffer = nullptr;
+  state_.current_draw_framebuffer_client_id = 0;
   state_.bound_renderbuffer = nullptr;
   state_.bound_transform_feedback = nullptr;
   state_.default_transform_feedback = nullptr;
@@ -5281,6 +5301,7 @@ bool GLES2DecoderImpl::ResizeOffscreenFramebuffer(const gfx::Size& size) {
     api()->glClearDepthFn(0);
     state_.SetDeviceDepthMask(GL_TRUE);
     state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, false);
+    ClearDeviceWindowRectangles();
     api()->glClearFn(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT |
                      GL_STENCIL_BUFFER_BIT);
     RestoreClearState();
@@ -5807,6 +5828,17 @@ void GLES2DecoderImpl::RestoreTextureState(unsigned service_id) const {
   }
 }
 
+void GLES2DecoderImpl::ClearDeviceWindowRectangles() const {
+  if (!feature_info_->feature_flags().ext_window_rectangles) {
+    return;
+  }
+  api()->glWindowRectanglesEXTFn(GL_EXCLUSIVE_EXT, 0, nullptr);
+}
+
+void GLES2DecoderImpl::RestoreDeviceWindowRectangles() const {
+  state_.UpdateWindowRectangles();
+}
+
 void GLES2DecoderImpl::ClearAllAttributes() const {
   // Must use native VAO 0, as RestoreAllAttributes can't fully restore
   // other VAOs.
@@ -5918,6 +5950,7 @@ void GLES2DecoderImpl::DoBindFramebuffer(GLenum target, GLuint client_id) {
 
   if (target == GL_FRAMEBUFFER || target == GL_DRAW_FRAMEBUFFER_EXT) {
     framebuffer_state_.bound_draw_framebuffer = framebuffer;
+    state_.UpdateWindowRectanglesForBoundDrawFramebufferClientID(client_id);
   }
 
   // vmiura: This looks like dup code
@@ -6614,6 +6647,13 @@ bool GLES2DecoderImpl::GetHelper(
               static_cast<GLint>(state_.bound_transform_feedback->paused());
         }
         return true;
+      case GL_WINDOW_RECTANGLE_EXT:
+        *num_written = 4;
+        // This is only used for glGetIntegeri_v and similar, so params will
+        // always be null - the only path here is through
+        // GetNumValuesReturnedForGLGet.
+        DCHECK(!params);
+        return true;
     }
   }
   switch (pname) {
@@ -7198,6 +7238,17 @@ template <typename TYPE>
 void GLES2DecoderImpl::GetIndexedIntegerImpl(
     const char* function_name, GLenum target, GLuint index, TYPE* data) {
   DCHECK(data);
+
+  if (features().ext_window_rectangles && target == GL_WINDOW_RECTANGLE_EXT) {
+    if (index >= state_.GetMaxWindowRectangles()) {
+      LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, function_name,
+                         "window rectangle index out of bounds");
+    }
+    // This must be queried from the state tracker because the driver state is
+    // "wrong" if the bound framebuffer is 0 (backbuffer).
+    state_.GetWindowRectangle(index, data);
+    return;
+  }
   scoped_refptr<IndexedBufferBindingHost> bindings;
   switch (target) {
     case GL_TRANSFORM_FEEDBACK_BUFFER_BINDING:
@@ -7815,6 +7866,7 @@ void GLES2DecoderImpl::ClearUnclearedAttachments(
     }
     state_.SetDeviceColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, false);
+    ClearDeviceWindowRectangles();
 
     // TODO(zmo): Assume DrawBuffers() does not affect ClearBuffer().
     framebuffer->ClearUnclearedIntRenderbufferAttachments(
@@ -7861,6 +7913,7 @@ void GLES2DecoderImpl::ClearUnclearedAttachments(
                                     framebuffer->service_id());
     }
     state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, false);
+    ClearDeviceWindowRectangles();
     if (workarounds().gl_clear_broken) {
       ClearFramebufferForWorkaround(clear_bits);
     } else {
@@ -7891,6 +7944,7 @@ void GLES2DecoderImpl::RestoreClearState() {
   api()->glClearDepthFn(state_.depth_clear);
   state_.SetDeviceCapabilityState(GL_SCISSOR_TEST,
                                   state_.enable_flags.scissor_test);
+  RestoreDeviceWindowRectangles();
   gfx::Vector2d scissor_offset = GetBoundFramebufferDrawOffset();
   api()->glScissorFn(state_.scissor_x + scissor_offset.x(),
                      state_.scissor_y + scissor_offset.y(),
@@ -8849,6 +8903,7 @@ bool GLES2DecoderImpl::VerifyMultisampleRenderbufferIntegrity(
   api()->glGetBooleanvFn(GL_SCISSOR_TEST, &scissor_enabled);
   if (scissor_enabled)
     state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, false);
+  ClearDeviceWindowRectangles();
 
   GLboolean color_mask[4] = {GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE};
   api()->glGetBooleanvFn(GL_COLOR_WRITEMASK, color_mask);
@@ -8883,6 +8938,7 @@ bool GLES2DecoderImpl::VerifyMultisampleRenderbufferIntegrity(
   // Restore cached state.
   if (scissor_enabled)
     state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, true);
+  RestoreDeviceWindowRectangles();
 
   state_.SetDeviceColorMask(
       color_mask[0], color_mask[1], color_mask[2], color_mask[3]);
@@ -12957,6 +13013,8 @@ bool GLES2DecoderImpl::ClearLevel(Texture* texture,
     gfx::Vector2d scissor_offset = GetBoundFramebufferDrawOffset();
     api()->glScissorFn(xoffset + scissor_offset.x(),
                        yoffset + scissor_offset.y(), width, height);
+    ClearDeviceWindowRectangles();
+
     api()->glClearFn(GL_DEPTH_BUFFER_BIT |
                      (have_stencil ? GL_STENCIL_BUFFER_BIT : 0));
 
@@ -15912,6 +15970,7 @@ void GLES2DecoderImpl::DoSwapBuffers() {
           api()->glClearColorFn(0, 0, 0, BackBufferAlphaClearColor());
           state_.SetDeviceColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
           state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, false);
+          ClearDeviceWindowRectangles();
           api()->glClearFn(GL_COLOR_BUFFER_BIT);
           RestoreClearState();
         }
@@ -20326,6 +20385,27 @@ void GLES2DecoderImpl::DoEndRasterCHROMIUM() {
   sk_surface_.reset();
 
   RestoreState(nullptr);
+}
+
+void GLES2DecoderImpl::DoWindowRectanglesEXT(GLenum mode,
+                                             GLsizei n,
+                                             const volatile GLint* box) {
+  std::vector<GLint> box_copy(box, box + (n * 4));
+  if (static_cast<size_t>(n) > state_.GetMaxWindowRectangles()) {
+    LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, "glWindowRectanglesEXT",
+                       "count > GL_MAX_WINDOW_RECTANGLES_EXT");
+    return;
+  }
+  for (int i = 0; i < n; ++i) {
+    int boxindex = i * 4;
+    if (box_copy[boxindex + 2] < 0 || box_copy[boxindex + 3] < 0) {
+      LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, "glWindowRectanglesEXT",
+                         "negative box width or height");
+      return;
+    }
+  }
+  state_.SetWindowRectangles(mode, n, box_copy.data());
+  state_.UpdateWindowRectangles();
 }
 
 // Include the auto-generated part of this file. We split this because it means
