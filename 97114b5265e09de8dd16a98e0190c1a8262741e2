@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "a0ed65dd_d992e653",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T19:01:21Z",
+      "side": 1,
+      "message": "I feel like even for a projector, where it isn\u0027t physically to the left, you would be aware of whether you drag windows to the left or right to get them to the projector.  I guess that\u0027s iffy though so we can leave it.",
+      "parentUuid": "583a08db_6fee4bca",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aadbb56_c8ca8bea",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 14
@@ -526,6 +550,48 @@
       "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "197187df_3c02f9b7",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T19:01:21Z",
+      "side": 1,
+      "message": "Ack, thanks for checking.",
+      "parentUuid": "04194045_10859e51",
+      "range": {
+        "startLine": 308,
+        "startChar": 67,
+        "endLine": 308,
+        "endChar": 0
+      },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "faf0d388_1174e7ef",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T19:01:21Z",
+      "side": 1,
+      "message": "Is there any display configuration (in software settings) that would result in the external display being the \"primary\" in that case?  On a Windows desktop, I can make either monitor the primary as far as Windows is concerned and chrome agrees with that setting. If this is also true for laptops, I\u0027m not sure that checking if it matches the \"primary\" display is a good idea.  IMHO it wouldn\u0027t be bad to drop the check in this case.  The controller is most likely open on the internal display anyway.",
+      "parentUuid": "73f11cee_96e630ac",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
