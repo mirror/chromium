@@ -22,6 +22,30 @@
       "revId": "d4758edcb84efcc8f5a5a46e8397e8ac67fa92bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850c21cd_6e30d9b5",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 3365,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T16:39:19Z",
+      "side": 1,
+      "message": "Actually I can\u0027t land cl/730867 without moving Tab Usage Recording code out of -[Tab view], so it would be safer to just abandon this CL. Sorry for the noise.",
+      "parentUuid": "d601cc10_e1fca33e",
+      "range": {
+        "startLine": 3365,
+        "startChar": 6,
+        "endLine": 3365,
+        "endChar": 30
+      },
+      "revId": "d4758edcb84efcc8f5a5a46e8397e8ac67fa92bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
