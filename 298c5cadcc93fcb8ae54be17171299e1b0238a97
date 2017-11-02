@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "835afc31_97eac0c2",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T07:49:34Z",
+      "side": 1,
+      "message": "is the argument needed?\n(can we just do !GetText().empty() below in place of has_visible_text)",
+      "range": {
+        "startLine": 184,
+        "startChar": 4,
+        "endLine": 184,
+        "endChar": 25
+      },
+      "revId": "298c5cadcc93fcb8ae54be17171299e1b0238a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55337db_9fb69461",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T07:49:34Z",
+      "side": 1,
+      "message": "nit: image_size isn\u0027t used after this - can just do\n\ngfx::Size size \u003d image_-\u003eGetPreferredSize();",
+      "revId": "298c5cadcc93fcb8ae54be17171299e1b0238a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f05497_b69ef6f2",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T07:49:34Z",
+      "side": 1,
+      "message": "is it confusing to manipulate the size now that we just care about height?\n\nMaybe declare |size| above as `const gfx::Size size_without_label`\n\nhere start with\n\n  int height \u003d std::max(size_without_label.height(), label_height_with_insets);\n  height \u003d std::max(height, min_size_.height();\n\n etc.",
+      "revId": "298c5cadcc93fcb8ae54be17171299e1b0238a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5762c1f2_0711d9bc",
+        "filename": "ui/views/controls/button/label_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T07:49:34Z",
+      "side": 1,
+      "message": "nit: probably needs a  comment.. There are private methods related to size below where this can probably go near (e.g. ResetCachedPreferredSize();)",
+      "revId": "298c5cadcc93fcb8ae54be17171299e1b0238a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e96ebe_e941697d",
+        "filename": "ui/views/controls/button/label_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T07:49:34Z",
+      "side": 1,
+      "message": "add a comment explaining why the test exists",
+      "revId": "298c5cadcc93fcb8ae54be17171299e1b0238a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0787b615_bc80cb2d",
+        "filename": "ui/views/controls/button/label_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T07:49:34Z",
+      "side": 1,
+      "message": "SCOPED_TRACE(testing::Message() \u003c\u003c \"Image Size: \" \u003c\u003c image_size);\n\n(this ensures we know which loop iteration failed)",
+      "revId": "298c5cadcc93fcb8ae54be17171299e1b0238a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60905fb3_4fa32cfd",
+        "filename": "ui/views/controls/button/label_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T07:49:34Z",
+      "side": 1,
+      "message": "Does this fail without the fix? I think calling GetPreferredSize() above is going to lock in a new min_size, then GetHeightForWidth can never return something smaller than preferred_button_size.height() - but that\u0027s exactly what the bug we had was.",
+      "revId": "298c5cadcc93fcb8ae54be17171299e1b0238a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
