@@ -22,6 +22,30 @@
       "revId": "7e802d8a84b8bb7a2930138a7dbae497e7c3c8b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b451fe_132ac419",
+        "filename": "components/data_reduction_proxy/core/browser/network_property.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-02T23:39:43Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "22f800ee_0c2d3b93",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "7e802d8a84b8bb7a2930138a7dbae497e7c3c8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
