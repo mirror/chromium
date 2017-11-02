@@ -234,11 +234,32 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
       subresource_loader_params_ =
           handler->MaybeCreateSubresourceLoaderParams();
+
       return;
+    }
+
+    // Even if we're falling back to the next one, give one more chance to
+    // see if |handler| still wants to give additional info to the frame
+    // for subresource loading.  In that case we will just fall back to
+    // the default loader (i.e. won't go on to the next handlers) but send
+    // the subresource_loader_params to the child process.
+    // This allows the cases where, e.g. there's a controlling ServiceWorker
+    // but it doesn't handle main resource loading, while it may still want
+    // to control the page and/or handle subresource loading, and therefore
+    // want to skip AppCache.
+    if (handler) {
+      subresource_loader_params_ =
+          handler->MaybeCreateSubresourceLoaderParams();
+
+      // If non-null |subresource_loader_params_| is returned, make sure
+      // we skip the next handlers.
+      if (subresource_loader_params_)
+        handler_index_ = handlers_.size();
     }
 
     // See if the next handler wants to handle the request.
     if (handler_index_ < handlers_.size()) {
+      DCHECK(!subresource_loader_params_);
       auto* next_handler = handlers_[handler_index_++].get();
       next_handler->MaybeCreateLoader(
           *resource_request_, resource_context_,
