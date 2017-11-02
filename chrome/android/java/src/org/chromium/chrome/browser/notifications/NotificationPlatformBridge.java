@@ -349,6 +349,9 @@ public class NotificationPlatformBridge {
                 NotificationConstants.EXTRA_NOTIFICATION_INFO_WEBAPK_PACKAGE, webApkPackage);
         intent.putExtra(NotificationConstants.EXTRA_NOTIFICATION_INFO_ACTION_INDEX, actionIndex);
 
+        // This ensures the broadcast is received with foreground priority.
+        intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+
         return PendingIntent.getBroadcast(
                 context, PENDING_INTENT_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
