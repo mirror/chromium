@@ -70,6 +70,30 @@
       "revId": "055e21027e38a11c836e155be6c7dbb12cbb87d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eadba2c_d176d553",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-02T06:48:48Z",
+      "side": 1,
+      "message": "I was thinking that it\u0027d be good to put it in something like |Cronet+ExposedForTesting.h|, what are your thoughts on that?",
+      "parentUuid": "b6c97b3a_17e820c0",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "055e21027e38a11c836e155be6c7dbb12cbb87d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
