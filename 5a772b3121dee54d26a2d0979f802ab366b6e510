@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6928c025_899b01fc",
+        "filename": "chrome/browser/renderer_host/render_process_host_chrome_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-02T21:37:06Z",
+      "side": 1,
+      "message": "Waits until commit / until we are ready to execute scripts (elsewhere in this test suite).\n\nNote that this change is not strictly necessary, unless we wanted to also enabled the DCHECK for RenderFrameImpl::OnJavaScriptExecuteRequest*ForTests* (which is problematic because there are a few tests where it is impractical to wait for a commit before executing scripts - RenderFrameHostManagerTest.ClickLinkAfter204Error and NavigationControllerBrowserTest.FrameNavigationEntry_SlowNestedAutoSubframe are 2 known examples).",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 40
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8071a6b8_640dd338",
+        "filename": "chrome/browser/ui/browser_focus_uitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-02T21:37:06Z",
+      "side": 1,
+      "message": "Waits until commit / until we are ready to execute scripts (e.g. on line 764 below).",
+      "range": {
+        "startLine": 757,
+        "startChar": 2,
+        "endLine": 757,
+        "endChar": 58
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e50d3782_2a984dca",
+        "filename": "chrome/browser/ui/webui/web_ui_test_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-02T21:37:06Z",
+      "side": 1,
+      "message": "git cl lint complained that std::string is used on line 80.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e5fae75_7353ca6f",
+        "filename": "chrome/browser/ui/webui/web_ui_test_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-02T21:37:06Z",
+      "side": 1,
+      "message": "WebUITestHandler is the only called of this method - therefore, to help future readers of that code, let\u0027s add a ForTesting suffix.  Initially, I had incorrectly assumed that (before this CL) this enabled *production* code to run scripts before a DidCommitProvisionalLoad IPC.",
+      "range": {
+        "startLine": 44,
+        "startChar": 45,
+        "endLine": 44,
+        "endChar": 55
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79b7f0a8_6763b8b9",
+        "filename": "chrome/renderer/chrome_render_frame_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-02T21:37:06Z",
+      "side": 1,
+      "message": "The alternative (swapping the order of 1) notifying RenderFrameObserver::DidCommitProvisionalLoad and 2) sending the DidCommitProvisionalLoad IPC) didn\u0027t work because of PageLoadTiming trouble - see approach #1 and #1b in https://crbug.com/766329#c5 and the response in #c7.",
+      "range": {
+        "startLine": 369,
+        "startChar": 44,
+        "endLine": 369,
+        "endChar": 52
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f04b4019_1d645835",
+        "filename": "chrome/test/base/web_ui_browser_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-02T21:37:06Z",
+      "side": 1,
+      "message": "At this point |error_messages_| can contain error messages from \"preloaded\" javascript libraries (note that PreloadJavaScript on line 472 is \"asynchronous\" - it just stuffs the scripts into ChromeRenderFrameObserver::webui_javascript_ field).  We should not look at errors of other scripts (only at errors from executing |content|), therefore we should reset the error count before executing the |content| script (not afterwards).\n\nIdeally the tests would fail when there are errors when executing the \"preloaded\" javascript libraries, but the errors are happening even before the CL under review (they just aren\u0027t caught in all the cases - see also https://crbug.com/780589).",
+      "range": {
+        "startLine": 464,
+        "startChar": 2,
+        "endLine": 464,
+        "endChar": 32
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9cfe92d_61273962",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-02T21:37:06Z",
+      "side": 1,
+      "message": "This moved script execution (new line 304) *after* WaitForLoadStop (new line 296).",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 0
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04e51c2f_f500daa0",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2182,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-02T21:37:06Z",
+      "side": 1,
+      "message": "AFAIR there are only 2 tests preventing this:\n\n*) RenderFrameHostManagerTest.ClickLinkAfter204Error - after a navigation that does *not* commit, the test calls ExecuteScript(... location.href\u003d...) to trigger a renderer-initiated navigation.\n\n*) NavigationControllerBrowserTest.FrameNavigationEntry_SlowNestedAutoSubframe - also tries to execute scripts after a navigation that did *not* commit (this time because of web_contents-\u003eStop(), rather than because of a 204 response).\n\n\nOTOH, fixing these tests seems difficult (Q: how to let a test trigger a renderer-initiated navigation without executing a script?).  I think it is okay to land the CL as-is and\n1. get the benefit of the 2 newly added DCHECKs\n2. unblock tightening of localStorage enforcements (https://crrev.com/c/666317)\nand deal with the tests at a later point in time.",
+      "range": {
+        "startLine": 2182,
+        "startChar": 5,
+        "endLine": 2182,
+        "endChar": 47
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
