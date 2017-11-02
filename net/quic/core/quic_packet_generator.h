@@ -160,6 +160,10 @@ class QUIC_EXPORT_PRIVATE QuicPacketGenerator {
   // pending retransmittable frames.
   bool HasRetransmittableFrames() const;
 
+  // Returns true if current constructed packet has pending stream frames for
+  // stream |id|.
+  bool HasPendingStreamFramesOfStream(QuicStreamId id) const;
+
   // Sets the encryption level that will be applied to new packets.
   void set_encryption_level(EncryptionLevel level);
 

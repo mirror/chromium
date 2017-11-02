@@ -706,6 +706,7 @@ TEST_F(QuicPacketGeneratorTest, NotWritableThenBatchOperations) {
   generator_.AddControlFrame(QuicFrame(CreateRstStreamFrame()));
   EXPECT_TRUE(generator_.HasQueuedFrames());
   EXPECT_TRUE(generator_.HasRetransmittableFrames());
+  EXPECT_FALSE(generator_.HasPendingStreamFramesOfStream(3));
 
   delegate_.SetCanWriteAnything();
 
@@ -719,6 +720,7 @@ TEST_F(QuicPacketGeneratorTest, NotWritableThenBatchOperations) {
   MakeIOVector("quux", &iov_);
   generator_.ConsumeData(3, &iov_, 1u, iov_.iov_len, 0, NO_FIN);
   generator_.AddControlFrame(QuicFrame(CreateGoAwayFrame()));
+  EXPECT_TRUE(generator_.HasPendingStreamFramesOfStream(3));
 
   // All five frames will be flushed out in a single packet.
   EXPECT_CALL(delegate_, OnSerializedPacket(_))
@@ -726,6 +728,7 @@ TEST_F(QuicPacketGeneratorTest, NotWritableThenBatchOperations) {
   generator_.FinishBatchOperations();
   EXPECT_FALSE(generator_.HasQueuedFrames());
   EXPECT_FALSE(generator_.HasRetransmittableFrames());
+  EXPECT_FALSE(generator_.HasPendingStreamFramesOfStream(3));
 
   PacketContents contents;
   contents.num_ack_frames = 1;

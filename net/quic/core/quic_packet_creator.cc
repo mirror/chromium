@@ -366,6 +366,15 @@ bool QuicPacketCreator::HasPendingRetransmittableFrames() const {
   return !packet_.retransmittable_frames.empty();
 }
 
+bool QuicPacketCreator::HasPendingStreamFramesOfStream(QuicStreamId id) const {
+  for (const auto& frame : packet_.retransmittable_frames) {
+    if (frame.type == STREAM_FRAME && frame.stream_frame->stream_id == id) {
+      return true;
+    }
+  }
+  return false;
+}
+
 size_t QuicPacketCreator::ExpansionOnNewFrame() const {
   // If the last frame in the packet is a stream frame, then it will expand to
   // include the stream_length field when a new frame is added.
