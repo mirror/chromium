@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed3e4f1b_e903c901",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-02T22:19:30Z",
+      "side": 1,
+      "message": "Style guide says no protected members. I realize there are others, but please don\u0027t make it worse.",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 29
+      },
+      "revId": "2801f6fd397aab02a848c115882ed60e0f509495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
