@@ -23,6 +23,7 @@
 #include "third_party/boringssl/src/include/openssl/evp.h"
 #include "third_party/boringssl/src/include/openssl/mem.h"
 #include "third_party/boringssl/src/include/openssl/rsa.h"
+#include "third_party/boringssl/src/include/openssl/ssl.h"
 
 namespace net {
 
@@ -256,11 +257,13 @@ TEST_P(SSLPlatformKeyCNGTest, KeyMatches) {
   scoped_refptr<SSLPrivateKey> key = WrapCNGPrivateKey(cert.get(), ncrypt_key);
   ASSERT_TRUE(key);
 
-  std::vector<SSLPrivateKey::Hash> expected_hashes = {
-      SSLPrivateKey::Hash::SHA512, SSLPrivateKey::Hash::SHA384,
-      SSLPrivateKey::Hash::SHA256, SSLPrivateKey::Hash::SHA1,
+  std::vector<uint16_t> expected = {
+      SSL_SIGN_RSA_PKCS1_SHA512, SSL_SIGN_ECDSA_SECP521R1_SHA512,
+      SSL_SIGN_RSA_PKCS1_SHA384, SSL_SIGN_ECDSA_SECP384R1_SHA384,
+      SSL_SIGN_RSA_PKCS1_SHA256, SSL_SIGN_ECDSA_SECP256R1_SHA256,
+      SSL_SIGN_RSA_PKCS1_SHA1,   SSL_SIGN_ECDSA_SHA1,
   };
-  EXPECT_EQ(expected_hashes, key->GetDigestPreferences());
+  EXPECT_EQ(expected, key->GetPreferences());
 
   TestSSLPrivateKeyMatches(key.get(), pkcs8);
 }
@@ -303,11 +306,11 @@ TEST(SSLPlatformKeyCAPITest, KeyMatches) {
       WrapCAPIPrivateKey(cert.get(), prov.release(), AT_SIGNATURE);
   ASSERT_TRUE(key);
 
-  std::vector<SSLPrivateKey::Hash> expected_hashes = {
-      SSLPrivateKey::Hash::SHA1, SSLPrivateKey::Hash::SHA512,
-      SSLPrivateKey::Hash::SHA384, SSLPrivateKey::Hash::SHA256,
+  std::vector<uint16_t> expected = {
+      SSL_SIGN_RSA_PKCS1_SHA1, SSL_SIGN_RSA_PKCS1_SHA512,
+      SSL_SIGN_RSA_PKCS1_SHA384, SSL_SIGN_RSA_PKCS1_SHA256,
   };
-  EXPECT_EQ(expected_hashes, key->GetDigestPreferences());
+  EXPECT_EQ(expected, key->GetPreferences());
 
   TestSSLPrivateKeyMatches(key.get(), pkcs8);
 }

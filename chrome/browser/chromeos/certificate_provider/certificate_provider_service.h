@@ -85,7 +85,7 @@ class CertificateProviderService : public KeyedService {
     virtual bool DispatchSignRequestToExtension(
         const std::string& extension_id,
         int sign_request_id,
-        net::SSLPrivateKey::Hash hash,
+        uint16_t algorithm,
         const scoped_refptr<net::X509Certificate>& certificate,
         const std::string& digest) = 0;
 
@@ -180,12 +180,13 @@ class CertificateProviderService : public KeyedService {
   void TerminateCertificateRequest(int cert_request_id);
 
   // Requests extension with |extension_id| to sign |digest| with the private
-  // key certified by |certificate|. |hash| was used to create |digest|.
-  // |callback| will be run with the reply of the extension or an error.
+  // key certified by |certificate|. |digest| was created by |algorithm|'s
+  // prehash.  |callback| will be run with the reply of the extension or an
+  // error.
   void RequestSignatureFromExtension(
       const std::string& extension_id,
       const scoped_refptr<net::X509Certificate>& certificate,
-      net::SSLPrivateKey::Hash hash,
+      uint16_t algorithm,
       const std::string& digest,
       const net::SSLPrivateKey::SignCallback& callback);
 
