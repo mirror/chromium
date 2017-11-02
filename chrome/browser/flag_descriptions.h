@@ -1676,6 +1676,9 @@ extern const char kAutomaticTabDiscardingDescription[];
 extern const char kEnableVrShellName[];
 extern const char kEnableVrShellDescription[];
 
+extern const char kEnableVrShellKeyboardName[];
+extern const char kEnableVrShellKeyboardDescription[];
+
 extern const char kVrCustomTabBrowsingName[];
 extern const char kVrCustomTabBrowsingDescription[];
 
