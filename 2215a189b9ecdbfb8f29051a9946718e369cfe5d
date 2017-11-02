@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8da24af_e0a11b7c",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 1636,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-02T18:15:29Z",
+      "side": 1,
+      "message": "This method seems much more sophisticated than the TabUIHelper\u0027s GetFavicon() function. What happens when they disagree?",
+      "range": {
+        "startLine": 1635,
+        "startChar": 42,
+        "endLine": 1636,
+        "endChar": 62
+      },
+      "revId": "2215a189b9ecdbfb8f29051a9946718e369cfe5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
