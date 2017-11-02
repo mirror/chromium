@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
@@ -32,7 +33,9 @@ class CONTENT_EXPORT MediaStreamTrack
   virtual void SetContentHint(
       blink::WebMediaStreamTrack::ContentHintType content_hint) = 0;
 
-  virtual void Stop() = 0;
+  // |callback| is invoked when the track has stopped.
+  virtual void StopWithNotification(base::OnceClosure callback) = 0;
+  void Stop() { StopWithNotification(base::OnceClosure()); }
 
   // TODO(hta): Make method pure virtual when all tracks have the method.
   void GetSettings(blink::WebMediaStreamTrack::Settings& settings) override {}

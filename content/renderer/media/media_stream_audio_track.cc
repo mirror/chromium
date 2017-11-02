@@ -102,7 +102,7 @@ void MediaStreamAudioTrack::Start(const base::Closure& stop_callback) {
   stop_callback_ = stop_callback;
 }
 
-void MediaStreamAudioTrack::Stop() {
+void MediaStreamAudioTrack::StopWithNotification(base::OnceClosure callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DVLOG(1) << "Stopping MediaStreamAudioTrack@" << this << '.';
 
@@ -116,6 +116,8 @@ void MediaStreamAudioTrack::Stop() {
     sink->OnReadyStateChanged(blink::WebMediaStreamSource::kReadyStateEnded);
   }
 
+  if (callback)
+    std::move(callback).Run();
   weak_factory_.InvalidateWeakPtrs();
 }
 
