@@ -22,6 +22,29 @@
       "revId": "bfa2c69aefc887a1839c3c909f3ab49b3cc9575a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e37c4b26_c7d9c6f2",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-02T20:40:55Z",
+      "side": 1,
+      "message": "I think we would prefer not to store the |frame_| as a member, and this adds another use. I\u0027ll defer to dalecurtis@.",
+      "range": {
+        "startLine": 560,
+        "startChar": 62,
+        "endLine": 560,
+        "endChar": 68
+      },
+      "revId": "bfa2c69aefc887a1839c3c909f3ab49b3cc9575a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
