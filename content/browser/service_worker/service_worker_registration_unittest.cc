@@ -253,25 +253,6 @@ TEST_F(ServiceWorkerRegistrationTest, SetAndUnsetVersions) {
             blink::mojom::kInvalidServiceWorkerVersionId);
 }
 
-TEST_F(ServiceWorkerRegistrationTest, FailedRegistrationNoCrash) {
-  const GURL kScope("http://www.example.not/");
-  int64_t kRegistrationId = 1L;
-  auto registration = base::MakeRefCounted<ServiceWorkerRegistration>(
-      blink::mojom::ServiceWorkerRegistrationOptions(kScope), kRegistrationId,
-      context()->AsWeakPtr());
-  auto dispatcher_host = base::MakeRefCounted<ServiceWorkerDispatcherHost>(
-      helper_->mock_render_process_id(),
-      helper_->browser_context()->GetResourceContext());
-  // ServiceWorkerRegistrationHandle ctor will make |handle| be owned by
-  // |dispatcher_host|.
-  auto* handle = new ServiceWorkerRegistrationHandle(
-      context()->AsWeakPtr(), dispatcher_host.get(),
-      base::WeakPtr<ServiceWorkerProviderHost>(), registration.get());
-  ALLOW_UNUSED_LOCAL(handle);
-  registration->NotifyRegistrationFailed();
-  // Don't crash when handle gets destructed.
-}
-
 TEST_F(ServiceWorkerRegistrationTest, NavigationPreload) {
   const GURL kScope("http://www.example.not/");
   const GURL kScript("https://www.example.not/service_worker.js");
