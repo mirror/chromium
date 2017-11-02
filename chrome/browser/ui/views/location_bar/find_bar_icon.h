@@ -14,6 +14,8 @@ class FindBarIcon : public BubbleIconView {
   FindBarIcon();
   ~FindBarIcon() override;
 
+  bool IsActivated();
+
  protected:
   // BubbleIconView:
   void OnExecuting(ExecuteSource execute_source) override;
