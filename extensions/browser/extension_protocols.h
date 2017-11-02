@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/callback.h"
+#include "base/memory/ref_counted.h"
 #include "net/url_request/url_request_job_factory.h"
 
 namespace base {
@@ -32,7 +33,7 @@ using ExtensionProtocolTestHandler =
 
 // Builds HTTP headers for an extension request. Hashes the time to avoid
 // exposing the exact user installation time of the extension.
-net::HttpResponseHeaders* BuildHttpHeaders(
+scoped_refptr<net::HttpResponseHeaders> BuildHttpHeaders(
     const std::string& content_security_policy,
     bool send_cors_header,
     const base::Time& last_modified_time);

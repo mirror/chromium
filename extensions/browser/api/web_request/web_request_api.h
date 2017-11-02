@@ -408,7 +408,7 @@ class ExtensionWebRequestEventRouter {
                      const InfoMap* extension_info_map,
                      net::URLRequest* request,
                      const RawListeners& listener_ids,
-                     ExtensionNavigationUIData* navigation_ui_data,
+                     const ExtensionNavigationUIData* navigation_ui_data,
                      std::unique_ptr<WebRequestEventDetails> event_details);
 
   void DispatchEventToListeners(
@@ -423,7 +423,7 @@ class ExtensionWebRequestEventRouter {
   RawListeners GetMatchingListeners(
       void* browser_context,
       const extensions::InfoMap* extension_info_map,
-      ExtensionNavigationUIData* navigation_ui_data,
+      const ExtensionNavigationUIData* navigation_ui_data,
       const std::string& event_name,
       const net::URLRequest* request,
       int* extra_info_spec);
@@ -432,20 +432,21 @@ class ExtensionWebRequestEventRouter {
   // browser_context of the event, the next time for the "cross" browser_context
   // (i.e. the incognito browser_context if the event is originally for the
   // normal browser_context, or vice versa).
-  void GetMatchingListenersImpl(void* browser_context,
-                                const net::URLRequest* request,
-                                const extensions::InfoMap* extension_info_map,
-                                ExtensionNavigationUIData* navigation_ui_data,
-                                bool crosses_incognito,
-                                const std::string& event_name,
-                                const GURL& url,
-                                int render_process_host_id,
-                                int routing_id,
-                                WebRequestResourceType resource_type,
-                                bool is_async_request,
-                                bool is_request_from_extension,
-                                int* extra_info_spec,
-                                RawListeners* matching_listeners);
+  void GetMatchingListenersImpl(
+      void* browser_context,
+      const net::URLRequest* request,
+      const extensions::InfoMap* extension_info_map,
+      const ExtensionNavigationUIData* navigation_ui_data,
+      bool crosses_incognito,
+      const std::string& event_name,
+      const GURL& url,
+      int render_process_host_id,
+      int routing_id,
+      WebRequestResourceType resource_type,
+      bool is_async_request,
+      bool is_request_from_extension,
+      int* extra_info_spec,
+      RawListeners* matching_listeners);
 
   // Decrements the count of event handlers blocking the given request. When the
   // count reaches 0, we stop blocking the request and proceed it using the
@@ -466,7 +467,7 @@ class ExtensionWebRequestEventRouter {
   // and wants to return the correct network error code himself.
   int ExecuteDeltas(void* browser_context,
                     uint64_t request_id,
-                    ExtensionNavigationUIData* navigation_ui_data,
+                    const ExtensionNavigationUIData* navigation_ui_data,
                     bool call_callback);
 
   // Evaluates the rules of the declarative webrequest API and stores
@@ -479,7 +480,7 @@ class ExtensionWebRequestEventRouter {
       const extensions::InfoMap* extension_info_map,
       const std::string& event_name,
       net::URLRequest* request,
-      ExtensionNavigationUIData* navigation_ui_data,
+      const ExtensionNavigationUIData* navigation_ui_data,
       extensions::RequestStage request_stage,
       const net::HttpResponseHeaders* original_response_headers);
 
@@ -488,7 +489,7 @@ class ExtensionWebRequestEventRouter {
   // chrome.declarativeWebRequest.onMessage.
   void SendMessages(void* browser_context,
                     const BlockedRequest& blocked_request,
-                    ExtensionNavigationUIData* navigation_ui_data);
+                    const ExtensionNavigationUIData* navigation_ui_data);
 
   // Called when the RulesRegistry is ready to unblock a request that was
   // waiting for said event.

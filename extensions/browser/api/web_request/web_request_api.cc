@@ -153,6 +153,16 @@ void LogRequestAction(RequestAction action) {
                             RequestAction::MAX);
 }
 
+const ExtensionNavigationUIData* GetNavigationUIDataForRequest(
+    net::URLRequest* request) {
+  const content::ResourceRequestInfo* info =
+      content::ResourceRequestInfo::ForRequest(request);
+  if (!info)
+    return nullptr;
+  return ExtensionsBrowserClient::Get()->GetExtensionNavigationUIData(
+      info->GetNavigationUIData());
+}
+
 bool IsWebRequestEvent(const std::string& event_name) {
   std::string web_request_event_name(event_name);
   if (base::StartsWith(web_request_event_name,
@@ -214,7 +224,7 @@ void ExtractRequestRoutingInfo(const net::URLRequest* request,
 // with information about the instance ID that uniquely identifies the
 // <webview> and its embedder, as well as the rules registry ID..
 bool GetWebViewInfo(const net::URLRequest* request,
-                    ExtensionNavigationUIData* navigation_ui_data,
+                    const ExtensionNavigationUIData* navigation_ui_data,
                     int* web_view_instance_id,
                     int* web_view_rules_registry_id) {
   int render_process_host_id = -1;
@@ -359,7 +369,7 @@ events::HistogramValue GetEventHistogramValue(const std::string& event_name) {
 bool ShouldHideEvent(void* browser_context,
                      const InfoMap* extension_info_map,
                      const net::URLRequest* request,
-                     ExtensionNavigationUIData* navigation_ui_data) {
+                     const ExtensionNavigationUIData* navigation_ui_data) {
   return (!browser_context ||
           WebRequestPermissions::HideRequest(extension_info_map, request,
                                              navigation_ui_data));
@@ -618,8 +628,8 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
     net::URLRequest* request,
     const net::CompletionCallback& callback,
     GURL* new_url) {
-  ExtensionNavigationUIData* navigation_ui_data =
-      ExtensionsBrowserClient::Get()->GetExtensionNavigationUIData(request);
+  const ExtensionNavigationUIData* navigation_ui_data =
+      GetNavigationUIDataForRequest(request);
   if (ShouldHideEvent(browser_context, extension_info_map, request,
                       navigation_ui_data)) {
     return net::OK;
@@ -680,8 +690,8 @@ int ExtensionWebRequestEventRouter::OnBeforeSendHeaders(
     net::URLRequest* request,
     const net::CompletionCallback& callback,
     net::HttpRequestHeaders* headers) {
-  ExtensionNavigationUIData* navigation_ui_data =
-      ExtensionsBrowserClient::Get()->GetExtensionNavigationUIData(request);
+  const ExtensionNavigationUIData* navigation_ui_data =
+      GetNavigationUIDataForRequest(request);
   if (ShouldHideEvent(browser_context, extension_info_map, request,
                       navigation_ui_data)) {
     return net::OK;
@@ -733,8 +743,8 @@ void ExtensionWebRequestEventRouter::OnSendHeaders(
     const InfoMap* extension_info_map,
     net::URLRequest* request,
     const net::HttpRequestHeaders& headers) {
-  ExtensionNavigationUIData* navigation_ui_data =
-      ExtensionsBrowserClient::Get()->GetExtensionNavigationUIData(request);
+  const ExtensionNavigationUIData* navigation_ui_data =
+      GetNavigationUIDataForRequest(request);
   if (ShouldHideEvent(browser_context, extension_info_map, request,
                       navigation_ui_data))
     return;
@@ -767,8 +777,8 @@ int ExtensionWebRequestEventRouter::OnHeadersReceived(
     const net::HttpResponseHeaders* original_response_headers,
     scoped_refptr<net::HttpResponseHeaders>* override_response_headers,
     GURL* allowed_unsafe_redirect_url) {
-  ExtensionNavigationUIData* navigation_ui_data =
-      ExtensionsBrowserClient::Get()->GetExtensionNavigationUIData(request);
+  const ExtensionNavigationUIData* navigation_ui_data =
+      GetNavigationUIDataForRequest(request);
   if (ShouldHideEvent(browser_context, extension_info_map, request,
                       navigation_ui_data)) {
     return net::OK;
@@ -827,8 +837,8 @@ ExtensionWebRequestEventRouter::OnAuthRequired(
     const net::AuthChallengeInfo& auth_info,
     const net::NetworkDelegate::AuthCallback& callback,
     net::AuthCredentials* credentials) {
-  ExtensionNavigationUIData* navigation_ui_data =
-      ExtensionsBrowserClient::Get()->GetExtensionNavigationUIData(request);
+  const ExtensionNavigationUIData* navigation_ui_data =
+      GetNavigationUIDataForRequest(request);
   // No browser_context means that this is for authentication challenges in the
   // system context. Skip in that case. Also skip sensitive requests.
   if (!browser_context ||
@@ -868,8 +878,8 @@ void ExtensionWebRequestEventRouter::OnBeforeRedirect(
     const InfoMap* extension_info_map,
     net::URLRequest* request,
     const GURL& new_location) {
-  ExtensionNavigationUIData* navigation_ui_data =
-      ExtensionsBrowserClient::Get()->GetExtensionNavigationUIData(request);
+  const ExtensionNavigationUIData* navigation_ui_data =
+      GetNavigationUIDataForRequest(request);
   if (ShouldHideEvent(browser_context, extension_info_map, request,
                       navigation_ui_data)) {
     return;
@@ -907,8 +917,8 @@ void ExtensionWebRequestEventRouter::OnResponseStarted(
     int net_error) {
   DCHECK_NE(net::ERR_IO_PENDING, net_error);
 
-  ExtensionNavigationUIData* navigation_ui_data =
-      ExtensionsBrowserClient::Get()->GetExtensionNavigationUIData(request);
+  const ExtensionNavigationUIData* navigation_ui_data =
+      GetNavigationUIDataForRequest(request);
   if (ShouldHideEvent(browser_context, extension_info_map, request,
                       navigation_ui_data)) {
     return;
@@ -949,8 +959,8 @@ void ExtensionWebRequestEventRouter::OnCompleted(
     const InfoMap* extension_info_map,
     net::URLRequest* request,
     int net_error) {
-  ExtensionNavigationUIData* navigation_ui_data =
-      ExtensionsBrowserClient::Get()->GetExtensionNavigationUIData(request);
+  const ExtensionNavigationUIData* navigation_ui_data =
+      GetNavigationUIDataForRequest(request);
   // We hide events from the system context as well as sensitive requests.
   // However, if the request first became sensitive after redirecting we have
   // already signaled it and thus we have to signal the end of it. This is
@@ -1017,8 +1027,8 @@ void ExtensionWebRequestEventRouter::OnErrorOccurred(
     // |client| could be NULL during shutdown.
     return;
   }
-  ExtensionNavigationUIData* navigation_ui_data =
-      client->GetExtensionNavigationUIData(request);
+  const ExtensionNavigationUIData* navigation_ui_data =
+      GetNavigationUIDataForRequest(request);
   // We hide events from the system context as well as sensitive requests.
   // However, if the request first became sensitive after redirecting we have
   // already signaled it and thus we have to signal the end of it. This is
@@ -1089,7 +1099,7 @@ bool ExtensionWebRequestEventRouter::DispatchEvent(
     const InfoMap* extension_info_map,
     net::URLRequest* request,
     const RawListeners& listeners,
-    ExtensionNavigationUIData* navigation_ui_data,
+    const ExtensionNavigationUIData* navigation_ui_data,
     std::unique_ptr<WebRequestEventDetails> event_details) {
   // TODO(mpcomplete): Consider consolidating common (extension_id,json_args)
   // pairs into a single message sent to a list of sub_event_names.
@@ -1415,7 +1425,7 @@ void ExtensionWebRequestEventRouter::GetMatchingListenersImpl(
     void* browser_context,
     const net::URLRequest* request,
     const InfoMap* extension_info_map,
-    ExtensionNavigationUIData* navigation_ui_data,
+    const ExtensionNavigationUIData* navigation_ui_data,
     bool crosses_incognito,
     const std::string& event_name,
     const GURL& url,
@@ -1550,7 +1560,7 @@ ExtensionWebRequestEventRouter::RawListeners
 ExtensionWebRequestEventRouter::GetMatchingListeners(
     void* browser_context,
     const InfoMap* extension_info_map,
-    ExtensionNavigationUIData* navigation_ui_data,
+    const ExtensionNavigationUIData* navigation_ui_data,
     const std::string& event_name,
     const net::URLRequest* request,
     int* extra_info_spec) {
@@ -1798,7 +1808,7 @@ void ExtensionWebRequestEventRouter::DecrementBlockCount(
 void ExtensionWebRequestEventRouter::SendMessages(
     void* browser_context,
     const BlockedRequest& blocked_request,
-    ExtensionNavigationUIData* navigation_ui_data) {
+    const ExtensionNavigationUIData* navigation_ui_data) {
   const helpers::EventResponseDeltas& deltas = blocked_request.response_deltas;
   for (const auto& delta : deltas) {
     const std::set<std::string>& messages = delta->messages_to_extension;
@@ -1825,7 +1835,7 @@ void ExtensionWebRequestEventRouter::SendMessages(
 int ExtensionWebRequestEventRouter::ExecuteDeltas(
     void* browser_context,
     uint64_t request_id,
-    ExtensionNavigationUIData* navigation_ui_data,
+    const ExtensionNavigationUIData* navigation_ui_data,
     bool call_callback) {
   BlockedRequest& blocked_request = blocked_requests_[request_id];
   CHECK_EQ(0, blocked_request.num_handlers_blocking);
@@ -1941,7 +1951,7 @@ bool ExtensionWebRequestEventRouter::ProcessDeclarativeRules(
     const InfoMap* extension_info_map,
     const std::string& event_name,
     net::URLRequest* request,
-    ExtensionNavigationUIData* navigation_ui_data,
+    const ExtensionNavigationUIData* navigation_ui_data,
     RequestStage request_stage,
     const net::HttpResponseHeaders* original_response_headers) {
   int web_view_instance_id, web_view_rules_registry_id;

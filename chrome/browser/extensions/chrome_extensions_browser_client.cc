@@ -34,6 +34,7 @@
 #include "chrome/browser/extensions/updater/chrome_update_client_config.h"
 #include "chrome/browser/external_protocol/external_protocol_handler.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/profiles/profile_io_data.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/renderer_host/chrome_navigation_ui_data.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
@@ -143,6 +144,12 @@ std::string ChromeExtensionsBrowserClient::GetUserIdHashFromContext(
 }
 #endif
 
+extensions::InfoMap* ChromeExtensionsBrowserClient::GetExtensionInfoMap(
+    content::ResourceContext* resource_context) {
+  return ProfileIOData::FromResourceContext(resource_context)
+      ->GetExtensionInfoMap();
+}
+
 bool ChromeExtensionsBrowserClient::IsGuestSession(
     content::BrowserContext* context) const {
   return static_cast<Profile*>(context)->IsGuestSession();
@@ -178,14 +185,19 @@ ChromeExtensionsBrowserClient::MaybeCreateResourceBundleRequestJob(
 }
 
 bool ChromeExtensionsBrowserClient::AllowCrossRendererResourceLoad(
-    net::URLRequest* request,
+    const GURL& url,
+    content::ResourceType resource_type,
+    ui::PageTransition page_transition,
+    int child_id,
     bool is_incognito,
     const Extension* extension,
     InfoMap* extension_info_map) {
   bool allowed = false;
   if (chrome_url_request_util::AllowCrossRendererResourceLoad(
-          request, is_incognito, extension, extension_info_map, &allowed))
+          url, resource_type, page_transition, child_id, is_incognito,
+          extension, extension_info_map, &allowed)) {
     return allowed;
+  }
 
   // Couldn't determine if resource is allowed. Block the load.
   return false;
@@ -433,18 +445,14 @@ bool ChromeExtensionsBrowserClient::IsActivityLoggingEnabled(
   return activity_log && activity_log->is_active();
 }
 
-ExtensionNavigationUIData*
+const ExtensionNavigationUIData*
 ChromeExtensionsBrowserClient::GetExtensionNavigationUIData(
-    net::URLRequest* request) {
-  const content::ResourceRequestInfo* info =
-      content::ResourceRequestInfo::ForRequest(request);
-  if (!info)
+    const content::NavigationUIData* navigation_ui_data) {
+  if (!navigation_ui_data)
     return nullptr;
-  ChromeNavigationUIData* navigation_data =
-      static_cast<ChromeNavigationUIData*>(info->GetNavigationUIData());
-  if (!navigation_data)
-    return nullptr;
-  return navigation_data->GetExtensionNavigationUIData();
+  const auto* data =
+      static_cast<const ChromeNavigationUIData*>(navigation_ui_data);
+  return data->GetExtensionNavigationUIData();
 }
 
 KioskDelegate* ChromeExtensionsBrowserClient::GetKioskDelegate() {

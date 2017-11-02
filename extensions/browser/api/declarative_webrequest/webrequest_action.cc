@@ -480,7 +480,7 @@ bool WebRequestAction::HasPermission(ApplyInfo* apply_info,
                                      const std::string& extension_id) const {
   const InfoMap* extension_info_map = apply_info->extension_info_map;
   const net::URLRequest* request = apply_info->request_data.request;
-  ExtensionNavigationUIData* navigation_ui_data =
+  const ExtensionNavigationUIData* navigation_ui_data =
       apply_info->request_data.navigation_ui_data;
   if (WebRequestPermissions::HideRequest(extension_info_map, request,
                                          navigation_ui_data)) {

@@ -58,6 +58,8 @@ class ChromeExtensionsBrowserClient : public ExtensionsBrowserClient {
   std::string GetUserIdHashFromContext(
       content::BrowserContext* context) override;
 #endif
+  extensions::InfoMap* GetExtensionInfoMap(
+      content::ResourceContext* resource_context) override;
   bool IsGuestSession(content::BrowserContext* context) const override;
   bool IsExtensionIncognitoEnabled(
       const std::string& extension_id,
@@ -71,7 +73,10 @@ class ChromeExtensionsBrowserClient : public ExtensionsBrowserClient {
       const base::FilePath& directory_path,
       const std::string& content_security_policy,
       bool send_cors_header) override;
-  bool AllowCrossRendererResourceLoad(net::URLRequest* request,
+  bool AllowCrossRendererResourceLoad(const GURL& url,
+                                      content::ResourceType resource_type,
+                                      ui::PageTransition page_transition,
+                                      int child_id,
                                       bool is_incognito,
                                       const Extension* extension,
                                       InfoMap* extension_info_map) override;
@@ -123,8 +128,8 @@ class ChromeExtensionsBrowserClient : public ExtensionsBrowserClient {
       content::RenderFrameHost* frame,
       const content::BluetoothChooser::EventHandler& event_handler) override;
   bool IsActivityLoggingEnabled(content::BrowserContext* context) override;
-  extensions::ExtensionNavigationUIData* GetExtensionNavigationUIData(
-      net::URLRequest* request) override;
+  const extensions::ExtensionNavigationUIData* GetExtensionNavigationUIData(
+      const content::NavigationUIData* navigation_ui_data) override;
   KioskDelegate* GetKioskDelegate() override;
   bool IsLockScreenContext(content::BrowserContext* context) override;
   std::string GetApplicationLocale() override;

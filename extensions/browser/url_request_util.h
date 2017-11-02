@@ -7,7 +7,10 @@
 
 #include <string>
 
+#include "content/public/common/resource_type.h"
 #include "ui/base/page_transition_types.h"
+
+class GURL;
 
 namespace net {
 class URLRequest;
@@ -24,15 +27,14 @@ namespace url_request_util {
 // Sets allowed=true to allow a chrome-extension:// resource request coming from
 // renderer A to access a resource in an extension running in renderer B.
 // Returns false when it couldn't determine if the resource is allowed or not
-bool AllowCrossRendererResourceLoad(net::URLRequest* request,
+bool AllowCrossRendererResourceLoad(const GURL& url,
+                                    content::ResourceType resource_type,
+                                    ui::PageTransition page_transition,
+                                    int child_id,
                                     bool is_incognito,
                                     const Extension* extension,
                                     InfoMap* extension_info_map,
                                     bool* allowed);
-
-// Returns true if |request| corresponds to a resource request from a
-// <webview>.
-bool IsWebViewRequest(net::URLRequest* request);
 
 // Helper method that is called by both AllowCrossRendererResourceLoad and
 // ExtensionNavigationThrottle to share logic.

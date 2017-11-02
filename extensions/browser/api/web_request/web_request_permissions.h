@@ -42,7 +42,7 @@ class WebRequestPermissions {
   static bool HideRequest(
       const extensions::InfoMap* extension_info_map,
       const net::URLRequest* request,
-      extensions::ExtensionNavigationUIData* navigation_ui_data);
+      const extensions::ExtensionNavigationUIData* navigation_ui_data);
 
   // Helper function used only in tests, sets a variable which enables or
   // disables a CHECK.
