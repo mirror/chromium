@@ -91,7 +91,7 @@ class SyncErrorTestThreadableLoader : public ThreadableLoader {
 
   void Start(const ResourceRequest& request) override {
     is_started_ = true;
-    client_->DidFail(ResourceError());
+    client_->DidFail(ResourceError::Failure(NullURL()));
   }
 
   void OverrideTimeout(unsigned long timeout_milliseconds) override {
@@ -186,7 +186,7 @@ TEST_F(BlobBytesConsumerTest, FailLoading) {
   EXPECT_EQ(PublicState::kReadableOrWaiting, consumer->GetPublicState());
 
   int num_on_state_change_called = client->NumOnStateChangeCalled();
-  consumer->DidFail(ResourceError());
+  consumer->DidFail(ResourceError::Failure(NullURL()));
 
   EXPECT_EQ(num_on_state_change_called + 1, client->NumOnStateChangeCalled());
   EXPECT_EQ(PublicState::kErrored, consumer->GetPublicState());
@@ -216,7 +216,7 @@ TEST_F(BlobBytesConsumerTest, FailLoadingAfterResponseReceived) {
   EXPECT_EQ(Result::kShouldWait, consumer->BeginRead(&buffer, &available));
   EXPECT_EQ(PublicState::kReadableOrWaiting, consumer->GetPublicState());
 
-  consumer->DidFail(ResourceError());
+  consumer->DidFail(ResourceError::Failure(NullURL()));
   EXPECT_EQ(num_on_state_change_called + 2, client->NumOnStateChangeCalled());
   EXPECT_EQ(PublicState::kErrored, consumer->GetPublicState());
   EXPECT_EQ(Result::kError, consumer->BeginRead(&buffer, &available));
@@ -238,7 +238,7 @@ TEST_F(BlobBytesConsumerTest, FailAccessControlCheck) {
   EXPECT_EQ(PublicState::kReadableOrWaiting, consumer->GetPublicState());
 
   int num_on_state_change_called = client->NumOnStateChangeCalled();
-  consumer->DidFail(ResourceError());
+  consumer->DidFail(ResourceError::Failure(NullURL()));
   EXPECT_EQ(num_on_state_change_called + 1, client->NumOnStateChangeCalled());
 
   EXPECT_EQ(PublicState::kErrored, consumer->GetPublicState());
