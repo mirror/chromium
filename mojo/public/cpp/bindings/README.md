@@ -370,6 +370,10 @@ which watches the pipe for an incoming response message, reads and deserializes
 it once it arrives, and then invokes the callback with the deserialized
 parameters.
 
+### Creating a service in a different sequence / thread.
+
+
+
 ### Connection Errors
 
 If a pipe is disconnected, both endpoints will be able to observe the connection
@@ -431,6 +435,7 @@ void LoggerImpl::OnError() {
 
 The use of `base::Unretained` is *safe* because the error handler will never be
 invoked beyond the lifetime of `binding_`, and `this` owns `binding_`.
+
 
 ### A Note About Ordering
 
