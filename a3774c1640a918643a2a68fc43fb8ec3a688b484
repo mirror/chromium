@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08c44e02_59655483",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-02T04:24:51Z",
+      "side": 0,
+      "message": "I think this should be left here and the #include should be removed. After this change ComputedStyle only ever seems to be used in cpp files",
+      "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc84046_755530b7",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-02T04:24:51Z",
+      "side": 0,
+      "message": "this should be changed to ComputedStyleInitialValues",
+      "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
