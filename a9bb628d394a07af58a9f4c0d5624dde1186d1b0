@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c3e0f545_9acf4de1",
+        "filename": "BUILD.gn",
+        "patchSetId": 22
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-02T02:25:46Z",
+      "side": 1,
+      "message": "Hm. Even if the group target was picked up, I wouldn\u0027t have expected it to have any effect.\n\nYou can leave it however you like for now and I can look at it later.",
+      "parentUuid": "959aca2f_3646282f",
+      "revId": "a9bb628d394a07af58a9f4c0d5624dde1186d1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b979eb72_bbb6e14e",
         "filename": "testing/buildbot/chromium.linux.json",
         "patchSetId": 22
