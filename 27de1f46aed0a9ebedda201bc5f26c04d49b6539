@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c9f713a_bb27ff47",
+        "filename": "base/android/java/src/org/chromium/base/SystemMessageHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-02T17:33:43Z",
+      "side": 1,
+      "message": "Replaced removeAllPendingMessages(), with a much faster shutdown() call that resets mNativeMessagePumpForUI.",
+      "parentUuid": "3572bfc3_d2ee6a03",
+      "revId": "27de1f46aed0a9ebedda201bc5f26c04d49b6539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "097baf08_5fe917fd",
         "filename": "base/message_loop/message_loop.h",
         "patchSetId": 9
@@ -68,6 +86,24 @@
       "revId": "27de1f46aed0a9ebedda201bc5f26c04d49b6539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3b2745_68cc97a3",
+        "filename": "base/message_loop/message_pump_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-02T17:33:43Z",
+      "side": 1,
+      "message": "Yep, I had a plan and forgot the most important part :P\n\nThanks for catching.",
+      "parentUuid": "ce053231_428eef39",
+      "revId": "27de1f46aed0a9ebedda201bc5f26c04d49b6539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
