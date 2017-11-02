@@ -106,10 +106,6 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_default_to_bbr, false)
 // option.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_rate_recovery, false)
 
-// If true, allow trailing headers with duplicate keys, and combine the values
-// from duplicate keys into a single delimted header.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_handle_duplicate_trailers, true)
-
 // Adds a QuicPacketNumberQueue that is based on a deque and does not support
 // costly AddRange arguments.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_frames_deque3, false)
