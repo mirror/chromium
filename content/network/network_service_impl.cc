@@ -195,6 +195,10 @@ void NetworkServiceImpl::GetNetworkChangeManager(
   network_change_manager_->AddRequest(std::move(request));
 }
 
+void NetworkServiceImpl::AddRequest(mojom::NetworkServiceRequest request) {
+  binding_.Bind(std::move(request));
+}
+
 void NetworkServiceImpl::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,

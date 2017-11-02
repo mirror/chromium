@@ -757,6 +757,12 @@ void IOThread::SetUpProxyConfigService(
   builder->set_proxy_config_service(std::move(proxy_config_service));
 }
 
+void IOThread::BindNetworkServiceRequest(
+    content::mojom::NetworkServiceRequest request) {
+  DCHECK(globals_->network_service);
+  globals_->network_service->AddRequest(std::move(request));
+}
+
 void IOThread::ConstructSystemRequestContext() {
   std::unique_ptr<content::URLRequestContextBuilderMojo> builder =
       base::MakeUnique<content::URLRequestContextBuilderMojo>();
