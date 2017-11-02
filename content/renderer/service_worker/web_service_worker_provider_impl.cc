@@ -273,10 +273,10 @@ void WebServiceWorkerProviderImpl::OnRegistered(
 
   DCHECK(!error_msg);
   DCHECK(registration);
-  DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationHandleId,
-            registration->handle_id);
+  DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationId,
+            registration->registration_id);
   callbacks->OnSuccess(WebServiceWorkerRegistrationImpl::CreateHandle(
-      GetDispatcher()->GetOrCreateRegistrationForServiceWorkerClient(
+      context_->GetOrCreateRegistrationForServiceWorkerClient(
           std::move(registration))));
 }
 
@@ -306,10 +306,8 @@ void WebServiceWorkerProviderImpl::OnDidGetRegistration(
   }
   DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationId,
             registration->registration_id);
-  DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationHandleId,
-            registration->handle_id);
   scoped_refptr<WebServiceWorkerRegistrationImpl> impl =
-      GetDispatcher()->GetOrCreateRegistrationForServiceWorkerClient(
+      context_->GetOrCreateRegistrationForServiceWorkerClient(
           std::move(registration));
   DCHECK(impl);
   callbacks->OnSuccess(
@@ -342,10 +340,10 @@ void WebServiceWorkerProviderImpl::OnDidGetRegistrations(
   std::unique_ptr<WebServiceWorkerRegistrationHandles> registrations =
       std::make_unique<WebServiceWorkerRegistrationHandles>(infos->size());
   for (size_t i = 0; i < infos->size(); ++i) {
-    DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationHandleId,
-              (*infos)[i]->handle_id);
+    DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationId,
+              (*infos)[i]->registration_id);
     (*registrations)[i] = WebServiceWorkerRegistrationImpl::CreateHandle(
-        GetDispatcher()->GetOrCreateRegistrationForServiceWorkerClient(
+        context_->GetOrCreateRegistrationForServiceWorkerClient(
             std::move((*infos)[i])));
   }
   callbacks->OnSuccess(std::move(registrations));
@@ -367,10 +365,10 @@ void WebServiceWorkerProviderImpl::OnDidGetRegistrationForReady(
   // https://groups.google.com/a/chromium.org/forum/#!topic/chromium-mojo/NNsogKNurlA
   // settled.
   CHECK(registration);
-  DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationHandleId,
-            registration->handle_id);
+  DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationId,
+            registration->registration_id);
   callbacks->OnSuccess(WebServiceWorkerRegistrationImpl::CreateHandle(
-      GetDispatcher()->GetOrCreateRegistrationForServiceWorkerClient(
+      context_->GetOrCreateRegistrationForServiceWorkerClient(
           std::move(registration))));
 }
 
