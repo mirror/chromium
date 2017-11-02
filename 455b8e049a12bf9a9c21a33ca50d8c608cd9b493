@@ -16,6 +16,24 @@
       "revId": "455b8e049a12bf9a9c21a33ca50d8c608cd9b493",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af85c5c2_54992280",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-02T01:47:59Z",
+      "side": 1,
+      "message": "Done, thanks Trent :)",
+      "parentUuid": "ab0ca027_c0291e2f",
+      "revId": "455b8e049a12bf9a9c21a33ca50d8c608cd9b493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
