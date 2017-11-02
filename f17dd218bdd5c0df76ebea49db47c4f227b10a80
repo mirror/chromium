@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcca0dd0_bc326d2f",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/util/UrlUtilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-02T05:03:51Z",
+      "side": 1,
+      "message": "it\u0027ll likely complain about duplicate class names now, so we can call this UrlUtilitiesUnitTest",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "f17dd218bdd5c0df76ebea49db47c4f227b10a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "233542e8_fbbb8b99",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/util/UrlUtilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-02T05:03:51Z",
+      "side": 1,
+      "message": "add another call that passes null?",
+      "range": {
+        "startLine": 43,
+        "startChar": 40,
+        "endLine": 43,
+        "endChar": 53
+      },
+      "revId": "f17dd218bdd5c0df76ebea49db47c4f227b10a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
