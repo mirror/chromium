@@ -45,6 +45,7 @@ def main():
   # On non-Windows, that's all we can do.
   if sys.platform != 'win32':
     return
+  # NOP to force a rebuild.
 
   # On Windows, run mc.exe on the input and check that its outputs are
   # identical to the checked-in outputs.
