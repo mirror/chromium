@@ -382,6 +382,7 @@ if (is_mac) {
       "breakpad/src/client/mac/handler/minidump_generator.cc",
       "breakpad/src/client/minidump_file_writer.cc",
       "breakpad/src/common/convert_UTF.c",
+      "breakpad/src/common/long_string_dictionary.cc",
       "breakpad/src/common/mac/MachIPC.mm",
       "breakpad/src/common/mac/arch_utilities.cc",
       "breakpad/src/common/mac/bootstrap_compat.cc",
