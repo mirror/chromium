@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e523f7f_f5654fc5",
+        "filename": "content/public/test/network_service_test_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-02T00:53:53Z",
+      "side": 1,
+      "message": "Ken or Tom: is there a better way to check that this is a network service than checking the sandbox flag?\n\nOr maybe this is moot because once the sandbox is enabled, we will pass the directory handle/certs through mojo and we can take it out?",
+      "revId": "304b70c41ce0dbcc564451d5f674cb08f4290310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
