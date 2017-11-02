@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b109326_c94bb857",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002431
+      },
+      "writtenOn": "2017-11-02T15:55:26Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "6351aac74fca1465d8f0fe45d2cff861fde2dffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14dee3b_da481a4e",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002431
+      },
+      "writtenOn": "2017-11-02T15:55:26Z",
+      "side": 1,
+      "message": "Clearing out the VPx stuff in a followup I presume?",
+      "revId": "6351aac74fca1465d8f0fe45d2cff861fde2dffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
