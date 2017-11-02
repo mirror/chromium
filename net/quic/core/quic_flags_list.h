@@ -110,8 +110,9 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_rate_recovery, false)
 // from duplicate keys into a single delimted header.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_handle_duplicate_trailers, true)
 
-// When enabled, ack frame uses a deque internally instead of a set.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_frames_deque2, false)
+// Adds a QuicPacketNumberQueue that is based on a deque and does not support
+// costly AddRange arguments.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_frames_deque3, false)
 
 // If true, enable QUIC v42.
 QUIC_FLAG(bool, FLAGS_quic_enable_version_42, false)
