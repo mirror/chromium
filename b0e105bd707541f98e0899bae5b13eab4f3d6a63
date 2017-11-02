@@ -22,6 +22,30 @@
       "revId": "b0e105bd707541f98e0899bae5b13eab4f3d6a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4860d0_236f2790",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-11-02T12:54:09Z",
+      "side": 1,
+      "message": "Yep, exactly. Originally I used a holder but Andrew noted that any reference to ChromePreferenceManager starts with getInstance() anyways so it\u0027ll initialize it.",
+      "parentUuid": "449e99b7_86ce696f",
+      "range": {
+        "startLine": 72,
+        "startChar": 19,
+        "endLine": 72,
+        "endChar": 42
+      },
+      "revId": "b0e105bd707541f98e0899bae5b13eab4f3d6a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
