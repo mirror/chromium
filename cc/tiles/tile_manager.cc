@@ -1228,7 +1228,7 @@ void TileManager::OnRasterTaskCompleted(
     Tile::Id tile_id,
     Resource* resource,
     bool was_canceled) {
-  raster_buffer_provider_->ReleaseBufferForRaster(std::move(raster_buffer));
+  raster_buffer = nullptr;
 
   auto found = tiles_.find(tile_id);
   Tile* tile = nullptr;

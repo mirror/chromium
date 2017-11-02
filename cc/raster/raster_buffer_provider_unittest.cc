@@ -289,7 +289,7 @@ class RasterBufferProviderTest
   void OnRasterTaskCompleted(std::unique_ptr<RasterBuffer> raster_buffer,
                              unsigned id,
                              bool was_canceled) override {
-    raster_buffer_provider_->ReleaseBufferForRaster(std::move(raster_buffer));
+    raster_buffer = nullptr;
     RasterTaskResult result;
     result.id = id;
     result.canceled = was_canceled;
