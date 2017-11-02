@@ -180,6 +180,33 @@ def WriteReachedSymbolNames(filename, reached_symbols):
       f.write(s.name + '\n')
 
 
+def WriteReachedSymbolOffsets(reached_symbols, output_filename):
+  """Writes the offsets of a list of symbols to a file, in hexadecimal.
+
+  Args:
+    reached_symbols: ([synbol_extractor.SymbolInfo]) symbols.
+    output_filename: (str) Output filename.
+  """
+  with open(output_filename, 'w') as f:
+    for symbol_info in reached_symbols:
+      f.write('%x\n' % symbol_info.offset)
+
+
+def MergeDumpsAndWriteSymbolOffsets(dump_filenames, native_lib_filename,
+                                    output_filename):
+  """Merge a list of dumps, and output reached symbol offsets.
+
+  Args:
+    dump_filenames: ([str]) List of dump filenames.
+    native_lib_filename: (str) Path to the native library.
+    output_filename: (str) Reached symbol offsets file.
+  """
+  dump = MergeDumps(dump_filenames)
+  offset_to_symbol_info = GetOffsetToSymbolArray(native_lib_filename)
+  reached_symbols = GetReachedSymbolsFromDump(dump, offset_to_symbol_info)
+  WriteReachedSymbolOffsets(reached_symbols, output_filename)
+
+
 def CreateArgumentParser():
   """Returns an ArgumentParser."""
   parser = argparse.ArgumentParser(description='Outputs reached symbols')
@@ -191,6 +218,9 @@ def CreateArgumentParser():
                       'files with instrumentation dumps', required=True)
   parser.add_argument('--output', type=str, help='Output filename',
                       required=True)
+  parser.add_argument('--offsets-output', type=str,
+                      help='Output filename for the symbol offsets',
+                      required=False)
   return parser
 
 
@@ -208,6 +238,8 @@ def main():
   offset_to_symbol_info = GetOffsetToSymbolArray(instrumented_native_lib)
   logging.info('Matching symbols')
   reached_symbols = GetReachedSymbolsFromDump(dump, offset_to_symbol_info)
+  if args.offsets_output:
+    WriteReachedSymbolOffsets(reached_symbols, args.offsets_output)
   logging.info('Reached Symbols = %d', len(reached_symbols))
   total_size = sum(s.size for s in reached_symbols)
   logging.info('Total reached size = %d', total_size)
