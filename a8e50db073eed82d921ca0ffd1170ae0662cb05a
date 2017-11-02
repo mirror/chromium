@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ed8a533_6b16b879",
+        "filename": "tools/win/static_initializers/static_initializers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-02T23:52:58Z",
+      "side": 1,
+      "message": "I get lots of errors when including this due to missing types, starting with this:\n\nC:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.16299.0\\um\\dbghelp.h(77): error C3646: \u0027ModuleName\u0027: unknown override specifier\n\nI thought it might be the 16299 SDK but forcing an older version gave the same results. Adding #include \u003cWindows.h\u003e first resolved the problem.",
+      "revId": "a8e50db073eed82d921ca0ffd1170ae0662cb05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
