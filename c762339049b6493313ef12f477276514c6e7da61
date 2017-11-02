@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b69d9fb_759d59db",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-11-02T21:29:49Z",
+      "side": 1,
+      "message": "nit: maybe avoid updating this if the state if not transitioning to \"stopped\" instead of explicitly setting to unknown?",
+      "range": {
+        "startLine": 958,
+        "startChar": 77,
+        "endLine": 958,
+        "endChar": 78
+      },
+      "revId": "c762339049b6493313ef12f477276514c6e7da61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
