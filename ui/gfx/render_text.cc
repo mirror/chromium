@@ -828,9 +828,18 @@ Rect RenderText::GetCursorBounds(const SelectionModel& caret,
       insert_mode ? caret.caret_affinity() : CURSOR_FORWARD;
   int x = 0, width = 1;
   Size size = GetStringSize();
-  if (caret_pos == (caret_affinity == CURSOR_BACKWARD ? 0 : text().length())) {
-    // The caret is attached to the boundary. Always return a 1-dip width caret,
-    // since there is nothing to overtype.
+  // Check whether the caret is attached to a boundary. Always return a 1-dip
+  // width caret, and avoid the call to IndexOfAdjacentGrapheme, which is slow.
+  bool at_boundary;
+  if (insert_mode) {
+    // Insert mode still needs to highlight a range when navigating towards the
+    // center of text.
+    at_boundary =
+        caret_pos == (caret_affinity == CURSOR_BACKWARD ? 0 : text().length());
+  } else {
+    at_boundary = caret_pos == 0 || caret_pos == text().length();
+  }
+  if (at_boundary) {
     if ((GetDisplayTextDirection() == base::i18n::RIGHT_TO_LEFT)
         == (caret_pos == 0)) {
       x = size.width();
