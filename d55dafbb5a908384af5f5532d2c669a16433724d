@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c483bf59_d0cbdbcb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T00:54:56Z",
+      "side": 1,
+      "message": "depricated funcion -\u003e base::RunLoop::QuitCurrentDeprecated()",
+      "range": {
+        "startLine": 7,
+        "startChar": 31,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "d55dafbb5a908384af5f5532d2c669a16433724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d7ac59_0be30434",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T00:54:56Z",
+      "side": 1,
+      "message": "you can put 748715 for the Bug:",
+      "revId": "d55dafbb5a908384af5f5532d2c669a16433724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d47409d9_002fcf23",
+        "filename": "chrome/browser/ui/test/test_browser_dialog_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T00:54:56Z",
+      "side": 1,
+      "message": "nit: blank line before",
+      "revId": "d55dafbb5a908384af5f5532d2c669a16433724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7b22e0_38e532db",
+        "filename": "chrome/browser/ui/test/test_browser_dialog_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T00:54:56Z",
+      "side": 1,
+      "message": "dependant -\u003e dependent   (\u0027dependant\u0027 usually refers a person - English is weird)",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "d55dafbb5a908384af5f5532d2c669a16433724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7febc30_994688a6",
+        "filename": "chrome/browser/ui/test/test_browser_dialog_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T00:54:56Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer a name like `TestBrowserDialogInteractiveSetUp`  -- a fixture usually refers to the whole class.",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "d55dafbb5a908384af5f5532d2c669a16433724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
