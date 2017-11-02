@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1995059a_76369241",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-02T23:03:52Z",
+      "side": 1,
+      "message": "(Or run-webkit-tests external/wpt to run all of them)",
+      "revId": "706ed8a838f7ace2229ffffa30dbe6e95d3e523e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e593282a_a6386ae7",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-02T23:03:52Z",
+      "side": 1,
+      "message": "For some tests that don\u0027t correspond to files... but it should work for tests that correspond to files, right?",
+      "revId": "706ed8a838f7ace2229ffffa30dbe6e95d3e523e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
