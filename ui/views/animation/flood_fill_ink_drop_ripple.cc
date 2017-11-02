@@ -95,18 +95,6 @@ int kAnimationDurationInMs[] = {
     300,  // DEACTIVATED_FADE_OUT
 };
 
-// Returns the InkDropState sub animation duration for the given |state|.
-base::TimeDelta GetAnimationDuration(InkDropSubAnimations state) {
-  if (!gfx::Animation::ShouldRenderRichAnimation())
-    return base::TimeDelta();
-
-  return base::TimeDelta::FromMilliseconds(
-      (views::InkDropRipple::UseFastAnimations()
-           ? 1
-           : views::InkDropRipple::kSlowAnimationDurationFactor) *
-      kAnimationDurationInMs[state]);
-}
-
 gfx::Rect CalculateClipBounds(const gfx::Size& host_size,
                               const gfx::Insets& clip_insets) {
   gfx::Rect clip_bounds(host_size);
@@ -130,6 +118,8 @@ FloodFillInkDropRipple::FloodFillInkDropRipple(const gfx::Size& host_size,
     : clip_insets_(clip_insets),
       center_point_(center_point),
       visible_opacity_(visible_opacity),
+      use_hide_transform_duration_for_hide_fade_out_(false),
+      duration_factor_(1.f),
       root_layer_(ui::LAYER_NOT_DRAWN),
       circle_layer_delegate_(color,
                              CalculateCircleLayerRadius(
@@ -204,9 +194,13 @@ void FloodFillInkDropRipple::AnimateStateChange(
       if (!IsVisible()) {
         SetStateToHidden();
       } else {
-        AnimateToOpacity(kHiddenOpacity, GetAnimationDuration(HIDDEN_FADE_OUT),
-                         ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET,
-                         gfx::Tween::EASE_IN_OUT, animation_observer);
+        AnimateToOpacity(
+            kHiddenOpacity,
+            GetAnimationDuration(use_hide_transform_duration_for_hide_fade_out_
+                                     ? HIDDEN_TRANSFORM
+                                     : HIDDEN_FADE_OUT),
+            ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET,
+            gfx::Tween::EASE_IN_OUT, animation_observer);
         const gfx::Transform transform = CalculateTransform(kMinRadius);
         AnimateToTransform(transform, GetAnimationDuration(HIDDEN_TRANSFORM),
                            ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET,
@@ -274,10 +268,11 @@ void FloodFillInkDropRipple::AnimateStateChange(
           << ToString(old_ink_drop_state)
           << " new_ink_drop_state=" << ToString(new_ink_drop_state);
 
-      AnimateToOpacity(kHiddenOpacity, GetAnimationDuration(
-                                           ALTERNATE_ACTION_TRIGGERED_FADE_OUT),
-                       ui::LayerAnimator::ENQUEUE_NEW_ANIMATION,
-                       gfx::Tween::EASE_IN_OUT, animation_observer);
+      AnimateToOpacity(
+          kHiddenOpacity,
+          GetAnimationDuration(ALTERNATE_ACTION_TRIGGERED_FADE_OUT),
+          ui::LayerAnimator::ENQUEUE_NEW_ANIMATION, gfx::Tween::EASE_IN_OUT,
+          animation_observer);
       break;
     case InkDropState::ACTIVATED: {
       if (old_ink_drop_state == InkDropState::ACTION_PENDING) {
@@ -315,7 +310,7 @@ void FloodFillInkDropRipple::AnimateStateChange(
 
 void FloodFillInkDropRipple::SetStateToHidden() {
   painted_layer_.SetTransform(CalculateTransform(kMinRadius));
-  root_layer_.SetOpacity(InkDropRipple::kHiddenOpacity);
+  root_layer_.SetOpacity(kHiddenOpacity);
   root_layer_.SetVisible(false);
 }
 
@@ -452,6 +447,18 @@ float FloodFillInkDropRipple::MaxDistanceToCorners(
   largest_distance = std::max(largest_distance, distance_to_bottom_left);
   largest_distance = std::max(largest_distance, distance_to_bottom_right);
   return largest_distance;
+}
+
+// Returns the InkDropState sub animation duration for the given |state|.
+base::TimeDelta FloodFillInkDropRipple::GetAnimationDuration(int state) {
+  if (!gfx::Animation::ShouldRenderRichAnimation())
+    return base::TimeDelta();
+
+  return base::TimeDelta::FromMilliseconds(
+      (views::InkDropRipple::UseFastAnimations()
+           ? 1
+           : views::InkDropRipple::kSlowAnimationDurationFactor) *
+      kAnimationDurationInMs[state] * duration_factor_);
 }
 
 }  // namespace views
