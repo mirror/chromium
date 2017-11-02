@@ -42,14 +42,18 @@ enum SwReporterExperimentError {
 };
 
 // Callback for running the software reporter after it is downloaded.
-using SwReporterRunner =
-    base::Callback<void(const safe_browsing::SwReporterQueue& invocations,
-                        const base::Version& version)>;
+using SwReporterRunner = base::Callback<void(
+    safe_browsing::SwReporterInvocationType invocation_type,
+    const safe_browsing::SwReporterInvocationsSequence& invocations,
+    safe_browsing::OnReporterDoneCallback on_reporter_done)>;
 
 class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
  public:
-  SwReporterInstallerPolicy(const SwReporterRunner& reporter_runner,
-                            bool is_experimental_engine_supported);
+  SwReporterInstallerPolicy(
+      const SwReporterRunner& reporter_runner,
+      bool is_experimental_engine_supported,
+      safe_browsing::SwReporterInvocationType invocation_type,
+      safe_browsing::OnReporterDoneCallback on_reporter_done);
   ~SwReporterInstallerPolicy() override;
 
   // ComponentInstallerPolicy implementation.
@@ -79,12 +83,28 @@ class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
   SwReporterRunner reporter_runner_;
   const bool is_experimental_engine_supported_;
 
+  const safe_browsing::SwReporterInvocationType invocation_type_;
+
+  // The action to be called on the first time the invocation sequence
+  // runs.
+  safe_browsing::OnReporterDoneCallback on_reporter_done_;
+
   DISALLOW_COPY_AND_ASSIGN(SwReporterInstallerPolicy);
 };
 
 // Call once during startup to make the component update service aware of the
-// SwReporter.
+// SwReporter. Once ready, this may trigger a periodic run of the reporter.
 void RegisterSwReporterComponent(ComponentUpdateService* cus);
+
+// Installs the SwReporter component and runs the reporter once it's available.
+// Once ready, this may trigger either a periodic or a user-initiated run of
+// the reporter, depending on |invocation_type|. Once the last invocation
+// finishes, |on_reporter_done| is called with a boolean variable indicating if
+// the run succeeded.
+void RegisterSwReporterComponentWithParams(
+    safe_browsing::SwReporterInvocationType invocation_type,
+    safe_browsing::OnReporterDoneCallback on_reporter_done,
+    ComponentUpdateService* cus);
 
 // Register local state preferences related to the SwReporter.
 void RegisterPrefsForSwReporter(PrefRegistrySimple* registry);

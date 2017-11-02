@@ -117,11 +117,16 @@ ChromeCleanerRunner::ChromeCleanerRunner(
   // If set, forward the engine flag from the reporter. Otherwise, set the
   // engine flag explicitly to 1.
   const std::string& reporter_engine =
-      reporter_invocation.command_line.GetSwitchValueASCII(
+      reporter_invocation.command_line().GetSwitchValueASCII(
           chrome_cleaner::kEngineSwitch);
   cleaner_command_line_.AppendSwitchASCII(
       chrome_cleaner::kEngineSwitch,
       reporter_engine.empty() ? "1" : reporter_engine);
+
+  if (reporter_invocation.cleaner_logs_upload_enabled()) {
+    cleaner_command_line_.AppendSwitch(
+        chrome_cleaner::kEnableCleanupLoggingInScanningModeSwitch);
+  }
 
   // If metrics is enabled, we can enable crash reporting in the Chrome Cleaner
   // process.
