@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "d8c936e0_c8549c87",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T07:16:32Z",
+      "side": 1,
+      "message": "nit: comment for this?",
+      "revId": "e98a5598d85e602956880766e99fb3db13d9a272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5109474_9c1225fc",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T07:16:32Z",
+      "side": 1,
+      "message": "Can this return the Profile* that\u0027s created? (i.e. |supervised|)\n\nThen I think you can get rid of kSupervisedName (just use the string literal again) and use supervised-\u003eGetPath() to switch profiles rather than recreating the path",
+      "revId": "e98a5598d85e602956880766e99fb3db13d9a272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7053139a_4d6ca376",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
         "patchSetId": 1
@@ -13,6 +47,41 @@
       "writtenOn": "2017-11-02T05:53:11Z",
       "side": 1,
       "message": "This is necessary to get the supervised user badge to show up in the EditableProfilePhoto.",
+      "revId": "e98a5598d85e602956880766e99fb3db13d9a272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9e4e3f_55981a2c",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T07:16:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7053139a_4d6ca376",
+      "revId": "e98a5598d85e602956880766e99fb3db13d9a272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe9844a9_504a82d2",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T07:16:32Z",
+      "side": 1,
+      "message": "maybe target_browser?",
       "revId": "e98a5598d85e602956880766e99fb3db13d9a272",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
