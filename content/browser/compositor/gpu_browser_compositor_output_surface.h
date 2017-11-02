@@ -52,6 +52,7 @@ class GpuBrowserCompositorOutputSurface : public BrowserCompositorOutputSurface,
   virtual void OnGpuSwapBuffersCompleted(
       const std::vector<ui::LatencyInfo>& latency_info,
       gfx::SwapResult result,
+      uint32_t count,
       const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac);
 
   // BrowserCompositorOutputSurface implementation.
@@ -83,8 +84,10 @@ class GpuBrowserCompositorOutputSurface : public BrowserCompositorOutputSurface,
   void SetNeedsVSync(bool needs_vsync) override;
 
  protected:
-  void OnVSyncParametersUpdated(base::TimeTicks timebase,
-                                base::TimeDelta interval);
+  void OnPresentation(uint32_t count,
+                      base::TimeTicks timestamp,
+                      base::TimeDelta refresh,
+                      uint32_t flags);
   gpu::CommandBufferProxyImpl* GetCommandBufferProxy();
 
   viz::OutputSurfaceClient* client_ = nullptr;

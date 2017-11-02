@@ -51,6 +51,7 @@ struct GPU_EXPORT SwapBuffersCompleteParams {
 #endif
   std::vector<ui::LatencyInfo> latency_info;
   gfx::SwapResult result;
+  uint32_t count;
 };
 
 class GPU_EXPORT ImageTransportSurfaceDelegate {
@@ -80,6 +81,11 @@ class GPU_EXPORT ImageTransportSurfaceDelegate {
   virtual void UpdateVSyncParameters(base::TimeTicks timebase,
                                      base::TimeDelta interval) = 0;
 
+  // Tells the delegate a buffer has been presented.
+  virtual void BufferPresented(uint32_t count,
+                               base::TimeTicks timestamp,
+                               base::TimeDelta refresh,
+                               uint32_t flags) = 0;
   // Add IPC message filter.
   virtual void AddFilter(IPC::MessageFilter* message_filter) = 0;
   // Gets route ID for sending / receiving IPC messages.

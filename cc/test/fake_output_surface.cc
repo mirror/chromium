@@ -49,12 +49,15 @@ void FakeOutputSurface::SwapBuffers(viz::OutputSurfaceFrame frame) {
   ++num_sent_frames_;
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(&FakeOutputSurface::SwapBuffersAck,
-                                weak_ptr_factory_.GetWeakPtr()));
+      FROM_HERE,
+      base::BindOnce(&FakeOutputSurface::SwapBuffersAck,
+                     weak_ptr_factory_.GetWeakPtr(), num_sent_frames_));
 }
 
-void FakeOutputSurface::SwapBuffersAck() {
-  client_->DidReceiveSwapBuffersAck();
+void FakeOutputSurface::SwapBuffersAck(uint32_t count) {
+  client_->DidReceiveSwapBuffersAck(count);
+  client_->DidPresentation(count, base::TimeTicks::Now(), base::TimeDelta(),
+                           0u);
 }
 
 void FakeOutputSurface::BindFramebuffer() {

@@ -52,8 +52,10 @@ void GlRenderer::RenderFrame() {
   glClearColor(1 - fraction, fraction, 0.0, 1.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  surface_->SwapBuffersAsync(base::Bind(&GlRenderer::PostRenderFrameTask,
-                                        weak_ptr_factory_.GetWeakPtr()));
+  surface_->SwapBuffersAsync(
+      base::Bind(&GlRenderer::PostRenderFrameTask,
+                 weak_ptr_factory_.GetWeakPtr()),
+      base::Bind([](base::TimeTicks, base::TimeDelta, uint32_t) {}));
 }
 
 void GlRenderer::PostRenderFrameTask(gfx::SwapResult result) {

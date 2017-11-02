@@ -90,6 +90,7 @@ IPC_STRUCT_BEGIN(GpuCommandBufferMsg_SwapBuffersCompleted_Params)
 #endif
   IPC_STRUCT_MEMBER(std::vector<ui::LatencyInfo>, latency_info)
   IPC_STRUCT_MEMBER(gfx::SwapResult, result)
+  IPC_STRUCT_MEMBER(uint32_t, count)
 IPC_STRUCT_END()
 
 //------------------------------------------------------------------------------
@@ -218,6 +219,13 @@ IPC_MESSAGE_ROUTED1(
 IPC_MESSAGE_ROUTED2(GpuCommandBufferMsg_UpdateVSyncParameters,
                     base::TimeTicks /* timebase */,
                     base::TimeDelta /* interval */)
+
+// Tells the browser a buffer has been presented on screen.
+IPC_MESSAGE_ROUTED4(GpuCommandBufferMsg_BufferPresented,
+                    uint32_t, /* count */
+                    base::TimeTicks /* timestamp */,
+                    base::TimeDelta /* refresh */,
+                    uint32_t /* flags */)
 
 // The receiver will stop processing messages until the Synctoken is signaled.
 IPC_MESSAGE_ROUTED1(GpuCommandBufferMsg_WaitSyncToken,

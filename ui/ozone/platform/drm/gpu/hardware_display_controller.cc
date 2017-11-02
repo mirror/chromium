@@ -26,7 +26,10 @@ namespace ui {
 
 namespace {
 
-void EmptyFlipCallback(gfx::SwapResult) {}
+void EmptyFlipCallback(gfx::SwapResult,
+                       base::TimeTicks,
+                       base::TimeDelta,
+                       uint32_t) {}
 
 }  // namespace
 
@@ -105,7 +108,8 @@ bool HardwareDisplayController::ActualSchedulePageFlip(
 
   // Ignore requests with no planes to schedule.
   if (plane_list.empty()) {
-    std::move(callback).Run(gfx::SwapResult::SWAP_ACK);
+    std::move(callback).Run(gfx::SwapResult::SWAP_ACK, base::TimeTicks(),
+                            base::TimeDelta(), 0u);
     return true;
   }
 
@@ -115,7 +119,8 @@ bool HardwareDisplayController::ActualSchedulePageFlip(
               return l.z_order < r.z_order;
             });
   if (pending_planes.front().z_order < 0) {
-    std::move(callback).Run(gfx::SwapResult::SWAP_FAILED);
+    std::move(callback).Run(gfx::SwapResult::SWAP_FAILED, base::TimeTicks(),
+                            base::TimeDelta(), 0u);
     return false;
   }
   scoped_refptr<PageFlipRequest> page_flip_request =
