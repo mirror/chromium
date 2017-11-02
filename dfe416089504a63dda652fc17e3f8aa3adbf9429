@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71b1e14b_47ae5d75",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-02T17:47:47Z",
+      "side": 1,
+      "message": "Why do you use the label_-\u003eparent() rather than this?",
+      "range": {
+        "startLine": 319,
+        "startChar": 1,
+        "endLine": 319,
+        "endChar": 27
+      },
+      "revId": "dfe416089504a63dda652fc17e3f8aa3adbf9429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0393c44b_f4e78430",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-02T17:47:47Z",
+      "side": 1,
+      "message": "no {}",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 3
+      },
+      "revId": "dfe416089504a63dda652fc17e3f8aa3adbf9429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e06abe_2eb3e762",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-02T17:47:47Z",
+      "side": 1,
+      "message": "Seems counter intuitive to make this a non-static function. If you can make this an instance function, do you really need it? Seems like most of the places use this to derive a font, could they just as well do label-\u003efont_list().Derive?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 55
+      },
+      "revId": "dfe416089504a63dda652fc17e3f8aa3adbf9429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
