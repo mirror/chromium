@@ -297,6 +297,10 @@ extern const base::Feature kEasyUnlockPromotions;
 extern const base::Feature kTPMFirmwareUpdate;
 #endif  // defined(OS_CHROMEOS)
 
+#if defined(OS_MACOSX)
+extern const base::Feature kProfileChooserViewForMacOS;
+#endif  // defined(OS_MACOSX)
+
 bool PrefServiceEnabled();
 
 // DON'T ADD RANDOM STUFF HERE. Put it in the main section above in

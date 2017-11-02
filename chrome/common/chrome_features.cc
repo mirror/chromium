@@ -573,4 +573,10 @@ const base::Feature kTPMFirmwareUpdate{"TPMFirmwareUpdate",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_CHROMEOS)
 
+#if defined(OS_MACOSX)
+const base::Feature kProfileChooserViewForMacOS(
+    "ProfileChooserViewForMacOS",
+    base::FEATURE_DISABLED_BY_DEFAULT);
+#endif  // defined(OS_MACOSX)
+
 }  // namespace features

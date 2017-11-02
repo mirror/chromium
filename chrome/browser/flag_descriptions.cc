@@ -2318,6 +2318,11 @@ const char kMacViewsTaskManagerName[] = "Toolkit-Views Task Manager.";
 const char kMacViewsTaskManagerDescription[] =
     "Controls whether to use the Toolkit-Views based Task Manager.";
 
+const char kProfileChooserViewForMacOSName[] = "ProfileChooserView for macOS";
+const char kProfileChooserViewForMacOSDescription[] =
+    "Uses Toolkit-Views to display the profile chooser menu on macOS (using "
+    "the same code-base than Linux and Windows).";
+
 const char kTabDetachingInFullscreenName[] =
     "Allow tab detaching in fullscreen";
 const char kTabDetachingInFullscreenDescription[] =

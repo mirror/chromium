@@ -3620,6 +3620,14 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(features::kNativeSamba)}
 #endif  // defined(OS_CHROMEOS)
 
+#if defined(OS_MACOSX)
+    {"profilechooserview-for-macos",
+     flag_descriptions::kRemoveUsageOfDeprecatedGaiaSigninEndpointName,
+     flag_descriptions::kRemoveUsageOfDeprecatedGaiaSigninEndpointDescription,
+     kOsWin | kOsMac | kOsLinux,
+     FEATURE_VALUE_TYPE(features::kRemoveUsageOfDeprecatedGaiaSigninEndpoint)},
+#endif  // defined(OS_MACOSX)
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the
