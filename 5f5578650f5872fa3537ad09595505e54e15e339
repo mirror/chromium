@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2964ae94_91a564c8",
+        "filename": "content/public/browser/download_manager_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-02T19:11:27Z",
+      "side": 1,
+      "message": "Return an empty version here or something (or just an in-memory version) for the other content embedders so they don\u0027t crash?",
+      "range": {
+        "startLine": 43,
+        "startChar": 9,
+        "endLine": 43,
+        "endChar": 16
+      },
+      "revId": "5f5578650f5872fa3537ad09595505e54e15e339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
