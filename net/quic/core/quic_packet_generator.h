@@ -112,6 +112,10 @@ class QUIC_EXPORT_PRIVATE QuicPacketGenerator {
   // Generates an MTU discovery packet of specified size.
   void GenerateMtuDiscoveryPacket(QuicByteCount target_mtu);
 
+  // TODO(zhongyi): figure out the packet size.
+  // Generates a connectivity probing packet of specified size.
+  void GenerateProbingPacket(QuicByteCount packet_size);
+
   // Indicates whether batch mode is currently enabled.
   bool InBatchMode();
   // Disables flushing.
