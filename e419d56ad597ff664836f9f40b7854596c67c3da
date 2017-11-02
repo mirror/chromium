@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e5f67fe_5376e7bd",
+        "filename": "chrome/browser/interstitials/chrome_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-02T21:30:24Z",
+      "side": 1,
+      "message": "GoBack() and CanGoBack() are semantically equivalent to parent class functions at the moment.\n\nI\u0027m thinking of:\n1) Removing CanGoBack()\n2) Keep the SecurityInterstitialControllerClient::GoBackAfterNavigationCommitted() call above.\n\nWhat do you think of that vs. copying the implementations here explicitly?",
+      "revId": "e419d56ad597ff664836f9f40b7854596c67c3da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
