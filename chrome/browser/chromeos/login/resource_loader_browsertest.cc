@@ -25,12 +25,15 @@
 
 namespace {
 
-GURL CreateResource(const std::string& content) {
+GURL CreateResource(const std::string& content, const std::string& file_ext) {
   base::FilePath path;
   EXPECT_TRUE(base::CreateTemporaryFile(&path));
   EXPECT_EQ(static_cast<int>(content.size()),
             base::WriteFile(path, content.c_str(), content.size()));
-  return GURL("file:///" + path.AsUTF8Unsafe());
+  base::FilePath path_with_extension;
+  path_with_extension = path.AddExtension(FILE_PATH_LITERAL(file_ext));
+  EXPECT_TRUE(base::Move(path, path_with_extension));
+  return GURL("file:///" + path_with_extension.AsUTF8Unsafe());
 }
 
 // Test the CrOS login screen resource loading mechanism.
@@ -71,7 +74,7 @@ class ResourceLoaderBrowserTest : public InProcessBrowserTest {
         "<div id=\"root\"></div>"
         "</body>"
         "</html>";
-    ui_test_utils::NavigateToURL(browser(), CreateResource(root_page));
+    ui_test_utils::NavigateToURL(browser(), CreateResource(root_page, ".html"));
     JSExpect("!!document.querySelector('#root')");
 
     // Define global alias for convenience.
@@ -118,9 +121,10 @@ IN_PROC_BROWSER_TEST_F(ResourceLoaderBrowserTest, LoadAssetsTest) {
   JSEval("stuff = {}");
 
   // Create the assets.
-  std::string html_url = CreateResource("<h1 id=\"bar\">foo</h1>").spec();
-  std::string css_url = CreateResource("h1 { color: red; }").spec();
-  std::string js_url = CreateResource("stuff.loaded = true;").spec();
+  std::string html_url =
+      CreateResource("<h1 id=\"bar\">foo</h1>", ".html").spec();
+  std::string css_url = CreateResource("h1 { color: red; }", ".css").spec();
+  std::string js_url = CreateResource("stuff.loaded = true;", ".js").spec();
 
   // Register the asset bundle.
   // clang-format off
