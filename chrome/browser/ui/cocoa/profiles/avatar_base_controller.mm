@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/platform_util.h"
 #include "chrome/browser/profiles/profile_avatar_icon_util.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profile_metrics.h"
@@ -21,8 +22,10 @@
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #include "chrome/browser/ui/cocoa/l10n_util.h"
 #import "chrome/browser/ui/cocoa/profiles/profile_chooser_controller.h"
+#include "chrome/browser/ui/views/profiles/profile_chooser_view.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
+#import "ui/gfx/mac/coordinate_conversion.h"
 
 // Space between the avatar icon and the avatar menu bubble.
 const CGFloat kMenuYOffsetAdjust = 1.0;
@@ -139,57 +142,80 @@ bool ProfileUpdateObserver::HasAvatarError() {
                           withMode:(BrowserWindow::AvatarBubbleMode)mode
                    withServiceType:(signin::GAIAServiceType)serviceType
                    fromAccessPoint:(signin_metrics::AccessPoint)accessPoint {
-  if (menuController_) {
+  if (YES) {
+    profiles::BubbleViewMode bubble_view_mode;
+    profiles::BubbleViewModeFromAvatarBubbleMode(mode, &bubble_view_mode);
+    if (SigninViewController::ShouldShowModalSigninForMode(bubble_view_mode)) {
+      browser_->signin_view_controller()->ShowModalSignin(
+          bubble_view_mode, browser_, accessPoint);
+    } else {
+      NSRect rect = anchor.bounds;
+      rect = [anchor convertRect:rect toView:nil];
+      rect.origin =
+          ui::ConvertPointFromWindowToScreen([anchor window], rect.origin);
+      gfx::Rect anchor_rect = gfx::ScreenRectFromNSRect(rect);
+      anchor_rect.set_x(anchor_rect.x() - 1);
+      anchor_rect.set_y(anchor_rect.y() + 1);
+      gfx::NativeView anchor_window = platform_util::GetViewForWindow(
+          browser_->window()->GetNativeWindow());
+      ProfileChooserView::ShowBubble(
+          bubble_view_mode, signin::ManageAccountsParams(), accessPoint,
+          anchor_window, anchor_rect, browser_, false);
+      ProfileMetrics::LogProfileOpenMethod(ProfileMetrics::ICON_AVATAR_BUBBLE);
+    }
+  } else {
+    if (menuController_) {
+      profiles::BubbleViewMode viewMode;
+      profiles::BubbleViewModeFromAvatarBubbleMode(mode, &viewMode);
+      if (viewMode == profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER) {
+        ProfileChooserController* profileChooserController =
+            base::mac::ObjCCastStrict<ProfileChooserController>(
+                menuController_);
+        [profileChooserController showMenuWithViewMode:viewMode];
+      }
+      return;
+    }
+
+    DCHECK(chrome::IsCommandEnabled(browser_, IDC_SHOW_AVATAR_MENU));
+
+    NSWindowController* wc =
+        [browser_->window()->GetNativeWindow() windowController];
+    if ([wc isKindOfClass:[BrowserWindowController class]]) {
+      [static_cast<BrowserWindowController*>(wc)
+          lockToolbarVisibilityForOwner:self
+                          withAnimation:NO];
+    }
+
+    // The new avatar bubble does not have an arrow, and it should be anchored
+    // to the edge of the avatar button.
+    int anchorX = cocoa_l10n_util::ShouldFlipWindowControlsInRTL()
+                      ? NSMinX([anchor bounds]) + kMenuXOffsetAdjust
+                      : NSMaxX([anchor bounds]) - kMenuXOffsetAdjust;
+    NSPoint point =
+        NSMakePoint(anchorX, NSMaxY([anchor bounds]) + kMenuYOffsetAdjust);
+    point = [anchor convertPoint:point toView:nil];
+    point = ui::ConvertPointFromWindowToScreen([anchor window], point);
+
+    // |menuController_| will automatically release itself on close.
     profiles::BubbleViewMode viewMode;
     profiles::BubbleViewModeFromAvatarBubbleMode(mode, &viewMode);
-    if (viewMode == profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER) {
-      ProfileChooserController* profileChooserController =
-          base::mac::ObjCCastStrict<ProfileChooserController>(
-              menuController_);
-      [profileChooserController showMenuWithViewMode:viewMode];
-    }
-    return;
+
+    menuController_ =
+        [[ProfileChooserController alloc] initWithBrowser:browser_
+                                               anchoredAt:point
+                                                 viewMode:viewMode
+                                              serviceType:serviceType
+                                              accessPoint:accessPoint];
+
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(bubbleWillClose:)
+               name:NSWindowWillCloseNotification
+             object:[menuController_ window]];
+    [menuController_ showWindow:self];
+
+    ProfileMetrics::LogProfileOpenMethod(ProfileMetrics::ICON_AVATAR_BUBBLE);
   }
-
-  DCHECK(chrome::IsCommandEnabled(browser_, IDC_SHOW_AVATAR_MENU));
-
-  NSWindowController* wc =
-      [browser_->window()->GetNativeWindow() windowController];
-  if ([wc isKindOfClass:[BrowserWindowController class]]) {
-    [static_cast<BrowserWindowController*>(wc)
-        lockToolbarVisibilityForOwner:self
-                        withAnimation:NO];
-  }
-
-  // The new avatar bubble does not have an arrow, and it should be anchored
-  // to the edge of the avatar button.
-  int anchorX = cocoa_l10n_util::ShouldFlipWindowControlsInRTL()
-                    ? NSMinX([anchor bounds]) + kMenuXOffsetAdjust
-                    : NSMaxX([anchor bounds]) - kMenuXOffsetAdjust;
-  NSPoint point = NSMakePoint(anchorX,
-                              NSMaxY([anchor bounds]) + kMenuYOffsetAdjust);
-  point = [anchor convertPoint:point toView:nil];
-  point = ui::ConvertPointFromWindowToScreen([anchor window], point);
-
-  // |menuController_| will automatically release itself on close.
-  profiles::BubbleViewMode viewMode;
-  profiles::BubbleViewModeFromAvatarBubbleMode(mode, &viewMode);
-
-  menuController_ =
-      [[ProfileChooserController alloc] initWithBrowser:browser_
-                                             anchoredAt:point
-                                               viewMode:viewMode
-                                            serviceType:serviceType
-                                            accessPoint:accessPoint];
-
-  [[NSNotificationCenter defaultCenter]
-      addObserver:self
-         selector:@selector(bubbleWillClose:)
-             name:NSWindowWillCloseNotification
-           object:[menuController_ window]];
-  [menuController_ showWindow:self];
-
-  ProfileMetrics::LogProfileOpenMethod(ProfileMetrics::ICON_AVATAR_BUBBLE);
 }
 
 - (IBAction)buttonClicked:(id)sender {
