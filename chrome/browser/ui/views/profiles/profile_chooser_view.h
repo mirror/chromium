@@ -52,7 +52,8 @@ class ProfileChooserView : public content::WebContentsDelegate,
       profiles::BubbleViewMode view_mode,
       const signin::ManageAccountsParams& manage_accounts_params,
       signin_metrics::AccessPoint access_point,
-      views::View* anchor_view,
+      gfx::NativeView anchor_window,
+      gfx::Rect anchor_rect,
       Browser* browser,
       bool is_source_keyboard);
   static bool IsShowing();
@@ -68,8 +69,7 @@ class ProfileChooserView : public content::WebContentsDelegate,
   typedef std::map<views::Button*, int> ButtonIndexes;
   typedef std::map<views::Button*, std::string> AccountButtonIndexes;
 
-  ProfileChooserView(views::View* anchor_view,
-                     Browser* browser,
+  ProfileChooserView(Browser* browser,
                      profiles::BubbleViewMode view_mode,
                      signin::GAIAServiceType service_type,
                      signin_metrics::AccessPoint access_point);
