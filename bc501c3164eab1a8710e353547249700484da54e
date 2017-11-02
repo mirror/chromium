@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a562b9f_56e8248d",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-02T20:42:24Z",
+      "side": 1,
+      "message": "I\u0027d considered sharing more. However, I wasn\u0027t convinced that all possible encoders/subclasses would use the same mechanisms for handling the audio. Things like handling pauses and buffering aren\u0027t inherently common to all possible encoding formats, even though the two existing classes do things similarly.\n\nI am happy to go either way; gimmie the word and I\u0027ll collapse the common stuff.",
+      "parentUuid": "d112a55d_8d365bd2",
+      "range": {
+        "startLine": 94,
+        "startChar": 26,
+        "endLine": 94,
+        "endChar": 38
+      },
+      "revId": "bc501c3164eab1a8710e353547249700484da54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e82985e_ec9245b8",
         "filename": "content/renderer/media_recorder/audio_track_recorder.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "bc501c3164eab1a8710e353547249700484da54e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17bb456b_2c536a77",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-02T20:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e82985e_ec9245b8",
+      "range": {
+        "startLine": 70,
+        "startChar": 35,
+        "endLine": 70,
+        "endChar": 44
+      },
+      "revId": "bc501c3164eab1a8710e353547249700484da54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "96983acc_3d7418ad",
+        "filename": "content/renderer/media_recorder/audio_track_recorder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-02T20:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc022be1_1b660690",
+      "range": {
+        "startLine": 252,
+        "startChar": 30,
+        "endLine": 252,
+        "endChar": 36
+      },
+      "revId": "bc501c3164eab1a8710e353547249700484da54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9a4cdaa_8bf00f73",
         "filename": "content/renderer/media_recorder/audio_track_recorder_unittest.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "bc501c3164eab1a8710e353547249700484da54e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b481dd73_dcee9cb7",
+        "filename": "content/renderer/media_recorder/audio_track_recorder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-02T20:42:24Z",
+      "side": 1,
+      "message": "Same here - I actually started off just having one test, but it got confusing. The issue is that we\u0027re sharing the audio source, so the number of times that DoOnEncodedAudio is called is different. Furthermore, the Opus test is kind of weirdly written. In reality the EXPECT* calls can be all grouped together, but it\u0027s written in an interleaved manner, so there\u0027s test code interspersed with checks. Injecting the PCM into that framework reduceed test-understandability for readers in the future.\n\nAs with the other issue, I can still merge if you prefer; I just think it\u0027ll be harder for future maintainers to grok the tests. (Also imagine if we had even more encoding formats.)",
+      "parentUuid": "e9a4cdaa_8bf00f73",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 357,
+        "endChar": 41
+      },
+      "revId": "bc501c3164eab1a8710e353547249700484da54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
