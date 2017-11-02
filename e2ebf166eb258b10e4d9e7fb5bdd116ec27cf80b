@@ -286,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "08fabf38_8b81bee4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-11-02T01:49:53Z",
+      "side": 1,
+      "message": "The Lifecycle callback for \"resume after stop\" is \"restart\" (but fine with calling it resume if that\u0027s what folks prefer)\n\"Restart\" has not related to discarding.",
+      "parentUuid": "892d6577_61118fd9",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "e2ebf166eb258b10e4d9e7fb5bdd116ec27cf80b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "999a9ee5_9540a7a4",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper_unittest.cc",
         "patchSetId": 2
