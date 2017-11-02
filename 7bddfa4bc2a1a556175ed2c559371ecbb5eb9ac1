@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2987da2_6554d68a",
+        "filename": "base/android/android_hardware_buffer_abi.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-02T17:01:41Z",
+      "side": 1,
+      "message": "I\u0027ve added a comment. Removing it works also, but then it looks a bit strange without a C++ namespace, and using a namespace would be incompatible with the original header file which we\u0027re planning to switch to once the third_party NDK is updated. Currently, forward declarations elsewhere use \"extern \"C\" typedef struct AHardwareBuffer AHardwareBuffer\" which works with the original android/hardware_buffer.h.\n\n(This file used to contain function declarations such as AHardwareBuffer_allocate where the \"C\" linkage would be important, but I switched to using member functions instead.)",
+      "parentUuid": "a1ff1f58_017737d3",
+      "revId": "7bddfa4bc2a1a556175ed2c559371ecbb5eb9ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fab5a45_168c854b",
         "filename": "base/memory/shared_memory_handle.h",
         "patchSetId": 23
@@ -33,6 +51,24 @@
       "revId": "7bddfa4bc2a1a556175ed2c559371ecbb5eb9ac1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41d57be_a9c988e3",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-02T17:01:41Z",
+      "side": 1,
+      "message": "Removed the \"struct\" here and elsewhere.",
+      "parentUuid": "5fab5a45_168c854b",
+      "revId": "7bddfa4bc2a1a556175ed2c559371ecbb5eb9ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
