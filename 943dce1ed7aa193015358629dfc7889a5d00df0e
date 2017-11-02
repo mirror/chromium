@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a325cb6_11733bc0",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T23:59:33Z",
+      "side": 1,
+      "message": "You can call WebStateObserver callbacks by simply interacting with TestWebState (see TestWebState::OnNavigationStarted() as example). There is no need to expose webStateObserverBridge for testing.",
+      "range": {
+        "startLine": 31,
+        "startChar": 33,
+        "endLine": 31,
+        "endChar": 55
+      },
+      "revId": "943dce1ed7aa193015358629dfc7889a5d00df0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a6e9ba_87a6781b",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T23:59:33Z",
+      "side": 1,
+      "message": "This looks like a backdoor just for testing: http://go/unit-test-practices#public-apis\n\nHow about injecting the objects via initializer instead of creating them inside the class? This way we will not have API which is only used in tests and will be able to inject mocks for testing. Initializer will only take objects which we have to mock in tests. The rest of the objects can be created internally, but they should not be exposed as properties just for testing.",
+      "range": {
+        "startLine": 34,
+        "startChar": 41,
+        "endLine": 34,
+        "endChar": 58
+      },
+      "revId": "943dce1ed7aa193015358629dfc7889a5d00df0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ada35a_38a6d66d",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T23:59:33Z",
+      "side": 1,
+      "message": "There is no need to test dependency injections. In tests we should test API contracts of CWVAutofillController: tests call public methods, check the results or the calls and verify that expected CWVAutofillControllerDelegate callbacks were called.",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "943dce1ed7aa193015358629dfc7889a5d00df0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
