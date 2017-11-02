@@ -168,12 +168,12 @@ if (enable_print_preview) {
 }
 
 if (enable_vr) {
-  grit("vr_shell_resources") {
-    source = "vr_shell_resources.grd"
+  grit("vr_daydream_resources") {
+    source = "vr_daydream_resources.grd"
     defines = chrome_grit_defines
     outputs = [
-      "grit/vr_shell_resources.h",
-      "vr_shell_resources.pak",
+      "grit/vr_daydream_resources.h",
+      "vr_daydream_resources.pak",
     ]
     output_dir = "$root_gen_dir/chrome"
   }
