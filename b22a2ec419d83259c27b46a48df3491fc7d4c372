@@ -22,6 +22,30 @@
       "revId": "b22a2ec419d83259c27b46a48df3491fc7d4c372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c66668e7_9a44d9e2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-02T09:59:39Z",
+      "side": 1,
+      "message": "It\u0027s a good question. Current logic in render_process_host_impl means that if audio is played then it will be foregrounded from renderer scheduler perspective.",
+      "parentUuid": "8614266f_990d59a7",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 13
+      },
+      "revId": "b22a2ec419d83259c27b46a48df3491fc7d4c372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
