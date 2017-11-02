@@ -93,6 +93,30 @@
       "revId": "17f6338cec8a1300e59edbf4be204d87b896d706",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87c03e7b_9fb9918c",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-02T15:36:06Z",
+      "side": 1,
+      "message": "I wouldn\u0027t think so given that it\u0027s a child window, but maybe? (I\u0027d try it -- though it maybe isn\u0027t important).",
+      "parentUuid": "561df2ef_3a11273a",
+      "range": {
+        "startLine": 456,
+        "startChar": 20,
+        "endLine": 456,
+        "endChar": 39
+      },
+      "revId": "17f6338cec8a1300e59edbf4be204d87b896d706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
