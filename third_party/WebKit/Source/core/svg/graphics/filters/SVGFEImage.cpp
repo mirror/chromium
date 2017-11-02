@@ -32,6 +32,7 @@
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/filters/Filter.h"
 #include "platform/graphics/filters/SkiaImageFilterBuilder.h"
+#include "platform/graphics/paint/PaintFilter.h"
 #include "platform/graphics/paint/PaintRecord.h"
 #include "platform/graphics/paint/PaintRecordBuilder.h"
 #include "platform/text/TextStream.h"
@@ -188,8 +189,7 @@ sk_sp<SkImageFilter> FEImage::CreateImageFilterForLayoutObject(
   canvas->concat(AffineTransformToSkMatrix(transform));
   builder.EndRecording(*canvas);
 
-  return SkPictureImageFilter::Make(
-      ToSkPicture(paint_recorder.finishRecordingAsPicture(), dst_rect));
+  return PaintFilter::Make(paint_recorder.finishRecordingAsPicture(), dst_rect);
 }
 
 sk_sp<SkImageFilter> FEImage::CreateImageFilter() {
