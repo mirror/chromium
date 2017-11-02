@@ -179,6 +179,8 @@ class DrmDevice : public base::RefCountedThreadSafe<DrmDevice> {
 
   HardwareDisplayPlaneManager* plane_manager() { return plane_manager_.get(); }
 
+  bool uses_atomic_modesetting() const { return uses_atomic_modesetting_; }
+
  protected:
   friend class base::RefCountedThreadSafe<DrmDevice>;
 
@@ -205,6 +207,7 @@ class DrmDevice : public base::RefCountedThreadSafe<DrmDevice> {
   std::unique_ptr<IOWatcher> watcher_;
 
   bool is_primary_device_;
+  bool uses_atomic_modesetting_;
 
   DISALLOW_COPY_AND_ASSIGN(DrmDevice);
 };

@@ -190,10 +190,20 @@ void DrmThread::GetScanoutFormats(
 void DrmThread::SchedulePageFlip(gfx::AcceleratedWidget widget,
                                  const std::vector<OverlayPlane>& planes,
                                  base::OnceClosure render_wait_task,
+                                 base::ScopedFD render_fence_fd,
                                  SwapCompletionOnceCallback callback) {
-  base::OnceClosure render_done_callback =
-      base::Bind(&DrmThread::SchedulePageFlipNoWait, weak_factory_.GetWeakPtr(),
-                 widget, planes, base::Passed(&callback));
+  scoped_refptr<ui::DrmDevice> drm_device =
+      device_manager_->GetDrmDevice(widget);
+
+  if (drm_device->uses_atomic_modesetting() && render_fence_fd.is_valid()) {
+    SchedulePageFlipNoWait(widget, planes, std::move(render_fence_fd),
+                           std::move(callback));
+    return;
+  }
+
+  base::OnceClosure render_done_callback = base::Bind(
+      &DrmThread::SchedulePageFlipNoWait, weak_factory_.GetWeakPtr(), widget,
+      planes, base::Passed(base::ScopedFD()), base::Passed(&callback));
   base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
@@ -202,12 +212,15 @@ void DrmThread::SchedulePageFlip(gfx::AcceleratedWidget widget,
 
 void DrmThread::SchedulePageFlipNoWait(gfx::AcceleratedWidget widget,
                                        const std::vector<OverlayPlane>& planes,
+                                       base::ScopedFD render_fence_fd,
                                        SwapCompletionOnceCallback callback) {
   DrmWindow* window = screen_manager_->GetWindow(widget);
-  if (window)
-    window->SchedulePageFlip(planes, std::move(callback));
-  else
+  if (window) {
+    window->SchedulePageFlip(planes, std::move(render_fence_fd),
+                             std::move(callback));
+  } else {
     std::move(callback).Run(gfx::SwapResult::SWAP_ACK);
+  }
 }
 
 void DrmThread::GetVSyncParameters(

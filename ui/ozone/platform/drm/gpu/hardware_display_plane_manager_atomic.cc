@@ -44,7 +44,7 @@ bool HardwareDisplayPlaneManagerAtomic::Commit(
           static_cast<HardwareDisplayPlaneAtomic*>(plane);
       atomic_plane->SetPlaneData(plane_list->atomic_property_set.get(), 0, 0,
                                  gfx::Rect(), gfx::Rect(),
-                                 gfx::OVERLAY_TRANSFORM_NONE);
+                                 gfx::OVERLAY_TRANSFORM_NONE, -1);
     }
   }
 
@@ -86,6 +86,7 @@ bool HardwareDisplayPlaneManagerAtomic::Commit(
 
   plane_list->plane_list.clear();
   plane_list->atomic_property_set.reset(drmModeAtomicAlloc());
+  plane_list->render_fence_fds.clear();
   return true;
 }
 
@@ -101,7 +102,7 @@ bool HardwareDisplayPlaneManagerAtomic::DisableOverlayPlanes(
         static_cast<HardwareDisplayPlaneAtomic*>(plane);
     atomic_plane->SetPlaneData(plane_list->atomic_property_set.get(), 0, 0,
                                gfx::Rect(), gfx::Rect(),
-                               gfx::OVERLAY_TRANSFORM_NONE);
+                               gfx::OVERLAY_TRANSFORM_NONE, -1);
   }
   // The list of crtcs is only useful if flags contains DRM_MODE_PAGE_FLIP_EVENT
   // to get the pageflip callback. In this case we don't need to be notified
@@ -113,6 +114,7 @@ bool HardwareDisplayPlaneManagerAtomic::DisableOverlayPlanes(
   PLOG_IF(ERROR, !ret) << "Failed to commit properties for page flip.";
 
   plane_list->atomic_property_set.reset(drmModeAtomicAlloc());
+  plane_list->render_fence_fds.clear();
   return ret;
 }
 
@@ -128,9 +130,21 @@ bool HardwareDisplayPlaneManagerAtomic::SetPlaneData(
   uint32_t framebuffer_id = overlay.z_order
                                 ? overlay.buffer->GetFramebufferId()
                                 : overlay.buffer->GetOpaqueFramebufferId();
+  int render_fence_fd_dup = -1;
+
+  // Create and store sync fd dup for this plane
+  if (plane_list->render_fence_fds.size() > 0) {
+    const auto& render_fence_fd = plane_list->render_fence_fds[0];
+    if (render_fence_fd.is_valid()) {
+      plane_list->render_fence_fds.emplace_back(dup(render_fence_fd.get()));
+      render_fence_fd_dup = plane_list->render_fence_fds.back().get();
+    }
+  }
+
   if (!atomic_plane->SetPlaneData(
           plane_list->atomic_property_set.get(), crtc_id, framebuffer_id,
-          overlay.display_bounds, src_rect, overlay.plane_transform)) {
+          overlay.display_bounds, src_rect, overlay.plane_transform,
+          render_fence_fd_dup)) {
     LOG(ERROR) << "Failed to set plane properties";
     return false;
   }

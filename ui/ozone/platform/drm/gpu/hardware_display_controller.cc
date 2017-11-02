@@ -84,19 +84,22 @@ void HardwareDisplayController::Disable() {
 
 void HardwareDisplayController::SchedulePageFlip(
     const OverlayPlaneList& plane_list,
+    base::ScopedFD render_fence_fd,
     SwapCompletionOnceCallback callback) {
-  ActualSchedulePageFlip(plane_list, false /* test_only */,
-                         std::move(callback));
+  ActualSchedulePageFlip(plane_list, std::move(render_fence_fd),
+                         false /* test_only */, std::move(callback));
 }
 
 bool HardwareDisplayController::TestPageFlip(
     const OverlayPlaneList& plane_list) {
-  return ActualSchedulePageFlip(plane_list, true /* test_only */,
+  return ActualSchedulePageFlip(plane_list, base::ScopedFD(),
+                                true /* test_only */,
                                 base::BindOnce(&EmptyFlipCallback));
 }
 
 bool HardwareDisplayController::ActualSchedulePageFlip(
     const OverlayPlaneList& plane_list,
+    base::ScopedFD render_fence_fd,
     bool test_only,
     SwapCompletionOnceCallback callback) {
   TRACE_EVENT0("drm", "HDC::SchedulePageFlip");
@@ -121,8 +124,11 @@ bool HardwareDisplayController::ActualSchedulePageFlip(
   scoped_refptr<PageFlipRequest> page_flip_request =
       new PageFlipRequest(crtc_controllers_.size(), std::move(callback));
 
-  for (const auto& planes : owned_hardware_planes_)
+  for (const auto& planes : owned_hardware_planes_) {
     planes.first->plane_manager()->BeginFrame(planes.second.get());
+    if (render_fence_fd.is_valid())
+      planes.second->render_fence_fds.emplace_back(dup(render_fence_fd.get()));
+  }
 
   bool status = true;
   for (const auto& controller : crtc_controllers_) {
