@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a34e1a22_23a54d83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-02T21:14:38Z",
+      "side": 1,
+      "message": "more precisely, the profiler trace from the bug indicates that compiling the regular expression on each invocation is too slow, not that using the regular expression is slow. Regular expression engines definitely trade of time/space in compilation for extremely low time/space requirements at runtime.\n\nCacheing the RegexMatcher (see autofill::AutofillRegexes and autofill::MatchesPattern) would almost certainly make this go away.\n\nThe next thing to wonder is: how often is the password manager calculating signatures?\n\nThen: why is password manager in the critical path (or sufficiently in the critical path) that its slowing down the browser\u0027s responsiveness?",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 9,
+        "endChar": 85
+      },
+      "revId": "2ae97fd28eb3932a1dfe3e50482bdce84498579e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5b23a11_4b993d35",
         "filename": "components/autofill/core/common/signatures_util.cc",
         "patchSetId": 3
