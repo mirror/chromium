@@ -46,6 +46,30 @@
       "revId": "f4a12db6e8aa59217e60176ed092d93011d30bf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b118b6_e2a1d3c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/IntentHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-02T16:30:23Z",
+      "side": 1,
+      "message": "CLA was in our downstream repo after IntentHandler was upstreamed, so this constant was introduced to handle that.",
+      "parentUuid": "bc98bf8f_3405b567",
+      "range": {
+        "startLine": 246,
+        "startChar": 44,
+        "endLine": 246,
+        "endChar": 60
+      },
+      "revId": "f4a12db6e8aa59217e60176ed092d93011d30bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
