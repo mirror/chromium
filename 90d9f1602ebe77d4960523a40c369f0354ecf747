@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94cd1bc6_4644fb93",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-02T22:28:28Z",
+      "side": 1,
+      "message": "Instead of copying fields individually, could we do:\nssl_status_ \u003d SSLStatus(ssl_info)\n?\nThat way when new fields are added to SSLInfo/SSLStatus we don\u0027t have to update here.",
+      "range": {
+        "startLine": 697,
+        "startChar": 4,
+        "endLine": 697,
+        "endChar": 15
+      },
+      "revId": "90d9f1602ebe77d4960523a40c369f0354ecf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
