@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58421ff7_cdb003af",
+        "filename": "chrome/browser/previews/previews_infobar_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-02T23:37:57Z",
+      "side": 1,
+      "message": "can you move this outside of the if instead of having the same code here and below?",
+      "revId": "3de28dae3290124816202b9cd0bf0a06da299446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
