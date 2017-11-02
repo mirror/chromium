@@ -101,7 +101,7 @@ cr.define('extension_manager_tests', function() {
     });
 
     test(assert(TestNames.SplitItems), function() {
-      var sectionHasItemWithName = function(section, name) {
+      const sectionHasItemWithName = function(section, name) {
         return !!manager[section].find(function(el) {
           return el.name == name;
         });

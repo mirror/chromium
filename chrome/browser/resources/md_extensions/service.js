@@ -95,6 +95,7 @@ cr.define('extensions', function() {
         case EventType.UNINSTALLED:
           this.manager_.removeItem(this.extensions_[currentIndex]);
           this.extensions_.splice(currentIndex, 1);
+          extensions.navigation.navigateTo({page: Page.LIST});
           break;
         default:
           assertNotReached();
