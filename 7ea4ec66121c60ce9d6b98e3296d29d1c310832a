@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd514882_bd3cd88e",
+        "filename": "base/files/file_util.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-02T15:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80fdd087_c763aecb",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b92b8cbb_5289b6d9",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 23
@@ -33,6 +51,24 @@
       "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49bdf791_1dcb1c59",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-02T15:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b92b8cbb_5289b6d9",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6e47c73f_7ee8ba3f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-02T15:52:42Z",
+      "side": 1,
+      "message": "Done... I think.\n\nCouple of points to consider...\n\nThe CL works, but I\u0027m not 100% sure I\u0027m passing the notification_copy correctly in this function. I\u0027ve tried various things and this was the only thing I could get working. (I hate Bind). I\u0027m somewhat more confident about my handling of |callback| in GetDisplayed and SetReadyCallback, but treat it with suspicion just in case. :)\n\nAlso, the GetDisplayed function comes in from another thread than the UI thread, so I\u0027m wondering if we should just call NotificationPlatformBridgeWinImpl::GetDisplayed directly (like it is now) or explicitly post it to our task runner (then we\u0027ll need to move DCHECK_CURRENTLY_ON(UI) out of PostTaskToTaskRunnerThread). I suspect we want the latter, but wanted to double check.",
+      "parentUuid": "9af2cf6e_2271c696",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "918672fb_84f6f4cf",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 23
@@ -67,6 +121,24 @@
       "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7efa8e13_1bc48bfa",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-02T15:52:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "918672fb_84f6f4cf",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "4df397df_c46e9541",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-02T15:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3ca6909_c5e35c50",
+      "range": {
+        "startLine": 273,
+        "startChar": 47,
+        "endLine": 273,
+        "endChar": 50
+      },
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7be69d95_82044741",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 23
@@ -104,6 +200,24 @@
       "writtenOn": "2017-10-27T15:27:28Z",
       "side": 1,
       "message": "The reason that the Linux bridge uses this pattern is that it needed to replicate `tag` behaviour in a way that was compatible with DBus semantics.\n\nWe might be able to take a different approach here, so we should aim for simplicity -- it\u0027s not used yet. Could we punt this entire set of changes?",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a162eab8_ea687045",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-02T15:52:42Z",
+      "side": 1,
+      "message": "As we agreed, this will be addressed in a followup.",
+      "parentUuid": "7be69d95_82044741",
       "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "13dc7aa7_d7f748ba",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-02T15:52:42Z",
+      "side": 1,
+      "message": "Now lazy-loading it and storing the pointer.",
+      "parentUuid": "e2504389_13cc6792",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d533b6cd_c0ed4bea",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 23
@@ -138,6 +270,24 @@
       "writtenOn": "2017-10-27T15:27:28Z",
       "side": 1,
       "message": "nit: delete the assignment for these strings, that\u0027s redundant. Dito on line 377-378.",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a7c6de_747c884c",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-02T15:52:42Z",
+      "side": 1,
+      "message": "This also falls under a follow-up CL, as agreed.",
+      "parentUuid": "d533b6cd_c0ed4bea",
       "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "a3041dda_4653c354",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-02T15:52:42Z",
+      "side": 1,
+      "message": "You were CCed, but I didn\u0027t see a reply. \nThis also falls under a follow-up CL.",
+      "parentUuid": "4b4637c2_4df6c7ef",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad141e9a_eaa597e2",
         "filename": "chrome/browser/notifications/notification_template_builder.h",
         "patchSetId": 23
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "490c382b_81ea267d",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-02T15:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad141e9a_eaa597e2",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a30324c_f7c2ca77",
         "filename": "chrome/browser/notifications/notification_template_builder.h",
         "patchSetId": 23
@@ -192,6 +378,24 @@
       "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359636ea_ea79114d",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-02T15:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a30324c_f7c2ca77",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
