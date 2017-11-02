@@ -37,7 +37,6 @@ class NotificationPlatformBridgeChromeOsImpl
 
   // NotificationPlatformBridge:
   void Display(NotificationCommon::Type notification_type,
-               const std::string& notification_id,
                const std::string& profile_id,
                bool is_incognito,
                const message_center::Notification& notification,
@@ -85,7 +84,6 @@ NotificationPlatformBridgeChromeOsImpl::
 // NotificationPlatformBridge interface.
 void NotificationPlatformBridgeChromeOsImpl::Display(
     NotificationCommon::Type /*notification_type*/,
-    const std::string& /*notification_id*/,
     const std::string& /*profile_id*/,
     bool /*is_incognito*/,
     const message_center::Notification& notification,
@@ -146,16 +144,14 @@ NotificationPlatformBridgeChromeOs::~NotificationPlatformBridgeChromeOs() {}
 
 void NotificationPlatformBridgeChromeOs::Display(
     NotificationCommon::Type notification_type,
-    const std::string& notification_id,
     const std::string& profile_id,
     bool is_incognito,
     const message_center::Notification& notification,
     std::unique_ptr<NotificationCommon::Metadata> metadata) {
   auto active_notification = std::make_unique<ProfileNotification>(
       GetProfile(profile_id, is_incognito), notification, notification_type);
-  impl_->Display(NotificationCommon::TYPE_MAX, std::string(), std::string(),
-                 false, active_notification->notification(),
-                 std::move(metadata));
+  impl_->Display(NotificationCommon::TYPE_MAX, std::string(), false,
+                 active_notification->notification(), std::move(metadata));
 
   std::string profile_notification_id =
       active_notification->notification().id();
@@ -190,7 +186,7 @@ void NotificationPlatformBridgeChromeOs::HandleNotificationClosed(
   NotificationDisplayServiceFactory::GetForProfile(notification->profile())
       ->ProcessNotificationOperation(
           NotificationCommon::CLOSE, notification->type(),
-          notification->notification().origin_url().possibly_invalid_spec(),
+          notification->notification().origin_url(),
           notification->original_id(), base::nullopt, base::nullopt, by_user);
   active_notifications_.erase(iter);
 }
@@ -199,11 +195,11 @@ void NotificationPlatformBridgeChromeOs::HandleNotificationClicked(
     const std::string& id) {
   ProfileNotification* notification = GetProfileNotification(id);
   NotificationDisplayServiceFactory::GetForProfile(notification->profile())
-      ->ProcessNotificationOperation(
-          NotificationCommon::CLICK, notification->type(),
-          notification->notification().origin_url().possibly_invalid_spec(),
-          notification->original_id(), base::nullopt, base::nullopt,
-          base::nullopt);
+      ->ProcessNotificationOperation(NotificationCommon::CLICK,
+                                     notification->type(),
+                                     notification->notification().origin_url(),
+                                     notification->original_id(), base::nullopt,
+                                     base::nullopt, base::nullopt);
 }
 
 void NotificationPlatformBridgeChromeOs::HandleNotificationButtonClicked(
@@ -211,11 +207,11 @@ void NotificationPlatformBridgeChromeOs::HandleNotificationButtonClicked(
     int button_index) {
   ProfileNotification* notification = GetProfileNotification(id);
   NotificationDisplayServiceFactory::GetForProfile(notification->profile())
-      ->ProcessNotificationOperation(
-          NotificationCommon::CLICK, notification->type(),
-          notification->notification().origin_url().possibly_invalid_spec(),
-          notification->original_id(), button_index, base::nullopt,
-          base::nullopt);
+      ->ProcessNotificationOperation(NotificationCommon::CLICK,
+                                     notification->type(),
+                                     notification->notification().origin_url(),
+                                     notification->original_id(), button_index,
+                                     base::nullopt, base::nullopt);
 }
 
 ProfileNotification* NotificationPlatformBridgeChromeOs::GetProfileNotification(
