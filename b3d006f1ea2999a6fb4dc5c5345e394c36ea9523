@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "df9f3d36_0028dd4d",
+        "filename": "chromeos/dbus/dbus_clients_browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-02T15:34:43Z",
+      "side": 1,
+      "message": "FWIW, fake clients are used to test stuff on Linux (e.g. run Chrome with target_os\u003d\"chromeos\" in args.gn. The real client doesn\u0027t make sense there because there\u0027s no smbprovider daemon. Fake clients are useful for unit- and browser tests. You\u0027ll probably need one at some point.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 58
+      },
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8bea935_afb71ede",
         "filename": "chromeos/dbus/smb_provider_client.cc",
         "patchSetId": 3
@@ -30,6 +53,24 @@
       "writtenOn": "2017-11-02T08:04:28Z",
       "side": 1,
       "message": "Ideally this wouldn\u0027t be overlapping with the file IO error so we can tell this is an internal error rather than a server communication error.",
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d46063_6911c37f",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-02T15:34:43Z",
+      "side": 1,
+      "message": "We have an ERROR_DBUS_FAILURE for that case.",
+      "parentUuid": "54d66d4b_f1db9744",
       "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
