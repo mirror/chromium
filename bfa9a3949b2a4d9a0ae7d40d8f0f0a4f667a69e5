@@ -69,6 +69,24 @@
       "revId": "bfa9a3949b2a4d9a0ae7d40d8f0f0a4f667a69e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c6416c_7b30b786",
+        "filename": "third_party/WebKit/public/platform/ScopedVirtualTimePauser.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-02T14:17:25Z",
+      "side": 1,
+      "message": "I don\u0027t understand the point re publicly-exposed WebXXXScheduler?\n\nIs WebViewSchedulerImpl the problem? I was hoping not to expose the increment and decrement functions because it\u0027s very easy to mess up and forget to decrement the counter.",
+      "parentUuid": "7c886ff9_71f7029f",
+      "revId": "bfa9a3949b2a4d9a0ae7d40d8f0f0a4f667a69e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
