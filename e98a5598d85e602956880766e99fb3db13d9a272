@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7053139a_4d6ca376",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-02T05:53:11Z",
+      "side": 1,
+      "message": "This is necessary to get the supervised user badge to show up in the EditableProfilePhoto.",
+      "revId": "e98a5598d85e602956880766e99fb3db13d9a272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
