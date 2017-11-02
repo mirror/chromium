@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88550ec2_5b292103",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-11-02T21:47:12Z",
+      "side": 1,
+      "message": "Why does this take the first fence, dups it and pushes it back into the same list?",
+      "range": {
+        "startLine": 139,
+        "startChar": 6,
+        "endLine": 139,
+        "endChar": 16
+      },
+      "revId": "a515ca15180d4fd5d2a1b74bd2b92e7a55d19c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afbda80_c715ee56",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-11-02T21:47:12Z",
+      "side": 1,
+      "message": "The API suggests that the fence is still owned by the caller, is this correct?\n\nIs this why the fence is dup-ed above and added back to the vector? It is unclear to me what the lifetime of the FDs is?\n\nWhy not just pass a ScopedFD into SetPlaneData() and have it deal with lifetime management?",
+      "range": {
+        "startLine": 147,
+        "startChar": 10,
+        "endLine": 147,
+        "endChar": 29
+      },
+      "revId": "a515ca15180d4fd5d2a1b74bd2b92e7a55d19c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
