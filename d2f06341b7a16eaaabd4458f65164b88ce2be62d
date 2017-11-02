@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f523a2e7_a7bf4e3b",
+        "filename": "chrome/browser/extensions/api/notifications/notifications_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-02T21:17:27Z",
+      "side": 1,
+      "message": "The same notification shouldn\u0027t be shown as a popup more than once. After the first time it\u0027s shown, shown_as_popup is set to true (that\u0027s another permanent bit in Notification which reflects past state) and notification blockers are not consulted for it. So I don\u0027t think there are any major regressions here right now (who knows about the future).\n\nI don\u0027t grasp your common subclass suggestion. What are you referring to by \"struct like this\"? Perhaps my other response helps answer this question?",
+      "parentUuid": "4fd0f9d8_63f98ee4",
+      "revId": "d2f06341b7a16eaaabd4458f65164b88ce2be62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e616327f_8e4b861a",
         "filename": "chrome/browser/notifications/fullscreen_notification_blocker.cc",
         "patchSetId": 9
