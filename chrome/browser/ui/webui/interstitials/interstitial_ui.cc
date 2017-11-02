@@ -18,6 +18,7 @@
 #include "chrome/browser/safe_browsing/ui_manager.h"
 #include "chrome/browser/ssl/bad_clock_blocking_page.h"
 #include "chrome/browser/ssl/mitm_software_blocking_page.h"
+#include "chrome/browser/ssl/server_misconfig_blocking_page.h"
 #include "chrome/browser/ssl/ssl_blocking_page.h"
 #include "chrome/browser/supervised_user/supervised_user_interstitial.h"
 #include "chrome/common/features.h"
@@ -395,6 +396,16 @@ CaptivePortalBlockingPage* CreateCaptivePortalBlockingPage(
 }
 #endif
 
+ServerMisconfigBlockingPage* CreateServerMisconfigBlockingPage(
+    content::WebContents* web_contents) {
+  const GURL request_url("https://example.com");
+
+  net::SSLInfo ssl_info;
+  ssl_info.cert = ssl_info.unverified_cert = CreateFakeCert();
+
+  return new ServerMisconfigBlockingPage(web_contents, request_url, ssl_info);
+}
+
 }  //  namespace
 
 InterstitialUI::InterstitialUI(content::WebUI* web_ui)
@@ -459,6 +470,9 @@ void InterstitialHTMLSource::StartDataRequest(
     interstitial_delegate.reset(CreateSafeBrowsingBlockingPage(web_contents));
   } else if (path_without_query == "/clock") {
     interstitial_delegate.reset(CreateBadClockBlockingPage(web_contents));
+  } else if (path_without_query == "/server-misconfig") {
+    interstitial_delegate.reset(
+        CreateServerMisconfigBlockingPage(web_contents));
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   } else if (path_without_query == "/captiveportal") {
     interstitial_delegate.reset(CreateCaptivePortalBlockingPage(web_contents));
