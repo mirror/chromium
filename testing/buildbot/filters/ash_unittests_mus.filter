@@ -2,7 +2,15 @@
 # is not supported by InputDeviceManager. http://crbug.com/734812.
 -TouchCalibratorControllerTest.CustomCalibration
 -TouchCalibratorControllerTest.CustomCalibrationInvalidTouchId
+-TouchCalibratorControllerTest.HighDPIMonitorsCalibration
+-TouchCalibratorControllerTest.IgnoreInternalTouchDevices
+-TouchCalibratorControllerTest.InternalTouchDeviceIsRejected
+-TouchCalibratorControllerTest.KeyEventIntercept
+-TouchCalibratorControllerTest.RotatedHighDPIMonitorsCalibration
+-TouchCalibratorControllerTest.StartCalibration
 -TouchCalibratorControllerTest.TouchDeviceIdIsSet
+-TouchCalibratorControllerTest.TouchThreshold
+
 # TODO: fix this. It fails because GL_OES_texture_npot is not supported.
 # http://crbug.com/775067.
 -WorkspaceLayoutManagerBackdropTest.BackdropTest
