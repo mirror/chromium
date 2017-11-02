@@ -309,6 +309,7 @@ android_library("chrome_java") {
   if (enable_vr) {
     java_files += chrome_vr_java_sources
     deps += [
+      "//chrome/android/java/src/com/google/vr/keyboard:java",
       "//device/vr:java",
       "//third_party/gvr-android-sdk:gvr_common_java",
     ]

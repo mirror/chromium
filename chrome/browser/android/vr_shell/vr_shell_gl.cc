@@ -112,6 +112,44 @@ gfx::Vector3dF GetForwardVector(const gfx::Transform& head_pose) {
                         -head_pose.matrix().get(2, 2));
 }
 
+static gvr_keyboard_context* keyboard_context;
+
+// TODO(ymalik,crbug.com/780318): This callback is temporary until we have an
+// editable input field.
+void OnKeyboardEvent(void*, int32_t event) {
+  switch (event) {
+    case GVR_KEYBOARD_ERROR_UNKNOWN:
+      LOG(ERROR) << "Unknown GVR keyboard error.";
+      break;
+    case GVR_KEYBOARD_ERROR_SERVICE_NOT_CONNECTED:
+      LOG(ERROR) << "GVR keyboard service not connected.";
+      break;
+    case GVR_KEYBOARD_ERROR_NO_LOCALES_FOUND:
+      LOG(ERROR) << "No GVR keyboard locales found.";
+      break;
+    case GVR_KEYBOARD_ERROR_SDK_LOAD_FAILED:
+      LOG(ERROR) << "GVR keyboard sdk load failed.";
+      break;
+    case GVR_KEYBOARD_SHOWN:
+      DVLOG(1) << "GVR keyboard shown.";
+      break;
+    case GVR_KEYBOARD_HIDDEN:
+      DVLOG(1) << "GVR keyboard hidden.";
+      break;
+    case GVR_KEYBOARD_TEXT_UPDATED: {
+      char* text = gvr_keyboard_get_text(keyboard_context);
+      DVLOG(1) << "GVR keyboard text updated: " << text;
+      free(reinterpret_cast<void*>(text));
+    } break;
+    case GVR_KEYBOARD_TEXT_COMMITTED: {
+      char* text = gvr_keyboard_get_text(keyboard_context);
+      DVLOG(1) << "GVR keyboard text updated: " << text;
+      free(reinterpret_cast<void*>(text));
+      gvr_keyboard_set_text(keyboard_context, "");
+    } break;
+  }
+}
+
 gfx::Transform PerspectiveMatrixFromView(const gvr::Rectf& fov,
                                          float z_near,
                                          float z_far) {
@@ -201,6 +239,8 @@ VrShellGl::VrShellGl(GlBrowserInterface* browser_interface,
       webvr_render_time_(new vr::SlidingAverage(kWebVRSlidingAverageSize)),
       skips_redraw_when_not_dirty_(base::FeatureList::IsEnabled(
           features::kVrShellExperimentalRendering)),
+      keyboard_enabled_(
+          base::FeatureList::IsEnabled(features::kVrShellKeyboard)),
       weak_ptr_factory_(this) {
   GvrInit(gvr_api);
 }
@@ -466,6 +506,9 @@ void VrShellGl::GvrInit(gvr_context* gvr_api) {
 
 void VrShellGl::InitializeRenderer() {
   gvr_api_->InitializeGl();
+  if (keyboard_enabled_) {
+    CreateKeyboard();
+  }
   gfx::Transform head_pose;
   device::GvrDelegate::GetGvrPoseWithNeckModel(gvr_api_.get(), &head_pose);
   webvr_head_pose_.assign(kPoseRingBufferSize, head_pose);
@@ -608,6 +651,7 @@ void VrShellGl::HandleControllerInput(const gfx::Point3F& laser_origin,
   controller_model.opacity = controller_->GetOpacity();
   controller_model.laser_direction = controller_direction;
   controller_model.laser_origin = laser_origin;
+  controller_model_ = controller_model;
 
   vr::ReticleModel reticle_model;
   ui_->input_manager()->HandleInput(controller_model, &reticle_model,
@@ -744,8 +788,21 @@ void VrShellGl::HandleControllerAppButtonActivity(
           gvr::ControllerButton::GVR_CONTROLLER_BUTTON_APP)) {
     controller_start_direction_ = controller_direction;
   }
+
   if (controller_->ButtonUpHappened(
           gvr::ControllerButton::GVR_CONTROLLER_BUTTON_APP)) {
+    // TODO(ymalik,crbug.com/780318): We temporarily show and hide the keyboard
+    // when the app button is pressed. This behavior is behind a runtime enabled
+    // feature and should go away as soon as we have editable input fields.
+    show_keyboard_ = keyboard_enabled_ && !show_keyboard_;
+    if (keyboard_enabled_) {
+      if (show_keyboard_) {
+        gvr_keyboard_show(gvr_keyboard_);
+      } else {
+        gvr_keyboard_hide(gvr_keyboard_);
+      }
+    }
+
     // A gesture is a movement of the controller while holding the App button.
     // If the angle of the movement is within a threshold, the action is
     // considered a regular click
@@ -999,8 +1056,9 @@ void VrShellGl::DrawIntoAcquiredFrame(int16_t frame_index) {
   // it's not supported on older devices such as Nexus 5X.
   glClear(GL_COLOR_BUFFER_BIT);
 
-  if (ShouldDrawWebVr())
+  if (ShouldDrawWebVr()) {
     DrawWebVr();
+  }
 
   UpdateEyeInfos(render_info_primary_.head_pose, kViewportListPrimaryOffset,
                  render_info_primary_.surface_texture_size,
@@ -1013,6 +1071,12 @@ void VrShellGl::DrawIntoAcquiredFrame(int16_t frame_index) {
   // viewport.  NB: this is not just 2d browsing stuff, we may have a splash
   // screen showing in WebVR mode that must also fill the screen.
   ui_->ui_renderer()->Draw(render_info_primary_);
+
+  // Draw keyboard. TODO(ymalik,crbug.com/780135): Keyboard should be a UI
+  // element and this special rendering logic should move out of here.
+  if (keyboard_enabled_) {
+    DrawKeyboard();
+  }
 
   content_frame_available_ = false;
   acquired_frame_.Unbind();
@@ -1089,6 +1153,67 @@ void VrShellGl::DrawIntoAcquiredFrame(int16_t frame_index) {
   } else {
     // Continue with submit immediately.
     DrawFrameSubmitNow(frame_index, render_info_primary_.head_pose);
+  }
+}
+
+void VrShellGl::CreateKeyboard() {
+  gvr_keyboard_ = gvr_keyboard_create(nullptr, OnKeyboardEvent);
+  keyboard_context = gvr_keyboard_;
+
+  gvr_mat4f matrix;
+  gvr_keyboard_get_recommended_world_from_keyboard_matrix(2.0f, &matrix);
+  gvr_keyboard_set_world_from_keyboard_matrix(gvr_keyboard_, &matrix);
+}
+
+void VrShellGl::DrawKeyboard() {
+  if (!gvr_keyboard_)
+    return;
+
+  std::lock_guard<std::mutex> lock(mutex_);
+  gvr::ClockTimePoint target_time = gvr::GvrApi::GetTimePointNow();
+  gvr_keyboard_set_frame_time(gvr_keyboard_, &target_time);
+  gvr_keyboard_advance_frame(gvr_keyboard_);
+
+  if (!show_keyboard_)
+    return;
+
+  bool pressed = controller_->ButtonUpHappened(
+      gvr::ControllerButton::GVR_CONTROLLER_BUTTON_CLICK);
+  gvr_keyboard_update_button_state(
+      gvr_keyboard_, gvr::ControllerButton::GVR_CONTROLLER_BUTTON_CLICK,
+      pressed);
+
+  // TODO(ymalik): Keyboard hittest needs the start and endpoint, so the hittest
+  // fails for now.
+  gvr_vec3f start;
+  start.x = controller_model_.laser_origin.x();
+  start.y = controller_model_.laser_origin.y();
+  start.z = controller_model_.laser_origin.z();
+  gvr_vec3f end;
+  end.x = start.x + controller_model_.laser_direction.x();
+  end.y = start.y + controller_model_.laser_direction.y();
+  end.z = start.z + controller_model_.laser_direction.z();
+  gvr_vec3f hit_point;
+  gvr_keyboard_update_controller_ray(gvr_keyboard_, &start, &end, &hit_point);
+  for (auto eye : {GVR_LEFT_EYE, GVR_RIGHT_EYE}) {
+    vr::RenderInfo::EyeInfo& eye_info =
+        (eye == GVR_LEFT_EYE) ? render_info_primary_.left_eye_info
+                              : render_info_primary_.right_eye_info;
+    gvr::Mat4f view_matrix;
+    TransformToGvrMat(eye_info.view_matrix, &view_matrix);
+    gvr_keyboard_set_eye_from_world_matrix(gvr_keyboard_, eye, &view_matrix);
+
+    gvr::Mat4f proj_matrix;
+    TransformToGvrMat(eye_info.proj_matrix, &proj_matrix);
+    gvr_keyboard_set_projection_matrix(gvr_keyboard_, eye, &proj_matrix);
+
+    gfx::Rect viewport_rect = eye_info.viewport;
+    const gvr::Recti viewport = {static_cast<int>(viewport_rect.x()),
+                                 static_cast<int>(viewport_rect.right()),
+                                 static_cast<int>(viewport_rect.y()),
+                                 static_cast<int>(viewport_rect.bottom())};
+    gvr_keyboard_set_viewport(gvr_keyboard_, eye, &viewport);
+    gvr_keyboard_render(gvr_keyboard_, eye);
   }
 }
 
