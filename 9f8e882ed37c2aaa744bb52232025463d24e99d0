@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adcc472b_69e3c958",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/css_properties.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-02T06:14:05Z",
+      "side": 1,
+      "message": "nice",
+      "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c1e4d7_c601280b",
+        "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialValues.h.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-02T06:14:05Z",
+      "side": 1,
+      "message": "this results in #including a bunch of files that aren\u0027t required (only a forward declaration is needed) e.g. QuotesData, CSSTransitionData, RotateTransformOperation. This isn\u0027t any different from the way it was handled in ComputedStyleBase before, but now we\u0027re duplicating these includes, which may impact build times. is there a huge benefit in generating this file? I wonder if it would be better just hand written so these includes can be tweaked.",
+      "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01fb025a_aeaa3f03",
+        "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialValues.h.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-02T06:14:05Z",
+      "side": 1,
+      "message": "these property name comments are excessive as there is only 1 method per property and the name of the method contains it",
+      "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8078f42c_01f41f8a",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/fields/base.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-02T06:14:05Z",
+      "side": 1,
+      "message": "what\u0027s the purpose of these comments? the whole argument for moving the initial functions into a separate class is that their logically distinct from the rest of these methods right? therefore they don\u0027t need to be mentioned here",
+      "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4711619_ba36e8ae",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyleInitialValues.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-02T06:14:05Z",
+      "side": 1,
+      "message": "why does this need to be in a .cpp file?",
+      "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
