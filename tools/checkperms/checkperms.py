@@ -440,6 +440,10 @@ Examples:
       '--file', action='append', dest='files',
       help='Specifics a list of files to check the permissions of. Only these '
       'files will be checked')
+  parser.add_option(
+      '--file-list',
+      help='Specifies a file with a list of files (one per line) to check the '
+      'permissions of. Only these files will be checked')
   parser.add_option('--json', help='Path to JSON output file')
   options, args = parser.parse_args()
 
@@ -454,6 +458,10 @@ Examples:
 
   if options.files:
     errors = check_files(options.root, options.files)
+  elif options.file_list:
+    with open(options.file_list) as file_list:
+      files = [line.strip() for line in file_list if line.strip()]
+    errors = check_files(options.root, files)
   else:
     api = get_scm(options.root, options.bare)
     start_dir = args[0] if args else api.root_dir

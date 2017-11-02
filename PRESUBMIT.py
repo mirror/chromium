@@ -9,6 +9,9 @@ for more details about the presubmit API built into depot_tools.
 """
 
 
+import tempfile
+
+
 _EXCLUDED_PATHS = (
     r"^native_client_sdk[\\\/]src[\\\/]build_tools[\\\/]make_rules.py",
     r"^native_client_sdk[\\\/]src[\\\/]build_tools[\\\/]make_simple.py",
@@ -926,15 +929,17 @@ def _CheckFilePermissions(input_api, output_api):
       'tools', 'checkperms', 'checkperms.py')
   args = [input_api.python_executable, checkperms_tool,
           '--root', input_api.change.RepositoryRoot()]
-  for f in input_api.AffectedFiles():
-    args += ['--file', f.AbsoluteLocalPath()]
-  try:
-    input_api.subprocess.check_output(args)
-    return []
-  except input_api.subprocess.CalledProcessError as error:
-    return [output_api.PresubmitError(
-        'checkperms.py failed:',
-        long_text=error.output)]
+  with tempfile.NamedTemporaryFile() as file_list:
+    for f in input_api.AffectedFiles():
+      file_list.write(f.AbsoluteLocalPath() + '\n')
+    args += ['--file-list', file_list.name]
+    try:
+      input_api.subprocess.check_output(args)
+      return []
+    except input_api.subprocess.CalledProcessError as error:
+      return [output_api.PresubmitError(
+          'checkperms.py failed:',
+          long_text=error.output)]
 
 
 def _CheckTeamTags(input_api, output_api):
