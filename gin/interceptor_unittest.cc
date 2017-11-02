@@ -150,7 +150,8 @@ class InterceptorTest : public V8Test {
     v8::Local<v8::Function> func;
     EXPECT_TRUE(ConvertFromV8(isolate, val, &func));
     v8::Local<v8::Value> argv[] = {
-        ConvertToV8(isolate->GetCurrentContext(), obj.get()).ToLocalChecked(),
+        MaybeConvertToV8(isolate->GetCurrentContext(), obj.get())
+            .ToLocalChecked(),
     };
     func->Call(v8::Undefined(isolate), 1, argv);
     EXPECT_FALSE(try_catch.HasCaught());
