@@ -400,6 +400,7 @@ void ProfilingProcessHost::RequestProcessDump(base::ProcessId pid,
 
 void ProfilingProcessHost::RequestProcessReport(base::ProcessId pid,
                                                 std::string trigger_name) {
+  LOG(ERROR) << "ProfilingProcessHost::RequestProcessReport";
   if (!connector_) {
     DLOG(ERROR)
         << "Requesting process dump when profiling process hasn't started.";
