@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f73f6f4_23701a58",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-02T23:23:39Z",
+      "side": 1,
+      "message": "Nit: Maybe the comment should change too.",
+      "range": {
+        "startLine": 28,
+        "startChar": 34,
+        "endLine": 28,
+        "endChar": 45
+      },
+      "revId": "56e45b13f4285d8c8c309036207d211b4a6c54c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
