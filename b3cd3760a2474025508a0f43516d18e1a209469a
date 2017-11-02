@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "41362144_88bb50c0",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T23:45:31Z",
+      "side": 1,
+      "message": "Then please C++ casting operator.\n\nhttps://google.github.io/styleguide/cppguide.html#Casting",
+      "parentUuid": "3ae5584f_3028beea",
+      "revId": "b3cd3760a2474025508a0f43516d18e1a209469a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98643390_a0236922",
         "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
         "patchSetId": 7

@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d15dec7_0518268b",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T23:45:31Z",
+      "side": 1,
+      "message": "Please return bool, add WARN_UNUSED_RESULT and call EXPECT_ in the test. This way the log will show useful line number.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "d7e568780c1fb6c96a1cd3f69079e7de1436fd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6b06e5_707a3e8a",
+        "filename": "ios/net/cookies/system_cookie_store_unittest_template.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T23:45:31Z",
+      "side": 1,
+      "message": "s/import/include",
+      "range": {
+        "startLine": 18,
+        "startChar": 1,
+        "endLine": 18,
+        "endChar": 7
+      },
+      "revId": "d7e568780c1fb6c96a1cd3f69079e7de1436fd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281a81b1_6b2b25c6",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T23:45:31Z",
+      "side": 1,
+      "message": "Please add comment to this endif (same as the code for #if)",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "d7e568780c1fb6c96a1cd3f69079e7de1436fd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81d6c4d_0b8003ca",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T23:45:31Z",
+      "side": 1,
+      "message": "[WKWebsiteDataStore nonPersistentDataStore]\n\nnonPersistentDataStore is not a property",
+      "range": {
+        "startLine": 29,
+        "startChar": 41,
+        "endLine": 29,
+        "endChar": 63
+      },
+      "revId": "d7e568780c1fb6c96a1cd3f69079e7de1436fd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292f0e73_6520808f",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T23:45:31Z",
+      "side": 1,
+      "message": "nit: Do we need this comment?",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "d7e568780c1fb6c96a1cd3f69079e7de1436fd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0bb2ada_560306d4",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T23:45:31Z",
+      "side": 1,
+      "message": "Do we need this call here? If all tests are disabled then this method should not be called, right? Same question for other methods.",
+      "range": {
+        "startLine": 42,
+        "startChar": 9,
+        "endLine": 42,
+        "endChar": 22
+      },
+      "revId": "d7e568780c1fb6c96a1cd3f69079e7de1436fd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda565ec_210a23d7",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T23:45:31Z",
+      "side": 1,
+      "message": "Please use constant for this. Same comment for other places.",
+      "range": {
+        "startLine": 60,
+        "startChar": 65,
+        "endLine": 60,
+        "endChar": 68
+      },
+      "revId": "d7e568780c1fb6c96a1cd3f69079e7de1436fd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae4eebd_4e76e251",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T23:45:31Z",
+      "side": 1,
+      "message": "Please return bool instead",
+      "range": {
+        "startLine": 84,
+        "startChar": 16,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "d7e568780c1fb6c96a1cd3f69079e7de1436fd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461beb4a_e5265b70",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T23:45:31Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 97,
+        "startChar": 15,
+        "endLine": 97,
+        "endChar": 16
+      },
+      "revId": "d7e568780c1fb6c96a1cd3f69079e7de1436fd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
