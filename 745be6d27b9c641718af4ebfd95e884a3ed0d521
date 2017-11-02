@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e9708f2_2bb43016",
+        "filename": "third_party/libovr/LICENSE",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-02T18:37:10Z",
+      "side": 1,
+      "message": "I\u0027m not clear on this one: Should this be the license that we negotiated with Oculus instead of the one that\u0027s on the public SDK download?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "745be6d27b9c641718af4ebfd95e884a3ed0d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1364df5_7884ecf2",
+        "filename": "third_party/libovr/README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-02T18:37:10Z",
+      "side": 1,
+      "message": "This commit doesn\u0027t include a libovr\\src\\LICENSE and libovr\\LICENSE doesn\u0027t appear to be the correct one? (See my note in that file)",
+      "range": {
+        "startLine": 14,
+        "startChar": 49,
+        "endLine": 14,
+        "endChar": 56
+      },
+      "revId": "745be6d27b9c641718af4ebfd95e884a3ed0d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
