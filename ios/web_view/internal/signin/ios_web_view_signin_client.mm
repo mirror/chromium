@@ -4,6 +4,8 @@
 
 #include "ios/web_view/internal/signin/ios_web_view_signin_client.h"
 
+#include "base/logging.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -35,3 +37,14 @@ base::Time IOSWebViewSigninClient::GetInstallDate() {
 }
 
 void IOSWebViewSigninClient::OnErrorChanged() {}
+
+void IOSWebViewSigninClient::SetAuthenticationController(
+    CWVAuthenticationController* authentication_controller) {
+  DCHECK(!authentication_controller || !authentication_controller_.get());
+  authentication_controller_.reset(authentication_controller);
+}
+
+CWVAuthenticationController*
+IOSWebViewSigninClient::GetAuthenticationController() {
+  return authentication_controller_.get();
+}
