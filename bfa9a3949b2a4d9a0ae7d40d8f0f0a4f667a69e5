@@ -105,6 +105,24 @@
       "revId": "bfa9a3949b2a4d9a0ae7d40d8f0f0a4f667a69e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6192e4_9f85c1e2",
+        "filename": "third_party/WebKit/public/platform/ScopedVirtualTimePauser.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-02T16:59:14Z",
+      "side": 1,
+      "message": "If you look in the earlier patch sets I did actually have code which basically did exactly that.  Getting it that right in all the corner cases took days (ditto with an unsent patch which does the same thing for IndexDB).\n\nSami was worried about maintenance of the code moving forwards in the face of refactors because it\u0027s critical that each pause is matched up with an unpause (or a load will never finish) and it would be very easy to drop one accidentally or to forget a code path. \n\nBasically this is the same reason we tend to prefer smart pointers and base::AutoLock over the lower level primitives.  We can do without but it\u0027s more error prone.  Does that make sense?",
+      "parentUuid": "41beaf4d_453eb3ac",
+      "revId": "bfa9a3949b2a4d9a0ae7d40d8f0f0a4f667a69e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
