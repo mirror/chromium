@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fba09e77_4d1ab7cc",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/NavigationPreloadManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-02T23:11:43Z",
+      "side": 1,
+      "message": "Why do we still need to check |client| and |client-\u003eProvider()|? Can we remove this code now? Same question for getState() and SetEnabled().",
+      "revId": "32b21e3ad45cbf56637478799e7a26b2ba863019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
