@@ -502,6 +502,11 @@ void ProxyImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
   host_impl_->WillBeginImplFrame(args);
 }
 
+bool ProxyImpl::DidBeginImplFrame() {
+  DCHECK(IsImplThread());
+  return host_impl_->DidBeginImplFrame();
+}
+
 void ProxyImpl::DidFinishImplFrame() {
   DCHECK(IsImplThread());
   host_impl_->DidFinishImplFrame();

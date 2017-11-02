@@ -2064,6 +2064,14 @@ void LayerTreeHostImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
   impl_thread_phase_ = ImplThreadPhase::INSIDE_IMPL_FRAME;
 }
 
+bool LayerTreeHostImpl::DidBeginImplFrame() {
+  if (!active_tree()->needs_update_draw_properties()) {
+    return HasDamage(false);
+  } else {
+    return true;
+  }
+}
+
 void LayerTreeHostImpl::DidFinishImplFrame() {
   impl_thread_phase_ = ImplThreadPhase::IDLE;
   current_begin_frame_tracker_.Finish();

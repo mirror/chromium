@@ -483,6 +483,12 @@ void Scheduler::BeginImplFrame(const viz::BeginFrameArgs& args,
   client_->WillBeginImplFrame(begin_impl_frame_tracker_.Current());
 
   ProcessScheduledActions();
+
+  bool has_damage = client_->DidBeginImplFrame();
+  if (!has_damage) {
+    state_machine_.AbortDraw();
+    compositor_timing_history_->DrawAborted();
+  }
 }
 
 void Scheduler::ScheduleBeginImplFrameDeadline() {
