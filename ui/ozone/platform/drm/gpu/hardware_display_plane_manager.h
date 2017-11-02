@@ -10,6 +10,7 @@
 #include <xf86drmMode.h>
 #include <vector>
 
+#include "base/files/scoped_file.h"
 #include "base/macros.h"
 #include "ui/ozone/platform/drm/common/scoped_drm_types.h"
 #include "ui/ozone/platform/drm/gpu/hardware_display_plane.h"
@@ -62,6 +63,7 @@ struct HardwareDisplayPlaneList {
   std::vector<PageFlipInfo> legacy_page_flips;
 
   ScopedDrmAtomicReqPtr atomic_property_set;
+  std::vector<base::ScopedFD> render_fence_fds;
 };
 
 class HardwareDisplayPlaneManager {

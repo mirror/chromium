@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "ui/display/types/display_mode.h"
@@ -76,7 +77,8 @@ class GbmDeviceGenerator : public DrmDeviceGenerator {
 
 }  // namespace
 
-DrmThread::DrmThread() : base::Thread("DrmThread"), binding_(this) {}
+DrmThread::DrmThread()
+    : base::Thread("DrmThread"), binding_(this), weak_factory_(this) {}
 
 DrmThread::~DrmThread() {
   Stop();
@@ -187,12 +189,38 @@ void DrmThread::GetScanoutFormats(
 
 void DrmThread::SchedulePageFlip(gfx::AcceleratedWidget widget,
                                  const std::vector<OverlayPlane>& planes,
+                                 base::OnceClosure render_wait_task,
+                                 base::ScopedFD render_fence_fd,
                                  SwapCompletionOnceCallback callback) {
+  scoped_refptr<ui::DrmDevice> drm_device =
+      device_manager_->GetDrmDevice(widget);
+
+  if (drm_device->uses_atomic_modesetting() && render_fence_fd.is_valid()) {
+    SchedulePageFlipNoWait(widget, planes, std::move(render_fence_fd),
+                           std::move(callback));
+    return;
+  }
+
+  base::OnceClosure render_done_callback = base::Bind(
+      &DrmThread::SchedulePageFlipNoWait, weak_factory_.GetWeakPtr(), widget,
+      planes, base::Passed(base::ScopedFD()), base::Passed(&callback));
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      std::move(render_wait_task), std::move(render_done_callback));
+}
+
+void DrmThread::SchedulePageFlipNoWait(gfx::AcceleratedWidget widget,
+                                       const std::vector<OverlayPlane>& planes,
+                                       base::ScopedFD render_fence_fd,
+                                       SwapCompletionOnceCallback callback) {
   DrmWindow* window = screen_manager_->GetWindow(widget);
-  if (window)
-    window->SchedulePageFlip(planes, std::move(callback));
-  else
+  if (window) {
+    window->SchedulePageFlip(planes, std::move(render_fence_fd),
+                             std::move(callback));
+  } else {
     std::move(callback).Run(gfx::SwapResult::SWAP_ACK);
+  }
 }
 
 void DrmThread::GetVSyncParameters(

@@ -7,6 +7,7 @@
 
 #include <vector>
 
+#include "base/files/scoped_file.h"
 #include "base/macros.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/vsync_provider.h"
@@ -25,6 +26,8 @@ class DrmWindowProxy {
   gfx::AcceleratedWidget widget() const { return widget_; }
 
   void SchedulePageFlip(const std::vector<OverlayPlane>& planes,
+                        base::OnceClosure render_wait_task,
+                        base::ScopedFD render_fence_fd,
                         SwapCompletionOnceCallback callback);
 
   void GetVSyncParameters(

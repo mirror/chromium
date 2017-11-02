@@ -85,6 +85,8 @@ class DrmThread : public base::Thread,
   // DrmWindowProxy (on GPU thread) is the client for these methods.
   void SchedulePageFlip(gfx::AcceleratedWidget widget,
                         const std::vector<OverlayPlane>& planes,
+                        base::OnceClosure render_wait_task,
+                        base::ScopedFD render_fence_fd,
                         SwapCompletionOnceCallback callback);
   void GetVSyncParameters(
       gfx::AcceleratedWidget widget,
@@ -141,6 +143,11 @@ class DrmThread : public base::Thread,
   void Init() override;
 
  private:
+  void SchedulePageFlipNoWait(gfx::AcceleratedWidget widget,
+                              const std::vector<OverlayPlane>& planes,
+                              base::ScopedFD render_fence_fd,
+                              SwapCompletionOnceCallback callback);
+
   std::unique_ptr<DrmDeviceManager> device_manager_;
   std::unique_ptr<ScanoutBufferGenerator> buffer_generator_;
   std::unique_ptr<ScreenManager> screen_manager_;
@@ -152,6 +159,8 @@ class DrmThread : public base::Thread,
 
   // The mojo implementation of DrmDevice can use a simple binding.
   mojo::Binding<ozone::mojom::DrmDevice> binding_;
+
+  base::WeakPtrFactory<DrmThread> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DrmThread);
 };

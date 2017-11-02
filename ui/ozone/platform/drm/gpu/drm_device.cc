@@ -401,7 +401,8 @@ DrmDevice::DrmDevice(const base::FilePath& device_path,
     : device_path_(device_path),
       file_(std::move(file)),
       page_flip_manager_(new PageFlipManager()),
-      is_primary_device_(is_primary_device) {}
+      is_primary_device_(is_primary_device),
+      uses_atomic_modesetting_(false) {}
 
 DrmDevice::~DrmDevice() {}
 
@@ -414,14 +415,18 @@ bool DrmDevice::Initialize(bool use_atomic) {
   }
 
   // Use atomic only if the build, kernel & flags all allow it.
-  if (use_atomic && SetCapability(DRM_CLIENT_CAP_ATOMIC, 1))
+  if (use_atomic && SetCapability(DRM_CLIENT_CAP_ATOMIC, 1)) {
     plane_manager_.reset(new HardwareDisplayPlaneManagerAtomic());
+    uses_atomic_modesetting_ = true;
+  }
 
   LOG_IF(WARNING, use_atomic && !plane_manager_)
       << "Drm atomic requested but capabilities don't allow it. Falling back "
          "to legacy page flip.";
-  if (!plane_manager_)
+  if (!plane_manager_) {
     plane_manager_.reset(new HardwareDisplayPlaneManagerLegacy());
+    uses_atomic_modesetting_ = false;
+  }
   if (!plane_manager_->Initialize(this)) {
     LOG(ERROR) << "Failed to initialize the plane manager for "
                << device_path_.value();
