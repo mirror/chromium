@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f016ad85_b3a558ff",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3351da7_e81e91b6",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4193ad5b_2a3abec2",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 14
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-27T21:26:34Z",
       "side": 1,
       "message": "I\u0027m fine with a numbered sink name now, but are we still interested in having a direction heuristic in the future?  I think moving a display into or out of mirroring mode could some indices but that\u0027s definitely an edge case.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583a08db_6fee4bca",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "Directions as in, labeling them with left/right, etc? Hmm I feel like neither \"Display 1\" or \"Display Left\" would be very helpful when the user wants to present to a projector, for instance...\n\nRight, the indices are based on the positions of the displays, so they would change if the displays are moved or put in/out of mirroring mode.",
+      "parentUuid": "4193ad5b_2a3abec2",
       "range": {
         "startLine": 35,
         "startChar": 0,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "57090a67_0bcc67dd",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "3aadbb56_c8ca8bea",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21b4b646_34d33419",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 14
@@ -73,6 +133,24 @@
       "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3080ff9_baefed22",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21b4b646_34d33419",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "5738b143_86ccebd2",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30bb0634_3ec8f2d8",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfe407d0_cff29cf0",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 14
@@ -104,6 +200,30 @@
       "writtenOn": "2017-10-30T22:26:18Z",
       "side": 1,
       "message": "Hmm... longer term (once Cast/Cloud MRPs are also in-browser) I wonder if it makes more sense for the MRP to handle reconnect for 1-UA presentations. PSDImpl then does not have to care about whether the presentation is \"offscreen\" or not and always forwards the reconnect to the MRP. No action required in this patch.",
+      "range": {
+        "startLine": 118,
+        "startChar": 64,
+        "endLine": 118,
+        "endChar": 0
+      },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "136fafb7_22db3b5e",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "That might make more sense.",
+      "parentUuid": "bfe407d0_cff29cf0",
       "range": {
         "startLine": 118,
         "startChar": 64,
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "d8d3bd1f_1fe86d7f",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb3c046e_47ca635f",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdaa113e_6e20f977",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 14
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "d5851c41_87672147",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdaa113e_6e20f977",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ce032a6_dc14510f",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 14
@@ -164,6 +320,24 @@
       "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8675536_adc3ab1c",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "It\u0027s not necessary as long as MR is not expecting a response from every MRP, which it isn\u0027t. Removing.",
+      "parentUuid": "1ce032a6_dc14510f",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "3c4b87d9_c886b9b0",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "Okay, removed.",
+      "parentUuid": "ae0e7934_cf18d1c1",
+      "range": {
+        "startLine": 214,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 35
+      },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddc1bd39_abef1299",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 14
@@ -225,6 +423,24 @@
       "writtenOn": "2017-10-30T22:26:18Z",
       "side": 1,
       "message": "Is this computation expensive? Have you considered storing a cached sink list in the MRP?",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63373d33_819d1e00",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "This computation shouldn\u0027t be expensive considering a user wouldn\u0027t usually have more than a few displays. If we want to exclude displays with MR dialog then caching a list of sinks would be complicated.",
+      "parentUuid": "ddc1bd39_abef1299",
       "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -271,6 +487,48 @@
     },
     {
       "key": {
+        "uuid": "73f11cee_96e630ac",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "This was to filter out external screens that mirror internal ones.\n\nI checked with Windows and Mac laptops and it turns out that their displays aren\u0027t considered \"internal\", so I\u0027m changing to checking for \"primary\" display, which is set to the laptop display by default.",
+      "parentUuid": "412f409b_ad5a7591",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04194045_10859e51",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "I checked Windows, Mac and Linux. On Win/Mac mirrored displays are represented by one Display. On Linux (at least on Goobuntu/Cinnamon) mirrored displays get separate Display objects with different IDs but same bounds.",
+      "parentUuid": "9c6df5c2_d41e560c",
+      "range": {
+        "startLine": 308,
+        "startChar": 67,
+        "endLine": 308,
+        "endChar": 0
+      },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d74cfec_004f0dac",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 14
@@ -285,6 +543,24 @@
       "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e04f54_2b22c239",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "As we discussed offline, I\u0027m removing this requirement from this CL to simplify it.\n\nThe requirement was there so that we don\u0027t start a presentation covering the controlling page. That would make it hard for the user to remove the presentation window - they\u0027d need to exit fullscreen first.",
+      "parentUuid": "6d74cfec_004f0dac",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -305,6 +581,24 @@
     },
     {
       "key": {
+        "uuid": "8cadb6df_6b40a859",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "Using a simple vector for now, since we\u0027re not checking for MR dialogs for now and that makes indices more consistent.",
+      "parentUuid": "bc3fa7a4_8cb8fce4",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1276038_c71536b6",
         "filename": "chrome/browser/media/router/offscreen_presentation_manager.cc",
         "patchSetId": 14
@@ -322,6 +616,24 @@
     },
     {
       "key": {
+        "uuid": "7be1ee43_a55841bd",
+        "filename": "chrome/browser/media/router/offscreen_presentation_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1276038_c71536b6",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4dfa75f_9c1383d4",
         "filename": "chrome/browser/media/router/presentation_service_delegate_impl.cc",
         "patchSetId": 14
@@ -336,6 +648,24 @@
       "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad88ac79_1a47a488",
+        "filename": "chrome/browser/media/router/presentation_service_delegate_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T01:21:14Z",
+      "side": 1,
+      "message": "Removing this from this CL for simplification.\n\nI agree that this would make more sense in MRUIService than in LocalPresentationManager if we were to implement it, and make MediaRouteDialogControllerImpl report directly.",
+      "parentUuid": "a4dfa75f_9c1383d4",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
