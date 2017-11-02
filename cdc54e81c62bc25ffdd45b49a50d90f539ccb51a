@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "c9ee2c95_c0aacd58",
+        "filename": "components/cronet/ios/CronetMetrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-02T20:31:54Z",
+      "side": 1,
+      "message": "Do we need this class to be exported? \nI don\u0027t think we need it in production, but do we need it for testing?",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 37
+      },
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77167db4_3e4138f9",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 5
@@ -64,6 +87,29 @@
         "startChar": 0,
         "endLine": 6,
         "endChar": 7
+      },
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f45c32ee_c7a04432",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-02T20:31:54Z",
+      "side": 1,
+      "message": "please remove #include which are not needed.",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 27
       },
       "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
