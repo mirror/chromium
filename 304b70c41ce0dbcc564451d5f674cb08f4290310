@@ -52,6 +52,24 @@
       "revId": "304b70c41ce0dbcc564451d5f674cb08f4290310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504d5211_4eb60fa2",
+        "filename": "content/public/test/network_service_test_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-02T02:51:50Z",
+      "side": 1,
+      "message": "I suspect for certs we may need a mojo interface to inject a cert verifier in the production interface (And we will normally run in the network process, for performance).  Then we can use globals or something to inject one with test certs (Or add test certs after it\u0027s been started).  But no one\u0027s working on that, currently.",
+      "parentUuid": "f493399f_45c9e9dd",
+      "revId": "304b70c41ce0dbcc564451d5f674cb08f4290310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
