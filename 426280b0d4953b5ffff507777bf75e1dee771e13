@@ -22,6 +22,30 @@
       "revId": "426280b0d4953b5ffff507777bf75e1dee771e13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c501fbe_12f53eb9",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 1631,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-02T23:23:18Z",
+      "side": 1,
+      "message": "Overriding the icon is the intended behavior here. There are 2 cases when |ShouldHideThrobber()| is true:\n1. When a tab is created by session restore.\n2. When a tab is opened in the background and its initial navigation is delayed.\n\nFor the 1st one, |tabUIHelper-\u003eGetFavicon()| will return empty favicon, so it will still use |iconImageForContents| to get the icon.\n\nFor the 2nd one, |tabUIHelper-\u003eGetFavicon()| will return non-empty favicon and override the icon image. This is the desired behavior. When this situation happens, there is no favicon available because the navigation is delayed. |iconImageForContents| will just return the default icon image. TabUIHelper will try to fetch a favicon from history if it is available and override the default icon. Once navigation resumes, spinner will show.",
+      "parentUuid": "e670aac4_2a586795",
+      "range": {
+        "startLine": 1631,
+        "startChar": 8,
+        "endLine": 1631,
+        "endChar": 26
+      },
+      "revId": "426280b0d4953b5ffff507777bf75e1dee771e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
