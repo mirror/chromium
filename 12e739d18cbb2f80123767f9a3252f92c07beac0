@@ -113,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "b379fc23_2808de37",
+        "filename": "components/payments/content/service_worker_payment_instrument_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-02T16:36:00Z",
+      "side": 1,
+      "message": "constructor must be explicit for test, but I think it is easier to read to keep both of them.",
+      "parentUuid": "e7e069f2_a05398f4",
+      "revId": "12e739d18cbb2f80123767f9a3252f92c07beac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "095848d6_384c8f05",
         "filename": "components/payments/content/service_worker_payment_instrument_unittest.cc",
         "patchSetId": 4
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "d891217c_6b9091bc",
+        "filename": "components/payments/content/service_worker_payment_instrument_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-02T16:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4008b4a_7f48a968",
+      "revId": "12e739d18cbb2f80123767f9a3252f92c07beac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bea45da4_dc6d4fe6",
         "filename": "components/payments/content/service_worker_payment_instrument_unittest.cc",
         "patchSetId": 4
@@ -238,6 +274,24 @@
       "revId": "12e739d18cbb2f80123767f9a3252f92c07beac0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99325d33_e6a318d8",
+        "filename": "components/payments/content/service_worker_payment_instrument_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-02T16:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0722cac2_0cf50079",
+      "revId": "12e739d18cbb2f80123767f9a3252f92c07beac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
