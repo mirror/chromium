@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcf559fb_a4845945",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-02T12:13:39Z",
+      "side": 1,
+      "message": "This is not a revert, VerifyXml didn\u0027t exist before that CL:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/735862/6/chrome/browser/notifications/notification_template_builder_unittest.cc\n\nInstead, this CL seems to be merging your approach and Veranika\u0027s VerifyXml function?",
+      "revId": "fa25f69594f013a9ae7f93b8eb7a23d6ae5ea16a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
