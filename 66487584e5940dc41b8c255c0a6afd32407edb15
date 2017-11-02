@@ -22,6 +22,30 @@
       "revId": "66487584e5940dc41b8c255c0a6afd32407edb15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81aeab2_ceaa48e5",
+        "filename": "components/optimization_guide/optimization_guide_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-02T16:57:21Z",
+      "side": 1,
+      "message": "This will later dispatch the hints to consumers who register for notifications that the hints have been processed (one of those consumers being //components/previews). I think something still has to live in the browser process (either the policy or this service) for the consumers to register listeners on directly (I guess consumers could technically listen to all sources for the one notification but that doesn\u0027t seem right).",
+      "parentUuid": "5d9956f8_a7c79768",
+      "range": {
+        "startLine": 36,
+        "startChar": 32,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "66487584e5940dc41b8c255c0a6afd32407edb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
