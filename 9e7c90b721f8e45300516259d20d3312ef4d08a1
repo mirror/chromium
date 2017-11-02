@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c6986e3_34d36013",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-02T02:22:25Z",
+      "side": 1,
+      "message": "Is it OK to do this as a follow up?\n\n1. We haven\u0027t agreed yet about what we want to do for old hosted apps.\n2. We actually have to rewrite the Hosted App tests for this[1].\n\n[1] Hosted Apps tests use Navigate() which results in a different type of navigation to that of a user clicking a link. When a user clicks a link we are allowed to open a new window; that is not the case for Navigate() navigations (the popup blocker blocks them). We could disable the popup blocker in tests but I would rather we matched what happens in practice and simulate a click, otherwise we might miss other bugs related to the popup blocker.\n\nIn order to simulate a click, we need the page to load successfully and for this we need to serve the pages from an EmbeddedTestServer. There are some tests that make sure https -\u003e http shows the location bar. Those tests require the pages to be served from the same origin (except the scheme) but EmbeddedTestServer does not support https and http at the same time, so we\u0027ll have to add this feature to it.\n\nHappy to do the work but it would be nice if we can land as soon as possible to see if it breaks sign in flows.",
+      "parentUuid": "55f43fc2_eedefcad",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 31
+      },
+      "revId": "9e7c90b721f8e45300516259d20d3312ef4d08a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60f628a5_1e117505",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "9e7c90b721f8e45300516259d20d3312ef4d08a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14af40c_7ecd55ed",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-02T02:22:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60f628a5_1e117505",
+      "range": {
+        "startLine": 239,
+        "startChar": 36,
+        "endLine": 239,
+        "endChar": 46
+      },
+      "revId": "9e7c90b721f8e45300516259d20d3312ef4d08a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
