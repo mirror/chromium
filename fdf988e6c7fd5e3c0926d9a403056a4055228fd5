@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "024f027e_74e56911",
+        "filename": "chrome_elf/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-11-02T01:48:44Z",
+      "side": 1,
+      "message": "Consider mentioning here as well that these are borrowed from base/sha1.*",
+      "revId": "fdf988e6c7fd5e3c0926d9a403056a4055228fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b866b190_9ec6e22a",
+        "filename": "chrome_elf/sha1/sha1.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-11-02T01:48:44Z",
+      "side": 1,
+      "message": "Could you mention that this is pulled from base/sha1.cc?",
+      "range": {
+        "startLine": 22,
+        "startChar": 49,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "fdf988e6c7fd5e3c0926d9a403056a4055228fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c48c9d2_ed2ec0c4",
+        "filename": "chrome_elf/sha1/sha1.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-11-02T01:48:44Z",
+      "side": 1,
+      "message": "\u003d {}; to zero initialize?",
+      "range": {
+        "startLine": 206,
+        "startChar": 25,
+        "endLine": 206,
+        "endChar": 0
+      },
+      "revId": "fdf988e6c7fd5e3c0926d9a403056a4055228fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
