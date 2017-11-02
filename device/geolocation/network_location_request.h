@@ -28,7 +28,8 @@ struct Geoposition;
 
 // Takes wifi data and sends it to a server to get a position fix.
 // It performs formatting of the request and interpretation of the response.
-class NetworkLocationRequest : private net::URLFetcherDelegate {
+class DEVICE_GEOLOCATION_EXPORT NetworkLocationRequest
+    : private net::URLFetcherDelegate {
  public:
   // ID passed to URLFetcher::Create(). Used for testing.
   DEVICE_GEOLOCATION_EXPORT static int url_fetcher_id_for_tests;
