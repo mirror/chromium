@@ -322,6 +322,10 @@ class QUIC_EXPORT_PRIVATE BbrSender : public SendAlgorithmInterface {
   // When true, pace at 1.5x and disable packet conservation in STARTUP.
   bool slower_startup_;
 
+  // If true, will not exit low gain mode until bytes_in_flight drops below BDP
+  // or it's time for high gain mode.
+  bool fully_drain_queue_;
+
   DISALLOW_COPY_AND_ASSIGN(BbrSender);
 };
 

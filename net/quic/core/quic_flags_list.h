@@ -178,3 +178,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_slower_startup, false)
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_deprecate_largest_observed,
           false)
+
+// Fully drain the queue in QUIC BBR at least once per cycle(8 rounds) when
+// activated by the BBR3 connection option.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_fully_drain_queue, false)

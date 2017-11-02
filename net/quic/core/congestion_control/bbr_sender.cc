@@ -117,7 +117,8 @@ BbrSender::BbrSender(const RttStats* rtt_stats,
       end_recovery_at_(0),
       recovery_window_(max_congestion_window_),
       rate_based_recovery_(false),
-      slower_startup_(false) {
+      slower_startup_(false),
+      fully_drain_queue_(false) {
   EnterStartupMode();
 }
 
@@ -211,6 +212,11 @@ void BbrSender::SetFromConfig(const QuicConfig& config,
       config.HasClientRequestedIndependentOption(kBBRS, perspective)) {
     QUIC_FLAG_COUNT(quic_reloadable_flag_quic_bbr_slower_startup);
     slower_startup_ = true;
+  }
+  if (FLAGS_quic_reloadable_flag_quic_bbr_fully_drain_queue &&
+      config.HasClientRequestedIndependentOption(kBBR3, perspective)) {
+    QUIC_FLAG_COUNT(quic_reloadable_flag_quic_bbr_fully_drain_queue);
+    fully_drain_queue_ = true;
   }
 }
 
@@ -422,6 +428,13 @@ void BbrSender::UpdateGainCyclePhase(QuicTime now,
   if (should_advance_gain_cycling) {
     cycle_current_offset_ = (cycle_current_offset_ + 1) % kGainCycleLength;
     last_cycle_start_ = now;
+    // Stay in low gain mode until the target BDP is hit.
+    // Low gain mode will be exited immediately when the target BDP is achieved.
+    if (fully_drain_queue_ && pacing_gain_ < 1 &&
+        kPacingGain[cycle_current_offset_] == 1 &&
+        prior_in_flight > GetTargetCongestionWindow(1)) {
+      return;
+    }
     pacing_gain_ = kPacingGain[cycle_current_offset_];
   }
 }
