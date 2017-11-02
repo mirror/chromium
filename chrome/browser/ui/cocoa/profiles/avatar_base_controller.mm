@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/platform_util.h"
 #include "chrome/browser/profiles/profile_avatar_icon_util.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profile_metrics.h"
@@ -21,14 +22,15 @@
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #include "chrome/browser/ui/cocoa/l10n_util.h"
 #import "chrome/browser/ui/cocoa/profiles/profile_chooser_controller.h"
+#include "chrome/browser/ui/views/profiles/profile_chooser_view.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
 
 // Space between the avatar icon and the avatar menu bubble.
-const CGFloat kMenuYOffsetAdjust = 1.0;
+// const CGFloat kMenuYOffsetAdjust = 1.0;
 // Offset needed to align the edge of the avatar bubble with the edge of the
 // avatar button.
-const CGFloat kMenuXOffsetAdjust = 1.0;
+// const CGFloat kMenuXOffsetAdjust = 1.0;
 
 @interface AvatarBaseController (Private)
 // Shows the avatar bubble.
@@ -139,6 +141,32 @@ bool ProfileUpdateObserver::HasAvatarError() {
                           withMode:(BrowserWindow::AvatarBubbleMode)mode
                    withServiceType:(signin::GAIAServiceType)serviceType
                    fromAccessPoint:(signin_metrics::AccessPoint)accessPoint {
+#if 1
+  profiles::BubbleViewMode bubble_view_mode;
+  profiles::BubbleViewModeFromAvatarBubbleMode(mode, &bubble_view_mode);
+  if (SigninViewController::ShouldShowModalSigninForMode(bubble_view_mode)) {
+    browser_->signin_view_controller()->ShowModalSignin(bubble_view_mode,
+                                                        browser_, accessPoint);
+  } else {
+    //    gfx::ScreenRectFromNSRect(ui::ConvertPointFromWindowToScreen(
+    //        [self window], [self bookmarkBubblePoint]))
+    CGRect view_rect = anchor.bounds;
+    view_rect = [anchor convertRect:view_rect toView:anchor.window.contentView];
+    view_rect = [anchor.window convertRectToScreen:view_rect];
+    view_rect.origin.y = anchor.window.screen.frame.size.height -
+                         view_rect.origin.y - view_rect.size.height;
+    view_rect.origin.y += 1;
+    view_rect.origin.x -= 1;
+    gfx::NativeView anchor_window =
+        platform_util::GetViewForWindow(browser_->window()->GetNativeWindow());
+    gfx::Rect anchor_rect(view_rect.origin.x, view_rect.origin.y,
+                          view_rect.size.width, view_rect.size.height);
+    ProfileChooserView::ShowBubble(bubble_view_mode,
+                                   signin::ManageAccountsParams(), accessPoint,
+                                   anchor_window, anchor_rect, browser_, false);
+    ProfileMetrics::LogProfileOpenMethod(ProfileMetrics::ICON_AVATAR_BUBBLE);
+  }
+#else
   if (menuController_) {
     profiles::BubbleViewMode viewMode;
     profiles::BubbleViewModeFromAvatarBubbleMode(mode, &viewMode);
@@ -190,6 +218,7 @@ bool ProfileUpdateObserver::HasAvatarError() {
   [menuController_ showWindow:self];
 
   ProfileMetrics::LogProfileOpenMethod(ProfileMetrics::ICON_AVATAR_BUBBLE);
+#endif
 }
 
 - (IBAction)buttonClicked:(id)sender {

@@ -480,15 +480,18 @@ void ProfileChooserView::ShowBubble(
     profiles::BubbleViewMode view_mode,
     const signin::ManageAccountsParams& manage_accounts_params,
     signin_metrics::AccessPoint access_point,
-    views::View* anchor_view,
+    gfx::NativeView anchor_window,
+    gfx::Rect anchor_rect,
     Browser* browser,
     bool is_source_keyboard) {
   if (IsShowing())
     return;
 
-  profile_bubble_ =
-      new ProfileChooserView(anchor_view, browser, view_mode,
-                             manage_accounts_params.service_type, access_point);
+  profile_bubble_ = new ProfileChooserView(
+      browser, view_mode, manage_accounts_params.service_type, access_point);
+  DCHECK(anchor_window);
+  profile_bubble_->SetAnchorRect(anchor_rect);
+  profile_bubble_->set_parent_window(anchor_window);
   views::Widget* widget =
       views::BubbleDialogDelegateView::CreateBubble(profile_bubble_);
   profile_bubble_->SetAlignment(views::BubbleBorder::ALIGN_EDGE_TO_ANCHOR_EDGE);
@@ -514,12 +517,11 @@ void ProfileChooserView::Hide() {
     profile_bubble_->GetWidget()->Close();
 }
 
-ProfileChooserView::ProfileChooserView(views::View* anchor_view,
-                                       Browser* browser,
+ProfileChooserView::ProfileChooserView(Browser* browser,
                                        profiles::BubbleViewMode view_mode,
                                        signin::GAIAServiceType service_type,
                                        signin_metrics::AccessPoint access_point)
-    : BubbleDialogDelegateView(anchor_view, views::BubbleBorder::TOP_RIGHT),
+    : BubbleDialogDelegateView(nil, views::BubbleBorder::TOP_RIGHT),
       browser_(browser),
       view_mode_(view_mode),
       gaia_service_type_(service_type),
