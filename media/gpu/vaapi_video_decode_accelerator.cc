@@ -148,18 +148,18 @@ class VaapiVideoDecodeAccelerator::VaapiH264Accelerator
                            const H264Picture::Vector& ref_pic_listp0,
                            const H264Picture::Vector& ref_pic_listb0,
                            const H264Picture::Vector& ref_pic_listb1,
-                           const scoped_refptr<H264Picture>& pic) override;
+                           scoped_refptr<H264Picture> pic) override;
 
   bool SubmitSlice(const H264PPS* pps,
                    const H264SliceHeader* slice_hdr,
                    const H264Picture::Vector& ref_pic_list0,
                    const H264Picture::Vector& ref_pic_list1,
-                   const scoped_refptr<H264Picture>& pic,
+                   scoped_refptr<H264Picture> pic,
                    const uint8_t* data,
                    size_t size) override;
 
-  bool SubmitDecode(const scoped_refptr<H264Picture>& pic) override;
-  bool OutputPicture(const scoped_refptr<H264Picture>& pic) override;
+  bool SubmitDecode(scoped_refptr<H264Picture> pic) override;
+  bool OutputPicture(scoped_refptr<H264Picture> pic) override;
 
   void Reset() override;
 
@@ -1228,7 +1228,7 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitFrameMetadata(
     const H264Picture::Vector& ref_pic_listp0,
     const H264Picture::Vector& ref_pic_listb0,
     const H264Picture::Vector& ref_pic_listb1,
-    const scoped_refptr<H264Picture>& pic) {
+    scoped_refptr<H264Picture> pic) {
   VAPictureParameterBufferH264 pic_param;
   memset(&pic_param, 0, sizeof(pic_param));
 
@@ -1343,7 +1343,7 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitSlice(
     const H264SliceHeader* slice_hdr,
     const H264Picture::Vector& ref_pic_list0,
     const H264Picture::Vector& ref_pic_list1,
-    const scoped_refptr<H264Picture>& pic,
+    scoped_refptr<H264Picture> pic,
     const uint8_t* data,
     size_t size) {
   VASliceParameterBufferH264 slice_param;
@@ -1445,7 +1445,7 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitSlice(
 }
 
 bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitDecode(
-    const scoped_refptr<H264Picture>& pic) {
+    scoped_refptr<H264Picture> pic) {
   VLOGF(4) << "Decoding POC " << pic->pic_order_cnt;
   scoped_refptr<VaapiDecodeSurface> dec_surface =
       H264PictureToVaapiDecodeSurface(pic);
@@ -1454,7 +1454,7 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitDecode(
 }
 
 bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::OutputPicture(
-    const scoped_refptr<H264Picture>& pic) {
+    scoped_refptr<H264Picture> pic) {
   scoped_refptr<VaapiDecodeSurface> dec_surface =
       H264PictureToVaapiDecodeSurface(pic);
   dec_surface->set_visible_rect(pic->visible_rect);

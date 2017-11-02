@@ -376,15 +376,13 @@ void H264Decoder::UpdatePicNums(int frame_num) {
 }
 
 struct PicNumDescCompare {
-  bool operator()(const scoped_refptr<H264Picture>& a,
-                  const scoped_refptr<H264Picture>& b) const {
+  bool operator()(H264Picture* a, H264Picture* b) const {
     return a->pic_num > b->pic_num;
   }
 };
 
 struct LongTermPicNumAscCompare {
-  bool operator()(const scoped_refptr<H264Picture>& a,
-                  const scoped_refptr<H264Picture>& b) const {
+  bool operator()(H264Picture* a, H264Picture* b) const {
     return a->long_term_pic_num < b->long_term_pic_num;
   }
 };
@@ -411,15 +409,13 @@ void H264Decoder::ConstructReferencePicListsP(
 }
 
 struct POCAscCompare {
-  bool operator()(const scoped_refptr<H264Picture>& a,
-                  const scoped_refptr<H264Picture>& b) const {
+  bool operator()(H264Picture* a, H264Picture* b) const {
     return a->pic_order_cnt < b->pic_order_cnt;
   }
 };
 
 struct POCDescCompare {
-  bool operator()(const scoped_refptr<H264Picture>& a,
-                  const scoped_refptr<H264Picture>& b) const {
+  bool operator()(H264Picture* a, H264Picture* b) const {
     return a->pic_order_cnt > b->pic_order_cnt;
   }
 };
@@ -482,7 +478,7 @@ void H264Decoder::ConstructReferencePicListsB(
 }
 
 // See 8.2.4
-int H264Decoder::PicNumF(const scoped_refptr<H264Picture>& pic) {
+int H264Decoder::PicNumF(H264Picture* pic) {
   if (!pic)
     return -1;
 
@@ -493,7 +489,7 @@ int H264Decoder::PicNumF(const scoped_refptr<H264Picture>& pic) {
 }
 
 // See 8.2.4
-int H264Decoder::LongTermPicNumF(const scoped_refptr<H264Picture>& pic) {
+int H264Decoder::LongTermPicNumF(H264Picture* pic) {
   if (pic->ref && pic->long_term)
     return pic->long_term_pic_num;
   else
@@ -505,7 +501,7 @@ int H264Decoder::LongTermPicNumF(const scoped_refptr<H264Picture>& pic) {
 static void ShiftRightAndInsert(H264Picture::Vector* v,
                                 int from,
                                 int to,
-                                const scoped_refptr<H264Picture>& pic) {
+                                scoped_refptr<H264Picture> pic) {
   // Security checks, do not disable in Debug mode.
   CHECK(from <= to);
   CHECK(to <= std::numeric_limits<int>::max() - 2);
@@ -520,7 +516,7 @@ static void ShiftRightAndInsert(H264Picture::Vector* v,
   for (int i = to + 1; i > from; --i)
     (*v)[i] = (*v)[i - 1];
 
-  (*v)[from] = pic;
+  (*v)[from] = std::move(pic);
 }
 
 bool H264Decoder::ModifyReferencePicList(const H264SliceHeader* slice_hdr,
