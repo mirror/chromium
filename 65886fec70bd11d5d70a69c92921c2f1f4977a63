@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd60920a_70959112",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2240,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-02T16:50:24Z",
+      "side": 1,
+      "message": "From the internal automatic checks it seems all enabled group names must be listed here. But I\u0027m unsure about it, better wait on holte@\u0027s say on that.",
+      "range": {
+        "startLine": 2240,
+        "startChar": 29,
+        "endLine": 2240,
+        "endChar": 36
+      },
+      "revId": "65886fec70bd11d5d70a69c92921c2f1f4977a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
