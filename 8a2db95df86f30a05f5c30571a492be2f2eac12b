@@ -34,6 +34,24 @@
       "revId": "8a2db95df86f30a05f5c30571a492be2f2eac12b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68d23ed_5a6909d4",
+        "filename": "media/remoting/proto_utils_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-02T16:57:17Z",
+      "side": 1,
+      "message": "While Mounirs PS7 is a smaller code change, I prefer the test you posted in the comment above. \n\nMounir\u0027s approach forces a particular ordering of things in the structure definition and the padding size assumptions will be off next time someone changes and they\u0027ll have to grok all this silly context. I prefer that people who come to this structure later not have to ask themselves questions about padding.",
+      "parentUuid": "45b75269_ff567618",
+      "revId": "8a2db95df86f30a05f5c30571a492be2f2eac12b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
