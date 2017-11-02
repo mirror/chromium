@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2648f5ea_9bf4c0db",
+        "filename": "services/device/wake_lock/wake_lock.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T00:51:07Z",
+      "side": 1,
+      "message": "Not introduced by this CL, but it\u0027d be good to fix at some point: per https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#Do-not-write-one_off-functions-to-convert-to_from-Mojo-types, let\u0027s change this to use the TypeConverter template. I\u0027ll file a bug to track this.",
+      "revId": "256b460474c11b858a12db6e15361eea0f7d3dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
