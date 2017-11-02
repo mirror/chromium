@@ -179,7 +179,7 @@ void PaintTiming::SetFirstContentfulPaint(double stamp) {
 
 void PaintTiming::RegisterNotifySwapTime(PaintEvent event) {
   RegisterNotifySwapTime(event,
-                         WTF::Bind(&PaintTiming::ReportSwapTime,
+                         WTF::BindRepeating(&PaintTiming::ReportSwapTime,
                                    WrapCrossThreadWeakPersistent(this), event));
 }
 
@@ -192,7 +192,7 @@ void PaintTiming::RegisterNotifySwapTime(PaintEvent event,
   if (WebLayerTreeView* layerTreeView =
           GetFrame()->GetPage()->GetChromeClient().GetWebLayerTreeView(
               GetFrame())) {
-    layerTreeView->NotifySwapTime(ConvertToBaseCallback(std::move(callback)));
+    layerTreeView->NotifySwapTime(std::move(callback));
   }
 }
 

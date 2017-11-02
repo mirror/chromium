@@ -86,7 +86,7 @@ bool ImageLayerBridge::PrepareTextureMailbox(
     auto func = WTF::Bind(&ImageLayerBridge::MailboxReleasedGpu,
                           WrapWeakPersistent(this), image_);
     *out_release_callback = viz::SingleReleaseCallback::Create(
-        ConvertToBaseCallback(std::move(func)));
+        std::move(func));
   } else {
     std::unique_ptr<viz::SharedBitmap> bitmap = CreateOrRecycleBitmap();
     if (!bitmap)
@@ -114,7 +114,7 @@ bool ImageLayerBridge::PrepareTextureMailbox(
                           WrapWeakPersistent(this), base::Passed(&bitmap),
                           image_->Size());
     *out_release_callback = viz::SingleReleaseCallback::Create(
-        ConvertToBaseCallback(std::move(func)));
+        std::move(func));
   }
 
   out_mailbox->set_nearest_neighbor(filter_quality_ == kNone_SkFilterQuality);

@@ -213,9 +213,9 @@ ScriptPromise Bluetooth::requestDevice(ScriptState* script_state,
   ScriptPromise promise = resolver->Promise();
 
   service_->RequestDevice(std::move(device_options),
-                          ConvertToBaseCallback(WTF::Bind(
+                          WTF::Bind(
                               &Bluetooth::RequestDeviceCallback,
-                              WrapPersistent(this), WrapPersistent(resolver))));
+                              WrapPersistent(this), WrapPersistent(resolver)));
   return promise;
 }
 

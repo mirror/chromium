@@ -56,9 +56,9 @@ void RespondWithObserver::RespondWith(ScriptState* script_state,
   state_ = kPending;
   observer_->WaitUntil(
       script_state, script_promise, exception_state,
-      WTF::Bind(&RespondWithObserver::ResponseWasFulfilled,
+      WTF::BindRepeating(&RespondWithObserver::ResponseWasFulfilled,
                 WrapPersistent(this)),
-      WTF::Bind(&RespondWithObserver::ResponseWasRejected, WrapPersistent(this),
+      WTF::BindRepeating(&RespondWithObserver::ResponseWasRejected, WrapPersistent(this),
                 kWebServiceWorkerResponseErrorPromiseRejected));
 }
 

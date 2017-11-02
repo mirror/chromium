@@ -247,8 +247,8 @@ void FirstMeaningfulPaintDetector::ReportHistograms() {
 void FirstMeaningfulPaintDetector::RegisterNotifySwapTime(PaintEvent event) {
   ++outstanding_swap_promise_count_;
   paint_timing_->RegisterNotifySwapTime(
-      event, WTF::Bind(&FirstMeaningfulPaintDetector::ReportSwapTime,
-                       WrapCrossThreadWeakPersistent(this), event));
+      event, WTF::BindRepeating(&FirstMeaningfulPaintDetector::ReportSwapTime,
+                                WrapCrossThreadWeakPersistent(this), event));
 }
 
 void FirstMeaningfulPaintDetector::ReportSwapTime(

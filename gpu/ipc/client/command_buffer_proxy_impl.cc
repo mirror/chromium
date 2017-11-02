@@ -235,9 +235,9 @@ void CommandBufferProxyImpl::OnSignalAck(uint32_t id,
                            gpu::error::kLostContext);
     return;
   }
-  base::Closure callback = it->second;
+  base::OnceClosure callback = std::move(it->second);
   signal_tasks_.erase(it);
-  callback.Run();
+  std::move(callback).Run();
 }
 
 CommandBuffer::State CommandBufferProxyImpl::GetLastState() {
@@ -641,7 +641,7 @@ void CommandBufferProxyImpl::AddLatencyInfo(
 }
 
 void CommandBufferProxyImpl::SignalQuery(uint32_t query,
-                                         const base::Closure& callback) {
+                                         base::OnceClosure callback) {
   CheckLock();
   base::AutoLock lock(last_state_lock_);
   if (last_state_.error != gpu::error::kNoError)
@@ -657,7 +657,7 @@ void CommandBufferProxyImpl::SignalQuery(uint32_t query,
   // called, leading to stalled threads and/or memory leaks.
   uint32_t signal_id = next_signal_id_++;
   Send(new GpuCommandBufferMsg_SignalQuery(route_id_, query, signal_id));
-  signal_tasks_.insert(std::make_pair(signal_id, callback));
+  signal_tasks_.insert(std::make_pair(signal_id, std::move(callback)));
 }
 
 void CommandBufferProxyImpl::TakeFrontBuffer(const gpu::Mailbox& mailbox) {

@@ -367,9 +367,9 @@ void GLES2Implementation::FreeSharedMemory(void* mem) {
   mapped_memory_->FreePendingToken(mem, helper_->InsertToken());
 }
 
-void GLES2Implementation::RunIfContextNotLost(const base::Closure& callback) {
+void GLES2Implementation::RunIfContextNotLost(base::OnceClosure callback) {
   if (!lost_context_callback_run_)
-    callback.Run();
+    std::move(callback).Run();
 }
 
 void GLES2Implementation::FlushPendingWork() {
@@ -403,15 +403,15 @@ bool GLES2Implementation::IsSyncTokenSignaled(
 }
 
 void GLES2Implementation::SignalQuery(uint32_t query,
-                                      const base::Closure& callback) {
+                                      base::OnceClosure callback) {
   // Flush previously entered commands to ensure ordering with any
   // glBeginQueryEXT() calls that may have been put into the context.
   ShallowFlushCHROMIUM();
   gpu_control_->SignalQuery(
       query,
-      base::Bind(&GLES2Implementation::RunIfContextNotLost,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 callback));
+      base::BindOnce(&GLES2Implementation::RunIfContextNotLost,
+                     weak_ptr_factory_.GetWeakPtr(),
+                     std::move(callback)));
 }
 
 void GLES2Implementation::SetAggressivelyFreeResources(
