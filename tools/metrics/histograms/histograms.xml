@@ -32214,6 +32214,40 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.AudioOutputStreamProxy.Win.ClientError" enum="Hresult">
+  <owner>marinaciocea@chromium.org</owner>
+  <summary>
+    Error codes from creating and activating an IAudioClient in
+    AudioManagerWin::GetPreferredOutputStreamParameters on Windows.
+  </summary>
+</histogram>
+
+<histogram name="Media.AudioOutputStreamProxy.Win.DeviceError" enum="Hresult">
+  <owner>marinaciocea@chromium.org</owner>
+  <summary>
+    Error codes from creating an IMMDevice endpoint in
+    AudioManagerWin::GetPreferredOutputStreamParameters on Windows.
+  </summary>
+</histogram>
+
+<histogram name="Media.AudioOutputStreamProxy.Win.DevicePeriodError"
+    enum="Hresult">
+  <owner>marinaciocea@chromium.org</owner>
+  <summary>
+    Error codes from IAudioClient::GetDevicePeriod() in
+    AudioManagerWin::GetPreferredOutputStreamParameters on Windows.
+  </summary>
+</histogram>
+
+<histogram name="Media.AudioOutputStreamProxy.Win.MixFormatError"
+    enum="Hresult">
+  <owner>marinaciocea@chromium.org</owner>
+  <summary>
+    Error codes from IAudioClient::GetMixFormat() in
+    AudioManagerWin::GetPreferredOutputStreamParameters on Windows.
+  </summary>
+</histogram>
+
 <histogram name="Media.AudioRendererAudioGlitches" enum="AudioGlitchResult">
   <owner>henrika@chromium.org</owner>
   <summary>
