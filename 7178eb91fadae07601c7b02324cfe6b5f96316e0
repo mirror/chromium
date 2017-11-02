@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3c26cf6_aea37123",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-02T21:53:54Z",
+      "side": 1,
+      "message": "I broke it. the Dump button\u0027s ID is also \u0027dump\u0027 before, so $(\u0027dump\u0027) grabs the button element, and .showModal() just completely fails :D",
+      "parentUuid": "1fe2f879_ed27b81b",
+      "revId": "7178eb91fadae07601c7b02324cfe6b5f96316e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4c8d58e_81adccb3",
         "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
         "patchSetId": 2
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3c09e962_861e1f91",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-02T21:53:54Z",
+      "side": 1,
+      "message": "my undo\u0027s in vim didn\u0027t undo this part... this change is actually unnecessary. reverted",
+      "parentUuid": "47892545_5d2fa8eb",
+      "revId": "7178eb91fadae07601c7b02324cfe6b5f96316e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5cc6491_aba02b1c",
         "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
         "patchSetId": 2
@@ -85,6 +121,24 @@
       "revId": "7178eb91fadae07601c7b02324cfe6b5f96316e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8923652_62d68758",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-02T21:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5cc6491_aba02b1c",
+      "revId": "7178eb91fadae07601c7b02324cfe6b5f96316e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "12476a07_d3834707",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-02T21:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5a2f076_e7a62554",
+      "revId": "7178eb91fadae07601c7b02324cfe6b5f96316e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd50ed03_623f7872",
         "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
         "patchSetId": 2
@@ -119,6 +191,24 @@
       "revId": "7178eb91fadae07601c7b02324cfe6b5f96316e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7ba016_25da956b",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-11-02T21:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd50ed03_623f7872",
+      "revId": "7178eb91fadae07601c7b02324cfe6b5f96316e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
