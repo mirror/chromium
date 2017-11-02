@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0749c6b_325c08a6",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c930a86_74d7cef1",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2c94e27_c817cc12",
         "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
         "patchSetId": 14
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f30a7710_3bd60624",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a7e9b8f_aa3348af",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04bee37f_66ecf99f",
         "filename": "content/browser/compositor/image_transport_factory_browsertest.cc",
         "patchSetId": 14
@@ -68,6 +104,24 @@
       "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3485ec08_e81d9109",
+        "filename": "content/browser/compositor/image_transport_factory_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04bee37f_66ecf99f",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "18cf0878_f675d04e",
+        "filename": "content/browser/compositor/image_transport_factory_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:26:00Z",
+      "side": 1,
+      "message": "Every feature would want a helper like this. So I ended up not doing that.",
+      "parentUuid": "21a6e461_8e5901ae",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8717fcf2_17bc9e72",
         "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
         "patchSetId": 14
@@ -102,6 +174,24 @@
       "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ede567_470985a0",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:26:00Z",
+      "side": 1,
+      "message": "You are right, but my CL doesn\u0027t regress it. Before CanUseGpuBrowserCompositor() checks three things:\n1) commandline switch, we hook up here.\n2) swiftshader mode\n3) blacklisting\nBoth 2) and 3) are hooked up on the GPU side in this CL, see gpu/config/gpu_util.cc, where I also blacklist accelerated 2d canvas if gpu compositor is disabled by swiftshader or blacklisting.",
+      "parentUuid": "8717fcf2_17bc9e72",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "fdd0625a_35221da2",
+        "filename": "content/renderer/pepper/ppb_graphics_3d_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee2caa8a_c33103c1",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee239fea_7a63422d",
         "filename": "content/renderer/pepper/ppb_graphics_3d_impl.cc",
         "patchSetId": 14
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "8d211918_ec92b95c",
+        "filename": "content/renderer/pepper/ppb_graphics_3d_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:26:00Z",
+      "side": 1,
+      "message": "I added a comment in line why this needs to be called after.",
+      "parentUuid": "ee239fea_7a63422d",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b867f58a_1d8ee374",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 14
@@ -153,6 +279,24 @@
       "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da9a6b74_f0b9165e",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1524,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:26:00Z",
+      "side": 1,
+      "message": "I am reverting all renderer side code.",
+      "parentUuid": "b867f58a_1d8ee374",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "cadb7d8b_508dba8f",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:26:00Z",
+      "side": 1,
+      "message": "I am reverting all renderer side code.",
+      "parentUuid": "9bf10ac1_9f6b5e1b",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c4d2f40_3fd89c5a",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 14
@@ -208,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "41536918_38b812b0",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2104,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:26:00Z",
+      "side": 1,
+      "message": "Code reverted.",
+      "parentUuid": "2c4d2f40_3fd89c5a",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee04d9ed_b6cf0052",
         "filename": "content/renderer/renderer_blink_platform_impl.cc",
         "patchSetId": 14
@@ -222,6 +402,24 @@
       "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8093b9_113ecc09",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:26:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ee04d9ed_b6cf0052",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +470,30 @@
     },
     {
       "key": {
+        "uuid": "e7be373d_7b32f9f6",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:26:00Z",
+      "side": 1,
+      "message": "I am reverting renderer side code.",
+      "parentUuid": "943ea211_0add9341",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 59
+      },
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ffbf103_34ab26bd",
         "filename": "third_party/WebKit/public/platform/Platform.h",
         "patchSetId": 14
@@ -286,6 +508,24 @@
       "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b80a1d2_ae75d504",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:26:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6ffbf103_34ab26bd",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
