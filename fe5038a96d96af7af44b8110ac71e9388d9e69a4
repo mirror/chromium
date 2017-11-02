@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "663ef964_f0facb2b",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1206860
+      },
+      "writtenOn": "2017-11-02T21:49:51Z",
+      "side": 1,
+      "message": "I think it would be good to add some comments about when the API clients are supposed to call this function. For example, should they call this every time they want to start using the API?  Or should they truly just call this when they have reason to believe that the component is not installed on the system or the currently installed component is out of date?\n\nAn alternative design is to call this something like `initializeEngine`, and any explicit calls to the Component Updater are handled under the hood.  That would facilitate a single component containing several possible graph specifications.  At this point we can probably assume a 1-1 relationship between components and graphs, so it could be over-engineering right now.  Or we could have `initializeEngine` as well as `loadComponent` and the API client would have to call `loadComponent` if `initializeEngine` returns a NOT_AVAILABLE state or something.",
+      "range": {
+        "startLine": 244,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 63
+      },
+      "revId": "fe5038a96d96af7af44b8110ac71e9388d9e69a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
