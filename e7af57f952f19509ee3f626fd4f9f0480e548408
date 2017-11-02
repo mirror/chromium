@@ -46,6 +46,30 @@
       "revId": "e7af57f952f19509ee3f626fd4f9f0480e548408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ca4b19a_d4f8c967",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-02T06:53:12Z",
+      "side": 1,
+      "message": "Oh, I missed that it was modified in place for None above, sorry.",
+      "parentUuid": "f77f8e5c_3d3632b2",
+      "range": {
+        "startLine": 214,
+        "startChar": 33,
+        "endLine": 214,
+        "endChar": 63
+      },
+      "revId": "e7af57f952f19509ee3f626fd4f9f0480e548408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
