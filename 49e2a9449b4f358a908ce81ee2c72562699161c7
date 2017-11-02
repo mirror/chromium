@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b77d0ad_60adc849",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-02T03:24:12Z",
+      "side": 1,
+      "message": "nit: !style.IsOverflowVisible()",
+      "range": {
+        "startLine": 615,
+        "startChar": 13,
+        "endLine": 616,
+        "endChar": 53
+      },
+      "revId": "49e2a9449b4f358a908ce81ee2c72562699161c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050ff5c2_3c28cf9c",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-02T03:24:12Z",
+      "side": 1,
+      "message": "should this be document.getScrollingElement or similar?",
+      "revId": "49e2a9449b4f358a908ce81ee2c72562699161c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b714e8f_2eed027d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-02T03:24:12Z",
+      "side": 1,
+      "message": "This is legitimate, any layout within the scroller needs to invalidate sticky constraints of sticky elements within the same scroller. It may need to mark the scroller as needing layout in case layout would have otherwise been clean.",
+      "revId": "49e2a9449b4f358a908ce81ee2c72562699161c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c21c9e_848c2047",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-02T03:24:12Z",
+      "side": 1,
+      "message": "I think this might actually belong in style when an element becomes sticky or not sticky.",
+      "revId": "49e2a9449b4f358a908ce81ee2c72562699161c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264280ab_79567358",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 3482,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-02T03:24:12Z",
+      "side": 1,
+      "message": "If so, should we not be setting anything for the initial ancestor overflow node?",
+      "revId": "49e2a9449b4f358a908ce81ee2c72562699161c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b569c8_7ae6adbd",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-02T03:24:12Z",
+      "side": 1,
+      "message": "This needs to invalidate layout on the scroller instead to cause sticky position constraints to be recalculated right?",
+      "revId": "49e2a9449b4f358a908ce81ee2c72562699161c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba7f523_83558d29",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-02T03:24:12Z",
+      "side": 1,
+      "message": "Yes",
+      "revId": "49e2a9449b4f358a908ce81ee2c72562699161c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
