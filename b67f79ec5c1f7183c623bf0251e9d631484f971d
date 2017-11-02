@@ -46,6 +46,30 @@
       "revId": "b67f79ec5c1f7183c623bf0251e9d631484f971d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b26cb54_e1636330",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-02T04:09:06Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t read the CL description carefully enough and thought that we needed to test for renderability.",
+      "parentUuid": "ac22ca33_198fb2fa",
+      "range": {
+        "startLine": 378,
+        "startChar": 36,
+        "endLine": 378,
+        "endChar": 68
+      },
+      "revId": "b67f79ec5c1f7183c623bf0251e9d631484f971d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
