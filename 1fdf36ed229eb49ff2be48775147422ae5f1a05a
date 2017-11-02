@@ -53,6 +53,41 @@
     },
     {
       "key": {
+        "uuid": "9bc55d75_664dacef",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-02T01:06:39Z",
+      "side": 1,
+      "message": "Where\u0027s the CL? I\u0027m curious why you prefer as_string() over AsStringPiece().",
+      "parentUuid": "84138781_a5d1ecd9",
+      "revId": "1fdf36ed229eb49ff2be48775147422ae5f1a05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ba0aa0_a2d00d00",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-02T01:06:39Z",
+      "side": 1,
+      "message": "Another option is to use:\n\n  operator url::Origin();\n\nWe\u0027re doing this for KURL \u003d\u003e GURL conversion.\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/weborigin/KURL.h?q\u003dkurl.h\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d220\n\nDaniel: Which do you prefer?",
+      "revId": "1fdf36ed229eb49ff2be48775147422ae5f1a05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "497a1600_de9a9688",
         "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.h",
         "patchSetId": 5
