@@ -27,6 +27,7 @@
 
 #include <memory>
 
+#include "base/threading/thread_task_runner_handle.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/bindings/DOMDataStore.h"
 #include "platform/bindings/ScriptForbiddenScope.h"
@@ -64,7 +65,8 @@ V8PerIsolateData::V8PerIsolateData(
     V8ContextSnapshotMode v8_context_snapshot_mode)
     : v8_context_snapshot_mode_(v8_context_snapshot_mode),
       isolate_holder_(
-          task_runner ? task_runner->ToSingleThreadTaskRunner() : nullptr,
+          task_runner ? task_runner->ToSingleThreadTaskRunner()
+                      : base::ThreadTaskRunnerHandle::Get(),
           gin::IsolateHolder::kSingleThread,
           IsMainThread() ? gin::IsolateHolder::kDisallowAtomicsWait
                          : gin::IsolateHolder::kAllowAtomicsWait,
