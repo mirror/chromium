@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "075dc47d_67aeddff",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-02T01:38:03Z",
+      "side": 1,
+      "message": "I don\u0027t think this will quite work like you want for empty because \u0027\u0027 is False-ish?",
+      "range": {
+        "startLine": 214,
+        "startChar": 33,
+        "endLine": 214,
+        "endChar": 63
+      },
+      "revId": "e7af57f952f19509ee3f626fd4f9f0480e548408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
