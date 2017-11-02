@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03a6a456_f19213bd",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-11-02T00:25:18Z",
+      "side": 1,
+      "message": "I would clean the wording up a bit. Something like the following:\n\nThe value of save_data_ is read once per frame from NetworkStateNotifier, which is guarded by a mutex lock, and cached locally here for performance.",
+      "range": {
+        "startLine": 232,
+        "startChar": 5,
+        "endLine": 232,
+        "endChar": 10
+      },
+      "revId": "30565511cf808b5475d1a58a7890589b30da61cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67ae3c1_8ca262de",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-11-02T00:25:18Z",
+      "side": 1,
+      "message": "TODO(tbansal)?",
+      "range": {
+        "startLine": 160,
+        "startChar": 7,
+        "endLine": 160,
+        "endChar": 11
+      },
+      "revId": "30565511cf808b5475d1a58a7890589b30da61cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
