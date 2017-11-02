@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc98696c_862247b0",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_client_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-02T14:21:40Z",
+      "side": 1,
+      "message": "Can this be moved above the timer_.start line to show that all it\u0027s measuring is the time spent in CheckUrlForSubresourceFilter?",
+      "revId": "a9cbefd372d823d0d1dd063859dcc5be3eb55b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e891f6_054e33e6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 82705,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-02T14:21:40Z",
+      "side": 1,
+      "message": "Are the IPC descheduling delays specific to Android or will they also be present on Desktop? May be clarify the IPC descheduling delays a bit more?",
+      "revId": "a9cbefd372d823d0d1dd063859dcc5be3eb55b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
