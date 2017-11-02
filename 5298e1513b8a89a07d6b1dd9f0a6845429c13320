@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0102acd3_8de51cc1",
+        "filename": "net/base/mime_sniffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-02T17:27:01Z",
+      "side": 1,
+      "message": "nit:  braces",
+      "range": {
+        "startLine": 786,
+        "startChar": 36,
+        "endLine": 786,
+        "endChar": 39
+      },
+      "revId": "5298e1513b8a89a07d6b1dd9f0a6845429c13320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
