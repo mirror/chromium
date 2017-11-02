@@ -15,6 +15,7 @@ import org.chromium.content_public.common.ContentUrlConstants;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.util.HashSet;
 import java.util.regex.Matcher;
@@ -100,6 +101,24 @@ public class UrlUtilities {
      */
     public static boolean isInternalScheme(URI uri) {
         return INTERNAL_SCHEMES.contains(uri.getScheme());
+    }
+
+    /**
+     * @param uri A URI.
+     *
+     * @return Whether the URI's scheme is HTTP or HTTPS.
+     */
+    public static boolean isHttpOrHttps(String uri) {
+        try {
+            // URI#getScheme would throw URISyntaxException if the other parts contain invalid
+            // characters. For example, "http://foo.bar/has[square].html" has [] in the path, which
+            // is not valid.
+            String scheme = new URL(uri).getProtocol();
+            return UrlConstants.HTTP_SCHEME.equals(scheme)
+                    || UrlConstants.HTTPS_SCHEME.equals(scheme);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
