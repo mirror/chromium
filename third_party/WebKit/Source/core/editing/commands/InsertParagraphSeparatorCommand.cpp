@@ -347,7 +347,6 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
     SetEndingSelection(SelectionForUndoStep::From(
         SelectionInDOMTree::Builder()
             .Collapse(Position::FirstPositionInNode(*parent))
-            .SetIsDirectional(EndingSelection().IsDirectional())
             .Build()));
     return;
   }
@@ -419,10 +418,7 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
 
     // In this case, we need to set the new ending selection.
     SetEndingSelection(SelectionForUndoStep::From(
-        SelectionInDOMTree::Builder()
-            .Collapse(insertion_position)
-            .SetIsDirectional(EndingSelection().IsDirectional())
-            .Build()));
+        SelectionInDOMTree::Builder().Collapse(insertion_position).Build()));
     return;
   }
 
@@ -446,10 +442,7 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
     // we need to do.
     if (visible_pos.DeepEquivalent().AnchorNode()->GetLayoutObject()->IsBR()) {
       SetEndingSelection(SelectionForUndoStep::From(
-          SelectionInDOMTree::Builder()
-              .Collapse(insertion_position)
-              .SetIsDirectional(EndingSelection().IsDirectional())
-              .Build()));
+          SelectionInDOMTree::Builder().Collapse(insertion_position).Build()));
       return;
     }
   }
@@ -602,7 +595,6 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
   SetEndingSelection(SelectionForUndoStep::From(
       SelectionInDOMTree::Builder()
           .Collapse(Position::FirstPositionInNode(*block_to_insert))
-          .SetIsDirectional(EndingSelection().IsDirectional())
           .Build()));
   ApplyStyleAfterInsertion(start_block, editing_state);
 }
