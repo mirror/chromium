@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0cce78e_80a0638c",
+        "filename": "chrome/browser/ui/app_list/search/extension_app_result.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-02T20:26:02Z",
+      "side": 1,
+      "message": "It seems like this can be used to differentiate suggested result and search result. Can we use this to fix the UMA? e.g. skip RecordHistogram [1] call to filter out suggested app, or pass it in to filter out inside RecordHistogram?\n\n[1]: https://cs.chromium.org/chromium/src/chrome/browser/ui/app_list/search/search_util.cc?rcl\u003d20c46444e0b3199d11a47c560b8da615facbbd1d\u0026l\u003d16",
+      "revId": "22de40fb6d6990a74025863b884120cfc3582f4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
