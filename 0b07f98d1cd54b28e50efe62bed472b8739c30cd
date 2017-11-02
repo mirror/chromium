@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cfcb1ad_da62012a",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-02T20:50:36Z",
+      "side": 1,
+      "message": "Need more elaborate comment, full sentence, etc.",
+      "range": {
+        "startLine": 36,
+        "startChar": 29,
+        "endLine": 36,
+        "endChar": 37
+      },
+      "revId": "0b07f98d1cd54b28e50efe62bed472b8739c30cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee607545_bde6471d",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-02T20:50:36Z",
+      "side": 1,
+      "message": "The callback will probably need NSURLSessionTask to associate metrics with, and may have to take a collection of metrics.",
+      "range": {
+        "startLine": 38,
+        "startChar": 34,
+        "endLine": 38,
+        "endChar": 35
+      },
+      "revId": "0b07f98d1cd54b28e50efe62bed472b8739c30cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2c47ac_7f77c48a",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-02T20:50:36Z",
+      "side": 1,
+      "message": "Need separate comments for separate methods, also explaining the return value and expectations passing same delegate.",
+      "range": {
+        "startLine": 205,
+        "startChar": 31,
+        "endLine": 205,
+        "endChar": 37
+      },
+      "revId": "0b07f98d1cd54b28e50efe62bed472b8739c30cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c17459_4fcd7ecc",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-02T20:50:36Z",
+      "side": 1,
+      "message": "I think this CL should extend test file added in CL #1.",
+      "range": {
+        "startLine": 3,
+        "startChar": 16,
+        "endLine": 3,
+        "endChar": 23
+      },
+      "revId": "0b07f98d1cd54b28e50efe62bed472b8739c30cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d1da5a9_37edda4f",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-02T20:50:36Z",
+      "side": 1,
+      "message": "Can you elaborate on the question?",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 16
+      },
+      "revId": "0b07f98d1cd54b28e50efe62bed472b8739c30cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
