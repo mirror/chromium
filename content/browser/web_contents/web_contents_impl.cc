@@ -4992,13 +4992,6 @@ std::unique_ptr<NavigationUIData> WebContentsImpl::GetNavigationUIData(
   return GetContentClient()->browser()->GetNavigationUIData(navigation_handle);
 }
 
-void WebContentsImpl::DidCancelLoading() {
-  controller_.DiscardNonCommittedEntries();
-
-  // Update the URL display.
-  NotifyNavigationStateChanged(INVALIDATE_TYPE_URL);
-}
-
 void WebContentsImpl::DidAccessInitialDocument() {
   has_accessed_initial_document_ = true;
 
@@ -5624,6 +5617,9 @@ void WebContentsImpl::OnDialogClosed(int render_process_id,
       rfh->frame_tree_node()->BeforeUnloadCanceled();
       controller_.DiscardNonCommittedEntries();
     }
+
+    // Update the URL display either way, to avoid showing a stale URL.
+    NotifyNavigationStateChanged(INVALIDATE_TYPE_URL);
 
     for (auto& observer : observers_)
       observer.BeforeUnloadDialogCancelled();
