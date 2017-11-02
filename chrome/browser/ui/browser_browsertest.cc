@@ -850,46 +850,6 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, SingleBeforeUnloadAfterRedirect) {
   SetBrowserClientForTesting(old_client);
 }
 
-// Test for crbug.com/80401.  Canceling a before unload dialog should reset
-// the URL to the previous page's URL.
-IN_PROC_BROWSER_TEST_F(BrowserTest, CancelBeforeUnloadResetsURL) {
-  GURL url(ui_test_utils::GetTestUrl(base::FilePath(
-      base::FilePath::kCurrentDirectory), base::FilePath(kBeforeUnloadFile)));
-  ui_test_utils::NavigateToURL(browser(), url);
-  WebContents* contents = browser()->tab_strip_model()->GetActiveWebContents();
-  content::PrepContentsForBeforeUnloadTest(contents);
-
-  // Navigate to a page that triggers a cross-site transition.
-  ASSERT_TRUE(embedded_test_server()->Start());
-  GURL url2(embedded_test_server()->GetURL("/title1.html"));
-  browser()->OpenURL(OpenURLParams(url2, Referrer(),
-                                   WindowOpenDisposition::CURRENT_TAB,
-                                   ui::PAGE_TRANSITION_TYPED, false));
-
-  content::WindowedNotificationObserver host_destroyed_observer(
-      content::NOTIFICATION_RENDER_WIDGET_HOST_DESTROYED,
-      content::NotificationService::AllSources());
-
-  // Cancel the dialog.
-  JavaScriptAppModalDialog* alert = ui_test_utils::WaitForAppModalDialog();
-  alert->CloseModalDialog();
-  EXPECT_FALSE(contents->IsLoading());
-
-  // Verify there are no pending history items after the dialog is cancelled.
-  // (see crbug.com/93858)
-  NavigationEntry* entry = contents->GetController().GetPendingEntry();
-  EXPECT_EQ(NULL, entry);
-
-  // Wait for the ShouldClose_ACK to arrive.  We can detect it by waiting for
-  // the pending RVH to be destroyed.
-  host_destroyed_observer.Wait();
-  EXPECT_EQ(url, browser()->toolbar_model()->GetURL());
-
-  // Clear the beforeunload handler so the test can easily exit.
-  contents->GetMainFrame()->ExecuteJavaScriptForTests(
-      ASCIIToUTF16("onbeforeunload=null;"));
-}
-
 // Test for crbug.com/11647.  A page closed with window.close() should not have
 // two beforeunload dialogs shown.
 // http://crbug.com/410891
