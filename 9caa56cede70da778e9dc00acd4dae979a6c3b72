@@ -16,6 +16,24 @@
       "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0baac228_2ef2f9bd",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T20:37:53Z",
+      "side": 1,
+      "message": "Were there other tests that need multiple displays? If so, it might make sense to make display::test::Screen support multiple displays.",
+      "parentUuid": "5e8df53d_a8f9057a",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

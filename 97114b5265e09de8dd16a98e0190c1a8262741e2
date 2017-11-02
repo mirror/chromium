@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "28ec0e4d_1b23dc88",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T20:37:53Z",
+      "side": 1,
+      "message": "That\u0027s true that the user would be aware of the virtual positioning of the displays. We may want to come back to this later.",
+      "parentUuid": "a0ed65dd_d992e653",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aadbb56_c8ca8bea",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 14
@@ -589,6 +613,24 @@
       "side": 1,
       "message": "Is there any display configuration (in software settings) that would result in the external display being the \"primary\" in that case?  On a Windows desktop, I can make either monitor the primary as far as Windows is concerned and chrome agrees with that setting. If this is also true for laptops, I\u0027m not sure that checking if it matches the \"primary\" display is a good idea.  IMHO it wouldn\u0027t be bad to drop the check in this case.  The controller is most likely open on the internal display anyway.",
       "parentUuid": "73f11cee_96e630ac",
+      "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9102248c_0d7fd4eb",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T20:37:53Z",
+      "side": 1,
+      "message": "As we discussed offline, on Windows laptops the user can choose an externally connected display as the primary display from the display settings, but there didn\u0027t seem to be a good reason to do so. (On a MacBook it didn\u0027t seem like you can change the primary display). So we\u0027ll disallow presenting to the primary display for now.",
+      "parentUuid": "faf0d388_1174e7ef",
       "revId": "97114b5265e09de8dd16a98e0190c1a8262741e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
