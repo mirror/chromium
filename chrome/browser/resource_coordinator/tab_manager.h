@@ -85,7 +85,7 @@ class TabManager : public TabStripModelObserver,
                    public chrome::BrowserListObserver {
  public:
   // Forward declaration of tab signal observer.
-  class GRCTabSignalObserver;
+  class ResourceCoordinatorSignalObserver;
   // Needs to be public for DEFINE_WEB_CONTENTS_USER_DATA_KEY.
   class WebContentsData;
 
@@ -587,6 +587,9 @@ class TabManager : public TabStripModelObserver,
   // The number of loading slots that TabManager can use to load background tabs
   // in parallel.
   size_t loading_slots_;
+
+  std::unique_ptr<ResourceCoordinatorSignalObserver>
+      resource_coordinator_signal_observer_;
 
   // Records UMAs for tab and system-related events and properties during
   // session restore.
