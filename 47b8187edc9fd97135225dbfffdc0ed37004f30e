@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "5b7168a8_8a9d1f06",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-02T20:37:18Z",
+      "side": 1,
+      "message": "This entire method is redundant; you can just:\n\nif (container.GetLayoutObject()-\u003eHasOverflowClip())\n\nNote that it\u0027s not necessary to consider the WebFocusType, because it\u0027s not possible to have an overflow clip in only one direction:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/style/ComputedStyle.h?rcl\u003d48e94b01b98d71ee312bfedbbdc94440493eac28\u0026l\u003d1949",
+      "range": {
+        "startLine": 324,
+        "startChar": 5,
+        "endLine": 324,
+        "endChar": 27
+      },
+      "revId": "47b8187edc9fd97135225dbfffdc0ed37004f30e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25f498f9_ee5b4672",
         "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
         "patchSetId": 5
