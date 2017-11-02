@@ -7,8 +7,10 @@
 #include "services/service_manager/public/cpp/service_runner.h"
 #include "services/viz/service.h"
 
+// Only used in tests.
 MojoResult ServiceMain(MojoHandle service_request_handle) {
-  viz::Service* viz_service = new viz::Service;
+  // Pass "" for UKM Service name. This should be okay for tests.
+  viz::Service* viz_service = new viz::Service("");
   service_manager::ServiceRunner runner(viz_service);
   runner.set_message_loop_type(base::MessageLoop::TYPE_UI);
   return runner.Run(service_request_handle);

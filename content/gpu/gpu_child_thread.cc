@@ -131,7 +131,9 @@ class QueueingConnectionFilter : public ConnectionFilter {
   DISALLOW_COPY_AND_ASSIGN(QueueingConnectionFilter);
 };
 
-viz::VizMainImpl::ExternalDependencies CreateVizMainDependencies() {
+viz::VizMainImpl::ExternalDependencies CreateVizMainDependencies(
+    service_manager::Connector* connector,
+    bool is_in_process_gpu) {
   viz::VizMainImpl::ExternalDependencies deps;
   deps.create_display_compositor =
       base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz);
@@ -140,6 +142,13 @@ viz::VizMainImpl::ExternalDependencies CreateVizMainDependencies() {
   auto* process = ChildProcess::current();
   deps.shutdown_event = process->GetShutDownEvent();
   deps.io_thread_task_runner = process->io_task_runner();
+
+  if (!is_in_process_gpu) {
+    ukm::mojom::UkmRecorderInterfacePtr ukm_recorder_ptr;
+    connector->BindInterface(content::mojom::kBrowserServiceName,
+                             mojo::MakeRequest(&ukm_recorder_ptr));
+    deps.ukm_recorder_ptr_info = ukm_recorder_ptr.PassInterface();
+  }
   return deps;
 }
 
@@ -163,7 +172,10 @@ GpuChildThread::GpuChildThread(const InProcessChildThreadParams& params,
 GpuChildThread::GpuChildThread(const ChildThreadImpl::Options& options,
                                std::unique_ptr<gpu::GpuInit> gpu_init)
     : ChildThreadImpl(options),
-      viz_main_(this, CreateVizMainDependencies(), std::move(gpu_init)),
+      viz_main_(this,
+                CreateVizMainDependencies(ChildThread::Get()->GetConnector(),
+                                          in_process_gpu()),
+                std::move(gpu_init)),
       weak_factory_(this) {
   if (in_process_gpu()) {
     DCHECK(base::CommandLine::ForCurrentProcess()->HasSwitch(
