@@ -16,6 +16,24 @@
       "revId": "d856f9c69a66c4d447b635d72fca52808246cd72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89eb437_f99e8faa",
+        "filename": "cc/paint/paint_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-02T15:42:48Z",
+      "side": 1,
+      "message": "I\u0027m not happy about having to make a lot of classes from skia public for this (SkReadBuffer, SkSpecialImage, SkSpecialSurface too). I\u0027m going to try adding an override of SkImageFilter to skia/ext which can include private things and having that class expose public classes that are really needed here. So we can inherit that instead.",
+      "parentUuid": "269ca3cd_9959f857",
+      "revId": "d856f9c69a66c4d447b635d72fca52808246cd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
