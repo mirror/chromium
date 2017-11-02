@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1d494fa_d0ac2e7c",
+        "filename": "ios/chrome/browser/payments/payment_request_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-02T15:02:17Z",
+      "side": 1,
+      "message": "I think it\u0027ll be easily confused with the CanMakePayment method if moved to the PaymentRequest object.",
+      "parentUuid": "15465b3f_64b74e32",
+      "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5428fb1d_54a90242",
         "filename": "ios/chrome/browser/payments/payment_request_util_unittest.mm",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-01T20:18:56Z",
       "side": 1,
       "message": "Does PlatformTest define SetUp()? If not, then it\u0027s not necessary to override this method, and if yes, it should probably be called as well?",
+      "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "409ed8c1_4b19f41d",
+        "filename": "ios/chrome/browser/payments/payment_request_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-02T15:02:17Z",
+      "side": 1,
+      "message": "PlatformTest doesn\u0027t define SetUp(). How does it make it unnecessary to override it?",
+      "parentUuid": "5428fb1d_54a90242",
       "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a89c98c_a602c547",
+        "filename": "ios/chrome/browser/payments/payment_request_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-02T15:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5af8c04_547e08de",
+      "range": {
+        "startLine": 82,
+        "startChar": 9,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
