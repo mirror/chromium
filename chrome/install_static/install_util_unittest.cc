@@ -4,6 +4,8 @@
 
 #include "chrome/install_static/install_util.h"
 
+#include <objbase.h>
+
 #include <tuple>
 
 #include "base/macros.h"
@@ -450,6 +452,65 @@ TEST_P(InstallStaticUtilTest, GetBaseAppId) {
   static_assert(arraysize(kBaseAppIds) == NUM_INSTALL_MODES,
                 "kBaseAppIds out of date.");
   EXPECT_THAT(GetBaseAppId(), StrCaseEq(kBaseAppIds[std::get<0>(GetParam())]));
+}
+
+TEST_P(InstallStaticUtilTest, GetToastActivatorClsid) {
+#if defined(GOOGLE_CHROME_BUILD)
+  // The toast activator CLSIDs for the brand's install modes; parallel to
+  // kInstallModes.
+  static constexpr const CLSID kToastActivatorClsids[] = {
+      {0xA2C6CB58,
+       0xC076,
+       0x425C,
+       {0xAC, 0xB7, 0x6D, 0x19, 0xD6, 0x44, 0x28, 0xCD}},  // Google Chrome.
+      {0xB89B137F,
+       0x96AA,
+       0x4AE2,
+       {0x98, 0xC4, 0x63, 0x73, 0xEA, 0xA1, 0xEA,
+        0x4D}},  // Google Chrome Beta.
+      {0xF01C03EB,
+       0xD431,
+       0x4C83,
+       {0x8D, 0x7A, 0x90, 0x27, 0x71, 0xE7, 0x32, 0xFA}},  // Google Chrome Dev.
+      {0xFA372A6E,
+       0x149F,
+       0x4E95,
+       {0x83, 0x2D, 0x8F, 0x69, 0x8D, 0x40, 0xAD,
+        0x7F}}  // Google Chrome SxS (Canary).
+  };
+
+  // The string representation of the CLSIDs above.
+  static constexpr const wchar_t* kToastActivatorClsidsString[] = {
+      L"{8A69D345-D564-463c-AFF1-A69D9E530F96}",  // Google Chrome.
+      L"{8237E44A-0054-442C-B6B6-EA0509993955}",  // Google Chrome Beta.
+      L"{401C381F-E0DE-4B85-8BD8-3F3F14FBDA57}",  // Google Chrome Dev.
+      L"{4EA16AC7-FD5A-47C3-875B-DBF4A2008C20}",  // Google Chrome SxS (Canary).
+  };
+#else
+  // The toast activator CLSIDs for the brand's install modes; parallel to
+  // kInstallModes.
+  static constexpr const CLSID kToastActivatorClsids[] = {
+      {0x635EFA6F,
+       0x08D6,
+       0x4EC9,
+       {0xBD, 0x14, 0x8A, 0x0F, 0xDE, 0x97, 0x51, 0x59}}  // Chromium.
+  };
+
+  // The string representation of the CLSIDs above.
+  static constexpr const wchar_t* kToastActivatorClsidsString[] = {
+      L"{635EFA6F-08D6-4EC9-BD14-8A0FDE975159}"  // Chromium.
+  };
+#endif
+  static_assert(arraysize(kToastActivatorClsids) == NUM_INSTALL_MODES,
+                "kToastActivatorClsids out of date.");
+
+  EXPECT_EQ(GetToastActivatorClsid(),
+            kToastActivatorClsids[std::get<0>(GetParam())]);
+
+  wchar_t clsid_str[MAX_PATH];
+  StringFromGUID2(GetToastActivatorClsid(), clsid_str, arraysize(clsid_str));
+  EXPECT_THAT(clsid_str,
+              StrCaseEq(kToastActivatorClsidsString[std::get<0>(GetParam())]));
 }
 
 TEST_P(InstallStaticUtilTest, UsageStatsAbsent) {
