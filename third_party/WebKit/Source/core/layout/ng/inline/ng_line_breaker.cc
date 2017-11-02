@@ -193,6 +193,13 @@ void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
   line_info->SetIsLastLine(true);
 }
 
+void NGLineBreaker::UpdatePosition(const NGInlineItemResults& results) {
+  LayoutUnit position;
+  for (const NGInlineItemResult& item_result : results)
+    position += item_result.inline_size;
+  line_.position = position;
+}
+
 void NGLineBreaker::ComputeLineLocation(NGLineInfo* line_info) const {
   LayoutUnit bfc_line_offset = line_.line_left_bfc_offset;
   LayoutUnit available_width = line_.AvailableWidth();
@@ -661,11 +668,11 @@ void NGLineBreaker::HandleOverflow(NGLineInfo* line_info,
                (item_result->end_offset == item.EndOffset() &&
                 item_result->has_hanging_spaces));
         DCHECK(!item_result->prohibit_break_after);
-        line_.position =
-            available_width + next_width_to_rewind + item_result->inline_size;
         DCHECK_LE(i + 1, item_results->size());
         if (i + 1 < item_results->size())
-          Rewind(line_info, i + 1);
+          return Rewind(line_info, i + 1);
+        line_.position =
+            available_width + next_width_to_rewind + item_result->inline_size;
         return;
       }
     }
@@ -705,6 +712,7 @@ void NGLineBreaker::Rewind(NGLineInfo* line_info, unsigned new_end) {
   item_results->Shrink(new_end);
 
   line_info->SetIsLastLine(false);
+  UpdatePosition(line_info->Results());
 }
 
 // Truncate overflowing text and append ellipsis.
