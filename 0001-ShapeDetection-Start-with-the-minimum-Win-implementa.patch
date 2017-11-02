@@ -1,0 +1,273 @@
+From f225a9c4fb550b4b86b9ad604850a4e904877f7a Mon Sep 17 00:00:00 2001
+From: "junwei.fu@intel.com" <junwei.fu@intel.com>
+Date: Wed, 4 Oct 2017 14:13:38 +0800
+Subject: [PATCH] ShapeDetection: Start with the minimum Win implementation
+
+Load com base functions dynamically at runtime with core_winrt_util.
+Request face detection failed if it's not supported with |IsSupported|
+functions.
+Add unittest and make sure work in win10 bots with using win_optional_gpu_tests_rel
+in PRESUBMIT.py .
+Link Face Detection demo[2] here.
+
+Split original large CL[1] up in smaller subpatches including this CL.
+
+[1] https://chromium-review.googlesource.com/c/chromium/src/+/708336
+[2] https://codepen.io/miguelao/pen/PmJWro
+
+BUG=767021
+---
+ services/shape_detection/BUILD.gn                  | 35 +++++++----
+ services/shape_detection/PRESUBMIT.py              |  7 ++-
+ .../shape_detection/face_detection_impl_win.cc     | 73 ++++++++++++++++++++++
+ services/shape_detection/face_detection_impl_win.h | 48 ++++++++++++++
+ .../face_detection_impl_win_unittest.cc            | 28 +++++++++
+ 5 files changed, 175 insertions(+), 16 deletions(-)
+ create mode 100644 services/shape_detection/face_detection_impl_win.cc
+ create mode 100644 services/shape_detection/face_detection_impl_win.h
+ create mode 100644 services/shape_detection/face_detection_impl_win_unittest.cc
+
+diff --git a/services/shape_detection/BUILD.gn b/services/shape_detection/BUILD.gn
+index 3765c024..37104ed 100644
+--- a/services/shape_detection/BUILD.gn
++++ b/services/shape_detection/BUILD.gn
+@@ -27,6 +27,13 @@ source_set("lib") {
+       "text_detection_impl_mac.mm",
+     ]
+     libs = [ "QuartzCore.framework" ]
++  } else if (is_win) {
++    sources += [
++      "barcode_detection_impl.cc",
++      "face_detection_impl_win.cc",
++      "face_detection_impl_win.h",
++      "text_detection_impl.cc",
++    ]
+   } else {
+     sources += [
+       "barcode_detection_impl.cc",
+@@ -110,18 +117,20 @@ source_set("tests") {
+       "CoreGraphics.framework",
+       "QuartzCore.framework",
+     ]
+-
+-    deps = [
+-      ":lib",
+-      "//base",
+-      "//skia",
+-      "//testing/gmock",
+-      "//testing/gtest",
+-      "//ui/gfx",
+-      "//ui/gl",
+-    ]
+-    data = [
+-      "//services/test/data/mona_lisa.jpg",
+-    ]
++  } else if (is_win) {
++    sources += [ "face_detection_impl_win_unittest.cc" ]
+   }
++
++  deps = [
++    ":lib",
++    "//base",
++    "//skia",
++    "//testing/gmock",
++    "//testing/gtest",
++    "//ui/gfx",
++    "//ui/gl",
++  ]
++  data = [
++    "//services/test/data/mona_lisa.jpg",
++  ]
+ }
+diff --git a/services/shape_detection/PRESUBMIT.py b/services/shape_detection/PRESUBMIT.py
+index 93854d4..6358b80 100644
+--- a/services/shape_detection/PRESUBMIT.py
++++ b/services/shape_detection/PRESUBMIT.py
+@@ -14,11 +14,12 @@ def PostUploadHook(cl, change, output_api):
+   """git cl upload will call this hook after the issue is created/modified.
+ 
+   This hook adds an extra try bot list to the CL description in order to run
+-  the Mac GPU bots in addition to the usual CQ try bots.
++  the Mac GPU and Windows 10 bots in addition to the usual CQ try bots.
+   """
+   return output_api.EnsureCQIncludeTrybotsAreAdded(
+     cl,
+     [
+-      'master.tryserver.chromium.mac:mac_optional_gpu_tests_rel'
++      'master.tryserver.chromium.mac:mac_optional_gpu_tests_rel',
++      'master.tryserver.chromium.win:win10_chromium_x64_rel_ng'
+     ],
+-    'Automatically added optional Mac GPU tests to run on CQ.')
++    'Automatically added optional Mac GPU and Windows 10 tests to run on CQ.')
+diff --git a/services/shape_detection/face_detection_impl_win.cc b/services/shape_detection/face_detection_impl_win.cc
+new file mode 100644
+index 0000000..20ca184
+--- /dev/null
++++ b/services/shape_detection/face_detection_impl_win.cc
+@@ -0,0 +1,73 @@
++// Copyright 2017 The Chromium Authors. All rights reserved.
++// Use of this source code is governed by a BSD-style license that can be
++// found in the LICENSE file.
++
++#include "services/shape_detection/face_detection_impl_win.h"
++
++#include <windows.media.faceanalysis.h>
++
++#include "base/scoped_generic.h"
++#include "base/win/core_winrt_util.h"
++#include "base/win/scoped_hstring.h"
++#include "base/win/windows_version.h"
++#include "media/base/scoped_callback_runner.h"
++#include "mojo/public/cpp/bindings/strong_binding.h"
++#include "services/shape_detection/face_detection_provider_impl.h"
++
++namespace shape_detection {
++
++using base::win::ScopedHString;
++using base::win::GetActivationFactory;
++
++void FaceDetectionProviderImpl::CreateFaceDetection(
++    shape_detection::mojom::FaceDetectionRequest request,
++    shape_detection::mojom::FaceDetectorOptionsPtr options) {
++  auto impl = FaceDetectionImplWin::Create();
++  if (!impl)
++    return;
++
++  mojo::MakeStrongBinding(std::move(impl), std::move(request));
++}
++
++std::unique_ptr<FaceDetectionImplWin> FaceDetectionImplWin::Create() {
++  // FaceDetector class is only available in Win 10 onwards (v10.0.10240.0).
++  if (base::win::GetVersion() < base::win::VERSION_WIN10) {
++    DVLOG(1) << "FaceDetector not supported before Windows 10";
++    return nullptr;
++  }
++  // Loads functions dynamically at runtime to prevent library dependencies.
++  if (!(base::win::ResolveCoreWinRTDelayload() &&
++        ScopedHString::ResolveCoreWinRTStringDelayload())) {
++    DLOG(ERROR) << "Failed loading functions from combase.dll";
++    return nullptr;
++  }
++
++  Microsoft::WRL::ComPtr<IFaceDetectorStatics> factory;
++  const HRESULT hr = GetActivationFactory<
++      IFaceDetectorStatics,
++      RuntimeClass_Windows_Media_FaceAnalysis_FaceDetector>(&factory);
++  if (FAILED(hr)) {
++    DLOG(ERROR) << "IFaceDetectorStatics factory failed: "
++                << logging::SystemErrorCodeToString(hr);
++    return nullptr;
++  }
++
++  boolean is_supported = FALSE;
++  factory->get_IsSupported(&is_supported);
++  return (is_supported == FALSE)
++             ? nullptr
++             : std::make_unique<FaceDetectionImplWin>(std::move(factory));
++}
++
++FaceDetectionImplWin::FaceDetectionImplWin(
++    Microsoft::WRL::ComPtr<IFaceDetectorStatics> factory)
++    : face_detector_factory_(std::move(factory)) {}
++
++FaceDetectionImplWin::~FaceDetectionImplWin() = default;
++
++void FaceDetectionImplWin::Detect(const SkBitmap& bitmap,
++                                  DetectCallback callback) {
++  DCHECK_EQ(kN32_SkColorType, bitmap.colorType());
++}
++
++}  // namespace shape_detection
+\ No newline at end of file
+diff --git a/services/shape_detection/face_detection_impl_win.h b/services/shape_detection/face_detection_impl_win.h
+new file mode 100644
+index 0000000..4c76729
+--- /dev/null
++++ b/services/shape_detection/face_detection_impl_win.h
+@@ -0,0 +1,48 @@
++// Copyright 2017 The Chromium Authors. All rights reserved.
++// Use of this source code is governed by a BSD-style license that can be
++// found in the LICENSE file.
++
++#ifndef SERVICES_SHAPE_DETECTION_FACE_DETECTION_IMPL_WIN_H_
++#define SERVICES_SHAPE_DETECTION_FACE_DETECTION_IMPL_WIN_H_
++
++#include <wrl/client.h>
++
++#include "services/shape_detection/public/interfaces/facedetection.mojom.h"
++
++class SkBitmap;
++
++namespace ABI {
++namespace Windows {
++namespace Media {
++namespace FaceAnalysis {
++struct IFaceDetectorStatics;
++}  // namespace FaceAnalysis
++}  // namespace Media
++}  // namespace Windows
++}  // namespace ABI
++
++namespace shape_detection {
++
++class FaceDetectionImplWin : public mojom::FaceDetection {
++ public:
++  using IFaceDetectorStatics =
++      ABI::Windows::Media::FaceAnalysis::IFaceDetectorStatics;
++
++  static std::unique_ptr<FaceDetectionImplWin> Create();
++
++  explicit FaceDetectionImplWin(
++      Microsoft::WRL::ComPtr<IFaceDetectorStatics> factory);
++  ~FaceDetectionImplWin() override;
++
++  void Detect(const SkBitmap& bitmap,
++              mojom::FaceDetection::DetectCallback callback) override;
++
++ private:
++  Microsoft::WRL::ComPtr<IFaceDetectorStatics> face_detector_factory_;
++
++  DISALLOW_COPY_AND_ASSIGN(FaceDetectionImplWin);
++};
++
++}  // namespace shape_detection
++
++#endif  // SERVICES_SHAPE_DETECTION_FACE_DETECTION_IMPL_WIN_H_
+\ No newline at end of file
+diff --git a/services/shape_detection/face_detection_impl_win_unittest.cc b/services/shape_detection/face_detection_impl_win_unittest.cc
+new file mode 100644
+index 0000000..f770b7f
+--- /dev/null
++++ b/services/shape_detection/face_detection_impl_win_unittest.cc
+@@ -0,0 +1,28 @@
++// Copyright 2017 The Chromium Authors. All rights reserved.
++// Use of this source code is governed by a BSD-style license that can be
++// found in the LICENSE file.
++
++#include "services/shape_detection/face_detection_impl_win.h"
++
++#include "base/win/scoped_com_initializer.h"
++#include "testing/gtest/include/gtest/gtest.h"
++
++namespace shape_detection {
++
++class FaceDetectionImplWinTest : public testing::Test {
++ protected:
++  void SetUp() override {
++    scoped_com_initializer_ = base::MakeUnique<base::win::ScopedCOMInitializer>(
++        base::win::ScopedCOMInitializer::kMTA);
++    ASSERT_TRUE(scoped_com_initializer_->Succeeded());
++  }
++
++ private:
++  std::unique_ptr<base::win::ScopedCOMInitializer> scoped_com_initializer_;
++};
++
++TEST_F(FaceDetectionImplWinTest, CreateAndDestroy) {
++  auto impl = FaceDetectionImplWin::Create();
++}
++
++}  // namespace shape_detection
+-- 
+1.9.1
+
