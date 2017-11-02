@@ -249,6 +249,11 @@ bool PPB_Graphics3D_Impl::InitRaw(
       gpu::kGpuFeatureStatusBlacklisted) {
     return false;
   }
+#if defined(USE_AURA)
+  if (render_thread->IsGpuCompositingDisabled()) {
+    return false;
+  }
+#endif
 
   has_alpha_ = requested_attribs.alpha_size > 0;
 
