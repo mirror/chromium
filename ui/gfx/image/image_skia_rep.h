@@ -6,8 +6,13 @@
 #define UI_GFX_IMAGE_IMAGE_SKIA_REP_H_
 
 #include "third_party/skia/include/core/SkBitmap.h"
+#include "ui/gfx/drawable/drawable.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/gfx_export.h"
+
+namespace cc {
+class PaintFlags;
+}
 
 namespace gfx {
 
@@ -18,7 +23,17 @@ class GFX_EXPORT ImageSkiaRep {
  public:
   // Create null bitmap.
   ImageSkiaRep();
+  ImageSkiaRep(const ImageSkiaRep& other);
   ~ImageSkiaRep();
+
+  template <class T>
+  ImageSkiaRep(
+      std::unique_ptr<T>&& source,
+      float scale,
+      typename std::enable_if<
+          std::is_convertible<T*, DrawableSource*>::value>::type* = nullptr)
+      : source_(static_cast<DrawableSource*>(source.release())),
+        scale_(scale) {}
 
   // Note: This is for testing purpose only.
   // Creates a bitmap with kARGB_8888_Config config with given |size| in DIP.
@@ -33,15 +48,15 @@ class GFX_EXPORT ImageSkiaRep {
   ImageSkiaRep(const SkBitmap& src, float scale);
 
   // Returns true if the backing bitmap is null.
-  bool is_null() const { return bitmap_.isNull(); }
+  bool is_null() const { return !source_; }
 
   // Get width and height of bitmap in DIP.
   int GetWidth() const;
   int GetHeight() const;
 
   // Get width and height of bitmap in pixels.
-  int pixel_width() const { return bitmap_.width(); }
-  int pixel_height() const { return bitmap_.height(); }
+  int pixel_width() const { return source_->referenceSize().width(); }
+  int pixel_height() const { return source_->referenceSize().height(); }
   Size pixel_size() const {
     return Size(pixel_width(), pixel_height());
   }
@@ -55,10 +70,14 @@ class GFX_EXPORT ImageSkiaRep {
   void SetScaled();
 
   // Returns backing bitmap.
-  const SkBitmap& sk_bitmap() const { return bitmap_; }
+  const SkBitmap& sk_bitmap() const;
+
+  void Draw(Canvas* canvas, const cc::PaintFlags& flags) const;
 
  private:
-  SkBitmap bitmap_;
+  std::shared_ptr<gfx::DrawableSource> source_;
+
+  SkBitmap bake_cache_;
 
   float scale_;
 };

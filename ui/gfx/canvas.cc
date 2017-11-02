@@ -17,6 +17,7 @@
 #include "third_party/skia/include/core/SkRefCnt.h"
 #include "third_party/skia/include/effects/SkDashPathEffect.h"
 #include "third_party/skia/include/effects/SkGradientShader.h"
+#include "ui/gfx/drawable/drawable.h"
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/insets_f.h"
 #include "ui/gfx/geometry/rect.h"
@@ -339,6 +340,10 @@ void Canvas::DrawSolidFocusRect(RectF rect, SkColor color, int thickness) {
   DrawRect(rect, flags);
 }
 
+void Canvas::DrawBitmap(const SkBitmap& bitmap, const cc::PaintFlags& flags) {
+  canvas_->drawBitmap(bitmap, 0, 0, &flags);
+}
+
 void Canvas::DrawImageInt(const ImageSkia& image, int x, int y) {
   cc::PaintFlags flags;
   DrawImageInt(image, x, y, flags);
@@ -357,14 +362,10 @@ void Canvas::DrawImageInt(const ImageSkia& image,
   const ImageSkiaRep& image_rep = image.GetRepresentation(image_scale_);
   if (image_rep.is_null())
     return;
-  const SkBitmap& bitmap = image_rep.sk_bitmap();
-  float bitmap_scale = image_rep.scale();
 
   ScopedCanvas scoper(this);
-  canvas_->scale(SkFloatToScalar(1.0f / bitmap_scale),
-                 SkFloatToScalar(1.0f / bitmap_scale));
-  canvas_->drawBitmap(bitmap, SkFloatToScalar(x * bitmap_scale),
-                      SkFloatToScalar(y * bitmap_scale), &flags);
+  canvas_->translate(SkFloatToScalar(x), SkFloatToScalar(y));
+  image_rep.Draw(this, flags);
 }
 
 void Canvas::DrawImageInt(const ImageSkia& image,

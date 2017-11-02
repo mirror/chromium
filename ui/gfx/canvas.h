@@ -279,6 +279,9 @@ class GFX_EXPORT Canvas {
   // Draws the given path using the given |flags| parameters.
   void DrawPath(const SkPath& path, const cc::PaintFlags& flags);
 
+  // Draws a bitmap with the upper left corner at (0, 0).
+  void DrawBitmap(const SkBitmap& bitmap, const cc::PaintFlags& flags);
+
   // Draws an image with the origin at the specified location. The upper left
   // corner of the bitmap is rendered at the specified location.
   // Parameters are specified relative to current canvas scale not in pixels.
