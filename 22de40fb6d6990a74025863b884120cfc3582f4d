@@ -34,6 +34,24 @@
       "revId": "22de40fb6d6990a74025863b884120cfc3582f4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de78dc18_49c7168d",
+        "filename": "chrome/browser/ui/app_list/search/extension_app_result.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-02T22:25:08Z",
+      "side": 1,
+      "message": "Suggested apps are search results with an empty query string. SearchController::OpenResult records search related metrics when a result does NOT have DISPLAY_RECOMMENDATION as its display type.\n\nThe new code path has almost identical code as OpenResult. I would prefer to keep one copy of functional code and fix the UMA recording there instead.\n\nIf we do the new code path, we also need to update ArcAppResult since it could be recommended too.",
+      "parentUuid": "9bb0ef79_6c73ef34",
+      "revId": "22de40fb6d6990a74025863b884120cfc3582f4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
