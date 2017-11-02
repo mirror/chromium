@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0fbf267f_6162a5b8",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-02T17:40:51Z",
+      "side": 1,
+      "message": "Why is this (and other mojom headers) safe to include? The generated code is far from POD only.",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 63
+      },
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ef6e895_1be4ea81",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 2
