@@ -34,6 +34,24 @@
       "revId": "304b70c41ce0dbcc564451d5f674cb08f4290310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f493399f_45c9e9dd",
+        "filename": "content/public/test/network_service_test_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-02T02:45:02Z",
+      "side": 1,
+      "message": "No better ideas at the moment, but I agree that the eventual solution probably wouldn\u0027t look anything like this anyway. i.e. there will be a locked down service process and we\u0027ll provide the network service with a filesystem interface it can use to read certs.",
+      "parentUuid": "0f70c3f1_f1454210",
+      "revId": "304b70c41ce0dbcc564451d5f674cb08f4290310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
