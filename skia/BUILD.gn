@@ -237,6 +237,8 @@ component("skia") {
     "ext/recursive_gaussian_convolution.h",
     "ext/skia_histogram.cc",
     "ext/skia_histogram.h",
+    "ext/skia_image_filter_base.cc",
+    "ext/skia_image_filter_base.h",
     "ext/skia_memory_dump_provider.cc",
     "ext/skia_memory_dump_provider.h",
     "ext/skia_trace_memory_dump_impl.cc",
