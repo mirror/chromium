@@ -3123,8 +3123,7 @@ bool PaintLayer::AttemptDirectCompositingUpdate(
   // means that the inline transform actually triggered assumed overlap in
   // the overlap map.
   if (diff.TransformChanged() &&
-      (!rare_data_ ||
-       !(rare_data_->compositing_reasons & kCompositingReasonInlineTransform)))
+      OverlapSkippedDueToInlineTransform(GetCompositingReasons()))
     return false;
 
   // We composite transparent Layers differently from non-transparent
