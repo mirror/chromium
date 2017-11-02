@@ -189,6 +189,10 @@ void QuicSentPacketManager::SetMaxPacingRate(QuicBandwidth max_pacing_rate) {
   pacing_sender_.set_max_pacing_rate(max_pacing_rate);
 }
 
+QuicBandwidth QuicSentPacketManager::MaxPacingRate() const {
+  return pacing_sender_.max_pacing_rate();
+}
+
 void QuicSentPacketManager::SetHandshakeConfirmed() {
   handshake_confirmed_ = true;
 }

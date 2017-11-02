@@ -394,6 +394,10 @@ void QuicConnection::SetMaxPacingRate(QuicBandwidth max_pacing_rate) {
   sent_packet_manager_.SetMaxPacingRate(max_pacing_rate);
 }
 
+QuicBandwidth QuicConnection::MaxPacingRate() const {
+  return sent_packet_manager_.MaxPacingRate();
+}
+
 void QuicConnection::SetNumOpenStreams(size_t num_streams) {
   sent_packet_manager_.SetNumOpenStreams(num_streams);
 }

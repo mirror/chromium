@@ -5197,6 +5197,12 @@ TEST_P(QuicConnectionTest, FailedToWriteHandshakePacket) {
   connection_.SendCryptoStreamData();
 }
 
+TEST_P(QuicConnectionTest, MaxPacingRate) {
+  EXPECT_EQ(0, connection_.MaxPacingRate().ToBytesPerSecond());
+  connection_.SetMaxPacingRate(QuicBandwidth::FromBytesPerSecond(100));
+  EXPECT_EQ(100, connection_.MaxPacingRate().ToBytesPerSecond());
+}
+
 }  // namespace
 }  // namespace test
 }  // namespace net
