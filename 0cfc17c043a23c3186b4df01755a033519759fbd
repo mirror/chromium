@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae05cff0_8906eb29",
+        "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-02T17:22:01Z",
+      "side": 1,
+      "message": "Changed to DCHECK here and in CrossProcessFrameConnector.",
+      "parentUuid": "1f7f2a89_53a1841b",
+      "revId": "0cfc17c043a23c3186b4df01755a033519759fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8969305_7c8c3723",
         "filename": "content/browser/renderer_host/frame_connector_delegate.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "0cfc17c043a23c3186b4df01755a033519759fbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87afcffc_75f724e7",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-02T17:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8969305_7c8c3723",
+      "revId": "0cfc17c043a23c3186b4df01755a033519759fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fea97e3d_ea9ba716",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-02T17:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dddc9547_1c4ba0a3",
+      "revId": "0cfc17c043a23c3186b4df01755a033519759fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef65b364_d08e6e71",
         "filename": "content/public/browser/render_widget_host.h",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "aefea19d_5cd0ce8f",
+        "filename": "content/public/browser/render_widget_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-02T17:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef65b364_d08e6e71",
+      "revId": "0cfc17c043a23c3186b4df01755a033519759fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "623bc1be_3a898843",
         "filename": "content/public/browser/render_widget_host_view.h",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "0cfc17c043a23c3186b4df01755a033519759fbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f33b80_4adb6c1d",
+        "filename": "content/public/browser/render_widget_host_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-02T17:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "623bc1be_3a898843",
+      "revId": "0cfc17c043a23c3186b4df01755a033519759fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
