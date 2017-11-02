@@ -574,3 +574,19 @@ config("default_sanitizer_flags_but_ubsan_vptr") {
 config("default_sanitizer_flags_but_coverage") {
   configs = all_sanitizer_configs - [ ":coverage_flags" ]
 }
+
+config("no_fuzzing_instrumentation") {
+  # Since we aren't instrumenting with coverage, code size is less of a
+  # concern, so use a more aggressive optimization level than
+  # optimize_for_fuzzing (-O1). When given multiple optimiation flags clang
+  # obeys the later one, so as long as this comes after O1, this should
+  # work. Since this config will always be depended on after
+  # "//build/config/compiler:default_optimization" (which adds -O1 when
+  # optimize_for_fuzzing is true), -O2 should always be the second flag.
+  # If this breaks somehow, proto fuzzers will still work, just slightly slower.
+  cflags = [ "-O2" ]
+
+  # We need to include this when we remove default_sanitizer_flags (we would
+  # remove that here as well, but gn doesn't permit this)
+  configs = [ ":default_sanitizer_ldflags" ]
+}

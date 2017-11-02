@@ -1,6 +1,7 @@
 # Copyright 2014 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
+import("//build/config/sanitizers/sanitizers.gni")
 
 config("protobuf_config") {
   include_dirs = [ "src" ]
@@ -169,6 +170,10 @@ component("protobuf_lite") {
     ":protobuf_warnings",
   ]
 
+  # Remove *San and coverage for a performance boost when using fuzzing.
+  configs -= no_fuzzing_remove_configs
+  configs += no_fuzzing_add_configs
+
   if (is_win) {
     configs -= [ "//build/config/win:lean_and_mean" ]
   }
@@ -189,7 +194,6 @@ component("protobuf_lite") {
   }
 
   cflags = protobuf_lite_cflags
-
   if (is_component_build && is_desktop_linux) {
     deps += [ ":mirclient" ]
   }
@@ -361,6 +365,13 @@ static_library("protobuf_full") {
     # correctly.
     ":protobuf_warnings",
   ]
+
+  # Remove coverage and Sanitizers other than ASan and MSan for a performance
+  # boost when fuzzing. ASan can't be removed here because of a bug preventing
+  # unsanitized code from using libc++.
+  configs -= no_fuzzing_remove_nonasan_configs
+  configs += no_fuzzing_add_configs
+
   if (is_win) {
     configs -= [ "//build/config/win:lean_and_mean" ]
   }
@@ -592,6 +603,10 @@ if (current_toolchain == host_toolchain) {
     public_deps = [
       ":protobuf_full",
     ]
+
+    # Remove *San and coverage for a performance boost when using fuzzing.
+    configs -= no_fuzzing_remove_configs
+    configs += no_fuzzing_add_configs
   }
 
   executable("protoc") {
@@ -622,6 +637,10 @@ if (current_toolchain == host_toolchain) {
 
     configs -= [ "//build/config/compiler:chromium_code" ]
     configs += [ "//build/config/compiler:no_chromium_code" ]
+
+    # Remove *San and coverage for a performance boost when using fuzzing.
+    configs -= no_fuzzing_remove_configs
+    configs += no_fuzzing_add_configs
   }
 }
 
