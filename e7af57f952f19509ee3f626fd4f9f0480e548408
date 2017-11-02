@@ -22,6 +22,30 @@
       "revId": "e7af57f952f19509ee3f626fd4f9f0480e548408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77f8e5c_3d3632b2",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-02T03:45:04Z",
+      "side": 1,
+      "message": "That\u0027s correct; basically we:\n\n- Check for None and set a default if so.\n- If the filter is now non-false then we apply it to the args \u0026 deps.\n\nThis print-out clause then has wording which matches the second conditional.",
+      "parentUuid": "075dc47d_67aeddff",
+      "range": {
+        "startLine": 214,
+        "startChar": 33,
+        "endLine": 214,
+        "endChar": 63
+      },
+      "revId": "e7af57f952f19509ee3f626fd4f9f0480e548408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
