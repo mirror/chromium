@@ -3540,6 +3540,113 @@ TEST_P(QuicConnectionTest, NewTimeoutAfterSendSilentClose) {
   EXPECT_FALSE(connection_.connected());
 }
 
+TEST_P(QuicConnectionTest, TimeoutAfterSendSilentCloseAndTLP) {
+  FLAGS_quic_reloadable_flag_quic_explicit_close_after_tlp = true;
+  // Same test as above, but complete a handshake which enables silent close,
+  // but sending TLPs causes the connection close to be sent.
+  EXPECT_TRUE(connection_.connected());
+  EXPECT_CALL(*send_algorithm_, SetFromConfig(_, _));
+  QuicConfig config;
+
+  // Create a handshake message that also enables silent close.
+  CryptoHandshakeMessage msg;
+  string error_details;
+  QuicConfig client_config;
+  client_config.SetInitialStreamFlowControlWindowToSend(
+      kInitialStreamFlowControlWindowForTest);
+  client_config.SetInitialSessionFlowControlWindowToSend(
+      kInitialSessionFlowControlWindowForTest);
+  client_config.SetIdleNetworkTimeout(
+      QuicTime::Delta::FromSeconds(kDefaultIdleTimeoutSecs),
+      QuicTime::Delta::FromSeconds(kDefaultIdleTimeoutSecs));
+  client_config.ToHandshakeMessage(&msg);
+  const QuicErrorCode error =
+      config.ProcessPeerHello(msg, CLIENT, &error_details);
+  EXPECT_EQ(QUIC_NO_ERROR, error);
+
+  connection_.SetFromConfig(config);
+  EXPECT_TRUE(QuicConnectionPeer::IsSilentCloseEnabled(&connection_));
+
+  const QuicTime::Delta default_idle_timeout =
+      QuicTime::Delta::FromSeconds(kDefaultIdleTimeoutSecs - 1);
+  const QuicTime::Delta five_ms = QuicTime::Delta::FromMilliseconds(5);
+  QuicTime default_timeout = clock_.ApproximateNow() + default_idle_timeout;
+
+  // When we send a packet, the timeout will change to 5ms +
+  // kInitialIdleTimeoutSecs.
+  clock_.AdvanceTime(five_ms);
+  SendStreamDataToPeer(kClientDataStreamId1, "foo", 0, FIN, nullptr);
+  EXPECT_EQ(default_timeout, connection_.GetTimeoutAlarm()->deadline());
+
+  // Retransmit the packet via tail loss probe.
+  clock_.AdvanceTime(connection_.GetRetransmissionAlarm()->deadline() -
+                     clock_.Now());
+  EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, 2u, _, _));
+  connection_.GetRetransmissionAlarm()->Fire();
+
+  // This time, we should time out and send a connection close due to the TLP.
+  EXPECT_CALL(visitor_, OnConnectionClosed(QUIC_NETWORK_IDLE_TIMEOUT, _,
+                                           ConnectionCloseSource::FROM_SELF));
+  EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _));
+  clock_.AdvanceTime(connection_.GetTimeoutAlarm()->deadline() -
+                     clock_.ApproximateNow() + five_ms);
+  connection_.GetTimeoutAlarm()->Fire();
+  EXPECT_FALSE(connection_.GetTimeoutAlarm()->IsSet());
+  EXPECT_FALSE(connection_.connected());
+}
+
+TEST_P(QuicConnectionTest, TimeoutAfterSendSilentCloseWithOpenStreams) {
+  FLAGS_quic_reloadable_flag_quic_explicit_close_after_tlp = true;
+  // Same test as above, but complete a handshake which enables silent close,
+  // but having open streams causes the connection close to be sent.
+  EXPECT_TRUE(connection_.connected());
+  EXPECT_CALL(*send_algorithm_, SetFromConfig(_, _));
+  QuicConfig config;
+
+  // Create a handshake message that also enables silent close.
+  CryptoHandshakeMessage msg;
+  string error_details;
+  QuicConfig client_config;
+  client_config.SetInitialStreamFlowControlWindowToSend(
+      kInitialStreamFlowControlWindowForTest);
+  client_config.SetInitialSessionFlowControlWindowToSend(
+      kInitialSessionFlowControlWindowForTest);
+  client_config.SetIdleNetworkTimeout(
+      QuicTime::Delta::FromSeconds(kDefaultIdleTimeoutSecs),
+      QuicTime::Delta::FromSeconds(kDefaultIdleTimeoutSecs));
+  client_config.ToHandshakeMessage(&msg);
+  const QuicErrorCode error =
+      config.ProcessPeerHello(msg, CLIENT, &error_details);
+  EXPECT_EQ(QUIC_NO_ERROR, error);
+
+  connection_.SetFromConfig(config);
+  EXPECT_TRUE(QuicConnectionPeer::IsSilentCloseEnabled(&connection_));
+
+  const QuicTime::Delta default_idle_timeout =
+      QuicTime::Delta::FromSeconds(kDefaultIdleTimeoutSecs - 1);
+  const QuicTime::Delta five_ms = QuicTime::Delta::FromMilliseconds(5);
+  QuicTime default_timeout = clock_.ApproximateNow() + default_idle_timeout;
+
+  // When we send a packet, the timeout will change to 5ms +
+  // kInitialIdleTimeoutSecs.
+  clock_.AdvanceTime(five_ms);
+  SendStreamDataToPeer(kClientDataStreamId1, "foo", 0, FIN, nullptr);
+  EXPECT_EQ(default_timeout, connection_.GetTimeoutAlarm()->deadline());
+
+  // Indicate streams are still open.
+  EXPECT_CALL(visitor_, HasOpenDynamicStreams()).WillRepeatedly(Return(true));
+
+  // This time, we should time out and send a connection close due to the TLP.
+  EXPECT_CALL(visitor_, OnConnectionClosed(QUIC_NETWORK_IDLE_TIMEOUT, _,
+                                           ConnectionCloseSource::FROM_SELF));
+  EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _));
+  clock_.AdvanceTime(connection_.GetTimeoutAlarm()->deadline() -
+                     clock_.ApproximateNow() + five_ms);
+  connection_.GetTimeoutAlarm()->Fire();
+  EXPECT_FALSE(connection_.GetTimeoutAlarm()->IsSet());
+  EXPECT_FALSE(connection_.connected());
+}
+
 TEST_P(QuicConnectionTest, TimeoutAfterReceive) {
   EXPECT_CALL(visitor_, OnSuccessfulVersionNegotiation(_));
   EXPECT_TRUE(connection_.connected());
