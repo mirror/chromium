@@ -170,6 +170,20 @@ bool NtpOverriddenBubbleDelegate::ShouldLimitToEnabledExtensions() const {
   return true;
 }
 
+bool NtpOverriddenBubbleDelegate::ShouldShow(
+    Profile* profile,
+    const ExtensionIdList& affected_extensions) {
+  DCHECK(affected_extensions.size() == 1);
+  // The bubble is shown if the profile, extension pair has not been displayed
+  // nor acknowledged (i.e. action taken) yet.
+  auto found = GetProfileExtensionsMap()->find(profile);
+  if (found == GetProfileExtensionsMap()->end()) {
+    return true;
+  } else {
+    return !found->second.count(affected_extensions[0]);
+  }
+}
+
 void NtpOverriddenBubbleDelegate::LogExtensionCount(size_t count) {
 }
 

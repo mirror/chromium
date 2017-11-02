@@ -123,6 +123,12 @@ bool ProxyOverriddenBubbleDelegate::ShouldAcknowledgeOnDeactivate() const {
   return false;
 }
 
+bool ProxyOverriddenBubbleDelegate::ShouldShow(
+    Profile* profile,
+    const ExtensionIdList& affected_extensions) {
+  return !GetProfileExtensionsMap()->count(profile);
+}
+
 bool ProxyOverriddenBubbleDelegate::ShouldShowExtensionList() const {
   return false;
 }
