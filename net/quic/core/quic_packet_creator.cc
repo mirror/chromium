@@ -578,7 +578,6 @@ void QuicPacketCreator::MaybeAddPadding() {
     packet_.num_padding_bytes =
         std::min<int16_t>(pending_padding_bytes_, BytesFree());
     pending_padding_bytes_ -= packet_.num_padding_bytes;
-    QUIC_FLAG_COUNT(quic_reloadable_flag_quic_enable_random_padding);
   }
 
   bool success =
