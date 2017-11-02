@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f7f2a89_53a1841b",
+        "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-11-02T15:56:21Z",
+      "side": 1,
+      "message": "nit: The RenderWidgetHost should always exist when there\u0027s a view.",
+      "revId": "0cfc17c043a23c3186b4df01755a033519759fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
