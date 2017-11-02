@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d24615a_47584c76",
+        "filename": "chrome/browser/ui/chrome_pages.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-02T12:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef7fd2eb_09f45170",
+      "range": {
+        "startLine": 373,
+        "startChar": 6,
+        "endLine": 373,
+        "endChar": 22
+      },
+      "revId": "a59ea90615e4f82c41686efecfcea0bca6354da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c7197fb_ada3101f",
         "filename": "chrome/browser/ui/chrome_pages.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "a59ea90615e4f82c41686efecfcea0bca6354da6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6618e13c_f9446942",
+        "filename": "chrome/browser/ui/chrome_pages.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-02T12:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c7197fb_ada3101f",
+      "revId": "a59ea90615e4f82c41686efecfcea0bca6354da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "231f5221_b2cc8f57",
+        "filename": "chrome/browser/ui/chrome_pages.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-02T12:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f73896da_51373283",
+      "revId": "a59ea90615e4f82c41686efecfcea0bca6354da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ce79efc_7f0f7322",
         "filename": "chrome/browser/ui/chrome_pages.cc",
         "patchSetId": 2
@@ -70,6 +130,30 @@
       "writtenOn": "2017-11-01T03:57:42Z",
       "side": 1,
       "message": "(aside: should this be renamed? I think the cases where the signin flow is shown hanging off the avatar button are becoming rarer. Certainly, BrowserView::ShowAvatarBubbleFromAvatarButton calls ShowModalSignin(..) in some paths, so it\u0027s a bit confusing.)",
+      "range": {
+        "startLine": 391,
+        "startChar": 23,
+        "endLine": 391,
+        "endChar": 55
+      },
+      "revId": "a59ea90615e4f82c41686efecfcea0bca6354da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb58812e_446aa713",
+        "filename": "chrome/browser/ui/chrome_pages.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-02T12:28:51Z",
+      "side": 1,
+      "message": "I will take a pass to rename this method in a separate CL - I will need that for the Desktop Identity Consistency flow (the other CL you reviewed a while back).",
+      "parentUuid": "3ce79efc_7f0f7322",
       "range": {
         "startLine": 391,
         "startChar": 23,
