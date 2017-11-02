@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b55c06d5_13f377d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-02T16:06:55Z",
+      "side": 1,
+      "message": "Correct, the NativePageAssassin will go through and kill native pages if there are more than X in the background.  The goal was that the memory owned by the tab wasn\u0027t associated with the renderer in the background, and it was to keep the overall memory down.",
+      "parentUuid": "99550f1b_956b1999",
+      "range": {
+        "startLine": 1344,
+        "startChar": 20,
+        "endLine": 1344,
+        "endChar": 27
+      },
+      "revId": "b377e13f3f8c4fd4f3e29af2f47391669c69b45e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abdaa604_df9b4d83",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/TabObserverTest.java",
         "patchSetId": 8
