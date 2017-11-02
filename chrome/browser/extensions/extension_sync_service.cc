@@ -144,6 +144,7 @@ ExtensionSyncService* ExtensionSyncService::Get(
 
 void ExtensionSyncService::SyncExtensionChangeIfNeeded(
     const Extension& extension) {
+  LOG(ERROR) << "ExtensionSyncService::SyncExtensionChangeIfNeeded";
   if (ignore_updates_ || !ShouldSync(extension))
     return;
 
@@ -151,10 +152,12 @@ void ExtensionSyncService::SyncExtensionChangeIfNeeded(
       extension.is_app() ? syncer::APPS : syncer::EXTENSIONS;
   SyncBundle* bundle = GetSyncBundle(type);
   if (bundle->IsSyncing()) {
+    LOG(ERROR) << "IsSyncing";
     bundle->PushSyncAddOrUpdate(extension.id(),
                                 CreateSyncData(extension).GetSyncData());
     DCHECK(!ExtensionPrefs::Get(profile_)->NeedsSync(extension.id()));
   } else {
+    LOG(ERROR) << "SetNeedsSync";
     ExtensionPrefs::Get(profile_)->SetNeedsSync(extension.id(), true);
     if (extension_service()->is_ready() && !flare_.is_null())
       flare_.Run(type);  // Tell sync to start ASAP.
@@ -723,6 +726,14 @@ void ExtensionSyncService::FillSyncDataList(
 }
 
 bool ExtensionSyncService::ShouldSync(const Extension& extension) const {
+  // Component extensions in general should not sync enable/disable status, as
+  // those don't have UI to enable/disable it. However, some component
+  // extensions like the Hotword extension, can be disabled programatticaly.
+  // So we only block sync of Zip Unpacker here as a fix for crbug.com/643060.
+  if (extension.id() == extension_misc::kZIPUnpackerExtensionId) {
+    LOG(ERROR) << "force sync zip unpacker";
+    return true;
+  }
   // Themes are handled by the ThemeSyncableService.
   return extensions::util::ShouldSync(&extension, profile_) &&
          !extension.is_theme();
