@@ -297,10 +297,9 @@ class CONTENT_EXPORT ServiceWorkerVersion
     return event_dispatcher_.get();
   }
 
-  // This must be called when the worker is running.
   // Returns the 'controller' interface of this worker.
+  // May return null if the service worker is not running.
   mojom::ControllerServiceWorker* controller() {
-    DCHECK(controller_ptr_.is_bound());
     return controller_ptr_.get();
   }
 
