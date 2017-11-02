@@ -109,6 +109,7 @@
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/proxy_config/pref_proxy_config_tracker.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_pref_names.h"
 #include "components/ssl_config/ssl_config_service_manager.h"
@@ -862,6 +863,10 @@ void ProfileImpl::OnLocaleReady() {
   if (g_browser_process->local_state())
     chrome::MigrateObsoleteBrowserPrefs(this, g_browser_process->local_state());
   chrome::MigrateObsoleteProfilePrefs(this);
+
+  // New profiles are created with Dice enabled.
+  if (IsNewProfile() && signin::IsDiceMigrationEnabled())
+    signin::MigrateProfileToDice(GetPrefs());
 
   // |kSessionExitType| was added after |kSessionExitedCleanly|. If the pref
   // value is empty fallback to checking for |kSessionExitedCleanly|.
