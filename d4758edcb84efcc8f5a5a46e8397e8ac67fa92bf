@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d601cc10_e1fca33e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 3365,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-02T15:17:28Z",
+      "side": 1,
+      "message": "I think you can remove \"[_model webUsageEnabled]\" since it was there to prevent the implicit reload in Tab -view if the view was evicted while the network usage was disabled.\n\nThe presence of this check indicate that this method may have been called with evicted tabs, otherwise the reload would never have happened and the check for network usage enabled unnecessary. Given that observation, I think the CL introduce a functional change and may change the value of the recorded metric.",
+      "range": {
+        "startLine": 3365,
+        "startChar": 6,
+        "endLine": 3365,
+        "endChar": 30
+      },
+      "revId": "d4758edcb84efcc8f5a5a46e8397e8ac67fa92bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
