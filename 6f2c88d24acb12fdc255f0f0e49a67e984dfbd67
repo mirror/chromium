@@ -16,6 +16,24 @@
       "revId": "6f2c88d24acb12fdc255f0f0e49a67e984dfbd67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d6f9e4_055ba633",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-02T22:14:22Z",
+      "side": 0,
+      "message": "Still in use by page_info.",
+      "parentUuid": "ddcfa2df_ea0ff35d",
+      "revId": "6f2c88d24acb12fdc255f0f0e49a67e984dfbd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

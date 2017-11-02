@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f00d64a_2526cc5d",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-02T22:14:22Z",
+      "side": 1,
+      "message": "Because the global stored is now a LocationBarBubbleDelegateView* instead of a subclass, so to legally call it from a static method (even from an inherited class\u0027 static method) it cannot be protected.\n\n../../chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc(924,31):  error: \u0027AdjustForFullscreen\u0027 is a protected member of \u0027LocationBarBubbleDelegateView\u0027\n    manage_passwords_bubble_-\u003eAdjustForFullscreen(\n                              ^\n../..\\chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.h(87,8):  note: can only access this member on an object of type \u0027ManagePasswordsBubbleView\u0027\n  void AdjustForFullscreen(const gfx::Rect\u0026 screen_bounds);\n       ^\n\nThis call would\u0027ve been OK directly on a ManagePasswordsBubbleView (as it was before making this global a LocationBarBubbleDelegateView*). It would probably also be OK to make ManagePasswordsBubbleView (where the static create function is) a friend class, but that inheritance is also weird to rely on, especially as we\u0027re removing the need for a shared ManagePasswordsBubbleView umbrella class.",
+      "parentUuid": "33d9d2bb_03c9b698",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "188b08773d72b15d78a882ba0956425da4d74a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9156002_9c12467d",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "188b08773d72b15d78a882ba0956425da4d74a8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719ddc09_6d2776e4",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-02T22:14:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9156002_9c12467d",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 8
+      },
+      "revId": "188b08773d72b15d78a882ba0956425da4d74a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bd0edaec_a4b8d12a",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-02T22:14:22Z",
+      "side": 1,
+      "message": "I don\u0027t think so / or this is error prone because the caller would also need to check whether the login is federated or not (regardless of the incoming password_visible_).",
+      "parentUuid": "33814f69_415d73ce",
+      "range": {
+        "startLine": 182,
+        "startChar": 43,
+        "endLine": 182,
+        "endChar": 48
+      },
+      "revId": "188b08773d72b15d78a882ba0956425da4d74a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27fd309c_cb27af06",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
         "patchSetId": 4
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "41afdd7c_ebbf5ef6",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-02T22:14:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27fd309c_cb27af06",
+      "revId": "188b08773d72b15d78a882ba0956425da4d74a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7df000f0_0fdfe4d4",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
         "patchSetId": 4
@@ -99,6 +189,30 @@
       "writtenOn": "2017-11-01T22:16:40Z",
       "side": 1,
       "message": "I think a good name would be \"ManagePasswordsView\" or \"ManagePasswordsBubble.\" It\u0027ll be a bit confusing with ManagePasswordsBubbleView until you\u0027re done dismantling that, but I think that\u0027s okay.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 25
+      },
+      "revId": "188b08773d72b15d78a882ba0956425da4d74a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f02785_4ad7680a",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-02T22:14:22Z",
+      "side": 1,
+      "message": "I don\u0027t think the existing name implies that this is a subview any more than ManagePasswordsView does, and maybe PasswordItems covers the fact that these can be passwords or other credentials better. Necessary to rename? Maybe we can otherwise agree on a naming scheme that all bubbles need to follow and follow up with those renames separately?",
+      "parentUuid": "7df000f0_0fdfe4d4",
       "range": {
         "startLine": 36,
         "startChar": 2,
