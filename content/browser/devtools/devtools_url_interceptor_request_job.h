@@ -31,11 +31,11 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob,
       scoped_refptr<DevToolsURLRequestInterceptor::State>
           devtools_url_request_interceptor_state,
       const std::string& interception_id,
+      intptr_t owning_entry_id,
       net::URLRequest* original_request,
       net::NetworkDelegate* original_network_delegate,
       const base::UnguessableToken& devtools_token,
-      const base::UnguessableToken& target_id,
-      base::WeakPtr<protocol::NetworkHandler> network_handler,
+      DevToolsURLRequestInterceptor::RequestInterceptedCallback callback,
       bool is_redirect,
       ResourceType resource_type);
 
@@ -85,12 +85,10 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob,
           modifications,
       std::unique_ptr<ContinueInterceptedRequestCallback> callback);
 
-  const base::UnguessableToken& target_id() const { return target_id_; }
+  intptr_t owning_entry_id() const { return owning_entry_id_; }
 
  private:
   std::unique_ptr<InterceptedRequestInfo> BuildRequestInfo();
-
-  class SubRequest;
 
   // We keep a copy of the original request details to facilitate the
   // Network.modifyRequest command which could potentially change any of these
@@ -194,17 +192,13 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob,
   std::unique_ptr<MockResponseDetails> mock_response_details_;
   std::unique_ptr<net::RedirectInfo> redirect_;
   WaitingForUserResponse waiting_for_user_response_;
-  bool intercepting_requests_;
   bool killed_;
   scoped_refptr<net::AuthChallengeInfo> auth_info_;
 
   const std::string interception_id_;
-  base::UnguessableToken devtools_token_;
-  // TODO(caseq): this really needs to be session id, not target id,
-  // so that we can clean up pending intercept jobs for individual
-  // session.
-  base::UnguessableToken target_id_;
-  const base::WeakPtr<protocol::NetworkHandler> network_handler_;
+  const intptr_t owning_entry_id_;
+  const base::UnguessableToken devtools_token_;
+  DevToolsURLRequestInterceptor::RequestInterceptedCallback callback_;
   const bool is_redirect_;
   const ResourceType resource_type_;
   base::WeakPtrFactory<DevToolsURLInterceptorRequestJob> weak_ptr_factory_;
