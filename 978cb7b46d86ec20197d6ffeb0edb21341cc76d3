@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8942a441_e9e79541",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-02T16:03:32Z",
+      "side": 1,
+      "message": "This is technically not correct. For example, in regular chrome, RenderWidgetHostViewAura window *is* embedding a child surface.\n\nMaybe hit-test provider can just poke WindowPortMus directly?",
+      "revId": "978cb7b46d86ec20197d6ffeb0edb21341cc76d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dae41ea_9917e7f0",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-02T16:03:32Z",
+      "side": 1,
+      "message": "return embed_frame_sink_id_.is_valid();",
+      "revId": "978cb7b46d86ec20197d6ffeb0edb21341cc76d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
