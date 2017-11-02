@@ -195,8 +195,8 @@ static_library("test_support") {
     "test/app_list_test_view_delegate.h",
     "test/test_search_result.cc",
     "test/test_search_result.h",
-    "views/test/app_list_view_test_api.cc",
-    "views/test/app_list_view_test_api.h",
+    "views/test/apps_grid_view_test_api.cc",
+    "views/test/apps_grid_view_test_api.h",
   ]
 
   deps = [
@@ -287,8 +287,6 @@ test("app_list_unittests") {
       "views/search_result_page_view_unittest.cc",
       "views/search_result_tile_item_list_view_unittest.cc",
       "views/speech_view_unittest.cc",
-      "views/test/apps_grid_view_test_api.cc",
-      "views/test/apps_grid_view_test_api.h",
     ]
     deps += [
       "//ui/accessibility",
