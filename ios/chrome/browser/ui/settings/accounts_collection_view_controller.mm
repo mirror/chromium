@@ -490,7 +490,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   _authenticationOperationInProgress = YES;
   __weak AccountsCollectionViewController* weakSelf = self;
   ShowSigninCommand* command = [[ShowSigninCommand alloc]
-      initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
+      initWithOperation:AUTHENTICATION_OPERATION_ADDACCOUNT
                identity:nil
             accessPoint:signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS
             promoAction:signin_metrics::PromoAction::

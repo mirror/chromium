@@ -26,6 +26,11 @@ enum AuthenticationOperation {
   // Operation to start a sign-in operation. The user is presented with the
   // SSOAuth sign in page (SSOAuth account picker or SSOAuth sign-in web page).
   AUTHENTICATION_OPERATION_SIGNIN,
+
+  // Operation to start a sign-in operation to add a new account. The user is
+  // presented with the SSOAuth sign in page (SSOAuth account picker or SSOAuth
+  // sign-in web page).
+  AUTHENTICATION_OPERATION_ADDACCOUNT,
 };
 
 // A command to perform a sign in operation.

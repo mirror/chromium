@@ -2066,6 +2066,13 @@ const int kExternalFilesCleanupDelaySeconds = 60;
           presentingViewController:[self topPresentedViewController]
                         completion:callback];
       break;
+    case AUTHENTICATION_OPERATION_ADDACCOUNT:
+      [self.signinInteractionCoordinator
+          addAccountWithAccessPoint:accessPoint
+                        promoAction:promoAction
+           presentingViewController:[self topPresentedViewController]
+                         completion:callback];
+      break;
   }
 }
 
