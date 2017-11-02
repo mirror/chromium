@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69b76724_1be91105",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-02T21:35:00Z",
+      "side": 1,
+      "message": "don\u0027t you need to update the definition of this function?\n\nAlso, I don\u0027t know if it\u0027s safe to remove the SetA. In the context of custom themes, I think it\u0027s intentional that the [x] is tinted by the tab\u0027s bg color.",
+      "range": {
+        "startLine": 1460,
+        "startChar": 19,
+        "endLine": 1460,
+        "endChar": 41
+      },
+      "revId": "19529d9fa9d9c1e76d52347300b1ffc87ac6dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
