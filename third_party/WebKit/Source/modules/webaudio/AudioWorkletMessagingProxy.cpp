@@ -4,6 +4,7 @@
 
 #include "modules/webaudio/AudioWorkletMessagingProxy.h"
 
+#include "core/dom/MessagePort.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "modules/webaudio/AudioWorkletGlobalScope.h"
 #include "modules/webaudio/AudioWorkletNode.h"
@@ -22,7 +23,8 @@ AudioWorkletMessagingProxy::AudioWorkletMessagingProxy(
 AudioWorkletMessagingProxy::~AudioWorkletMessagingProxy() {}
 
 void AudioWorkletMessagingProxy::CreateProcessor(
-    AudioWorkletHandler* handler) {
+    AudioWorkletHandler* handler,
+    MessagePortChannel message_port_channel) {
   DCHECK(IsMainThread());
   TaskRunnerHelper::Get(TaskType::kMiscPlatformAPI, GetWorkerThread())
       ->PostTask(
@@ -33,19 +35,21 @@ void AudioWorkletMessagingProxy::CreateProcessor(
               CrossThreadUnretained(GetWorkerThread()),
               CrossThreadUnretained(handler),
               handler->Name(),
-              handler->Context()->sampleRate()));
+              handler->Context()->sampleRate(),
+              std::move(message_port_channel)));
 }
 
 void AudioWorkletMessagingProxy::CreateProcessorOnRenderingThread(
     WorkerThread* worker_thread,
     AudioWorkletHandler* handler,
     const String& name,
-    float sample_rate) {
+    float sample_rate,
+    MessagePortChannel message_port_channel) {
   DCHECK(worker_thread->IsCurrentThread());
   AudioWorkletGlobalScope* global_scope =
       ToAudioWorkletGlobalScope(worker_thread->GlobalScope());
   AudioWorkletProcessor* processor =
-      global_scope->CreateInstance(name, sample_rate);
+      global_scope->CreateProcessor(name, sample_rate, message_port_channel);
   handler->SetProcessorOnRenderThread(processor);
 }
 
