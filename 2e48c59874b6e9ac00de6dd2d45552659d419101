@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30dec773_58951d33",
+        "filename": "components/arc/common/intent_helper.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-02T04:46:01Z",
+      "side": 1,
+      "message": "9",
+      "revId": "2e48c59874b6e9ac00de6dd2d45552659d419101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85681b7f_813785b7",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-02T04:46:01Z",
+      "side": 1,
+      "message": "Let\u0027s use constexpr for new code.",
+      "revId": "2e48c59874b6e9ac00de6dd2d45552659d419101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb54cb9_c5ba6466",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-02T04:46:01Z",
+      "side": 1,
+      "message": "Isn\u0027t it safer/simpler to use switch-case in OnOpenChromeSettings()? That way, if you add a new entry to the enum in mojom but leave this file as-is, clang will catch the error at compile time.\n\n(Adding a static assert to compare the size of this array and the number of enum entries seems also fine but I\u0027m not sure if there\u0027s a simple way to do that.)",
+      "revId": "2e48c59874b6e9ac00de6dd2d45552659d419101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c07d04e1_8c2160e5",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-02T04:46:01Z",
+      "side": 1,
+      "message": "Could you test non-deprecated version instead?",
+      "revId": "2e48c59874b6e9ac00de6dd2d45552659d419101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
