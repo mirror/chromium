@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b755a8e3_2a5c7163",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-02T15:14:51Z",
+      "side": 0,
+      "message": "I\u0027m not too sure why we used this intermediate variable? I assume with OnceCallback it\u0027s not needed.",
+      "revId": "d05563e79739d8d2943d0996de32f2e99f93893b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
