@@ -8,5 +8,5 @@
   LegacyTreatAsPartialInterface,
   NoInterfaceObject
 ] interface FontFaceSource {
-  [MeasureAs=DocumentFonts] readonly attribute FontFaceSet fonts;
+  [RuntimeEnabled=ExperimentalCanvasFeatures,MeasureAs=DocumentFonts] readonly attribute FontFaceSet fonts;
 };
