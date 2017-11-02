@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cc39335_42b44bc5",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-11-02T10:13:51Z",
+      "side": 1,
+      "message": "With your change, this code will run more often? Is that intentional?\n\nBefore we checked CanScrollInDirection, now you check CanBeContainer. CanBeContainer returns true also when node-\u003eIsDocumentNode().",
+      "range": {
+        "startLine": 1438,
+        "startChar": 0,
+        "endLine": 1449,
+        "endChar": 4
+      },
+      "revId": "e832482228c9a5bd0a0293b2498105fdb5e556d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140cf310_bdbc6a81",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-11-02T10:13:51Z",
+      "side": 1,
+      "message": "I\u0027d love to see a new file, SpatialNavigationTest.cpp, with some basic C++ gtests. It is crazy that spatnav lacks unit testing (or did I miss them?). \n\nFor example,\n\nTEST_F(SpatialNavigationTest, EnclosingBoxIsIframe)\nTEST_F(SpatialNavigationTest, EnclosingBoxIsDocumentBody)\nTEST_F(SpatialNavigationTest, EnclosingBoxIsOverflowAutoDiv)\nTEST_F(SpatialNavigationTest, EnclosingBoxIsOverflowHiddenDiv)\n  SetHtmlInnerHTML(..)\n\ncould assert that ScrollableEnclosingBoxOrParentFrameForNodeInDirection finds the right parent element in these basic cases.",
+      "range": {
+        "startLine": 308,
+        "startChar": 6,
+        "endLine": 308,
+        "endChar": 59
+      },
+      "revId": "e832482228c9a5bd0a0293b2498105fdb5e556d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
