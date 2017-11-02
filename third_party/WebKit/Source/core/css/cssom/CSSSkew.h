@@ -25,6 +25,7 @@ class CORE_EXPORT CSSSkew final : public CSSTransformComponent {
   static CSSSkew* Create(CSSNumericValue* ax, CSSNumericValue* ay) {
     return new CSSSkew(ax, ay);
   }
+  static CSSSkew* Create(CSSNumericValue*, CSSNumericValue*, ExceptionState&);
 
   // Internal ways of creating CSSSkews.
   static CSSSkew* FromCSSValue(const CSSFunctionValue&);
