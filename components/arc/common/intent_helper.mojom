@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// Next MinVersion: 18
+// Next MinVersion: 19
 
 module arc.mojom;
 
@@ -82,9 +82,24 @@ struct UrlWithMimeType {
   string mime_type;
 };
 
+// Describes a specific page in chrome://settings.
+[Extensible]
+enum SettingsPage {
+  MAIN,
+  POWER,
+  BLUETOOTH,
+  DATETIME,
+  DISPLAY,
+  WIFI,
+  LANGUAGE,
+  PRIVACY,
+  HELP,
+  MULTIDEVICE,
+};
+
 // Handles intents from ARC in Chrome.
-// Deprecated method ID: 4
-// Next method ID: 8
+// Deprecated method ID: 4, 7
+// Next method ID: 9
 interface IntentHelperHost {
   // Called when icons associated with the package are no longer up to date.
   [MinVersion=3] OnIconInvalidated@1(string package_name);
@@ -110,7 +125,10 @@ interface IntentHelperHost {
   [MinVersion=16] OpenVolumeControl@6();
 
   // Opens the multidevice settings in the Chrome browser.
-  [MinVersion=17] OnOpenChromeSettingsMultideviceUrl@7();
+  [MinVersion=17] OnOpenChromeSettingsMultideviceUrlDeprecated@7();
+
+  // Opens the specified settings page in the Chrome browser.
+  [MinVersion=18] OnOpenChromeSettings@8(SettingsPage page);
 };
 
 // Sends intents to ARC on behalf of Chrome.
