@@ -16,10 +16,7 @@
 
 namespace policy {
 
-PolicyCertService::~PolicyCertService() {
-  DCHECK(cert_verifier_)
-      << "CreatePolicyCertVerifier() must be called after construction.";
-}
+PolicyCertService::~PolicyCertService() = default;
 
 PolicyCertService::PolicyCertService(
     const std::string& user_id,
@@ -29,32 +26,29 @@ PolicyCertService::PolicyCertService(
       user_id_(user_id),
       net_conf_updater_(net_conf_updater),
       user_manager_(user_manager),
-      has_trust_anchors_(false),
-      weak_ptr_factory_(this) {
+      has_trust_anchors_(false) {
   DCHECK(net_conf_updater_);
   DCHECK(user_manager_);
 }
 
 PolicyCertService::PolicyCertService(const std::string& user_id,
-                                     PolicyCertVerifier* verifier,
+                                     base::WeakPtr<PolicyCertVerifier> verifier,
                                      user_manager::UserManager* user_manager)
     : cert_verifier_(verifier),
       user_id_(user_id),
       net_conf_updater_(NULL),
       user_manager_(user_manager),
-      has_trust_anchors_(false),
-      weak_ptr_factory_(this) {
-}
+      has_trust_anchors_(false) {}
 
 std::unique_ptr<PolicyCertVerifier>
 PolicyCertService::CreatePolicyCertVerifier() {
   base::Closure callback = base::Bind(
       &PolicyCertServiceFactory::SetUsedPolicyCertificates, user_id_);
-  cert_verifier_ = new PolicyCertVerifier(
-      base::Bind(base::IgnoreResult(&content::BrowserThread::PostTask),
-                 content::BrowserThread::UI,
-                 FROM_HERE,
-                 callback));
+  std::unique_ptr<PolicyCertVerifier> cert_verifier =
+      base::MakeUnique<PolicyCertVerifier>(
+          base::Bind(base::IgnoreResult(&content::BrowserThread::PostTask),
+                     content::BrowserThread::UI, FROM_HERE, callback));
+  cert_verifier_ = cert_verifier->GetWeakPtr();
   // Certs are forwarded to |cert_verifier_|, thus register here after
   // |cert_verifier_| is created.
   net_conf_updater_->AddTrustedCertsObserver(this);
@@ -64,12 +58,11 @@ PolicyCertService::CreatePolicyCertVerifier() {
   net_conf_updater_->GetWebTrustedCertificates(&trust_anchors);
   OnTrustAnchorsChanged(trust_anchors);
 
-  return base::WrapUnique(cert_verifier_);
+  return cert_verifier;
 }
 
 void PolicyCertService::OnTrustAnchorsChanged(
     const net::CertificateList& trust_anchors) {
-  DCHECK(cert_verifier_);
 
   // Do not use certificates installed via ONC policy if the current session has
   // multiple profiles. This is important to make sure that any possibly tainted
@@ -83,15 +76,10 @@ void PolicyCertService::OnTrustAnchorsChanged(
 
   has_trust_anchors_ = !trust_anchors.empty();
 
-  // It's safe to use base::Unretained here, because it's guaranteed that
-  // |cert_verifier_| outlives this object (see description of
-  // CreatePolicyCertVerifier).
-  // Note: ProfileIOData, which owns the CertVerifier is deleted by a
-  // DeleteSoon on IO, i.e. after all pending tasks on IO are finished.
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&PolicyCertVerifier::SetTrustAnchors,
-                     base::Unretained(cert_verifier_), trust_anchors));
+      base::BindOnce(&PolicyCertVerifier::SetTrustAnchors, cert_verifier_,
+                     trust_anchors));
 }
 
 bool PolicyCertService::UsedPolicyCertificates() const {
@@ -99,7 +87,6 @@ bool PolicyCertService::UsedPolicyCertificates() const {
 }
 
 void PolicyCertService::Shutdown() {
-  weak_ptr_factory_.InvalidateWeakPtrs();
   if (net_conf_updater_)
     net_conf_updater_->RemoveTrustedCertsObserver(this);
   OnTrustAnchorsChanged(net::CertificateList());
@@ -109,7 +96,7 @@ void PolicyCertService::Shutdown() {
 // static
 std::unique_ptr<PolicyCertService> PolicyCertService::CreateForTesting(
     const std::string& user_id,
-    PolicyCertVerifier* verifier,
+    base::WeakPtr<PolicyCertVerifier> verifier,
     user_manager::UserManager* user_manager) {
   return base::WrapUnique(
       new PolicyCertService(user_id, verifier, user_manager));

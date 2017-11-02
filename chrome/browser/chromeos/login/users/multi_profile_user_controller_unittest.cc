@@ -106,7 +106,7 @@ const BehaviorTestCase kBehaviorTestCases[] = {
 
 // Weak ptr to PolicyCertVerifier - object is freed in test destructor once
 // we've ensured the profile has been shut down.
-policy::PolicyCertVerifier* g_policy_cert_verifier_for_factory = NULL;
+base::WeakPtr<policy::PolicyCertVerifier> g_policy_cert_verifier_for_factory;
 
 std::unique_ptr<KeyedService> TestPolicyCertServiceFactory(
     content::BrowserContext* context) {
@@ -385,7 +385,7 @@ TEST_F(MultiProfileUserControllerTest,
   LoginUser(0);
 
   cert_verifier_.reset(new policy::PolicyCertVerifier(base::Closure()));
-  g_policy_cert_verifier_for_factory = cert_verifier_.get();
+  g_policy_cert_verifier_for_factory = cert_verifier_->GetWeakPtr();
   ASSERT_TRUE(
       policy::PolicyCertServiceFactory::GetInstance()->SetTestingFactoryAndUse(
           profile(0), TestPolicyCertServiceFactory));
@@ -421,7 +421,7 @@ TEST_F(MultiProfileUserControllerTest,
   SetPrefBehavior(0, MultiProfileUserController::kBehaviorUnrestricted);
 
   cert_verifier_.reset(new policy::PolicyCertVerifier(base::Closure()));
-  g_policy_cert_verifier_for_factory = cert_verifier_.get();
+  g_policy_cert_verifier_for_factory = cert_verifier_->GetWeakPtr();
   ASSERT_TRUE(
       policy::PolicyCertServiceFactory::GetInstance()->SetTestingFactoryAndUse(
           profile(0), TestPolicyCertServiceFactory));

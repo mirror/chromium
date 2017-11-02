@@ -43,7 +43,7 @@ void CompleteAndSignalAnchorUse(
 
 PolicyCertVerifier::PolicyCertVerifier(
     const base::Closure& anchor_used_callback)
-    : anchor_used_callback_(anchor_used_callback) {
+    : anchor_used_callback_(anchor_used_callback), weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 }
 
@@ -98,6 +98,10 @@ int PolicyCertVerifier::Verify(
 bool PolicyCertVerifier::SupportsOCSPStapling() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   return delegate_->SupportsOCSPStapling();
+}
+
+base::WeakPtr<PolicyCertVerifier> PolicyCertVerifier::GetWeakPtr() {
+  return weak_ptr_factory_.GetWeakPtr();
 }
 
 }  // namespace policy

@@ -63,23 +63,20 @@ class PolicyCertService
 
   static std::unique_ptr<PolicyCertService> CreateForTesting(
       const std::string& user_id,
-      PolicyCertVerifier* verifier,
+      base::WeakPtr<PolicyCertVerifier> verifier,
       user_manager::UserManager* user_manager);
 
  private:
   PolicyCertService(const std::string& user_id,
-                    PolicyCertVerifier* verifier,
+                    base::WeakPtr<PolicyCertVerifier> verifier,
                     user_manager::UserManager* user_manager);
 
-  PolicyCertVerifier* cert_verifier_;
+  // WeakPtr to the PolicyCertVerifier must only be dereferenced on IO thread.
+  base::WeakPtr<PolicyCertVerifier> cert_verifier_;
   std::string user_id_;
   UserNetworkConfigurationUpdater* net_conf_updater_;
   user_manager::UserManager* user_manager_;
   bool has_trust_anchors_;
-
-  // Weak pointers to handle callbacks from PolicyCertVerifier on the IO thread.
-  // The factory and the created WeakPtrs must only be used on the UI thread.
-  base::WeakPtrFactory<PolicyCertService> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PolicyCertService);
 };

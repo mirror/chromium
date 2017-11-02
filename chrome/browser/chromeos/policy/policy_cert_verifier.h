@@ -54,10 +54,16 @@ class PolicyCertVerifier : public net::CertVerifier {
 
   bool SupportsOCSPStapling() override;
 
+  // Returns a weak pointer to the PolicyCertVerifier.
+  // The result must only be dereferenced on the IO thread.
+  base::WeakPtr<PolicyCertVerifier> GetWeakPtr();
+
  private:
   net::CertificateList trust_anchors_;
   base::Closure anchor_used_callback_;
   std::unique_ptr<CertVerifier> delegate_;
+
+  base::WeakPtrFactory<PolicyCertVerifier> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PolicyCertVerifier);
 };

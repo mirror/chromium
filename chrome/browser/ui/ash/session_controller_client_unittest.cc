@@ -45,7 +45,7 @@ const char* kUser = "user@test.com";
 
 // Weak ptr to PolicyCertVerifier - object is freed in test destructor once
 // we've ensured the profile has been shut down.
-policy::PolicyCertVerifier* g_policy_cert_verifier_for_factory = nullptr;
+base::WeakPtr<policy::PolicyCertVerifier> g_policy_cert_verifier_for_factory;
 
 std::unique_ptr<KeyedService> CreateTestPolicyCertService(
     content::BrowserContext* context) {
@@ -367,7 +367,7 @@ TEST_F(SessionControllerClientTest,
   EXPECT_EQ(ash::AddUserSessionPolicy::ALLOWED,
             SessionControllerClient::GetAddUserSessionPolicy());
   cert_verifier_.reset(new policy::PolicyCertVerifier(base::Closure()));
-  g_policy_cert_verifier_for_factory = cert_verifier_.get();
+  g_policy_cert_verifier_for_factory = cert_verifier_->GetWeakPtr();
   ASSERT_TRUE(
       policy::PolicyCertServiceFactory::GetInstance()->SetTestingFactoryAndUse(
           user_profile, CreateTestPolicyCertService));
