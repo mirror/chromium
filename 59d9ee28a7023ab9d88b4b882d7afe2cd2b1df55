@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "988e5b2e_abef8a71",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-02T01:22:10Z",
+      "side": 1,
+      "message": "I\u0027m happy to, but I consider it a more longer term TODO. That is, I\u0027m not sure it\u0027s necessary before \"launch\", whereas the others are mandatory.",
+      "parentUuid": "1910c12b_7b0957a8",
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e7e69ae_088681f6",
         "filename": "components/omnibox/browser/history_quick_provider.cc",
         "patchSetId": 32
@@ -33,6 +51,24 @@
       "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a21613_382aa116",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-02T01:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e7e69ae_088681f6",
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "321bd7ac_f546ac94",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-02T01:22:10Z",
+      "side": 1,
+      "message": "Done plus one other place.",
+      "parentUuid": "e3836dc0_dd6d9362",
+      "range": {
+        "startLine": 197,
+        "startChar": 10,
+        "endLine": 197,
+        "endChar": 13
+      },
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16a5e295_01625215",
         "filename": "components/omnibox/browser/history_quick_provider.h",
         "patchSetId": 32
@@ -73,6 +133,24 @@
       "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626541b5_d0e6b48c",
+        "filename": "components/omnibox/browser/history_quick_provider.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-02T01:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16a5e295_01625215",
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "993c15bc_6e5087fc",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-02T01:22:10Z",
+      "side": 1,
+      "message": "\u003e even smaller than a nit: put \"the tab is switch to\" phrase before the \"the current tab is closed\" phrase in the above list, as the switching is the most important item.\n\nnp, I was trying to indicate the order.\n\n\u003e Also, \"false\" -\u003e \"returns false\"\n\nDone.",
+      "parentUuid": "c2f3574f_204d9ecb",
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f639b799_7a54e0ba",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 32
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "389fd907_915f9975",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-02T01:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f639b799_7a54e0ba",
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b70fa4af_ac68faaa",
         "filename": "components/omnibox/browser/omnibox_field_trial.cc",
         "patchSetId": 32
@@ -124,6 +238,24 @@
       "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b6b049_3b53ace8",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-02T01:22:10Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b70fa4af_ac68faaa",
+      "revId": "59d9ee28a7023ab9d88b4b882d7afe2cd2b1df55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
