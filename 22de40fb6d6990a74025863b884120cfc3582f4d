@@ -16,6 +16,24 @@
       "revId": "22de40fb6d6990a74025863b884120cfc3582f4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb0ef79_6c73ef34",
+        "filename": "chrome/browser/ui/app_list/search/extension_app_result.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-02T22:11:01Z",
+      "side": 1,
+      "message": "Is DISPLAY_RECOMMENDATION a suggested app? It is used on SearchController::OpenResult to record search-related metrics so I assumed it was a type of search result.\n\nWe also record other search-related metrics whenever a suggested app is clicked at SearchController::OpenResult which should not be recorded.\n\nI created a new code path because we currently record histograms at many levels of the call stack that seem to be for Search Results, not suggested apps.",
+      "parentUuid": "e0cce78e_80a0638c",
+      "revId": "22de40fb6d6990a74025863b884120cfc3582f4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
