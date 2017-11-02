@@ -13,11 +13,19 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/interstitials/chrome_metrics_helper.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ssl/chrome_ssl_host_state_delegate.h"
+#include "chrome/browser/ssl/ssl_error_handler.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
+#include "net/cert/cert_status_flags.h"
+#include "net/ssl/ssl_info.h"
+#include "url/gurl.h"
+
+#include "base/bind.h"  // TODO(REMOVE BEFORE LANDING)
 
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/intent_helper.h"
@@ -114,19 +122,67 @@ void LaunchDateAndTimeSettingsImpl() {
 }
 #endif
 
+bool AreCommittedInterstitialsEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kCommittedInterstitials);
+}
+
 }  // namespace
 
 ChromeControllerClient::ChromeControllerClient(
     content::WebContents* web_contents,
+    const net::SSLInfo& ssl_info,
+    const GURL& request_url,
     std::unique_ptr<security_interstitials::MetricsHelper> metrics_helper)
     : SecurityInterstitialControllerClient(
-        web_contents, std::move(metrics_helper),
-        Profile::FromBrowserContext(
-            web_contents->GetBrowserContext())->GetPrefs(),
-        g_browser_process->GetApplicationLocale(),
-        GURL(chrome::kChromeUINewTabURL)) {}
+          web_contents,
+          std::move(metrics_helper),
+          Profile::FromBrowserContext(web_contents->GetBrowserContext())
+              ->GetPrefs(),
+          g_browser_process->GetApplicationLocale(),
+          GURL(chrome::kChromeUINewTabURL)),
+      ssl_info_(ssl_info),
+      request_url_(request_url) {
+  // TODO(REMOVE BEFORE LANDING)
+  timer_.Start(FROM_HERE, base::TimeDelta::FromSeconds(3), this,
+               &ChromeControllerClient::Proceed);
+}
 
 ChromeControllerClient::~ChromeControllerClient() {}
+
+void ChromeControllerClient::GoBack() {
+  if (!AreCommittedInterstitialsEnabled()) {
+    SecurityInterstitialControllerClient::GoBack();
+    return;
+  }
+
+  SecurityInterstitialControllerClient::GoBackAfterNavigationCommitted();
+}
+
+bool ChromeControllerClient::CanGoBack() {
+  if (!AreCommittedInterstitialsEnabled()) {
+    return SecurityInterstitialControllerClient::CanGoBack();
+  }
+
+  return SecurityInterstitialControllerClient::CanGoBack();
+}
+
+void ChromeControllerClient::Proceed() {
+  if (!AreCommittedInterstitialsEnabled()) {
+    SecurityInterstitialControllerClient::Proceed();
+    return;
+  }
+
+  Profile* profile =
+      Profile::FromBrowserContext(web_contents_->GetBrowserContext());
+  ChromeSSLHostStateDelegate* state =
+      reinterpret_cast<ChromeSSLHostStateDelegate*>(
+          profile->GetSSLHostStateDelegate());
+  state->AllowCert(request_url_.host(), *ssl_info_.cert.get(),
+                   net::MapCertStatusToNetError(ssl_info_.cert_status));
+
+  Reload();
+}
 
 bool ChromeControllerClient::CanLaunchDateAndTimeSettings() {
 #if defined(OS_ANDROID) || defined(OS_LINUX) || defined(OS_MACOSX) || \
