@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "effc1b59_8f8c08d2",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T23:10:39Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s just call this GetCleanedNameForTesting or something, as it\u0027s possible for implementation details to change in the future.",
+      "range": {
+        "startLine": 309,
+        "startChar": 30,
+        "endLine": 309,
+        "endChar": 64
+      },
+      "revId": "4603612ff17d4b7f90521b5b9b7865d886ddb691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b2df95_c42d79a9",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T23:10:39Z",
+      "side": 1,
+      "message": "Super minor nit: please use 1 space after periods for consistency with the rest of this file.",
+      "range": {
+        "startLine": 139,
+        "startChar": 52,
+        "endLine": 139,
+        "endChar": 53
+      },
+      "revId": "4603612ff17d4b7f90521b5b9b7865d886ddb691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4c9879_8eb0eddc",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T23:10:39Z",
+      "side": 1,
+      "message": "Two nits:\n\"new_child\" is implicit from the name of the method, so omit that from the param name.\n\"is_dynamic\" can just be \"is_script_created\", which will simplify the comment somewhat.",
+      "range": {
+        "startLine": 145,
+        "startChar": 48,
+        "endLine": 145,
+        "endChar": 68
+      },
+      "revId": "4603612ff17d4b7f90521b5b9b7865d886ddb691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80085210_e08261b5",
+        "filename": "content/public/test/test_runner_support.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T23:10:39Z",
+      "side": 1,
+      "message": "Nit: GetFrameNameForLayoutTests would be clearer",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "4603612ff17d4b7f90521b5b9b7865d886ddb691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd01697b_dc647b33",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 3302,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T23:10:39Z",
+      "side": 1,
+      "message": "Nit: just call this \"is_script_created\".",
+      "revId": "4603612ff17d4b7f90521b5b9b7865d886ddb691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d04217_1ea50d28",
+        "filename": "third_party/WebKit/LayoutTests/fast/frames/unique-name-all-subframes-have-same-name-expected.txt",
+        "patchSetId": 25
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T23:10:39Z",
+      "side": 1,
+      "message": "Maybe it\u0027s worth adding a suffix in testing mode? Though I guess that doesn\u0027t scale well once you have two script-inserted frames--but it does seem confusing that the test results don\u0027t match what one might expect (since the test was originally trying to verify that they are all different)",
+      "range": {
+        "startLine": 24,
+        "startChar": 60,
+        "endLine": 24,
+        "endChar": 61
+      },
+      "revId": "4603612ff17d4b7f90521b5b9b7865d886ddb691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
