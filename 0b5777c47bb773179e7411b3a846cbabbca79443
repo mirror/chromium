@@ -34,6 +34,24 @@
       "revId": "0b5777c47bb773179e7411b3a846cbabbca79443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b9b608_b8c637c1",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-02T02:03:50Z",
+      "side": 1,
+      "message": "Yes, this is redundant. Will remove it in a following up CL.\nSorry, I click submit too fast, it seems abandon can not stop submit.",
+      "parentUuid": "92fe03ac_44c95044",
+      "revId": "0b5777c47bb773179e7411b3a846cbabbca79443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
