@@ -1,0 +1,483 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c64d0b4a_31a29699",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "please document what happens if the instance is deleted while an operation is outstanding.",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0efc3d_eb9e4b90",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "nit: doc comment on the callback type",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3893b0_77b21fd4",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "#include \"base/callback.h\"",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0208e9a_470af4c9",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "nit: omit \"explicit\" when there\u0027s more than one arg to the ctor.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e50fc7_08342f7e",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122361b4_2e5d7115",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "it looks like all callers would need to create an instance and then immediately call PutCompleted on it. how about making the ctor private and turning this into a static factory function that returns an instance only when put_Completed succeeds?",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f179965c_3cd8be8c",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "#include \"base/memory/weak_ptr.h\"",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33eef1bd_413b9769",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "#include \"base/memory/ref_counted.h\"",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 17
+      },
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2a32b90_f764f674",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "is it a requirement that the callback be run on the caller\u0027s *thread*, or does it suffice for it to run on the caller\u0027s sequence? the latter is strongly preferred when possible (i.e., use SequencedTaskRunnerHandle rather than ThreadTaskRunnerHandle).",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d027326_e730e445",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "|status| is unused. why? should this check for Completed vs. Cancelled vs. Error?",
+      "range": {
+        "startLine": 48,
+        "startChar": 44,
+        "endLine": 48,
+        "endChar": 50
+      },
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726bc02b_4b6a561a",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "#include \"base/sequenced_task_runner.h\"",
+      "range": {
+        "startLine": 51,
+        "startChar": 10,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48935387_332051b1",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "#include \"base/bind.h\"",
+      "range": {
+        "startLine": 52,
+        "startChar": 25,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bf8a05_93ccf5fe",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "#include \"base/location.h\"",
+      "range": {
+        "startLine": 52,
+        "startChar": 14,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5a5b79_f32bc65f",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "DCHECK that async_op \u003d\u003d async_op_ptr_.Get()?",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ec6a2f_2a28e1e4",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\"",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b17645_8a55c294",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "please add a comment that explains why Unretained is safe here.",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36802f72_854aaa9a",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "should async_create_detector_ops_ be reset() here?",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51bd5d8_4e6b4b3e",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "i think it\u0027s best to prefer \"enum class\" except in cases where you really need the automatic int conversion. please switch if you don\u0027t need the conversion here.\n\nalso, is there a reason this is public? it seems like a private implementation detail of FaceDetectionImplWin.",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f84866c_1aa2fce0",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "is the value 1 significant? if no, please remove \" \u003d 1\" and let the language do what it will.",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3321ff4d_ae3f2709",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "nit: please document the origin of the overridden method with:\n  // mojom::FaceDetection:",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80a24a5_fef2f03d",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "please follow the preferred ordering described in https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0b5801_65f49acd",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "nit: \"set_async_status\" as per the \"accessors and mutators\" section of https://google.github.io/styleguide/cppguide.html#Function_Names.",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd26c08_a6c35d0f",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "nit: \"async_status() const {...}\"",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edbae85e_76d2a6eb",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "nit: blank line between methods and data members",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2ab439_ad008dcf",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-02T10:10:15Z",
+      "side": 1,
+      "message": "it\u0027s quite bad to have long fixed delays like this in tests. they often end up being flaky, taking too long, or both. how about making CreateFaceDetector and Create take an optional callback that is run on the caller\u0027s thread when the async operation completes?",
+      "revId": "c03bea3ed1c1932c75d62d6d44746cdd2b501597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
