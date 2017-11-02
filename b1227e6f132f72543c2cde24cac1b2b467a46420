@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7214a23_af222174",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/visual-viewport/viewport-dimensions-custom-scrollbars-manual.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-02T18:48:07Z",
+      "side": 1,
+      "message": "It took me a while to understand why this is true, I find dividing the scrollbar thickness and then subtracting it back out a bit awkward since the scrollbar never changes size (in CSS pixels). Do you think it might be clearer if we instead used `originalInnerWidth / 2 - 20`?",
+      "range": {
+        "startLine": 121,
+        "startChar": 20,
+        "endLine": 121,
+        "endChar": 67
+      },
+      "revId": "b1227e6f132f72543c2cde24cac1b2b467a46420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
