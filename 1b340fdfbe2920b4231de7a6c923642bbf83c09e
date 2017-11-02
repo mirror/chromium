@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "85616945_d4ad5e39",
+        "filename": "build/secondary/third_party/crashpad/crashpad/tools/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-02T18:22:00Z",
+      "side": 1,
+      "message": "\u003e \u003e I think this is going to not get tracked as a dependency properly, but I don\u0027t think listing it as data[] on the target is right, either.\n\u003e \n\u003e Good point. I think “inputs” is the way to do this, but I have to specify it in the target itself. If I try to specify it in the config, I get:\n\u003e \n\u003e \u003e You set the variable \"inputs\" here and it was unused before it went\n\u003e \u003e out of scope.\n\u003e \n\u003e Dirk, do you know how to achieve this?\n\nIn Patch Set 2, I got rid of the config and work with ldflags in each of the two targets that need it, so that I can use “inputs” too. I’d be happier with the config, if that’s possible, but build correctness is more important, and I didn’t want to separate the places where this needed to be configured.",
+      "parentUuid": "e03d48e2_fef49d5b",
+      "revId": "1b340fdfbe2920b4231de7a6c923642bbf83c09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9c5feb7_a6573239",
         "filename": "testing/buildbot/chromium.fyi.json",
         "patchSetId": 1
