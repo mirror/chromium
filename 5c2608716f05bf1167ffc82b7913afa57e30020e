@@ -46,6 +46,30 @@
       "revId": "5c2608716f05bf1167ffc82b7913afa57e30020e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311e767a_e6a2d987",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-02T22:42:23Z",
+      "side": 1,
+      "message": "Actually I think we can\u0027t quite do that, it only works if we\u0027re not in the middle of the Flush currently... I think we may need to track if audio/video is flushed and defer if the flush has not completed. If the flush has completed we can then flush only the renderer which is unflushed... This is quite complicated though :/",
+      "parentUuid": "0405114f_df34a844",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 80
+      },
+      "revId": "5c2608716f05bf1167ffc82b7913afa57e30020e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
