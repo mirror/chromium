@@ -222,6 +222,30 @@
       "revId": "188b08773d72b15d78a882ba0956425da4d74a8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17bb1c4_34533b40",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-02T23:15:51Z",
+      "side": 1,
+      "message": "Okay to punt",
+      "parentUuid": "f9f02785_4ad7680a",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 25
+      },
+      "revId": "188b08773d72b15d78a882ba0956425da4d74a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
