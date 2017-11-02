@@ -70,6 +70,24 @@
       "revId": "8a2db95df86f30a05f5c30571a492be2f2eac12b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7759a8cc_ead98b2a",
+        "filename": "media/remoting/proto_utils_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-02T23:22:56Z",
+      "side": 1,
+      "message": "I did test my proposal on Linux workstation. Unfortunately I can not test it on windows since my windows machine does not work right now.\n\nI don\u0027t want to block this CL just by this unit test. How about revert the change to this unit test, but simply memset both 0xcd to |original| and |converted| (in original code). This should pass the trybots but the test can not detect any newly added field in PipelineStatistics. Please open a bug for this and assigned it to me. \n\nWDYT?",
+      "parentUuid": "ddef1698_8eb78f4e",
+      "revId": "8a2db95df86f30a05f5c30571a492be2f2eac12b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
