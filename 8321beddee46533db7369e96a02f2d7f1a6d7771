@@ -332,6 +332,24 @@
     },
     {
       "key": {
+        "uuid": "a75e5760_27ebc41f",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_cache_storage.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-02T12:08:16Z",
+      "side": 1,
+      "message": "+1: would like to separate Service Worker from Cache Storage and Fetch where appropriate. They were implemented at the same time so things ended up with the SW name.",
+      "parentUuid": "a94e1a52_83725ba2",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd8e924a_c3841309",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_cache_storage.mojom",
         "patchSetId": 6
