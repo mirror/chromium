@@ -828,9 +828,20 @@ Rect RenderText::GetCursorBounds(const SelectionModel& caret,
       insert_mode ? caret.caret_affinity() : CURSOR_FORWARD;
   int x = 0, width = 1;
   Size size = GetStringSize();
-  if (caret_pos == (caret_affinity == CURSOR_BACKWARD ? 0 : text().length())) {
-    // The caret is attached to the boundary. Always return a 1-dip width caret,
-    // since there is nothing to overtype.
+  // Check whether the caret is attached to a boundary. Always return a 1-dip
+  // width caret at the boundary. Avoid calling to IndexOfAdjacentGrapheme(),
+  // which is slow and can impact browser startup here. Cursors are most often
+  // at the ends of input, so this captures most cases.
+  bool at_boundary;
+  if (insert_mode) {
+    at_boundary = caret_pos == 0 || caret_pos == text().length();
+  } else {
+    // Overtype mode still needs to highlight a range when navigating towards
+    // the center of text.
+    at_boundary =
+        caret_pos == (caret_affinity == CURSOR_BACKWARD ? 0 : text().length());
+  }
+  if (at_boundary) {
     if ((GetDisplayTextDirection() == base::i18n::RIGHT_TO_LEFT)
         == (caret_pos == 0)) {
       x = size.width();
