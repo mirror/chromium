@@ -112,13 +112,30 @@ void HTMLFrameOwnerElement::ClearContentFrame() {
 }
 
 void HTMLFrameOwnerElement::DisconnectContentFrame() {
+  Frame* subframe = ContentFrame();
+  if (!subframe)
+    return;
+
+  // Removing a subframe that was still loading can impact the result of
+  // AllDescendantsAreComplete that is consulted by Document::ShouldComplete.
+  // Therefore we might need to re-check this after removing the subframe.  The
+  // re-check is not needed for local frames (which will handle re-checking from
+  // FrameLoader::DidFinishNavigation that responds to LocalFrame::Detach).
+  // OTOH, re-checking is required for OOPIFs - see https://crbug.com/779433.
+  Document& parent_doc = GetDocument();
+  bool have_to_check_if_parent_is_completed = !parent_doc.IsLoadCompleted() &&
+                                              subframe->IsRemoteFrame() &&
+                                              subframe->IsLoading();
+
   // FIXME: Currently we don't do this in removedFrom because this causes an
   // unload event in the subframe which could execute script that could then
   // reach up into this document and then attempt to look back down. We should
   // see if this behavior is really needed as Gecko does not allow this.
-  if (Frame* frame = ContentFrame()) {
-    frame->Detach(FrameDetachType::kRemove);
-  }
+  subframe->Detach(FrameDetachType::kRemove);
+
+  // Check if removing the |subframe| caused |parent_doc| to finish loading.
+  if (have_to_check_if_parent_is_completed)
+    parent_doc.CheckCompleted();
 }
 
 HTMLFrameOwnerElement::~HTMLFrameOwnerElement() {
