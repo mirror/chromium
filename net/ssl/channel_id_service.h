@@ -20,6 +20,7 @@
 #include "base/threading/thread_checker.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
+#include "net/log/net_log_with_source.h"
 #include "net/ssl/channel_id_store.h"
 
 namespace crypto {
@@ -36,6 +37,7 @@ class NET_EXPORT ChannelIDService {
   class NET_EXPORT Request {
    public:
     Request();
+    explicit Request(NetLog* net_log);
     ~Request();
 
     // Cancel the request.  Does nothing if the request finished or was already
@@ -55,10 +57,13 @@ class NET_EXPORT ChannelIDService {
 
     void Post(int error, std::unique_ptr<crypto::ECPrivateKey> key);
 
+    void LogDebugString(const std::string&);
+
     ChannelIDService* service_;
     CompletionCallback callback_;
     std::unique_ptr<crypto::ECPrivateKey>* key_;
     ChannelIDServiceJob* job_;
+    NetLogWithSource net_log_;
   };
 
   // This object owns |channel_id_store|.

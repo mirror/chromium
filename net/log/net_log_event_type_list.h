@@ -500,6 +500,8 @@ EVENT_TYPE(SSL_PRIVATE_KEY_OP)
 //   }
 EVENT_TYPE(SSL_GET_CHANNEL_ID)
 
+EVENT_TYPE(SSL_GET_OR_CREATE_CHANNEL_ID_RETURN_VALUE)
+
 // A client certificate (or none) was provided to the SSL library to be sent
 // to the SSL server.
 // The following parameters are attached to the event:
@@ -3230,3 +3232,10 @@ EVENT_TYPE(HOST_CACHE_PREF_WRITE)
 // This event is created when the HostCachePersistenceManager starts the timer
 // for writing a cache change to prefs.
 EVENT_TYPE(HOST_CACHE_PERSISTENCE_START_TIMER)
+
+// -----------------------------------------------------------------------------
+// ChannelIDService::Request related events
+// -----------------------------------------------------------------------------
+
+EVENT_TYPE(CHANNEL_ID_REQUEST_RUNNING)
+EVENT_TYPE(CHANNEL_ID_REQUEST_DEBUG)

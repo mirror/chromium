@@ -73,6 +73,7 @@ DefaultChannelIDStore::GetChannelIDTask::~GetChannelIDTask() {
 void DefaultChannelIDStore::GetChannelIDTask::Run(
     DefaultChannelIDStore* store) {
   std::unique_ptr<crypto::ECPrivateKey> key_result;
+  LOG(ERROR) << "Running GetChannelIDTask for " << server_identifier_;
   int err = store->GetChannelID(server_identifier_, &key_result,
                                 GetChannelIDCallback());
   DCHECK(err != ERR_IO_PENDING);
@@ -231,11 +232,15 @@ int DefaultChannelIDStore::GetChannelID(
   InitIfNecessary();
 
   if (!loaded_) {
+    LOG(ERROR) << "Channel ID store not loaded; creating task for "
+               << server_identifier;
     EnqueueTask(std::unique_ptr<Task>(
         new GetChannelIDTask(server_identifier, callback)));
     return ERR_IO_PENDING;
   }
 
+  LOG(ERROR) << "Searching through loaded ChannelIDStore for "
+             << server_identifier;
   ChannelIDMap::iterator it = channel_ids_.find(server_identifier);
 
   if (it == channel_ids_.end())
@@ -317,6 +322,7 @@ void DefaultChannelIDStore::InitStore() {
   DCHECK(store_) << "Store must exist to initialize";
   DCHECK(!loaded_);
 
+  LOG(ERROR) << "Initializing persistent store";
   store_->Load(base::Bind(&DefaultChannelIDStore::OnLoaded,
                           weak_ptr_factory_.GetWeakPtr()));
 }
@@ -336,6 +342,8 @@ void DefaultChannelIDStore::OnLoaded(
 
   loaded_ = true;
 
+  LOG(ERROR) << "ChannelIDStore has loaded, running " << waiting_tasks_.size()
+             << " tasks";
   for (std::unique_ptr<Task>& i : waiting_tasks_)
     i->Run(this);
   waiting_tasks_.clear();
@@ -394,6 +402,7 @@ void DefaultChannelIDStore::EnqueueTask(std::unique_ptr<Task> task) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(!loaded_);
   waiting_tasks_.push_back(std::move(task));
+  LOG(ERROR) << "Enqueued task";
 }
 
 void DefaultChannelIDStore::RunOrEnqueueTask(std::unique_ptr<Task> task) {

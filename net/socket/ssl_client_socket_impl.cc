@@ -454,6 +454,7 @@ SSLClientSocketImpl::SSLClientSocketImpl(
       channel_id_sent_(false),
       certificate_verified_(false),
       certificate_requested_(false),
+      channel_id_request_(transport_->socket()->NetLog().net_log()),
       signature_result_(kNoPendingResult),
       transport_security_state_(context.transport_security_state),
       policy_enforcer_(context.ct_policy_enforcer),
@@ -1169,16 +1170,27 @@ int SSLClientSocketImpl::DoHandshakeComplete(int result) {
   return OK;
 }
 
+std::unique_ptr<base::Value> LogGetOrCreateChannelIDReturnValue(
+    int ret,
+    NetLogCaptureMode capture_mode) {
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  dict->SetInteger("net_error", ret);
+  return std::move(dict);
+}
+
 int SSLClientSocketImpl::DoChannelIDLookup() {
   NetLogParametersCallback callback = base::Bind(
       &NetLogChannelIDLookupCallback, base::Unretained(channel_id_service_));
   net_log_.BeginEvent(NetLogEventType::SSL_GET_CHANNEL_ID, callback);
   next_handshake_state_ = STATE_CHANNEL_ID_LOOKUP_COMPLETE;
-  return channel_id_service_->GetOrCreateChannelID(
+  int ret = channel_id_service_->GetOrCreateChannelID(
       host_and_port_.host(), &channel_id_key_,
       base::Bind(&SSLClientSocketImpl::OnHandshakeIOComplete,
                  base::Unretained(this)),
       &channel_id_request_);
+  net_log_.AddEvent(NetLogEventType::SSL_GET_OR_CREATE_CHANNEL_ID_RETURN_VALUE,
+                    base::Bind(&LogGetOrCreateChannelIDReturnValue, ret));
+  return ret;
 }
 
 int SSLClientSocketImpl::DoChannelIDLookupComplete(int result) {

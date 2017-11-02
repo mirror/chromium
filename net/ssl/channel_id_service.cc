@@ -24,6 +24,7 @@
 #include "base/task_runner.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/values.h"
 #include "crypto/ec_private_key.h"
 #include "net/base/net_errors.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
@@ -94,6 +95,13 @@ std::unique_ptr<ChannelIDStore::ChannelID> GenerateChannelID(
   return result;
 }
 
+std::unique_ptr<base::Value> NetLogDebugString(const std::string& str,
+                                               NetLogCaptureMode capture_mode) {
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  dict->SetString("debug", str);
+  return std::move(dict);
+}
+
 }  // namespace
 
 // ChannelIDServiceWorker takes care of the blocking process of performing key
@@ -158,6 +166,7 @@ class ChannelIDServiceJob {
   void AddRequest(ChannelIDService::Request* request,
                   bool create_if_missing = false) {
     create_if_missing_ |= create_if_missing;
+    request->LogDebugString("Added Request to ChannelIDServiceJob");
     requests_.push_back(request);
   }
 
@@ -191,8 +200,12 @@ class ChannelIDServiceJob {
   bool create_if_missing_;
 };
 
-ChannelIDService::Request::Request() : service_(NULL) {
-}
+ChannelIDService::Request::Request() : Request(nullptr) {}
+ChannelIDService::Request::Request(NetLog* net_log)
+    : service_(NULL),
+      net_log_(NetLogWithSource::Make(
+          net_log,
+          NetLogSourceType::CHANNEL_ID_SERVICE_REQUEST)) {}
 
 ChannelIDService::Request::~Request() {
   Cancel();
@@ -208,11 +221,24 @@ void ChannelIDService::Request::Cancel() {
   }
 }
 
+std::unique_ptr<base::Value> NetLogRequestStartCallback(
+    ChannelIDService* service,
+    NetLogCaptureMode capture_mode) {
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  dict->SetInteger("service_id", service->GetUniqueID());
+  dict->SetBoolean("is_ephemeral", service->GetChannelIDStore()->IsEphemeral());
+  return std::move(dict);
+}
+
 void ChannelIDService::Request::RequestStarted(
     ChannelIDService* service,
     const CompletionCallback& callback,
     std::unique_ptr<crypto::ECPrivateKey>* key,
     ChannelIDServiceJob* job) {
+  if (net_log_.net_log()) {
+    net_log_.BeginEvent(NetLogEventType::CHANNEL_ID_REQUEST_RUNNING,
+                        base::Bind(NetLogRequestStartCallback, service));
+  }
   DCHECK(service_ == NULL);
   service_ = service;
   callback_ = callback;
@@ -223,6 +249,11 @@ void ChannelIDService::Request::RequestStarted(
 void ChannelIDService::Request::Post(
     int error,
     std::unique_ptr<crypto::ECPrivateKey> key) {
+  LogDebugString("ChannelIDService::Request::Post received");
+  if (net_log_.net_log()) {
+    net_log_.EndEventWithNetErrorCode(
+        NetLogEventType::CHANNEL_ID_REQUEST_RUNNING, error);
+  }
   switch (error) {
     case OK: {
       RecordGetChannelIDResult(ASYNC_SUCCESS);
@@ -249,6 +280,13 @@ void ChannelIDService::Request::Post(
   // resources created for the request), so we can't touch any of our
   // members afterwards. Reset callback_ first.
   base::ResetAndReturn(&callback_).Run(error);
+}
+
+void ChannelIDService::Request::LogDebugString(const std::string& str) {
+  if (net_log_.net_log()) {
+    net_log_.AddEvent(NetLogEventType::CHANNEL_ID_REQUEST_DEBUG,
+                      base::Bind(NetLogDebugString, str));
+  }
 }
 
 ChannelIDService::ChannelIDService(ChannelIDStore* channel_id_store)
@@ -304,6 +342,8 @@ int ChannelIDService::GetOrCreateChannelID(
 
   int err = LookupChannelID(domain, key, create_if_missing, callback, out_req);
   if (err == ERR_FILE_NOT_FOUND) {
+    out_req->LogDebugString("Channel ID not found, creating new one for " +
+                            domain);
     // Sync lookup did not find a valid channel ID.  Start generating a new one.
     workers_created_++;
     ChannelIDServiceWorker* worker = new ChannelIDServiceWorker(
@@ -433,6 +473,7 @@ bool ChannelIDService::JoinToInFlightRequest(
   ChannelIDServiceJob* job = NULL;
   auto j = inflight_.find(domain);
   if (j != inflight_.end()) {
+    out_req->LogDebugString("Joining to in-flight request");
     // A request for the same domain is in flight already. We'll attach our
     // callback, but we'll also mark it as requiring a channel ID if one's
     // mising.
@@ -443,7 +484,18 @@ bool ChannelIDService::JoinToInFlightRequest(
     out_req->RequestStarted(this, callback, key, job);
     return true;
   }
+  out_req->LogDebugString("No in-flight request");
   return false;
+}
+
+std::unique_ptr<base::Value> NetLogGetChannelIDCallback(
+    std::string domain,
+    int err,
+    NetLogCaptureMode capture_mode) {
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  dict->SetString("domain", domain);
+  dict->SetInteger("net_error", err);
+  return std::move(dict);
 }
 
 int ChannelIDService::LookupChannelID(
@@ -452,20 +504,28 @@ int ChannelIDService::LookupChannelID(
     bool create_if_missing,
     const CompletionCallback& callback,
     Request* out_req) {
+  out_req->LogDebugString("Looking up Channel ID for domain " + domain);
   // Check if a channel ID key already exists for this domain.
   int err = channel_id_store_->GetChannelID(
       domain, key, base::Bind(&ChannelIDService::GotChannelID,
                               weak_ptr_factory_.GetWeakPtr()));
+  if (out_req->net_log_.net_log()) {
+    out_req->net_log_.AddEvent(
+        NetLogEventType::CHANNEL_ID_REQUEST_DEBUG,
+        base::Bind(NetLogGetChannelIDCallback, domain, err));
+  }
 
   if (err == OK) {
     // Sync lookup found a valid channel ID.
     DVLOG(1) << "Channel ID store had valid key for " << domain;
     key_store_hits_++;
     RecordGetChannelIDResult(SYNC_SUCCESS);
+    out_req->LogDebugString("Found channel ID for domain " + domain);
     return OK;
   }
 
   if (err == ERR_IO_PENDING) {
+    out_req->LogDebugString("Pending lookup for channel ID for " + domain);
     // We are waiting for async DB lookup.  Create a job & request to track it.
     ChannelIDServiceJob* job = new ChannelIDServiceJob(create_if_missing);
     inflight_[domain] = base::WrapUnique(job);
