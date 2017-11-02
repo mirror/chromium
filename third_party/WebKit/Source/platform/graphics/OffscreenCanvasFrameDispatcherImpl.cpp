@@ -8,15 +8,16 @@
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/common/resources/resource_format.h"
+#include "gpu/config/gpu_feature_info.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/graphics/OffscreenCanvasPlaceholder.h"
+#include "platform/graphics/WebGraphicsContext3DProviderWrapper.h"
 #include "platform/graphics/gpu/SharedGpuContext.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebGraphicsContext3DProvider.h"
 #include "public/platform/modules/offscreencanvas/offscreen_canvas_surface.mojom-blink.h"
 
 namespace blink {
@@ -176,6 +177,17 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
 
   viz::TransferableResource resource;
   offscreen_canvas_resource_provider_->TransferResource(&resource);
+
+  bool gpu_compositing = !Platform::Current()->IsGpuCompositingDisabled();
+  if (image->ContextProviderWrapper() &&
+      image->ContextProviderWrapper()->ContextProvider() &&
+      image->ContextProviderWrapper()
+              ->ContextProvider()
+              ->GetGpuFeatureInfo()
+              .status_values[gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING] !=
+          gpu::kGpuFeatureStatusEnabled) {
+    gpu_compositing = false;
+  }
 
   bool yflipped = false;
   OffscreenCanvasCommitType commit_type;
