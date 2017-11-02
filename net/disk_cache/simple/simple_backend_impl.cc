@@ -325,8 +325,6 @@ void SimpleBackendImpl::DoomEntries(std::vector<uint64_t>* entry_hashes,
   //    SimpleSynchronousEntry::DoomEntrySet and delete the files en masse.
   for (int i = mass_doom_entry_hashes->size() - 1; i >= 0; --i) {
     const uint64_t entry_hash = (*mass_doom_entry_hashes)[i];
-    CHECK(active_entries_.count(entry_hash) == 0 ||
-          entries_pending_doom_.count(entry_hash) == 0);
     if (!active_entries_.count(entry_hash) &&
         !entries_pending_doom_.count(entry_hash)) {
       continue;
