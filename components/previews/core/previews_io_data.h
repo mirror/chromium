@@ -82,6 +82,8 @@ class PreviewsIOData : public PreviewsDecider {
       const std::vector<std::string>& host_blacklist_from_server)
       const override;
 
+  uint64_t GeneratePageId();
+
  protected:
   // Posts a task to SetIOData for |previews_ui_service_| on the UI thread with
   // a weak pointer to |this|. Virtualized for testing.
@@ -107,6 +109,8 @@ class PreviewsIOData : public PreviewsDecider {
 
   // Whether the preview is enabled. Valid after Initialize() is called.
   PreviewsIsEnabledCallback is_enabled_callback_;
+
+  uint64_t page_id_;
 
   base::WeakPtrFactory<PreviewsIOData> weak_factory_;
 

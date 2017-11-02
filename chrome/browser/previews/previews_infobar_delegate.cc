@@ -23,6 +23,7 @@
 #include "components/infobars/core/infobar.h"
 #include "components/network_time/network_time_tracker.h"
 #include "components/previews/core/previews_features.h"
+#include "components/previews/core/previews_user_data.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -118,6 +119,8 @@ void PreviewsInfoBarDelegate::Create(
     return;
   if (infobar_tab_helper->displayed_preview_infobar())
     return;
+
+  LOG(WARNING) << infobar_tab_helper->previews_user_data()->page_id();
 
   std::unique_ptr<PreviewsInfoBarDelegate> delegate(new PreviewsInfoBarDelegate(
       infobar_tab_helper, previews_type, previews_freshness, is_data_saver_user,

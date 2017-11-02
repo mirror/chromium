@@ -18,6 +18,7 @@
 #include "components/previews/core/previews_experiments.h"
 #include "components/previews/core/previews_opt_out_store.h"
 #include "components/previews/core/previews_ui_service.h"
+#include "components/previews/core/previews_user_data.h"
 #include "net/base/load_flags.h"
 #include "net/nqe/network_quality_estimator.h"
 #include "net/url_request/url_request.h"
@@ -151,6 +152,11 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
     // when navigating to files on disk, etc.
     return false;
   }
+
+  PreviewsUserData* user_data = PreviewsUserData::GetData(request);
+
+  LOG(WARNING) << user_data->page_id();
+
   if (is_enabled_callback_.is_null() || !previews_black_list_) {
     LogPreviewDecisionMade(PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE,
                            request.url(), base::Time::Now(), type);
@@ -211,6 +217,10 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
   LogPreviewDecisionMade(PreviewsEligibilityReason::ALLOWED, request.url(),
                          base::Time::Now(), type);
   return true;
+}
+
+uint64_t PreviewsIOData::GeneratePageId() {
+  return ++page_id_;
 }
 
 }  // namespace previews
