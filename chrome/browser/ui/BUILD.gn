@@ -2421,6 +2421,8 @@ split_static_library("ui") {
       "startup/default_browser_prompt_win.cc",
       "tabs/tab_strip_model_experimental.cc",
       "tabs/tab_strip_model_experimental.h",
+      "views/arrow_border.cc",
+      "views/arrow_border.h",
       "views/certificate_viewer_win.cc",
       "views/chrome_cleaner_dialog_win.cc",
       "views/chrome_cleaner_dialog_win.h",
