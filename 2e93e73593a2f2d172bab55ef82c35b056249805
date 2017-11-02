@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3203be15_91a48b5e",
+        "filename": "DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-02T00:19:37Z",
+      "side": 1,
+      "message": "We\u0027ll need to merge the changes you made there to the libaddressinput GitHub before we land this, correct?",
+      "range": {
+        "startLine": 395,
+        "startChar": 4,
+        "endLine": 395,
+        "endChar": 62
+      },
+      "revId": "2e93e73593a2f2d172bab55ef82c35b056249805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bddcc72_3c83e173",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-02T00:19:37Z",
+      "side": 1,
+      "message": "Loaded?",
+      "range": {
+        "startLine": 109,
+        "startChar": 65,
+        "endLine": 109,
+        "endChar": 74
+      },
+      "revId": "2e93e73593a2f2d172bab55ef82c35b056249805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff208f64_4701fffa",
+        "filename": "components/autofill/core/browser/subkey_requester_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-02T00:19:37Z",
+      "side": 1,
+      "message": "nit: kExpectedSubkeySize?",
+      "range": {
+        "startLine": 33,
+        "startChar": 10,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "2e93e73593a2f2d172bab55ef82c35b056249805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2238ee_ecb0f37c",
+        "filename": "components/autofill/core/browser/subkey_requester_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-02T00:19:37Z",
+      "side": 1,
+      "message": "Nit: Capitalize?",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 13
+      },
+      "revId": "2e93e73593a2f2d172bab55ef82c35b056249805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c45cfa_4a418f2b",
+        "filename": "components/autofill/core/browser/subkey_requester_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-02T00:19:37Z",
+      "side": 1,
+      "message": "Format?",
+      "revId": "2e93e73593a2f2d172bab55ef82c35b056249805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
