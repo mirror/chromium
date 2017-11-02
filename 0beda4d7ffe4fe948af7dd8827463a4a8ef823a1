@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db777bad_611a65ee",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerAssigner.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-02T21:09:40Z",
+      "side": 1,
+      "message": "One more question: what\u0027s the time complexity of this area with this sibling loop? Are we making it O(|layers|^2) when it was previously just O(|layers|)?",
+      "revId": "0beda4d7ffe4fe948af7dd8827463a4a8ef823a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
