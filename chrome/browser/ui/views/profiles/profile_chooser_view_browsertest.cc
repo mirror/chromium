@@ -46,6 +46,8 @@
 
 namespace {
 
+constexpr char kSupervisedName[] = "supervised";
+
 Profile* CreateTestingProfile(const base::FilePath& path) {
   base::ScopedAllowBlockingForTesting allow_blocking;
   ProfileManager* profile_manager = g_browser_process->profile_manager();
@@ -55,7 +57,7 @@ Profile* CreateTestingProfile(const base::FilePath& path) {
     NOTREACHED() << "Could not create directory at " << path.MaybeAsASCII();
 
   Profile* profile =
-      Profile::CreateProfile(path, NULL, Profile::CREATE_MODE_SYNCHRONOUS);
+      Profile::CreateProfile(path, nullptr, Profile::CREATE_MODE_SYNCHRONOUS);
   profile_manager->RegisterTestingProfile(profile, true, false);
   EXPECT_EQ(starting_number_of_profiles + 1,
             profile_manager->GetNumberOfProfiles());
@@ -77,7 +79,7 @@ Profile* CreateProfileOutsideUserDataDir() {
 
   ProfileManager* profile_manager = g_browser_process->profile_manager();
   Profile* profile =
-      Profile::CreateProfile(path, NULL, Profile::CREATE_MODE_SYNCHRONOUS);
+      Profile::CreateProfile(path, nullptr, Profile::CREATE_MODE_SYNCHRONOUS);
   profile_manager->RegisterTestingProfile(profile, true, false);
   return profile;
 }
@@ -103,12 +105,13 @@ void SetupProfilesForLock(Profile* signed_in) {
 
   // Create the |supervised| profile, which is supervised by |signed_in|.
   ProfileAttributesEntry* entry_supervised;
-  Profile* supervised = CreateTestingProfile("supervised");
+  Profile* supervised = CreateTestingProfile(kSupervisedName);
   ProfileAttributesStorage& storage =
       g_browser_process->profile_manager()->GetProfileAttributesStorage();
   ASSERT_TRUE(storage.GetProfileAttributesWithPath(supervised->GetPath(),
                                                    &entry_supervised));
   entry_supervised->SetSupervisedUserId(kEmail);
+  supervised->GetPrefs()->SetString(prefs::kSupervisedUserId, kEmail);
 
   // |signed_in| should now be lockable.
   EXPECT_TRUE(profiles::IsLockAvailable(signed_in));
@@ -124,9 +127,27 @@ class ProfileChooserViewExtensionsTest
 
   // SupportsTestDialog:
   void ShowDialog(const std::string& name) override {
+    constexpr char kSignedIn[] = "SignedIn";
+    constexpr char kMultiProfile[] = "MultiProfile";
+    constexpr char kGuest[] = "Guest";
+    constexpr char kManageAccountLink[] = "ManageAccountLink";
+    constexpr char kSupervisedOwner[] = "SupervisedOwner";
+    constexpr char kSupervisedUser[] = "SupervisedUser";
+
+    Browser* curr_browser = browser();
     std::unique_ptr<signin::ScopedAccountConsistency>
         scoped_account_consistency;
-    if (name == "Guest") {
+
+    if (name == kSignedIn || name == kManageAccountLink) {
+      constexpr char kEmail[] = "verylongemailfortesting@gmail.com";
+      AddAccountToProfile(curr_browser->profile(), kEmail);
+    }
+    if (name == kMultiProfile) {
+      ProfileManager* profile_manager = g_browser_process->profile_manager();
+      CreateTestingProfile(profile_manager->GenerateNextProfileDirectoryPath());
+      CreateTestingProfile(profile_manager->GenerateNextProfileDirectoryPath());
+    }
+    if (name == kGuest) {
       content::WindowedNotificationObserver browser_creation_observer(
           chrome::NOTIFICATION_BROWSER_WINDOW_READY,
           content::NotificationService::AllSources());
@@ -136,28 +157,28 @@ class ProfileChooserViewExtensionsTest
       Profile* guest = g_browser_process->profile_manager()->GetProfileByPath(
           ProfileManager::GetGuestProfilePath());
       EXPECT_TRUE(guest);
-      OpenProfileChooserView(chrome::FindAnyBrowser(guest, true));
-      return;
+      curr_browser = chrome::FindAnyBrowser(guest, true);
     }
-
-    if (name == "SignedIn" || name == "ManageAccountLink") {
-      constexpr char kEmail[] = "verylongemailfortesting@gmail.com";
-      AddAccountToProfile(browser()->profile(), kEmail);
-    }
-    if (name == "MultiProfile") {
-      ProfileManager* profile_manager = g_browser_process->profile_manager();
-      CreateTestingProfile(profile_manager->GenerateNextProfileDirectoryPath());
-      CreateTestingProfile(profile_manager->GenerateNextProfileDirectoryPath());
-    }
-    if (name == "ManageAccountLink") {
+    if (name == kManageAccountLink) {
       scoped_account_consistency =
           std::make_unique<signin::ScopedAccountConsistency>(
               signin::AccountConsistencyMethod::kMirror);
     }
-    if (name == "SupervisedOwner") {
-      SetupProfilesForLock(browser()->profile());
+    if (name == kSupervisedOwner || name == kSupervisedUser) {
+      SetupProfilesForLock(curr_browser->profile());
     }
-    OpenProfileChooserView(browser());
+    if (name == kSupervisedUser) {
+      base::FilePath path;
+      PathService::Get(chrome::DIR_USER_DATA, &path);
+      path = path.AppendASCII(kSupervisedName);
+      profiles::SwitchToProfile(path, false, ProfileManager::CreateCallback(),
+                                ProfileMetrics::ICON_AVATAR_BUBBLE);
+      Profile* supervised =
+          g_browser_process->profile_manager()->GetProfileByPath(path);
+      EXPECT_TRUE(supervised);
+      curr_browser = chrome::FindAnyBrowser(supervised, true);
+    }
+    OpenProfileChooserView(curr_browser);
   }
 
  protected:
@@ -402,5 +423,11 @@ IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest,
 // user profile attached.
 IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest,
                        InvokeDialog_SupervisedOwner) {
+  RunDialog();
+}
+
+// Shows the |ProfileChooserView| when a supervised user is the active profile.
+IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest,
+                       InvokeDialog_SupervisedUser) {
   RunDialog();
 }
