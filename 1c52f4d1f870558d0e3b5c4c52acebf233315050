@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "edef7805_019711dd",
+        "filename": "chrome/browser/ui/libgtkui/native_theme_gtk3.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-02T15:55:41Z",
+      "side": 1,
+      "message": "Thomas resolved this in patchset 3.",
+      "parentUuid": "2f943219_b60ac1b1",
+      "range": {
+        "startLine": 228,
+        "startChar": 25,
+        "endLine": 228,
+        "endChar": 53
+      },
+      "revId": "1c52f4d1f870558d0e3b5c4c52acebf233315050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb7467f8_4190b620",
         "filename": "ui/native_theme/common_theme.cc",
         "patchSetId": 2
@@ -120,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "8f2f703c_8a53ac0a",
+        "filename": "ui/native_theme/common_theme.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-02T15:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb7467f8_4190b620",
+      "range": {
+        "startLine": 208,
+        "startChar": 39,
+        "endLine": 208,
+        "endChar": 43
+      },
+      "revId": "1c52f4d1f870558d0e3b5c4c52acebf233315050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6397b267_6f82a2c2",
         "filename": "ui/native_theme/native_theme_dark_aura.cc",
         "patchSetId": 2
@@ -140,6 +188,30 @@
       "revId": "1c52f4d1f870558d0e3b5c4c52acebf233315050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca114554_6ccaeaa1",
+        "filename": "ui/native_theme/native_theme_dark_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-02T15:55:41Z",
+      "side": 1,
+      "message": "I moved them to \"not defined\". I\u0027m not sure where dark themes actually apply, though.",
+      "parentUuid": "6397b267_6f82a2c2",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 45
+      },
+      "revId": "1c52f4d1f870558d0e3b5c4c52acebf233315050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
