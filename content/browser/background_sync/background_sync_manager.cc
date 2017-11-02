@@ -834,7 +834,8 @@ void BackgroundSyncManager::GetRegistrationsImpl(
 bool BackgroundSyncManager::AreOptionConditionsMet(
     const BackgroundSyncRegistrationOptions& options) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  return network_observer_->NetworkSufficient(options.network_state);
+  return network_observer_->NetworkSufficient(options.network_state) &&
+         offline_emulation_ids_.empty();
 }
 
 bool BackgroundSyncManager::IsRegistrationReadyToFire(
@@ -1195,6 +1196,17 @@ void BackgroundSyncManager::SetMaxSyncAttemptsImpl(int max_attempts,
 base::OnceClosure BackgroundSyncManager::MakeEmptyCompletion() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   return op_scheduler_.WrapCallbackToRunNext(base::BindOnce(&base::DoNothing));
+}
+
+void BackgroundSyncManager::EnableOfflineModeEmulation(const std::string& id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  offline_emulation_ids_.insert(id);
+}
+
+void BackgroundSyncManager::DisableOfflineModeEmulation(const std::string& id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!offline_emulation_ids_.empty() && offline_emulation_ids_.erase(id) > 0)
+    FireReadyEvents();
 }
 
 }  // namespace content

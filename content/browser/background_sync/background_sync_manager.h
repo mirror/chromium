@@ -106,6 +106,8 @@ class CONTENT_EXPORT BackgroundSyncManager
       scoped_refptr<ServiceWorkerVersion> active_version,
       bool last_chance,
       const ServiceWorkerVersion::LegacyStatusCallback& callback);
+  void EnableOfflineModeEmulation(const std::string& id);
+  void DisableOfflineModeEmulation(const std::string& id);
 
  protected:
   explicit BackgroundSyncManager(
@@ -300,6 +302,8 @@ class CONTENT_EXPORT BackgroundSyncManager
   std::unique_ptr<BackgroundSyncNetworkObserver> network_observer_;
 
   std::unique_ptr<base::Clock> clock_;
+
+  std::unordered_set<std::string> offline_emulation_ids_;
 
   base::WeakPtrFactory<BackgroundSyncManager> weak_ptr_factory_;
 

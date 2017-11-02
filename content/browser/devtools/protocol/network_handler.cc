@@ -16,12 +16,15 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
+#include "content/browser/background_sync/background_sync_context.h"
+#include "content/browser/background_sync/background_sync_manager.h"
 #include "content/browser/devtools/devtools_session.h"
 #include "content/browser/devtools/devtools_url_interceptor_request_job.h"
 #include "content/browser/devtools/protocol/page.h"
 #include "content/browser/devtools/protocol/security.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
+#include "content/browser/storage_partition_impl_map.h"
 #include "content/common/navigation_params.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -643,6 +646,18 @@ void ConfigureServiceWorkerContextOnIO() {
   content::ServiceWorkerContext::AddExcludedHeadersForFetchEvent(headers);
 }
 
+void SetBackgroundSyncOfflineOnIo(
+    scoped_refptr<BackgroundSyncContext> sync_context,
+    const std::string& id,
+    bool offline) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  BackgroundSyncManager* manager = sync_context->background_sync_manager();
+  if (offline)
+    manager->EnableOfflineModeEmulation(id);
+  else
+    manager->DisableOfflineModeEmulation(id);
+}
+
 }  // namespace
 
 NetworkHandler::NetworkHandler(const std::string& host_id)
@@ -1260,9 +1275,18 @@ void NetworkHandler::SetNetworkConditions(
     mojom::NetworkConditionsPtr conditions) {
   if (!process_)
     return;
-  StoragePartition* partition = process_->GetStoragePartition();
+  StoragePartitionImpl* partition =
+      static_cast<StoragePartitionImpl*>(process_->GetStoragePartition());
+  BackgroundSyncContext* sync_context = partition->GetBackgroundSyncContext();
+  bool offline = conditions && conditions->offline;
   mojom::NetworkContext* context = partition->GetNetworkContext();
   context->SetNetworkConditions(host_id_, std::move(conditions));
+  if (!host_)  // Only record offline pages, not SWs.
+    return;
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(SetBackgroundSyncOfflineOnIo,
+                     base::WrapRefCounted(sync_context), host_id_, offline));
 }
 
 }  // namespace protocol
