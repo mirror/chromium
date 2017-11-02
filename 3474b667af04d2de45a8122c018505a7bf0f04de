@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f35a2d9d_22fe688a",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 24
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-02T20:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2570f606_2ddc8e35",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36f9917c_6eecef5d",
         "filename": "base/memory/shared_memory_handle.h",
         "patchSetId": 24
@@ -33,6 +51,24 @@
       "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0859c8_fb453693",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-02T20:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36f9917c_6eecef5d",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3c646524_5da98c33",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-02T20:24:12Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep this error visible in production builds since buffer allocation is something that could sometimes fail at runtime, i.e. due to lack of memory, and this message would be helpful in figuring out what\u0027s going on, especially since error handling in consumers of this may no longer refer to AHardwareBuffer specifically.\n\nIs there documentation about logging best practices? My interpretation is that \"shouldn\u0027t happen\" logic errors should be DLOG while rare-but-possible runtime errors would be a candidate for keeping, but existing usage seems to vary.",
+      "parentUuid": "37669644_c49a7d2d",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d862f43e_467cce9b",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h",
         "patchSetId": 24
@@ -67,6 +121,24 @@
       "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0902c9_8c76df95",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-02T20:24:12Z",
+      "side": 1,
+      "message": "Yes, the call is in the pre-existing gpu_memory_buffer_impl_test_template.h as instantiated from gpu_memory_buffer_impl_android_hardware_buffer_unittest.cc . (I made changes in http://crrev.com/c/747604 and http://crrev.com/c/747601 to share that test.)",
+      "parentUuid": "d862f43e_467cce9b",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "1ae56d1a_9e4b694d",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-02T20:24:12Z",
+      "side": 1,
+      "message": "Changed to DLOG - this shouldn\u0027t fail on systems that support AHardwareBuffer.",
+      "parentUuid": "ff162fc1_ec7b4404",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 7
+      },
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ca3fe9b_e2e3d5ee",
         "filename": "ipc/ipc_message_utils.cc",
         "patchSetId": 24
@@ -107,6 +203,24 @@
       "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97dd7753_b458cbe0",
+        "filename": "ipc/ipc_message_utils.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-02T20:24:12Z",
+      "side": 1,
+      "message": "Done, via manual ParamTraits override as discussed in IM.",
+      "parentUuid": "1ca3fe9b_e2e3d5ee",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "16fc60e7_fc804768",
+        "filename": "ui/gfx/mojo/buffer_types.mojom",
+        "patchSetId": 24
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-02T20:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f563c0d_bbdc4b4e",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64be9589_f252af7b",
         "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
         "patchSetId": 24
@@ -141,6 +273,24 @@
       "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ba7c6e_72bb3e4b",
+        "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-02T20:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64be9589_f252af7b",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "58842080_b5e5b475",
+        "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-02T20:24:12Z",
+      "side": 1,
+      "message": "That\u0027s incompatible with existing usage in the template:\n\n../../ui/gl/test/gl_image_test_template.h:314:57: error: reference to type \u0027const uint8_t [4]\u0027 could not bind to an lvalue of type \u0027const uint8_t *\u0027 (aka \u0027const unsigned char *\u0027)\n      this-\u003edelegate_.CreateSolidColorImage(image_size, image_color);\n\nLet me know if you feel strongly about changing it, this would require modifying the template and other tests.",
+      "parentUuid": "c98278f1_f1b6e68f",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "060e8386_04f0be09",
         "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
         "patchSetId": 24
@@ -175,6 +343,24 @@
       "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ba23c0_daaa9cc3",
+        "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-02T20:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "060e8386_04f0be09",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
