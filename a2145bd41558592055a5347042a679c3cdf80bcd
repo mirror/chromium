@@ -1,0 +1,520 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6b40f2d_7a446fa8",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "I haven\u0027t seen many tests that write property to \"document\". \"window\" is more common.",
+      "range": {
+        "startLine": 42,
+        "startChar": 20,
+        "endLine": 42,
+        "endChar": 43
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075a20db_0226c9ea",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "This class (RulesetManager::TestDelegate) looks more like an observer to me than a delegate, I\u0027d rename TestDelegate -\u003e TestObserver.",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2acede80_ed5a14ed",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "nitty nit: this is more like \"will_main_frame_load\"/\"expect_main_frame_to_load\"",
+      "range": {
+        "startLine": 207,
+        "startChar": 9,
+        "endLine": 207,
+        "endChar": 28
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39b5246d_9810fbe0",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "nit:\nYou might wan\u0027t to put the helpful comment about which rule a test case is targeting clearer like this (since there are multiple cases that cover a rule):\n\n  // Rule 1\n  {\"example.com\", ...},\n  {\"example.com\", ...},\n  // Rule 2\n...",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 209,
+        "endChar": 68
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9953be64_9f7c3c82",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "Add \"/pages_with_script/page2?q\u003dbye\" too?",
+      "range": {
+        "startLine": 221,
+        "startChar": 22,
+        "endLine": 221,
+        "endChar": 52
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8e793c_7221b8f0",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "nit; For the next 6 navigation thaat are not blocked, adding a comment would be helpful, e.g.\n// These won\u0027t be blocked by Rule 6 b/c the url\u0027s prefixes do not end with bye ...",
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b9fc56_26482498",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "Q: What happens if I escape 3?, i.e.:\n\"/pages_with_script/page2?q\u003dbye\u0026#51;\n(\u0026#51 \u003d\u003d 3)",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 62
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79075ab7_f5a285f5",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "nit: expect_frame1_to_load",
+      "range": {
+        "startLine": 366,
+        "startChar": 9,
+        "endLine": 366,
+        "endChar": 23
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a710b560_5fa13d63",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "Will this ensure the 4*2 frames from domain_type_test.html completed loadstop?",
+      "range": {
+        "startLine": 423,
+        "startChar": 2,
+        "endLine": 423,
+        "endChar": 47
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5635d64d_f525e880",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "For each of these frames, adding a comment would be helpful, e.g.\n// Rule 1 will deny first party but will let third party through.\n{first_party_1, false},\n{first_party_2, true}\n// Rule 2...\n\nIt might feel verbose, but these are helpful to diagnose (by sheriffs) when tests start flaking",
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b79eb8_cae41f0e",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "++i",
+      "range": {
+        "startLine": 459,
+        "startChar": 37,
+        "endLine": 459,
+        "endChar": 40
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1f0b56_0f4c3901",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "ExtensionId",
+      "range": {
+        "startLine": 499,
+        "startChar": 8,
+        "endLine": 499,
+        "endChar": 19
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb4d19b_b2a3b242",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "Q: Is capturing all allowed now? I keep forgetting.",
+      "range": {
+        "startLine": 617,
+        "startChar": 35,
+        "endLine": 617,
+        "endChar": 38
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd2530f_410fef55",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "Turn this into a TODO?",
+      "range": {
+        "startLine": 665,
+        "startChar": 5,
+        "endLine": 665,
+        "endChar": 12
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23bdd8ea_d7305a60",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "Not sure I follow this comment.",
+      "range": {
+        "startLine": 710,
+        "startChar": 4,
+        "endLine": 710,
+        "endChar": 52
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13136228_bbd42ce5",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "Don\u0027t generate this test case, only generate for PACKED.",
+      "range": {
+        "startLine": 821,
+        "startChar": 2,
+        "endLine": 821,
+        "endChar": 48
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "227ac317_da7f2d27",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "Nice!",
+      "range": {
+        "startLine": 897,
+        "startChar": 66,
+        "endLine": 898,
+        "endChar": 38
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472f0334_323cacce",
+        "filename": "chrome/test/data/extensions/declarative_net_request/cached/page_with_cacheable_script",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "Is there a reason to not make this file have .html extension?\n\nedit: I see this on other pages too, is this to save string literal length? I\u0027d be hesitant to drop .html as it hurts readability.",
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e120be_f26829af",
+        "filename": "chrome/test/data/extensions/declarative_net_request/cached/page_with_cacheable_script",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "nit: any reason to call them included_script.js instead of plain script.js?",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 35
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1039d751_bf6cc637",
+        "filename": "chrome/test/data/extensions/declarative_net_request/domain_type_test.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "nit: indent",
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fec5c63_7a36a7bf",
+        "filename": "chrome/test/data/extensions/declarative_net_request/pages_with_script/index",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "Here and in other files, remove empty lines at the end.",
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7925b2b_2c354b58",
+        "filename": "chrome/test/data/extensions/declarative_net_request/subresources.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "(here and if in other places)\ncssLoaded",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ca07f9_31ae7fc5",
+        "filename": "chrome/test/data/extensions/declarative_net_request/subresources.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "Single quotes. (here and in all other places)",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b55f1f3_593aac98",
+        "filename": "chrome/test/data/extensions/declarative_net_request/subresources/subframe.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 1,
+      "message": "frameLoaded",
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

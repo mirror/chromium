@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fac3ebe_1a4ed331",
+        "filename": "chrome/test/data/extensions/declarative_net_request/subresources/extension_types.png",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-02T00:23:33Z",
+      "side": 0,
+      "message": "Better choose a smaller size file for this?",
+      "revId": "c419b45ea91d92d29bb6434af809f411a7a08778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
