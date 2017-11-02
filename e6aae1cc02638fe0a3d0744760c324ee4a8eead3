@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "470991c6_4411078c",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-02T03:22:25Z",
+      "side": 1,
+      "message": "Nit: spelling",
+      "revId": "e6aae1cc02638fe0a3d0744760c324ee4a8eead3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb4fe08_a5a41284",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-02T03:22:25Z",
+      "side": 1,
+      "message": "Nit: I wouldn\u0027t include this TODO in the code, as I think there is a chance we\u0027ll just leave it like this forever.",
+      "range": {
+        "startLine": 148,
+        "startChar": 22,
+        "endLine": 148,
+        "endChar": 28
+      },
+      "revId": "e6aae1cc02638fe0a3d0744760c324ee4a8eead3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d44b6f_554dd782",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-02T03:22:25Z",
+      "side": 1,
+      "message": "What prevents this opening a new app window if matching_app_ref is the same as the current app?",
+      "revId": "e6aae1cc02638fe0a3d0744760c324ee4a8eead3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
