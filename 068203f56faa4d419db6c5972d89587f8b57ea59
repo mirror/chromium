@@ -16,6 +16,24 @@
       "revId": "068203f56faa4d419db6c5972d89587f8b57ea59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c3af22_488d4a7f",
+        "filename": "third_party/WebKit/Source/core/css/CSSPropertyValue.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-02T02:24:14Z",
+      "side": 1,
+      "message": "is_set_from_shorthand and important are instance-specific, right?",
+      "parentUuid": "666077d6_f5b0336d",
+      "revId": "068203f56faa4d419db6c5972d89587f8b57ea59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
