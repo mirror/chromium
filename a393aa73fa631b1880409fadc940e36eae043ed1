@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e888251_8de06b5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuUi.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-02T21:11:32Z",
+      "side": 1,
+      "message": "If we move all the calculations into this file, I wouldn\u0027t cache this value but instead query it by doing: viewPager.findViewById(R.id.tab_layout).getHeight() below.",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 22
+      },
+      "revId": "a393aa73fa631b1880409fadc940e36eae043ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d948fa19_42b78fa0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuUi.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-02T21:11:32Z",
+      "side": 1,
+      "message": "the other ones are called getContextMenuMaxDimensPx\n\nBut I wonder if all the calculations you have in ContextMenuHelper#getThumbnail should be here instead.\n\nInstead of the context menu max dimens, it seems like the UIs should have control over their thumbnail dimension sizing, so having this actually return the max width/height of the thumbnail seems better to me.",
+      "range": {
+        "startLine": 304,
+        "startChar": 17,
+        "endLine": 304,
+        "endChar": 37
+      },
+      "revId": "a393aa73fa631b1880409fadc940e36eae043ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
