@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d96358e_9cbebd43",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/IntentHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-02T16:20:26Z",
+      "side": 1,
+      "message": "Can we greedily address the TODO above and simply delete this constant entirely and reference ChromeLauncherActivity directly?  Just use Intent.setClass?",
+      "range": {
+        "startLine": 246,
+        "startChar": 44,
+        "endLine": 246,
+        "endChar": 60
+      },
+      "revId": "f4a12db6e8aa59217e60176ed092d93011d30bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
