@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cec6cb8_4bb89c91",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-02T21:45:23Z",
+      "side": 1,
+      "message": "Just curious: Do we really want to put the flag in chrome://flags? Adding a flag for a deprecated feature sounds weird. It seems open a door for normal users which might defeat all the purposes of the blurring... Is there any other way to do this? Like add extra logs?",
+      "revId": "69676f0df441fa0bf4aa754a88f34e14ae538208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
