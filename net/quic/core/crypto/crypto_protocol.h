@@ -83,6 +83,12 @@ const QuicTag kTBBR = TAG('T', 'B', 'B', 'R');   // Reduced Buffer Bloat TCP
 const QuicTag k1RTT = TAG('1', 'R', 'T', 'T');   // STARTUP in BBR for 1 RTT
 const QuicTag k2RTT = TAG('2', 'R', 'T', 'T');   // STARTUP in BBR for 2 RTTs
 const QuicTag kLRTT = TAG('L', 'R', 'T', 'T');   // Exit STARTUP in BBR on loss
+const QuicTag kBBS1 = TAG('B', 'B', 'S', '1');   // Rate-based recovery in
+                                                 // BBR STARTUP
+const QuicTag kBBS2 = TAG('B', 'B', 'S', '2');   // More aggressive packet
+                                                 // conservation in BBR STARTUP
+const QuicTag kBBS3 = TAG('B', 'B', 'S', '3');   // Slowstart packet
+                                                 // conservation in BBR STARTUP
 const QuicTag kBBRR = TAG('B', 'B', 'R', 'R');   // Rate-based recovery in BBR
 const QuicTag kBBR1 = TAG('B', 'B', 'R', '1');   // Ack aggregation v1
 const QuicTag kBBR2 = TAG('B', 'B', 'R', '2');   // Ack aggregation v2

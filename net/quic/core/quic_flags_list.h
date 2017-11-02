@@ -182,3 +182,9 @@ QUIC_FLAG(bool,
 // Fully drain the queue in QUIC BBR at least once per cycle(8 rounds) when
 // activated by the BBR3 connection option.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_fully_drain_queue, false)
+
+// When true, allows connection options to be sent to completely disable packet
+// conservation in QUIC BBR STARTUP or make it more aggressive.
+QUIC_FLAG(bool,
+          FLAGS_quic_reloadable_flag_quic_bbr_conservation_in_startup,
+          false)
