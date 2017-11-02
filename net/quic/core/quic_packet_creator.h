@@ -123,6 +123,9 @@ class QUIC_EXPORT_PRIVATE QuicPacketCreator {
   // Returns true if there are retransmittable frames pending to be serialized.
   bool HasPendingRetransmittableFrames() const;
 
+  // Returns true if there are stream frames for |id| pending to be serialized.
+  bool HasPendingStreamFramesOfStream(QuicStreamId id) const;
+
   // Returns the number of bytes which are available to be used by additional
   // frames in the packet.  Since stream frames are slightly smaller when they
   // are the last frame in a packet, this method will return a different
