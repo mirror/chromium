@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c3fdc74_84e6b326",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_called.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-02T23:04:02Z",
+      "side": 1,
+      "message": "Same number of lines per test, so I don\u0027t have a problem with that.",
+      "parentUuid": "0dc1cbd2_8682828d",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6129406_ba96732a",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_invalidhandle.html",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e612b1_4a3c7c10",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_invalidhandle.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-02T23:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6129406_ba96732a",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "62e377e0_306afb70",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_nolayer.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-02T23:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be47e5db_7cd60c4b",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dc010cb_1b209ffe",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_nolayer.html",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4661465_c6642669",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_nolayer.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-02T23:04:02Z",
+      "side": 1,
+      "message": "LOL. Apparently I just gave up on typing that line mid way through. Oops! Fixed.",
+      "parentUuid": "4dc010cb_1b209ffe",
+      "range": {
+        "startLine": 28,
+        "startChar": 29,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f486b874_83e8af74",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_unregister.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-02T23:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f509ff83_2d8231ed",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baf6dbf8_34cf96f2",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/getDevicePose_oneframeupdate.html",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf285cf_3531bce3",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/getDevicePose_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-02T23:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baf6dbf8_34cf96f2",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "24a7b7cf_8b914a32",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_match.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-02T23:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd2fcc44_3b2c9e82",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9194caa7_3fec7c56",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
         "patchSetId": 1
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "a74a44ef_76f646af",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-02T23:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9194caa7_3fec7c56",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff040eea_e1b180e9",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrViewport_valid.html",
         "patchSetId": 1
@@ -206,6 +398,30 @@
       "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7810f156_8ae1bd6e",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrViewport_valid.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-02T23:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff040eea_e1b180e9",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
