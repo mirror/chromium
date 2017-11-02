@@ -87,6 +87,24 @@
       "revId": "2d3ea7e52f846a0beec94fbd0027e15a4970c562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adf09468_3822fdd1",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-02T23:02:28Z",
+      "side": 0,
+      "message": "I\u0027m not sure I have any great answers here. I\u0027ve been thinking hard about how this might happen but I can\u0027t think of anything solid yet.",
+      "parentUuid": "9961b56b_51a3244c",
+      "revId": "2d3ea7e52f846a0beec94fbd0027e15a4970c562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
