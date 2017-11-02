@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fe2f879_ed27b81b",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-02T18:00:17Z",
+      "side": 1,
+      "message": "any reason you are changing this?",
+      "revId": "7178eb91fadae07601c7b02324cfe6b5f96316e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47892545_5d2fa8eb",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-02T18:00:17Z",
+      "side": 1,
+      "message": "perhaps this is more concise:\n\nfor (let request of requests) {\n ..\n}",
+      "revId": "7178eb91fadae07601c7b02324cfe6b5f96316e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5cc6491_aba02b1c",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-02T18:00:17Z",
+      "side": 1,
+      "message": "nit: not so much whitespace",
+      "revId": "7178eb91fadae07601c7b02324cfe6b5f96316e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a2f076_e7a62554",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-02T18:00:17Z",
+      "side": 1,
+      "message": "nit: add comment about translating time format",
+      "revId": "7178eb91fadae07601c7b02324cfe6b5f96316e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd50ed03_623f7872",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-02T18:00:17Z",
+      "side": 1,
+      "message": "I wonder if we should change the key to lastAttemptTime and then just match on /Time$/?",
+      "revId": "7178eb91fadae07601c7b02324cfe6b5f96316e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
