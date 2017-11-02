@@ -36,7 +36,7 @@
 using blink::WebDocument;
 using blink::WebLocalFrame;
 using blink::WebScriptSource;
-using blink::WebSecurityOrigin;
+using blink::WebMutableSecurityOrigin;
 using blink::WebString;
 using blink::WebVector;
 using blink::WebLanguageDetectionDetails;
@@ -319,7 +319,7 @@ void TranslateHelper::Translate(const std::string& translate_script,
 
   GURL security_origin = GetTranslateSecurityOrigin();
   main_frame->SetIsolatedWorldSecurityOrigin(
-      world_id_, WebSecurityOrigin::Create(security_origin));
+      world_id_, WebMutableSecurityOrigin::Create(security_origin));
 
   if (!IsTranslateLibAvailable()) {
     // Evaluate the script to add the translation related method to the global
