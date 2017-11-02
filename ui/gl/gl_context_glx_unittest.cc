@@ -6,6 +6,7 @@
 
 #include "base/memory/scoped_refptr.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/x/x11_window_event_manager.h"
 #include "ui/gfx/x/x11_error_tracker.h"
 #include "ui/gfx/x/x11_types.h"
 #include "ui/gl/gl_surface_glx_x11.h"
@@ -16,14 +17,12 @@
 
 namespace gl {
 
-TEST(GLContextGLXTest, DISABLED_DoNotDesrtroyOnFailedMakeCurrent) {
+TEST(GLContextGLXTest, DoNotDestroyOnFailedMakeCurrent) {
   auto* xdisplay = gfx::GetXDisplay();
   ASSERT_TRUE(xdisplay);
 
   gfx::X11ErrorTracker error_tracker;
 
-  // Turn on sync behaviour, and create the window.
-  XSynchronize(xdisplay, True);
   XSetWindowAttributes swa;
   memset(&swa, 0, sizeof(swa));
   swa.background_pixmap = 0;
@@ -35,21 +34,33 @@ TEST(GLContextGLXTest, DISABLED_DoNotDesrtroyOnFailedMakeCurrent) {
                                InputOutput,
                                CopyFromParent,  // visual
                                CWBackPixmap | CWOverrideRedirect, &swa);
+  long event_mask = StructureNotifyMask;
+  ui::XScopedEventSelector xevent_selector(xwindow, event_mask);
+
+  XEvent xevent;
   XMapWindow(xdisplay, xwindow);
+  // Wait until the window is mapped.
+  while (XNextEvent(xdisplay, &xevent) && xevent.type != MapNotify &&
+         xevent.xmap.window != xwindow) {
+  }
 
   GLImageTestSupport::InitializeGL();
   auto surface =
       gl::InitializeGLSurface(base::MakeRefCounted<GLSurfaceGLXX11>(xwindow));
   scoped_refptr<GLContext> context =
       gl::init::CreateGLContext(nullptr, surface.get(), GLContextAttribs());
+
   // Verify that MakeCurrent() is successful.
   ASSERT_TRUE(context->GetHandle());
   ASSERT_TRUE(context->MakeCurrent(surface.get()));
   EXPECT_TRUE(context->GetHandle());
 
-  // Destroy the window. We should get no x11 errors so far.
+  // Destroy the window, and wait until the window is unmapped. There should be
+  // no x11 errors.
   context->ReleaseCurrent(surface.get());
   XDestroyWindow(xdisplay, xwindow);
+  while (XNextEvent(xdisplay, &xevent) && xevent.type != UnmapNotify) {
+  }
   ASSERT_FALSE(error_tracker.FoundNewError());
 
   // Now that the window is gone, MakeCurrent() should fail. But the context
@@ -57,7 +68,8 @@ TEST(GLContextGLXTest, DISABLED_DoNotDesrtroyOnFailedMakeCurrent) {
   EXPECT_FALSE(context->MakeCurrent(surface.get()));
   ASSERT_TRUE(context->GetHandle());
   EXPECT_TRUE(error_tracker.FoundNewError());
-  XSynchronize(xdisplay, False);
+  surface = nullptr;
+  XSync(xdisplay, True);
 }
 
 }  // namespace gl
