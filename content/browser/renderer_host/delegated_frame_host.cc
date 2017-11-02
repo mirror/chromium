@@ -292,9 +292,9 @@ void DelegatedFrameHost::WasResized() {
 
   if (enable_surface_synchronization_) {
     ui::Layer* layer = client_->DelegatedFrameHostGetLayer();
-    gfx::Size desired_size_in_pixels =
-        gfx::ConvertSizeToPixel(layer->device_scale_factor(),
-                                client_->DelegatedFrameHostDesiredSizeInDIP());
+    current_frame_size_in_dip_ = client_->DelegatedFrameHostDesiredSizeInDIP();
+    gfx::Size desired_size_in_pixels = gfx::ConvertSizeToPixel(
+        layer->device_scale_factor(), current_frame_size_in_dip_);
 
     viz::SurfaceId surface_id(frame_sink_id_, client_->GetLocalSurfaceId());
     viz::SurfaceInfo surface_info(surface_id, layer->device_scale_factor(),
@@ -591,9 +591,12 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
   local_surface_id_ = surface_info.id().local_surface_id();
 
   released_front_lock_ = nullptr;
-  gfx::Size frame_size_in_dip = gfx::ConvertSizeToDIP(
-      surface_info.device_scale_factor(), surface_info.size_in_pixels());
-  current_frame_size_in_dip_ = frame_size_in_dip;
+  // With surface synchronization, we update the frame size in WasResized().
+  if (!enable_surface_synchronization_) {
+    gfx::Size frame_size_in_dip = gfx::ConvertSizeToDIP(
+        surface_info.device_scale_factor(), surface_info.size_in_pixels());
+    current_frame_size_in_dip_ = frame_size_in_dip;
+  }
   CheckResizeLock();
 
   UpdateGutters();
