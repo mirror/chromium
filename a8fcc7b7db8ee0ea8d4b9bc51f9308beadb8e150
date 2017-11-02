@@ -181,6 +181,30 @@
       "revId": "a8fcc7b7db8ee0ea8d4b9bc51f9308beadb8e150",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8e41f5_c254b518",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-02T17:41:45Z",
+      "side": 1,
+      "message": "Right, that would work (d\u0027oh), but then there\u0027s again two pieces of state that need to be tracked: Is the cancelable callback null, and is the thumbnailing_context_ null. (We\u0027d only want to call CleanUpFromThumbnailGeneration if the callback is valid.) So I don\u0027t think this by itself is a big improvement. I\u0027ll submit this as-is for now and look into a cleanup/refactoring CL as a followup.\n\nYep, that weird non-UI-case has been bothering me too. I don\u0027t know if it can actually happen. It certainly seems that it shouldn\u0027t, but clearly it was added for a reason. I haven\u0027t gotten around to investigating yet.",
+      "parentUuid": "76790431_407c04c1",
+      "range": {
+        "startLine": 247,
+        "startChar": 30,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "a8fcc7b7db8ee0ea8d4b9bc51f9308beadb8e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
