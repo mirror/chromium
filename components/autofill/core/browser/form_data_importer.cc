@@ -13,7 +13,6 @@
 #include <set>
 #include <utility>
 
-#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -97,7 +96,7 @@ FormDataImporter::FormDataImporter(AutofillClient* client,
                                    PersonalDataManager* personal_data_manager,
                                    const std::string& app_locale)
     : credit_card_save_manager_(
-          base::MakeUnique<CreditCardSaveManager>(client,
+          std::make_unique<CreditCardSaveManager>(client,
                                                   payments_client,
                                                   app_locale,
                                                   personal_data_manager)),

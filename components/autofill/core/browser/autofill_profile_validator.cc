@@ -10,7 +10,6 @@
 #include "base/bind_helpers.h"
 #include "base/cancelable_callback.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
@@ -95,7 +94,7 @@ void AutofillProfileValidator::ValidateProfile(
     return;
   }
   std::unique_ptr<ValidationRequest> request(
-      base::MakeUnique<ValidationRequest>(profile, &address_validator_,
+      std::make_unique<ValidationRequest>(profile, &address_validator_,
                                           std::move(cb)));
 
   // If the |region_code| is not a valid code according to our source, calling
