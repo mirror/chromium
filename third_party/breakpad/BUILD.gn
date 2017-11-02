@@ -305,6 +305,11 @@ if (is_mac) {
         "breakpad/src/tools/mac/dump_syms/dump_syms_tool.cc",
       ]
 
+      if (is_clang) {
+        # TODO(crbug.com/780692): Remove once use of 'register' is removed.
+        cflags = [ "-Wno-deprecated-register" ]
+      }
+
       # For breakpad/src/common/stabs_reader.h.
       defines = [ "HAVE_MACH_O_NLIST_H" ]
       include_dirs = [ "breakpad/src/common/mac" ]
@@ -531,6 +536,11 @@ if (is_linux || is_android) {
         "breakpad/src/common/stabs_to_module.h",
         "breakpad/src/tools/linux/dump_syms/dump_syms.cc",
       ]
+
+      if (is_clang) {
+        # TODO(crbug.com/780692): Remove once use of 'register' is removed.
+        cflags = [ "-Wno-deprecated-register" ]
+      }
 
       # There are some warnings in this code.
       configs -= [ "//build/config/compiler:chromium_code" ]
