@@ -9,6 +9,11 @@
 let fakeDisplays = fakeVRDisplays();
 
 vr_session_test( (t, session) => {
+  // Session must have a baseLayer or frame requests will be ignored.
+  let canvas = document.createElement("canvas");
+  let gl = canvas.getContext("webgl");
+  session.baseLayer = new VRWebGLLayer(session, gl);
+
   let counter = 0;
 
   function onFrame(vrFrame) {
