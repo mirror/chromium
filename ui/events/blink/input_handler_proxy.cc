@@ -219,7 +219,9 @@ InputHandlerProxy::InputHandlerProxy(
       mouse_wheel_result_(kEventDispositionUndefined),
       current_overscroll_params_(nullptr),
       has_ongoing_compositor_scroll_fling_pinch_(false),
-      tick_clock_(std::make_unique<base::DefaultTickClock>()) {
+      tick_clock_(std::make_unique<base::DefaultTickClock>()),
+      is_compositor_touch_action_enabled_(
+          base::FeatureList::IsEnabled(features::kCompositorTouchAction)) {
   DCHECK(client);
   input_handler_->BindToClient(this,
                                touchpad_and_wheel_scroll_latching_enabled_);
@@ -1047,22 +1049,17 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
     cc::TouchAction* white_listed_touch_action) {
   *is_touching_scrolling_layer = false;
   EventDisposition result = DROP_EVENT;
-  for (size_t i = 0; i < touch_event.touches_length; ++i) {
-    if (touch_event.touch_start_or_first_touch_move)
-      DCHECK(white_listed_touch_action);
-    else
-      DCHECK(!white_listed_touch_action);
-
+  DCHECK(white_listed_touch_action);
+  for (const auto& touch : touch_event.touches) {
     if (touch_event.GetType() == WebInputEvent::kTouchStart &&
-        touch_event.touches[i].state != WebTouchPoint::kStatePressed) {
+        touch.state != WebTouchPoint::kStatePressed) {
       continue;
     }
 
     cc::TouchAction touch_action = cc::kTouchActionAuto;
     cc::InputHandler::TouchStartOrMoveEventListenerType event_listener_type =
         input_handler_->EventListenerTypeForTouchStartOrMoveAt(
-            gfx::Point(touch_event.touches[i].PositionInWidget().x,
-                       touch_event.touches[i].PositionInWidget().y),
+            gfx::Point(touch.PositionInWidget().x, touch.PositionInWidget().y),
             &touch_action);
     if (white_listed_touch_action)
       *white_listed_touch_action &= touch_action;
@@ -1073,9 +1070,20 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
           event_listener_type ==
           cc::InputHandler::TouchStartOrMoveEventListenerType::
               HANDLER_ON_SCROLLING_LAYER;
-      result = DID_NOT_HANDLE;
+      if (is_compositor_touch_action_enabled_)
+        result = DID_HANDLE_NON_BLOCKING;
+      else
+        result = DID_NOT_HANDLE;
       break;
     }
+  }
+
+  // A non-passive touch start / move will always set the whitelisted touch
+  // action to kTouchActionNone, and in that case we do not ack the event from
+  // the compositor.
+  if (result == DID_HANDLE_NON_BLOCKING &&
+      *white_listed_touch_action == cc::kTouchActionNone) {
+    result = DID_NOT_HANDLE;
   }
 
   // If |result| is DROP_EVENT it wasn't processed above.
