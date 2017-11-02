@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b4fc0b9_1855976d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/ImpressionFilter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-02T14:50:40Z",
+      "side": 1,
+      "message": "When would we call that method? I was thinking about having the impression callback return a value that says whether the listener should be unregistered, but the problem is you can\u0027t re-register without having a reference to the ImpressionTracker (which in turn needs a reference to the view), so we might run the risk of leaking the view again. This is the simplest design that I could make work (and I think in terms of responsibilities it is pretty straightforward -- this class is trivial, and the ImpressionTracker is strictly simpler than it was before).",
+      "parentUuid": "5c8b1c6c_737976f8",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "ebbeedbafa092129c8c1c84264bda0e5ec71a571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8890f4d_c87e4dd5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d2369dae_fea1005e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-02T14:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8890f4d_c87e4dd5",
+      "range": {
+        "startLine": 180,
+        "startChar": 12,
+        "endLine": 180,
+        "endChar": 20
+      },
+      "revId": "ebbeedbafa092129c8c1c84264bda0e5ec71a571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96df1701_b6d7ebc7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
         "patchSetId": 14
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-02T11:10:20Z",
       "side": 1,
       "message": "nit: maybe still leave it as `private final ImpressionListener mOneShotImpressionListener;` ?",
+      "range": {
+        "startLine": 48,
+        "startChar": 18,
+        "endLine": 48,
+        "endChar": 60
+      },
+      "revId": "ebbeedbafa092129c8c1c84264bda0e5ec71a571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe5c5d3_891bb4ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-02T14:50:40Z",
+      "side": 1,
+      "message": "I am calling ImpressionFilter.reset() on it below, so the member needs to be of type ImpressionFilter (although I could make it an ImpressionTracker.Listener by replacing it with a new instance there, at the expense of making the member not final anymore. WDYT?).\n\nThe member name was outdated though; changed to |mImpressionFilter|.",
+      "parentUuid": "96df1701_b6d7ebc7",
       "range": {
         "startLine": 48,
         "startChar": 18,
