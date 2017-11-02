@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c069bd1_3b962a19",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-02T20:15:41Z",
+      "side": 1,
+      "message": "Should we validate anchor and gravity?",
+      "revId": "927a27bfe3df931463fbe39655663d6ba934ddbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
