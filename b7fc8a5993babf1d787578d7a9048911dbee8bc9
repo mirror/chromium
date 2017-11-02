@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c27d7ae3_04f6479a",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_property_names.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-02T04:32:13Z",
+      "side": 1,
+      "message": "Oh I just meant use the existing Jinja expander. But what you have is even better.",
+      "parentUuid": "2bcd3db8_e29b33e2",
+      "revId": "b7fc8a5993babf1d787578d7a9048911dbee8bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "401c5d24_1dcb8fee",
         "filename": "third_party/WebKit/Source/build/scripts/templates/CSSPropertyNames.cpp.tmpl",
         "patchSetId": 3
