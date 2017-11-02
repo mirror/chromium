@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d6a250e_f6872f18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-02T14:17:42Z",
+      "side": 1,
+      "message": "Nit: I wonder whether it would be easier to do\n\n  float transitionFraction \u003d isAnimating() ? mAnimator.getAnimatedFraction() : 1.0f;\n  float alpha \u003d hasFocus ? 1.0f - transitionFraction : transitionFraction;",
+      "range": {
+        "startLine": 436,
+        "startChar": 8,
+        "endLine": 445,
+        "endChar": 9
+      },
+      "revId": "1ac6ac32fee499fbb4250cd8c371e29f9b31828f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
