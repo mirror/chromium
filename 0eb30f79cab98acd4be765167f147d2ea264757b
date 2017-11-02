@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "49afe7d1_b50e40f8",
+        "filename": "content/renderer/media_recorder/media_recorder_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-02T20:27:50Z",
+      "side": 1,
+      "message": "Do you know if the standard says what happens when you pass in 2+ codecs? Do you use the first one? Or is it implementation-dependent? (Either way, the video side of things also has this same problem.) I\u0027ve reversed it here anyway just in case, so opus is preferred over pcm.",
+      "parentUuid": "8c58a641_cdb1a15e",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "0eb30f79cab98acd4be765167f147d2ea264757b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbb270a6_96734863",
         "filename": "content/renderer/media_recorder/media_recorder_handler.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ac6eb107_41c61b74",
+        "filename": "content/renderer/media_recorder/media_recorder_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-02T20:27:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb270a6_96734863",
+      "range": {
+        "startLine": 205,
+        "startChar": 36,
+        "endLine": 205,
+        "endChar": 41
+      },
+      "revId": "0eb30f79cab98acd4be765167f147d2ea264757b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "821926a3_52be7d8d",
         "filename": "content/renderer/media_recorder/media_recorder_handler.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "0eb30f79cab98acd4be765167f147d2ea264757b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b8e931_70544d8e",
+        "filename": "content/renderer/media_recorder/media_recorder_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-02T20:27:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "821926a3_52be7d8d",
+      "range": {
+        "startLine": 215,
+        "startChar": 36,
+        "endLine": 215,
+        "endChar": 41
+      },
+      "revId": "0eb30f79cab98acd4be765167f147d2ea264757b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
