@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4a4cea1d_a7e5d144",
+        "filename": "content/renderer/media/audio_ipc_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-02T10:00:59Z",
+      "side": 1,
+      "message": "I think the change is supposed to handle when the factory is successfully bound, then we have a navigation, and then it gets bound again.",
+      "parentUuid": "846d21a7_62d4340e",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2412fac3_cd15bcdd",
         "filename": "content/renderer/media/media_factory.cc",
         "patchSetId": 20
@@ -76,6 +100,24 @@
       "writtenOn": "2017-11-02T08:33:58Z",
       "side": 1,
       "message": "Why does this need to happen here? It seems odd for one specific factory to have be registered here, but no others. At the very least, this needs a comment explaining why (or preferably, we should not need this at all \u003d)",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e2f26f_5265d89d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 3971,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-02T10:00:59Z",
+      "side": 1,
+      "message": "This is due to some audio code being badly broken (crbug.com/668275), and yes, it should really be fixed :). We\u0027d like to initialize the factory lazily, but by the time we know we need the factory, it may be to late to post a task to the main thread to get it (since the main thread may be blocked waiting for a response from the factory).",
+      "parentUuid": "7f5664f9_4299ca59",
       "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
