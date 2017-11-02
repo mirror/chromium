@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d4d7ab1_d188143a",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-02T15:22:36Z",
+      "side": 1,
+      "message": "What\u0027s the reason for de-inlining this?",
+      "range": {
+        "startLine": 796,
+        "startChar": 31,
+        "endLine": 796,
+        "endChar": 44
+      },
+      "revId": "e64f84fce4fa5b5da0ec1c39fd14298a94910c89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1cdafda_aea2e96e",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-02T15:22:36Z",
+      "side": 1,
+      "message": "Was hoping to see this method removed in this CL.  Guess not yet.  :(",
+      "range": {
+        "startLine": 1101,
+        "startChar": 38,
+        "endLine": 1101,
+        "endChar": 65
+      },
+      "revId": "e64f84fce4fa5b5da0ec1c39fd14298a94910c89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
