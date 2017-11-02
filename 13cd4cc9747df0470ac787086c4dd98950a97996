@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53216ef2_758da77e",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-02T18:51:36Z",
+      "side": 1,
+      "message": "nit: finish the comment",
+      "revId": "13cd4cc9747df0470ac787086c4dd98950a97996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
