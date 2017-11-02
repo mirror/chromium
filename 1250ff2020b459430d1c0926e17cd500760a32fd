@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c5342b7_abed2a00",
+        "filename": "base/cpu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-02T19:23:14Z",
+      "side": 1,
+      "message": "Done. I also added a comment to explain it is being used for two different things.",
+      "parentUuid": "2f788594_d8db0333",
+      "range": {
+        "startLine": 136,
+        "startChar": 18,
+        "endLine": 136,
+        "endChar": 20
+      },
+      "revId": "1250ff2020b459430d1c0926e17cd500760a32fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82d465b0_7dde28a0",
         "filename": "base/cpu.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f093c200_ddf09989",
+        "filename": "base/cpu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-02T19:23:14Z",
+      "side": 1,
+      "message": "Look away! Look away! :)",
+      "parentUuid": "82d465b0_7dde28a0",
+      "range": {
+        "startLine": 201,
+        "startChar": 19,
+        "endLine": 201,
+        "endChar": 22
+      },
+      "revId": "1250ff2020b459430d1c0926e17cd500760a32fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "243700a6_4fb4c796",
         "filename": "base/cpu.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-02T12:06:20Z",
       "side": 1,
       "message": "I\u0027d probably add a DCHECK(std::find(\u0027\\0\u0027)) here just to avoid re-regressing this (e.g. imagine if something screws CpuInfoBrand() in future?) given that this code here does extremely clever things.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 1
+      },
+      "revId": "1250ff2020b459430d1c0926e17cd500760a32fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0937b2_563bd5b9",
+        "filename": "base/cpu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-02T19:23:14Z",
+      "side": 1,
+      "message": "Do you think that\u0027s still needed given the test cases which looks for the same thing in base/cpu_unittest.cc?",
+      "parentUuid": "243700a6_4fb4c796",
       "range": {
         "startLine": 227,
         "startChar": 0,
