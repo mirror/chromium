@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e44fa57_bbd15402",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-02T18:29:21Z",
+      "side": 1,
+      "message": "This check will be done for both pending and committed sites.  Technically, I think for the bugs here, it would\u0027ve been enough to check IsSuitableHost only for the pending sites, as a committed site would imply correct origin lock ought to be in place.  However, this seemed safer, and might actually be needed for the existing pages in SafeBrowsing isolation, where a site might be committed, then it might be added to the list of isolated clickthrough sites, which would make the existing process for it unsuitable for reuse (assuming we go ahead and break scripting connections in that case).\n\nIt might also be worthwhile to add some sanity CHECKs for origin lock correctness and/or IsSuitableHost() to the end of RenderProcessHostImpl::GetProcessHostForSiteInstance -- I can look into that in a followup to minimize the risk for this CL.\n\nI think apart from mismatched origin locks, the other checks in IsSuitableHost are also desirable to do here, though they\u0027re probably not a problem today.  E.g., if this reuse policy ever gets used for WebUI, we might have a risk of a bindings change rendering |host| unsuitable.  \n\nI was curious also whether this might affect --isolate-extensions.  I don\u0027t think so -- the step where a web navigation grabs onto a pending chrome-extension navigation\u0027s process (or vice versa) shouldn\u0027t ever be possible with process reuse, due to the process privilege level mismatch.  (I double-checked with a repro, just to be safe)",
+      "range": {
+        "startLine": 837,
+        "startChar": 0,
+        "endLine": 837,
+        "endChar": 49
+      },
+      "revId": "21737c243024c3ca0ef3eff5c523b1098c56ddfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca323ea0_1b6238a6",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-02T18:29:21Z",
+      "side": 1,
+      "message": "I considered whether UnmatchedServiceWorkerProcessTracker also needs a similar check.  For these bugs, I don\u0027t actually think so, since getting an entry added here means that the unmatched ServiceWorker called AllocateWorkerProcess, which always assigns the site URL and calls GetProcess, so the RPH ought to be marked as used and origin-locked correctly right from the start.\n\nOn the other hand, we might end up needing to check IsSuitableHost for SafeBrowsing, similarly to my other comment (e.g., an existing SW\u0027s site later gets added to the list of isolated clickthrough sites).  So I could add a check IsSuitableHost(...)) now just to be safe, or add a CHECK and revisit it for SafeBrowsing isolation (the latter might be best in a followup to minimize risk for the M63 merge).",
+      "range": {
+        "startLine": 957,
+        "startChar": 28,
+        "endLine": 957,
+        "endChar": 41
+      },
+      "revId": "21737c243024c3ca0ef3eff5c523b1098c56ddfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
