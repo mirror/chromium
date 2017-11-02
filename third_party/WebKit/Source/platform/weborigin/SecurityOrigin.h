@@ -46,17 +46,17 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   WTF_MAKE_NONCOPYABLE(SecurityOrigin);
 
  public:
-  static scoped_refptr<SecurityOrigin> Create(const KURL&);
-  static scoped_refptr<SecurityOrigin> CreateUnique();
+  static scoped_refptr<const SecurityOrigin> Create(const KURL&);
+  static scoped_refptr<const SecurityOrigin> CreateUnique();
 
-  static scoped_refptr<SecurityOrigin> CreateFromString(const String&);
-  static scoped_refptr<SecurityOrigin> Create(const String& protocol,
-                                              const String& host,
-                                              int port);
-  static scoped_refptr<SecurityOrigin> Create(const String& protocol,
-                                              const String& host,
-                                              int port,
-                                              const String& suborigin);
+  static scoped_refptr<const SecurityOrigin> CreateFromString(const String&);
+  static scoped_refptr<const SecurityOrigin> Create(const String& protocol,
+                                                    const String& host,
+                                                    int port);
+  static scoped_refptr<const SecurityOrigin> Create(const String& protocol,
+                                                    const String& host,
+                                                    int port,
+                                                    const String& suborigin);
 
   static void SetMap(URLSecurityOriginMap*);
 
@@ -75,7 +75,7 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
 
   // Create a deep copy of this SecurityOrigin. This method is useful
   // when marshalling a SecurityOrigin to another thread.
-  scoped_refptr<SecurityOrigin> IsolatedCopy() const;
+  scoped_refptr<const SecurityOrigin> IsolatedCopy() const;
 
   // Set the domain property of this security origin to newDomain. This
   // function does not check whether newDomain is a suffix of the current

@@ -1283,7 +1283,7 @@ class CORE_EXPORT Document : public ContainerNode,
   enum HttpRefreshType { kHttpRefreshFromHeader, kHttpRefreshFromMetaTag };
   void MaybeHandleHttpRefresh(const String&, HttpRefreshType);
 
-  void UpdateSecurityOrigin(scoped_refptr<SecurityOrigin>);
+  void UpdateSecurityOrigin(scoped_refptr<const SecurityOrigin>);
   // Set SecurityOrigin to the |source|'s SecurityOrigin.
   // Should be used only when the SecurityOrigin should be intentionally shared
   // between this Document and |source|.

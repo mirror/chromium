@@ -166,7 +166,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
     return;
   }
 
-  scoped_refptr<SecurityOrigin> document_origin =
+  scoped_refptr<const SecurityOrigin> document_origin =
       execution_context->GetSecurityOrigin();
   String error_message;
   // Restrict to secure origins:
@@ -191,7 +191,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
   KURL script_url = raw_script_url;
   script_url.RemoveFragmentIdentifier();
   if (!document_origin->CanRequest(script_url)) {
-    scoped_refptr<SecurityOrigin> script_origin =
+    scoped_refptr<const SecurityOrigin> script_origin =
         SecurityOrigin::Create(script_url);
     callbacks->OnError(
         WebServiceWorkerError(mojom::blink::ServiceWorkerErrorType::kSecurity,
@@ -216,7 +216,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
   pattern_url.RemoveFragmentIdentifier();
 
   if (!document_origin->CanRequest(pattern_url)) {
-    scoped_refptr<SecurityOrigin> pattern_origin =
+    scoped_refptr<const SecurityOrigin> pattern_origin =
         SecurityOrigin::Create(pattern_url);
     callbacks->OnError(
         WebServiceWorkerError(mojom::blink::ServiceWorkerErrorType::kSecurity,
@@ -325,7 +325,7 @@ ScriptPromise ServiceWorkerContainer::getRegistration(
   if (!execution_context)
     return ScriptPromise();
 
-  scoped_refptr<SecurityOrigin> document_origin =
+  scoped_refptr<const SecurityOrigin> document_origin =
       execution_context->GetSecurityOrigin();
   String error_message;
   if (!execution_context->IsSecureContext(error_message)) {
@@ -347,7 +347,7 @@ ScriptPromise ServiceWorkerContainer::getRegistration(
   KURL completed_url = execution_context->CompleteURL(document_url);
   completed_url.RemoveFragmentIdentifier();
   if (!document_origin->CanRequest(completed_url)) {
-    scoped_refptr<SecurityOrigin> document_url_origin =
+    scoped_refptr<const SecurityOrigin> document_url_origin =
         SecurityOrigin::Create(completed_url);
     resolver->Reject(
         DOMException::Create(kSecurityError,
@@ -378,7 +378,7 @@ ScriptPromise ServiceWorkerContainer::getRegistrations(
   }
 
   ExecutionContext* execution_context = ExecutionContext::From(script_state);
-  scoped_refptr<SecurityOrigin> document_origin =
+  scoped_refptr<const SecurityOrigin> document_origin =
       execution_context->GetSecurityOrigin();
   String error_message;
   if (!execution_context->IsSecureContext(error_message)) {

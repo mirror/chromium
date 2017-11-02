@@ -50,13 +50,15 @@ class BlobURLRegistry final : public URLRegistry {
   // SecurityOrigin is passed together with KURL so that the registry can
   // save it for entries from whose KURL the origin is not recoverable by
   // using BlobURL::getOrigin().
-  void RegisterURL(SecurityOrigin*, const KURL&, URLRegistrable*) override;
+  void RegisterURL(const SecurityOrigin*,
+                   const KURL&,
+                   URLRegistrable*) override;
   void UnregisterURL(const KURL&) override;
 
   static URLRegistry& Registry();
 };
 
-void BlobURLRegistry::RegisterURL(SecurityOrigin* origin,
+void BlobURLRegistry::RegisterURL(const SecurityOrigin* origin,
                                   const KURL& public_url,
                                   URLRegistrable* registrable_object) {
   DCHECK_EQ(&registrable_object->Registry(), this);
