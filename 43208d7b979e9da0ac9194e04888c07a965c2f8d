@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f953034c_e457977f",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1828,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-02T18:34:03Z",
+      "side": 1,
+      "message": "Did you want to add a note that this shouldn\u0027t be necessary?",
+      "range": {
+        "startLine": 1828,
+        "startChar": 4,
+        "endLine": 1828,
+        "endChar": 34
+      },
+      "revId": "43208d7b979e9da0ac9194e04888c07a965c2f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "383450b7_0efd1e3c",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 6
@@ -16,6 +39,24 @@
       "revId": "43208d7b979e9da0ac9194e04888c07a965c2f8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e191ee_bc2a8083",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-02T18:34:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "383450b7_0efd1e3c",
+      "revId": "43208d7b979e9da0ac9194e04888c07a965c2f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
