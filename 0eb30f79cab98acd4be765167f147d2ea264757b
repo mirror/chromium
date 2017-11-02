@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c58a641_cdb1a15e",
+        "filename": "content/renderer/media_recorder/media_recorder_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-02T20:04:53Z",
+      "side": 1,
+      "message": "With this code, if the user inadvertently passes\na \u0027video/webm;codecs\u003d\"opus,pcm\"\u0027 string, pcm\nwill be selected. Would that be the intention?",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "0eb30f79cab98acd4be765167f147d2ea264757b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb270a6_96734863",
+        "filename": "content/renderer/media_recorder/media_recorder_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-02T20:04:53Z",
+      "side": 1,
+      "message": "nit: s/codec/video codec/",
+      "range": {
+        "startLine": 205,
+        "startChar": 36,
+        "endLine": 205,
+        "endChar": 41
+      },
+      "revId": "0eb30f79cab98acd4be765167f147d2ea264757b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821926a3_52be7d8d",
+        "filename": "content/renderer/media_recorder/media_recorder_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-02T20:04:53Z",
+      "side": 1,
+      "message": "Correspondingly, nit: s/codec/audio codec/ here.",
+      "range": {
+        "startLine": 215,
+        "startChar": 36,
+        "endLine": 215,
+        "endChar": 41
+      },
+      "revId": "0eb30f79cab98acd4be765167f147d2ea264757b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
