@@ -15,6 +15,7 @@
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/web_contents/web_contents_view.h"
 #include "content/browser/webrtc/webrtc_internals_ui_observer.h"
+#include "content/browser/webrtc/webrtc_rtc_event_log_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/web_contents.h"
@@ -87,9 +88,9 @@ WebRTCInternals::WebRTCInternals() : WebRTCInternals(500, true) {}
 
 WebRTCInternals::WebRTCInternals(int aggregate_updates_ms,
                                  bool should_block_power_saving)
-    : audio_debug_recordings_(false),
-      event_log_recordings_(false),
-      selecting_event_log_(false),
+    : selection_type_(SelectionType::AudioDebugRecordings),
+      audio_debug_recordings_(false),
+      event_log_recordings_(true),  // TODO(eladalon): !!! Undo
       num_open_connections_(0),
       should_block_power_saving_(should_block_power_saving),
       aggregate_updates_ms_(aggregate_updates_ms),
@@ -292,7 +293,7 @@ void WebRTCInternals::EnableAudioDebugRecordings(
 #if defined(OS_ANDROID)
   EnableAudioDebugRecordingsOnAllRenderProcessHosts();
 #else
-  selecting_event_log_ = false;
+  selection_type_ = SelectionType::AudioDebugRecordings;
   DCHECK(!select_file_dialog_);
   select_file_dialog_ = ui::SelectFileDialog::Create(this, nullptr);
   select_file_dialog_->SelectFile(
@@ -351,7 +352,7 @@ void WebRTCInternals::EnableEventLogRecordings(
 #else
   DCHECK(web_contents);
   DCHECK(!select_file_dialog_);
-  selecting_event_log_ = true;
+  selection_type_ = SelectionType::RtcEventLogs;
   select_file_dialog_ = ui::SelectFileDialog::Create(this, nullptr);
   select_file_dialog_->SelectFile(
       ui::SelectFileDialog::SELECT_SAVEAS_FILE, base::string16(),
@@ -366,6 +367,7 @@ void WebRTCInternals::DisableEventLogRecordings() {
   event_log_recordings_ = false;
   // Tear down the dialog since the user has unchecked the event log checkbox.
   select_file_dialog_ = nullptr;
+
   for (RenderProcessHost::iterator i(
            content::RenderProcessHost::AllHostsIterator());
        !i.IsAtEnd(); i.Advance())
@@ -414,12 +416,17 @@ void WebRTCInternals::FileSelected(const base::FilePath& path,
                                    void* /*unused_params */) {
 #if BUILDFLAG(ENABLE_WEBRTC)
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (selecting_event_log_) {
-    event_log_recordings_file_path_ = path;
-    EnableEventLogRecordingsOnAllRenderProcessHosts();
-  } else {
-    audio_debug_recordings_file_path_ = path;
-    EnableAudioDebugRecordingsOnAllRenderProcessHosts();
+  switch (selection_type_) {
+    case SelectionType::RtcEventLogs:
+      event_log_recordings_file_path_ = path;
+      EnableEventLogRecordingsOnAllRenderProcessHosts();
+      break;
+    case SelectionType::AudioDebugRecordings:
+      audio_debug_recordings_file_path_ = path;
+      EnableAudioDebugRecordingsOnAllRenderProcessHosts();
+      break;
+    default:
+      NOTREACHED();
   }
 #endif
 }
@@ -427,10 +434,15 @@ void WebRTCInternals::FileSelected(const base::FilePath& path,
 void WebRTCInternals::FileSelectionCanceled(void* params) {
 #if BUILDFLAG(ENABLE_WEBRTC)
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (selecting_event_log_) {
-    SendUpdate("eventLogRecordingsFileSelectionCancelled", nullptr);
-  } else {
-    SendUpdate("audioDebugRecordingsFileSelectionCancelled", nullptr);
+  switch (selection_type_) {
+    case SelectionType::RtcEventLogs:
+      SendUpdate("eventLogRecordingsFileSelectionCancelled", nullptr);
+      break;
+    case SelectionType::AudioDebugRecordings:
+      SendUpdate("audioDebugRecordingsFileSelectionCancelled", nullptr);
+      break;
+    default:
+      NOTREACHED();
   }
 #endif
 }
@@ -516,10 +528,9 @@ void WebRTCInternals::EnableEventLogRecordingsOnAllRenderProcessHosts() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   event_log_recordings_ = true;
-  for (RenderProcessHost::iterator i(
-           content::RenderProcessHost::AllHostsIterator());
-       !i.IsAtEnd(); i.Advance())
-    i.GetCurrentValue()->StartWebRTCEventLog(event_log_recordings_file_path_);
+  for (auto it = content::RenderProcessHost::AllHostsIterator(); !it.IsAtEnd(); it.Advance()) {
+    it.GetCurrentValue()->StartWebRTCEventLog(event_log_recordings_file_path_);
+  }
 }
 #endif
 

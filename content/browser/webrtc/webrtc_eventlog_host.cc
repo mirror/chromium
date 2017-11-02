@@ -13,6 +13,7 @@
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_restrictions.h"
 #include "content/browser/webrtc/webrtc_internals.h"
+#include "content/browser/webrtc/webrtc_rtc_event_log_manager.h"
 #include "content/common/media/peer_connection_tracker_messages.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
@@ -32,7 +33,7 @@ namespace {
 // TODO(eladalon): This blocks the new code path from executing until all
 // CLs associated with it have been landed. When that happens, it will be
 // removed.
-constexpr bool kRtcEventLoggingFromHostApplication = false;
+constexpr bool kRtcEventLoggingFromHostApplication = true;  // TODO(eladalon): !!! Undo
 
 // In addition to the limit to the number of files given below, the size of the
 // files is also capped, see content/renderer/media/peer_connection_tracker.cc.
@@ -107,9 +108,10 @@ void WebRTCEventLogHost::PeerConnectionRemoved(int peer_connection_local_id) {
   }
 }
 
-// TODO(eladalon): By the time we remove kRtcEventLoggingFromHostApplication,
-// and use the new code, we should make sure that users of this interface still
-// get their logs written to the file they inteded it to reach.
+// TODO(eladalon): !!! By the time we remove
+// kRtcEventLoggingFromHostApplication, and use the new code, we should make
+// sure that users of this interface still get their logs written to the file
+// they inteded it to reach.
 bool WebRTCEventLogHost::StartWebRTCEventLog(const base::FilePath& file_path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (rtc_event_logging_enabled_)
@@ -121,16 +123,22 @@ bool WebRTCEventLogHost::StartWebRTCEventLog(const base::FilePath& file_path) {
   return true;
 }
 
+// TODO(eladalon): !!! Do we ever need this?
 bool WebRTCEventLogHost::StopWebRTCEventLog() {
+  // TODO(eladalon): !!! Are we really checking for all possible ways for
+  // the log to stop?
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (!rtc_event_logging_enabled_)
     return false;
   number_active_log_files_ = 0;
   rtc_event_logging_enabled_ = false;
   RenderProcessHost* host = RenderProcessHost::FromID(render_process_id_);
-  if (host) {
-    for (int local_id : active_peer_connection_local_ids_)
-      host->Send(new PeerConnectionTracker_StopEventLog(local_id));
+  if (!host)
+    return true;
+  for (int local_id : active_peer_connection_local_ids_) {
+    host->Send(new PeerConnectionTracker_StopEventLog(local_id));
+    RtcEventLogManager::GetInstance()->LocalRtcEventLogStop(render_process_id_,
+                                                            local_id);
   }
   return true;
 }
@@ -141,9 +149,12 @@ base::WeakPtr<WebRTCEventLogHost> WebRTCEventLogHost::GetWeakPtr() {
 
 void WebRTCEventLogHost::StartEventLogForPeerConnection(
     int peer_connection_local_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (kRtcEventLoggingFromHostApplication) {
     RenderProcessHost* rph = RenderProcessHost::FromID(render_process_id_);
     if (rph) {
+      RtcEventLogManager::GetInstance()->LocalRtcEventLogStart(
+          render_process_id_, peer_connection_local_id, base_file_path_);
       rph->Send(new PeerConnectionTracker_StartEventLogOutput(
           peer_connection_local_id));
     }
