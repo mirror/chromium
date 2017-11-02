@@ -92,9 +92,7 @@ class FrameSerializerTest : public ::testing::Test,
   }
 
   void RegisterErrorURL(const char* file, int status_code) {
-    WebURLError error;
-    error.reason = 0xdead + status_code;
-    error.domain = WebURLError::Domain::kTest;
+    WebURLError error(WebURLError::Domain::kTest, 0xdead + status_code);
 
     WebURLResponse response;
     response.SetMIMEType("text/html");
