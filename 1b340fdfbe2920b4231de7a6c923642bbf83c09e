@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "44e0ebf9_24af2253",
+        "filename": "build/secondary/third_party/crashpad/crashpad/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-02T17:53:46Z",
+      "side": 1,
+      "message": "Intentional empty group?",
+      "revId": "1b340fdfbe2920b4231de7a6c923642bbf83c09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c0b495_cff07303",
+        "filename": "build/secondary/third_party/crashpad/crashpad/handler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-02T17:53:46Z",
+      "side": 1,
+      "message": "Maybe set this up for the next roll with:\n\nsources \u003d []\ndeps \u003d []\n\nif (is_win) {\n  sources +\u003d [ \"crashpad_handler_test.cc\" ]\n  deps +\u003d […]\n}\n\n?",
+      "revId": "1b340fdfbe2920b4231de7a6c923642bbf83c09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df45a274_7207caf2",
+        "filename": "build/secondary/third_party/crashpad/crashpad/tools/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-02T17:53:46Z",
+      "side": 1,
+      "message": "I think this is going to not get tracked as a dependency properly, but I don\u0027t think listing it as data[] on the target is right, either.",
+      "revId": "1b340fdfbe2920b4231de7a6c923642bbf83c09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9c5feb7_a6573239",
         "filename": "testing/buildbot/chromium.fyi.json",
         "patchSetId": 1
