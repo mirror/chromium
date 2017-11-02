@@ -82,6 +82,9 @@ CrOSComponentInstallerPolicy::CrOSComponentInstallerPolicy(
     cell = stoul(strstream.substr(0, 2), nullptr, 16);
     strstream.erase(0, 2);
   }
+  task_runner_ = base::CreateSingleThreadTaskRunnerWithTraits(
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
 }
 
 bool CrOSComponentInstallerPolicy::SupportsGroupPolicyEnabledComponentUpdates()
@@ -101,9 +104,8 @@ CrOSComponentInstallerPolicy::OnCustomInstall(
   if (!manifest.GetString("version", &version)) {
     return ToInstallerResult(update_client::InstallError::GENERIC_ERROR);
   }
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&ImageLoaderRegistration, version, install_dir, name));
+  task_runner_->PostTask(FROM_HERE, base::BindOnce(&ImageLoaderRegistration,
+                                                   version, install_dir, name));
   return update_client::CrxInstaller::Result(update_client::InstallError::NONE);
 }
 

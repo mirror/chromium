@@ -16,6 +16,8 @@
 #include "components/update_client/update_client.h"
 #include "crypto/sha2.h"
 
+#include "base/sequenced_task_runner.h"
+
 //  Developer API usage:
 //  ...
 //  void LoadCallback(const std::string& mount_point){
@@ -75,6 +77,7 @@ class CrOSComponentInstallerPolicy : public ComponentInstallerPolicy {
   std::string name;
   std::string env_version;
   uint8_t kSha2Hash_[crypto::kSHA256Length] = {};
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(CrOSComponentInstallerPolicy);
 };
