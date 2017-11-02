@@ -300,6 +300,11 @@ void TouchTransformController::UpdateTouchTransforms() const {
   setter_->ConfigureTouchDevices(update_data.touch_device_transforms);
 }
 
+void TouchTransformController::ConfigureTouchDevicesForTesting(
+    const std::vector<ui::TouchDeviceTransform>& transforms) {
+  setter_->ConfigureTouchDevices(transforms);
+}
+
 void TouchTransformController::UpdateTouchRadius(
     const ManagedDisplayInfo& display,
     UpdateData* update_data) const {

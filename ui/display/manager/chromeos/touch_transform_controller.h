@@ -50,6 +50,9 @@ class DISPLAY_MANAGER_EXPORT TouchTransformController {
   // transformer until calibration is complete.
   void SetForCalibration(bool is_calibrating);
 
+  void ConfigureTouchDevicesForTesting(
+      const std::vector<ui::TouchDeviceTransform>& transforms);
+
  private:
   friend class test::TouchTransformControllerTest;
 
