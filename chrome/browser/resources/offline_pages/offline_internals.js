@@ -62,10 +62,12 @@ cr.define('offlineInternals', function() {
   function fillRequestQueue(requests) {
     var requestQueueTable = $('request-queue');
     requestQueueTable.textContent = '';
+    savePageRequests = [];
 
     var template = $('request-queue-table-row');
     var td = template.content.querySelectorAll('td');
     for (var i = 0; i < requests.length; i++) {
+      let request = requests[i];
       var checkbox = td[0].querySelector('input');
       checkbox.setAttribute('value', requests[i].id);
 
@@ -73,6 +75,8 @@ cr.define('offlineInternals', function() {
       td[2].textContent = new Date(requests[i].creationTime);
       td[3].textContent = requests[i].status;
       td[4].textContent = requests[i].requestOrigin;
+
+
 
       var row = document.importNode(template.content, true);
       requestQueueTable.appendChild(row);
@@ -175,17 +179,23 @@ cr.define('offlineInternals', function() {
    */
   function dumpAsJson() {
     var json = JSON.stringify(
-        {offlinePages: offlinePages, savePageRequests: savePageRequests}, null,
+        {offlinePages: offlinePages, savePageRequests: savePageRequests},
+        function(key, value) {
+          if (key == 'creationTime' || key == 'lastAttempt' ||
+              key == 'lastAccessTime')
+            return new Date(value).toString();
+          return value;
+        },
         2);
 
     $('dump-box').value = json;
     $('dump-info').textContent = '';
-    $('dump').showModal();
+    $('dump-modal').showModal();
     $('dump-box').select();
   }
 
   function closeDump() {
-    $('dump').close();
+    $('dump-modal').close();
     $('dump-box').value = '';
   }
 
