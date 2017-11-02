@@ -34,6 +34,24 @@
       "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a89eaf0_b3b55bf9",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:06:50Z",
+      "side": 1,
+      "message": "//chrome/browser/api/system_display/system_display_apitest.cc and //chrome/browser/ui/window_sizer/window_sizer_common_unittest.cc both use a custom list of displays.",
+      "parentUuid": "0baac228_2ef2f9bd",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
