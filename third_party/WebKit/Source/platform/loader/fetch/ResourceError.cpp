@@ -86,6 +86,15 @@ ResourceError::ResourceError(Domain domain, int error_code, const KURL& url)
   }
 }
 
+ResourceError::ResourceError(const WebURLError& error)
+    : domain_(error.domain()),
+      error_code_(error.reason()),
+      failing_url_(error.url()),
+      is_access_check_(error.is_web_security_violation()),
+      stale_copy_in_cache_(error.has_copy_in_cache()) {
+  DCHECK(!IsNull());
+}
+
 ResourceError ResourceError::Copy() const {
   ResourceError error_copy;
   error_copy.domain_ = domain_;
@@ -94,6 +103,10 @@ ResourceError ResourceError::Copy() const {
   error_copy.localized_description_ = localized_description_.IsolatedCopy();
   error_copy.is_access_check_ = is_access_check_;
   return error_copy;
+}
+
+Optional<WebURLError> ResourceError::ToNullableWebURLError() const {
+  return WTF::nullopt;
 }
 
 bool ResourceError::Compare(const ResourceError& a, const ResourceError& b) {

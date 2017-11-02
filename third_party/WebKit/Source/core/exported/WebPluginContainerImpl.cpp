@@ -660,7 +660,8 @@ void WebPluginContainerImpl::DidFinishLoading() {
 }
 
 void WebPluginContainerImpl::DidFailLoading(const ResourceError& error) {
-  web_plugin_->DidFailLoading(error);
+  DCHECK(!error.IsNull());
+  web_plugin_->DidFailLoading(*error.ToNullableWebURLError());
 }
 
 WebLayer* WebPluginContainerImpl::PlatformLayer() const {
