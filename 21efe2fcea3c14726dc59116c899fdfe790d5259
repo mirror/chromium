@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d7cb568_3cb4ae67",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-02T02:40:52Z",
+      "side": 1,
+      "message": "\u003cwebview\u003e supports fullscreen but I can\u0027t remember what code path it takes...lazyboy@ implemented \u003cwebview\u003e fullscreen.",
+      "revId": "21efe2fcea3c14726dc59116c899fdfe790d5259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c54571_cda5b16b",
+        "filename": "content/browser/web_contents/web_contents_view_aura.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-02T02:40:52Z",
+      "side": 1,
+      "message": "so we get a WebContentsViewAura but we don\u0027t get an aura window if using mus? Dumb question: Why would we not just do this in general for all guests?",
+      "revId": "21efe2fcea3c14726dc59116c899fdfe790d5259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
