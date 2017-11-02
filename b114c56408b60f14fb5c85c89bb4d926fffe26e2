@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de424ba2_d9114c90",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T17:09:15Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be handled in GetTopInset ?",
+      "revId": "b114c56408b60f14fb5c85c89bb4d926fffe26e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
