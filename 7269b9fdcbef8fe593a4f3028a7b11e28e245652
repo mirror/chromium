@@ -16,6 +16,24 @@
       "revId": "7269b9fdcbef8fe593a4f3028a7b11e28e245652",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70479140_7566526d",
+        "filename": "third_party/WebKit/Source/core/css/properties/shorthands/CSSShorthandPropertyAPIFont.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-02T02:05:48Z",
+      "side": 1,
+      "message": "Won\u0027t build without it. I\u0027m not 100% sure why.",
+      "parentUuid": "0160ab9c_3779c0a2",
+      "revId": "7269b9fdcbef8fe593a4f3028a7b11e28e245652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
