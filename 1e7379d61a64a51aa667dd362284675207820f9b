@@ -16,6 +16,24 @@
       "revId": "1e7379d61a64a51aa667dd362284675207820f9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c182666e_7522379f",
+        "filename": "media/cdm/aes_decryptor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-02T22:37:56Z",
+      "side": 0,
+      "message": "We used to pass this to CdmAdapter::Create(). When it changed to the helper this didn\u0027t get deleted.",
+      "parentUuid": "65ab37d0_8efa64f8",
+      "revId": "1e7379d61a64a51aa667dd362284675207820f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
