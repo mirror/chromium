@@ -28,6 +28,7 @@
 #define SelectionModifier_h
 
 #include "base/macros.h"
+#include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisibleSelection.h"
 #include "platform/LayoutUnit.h"
 #include "platform/wtf/Allocator.h"
@@ -53,7 +54,11 @@ class SelectionModifier {
   LayoutUnit XPosForVerticalArrowNavigation() const {
     return x_pos_for_vertical_arrow_navigation_;
   }
-  const VisibleSelection& Selection() const { return selection_; }
+
+  // TODO(editing-dev): We should rename |Selection()| to
+  // |ComputeVisibleSelectionDeprecated()| and introduce |GetSelection()|
+  // to return |current_selection_|.
+  VisibleSelection Selection() const;
 
   bool Modify(SelectionModifyAlteration,
               SelectionModifyDirection,
@@ -98,6 +103,10 @@ class SelectionModifier {
 
   Member<LocalFrame> frame_;
   VisibleSelection selection_;
+  // TODO(editing-dev): We should introduce |GetSelection()| to return
+  // |result_| to replace |Selection().AsSelection()|.
+  // |current_selection_| holds initial value and result of |Modify()|.
+  SelectionInDOMTree current_selection_;
   LayoutUnit x_pos_for_vertical_arrow_navigation_;
 
   DISALLOW_COPY_AND_ASSIGN(SelectionModifier);
