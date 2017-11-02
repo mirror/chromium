@@ -97,12 +97,6 @@ class TaskQueueManagerTest : public ::testing::Test {
  protected:
   void TearDown() { manager_.reset(); }
 
-  scoped_refptr<TestTaskQueue> CreateTaskQueueWithShutdownTaskRunner(
-      scoped_refptr<base::SingleThreadTaskRunner> shutdown_task_runner) {
-    return manager_->CreateTaskQueue<TestTaskQueue>(
-        TaskQueue::Spec("test").SetShutdownTaskRunner(shutdown_task_runner));
-  }
-
   scoped_refptr<TestTaskQueue> CreateTaskQueueWithSpec(TaskQueue::Spec spec) {
     return manager_->CreateTaskQueue<TestTaskQueue>(spec);
   }
@@ -3144,12 +3138,10 @@ TEST_F(TaskQueueManagerTest, GracefulShutdown) {
   test_task_runner_->SetAutoAdvanceNowToPendingTasks(true);
 
   std::vector<base::TimeTicks> run_times;
-  scoped_refptr<TestTaskQueue> control_tq = CreateTaskQueue();
-  scoped_refptr<TestTaskQueue> main_tq =
-      CreateTaskQueueWithShutdownTaskRunner(control_tq);
+  scoped_refptr<TestTaskQueue> main_tq = CreateTaskQueue();
   base::WeakPtr<TestTaskQueue> main_tq_weak_ptr = main_tq->GetWeakPtr();
 
-  EXPECT_EQ(2u, manager_->active_queues_count());
+  EXPECT_EQ(1u, manager_->active_queues_count());
   EXPECT_EQ(0u, manager_->queues_to_shutdown_count());
   EXPECT_EQ(0u, manager_->queues_to_delete_count());
 
@@ -3181,7 +3173,7 @@ TEST_F(TaskQueueManagerTest, GracefulShutdown) {
                   base::TimeTicks() + base::TimeDelta::FromMilliseconds(401),
                   base::TimeTicks() + base::TimeDelta::FromMilliseconds(501)));
 
-  EXPECT_EQ(1u, manager_->active_queues_count());
+  EXPECT_EQ(0u, manager_->active_queues_count());
   EXPECT_EQ(0u, manager_->queues_to_shutdown_count());
   EXPECT_EQ(0u, manager_->queues_to_delete_count());
 }
@@ -3203,8 +3195,7 @@ TEST_F(TaskQueueManagerTest, GracefulShutdown_ManagerDeletedInFlight) {
   // pages.
   const int N = 100;
   for (int i = 0; i < N; ++i) {
-    scoped_refptr<TestTaskQueue> tq =
-        CreateTaskQueueWithShutdownTaskRunner(control_tq);
+    scoped_refptr<TestTaskQueue> tq = CreateTaskQueue();
     main_tq_weak_ptrs.push_back(tq->GetWeakPtr());
     main_tqs.push_back(std::move(tq));
   }
@@ -3241,12 +3232,10 @@ TEST_F(TaskQueueManagerTest,
   test_task_runner_->SetAutoAdvanceNowToPendingTasks(true);
 
   std::vector<base::TimeTicks> run_times;
-  scoped_refptr<TestTaskQueue> control_tq = CreateTaskQueue();
-  scoped_refptr<TestTaskQueue> main_tq =
-      CreateTaskQueueWithShutdownTaskRunner(control_tq);
+  scoped_refptr<TestTaskQueue> main_tq = CreateTaskQueue();
   base::WeakPtr<TestTaskQueue> main_tq_weak_ptr = main_tq->GetWeakPtr();
 
-  EXPECT_EQ(2u, manager_->active_queues_count());
+  EXPECT_EQ(1u, manager_->active_queues_count());
   EXPECT_EQ(0u, manager_->queues_to_shutdown_count());
   EXPECT_EQ(0u, manager_->queues_to_delete_count());
 
