@@ -22,6 +22,30 @@
       "revId": "8e50cc8c384c68b056a41727c963268a4af335b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3f8fa5_1abf346b",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-02T20:31:17Z",
+      "side": 1,
+      "message": "\u003e Omit the \u003d here and it will automatically be the last entry + 1.\n\nDone.\n\n\u003e \n\u003e Also, I think Chromium convention is to use FOO_BAR naming for enums - at least that seems consistent with other code in this file.\n\nI think that applies only to enums (not enum classes -- which is what I am using here).\nI could not find anything in Chromium style guide.\nGoogle Style guide:\nhttps://google.github.io/styleguide/cppguide.html#Enumerator_Names\n\nchromium-dev discussion thread: https://groups.google.com/a/chromium.org/d/msg/chromium-dev/Q5WmkAImanc/WxHbMo2K1tUJ",
+      "parentUuid": "ab33204f_28f2dc54",
+      "range": {
+        "startLine": 109,
+        "startChar": 11,
+        "endLine": 109,
+        "endChar": 37
+      },
+      "revId": "8e50cc8c384c68b056a41727c963268a4af335b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
