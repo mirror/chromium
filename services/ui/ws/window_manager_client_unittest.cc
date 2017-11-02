@@ -59,6 +59,7 @@ class TestWindowManagerDelegate : public aura::WindowManagerDelegate {
   void OnWmSetCanFocus(aura::Window* window, bool can_focus) override {}
   aura::Window* OnWmCreateTopLevelWindow(
       ui::mojom::WindowType window_type,
+      const std::string& remote_service_name,
       std::map<std::string, std::vector<uint8_t>>* properties) override {
     return nullptr;
   }
@@ -721,6 +722,7 @@ class EstablishConnectionViaFactoryDelegate : public TestWindowManagerDelegate {
   // WindowManagerDelegate:
   aura::Window* OnWmCreateTopLevelWindow(
       ui::mojom::WindowType window_type,
+      const std::string& remote_service_name,
       std::map<std::string, std::vector<uint8_t>>* properties) override {
     created_window_ = NewVisibleWindow((*client_->GetRoots().begin()), client_,
                                        aura::WindowMusType::TOP_LEVEL_IN_WM);
