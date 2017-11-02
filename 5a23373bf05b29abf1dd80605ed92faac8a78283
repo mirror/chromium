@@ -16,6 +16,24 @@
       "revId": "5a23373bf05b29abf1dd80605ed92faac8a78283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad955c02_b816c77c",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-02T23:01:36Z",
+      "side": 1,
+      "message": "Yes, it now takes a LocalSurfaceId as a parameter.",
+      "parentUuid": "ef0d6955_4e124548",
+      "revId": "5a23373bf05b29abf1dd80605ed92faac8a78283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
