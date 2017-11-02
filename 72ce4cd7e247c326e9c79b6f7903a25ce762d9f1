@@ -22,6 +22,30 @@
       "revId": "72ce4cd7e247c326e9c79b6f7903a25ce762d9f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f4fde9_0ac9050e",
+        "filename": "base/files/memory_mapped_file_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-02T16:35:59Z",
+      "side": 1,
+      "message": "I\u0027m curious why would you would think a CHECK is dangerous? Are these values user controlled at all?",
+      "parentUuid": "b04bbb11_62632c5c",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 54
+      },
+      "revId": "72ce4cd7e247c326e9c79b6f7903a25ce762d9f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
