@@ -435,6 +435,7 @@ void SimpleWM::OnWmSetCanFocus(aura::Window* window, bool can_focus) {}
 
 aura::Window* SimpleWM::OnWmCreateTopLevelWindow(
     ui::mojom::WindowType window_type,
+    const std::string& remote_service_name,
     std::map<std::string, std::vector<uint8_t>>* properties) {
   aura::Window* client_window = new aura::Window(nullptr);
   SetWindowType(client_window, window_type);
