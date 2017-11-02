@@ -33,6 +33,40 @@
       "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb140d71_c71a86e9",
+        "filename": "third_party/WebKit/Source/core/animation/LengthPropertyFunctions.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-02T06:31:32Z",
+      "side": 0,
+      "message": "nice",
+      "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081e0853_7dc4c1f3",
+        "filename": "third_party/WebKit/Source/core/animation/LengthPropertyFunctions.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-02T06:31:32Z",
+      "side": 0,
+      "message": "this sort of thing makes me think the initial functions are best put on he property APIs... not sure how this switch on property will be solved",
+      "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

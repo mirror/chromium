@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "55013d7a_1567403a",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineBox.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-02T06:31:32Z",
+      "side": 1,
+      "message": "this should already be a EVerticalAlign type",
+      "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4711619_ba36e8ae",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyleInitialValues.cpp",
         "patchSetId": 13
