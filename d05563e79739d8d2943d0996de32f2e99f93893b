@@ -16,6 +16,24 @@
       "revId": "d05563e79739d8d2943d0996de32f2e99f93893b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4518b3_ea28262b",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-02T16:56:48Z",
+      "side": 0,
+      "message": "Not sure about this one, but for the fetch_callback_ case below it is because the actual callback (ServiceWorkerURLRequestJob::DidDispatchFetchEvent) ends up deleting ServiceWorkerFetchDispatcher, which would delete fetch_callback_, making the various parameters that are passed as const-ref to DidDispatchFetchEvent dangling references to the no longer existing bind state. I assume that with OnceCallback and the fact that the callback is moved out-of before Run is called indeed these work-arounds aren\u0027t needed anymore (not sure why Run() wouldn\u0027t just keep a reference to the callback/bindstate for the duration of the run, but I\u0027m pretty sure that\u0027s how I remember this working).",
+      "parentUuid": "b755a8e3_2a5c7163",
+      "revId": "d05563e79739d8d2943d0996de32f2e99f93893b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
