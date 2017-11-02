@@ -239,6 +239,18 @@ void BbrSender::SetFromConfig(const QuicConfig& config,
                       3);
     initial_conservation_in_startup_ = GROWTH;
   }
+  if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_window &&
+      config.HasClientRequestedIndependentOption(kBBR4, perspective)) {
+    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_window, 1,
+                      2);
+    max_ack_height_.SetWindowLength(2 * kBandwidthWindowSize);
+  }
+  if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_window &&
+      config.HasClientRequestedIndependentOption(kBBR5, perspective)) {
+    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_window, 2,
+                      2);
+    max_ack_height_.SetWindowLength(4 * kBandwidthWindowSize);
+  }
 }
 
 void BbrSender::AdjustNetworkParameters(QuicBandwidth bandwidth,

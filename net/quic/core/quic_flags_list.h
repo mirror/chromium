@@ -184,3 +184,9 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_fully_drain_queue, false)
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_bbr_conservation_in_startup,
           false)
+
+// Allows increasing the length of time ack aggregation is windowed for to 20
+// and 40 RTTs.
+QUIC_FLAG(bool,
+          FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_window,
+          false)

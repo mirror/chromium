@@ -94,6 +94,8 @@ const QuicTag kBBR1 = TAG('B', 'B', 'R', '1');   // Ack aggregation v1
 const QuicTag kBBR2 = TAG('B', 'B', 'R', '2');   // Ack aggregation v2
 const QuicTag kBBR3 = TAG('B', 'B', 'R', '3');   // Fully drain the queue once
                                                  // per cycle
+const QuicTag kBBR4 = TAG('B', 'B', 'R', '4');   // 20 RTT ack aggregation
+const QuicTag kBBR5 = TAG('B', 'B', 'R', '5');   // 40 RTT ack aggregation
 const QuicTag kBBRS = TAG('B', 'B', 'R', 'S');   // Use 1.5x pacing in startup
                                                  // after a loss has occurred.
 const QuicTag kRENO = TAG('R', 'E', 'N', 'O');   // Reno Congestion Control
