@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6cefee1c_68245734",
+        "filename": "third_party/zlib/contrib/tests/fuzzers/deflate_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-02T18:14:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49bf9c11_424e6030",
+      "revId": "739f0424f12d5bcefa2d8899f078013c877469df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e185987c_bc265329",
         "filename": "third_party/zlib/contrib/tests/fuzzers/deflate_fuzzer.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "739f0424f12d5bcefa2d8899f078013c877469df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c787accd_55d50ac9",
+        "filename": "third_party/zlib/contrib/tests/fuzzers/deflate_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-02T18:14:18Z",
+      "side": 1,
+      "message": "Yes.\n\nMy goal is to first just land SOMETHING and get some coverage.\nI\u0027ve been talking to Max about the best way to handle this. But we definitely want to test all of the potentially valid input parameters.\nThat will come in a later patch.\n\nMy roadmap here is:\n-Just get some sort of coverage over all of the APIS.\n-Provide seeds for the APIs that need it (so libfuzzer doesn\u0027t have to randomly guess at how to form a valid compressed stream, for example)\n-Update the fuzzers to cover all parameter permutations.",
+      "parentUuid": "e185987c_bc265329",
+      "revId": "739f0424f12d5bcefa2d8899f078013c877469df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
