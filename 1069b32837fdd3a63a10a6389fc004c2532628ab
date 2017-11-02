@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "547be23b_03280d78",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5368,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-02T18:11:01Z",
+      "side": 1,
+      "message": "Ahh got it. Thanks Gregory. Yes, you\u0027re right that we will need the BVC to provide the presenting VC in a future CL, so we need this structure.",
+      "parentUuid": "4de72bb4_036d37fc",
+      "revId": "1069b32837fdd3a63a10a6389fc004c2532628ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "047ad1b2_2ce901eb",
         "filename": "ios/chrome/browser/ui/settings/sync_utils/sync_error_infobar_delegate.mm",
         "patchSetId": 3
