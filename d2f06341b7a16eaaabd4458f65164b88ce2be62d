@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2540ac9d_e9995016",
+        "filename": "chrome/browser/extensions/api/notifications/extension_notification_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T17:22:16Z",
+      "side": 1,
+      "message": "Please document this. It\u0027s not clear what |url| may refer to.",
+      "revId": "d2f06341b7a16eaaabd4458f65164b88ce2be62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e616327f_8e4b861a",
+        "filename": "chrome/browser/notifications/fullscreen_notification_blocker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T17:22:16Z",
+      "side": 1,
+      "message": "bool enabled \u003d !is_fullscreen_mode_ || notification.fullscreen_visibility() !\u003d message_center::FullscreenVisibility::NONE;",
+      "revId": "d2f06341b7a16eaaabd4458f65164b88ce2be62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
