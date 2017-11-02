@@ -202,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "da0d7111_9b91f512",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-02T03:13:47Z",
+      "side": 1,
+      "message": "Thanks a lot for you clear explanation @Kruisselbrink, I am not sure if String16 has those limitations. But I will replace the parameters with TransferableMessage in later patch.",
+      "parentUuid": "85ff2853_115eb256",
+      "range": {
+        "startLine": 96,
+        "startChar": 14,
+        "endLine": 96,
+        "endChar": 40
+      },
+      "revId": "b8e1792989e56cf802ab715e8172af429e1550c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d418b6d1_4734fa25",
         "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 2
