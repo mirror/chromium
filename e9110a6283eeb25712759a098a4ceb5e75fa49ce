@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4007f27_f34ed43a",
+        "filename": "ui/display/manager/chromeos/touch_transform_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-02T17:51:49Z",
+      "side": 1,
+      "message": "I could also do this by caching a raw pointer to setter_ in ash::Shell, or by exposing |setter_| directly, but this seemed a little cleaner.",
+      "revId": "e9110a6283eeb25712759a098a4ceb5e75fa49ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

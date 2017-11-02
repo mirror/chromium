@@ -34,6 +34,24 @@
       "revId": "5b922d8ab1cdbf0eca0317bfc2b7cd6d119f4dfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9734ef1_90f09c55",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-02T17:51:49Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "d45b4e08_e2ff0074",
+      "revId": "5b922d8ab1cdbf0eca0317bfc2b7cd6d119f4dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
