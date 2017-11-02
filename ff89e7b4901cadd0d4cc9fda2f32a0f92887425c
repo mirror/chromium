@@ -16,6 +16,41 @@
       "revId": "ff89e7b4901cadd0d4cc9fda2f32a0f92887425c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301201b8_5a8263b8",
+        "filename": "third_party/breakpad/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-02T15:48:51Z",
+      "side": 1,
+      "message": "Just move this…",
+      "parentUuid": "0752d2a2_fe9b5691",
+      "revId": "ff89e7b4901cadd0d4cc9fda2f32a0f92887425c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2332b15_d5b1917d",
+        "filename": "third_party/breakpad/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-02T15:48:51Z",
+      "side": 1,
+      "message": "…here.",
+      "revId": "ff89e7b4901cadd0d4cc9fda2f32a0f92887425c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
