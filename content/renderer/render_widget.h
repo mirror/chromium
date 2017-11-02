@@ -691,9 +691,9 @@ class CONTENT_EXPORT RenderWidget
   // by extension popups.
   bool auto_resize_mode_;
 
-  // True if we need to send an UpdateRect message to notify the browser about
-  // an already-completed auto-resize.
-  bool need_update_rect_for_auto_resize_;
+  // True if we need to send a ViewHsotMsg_ResizeOrRepaint_ACK message to notify
+  // the browser about an already-completed auto-resize.
+  bool need_resize_ack_for_auto_resize_;
 
   // The sequence number used for ViewHostMsg_UpdateRect.
   uint64_t resize_or_repaint_ack_num_ = 0;
