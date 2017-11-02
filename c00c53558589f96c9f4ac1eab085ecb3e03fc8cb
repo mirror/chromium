@@ -46,6 +46,30 @@
       "revId": "c00c53558589f96c9f4ac1eab085ecb3e03fc8cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d19fcd_4942a49d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-02T23:13:31Z",
+      "side": 1,
+      "message": "Ted, We\u0027re already connected in to onReparentingFinished down at line 140, but maybe you felt it would be safer for us to null out the manager at the beginning of the reparenting rather than when it\u0027s finished?  Or was there another reason to introduce a new TabObserver method?  The one call in to this class that seems like it could happen at any time is onConnectionTypeChanged when the network connects or disconnects, so that might be compelling.",
+      "parentUuid": "632af1f9_64e65b56",
+      "range": {
+        "startLine": 41,
+        "startChar": 48,
+        "endLine": 41,
+        "endChar": 59
+      },
+      "revId": "c00c53558589f96c9f4ac1eab085ecb3e03fc8cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
