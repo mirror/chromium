@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac763884_0cbdec20",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-02T21:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab52e8eb_e3510585",
+      "revId": "f1f1576d822362f9612fd1eff9559cd43d760922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e1c4253_a7692c86",
         "filename": "ash/wm/overview/window_selector_item.cc",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7a56760e_44e6b56b",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-02T21:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e1c4253_a7692c86",
+      "revId": "f1f1576d822362f9612fd1eff9559cd43d760922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ca3af37_26668d30",
         "filename": "ash/wm/overview/window_selector_item.cc",
         "patchSetId": 12
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-02T20:58:40Z",
       "side": 1,
       "message": "* 2 ?",
+      "revId": "f1f1576d822362f9612fd1eff9559cd43d760922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d05ca03_e0ab2118",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-02T21:35:06Z",
+      "side": 1,
+      "message": "I do not understand, sorry.\nBut i did move 474-479 to 442-443.",
+      "parentUuid": "3ca3af37_26668d30",
       "revId": "f1f1576d822362f9612fd1eff9559cd43d760922",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
