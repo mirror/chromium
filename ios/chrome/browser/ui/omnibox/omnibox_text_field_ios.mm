@@ -18,6 +18,7 @@
 #include "ios/chrome/browser/autocomplete/autocomplete_scheme_classifier_impl.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/ui/animation_util.h"
+#import "ios/chrome/browser/ui/animations/locationbar_animation_configurator.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_util.h"
 #import "ios/chrome/browser/ui/reversed_animation.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
@@ -110,8 +111,8 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 @synthesize selectedTextBackgroundColor = _selectedTextBackgroundColor;
 @synthesize placeholderTextColor = _placeholderTextColor;
 @synthesize incognito = _incognito;
-@synthesize omniboxExpanderAnimator = _omniboxExpanderAnimator;
-@synthesize omniboxContractorAnimator = _omniboxContractorAnimator;
+@synthesize locationbarAnimationConfigurator =
+    _locationbarAnimationConfigurator;
 
 // Overload to allow for code-based initialization.
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -168,67 +169,15 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   return nil;
 }
 
-- (void)setOmniboxExpanderAnimator:(UIViewPropertyAnimator*)animator
-    API_AVAILABLE(ios(10.0)) {
-  _omniboxExpanderAnimator = animator;
-  [self addExpandOmniboxAnimations];
-}
-
-- (void)setOmniboxContractorAnimator:(UIViewPropertyAnimator*)animator
-    API_AVAILABLE(ios(10.0)) {
-  _omniboxContractorAnimator = animator;
-  [self addContractOmniboxAnimations];
-}
-
-- (void)addExpandOmniboxAnimations API_AVAILABLE(ios(10.0)) {
-  UIView* leadingView = [self leftView];
-  [_omniboxExpanderAnimator addAnimations:^{
-    leadingView.alpha = 0;
-    leadingView.frame =
-        CGRectMake(leadingView.frame.origin.x - kPositionAnimationLeadingOffset,
-                   leadingView.frame.origin.y, leadingView.frame.size.width,
-                   leadingView.frame.size.height);
-  }];
-
-  __weak OmniboxTextFieldIOS* weakSelf = self;
-  [self rightView].alpha = 0;
-  [_omniboxExpanderAnimator addCompletion:^(
-                                UIViewAnimatingPosition finalPosition) {
-    UIView* trailingView = [weakSelf rightView];
-    CGRect finalTrailingViewFrame = trailingView.frame;
-    trailingView.frame =
-        CGRectLayoutOffset(trailingView.frame, kPositionAnimationLeadingOffset);
-    [UIViewPropertyAnimator
-        runningPropertyAnimatorWithDuration:0.2
-                                      delay:0.1
-                                    options:UIViewAnimationOptionCurveEaseOut
-                                 animations:^{
-                                   trailingView.alpha = 1.0;
-                                   trailingView.frame = finalTrailingViewFrame;
-                                 }
-                                 completion:nil];
-  }];
-}
-
-- (void)addContractOmniboxAnimations API_AVAILABLE(ios(10.0)) {
-  UIView* leadingView = [self leftView];
-  leadingView.alpha = 0;
-  CGRect finalLeadingViewFrame = leadingView.frame;
-  leadingView.frame =
-      CGRectLayoutOffset(leadingView.frame, kPositionAnimationLeadingOffset);
-  [_omniboxContractorAnimator addAnimations:^{
-    leadingView.alpha = 1.0;
-    leadingView.frame = finalLeadingViewFrame;
-  }
-                                delayFactor:ios::material::kDuration2];
-
-  UIView* trailingView = [self rightView];
-  [_omniboxContractorAnimator addAnimations:^{
-    trailingView.alpha = 0;
-    trailingView.frame.origin = CGPointMake(
-        trailingView.frame.origin.x + kPositionAnimationLeadingOffset,
-        trailingView.frame.origin.y);
-  }];
+- (void)setLocationbarAnimationConfigurator:
+    (LocationbarAnimationConfigurator*)locationbarAnimationConfigurator {
+  _locationbarAnimationConfigurator = locationbarAnimationConfigurator;
+  if (self.leftView)
+    [_locationbarAnimationConfigurator.fadingLeadingViews
+        addObject:self.leftView];
+  if (self.rightView)
+    [_locationbarAnimationConfigurator.fadingTrailingViews
+        addObject:self.rightView];
 }
 
 // Enforces that the delegate is an OmniboxTextFieldDelegate.
