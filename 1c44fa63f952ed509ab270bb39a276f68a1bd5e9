@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16043976_e0811880",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/CC128.png",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-02T21:15:51Z",
+      "side": 1,
+      "message": "nittiest of nits: let\u0027s have the filename be cc128.png to match the others.",
+      "revId": "1c44fa63f952ed509ab270bb39a276f68a1bd5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2c11e7_d3fec1d0",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/content_script.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-02T21:15:51Z",
+      "side": 1,
+      "message": "Let\u0027s simplify this a hair. I think this is basically the same as:\n\nconst kSets \u003d\n    [{selectors: \u0027p, span\u0027, color: \u0027#f7d68f\u0027},\n     {selectors: \u0027li, td\u0027, color: \u0027#89b1ed\u0027},\n     {selectors: \u0027h1, h2, h3, th\u0027, color: \u0027#8ae2a0\u0027}];\n\nfor (let set : sets) {\n  let elements \u003d Array.from(document.querySelectorAll(set.selectors));\n  for (let element : elements) {\n    if (regExp.test(element.innerText))\n      element.style.backgroundColor \u003d set.color;\n  }\n}",
+      "revId": "1c44fa63f952ed509ab270bb39a276f68a1bd5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
