@@ -332,7 +332,6 @@
 -CastStreamingApiTestWithPixelOutput.EndToEnd
 -CastStreamingApiTestWithPixelOutput.RtpStreamError
 -ChromeFindRequestManagerTest.FindInPDF
--ChromeMojoProxyResolverFactoryBrowserTest.ServiceLifecycle
 -ChromeNavigationBrowserTest.CrossSiteRedirectionToPDF
 -ChromeSitePerProcessTest.LaunchExternalProtocolFromSubframe
 -ChromeUpdatesEventsApiTest.ChromeUpdates
