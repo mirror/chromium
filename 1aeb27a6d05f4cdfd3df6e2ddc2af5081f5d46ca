@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c13913cf_fa58eaac",
+        "filename": "build/toolchain/mac/compile_xcassets.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-02T16:04:44Z",
+      "side": 1,
+      "message": "Please add the full message like above, we don\u0027t want to discard message that are correct.",
+      "revId": "1aeb27a6d05f4cdfd3df6e2ddc2af5081f5d46ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
