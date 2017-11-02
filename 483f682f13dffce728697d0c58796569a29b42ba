@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4276c3b2_ec2a125e",
+        "filename": "net/disk_cache/OWNERS",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-02T12:20:41Z",
+      "side": 1,
+      "message": "Nope, thanks for raising that. Everyone in an OWNERS file should be a committer for at least 6 months, per https://chromium.googlesource.com/chromium/src/+/master/docs/code_reviews.md\n\n\"Be a Chromium project member with full commit access of at least 6 months tenure.\"",
+      "parentUuid": "3eb79eef_b594834c",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "483f682f13dffce728697d0c58796569a29b42ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d41b428_09506d37",
         "filename": "net/disk_cache/OWNERS",
         "patchSetId": 12
