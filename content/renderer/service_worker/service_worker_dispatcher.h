@@ -50,8 +50,6 @@ struct ServiceWorkerVersionAttributes;
 // scripts through methods like navigator.registerServiceWorker().
 class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
  public:
-  using WebGetNavigationPreloadStateCallbacks = blink::
-      WebServiceWorkerRegistration::WebGetNavigationPreloadStateCallbacks;
   using WebSetNavigationPreloadHeaderCallbacks = blink::
       WebServiceWorkerRegistration::WebSetNavigationPreloadHeaderCallbacks;
 
@@ -62,11 +60,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
 
   void OnMessageReceived(const IPC::Message& msg);
 
-  // Corresponds to NavigationPreloadManager.getState.
-  void GetNavigationPreloadState(
-      int provider_id,
-      int64_t registration_id,
-      std::unique_ptr<WebGetNavigationPreloadStateCallbacks> callbacks);
   // Corresponds to NavigationPreloadManager.setHeaderValue.
   void SetNavigationPreloadHeader(
       int provider_id,
@@ -128,8 +121,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   }
 
  private:
-  using GetNavigationPreloadStateCallbackMap =
-      base::IDMap<std::unique_ptr<WebGetNavigationPreloadStateCallbacks>>;
   using SetNavigationPreloadHeaderCallbackMap =
       base::IDMap<std::unique_ptr<WebSetNavigationPreloadHeaderCallbacks>>;
 
@@ -148,15 +139,7 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   // WorkerThread::Observer implementation.
   void WillStopCurrentWorkerThread() override;
 
-  void OnDidGetNavigationPreloadState(int thread_id,
-                                      int request_id,
-                                      const NavigationPreloadState& state);
   void OnDidSetNavigationPreloadHeader(int thread_id, int request_id);
-  void OnGetNavigationPreloadStateError(
-      int thread_id,
-      int request_id,
-      blink::mojom::ServiceWorkerErrorType error_type,
-      const std::string& message);
   void OnSetNavigationPreloadHeaderError(
       int thread_id,
       int request_id,
@@ -185,7 +168,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   void RemoveServiceWorkerRegistration(
       int registration_handle_id);
 
-  GetNavigationPreloadStateCallbackMap get_navigation_preload_state_callbacks_;
   SetNavigationPreloadHeaderCallbackMap
       set_navigation_preload_header_callbacks_;
 
