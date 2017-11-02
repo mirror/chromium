@@ -13,6 +13,8 @@
 #include "chromecast/media/cma/backend/post_processing_pipeline.h"
 #include "chromecast/media/cma/backend/post_processor_factory.h"
 
+#include "volume_control.h"
+
 namespace base {
 class ListValue;
 }  // namespace base
@@ -42,6 +44,7 @@ class PostProcessingPipelineImpl : public PostProcessingPipeline {
   // Send string |config| to post processor |name|.
   void SetPostProcessorConfig(const std::string& name,
                               const std::string& config) override;
+  void SetContentType(AudioContentType content_type) override;
 
  private:
   // Note: typedef is used to silence chromium-style mandatory constructor in
