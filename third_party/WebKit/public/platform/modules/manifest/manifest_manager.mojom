@@ -11,5 +11,6 @@ interface ManifestManager {
   // Requests the manifest URL and the Manifest of the frame's document. |url|
   // will be empty if the document specifies no manifest, and |manifest| will be
   // empty if any other failures occurred.
-  RequestManifest() => (url.mojom.Url url, Manifest? manifest);
+  RequestManifest() => (url.mojom.Url url, Manifest? manifest,
+                        ManifestDebugInfo? debug_info);
 };
