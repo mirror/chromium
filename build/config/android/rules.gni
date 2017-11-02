@@ -2423,6 +2423,10 @@ if (enable_java_templates) {
       dex_path = final_dex_path
       load_library_from_apk = _load_library_from_apk
       create_density_splits = _create_density_splits
+      if (_proguard_enabled) {
+        # This is used to generate *.apk.pak.info files.
+        apk_name = invoker.apk_name
+      }
 
       version_code = _version_code
       version_name = _version_name

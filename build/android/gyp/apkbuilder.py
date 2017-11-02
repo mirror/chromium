@@ -46,6 +46,8 @@ def _ParseArgs(args):
   parser.add_argument('--output-apk',
                       help='Path to the output file',
                       required=True)
+  parser.add_argument('--apk-pak-info-path',
+                      help='Path to the *.apk.pak.info file')
   parser.add_argument('--dex-file',
                       help='Path to the classes.dex to use')
   parser.add_argument('--native-libs',
@@ -183,6 +185,17 @@ def _AddNativeLibraries(out_apk, native_libs, android_abi, uncompress):
                                  compress=compress)
 
 
+def _MergePakInfoFiles(pak_info_path, asset_list):
+  lines = set()
+  for asset_details in asset_list:
+    src = asset_details.split(':')[0]
+    if src.endswith('.pak'):
+      with open(src + '.info', 'r') as src_info_file:
+        lines.update(src_info_file.readlines())
+  with open(pak_info_path, 'w') as merged_info_file:
+    merged_info_file.writelines(sorted(lines))
+
+
 def main(args):
   args = build_utils.ExpandFileArgs(args)
   options = _ParseArgs(args)
@@ -301,6 +314,10 @@ def main(args):
 
               build_utils.AddToZipHermetic(
                   out_apk, apk_path, data=java_resource_jar.read(apk_path))
+
+        if options.apk_pak_info_path:
+          _MergePakInfoFiles(options.apk_pak_info_path,
+                             options.assets + options.uncompressed_assets)
 
       shutil.move(tmp_apk, options.output_apk)
     finally:
