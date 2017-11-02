@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1ff1f58_017737d3",
+        "filename": "base/android/android_hardware_buffer_abi.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-02T03:45:32Z",
+      "side": 1,
+      "message": "It doesn’t look like this affects anything here (but it’s also not actively harmful).",
+      "revId": "7bddfa4bc2a1a556175ed2c559371ecbb5eb9ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fab5a45_168c854b",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-02T03:45:32Z",
+      "side": 1,
+      "message": "In C++, you can just write AHardwareBuffer*, no extra struct needed.",
+      "revId": "7bddfa4bc2a1a556175ed2c559371ecbb5eb9ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
