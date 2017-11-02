@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffc0c40a_91c259bc",
+        "filename": "content/browser/loader/url_loader_request_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-02T18:40:12Z",
+      "side": 1,
+      "message": "wants",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 13
+      },
+      "revId": "d2bc7027e0c5d5d72e413732d08fea817cd0e84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
