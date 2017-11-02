@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37ed69af_5453bb69",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-02T00:13:04Z",
+      "side": 1,
+      "message": "It does delete itself on close so we don\u0027t need a point to the page.",
+      "parentUuid": "f31c5751_83424ccf",
+      "range": {
+        "startLine": 64,
+        "startChar": 32,
+        "endLine": 64,
+        "endChar": 61
+      },
+      "revId": "83134d47da2cec5ae534eb0b7b973fe28d7c94d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "414848af_610a8b96",
         "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "83134d47da2cec5ae534eb0b7b973fe28d7c94d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a88546_80f9b32c",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-02T00:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "414848af_610a8b96",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 14
+      },
+      "revId": "83134d47da2cec5ae534eb0b7b973fe28d7c94d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b04b7318_d135db14",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-02T00:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "707eb8d6_f5f2d8b8",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "83134d47da2cec5ae534eb0b7b973fe28d7c94d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b76c88e0_9a7b9b84",
         "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0e5593ea_67029517",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-02T00:13:04Z",
+      "side": 1,
+      "message": "Removed. We don\u0027t.",
+      "parentUuid": "b76c88e0_9a7b9b84",
+      "range": {
+        "startLine": 115,
+        "startChar": 14,
+        "endLine": 115,
+        "endChar": 23
+      },
+      "revId": "83134d47da2cec5ae534eb0b7b973fe28d7c94d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddb0cb37_b0c86916",
         "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "83134d47da2cec5ae534eb0b7b973fe28d7c94d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eecab6f9_412879a6",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-02T00:13:04Z",
+      "side": 1,
+      "message": "Hmm, it doesn\u0027t actually improve formatting to have it so no. Removed",
+      "parentUuid": "ddb0cb37_b0c86916",
+      "range": {
+        "startLine": 128,
+        "startChar": 29,
+        "endLine": 128,
+        "endChar": 35
+      },
+      "revId": "83134d47da2cec5ae534eb0b7b973fe28d7c94d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
