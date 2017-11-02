@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "ab29ea2e_7442afc8",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-02T19:56:31Z",
+      "side": 1,
+      "message": "The callback should be able to provide an array of metrics because a single request may result in a series of requests due to redirects. iOS solves it by returning NSURLSessionTaskMetrics object that contains an array of NSURLSessionTaskTransactionMetrics.",
+      "range": {
+        "startLine": 38,
+        "startChar": 35,
+        "endLine": 38,
+        "endChar": 79
+      },
+      "revId": "23845917f6ad741bc832047567e0ebce5d416d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e33f21e_71080f10",
         "filename": "components/cronet/ios/Cronet.h",
         "patchSetId": 2
