@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2bcd3db8_e29b33e2",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_property_names.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-02T03:55:09Z",
+      "side": 1,
+      "message": "It is possible! I had to look up how to write decorators, but I implemented one in https://chromium-review.googlesource.com/c/chromium/src/+/750483. WDYT?",
+      "parentUuid": "5c8df3ab_85039354",
+      "revId": "b7fc8a5993babf1d787578d7a9048911dbee8bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "401c5d24_1dcb8fee",
         "filename": "third_party/WebKit/Source/build/scripts/templates/CSSPropertyNames.cpp.tmpl",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-02T03:14:50Z",
       "side": 1,
       "message": "wow wait so this Jinja template is to generate a gperf template? my mind is blown.",
+      "revId": "b7fc8a5993babf1d787578d7a9048911dbee8bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d55d51f6_5b864e8f",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSPropertyNames.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-02T03:55:09Z",
+      "side": 1,
+      "message": "Lol code that generates code that generates code...",
+      "parentUuid": "401c5d24_1dcb8fee",
       "revId": "b7fc8a5993babf1d787578d7a9048911dbee8bc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
