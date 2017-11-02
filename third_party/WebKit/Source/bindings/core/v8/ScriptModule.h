@@ -72,11 +72,11 @@ class CORE_EXPORT ScriptModule final {
 
   Vector<String> ModuleRequests(ScriptState*);
   Vector<TextPosition> ModuleRequestPositions(ScriptState*);
-  ScriptModuleState Status(ScriptState*);
+  // ScriptModuleState Status(ScriptState*);
 
   // Returns record's [[ErrorCompletion]] field's [[Value]].
   // Should only be used via ModulatorImpl::GetError()
-  v8::Local<v8::Value> ErrorCompletion(ScriptState*);
+  // v8::Local<v8::Value> ErrorCompletion(ScriptState*);
 
   inline bool operator==(const blink::ScriptModule& other) const;
   bool operator!=(const blink::ScriptModule& other) const {

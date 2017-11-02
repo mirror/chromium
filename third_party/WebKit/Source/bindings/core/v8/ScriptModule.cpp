@@ -174,6 +174,7 @@ Vector<TextPosition> ScriptModule::ModuleRequestPositions(
   return ret;
 }
 
+/*
 ScriptModuleState ScriptModule::Status(ScriptState* script_state) {
   DCHECK(!IsNull());
 
@@ -188,11 +189,12 @@ v8::Local<v8::Value> ScriptModule::ErrorCompletion(ScriptState* script_state) {
   v8::Local<v8::Module> module = module_->NewLocal(script_state->GetIsolate());
   return module->GetException();
 }
+*/
 
 v8::Local<v8::Value> ScriptModule::V8Namespace(v8::Isolate* isolate) {
   DCHECK(!IsNull());
   v8::Local<v8::Module> module = module_->NewLocal(isolate);
-  DCHECK_EQ(ScriptModuleState::kEvaluated, module->GetStatus());
+  // DCHECK_EQ(ScriptModuleState::kEvaluated, module->GetStatus());
   return module->GetModuleNamespace();
 }
 
