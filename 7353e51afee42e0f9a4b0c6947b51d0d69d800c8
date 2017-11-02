@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68f7eda6_58345fa2",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T18:37:27Z",
+      "side": 1,
+      "message": "Sure, that makes sense. Done.",
+      "parentUuid": "1b15fa72_fa80acb0",
+      "revId": "7353e51afee42e0f9a4b0c6947b51d0d69d800c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a9f8a90_231c6800",
         "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "7353e51afee42e0f9a4b0c6947b51d0d69d800c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa5ef18_d090781b",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T18:37:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6a9f8a90_231c6800",
+      "revId": "7353e51afee42e0f9a4b0c6947b51d0d69d800c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "97b09cb1_98c3a0de",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T18:37:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c769e466_87b0a452",
+      "range": {
+        "startLine": 458,
+        "startChar": 13,
+        "endLine": 458,
+        "endChar": 35
+      },
+      "revId": "7353e51afee42e0f9a4b0c6947b51d0d69d800c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e222e171_bb6bef08",
         "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
         "patchSetId": 3
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "3c590e9e_4442d5fb",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T18:37:27Z",
+      "side": 1,
+      "message": "Maybe. Currently we always show the EAP config because there is nothing to configure for \u0027none\u0027. With the new UI though, it probably makes sense to default to the current state, so done.",
+      "parentUuid": "e222e171_bb6bef08",
+      "revId": "7353e51afee42e0f9a4b0c6947b51d0d69d800c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "713db3e2_0835147c",
         "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "7353e51afee42e0f9a4b0c6947b51d0d69d800c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c533f6e_3c30612f",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T18:37:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "713db3e2_0835147c",
+      "revId": "7353e51afee42e0f9a4b0c6947b51d0d69d800c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
