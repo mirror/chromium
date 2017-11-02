@@ -63,7 +63,7 @@
 #include "ui/gfx/geometry/dip_util.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/size.h"
-
+#include "base/debug/stack_trace.h" 
 namespace aura {
 namespace {
 
@@ -177,8 +177,8 @@ void DispatchEventToTarget(ui::Event* event, WindowMus* target) {
 
 // Use for acks from mus that are expected to always succeed and if they don't
 // a crash is triggered.
-void OnAckMustSucceed(bool success) {
-  CHECK(success);
+void OnAckMustSucceed(int context, bool success) {
+  CHECK(success) << "Context: " << context;
 }
 
 Id GetServerIdForWindow(Window* window) {
@@ -840,10 +840,12 @@ void WindowTreeClient::OnWindowMusCreated(WindowMus* window) {
             display_init_params->viewport_metrics.bounds_in_pixels.size()));
 
     if (window_manager_client_) {
+      // TODO(msw): This may fail, or maybe it shouldn't be run??? 
+      LOG(ERROR) << "MSW WindowTreeClient::OnWindowMusCreated... ";
       window_manager_client_->SetDisplayRoot(
           display, display_init_params->viewport_metrics.Clone(),
           display_init_params->is_primary_display, window->server_id(),
-          display_init_params->mirrors, base::Bind(&OnAckMustSucceed));
+          display_init_params->mirrors, base::Bind(&OnAckMustSucceed, 1));
     }
   }
 }
@@ -851,6 +853,11 @@ void WindowTreeClient::OnWindowMusCreated(WindowMus* window) {
 void WindowTreeClient::OnWindowMusDestroyed(WindowMus* window, Origin origin) {
   if (focus_synchronizer_->focused_window() == window)
     focus_synchronizer_->OnFocusedWindowDestroyed();
+
+  // LOG(ERROR) << "MSW WindowTreeClient::OnWindowMusDestroyed "; 
+  // static bool msw = true; 
+  // if(msw) base::debug::StackTrace().Print();  
+  // msw = false; 
 
   // If we're |in_shutdown_| there is no point in telling the server about the
   // deletion. The connection to the server is about to be dropped and the
@@ -1653,7 +1660,7 @@ void WindowTreeClient::SetBlockingContainers(
   }
   window_manager_client_->SetBlockingContainers(
       std::move(transport_all_blocking_containers),
-      base::Bind(&OnAckMustSucceed));
+      base::Bind(&OnAckMustSucceed, 2));
 }
 
 void WindowTreeClient::GetWindowManager(
@@ -2112,15 +2119,16 @@ void WindowTreeClient::SetDisplayConfiguration(
     std::vector<ui::mojom::WmViewportMetricsPtr> viewport_metrics,
     int64_t primary_display_id,
     const std::vector<display::Display>& mirrors) {
-  DCHECK_EQ(displays.size(), viewport_metrics.size());
+  DCHECK_EQ(displays.size() + mirrors.size(), viewport_metrics.size());
   if (window_manager_client_) {
     const int64_t internal_display_id =
         display::Display::HasInternalDisplay()
             ? display::Display::InternalDisplayId()
             : display::kInvalidDisplayId;
+    LOG(ERROR) << "MSW WindowTreeClient::SetDisplayConfiguration!!! displays:" << displays.size() << " mirrors:" << mirrors.size();
     window_manager_client_->SetDisplayConfiguration(
         displays, std::move(viewport_metrics), primary_display_id,
-        internal_display_id, mirrors, base::Bind(&OnAckMustSucceed));
+        internal_display_id, mirrors, base::Bind(&OnAckMustSucceed, 3));
   }
 }
 
@@ -2139,7 +2147,7 @@ void WindowTreeClient::AddDisplayReusingWindowTreeHost(
     window_manager_client_->SetDisplayRoot(
         display, std::move(viewport_metrics), is_primary_display,
         display_root_window->server_id(), mirrors,
-        base::Bind(&OnAckMustSucceed));
+        base::Bind(&OnAckMustSucceed, 4));
     window_tree_host->compositor()->SetLocalSurfaceId(
         display_root_window->GetOrAllocateLocalSurfaceId(
             window_tree_host->GetBoundsInPixels().size()));
@@ -2156,7 +2164,7 @@ void WindowTreeClient::SwapDisplayRoots(WindowTreeHostMus* window_tree_host1,
   window_tree_host2->set_display_id(display_id1);
   if (window_manager_client_) {
     window_manager_client_->SwapDisplayRoots(display_id1, display_id2,
-                                             base::Bind(&OnAckMustSucceed));
+                                             base::Bind(&OnAckMustSucceed, 5));
   }
 }
 

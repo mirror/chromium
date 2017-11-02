@@ -77,6 +77,7 @@ void UpdateDisplayConfigurationTask::OnDisplaysUpdated(
   force_dpms_ = ShouldForceDpms() && ShouldConfigure();
 
   if (ShouldConfigure()) {
+    // LOG(ERROR) << "MSW UpdateDisplayConfigurationTask::OnDisplaysUpdated calling EnterState->OnStateEntered"; 
     EnterState(base::Bind(&UpdateDisplayConfigurationTask::OnStateEntered,
                           weak_ptr_factory_.GetWeakPtr()));
   } else {
@@ -90,31 +91,38 @@ void UpdateDisplayConfigurationTask::OnDisplaysUpdated(
 void UpdateDisplayConfigurationTask::EnterState(
     const ConfigureDisplaysTask::ResponseCallback& callback) {
   VLOG(2) << "EnterState";
+  LOG(ERROR) << "MSW UpdateDisplayConfigurationTask::EnterState A cached_displays_:" << cached_displays_.size() << " new_display_state_:" << MultipleDisplayStateToString(new_display_state_); 
   std::vector<DisplayConfigureRequest> requests;
   if (!layout_manager_->GetDisplayLayout(cached_displays_, new_display_state_,
                                          new_power_state_, &requests)) {
+    LOG(ERROR) << "MSW UpdateDisplayConfigurationTask::EnterState error"; 
     callback.Run(ConfigureDisplaysTask::ERROR);
     return;
   }
   if (!requests.empty()) {
     configure_task_.reset(
         new ConfigureDisplaysTask(delegate_, requests, callback));
+    LOG(ERROR) << "MSW UpdateDisplayConfigurationTask::EnterState B running request"; 
     configure_task_->Run();
   } else {
     VLOG(2) << "No displays";
+    LOG(ERROR) << "MSW UpdateDisplayConfigurationTask::EnterState C success"; 
     callback.Run(ConfigureDisplaysTask::SUCCESS);
   }
 }
 
 void UpdateDisplayConfigurationTask::OnStateEntered(
     ConfigureDisplaysTask::Status status) {
+  LOG(ERROR) << "MSW UpdateDisplayConfigurationTask::OnStateEntered status:" << status << " new_display_state_:" << MultipleDisplayStateToString(new_display_state_);
   bool success = status != ConfigureDisplaysTask::ERROR;
   if (new_display_state_ == MULTIPLE_DISPLAY_STATE_DUAL_MIRROR &&
       status == ConfigureDisplaysTask::PARTIAL_SUCCESS)
     success = false;
 
   if (layout_manager_->GetSoftwareMirroringController()) {
-    bool enable_software_mirroring = false;
+    // TODO(msw): Why was this turning mirroring off? 
+    bool enable_software_mirroring =
+        (new_display_state_ == MULTIPLE_DISPLAY_STATE_DUAL_MIRROR) && success;
     if (!success && new_display_state_ == MULTIPLE_DISPLAY_STATE_DUAL_MIRROR) {
       if (layout_manager_->GetDisplayState() !=
               MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED ||

@@ -17,6 +17,7 @@
 #include "services/ui/ws/display_creation_config.h"
 #include "services/ui/ws/event_dispatcher.h"
 #include "services/ui/ws/frame_generator.h"
+#include "services/ui/ws/platform_display_unified.h"
 #include "services/ui/ws/server_window.h"
 #include "services/ui/ws/user_display_manager.h"
 #include "services/ui/ws/user_display_manager_delegate.h"
@@ -26,6 +27,7 @@
 #include "services/ui/ws/window_server_delegate.h"
 #include "services/ui/ws/window_tree.h"
 #include "ui/display/display_list.h"
+#include "ui/display/manager/display_manager.h"
 #include "ui/display/screen_base.h"
 #include "ui/display/types/display_constants.h"
 #include "ui/events/event_rewriter.h"
@@ -34,7 +36,7 @@
 #if defined(OS_CHROMEOS)
 #include "ui/chromeos/events/event_rewriter_chromeos.h"
 #endif
-
+#include "base/debug/stack_trace.h" 
 namespace ui {
 namespace ws {
 
@@ -79,19 +81,20 @@ bool DisplayManager::SetDisplayConfiguration(
     int64_t primary_display_id,
     int64_t internal_display_id,
     const std::vector<display::Display>& mirrors) {
+  LOG(ERROR) << "MSW SetDisplayConfiguration A displays:" << displays.size() << " id[0]:" << displays[0].id() << " mirrors:" << mirrors.size();
   if (window_server_->display_creation_config() !=
       DisplayCreationConfig::MANUAL) {
     LOG(ERROR) << "SetDisplayConfiguration is only valid when roots manually "
                   "created";
     return false;
   }
-  if (displays.size() != viewport_metrics.size()) {
+  if (displays.size() + mirrors.size() != viewport_metrics.size()) {
     LOG(ERROR) << "SetDisplayConfiguration called with mismatch in sizes";
     return false;
   }
-  size_t primary_display_index = displays.size();
   std::set<int64_t> display_ids;
-  size_t internal_display_index = displays.size();
+  size_t primary_display_index = std::numeric_limits<size_t>::max();
+  bool found_internal_display = false;
   for (size_t i = 0; i < displays.size(); ++i) {
     const display::Display& display = displays[i];
     if (display.id() == display::kInvalidDisplayId) {
@@ -104,43 +107,104 @@ bool DisplayManager::SetDisplayConfiguration(
     }
     if (display.id() == primary_display_id)
       primary_display_index = i;
-    if (display.id() == internal_display_id)
-      internal_display_index = i;
+    found_internal_display |= display.id() == internal_display_id;
     Display* ws_display = GetDisplayById(display.id());
     if (!ws_display) {
-      LOG(ERROR) << "SetDisplayConfiguration passed unknown display id "
-                 << display.id();
-      return false;
+      // Setup a unified display configuration if requested.
+      if (display.id() == display::DisplayManager::kUnifiedDisplayId) {
+        LOG(ERROR) << "TODO(crbug.com/764472): Mus unified/mirroring modes."; 
+        DCHECK_EQ(displays.size(), 1u);
+        DCHECK_GT(mirrors.size(), 1u);
+        DCHECK_NE(display.id(), internal_display_id);
+        CreateDisplay(displays[0], viewport_metrics[i]);
+        // TODO(msw): Pass mirrors to the platform display for setup? 
+        ws_display = GetDisplayById(display.id());
+        PlatformDisplayUnified* platform_display_unified =
+            static_cast<PlatformDisplayUnified*>(ws_display->platform_display());
+        // TODO(msw): Error checking in SetMirrors with a return value? 
+        platform_display_unified->SetMirrors(mirrors);
+        // if (!platform_display_unified->SetMirrors(mirrors))
+        //   return false;
+
+        // TODO(msw): Reuse the previous primary display's root? 
+        
+        // TODO(msw): OnDisplayAcceleratedWidgetAvailable... 
+      } else {
+        LOG(ERROR) << "SetDisplayConfiguration passed unknown display id "
+                  << display.id();
+        return false;
+      }
     }
   }
-  if (primary_display_index == displays.size()) {
+  // TODO(msw): Check mirrors here before sending to the unified display above? 
+  for (size_t i = 0; i < mirrors.size(); ++i) {
+    // NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified/mirroring modes.";
+    const display::Display& mirror = mirrors[i];
+    if (mirror.id() == display::kInvalidDisplayId) {
+      LOG(ERROR) << "SetDisplayConfiguration passed invalid display id";
+      return false;
+    }
+    if (mirror.id() == display::DisplayManager::kUnifiedDisplayId) {
+      LOG(ERROR) << "SetDisplayConfiguration passed unified display in mirrors";
+      return false;
+    }
+    if (!display_ids.insert(mirror.id()).second) {
+      LOG(ERROR) << "SetDisplayConfiguration passed duplicate display id";
+      return false;
+    }
+    if (mirror.id() == primary_display_id) {
+      LOG(ERROR) << "SetDisplayConfiguration passed primary display in mirrors";
+      return false;
+    }
+    found_internal_display |= mirror.id() == internal_display_id;
+    // TODO(msw): Need to add proper Displays for the physical displays. 
+    // Display* ws_display = GetDisplayById(mirror.id());
+    // if (!ws_display) {
+    //   LOG(ERROR) << "SetDisplayConfiguration passed unknown display id "
+    //              << mirror.id();
+    //   return false;
+    // }
+  }
+  if (primary_display_index == std::numeric_limits<size_t>::max()) {
     LOG(ERROR) << "SetDisplayConfiguration primary id not in displays";
     return false;
   }
-  if (internal_display_index == displays.size() &&
+  if (!found_internal_display &&
       internal_display_id != display::kInvalidDisplayId) {
     LOG(ERROR) << "SetDisplayConfiguration internal display id not in displays";
-    return false;
-  }
-  if (!mirrors.empty()) {
-    NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified/mirroring modes.";
     return false;
   }
 
   // See comment in header as to why this doesn't use Display::SetInternalId().
   internal_display_id_ = internal_display_id;
 
+  LOG(ERROR) << "MSW SetDisplayConfiguration B display_ids:" << display_ids.size(); 
   display::DisplayList& display_list =
       display::ScreenManager::GetInstance()->GetScreen()->display_list();
   display_list.AddOrUpdateDisplay(displays[primary_display_index],
                                   display::DisplayList::Type::PRIMARY);
   for (size_t i = 0; i < displays.size(); ++i) {
+    LOG(ERROR) << "MSW SetDisplayConfiguration C display#" << i; 
     Display* ws_display = GetDisplayById(displays[i].id());
     DCHECK(ws_display);
     ws_display->SetDisplay(displays[i]);
     ws_display->OnViewportMetricsChanged(viewport_metrics[i]);
     if (i != primary_display_index) {
+      LOG(ERROR) << "MSW SetDisplayConfiguration C display#" << i << "a"; 
       display_list.AddOrUpdateDisplay(displays[i],
+                                      display::DisplayList::Type::NOT_PRIMARY);
+    }
+  }
+  // TODO(msw): Similar handling for mirrors? 
+  for (size_t i = 0; i < mirrors.size(); ++i) {
+    Display* ws_mirror = GetDisplayById(mirrors[i].id());
+    LOG(ERROR) << "MSW SetDisplayConfiguration D mirror#" << i << " exists:" << (ws_mirror!=nullptr); 
+    if (!ws_mirror) {
+      CreateDisplay(mirrors[i], viewport_metrics[displays.size() + i]);
+    } else {
+      ws_mirror->SetDisplay(mirrors[i]);
+      ws_mirror->OnViewportMetricsChanged(viewport_metrics[displays.size() + i]);
+      display_list.AddOrUpdateDisplay(mirrors[i],
                                       display::DisplayList::Type::NOT_PRIMARY);
     }
   }
@@ -148,12 +212,15 @@ bool DisplayManager::SetDisplayConfiguration(
   std::set<int64_t> existing_display_ids;
   for (const display::Display& display : display_list.displays())
     existing_display_ids.insert(display.id());
+  LOG(ERROR) << "MSW SetDisplayConfiguration E display_ids:" << display_list.displays().size() << " existing_display_ids:" << existing_display_ids.size(); 
   std::set<int64_t> removed_display_ids =
       base::STLSetDifference<std::set<int64_t>>(existing_display_ids,
                                                 display_ids);
+  LOG(ERROR) << "MSW SetDisplayConfiguration F removed_display_ids:" << removed_display_ids.size(); 
   for (int64_t display_id : removed_display_ids)
     display_list.RemoveDisplay(display_id);
 
+  LOG(ERROR) << "MSW SetDisplayConfiguration G user_display_managers_:" << user_display_managers_.size(); 
   for (auto& pair : user_display_managers_)
     pair.second->CallOnDisplaysChanged();
 
@@ -208,6 +275,8 @@ Display* DisplayManager::AddDisplayForWindowManager(
 }
 
 void DisplayManager::DestroyDisplay(Display* display) {
+  LOG(ERROR) << "MSW DisplayManager::DestroyDisplay!!!! " << display->GetId(); 
+  // base::debug::StackTrace().Print(); 
   const bool is_pending = pending_displays_.count(display) > 0;
   if (is_pending) {
     pending_displays_.erase(display);
@@ -230,6 +299,7 @@ void DisplayManager::DestroyDisplay(Display* display) {
 }
 
 void DisplayManager::DestroyAllDisplays() {
+  LOG(ERROR) << "MSW DisplayManager::DestroyAllDisplays "; 
   while (!pending_displays_.empty())
     DestroyDisplay(*pending_displays_.begin());
   DCHECK(pending_displays_.empty());
@@ -365,12 +435,12 @@ void DisplayManager::CreateDisplay(const display::Display& display,
 
 void DisplayManager::OnDisplayAdded(const display::Display& display,
                                     const display::ViewportMetrics& metrics) {
-  DVLOG(3) << "OnDisplayAdded: " << display.ToString();
+  /*DVLOG(3) << "*/LOG(ERROR)  << "MSW OnDisplayAdded: " << display.ToString();
   CreateDisplay(display, metrics);
 }
 
 void DisplayManager::OnDisplayRemoved(int64_t display_id) {
-  DVLOG(3) << "OnDisplayRemoved: " << display_id;
+  /*DVLOG(3) << "*/LOG(ERROR)  << "MSW OnDisplayRemoved: " << display_id;
   Display* display = GetDisplayById(display_id);
   if (display)
     DestroyDisplay(display);
@@ -379,7 +449,7 @@ void DisplayManager::OnDisplayRemoved(int64_t display_id) {
 void DisplayManager::OnDisplayModified(
     const display::Display& display,
     const display::ViewportMetrics& metrics) {
-  DVLOG(3) << "OnDisplayModified: " << display.ToString();
+  /*DVLOG(3) << "*/LOG(ERROR)  << "MSW OnDisplayModified: " << display.ToString();
 
   Display* ws_display = GetDisplayById(display.id());
   DCHECK(ws_display);
@@ -403,7 +473,7 @@ void DisplayManager::OnDisplayModified(
 }
 
 void DisplayManager::OnPrimaryDisplayChanged(int64_t primary_display_id) {
-  DVLOG(3) << "OnPrimaryDisplayChanged: " << primary_display_id;
+  /*DVLOG(3) << "*/LOG(ERROR)  << "MSW OnPrimaryDisplayChanged: " << primary_display_id;
   // TODO(kylechar): Send IPCs to WM clients first.
 
   // Send IPCs to any DisplayManagerObservers.
