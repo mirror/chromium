@@ -51,6 +51,24 @@
       "revId": "af5b98d31da42912e9690efee6bd424412c545fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b82902_a8b94f8b",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-02T23:04:47Z",
+      "side": 1,
+      "message": "\u003e Assuming you mean before \"image\" to, illustrate how confusing this can be.\n\noops - yes. After image. My brain image was thinking but my finger spacing typed.",
+      "parentUuid": "b24422d3_596437d7",
+      "revId": "af5b98d31da42912e9690efee6bd424412c545fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
