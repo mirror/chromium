@@ -572,6 +572,18 @@ TEST(IPAddressTest, ParseURLHostnameToAddress_FailParse) {
   EXPECT_FALSE(ParseURLHostnameToAddress("  192.168.0.1  ", &address));
   EXPECT_FALSE(ParseURLHostnameToAddress("::1", &address));
   EXPECT_FALSE(ParseURLHostnameToAddress("[192.169.0.1]", &address));
+  EXPECT_FALSE(ParseURLHostnameToAddress("192", &address));
+  EXPECT_FALSE(ParseURLHostnameToAddress(".192.", &address));
+  EXPECT_FALSE(ParseURLHostnameToAddress("192.", &address));
+  EXPECT_FALSE(ParseURLHostnameToAddress("192.1", &address));
+  EXPECT_FALSE(ParseURLHostnameToAddress(".192.1.", &address));
+  EXPECT_FALSE(ParseURLHostnameToAddress("192.1.", &address));
+  EXPECT_FALSE(ParseURLHostnameToAddress("192.1.0", &address));
+  EXPECT_FALSE(ParseURLHostnameToAddress(".192.1.0.", &address));
+  EXPECT_FALSE(ParseURLHostnameToAddress("192.1.0.", &address));
+  EXPECT_FALSE(ParseURLHostnameToAddress(".192.1.0.1", &address));
+  EXPECT_FALSE(ParseURLHostnameToAddress("192.1.0.1.2", &address));
+  EXPECT_FALSE(ParseURLHostnameToAddress(".192.1.0.1.2", &address));
 }
 
 TEST(IPAddressTest, ParseURLHostnameToAddress_IPv4) {
