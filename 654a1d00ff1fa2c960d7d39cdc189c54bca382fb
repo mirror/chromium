@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "986d5a44_25bf0cbe",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-02T19:46:32Z",
+      "side": 1,
+      "message": "if the profile is gone, why notify?",
+      "revId": "654a1d00ff1fa2c960d7d39cdc189c54bca382fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d524295e_067a2023",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-02T19:46:32Z",
+      "side": 1,
+      "message": "if profile is nullptr, why notify?",
+      "revId": "654a1d00ff1fa2c960d7d39cdc189c54bca382fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
