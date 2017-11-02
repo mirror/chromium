@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "15b32ddc_728a4e7d",
+        "filename": "media/muxers/webm_muxer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-02T21:23:44Z",
+      "side": 1,
+      "message": "Makes sense. I set the bit depth now, and we DCHECK in the PCM path, since that\u0027s the one that cares (more).",
+      "parentUuid": "b5d4e9ae_3094f775",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 43
+      },
+      "revId": "2ec34e5681ad73388d0372771df9f8b8412f796d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06525511_f22568db",
         "filename": "media/muxers/webm_muxer.h",
         "patchSetId": 3
