@@ -691,6 +691,15 @@ void NavigationHandleImpl::WillFailRequest(
   complete_callback_ = callback;
   state_ = WILL_FAIL_REQUEST;
 
+  if (ssl_info.has_value()) {
+    // Set |ssl_status_| fields so that committed interstitials have the
+    // information to show the right security state.
+    ssl_status_.certificate = ssl_info.value().cert;
+    ssl_status_.cert_status = ssl_info.value().cert_status;
+    ssl_status_.connection_status = ssl_info.value().connection_status;
+    ssl_status_.initialized = true;
+  }
+
   // Notify each throttle of the request.
   base::Closure on_defer_callback_copy = on_defer_callback_for_testing_;
   NavigationThrottle::ThrottleCheckResult result = CheckWillFailRequest();
