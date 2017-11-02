@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b04bbb11_62632c5c",
+        "filename": "base/files/memory_mapped_file_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-02T15:43:31Z",
+      "side": 1,
+      "message": "I know I\u0027m late to the party, but this calls CHECK and will crash if the numbers are out of range. This seems dangerous. Should we just call if-check IsValueInRangeForNumericType?",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 54
+      },
+      "revId": "72ce4cd7e247c326e9c79b6f7903a25ce762d9f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
