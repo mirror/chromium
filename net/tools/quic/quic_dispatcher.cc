@@ -290,7 +290,7 @@ void QuicDispatcher::ProcessPacket(const QuicSocketAddress& server_address,
 }
 
 bool QuicDispatcher::OnUnauthenticatedPublicHeader(
-    const QuicPacketPublicHeader& header) {
+    const QuicPacketHeader& header) {
   current_connection_id_ = header.connection_id;
 
   // Port zero is only allowed for unidirectional UDP, so is disallowed by QUIC.
@@ -355,7 +355,7 @@ bool QuicDispatcher::OnUnauthenticatedPublicHeader(
   // processing using our preferred version.
   QuicTransportVersion version = GetSupportedTransportVersions().front();
   if (header.version_flag) {
-    QuicTransportVersion packet_version = header.versions.front();
+    QuicTransportVersion packet_version = header.version;
     if (framer_.supported_versions() != GetSupportedTransportVersions()) {
       // Reset framer's version if version flags change in flight.
       framer_.SetSupportedTransportVersions(GetSupportedTransportVersions());
@@ -379,14 +379,12 @@ bool QuicDispatcher::OnUnauthenticatedPublicHeader(
 }
 
 bool QuicDispatcher::OnUnauthenticatedHeader(const QuicPacketHeader& header) {
-  QuicConnectionId connection_id = header.public_header.connection_id;
+  QuicConnectionId connection_id = header.connection_id;
 
-  if (time_wait_list_manager_->IsConnectionIdInTimeWait(
-          header.public_header.connection_id)) {
+  if (time_wait_list_manager_->IsConnectionIdInTimeWait(header.connection_id)) {
     // This connection ID is already in time-wait state.
-    time_wait_list_manager_->ProcessPacket(current_server_address_,
-                                           current_client_address_,
-                                           header.public_header.connection_id);
+    time_wait_list_manager_->ProcessPacket(
+        current_server_address_, current_client_address_, header.connection_id);
     return false;
   }
 
@@ -395,8 +393,7 @@ bool QuicDispatcher::OnUnauthenticatedHeader(const QuicPacketHeader& header) {
   if (fate == kFateProcess) {
     // Execute stateless rejection logic to determine the packet fate, then
     // invoke ProcessUnauthenticatedHeaderFate.
-    MaybeRejectStatelessly(connection_id,
-                           header.public_header.versions.front());
+    MaybeRejectStatelessly(connection_id, header.version);
   } else {
     // If the fate is already known, process it without executing stateless
     // rejection logic.
@@ -464,10 +461,10 @@ QuicDispatcher::QuicPacketFate QuicDispatcher::ValidityChecks(
   // response from the server are required to have the version negotiation flag
   // set.  Since this may be a client continuing a connection we lost track of
   // via server restart, send a rejection to fast-fail the connection.
-  if (!header.public_header.version_flag) {
+  if (!header.version_flag) {
     QUIC_DLOG(INFO)
         << "Packet without version arrived for unknown connection ID "
-        << header.public_header.connection_id;
+        << header.connection_id;
     return kFateTimeWait;
   }
 
@@ -834,8 +831,7 @@ const QuicSocketAddress QuicDispatcher::GetClientAddress() const {
   return current_client_address_;
 }
 
-bool QuicDispatcher::HandlePacketForTimeWait(
-    const QuicPacketPublicHeader& header) {
+bool QuicDispatcher::HandlePacketForTimeWait(const QuicPacketHeader& header) {
   if (header.reset_flag) {
     // Public reset packets do not have packet numbers, so ignore the packet.
     return false;
@@ -860,7 +856,7 @@ void QuicDispatcher::SetLastError(QuicErrorCode error) {
 }
 
 bool QuicDispatcher::OnUnauthenticatedUnknownPublicHeader(
-    const QuicPacketPublicHeader& header) {
+    const QuicPacketHeader& header) {
   return true;
 }
 
