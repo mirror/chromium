@@ -27,6 +27,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.blink_public.web.WebReferrerPolicy;
+import org.chromium.chrome.browser.browseractions.BrowserActionsService;
 import org.chromium.chrome.browser.browserservices.BrowserSessionContentUtils;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.externalauth.ExternalAuthUtils;
@@ -380,6 +381,7 @@ public class IntentHandler {
      */
     boolean onNewIntent(Intent intent) {
         updateDeferredIntent(null);
+        BrowserActionsService.recordTabOpenedNotificationClicked(intent);
 
         assert intentHasValidUrl(intent);
         String url = getUrlFromIntent(intent);
