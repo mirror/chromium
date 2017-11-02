@@ -62,6 +62,72 @@
       "revId": "4a1a85abdfc90f5f188e755e542aa319cba00cc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce64446d_8e7ee0e5",
+        "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-02T17:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3322fc16_1250135d",
+      "revId": "4a1a85abdfc90f5f188e755e542aa319cba00cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "877cac12_2f9e2cff",
+        "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-02T17:20:25Z",
+      "side": 1,
+      "message": "IMO it shouldn\u0027t be too confusing assuming someone is familiar with raw strings in C++, but I\u0027ll defer if you would like it the other way.",
+      "parentUuid": "2bfbe4aa_2648dc07",
+      "range": {
+        "startLine": 38,
+        "startChar": 27,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "4a1a85abdfc90f5f188e755e542aa319cba00cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8eb323a7_ea07597c",
+        "filename": "device/bluetooth/bluetooth_low_energy_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-02T17:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19184715_8e7d4714",
+      "range": {
+        "startLine": 38,
+        "startChar": 35,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "4a1a85abdfc90f5f188e755e542aa319cba00cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
