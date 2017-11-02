@@ -22,6 +22,30 @@
       "revId": "b5556a3e8a3dd1bc0e36342571fa610c4a385e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64bccd1_811c4df3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkServiceClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-02T22:32:53Z",
+      "side": 1,
+      "message": "I thought about reporting this failure. I decided not to record the exception in UMA because I don\u0027t think that recording it will be very actionable",
+      "parentUuid": "cf86e3f5_7dfdb470",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "b5556a3e8a3dd1bc0e36342571fa610c4a385e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
