@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1985166d_34b52eb2",
+        "filename": "third_party/WebKit/Source/core/css/cssom/ComputedStylePropertyMap.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-02T01:50:45Z",
+      "side": 1,
+      "message": "Please also make a tracking bug for this, block https://bugs.chromium.org/p/chromium/issues/detail?id\u003d545318 on it, and quote the bug here. Link to this CL in the bug in case the person who fixes it wants to add back the old layout test.",
+      "revId": "539137da7c51f274d4cefab66706a800ec042f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71d46e3_d056a7cb",
+        "filename": "third_party/WebKit/Source/core/css/cssom/ElementComputedStyleMap.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-02T01:50:45Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this works. I\u0027m assuming its some ImplementedAs magic that gets the target element through to ElementComputedStyleMap::computedStyleMap? It\u0027s been a while since I worked with IDL. Do you know how this works, or did you just copy a similar pattern from elsewhere (a perfectly valid strategy :P)?",
+      "revId": "539137da7c51f274d4cefab66706a800ec042f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
