@@ -104,6 +104,24 @@
       "revId": "f1f1576d822362f9612fd1eff9559cd43d760922",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3042558a_eb6e0a2b",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-02T21:41:54Z",
+      "side": 1,
+      "message": "\u003e I do not understand, sorry.\n\u003e But i did move 474-479 to 442-443.\n\nLooks like you handled it by doing \"2 * kHorizontalLabelPadding\", thanks :)",
+      "parentUuid": "7d05ca03_e0ab2118",
+      "revId": "f1f1576d822362f9612fd1eff9559cd43d760922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
