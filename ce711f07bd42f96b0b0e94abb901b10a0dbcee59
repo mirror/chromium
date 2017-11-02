@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "169d5416_af0f044e",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-02T16:52:54Z",
+      "side": 1,
+      "message": "puts this above PostEarlyInitialization",
+      "revId": "ce711f07bd42f96b0b0e94abb901b10a0dbcee59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
