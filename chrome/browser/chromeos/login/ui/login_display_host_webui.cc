@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/login/ui/login_display_host_impl.h"
+#include "chrome/browser/chromeos/login/ui/login_display_host_webui.h"
 
 #include <utility>
 #include <vector>
@@ -351,10 +351,10 @@ class CloseAfterCommit : public ui::CompositorObserver,
 namespace chromeos {
 
 // static
-const int LoginDisplayHostImpl::kShowLoginWebUIid = 0x1111;
+const int LoginDisplayHostWebUi::kShowLoginWebUIid = 0x1111;
 
 // A class to handle special menu key for keyboard driven OOBE.
-class LoginDisplayHostImpl::KeyboardDrivenOobeKeyHandler
+class LoginDisplayHostWebUi::KeyboardDrivenOobeKeyHandler
     : public ui::EventHandler {
  public:
   KeyboardDrivenOobeKeyHandler() {
@@ -377,9 +377,10 @@ class LoginDisplayHostImpl::KeyboardDrivenOobeKeyHandler
 };
 
 // A login implementation of WidgetDelegate.
-class LoginDisplayHostImpl::LoginWidgetDelegate : public views::WidgetDelegate {
+class LoginDisplayHostWebUi::LoginWidgetDelegate
+    : public views::WidgetDelegate {
  public:
-  LoginWidgetDelegate(views::Widget* widget, LoginDisplayHostImpl* host)
+  LoginWidgetDelegate(views::Widget* widget, LoginDisplayHostWebUi* host)
       : widget_(widget), login_display_host_(host) {
     DCHECK(widget_);
     DCHECK(login_display_host_);
@@ -406,16 +407,16 @@ class LoginDisplayHostImpl::LoginWidgetDelegate : public views::WidgetDelegate {
 
  private:
   views::Widget* widget_;
-  // Set to null if LoginDisplayHostImpl is destroyed before us.
-  LoginDisplayHostImpl* login_display_host_;
+  // Set to null if LoginDisplayHostWebUi is destroyed before us.
+  LoginDisplayHostWebUi* login_display_host_;
 
   DISALLOW_COPY_AND_ASSIGN(LoginWidgetDelegate);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// LoginDisplayHostImpl, public
+// LoginDisplayHostWebUi, public
 
-LoginDisplayHostImpl::LoginDisplayHostImpl(const gfx::Rect& wallpaper_bounds)
+LoginDisplayHostWebUi::LoginDisplayHostWebUi(const gfx::Rect& wallpaper_bounds)
     : wallpaper_bounds_(wallpaper_bounds),
       startup_sound_played_(StartupUtils::IsOobeCompleted()),
       pointer_factory_(this),
@@ -454,7 +455,7 @@ LoginDisplayHostImpl::LoginDisplayHostImpl(const gfx::Rect& wallpaper_bounds)
   default_host_ = this;
 
   keep_alive_.reset(
-      new ScopedKeepAlive(KeepAliveOrigin::LOGIN_DISPLAY_HOST_IMPL,
+      new ScopedKeepAlive(KeepAliveOrigin::LOGIN_DISPLAY_HOST_WEBUI,
                           KeepAliveRestartOption::DISABLED));
 
   bool is_registered = StartupUtils::IsDeviceRegistered();
@@ -532,7 +533,7 @@ LoginDisplayHostImpl::LoginDisplayHostImpl(const gfx::Rect& wallpaper_bounds)
   }
 }
 
-LoginDisplayHostImpl::~LoginDisplayHostImpl() {
+LoginDisplayHostWebUi::~LoginDisplayHostWebUi() {
   DBusThreadManager::Get()->GetSessionManagerClient()->RemoveObserver(this);
   CrasAudioHandler::Get()->RemoveAudioObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
@@ -571,27 +572,27 @@ LoginDisplayHostImpl::~LoginDisplayHostImpl() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// LoginDisplayHostImpl, LoginDisplayHost:
+// LoginDisplayHostWebUi, LoginDisplayHost:
 
-LoginDisplay* LoginDisplayHostImpl::CreateLoginDisplay(
+LoginDisplay* LoginDisplayHostWebUi::CreateLoginDisplay(
     LoginDisplay::Delegate* delegate) {
   webui_login_display_ = new WebUILoginDisplay(delegate);
   return webui_login_display_;
 }
 
-gfx::NativeWindow LoginDisplayHostImpl::GetNativeWindow() const {
+gfx::NativeWindow LoginDisplayHostWebUi::GetNativeWindow() const {
   return login_window_ ? login_window_->GetNativeWindow() : nullptr;
 }
 
-WebUILoginView* LoginDisplayHostImpl::GetWebUILoginView() const {
+WebUILoginView* LoginDisplayHostWebUi::GetWebUILoginView() const {
   return login_view_;
 }
 
-void LoginDisplayHostImpl::BeforeSessionStart() {
+void LoginDisplayHostWebUi::BeforeSessionStart() {
   session_starting_ = true;
 }
 
-void LoginDisplayHostImpl::Finalize(base::OnceClosure completion_callback) {
+void LoginDisplayHostWebUi::Finalize(base::OnceClosure completion_callback) {
   DVLOG(1) << "Finalizing LoginDisplayHost. User session starting";
 
   completion_callbacks_.push_back(std::move(completion_callback));
@@ -623,19 +624,19 @@ void LoginDisplayHostImpl::Finalize(base::OnceClosure completion_callback) {
   }
 }
 
-void LoginDisplayHostImpl::OpenInternetDetailDialog(
+void LoginDisplayHostWebUi::OpenInternetDetailDialog(
     const std::string& network_id) {
   InternetDetailDialog::ShowDialog(network_id);
 }
 
-void LoginDisplayHostImpl::SetStatusAreaVisible(bool visible) {
+void LoginDisplayHostWebUi::SetStatusAreaVisible(bool visible) {
   if (initialize_webui_hidden_)
     status_area_saved_visibility_ = visible;
   else if (login_view_)
     login_view_->SetStatusAreaVisible(visible);
 }
 
-void LoginDisplayHostImpl::StartWizard(OobeScreen first_screen) {
+void LoginDisplayHostWebUi::StartWizard(OobeScreen first_screen) {
   DisableKeyboardOverscroll();
 
   TryToPlayStartupSound();
@@ -668,15 +669,15 @@ void LoginDisplayHostImpl::StartWizard(OobeScreen first_screen) {
   wizard_controller_->Init(first_screen);
 }
 
-WizardController* LoginDisplayHostImpl::GetWizardController() {
+WizardController* LoginDisplayHostWebUi::GetWizardController() {
   return wizard_controller_.get();
 }
 
-AppLaunchController* LoginDisplayHostImpl::GetAppLaunchController() {
+AppLaunchController* LoginDisplayHostWebUi::GetAppLaunchController() {
   return app_launch_controller_.get();
 }
 
-void LoginDisplayHostImpl::StartUserAdding(
+void LoginDisplayHostWebUi::StartUserAdding(
     base::OnceClosure completion_callback) {
   DisableKeyboardOverscroll();
 
@@ -726,7 +727,7 @@ void LoginDisplayHostImpl::StartUserAdding(
                                 webui_login_display_);
 }
 
-void LoginDisplayHostImpl::CancelUserAdding() {
+void LoginDisplayHostWebUi::CancelUserAdding() {
   // ANIMATION_ADD_USER observes UserSwitchAnimatorChromeOS to shutdown the
   // login display host. However, the animation does not run when user adding is
   // canceled. Changing to ANIMATION_NONE so that Finalize() shuts down the host
@@ -735,7 +736,7 @@ void LoginDisplayHostImpl::CancelUserAdding() {
   Finalize(base::OnceClosure());
 }
 
-void LoginDisplayHostImpl::StartSignInScreen(
+void LoginDisplayHostWebUi::StartSignInScreen(
     const LoginScreenContext& context) {
   DisableKeyboardOverscroll();
 
@@ -805,18 +806,19 @@ void LoginDisplayHostImpl::StartSignInScreen(
       "login-wait-for-signin-state-initialize");
 }
 
-void LoginDisplayHostImpl::OnPreferencesChanged() {
+void LoginDisplayHostWebUi::OnPreferencesChanged() {
   if (is_showing_login_)
     webui_login_display_->OnPreferencesChanged();
 }
 
-void LoginDisplayHostImpl::PrewarmAuthentication() {
+void LoginDisplayHostWebUi::PrewarmAuthentication() {
   auth_prewarmer_.reset(new AuthPrewarmer());
-  auth_prewarmer_->PrewarmAuthentication(base::Bind(
-      &LoginDisplayHostImpl::OnAuthPrewarmDone, pointer_factory_.GetWeakPtr()));
+  auth_prewarmer_->PrewarmAuthentication(
+      base::Bind(&LoginDisplayHostWebUi::OnAuthPrewarmDone,
+                 pointer_factory_.GetWeakPtr()));
 }
 
-void LoginDisplayHostImpl::StartDemoAppLaunch() {
+void LoginDisplayHostWebUi::StartDemoAppLaunch() {
   VLOG(1) << "Login WebUI >> starting demo app.";
   SetStatusAreaVisible(false);
 
@@ -824,9 +826,9 @@ void LoginDisplayHostImpl::StartDemoAppLaunch() {
   demo_app_launcher_->StartDemoAppLaunch();
 }
 
-void LoginDisplayHostImpl::StartAppLaunch(const std::string& app_id,
-                                          bool diagnostic_mode,
-                                          bool auto_launch) {
+void LoginDisplayHostWebUi::StartAppLaunch(const std::string& app_id,
+                                           bool diagnostic_mode,
+                                           bool auto_launch) {
   VLOG(1) << "Login WebUI >> start app launch.";
   SetStatusAreaVisible(false);
 
@@ -834,7 +836,7 @@ void LoginDisplayHostImpl::StartAppLaunch(const std::string& app_id,
   // untrusted.
   const CrosSettingsProvider::TrustedStatus status =
       CrosSettings::Get()->PrepareTrustedValues(base::Bind(
-          &LoginDisplayHostImpl::StartAppLaunch, pointer_factory_.GetWeakPtr(),
+          &LoginDisplayHostWebUi::StartAppLaunch, pointer_factory_.GetWeakPtr(),
           app_id, diagnostic_mode, auto_launch));
   if (status == CrosSettingsProvider::TEMPORARILY_UNTRUSTED)
     return;
@@ -870,7 +872,7 @@ void LoginDisplayHostImpl::StartAppLaunch(const std::string& app_id,
   app_launch_controller_->StartAppLaunch(auto_launch);
 }
 
-void LoginDisplayHostImpl::StartArcKiosk(const AccountId& account_id) {
+void LoginDisplayHostWebUi::StartArcKiosk(const AccountId& account_id) {
   VLOG(1) << "Login WebUI >> start ARC kiosk.";
   SetStatusAreaVisible(false);
 
@@ -890,34 +892,34 @@ void LoginDisplayHostImpl::StartArcKiosk(const AccountId& account_id) {
   arc_kiosk_controller_->StartArcKiosk(account_id);
 }
 
-bool LoginDisplayHostImpl::IsVoiceInteractionOobe() {
+bool LoginDisplayHostWebUi::IsVoiceInteractionOobe() {
   return is_voice_interaction_oobe_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// LoginDisplayHostImpl, public
+// LoginDisplayHostWebUi, public
 
-WizardController* LoginDisplayHostImpl::CreateWizardController() {
+WizardController* LoginDisplayHostWebUi::CreateWizardController() {
   // TODO(altimofeev): ensure that WebUI is ready.
   OobeUI* oobe_ui = GetOobeUI();
   return new WizardController(this, oobe_ui);
 }
 
-void LoginDisplayHostImpl::OnBrowserCreated() {
+void LoginDisplayHostWebUi::OnBrowserCreated() {
   // Close lock window now so that the launched browser can receive focus.
   ResetLoginWindowAndView();
 }
 
-OobeUI* LoginDisplayHostImpl::GetOobeUI() const {
+OobeUI* LoginDisplayHostWebUi::GetOobeUI() const {
   if (!login_view_)
     return nullptr;
   return login_view_->GetOobeUI();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// LoginDisplayHostImpl, content:NotificationObserver:
+// LoginDisplayHostWebUi, content:NotificationObserver:
 
-void LoginDisplayHostImpl::Observe(
+void LoginDisplayHostWebUi::Observe(
     int type,
     const content::NotificationSource& source,
     const content::NotificationDetails& details) {
@@ -981,9 +983,9 @@ void LoginDisplayHostImpl::Observe(
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// LoginDisplayHostImpl, WebContentsObserver:
+// LoginDisplayHostWebUi, WebContentsObserver:
 
-void LoginDisplayHostImpl::RenderProcessGone(base::TerminationStatus status) {
+void LoginDisplayHostWebUi::RenderProcessGone(base::TerminationStatus status) {
   // Do not try to restore on shutdown
   if (browser_shutdown::GetShutdownType() != browser_shutdown::NOT_VALID)
     return;
@@ -1002,28 +1004,29 @@ void LoginDisplayHostImpl::RenderProcessGone(base::TerminationStatus status) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// LoginDisplayHostImpl, chromeos::SessionManagerClient::Observer:
+// LoginDisplayHostWebUi, chromeos::SessionManagerClient::Observer:
 
-void LoginDisplayHostImpl::EmitLoginPromptVisibleCalled() {
+void LoginDisplayHostWebUi::EmitLoginPromptVisibleCalled() {
   OnLoginPromptVisible();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// LoginDisplayHostImpl, chromeos::CrasAudioHandler::AudioObserver:
+// LoginDisplayHostWebUi, chromeos::CrasAudioHandler::AudioObserver:
 
-void LoginDisplayHostImpl::OnActiveOutputNodeChanged() {
+void LoginDisplayHostWebUi::OnActiveOutputNodeChanged() {
   TryToPlayStartupSound();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// LoginDisplayHostImpl, display::DisplayObserver:
+// LoginDisplayHostWebUi, display::DisplayObserver:
 
-void LoginDisplayHostImpl::OnDisplayAdded(const display::Display& new_display) {
+void LoginDisplayHostWebUi::OnDisplayAdded(
+    const display::Display& new_display) {
   if (GetOobeUI())
     GetOobeUI()->OnDisplayConfigurationChanged();
 }
 
-void LoginDisplayHostImpl::OnDisplayMetricsChanged(
+void LoginDisplayHostWebUi::OnDisplayMetricsChanged(
     const display::Display& display,
     uint32_t changed_metrics) {
   const display::Display primary_display =
@@ -1049,16 +1052,16 @@ void LoginDisplayHostImpl::OnDisplayMetricsChanged(
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// LoginDisplayHostImpl, ui::InputDeviceEventObserver
-void LoginDisplayHostImpl::OnTouchscreenDeviceConfigurationChanged() {
+// LoginDisplayHostWebUi, ui::InputDeviceEventObserver
+void LoginDisplayHostWebUi::OnTouchscreenDeviceConfigurationChanged() {
   if (GetOobeUI())
     GetOobeUI()->OnDisplayConfigurationChanged();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// LoginDisplayHostImpl, views::WidgetRemovalsObserver:
-void LoginDisplayHostImpl::OnWillRemoveView(views::Widget* widget,
-                                            views::View* view) {
+// LoginDisplayHostWebUi, views::WidgetRemovalsObserver:
+void LoginDisplayHostWebUi::OnWillRemoveView(views::Widget* widget,
+                                             views::View* view) {
   if (view != static_cast<views::View*>(login_view_))
     return;
   login_view_ = nullptr;
@@ -1066,15 +1069,15 @@ void LoginDisplayHostImpl::OnWillRemoveView(views::Widget* widget,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// LoginDisplayHostImpl, chrome::MultiUserWindowManager::Observer:
-void LoginDisplayHostImpl::OnUserSwitchAnimationFinished() {
+// LoginDisplayHostWebUi, chrome::MultiUserWindowManager::Observer:
+void LoginDisplayHostWebUi::OnUserSwitchAnimationFinished() {
   ShutdownDisplayHost(false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// LoginDisplayHostImpl, private
+// LoginDisplayHostWebUi, private
 
-void LoginDisplayHostImpl::ShutdownDisplayHost(bool post_quit_task) {
+void LoginDisplayHostWebUi::ShutdownDisplayHost(bool post_quit_task) {
   if (shutting_down_)
     return;
 
@@ -1085,7 +1088,7 @@ void LoginDisplayHostImpl::ShutdownDisplayHost(bool post_quit_task) {
     base::RunLoop::QuitCurrentWhenIdleDeprecated();
 }
 
-void LoginDisplayHostImpl::ScheduleWorkspaceAnimation() {
+void LoginDisplayHostWebUi::ScheduleWorkspaceAnimation() {
   if (ash_util::IsRunningInMash()) {
     NOTIMPLEMENTED();
     return;
@@ -1097,7 +1100,7 @@ void LoginDisplayHostImpl::ScheduleWorkspaceAnimation() {
   }
 }
 
-void LoginDisplayHostImpl::ScheduleFadeOutAnimation(int animation_speed_ms) {
+void LoginDisplayHostWebUi::ScheduleFadeOutAnimation(int animation_speed_ms) {
   // login window might have been closed by OnBrowserCreated() at this moment.
   // This may happen when adding another user into the session, and a browser
   // is created before session start, which triggers the close of the login
@@ -1109,21 +1112,21 @@ void LoginDisplayHostImpl::ScheduleFadeOutAnimation(int animation_speed_ms) {
   ui::Layer* layer = login_window_->GetLayer();
   ui::ScopedLayerAnimationSettings animation(layer->GetAnimator());
   animation.AddObserver(new AnimationObserver(
-      base::Bind(&LoginDisplayHostImpl::ShutdownDisplayHost,
+      base::Bind(&LoginDisplayHostWebUi::ShutdownDisplayHost,
                  animation_weak_ptr_factory_.GetWeakPtr(), false)));
   animation.SetTransitionDuration(
       base::TimeDelta::FromMilliseconds(animation_speed_ms));
   layer->SetOpacity(0);
 }
 
-void LoginDisplayHostImpl::LoadURL(const GURL& url) {
+void LoginDisplayHostWebUi::LoadURL(const GURL& url) {
   InitLoginWindowAndView();
   // Subscribe to crash events.
   content::WebContentsObserver::Observe(login_view_->GetWebContents());
   login_view_->LoadURL(url);
 }
 
-void LoginDisplayHostImpl::ShowWebUI() {
+void LoginDisplayHostWebUi::ShowWebUI() {
   if (!login_window_ || !login_view_) {
     NOTREACHED();
     return;
@@ -1138,7 +1141,7 @@ void LoginDisplayHostImpl::ShowWebUI() {
   initialize_webui_hidden_ = false;
 }
 
-void LoginDisplayHostImpl::StartPostponedWebUI() {
+void LoginDisplayHostWebUi::StartPostponedWebUI() {
   if (!is_wallpaper_loaded_) {
     NOTREACHED();
     return;
@@ -1169,7 +1172,7 @@ void LoginDisplayHostImpl::StartPostponedWebUI() {
   }
 }
 
-void LoginDisplayHostImpl::InitLoginWindowAndView() {
+void LoginDisplayHostWebUi::InitLoginWindowAndView() {
   if (login_window_)
     return;
 
@@ -1241,7 +1244,7 @@ void LoginDisplayHostImpl::InitLoginWindowAndView() {
   login_window_->GetNativeView()->SetName("WebUILoginView");
 }
 
-void LoginDisplayHostImpl::ResetLoginWindowAndView() {
+void LoginDisplayHostWebUi::ResetLoginWindowAndView() {
   // Make sure to reset the |login_view_| pointer first; it is owned by
   // |login_window_|. Closing |login_window_| could immediately invalidate the
   // |login_view_| pointer.
@@ -1265,15 +1268,15 @@ void LoginDisplayHostImpl::ResetLoginWindowAndView() {
   }
 }
 
-void LoginDisplayHostImpl::OnAuthPrewarmDone() {
+void LoginDisplayHostWebUi::OnAuthPrewarmDone() {
   auth_prewarmer_.reset();
 }
 
-void LoginDisplayHostImpl::SetOobeProgressBarVisible(bool visible) {
+void LoginDisplayHostWebUi::SetOobeProgressBarVisible(bool visible) {
   GetOobeUI()->ShowOobeUI(visible);
 }
 
-void LoginDisplayHostImpl::TryToPlayStartupSound() {
+void LoginDisplayHostWebUi::TryToPlayStartupSound() {
   if (is_voice_interaction_oobe_)
     return;
 
@@ -1295,7 +1298,7 @@ void LoginDisplayHostImpl::TryToPlayStartupSound() {
                                           PlaySoundOption::ALWAYS);
 }
 
-void LoginDisplayHostImpl::OnLoginPromptVisible() {
+void LoginDisplayHostWebUi::OnLoginPromptVisible() {
   if (!login_prompt_visible_time_.is_null())
     return;
   login_prompt_visible_time_ = base::TimeTicks::Now();
@@ -1303,14 +1306,14 @@ void LoginDisplayHostImpl::OnLoginPromptVisible() {
 }
 
 // static
-void LoginDisplayHostImpl::DisableRestrictiveProxyCheckForTest() {
-  static_cast<chromeos::LoginDisplayHostImpl*>(default_host())
+void LoginDisplayHostWebUi::DisableRestrictiveProxyCheckForTest() {
+  static_cast<chromeos::LoginDisplayHostWebUi*>(default_host())
       ->GetOobeUI()
       ->GetGaiaScreenView()
       ->DisableRestrictiveProxyCheckForTest();
 }
 
-void LoginDisplayHostImpl::StartVoiceInteractionOobe() {
+void LoginDisplayHostWebUi::StartVoiceInteractionOobe() {
   is_voice_interaction_oobe_ = true;
   finalize_animation_type_ = ANIMATION_NONE;
   StartWizard(chromeos::OobeScreen::SCREEN_VOICE_INTERACTION_VALUE_PROP);
@@ -1357,7 +1360,8 @@ void ShowLoginWizard(OobeScreen first_screen) {
           : session_manager::SessionState::OOBE);
 
   // Manages its own lifetime. See ShutdownDisplayHost().
-  LoginDisplayHostImpl* display_host = new LoginDisplayHostImpl(screen_bounds);
+  LoginDisplayHostWebUi* display_host =
+      new LoginDisplayHostWebUi(screen_bounds);
 
   bool show_app_launch_splash_screen =
       (first_screen == OobeScreen::SCREEN_APP_LAUNCH_SPLASH);
