@@ -22,6 +22,30 @@
       "revId": "0f5bdfe9149fcb97d2ba8edd67f3a5bc99047210",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ae9357_43012607",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-02T08:59:56Z",
+      "side": 1,
+      "message": "Oh, good catch! That was meant to be https://crrev.com/c/746841 (the parent CL on Gerrit), but that has now landed anyway, so I can link to that commit.",
+      "parentUuid": "06cfabd2_4d52c60d",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 37
+      },
+      "revId": "0f5bdfe9149fcb97d2ba8edd67f3a5bc99047210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
