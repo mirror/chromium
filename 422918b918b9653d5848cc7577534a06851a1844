@@ -16,6 +16,24 @@
       "revId": "422918b918b9653d5848cc7577534a06851a1844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa78c58b_e26e809f",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-11-02T17:23:55Z",
+      "side": 1,
+      "message": "The only concern I have is resource_format. I cannot find a clean way to get the bytes_per_pixel value in AppendQuads, we need to iterate over tiles and find the first one with a texture. So I was considering using a ratio to avoid that messy logic.",
+      "parentUuid": "37fd84b2_07a9b681",
+      "revId": "422918b918b9653d5848cc7577534a06851a1844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
