@@ -66,6 +66,8 @@
         var originalWidth = 0;
         var originalHeight = 0;
         var originalInnerWidth = 0;
+        var originalVisualViewportWidthExpectation = 0;
+        var originalVisualViewportHeightExpectation = 0;
 
         addManualTestStep(
             function() {},
@@ -78,14 +80,26 @@
                 originalWidth = window.visualViewport.width;
                 originalHeight = window.visualViewport.height;
                 originalInnerWidth = window.innerWidth;
+                // Remember the visualViewport size here for the next test to
+                // address an edge case where originalInnerWidth is an odd
+                // number of pixels. The test expects that at 2x browser-zoom,
+                // visualViewport.width = innerWidth - customScrollbarThickness
+                // The equality only holds if originalInnerWidth / innerWidth is
+                // exactly 2, which is not the case in the aforementioned
+                // scenario because innerWidth always has to be an integer
+                // number of CSS pixels. Ditto for the height computation.
+                originalVisualViewportWidthExpectation =
+                    window.innerWidth - 20;
+                originalVisualViewportHeightExpectation =
+                    window.innerHeight - 25;
 
                 assert_equals(
                     window.visualViewport.width,
-                    window.innerWidth - 20,
+                    originalVisualViewportWidthExpectation,
                     "Custom scrollbar width subtracted from viewport.");
                 assert_equals(
                     window.visualViewport.height,
-                    window.innerHeight - 25,
+                    originalVisualViewportHeightExpectation,
                     "Custom scrollbar height subtracted from viewport.");
             },
             'No zoom or scale applied',
@@ -100,13 +114,15 @@
                     0.1,
                     "Browser zoom to correct level");
 
+                // The custom scrollbars are also 2x larger on the screen, so
+                // the viewport is smaller than half of the original size.
                 assert_equals(
                     window.visualViewport.width,
-                    window.innerWidth - 20,
+                    originalVisualViewportWidthExpectation / 2 - 10,
                     "Custom scrollbar width subtracted from viewport.");
                 assert_equals(
                     window.visualViewport.height,
-                    window.innerHeight - 25,
+                    originalVisualViewportHeightExpectation / 2 - 12.5,
                     "Custom scrollbar height subtracted from viewport.");
             },
             'With 200% browser zoom',
