@@ -120,6 +120,20 @@ std::unique_ptr<base::Value> StringForBrowserAccessibility(
     [tokens addObject:title];
   } else if (value && ![value isEqual:@""]) {
     [tokens addObject:value];
+  } else if ([[obj children] count] == 1) {
+    // Last resort, get text from single child, helpful because cells no
+    // longer expose their own text.
+    BrowserAccessibilityCocoa* first_child = ([obj children])[0];
+    id title = [first_child title];
+    id description = [first_child description];
+    id value = [first_child value];
+    if (description && ![description isEqual:@""]) {
+      [tokens addObject:description];
+    } else if (title && ![title isEqual:@""]) {
+      [tokens addObject:title];
+    } else if (value && ![value isEqual:@""]) {
+      [tokens addObject:value];
+    }
   }
 
   NSString* result = [tokens componentsJoinedByString:@" "];

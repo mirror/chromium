@@ -11,10 +11,10 @@ AXWebArea
 ++AXLink AXTitle='Empty span' AXLinkedUIElements=["AXGroup"]
 ++++AXStaticText AXValue='Empty span'
 ++AXStaticText AXValue=' '
-++AXLink AXTitle='Span with content' AXLinkedUIElements=["AXGroup"]
+++AXLink AXTitle='Span with content' AXLinkedUIElements=["AXGroup Span with content"]
 ++++AXStaticText AXValue='Span with content'
 ++AXStaticText AXValue=' '
-++AXLink AXTitle='Paragraph with content' AXLinkedUIElements=["AXGroup"]
+++AXLink AXTitle='Paragraph with content' AXLinkedUIElements=["AXGroup Paragraph with content"]
 ++++AXStaticText AXValue='Paragraph with content'
 ++AXGroup
 ++++AXGroup
