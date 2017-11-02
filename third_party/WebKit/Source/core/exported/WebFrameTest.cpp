@@ -6540,7 +6540,7 @@ TEST_P(ParameterizedWebFrameTest, ReplaceNavigationAfterHistoryNavigation) {
   // FrameLoader::didReceiveData() wasn't getting called in this case, which
   // resulted in the SubstituteData document not getting displayed.
   std::string error_url = "http://0.0.0.0";
-  WebURLError error(WebURLError::Domain::kTest, 1337, ToKURL(error_url));
+  ResourceError error = ResourceError::Failure(ToKURL(error_url));
   WebURLResponse response;
   response.SetURL(URLTestHelpers::ToKURL(error_url));
   response.SetMIMEType("text/html");
@@ -11733,8 +11733,8 @@ TEST_P(ParameterizedWebFrameTest, FallbackForNonexistentProvisionalNavigation) {
   // caller won't attempt to replace the correctly empty frame with an error
   // page.
   EXPECT_EQ(WebLocalFrame::NoLoadInProgress,
-            child->MaybeRenderFallbackContent(WebURLError(
-                WebURLError::Domain::kNet, net::ERR_FAILED, request.Url())));
+            child->MaybeRenderFallbackContent(
+                WebURLError(net::ERR_FAILED, request.Url())));
 }
 
 TEST_P(ParameterizedWebFrameTest, AltTextOnAboutBlankPage) {
