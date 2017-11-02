@@ -385,6 +385,8 @@ source_set("run_all_unittests") {
 }
 
 test("gl_unittests") {
+  defines = []
+
   sources = [
     "gl_api_unittest.cc",
     "gl_image_ref_counted_memory_unittest.cc",
@@ -447,6 +449,12 @@ test("gl_unittests") {
     sources += [ "gl_context_glx_unittest.cc" ]
     deps += [ "//ui/gfx/x" ]
     configs += [ "//build/config/linux:x11" ]
+  }
+
+  if (is_desktop_linux) {
+    sources += [ "gl_image_native_pixmap_dmabuf_unittest.cc" ]
+    deps += [ "//third_party/libdrm" ]
+    deps += [ "//third_party/minigbm" ]
   }
 }
 
