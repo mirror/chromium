@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "269ca3cd_9959f857",
+        "filename": "cc/paint/paint_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-11-02T15:06:20Z",
+      "side": 1,
+      "message": "Yeah, I think we just need to move SkColorSpaceXformer.h into include/core?  We shouldn\u0027t need to worry about the transitive use of SkTHash.",
+      "revId": "d856f9c69a66c4d447b635d72fca52808246cd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
