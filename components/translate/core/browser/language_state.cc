@@ -71,12 +71,12 @@ bool LanguageState::InTranslateNavigation() const {
   //   - no translation is pending
   //   - this page is in the same language as the previous page
   //   - the previous page had been translated
-  //   - the new page was navigated through a link.
+  //   - the new page was navigated through a link or by pressing back.
   return
       !translation_pending_ &&
       prev_original_lang_ == original_lang_ &&
       prev_original_lang_ != prev_current_lang_ &&
-      translate_driver_->IsLinkNavigation();
+      translate_driver_->IsAutoTranslateNavigation();
 }
 
 void LanguageState::SetCurrentLanguage(const std::string& language) {

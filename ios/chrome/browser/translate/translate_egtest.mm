@@ -741,7 +741,7 @@ using translate::LanguageDetectionController;
 
 // Tests that translation occurs automatically on second navigation to an
 // already translated page.
-- (void)testAutoTranslate {
+- (void)testAutoTranslateLink {
   // The translate machinery will not auto-fire without API keys, unless that
   // behavior is overridden for testing.
   translate::TranslateManager::SetIgnoreMissingKeyForTesting(true);
@@ -802,6 +802,79 @@ using translate::LanguageDetectionController;
   [[EarlGrey selectElementWithMatcher:chrome_test_util::OmniboxText(
                                           frenchPagePathURL.GetContent())]
       assertWithMatcher:grey_notNil()];
+
+  // Check that the auto-translation happened.
+  [ChromeEarlGrey waitForWebViewContainingText:"Translated"];
+}
+
+// Tests that translation occurs automatically on back navigation from a
+// translated page.
+- (void)testAutoTranslateBack {
+  // The translate machinery will not auto-fire without API keys, unless that
+  // behavior is overridden for testing.
+  translate::TranslateManager::SetIgnoreMissingKeyForTesting(true);
+
+  std::unique_ptr<web::DataResponseProvider> provider(new TestResponseProvider);
+  web::test::SetUpHttpServer(std::move(provider));
+
+  // Reset translate prefs to default.
+  std::unique_ptr<translate::TranslatePrefs> translatePrefs(
+      ChromeIOSTranslateClient::CreateTranslatePrefs(
+          chrome_test_util::GetOriginalBrowserState()->GetPrefs()));
+  translatePrefs->ResetToDefaults();
+
+  // Set up the mock translate script manager.
+  ChromeIOSTranslateClient* client = ChromeIOSTranslateClient::FromWebState(
+      chrome_test_util::GetCurrentWebState());
+  translate::IOSTranslateDriver* driver =
+      static_cast<translate::IOSTranslateDriver*>(client->GetTranslateDriver());
+  MockTranslateScriptManager* jsTranslateManager =
+      [[MockTranslateScriptManager alloc]
+          initWithWebState:chrome_test_util::GetCurrentWebState()];
+  driver->translate_controller()->SetJsTranslateManagerForTesting(
+      jsTranslateManager);
+
+  // Set up a fake URL for the translate script, to avoid hitting real servers.
+  base::CommandLine& command_line = *base::CommandLine::ForCurrentProcess();
+  GURL translateScriptURL = web::test::HttpServer::MakeUrl(
+      base::StringPrintf("http://%s", kTranslateScriptPath));
+  command_line.AppendSwitchASCII(translate::switches::kTranslateScriptURL,
+                                 translateScriptURL.spec().c_str());
+
+  // Load (but don't translate) the page with the link.
+  GURL frenchPageURL = web::test::HttpServer::MakeUrl(
+      base::StringPrintf("http://%s", kFrenchPageWithLinkPath));
+  [ChromeEarlGrey loadURL:frenchPageURL];
+
+  // Click on the link and arrive at the child page.
+  [ChromeEarlGrey tapWebViewElementWithID:@"link"];
+  [ChromeEarlGrey waitForWebViewNotContainingText:"link"];
+
+  GURL frenchPagePathURL = web::test::HttpServer::MakeUrl(
+      base::StringPrintf("http://%s", kFrenchPagePath));
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::OmniboxText(
+                                          frenchPagePathURL.GetContent())]
+      assertWithMatcher:grey_notNil()];
+
+  // Translate the child page.
+  [[EarlGrey
+      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
+                                   IDS_TRANSLATE_INFOBAR_ACCEPT)]
+      performAction:grey_tap()];
+
+  // Wait for all callbacks.
+  GREYAssert(testing::WaitUntilConditionOrTimeout(
+                 testing::kWaitForJSCompletionTimeout,
+                 ^{
+                   return jsTranslateManager.translateStatusChecked;
+                 }),
+             @"Did not receive all translate status callbacks");
+
+  // Check that the translation happened.
+  [ChromeEarlGrey waitForWebViewContainingText:"Translated"];
+
+  // Click the back button to return to the page with the link.
+  [ChromeEarlGrey goBack];
 
   // Check that the auto-translation happened.
   [ChromeEarlGrey waitForWebViewContainingText:"Translated"];

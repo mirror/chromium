@@ -84,13 +84,16 @@ void ContentTranslateDriver::InitiateTranslation(const std::string& page_lang,
 
 // TranslateDriver methods
 
-bool ContentTranslateDriver::IsLinkNavigation() {
+bool ContentTranslateDriver::IsAutoTranslateNavigation() {
   return navigation_controller_ &&
          navigation_controller_->GetLastCommittedEntry() &&
-         ui::PageTransitionCoreTypeIs(
-             navigation_controller_->GetLastCommittedEntry()
-                 ->GetTransitionType(),
-             ui::PAGE_TRANSITION_LINK);
+         (ui::PageTransitionCoreTypeIs(
+              navigation_controller_->GetLastCommittedEntry()
+                  ->GetTransitionType(),
+              ui::PAGE_TRANSITION_LINK) ||
+          (navigation_controller_->GetLastCommittedEntry()
+               ->GetTransitionType() &
+           ui::PAGE_TRANSITION_FORWARD_BACK) != 0);
 }
 
 void ContentTranslateDriver::OnTranslateEnabledChanged() {

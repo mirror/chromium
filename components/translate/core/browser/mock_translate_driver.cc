@@ -37,7 +37,7 @@ void  MockTranslateDriver::OnTranslateEnabledChanged() {
   on_translate_enabled_changed_called_ = true;
 }
 
-bool MockTranslateDriver::IsLinkNavigation() {
+bool MockTranslateDriver::IsAutoTranslateNavigation() {
   return false;
 }
 

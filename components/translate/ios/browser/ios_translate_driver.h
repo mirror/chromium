@@ -57,7 +57,7 @@ class IOSTranslateDriver : public TranslateDriver,
   // TranslateDriver methods.
   void OnIsPageTranslatedChanged() override;
   void OnTranslateEnabledChanged() override;
-  bool IsLinkNavigation() override;
+  bool IsAutoTranslateNavigation() override;
   void TranslatePage(int page_seq_no,
                      const std::string& translate_script,
                      const std::string& source_lang,
