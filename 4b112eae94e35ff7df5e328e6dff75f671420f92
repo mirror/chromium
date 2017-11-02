@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bb1ca9b_38a666cc",
+        "filename": "ios/chrome/browser/ui/activity_services/chrome_activity_item_source.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-02T23:35:42Z",
+      "side": 1,
+      "message": "Would strong be sufficient? Any reasons why you think this needs to be copied?",
+      "range": {
+        "startLine": 64,
+        "startChar": 21,
+        "endLine": 64,
+        "endChar": 25
+      },
+      "revId": "4b112eae94e35ff7df5e328e6dff75f671420f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15f97f1_3b775082",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-02T23:35:42Z",
+      "side": 1,
+      "message": "nit: Most of the time, nonatomic comes first, followed by others, but I don\u0027t think there\u0027s a style rule against it.\nnit: I\u0027m also thinking of whether strong \u0026 readonly are in conflict since you can\u0027t assign to a readonly property, so the public interface shouldn\u0027t need to know about strong.",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "4b112eae94e35ff7df5e328e6dff75f671420f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02cff9c_8a4d180b",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-02T23:35:42Z",
+      "side": 1,
+      "message": "Does this need to be [title copy] ?",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 18
+      },
+      "revId": "4b112eae94e35ff7df5e328e6dff75f671420f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
