@@ -16,6 +16,24 @@
       "revId": "497a231cfae172ee9a1cdc5b693d9d86f4892a78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf08b56_81f487e3",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-02T15:22:06Z",
+      "side": 1,
+      "message": "Good point! Removed the input param from here.",
+      "parentUuid": "95d7c4a9_3430ae6a",
+      "revId": "497a231cfae172ee9a1cdc5b693d9d86f4892a78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
