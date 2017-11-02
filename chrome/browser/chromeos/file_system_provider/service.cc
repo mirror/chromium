@@ -19,6 +19,9 @@
 #include "chrome/browser/chromeos/file_system_provider/registry_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/service_factory.h"
 #include "chrome/browser/chromeos/file_system_provider/throttled_file_system.h"
+#include "chrome/browser/chromeos/samba_client/create.h"
+#include "chrome/browser/chromeos/samba_client/smb_provided_file_system.h"
+#include "chrome/common/chrome_features.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "extensions/browser/event_router.h"
@@ -41,6 +44,11 @@ std::unique_ptr<ProvidedFileSystemInterface> CreateProvidedFileSystem(
     Profile* profile,
     const ProvidedFileSystemInfo& file_system_info) {
   DCHECK(profile);
+
+  if (base::FeatureList::IsEnabled(features::kNativeSamba) &&
+      file_system_info.provider_id() == "smb_provider") {
+    return samba_client::CreateSambaProvidedFileSystem(file_system_info);
+  }
   return base::MakeUnique<ThrottledFileSystem>(
       base::MakeUnique<ProvidedFileSystem>(profile, file_system_info));
 }
