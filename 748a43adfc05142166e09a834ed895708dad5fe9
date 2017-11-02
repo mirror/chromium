@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c511c0b_eda41b88",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsEmulator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T23:29:03Z",
+      "side": 1,
+      "message": "Should probably be conditional under emulate_mobile_enabled_.",
+      "revId": "748a43adfc05142166e09a834ed895708dad5fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
