@@ -225,6 +225,9 @@ class IOThread : public content::BrowserThreadDelegate {
       content::URLRequestContextBuilderMojo* builder,
       std::unique_ptr<net::ProxyConfigService> proxy_config_service) const;
 
+  // Binds a NetworkService request to |network_service|.
+  void BindNetworkServiceRequest(content::mojom::NetworkServiceRequest request);
+
  private:
   friend class test::IOThreadPeer;
 

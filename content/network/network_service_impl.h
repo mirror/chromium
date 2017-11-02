@@ -66,6 +66,7 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   void SetRawHeadersAccess(uint32_t process_id, bool allow) override;
   void GetNetworkChangeManager(
       mojom::NetworkChangeManagerRequest request) override;
+  void AddRequest(mojom::NetworkServiceRequest request) override;
 
   bool quic_disabled() const { return quic_disabled_; }
   bool HasRawHeadersAccess(uint32_t process_id) const;

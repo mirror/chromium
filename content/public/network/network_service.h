@@ -47,6 +47,10 @@ class CONTENT_EXPORT NetworkService : public mojom::NetworkService {
 
   ~NetworkService() override {}
 
+  // Binds a NetworkService request to this object. Mojo messages coming through
+  // associated pipe will be served by this object.
+  virtual void AddRequest(mojom::NetworkServiceRequest request) = 0;
+
  protected:
   NetworkService() {}
 };
