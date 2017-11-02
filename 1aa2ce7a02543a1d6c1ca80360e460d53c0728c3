@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4191ada9_63db0f30",
+        "filename": "tools/checkperms/checkperms.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T17:48:28Z",
+      "side": 1,
+      "message": "Is this just to get rid of the newline? Maybe we can just do file_list.read().splitlines()?",
+      "revId": "1aa2ce7a02543a1d6c1ca80360e460d53c0728c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
