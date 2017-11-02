@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "31e7b4a0_b487ea13",
+        "filename": "chrome/browser/extensions/api/notifications/notifications_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-02T22:53:22Z",
+      "side": 1,
+      "message": "I was unaware that you were moving so much out-of-process.\n\nStruct like this referred to the \"rich notification data\" that contains the fullscreen visibility bit.\n\nSo long as bmalcolm is ok with the behavior tweaks I think this should be fine.",
+      "parentUuid": "f523a2e7_a7bf4e3b",
+      "revId": "d2f06341b7a16eaaabd4458f65164b88ce2be62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e616327f_8e4b861a",
         "filename": "chrome/browser/notifications/fullscreen_notification_blocker.cc",
         "patchSetId": 9
