@@ -32,6 +32,7 @@ TEST_F(CWVAutofillSuggestionTest, Initialization) {
       [[CWVAutofillSuggestion alloc] initWithFormSuggestion:formSuggestion
                                                    formName:formName
                                                   fieldName:fieldName];
+
   EXPECT_NSEQ(formName, suggestion.formName);
   EXPECT_NSEQ(fieldName, suggestion.fieldName);
   EXPECT_NSEQ(formSuggestion.displayDescription, suggestion.displayDescription);
