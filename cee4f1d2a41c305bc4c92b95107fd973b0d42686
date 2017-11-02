@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e112ebde_158e80a3",
+        "filename": "third_party/WebKit/Source/core/css/cssom/ComputedStylePropertyMap.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-11-02T01:30:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67090a5f_b99ed508",
+      "revId": "cee4f1d2a41c305bc4c92b95107fd973b0d42686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec5b2c9c_ce896457",
         "filename": "third_party/WebKit/Source/core/css/cssom/ElementComputedStyleMap.idl",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "cee4f1d2a41c305bc4c92b95107fd973b0d42686",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e1c900_1b184b50",
+        "filename": "third_party/WebKit/Source/core/css/cssom/ElementComputedStyleMap.idl",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-11-02T01:30:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec5b2c9c_ce896457",
+      "revId": "cee4f1d2a41c305bc4c92b95107fd973b0d42686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
