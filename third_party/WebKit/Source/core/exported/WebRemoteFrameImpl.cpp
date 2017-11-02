@@ -291,7 +291,6 @@ void WebRemoteFrameImpl::SetReplicatedPotentiallyTrustworthyUniqueOrigin(
          GetFrame()->GetSecurityContext()->GetSecurityOrigin()->IsUnique());
   GetFrame()
       ->GetSecurityContext()
-      ->GetSecurityOrigin()
       ->SetUniqueOriginIsPotentiallyTrustworthy(
           is_unique_origin_potentially_trustworthy);
 }
