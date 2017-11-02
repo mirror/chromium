@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "133977a6_d8e596f4",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-02T18:01:19Z",
+      "side": 1,
+      "message": "Agreed, makes sense since the property was removed.",
+      "parentUuid": "ab10bcc6_51f178c4",
+      "revId": "0b3e9edc344af025fbf88c68372623eacdfacb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd24e8b3_a11e58b0",
         "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
         "patchSetId": 11
@@ -54,6 +72,30 @@
       "side": 1,
       "message": "We probably don\u0027t even need to load about://blank. I see 2 alternative options to play with:\n1.) a subclass web::WebStatePolicyDecider which will reject the load and will present interstitial\n2.) a TabHelper which will present interstitial in DidStartNavigation",
       "parentUuid": "bd24e8b3_a11e58b0",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "0b3e9edc344af025fbf88c68372623eacdfacb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb58d3c4_8cce92e9",
+        "filename": "ios/chrome/browser/ui/webui/interstitial_ui.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-02T18:01:19Z",
+      "side": 1,
+      "message": "These are interesting alternatives. First to give a little background, on other platforms this is WebUI, but the WebUI page is actually chrome://interstitials. I initially implemented that as well as it\u0027s very simply to add. However, since we only support the display of the captive portal page today, I think the chrome://interstitials page just adds confusion. In the future though, we should likely add support for more of these interstitials and this WebUI page is a good way to surface them and to remain consistent.\n\nRegarding the hack with the flag, other platforms actually just return the html from the interstitial directly. However, I didn\u0027t like that approach because you end up with the interstitial UI, but it is not functional, so it limits the testability of bringing up the page in this way. Additionally, there is some replacement which seems to not be working properly when directly returning the html.\n\nWith the suggested alternatives, I looked into them, but I worry that it would require us to do a check against every loaded URL and then do something to show the interstitial if the URL matched. Of course this is only if we want to keep a similar trigger method with a chrome: URL, but I don\u0027t want to slow down the page load flow just to maybe force an interstitial to be displayed. Let me know if I\u0027m missing something with this approach though.",
+      "parentUuid": "4fd36563_06219e4f",
       "range": {
         "startLine": 67,
         "startChar": 7,
