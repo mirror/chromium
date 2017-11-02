@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1cd5f4f_3377e35c",
+        "filename": "third_party/WebKit/public/platform/WebURLError.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-02T07:36:17Z",
+      "side": 1,
+      "message": "Getters are written in the chromium style rather than the blink style (such as GetDomain / Reason), because I\u0027m planning to move this class to /services/network.",
+      "revId": "62c864b4aa8f53570dce9dab596a5be5cbe088de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
