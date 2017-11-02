@@ -209,6 +209,10 @@ class QuicDispatcher : public QuicTimeWaitListManager::Visitor,
   // source address token.
   virtual const QuicSocketAddress GetClientAddress() const;
 
+  // Return true if dispatcher wants to destroy session outside of
+  // OnConnectionClosed() call stack.
+  virtual bool ShouldDestroySessionAsynchronously();
+
   QuicTimeWaitListManager* time_wait_list_manager() {
     return time_wait_list_manager_.get();
   }
