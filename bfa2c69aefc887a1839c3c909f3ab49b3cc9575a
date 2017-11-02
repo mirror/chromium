@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "152cb84c_baa7f6a3",
+        "filename": "content/renderer/accessibility/render_accessibility_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-02T18:38:14Z",
+      "side": 1,
+      "message": "Why was this protected? 😦\n\nGood fix.",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "bfa2c69aefc887a1839c3c909f3ab49b3cc9575a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
