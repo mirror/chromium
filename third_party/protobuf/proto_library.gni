@@ -93,6 +93,8 @@
 #    ]
 #  }
 
+import("//build/config/sanitizers/sanitizers.gni")
+
 template("proto_library") {
   assert(defined(invoker.sources), "Need sources for proto_library")
   proto_sources = invoker.sources
@@ -348,6 +350,10 @@ template("proto_library") {
     if (defined(invoker.extra_configs)) {
       configs += invoker.extra_configs
     }
+
+    # Remove *San and coverage for a performance boost when using fuzzing.
+    configs -= no_fuzzing_remove_configs
+    configs += no_fuzzing_add_configs
 
     public_configs = [ "//third_party/protobuf:using_proto" ]
 

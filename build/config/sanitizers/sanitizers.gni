@@ -226,3 +226,23 @@ assert(
     "crbug.com/753445: use_sanitizer_coverage=true is not supported by the " +
         "Chromium mac_clang_x64 toolchain on iOS distribution. Please set " +
         "the argument value to false.")
+
+# Use the lists of configs to disable instrumenting code that is part of a
+# fuzzer, but which isn't being targeted (eg libprotobuf-mutator).
+no_fuzzing_remove_configs = []
+no_fuzzing_remove_nonasan_configs = []
+no_fuzzing_add_configs = []
+
+if (use_libfuzzer) {
+  no_fuzzing_remove_configs += [ "//build/config/coverage:default_coverage" ]
+  no_fuzzing_add_configs =
+      [ "//build/config/sanitizers:no_fuzzing_instrumentation" ]
+  if (!is_msan) {  # Binaries cannot be partially instrumented with MSan.
+    no_fuzzing_remove_configs +=
+        [ "//build/config/sanitizers:default_sanitizer_flags" ]
+    if (!is_asan) {  # Certain parts of binaries must be instrumented with ASan if the rest of the binary is.
+      no_fuzzing_remove_nonasan_configs +=
+          [ "//build/config/sanitizers:default_sanitizer_flags" ]
+    }
+  }
+}
