@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8bf0db69_b311ae37",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-02T21:07:38Z",
+      "side": 1,
+      "message": "Yes, exactly.",
+      "parentUuid": "618ac512_fd7abac0",
+      "revId": "08749f0f6a81b222ada271b8941cf8e18684c3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "061fa218_541c6094",
         "filename": "DEPS",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2017-11-02T20:47:02Z",
       "side": 1,
       "message": "Shouldn\u0027t there be a \u0027condition\u0027 field here? Or am I misunderstanding?",
+      "revId": "08749f0f6a81b222ada271b8941cf8e18684c3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73d083f_142d09d5",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-02T21:07:38Z",
+      "side": 1,
+      "message": "Uh, whoops, yes :).",
+      "parentUuid": "061fa218_541c6094",
       "revId": "08749f0f6a81b222ada271b8941cf8e18684c3c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
