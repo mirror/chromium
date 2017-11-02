@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "629ced3e_163d60a9",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:14:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a78ca9eb_fdd5332a",
+      "range": {
+        "startLine": 108,
+        "startChar": 25,
+        "endLine": 108,
+        "endChar": 59
+      },
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdae2a38_88cdad13",
         "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c4dded_9412d17b",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:14:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdae2a38_88cdad13",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f9549ead_e03ceee7",
+        "filename": "chrome/browser/media/router/presentation_navigation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:14:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "453b09da_7732c247",
+      "range": {
+        "startLine": 12,
+        "startChar": 40,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9e22812_eaaf5da9",
         "filename": "chrome/browser/media/router/presentation_navigation_policy.h",
         "patchSetId": 1
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "80f0ea29_50446d23",
+        "filename": "chrome/browser/media/router/presentation_navigation_policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:14:32Z",
+      "side": 1,
+      "message": "I\u0027d rather make a new subclass in that case.  Naming the interface that way seems confusing.  Done.",
+      "parentUuid": "d9e22812_eaaf5da9",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25d94c68_aaef6df5",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 1
@@ -102,6 +192,24 @@
       "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7a800d_aed8f817",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:14:32Z",
+      "side": 1,
+      "message": "The separate profiles and differing behavior between this and OffscreenTab was purely because of my lack of understanding of the Profile\u003c-\u003eBrowser ownership relationship and inability to get it to work in the tests strictly using CreateOffTheRecordProfile.  I have fixed this so the logic in the new patch should make more sense and be just like OffscreenTab.\n\nBriefly, CreateOffTheRecordProfile is indeed what we want and we should use the same profile for Browser and WebContents.  We want Create over Get because, as you mentioned, we want the presentation profile to be separate from \"the user\" OTR profile.  Special destruction behavior is needed for this to work, similar to what was done for OffscreenTab.",
+      "parentUuid": "25d94c68_aaef6df5",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "94907a47_d512bf80",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:14:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae85b616_d61f9ca6",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1d63cb7_42b4babc",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 1
@@ -136,6 +262,24 @@
       "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4daec882_840c3675",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:14:32Z",
+      "side": 1,
+      "message": "Yes, it looks like that\u0027s true on Windows as well.",
+      "parentUuid": "e1d63cb7_42b4babc",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "4a2a49f4_a88cf3d2",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:14:32Z",
+      "side": 1,
+      "message": "It can be accomplished by closing the WebContents.  I added a specific method for this for clarity though.",
+      "parentUuid": "aff2a755_2c937424",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ab32466_3b471c0e",
         "filename": "chrome/browser/media/router/presentation_receiver_window.h",
         "patchSetId": 1
@@ -167,6 +329,24 @@
       "writtenOn": "2017-10-28T00:24:38Z",
       "side": 1,
       "message": "Make this method const?",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e551aa3_c9421fec",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:14:32Z",
+      "side": 1,
+      "message": "Although it compiles, I feel that\u0027s a little dishonest since we can\u0027t make it const WebContents*.  WDYT?",
+      "parentUuid": "2ab32466_3b471c0e",
       "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "d909e467_511f717a",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:14:32Z",
+      "side": 1,
+      "message": "Since PresentationReceiverWindow is a Browser subclass, it is owned by its BrowserView (confusing IMHO), which is in turned owned by the frame hierarchy.",
+      "parentUuid": "92b886d4_d0f5077c",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ef577be_4571dd8d",
         "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
         "patchSetId": 1
@@ -204,6 +402,24 @@
       "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2cc74c6_095b8009",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:14:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ef577be_4571dd8d",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "4469fe18_3bcced33",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:14:32Z",
+      "side": 1,
+      "message": "You\u0027re right.  I was thinking it wouldn\u0027t be true until a mojo::Binding called Bind() on the request, but since it makes the pipe when making the request, it\u0027s already true.  This also removes the need for the waiting below.",
+      "parentUuid": "16553dc7_b4993680",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "269349c5_cff23f54",
         "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
         "patchSetId": 1
@@ -238,6 +472,24 @@
       "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b6de32_f9d9e892",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-02T21:14:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "269349c5_cff23f54",
+      "revId": "7b7455aa29114e2e53e1613931d9e664462373df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
