@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20b49b71_867d5003",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-02T23:35:54Z",
+      "side": 1,
+      "message": "This re-ordering makes total sense!",
+      "revId": "73603e731d32306641a59d1d6ef2cd1dc4fc9377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
