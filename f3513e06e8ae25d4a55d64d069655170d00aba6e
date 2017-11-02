@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7ff2f29_ed3dd2f6",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-02T17:04:32Z",
+      "side": 1,
+      "message": "do you need |int()? I see above in the manifest {% if min_sdk_version \u003c 24 %} check without that.",
+      "range": {
+        "startLine": 401,
+        "startChar": 33,
+        "endLine": 401,
+        "endChar": 34
+      },
+      "revId": "f3513e06e8ae25d4a55d64d069655170d00aba6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
