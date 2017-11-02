@@ -296,6 +296,7 @@ ChromeSSLHostStateDelegate::~ChromeSSLHostStateDelegate() {
 void ChromeSSLHostStateDelegate::AllowCert(const std::string& host,
                                            const net::X509Certificate& cert,
                                            net::CertStatus error) {
+  LOG(ERROR) << "ChromeSSLHostStateDelegate::AllowCert";
   GURL url = GetSecureGURLForHost(host);
   HostContentSettingsMap* map =
       HostContentSettingsMapFactory::GetForProfile(profile_);
