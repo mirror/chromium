@@ -42,7 +42,7 @@ constexpr char kThrottledErrorDescription[] =
 }  // namespace
 
 ResourceError ResourceError::CancelledError(const KURL& url) {
-  return WebURLError(url, false, net::ERR_ABORTED);
+  return WebURLError(url, false, net::ERR_ABORTED, base::nullopt);
 }
 
 ResourceError ResourceError::CancelledDueToAccessCheckError(
@@ -65,17 +65,18 @@ ResourceError ResourceError::CancelledDueToAccessCheckError(
 }
 
 ResourceError ResourceError::CacheMissError(const KURL& url) {
-  return WebURLError(url, false, net::ERR_CACHE_MISS);
+  return WebURLError(url, false, net::ERR_CACHE_MISS, base::nullopt);
 }
 
 ResourceError ResourceError::TimeoutError(const KURL& url) {
-  return WebURLError(url, false, net::ERR_TIMED_OUT);
+  return WebURLError(url, false, net::ERR_TIMED_OUT, base::nullopt);
 }
 
 ResourceError ResourceError::Copy() const {
   ResourceError error_copy;
   error_copy.domain_ = domain_;
   error_copy.error_code_ = error_code_;
+  error_copy.cors_error_ = cors_error_;
   error_copy.failing_url_ = failing_url_.Copy();
   error_copy.localized_description_ = localized_description_.IsolatedCopy();
   error_copy.is_access_check_ = is_access_check_;
@@ -90,6 +91,9 @@ bool ResourceError::Compare(const ResourceError& a, const ResourceError& b) {
     return false;
 
   if (a.ErrorCode() != b.ErrorCode())
+    return false;
+
+  if (a.CORSError() != b.CORSError())
     return false;
 
   if (a.FailingURL() != b.FailingURL())
@@ -107,12 +111,15 @@ bool ResourceError::Compare(const ResourceError& a, const ResourceError& b) {
   return true;
 }
 
-void ResourceError::InitializeWebURLError(WebURLError* error,
-                                          const WebURL& url,
-                                          bool stale_copy_in_cache,
-                                          int reason) {
+void ResourceError::InitializeWebURLError(
+    WebURLError* error,
+    const WebURL& url,
+    bool stale_copy_in_cache,
+    int reason,
+    base::Optional<network::mojom::CORSError> cors_error) {
   error->domain = Domain::kNet;
   error->reason = reason;
+  error->cors_error = cors_error;
   error->stale_copy_in_cache = stale_copy_in_cache;
   error->unreachable_url = url;
   if (reason == net::ERR_TEMPORARILY_THROTTLED) {

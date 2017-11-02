@@ -37,10 +37,11 @@ namespace blink {
 
 WebURLError::WebURLError(const WebURL& unreachable_url,
                          bool stale_copy_in_cache,
-                         int reason) {
+                         int reason,
+                         base::Optional<network::mojom::CORSError> cors_error) {
   // This is implemented in ResourceError.h due to a DEPS restriction.
   ResourceError::InitializeWebURLError(this, unreachable_url,
-                                       stale_copy_in_cache, reason);
+                                       stale_copy_in_cache, reason, cors_error);
 }
 
 WebURLError::WebURLError(const ResourceError& error) {
@@ -53,6 +54,7 @@ WebURLError& WebURLError::operator=(const ResourceError& error) {
   } else {
     domain = error.GetDomain();
     reason = error.ErrorCode();
+    cors_error = error.CORSError();
     unreachable_url = KURL(error.FailingURL());
     stale_copy_in_cache = error.StaleCopyInCache();
     localized_description = error.LocalizedDescription();
@@ -64,8 +66,8 @@ WebURLError& WebURLError::operator=(const ResourceError& error) {
 WebURLError::operator ResourceError() const {
   if (!reason)
     return ResourceError();
-  ResourceError resource_error =
-      ResourceError(domain, reason, unreachable_url, localized_description);
+  ResourceError resource_error = ResourceError(
+      domain, reason, cors_error, unreachable_url, localized_description);
   resource_error.SetStaleCopyInCache(stale_copy_in_cache);
   resource_error.SetIsAccessCheck(is_web_security_violation);
   return resource_error;

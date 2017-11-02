@@ -64,12 +64,14 @@ class TestRequestPeer : public RequestPeer {
 
   void OnTransferSizeUpdated(int transfer_size_diff) override {}
 
-  void OnCompletedRequest(int error_code,
-                          bool stale_copy_in_cache,
-                          const base::TimeTicks& completion_time,
-                          int64_t total_transfer_size,
-                          int64_t encoded_body_size,
-                          int64_t decoded_body_size) override {
+  void OnCompletedRequest(
+      int error_code,
+      bool stale_copy_in_cache,
+      const base::TimeTicks& completion_time,
+      int64_t total_transfer_size,
+      int64_t encoded_body_size,
+      int64_t decoded_body_size,
+      base::Optional<network::mojom::CORSError> cors_error) override {
     EXPECT_FALSE(context_->complete);
     context_->complete = true;
     context_->error_code = error_code;
