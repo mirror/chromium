@@ -296,6 +296,38 @@ TEST_F(LabelButtonTest, LabelAndImage) {
   EXPECT_LT(button_->GetPreferredSize().height(), image_size);
 }
 
+TEST_F(LabelButtonTest, GetHeightForWidthConsistentWithGetPreferredSize) {
+  const base::string16 text(ASCIIToUTF16("abcdefghijklm"));
+  constexpr int kTinyImageSize = 2;
+  constexpr int kLargeImageSize = 50;
+  const int font_height = button_->label()->font_list().GetHeight();
+  // Parts of this test (accounting for label height) doesn't make sense if the
+  // font is smaller than the tiny test image and insets.
+  ASSERT_GT(font_height, button_->GetInsets().height() + kTinyImageSize);
+  // Parts of this test (accounting for image insets) doesn't make sense if the
+  // font is larger than the large test image.
+  ASSERT_LT(font_height, kLargeImageSize);
+  button_->SetText(text);
+
+  for (int image_size : {kTinyImageSize, kLargeImageSize}) {
+    // Set image and reset monotonic min size for every test iteration.
+    const gfx::ImageSkia image = CreateTestImage(image_size, image_size);
+    button_->SetImage(Button::STATE_NORMAL, image);
+    button_->SetMinSize(gfx::Size());
+
+    const gfx::Size preferred_button_size = button_->GetPreferredSize();
+
+    // The preferred button height should be the larger of image / label
+    // heights + inset height.
+    EXPECT_EQ(std::max(image_size, font_height) + button_->GetInsets().height(),
+              preferred_button_size.height());
+
+    // Make sure this preferred height is consistent with GetHeightForWidth().
+    EXPECT_EQ(preferred_button_size.height(),
+              button_->GetHeightForWidth(preferred_button_size.width()));
+  }
+}
+
 // Ensure that the text used for button labels correctly adjusts in response
 // to provided style::TextContext values.
 TEST_F(LabelButtonTest, TextSizeFromContext) {

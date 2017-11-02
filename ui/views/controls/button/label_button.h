@@ -161,6 +161,7 @@ class VIEWS_EXPORT LabelButton : public Button, public NativeThemeDelegate {
 
  private:
   void SetTextInternal(const base::string16& text);
+  gfx::Size GetUnclampedSizeWithoutLabel(bool has_visible_label) const;
 
   // View:
   void ChildPreferredSizeChanged(View* child) override;
