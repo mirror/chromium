@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdbf5ced_e7672a18",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-02T17:24:50Z",
+      "side": 1,
+      "message": "why not base::MakeUnique anymore?  here and elsewhere.",
+      "revId": "ed0e9ce196694a2c8cbec25c5b7e332716f74893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6b5677_e2383232",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-02T17:24:50Z",
+      "side": 1,
+      "message": "please add a thread check.",
+      "revId": "ed0e9ce196694a2c8cbec25c5b7e332716f74893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99bc2426_350258e2",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-02T17:24:50Z",
+      "side": 1,
+      "message": "mojo thread\" doesn\u0027t really help me to understand.  mojo will use whatever threads(s) you like; there\u0027s got to be some other way to describe it.\n\nalso, is the mojo thread different than the thread used to call the other methods?  i\u0027m guessing not, since things like OnBeginFrame \u003d\u003e SubmitFrame \u003d\u003e has a thread check.\n\nare there any fns that run on different thread in this class?\n\nnit: i think s/thread/sequence .",
+      "revId": "ed0e9ce196694a2c8cbec25c5b7e332716f74893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1acc87bf_a3a9976f",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-02T17:24:50Z",
+      "side": 1,
+      "message": "you might want \"SEQUENCE_CHECKER\", unless this class has actual thread affinity.  THREAD_CHECKER gets mad if the thread changes, even if the scheduler has guaranteed proper ordering in the sequence.\n\ni don\u0027t know what the intended semantics are, but i suspect that sequence is strong enough.",
+      "revId": "ed0e9ce196694a2c8cbec25c5b7e332716f74893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
