@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b949f00_cdc3c224",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T18:16:56Z",
+      "side": 1,
+      "message": "Can this call Create(protocol, host, port, suborigin) instead?",
+      "revId": "cf9251d30f00bcb220d73c5c252d4759a5480321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
