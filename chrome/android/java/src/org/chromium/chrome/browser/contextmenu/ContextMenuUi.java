@@ -34,4 +34,10 @@ public interface ContextMenuUi {
     void displayMenu(Activity activity, ContextMenuParams params,
             List<Pair<Integer, List<ContextMenuItem>>> items, Callback<Integer> onItemClicked,
             Runnable onMenuShown, Runnable onMenuClosed);
+
+    /**
+     * Gets the max width and height of the context menu in pixels.
+     * @return The array containing the maximum width and the height in that order.
+     */
+    int[] getContextMenuMaxDimensPx();
 }
