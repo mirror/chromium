@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d50c3550_a66b25e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-02T15:26:22Z",
+      "side": 1,
+      "message": "\"Fix null-dereference in U2fMessage:::AddContinuationPacket\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "fbef51db6918bc9f550f31de7e8c0edbd1010bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12507333_ef5716cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-02T15:26:22Z",
+      "side": 1,
+      "message": "Use the commit position: r513104",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "fbef51db6918bc9f550f31de7e8c0edbd1010bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
