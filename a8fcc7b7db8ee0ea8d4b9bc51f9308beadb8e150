@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "45023387_c0b18665",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-02T12:42:00Z",
+      "side": 1,
+      "message": "I hadn\u0027t tried that because I didn\u0027t know about \"/slow\" (thanks!).\n\nI did now, and it doesn\u0027t work quite as suggested. Apparently DocumentAvailableInMainFrame can fire before that slow script finishes loading. What does seem to work is navigating to \"/slow\" directly; I\u0027ve added that as a separate test.\n\nGenerally, I find it cleaner to explicitly wait for the desired event, rather than adding some arbitrary timeout/delay, though admittedly it does make the test code a lot simpler here. OTOH it delays the test by a second, which isn\u0027t ideal.\nAnyway, I think there\u0027s some value in both variants, so how about just keeping both?",
+      "parentUuid": "dc138e51_3fbd6ca4",
+      "range": {
+        "startLine": 166,
+        "startChar": 62,
+        "endLine": 166,
+        "endChar": 0
+      },
+      "revId": "a8fcc7b7db8ee0ea8d4b9bc51f9308beadb8e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50b98074_1d1958e4",
         "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
         "patchSetId": 9
@@ -76,6 +100,30 @@
       "writtenOn": "2017-10-30T20:42:09Z",
       "side": 1,
       "message": "Would it work if, instead of introducing the bool, you use a CancelableCallback and cancel on those two events?",
+      "range": {
+        "startLine": 247,
+        "startChar": 30,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "a8fcc7b7db8ee0ea8d4b9bc51f9308beadb8e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f1acf0_7e5f7bbf",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-02T12:42:00Z",
+      "side": 1,
+      "message": "Unfortunately no: We still need to be called back in the \"canceled\" case, so that we can clean up our state (|thumbnailing_context_|). So at least it\u0027d need some more refactoring, and I\u0027m not sure if the end result would be better than what we have now (though I also don\u0027t like that bool). In any case, I\u0027d like to leave that refactoring for a possible followup. WDYT?",
+      "parentUuid": "e2468f09_3dc0a2c1",
       "range": {
         "startLine": 247,
         "startChar": 30,
