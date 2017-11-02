@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "666dfaff_2b96c8d3",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T17:58:05Z",
+      "side": 1,
+      "message": "s/success/succeed/",
+      "revId": "7cd417258b275872d690695338bfba266dda67bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
