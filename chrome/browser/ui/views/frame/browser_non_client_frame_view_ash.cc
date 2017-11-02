@@ -75,7 +75,8 @@ BrowserNonClientFrameViewAsh::BrowserNonClientFrameViewAsh(
       caption_button_container_(nullptr),
       back_button_(nullptr),
       window_icon_(nullptr),
-      hosted_app_button_container_(nullptr) {
+      hosted_app_button_container_(nullptr),
+      maybe_paint_(true) {
   ash::wm::InstallResizeHandleWindowTargeterForWindow(frame->GetNativeWindow(),
                                                       nullptr);
   ash::Shell::Get()->AddShellObserver(this);
@@ -179,8 +180,9 @@ int BrowserNonClientFrameViewAsh::GetTopInset(bool restored) const {
     if (immersive_controller->IsEnabled() &&
         !immersive_controller->IsRevealed()) {
       return (-1) * browser_view()->GetTabStripHeight();
+    } else if (frame()->IsFullscreen()) {
+      return 0;
     }
-    return 0;
   }
 
   if (!browser_view()->IsTabStripVisible()) {
@@ -368,10 +370,12 @@ void BrowserNonClientFrameViewAsh::OnOverviewModeStarting() {
   frame()->GetNativeWindow()->SetProperty(aura::client::kTopViewColor,
                                           GetFrameColor());
   caption_button_container_->SetVisible(false);
+  MaybePaintHeader(false);
 }
 
 void BrowserNonClientFrameViewAsh::OnOverviewModeEnded() {
   caption_button_container_->SetVisible(true);
+  MaybePaintHeader(true);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -493,5 +497,16 @@ bool BrowserNonClientFrameViewAsh::ShouldPaint() const {
   if (immersive_mode_controller->IsEnabled())
     return immersive_mode_controller->IsRevealed();
 
-  return !frame()->IsFullscreen();
+  if (frame()->IsFullscreen())
+    return false;
+
+  return maybe_paint_ || browser_view()->IsBrowserTypeNormal();
+}
+
+void BrowserNonClientFrameViewAsh::MaybePaintHeader(bool paint) {
+  if (maybe_paint_ == paint)
+    return;
+
+  maybe_paint_ = paint;
+  SchedulePaint();
 }

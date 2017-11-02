@@ -111,6 +111,8 @@ class BrowserNonClientFrameViewAsh : public BrowserNonClientFrameView,
   // need their frames painted.
   bool ShouldPaint() const;
 
+  void MaybePaintHeader(bool paint);
+
   // View which contains the window controls.
   ash::FrameCaptionButtonContainerView* caption_button_container_;
 
@@ -125,6 +127,11 @@ class BrowserNonClientFrameViewAsh : public BrowserNonClientFrameView,
   // Container for extra frame buttons shown for hosted app windows.
   // Owned by views hierarchy.
   HostedAppButtonContainer* hosted_app_button_container_;
+
+  // False to skip painting for v1 apps. However, in immersive fullscreen
+  // revealed mode, the header should be painted even this value is false. This
+  // value has no effect for normal browser type.
+  bool maybe_paint_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserNonClientFrameViewAsh);
 };

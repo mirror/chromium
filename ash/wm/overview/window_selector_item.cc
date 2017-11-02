@@ -365,8 +365,6 @@ class WindowSelectorItem::RoundedContainerView
   void OnLayerAnimationEnded(ui::LayerAnimationSequence* sequence) override {
     if (0 != (sequence->properties() &
               ui::LayerAnimationElement::AnimatableProperty::OPACITY)) {
-      if (item_)
-        item_->HideHeader();
       StopObservingLayerAnimations();
       AnimateColor(gfx::Tween::EASE_IN, kSelectorColorSlideMilliseconds);
     }
@@ -578,10 +576,6 @@ void WindowSelectorItem::CloseWindow() {
   AnimateOpacity(0.0,
                  OverviewAnimationType::OVERVIEW_ANIMATION_CLOSE_SELECTOR_ITEM);
   transform_window_.Close();
-}
-
-void WindowSelectorItem::HideHeader() {
-  transform_window_.HideHeader();
 }
 
 void WindowSelectorItem::OnMinimizedStateChanged() {
