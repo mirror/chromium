@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59b05b38_a71eb8d4",
+        "filename": "chrome/browser/extensions/api/notifications/extension_notification_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-02T23:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2540ac9d_e9995016",
+      "revId": "d2f06341b7a16eaaabd4458f65164b88ce2be62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fd0f9d8_63f98ee4",
         "filename": "chrome/browser/extensions/api/notifications/notifications_api.cc",
         "patchSetId": 9
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "a918be4d_b4ca545a",
+        "filename": "chrome/browser/extensions/api/notifications/notifications_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-02T23:13:17Z",
+      "side": 1,
+      "message": "thanks!",
+      "parentUuid": "31e7b4a0_b487ea13",
+      "revId": "d2f06341b7a16eaaabd4458f65164b88ce2be62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e616327f_8e4b861a",
         "filename": "chrome/browser/notifications/fullscreen_notification_blocker.cc",
         "patchSetId": 9
@@ -86,6 +122,24 @@
       "revId": "d2f06341b7a16eaaabd4458f65164b88ce2be62d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f5ffb4_fcd86151",
+        "filename": "chrome/browser/notifications/fullscreen_notification_blocker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-02T23:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e616327f_8e4b861a",
+      "revId": "d2f06341b7a16eaaabd4458f65164b88ce2be62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
