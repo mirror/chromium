@@ -29512,7 +29512,7 @@ Called by update_use_counter_css.py.-->
   <int value="1000" label="STALE_AT_DOWNLOADING">
     Entry became stale while at the DOWNLOADING state.
   </int>
-  <int value="1050" label="STALE_AT_IMPORTING">
+  <int value="1050" label="deprecated: STALE_AT_IMPORTING">
     Entry became stale while at the IMPORTING state.
   </int>
   <int value="1100" label="STALE_AT_UNKNOWN">
@@ -29529,6 +29529,10 @@ Called by update_use_counter_css.py.-->
   </int>
   <int value="1500" label="MAXIMUM_CLOCK_BACKWARD_SKEW_EXCEEDED">
     The clock was set backwards too far in time.
+  </int>
+  <int value="1600" label="IMPORT_ABORTED">
+    The importing was cancelled because it was not completed in time, probably
+    due to that Chrome was killed before it was done.
   </int>
 </enum>
 

@@ -39,7 +39,6 @@ const base::TimeDelta FreshnessPeriodForState(PrefetchItemState state) {
       return base::TimeDelta::FromDays(1);
     // Bucket 3.
     case PrefetchItemState::DOWNLOADING:
-    case PrefetchItemState::IMPORTING:
       return kPrefetchDownloadLifetime;
     default:
       NOTREACHED();
@@ -59,8 +58,6 @@ PrefetchItemErrorCode ErrorCodeForState(PrefetchItemState state) {
       return PrefetchItemErrorCode::STALE_AT_RECEIVED_BUNDLE;
     case PrefetchItemState::DOWNLOADING:
       return PrefetchItemErrorCode::STALE_AT_DOWNLOADING;
-    case PrefetchItemState::IMPORTING:
-      return PrefetchItemErrorCode::STALE_AT_IMPORTING;
     default:
       NOTREACHED();
   }
@@ -147,14 +144,14 @@ Result FinalizeStaleEntriesSync(StaleEntryFinalizerTask::NowGetter now_getter,
   if (!transaction.Begin())
     return Result::NO_MORE_WORK;
 
-  static constexpr std::array<PrefetchItemState, 6> expirable_states = {{
+  static constexpr std::array<PrefetchItemState, 5> expirable_states = {{
       // Bucket 1.
       PrefetchItemState::NEW_REQUEST,
       // Bucket 2.
       PrefetchItemState::AWAITING_GCM, PrefetchItemState::RECEIVED_GCM,
       PrefetchItemState::RECEIVED_BUNDLE,
       // Bucket 3.
-      PrefetchItemState::DOWNLOADING, PrefetchItemState::IMPORTING,
+      PrefetchItemState::DOWNLOADING,
   }};
   base::Time now = now_getter.Run();
   for (PrefetchItemState state : expirable_states) {
