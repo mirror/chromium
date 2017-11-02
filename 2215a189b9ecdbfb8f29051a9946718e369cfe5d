@@ -22,6 +22,30 @@
       "revId": "2215a189b9ecdbfb8f29051a9946718e369cfe5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a56803_0e4a9795",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 1636,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-02T23:02:42Z",
+      "side": 1,
+      "message": "Thanks for pointing this out! Now updated to fall back to the same method.",
+      "parentUuid": "d8da24af_e0a11b7c",
+      "range": {
+        "startLine": 1635,
+        "startChar": 42,
+        "endLine": 1636,
+        "endChar": 62
+      },
+      "revId": "2215a189b9ecdbfb8f29051a9946718e369cfe5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
