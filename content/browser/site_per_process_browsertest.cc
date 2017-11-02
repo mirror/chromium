@@ -286,6 +286,29 @@ double GetPageScaleFactor(Shell* shell) {
       .page_scale_factor;
 }
 
+class HitTestCallback {
+ public:
+  HitTestCallback() : weak_ptr_factory_(this) {}
+  void Callback(int frame_id) {
+    callback_recieved_ = true;
+    frame_id_ = frame_id;
+  }
+
+  base::WeakPtr<HitTestCallback> GetWeakPtr() {
+    return weak_ptr_factory_.GetWeakPtr();
+  }
+
+  bool CallbackRecieved() { return callback_recieved_; }
+  int FrameId() { return frame_id_; }
+
+ private:
+  bool callback_recieved_ = false;
+  int frame_id_;
+  base::WeakPtrFactory<HitTestCallback> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(HitTestCallback);
+};
+
 // Helper function that performs a surface hittest.
 void SurfaceHitTestTestHelper(
     Shell* shell,
@@ -343,6 +366,22 @@ void SurfaceHitTestTestHelper(
   child_event.click_count = 1;
   main_frame_monitor.ResetEventReceived();
   child_frame_monitor.ResetEventReceived();
+
+  HitTestCallback hit_test_callback;
+  root->current_frame_host()->GetInputTargetClient()->WidgetRoutingIdAt(
+      gfx::Point(child_event.PositionInWidget().x,
+                 child_event.PositionInWidget().y),
+      base::Bind(&HitTestCallback::Callback, hit_test_callback.GetWeakPtr()));
+
+  while (!hit_test_callback.CallbackRecieved()) {
+    base::RunLoop run_loop;
+    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE, run_loop.QuitClosure(), TestTimeouts::tiny_timeout());
+    run_loop.Run();
+  }
+  ASSERT_EQ(rwhv_child->GetRenderWidgetHost()->GetRoutingID(),
+            hit_test_callback.FrameId());
+
   router->RouteMouseEvent(root_view, &child_event, ui::LatencyInfo());
 
   EXPECT_TRUE(child_frame_monitor.EventWasReceived());
