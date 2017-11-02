@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "fa59b2c9_9090ed75",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-02T01:54:32Z",
+      "side": 1,
+      "message": "SGTM!",
+      "parentUuid": "40113153_7fd4a802",
+      "revId": "172269f1a548abbcc7712a3a56483b5b2ee036e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf9276c7_aae471a0",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 24

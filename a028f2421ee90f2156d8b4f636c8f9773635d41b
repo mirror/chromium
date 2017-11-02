@@ -16,6 +16,137 @@
       "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef431d55_3db840ec",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletGlobalScope.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-02T01:54:32Z",
+      "side": 1,
+      "message": "GetThread() should return a valid instance while this context is alive. Can you remove the former condition?\n\nI know this was necessary because we needed to make AnimationWorkletGlobalScope outlive WorkerThread for running MutateWithEvent(), and IsContextThread() can be called after WorkerThread destruction. However, in the latest patchset, we no longer need it because MutateWithEvent() is moved to AnimationWorkletProxyClientImpl.",
+      "range": {
+        "startLine": 41,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a22198_36faec55",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-02T01:54:32Z",
+      "side": 1,
+      "message": "Can you also nullify |global_scope_| so that it\u0027s able to be GC\u0027ed as soon as possible? Without this, a posted task (MutateWithEvent) may extend the lifetime.",
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478e4c39_d1485cfb",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-02T01:54:32Z",
+      "side": 1,
+      "message": "Sorry for my misdirection. This |global_scope_| access could also cause race condition, so can you remove the latter condition?\n\nThe intention of this DCHECK is to confirm we\u0027re on the compositor thread. It\u0027d be nice that we\u0027ll have a thread checker specific for the compositor thread like IsCompositorThread() in a following CL.",
+      "range": {
+        "startLine": 57,
+        "startChar": 29,
+        "endLine": 57,
+        "endChar": 42
+      },
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31cef471_f524f50e",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-02T01:54:32Z",
+      "side": 1,
+      "message": "Can you add a TODO comment about switching GetSharedBackingThread to TaskRunnerHelper?",
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e842b2bc_34c3adca",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThread.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-02T01:54:32Z",
+      "side": 1,
+      "message": "Do we need to move these functions from private to protected?",
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79438234_2be0a44a",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-02T01:54:32Z",
+      "side": 1,
+      "message": "\u003d default; ?",
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46422e1e_0a949573",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-02T01:54:32Z",
+      "side": 1,
+      "message": "Can you remove this line?",
+      "revId": "a028f2421ee90f2156d8b4f636c8f9773635d41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
