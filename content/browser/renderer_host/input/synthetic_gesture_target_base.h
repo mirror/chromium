@@ -52,6 +52,8 @@ class SyntheticGestureTargetBase : public SyntheticGestureTarget {
 
   float GetMinScalingSpanInDips() const override;
 
+  int GetMouseWheelTickMultiplier() const override;
+
  protected:
   RenderWidgetHostImpl* render_widget_host() const { return host_; }
 
