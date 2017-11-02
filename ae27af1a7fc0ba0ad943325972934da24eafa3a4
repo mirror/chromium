@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69165dc5_6e937359",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-02T00:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d471e892_3326d180",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 16
+      },
+      "revId": "ae27af1a7fc0ba0ad943325972934da24eafa3a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "637d89ca_bc193689",
         "filename": "chrome/browser/media/platform_verification_impl.cc",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "ae27af1a7fc0ba0ad943325972934da24eafa3a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ff40f9_22e92033",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-02T00:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "637d89ca_bc193689",
+      "revId": "ae27af1a7fc0ba0ad943325972934da24eafa3a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "ae27af1a7fc0ba0ad943325972934da24eafa3a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b5e325_35a20402",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-02T00:22:07Z",
+      "side": 1,
+      "message": "Changed to GetStorageIdSaltFromProfile.",
+      "parentUuid": "c9e11338_97ddc200",
+      "range": {
+        "startLine": 31,
+        "startChar": 21,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "ae27af1a7fc0ba0ad943325972934da24eafa3a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
