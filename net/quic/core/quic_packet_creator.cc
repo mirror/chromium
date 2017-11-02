@@ -595,4 +595,10 @@ bool QuicPacketCreator::StreamFrameStartsWithChlo(
   return framer_->StartsWithChlo(frame.stream_id, frame.offset);
 }
 
+void QuicPacketCreator::SetConnectionIdLength(QuicConnectionIdLength length) {
+  DCHECK(framer_->perspective() == Perspective::IS_SERVER ||
+         length != PACKET_0BYTE_CONNECTION_ID);
+  connection_id_length_ = length;
+}
+
 }  // namespace net

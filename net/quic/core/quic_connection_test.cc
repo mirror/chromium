@@ -333,6 +333,7 @@ class TestPacketWriter : public QuicPacketWriter {
     }
 
     last_packet_size_ = packet.length();
+    last_packet_header_ = framer_.header();
 
     if (!write_pause_time_delta_.IsZero()) {
       clock_->AdvanceTime(write_pause_time_delta_);
@@ -406,6 +407,10 @@ class TestPacketWriter : public QuicPacketWriter {
 
   size_t last_packet_size() { return last_packet_size_; }
 
+  const QuicPacketHeader& last_packet_header() const {
+    return last_packet_header_;
+  }
+
   const QuicVersionNegotiationPacket* version_negotiation_packet() {
     return framer_.version_negotiation_packet();
   }
@@ -451,6 +456,7 @@ class TestPacketWriter : public QuicPacketWriter {
   QuicTransportVersion version_;
   SimpleQuicFramer framer_;
   size_t last_packet_size_;
+  QuicPacketHeader last_packet_header_;
   bool write_blocked_;
   bool write_should_fail_;
   bool block_on_next_write_;
@@ -1066,6 +1072,9 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
 
   void set_perspective(Perspective perspective) {
     connection_.set_perspective(perspective);
+    if (perspective == Perspective::IS_SERVER) {
+      connection_.set_can_truncate_connection_ids(true);
+    }
     QuicFramerPeer::SetPerspective(&peer_framer_,
                                    InvertPerspective(perspective));
   }
@@ -3770,6 +3779,8 @@ TEST_P(QuicConnectionTest, LoopThroughSendingPackets) {
 }
 
 TEST_P(QuicConnectionTest, LoopThroughSendingPacketsWithTruncation) {
+  set_perspective(Perspective::IS_SERVER);
+  QuicPacketCreatorPeer::SetSendVersionInPacket(creator_, false);
   // Set up a larger payload than will fit in one packet.
   const string payload(connection_.max_packet_length(), 'a');
   EXPECT_CALL(*send_algorithm_, SetFromConfig(_, _)).Times(AnyNumber());
@@ -5199,6 +5210,25 @@ TEST_P(QuicConnectionTest, MaxPacingRate) {
   EXPECT_EQ(0, connection_.MaxPacingRate().ToBytesPerSecond());
   connection_.SetMaxPacingRate(QuicBandwidth::FromBytesPerSecond(100));
   EXPECT_EQ(100, connection_.MaxPacingRate().ToBytesPerSecond());
+}
+
+TEST_P(QuicConnectionTest, ClientAlwaysSendConnectionId) {
+  EXPECT_EQ(Perspective::IS_CLIENT, connection_.perspective());
+  EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _)).Times(1);
+  connection_.SendStreamDataWithString(3, "foo", 0, NO_FIN);
+  EXPECT_EQ(PACKET_8BYTE_CONNECTION_ID,
+            writer_->last_packet_header().connection_id_length);
+
+  EXPECT_CALL(*send_algorithm_, SetFromConfig(_, _));
+  QuicConfig config;
+  QuicConfigPeer::SetReceivedBytesForConnectionId(&config, 0);
+  connection_.SetFromConfig(config);
+
+  EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _)).Times(1);
+  connection_.SendStreamDataWithString(3, "bar", 3, NO_FIN);
+  // Verify connection id is still sent in the packet.
+  EXPECT_EQ(PACKET_8BYTE_CONNECTION_ID,
+            writer_->last_packet_header().connection_id_length);
 }
 
 }  // namespace

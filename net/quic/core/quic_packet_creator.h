@@ -169,9 +169,7 @@ class QUIC_EXPORT_PRIVATE QuicPacketCreator {
     return connection_id_length_;
   }
 
-  void set_connection_id_length(QuicConnectionIdLength length) {
-    connection_id_length_ = length;
-  }
+  void SetConnectionIdLength(QuicConnectionIdLength length);
 
   QuicByteCount max_packet_length() const { return max_packet_length_; }
 

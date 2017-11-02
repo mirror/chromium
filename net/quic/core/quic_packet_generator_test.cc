@@ -19,6 +19,7 @@
 #include "net/quic/platform/api/quic_string_piece.h"
 #include "net/quic/platform/api/quic_test.h"
 #include "net/quic/test_tools/mock_random.h"
+#include "net/quic/test_tools/quic_framer_peer.h"
 #include "net/quic/test_tools/quic_packet_creator_peer.h"
 #include "net/quic/test_tools/quic_packet_generator_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
@@ -787,6 +788,7 @@ TEST_F(QuicPacketGeneratorTest, NotWritableThenBatchOperations2) {
 }
 
 TEST_F(QuicPacketGeneratorTest, TestConnectionIdLength) {
+  QuicFramerPeer::SetPerspective(&framer_, Perspective::IS_SERVER);
   generator_.SetConnectionIdLength(0);
   EXPECT_EQ(PACKET_0BYTE_CONNECTION_ID, creator_->connection_id_length());
 
