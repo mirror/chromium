@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45889c93_150a8b86",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-02T22:15:30Z",
+      "side": 1,
+      "message": "Does this return the correct height if the message is long (eg. in German) and needs to be displayed on several lines? I\u0027m not sure how the label would take the clamped width into account for its preferred height calculation using this approach. It seems like the ctor should be calling views::Label::SizeToFit or SetMaximumWidth with some constant, instead of clamping the width here.",
+      "revId": "4eca881b6700ae394478f0284f2db798946c8d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
