@@ -51,7 +51,8 @@ AppCacheRequestHandler::AppCacheRequestHandler(
       old_host_id_(kAppCacheNoHostId),
       cache_id_(kAppCacheNoCacheId),
       service_(host_->service()),
-      request_(std::move(request)) {
+      request_(std::move(request)),
+      weak_factory_(this) {
   DCHECK(host_);
   DCHECK(service_);
   host_->AddObserver(this);
@@ -347,7 +348,8 @@ std::unique_ptr<AppCacheJob> AppCacheRequestHandler::CreateJob(
   std::unique_ptr<AppCacheJob> job;
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     job.reset(new AppCacheURLLoaderJob(request_->AsURLLoaderRequest(),
-                                       storage(), std::move(loader_callback_)));
+                                       storage(), weak_factory_.GetWeakPtr(),
+                                       std::move(loader_callback_)));
   } else {
     job.reset(new AppCacheURLRequestJob(
         request_->GetURLRequest(), network_delegate, storage(), host_,
@@ -613,6 +615,9 @@ bool AppCacheRequestHandler::MaybeCreateLoaderForResponse(
 
 base::Optional<SubresourceLoaderParams>
 AppCacheRequestHandler::MaybeCreateSubresourceLoaderParams() {
+  if (!should_create_subresource_loader_)
+    return base::nullopt;
+
   // The factory is destroyed when the renderer drops the connection.
   mojom::URLLoaderFactoryPtr factory_ptr;
   AppCacheSubresourceURLFactory::CreateURLLoaderFactory(
