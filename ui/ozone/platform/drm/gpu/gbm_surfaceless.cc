@@ -104,13 +104,22 @@ void GbmSurfaceless::SwapBuffersAsync(const SwapCompletionCallback& callback) {
     return;
   }
 
+  // TODO: the following should be replaced by a per surface flush as it gets
+  // implemented in GL drivers.
+  EGLSyncKHR fence = InsertFence(has_implicit_external_sync_);
+  if (!fence) {
+    callback.Run(gfx::SwapResult::SWAP_FAILED);
+    return;
+  }
+
   // TODO(dcastagna): remove glFlush since eglImageFlushExternalEXT called on
   // the image should be enough (crbug.com/720045).
   glFlush();
   unsubmitted_frames_.back()->Flush();
 
-  SwapCompletionCallback surface_swap_callback = base::Bind(
-      &GbmSurfaceless::SwapCompleted, weak_factory_.GetWeakPtr(), callback);
+  SwapCompletionCallback surface_swap_callback =
+      base::Bind(&GbmSurfaceless::SwapCompleted, weak_factory_.GetWeakPtr(),
+                 fence, callback);
 
   PendingFrame* frame = unsubmitted_frames_.back().get();
   frame->callback = surface_swap_callback;
@@ -126,29 +135,15 @@ void GbmSurfaceless::SwapBuffersAsync(const SwapCompletionCallback& callback) {
   // This means |is_on_external_drm_device_| could be incorrectly set to true
   // the first time we're testing it.
   if (rely_on_implicit_sync_ && !is_on_external_drm_device_) {
-    frame->ready = true;
-    SubmitFrame();
-    return;
+    frame->render_wait_task = base::BindOnce(&base::DoNothing);
+  } else {
+    frame->render_wait_task =
+        base::BindOnce(&WaitForFence, GetDisplay(), fence);
   }
 
-  // TODO: the following should be replaced by a per surface flush as it gets
-  // implemented in GL drivers.
-  EGLSyncKHR fence = InsertFence(has_implicit_external_sync_);
-  if (!fence) {
-    callback.Run(gfx::SwapResult::SWAP_FAILED);
-    return;
-  }
+  frame->ready = true;
 
-  base::Closure fence_wait_task =
-      base::Bind(&WaitForFence, GetDisplay(), fence);
-
-  base::Closure fence_retired_callback = base::Bind(
-      &GbmSurfaceless::FenceRetired, weak_factory_.GetWeakPtr(), fence, frame);
-
-  base::PostTaskWithTraitsAndReply(
-      FROM_HERE,
-      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      fence_wait_task, fence_retired_callback);
+  SubmitFrame();
 }
 
 void GbmSurfaceless::PostSubBufferAsync(
@@ -224,7 +219,8 @@ void GbmSurfaceless::SubmitFrame() {
       return;
     }
 
-    window_->SchedulePageFlip(planes_, frame->callback);
+    window_->SchedulePageFlip(planes_, std::move(frame->render_wait_task),
+                              frame->callback);
     planes_.clear();
   }
 }
@@ -237,14 +233,10 @@ EGLSyncKHR GbmSurfaceless::InsertFence(bool implicit) {
                           implicit ? attrib_list : NULL);
 }
 
-void GbmSurfaceless::FenceRetired(EGLSyncKHR fence, PendingFrame* frame) {
-  eglDestroySyncKHR(GetDisplay(), fence);
-  frame->ready = true;
-  SubmitFrame();
-}
-
-void GbmSurfaceless::SwapCompleted(const SwapCompletionCallback& callback,
+void GbmSurfaceless::SwapCompleted(EGLSyncKHR fence,
+                                   const SwapCompletionCallback& callback,
                                    gfx::SwapResult result) {
+  eglDestroySyncKHR(GetDisplay(), fence);
   callback.Run(result);
   swap_buffers_pending_ = false;
   if (result == gfx::SwapResult::SWAP_FAILED) {

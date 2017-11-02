@@ -18,11 +18,15 @@ DrmWindowProxy::DrmWindowProxy(gfx::AcceleratedWidget widget,
 DrmWindowProxy::~DrmWindowProxy() {}
 
 void DrmWindowProxy::SchedulePageFlip(const std::vector<OverlayPlane>& planes,
+                                      base::OnceClosure render_wait_task,
                                       SwapCompletionOnceCallback callback) {
   auto safe_callback = CreateSafeOnceCallback(std::move(callback));
+  auto safe_render_wait_task =
+      CreateSafeOnceCallback(std::move(render_wait_task));
   drm_thread_->task_runner()->PostTask(
       FROM_HERE, base::BindOnce(&DrmThread::SchedulePageFlip,
                                 base::Unretained(drm_thread_), widget_, planes,
+                                std::move(safe_render_wait_task),
                                 std::move(safe_callback)));
 }
 

@@ -72,6 +72,7 @@ class GbmSurfaceless : public gl::SurfacelessEGL {
 
     bool ready = false;
     std::vector<gl::GLSurfaceOverlay> overlays;
+    base::OnceClosure render_wait_task;
     SwapCompletionCallback callback;
   };
 
@@ -80,7 +81,8 @@ class GbmSurfaceless : public gl::SurfacelessEGL {
   EGLSyncKHR InsertFence(bool implicit);
   void FenceRetired(EGLSyncKHR fence, PendingFrame* frame);
 
-  void SwapCompleted(const SwapCompletionCallback& callback,
+  void SwapCompleted(EGLSyncKHR,
+                     const SwapCompletionCallback& callback,
                      gfx::SwapResult result);
 
   GbmSurfaceFactory* surface_factory_;

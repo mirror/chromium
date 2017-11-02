@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "ui/display/types/display_mode.h"
@@ -76,7 +77,8 @@ class GbmDeviceGenerator : public DrmDeviceGenerator {
 
 }  // namespace
 
-DrmThread::DrmThread() : base::Thread("DrmThread"), binding_(this) {}
+DrmThread::DrmThread()
+    : base::Thread("DrmThread"), binding_(this), weak_factory_(this) {}
 
 DrmThread::~DrmThread() {
   Stop();
@@ -187,7 +189,20 @@ void DrmThread::GetScanoutFormats(
 
 void DrmThread::SchedulePageFlip(gfx::AcceleratedWidget widget,
                                  const std::vector<OverlayPlane>& planes,
+                                 base::OnceClosure render_wait_task,
                                  SwapCompletionOnceCallback callback) {
+  base::OnceClosure render_done_callback =
+      base::Bind(&DrmThread::SchedulePageFlipNoWait, weak_factory_.GetWeakPtr(),
+                 widget, planes, base::Passed(&callback));
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      std::move(render_wait_task), std::move(render_done_callback));
+}
+
+void DrmThread::SchedulePageFlipNoWait(gfx::AcceleratedWidget widget,
+                                       const std::vector<OverlayPlane>& planes,
+                                       SwapCompletionOnceCallback callback) {
   DrmWindow* window = screen_manager_->GetWindow(widget);
   if (window)
     window->SchedulePageFlip(planes, std::move(callback));
