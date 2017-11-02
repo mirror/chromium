@@ -2,10 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <dbghelp.h>
 #include <dia2.h>
 #include <stdio.h>
 
 #include <string>
+
+static const size_t kMaxSymbolLength = 4096;
 
 // Create an IDiaData source and open a PDB file.
 static bool LoadDataFromPdb(const wchar_t* filename,
@@ -101,8 +104,22 @@ static void PrintIfDynamicInitializer(const std::wstring& module,
     if (wcsstr(bstr_name, L"`dynamic initializer for '") ||
         wcsstr(bstr_name, L"`dynamic atexit destructor for '")) {
       wprintf(L"%s: %s\n", module.c_str(), bstr_name);
-      SysFreeString(bstr_name);
     }
+    // As of this writing, Clang does not undecorate the symbol names for
+    // dynamic initializers, so the debug info contains the decorated name,
+    // which starts with "??__E" or "??__F" for atexit destructors. Check for
+    // that, and print the undecorated name if it matches.
+    if (wcsncmp(bstr_name, L"??__E", 5) == 0 ||
+        wcsncmp(bstr_name, L"??__F", 5) == 0) {
+      wchar_t undecorated[kMaxSymbolLength];
+      if (UnDecorateSymbolNameW(bstr_name, undecorated, kMaxSymbolLength,
+                                UNDNAME_NAME_ONLY) == 0) {
+        printf("UnDecorateSymbolNameW failed, %d\n", GetLastError());
+        return;
+      }
+      wprintf(L"%s: %s\n", module.c_str(), undecorated);
+    }
+    SysFreeString(bstr_name);
   }
 }
 
