@@ -78,6 +78,12 @@ bool DevModeBubbleDelegate::ShouldAcknowledgeOnDeactivate() const {
   return false;
 }
 
+bool DevModeBubbleDelegate::ShouldShow(
+    Profile* profile,
+    const ExtensionIdList& affected_extensions) {
+  return !GetProfileExtensionsMap()->count(profile);
+}
+
 bool DevModeBubbleDelegate::ShouldShowExtensionList() const {
   return false;
 }
@@ -106,7 +112,7 @@ const char* DevModeBubbleDelegate::GetKey() {
   return "DevModeBubbleDelegate";
 }
 
-bool DevModeBubbleDelegate::ClearProfileSetAfterAction() {
+bool DevModeBubbleDelegate::ClearProfileExtensionsMapAfterAction() {
   return false;
 }
 
