@@ -246,16 +246,24 @@ class CORE_EXPORT LayoutBoxModelObject : public LayoutObject {
   LayoutUnit PaddingUnder() const { return PhysicalPaddingToLogical().Under(); }
 
   virtual LayoutUnit BorderTop() const {
-    return LayoutUnit(Style()->BorderTopWidth());
+    float ratio = GetDocument().DevicePixelRatio();
+    return LayoutUnit::FromFloatRound(
+        roundf(Style()->BorderTopWidth() * ratio) / ratio);
   }
   virtual LayoutUnit BorderBottom() const {
-    return LayoutUnit(Style()->BorderBottomWidth());
+    float ratio = GetDocument().DevicePixelRatio();
+    return LayoutUnit::FromFloatRound(
+        roundf(Style()->BorderBottomWidth() * ratio) / ratio);
   }
   virtual LayoutUnit BorderLeft() const {
-    return LayoutUnit(Style()->BorderLeftWidth());
+    float ratio = GetDocument().DevicePixelRatio();
+    return LayoutUnit::FromFloatRound(
+        roundf(Style()->BorderLeftWidth() * ratio) / ratio);
   }
   virtual LayoutUnit BorderRight() const {
-    return LayoutUnit(Style()->BorderRightWidth());
+    float ratio = GetDocument().DevicePixelRatio();
+    return LayoutUnit::FromFloatRound(
+        roundf(Style()->BorderRightWidth() * ratio) / ratio);
   }
 
   LayoutUnit BorderBefore() const { return PhysicalBorderToLogical().Before(); }
