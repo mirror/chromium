@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c4d1cbc_a49a58e7",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-02T01:44:31Z",
+      "side": 1,
+      "message": "To avoid buffer overrun, we use CHECK_LE() instead of SECURITY_DCHECK().",
+      "parentUuid": "5355e089_8e130efe",
+      "revId": "b36f942aa7b1e0beacb7a45590aafad2571aa395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d29b185_b9b4184e",
         "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextState.cpp",
         "patchSetId": 4
@@ -51,6 +69,24 @@
       "revId": "b36f942aa7b1e0beacb7a45590aafad2571aa395",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1305eb6_a0d7381e",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-02T01:44:31Z",
+      "side": 1,
+      "message": "SECURITY_{CHECK,DCHECK}() are variation of CHECK/DCHECK.\nThey adds \"Security {CHECK,DCHECK}\" into log file when\nENABLE_SECURITY_ASSERT. This feature is used by trybot to file a security\nbug.\n\nAs xiaochengh@ pointed out, PreprendTextTo() follows AppendTextTo() to\nquit for buffer overrun condition to avoid attack by CHECK()\nand catch in trybot by SECURITY_DCEHCK()",
+      "parentUuid": "92e3d2e4_9b1e1bdf",
+      "revId": "b36f942aa7b1e0beacb7a45590aafad2571aa395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
