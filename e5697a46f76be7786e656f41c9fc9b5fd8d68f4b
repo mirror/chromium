@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f63ef15_dba65f1a",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2546,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-02T01:46:24Z",
+      "side": 1,
+      "message": "nit: What is \"native file system\"? I think we can simplify.",
+      "range": {
+        "startLine": 2546,
+        "startChar": 17,
+        "endLine": 2546,
+        "endChar": 74
+      },
+      "revId": "e5697a46f76be7786e656f41c9fc9b5fd8d68f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24f0ca61_21847ae5",
+        "filename": "tools/metrics/histograms/enums.before.pretty-print.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-02T01:46:24Z",
+      "side": 1,
+      "message": "Remove this file.",
+      "revId": "e5697a46f76be7786e656f41c9fc9b5fd8d68f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
