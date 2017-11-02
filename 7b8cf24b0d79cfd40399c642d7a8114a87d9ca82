@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32d81d6d_a34fd3c6",
+        "filename": "media/base/mime_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-02T00:50:39Z",
+      "side": 1,
+      "message": "We chatted, so mostly for other readers...\n\n\u003cvideo\u003e.canPlayType(\u0027video/mp4\u0027) will now return \"maybe\" for both chrome and chromium, and in chromium the \"maybe\" will more often end up being \"no\". Not expecting a lot of sites to use canPlayType this way though. Hopefully most are supplying the full mime with codecs\u003d (which will still return \"\" for h264 in chromium)",
+      "parentUuid": "cd33c0d5_ff1aa9ac",
+      "revId": "7b8cf24b0d79cfd40399c642d7a8114a87d9ca82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f823be7_f209363e",
         "filename": "media/base/mime_util_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "7b8cf24b0d79cfd40399c642d7a8114a87d9ca82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5231db_c0790943",
+        "filename": "media/base/mime_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-02T00:50:39Z",
+      "side": 1,
+      "message": "yes. they were restricted to just those codecs for minimal backward compat support of this non-standard string.",
+      "parentUuid": "4f823be7_f209363e",
+      "revId": "7b8cf24b0d79cfd40399c642d7a8114a87d9ca82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e2358f88_5c7f7005",
+        "filename": "media/cdm/aes_decryptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-02T00:50:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd3e2055_3c7b74a7",
+      "revId": "7b8cf24b0d79cfd40399c642d7a8114a87d9ca82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c44e5c5_0cd74369",
         "filename": "media/test/pipeline_integration_test.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "7b8cf24b0d79cfd40399c642d7a8114a87d9ca82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfea5462_c9f6641a",
+        "filename": "media/test/pipeline_integration_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-02T00:50:39Z",
+      "side": 1,
+      "message": "LOL. Done.",
+      "parentUuid": "2c44e5c5_0cd74369",
+      "revId": "7b8cf24b0d79cfd40399c642d7a8114a87d9ca82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
