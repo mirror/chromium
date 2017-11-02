@@ -19,6 +19,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.provider.Browser;
 import android.support.customtabs.CustomTabsCallback;
 import android.support.customtabs.CustomTabsIntent;
@@ -139,6 +140,8 @@ public class CustomTabActivity extends ChromeActivity {
     // This boolean is used to do a hack in navigation history for
     // prerender and hidden tab loads with unmatching fragments.
     private boolean mIsFirstLoad;
+
+    private long mStartTime = 0;
 
     private final CustomTabsConnection mConnection = CustomTabsConnection.getInstance();
 
@@ -280,6 +283,12 @@ public class CustomTabActivity extends ChromeActivity {
         mIsClosing = false;
         mIsKeepAlive = mConnection.keepAliveForSession(
                 mIntentDataProvider.getSession(), mIntentDataProvider.getKeepAliveServiceIntent());
+        int sourceOfOpen = getIntent().getIntExtra(CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN,
+                CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN_NONE);
+        if (sourceOfOpen == CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN_WEBAPP
+                || sourceOfOpen == CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN_WEBAPK) {
+            mStartTime = SystemClock.elapsedRealtime();
+        }
     }
 
     @Override
@@ -287,6 +296,15 @@ public class CustomTabActivity extends ChromeActivity {
         super.onStop();
         mConnection.dontKeepAliveForSession(mIntentDataProvider.getSession());
         mIsKeepAlive = false;
+        int sourceOfOpen = getIntent().getIntExtra(CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN,
+                CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN_NONE);
+        if (sourceOfOpen == CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN_WEBAPP) {
+            RecordHistogram.recordTimesHistogram("Webapp.CustomTab.Duration",
+                    SystemClock.elapsedRealtime() - mStartTime, TimeUnit.MILLISECONDS);
+        } else if (sourceOfOpen == CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN_WEBAPK) {
+            RecordHistogram.recordTimesHistogram("WebApk.CustomTab.Duration",
+                    SystemClock.elapsedRealtime() - mStartTime, TimeUnit.MILLISECONDS);
+        }
     }
 
     @Override

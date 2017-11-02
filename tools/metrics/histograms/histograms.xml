@@ -91255,6 +91255,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WebApk.CustomTab.Duration" units="ms">
+  <owner>ranj@chromium.org</owner>
+  <owner>yfriedman@chromium.org</owner>
+  <summary>Records the time during which WebApk opens CustomTab.</summary>
+</histogram>
+
 <histogram name="WebApk.Install.AvailableSpace.Fail" units="MB">
   <owner>hanxi@chromium.org</owner>
   <owner>ranj@chromium.org</owner>
@@ -91559,6 +91565,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Records the time point when a request to update a WebAPK is sent to the
     WebAPK Server.
   </summary>
+</histogram>
+
+<histogram name="Webapp.CustomTab.Duration" units="ms">
+  <owner>ranj@chromium.org</owner>
+  <owner>yfriedman@chromium.org</owner>
+  <summary>Records the time during which Webapp opens CustomTab.</summary>
 </histogram>
 
 <histogram name="Webapp.Install.DisplayMode" enum="WebAppDisplayMode">
