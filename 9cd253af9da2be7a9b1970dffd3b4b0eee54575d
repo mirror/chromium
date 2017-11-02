@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b11e90b_05ff44e4",
+        "filename": "chrome/browser/chromeos/samba_client/smb_provided_file_system.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-11-02T07:40:21Z",
+      "side": 1,
+      "message": "nit: Delete empty line to be consistent with others.",
+      "revId": "9cd253af9da2be7a9b1970dffd3b4b0eee54575d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc76ac3_bc3a6394",
+        "filename": "chrome/browser/chromeos/samba_client/smb_provided_file_system.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-11-02T07:40:21Z",
+      "side": 1,
+      "message": "Just \"return\" here and below.",
+      "revId": "9cd253af9da2be7a9b1970dffd3b4b0eee54575d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
