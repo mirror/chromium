@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "691ec30f_cf5f0246",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-02T03:17:53Z",
+      "side": 1,
+      "message": "nit: Soup",
+      "range": {
+        "startLine": 16,
+        "startChar": 25,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "213d21fab10f2743d30920338109366e22ce9e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
