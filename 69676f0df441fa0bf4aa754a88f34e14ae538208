@@ -34,6 +34,24 @@
       "revId": "69676f0df441fa0bf4aa754a88f34e14ae538208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6618b009_f2430d60",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-02T22:30:57Z",
+      "side": 1,
+      "message": "+reveman@. Do you think we can add more logs in this cl for debugging if the blur+RS caching cause the GPU hang?\n\nHi Xiaoqian,\n\nWe have this bug (in the description) that only can be repro in non-dev mode. Without a flag to turn off this feature, we cannot rule out blur+cache+dim might cause the problem. There is no way to sign a local build to start non-dev mode. Therefore, this could be only way we can debug.\n\nThanks,\nTao",
+      "parentUuid": "637e35b6_b731e667",
+      "revId": "69676f0df441fa0bf4aa754a88f34e14ae538208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
