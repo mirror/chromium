@@ -6,14 +6,14 @@
 #include <memory>
 
 #include "ash/message_center/message_center_controller.h"
-#include "ash/message_center/notifier_settings_view.h"
+#include "ash/message_center/notifier_id_view.h"
 #include "ash/public/interfaces/ash_message_center_controller.mojom.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "ui/message_center/notifier_settings.h"
+#include "ui/message_center/notifier_id.h"
 #include "ui/views/controls/scroll_view.h"
 
 namespace ash {
@@ -100,7 +100,7 @@ class NotifierSettingsViewTest : public AshTestBase {
 
  private:
   TestAshMessageCenterClient client_;
-  std::unique_ptr<NotifierSettingsView> notifier_settings_view_;
+  std::unique_ptr<NotifierSettingsView> notifier_id_view_;
 
   DISALLOW_COPY_AND_ASSIGN(NotifierSettingsViewTest);
 };
@@ -118,17 +118,17 @@ void NotifierSettingsViewTest::SetUp() {
 }
 
 void NotifierSettingsViewTest::TearDown() {
-  notifier_settings_view_.reset();
+  notifier_id_view_.reset();
   AshTestBase::TearDown();
 }
 
 void NotifierSettingsViewTest::InitView() {
-  notifier_settings_view_.reset();
-  notifier_settings_view_ = std::make_unique<NotifierSettingsView>();
+  notifier_id_view_.reset();
+  notifier_id_view_ = std::make_unique<NotifierSettingsView>();
 }
 
 NotifierSettingsView* NotifierSettingsViewTest::GetView() const {
-  return notifier_settings_view_.get();
+  return notifier_id_view_.get();
 }
 
 TEST_F(NotifierSettingsViewTest, TestLearnMoreButton) {

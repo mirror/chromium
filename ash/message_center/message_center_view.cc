@@ -9,7 +9,7 @@
 
 #include "ash/message_center/message_center_button_bar.h"
 #include "ash/message_center/message_center_style.h"
-#include "ash/message_center/notifier_settings_view.h"
+#include "ash/message_center/notifier_id_view.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "base/macros.h"
