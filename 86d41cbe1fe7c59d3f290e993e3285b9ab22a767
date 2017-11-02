@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01e2d5e3_58c43aa1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-02T06:31:38Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 9,
+        "startChar": 28,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "86d41cbe1fe7c59d3f290e993e3285b9ab22a767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9cef033_2c7583ba",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-02T06:31:38Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment -- maybe s/if//?",
+      "revId": "86d41cbe1fe7c59d3f290e993e3285b9ab22a767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
