@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "eb47d1b3_da9a9cc6",
+        "filename": "build/android/buildhooks/java/org/chromium/build/Callback.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-11-02T15:50:38Z",
+      "side": 1,
+      "message": "Ah yes, somehow missed the second sentence in your original comment. Good point!",
+      "parentUuid": "adc8ef1f_24ec8eca",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "25fffd0757144c1a3d0db4af2aef954a841b38d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05602234_1341fe1e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
         "patchSetId": 12
