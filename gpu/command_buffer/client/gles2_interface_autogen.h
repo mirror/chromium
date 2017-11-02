@@ -926,15 +926,10 @@ virtual void BeginRasterCHROMIUM(GLuint texture_id,
                                  GLboolean use_distance_field_text,
                                  GLint pixel_config) = 0;
 virtual void RasterCHROMIUM(const cc::DisplayItemList* list,
-                            GLint translate_x,
-                            GLint translate_y,
-                            GLint clip_x,
-                            GLint clip_y,
-                            GLint clip_w,
-                            GLint clip_h,
-                            GLfloat post_translate_x,
-                            GLfloat post_translate_y,
-                            GLfloat post_scale) = 0;
+                            GLint x,
+                            GLint y,
+                            GLint w,
+                            GLint h) = 0;
 virtual void EndRasterCHROMIUM() = 0;
 virtual void TexStorage2DImageCHROMIUM(GLenum target,
                                        GLenum internalFormat,
