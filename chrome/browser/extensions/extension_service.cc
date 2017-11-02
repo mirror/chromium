@@ -464,7 +464,6 @@ void ExtensionService::Init() {
   LoadExtensionsFromCommandLineFlag(switches::kDisableExtensionsExcept);
   if (load_command_line_extensions)
     LoadExtensionsFromCommandLineFlag(extensions::switches::kLoadExtension);
-  EnableZipUnpackerExtension();
   EnabledReloadableExtensions();
   MaybeFinishShutdownDelayed();
   SetReadyAndNotifyListeners();
@@ -491,8 +490,15 @@ void ExtensionService::EnableZipUnpackerExtension() {
   // by some reason, and cannot re-enable it in any UI. crbug.com/643060
   const std::string& id = extension_misc::kZIPUnpackerExtensionId;
   const Extension* extension = registry_->disabled_extensions().GetByID(id);
-  if (extension && CanEnableExtension(extension))
-    EnableExtension(id);
+  if (!extension) extension =
+      registry_->enabled_extensions().GetByID(id);
+  if (extension /* && CanEnableExtension(extension)*/)
+  {
+    // EnableExtension(id);
+    LOG(ERROR) << "extension found. disable and sync ";
+    DisableExtension(id, extensions::disable_reason::DISABLE_USER_ACTION);
+    ExtensionSyncService::Get(profile_)->SyncExtensionChangeIfNeeded(*extension);
+  }
 #endif
 }
 
@@ -883,17 +889,31 @@ bool ExtensionService::IsExtensionEnabled(
 void ExtensionService::EnableExtension(const std::string& extension_id) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
 
+  LOG(ERROR) << "Enable extension " << extension_id;
   // If the extension is currently reloading, it will be enabled once the reload
   // is complete.
   if (reloading_extensions_.count(extension_id) > 0)
     return;
 
+  if (extension_id == extension_misc::kZIPUnpackerExtensionId) {
+    LOG(ERROR) << "Prevented enabling Zip Unpacker extension.";
+    return;
+  }
   extension_registrar_.EnableExtension(extension_id);
 }
 
 void ExtensionService::DisableExtension(const std::string& extension_id,
                                         int disable_reasons) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
+  LOG(ERROR) << "Disable extension " << extension_id;
+  if (extension_id == extension_misc::kZIPUnpackerExtensionId) {
+    LOG(ERROR) << "Disabling Zip Unpacker extension.";
+  } else {
+    // A hack for debugging.
+    // Trigger status change and sync of zip unpacker when any other extension
+    // status is changed.
+    EnableZipUnpackerExtension();
+  }
   extension_registrar_.DisableExtension(extension_id, disable_reasons);
 }
 
