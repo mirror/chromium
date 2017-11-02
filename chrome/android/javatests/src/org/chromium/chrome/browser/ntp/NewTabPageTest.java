@@ -117,8 +117,7 @@ public class NewTabPageTest {
                 "/test.png", TileTitleSource.UNKNOWN, TileSource.WHITELIST,
                 TileSectionType.PERSONALIZED, new Date()));
 
-        mMostVisitedSites = new FakeMostVisitedSites();
-        mMostVisitedSites.setTileSuggestions(mSiteSuggestions.get(0), mSiteSuggestions.get(1));
+        mMostVisitedSites = NtpUiCaptureTestData.createMostVisitedSites();
         mSuggestionsDeps.getFactory().mostVisitedSites = mMostVisitedSites;
 
         mActivityTestRule.startMainActivityWithURL(UrlConstants.NTP_URL);
@@ -150,17 +149,18 @@ public class NewTabPageTest {
         // Scroll to search bar
         final NewTabPageRecyclerView recyclerView = mNtp.getNewTabPageView().getRecyclerView();
 
+        int scrollAmount = mFakebox.getTop() + mFakebox.getPaddingTop();
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                recyclerView.smoothScrollBy(0, mFakebox.getTop());
+                recyclerView.scrollBy(0, scrollAmount);
             }
         });
 
         CriteriaHelper.pollUiThread(new Criteria(){
             @Override
             public boolean isSatisfied() {
-                return recyclerView.computeVerticalScrollOffset() == mFakebox.getTop();
+                return recyclerView.computeVerticalScrollOffset() == scrollAmount;
             }
         });
 
