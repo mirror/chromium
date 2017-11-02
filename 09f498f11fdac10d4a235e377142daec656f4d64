@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "377964bd_6b23dc73",
+        "filename": "device/vr/openvr/openvr_helpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T23:24:29Z",
+      "side": 1,
+      "message": "Nit: call this openvr_type_converters.h. Note that the PRESUBMIT will ask for the OWNERS rules to be updated too; sorry for not including this in the earlier comments.",
+      "revId": "09f498f11fdac10d4a235e377142daec656f4d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d9d000_2968434c",
+        "filename": "device/vr/openvr/openvr_helpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T23:24:29Z",
+      "side": 1,
+      "message": "Ah I missed that these are optionals. One thing that might make this simpler is:\npose-\u003eorientation.emplace({0.0f, 0.0f, 0.0f, 1.0f});\n\nAlso, please out-of-line this body to a .cc file.",
+      "revId": "09f498f11fdac10d4a235e377142daec656f4d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecfb051e_89274726",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T23:24:29Z",
+      "side": 1,
+      "message": "Nit: please update this comment to mention which process VRPresentationProvider is hosted in, and what processes talk to it. I guess the calling process is typically the renderer, and the hosting process is browser on android. I\u0027m asking because I was under the impression that the code hosting openvr might live in a sandboxed utiltiy process down the road?",
+      "revId": "09f498f11fdac10d4a235e377142daec656f4d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
