@@ -222,6 +222,30 @@
       "revId": "99a1e0fa3321a25cf2fc6575523b3aa791e0d1ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eca844c5_f71979c9",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-02T22:12:09Z",
+      "side": 1,
+      "message": "SimulateGattConnection, or SimulateGattServicesDiscovered is doing this?  \n\nHow does ...Device::IsGattServicesDiscoveryComplete change during this process?  If possible EXPECT that it is false as late as possible in this test.\n\nOK to continue if that\u0027s not possible, we can trust the constructor to start off false... maybe.. (I\u0027m so not a trusting person)",
+      "parentUuid": "8f0da3b7_4a7fb8ec",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "99a1e0fa3321a25cf2fc6575523b3aa791e0d1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
