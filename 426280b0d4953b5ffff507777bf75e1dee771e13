@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e670aac4_2a586795",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 1631,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-02T23:13:13Z",
+      "side": 1,
+      "message": "But you\u0027re still overriding the icon from -iconImageForContents:atIndex: with the one returned by TabUIHelper::GetFavicon(). What if they\u0027re different? The icon routine in TabStripController is much, much more sophisticated than it, and I\u0027m loath to switch to something simpler that doesn\u0027t appear to handle all the cases.",
+      "range": {
+        "startLine": 1631,
+        "startChar": 8,
+        "endLine": 1631,
+        "endChar": 26
+      },
+      "revId": "426280b0d4953b5ffff507777bf75e1dee771e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
