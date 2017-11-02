@@ -63,6 +63,12 @@ ScriptResource::~ScriptResource() {}
 
 void ScriptResource::DidAddClient(ResourceClient* client) {
   DCHECK(ScriptResourceClient::IsExpectedType(client));
+  // Don't emulate streaming the data if we dropped the raw buffered data.
+  if (ResourceBuffer()) {
+    ResourceClientWalker<ScriptResourceClient> walker(Clients());
+    while (ScriptResourceClient* client = walker.Next())
+      client->NotifyAppendData(this);
+  }
   Resource::DidAddClient(client);
 }
 
