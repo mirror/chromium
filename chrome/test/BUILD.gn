@@ -1424,6 +1424,9 @@ test("browser_tests") {
       "../browser/site_details_browsertest.cc",
       "../browser/thumbnails/thumbnail_browsertest.cc",
       "../browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+      "../browser/vr/vr_browser_navigation_test.cc",
+      "../browser/vr/vr_browser_test.cc",
+      "../browser/vr/vr_browser_test.h",
 
       # If this list is used on Android in the future, these browser/speech/*
       # files will probably not be applicable.
@@ -2400,9 +2403,8 @@ test("browser_tests") {
         sources -= [ "../browser/ui/views/select_file_dialog_extension_browsertest.cc" ]
       }
       if (is_win || is_linux) {
-        sources += [
-          "../browser/ui/views/ime/input_ime_apitest_nonchromeos.cc",
-        ]
+        sources +=
+            [ "../browser/ui/views/ime/input_ime_apitest_nonchromeos.cc" ]
       }
     }
     if (enable_desktop_in_product_help) {
