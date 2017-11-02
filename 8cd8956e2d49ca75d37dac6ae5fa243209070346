@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "899ff505_511b0344",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-02T15:25:27Z",
+      "side": 1,
+      "message": "Our goal was to group all policies for AD management devices (to get the ADMX templates right), but attestation isn\u0027t supported for those. It would make sense to add that, though, but I\u0027d prefer to do that in another CL to cut down the complexity of the change a little.",
+      "parentUuid": "b2363a9a_5a492e58",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "339cf6b9_af9157e7",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "c7a49262_59e206f3",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-02T15:25:27Z",
+      "side": 1,
+      "message": "The plan is to move the whole group into SignIn once we support hierarchical groups (that\u0027s next on the plate). Until then we erred on the side of keeping it as is because that probably causes less confusion.",
+      "parentUuid": "339cf6b9_af9157e7",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad684de6_e4e8221f",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -70,6 +106,24 @@
       "writtenOn": "2017-10-27T11:38:47Z",
       "side": 1,
       "message": "Is it intentional that not all device policies are referenced here? For instance, \"DeviceOffHours\" or \"CastReceiverName\" or \"SupervisedUsersEnabled\" (likely not an exhaustive list).\n\nI\u0027m personally not sure which approach is better - either strictly following the Help Center Article or trying to attribute every policy to some group. But I think you\u0027re anyway deviating from the Article in this CL - for instance, \"ExtensionCacheSize\" doesn\u0027t seem to be mentioned in it.",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f4ce31_c1d2781b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-02T15:25:27Z",
+      "side": 1,
+      "message": "The reason some policies are missing is because they were not there when I wrote the script to collect them ;-) We should add them, though. The ones that we didn\u0027t find we moved somewhere we thought would be appropriate, like ExtensionCacheSize.",
+      "parentUuid": "ad684de6_e4e8221f",
       "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
