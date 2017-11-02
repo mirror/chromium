@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1654482_1c2fd23a",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-11-02T19:43:23Z",
+      "side": 1,
+      "message": "git grep strcmp in chrome doesn\u0027t look very consistent... and there\u0027s one case of kTypePropName but five other cases of literal strings used for drm properties. If the string literal was used multiple times, it might make sense, but for this one-off use, does it buy us anything?",
+      "parentUuid": "5a11cbd3_cf0c213f",
+      "revId": "3004f86c2b0095d82fa29cccf2d86397a77c5bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3d47986_cbc8ad4d",
         "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-31T18:56:05Z",
       "side": 1,
       "message": "nit: can this be const char*? Maybe also const uint8_t*?",
+      "revId": "3004f86c2b0095d82fa29cccf2d86397a77c5bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a346b1c_cde8c615",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-11-02T19:43:23Z",
+      "side": 1,
+      "message": "Ah, all the casts can be const. I tried before but I got an error... I think I had a mismatch between the cast type and the variable declaration. Maybe I should use auto here. char vs uint8_t doesn\u0027t matter, I only need the pointer for pointer arithmetic and is guaranteed to be one byte.",
+      "parentUuid": "b3d47986_cbc8ad4d",
       "revId": "3004f86c2b0095d82fa29cccf2d86397a77c5bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9d332de1_83e994b1",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-11-02T19:43:23Z",
+      "side": 1,
+      "message": "I think we agreed that these casts are the right type?",
+      "parentUuid": "7d513d63_3c5c7682",
+      "revId": "3004f86c2b0095d82fa29cccf2d86397a77c5bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63844243_adc371e0",
         "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-31T18:56:05Z",
       "side": 1,
       "message": "Why CHECK and not DCHECK?\nAlso, CHECK_EQ(0, bla.offset) or CHECK(!offset) is preferred.",
+      "revId": "3004f86c2b0095d82fa29cccf2d86397a77c5bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313f76ca_fe43c413",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-11-02T19:43:23Z",
+      "side": 1,
+      "message": "It\u0027s a CHECK because offset can be non-zero and we don\u0027t handle that.  The right thing to do here is to just handle non-zero offsets and remove the CHECK.",
+      "parentUuid": "63844243_adc371e0",
       "revId": "3004f86c2b0095d82fa29cccf2d86397a77c5bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
