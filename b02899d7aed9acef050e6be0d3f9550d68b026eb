@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c459c191_ec727167",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-11-02T01:13:17Z",
+      "side": 1,
+      "message": "maybe you don\u0027t needs O2 at all.\nI\u0027d expect O1 vs O2 on small part of fuzzer makes no noticeable difference.",
+      "revId": "b02899d7aed9acef050e6be0d3f9550d68b026eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a46ea9fa_d62cdeba",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-11-02T01:13:17Z",
+      "side": 1,
+      "message": "80 chars?",
+      "revId": "b02899d7aed9acef050e6be0d3f9550d68b026eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
