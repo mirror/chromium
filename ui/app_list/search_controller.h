@@ -37,6 +37,7 @@ class APP_LIST_EXPORT SearchController {
   void Stop();
 
   void OpenResult(SearchResult* result, int event_flags);
+  void OpenSuggestedApp(SearchResult* suggested_app, int event_flags);
   void InvokeResultAction(SearchResult* result,
                           int action_index,
                           int event_flags);

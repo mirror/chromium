@@ -61,7 +61,7 @@ void ExtensionAppResult::Open(int event_flags) {
   if (!extensions::util::IsAppLaunchable(app_id(), profile()))
     return;
 
-  // Check if enable flow is already running or should be started
+  // Check if enable flow is already running or should be started.
   if (RunExtensionEnableFlow())
     return;
 
@@ -75,6 +75,26 @@ void ExtensionAppResult::Open(int event_flags) {
       extension,
       AppListControllerDelegate::LAUNCH_FROM_APP_LIST_SEARCH,
       event_flags);
+}
+
+void ExtensionAppResult::OpenSuggestedApp(int event_flags) {
+  const extensions::Extension* extension =
+      extensions::ExtensionRegistry::Get(profile())->GetInstalledExtension(
+          app_id());
+  if (!extension)
+    return;
+
+  // Don't auto-enable apps that cannot be launched.
+  if (!extensions::util::IsAppLaunchable(app_id(), profile()))
+    return;
+
+  // Check if enable flow is already running or should be started.
+  if (RunExtensionEnableFlow())
+    return;
+
+  controller()->ActivateApp(profile(), extension,
+                            AppListControllerDelegate::LAUNCH_FROM_APP_LIST,
+                            event_flags);
 }
 
 std::unique_ptr<SearchResult> ExtensionAppResult::Duplicate() const {

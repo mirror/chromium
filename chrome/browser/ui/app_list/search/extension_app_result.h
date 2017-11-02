@@ -40,6 +40,7 @@ class ExtensionAppResult : public AppResult,
 
   // SearchResult overrides:
   void Open(int event_flags) override;
+  void OpenSuggestedApp(int event_flags) override;
   std::unique_ptr<SearchResult> Duplicate() const override;
   ui::MenuModel* GetContextMenuModel() override;
 

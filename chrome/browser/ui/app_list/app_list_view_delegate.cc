@@ -238,6 +238,13 @@ void AppListViewDelegate::OpenSearchResult(app_list::SearchResult* result,
   search_controller_->OpenResult(result, event_flags);
 }
 
+void AppListViewDelegate::OpenSuggestedApp(
+    app_list::SearchResult* suggested_app,
+    bool auto_launch,
+    int event_flags) {
+  search_controller_->OpenSuggestedApp(suggested_app, event_flags);
+}
+
 void AppListViewDelegate::InvokeSearchResultAction(
     app_list::SearchResult* result,
     int action_index,

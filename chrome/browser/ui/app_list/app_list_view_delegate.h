@@ -70,6 +70,9 @@ class AppListViewDelegate : public app_list::AppListViewDelegate,
   void OpenSearchResult(app_list::SearchResult* result,
                         bool auto_launch,
                         int event_flags) override;
+  void OpenSuggestedApp(app_list::SearchResult* suggested_app,
+                        bool auto_launch,
+                        int event_flags) override;
   void InvokeSearchResultAction(app_list::SearchResult* result,
                                 int action_index,
                                 int event_flags) override;

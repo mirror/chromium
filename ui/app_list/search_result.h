@@ -212,6 +212,10 @@ class APP_LIST_EXPORT SearchResult {
   // Opens the result. Clients should use AppListViewDelegate::OpenSearchResult.
   virtual void Open(int event_flags);
 
+  // Opens the suggested app. Clients should use
+  // AppListViewDelegate::OpenSuggestedApp.
+  virtual void OpenSuggestedApp(int event_flags);
+
   gfx::ImageSkia icon_;
   gfx::ImageSkia badge_icon_;
 

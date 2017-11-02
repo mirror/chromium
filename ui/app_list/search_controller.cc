@@ -98,6 +98,16 @@ void SearchController::OpenResult(SearchResult* result, int event_flags) {
   }
 }
 
+void SearchController::OpenSuggestedApp(SearchResult* suggested_app,
+                                        int event_flags) {
+  // This can happen in certain circumstances due to races. See
+  // https://crbug.com/534772
+  if (!suggested_app)
+    return;
+
+  suggested_app->OpenSuggestedApp(event_flags);
+}
+
 void SearchController::InvokeResultAction(SearchResult* result,
                                           int action_index,
                                           int event_flags) {

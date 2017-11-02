@@ -133,6 +133,8 @@ void SearchResult::UpdateFromMatch(const TokenizedString& title,
 
 void SearchResult::Open(int event_flags) {}
 
+void SearchResult::OpenSuggestedApp(int event_flags) {}
+
 void SearchResult::InvokeAction(int action_index, int event_flags) {}
 
 ui::MenuModel* SearchResult::GetContextMenuModel() {

@@ -216,13 +216,22 @@ void SearchResultTileItemView::LogAppLaunch() const {
 
 void SearchResultTileItemView::ButtonPressed(views::Button* sender,
                                              const ui::Event& event) {
-  LogAppLaunch();
+  if (is_suggested_app_) {
+    LogAppLaunch();
+    view_delegate_->OpenSuggestedApp(item_, false, event.flags());
+    return;
+  }
   view_delegate_->OpenSearchResult(item_, false, event.flags());
 }
 
 bool SearchResultTileItemView::OnKeyPressed(const ui::KeyEvent& event) {
   if (event.key_code() == ui::VKEY_RETURN) {
-    LogAppLaunch();
+    if (is_suggested_app_) {
+      LogAppLaunch();
+      view_delegate_->OpenSuggestedApp(item_, false, event.flags());
+      return true;
+    }
+
     view_delegate_->OpenSearchResult(item_, false, event.flags());
     return true;
   }

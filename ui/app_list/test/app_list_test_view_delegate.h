@@ -57,6 +57,9 @@ class AppListTestViewDelegate : public AppListViewDelegate {
   void OpenSearchResult(SearchResult* result,
                         bool auto_launch,
                         int event_flags) override;
+  void OpenSuggestedApp(SearchResult* suggested_app,
+                        bool auto_launch,
+                        int event_flags) override;
   void InvokeSearchResultAction(SearchResult* result,
                                 int action_index,
                                 int event_flags) override {}
@@ -88,6 +91,7 @@ class AppListTestViewDelegate : public AppListViewDelegate {
   int dismiss_count_;
   int stop_speech_recognition_count_;
   int open_search_result_count_;
+  int open_suggested_app_count_;
   int next_profile_app_count_;
   std::map<size_t, int> open_search_result_counts_;
   std::unique_ptr<AppListTestModel> model_;
