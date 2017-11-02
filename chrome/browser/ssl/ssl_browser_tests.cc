@@ -5208,10 +5208,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITestCommittedInterstitials, ErrorPageType) {
   ui_test_utils::NavigateToURL(
       browser(), https_server_expired_.GetURL("/ssl/google.html"));
 
-  // TODO(crbug.com/751951, crbug.com/752372): Get the correct cert error and
-  // security state showing in this test.
-  CheckSecurityState(tab, CertError::NONE, security_state::NONE,
-                     AuthState::SHOWING_ERROR);
+  CheckSecurityState(tab, net::CERT_STATUS_DATE_INVALID,
+                     security_state::DANGEROUS, AuthState::SHOWING_ERROR);
 
   NavigationEntry* entry = tab->GetController().GetVisibleEntry();
   EXPECT_EQ(content::PAGE_TYPE_ERROR, entry->GetPageType());
