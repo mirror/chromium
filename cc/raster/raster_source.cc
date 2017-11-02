@@ -72,7 +72,10 @@ void RasterSource::PlaybackToCanvas(SkCanvas* input_canvas,
   if (target_color_space.IsValid()) {
     color_transform_canvas = SkCreateColorSpaceXformCanvas(
         input_canvas, target_color_space.ToSkColorSpace());
-    raster_canvas = color_transform_canvas.get();
+    // TODO(ccameron): This returns nullptr sometimes. We need to investigate
+    // why and fix it. crbug.com/780415.
+    if (color_transform_canvas)
+      raster_canvas = color_transform_canvas.get();
   }
 
   ClearCanvasForPlayback(raster_canvas);
