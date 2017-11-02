@@ -161,6 +161,7 @@ bool CommandBufferProxyImpl::OnMessageReceived(const IPC::Message& message) {
                         OnSwapBuffersCompleted);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_UpdateVSyncParameters,
                         OnUpdateVSyncParameters);
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_BufferPresented, OnBufferPresented);
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -300,6 +301,12 @@ void CommandBufferProxyImpl::SetUpdateVSyncParametersCallback(
     const UpdateVSyncParametersCallback& callback) {
   CheckLock();
   update_vsync_parameters_completion_callback_ = callback;
+}
+
+void CommandBufferProxyImpl::SetPresentationCallback(
+    const PresentationCallback& callback) {
+  CheckLock();
+  presentation_callback_ = callback;
 }
 
 void CommandBufferProxyImpl::SetNeedsVSync(bool needs_vsync) {
@@ -789,10 +796,11 @@ void CommandBufferProxyImpl::OnSwapBuffersCompleted(
             params.latency_info,
             "CommandBufferProxyImpl::OnSwapBuffersCompleted")) {
       swap_buffers_completion_callback_.Run(std::vector<ui::LatencyInfo>(),
-                                            params.result, mac_frame_ptr);
+                                            params.result, params.count,
+                                            mac_frame_ptr);
     } else {
       swap_buffers_completion_callback_.Run(params.latency_info, params.result,
-                                            mac_frame_ptr);
+                                            params.count, mac_frame_ptr);
     }
   }
 }
@@ -801,6 +809,14 @@ void CommandBufferProxyImpl::OnUpdateVSyncParameters(base::TimeTicks timebase,
                                                      base::TimeDelta interval) {
   if (!update_vsync_parameters_completion_callback_.is_null())
     update_vsync_parameters_completion_callback_.Run(timebase, interval);
+}
+
+void CommandBufferProxyImpl::OnBufferPresented(uint32_t count,
+                                               base::TimeTicks timestamp,
+                                               base::TimeDelta refresh,
+                                               uint32_t flags) {
+  if (!presentation_callback_.is_null())
+    presentation_callback_.Run(count, timestamp, refresh, flags);
 }
 
 void CommandBufferProxyImpl::OnGpuSyncReplyError() {

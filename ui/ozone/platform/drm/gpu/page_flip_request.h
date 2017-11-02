@@ -19,7 +19,10 @@ class PageFlipRequest : public base::RefCounted<PageFlipRequest> {
  public:
   PageFlipRequest(int crtc_count, SwapCompletionOnceCallback callback);
 
-  void Signal(gfx::SwapResult result);
+  void Signal(gfx::SwapResult result,
+              base::TimeTicks time,
+              base::TimeDelta refresh,
+              uint32_t flags);
 
  private:
   friend class base::RefCounted<PageFlipRequest>;
