@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "65f1cef8_765840dc",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-02T20:50:33Z",
+      "side": 1,
+      "message": "Actually, the pause stuff is common at least, so I\u0027ll factor that out.",
+      "parentUuid": "0a562b9f_56e8248d",
+      "range": {
+        "startLine": 94,
+        "startChar": 26,
+        "endLine": 94,
+        "endChar": 38
+      },
+      "revId": "bc501c3164eab1a8710e353547249700484da54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e82985e_ec9245b8",
         "filename": "content/renderer/media_recorder/audio_track_recorder.h",
         "patchSetId": 3
