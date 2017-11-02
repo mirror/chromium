@@ -16,6 +16,24 @@
       "revId": "fa25f69594f013a9ae7f93b8eb7a23d6ae5ea16a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00c1198_6c3f8ff2",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-02T12:50:39Z",
+      "side": 1,
+      "message": "VerifyXml does indeed exist in that CL. Look at line 50 in the URL you link to.",
+      "parentUuid": "fcf559fb_a4845945",
+      "revId": "fa25f69594f013a9ae7f93b8eb7a23d6ae5ea16a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
