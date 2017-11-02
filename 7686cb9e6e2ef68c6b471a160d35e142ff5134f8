@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "633cf6ba_f66f0f4d",
+        "filename": "ios/chrome/browser/payments/payment_request_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-11-02T15:42:51Z",
+      "side": 1,
+      "message": "Maybe this method can be renamed? Like, IsAbleToPay or something else to avoid confusing it with CanMakePayment? The two methods below should probably also move.\n\nI have a very strong preference to move these to PaymentRequest, but you can leave these here if you prefer. I just feel that since these methods depend exclusively on the contents of the PaymentRequest object and nothing else, it would really make a lot more sense to keep it there.",
+      "parentUuid": "b1d494fa_d0ac2e7c",
+      "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5428fb1d_54a90242",
         "filename": "ios/chrome/browser/payments/payment_request_util_unittest.mm",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "PlatformTest doesn\u0027t define SetUp(). How does it make it unnecessary to override it?",
       "parentUuid": "5428fb1d_54a90242",
+      "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21078550_0c0455d2",
+        "filename": "ios/chrome/browser/payments/payment_request_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-11-02T15:42:51Z",
+      "side": 1,
+      "message": "Seems like PaymentRequestUnitTestBase doesn\u0027t declare SetUp/TearDown as virtual, which is strange. Maybe that should be fixed?\n\nIt shouldn\u0027t be necessary to write a method out if all it does is call a method with the same name on a parent class, but multiple inheritance is strange... :)",
+      "parentUuid": "409ed8c1_4b19f41d",
       "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
