@@ -34,6 +34,24 @@
       "revId": "422918b918b9653d5848cc7577534a06851a1844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a385b626_b852ebf1",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-02T17:52:22Z",
+      "side": 1,
+      "message": "I think there should be some way to ask the TileManager for what resource format it\u0027s using for tiles? Alternatively you could uma just pixels saved instead of bytes saved?",
+      "parentUuid": "aa78c58b_e26e809f",
+      "revId": "422918b918b9653d5848cc7577534a06851a1844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
