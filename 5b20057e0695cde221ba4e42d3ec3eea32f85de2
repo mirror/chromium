@@ -57,6 +57,30 @@
       "revId": "5b20057e0695cde221ba4e42d3ec3eea32f85de2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f9a5f77_32a59afb",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwLayoutSizer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-11-02T14:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "478d013d_a786092b",
+      "range": {
+        "startLine": 99,
+        "startChar": 28,
+        "endLine": 99,
+        "endChar": 34
+      },
+      "revId": "5b20057e0695cde221ba4e42d3ec3eea32f85de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
