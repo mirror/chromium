@@ -28,10 +28,6 @@ class ImageData;
 class ImageDecoder;
 class OffscreenCanvas;
 
-enum AlphaDisposition {
-  kPremultiplyAlpha,
-  kDontPremultiplyAlpha,
-};
 enum DataColorFormat {
   kRGBAColorType,
   kN32ColorType,
