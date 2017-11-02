@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7011568c_fc381ba0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-02T06:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08bc067f_fef082d4",
+      "range": {
+        "startLine": 14,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 61
+      },
+      "revId": "55a113f140f16c5883812bc33fe645ac9e0e6f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce0f2e80_85c6bca5",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1e88b18b_116ad82d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-02T06:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce0f2e80_85c6bca5",
+      "range": {
+        "startLine": 201,
+        "startChar": 40,
+        "endLine": 201,
+        "endChar": 55
+      },
+      "revId": "55a113f140f16c5883812bc33fe645ac9e0e6f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba577e9d_42ef8a15",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.h",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-01T13:15:01Z",
       "side": 1,
       "message": "std::array comment applies here too. That\u0027s one more reason to incorporate NONE into frame type.",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 19
+      },
+      "revId": "55a113f140f16c5883812bc33fe645ac9e0e6f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38e79df_1b76014c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-02T06:48:32Z",
+      "side": 1,
+      "message": "The \u0027other\u0027 category here would not just include NONE, but also FrameTypes that are rare and for which we don\u0027t believe a whole new histogram should be added. Looking at the CL where you introduce NONE, it seems to me that there are going to be way too many FrameTypes that I don\u0027t want to consider in here. So having the array of size FrameType::COUNT will waste more space than having a small_map. Changed the size of the small_map so it just heap-allocates the proper size from the beginning. We can remove the Optional if we use NONE as a nickname for the \u0027Other\u0027 bucket here (once the CL introducing it lands).",
+      "parentUuid": "ba577e9d_42ef8a15",
       "range": {
         "startLine": 113,
         "startChar": 4,
