@@ -105,6 +105,24 @@
       "revId": "2d3ea7e52f846a0beec94fbd0027e15a4970c562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45d01b45_33ae7fdb",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-02T23:19:06Z",
+      "side": 0,
+      "message": "I just tried removing Nate\u0027s check from Document.cpp and it regressed https://crbug.com/430507 (i.e., we put up tons of beforeunload dialogs), so I think that\u0027s still the only fix there.\n\nI\u0027ll also point out FrameLoader::ShouldClose is a bit subtle.  It doesn\u0027t look like it should return false without showing the dialog if you read it closely, but it defaults to should_close \u003d false and depends on the size of the target_frames array.  I\u0027m a bit surprised we don\u0027t UaF there when frames get deleted by beforeunload handlers, but I guess that\u0027s Oilpan at work.\n\nAt any rate, there\u0027s enough subtle code that I\u0027d rather keep the extra defense against URL spoof for now.  It\u0027s not that costly to do another URL invalidation.",
+      "parentUuid": "adf09468_3822fdd1",
+      "revId": "2d3ea7e52f846a0beec94fbd0027e15a4970c562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
