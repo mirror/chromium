@@ -157,18 +157,7 @@ void GeolocationImpl::OnLocationUpdate(const Geoposition& position) {
   RecordGeopositionErrorCode(position.error_code);
   DCHECK(context_);
 
-  current_position_.valid = position.Validate();
-  current_position_.latitude = position.latitude;
-  current_position_.longitude = position.longitude;
-  current_position_.altitude = position.altitude;
-  current_position_.accuracy = position.accuracy;
-  current_position_.altitude_accuracy = position.altitude_accuracy;
-  current_position_.heading = position.heading;
-  current_position_.speed = position.speed;
-  current_position_.timestamp = position.timestamp.ToDoubleT();
-  current_position_.error_code =
-      mojom::Geoposition::ErrorCode(position.error_code);
-  current_position_.error_message = position.error_message;
+  FillMojomGeoposition(position, &current_position_);
 
   has_position_to_report_ = true;
 
