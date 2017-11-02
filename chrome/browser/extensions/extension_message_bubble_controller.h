@@ -74,6 +74,10 @@ class ExtensionMessageBubbleController : public chrome::BrowserListObserver,
     // widget deactivates.
     virtual bool ShouldAcknowledgeOnDeactivate() const = 0;
 
+    // Returns true if the bubble should be shown.
+    virtual bool ShouldShow(Profile* profile,
+                            const ExtensionIdList& affected_extensions) = 0;
+
     // Whether to show a list of extensions in the bubble.
     virtual bool ShouldShowExtensionList() const = 0;
 
@@ -104,12 +108,18 @@ class ExtensionMessageBubbleController : public chrome::BrowserListObserver,
     // the bubble won't show for that extension.
     // This should be false in cases where there is no acknowledgment option
     // (as in the developer-mode extension warning).
-    virtual bool ClearProfileSetAfterAction();
+    virtual bool ClearProfileExtensionsMapAfterAction();
 
     // Has the user acknowledged info about the extension the bubble reports.
     bool HasBubbleInfoBeenAcknowledged(const std::string& extension_id);
     void SetBubbleInfoBeenAcknowledged(const std::string& extension_id,
                                        bool value);
+
+    // Clears the delegate's internally managed map of profiles and their
+    // extensions associated with bubbles.
+    void ClearProfileExtensionsMap();
+
+    std::map<Profile*, std::set<ExtensionId>>* GetProfileExtensionsMap();
 
    protected:
     Profile* profile() { return profile_; }
@@ -208,8 +218,6 @@ class ExtensionMessageBubbleController : public chrome::BrowserListObserver,
 
   // Performs cleanup after the bubble closes.
   void OnClose();
-
-  std::set<Profile*>* GetProfileSet();
 
   // A weak pointer to the Browser we are associated with. Not owned by us.
   Browser* browser_;

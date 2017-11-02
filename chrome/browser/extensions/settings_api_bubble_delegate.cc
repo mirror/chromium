@@ -202,6 +202,12 @@ bool SettingsApiBubbleDelegate::ShouldAcknowledgeOnDeactivate() const {
   return false;
 }
 
+bool SettingsApiBubbleDelegate::ShouldShow(
+    Profile* profile,
+    const ExtensionIdList& affected_extensions) {
+  return !GetProfileExtensionsMap()->count(profile);
+}
+
 bool SettingsApiBubbleDelegate::ShouldShowExtensionList() const {
   return false;
 }

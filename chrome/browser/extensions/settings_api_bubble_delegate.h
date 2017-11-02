@@ -37,6 +37,8 @@ class SettingsApiBubbleDelegate
   base::string16 GetDismissButtonLabel() const override;
   bool ShouldCloseOnDeactivate() const override;
   bool ShouldAcknowledgeOnDeactivate() const override;
+  bool ShouldShow(Profile* profile,
+                  const ExtensionIdList& affected_extensions) override;
   bool ShouldShowExtensionList() const override;
   bool ShouldHighlightExtensions() const override;
   bool ShouldLimitToEnabledExtensions() const override;
