@@ -15,6 +15,7 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle.h"
 #include "components/subresource_filter/content/browser/subresource_filter_safe_browsing_client_request.h"
+#include "components/subresource_filter/core/common/time_measurements.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace subresource_filter {
@@ -46,6 +47,8 @@ SubresourceFilterSafeBrowsingClient::~SubresourceFilterSafeBrowsingClient() {}
 
 void SubresourceFilterSafeBrowsingClient::CheckUrlOnIO(const GURL& url,
                                                        size_t request_id) {
+  SCOPED_UMA_HISTOGRAM_MICRO_TIMER(
+      "SubresourceFilter.SafeBrowsing.CheckDispatchTime");
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   DCHECK(!url.is_empty());
 
