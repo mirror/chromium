@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "312907b1_a704538f",
+        "filename": "chrome_elf/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-02T17:29:30Z",
+      "side": 1,
+      "message": "It doesn\u0027t feel to me like that comment is useful here in the .gn file.  I\u0027ve added comments at the top of each sha1 code file!",
+      "parentUuid": "024f027e_74e56911",
+      "revId": "fdf988e6c7fd5e3c0926d9a403056a4055228fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b866b190_9ec6e22a",
         "filename": "chrome_elf/sha1/sha1.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9b3ca9e8_477c5042",
+        "filename": "chrome_elf/sha1/sha1.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-02T17:29:30Z",
+      "side": 1,
+      "message": "I\u0027ve put a comment at the top of each file!",
+      "parentUuid": "b866b190_9ec6e22a",
+      "range": {
+        "startLine": 22,
+        "startChar": 49,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "fdf988e6c7fd5e3c0926d9a403056a4055228fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c48c9d2_ed2ec0c4",
         "filename": "chrome_elf/sha1/sha1.cc",
         "patchSetId": 5
@@ -62,6 +104,30 @@
       "revId": "fdf988e6c7fd5e3c0926d9a403056a4055228fd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ca7308_fb7d676f",
+        "filename": "chrome_elf/sha1/sha1.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-11-02T17:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c48c9d2_ed2ec0c4",
+      "range": {
+        "startLine": 206,
+        "startChar": 25,
+        "endLine": 206,
+        "endChar": 0
+      },
+      "revId": "fdf988e6c7fd5e3c0926d9a403056a4055228fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
