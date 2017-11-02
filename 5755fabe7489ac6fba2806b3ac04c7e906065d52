@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d06f491a_8f9728b4",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1935,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-02T03:13:00Z",
+      "side": 1,
+      "message": "I wonder if it\u0027s better security to just make the parameter unsigned, but I\u0027ll leave that for dcheng ot decide",
+      "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55283297_f880c7a8",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionEventProxyImpl.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-02T03:13:00Z",
+      "side": 1,
+      "message": "the exception message should be included by Log already, so write an actual error message like \"reflection failure\" or something like that\n\nditto everywhere else",
+      "range": {
+        "startLine": 58,
+        "startChar": 38,
+        "endLine": 58,
+        "endChar": 50
+      },
+      "revId": "5755fabe7489ac6fba2806b3ac04c7e906065d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
