@@ -117,6 +117,30 @@
       "revId": "720c54e2f274ede745ab3c2743f28fd5d1091b89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6a85197_cb55f19d",
+        "filename": "components/browser_watcher/watcher_metrics_provider_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-11-02T15:16:30Z",
+      "side": 1,
+      "message": "I expect what we\u0027ll find here is that there\u0027ll be some 3rd party mis-patching our binaries and causing corruption, so I don\u0027t think it\u0027s worth a whole lot of up-front work to improve the precision of the analysis. If this trips something we\u0027ll refine it and run it again, I figure.\nAs-is, this should reliably trip before your tally an overflow, but I predict none of this will hit (I\u0027m often wrong).",
+      "parentUuid": "8bb4c69c_55285917",
+      "range": {
+        "startLine": 134,
+        "startChar": 59,
+        "endLine": 134,
+        "endChar": 68
+      },
+      "revId": "720c54e2f274ede745ab3c2743f28fd5d1091b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
