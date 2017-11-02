@@ -16,6 +16,24 @@
       "revId": "880e9bb369ade513f86d8b1d9d49ca96b7d29daf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9144f7fc_cd4bd254",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-11-02T17:40:57Z",
+      "side": 1,
+      "message": "I changed it to no use default argument. PTAL, thanks!",
+      "parentUuid": "4d02293f_cb694b21",
+      "revId": "880e9bb369ade513f86d8b1d9d49ca96b7d29daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
