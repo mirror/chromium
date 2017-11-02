@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7cda9089_8183dde8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-02T16:02:26Z",
+      "side": 1,
+      "message": "The footer is inflated into a view stub in the app menu\u0027s content view layout where as the header is added as the first item in the app menu\u0027s list view via ListView#addHeaderView.\n\nThe app menu was previously responsible for inflating the header view, but ChromeTabbedActivity needs access to the header views to finish initialization so it was easier to have ChromeTabbedActivity inflate and pass the views through to the menu.",
+      "parentUuid": "aa8c811a_4164a92a",
+      "range": {
+        "startLine": 164,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 9
+      },
+      "revId": "785a5731b3f42914cf2f060b5dfd608a0859d699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aeeef88_e763f7ca",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuHandler.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "785a5731b3f42914cf2f060b5dfd608a0859d699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277765b2_1805fe40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-02T16:02:26Z",
+      "side": 1,
+      "message": "No, the #shouldShow.. check doesn\u0027t take into account whether a footer is going to show or not. It\u0027s a simple check for whether we think the current app height supports showing the data saver header. We probably can/should refine that logic at some point. I added a TODO.",
+      "parentUuid": "1aeeef88_e763f7ca",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 171,
+        "endChar": 9
+      },
+      "revId": "785a5731b3f42914cf2f060b5dfd608a0859d699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
