@@ -44,6 +44,7 @@ namespace {
 // Default test image file.
 const base::FilePath::CharType* kDefaultJpegFilename =
     FILE_PATH_LITERAL("peach_pi-1280x720.jpg");
+int kDefaultPerfDecodeTimes = 600;
 // Decide to save decode results to files or not. Output files will be saved
 // in the same directory with unittest. File name is like input file but
 // changing the extension to "yuv".
@@ -81,22 +82,23 @@ enum ClientState {
 class JpegClient : public JpegDecodeAccelerator::Client {
  public:
   JpegClient(const std::vector<TestImageFile*>& test_image_files,
-             ClientStateNotification<ClientState>* note);
+             ClientStateNotification<ClientState>* note, bool is_skip);
   ~JpegClient() override;
   void CreateJpegDecoder();
   void DestroyJpegDecoder();
-  void StartDecode(int32_t bitstream_buffer_id);
+  void StartDecode(int32_t bitstream_buffer_id, bool do_prepare_memory=true);
+  void PrepareMemory(int32_t bitstream_buffer_id);
+  bool GetSoftwareDecodeResult(int32_t bitstream_buffer_id);
 
   // JpegDecodeAccelerator::Client implementation.
   void VideoFrameReady(int32_t bitstream_buffer_id) override;
   void NotifyError(int32_t bitstream_buffer_id,
                    JpegDecodeAccelerator::Error error) override;
 
+
  private:
-  void PrepareMemory(int32_t bitstream_buffer_id);
   void SetState(ClientState new_state);
   void SaveToFile(int32_t bitstream_buffer_id);
-  bool GetSoftwareDecodeResult(int32_t bitstream_buffer_id);
 
   // Calculate mean absolute difference of hardware and software decode results
   // to check the similarity.
@@ -112,6 +114,9 @@ class JpegClient : public JpegDecodeAccelerator::Client {
   // this.
   ClientStateNotification<ClientState>* note_;
 
+  // Skip JDA decode result. Used for testing performance.
+  bool is_skip_;
+
   // Mapped memory of input file.
   std::unique_ptr<base::SharedMemory> in_shm_;
   // Mapped memory of output buffer from hardware decoder.
@@ -123,8 +128,9 @@ class JpegClient : public JpegDecodeAccelerator::Client {
 };
 
 JpegClient::JpegClient(const std::vector<TestImageFile*>& test_image_files,
-                       ClientStateNotification<ClientState>* note)
-    : test_image_files_(test_image_files), state_(CS_CREATED), note_(note) {}
+                       ClientStateNotification<ClientState>* note, bool is_skip)
+    : test_image_files_(test_image_files), state_(CS_CREATED), note_(note),
+    is_skip_(is_skip) {}
 
 JpegClient::~JpegClient() {}
 
@@ -164,6 +170,11 @@ void JpegClient::DestroyJpegDecoder() {
 }
 
 void JpegClient::VideoFrameReady(int32_t bitstream_buffer_id) {
+  if (is_skip_) {
+    SetState(CS_DECODE_PASS);
+    return;
+  }
+
   if (!GetSoftwareDecodeResult(bitstream_buffer_id)) {
     SetState(CS_ERROR);
     return;
@@ -242,11 +253,14 @@ double JpegClient::GetMeanAbsoluteDifference(int32_t bitstream_buffer_id) {
   return total_difference / image_file->output_size;
 }
 
-void JpegClient::StartDecode(int32_t bitstream_buffer_id) {
+void JpegClient::StartDecode(int32_t bitstream_buffer_id,
+    bool do_prepare_memory) {
   DCHECK_LT(static_cast<size_t>(bitstream_buffer_id), test_image_files_.size());
   TestImageFile* image_file = test_image_files_[bitstream_buffer_id];
 
-  PrepareMemory(bitstream_buffer_id);
+  if (do_prepare_memory) {
+    PrepareMemory(bitstream_buffer_id);
+  }
 
   base::SharedMemoryHandle dup_handle;
   dup_handle = base::SharedMemory::DuplicateHandle(in_shm_->handle());
@@ -303,9 +317,11 @@ bool JpegClient::GetSoftwareDecodeResult(int32_t bitstream_buffer_id) {
 class JpegDecodeAcceleratorTestEnvironment : public ::testing::Environment {
  public:
   JpegDecodeAcceleratorTestEnvironment(
-      const base::FilePath::CharType* jpeg_filenames) {
+      const base::FilePath::CharType* jpeg_filenames, int perf_decode_times) {
     user_jpeg_filenames_ =
         jpeg_filenames ? jpeg_filenames : kDefaultJpegFilename;
+    perf_decode_times_ = perf_decode_times ? perf_decode_times:
+      kDefaultPerfDecodeTimes;
   }
   void SetUp() override;
   void TearDown() override;
@@ -332,6 +348,8 @@ class JpegDecodeAcceleratorTestEnvironment : public ::testing::Environment {
   std::unique_ptr<TestImageFile> image_data_invalid_;
   // Parsed data from command line.
   std::vector<std::unique_ptr<TestImageFile>> image_data_user_;
+  // Decode times for performance measurement.
+  int perf_decode_times_;
 
  private:
   const base::FilePath::CharType* user_jpeg_filenames_;
@@ -450,6 +468,8 @@ class JpegDecodeAcceleratorTest : public ::testing::Test {
   JpegDecodeAcceleratorTest() {}
 
   void TestDecode(size_t num_concurrent_decoders);
+  void PerfDecodeByJDA(int decode_times);
+  void PerfDecodeBySW(int decode_times);
 
   // The elements of |test_image_files_| are owned by
   // JpegDecodeAcceleratorTestEnvironment.
@@ -471,7 +491,8 @@ void JpegDecodeAcceleratorTest::TestDecode(size_t num_concurrent_decoders) {
   for (size_t i = 0; i < num_concurrent_decoders; i++) {
     notes.push_back(base::MakeUnique<ClientStateNotification<ClientState>>());
     clients.push_back(
-        base::MakeUnique<JpegClient>(test_image_files_, notes.back().get()));
+        base::MakeUnique<JpegClient>(test_image_files_, notes.back().get(),
+          false));
     decoder_thread.task_runner()->PostTask(
         FROM_HERE, base::Bind(&JpegClient::CreateJpegDecoder,
                               base::Unretained(clients.back().get())));
@@ -482,7 +503,8 @@ void JpegDecodeAcceleratorTest::TestDecode(size_t num_concurrent_decoders) {
     for (size_t i = 0; i < num_concurrent_decoders; i++) {
       decoder_thread.task_runner()->PostTask(
           FROM_HERE, base::Bind(&JpegClient::StartDecode,
-                                base::Unretained(clients[i].get()), index));
+                                base::Unretained(clients[i].get()), index,
+                                true));
     }
     if (index < expected_status_.size()) {
       for (size_t i = 0; i < num_concurrent_decoders; i++) {
@@ -498,6 +520,50 @@ void JpegDecodeAcceleratorTest::TestDecode(size_t num_concurrent_decoders) {
   }
   decoder_thread.Stop();
 }
+
+void JpegDecodeAcceleratorTest::PerfDecodeByJDA(int decode_times) {
+  LOG_ASSERT(test_image_files_.size() == 1);
+  base::Thread decoder_thread("DecoderThread");
+  ASSERT_TRUE(decoder_thread.Start());
+
+  std::unique_ptr<ClientStateNotification<ClientState>> note =
+    base::MakeUnique<ClientStateNotification<ClientState>>();
+  std::unique_ptr<JpegClient> client =
+        base::MakeUnique<JpegClient>(test_image_files_, note.get(), true);
+
+  decoder_thread.task_runner()->PostTask(
+      FROM_HERE, base::Bind(&JpegClient::CreateJpegDecoder,
+        base::Unretained(client.get())));
+  ASSERT_EQ(note->Wait(), CS_INITIALIZED);
+
+  client->PrepareMemory(0);
+  for (int index = 0; index < decode_times; index++) {
+    decoder_thread.task_runner()->PostTask(
+        FROM_HERE, base::Bind(&JpegClient::StartDecode,
+                                base::Unretained(client.get()), 0, false));
+    ASSERT_EQ(note->Wait(), CS_DECODE_PASS);
+  }
+
+  decoder_thread.task_runner()->PostTask(
+      FROM_HERE, base::Bind(&JpegClient::DestroyJpegDecoder,
+        base::Unretained(client.get())));
+  decoder_thread.Stop();
+}
+
+void JpegDecodeAcceleratorTest::PerfDecodeBySW(int decode_times) {
+  LOG_ASSERT(test_image_files_.size() == 1);
+
+  std::unique_ptr<ClientStateNotification<ClientState>> note =
+    base::MakeUnique<ClientStateNotification<ClientState>>();
+  std::unique_ptr<JpegClient> client =
+        base::MakeUnique<JpegClient>(test_image_files_, note.get(), true);
+
+  client->PrepareMemory(0);
+  for (int index = 0; index < decode_times; index++) {
+    client->GetSoftwareDecodeResult(0);
+  }
+}
+
 
 TEST_F(JpegDecodeAcceleratorTest, SimpleDecode) {
   for (auto& image : g_env->image_data_user_) {
@@ -566,6 +632,22 @@ TEST_F(JpegDecodeAcceleratorTest, Abort) {
   TestDecode(2);
 }
 
+TEST_F(JpegDecodeAcceleratorTest, PerfJDA) {
+  // only retrieve first image.
+  for (auto& image : g_env->image_data_user_) {
+    test_image_files_.push_back(image.get());
+  }
+  PerfDecodeByJDA(g_env->perf_decode_times_);
+}
+
+TEST_F(JpegDecodeAcceleratorTest, PerfSW) {
+  // only retrieve first image.
+  for (auto& image : g_env->image_data_user_) {
+    test_image_files_.push_back(image.get());
+  }
+  PerfDecodeBySW(g_env->perf_decode_times_);
+}
+
 }  // namespace
 }  // namespace media
 
@@ -583,12 +665,17 @@ int main(int argc, char** argv) {
   DCHECK(cmd_line);
 
   const base::FilePath::CharType* jpeg_filenames = nullptr;
+  int perf_decode_times = 0;
   base::CommandLine::SwitchMap switches = cmd_line->GetSwitches();
   for (base::CommandLine::SwitchMap::const_iterator it = switches.begin();
        it != switches.end(); ++it) {
     // jpeg_filenames can include one or many files and use ';' as delimiter.
     if (it->first == "jpeg_filenames") {
       jpeg_filenames = it->second.c_str();
+      continue;
+    }
+    if (it->first == "perf_decode_times") {
+      perf_decode_times = std::stoi(it->second.c_str());
       continue;
     }
     if (it->first == "save_to_file") {
@@ -608,7 +695,8 @@ int main(int argc, char** argv) {
 
   media::g_env = reinterpret_cast<media::JpegDecodeAcceleratorTestEnvironment*>(
       testing::AddGlobalTestEnvironment(
-          new media::JpegDecodeAcceleratorTestEnvironment(jpeg_filenames)));
+          new media::JpegDecodeAcceleratorTestEnvironment(jpeg_filenames,
+            perf_decode_times)));
 
   return RUN_ALL_TESTS();
 }
