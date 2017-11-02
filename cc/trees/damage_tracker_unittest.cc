@@ -697,9 +697,11 @@ TEST_F(DamageTrackerTest, VerifyDamageForBlurredSurface) {
   LayerImpl* child = surface->test_properties()->children[0];
 
   FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(5.f));
+  filters.Append(FilterOperation::CreateBlurFilter(4.f));
 
-  // Setting the filter should not damage the conrresponding render surface.
+  // Setting the filter should not damage the corresponding render surface
+  // as long as blur amount is small enough to not cause a change in
+  // layer scale factor.
   ClearDamageForAllSurfaces(root);
   surface->test_properties()->filters = filters;
   root->layer_tree_impl()->property_trees()->needs_rebuild = true;
@@ -724,7 +726,7 @@ TEST_F(DamageTrackerTest, VerifyDamageForBlurredSurface) {
   gfx::Rect root_damage_rect;
   EXPECT_TRUE(GetRenderSurface(root)->damage_tracker()->GetDamageRectIfValid(
       &root_damage_rect));
-  EXPECT_EQ(gfx::Rect(286, 287, 33, 34), root_damage_rect);
+  EXPECT_EQ(gfx::Rect(289, 290, 27, 28), root_damage_rect);
   EXPECT_TRUE(GetRenderSurface(root)
                   ->damage_tracker()
                   ->has_damage_from_contributing_content());
