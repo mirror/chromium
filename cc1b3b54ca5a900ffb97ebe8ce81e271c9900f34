@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "ae27ef0a_ef19636f",
+        "filename": "content/renderer/pepper/ppb_graphics_3d_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-02T20:30:20Z",
+      "side": 1,
+      "message": "Never mind. Moved this earlier. Since I reverted all renderer side change, whether a GPU channel is established or not doesn\u0027t make a difference. I assume the browser side already obtained blacklisting decision and that\u0027s included in the render_thread-\u003eIsGpuCompositingDisabled().",
+      "parentUuid": "8d211918_ec92b95c",
+      "revId": "cc1b3b54ca5a900ffb97ebe8ce81e271c9900f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b867f58a_1d8ee374",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 14
