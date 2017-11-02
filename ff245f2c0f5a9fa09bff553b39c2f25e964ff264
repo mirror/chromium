@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6fd9e0a2_9a9df968",
+        "filename": "chrome/browser/chromeos/login/users/multi_profile_user_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-02T22:06:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f686593_a7b18f33",
+      "range": {
+        "startLine": 109,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 13
+      },
+      "revId": "ff245f2c0f5a9fa09bff553b39c2f25e964ff264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b846eb0a_427213f4",
         "filename": "chrome/browser/chromeos/policy/policy_cert_verifier.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-02T15:18:57Z",
       "side": 1,
       "message": "Publicly exposing WeakPtrs to the world is an anti-pattern.  I find it rather surprising we\u0027re exercising this path in a unit test, but given that I\u0027m too cowardly to push back on rewriting those tests, could we instead just destroy the cert_verifier_ in the test after shutting down the threads, or does it DCHECK if destroyed when not on a messageloop?",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "ff245f2c0f5a9fa09bff553b39c2f25e964ff264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d8cdf6_f103716a",
+        "filename": "chrome/browser/chromeos/policy/policy_cert_verifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-02T22:06:31Z",
+      "side": 1,
+      "message": "\u003e Publicly exposing WeakPtrs to the world is an anti-pattern.  I find it rather surprising we\u0027re exercising this path in a unit test\n\n(It was actually some browser_tests that were crashing due to the lifetime issue, the unit_test changes were only to match the design changes.)\n\n\u003e, but given that I\u0027m too cowardly to push back on rewriting those tests, could we instead just destroy the cert_verifier_ in the test after shutting down the threads, or does it DCHECK if destroyed when not on a messageloop?\n\nIt turns out I had just hadn\u0027t figured out the root cause correctly.\nI thought it was just a general issue about profile destruction order of PolicyCertService (a BrowserContextKeyedService) vs the URLRequestContext. (eg, not something test specific).\n\nBut after digging into it again, it turns out to be due to moving the initial ownership of the PolicyCertVerifier into ProfileParams. When a test sets a g_cert_verifier_for_testing the PolicyCertVerifier wouldn\u0027t get moved into the ProfileIOData and would get destroyed along with the ProfileParams, then the PolicyCertService would still have a pointer to it. I changed the ProfileIOData::Init to not create the PolicyCertVerifier at all in that case.\n\nI think the PolicyCertService vs URLRequestContext lifetime is okay since PolicyCertService removes the observer in PolicyCertService::Shutdown.",
+      "parentUuid": "b846eb0a_427213f4",
       "range": {
         "startLine": 59,
         "startChar": 16,
@@ -68,6 +116,30 @@
       "revId": "ff245f2c0f5a9fa09bff553b39c2f25e964ff264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011e10bf_02453834",
+        "filename": "chrome/browser/profiles/profile_io_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-02T22:06:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81d39e15_6b8133ff",
+      "range": {
+        "startLine": 344,
+        "startChar": 48,
+        "endLine": 344,
+        "endChar": 69
+      },
+      "revId": "ff245f2c0f5a9fa09bff553b39c2f25e964ff264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
