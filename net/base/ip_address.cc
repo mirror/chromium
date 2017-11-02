@@ -128,6 +128,10 @@ bool ParseIPLiteralToBytes(const base::StringPiece& ip_literal,
   int num_components;
   url::CanonHostInfo::Family family = url::IPv4AddressToNumber(
       ip_literal.data(), host_comp, bytes->data(), &num_components);
+  if (num_components != 4) {
+    // Must have 4 address components
+    return false;
+  }
   return family == url::CanonHostInfo::IPV4;
 }
 
