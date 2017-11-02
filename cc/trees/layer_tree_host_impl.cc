@@ -3412,7 +3412,7 @@ void LayerTreeHostImpl::ApplyScroll(ScrollNode* scroll_node,
   DCHECK(scroll_node && scroll_state);
   gfx::Point viewport_point(scroll_state->position_x(),
                             scroll_state->position_y());
-  const gfx::Vector2dF delta(scroll_state->delta_x(), scroll_state->delta_y());
+  const gfx::Vector2dF delta(scroll_state->delta_x(), 0);//scroll_state->delta_y());
   gfx::Vector2dF applied_delta;
   gfx::Vector2dF delta_applied_to_content;
   // TODO(tdresser): Use a more rational epsilon. See crbug.com/510550 for
@@ -3574,6 +3574,7 @@ void LayerTreeHostImpl::UpdateImageDecodingHints(
 InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
     ScrollState* scroll_state) {
   DCHECK(scroll_state);
+  LOG(ERROR) << "BOKAN SCROLLBY: " << scroll_state->delta_y();
 
   TRACE_EVENT0("cc", "LayerTreeHostImpl::ScrollBy");
   ScrollTree& scroll_tree = active_tree_->property_trees()->scroll_tree;
