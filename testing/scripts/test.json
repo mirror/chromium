@@ -1,0 +1,101 @@
+{
+    "interrupted": false,
+    "num_failures_by_type": {
+        "PASS": 17
+    },
+    "path_delimiter": "/",
+    "seconds_since_epoch": 1509471128.03137,
+    "tests": {
+        "blink_perf.canvas": {
+            "createImageBitmapFromImageData.html": {
+                "actual": "PASS",
+                "artifacts": {
+                  "screenshot": "file:///usr/local/google/home/martiniss/chromium/src/testing/scripts/test"
+                },
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "draw-dynamic-canvas-2d-to-hw-accelerated-canvas-2d.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "draw-dynamic-webgl-to-hw-accelerated-canvas-2d.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "draw-hw-accelerated-canvas-2d-to-sw-canvas-2d.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "draw-static-canvas-2d-to-hw-accelerated-canvas-2d.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "draw-static-webgl-to-hw-accelerated-canvas-2d.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "draw-video-to-hw-accelerated-canvas-2d.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "drawimage-not-pixelaligned.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "getImageData.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "putImageData.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "toBlob_duration.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "toBlob_duration_jpeg.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "transferFromImageBitmap.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "upload-canvas-2d-to-texture.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "upload-video-to-sub-texture.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "upload-video-to-texture.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            },
+            "upload-webgl-to-texture.html": {
+                "actual": "PASS",
+                "expected": "PASS",
+                "is_unexpected": false
+            }
+        }
+    },
+    "version": 3
+}
