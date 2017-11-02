@@ -3321,7 +3321,7 @@ WebInputMethodController* WebViewImpl::GetActiveWebInputMethodController()
 void WebViewImpl::RequestDecode(const PaintImage& image,
                                 WTF::Function<void(bool)> callback) {
   layer_tree_view_->RequestDecode(image,
-                                  ConvertToBaseCallback(std::move(callback)));
+                                  std::move(callback));
 }
 
 Color WebViewImpl::BaseBackgroundColor() const {

@@ -183,7 +183,7 @@ void Context::DestroyImage(int32_t id) {
   NOTIMPLEMENTED();
 }
 
-void Context::SignalQuery(uint32_t query, const base::Closure& callback) {
+void Context::SignalQuery(uint32_t query, base::OnceClosure callback) {
   NOTIMPLEMENTED();
 }
 

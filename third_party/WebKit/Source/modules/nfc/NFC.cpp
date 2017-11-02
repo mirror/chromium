@@ -644,8 +644,8 @@ NFC::NFC(LocalFrame* frame)
     return;
 
   frame->GetInterfaceProvider().GetInterface(mojo::MakeRequest(&nfc_));
-  nfc_.set_connection_error_handler(ConvertToBaseCallback(
-      WTF::Bind(&NFC::OnConnectionError, WrapWeakPersistent(this))));
+  nfc_.set_connection_error_handler(
+      WTF::Bind(&NFC::OnConnectionError, WrapWeakPersistent(this)));
   device::mojom::blink::NFCClientPtr client;
   client_binding_.Bind(mojo::MakeRequest(&client));
   nfc_->SetClient(std::move(client));
@@ -716,11 +716,12 @@ ScriptPromise NFC::push(ScriptState* script_state,
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   requests_.insert(resolver);
-  auto callback = ConvertToBaseCallback(WTF::Bind(&NFC::OnRequestCompleted,
-                                                  WrapPersistent(this),
-                                                  WrapPersistent(resolver)));
+  auto callback = WTF::Bind(&NFC::OnRequestCompleted,
+                            WrapPersistent(this),
+                            WrapPersistent(resolver));
   nfc_->Push(std::move(message),
-             device::mojom::blink::NFCPushOptions::From(options), callback);
+             device::mojom::blink::NFCPushOptions::From(options),
+             std::move(callback));
 
   return resolver->Promise();
 }
@@ -733,10 +734,10 @@ ScriptPromise NFC::cancelPush(ScriptState* script_state, const String& target) {
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   requests_.insert(resolver);
-  auto callback = ConvertToBaseCallback(WTF::Bind(&NFC::OnRequestCompleted,
-                                                  WrapPersistent(this),
-                                                  WrapPersistent(resolver)));
-  nfc_->CancelPush(mojo::toNFCPushTarget(target), callback);
+  auto callback = WTF::Bind(&NFC::OnRequestCompleted,
+                            WrapPersistent(this),
+                            WrapPersistent(resolver));
+  nfc_->CancelPush(mojo::toNFCPushTarget(target), std::move(callback));
 
   return resolver->Promise();
 }
@@ -762,11 +763,11 @@ ScriptPromise NFC::watch(ScriptState* script_state,
   callback->SetScriptState(script_state);
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   requests_.insert(resolver);
-  auto watch_callback = ConvertToBaseCallback(
+  auto watch_callback =
       WTF::Bind(&NFC::OnWatchRegistered, WrapPersistent(this),
-                WrapPersistent(callback), WrapPersistent(resolver)));
+                WrapPersistent(callback), WrapPersistent(resolver));
   nfc_->Watch(device::mojom::blink::NFCWatchOptions::From(options),
-              watch_callback);
+              std::move(watch_callback));
   return resolver->Promise();
 }
 
@@ -785,9 +786,9 @@ ScriptPromise NFC::cancelWatch(ScriptState* script_state, long id) {
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   requests_.insert(resolver);
-  nfc_->CancelWatch(id, ConvertToBaseCallback(WTF::Bind(
-                            &NFC::OnRequestCompleted, WrapPersistent(this),
-                            WrapPersistent(resolver))));
+  nfc_->CancelWatch(id, WTF::Bind(
+      &NFC::OnRequestCompleted, WrapPersistent(this),
+      WrapPersistent(resolver)));
   return resolver->Promise();
 }
 
@@ -801,9 +802,9 @@ ScriptPromise NFC::cancelWatch(ScriptState* script_state) {
   callbacks_.clear();
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   requests_.insert(resolver);
-  nfc_->CancelAllWatches(ConvertToBaseCallback(
+  nfc_->CancelAllWatches(
       WTF::Bind(&NFC::OnRequestCompleted, WrapPersistent(this),
-                WrapPersistent(resolver))));
+                WrapPersistent(resolver)));
   return resolver->Promise();
 }
 

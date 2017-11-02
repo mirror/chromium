@@ -126,7 +126,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
                       size_t height,
                       unsigned internalformat) override;
   void DestroyImage(int32_t id) override;
-  void SignalQuery(uint32_t query_id, const base::Closure& callback) override;
+  void SignalQuery(uint32_t query_id, base::OnceClosure callback) override;
   void SetLock(base::Lock*) override;
   void EnsureWorkVisible() override;
   CommandBufferNamespace GetNamespaceID() const override;
@@ -212,7 +212,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
     virtual void Release() const = 0;
 
     // Queues a task to run as soon as possible.
-    virtual void ScheduleTask(const base::Closure& task) = 0;
+    virtual void ScheduleTask(base::OnceClosure task) = 0;
 
     // Schedules |callback| to run at an appropriate time for performing delayed
     // work.
@@ -288,8 +288,8 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   void UpdateLastStateOnGpuThread();
   void ScheduleDelayedWorkOnGpuThread();
   bool MakeCurrent();
-  base::Closure WrapCallback(const base::Closure& callback);
-  void QueueTask(bool out_of_order, const base::Closure& task);
+  base::OnceClosure WrapCallback(base::OnceClosure callback);
+  void QueueTask(bool out_of_order, base::OnceClosure task);
   void ProcessTasksOnGpuThread();
   void CheckSequencedThread();
   void OnWaitSyncTokenCompleted(const SyncToken& sync_token);
@@ -367,9 +367,9 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
 
   base::Lock task_queue_lock_;
   struct GpuTask {
-    GpuTask(const base::Closure& callback, uint32_t order_number);
+    GpuTask(base::OnceClosure callback, uint32_t order_number);
     ~GpuTask();
-    base::Closure callback;
+    base::OnceClosure callback;
     uint32_t order_number;
   };
   base::queue<std::unique_ptr<GpuTask>> task_queue_;

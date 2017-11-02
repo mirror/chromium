@@ -119,7 +119,7 @@ void BlinkInitializer::InitLocalFrame(LocalFrame& frame) const {
 
   if (frame.IsMainFrame()) {
     frame.GetInterfaceRegistry()->AddInterface(
-        WTF::Bind(&OomInterventionImpl::Create));
+        WTF::BindRepeating(&OomInterventionImpl::Create));
   }
 }
 
