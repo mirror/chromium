@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "4e0f7a3e_9ffabead",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-02T10:22:51Z",
+      "side": 1,
+      "message": "The graybg:1 flag can change and when it does we should be able to make new requests, clear the cache, etc. The code currently relies on only checking logo_url_ and does not change it if only the param changes. So to fix that I decided to add graybg:1 and other things that don\u0027t change as often as the fingerprint in the logo_url_\n\nBetter solutions would be most welcome, as I don\u0027t have the big picture of the component.",
+      "parentUuid": "6879b61a_1cbb47cc",
+      "range": {
+        "startLine": 69,
+        "startChar": 45,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16119479_af5cd6fe",
         "filename": "components/search_provider_logos/google_logo_api.cc",
         "patchSetId": 12
