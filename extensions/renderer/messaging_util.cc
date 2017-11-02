@@ -8,6 +8,8 @@
 
 #include "base/logging.h"
 #include "extensions/common/api/messaging/message.h"
+#include "extensions/common/extension.h"
+#include "extensions/renderer/script_context.h"
 #include "gin/converter.h"
 #include "gin/dictionary.h"
 #include "third_party/WebKit/public/web/WebUserGestureIndicator.h"
@@ -152,6 +154,25 @@ ParseOptionsResult ParseMessageOptions(v8::Local<v8::Context> context,
 
   *options_out = std::move(options);
   return SUCCESS;
+}
+
+bool GetTarget(ScriptContext* script_context,
+               v8::Local<v8::Value> v8_target_id,
+               std::string* target_out) {
+  DCHECK(!v8_target_id.IsEmpty());
+
+  std::string target_id;
+  if (v8_target_id->IsNull()) {
+    if (!script_context->extension())
+      return false;
+
+    *target_out = script_context->extension()->id();
+  } else {
+    DCHECK(v8_target_id->IsString());
+    *target_out = gin::V8ToString(v8_target_id);
+  }
+
+  return true;
 }
 
 }  // namespace messaging_util

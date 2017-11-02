@@ -321,10 +321,12 @@ RequestResult RuntimeHooksDelegate::HandleConnect(
     ScriptContext* script_context,
     const std::vector<v8::Local<v8::Value>>& arguments) {
   DCHECK_EQ(2u, arguments.size());
+  LOG(WARNING) << "Handling connect";
 
   std::string target_id;
   if (!GetTarget(script_context, arguments[0], &target_id)) {
     RequestResult result(RequestResult::INVALID_INVOCATION);
+    LOG(WARNING) << "Invalid";
     result.error =
         base::StringPrintf(kExtensionIdRequiredErrorTemplate, "connect");
     return result;
@@ -332,6 +334,7 @@ RequestResult RuntimeHooksDelegate::HandleConnect(
 
   messaging_util::MessageOptions options;
   if (!arguments[1]->IsNull()) {
+    LOG(WARNING) << "Parsing";
     std::string error;
     messaging_util::ParseOptionsResult parse_result =
         messaging_util::ParseMessageOptions(
@@ -346,11 +349,14 @@ RequestResult RuntimeHooksDelegate::HandleConnect(
         return result;
       }
       case messaging_util::THROWN:
+        LOG(WARNING) << "Thrown";
         return RequestResult(RequestResult::THROWN);
       case messaging_util::SUCCESS:
         break;
     }
   }
+
+  LOG(WARNING) << "Parsed";
 
   gin::Handle<GinPort> port = messaging_service_->Connect(
       script_context, MessageTarget::ForExtension(target_id),

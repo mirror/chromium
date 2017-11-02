@@ -11,6 +11,7 @@
 #include "v8/include/v8.h"
 
 namespace extensions {
+class ScriptContext;
 struct Message;
 
 namespace messaging_util {
@@ -66,6 +67,13 @@ ParseOptionsResult ParseMessageOptions(v8::Local<v8::Context> context,
                                        int flags,
                                        MessageOptions* options_out,
                                        std::string* error_out);
+
+// Parses the target from |v8_target_id|, or uses the extension associated with
+// the |script_context| as a default. Returns true on success, and false on
+// failure.
+bool GetTarget(ScriptContext* script_context,
+               v8::Local<v8::Value> v8_target_id,
+               std::string* target_out);
 
 }  // namespace messaging_util
 }  // namespace extensions
