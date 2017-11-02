@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "52e43b7f_d27505e1",
+        "filename": "third_party/WebKit/Source/core/loader/WorkerFetchContext.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-02T03:55:21Z",
+      "side": 1,
+      "message": "Could we do the same trick (i.e. local caching) as we do in FrameFetchContext for this one too? (Fetch performance from workers could be also important)",
+      "revId": "30565511cf808b5475d1a58a7890589b30da61cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c67ae3c1_8ca262de",
         "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
         "patchSetId": 19
