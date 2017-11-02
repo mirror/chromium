@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "616d0abf_ee3dcbb0",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-02T21:06:46Z",
+      "side": 1,
+      "message": "Instead of separately looking for LONG_PRESS here, should this explicitly look for the ET_GESTURE_TAP and trigger the selection only in that case, and goes back to the overview mode in all other cases? Alternatively, since you know from here that drag event happens only if SCROLL_UPDATE happened, then you can explicitly look for a SCROLL_END, and CompleteDrag() when that happens, and for all other GESTURE_END, cancel the drag and go back to the original overview state? I think that\u0027d be easier to follow.",
+      "revId": "a89a2b5ef85f3bfa5de4bfb10b1ba2e49434cb5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
