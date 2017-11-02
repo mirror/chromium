@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a90c1ad3_4d96190f",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-02T16:21:01Z",
+      "side": 1,
+      "message": "Somewhere we need to encode the knowledge that a particular technique requires to be whitelisted. We don\u0027t have that in the hints at this point (and don\u0027t think we necessarily want to in the near term). One idea for the hints object is to have a tri-state return value - type is whitelisted, type is blacklist, or no information about type. But really I want to do some refactoring away from this ShouldAllow type granularity and instead determine and return the optimization policy for the URLRequest (get all the applicable hints from the opt-guide in one call). Not so interesting yet for single support type though.",
+      "parentUuid": "fe129d8b_0807c5ff",
+      "revId": "6c406b16e5e9460ac7c1c9f7d93927163e9a9ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e360db82_902e04cc",
         "filename": "components/previews/core/previews_io_data.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "6c406b16e5e9460ac7c1c9f7d93927163e9a9ac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "573c8bb8_53de1965",
+        "filename": "components/previews/core/previews_io_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-02T16:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e360db82_902e04cc",
+      "revId": "6c406b16e5e9460ac7c1c9f7d93927163e9a9ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
