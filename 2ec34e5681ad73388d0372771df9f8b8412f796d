@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b5d4e9ae_3094f775",
+        "filename": "media/muxers/webm_muxer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-02T21:11:29Z",
+      "side": 1,
+      "message": "Doh, didn\u0027t see they\u0027re DCHECK()ed on l.294-295... The \nreason to DCHECK() (even) default values (e.g. those lines \nand/or l.308) is to prevent libwebm rolls breaking this \ncode... In that spirit, if you care about bit_depth() you \ncould DCHECK() it here as well, up to you.",
+      "parentUuid": "a3839c6b_2f8e8e7d",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 43
+      },
+      "revId": "2ec34e5681ad73388d0372771df9f8b8412f796d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06525511_f22568db",
         "filename": "media/muxers/webm_muxer.h",
         "patchSetId": 3
