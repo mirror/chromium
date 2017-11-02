@@ -659,7 +659,7 @@ void ResourceLoader::DidFail(const WebURLError& error,
   resource_->SetEncodedDataLength(encoded_data_length);
   resource_->SetEncodedBodyLength(encoded_body_length);
   resource_->SetDecodedBodyLength(decoded_body_length);
-  HandleError(error);
+  HandleError(ResourceError(error, resource_->LastResourceRequest().Url()));
 }
 
 void ResourceLoader::HandleError(const ResourceError& error) {
@@ -700,7 +700,7 @@ void ResourceLoader::RequestSynchronously(const ResourceRequest& request) {
   if (!loader_)
     return;
   int64_t decoded_body_length = data_out.size();
-  if (error_out.reason) {
+  if (error_out.reason()) {
     DidFail(error_out, encoded_data_length, encoded_body_length,
             decoded_body_length);
     return;

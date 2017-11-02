@@ -2061,7 +2061,8 @@ void WebLocalFrameImpl::LoadData(const WebData& data,
 }
 
 WebLocalFrame::FallbackContentResult
-WebLocalFrameImpl::MaybeRenderFallbackContent(const WebURLError& error) const {
+WebLocalFrameImpl::MaybeRenderFallbackContent(const WebURL& url,
+                                              const WebURLError& error) const {
   DCHECK(GetFrame());
 
   if (!GetFrame()->Owner() || !GetFrame()->Owner()->CanRenderFallbackContent())
@@ -2073,7 +2074,8 @@ WebLocalFrameImpl::MaybeRenderFallbackContent(const WebURLError& error) const {
   if (!GetFrame()->Loader().GetProvisionalDocumentLoader())
     return NoLoadInProgress;
 
-  GetFrame()->Loader().GetProvisionalDocumentLoader()->LoadFailed(error);
+  GetFrame()->Loader().GetProvisionalDocumentLoader()->LoadFailed(
+      ResourceError(error, url));
   return FallbackRendered;
 }
 
