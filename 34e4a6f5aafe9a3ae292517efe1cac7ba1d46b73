@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22c0abf1_0334625a",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-02T21:40:54Z",
+      "side": 1,
+      "message": "Should format_index be offset by modifier.offset?\n\nsuper nit: Brackets around the body of an \u0027if\u0027 when the condition takes more than one line is preferred (or at least they told me so in reviews).",
+      "revId": "34e4a6f5aafe9a3ae292517efe1cac7ba1d46b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d87f3b2_af280028",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-02T21:40:54Z",
+      "side": 1,
+      "message": "Can there be two properties with the same name?\nShould we break the for loop once we find one? Not that it\u0027d make any difference.",
+      "revId": "34e4a6f5aafe9a3ae292517efe1cac7ba1d46b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
