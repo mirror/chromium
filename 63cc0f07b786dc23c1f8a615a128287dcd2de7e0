@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94dd199e_d70996a5",
+        "filename": "media/base/audio_bus_perftest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-02T00:40:58Z",
+      "side": 1,
+      "message": "Deleted now, but because it was the wrong type; there is no int8_t converter.",
+      "parentUuid": "f28805f7_e07324a6",
+      "range": {
+        "startLine": 49,
+        "startChar": 18,
+        "endLine": 50,
+        "endChar": 71
+      },
+      "revId": "63cc0f07b786dc23c1f8a615a128287dcd2de7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c70cfde_d79ce15e",
         "filename": "media/base/audio_bus_perftest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "63cc0f07b786dc23c1f8a615a128287dcd2de7e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11bc7965_19f3b464",
+        "filename": "media/base/audio_bus_perftest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-02T00:40:58Z",
+      "side": 1,
+      "message": "Removed uint8_t and int32_t per offline discussion.",
+      "parentUuid": "2c70cfde_d79ce15e",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 73
+      },
+      "revId": "63cc0f07b786dc23c1f8a615a128287dcd2de7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
