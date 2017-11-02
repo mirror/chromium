@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a62552ca_92e77c89",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3963,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-02T14:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11444521_1dcd429c",
+      "range": {
+        "startLine": 3963,
+        "startChar": 38,
+        "endLine": 3963,
+        "endChar": 54
+      },
+      "revId": "915d0763962fffb4017fe91eaa7f6d19119933ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71298b66_fee252bd",
         "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
         "patchSetId": 15
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-02T14:00:45Z",
       "side": 1,
       "message": "nit: I wonder if it is possible to check whether the scroller is composited here.\nAnd fail to create and start animation here rather than crash?\n\nGiven that the main thread AnimationWorklet may be a while away not crashing\nmay be a better UX in mean time. In any case I am fine with a TODO here around\nthis or main thread fallback.",
+      "range": {
+        "startLine": 93,
+        "startChar": 35,
+        "endLine": 93,
+        "endChar": 63
+      },
+      "revId": "915d0763962fffb4017fe91eaa7f6d19119933ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af2f5d6_1f7b2209",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-02T14:18:38Z",
+      "side": 1,
+      "message": "We will crash later anyway if the user does something to make the scroller non-composited during animation. In the absence of main-thread AW, my only real thought is to have the scroller turning non-composited cause the animation to finish (and maybe there\u0027s some way we can communicate the reason for this happening, perhaps via a console log warning?).\n\nIn that sort of world, we would have to have code that checks on each commit whether the scroller is still composited, and destroys the animation if it isn\u0027t.\n\nThoughts?",
+      "parentUuid": "71298b66_fee252bd",
       "range": {
         "startLine": 93,
         "startChar": 35,
