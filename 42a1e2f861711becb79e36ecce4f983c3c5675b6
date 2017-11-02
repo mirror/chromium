@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37e8be86_8dd38496",
+        "filename": "ios/web/web_state/web_state_observer_bridge.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-02T15:26:12Z",
+      "side": 1,
+      "message": "Can we fix the tests instead? This code may hide a potential bug in production code.",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 16
+      },
+      "revId": "42a1e2f861711becb79e36ecce4f983c3c5675b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
