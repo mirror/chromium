@@ -1,0 +1,36 @@
+{
+   "extensions": {
+      "settings": {
+         "oedeeodfidgoollimchfdnbmhcpnklnd": {
+            "location": 10,
+            "path": "oedeeodfidgoollimchfdnbmhcpnklnd/0.76.1",
+            "granted_permissions": {
+              "api": ["tabs"],
+              "explicit_host": ["file://*", "http://*.google.com/*", "https://*.google.com/*", "http://*.news.com/*"]
+            },
+            "state": 1,
+            "newAllowFileAccess": true,
+            "manifest": {
+            "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlNLNIOIjMPNnZBfVoc+Vq+RLFzPJQc9meAWvCfl6dn/FJCfIjsiMgq3kBOQ7k57OdHBZl7gFIp75JWlQCUdFAQKkNnmYfOYiudjev33EwZvBvMOo+Gmwp2ULVrk6ExOiSWJViM5nutt4T8j4xNwk8bN4P8La+3a5xeKsVj+qFlfq77qJxjWMsheb9hRzapnPXjKxAmpy9BDh3ZK5y0k9De2sMhAKpphHLCCTiumS4s1jBNBGCM0wq+QAjuCtw/kAKEOqdKAoyZ373KZ81v1+3aB/KlxJ3jX0WVOs3kYnyWYuEyTxwkwspwaPqUusf0YEzUzsvtNaYyDpcA6TGrBFmwIDAQAB",
+              "version": "0.76.1",
+              "name": "My extension 1",
+              "description": "The first extension that I made.",
+              "icons": {
+                "128": "icon_128.png"
+              },
+              "default_locale": "en_US",
+              "background": {
+                "page": "backgroundpage.html"
+              },
+              "permissions": ["tabs", "http://*.google.com/*", "https://*.google.com/*"],
+              "content_scripts": [
+                {
+                  "matches": ["file://*", "http://*.google.com/*", "https://*.google.com/*"],
+                  "js": ["script1.js"],
+                }
+              ],
+            }
+         }
+      }
+   }
+}

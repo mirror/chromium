@@ -723,6 +723,12 @@ void ExtensionSyncService::FillSyncDataList(
 }
 
 bool ExtensionSyncService::ShouldSync(const Extension& extension) const {
+  // Component extensions in general should not sync enable/disable status, as
+  // those don't have UI to enable/disable it. However, some component
+  // extensions like the Hotword extension, can be disabled programatticaly.
+  // So we only block sync of Zip Unpacker here as a fix for crbug.com/643060.
+  if (extension.id() == extension_misc::kZIPUnpackerExtensionId)
+    return false;
   // Themes are handled by the ThemeSyncableService.
   return extensions::util::ShouldSync(&extension, profile_) &&
          !extension.is_theme();

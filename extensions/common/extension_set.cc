@@ -117,6 +117,8 @@ bool ExtensionSet::InSameExtent(const GURL& old_url,
 }
 
 const Extension* ExtensionSet::GetByID(const std::string& id) const {
+  LOG(ERROR) << "GetById " << id;
+  GetIDs();
   ExtensionMap::const_iterator i = extensions_.find(id);
   if (i != extensions_.end())
     return i->second.get();
@@ -126,9 +128,11 @@ const Extension* ExtensionSet::GetByID(const std::string& id) const {
 
 ExtensionIdSet ExtensionSet::GetIDs() const {
   ExtensionIdSet ids;
+  LOG(ERROR) << "GetIds ";
   for (ExtensionMap::const_iterator it = extensions_.begin();
        it != extensions_.end(); ++it) {
     ids.insert(it->first);
+    LOG(ERROR) << "GetIds > " << it->first;
   }
   return ids;
 }

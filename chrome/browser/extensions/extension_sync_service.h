@@ -125,6 +125,9 @@ class ExtensionSyncService : public syncer::SyncableService,
   // ThemeSyncableService instead).
   bool ShouldSync(const extensions::Extension& extension) const;
 
+  // Returns whether the sync data for an extension should be synced.
+  bool ShouldSyncExtensionData(const std::string& id) const;
+
   // The normal profile associated with this ExtensionSyncService.
   Profile* profile_;
 
