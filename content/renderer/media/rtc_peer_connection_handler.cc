@@ -1928,6 +1928,12 @@ void RTCPeerConnectionHandler::Stop() {
 
   native_peer_connection_->Close();
 
+  // TODO(eladalon): !!! Fix before landing, after discussion with reviewers.
+  // This is probably not the way to solve the problem. It appears that handlers
+  // stay alive longer than they should.
+  if (peer_connection_tracker_)
+    peer_connection_tracker_->UnregisterPeerConnection(this);
+
   // This object may no longer forward call backs to blink.
   is_closed_ = true;
 }
