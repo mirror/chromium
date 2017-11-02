@@ -16,6 +16,24 @@
       "revId": "dcc4220b48308e5a45b660fe03e99485b07e7bfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e86eae_6351d970",
+        "filename": "chrome/browser/resources/md_extensions/extensions.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-11-02T23:34:59Z",
+      "side": 1,
+      "message": "sorry!",
+      "parentUuid": "cabd77ce_258f1a96",
+      "revId": "dcc4220b48308e5a45b660fe03e99485b07e7bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
