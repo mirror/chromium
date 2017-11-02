@@ -22,6 +22,30 @@
       "revId": "e644d473f6f7a634d97475decb8552bce4ce6b32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03c8871_38d80253",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-02T15:48:30Z",
+      "side": 1,
+      "message": "\u003e This isn\u0027t accurate; it measures DecodeTask(), of which there can be many per decoder thread. The current trace basically measures how often a flush happens, which is admittedly not all that useful.\n\nHmm you\u0027re right in part, but as long as DecodeTask() has input and\nDecode() doesn\u0027t fail, DecodeTask() would not return, and that\u0027s why\nwe see the never ending trace.\n\n\u003e \n\u003e I get the impression that the original traces were meant to trace zero-duration events rather than anything performance related. Perhaps DecodeTask() should still be traced, but as an async event?\n\nDo you mean a TRACE EVENT ASYNC_...()? What would this give us\nthat the distance between/starting point of the call Decode()\nwon\u0027t?",
+      "parentUuid": "950a596d_9bf4b330",
+      "range": {
+        "startLine": 11,
+        "startChar": 56,
+        "endLine": 12,
+        "endChar": 21
+      },
+      "revId": "e644d473f6f7a634d97475decb8552bce4ce6b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
