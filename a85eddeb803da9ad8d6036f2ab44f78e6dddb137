@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8dad734b_6605a528",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-02T20:43:37Z",
+      "side": 1,
+      "message": "It does on clang. :-.\n\nI fixed the wrong enum. Fixed this one too now.",
+      "parentUuid": "78d9ff36_396ae4f5",
+      "revId": "a85eddeb803da9ad8d6036f2ab44f78e6dddb137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5a4e023_c10e7ad6",
         "filename": "chrome/browser/profiling_host/background_profiling_triggers.h",
         "patchSetId": 6
