@@ -116,10 +116,8 @@ TEST_F(ConverterTest, Vector) {
   expected.push_back(0);
   expected.push_back(1);
 
-  auto maybe = Converter<std::vector<int>>::ToV8(
+  auto js_value = Converter<std::vector<int>>::ToV8(
       instance_->isolate()->GetCurrentContext(), expected);
-  Local<Value> js_value;
-  EXPECT_TRUE(maybe.ToLocal(&js_value));
   Local<Array> js_array2 = Local<Array>::Cast(js_value);
   EXPECT_EQ(3u, js_array2->Length());
   for (size_t i = 0; i < expected.size(); ++i) {
