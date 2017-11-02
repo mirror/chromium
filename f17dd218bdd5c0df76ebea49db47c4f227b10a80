@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "2658ff9e_7dad1ed1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnercustomizations/PartnerBrowserCustomizations.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-02T09:12:47Z",
+      "side": 1,
+      "message": "This could be private.",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "f17dd218bdd5c0df76ebea49db47c4f227b10a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1aceeae_80c91a0a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnercustomizations/PartnerBrowserCustomizations.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-02T09:12:47Z",
+      "side": 1,
+      "message": "And could you add @VisibleForTesting to these?",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "f17dd218bdd5c0df76ebea49db47c4f227b10a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcca0dd0_bc326d2f",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/util/UrlUtilitiesTest.java",
         "patchSetId": 3
