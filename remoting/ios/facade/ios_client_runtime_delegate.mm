@@ -19,9 +19,58 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/sys_string_conversions.h"
 
+// 233
+#include "remoting/base/oauth_token_getter.h"
+
 namespace remoting {
 
-IosClientRuntimeDelegate::IosClientRuntimeDelegate() : weak_factory_(this) {
+class IosAuthTokenGetter : public remoting::OAuthTokenGetter {
+ public:
+  IosAuthTokenGetter();
+  ~IosAuthTokenGetter() override;
+  void CallWithToken(const TokenCallback& on_access_token) override;
+  void InvalidateCache() override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(IosAuthTokenGetter);
+};
+
+IosAuthTokenGetter::IosAuthTokenGetter() {}
+
+IosAuthTokenGetter::~IosAuthTokenGetter() {}
+
+void IosAuthTokenGetter::CallWithToken(const TokenCallback& on_access_token) {
+  TokenCallback accessTokenCopied = on_access_token;
+  [RemotingService.instance.authentication
+      callbackWithAccessToken:^(RemotingAuthenticationStatus status,
+                              NSString* userEmail,
+                              NSString* accessToken) {
+    Status oauthStatus;
+    switch (status) {
+      case RemotingAuthenticationStatusSuccess:
+        oauthStatus = Status::SUCCESS;
+        break;
+      case RemotingAuthenticationStatusAuthError:
+        oauthStatus = Status::AUTH_ERROR;
+        break;
+      case RemotingAuthenticationStatusNetworkError:
+        oauthStatus = Status::NETWORK_ERROR;
+        break;
+      default:
+        NOTREACHED();
+    }
+    accessTokenCopied.Run(oauthStatus, base::SysNSStringToUTF8(userEmail),
+                          base::SysNSStringToUTF8(accessToken));
+  }];
+}
+
+void IosAuthTokenGetter::InvalidateCache() {
+  LOG(WARNING) << "IosAuthTokenGetter::InvalidateCache is not implemented.";
+}
+
+IosClientRuntimeDelegate::IosClientRuntimeDelegate() :
+    token_getter_(new IosAuthTokenGetter()),
+    weak_factory_(this) {
   runtime_ = ChromotingClientRuntime::GetInstance();
 }
 
@@ -60,6 +109,10 @@ void IosClientRuntimeDelegate::RequestAuthTokenForLogger() {
           }
         }];
   }
+}
+
+OAuthTokenGetter* IosClientRuntimeDelegate::GetTokenGetter() {
+  return token_getter_.get();
 }
 
 void IosClientRuntimeDelegate::SetAuthToken(const std::string& access_token) {

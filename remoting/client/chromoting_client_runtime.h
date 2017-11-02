@@ -24,6 +24,8 @@ struct DefaultSingletonTraits;
 // (e.g. message loops and task runners).
 namespace remoting {
 
+class OAuthTokenGetter;
+
 class ChromotingClientRuntime {
  public:
   class Delegate {
@@ -44,6 +46,8 @@ class ChromotingClientRuntime {
     // delegate will give the logger and auth token on the network thread like:
     // (network thread): runtime->log_writer()->SetAuthToken(token)
     virtual void RequestAuthTokenForLogger() = 0;
+
+    virtual OAuthTokenGetter* GetTokenGetter() = 0;
   };
 
   static ChromotingClientRuntime* GetInstance();
@@ -76,6 +80,8 @@ class ChromotingClientRuntime {
 
   // Must call and use log_writer on the network thread.
   ChromotingEventLogWriter* log_writer();
+
+  OAuthTokenGetter* token_getter();
 
  private:
   ChromotingClientRuntime();

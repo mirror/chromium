@@ -21,6 +21,8 @@
 #import "remoting/ios/facade/remoting_authentication.h"
 #import "remoting/ios/keychain_wrapper.h"
 
+#include <memory>
+
 #include "base/i18n/time_formatting.h"
 #include "base/logging.h"
 #include "base/strings/sys_string_conversions.h"

@@ -11,6 +11,8 @@
 
 namespace remoting {
 
+class IosAuthTokenGetter;
+
 class IosClientRuntimeDelegate : public ChromotingClientRuntime::Delegate {
  public:
   IosClientRuntimeDelegate();
@@ -21,6 +23,8 @@ class IosClientRuntimeDelegate : public ChromotingClientRuntime::Delegate {
   void RuntimeDidShutdown() override;
   void RequestAuthTokenForLogger() override;
 
+  OAuthTokenGetter* GetTokenGetter() override;
+
   // Sets the access token. Should be called when the user switches accounts.
   void SetAuthToken(const std::string& access_token);
 
@@ -28,6 +32,7 @@ class IosClientRuntimeDelegate : public ChromotingClientRuntime::Delegate {
 
  private:
   ChromotingClientRuntime* runtime_;
+  std::unique_ptr<IosAuthTokenGetter> token_getter_;
 
   base::WeakPtrFactory<IosClientRuntimeDelegate> weak_factory_;
 

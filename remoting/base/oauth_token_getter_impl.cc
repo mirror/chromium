@@ -194,7 +194,7 @@ void OAuthTokenGetterImpl::OnNetworkError(int response_code) {
 }
 
 void OAuthTokenGetterImpl::CallWithToken(const TokenCallback& on_access_token) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+//  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (intermediate_credentials_) {
     pending_callbacks_.push(on_access_token);
     if (!response_pending_) {

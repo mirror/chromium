@@ -10,6 +10,10 @@
 @class HostInfo;
 @class UserInfo;
 
+namespace remoting {
+class OAuthTokenGetter;
+}  // namespace remoting
+
 @protocol RemotingAuthentication;
 
 typedef NS_ENUM(NSInteger, HostListState) {
