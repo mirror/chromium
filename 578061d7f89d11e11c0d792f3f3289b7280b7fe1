@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ec01a01_7d6b319f",
+        "filename": "components/viz/service/display/direct_renderer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-02T15:14:30Z",
+      "side": 1,
+      "message": "All the pure virtual things should be grouped here",
+      "revId": "578061d7f89d11e11c0d792f3f3289b7280b7fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9896e0_e7ee25df",
+        "filename": "components/viz/service/display/direct_renderer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-02T15:14:30Z",
+      "side": 1,
+      "message": "This can stay where it was if subclasses don\u0027t need it (they don\u0027t now right?)",
+      "revId": "578061d7f89d11e11c0d792f3f3289b7280b7fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

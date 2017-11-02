@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7a4aba0_7a102d07",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-02T15:14:30Z",
+      "side": 0,
+      "message": "Like UseRenderPass, there\u0027s a bunch of code in here that isn\u0027t GL/software-specific, like this building of the flat_map. Let\u0027s keep as much in the base class as we can, then delegate to the subclass for resource work",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1826d4da_d9a9c3f5",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-02T15:14:30Z",
+      "side": 0,
+      "message": "This loop will need to be in the subclasses",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f52aad_794b2da3",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-02T15:14:30Z",
+      "side": 0,
+      "message": "And this loop",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73b0eaa_72dbdbc4",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-02T15:14:30Z",
+      "side": 0,
+      "message": "Looks like this loop should stay here, so it can do the pass-\u003e call. But will have to delegate to the subclass to make the resource (and get back a return value if it had to make something or not)",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91753326_d1b4740c",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-02T15:14:30Z",
+      "side": 0,
+      "message": "Computing the size can stay in the base class?",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f92812_d8f89460",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-02T15:14:30Z",
+      "side": 0,
+      "message": "This else if and the next are not resource-related. Can the first if block be the only piece that moves?",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa779c8_6b807653",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-02T15:14:30Z",
+      "side": 0,
+      "message": "This doesn\u0027t need to move to the subclass, if it works with renderpass id instead of a resource* ?",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
