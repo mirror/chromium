@@ -879,7 +879,7 @@ void RenderThreadImpl::Init(
   }
 
   if (command_line.HasSwitch(switches::kDisableGpuCompositing))
-    is_gpu_compositing_disabled_ = true;
+    CompositingModeFallbackToSoftware();
 
   is_gpu_rasterization_forced_ =
       command_line.HasSwitch(switches::kForceGpuRasterization);
@@ -1986,6 +1986,12 @@ void RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics(
 }
 
 void RenderThreadImpl::CompositingModeFallbackToSoftware() {
+  // Misconfigured bots (eg. crbug.com/780757) could run layout tests on a
+  // machine where gpu compositing doesn't work. Ignore the fallback and keep
+  // trying to use it in the renderer anyway.
+  if (layout_test_mode())
+    return;
+
   if (gpu_channel_) {
     // TODO(danakj): Tell all clients of the compositor. We should send a more
     // scoped message than this.
