@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "656aecb6_0f427e3d",
+        "filename": "content/browser/background_sync/background_sync_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T23:26:23Z",
+      "side": 1,
+      "message": "Since id is opaque for this object, it does not make much sense storing it here. What you should do is you should tell background manager the procId/routeId of the controllee that is offline and you should hold off registrations firing events in case they have an offline controllee.",
+      "revId": "013993e16fb78c43f604c3660284ff20d03a0e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2cf3617_d52f0ecf",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T23:26:23Z",
+      "side": 1,
+      "message": "We like IO in caps.",
+      "revId": "013993e16fb78c43f604c3660284ff20d03a0e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
