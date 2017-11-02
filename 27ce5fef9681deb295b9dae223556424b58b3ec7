@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a957b77_e50e42b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-02T00:17:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bc5092f_c4cacc96",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 12
+      },
+      "revId": "27ce5fef9681deb295b9dae223556424b58b3ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25bbde44_0e1d43b0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBarDelegate.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "27ce5fef9681deb295b9dae223556424b58b3ec7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666de3aa_d821fece",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBarDelegate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-02T00:17:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25bbde44_0e1d43b0",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 36
+      },
+      "revId": "27ce5fef9681deb295b9dae223556424b58b3ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b4e92305_bc345094",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-02T00:17:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05227c4d_37fa7aa0",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 13
+      },
+      "revId": "27ce5fef9681deb295b9dae223556424b58b3ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d183912e_e152db16",
         "filename": "chrome/browser/ui/android/infobars/survey_infobar.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "27ce5fef9681deb295b9dae223556424b58b3ec7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cbf8efa_c13b5891",
+        "filename": "chrome/browser/ui/android/infobars/survey_infobar.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-02T00:17:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d183912e_e152db16",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "27ce5fef9681deb295b9dae223556424b58b3ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
