@@ -1364,6 +1364,8 @@ split_static_library("browser") {
     "ssl/mitm_software_blocking_page.h",
     "ssl/security_state_tab_helper.cc",
     "ssl/security_state_tab_helper.h",
+    "ssl/server_misconfig_blocking_page.cc",
+    "ssl/server_misconfig_blocking_page.h",
     "ssl/ssl_blocking_page.cc",
     "ssl/ssl_blocking_page.h",
     "ssl/ssl_cert_reporter.h",
