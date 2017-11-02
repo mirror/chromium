@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc7e39f4_528d855b",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3173,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-02T00:12:40Z",
+      "side": 1,
+      "message": "First? Here and below",
+      "range": {
+        "startLine": 3173,
+        "startChar": 32,
+        "endLine": 3173,
+        "endChar": 40
+      },
+      "revId": "b0af8987f0f0f31e11ae77b4edaac3bb1ae9da34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b91ba8_13487ad2",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3328,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-02T00:12:40Z",
+      "side": 1,
+      "message": "Can you add a comment for this one since it\u0027s a bit more complicated?",
+      "range": {
+        "startLine": 3328,
+        "startChar": 0,
+        "endLine": 3328,
+        "endChar": 6
+      },
+      "revId": "b0af8987f0f0f31e11ae77b4edaac3bb1ae9da34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
