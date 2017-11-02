@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9064745e_275036cc",
+        "filename": "components/cronet/ios/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-02T18:57:49Z",
+      "side": 1,
+      "message": "By convention, all source files have lowercase names. Cronet.h is an exception since it is a header file of the Cronet framework.",
+      "range": {
+        "startLine": 82,
+        "startChar": 3,
+        "endLine": 82,
+        "endChar": 18
+      },
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fecc78_a56c2822",
+        "filename": "components/cronet/ios/CronetMetrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-02T18:57:49Z",
+      "side": 1,
+      "message": "Why is it needed?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77167db4_3e4138f9",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-02T18:57:49Z",
+      "side": 1,
+      "message": "Use #include for consistency.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 7
+      },
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70fc4613_2880eec8",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-02T18:57:49Z",
+      "side": 1,
+      "message": "I am not sure we need a blank line here.",
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc48f2c9_eb1ba871",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-02T18:57:49Z",
+      "side": 1,
+      "message": "What do you mean by \"uninitialized\" here?",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
