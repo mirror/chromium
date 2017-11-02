@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b268e248_d9159942",
+        "filename": "components/viz/common/resources/release_callback.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-02T14:55:34Z",
+      "side": 1,
+      "message": "All release callbacks should only be called once",
+      "revId": "e76e3bb6794d78051e539aae54bf9d8805457690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
