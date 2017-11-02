@@ -122,6 +122,24 @@
       "revId": "f1f1576d822362f9612fd1eff9559cd43d760922",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45584f03_b3637ba7",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-02T21:45:26Z",
+      "side": 1,
+      "message": "Oh, I understand now.",
+      "parentUuid": "3042558a_eb6e0a2b",
+      "revId": "f1f1576d822362f9612fd1eff9559cd43d760922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
