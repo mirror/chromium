@@ -94055,6 +94055,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WebRTC.Audio.ReceiverDelayEstimateMs" units="ms">
+  <owner>hlundin@chromium.org</owner>
+  <summary>
+    The sum of the jitter buffer delay and the sound card's buffering delay for
+    the receiving side. Sampled everytime the client polls stats.
+  </summary>
+</histogram>
+
 <histogram name="WebRTC.Audio.ResidualEchoDetector.EchoLikelihood" units="%">
   <owner>hlundin@chromium.org</owner>
   <owner>ivoc@chromium.org</owner>
