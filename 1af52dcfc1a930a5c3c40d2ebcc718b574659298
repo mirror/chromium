@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5c80066_2f4f1f23",
+        "filename": "chrome/browser/banners/app_banner_infobar_delegate_desktop.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-02T02:21:16Z",
+      "side": 1,
+      "message": "This include isn\u0027t needed any more.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 21
+      },
+      "revId": "1af52dcfc1a930a5c3c40d2ebcc718b574659298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
