@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24b82416_a2df3e57",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-02T02:53:26Z",
+      "side": 1,
+      "message": "Done.\nI did this for the important stuff (removing sanitizers and coverage). \nBut for the optimization flags (which is less important) I do not think there is another way that can be easily done.",
+      "parentUuid": "b04ee1de_2891d965",
+      "range": {
+        "startLine": 582,
+        "startChar": 6,
+        "endLine": 582,
+        "endChar": 66
+      },
+      "revId": "d4f0504bfd3a6b7fa06ae9d056643ba366cbf345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb93ebed_7009e75d",
         "filename": "build/config/sanitizers/BUILD.gn",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "d4f0504bfd3a6b7fa06ae9d056643ba366cbf345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db6e5ae0_ea34a2a8",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-02T02:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb93ebed_7009e75d",
+      "range": {
+        "startLine": 605,
+        "startChar": 6,
+        "endLine": 605,
+        "endChar": 19
+      },
+      "revId": "d4f0504bfd3a6b7fa06ae9d056643ba366cbf345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3162992d_faec416e",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-02T02:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97dc9b24_c71a085f",
+      "range": {
+        "startLine": 606,
+        "startChar": 16,
+        "endLine": 606,
+        "endChar": 37
+      },
+      "revId": "d4f0504bfd3a6b7fa06ae9d056643ba366cbf345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43a75fb5_8da26188",
         "filename": "third_party/protobuf/BUILD.gn",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "d4f0504bfd3a6b7fa06ae9d056643ba366cbf345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5c26b1_e55d5206",
+        "filename": "third_party/protobuf/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-02T02:53:26Z",
+      "side": 1,
+      "message": "Yup, I removed the comment though.",
+      "parentUuid": "43a75fb5_8da26188",
+      "range": {
+        "startLine": 368,
+        "startChar": 74,
+        "endLine": 369,
+        "endChar": 13
+      },
+      "revId": "d4f0504bfd3a6b7fa06ae9d056643ba366cbf345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

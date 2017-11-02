@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be8d4886_52733b9d",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-02T02:53:26Z",
+      "side": 1,
+      "message": "O2 seemed to make a 15% difference in speed (on average). I think it\u0027s worth keeping.\nSee the main reply.",
+      "parentUuid": "c459c191_ec727167",
+      "revId": "b02899d7aed9acef050e6be0d3f9550d68b026eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a46ea9fa_d62cdeba",
         "filename": "build/config/sanitizers/sanitizers.gni",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "b02899d7aed9acef050e6be0d3f9550d68b026eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effc7c9f_4999f8b8",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-02T02:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a46ea9fa_d62cdeba",
+      "revId": "b02899d7aed9acef050e6be0d3f9550d68b026eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

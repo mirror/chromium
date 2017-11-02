@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "06be1086_20b90d24",
+        "filename": "third_party/libprotobuf-mutator/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-02T02:53:26Z",
+      "side": 1,
+      "message": "I did an experiment and found that no sanitizing improved speed by an average of 12%. I think it\u0027s worth keeping.\nSee the main reply.",
+      "parentUuid": "66a268a3_78fcc178",
+      "revId": "5a5176156c0acefd8259c967ca7d7083e31830d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d185185b_46211cc6",
         "filename": "third_party/protobuf/BUILD.gn",
         "patchSetId": 4
