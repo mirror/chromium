@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "553a2501_b91ee6cb",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-02T10:41:55Z",
+      "side": 1,
+      "message": "I think the old assignments need to be kept here - they are not initialized in https://cs.chromium.org/chromium/src/google_apis/gaia/gaia_auth_util.h?rcl\u003df9df6fbe19f684cb3e7aa422eb6e190160203e09\u0026l\u003d31",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 13
+      },
+      "revId": "16d98b8dc15af421c7cc8bf5d137d8b2038c07c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c047071_c90b7b62",
+        "filename": "components/signin/core/browser/gaia_cookie_manager_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-02T10:41:55Z",
+      "side": 1,
+      "message": "Should this also compare the \".valid\" value (the reconcilor uses that in its compare listed accounts function)?",
+      "range": {
+        "startLine": 72,
+        "startChar": 33,
+        "endLine": 72,
+        "endChar": 47
+      },
+      "revId": "16d98b8dc15af421c7cc8bf5d137d8b2038c07c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b09d95f_9b2b2b66",
+        "filename": "google_apis/gaia/gaia_auth_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-02T10:41:55Z",
+      "side": 1,
+      "message": "\u003d true?",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 15
+      },
+      "revId": "16d98b8dc15af421c7cc8bf5d137d8b2038c07c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d268cb8_42d12977",
+        "filename": "google_apis/gaia/gaia_auth_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-02T10:41:55Z",
+      "side": 1,
+      "message": "\u003d false?",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "16d98b8dc15af421c7cc8bf5d137d8b2038c07c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
