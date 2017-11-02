@@ -131,6 +131,7 @@ struct FocusCandidate {
 bool HasOffscreenRect(Node*, WebFocusType = kWebFocusTypeNone);
 bool ScrollInDirection(LocalFrame*, WebFocusType);
 bool ScrollInDirection(Node* container, WebFocusType);
+bool CanBeContainer(const Node*, WebFocusType);
 bool CanScrollInDirection(const Node* container, WebFocusType);
 bool CanScrollInDirection(const LocalFrame*, WebFocusType);
 bool CanBeScrolledIntoView(WebFocusType, const FocusCandidate&);
