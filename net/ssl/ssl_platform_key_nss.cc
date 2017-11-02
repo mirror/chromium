@@ -30,6 +30,7 @@
 #include "third_party/boringssl/src/include/openssl/mem.h"
 #include "third_party/boringssl/src/include/openssl/nid.h"
 #include "third_party/boringssl/src/include/openssl/rsa.h"
+#include "third_party/boringssl/src/include/openssl/ssl.h"
 
 namespace net {
 
@@ -45,24 +46,23 @@ void LogPRError(const char* message) {
 
 class SSLPlatformKeyNSS : public ThreadedSSLPrivateKey::Delegate {
  public:
-  SSLPlatformKeyNSS(int type,
-                    scoped_refptr<crypto::CryptoModuleBlockingPasswordDelegate>
+  SSLPlatformKeyNSS(scoped_refptr<crypto::CryptoModuleBlockingPasswordDelegate>
                         password_delegate,
                     crypto::ScopedSECKEYPrivateKey key)
-      : type_(type),
-        password_delegate_(std::move(password_delegate)),
+      : password_delegate_(std::move(password_delegate)),
         key_(std::move(key)) {}
   ~SSLPlatformKeyNSS() override {}
 
-  std::vector<SSLPrivateKey::Hash> GetDigestPreferences() override {
-    static const SSLPrivateKey::Hash kHashes[] = {
-        SSLPrivateKey::Hash::SHA512, SSLPrivateKey::Hash::SHA384,
-        SSLPrivateKey::Hash::SHA256, SSLPrivateKey::Hash::SHA1};
-    return std::vector<SSLPrivateKey::Hash>(kHashes,
-                                            kHashes + arraysize(kHashes));
+  std::vector<uint16_t> GetPreferences() override {
+    return {
+        SSL_SIGN_RSA_PKCS1_SHA512, SSL_SIGN_ECDSA_SECP521R1_SHA512,
+        SSL_SIGN_RSA_PKCS1_SHA384, SSL_SIGN_ECDSA_SECP384R1_SHA384,
+        SSL_SIGN_RSA_PKCS1_SHA256, SSL_SIGN_ECDSA_SECP256R1_SHA256,
+        SSL_SIGN_RSA_PKCS1_SHA1,   SSL_SIGN_ECDSA_SHA1,
+    };
   }
 
-  Error SignDigest(SSLPrivateKey::Hash hash,
+  Error SignDigest(uint16_t algorithm,
                    const base::StringPiece& input,
                    std::vector<uint8_t>* signature) override {
     SECItem digest_item;
@@ -71,27 +71,9 @@ class SSLPlatformKeyNSS : public ThreadedSSLPrivateKey::Delegate {
     digest_item.len = input.size();
 
     bssl::UniquePtr<uint8_t> free_digest_info;
-    if (type_ == EVP_PKEY_RSA) {
+    if (SSL_get_signature_algorithm_key_type(algorithm) == EVP_PKEY_RSA) {
       // PK11_Sign expects the caller to prepend the DigestInfo.
-      int hash_nid = NID_undef;
-      switch (hash) {
-        case SSLPrivateKey::Hash::MD5_SHA1:
-          hash_nid = NID_md5_sha1;
-          break;
-        case SSLPrivateKey::Hash::SHA1:
-          hash_nid = NID_sha1;
-          break;
-        case SSLPrivateKey::Hash::SHA256:
-          hash_nid = NID_sha256;
-          break;
-        case SSLPrivateKey::Hash::SHA384:
-          hash_nid = NID_sha384;
-          break;
-        case SSLPrivateKey::Hash::SHA512:
-          hash_nid = NID_sha512;
-          break;
-      }
-      DCHECK_NE(NID_undef, hash_nid);
+      int hash_nid = EVP_MD_type(SSL_get_signature_algorithm_digest(algorithm));
       int is_alloced;
       size_t prefix_len;
       if (!RSA_add_pkcs1_prefix(&digest_item.data, &prefix_len, &is_alloced,
@@ -122,7 +104,7 @@ class SSLPlatformKeyNSS : public ThreadedSSLPrivateKey::Delegate {
 
     // NSS emits raw ECDSA signatures, but BoringSSL expects a DER-encoded
     // ECDSA-Sig-Value.
-    if (type_ == EVP_PKEY_EC) {
+    if (SSL_get_signature_algorithm_key_type(algorithm) == EVP_PKEY_EC) {
       if (signature->size() % 2 != 0) {
         LOG(ERROR) << "Bad signature length";
         return ERR_SSL_CLIENT_AUTH_SIGNATURE_FAILED;
@@ -151,7 +133,6 @@ class SSLPlatformKeyNSS : public ThreadedSSLPrivateKey::Delegate {
   }
 
  private:
-  int type_;
   // NSS retains a pointer to the password delegate, so retain a reference here
   // to ensure the lifetimes are correct.
   scoped_refptr<crypto::CryptoModuleBlockingPasswordDelegate>
@@ -190,7 +171,7 @@ scoped_refptr<SSLPrivateKey> FetchClientCertPrivateKey(
   // into SSLPlatformKeyNSS to tie the lifetimes together. See
   // https://crbug.com/779090.
   return base::MakeRefCounted<ThreadedSSLPrivateKey>(
-      std::make_unique<SSLPlatformKeyNSS>(type, std::move(password_delegate),
+      std::make_unique<SSLPlatformKeyNSS>(std::move(password_delegate),
                                           std::move(key)),
       GetSSLPlatformKeyTaskRunner());
 }

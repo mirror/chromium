@@ -31,6 +31,7 @@
 #include "third_party/boringssl/src/include/openssl/ec_key.h"
 #include "third_party/boringssl/src/include/openssl/evp.h"
 #include "third_party/boringssl/src/include/openssl/mem.h"
+#include "third_party/boringssl/src/include/openssl/ssl.h"
 
 namespace net {
 
@@ -130,12 +131,14 @@ TEST_P(SSLPlatformKeyNSSTest, KeyMatches) {
       FetchClientCertPrivateKey(cert.get(), nss_cert.get(), nullptr);
   ASSERT_TRUE(key);
 
-  // All NSS keys are expected to have the same hash preferences.
-  std::vector<SSLPrivateKey::Hash> expected_hashes = {
-      SSLPrivateKey::Hash::SHA512, SSLPrivateKey::Hash::SHA384,
-      SSLPrivateKey::Hash::SHA256, SSLPrivateKey::Hash::SHA1,
+  // All NSS keys are expected to have the same preferences.
+  std::vector<uint16_t> expected = {
+      SSL_SIGN_RSA_PKCS1_SHA512, SSL_SIGN_ECDSA_SECP521R1_SHA512,
+      SSL_SIGN_RSA_PKCS1_SHA384, SSL_SIGN_ECDSA_SECP384R1_SHA384,
+      SSL_SIGN_RSA_PKCS1_SHA256, SSL_SIGN_ECDSA_SECP256R1_SHA256,
+      SSL_SIGN_RSA_PKCS1_SHA1,   SSL_SIGN_ECDSA_SHA1,
   };
-  EXPECT_EQ(expected_hashes, key->GetDigestPreferences());
+  EXPECT_EQ(expected, key->GetPreferences());
 
   TestSSLPrivateKeyMatches(key.get(), pkcs8);
 }

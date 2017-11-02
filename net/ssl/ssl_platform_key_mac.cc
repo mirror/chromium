@@ -37,6 +37,7 @@
 #include "third_party/boringssl/src/include/openssl/mem.h"
 #include "third_party/boringssl/src/include/openssl/nid.h"
 #include "third_party/boringssl/src/include/openssl/rsa.h"
+#include "third_party/boringssl/src/include/openssl/ssl.h"
 
 namespace net {
 
@@ -70,23 +71,23 @@ class ScopedCSSM_CC_HANDLE {
 
 class SSLPlatformKeyCSSM : public ThreadedSSLPrivateKey::Delegate {
  public:
-  SSLPlatformKeyCSSM(int type,
-                     size_t max_length,
-                     SecKeyRef key,
-                     const CSSM_KEY* cssm_key)
+  SSLPlatformKeyCSSM(size_t max_length, SecKeyRef key, const CSSM_KEY* cssm_key)
       : max_length_(max_length),
         key_(key, base::scoped_policy::RETAIN),
         cssm_key_(cssm_key) {}
 
   ~SSLPlatformKeyCSSM() override {}
 
-  std::vector<SSLPrivateKey::Hash> GetDigestPreferences() override {
-    return std::vector<SSLPrivateKey::Hash>{
-        SSLPrivateKey::Hash::SHA512, SSLPrivateKey::Hash::SHA384,
-        SSLPrivateKey::Hash::SHA256, SSLPrivateKey::Hash::SHA1};
+  std::vector<uint16_t> GetPreferences() override {
+    return {
+        SSL_SIGN_RSA_PKCS1_SHA512, SSL_SIGN_ECDSA_SECP521R1_SHA512,
+        SSL_SIGN_RSA_PKCS1_SHA384, SSL_SIGN_ECDSA_SECP384R1_SHA384,
+        SSL_SIGN_RSA_PKCS1_SHA256, SSL_SIGN_ECDSA_SECP256R1_SHA256,
+        SSL_SIGN_RSA_PKCS1_SHA1,   SSL_SIGN_ECDSA_SHA1,
+    };
   }
 
-  Error SignDigest(SSLPrivateKey::Hash hash,
+  Error SignDigest(uint16_t algorithm,
                    const base::StringPiece& input,
                    std::vector<uint8_t>* signature) override {
     crypto::OpenSSLErrStackTracer tracer(FROM_HERE);
@@ -122,25 +123,7 @@ class SSLPlatformKeyCSSM : public ThreadedSSLPrivateKey::Delegate {
     bssl::UniquePtr<uint8_t> free_digest_info;
     if (cssm_key_->KeyHeader.AlgorithmId == CSSM_ALGID_RSA) {
       // CSSM expects the caller to prepend the DigestInfo.
-      int hash_nid = NID_undef;
-      switch (hash) {
-        case SSLPrivateKey::Hash::MD5_SHA1:
-          hash_nid = NID_md5_sha1;
-          break;
-        case SSLPrivateKey::Hash::SHA1:
-          hash_nid = NID_sha1;
-          break;
-        case SSLPrivateKey::Hash::SHA256:
-          hash_nid = NID_sha256;
-          break;
-        case SSLPrivateKey::Hash::SHA384:
-          hash_nid = NID_sha384;
-          break;
-        case SSLPrivateKey::Hash::SHA512:
-          hash_nid = NID_sha512;
-          break;
-      }
-      DCHECK_NE(NID_undef, hash_nid);
+      int hash_nid = EVP_MD_type(SSL_get_signature_algorithm_digest(algorithm));
       int is_alloced;
       if (!RSA_add_pkcs1_prefix(&hash_data.Data, &hash_data.Length, &is_alloced,
                                 hash_nid, hash_data.Data, hash_data.Length)) {
@@ -184,62 +167,55 @@ class SSLPlatformKeyCSSM : public ThreadedSSLPrivateKey::Delegate {
 class API_AVAILABLE(macosx(10.12)) SSLPlatformKeySecKey
     : public ThreadedSSLPrivateKey::Delegate {
  public:
-  SSLPlatformKeySecKey(int type, size_t max_length, SecKeyRef key)
-      : type_(type), key_(key, base::scoped_policy::RETAIN) {}
+  SSLPlatformKeySecKey(size_t max_length, SecKeyRef key)
+      : key_(key, base::scoped_policy::RETAIN) {}
 
   ~SSLPlatformKeySecKey() override {}
 
-  std::vector<SSLPrivateKey::Hash> GetDigestPreferences() override {
-    return std::vector<SSLPrivateKey::Hash>{
-        SSLPrivateKey::Hash::SHA512, SSLPrivateKey::Hash::SHA384,
-        SSLPrivateKey::Hash::SHA256, SSLPrivateKey::Hash::SHA1};
+  std::vector<uint16_t> GetPreferences() override {
+    return {
+        SSL_SIGN_RSA_PKCS1_SHA512, SSL_SIGN_ECDSA_SECP521R1_SHA512,
+        SSL_SIGN_RSA_PKCS1_SHA384, SSL_SIGN_ECDSA_SECP384R1_SHA384,
+        SSL_SIGN_RSA_PKCS1_SHA256, SSL_SIGN_ECDSA_SECP256R1_SHA256,
+        SSL_SIGN_RSA_PKCS1_SHA1,   SSL_SIGN_ECDSA_SHA1,
+    };
   }
 
-  Error SignDigest(SSLPrivateKey::Hash hash,
+  Error SignDigest(uint16_t algorithm,
                    const base::StringPiece& input,
                    std::vector<uint8_t>* signature) override {
-    SecKeyAlgorithm algorithm = nullptr;
-    if (type_ == EVP_PKEY_RSA) {
-      switch (hash) {
-        case SSLPrivateKey::Hash::SHA512:
-          algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA512;
-          break;
-        case SSLPrivateKey::Hash::SHA384:
-          algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA384;
-          break;
-        case SSLPrivateKey::Hash::SHA256:
-          algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256;
-          break;
-        case SSLPrivateKey::Hash::SHA1:
-          algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1;
-          break;
-        case SSLPrivateKey::Hash::MD5_SHA1:
-          algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw;
-          break;
-      }
-    } else if (type_ == EVP_PKEY_EC) {
-      switch (hash) {
-        case SSLPrivateKey::Hash::SHA512:
-          algorithm = kSecKeyAlgorithmECDSASignatureDigestX962SHA512;
-          break;
-        case SSLPrivateKey::Hash::SHA384:
-          algorithm = kSecKeyAlgorithmECDSASignatureDigestX962SHA384;
-          break;
-        case SSLPrivateKey::Hash::SHA256:
-          algorithm = kSecKeyAlgorithmECDSASignatureDigestX962SHA256;
-          break;
-        case SSLPrivateKey::Hash::SHA1:
-          algorithm = kSecKeyAlgorithmECDSASignatureDigestX962SHA1;
-          break;
-        case SSLPrivateKey::Hash::MD5_SHA1:
-          // MD5-SHA1 is not used with ECDSA.
-          break;
-      }
-    }
-
-    if (!algorithm) {
-      NOTREACHED();
-      return ERR_FAILED;
+    SecKeyAlgorithm sec_algorithm;
+    switch (algorithm) {
+      case SSL_SIGN_RSA_PKCS1_SHA512:
+        sec_algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA512;
+        break;
+      case SSL_SIGN_RSA_PKCS1_SHA384:
+        sec_algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA384;
+        break;
+      case SSL_SIGN_RSA_PKCS1_SHA256:
+        sec_algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256;
+        break;
+      case SSL_SIGN_RSA_PKCS1_SHA1:
+        sec_algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1;
+        break;
+      case SSL_SIGN_RSA_PKCS1_MD5_SHA1:
+        sec_algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw;
+        break;
+      case SSL_SIGN_ECDSA_SECP521R1_SHA512:
+        sec_algorithm = kSecKeyAlgorithmECDSASignatureDigestX962SHA512;
+        break;
+      case SSL_SIGN_ECDSA_SECP384R1_SHA384:
+        sec_algorithm = kSecKeyAlgorithmECDSASignatureDigestX962SHA384;
+        break;
+      case SSL_SIGN_ECDSA_SECP256R1_SHA256:
+        sec_algorithm = kSecKeyAlgorithmECDSASignatureDigestX962SHA256;
+        break;
+      case SSL_SIGN_ECDSA_SHA1:
+        sec_algorithm = kSecKeyAlgorithmECDSASignatureDigestX962SHA1;
+        break;
+      default:
+        NOTREACHED();
+        return ERR_FAILED;
     }
 
     base::ScopedCFTypeRef<CFDataRef> input_ref(CFDataCreateWithBytesNoCopy(
@@ -248,7 +224,7 @@ class API_AVAILABLE(macosx(10.12)) SSLPlatformKeySecKey
 
     base::ScopedCFTypeRef<CFErrorRef> error;
     base::ScopedCFTypeRef<CFDataRef> signature_ref(SecKeyCreateSignature(
-        key_, algorithm, input_ref, error.InitializeInto()));
+        key_, sec_algorithm, input_ref, error.InitializeInto()));
     if (!signature_ref) {
       LOG(ERROR) << error;
       return ERR_SSL_CLIENT_AUTH_SIGNATURE_FAILED;
@@ -261,7 +237,6 @@ class API_AVAILABLE(macosx(10.12)) SSLPlatformKeySecKey
   }
 
  private:
-  int type_;
   base::ScopedCFTypeRef<SecKeyRef> key_;
 
   DISALLOW_COPY_AND_ASSIGN(SSLPlatformKeySecKey);
@@ -277,8 +252,7 @@ scoped_refptr<SSLPrivateKey> CreateSSLPrivateKeyForSecKey(
 
   if (__builtin_available(macOS 10.12, *)) {
     return base::MakeRefCounted<ThreadedSSLPrivateKey>(
-        std::make_unique<SSLPlatformKeySecKey>(key_type, max_length,
-                                               private_key),
+        std::make_unique<SSLPlatformKeySecKey>(max_length, private_key),
         GetSSLPlatformKeyTaskRunner());
   }
 
@@ -290,8 +264,7 @@ scoped_refptr<SSLPrivateKey> CreateSSLPrivateKeyForSecKey(
   }
 
   return base::MakeRefCounted<ThreadedSSLPrivateKey>(
-      std::make_unique<SSLPlatformKeyCSSM>(key_type, max_length, private_key,
-                                           cssm_key),
+      std::make_unique<SSLPlatformKeyCSSM>(max_length, private_key, cssm_key),
       GetSSLPlatformKeyTaskRunner());
 }
 
