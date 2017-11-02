@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c31fa4db_b871a518",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console-show-all-messages.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T23:05:13Z",
+      "side": 1,
+      "message": "Adding sniffers is bad, let\u0027s try avoiding it.",
+      "revId": "21f73d51c71c81041ddb0d907eb0af441e410d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f7a0db_934198a7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T23:05:13Z",
+      "side": 1,
+      "message": "Move this into this._cancelBuildVisibleCache?",
+      "revId": "21f73d51c71c81041ddb0d907eb0af441e410d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed75ddb_12415a8f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T23:05:13Z",
+      "side": 1,
+      "message": "The most expensive thing you do in this loop is Date.now(), consider capping at # of messages, not millis.\n\nAlso, you should not assume that this._consoleMessages is going to be the same every time you call this.",
+      "revId": "21f73d51c71c81041ddb0d907eb0af441e410d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9371fb62_e7c11df3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T23:05:13Z",
+      "side": 1,
+      "message": "Use raf 16ms instead?",
+      "revId": "21f73d51c71c81041ddb0d907eb0af441e410d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
