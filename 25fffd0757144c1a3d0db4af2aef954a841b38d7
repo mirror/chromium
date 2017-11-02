@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "adc8ef1f_24ec8eca",
+        "filename": "build/android/buildhooks/java/org/chromium/build/Callback.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-02T15:44:55Z",
+      "side": 1,
+      "message": "Sorry I wasn\u0027t clear - I\u0027m aware this can\u0027t depend on base. However, I don\u0027t see the value in having a generic Callback interface in buildhooks either - are there plans for more usages of it? Given that I don\u0027t expect additional usages and there\u0027s already a generic callback in base, I was suggesting that we should just make this instance specific to this use case (potentially even make it an inner-class of existing class) and avoid duplicating the name \"Callback\". The base version can be left unmodified",
+      "parentUuid": "175f522b_5a198af9",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "25fffd0757144c1a3d0db4af2aef954a841b38d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05602234_1341fe1e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
         "patchSetId": 12
