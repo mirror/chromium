@@ -425,11 +425,7 @@ QuicPendingRetransmission QuicSentPacketManager::NextPendingRetransmission() {
   DCHECK(!transmission_info.retransmittable_frames.empty());
 
   return QuicPendingRetransmission(packet_number, transmission_type,
-                                   transmission_info.retransmittable_frames,
-                                   transmission_info.has_crypto_handshake,
-                                   transmission_info.num_padding_bytes,
-                                   transmission_info.encryption_level,
-                                   transmission_info.packet_number_length);
+                                   transmission_info);
 }
 
 QuicPacketNumber QuicSentPacketManager::GetNewestRetransmission(
