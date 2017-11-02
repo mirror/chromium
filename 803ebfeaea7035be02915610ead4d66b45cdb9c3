@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3997adc_62b3de0b",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-02T17:37:21Z",
+      "side": 1,
+      "message": "nit: Please provide comment for the new argument here and below.",
+      "range": {
+        "startLine": 106,
+        "startChar": 33,
+        "endLine": 106,
+        "endChar": 41
+      },
+      "revId": "803ebfeaea7035be02915610ead4d66b45cdb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad645be1_e61ec9ba",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-02T17:37:21Z",
+      "side": 1,
+      "message": "nit: it looks strange to compare a boolean type to YES/NO.",
+      "range": {
+        "startLine": 389,
+        "startChar": 8,
+        "endLine": 389,
+        "endChar": 23
+      },
+      "revId": "803ebfeaea7035be02915610ead4d66b45cdb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2979b10_bccb3936",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-02T17:37:21Z",
+      "side": 1,
+      "message": "nit: s/event/even",
+      "range": {
+        "startLine": 762,
+        "startChar": 59,
+        "endLine": 762,
+        "endChar": 64
+      },
+      "revId": "803ebfeaea7035be02915610ead4d66b45cdb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd81aaf0_09211eed",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-02T17:37:21Z",
+      "side": 1,
+      "message": "move inside the if statement?",
+      "range": {
+        "startLine": 667,
+        "startChar": 2,
+        "endLine": 667,
+        "endChar": 52
+      },
+      "revId": "803ebfeaea7035be02915610ead4d66b45cdb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
