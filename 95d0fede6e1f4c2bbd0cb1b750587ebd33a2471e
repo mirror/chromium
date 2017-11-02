@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ef6e895_1be4ea81",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T07:39:08Z",
+      "side": 1,
+      "message": "Is it possible to just remove the response then?",
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22afa77f_8f2bacdb",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T07:39:08Z",
+      "side": 1,
+      "message": "Since this is bound using a strong binding, we *could* just reset |intervention_| here. This will destroy the pause scoper, since the Mojo impl will be destroyed on connection error.",
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f858899_b3c1d44b",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T07:39:08Z",
+      "side": 1,
+      "message": "1) Can OnNearOomDetected be called multiple times? And presumably this infobar is per tab, right? What happens if the user switches tabs?\n2) Android doesn\u0027t currently use OOPIF, but it seems like this intervention would only affect the main frame. Should we consider OOPIF?\n3) AFAICT, pausing is renderer process global. Would it make sense to make it a per-process interface, rather than per-frame?\n4) What happens if this infobars in multiple tabs? This would create multiple impl objects as well--and so declining the infobar in one wouldn\u0027t unpause (since another impl could still have an active scoper). So maybe the impl should be per-process and used for all mojo requests to that process for the OomIntervention interface?",
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f74357_d179d54c",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T07:39:08Z",
+      "side": 1,
+      "message": "Can you help me understand why we need to wait for the renderer to respond?",
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
