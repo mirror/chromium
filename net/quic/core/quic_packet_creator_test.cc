@@ -769,8 +769,7 @@ TEST_P(QuicPacketCreatorTest, SerializeFrame) {
     EXPECT_CALL(framer_visitor_, OnPacketComplete());
   }
   ProcessPacket(serialized);
-  EXPECT_EQ(GetParam().version_serialization,
-            header.public_header.version_flag);
+  EXPECT_EQ(GetParam().version_serialization, header.version_flag);
 }
 
 TEST_P(QuicPacketCreatorTest, ConsumeDataLargerThanOneStreamFrame) {

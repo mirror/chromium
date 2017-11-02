@@ -438,7 +438,7 @@ void QuicConnection::OnPublicResetPacket(const QuicPublicResetPacket& packet) {
   // Check that any public reset packet with a different connection ID that was
   // routed to this QuicConnection has been redirected before control reaches
   // here.  (Check for a bug regression.)
-  DCHECK_EQ(connection_id_, packet.public_header.connection_id);
+  DCHECK_EQ(connection_id_, packet.connection_id);
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnPublicResetPacket(packet);
   }
@@ -562,7 +562,7 @@ void QuicConnection::OnVersionNegotiationPacket(
 }
 
 bool QuicConnection::OnUnauthenticatedPublicHeader(
-    const QuicPacketPublicHeader& header) {
+    const QuicPacketHeader& header) {
   if (header.connection_id == connection_id_) {
     return true;
   }
@@ -589,7 +589,7 @@ bool QuicConnection::OnUnauthenticatedHeader(const QuicPacketHeader& header) {
   // Check that any public reset packet with a different connection ID that was
   // routed to this QuicConnection has been redirected before control reaches
   // here.
-  DCHECK_EQ(connection_id_, header.public_header.connection_id);
+  DCHECK_EQ(connection_id_, header.connection_id);
 
   if (!packet_generator_.IsPendingPacketEmpty()) {
     // Incoming packets may change a queued ACK frame.
@@ -945,7 +945,7 @@ void QuicConnection::OnPacketComplete() {
   }
 
   QUIC_DVLOG(1) << ENDPOINT << "Got packet " << last_header_.packet_number
-                << " for " << last_header_.public_header.connection_id;
+                << " for " << last_header_.connection_id;
 
   // An ack will be sent if a missing retransmittable packet was received;
   const bool was_missing =
@@ -1371,7 +1371,7 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
 
   if (version_negotiation_state_ != NEGOTIATED_VERSION) {
     if (perspective_ == Perspective::IS_SERVER) {
-      if (!header.public_header.version_flag) {
+      if (!header.version_flag) {
         // Packets should have the version flag till version negotiation is
         // done.
         string error_details =
@@ -1382,8 +1382,7 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
                         ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
         return false;
       } else {
-        DCHECK_EQ(1u, header.public_header.versions.size());
-        DCHECK_EQ(header.public_header.versions[0], transport_version());
+        DCHECK_EQ(header.version, transport_version());
         version_negotiation_state_ = NEGOTIATED_VERSION;
         visitor_->OnSuccessfulVersionNegotiation(transport_version());
         if (debug_visitor_ != nullptr) {
@@ -1391,7 +1390,7 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
         }
       }
     } else {
-      DCHECK(!header.public_header.version_flag);
+      DCHECK(!header.version_flag);
       // If the client gets a packet without the version flag from the server
       // it should stop sending version since the version negotiation is done.
       packet_generator_.StopSendingVersion();
