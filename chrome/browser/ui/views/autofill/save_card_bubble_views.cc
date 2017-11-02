@@ -122,7 +122,7 @@ bool SaveCardBubbleViews::Accept() {
     // the stack and update the bubble.
     DCHECK(controller_);
     controller_->ContinueToRequestCvcStage();
-    view_stack_->Push(CreateRequestCvcView(), /*animate=*/true);
+    view_stack_->Push(CreateRequestCvcView(), /*animate=*/false);
     GetWidget()->UpdateWindowTitle();
     GetWidget()->UpdateWindowIcon();
     // Disable the Save button until a valid CVC is entered:
@@ -373,8 +373,11 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateRequestCvcView() {
   request_cvc_view->AddChildView(explanation_label);
 
   views::View* cvc_entry_view = new views::View();
+  // The focus ring is cut-off around the textfield unless this inset is
+  // present.
+  constexpr int kSmallPadding = 5;
   views::BoxLayout* layout = new views::BoxLayout(
-      views::BoxLayout::kHorizontal, gfx::Insets(),
+      views::BoxLayout::kHorizontal, gfx::Insets(kSmallPadding, kSmallPadding),
       provider->GetDistanceMetric(views::DISTANCE_RELATED_BUTTON_HORIZONTAL));
   layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
