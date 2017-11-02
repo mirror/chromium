@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "fe8ad27e_b70463c9",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-02T22:58:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e46bb2c_8232c1f1",
+      "range": {
+        "startLine": 590,
+        "startChar": 56,
+        "endLine": 590,
+        "endChar": 57
+      },
+      "revId": "b02899d7aed9acef050e6be0d3f9550d68b026eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ec086fd_16bd0c85",
         "filename": "build/config/sanitizers/sanitizers.gni",
         "patchSetId": 7
@@ -80,6 +104,30 @@
       "revId": "b02899d7aed9acef050e6be0d3f9550d68b026eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8de14bb_683328ae",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-02T22:58:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ec086fd_16bd0c85",
+      "range": {
+        "startLine": 238,
+        "startChar": 25,
+        "endLine": 238,
+        "endChar": 26
+      },
+      "revId": "b02899d7aed9acef050e6be0d3f9550d68b026eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "9d67d6bc_8869e839",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-02T22:58:10Z",
+      "side": 1,
+      "message": "Weird, I thought I fixed this.\n\nThanks for pointing this out.\n\nDone.",
+      "parentUuid": "8e7424c4_dd6a521c",
+      "revId": "b02899d7aed9acef050e6be0d3f9550d68b026eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1263b0a3_04825a70",
         "filename": "third_party/libprotobuf-mutator/BUILD.gn",
         "patchSetId": 7
@@ -156,6 +222,30 @@
       "revId": "b02899d7aed9acef050e6be0d3f9550d68b026eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "563e6358_3d80cbbd",
+        "filename": "third_party/libprotobuf-mutator/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-02T22:58:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1263b0a3_04825a70",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 55
+      },
+      "revId": "b02899d7aed9acef050e6be0d3f9550d68b026eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
