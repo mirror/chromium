@@ -22,6 +22,30 @@
       "revId": "51948c14e24e2ed281ca7416cc5354c558398484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa19bd2_e1fee401",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5156,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-02T18:29:59Z",
+      "side": 1,
+      "message": "I previously looked into this and the transition type does match.",
+      "parentUuid": "c39c16cc_f5a2b311",
+      "range": {
+        "startLine": 5156,
+        "startChar": 34,
+        "endLine": 5156,
+        "endChar": 55
+      },
+      "revId": "51948c14e24e2ed281ca7416cc5354c558398484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
