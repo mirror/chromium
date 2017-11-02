@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2570f606_2ddc8e35",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 24
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T17:46:01Z",
+      "side": 1,
+      "message": "Nit: I would personally find this condition clearer if is_posix was first.",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f9917c_6eecef5d",
+        "filename": "base/memory/shared_memory_handle.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T17:46:01Z",
+      "side": 1,
+      "message": "Nit: I would put the Type first (since it disambiguates the FileDescriptor argument)",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37669644_c49a7d2d",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T17:46:01Z",
+      "side": 1,
+      "message": "Does DLOG instead of LOG work here?",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d862f43e_467cce9b",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T17:46:01Z",
+      "side": 1,
+      "message": "Is this called by something?",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff162fc1_ec7b4404",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T17:46:01Z",
+      "side": 1,
+      "message": "Any reason for LOG instead of DLOG?",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 7
+      },
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca3fe9b_e2e3d5ee",
+        "filename": "ipc/ipc_message_utils.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T17:46:01Z",
+      "side": 1,
+      "message": "Please add an IPC_ENUM_TRAITS_MAX_VALUE() for this rather than casting to/from integer types.",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f563c0d_bbdc4b4e",
+        "filename": "ui/gfx/mojo/buffer_types.mojom",
+        "patchSetId": 24
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T17:46:01Z",
+      "side": 1,
+      "message": "Let\u0027s just get rid of the LAST value (it\u0027s not needed in mojo).\n\nThe EnumTraits that returns this can just return EMPTY_BUFFER or something.",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64be9589_f252af7b",
+        "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T17:46:01Z",
+      "side": 1,
+      "message": "Nit: Include base/memory/scoped_refptr.h",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98278f1_f1b6e68f",
+        "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T17:46:01Z",
+      "side": 1,
+      "message": "Nit: by ref, though the syntax looks kind of funny: const uint8_t (\u0026color)[4]",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060e8386_04f0be09",
+        "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T17:46:01Z",
+      "side": 1,
+      "message": "Nit: consider writing:\n\nauto image \u003d base::MakeRefCounted\u003cGLImageAHardwareBuffer\u003e(size);",
+      "revId": "3474b667af04d2de45a8122c018505a7bf0f04de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
