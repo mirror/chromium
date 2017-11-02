@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d12fd741_7691b753",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-02T16:57:37Z",
+      "side": 1,
+      "message": "I think we can early exit after setting local_surface_id_ if surface sync is enabled.",
+      "revId": "dd8b3fc815c30733e734212aaeb17dcb4dd982f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
