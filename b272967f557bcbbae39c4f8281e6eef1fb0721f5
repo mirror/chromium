@@ -201,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "f75af173_df1362b2",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T09:02:15Z",
+      "side": 1,
+      "message": "Optional has an emplace() method that will default construct the optional so it won\u0027t be null anymore (or replace the existing value with the default constructed one).\n\nIt doesn\u0027t matter a lot; it\u0027s just how I\u0027m personally used to initializing optionals (so they\u0027re easy to distinguish from assigning to a std::vector lvalue). Hence nit, and if you don\u0027t want to do so for stylistic reasons, that\u0027s fine too \u003d)",
+      "parentUuid": "ca502066_adb1d929",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1327ad36_1b1c7d2e",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 22
