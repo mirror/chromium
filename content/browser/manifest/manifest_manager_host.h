@@ -48,7 +48,8 @@ class ManifestManagerHost : public WebContentsObserver,
 
   void OnRequestManifestResponse(int request_id,
                                  const GURL& url,
-                                 const base::Optional<Manifest>& manifest);
+                                 const base::Optional<Manifest>& manifest,
+                                 blink::mojom::ManifestDebugInfoPtr debug_info);
 
   // mojom::ManifestUrlChangeObserver:
   void ManifestUrlChanged(const base::Optional<GURL>& manifest_url) override;
