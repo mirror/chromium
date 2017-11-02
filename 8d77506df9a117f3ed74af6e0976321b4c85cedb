@@ -22,6 +22,30 @@
       "revId": "8d77506df9a117f3ed74af6e0976321b4c85cedb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3bab11_ca445b4d",
+        "filename": "build/android/gyp/write_build_config.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-02T17:30:45Z",
+      "side": 1,
+      "message": "Added an explicit treat_as_locale_pak\u003dtrue GN flag. ptal",
+      "parentUuid": "3866ff1b_dea81765",
+      "range": {
+        "startLine": 242,
+        "startChar": 55,
+        "endLine": 242,
+        "endChar": 66
+      },
+      "revId": "8d77506df9a117f3ed74af6e0976321b4c85cedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
