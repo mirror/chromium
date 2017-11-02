@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4188b580_deaf02de",
+        "filename": "chrome/browser/data_saver/data_saver_webapis_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T18:14:34Z",
+      "side": 1,
+      "message": "Nit: this doesn\u0027t have to be wrapped in a unique_ptr, it can just be a normal member.",
+      "revId": "1be1fb9e66473c5235c38dc8ee640c674f6b6f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f48e22_e5923098",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T18:14:34Z",
+      "side": 1,
+      "message": "Nit: is_save_data_enabled_ or save_data_enabled_",
+      "revId": "1be1fb9e66473c5235c38dc8ee640c674f6b6f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa41133_3ff8fd0b",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContextTest.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T18:14:34Z",
+      "side": 1,
+      "message": "Delegate to RecreateFetchContext() rather than duplicating this code?",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 80
+      },
+      "revId": "1be1fb9e66473c5235c38dc8ee640c674f6b6f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9383e1_0d3a1304",
+        "filename": "third_party/WebKit/Source/core/loader/WorkerFetchContext.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T18:14:34Z",
+      "side": 1,
+      "message": "Ditto about naming of fields named save_data_ here and elsewhere.",
+      "revId": "1be1fb9e66473c5235c38dc8ee640c674f6b6f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce136172_96596994",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T18:14:34Z",
+      "side": 1,
+      "message": "I guess this one can\u0027t change, given that it\u0027s standardized, so the naming comment can be ignored for this file.",
+      "revId": "1be1fb9e66473c5235c38dc8ee640c674f6b6f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee20943c_35e6876e",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T18:14:34Z",
+      "side": 1,
+      "message": "Same thoughts about naming here. Either:\n\nbool SaveDataEnabled() const;\nbool IsSaveDataEnabled() const;\nSaveDataMode GetSaveDataMode() const;",
+      "revId": "1be1fb9e66473c5235c38dc8ee640c674f6b6f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410d981d_c9ba7523",
+        "filename": "third_party/WebKit/public/platform/WebNetworkStateNotifier.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T18:14:34Z",
+      "side": 1,
+      "message": "Per https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Precede-boolean-values-with-words-like-is_and-did, this should be named something like:\n\nstatic void SetSaveDataEnabled(bool enabled);\nstatic void SetIsSaveDataEnabled(bool enabled);\n\nAlternatively, make it take an enum and then change it to:\nstatic void SetSaveDataMode(SaveDataMode);\n\n(Similar comment to naming throughout the rest of this CL)",
+      "revId": "1be1fb9e66473c5235c38dc8ee640c674f6b6f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
