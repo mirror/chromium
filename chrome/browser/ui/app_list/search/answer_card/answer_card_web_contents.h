@@ -54,6 +54,8 @@ class AnswerCardWebContents : public AnswerCardContents,
   void AttachToHost(content::RenderWidgetHost* host);
   void DetachFromHost();
 
+  void VisualStateUpdated(bool result);
+
   // Web view for the web contents managed by this class.
   const std::unique_ptr<views::WebView> web_view_;
 
