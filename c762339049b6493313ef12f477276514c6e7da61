@@ -22,6 +22,30 @@
       "revId": "c762339049b6493313ef12f477276514c6e7da61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9920d11a_65cbe085",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-11-02T21:51:56Z",
+      "side": 1,
+      "message": "Otherwise we would not transition (i.e. change from one state to another). Resetting it to unknown allows us to track transitions.",
+      "parentUuid": "5b69d9fb_759d59db",
+      "range": {
+        "startLine": 958,
+        "startChar": 77,
+        "endLine": 958,
+        "endChar": 78
+      },
+      "revId": "c762339049b6493313ef12f477276514c6e7da61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
