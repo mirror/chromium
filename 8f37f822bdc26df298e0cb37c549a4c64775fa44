@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "857ff559_1a7aa5d6",
+        "filename": "components/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-02T18:43:16Z",
+      "side": 1,
+      "message": "nit: What is \"ZTE EID\"? Codesearch/googling didn\u0027t help to find these abbreviations.",
+      "range": {
+        "startLine": 925,
+        "startChar": 52,
+        "endLine": 925,
+        "endChar": 59
+      },
+      "revId": "8f37f822bdc26df298e0cb37c549a4c64775fa44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1b13d5_925fdfe6",
+        "filename": "components/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-02T18:43:16Z",
+      "side": 1,
+      "message": "nit: s/fo/for/",
+      "range": {
+        "startLine": 925,
+        "startChar": 61,
+        "endLine": 925,
+        "endChar": 63
+      },
+      "revId": "8f37f822bdc26df298e0cb37c549a4c64775fa44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d4d7b5_6e871c4e",
+        "filename": "components/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-02T18:43:16Z",
+      "side": 1,
+      "message": "nit: I\u0027m lacking the context here, but the word \"data\" sounds a bit too vague to me. Can a more specific name of the entity be specified here? Or, at least, a word like \"attributes\" or \"properties\" would be a bit narrower in scope.\n\nAlso it\u0027s unclear from the name to which is \"needed\" referring. Maybe something like \"server_needs_enrollment_...\" or \"upload_enrollment_...\" will be clearer?",
+      "range": {
+        "startLine": 927,
+        "startChar": 27,
+        "endLine": 927,
+        "endChar": 31
+      },
+      "revId": "8f37f822bdc26df298e0cb37c549a4c64775fa44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
