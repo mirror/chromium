@@ -990,7 +990,7 @@ class RunTest(unittest.TestCase, StreamTestingMixin):
         # see the verbose log output. However, we can't use logging_run() because using
         # output_capture to capture stdout and stderr latter results in a nonpicklable host.
 
-        options, parsed_args = parse_args(['--verbose', '--fully-parallel', '--child-processes',
+        options, parsed_args = parse_args(['--verbose', '--child-processes',
                                            '2', 'passes/text.html', 'passes/image.html'], tests_included=True)
         host = MockHost()
         port_obj = host.port_factory.get(port_name=options.platform, options=options)
