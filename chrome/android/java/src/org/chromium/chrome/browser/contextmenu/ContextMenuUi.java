@@ -34,4 +34,6 @@ public interface ContextMenuUi {
     void displayMenu(Activity activity, ContextMenuParams params,
             List<Pair<Integer, List<ContextMenuItem>>> items, Callback<Integer> onItemClicked,
             Runnable onMenuShown, Runnable onMenuClosed);
+
+    int[] getThumbnailDimensPx();
 }

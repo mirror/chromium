@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
+import org.chromium.base.ContextUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.widget.ContextMenuDialog;
@@ -41,6 +42,7 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
     private ContextMenuDialog mContextMenuDialog;
     private Callback<Integer> mCallback;
     private int mMenuItemHeight;
+    private int mTabLayoutSize;
     private ImageView mHeaderImageView;
     private Callback<Boolean> mOnShareItemClicked;
     private View mPagerView;
@@ -131,6 +133,7 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
 
         viewPager.setAdapter(new TabularContextMenuPagerAdapter(viewGroups));
         TabLayout tabLayout = (TabLayout) viewPager.findViewById(R.id.tab_layout);
+        mTabLayoutSize = tabLayout.getHeight();
         if (itemGroups.size() <= 1) {
             tabLayout.setVisibility(View.GONE);
         } else {
@@ -295,5 +298,12 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
      */
     public void setTopContentOffsetY(float topContentOffsetPx) {
         mTopContentOffsetPx = topContentOffsetPx;
+    }
+
+    @Override
+    public int[] getThumbnailDimensPx() {
+        return new int[] {
+                ContextUtils.getApplicationContext().getResources().getDisplayMetrics().widthPixels,
+                mTabLayoutSize};
     }
 }

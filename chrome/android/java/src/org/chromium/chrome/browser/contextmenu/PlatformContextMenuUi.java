@@ -56,4 +56,9 @@ public class PlatformContextMenuUi implements ContextMenuUi {
         ContextMenuTitleView title = new ContextMenuTitleView(context, text);
         menu.setHeaderView(title);
     }
+
+    @Override
+    public int[] getThumbnailDimensPx() {
+        return null;
+    }
 }
