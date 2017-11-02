@@ -236,8 +236,6 @@ void ServiceWorkerRegistrationHandle::SetVersionAttributes(
     ServiceWorkerVersion* installing_version,
     ServiceWorkerVersion* waiting_version,
     ServiceWorkerVersion* active_version) {
-  if (!provider_host_)
-    return;  // Could be nullptr in some tests.
   if (!changed_mask.changed())
     return;
 
