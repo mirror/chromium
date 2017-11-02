@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc2e738a_d50b4bf1",
+        "filename": "components/url_pattern_index/url_pattern_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-02T22:41:58Z",
+      "side": 1,
+      "message": "Yeah this is better.",
+      "parentUuid": "cb4887fe_875ee0b5",
+      "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8710e389_e6564c3e",
         "filename": "components/url_pattern_index/url_pattern_index.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0ae65dcc_610fa0dc",
+        "filename": "components/url_pattern_index/url_pattern_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-02T22:41:58Z",
+      "side": 1,
+      "message": "Just inlined it.",
+      "parentUuid": "8710e389_e6564c3e",
+      "range": {
+        "startLine": 661,
+        "startChar": 25,
+        "endLine": 661,
+        "endChar": 30
+      },
+      "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "194a7c57_806aaa98",
         "filename": "components/url_pattern_index/url_pattern_index.cc",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5285cd18_22750246",
+        "filename": "components/url_pattern_index/url_pattern_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-02T22:41:58Z",
+      "side": 1,
+      "message": "Not applicable anymore.",
+      "parentUuid": "194a7c57_806aaa98",
+      "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "d9b20813_baaf55cf",
+        "filename": "components/url_pattern_index/url_pattern_index.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-02T22:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7379d3f_754e9bc5",
+      "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e6e383c_e06bab23",
         "filename": "components/url_pattern_index/url_pattern_index.h",
         "patchSetId": 4
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "162394be_5301cbb0",
+        "filename": "components/url_pattern_index/url_pattern_index.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-02T22:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e6e383c_e06bab23",
+      "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ecdd204_06b1d730",
         "filename": "components/url_pattern_index/url_pattern_index.h",
         "patchSetId": 4
@@ -107,6 +203,24 @@
       "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb6357b_5d4f185e",
+        "filename": "components/url_pattern_index/url_pattern_index.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-02T22:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ecdd204_06b1d730",
+      "revId": "af3b827d73ab28fb5834aac166a509a71f336f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
