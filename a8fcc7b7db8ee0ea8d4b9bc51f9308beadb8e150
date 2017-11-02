@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "694ec9a5_8b6acd4e",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-02T14:44:47Z",
+      "side": 1,
+      "message": "Agreed with what you say and keeping both seems beneficial.",
+      "parentUuid": "45023387_c0b18665",
+      "range": {
+        "startLine": 166,
+        "startChar": 62,
+        "endLine": 166,
+        "endChar": 0
+      },
+      "revId": "a8fcc7b7db8ee0ea8d4b9bc51f9308beadb8e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50b98074_1d1958e4",
         "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
         "patchSetId": 9
@@ -124,6 +148,30 @@
       "side": 1,
       "message": "Unfortunately no: We still need to be called back in the \"canceled\" case, so that we can clean up our state (|thumbnailing_context_|). So at least it\u0027d need some more refactoring, and I\u0027m not sure if the end result would be better than what we have now (though I also don\u0027t like that bool). In any case, I\u0027d like to leave that refactoring for a possible followup. WDYT?",
       "parentUuid": "e2468f09_3dc0a2c1",
+      "range": {
+        "startLine": 247,
+        "startChar": 30,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "a8fcc7b7db8ee0ea8d4b9bc51f9308beadb8e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76790431_407c04c1",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-02T14:44:47Z",
+      "side": 1,
+      "message": "I\u0027m fine deferring refactoring work but it seems to me that calling CleanUpFromThumbnailGeneration() on the cancelling site is quite simple. I\u0027m wondering if you could even get rid of the weird codepath outside the UI thread during shutdown (how is that even possible anyway?).",
+      "parentUuid": "c0f1acf0_7e5f7bbf",
       "range": {
         "startLine": 247,
         "startChar": 30,
