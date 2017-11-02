@@ -16,9 +16,11 @@
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
 #include "chrome/browser/android/vr_shell/android_vsync_helper.h"
+#include "chrome/browser/android/vr_shell/gvr_keyboard.h"
 #include "chrome/browser/android/vr_shell/vr_controller.h"
 #include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/controller_mesh.h"
+#include "chrome/browser/vr/model/controller_model.h"
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_renderer.h"
 #include "device/vr/vr_service.mojom.h"
@@ -92,6 +94,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   void OnTriggerEvent();
   void OnPause();
   void OnResume();
+  void DrawKeyboard();
+  void CreateKeyboard();
 
   base::WeakPtr<vr::BrowserUiInterface> GetBrowserUiWeakPtr();
 
@@ -251,6 +255,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   bool is_exiting_ = false;
 
   std::unique_ptr<VrController> controller_;
+  gvr_keyboard_context* gvr_keyboard_;
+  std::mutex mutex_;
 
   int content_id_ = 0;
   int locked_content_id_ = 0;
@@ -296,6 +302,10 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   bool content_frame_available_ = false;
   bool skips_redraw_when_not_dirty_;
   gfx::Transform last_used_head_pose_;
+
+  bool keyboard_enabled_ = false;
+  bool show_keyboard_ = false;
+  vr::ControllerModel controller_model_;
 
   base::WeakPtrFactory<VrShellGl> weak_ptr_factory_;
 
