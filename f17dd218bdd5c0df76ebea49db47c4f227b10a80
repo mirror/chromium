@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1010f281_816946ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnercustomizations/PartnerBrowserCustomizations.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-02T22:59:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2658ff9e_7dad1ed1",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "f17dd218bdd5c0df76ebea49db47c4f227b10a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1aceeae_80c91a0a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnercustomizations/PartnerBrowserCustomizations.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "f17dd218bdd5c0df76ebea49db47c4f227b10a80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcbaf78a_02a2ec4c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnercustomizations/PartnerBrowserCustomizations.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-02T22:59:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1aceeae_80c91a0a",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "f17dd218bdd5c0df76ebea49db47c4f227b10a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4b913820_c75e60e8",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/util/UrlUtilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-02T22:59:06Z",
+      "side": 1,
+      "message": "Android Studio does complain about this, but these two classes would never be in the same target, so they would run fine. Renamed anyway.",
+      "parentUuid": "fcca0dd0_bc326d2f",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "f17dd218bdd5c0df76ebea49db47c4f227b10a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "233542e8_fbbb8b99",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/util/UrlUtilitiesTest.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "f17dd218bdd5c0df76ebea49db47c4f227b10a80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd671f9_70bd4fdb",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/util/UrlUtilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-02T22:59:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "233542e8_fbbb8b99",
+      "range": {
+        "startLine": 43,
+        "startChar": 40,
+        "endLine": 43,
+        "endChar": 53
+      },
+      "revId": "f17dd218bdd5c0df76ebea49db47c4f227b10a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
