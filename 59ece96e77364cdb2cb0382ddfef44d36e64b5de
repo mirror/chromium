@@ -16,6 +16,24 @@
       "revId": "59ece96e77364cdb2cb0382ddfef44d36e64b5de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b08eea_8fc1a7d8",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-11-02T01:06:39Z",
+      "side": 1,
+      "message": "I do have to *set* them individually but only need to *get* the flags for one of them because the other will be the same.",
+      "parentUuid": "7e6e4008_511615e6",
+      "revId": "59ece96e77364cdb2cb0382ddfef44d36e64b5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
