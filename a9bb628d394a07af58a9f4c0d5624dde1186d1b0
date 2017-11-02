@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "959aca2f_3646282f",
+        "filename": "BUILD.gn",
+        "patchSetId": 22
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-02T02:00:49Z",
+      "side": 1,
+      "message": "It was picked up somehow by the win_clang builder which failed to run closure due to lack of java. I guess because the \u0027all\u0027 target picks it up?\n\nI want to keep the target on all platforms so that developers can run it, but it can only run on bots that have Java. For now, I\u0027ll just leave it behind !is_win || !is_clang. WDYT? Will this break on tree builders that don\u0027t have Java?",
+      "parentUuid": "0faa13b6_ed9862db",
+      "revId": "a9bb628d394a07af58a9f4c0d5624dde1186d1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b979eb72_bbb6e14e",
         "filename": "testing/buildbot/chromium.linux.json",
         "patchSetId": 22
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "190b6878_0019438d",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 22
+      },
+      "lineNbr": 3536,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-02T02:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b979eb72_bbb6e14e",
+      "revId": "a9bb628d394a07af58a9f4c0d5624dde1186d1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0004c55_1742d8f5",
         "filename": "testing/buildbot/gn_isolate_map.pyl",
         "patchSetId": 22
@@ -50,6 +86,24 @@
       "revId": "a9bb628d394a07af58a9f4c0d5624dde1186d1b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d32c28_abd7c9fa",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 22
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-02T02:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0004c55_1742d8f5",
+      "revId": "a9bb628d394a07af58a9f4c0d5624dde1186d1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
