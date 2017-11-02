@@ -22,6 +22,30 @@
       "revId": "f4a12db6e8aa59217e60176ed092d93011d30bf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc98bf8f_3405b567",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/IntentHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-11-02T16:24:42Z",
+      "side": 1,
+      "message": "Sure, will do. But what is the history behind this constant? Why \"publicly available\" requirement? Note CLA is still not exported (it doesn\u0027t have any intent-filters, in which case default for \u0027exported\u0027 is false, I think).",
+      "parentUuid": "1d96358e_9cbebd43",
+      "range": {
+        "startLine": 246,
+        "startChar": 44,
+        "endLine": 246,
+        "endChar": 60
+      },
+      "revId": "f4a12db6e8aa59217e60176ed092d93011d30bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
