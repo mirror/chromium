@@ -1825,7 +1825,7 @@ void RenderFrameHostImpl::OnBeforeUnloadACK(
 
   // If canceled, notify the delegate to cancel its pending navigation entry.
   if (!proceed)
-    render_view_host_->GetDelegate()->DidCancelLoading();
+    delegate_->DidCancelLoading();
 }
 
 bool RenderFrameHostImpl::IsWaitingForUnloadACK() const {
