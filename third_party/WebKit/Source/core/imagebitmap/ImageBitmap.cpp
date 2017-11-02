@@ -210,20 +210,16 @@ scoped_refptr<StaticBitmapImage> NewImageFromRaster(
 
 scoped_refptr<StaticBitmapImage> FlipImageVertically(
     scoped_refptr<StaticBitmapImage> input) {
-  scoped_refptr<Uint8Array> image_pixels = CopyImageData(input);
-  if (!image_pixels)
+  SkImageInfo info = GetSkImageInfo(input);
+  sk_sp<SkSurface> surface = SkSurface::MakeRaster(info);
+  if (!surface)
     return nullptr;
-  SkImageInfo info = GetSkImageInfo(input.get());
-  unsigned image_row_bytes = info.width() * info.bytesPerPixel();
-  for (int i = 0; i < info.height() / 2; i++) {
-    unsigned top_first_element = i * image_row_bytes;
-    unsigned top_last_element = (i + 1) * image_row_bytes;
-    unsigned bottom_first_element = (info.height() - 1 - i) * image_row_bytes;
-    std::swap_ranges(image_pixels->Data() + top_first_element,
-                     image_pixels->Data() + top_last_element,
-                     image_pixels->Data() + bottom_first_element);
-  }
-  return NewImageFromRaster(info, std::move(image_pixels));
+  SkCanvas* canvas = surface->getCanvas();
+  canvas->translate(0, -input->height());
+  canvas->scale(1, -1);
+  sk_sp<SkImage> image = input->PaintImageForCurrentFrame().GetSkImage();
+  canvas->drawImage(image.get(), 0, 0);
+  return StaticBitmapImage::Create(surface->makeImageSnapshot());
 }
 
 scoped_refptr<StaticBitmapImage> GetImageWithAlphaDisposition(
