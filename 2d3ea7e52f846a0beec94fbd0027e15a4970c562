@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f1eea72_5b23d258",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-02T18:19:29Z",
+      "side": 0,
+      "message": "The file itself looks like it\u0027s still used in other chrome browser_tests, so I haven\u0027t deleted it.",
+      "revId": "2d3ea7e52f846a0beec94fbd0027e15a4970c562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8144d0e_ddce652a",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-02T18:19:29Z",
+      "side": 0,
+      "message": "I\u0027m not sure why the test was flaky (since it hangs after the test runs to completion and while it is being torn down), but this need to wait for the ack to reset the address bar seemed unfortunate.  We now reset the address bar before we tell the renderer, which should be faster and avoids the need to wait during the test.\n\nUnfortunately, I think I need to leave an additional address bar reset *after* the ack as well, because it looks like there are some corner cases where Blink returns false from DispatchBeforeUnload without actually showing the dialog.  I haven\u0027t found any exploitable cases yet (e.g., Nate\u0027s https://codereview.chromium.org/703383002/ added a case where we return false, but only if an existing dialog is open), but I can\u0027t easily conclude that it\u0027s safe to skip the address bar reset on the ack.  Note that I have confirmed that if we return false there without showing the dialog and without resetting after the ack, the spoof will happen.\n\nThat\u0027s a bit unfortunate, since I was hoping to remove the DidCancelLoading delegate method entirely (as in patchset 4).  I\u0027ve at least moved it over to RenderFrameHostDelegate, though.",
+      "revId": "2d3ea7e52f846a0beec94fbd0027e15a4970c562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

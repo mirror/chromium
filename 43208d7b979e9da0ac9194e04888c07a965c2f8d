@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "383450b7_0efd1e3c",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-02T18:19:29Z",
+      "side": 1,
+      "message": "No need to wait for the ack now that we also reset the address bar in OnDialogClosed.  (We\u0027ll reset it again when the ack comes in, as discussed.)",
+      "revId": "43208d7b979e9da0ac9194e04888c07a965c2f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
