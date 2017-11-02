@@ -16,6 +16,24 @@
       "revId": "949224b603328994c8c3d08bd7a72c50f391e563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817acbc4_42540d50",
+        "filename": "media/audio/win/audio_low_latency_output_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-02T08:19:37Z",
+      "side": 1,
+      "message": "I replaced the if/else with the CoreAudioUtil::CreateClient that takes device_id_ as first parameter - which does what the if/else block was doing: checks if device_id_ is default and creates a client accordingly.",
+      "parentUuid": "d9c61db9_53fa6cd0",
+      "revId": "949224b603328994c8c3d08bd7a72c50f391e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
