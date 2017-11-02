@@ -16,6 +16,24 @@
       "revId": "1e9795bcc487f4275a798b2386c675023a6c7999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ac1fd2_66703615",
+        "filename": "third_party/WebKit/Source/core/layout/AdjustForAbsoluteZoom.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-02T02:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25429f96_91a72e80",
+      "revId": "1e9795bcc487f4275a798b2386c675023a6c7999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
