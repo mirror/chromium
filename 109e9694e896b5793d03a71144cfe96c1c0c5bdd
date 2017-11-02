@@ -16,6 +16,24 @@
       "revId": "109e9694e896b5793d03a71144cfe96c1c0c5bdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4052160e_9ec01357",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-02T15:32:54Z",
+      "side": 1,
+      "message": "Just out of curiosity, is that for efficient storage?",
+      "parentUuid": "06ccf712_8c5be61e",
+      "revId": "109e9694e896b5793d03a71144cfe96c1c0c5bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
