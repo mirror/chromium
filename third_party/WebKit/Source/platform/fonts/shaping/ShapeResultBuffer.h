@@ -36,7 +36,8 @@ class PLATFORM_EXPORT ShapeResultBuffer {
   int OffsetForPosition(const TextRun&,
                         float target_x,
                         bool include_partial_glyphs) const;
-  CharacterRange GetCharacterRange(TextDirection,
+  CharacterRange GetCharacterRange(const TextRun&,
+                                   TextDirection,
                                    float total_width,
                                    unsigned from,
                                    unsigned to) const;
@@ -62,6 +63,7 @@ class PLATFORM_EXPORT ShapeResultBuffer {
   friend class ShapeResultBloberizer;
   static CharacterRange GetCharacterRangeInternal(
       const Vector<scoped_refptr<const ShapeResult>, 64>&,
+      const TextRun&,
       TextDirection,
       float total_width,
       unsigned from,

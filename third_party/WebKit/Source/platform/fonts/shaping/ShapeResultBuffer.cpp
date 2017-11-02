@@ -24,11 +24,13 @@ CharacterRange ShapeResultBuffer::GetCharacterRange(
     unsigned to) {
   Vector<scoped_refptr<const ShapeResult>, 64> results;
   results.push_back(result);
-  return GetCharacterRangeInternal(results, direction, total_width, from, to);
+  TextRun* run = nullptr;
+  return GetCharacterRangeInternal(results, *run, direction, total_width, from, to);
 }
 
 CharacterRange ShapeResultBuffer::GetCharacterRangeInternal(
     const Vector<scoped_refptr<const ShapeResult>, 64>& results,
+    const TextRun& text_run,
     TextDirection direction,
     float total_width,
     unsigned absolute_from,
@@ -67,11 +69,16 @@ CharacterRange ShapeResultBuffer::GetCharacterRangeInternal(
     for (unsigned i = 0; i < result->runs_.size(); i++) {
       if (!result->runs_[i])
         continue;
+      TextRun sub_run = text_run.SubRun(total_num_characters + result->runs_[i]->start_index_, result->runs_[i]->num_characters_);
+      DVLOG(1)
+        << total_num_characters
+        << " - " << result->runs_[i]->start_index_
+        << " : " << String(sub_run.Characters16(), sub_run.length());
       DCHECK_EQ(direction == TextDirection::kRtl, result->runs_[i]->Rtl());
       int num_characters = result->runs_[i]->num_characters_;
       if (!found_from_x && from >= 0 && from < num_characters) {
         from_x =
-            result->runs_[i]->XPositionForVisualOffset(from, kAdjustToStart) +
+            result->runs_[i]->XPositionForVisualOffset(sub_run, from, kAdjustToStart) +
             current_x;
         found_from_x = true;
       } else {
@@ -79,7 +86,7 @@ CharacterRange ShapeResultBuffer::GetCharacterRangeInternal(
       }
 
       if (!found_to_x && to >= 0 && to < num_characters) {
-        to_x = result->runs_[i]->XPositionForVisualOffset(to, kAdjustToEnd) +
+        to_x = result->runs_[i]->XPositionForVisualOffset(sub_run, to, kAdjustToEnd) +
                current_x;
         found_to_x = true;
       } else {
@@ -122,11 +129,12 @@ CharacterRange ShapeResultBuffer::GetCharacterRangeInternal(
   return CharacterRange(to_x, from_x, -min_y, max_y);
 }
 
-CharacterRange ShapeResultBuffer::GetCharacterRange(TextDirection direction,
+CharacterRange ShapeResultBuffer::GetCharacterRange(const TextRun& text_run,
+                                                    TextDirection direction,
                                                     float total_width,
                                                     unsigned from,
                                                     unsigned to) const {
-  return GetCharacterRangeInternal(results_, direction, total_width, from, to);
+  return GetCharacterRangeInternal(results_, text_run, direction, total_width, from, to);
 }
 
 void ShapeResultBuffer::AddRunInfoRanges(const ShapeResult::RunInfo& run_info,

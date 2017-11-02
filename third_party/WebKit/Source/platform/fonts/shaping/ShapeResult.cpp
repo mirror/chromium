@@ -38,6 +38,7 @@
 #include "platform/fonts/shaping/ShapeResultSpacing.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/StringBuilder.h"
+#include "platform/text/TextBreakIterator.h"
 
 namespace blink {
 
@@ -66,18 +67,50 @@ unsigned ShapeResult::RunInfo::PreviousSafeToBreakOffset(
   return 0;
 }
 
+int ShapeResult::RunInfo::CountGraphemesInCluster(
+    const TextRun& text_run,
+    unsigned glyph_index) const {
+
+  uint16_t start_index = glyph_data_[glyph_index].character_index;
+  uint16_t end_index = glyph_index + 1 < glyph_data_.size() ?
+    glyph_data_[glyph_index+1].character_index : num_characters_;
+
+  DVLOG(1) << "CGIC: " << text_run.Is8Bit() << " : " << start_index << " to " << end_index;
+  if (text_run.Is8Bit()) return end_index - start_index;
+  const UChar* str = text_run.Characters16();
+
+  uint16_t length = end_index - start_index;
+  DCHECK_LE(static_cast<unsigned>(start_index + length), text_run.length());
+  TextBreakIterator* cursor_pos_iterator =
+      CursorMovementIterator(&str[start_index], length);
+
+  int cursor_pos = cursor_pos_iterator->current();
+  int num_graphemes = -1;
+  while (0 <= cursor_pos) {
+    cursor_pos = cursor_pos_iterator->next();
+    num_graphemes++;
+  }
+  TextRun s = text_run.SubRun(start_index, end_index - start_index);
+  DVLOG(1) << String(s.Characters16(), s.length()) << ": graphemes: " << num_graphemes;
+  return std::max(0, num_graphemes);
+}
+
 float ShapeResult::RunInfo::XPositionForVisualOffset(
+    const TextRun& text_run,
     unsigned offset,
     AdjustMidCluster adjust_mid_cluster) const {
   DCHECK_LT(offset, num_characters_);
   if (Rtl())
     offset = num_characters_ - offset - 1;
-  return XPositionForOffset(offset, adjust_mid_cluster);
+  return XPositionForOffset(text_run, offset, adjust_mid_cluster);
 }
 
 float ShapeResult::RunInfo::XPositionForOffset(
+    const TextRun& text_run,
     unsigned offset,
     AdjustMidCluster adjust_mid_cluster) const {
+  DVLOG(1) << offset << ": "
+    << start_index_ << " / " << num_characters_ << " : " << width_;
   DCHECK_LE(offset, num_characters_);
   const unsigned num_glyphs = glyph_data_.size();
   unsigned glyph_index = 0;
@@ -110,19 +143,31 @@ float ShapeResult::RunInfo::XPositionForOffset(
       position += glyph_data_[glyph_index].advance;
       ++glyph_index;
     }
-    // Adjust offset if it's not on the cluster boundary.
-    if (adjust_mid_cluster == kAdjustToStart && glyph_index &&
-        (glyph_index < num_glyphs ? glyph_data_[glyph_index].character_index
-                                  : num_characters_) > offset) {
-      offset = glyph_data_[--glyph_index].character_index;
-      for (; glyph_data_[glyph_index].character_index == offset;
-           --glyph_index) {
-        position -= glyph_data_[glyph_index].advance;
-        if (!glyph_index)
-          break;
-      }
+    float fraction = 1.0;
+    if (glyph_index > 0) {
+      int cnt = CountGraphemesInCluster(text_run, glyph_index - 1);
+      int idx = glyph_data_[glyph_index - 1].character_index;
+      int pos = offset - idx;
+      fraction = static_cast<float>(pos) / cnt;
+      position -= (1 - fraction)*glyph_data_[glyph_index - 1].advance;
+
+      DVLOG(1) << "CGIC: " << cnt << ", " << pos << ", "  << fraction;
     }
+
+    // Adjust offset if it's not on the cluster boundary.
+    // if (adjust_mid_cluster == kAdjustToStart && glyph_index &&
+    //     (glyph_index < num_glyphs ? glyph_data_[glyph_index].character_index
+    //                               : num_characters_) > offset) {
+    //   offset = glyph_data_[--glyph_index].character_index;
+    //   for (; glyph_data_[glyph_index].character_index == offset;
+    //        --glyph_index) {
+    //     position -= glyph_data_[glyph_index].advance*fraction;
+    //     if (!glyph_index)
+    //       break;
+    //   }
+    // }
   }
+  DVLOG(1) << "position: " << position;
   return position;
 }
 
@@ -362,7 +407,7 @@ float ShapeResult::PositionForOffset(unsigned absolute_offset) const {
     unsigned num_characters = runs_[i]->num_characters_;
 
     if (!offset_x && offset < num_characters) {
-      offset_x = runs_[i]->XPositionForVisualOffset(offset, kAdjustToEnd) + x;
+      // offset_x = runs_[i]->XPositionForVisualOffset(offset, kAdjustToEnd) + x;
       break;
     }
 
