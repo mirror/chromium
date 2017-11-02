@@ -17,6 +17,7 @@
 #include "content/browser/service_worker/service_worker_response_info.h"
 #include "content/browser/service_worker/service_worker_url_job_wrapper.h"
 #include "content/browser/service_worker/service_worker_url_request_job.h"
+#include "content/common/navigation_subresource_loader_params.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
@@ -45,6 +46,11 @@ bool MaybeForwardToServiceWorker(ServiceWorkerURLJobWrapper* job,
   DCHECK(version);
   DCHECK_NE(version->fetch_handler_existence(),
             ServiceWorkerVersion::FetchHandlerExistence::UNKNOWN);
+  // TODO(kinuko): Support this optimization in S13nServiceWorker.
+  // Currently we need to let the service worker handle the request
+  // in order to propagate the controller info.
+  // We'll need to fix how NavigationURLLoaderNetworkLoader handles
+  // network-fallback + handles subresource loading cases.
   if (version->fetch_handler_existence() ==
       ServiceWorkerVersion::FetchHandlerExistence::EXISTS) {
     job->ForwardToServiceWorker();
@@ -241,6 +247,26 @@ void ServiceWorkerControlleeRequestHandler::MaybeCreateLoader(
   }
 
   // We will asynchronously continue on DidLookupRegistrationForMainResource.
+}
+
+base::Optional<SubresourceLoaderParams>
+ServiceWorkerControlleeRequestHandler::MaybeCreateSubresourceLoaderParams() {
+  if (!provider_host_ || !provider_host_->controller())
+    return base::nullopt;
+
+  SubresourceLoaderParams params;
+  auto controller_info = mojom::ControllerServiceWorkerInfo::New();
+  if (provider_host_->controller()->fetch_handler_existence() ==
+      ServiceWorkerVersion::FetchHandlerExistence::EXISTS) {
+    controller_info->endpoint = provider_host_->GetControllerServiceWorkerPtr();
+  }
+  controller_info->object_info = provider_host_->GetOrCreateServiceWorkerHandle(
+      provider_host_->controller());
+  params.controller_service_worker_info = std::move(controller_info);
+  LOG(ERROR) << "RETURNING params: "
+             << (params.controller_service_worker_info ? "has controller"
+                                                       : "no controller");
+  return params;
 }
 
 void ServiceWorkerControlleeRequestHandler::PrepareForMainResource(

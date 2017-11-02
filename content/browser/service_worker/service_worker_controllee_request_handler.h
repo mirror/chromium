@@ -77,6 +77,12 @@ class CONTENT_EXPORT ServiceWorkerControlleeRequestHandler
   void MaybeCreateLoader(const ResourceRequest& request,
                          ResourceContext* resource_context,
                          LoaderCallback callback) override;
+  // MaybeCreateSubresourceLoaderParams returns params with the
+  // ControllerServiceWorkerPtr. This method is called only when
+  // MaybeCreateLoader() returned |callback| with non-null StartLoaderCallback,
+  // i.e. when a service worker is going handle the request.
+  base::Optional<SubresourceLoaderParams> MaybeCreateSubresourceLoaderParams()
+      override;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerControlleeRequestHandlerTest,

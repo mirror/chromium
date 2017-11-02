@@ -15,6 +15,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/supports_user_data.h"
 #include "content/common/content_export.h"
+#include "content/common/service_worker/controller_service_worker.mojom.h"
 #include "content/common/service_worker/service_worker.mojom.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
 
@@ -55,6 +56,8 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
   // with WebServiceWorkerNetworkProvider to be owned by Blink.
   //
   // For S13nServiceWorker:
+  // |controller_info| contains the endpoint and object info that is needed to
+  // set up the controller service worker for the client.
   // |default_loader_factory_getter| contains a set of default loader
   // factories for the associated loading context, and is used when we
   // create a subresource loader for controllees. This is non-null only
@@ -63,9 +66,11 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
   static std::unique_ptr<blink::WebServiceWorkerNetworkProvider>
   CreateForNavigation(
       int route_id,
+      const GURL& url_to_navigate,
       const RequestNavigationParams& request_params,
       blink::WebLocalFrame* frame,
       bool content_initiated,
+      mojom::ControllerServiceWorkerInfoPtr controller_info,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter);
 
   // Creates a ServiceWorkerNetworkProvider for a shared worker (as a
@@ -73,7 +78,8 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
   // TODO(kinuko): This should also take ChildURLLoaderFactoryGetter associated
   // with the SharedWorker.
   static std::unique_ptr<ServiceWorkerNetworkProvider> CreateForSharedWorker(
-      int route_id);
+      int route_id,
+      const GURL& worker_url);
 
   // Creates a ServiceWorkerNetworkProvider for a "controller" (i.e.
   // a service worker execution context).
@@ -100,23 +106,23 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
   ServiceWorkerNetworkProvider();
 
   // This is for service worker clients (used in CreateForNavigation and
-  // CreateForSharedWorker). |provider_id| is provided by the browser process
+  // CreateForSharedWorker). |url| is the URL of the client that is being
+  // initialized. |provider_id| is provided by the browser process
   // for navigations (with PlzNavigate, which is default).
   // |type| must be either one of SERVICE_WORKER_PROVIDER_FOR_{WINDOW,
   // SHARED_WORKER,WORKER} (while currently we don't have code for WORKER).
   // |is_parent_frame_secure| is only relevant when the |type| is WINDOW.
   //
   // For S13nServiceWorker:
-  // |default_loader_factory_getter| contains a set of default loader
-  // factories for the associated loading context, and is used when we
-  // create a subresource loader for controllees. This is non-null only
-  // if the provider is created for controllees, and if the loading context,
-  // e.g. a frame, provides the loading factory getter for default loaders.
+  // See the comment at CreateForNavigation() for |controller_info| and
+  // |default_loader_factory_getter|.
   ServiceWorkerNetworkProvider(
       int route_id,
+      const GURL& url,
       ServiceWorkerProviderType type,
       int provider_id,
       bool is_parent_frame_secure,
+      mojom::ControllerServiceWorkerInfoPtr controller_info,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter);
 
   // This is for controllers, used in CreateForController.
