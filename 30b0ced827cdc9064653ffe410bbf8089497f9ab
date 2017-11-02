@@ -16,6 +16,24 @@
       "revId": "30b0ced827cdc9064653ffe410bbf8089497f9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de69524b_ad16fe32",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-02T21:52:38Z",
+      "side": 1,
+      "message": "\u003e Can/should we narrow down the cases where we do this?\n\nYes - possibly.\n\n\u003e At the very least, we should only need to do it if ContentFrame()-\u003eIsLoading() was true at the start of the function. \n\nGood point - checking this makes a lot of sense because Document::ShouldComplete and/or AllDescendantsAreComplete can only be impacted by the child frame removal if the child was still loading.\n\nDone.\n\n\u003e And we probably only need to do it if ContentFrame() was remote?\n\nOkay - the local case should be already handled via:\n\n    #2 0x7f33528dadd2 blink::Document::ImplicitClose()\n    #3 0x7f33528dab3a blink::Document::CheckCompleted()\n    #4 0x7f335354846b blink::FrameLoader::DidFinishNavigation()\n    #5 0x7f335354cc8f blink::FrameLoader::DetachProvisionalDocumentLoader()\n    #6 0x7f335352460c blink::DocumentLoader::LoadFailed()\n    #7 0x7f3353527407 blink::DocumentLoader::DetachFromFrame()\n    #8 0x7f3352c2c74f blink::WebDocumentLoaderImpl::DetachFromFrame()\n    #9 0x7f3353548d6e blink::FrameLoader::DetachDocumentLoader()\n    #10 0x7f3353547ccc blink::FrameLoader::StopAllLoaders()\n    #11 0x7f3353547c1a blink::FrameLoader::StopAllLoaders()\n    #12 0x7f3352cd796d blink::LocalFrame::Detach()\n    #13 0x7f3352e15e1e blink::HTMLFrameOwnerElement::DisconnectContentFrame()\n    #14 0x7f3352893cbf blink::ChildFrameDisconnector::DisconnectCollectedFrameOwners()\n    #15 0x7f33528937f7 blink::ChildFrameDisconnector::Disconnect()\n    #16 0x7f33528a77d5 blink::ContainerNode::WillRemoveChild()\n    #17 0x7f33528a746b blink::ContainerNode::RemoveChild()\n    #18 0x7f33529ad6da blink::Node::removeChild()\n    #19 0x7f3353afe656 blink::NodeV8Internal::removeChildMethod()\n    #20 0x7f3353afe317 blink::V8Node::removeChildMethodCallback()\n\nDone.\n\n\nBTW: When addressing your comment I also realized that calling CheckCompleted doesn\u0027t make sense unless we actually had a non-null |frame| and called |frame-\u003eDetach(...)|.  So - I refactored this whole method slightly to exit early if ContentFrame() is null.  I\u0027ve also introduced and renamed variables to hopefully make things easier to understand (?).",
+      "parentUuid": "ba3eede3_c67cd413",
+      "revId": "30b0ced827cdc9064653ffe410bbf8089497f9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
