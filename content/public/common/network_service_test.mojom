@@ -15,4 +15,7 @@ interface NetworkServiceTest {
   // service is running.
   [Sync]
   AddRules(array<Rule> rules) => ();
+
+  // Crash the process where network service is running.
+  SimulateCrash();
 };
