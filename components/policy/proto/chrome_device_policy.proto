@@ -922,9 +922,10 @@ message ForcedReenrollmentProto {
 
   optional ForcedReenrollmentMode forced_reenrollment_mode = 1;
 
-  // Indicate whether the server needs an enrollment ID for attestation-based
-  // enrollment.
-  optional bool enrollment_id_needed = 2;
+  // Indicate whether the server needs data (e.g. a ZTE EID) to ensure that
+  // attestation-based enrollment will work. The data depend on how the
+  // device can do ZTE. At this time, only an EID is required.
+  optional bool enrollment_data_needed = 2;
 }
 
 // Settings to control the minimum version that is allowed to sign in / stay
