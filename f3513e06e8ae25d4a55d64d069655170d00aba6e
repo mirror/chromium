@@ -70,6 +70,30 @@
       "revId": "f3513e06e8ae25d4a55d64d069655170d00aba6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0ff3de7_d85ba703",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-02T18:14:04Z",
+      "side": 1,
+      "message": "In Theresa\u0027s CL, there is no ()\u0027s after the int.\n\nWould be good to be consistent one way or the other:\nhttps://chromium-review.googlesource.com/#/c/751541/",
+      "parentUuid": "ff5af7bb_a8923cef",
+      "range": {
+        "startLine": 401,
+        "startChar": 33,
+        "endLine": 401,
+        "endChar": 34
+      },
+      "revId": "f3513e06e8ae25d4a55d64d069655170d00aba6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
