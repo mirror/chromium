@@ -571,12 +571,16 @@ void QuicDispatcher::OnConnectionClosed(QuicConnectionId connection_id,
       << ") due to error: " << QuicErrorCodeToString(error)
       << ", with details: " << error_details;
 
-  if (closed_session_list_.empty()) {
-    delete_sessions_alarm_->Update(helper()->GetClock()->ApproximateNow(),
-                                   QuicTime::Delta::Zero());
-  }
   QuicConnection* connection = it->second->connection();
-  closed_session_list_.push_back(std::move(it->second));
+  if (ShouldDestroySessionAsynchronously()) {
+    // Set up alarm to fire immediately to bring destruction of this session
+    // out of current call stack.
+    if (closed_session_list_.empty()) {
+      delete_sessions_alarm_->Update(helper()->GetClock()->ApproximateNow(),
+                                     QuicTime::Delta::Zero());
+    }
+    closed_session_list_.push_back(std::move(it->second));
+  }
   const bool should_close_statelessly =
       (error == QUIC_CRYPTO_HANDSHAKE_STATELESS_REJECT);
   CleanUpSession(it, connection, should_close_statelessly);
@@ -829,6 +833,10 @@ void QuicDispatcher::ProcessChlo() {
 
 const QuicSocketAddress QuicDispatcher::GetClientAddress() const {
   return current_client_address_;
+}
+
+bool QuicDispatcher::ShouldDestroySessionAsynchronously() {
+  return true;
 }
 
 bool QuicDispatcher::HandlePacketForTimeWait(const QuicPacketHeader& header) {
