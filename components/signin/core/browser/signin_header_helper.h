@@ -167,6 +167,7 @@ void AppendOrRemoveMirrorRequestHeader(
     const GURL& redirect_url,
     const std::string& account_id,
     const content_settings::CookieSettings* cookie_settings,
+    bool account_consistency_required,
     int profile_mode_mask);
 
 // Adds the Dice to all Gaia requests from a connected profile, with the
