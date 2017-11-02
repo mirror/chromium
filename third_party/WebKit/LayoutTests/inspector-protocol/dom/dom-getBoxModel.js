@@ -8,14 +8,26 @@
     <div style='position:absolute;top:200;left:100;width:100;height:100;background:green'></div>
     <div style='position:absolute;top:150;left:50;width:100;height:100;background:blue;transform:rotate(45deg);'></div>
   `, 'Tests DOM.getBoxModel method.');
+
+  await session.evaluate(`
+    var iframe = document.createElement('iframe');
+    iframe.style.position = 'absolute';
+    iframe.style.top = '200px';
+    iframe.style.left = '200px';
+    document.body.appendChild(iframe);
+    iframe.contentWindow.document.body.innerHTML = '<div style="width:100px;height:100px;background:orange"></div>';`);
+
   var NodeTracker = await testRunner.loadScript('../resources/node-tracker.js');
   var nodeTracker = new NodeTracker(dp);
   dp.DOM.enable();
   await dp.DOM.getNodeForLocation({x: 100, y: 200});
+  await dp.DOM.getNodeForLocation({x: 250, y: 250});
 
   for (var nodeId of nodeTracker.nodeIds()) {
-    var message = await dp.DOM.getBoxModel({nodeId});
     var node = nodeTracker.nodeForId(nodeId);
+    if (node.nodeName !== 'DIV')
+      continue;
+    var message = await dp.DOM.getBoxModel({nodeId});
     if (message.error)
       testRunner.log(node.nodeName + ': ' + message.error.message);
     else
@@ -23,4 +35,3 @@
   }
   testRunner.completeTest();
 })
-
