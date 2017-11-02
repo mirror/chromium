@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "666077d6_f5b0336d",
+        "filename": "third_party/WebKit/Source/core/css/CSSPropertyValue.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-02T02:16:15Z",
+      "side": 1,
+      "message": "Nit: Should this be PropertyValue? It only contains information about the property?",
+      "revId": "068203f56faa4d419db6c5972d89587f8b57ea59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
