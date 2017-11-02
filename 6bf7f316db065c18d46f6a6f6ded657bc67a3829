@@ -69,6 +69,24 @@
       "revId": "6bf7f316db065c18d46f6a6f6ded657bc67a3829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "233e40e8_a600c042",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-02T19:02:27Z",
+      "side": 1,
+      "message": "The .pak files weren\u0027t in the depfile_deps for process_resources, but they are for package_apk(), so I think we\u0027re good now.",
+      "parentUuid": "c916fced_137dedb6",
+      "revId": "6bf7f316db065c18d46f6a6f6ded657bc67a3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

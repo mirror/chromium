@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a795dce6_94b22b71",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1788,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-02T19:02:27Z",
+      "side": 1,
+      "message": "nit: I know I came up with this name.... but now thinking in case we have to do this again for another type, mayble let\u0027s call the directory \"size-info\" wdyt?",
+      "range": {
+        "startLine": 1788,
+        "startChar": 36,
+        "endLine": 1788,
+        "endChar": 39
+      },
+      "revId": "6bdea87cff5e62881fd650f3054c7184d33d0db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a8ba40_86c55963",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-02T19:02:27Z",
+      "side": 1,
+      "message": "Why conditional on proguard? is_official_build would be more appropriate, since that\u0027s what triggers linker map files to be created, and what enables pak whitelists.\n\nI\u0027d also be fine with just setting it unconditionally though.",
+      "revId": "6bdea87cff5e62881fd650f3054c7184d33d0db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
