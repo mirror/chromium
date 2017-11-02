@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8646495_275caa22",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1937,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T02:10:16Z",
+      "side": 1,
+      "message": "It didn\u0027t initialize, so sometimes it will give a wrong number if there is no selection. Added the initialization. Added kill renderer part.",
+      "parentUuid": "fbaec84f_e9dbcccf",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "befe5120_b1c0abfd",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
         "patchSetId": 21
@@ -33,6 +51,24 @@
       "revId": "dbb98d1466af290ba1345005db50c09158a406df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e72889_ea3a882d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T02:10:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "befe5120_b1c0abfd",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "da8b008f_40a60b94",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T02:10:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb046b2e_26474ab2",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c52bd646_2aeefb21",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
         "patchSetId": 21
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ff9aa34c_569caae2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T02:10:16Z",
+      "side": 1,
+      "message": "Done\n\nMade this two ifs since they are independent to each other, otherwise the comment will be inside of the former if block, more weird..\n \nI vaguely remembered that writing comments in else if block is recommended in the style guide, but can\u0027t find it anymore.",
+      "parentUuid": "c52bd646_2aeefb21",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9907335_0bd8a423",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
         "patchSetId": 21
@@ -84,6 +156,24 @@
       "revId": "dbb98d1466af290ba1345005db50c09158a406df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde84139_ec13cf9a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T02:10:16Z",
+      "side": 1,
+      "message": "That is for the end index, which is an excluded index and we are counting until we reach the start offset of the original selection, that\u0027s equals to how many words we have in this range. Use the example again, we will call countWordsBackward(8, 0), then we count \"York\" and \"New\".",
+      "parentUuid": "a9907335_0bd8a423",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "f5dbabe1_ade1f292",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T02:10:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "827b6d7e_593ea968",
+      "range": {
+        "startLine": 129,
+        "startChar": 51,
+        "endLine": 129,
+        "endChar": 69
+      },
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3418c3d8_6098fd65",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
         "patchSetId": 21
@@ -124,6 +238,24 @@
       "revId": "dbb98d1466af290ba1345005db50c09158a406df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "531205a6_a432fd44",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T02:10:16Z",
+      "side": 1,
+      "message": "I doubt that StringBuilder will buy us that much for 2 substring() calls and 2 concatenations. I\u0027ll leave it as is.",
+      "parentUuid": "3418c3d8_6098fd65",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "dba96f5c_8121513c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionIndicesConverter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T02:10:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39668857_89dbc994",
+      "range": {
+        "startLine": 209,
+        "startChar": 69,
+        "endLine": 209,
+        "endChar": 92
+      },
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01142580_81a51b1b",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 21
@@ -164,6 +320,24 @@
       "revId": "dbb98d1466af290ba1345005db50c09158a406df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33079be_f63ac42b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T02:10:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01142580_81a51b1b",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "e9fda11e_8ff87a0b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T02:10:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bffb87e4_f6b3eae0",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7594cfa_12c00459",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 21
@@ -198,6 +390,24 @@
       "revId": "dbb98d1466af290ba1345005db50c09158a406df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb80ee3_75ba2543",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-11-02T02:10:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7594cfa_12c00459",
+      "revId": "dbb98d1466af290ba1345005db50c09158a406df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
