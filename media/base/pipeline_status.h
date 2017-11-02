@@ -64,11 +64,15 @@ struct PipelineStatistics {
   uint64_t video_bytes_decoded = 0;
   uint32_t video_frames_decoded = 0;
   uint32_t video_frames_dropped = 0;
+
   int64_t audio_memory_usage = 0;
   int64_t video_memory_usage = 0;
   base::TimeDelta video_keyframe_distance_average = kNoTimestamp;
   // NOTE: frame duration should reflect changes to playback rate.
   base::TimeDelta video_frame_duration_average = kNoTimestamp;
+
+  // This is at the end to have the padding at the end of the object.
+  uint32_t video_frames_decoded_power_efficient = 0;
 };
 
 // Used for updating pipeline statistics; the passed value should be a delta

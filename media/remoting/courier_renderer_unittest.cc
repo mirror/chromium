@@ -52,7 +52,17 @@ PipelineStatistics DefaultStats() {
 
 bool IsDefaultStats(const PipelineStatistics& stats) {
   const PipelineStatistics default_stats = DefaultStats();
-  return memcmp(&stats, &default_stats, sizeof(PipelineStatistics)) == 0;
+
+  // This is using `real_size` because at the moment the struct has some padding
+  // in 64 bits architecture. This test should be updated to remove this if and
+  // when there is no more padding.
+  size_t real_size = sizeof(PipelineStatistics);
+#ifdef ARCH_CPU_64_BITS
+  // When the object size is changed, the test should be updtade.
+  EXPECT_EQ(64u, real_size);
+  real_size -= 4;  // Padding is currently 32 bits, 4 octets.
+#endif  // ARCH_CPU_64_BITS
+  return memcmp(&stats, &default_stats, real_size) == 0;
 }
 
 class RendererClientImpl final : public RendererClient {
