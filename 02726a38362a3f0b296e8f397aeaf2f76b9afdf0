@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dc1cbd2_8682828d",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_called.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-02T22:39:03Z",
+      "side": 1,
+      "message": "Nit: Declare the canvas at the top and set it up by including presentation-setup.js for consistency? See https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/vr/requestPresent_resolve.html?q\u003drequestpresent+lang:html\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d8",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6129406_ba96732a",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_invalidhandle.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-02T22:39:03Z",
+      "side": 1,
+      "message": "Nit: Ditto.",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be47e5db_7cd60c4b",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_nolayer.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-02T22:39:03Z",
+      "side": 1,
+      "message": "Nit: Ditto",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc010cb_1b209ffe",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_nolayer.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-02T22:39:03Z",
+      "side": 1,
+      "message": "Nit: Did you stop typing midway through or does re stand for something that I\u0027m not familiar with?",
+      "range": {
+        "startLine": 28,
+        "startChar": 29,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f509ff83_2d8231ed",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/exclusive_requestFrame_unregister.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-02T22:39:03Z",
+      "side": 1,
+      "message": "Nit: Ditto",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf6dbf8_34cf96f2",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/getDevicePose_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-02T22:39:03Z",
+      "side": 1,
+      "message": "Nit: Ditto",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2fcc44_3b2c9e82",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_match.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-02T22:39:03Z",
+      "side": 1,
+      "message": "Nit: Ditto",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9194caa7_3fec7c56",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrView_oneframeupdate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-02T22:39:03Z",
+      "side": 1,
+      "message": "Nit: Ditto",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff040eea_e1b180e9",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrViewport_valid.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-02T22:39:03Z",
+      "side": 1,
+      "message": "Nit: Ditto",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "02726a38362a3f0b296e8f397aeaf2f76b9afdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
