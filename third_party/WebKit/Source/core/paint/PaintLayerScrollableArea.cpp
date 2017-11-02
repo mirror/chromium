@@ -1028,9 +1028,7 @@ bool PaintLayerScrollableArea::HasHorizontalOverflow() const {
   if (NeedsRelayout() && !HadVerticalScrollbarBeforeRelayout())
     client_width += VerticalScrollbarWidth();
   LayoutUnit scroll_width(ScrollWidth());
-  LayoutUnit box_x = Box().Location().X();
-  return SnapSizeToPixel(scroll_width, box_x) >
-         SnapSizeToPixel(client_width, box_x);
+  return scroll_width - client_width >= LayoutUnit(1);
 }
 
 bool PaintLayerScrollableArea::HasVerticalOverflow() const {
@@ -1038,9 +1036,7 @@ bool PaintLayerScrollableArea::HasVerticalOverflow() const {
       LayoutContentRect(kIncludeScrollbars).Height() -
       HorizontalScrollbarHeight(kIgnorePlatformAndCSSOverlayScrollbarSize);
   LayoutUnit scroll_height(ScrollHeight());
-  LayoutUnit box_y = Box().Location().Y();
-  return SnapSizeToPixel(scroll_height, box_y) >
-         SnapSizeToPixel(client_height, box_y);
+  return scroll_height - client_height >= LayoutUnit(1);
 }
 
 // This function returns true if the given box requires overflow scrollbars (as
