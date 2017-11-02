@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38a0d777_fd2308bb",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T17:45:09Z",
+      "side": 1,
+      "message": "nit: local not needed",
+      "revId": "cc8e7873169bceda1284def2959c85439994396e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4b43f6_1773c07e",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T17:45:09Z",
+      "side": 1,
+      "message": "Do we need this extra pref, or can we just set the old pref to the default value and only call this if the old pref is not the default?",
+      "revId": "cc8e7873169bceda1284def2959c85439994396e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8702be9_33df33ca",
+        "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T17:45:09Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "cc8e7873169bceda1284def2959c85439994396e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb3968e_7034341c",
+        "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T17:45:09Z",
+      "side": 1,
+      "message": "or: return (value \u003c 0 || value \u003e\u003d METHODS_NUMBER) ? DISABLED : value;",
+      "revId": "cc8e7873169bceda1284def2959c85439994396e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047503ad_04f51c1b",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-02T17:45:09Z",
+      "side": 1,
+      "message": "\u0027amount\u0027 or \u0027type\u0027? Also, the comment doesn\u0027t match the non device version, aren\u0027t they the same, just one applies when in login/guest?",
+      "revId": "cc8e7873169bceda1284def2959c85439994396e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
