@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "90cd1b78_45dd9871",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-02T18:11:19Z",
+      "side": 1,
+      "message": "I\u0027d like to leave this |element_document|, in order to make it clear that this is element document, not context document.\nSettings object handling in the current implementation is a little inconsistent:\ne.g. element document\u0027s ResourceFetcher has been used for classic scripts, while context document\u0027s modulator has been used for module scripts.",
+      "parentUuid": "b2f4cfc5_9ed7df7c",
+      "revId": "e851d86b5f17ccce883e39024bd33e1e63b7397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4920dfdb_608d9c22",
         "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
         "patchSetId": 7
@@ -50,6 +68,24 @@
       "revId": "e851d86b5f17ccce883e39024bd33e1e63b7397e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5961c019_4f280b88",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-02T18:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4920dfdb_608d9c22",
+      "revId": "e851d86b5f17ccce883e39024bd33e1e63b7397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "b13f2027_109008f4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ScriptFetchOptions.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-02T18:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab6124cf_5abddee0",
+      "revId": "e851d86b5f17ccce883e39024bd33e1e63b7397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74c2ce6b_fd814abe",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ScriptFetchOptions.cpp",
         "patchSetId": 7
@@ -84,6 +138,24 @@
       "revId": "e851d86b5f17ccce883e39024bd33e1e63b7397e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c42c1e_370e43b7",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ScriptFetchOptions.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-02T18:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74c2ce6b_fd814abe",
+      "revId": "e851d86b5f17ccce883e39024bd33e1e63b7397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
