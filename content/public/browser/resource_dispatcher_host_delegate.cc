@@ -108,6 +108,11 @@ bool ResourceDispatcherHostDelegate::ShouldUseResourceScheduler() const {
   return true;
 }
 
+bool ResourceDispatcherHostDelegate::AllowRenderingMhtmlOverHttp(
+    net::URLRequest* request) const {
+  return false;
+}
+
 ResourceDispatcherHostDelegate::~ResourceDispatcherHostDelegate() {
 }
 
