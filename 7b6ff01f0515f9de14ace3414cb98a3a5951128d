@@ -22,6 +22,30 @@
       "revId": "7b6ff01f0515f9de14ace3414cb98a3a5951128d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50172f4c_cb3766fe",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-11-02T14:11:41Z",
+      "side": 1,
+      "message": "Yeah, I think we have to update our script every release anyways, which is sad. So might as well be explicit here. :(",
+      "parentUuid": "5a709109_02b4f28d",
+      "range": {
+        "startLine": 849,
+        "startChar": 39,
+        "endLine": 849,
+        "endChar": 42
+      },
+      "revId": "7b6ff01f0515f9de14ace3414cb98a3a5951128d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
