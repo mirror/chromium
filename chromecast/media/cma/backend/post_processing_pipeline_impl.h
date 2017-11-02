@@ -42,6 +42,7 @@ class PostProcessingPipelineImpl : public PostProcessingPipeline {
   // Send string |config| to post processor |name|.
   void SetPostProcessorConfig(const std::string& name,
                               const std::string& config) override;
+  void SetContentType(AudioContentType content_type) override;
 
  private:
   // Note: typedef is used to silence chromium-style mandatory constructor in
