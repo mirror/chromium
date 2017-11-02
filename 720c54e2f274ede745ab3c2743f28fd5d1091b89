@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fcf0e021_4e44c27b",
+        "filename": "components/browser_watcher/watcher_metrics_provider_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-11-02T14:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf0b65de_9de013ad",
+      "range": {
+        "startLine": 132,
+        "startChar": 28,
+        "endLine": 132,
+        "endChar": 42
+      },
+      "revId": "720c54e2f274ede745ab3c2743f28fd5d1091b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "301103ff_576691d2",
         "filename": "components/browser_watcher/watcher_metrics_provider_win.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "720c54e2f274ede745ab3c2743f28fd5d1091b89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3d41b2_edc2ae50",
+        "filename": "components/browser_watcher/watcher_metrics_provider_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-11-02T14:49:47Z",
+      "side": 1,
+      "message": "This is going to hit nowhere except out in the field, where the logs will be lost, and the only data you\u0027ll get is what goes into the minidumps. I aliased some more stuff, hope that works for you?",
+      "parentUuid": "301103ff_576691d2",
+      "range": {
+        "startLine": 134,
+        "startChar": 59,
+        "endLine": 134,
+        "endChar": 68
+      },
+      "revId": "720c54e2f274ede745ab3c2743f28fd5d1091b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
