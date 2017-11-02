@@ -342,6 +342,9 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // Called by the Session when a max pacing rate for the connection is needed.
   virtual void SetMaxPacingRate(QuicBandwidth max_pacing_rate);
 
+  // Returns the max pacing rate for the connection.
+  QuicBandwidth MaxPacingRate() const;
+
   // Sets the number of active streams on the connection for congestion control.
   void SetNumOpenStreams(size_t num_streams);
 
