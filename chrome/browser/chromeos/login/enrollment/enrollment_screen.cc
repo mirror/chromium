@@ -143,7 +143,7 @@ void EnrollmentScreen::SetConfig() {
   config_ = enrollment_config_;
   if (current_auth_ == AUTH_ATTESTATION) {
     config_.mode = enrollment_config_.is_attestation_forced()
-                       ? policy::EnrollmentConfig::MODE_ATTESTATION_FORCED
+                       ? policy::EnrollmentConfig::MODE_ATTESTATION_LOCAL_FORCED
                        : policy::EnrollmentConfig::MODE_ATTESTATION;
   }
   view_->SetParameters(this, config_);

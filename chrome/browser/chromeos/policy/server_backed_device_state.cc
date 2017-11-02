@@ -24,6 +24,8 @@ const char kDeviceStateRestoreModeReEnrollmentRequested[] =
 const char kDeviceStateRestoreModeReEnrollmentEnforced[] =
     "re-enrollment-enforced";
 const char kDeviceStateRestoreModeDisabled[] = "disabled";
+const char kDeviceStateRestoreModeReenrollmentZeroTouch[] =
+    "re-enrollment-zero-touch";
 
 RestoreMode GetRestoreMode() {
   std::string restore_mode;

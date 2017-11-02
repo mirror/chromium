@@ -75,6 +75,8 @@ std::string ConvertRestoreMode(
       return kDeviceStateRestoreModeReEnrollmentEnforced;
     case em::DeviceStateRetrievalResponse::RESTORE_MODE_DISABLED:
       return kDeviceStateRestoreModeDisabled;
+    case em::DeviceStateRetrievalResponse::RESTORE_MODE_REENROLLMENT_ZERO_TOUCH:
+      return kDeviceStateRestoreModeReenrollmentZeroTouch;
   }
 
   // Return is required to avoid compiler warning.
@@ -230,6 +232,7 @@ void AutoEnrollmentClient::NextStep() {
       break;
     case RESTORE_MODE_REENROLLMENT_REQUESTED:
     case RESTORE_MODE_REENROLLMENT_ENFORCED:
+    case RESTORE_MODE_REENROLLMENT_ZERO_TOUCH:
       ReportProgress(AUTO_ENROLLMENT_STATE_TRIGGER_ENROLLMENT);
       break;
   }
