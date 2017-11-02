@@ -6,6 +6,7 @@
 #define BASE_MESSAGE_LOOP_MESSAGE_PUMP_ANDROID_H_
 
 #include <jni.h>
+#include <atomic>
 #include <memory>
 
 #include "base/android/scoped_java_ref.h"
@@ -14,6 +15,8 @@
 #include "base/macros.h"
 #include "base/message_loop/message_pump.h"
 #include "base/time/time.h"
+
+class ALooper;
 
 namespace base {
 
@@ -45,6 +48,9 @@ class BASE_EXPORT MessagePumpForUI : public MessagePump {
   void Abort() { should_abort_ = true; }
   bool ShouldAbort() const { return should_abort_; }
 
+  void OnDelayedCallback();
+  void OnNonDelayedCallback();
+
  private:
   std::unique_ptr<RunLoop> run_loop_;
   base::android::ScopedJavaGlobalRef<jobject> system_message_handler_obj_;
@@ -52,6 +58,12 @@ class BASE_EXPORT MessagePumpForUI : public MessagePump {
   bool quit_ = false;
   Delegate* delegate_ = nullptr;
   base::TimeTicks delayed_scheduled_time_;
+  bool use_native_looper_;
+  std::atomic_int pending_tasks_{0};
+
+  int non_delayed_fd_;
+  int delayed_fd_;
+  ALooper* looper_;
 
   DISALLOW_COPY_AND_ASSIGN(MessagePumpForUI);
 };
