@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be0cfcda_bff00d17",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-02T17:24:29Z",
+      "side": 1,
+      "message": "What I can find (go/copyright) suggests that new files do not need it, but when copying existing files they should stay. It doesn\u0027t give any guidance on updating the year when copying, so it seems fine to let it be.",
+      "parentUuid": "1b109326_c94bb857",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "6351aac74fca1465d8f0fe45d2cff861fde2dffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f14dee3b_da481a4e",
         "filename": "third_party/libaom/BUILD.gn",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "6351aac74fca1465d8f0fe45d2cff861fde2dffe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7863e95_786d517c",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-02T17:24:29Z",
+      "side": 1,
+      "message": "yeah i have a couple TODOs sprinkled throughout. since there are no builders yet, i don\u0027t want to go chasing build issues when they do get added just in case these are still valid. see previous comments.",
+      "parentUuid": "f14dee3b_da481a4e",
+      "revId": "6351aac74fca1465d8f0fe45d2cff861fde2dffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
