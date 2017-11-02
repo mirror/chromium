@@ -201,23 +201,18 @@ void RendererImpl::Flush(const base::Closure& flush_cb) {
   flush_cb_ = flush_cb;
   state_ = STATE_FLUSHING;
 
-  // If we are currently handling a media stream status change, then postpone
-  // Flush until after that's done (because stream status changes also flush
-  // audio_renderer_/video_renderer_ and they need to be restarted before they
-  // can be flushed again). OnStreamRestartCompleted will resume Flush
-  // processing after audio/video restart has completed and there are no other
-  // pending stream status changes.
+  // Cancel any outstanding restarts; the normal Flush() flow will result in the
+  // stream resuming correctly post-Flush.
   if (restarting_audio_ || restarting_video_) {
-    pending_actions_.push_back(
-        base::Bind(&RendererImpl::FlushInternal, weak_this_));
-    return;
+    pending_actions_.clear();
+    OnStreamRestartCompleted();
   }
 
   FlushInternal();
 }
 
 void RendererImpl::StartPlayingFrom(base::TimeDelta time) {
-  DVLOG(1) << __func__;
+  DVLOG(1) << __func__ << " : " << time;
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   if (state_ != STATE_FLUSHED) {

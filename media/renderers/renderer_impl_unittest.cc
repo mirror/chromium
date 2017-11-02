@@ -867,18 +867,12 @@ TEST_F(RendererImplTest, FlushDuringAudioReinit) {
 
   bool flush_done = false;
 
-  // Now that audio stream change is being handled the RendererImpl::Flush
-  // should be postponed, instead of being executed immediately.
+  // Now that stream change is in flight, ensure the Flush() call is still
+  // executed immediately.
+  SetFlushExpectationsForAVRenderers();
   EXPECT_CALL(callbacks_, OnFlushed()).WillOnce(SetBool(&flush_done, true));
   renderer_impl_->Flush(
       base::Bind(&CallbackHelper::OnFlushed, base::Unretained(&callbacks_)));
-  base::RunLoop().RunUntilIdle();
-  EXPECT_FALSE(flush_done);
-
-  // The renderer_impl_->Flush invoked above should proceed after the first
-  // audio renderer flush (initiated by the stream status change) completes.
-  SetFlushExpectationsForAVRenderers();
-  audio_renderer_flush_cb.Run();
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(flush_done);
 }
@@ -898,7 +892,8 @@ TEST_F(RendererImplTest, FlushDuringVideoReinit) {
   base::Closure video_renderer_flush_cb;
   EXPECT_CALL(*video_renderer_, Flush(_))
       .WillOnce(SaveArg<0>(&video_renderer_flush_cb));
-  EXPECT_CALL(*video_renderer_, StartPlayingFrom(_));
+  // Since we never complete the track change, this should not be called.
+  EXPECT_CALL(*video_renderer_, StartPlayingFrom(_)).Times(0);
 
   // This should start flushing the video renderer (due to video stream status
   // change) and should populate the |video_renderer_flush_cb|.
@@ -908,18 +903,12 @@ TEST_F(RendererImplTest, FlushDuringVideoReinit) {
 
   bool flush_done = false;
 
-  // Now that video stream change is being handled the RendererImpl::Flush
-  // should be postponed, instead of being executed immediately.
+  // Now that stream change is in flight, ensure the Flush() call is still
+  // executed immediately.
+  SetFlushExpectationsForAVRenderers();
   EXPECT_CALL(callbacks_, OnFlushed()).WillOnce(SetBool(&flush_done, true));
   renderer_impl_->Flush(
       base::Bind(&CallbackHelper::OnFlushed, base::Unretained(&callbacks_)));
-  base::RunLoop().RunUntilIdle();
-  EXPECT_FALSE(flush_done);
-
-  // The renderer_impl_->Flush invoked above should proceed after the first
-  // video renderer flush (initiated by the stream status change) completes.
-  SetFlushExpectationsForAVRenderers();
-  video_renderer_flush_cb.Run();
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(flush_done);
 }
