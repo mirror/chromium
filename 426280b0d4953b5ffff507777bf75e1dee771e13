@@ -46,6 +46,30 @@
       "revId": "426280b0d4953b5ffff507777bf75e1dee771e13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f642b38f_c14d19aa",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 1631,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-02T23:25:35Z",
+      "side": 1,
+      "message": "Can you put that in comments here? This block of code is getting very dense with little explanation.",
+      "parentUuid": "0c501fbe_12f53eb9",
+      "range": {
+        "startLine": 1631,
+        "startChar": 8,
+        "endLine": 1631,
+        "endChar": 26
+      },
+      "revId": "426280b0d4953b5ffff507777bf75e1dee771e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
