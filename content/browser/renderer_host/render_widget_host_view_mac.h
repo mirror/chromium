@@ -299,6 +299,7 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   void SetBackgroundColor(SkColor color) override;
   SkColor background_color() const override;
   void SetNeedsBeginFrames(bool needs_begin_frames) override;
+  int GetMouseWheelTickMultiplier() const override;
 
   // Implementation of RenderWidgetHostViewBase.
   void InitAsPopup(RenderWidgetHostView* parent_host_view,

@@ -1227,6 +1227,12 @@ void RenderWidgetHostViewMac::SetNeedsBeginFrames(bool needs_begin_frames) {
   UpdateNeedsBeginFramesInternal();
 }
 
+int RenderWidgetHostViewMac::GetMouseWheelTickMultiplier() const {
+  // Mac has precise wheel deltas and doesn't need to clamp wheel events to
+  // discrete ticks.
+  return 0;
+}
+
 void RenderWidgetHostViewMac::UpdateNeedsBeginFramesInternal() {
   browser_compositor_->SetNeedsBeginFrames(needs_begin_frames_);
 }
