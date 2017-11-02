@@ -16,6 +16,24 @@
       "revId": "be5713727d0150a7a24cde026b3a4022ba2371a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a713b1b_8bcf53b7",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-02T22:52:46Z",
+      "side": 1,
+      "message": "Let me ask what should happen if the details page is up and the user uninstalls by right-clicking the extension in the top-chrome and selecting \"Remove from Chrome...\"?\n\nAnother concern is if the user is viewing the extension errors page for an extension that they remove by the \"Remove from Chrome...\" menu item.\n\nThe current patch handles each of those cases (and the initial case) by navigating to the main extensions page.\n\nI can change it if ya like; I just wanted to explain the reasoning for the current patch before changing it. Please let me know what you\u0027d like.",
+      "parentUuid": "47dc9b42_d79cef9a",
+      "revId": "be5713727d0150a7a24cde026b3a4022ba2371a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
