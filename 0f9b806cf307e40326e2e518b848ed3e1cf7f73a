@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "988719e6_525e1dda",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-02T18:05:54Z",
+      "side": 1,
+      "message": "I made a dedicated header and implementation file for CronetMetrics related code.",
+      "parentUuid": "c81948b7_83d3cf9a",
+      "range": {
+        "startLine": 204,
+        "startChar": 16,
+        "endLine": 204,
+        "endChar": 25
+      },
+      "revId": "0f9b806cf307e40326e2e518b848ed3e1cf7f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15827235_8e3be671",
         "filename": "components/cronet/ios/Cronet.mm",
         "patchSetId": 2
