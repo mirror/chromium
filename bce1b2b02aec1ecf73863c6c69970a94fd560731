@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05a78cd0_d3f7ff10",
+        "filename": "base/process/process.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-02T14:00:33Z",
+      "side": 1,
+      "message": "The expectations for this are uneven. The Windows implementation can call Exited() on its own, and it seems that Exited() could almost even just be a private implementation detail there. But for POSIX, there’s no internal call to Exited(), something from outside has to reach in and call it.",
+      "revId": "bce1b2b02aec1ecf73863c6c69970a94fd560731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b625df_5ba25219",
+        "filename": "base/process/process_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-02T14:00:33Z",
+      "side": 1,
+      "message": "Should we take precautions to avoid calling Exited() more than once? It looks like nothing stands in the way of calling Terminate(…, true) followed by WaitForExit(), as silly as that may seem.",
+      "revId": "bce1b2b02aec1ecf73863c6c69970a94fd560731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc01403_ff1018ea",
+        "filename": "base/process/process_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-02T14:00:33Z",
+      "side": 1,
+      "message": "Is this only something we care about on Windows?",
+      "revId": "bce1b2b02aec1ecf73863c6c69970a94fd560731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
