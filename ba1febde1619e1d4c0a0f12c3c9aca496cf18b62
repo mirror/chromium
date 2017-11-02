@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "f399fcb5_365e4df2",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-02T18:49:14Z",
+      "side": 1,
+      "message": "Let\u0027s go with your suggestion to have a delegate for presentation rather than listening to notifications in BVC. I don\u0027t think they constitute a duplicate mechanism. The delegate is for commanding the BVC to show the menu. The notification is a signal that it will happen.",
+      "parentUuid": "1d8a0c59_dc665e90",
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cefe5f10_57cf0143",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
