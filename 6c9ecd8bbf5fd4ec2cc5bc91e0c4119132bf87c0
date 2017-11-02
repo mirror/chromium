@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9609d96_45e11033",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-02T19:13:38Z",
+      "side": 1,
+      "message": "Maybe easier to read if it were split this into named clauses? for example:\n\nconst bool changed \u003d was_visible !\u003d find_bar_icon-\u003evisible();\nconst bool needs_activation \u003d !find_bar_icon_-\u003eIsActivated() \u0026\u0026 find_bar_icon_-\u003evisible();\nreturn changed || needs_activation;",
+      "range": {
+        "startLine": 771,
+        "startChar": 10,
+        "endLine": 771,
+        "endChar": 21
+      },
+      "revId": "6c9ecd8bbf5fd4ec2cc5bc91e0c4119132bf87c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
