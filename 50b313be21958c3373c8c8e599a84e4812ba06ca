@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f5bf181_77a93627",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-02T01:45:01Z",
+      "side": 1,
+      "message": "Since the class still doesn\u0027t have unit/browser tests for that part, please do manual testing for now and write down what you did here.",
+      "revId": "50b313be21958c3373c8c8e599a84e4812ba06ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03e44dd_9ef3df96",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-02T01:45:01Z",
+      "side": 1,
+      "message": "Adding lots of Resume() to the function seems a bit error prone. How about adding\n\n ScopedNavigationController scoped_navigation_controller(this);\n\nand then defining the class like\n\n namespace {\n\n class ScopedNavigationController {\n  public:\n   explicit ScopedNavigationController(content::NavigationThrottle* throttle)\n     : throttle_(throttle), canceled_(false) {}\n \n   ~ScopedNavigationThrottle() {\n     if (cancaled_)\n       throttle_-\u003eCancel...();\n     else\n       throttle_-\u003eResume...();\n   }\n \n   void CancelNavigation() {\n     canceled_ \u003d true;\n   }\n \n   private:\n     ...\n };\n\n }  // namespace\n\n?",
+      "revId": "50b313be21958c3373c8c8e599a84e4812ba06ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77adf1c_efca550f",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-02T01:45:01Z",
+      "side": 1,
+      "message": "Then you can remove all the Resume() calls and instead do\n\n scoped_navigation_controller.CancelNavigation();\n\nhere.",
+      "revId": "50b313be21958c3373c8c8e599a84e4812ba06ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
