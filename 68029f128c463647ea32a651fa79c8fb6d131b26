@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fd4d6fe_40f0bb11",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridgeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-02T18:35:35Z",
+      "side": 1,
+      "message": "This was added in API level 19, I think we still run tests on Android versions prior to that? (We definitely ship to them.) Please add it in an if-block similar to line 272.",
+      "revId": "68029f128c463647ea32a651fa79c8fb6d131b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
