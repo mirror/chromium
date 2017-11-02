@@ -139,6 +139,7 @@ bool LegacyRenderWidgetHostHWND::Init() {
 
   // Direct Manipulation is enabled on Windows 10+. The CreateInstance function
   // returns NULL if Direct Manipulation is not available.
+  LOG(ERROR) << "DirectManipulation" << this;
   direct_manipulation_helper_ =
       gfx::win::DirectManipulationHelper::CreateInstance();
   if (direct_manipulation_helper_)
@@ -278,11 +279,11 @@ LRESULT LegacyRenderWidgetHostHWND::OnMouseRange(UINT message,
     }
   }
 
-  if (direct_manipulation_helper_ &&
-      (message == WM_MOUSEWHEEL || message == WM_MOUSEHWHEEL)) {
-    direct_manipulation_helper_->HandleMouseWheel(hwnd(), message, w_param,
-        l_param);
-  }
+  // if (direct_manipulation_helper_ &&
+  //     (message == WM_MOUSEWHEEL || message == WM_MOUSEHWHEEL)) {
+  //   direct_manipulation_helper_->HandleMouseWheel(hwnd(), message, w_param,
+  //       l_param);
+  // }
   return ret;
 }
 
@@ -445,6 +446,27 @@ LRESULT LegacyRenderWidgetHostHWND::OnWindowPosChanged(UINT message,
     }
   }
   SetMsgHandled(FALSE);
+  return 0;
+}
+
+LRESULT LegacyRenderWidgetHostHWND::OnPointerHitTest(UINT message,
+                                                     WPARAM w_param,
+                                                     LPARAM l_param) {
+  LOG(ERROR) << "OnPointerHitTest";
+  if (direct_manipulation_helper_) {
+    direct_manipulation_helper_->OnPointerHitTest(w_param);
+  }
+
+  return 0;
+}
+
+LRESULT LegacyRenderWidgetHostHWND::OnTimer(UINT message,
+                                            WPARAM w_param,
+                                            LPARAM l_param) {
+  if (direct_manipulation_helper_) {
+    direct_manipulation_helper_->OnTimer(w_param);
+  }
+
   return 0;
 }
 

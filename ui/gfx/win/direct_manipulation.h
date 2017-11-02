@@ -5,8 +5,10 @@
 #ifndef UI_GFX_WIN_DIRECT_MANIPULATION_H_
 #define UI_GFX_WIN_DIRECT_MANIPULATION_H_
 
+#include <Windows.h>
+
 #include <directmanipulation.h>
-#include <wrl/client.h>
+#include <wrl.h>
 
 #include <memory>
 
@@ -16,6 +18,35 @@
 
 namespace gfx {
 namespace win {
+
+class GFX_EXPORT DirectManipulationHelper;
+
+class DirectManipulationHandler
+    : public Microsoft::WRL::RuntimeClass<
+          Microsoft::WRL::RuntimeClassFlags<
+              Microsoft::WRL::RuntimeClassType::ClassicCom>,
+          Microsoft::WRL::Implements<
+              Microsoft::WRL::RuntimeClassFlags<
+                  Microsoft::WRL::RuntimeClassType::ClassicCom>,
+              Microsoft::WRL::FtmBase,
+              IDirectManipulationViewportEventHandler>> {
+ public:
+  HRESULT STDMETHODCALLTYPE
+  OnViewportStatusChanged(_In_ IDirectManipulationViewport* viewport,
+                          _In_ DIRECTMANIPULATION_STATUS current,
+                          _In_ DIRECTMANIPULATION_STATUS previous) override;
+
+  HRESULT STDMETHODCALLTYPE
+  OnViewportUpdated(_In_ IDirectManipulationViewport* viewport) override;
+
+  HRESULT STDMETHODCALLTYPE
+  OnContentUpdated(_In_ IDirectManipulationViewport* viewport,
+                   _In_ IDirectManipulationContent* content) override;
+  void SetDirectManipulationHelper(DirectManipulationHelper* helper);
+
+ private:
+  DirectManipulationHelper* helper_;
+};
 
 // Windows 10 provides a new API called Direct Manipulation which generates
 // smooth scroll events via WM_MOUSEWHEEL messages with predictable deltas
@@ -61,21 +92,27 @@ class GFX_EXPORT DirectManipulationHelper {
   // Deactivates Direct Manipulation processing on the passed in |window|.
   void Deactivate(HWND window);
 
-  // Passes the WM_MOUSEWHEEL messages to Direct Manipulation. This is for
-  // logistics purposes.
-  void HandleMouseWheel(HWND window, UINT message, WPARAM w_param,
-      LPARAM l_param);
+  void ResetViewport();
+
+  void OnPointerHitTest(WPARAM w_param);
+
+  void OnTimer(WPARAM w_param);
 
   ~DirectManipulationHelper();
 
  private:
   DirectManipulationHelper();
 
+  static DirectManipulationHelper instance_;
+
   Microsoft::WRL::ComPtr<IDirectManipulationManager2> manager_;
-  Microsoft::WRL::ComPtr<IDirectManipulationCompositor> compositor_;
   Microsoft::WRL::ComPtr<IDirectManipulationUpdateManager> update_manager_;
-  Microsoft::WRL::ComPtr<IDirectManipulationFrameInfoProvider> frame_info_;
   Microsoft::WRL::ComPtr<IDirectManipulationViewport2> view_port_outer_;
+  Microsoft::WRL::ComPtr<DirectManipulationHandler> event_handler_;
+  UINT_PTR render_timer_;
+  DWORD view_port_handler_cookie_;
+
+  RECT const default_rect_ = {0, 0, 100, 100};
 
   DISALLOW_COPY_AND_ASSIGN(DirectManipulationHelper);
 };

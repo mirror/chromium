@@ -98,6 +98,8 @@ class CONTENT_EXPORT LegacyRenderWidgetHostHWND
     MESSAGE_HANDLER_EX(WM_NCCALCSIZE, OnNCCalcSize)
     MESSAGE_HANDLER_EX(WM_SIZE, OnSize)
     MESSAGE_HANDLER_EX(WM_WINDOWPOSCHANGED, OnWindowPosChanged)
+    MESSAGE_HANDLER_EX(WM_TIMER, OnTimer)
+    MESSAGE_HANDLER_EX(DM_POINTERHITTEST, OnPointerHitTest)
   END_MSG_MAP()
 
   HWND hwnd() { return m_hWnd; }
@@ -156,6 +158,9 @@ class CONTENT_EXPORT LegacyRenderWidgetHostHWND
   LRESULT OnNCCalcSize(UINT message, WPARAM w_param, LPARAM l_param);
   LRESULT OnSize(UINT message, WPARAM w_param, LPARAM l_param);
   LRESULT OnWindowPosChanged(UINT message, WPARAM w_param, LPARAM l_param);
+
+  LRESULT OnTimer(UINT message, WPARAM w_param, LPARAM l_param);
+  LRESULT OnPointerHitTest(UINT message, WPARAM w_param, LPARAM l_param);
 
   Microsoft::WRL::ComPtr<IAccessible> window_accessible_;
 
