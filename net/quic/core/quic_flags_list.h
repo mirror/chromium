@@ -192,3 +192,7 @@ QUIC_FLAG(bool,
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_remove_on_stream_frame_discarded,
           false)
+
+// Explicitly send a connection close if the TLP count is greater than 0 when
+// idle timeout occurs.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_explicit_close_after_tlp, false)
