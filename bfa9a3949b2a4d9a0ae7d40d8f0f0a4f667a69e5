@@ -87,6 +87,24 @@
       "revId": "bfa9a3949b2a4d9a0ae7d40d8f0f0a4f667a69e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41beaf4d_453eb3ac",
+        "filename": "third_party/WebKit/public/platform/ScopedVirtualTimePauser.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-02T15:20:47Z",
+      "side": 1,
+      "message": "Why is it hard to write code like:\n\n  frame-\u003eFrameScheduler()-\u003ePauseVirtualTime();\n  storage_area_-\u003eRemoveItem(...);\n  frame-\u003eFrameScheduler()-\u003eUnPauseVirtualTime();\n\n?\n\nI\u0027m not fully happy about the CL for two reasons:\n\na) It passes around ScopedPauseVirtualTimer in so many places.\nb) It exposes ScopedPauseVirtualTimer to Chromium (public APIs are not encouraged because we\u0027re working on onion soup). In particular, we moved Blink Scheduler to Blink. It\u0027s not a good idea to add a new public API for Blink Scheduler.\n\nRegarding b), the real problem is that //content/renderer/dom_storage is not yet onion-souped. So I\u0027m okay with b) for now but want to find a way to fix a).",
+      "parentUuid": "d8c6416c_7b30b786",
+      "revId": "bfa9a3949b2a4d9a0ae7d40d8f0f0a4f667a69e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
