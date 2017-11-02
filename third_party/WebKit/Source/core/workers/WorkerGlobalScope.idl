@@ -70,3 +70,4 @@
 
 WorkerGlobalScope implements WindowBase64;
 WorkerGlobalScope implements WindowTimers;
+[RuntimeEnabled=ExperimentalCanvasFeatures] WorkerGlobalScope implements FontFaceSource;
