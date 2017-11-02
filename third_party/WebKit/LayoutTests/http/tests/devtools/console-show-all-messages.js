@@ -14,6 +14,7 @@
     name: 'myIFrame'
   });
 
+  Console.ConsoleView.instance()._setMuteThrottlerForTest(true);
   var filterByExecutionContextSetting = Console.ConsoleView.instance()._filter._filterByExecutionContextSetting;
 
   //we can't use usual ConsoleTestRunner.dumpConsoleMessages(), because it dumps url of message and it flakes in case of iframe

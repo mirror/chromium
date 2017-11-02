@@ -281,6 +281,8 @@ ConsoleTestRunner.dumpConsoleMessagesWithStyles = function() {
  * @param {boolean=} sortMessages
  */
 ConsoleTestRunner.dumpConsoleMessagesWithClasses = function(sortMessages) {
+  if (Console.ConsoleView.instance()._needsFullUpdate)
+    Console.ConsoleView.instance()._updateMessageList();
   var result = [];
   var messageViews = Console.ConsoleView.instance()._visibleViewMessages;
   for (var i = 0; i < messageViews.length; ++i) {

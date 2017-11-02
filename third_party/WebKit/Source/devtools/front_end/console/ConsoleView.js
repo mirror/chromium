@@ -232,7 +232,8 @@ Console.ConsoleView = class extends UI.VBox {
   _onFilterChanged() {
     this._filter._currentFilter.levelsMask = this._isSidebarOpen ? Console.ConsoleFilter.allLevelsFilterValue() :
                                                                    this._filter._messageLevelFiltersSetting.get();
-    this._updateMessageList();
+    this._needsFullUpdate = true;
+    this._scheduleViewportRefresh();
   }
 
   /**
@@ -405,7 +406,17 @@ Console.ConsoleView = class extends UI.VBox {
     } else {
       this._scheduleViewportRefreshForTest(false);
     }
-    this._viewportThrottler.schedule(this._invalidateViewport.bind(this));
+    if (this._muteThrottlerForTest)
+      this._invalidateViewport();
+    else
+      this._viewportThrottler.schedule(this._invalidateViewport.bind(this));
+  }
+
+  /**
+   * @param {boolean} muted
+   */
+  _setMuteThrottlerForTest(muted) {
+    this._muteThrottlerForTest = muted;
   }
 
   /**
