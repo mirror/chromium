@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dd4a5ca_f960ca67",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_methods.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-02T21:54:00Z",
+      "side": 1,
+      "message": "Can you clarify what cases this resolves? It looks the same as the check already done by v8::FunctionCallbackInfo\u003cT\u003e::operator[]:\n\nhttps://chromium.googlesource.com/v8/v8/+/96b1fdb2/include/v8.h#9583",
+      "revId": "e72dcb1a77407d5f3a4cc00933ed8ba1836e4719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
