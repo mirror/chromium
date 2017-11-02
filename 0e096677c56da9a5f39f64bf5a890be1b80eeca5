@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "794002e8_e9dd3d5c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T01:02:21Z",
+      "side": 1,
+      "message": "The update routine would simplify a great deal if this becomes a \u0027model\u0027 for the contrast. I.e. it would extend the Common.Object and emit events upon changes. Someone sets color on the model, all views update in respond, curve becomes unbound from details and vice versa.",
+      "revId": "0e096677c56da9a5f39f64bf5a890be1b80eeca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0318b0b_cce01a38",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T01:02:21Z",
+      "side": 1,
+      "message": "I don\u0027t think we should show anything with the new model, the code could be simplified a great deal.",
+      "revId": "0e096677c56da9a5f39f64bf5a890be1b80eeca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a845f5_2d657d23",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T01:02:21Z",
+      "side": 1,
+      "message": "These should be independent, bound to the model. Details should only render the details based on the model.",
+      "revId": "0e096677c56da9a5f39f64bf5a890be1b80eeca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5362a59e_bb57a9ee",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-02T01:02:21Z",
+      "side": 1,
+      "message": "This should now be a root element in the ContrastDetails instead of passing it there. Think of ContrastDetails as a web component with all inner details under shadow dom.",
+      "revId": "0e096677c56da9a5f39f64bf5a890be1b80eeca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
