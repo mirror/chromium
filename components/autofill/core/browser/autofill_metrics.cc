@@ -382,8 +382,13 @@ void LogPredictionQualityMetrics(
   // purposes, but remember whether or not it was empty for more precise logging
   // later.
   bool is_empty = (actual_type == EMPTY_TYPE);
+  if (is_empty && field.only_fill_when_focused())
+    actual_type = predicted_type;
+  else if (is_empty)
+    actual_type = UNKNOWN_TYPE;
+
   bool is_ambiguous = (actual_type == AMBIGUOUS_TYPE);
-  if (is_empty || is_ambiguous)
+  if (is_ambiguous)
     actual_type = UNKNOWN_TYPE;
 
   // If the predicted and actual types match then it's either a true positive
