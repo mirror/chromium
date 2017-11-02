@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "13093826_cb801ffc",
+        "filename": "ios/chrome/browser/payments/payment_request_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-02T18:23:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "633cf6ba_f66f0f4d",
+      "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5428fb1d_54a90242",
         "filename": "ios/chrome/browser/payments/payment_request_util_unittest.mm",
         "patchSetId": 3
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Seems like PaymentRequestUnitTestBase doesn\u0027t declare SetUp/TearDown as virtual, which is strange. Maybe that should be fixed?\n\nIt shouldn\u0027t be necessary to write a method out if all it does is call a method with the same name on a parent class, but multiple inheritance is strange... :)",
       "parentUuid": "409ed8c1_4b19f41d",
+      "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec532257_b05fedc3",
+        "filename": "ios/chrome/browser/payments/payment_request_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-11-02T18:23:52Z",
+      "side": 1,
+      "message": "It\u0027s not just the platform tests that use PaymentRequestUnitTestBase as the base class. So it can\u0027t inherit from the PlatformTest or declare SetUp/TearDown as virtual methods. Hence we need to explicitly call those methods from SetUp/TearDown of every test that inherits from that class.",
+      "parentUuid": "21078550_0c0455d2",
       "revId": "7686cb9e6e2ef68c6b471a160d35e142ff5134f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
