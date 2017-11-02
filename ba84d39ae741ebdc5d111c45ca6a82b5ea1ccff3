@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdd8e523_3533b9c2",
+        "filename": "chrome/browser/resources/print_preview/new/header.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-02T23:53:41Z",
+      "side": 1,
+      "message": "-webkit-box predates display: flex, and has been obsoleted, see https://developer.mozilla.org/en-US/docs/Web/CSS/box-flex. Can we tweak this to use display: flex instead?",
+      "revId": "ba84d39ae741ebdc5d111c45ca6a82b5ea1ccff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47418c4_de8c2250",
+        "filename": "chrome/browser/resources/print_preview/new/header.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-02T23:53:41Z",
+      "side": 1,
+      "message": "Note: you can use CSS variables to avoid repeating the same literals.\n\n#button-strip button.print:enabled {\n  --bg-color: rgb(77, 144, 254);\n  ...re-use within this block as var(--bg-color)...\n}",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 43
+      },
+      "revId": "ba84d39ae741ebdc5d111c45ca6a82b5ea1ccff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc402ce_d187d915",
+        "filename": "chrome/browser/resources/print_preview/new/header.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-02T23:53:41Z",
+      "side": 1,
+      "message": "Let\u0027s add a binding for this, and hardcode the \"1\" in the JS for now (that get\u0027s us closer to the final result I think).\n\n\u003cspan class\u003d\"summary\"\u003eTotal: \u003cb\u003e[[pageCount_]] page\u003c/b\u003e\u003c/span\u003e\n\nIn the JS\nproperties: {\n  pageCount_: {\n    type: Number,\n    value: 1,\n  },\n},",
+      "revId": "ba84d39ae741ebdc5d111c45ca6a82b5ea1ccff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8810b448_82a8eaa8",
+        "filename": "chrome/browser/resources/print_preview/new/print_preview_shared_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-02T23:53:41Z",
+      "side": 1,
+      "message": ".custom-appearance is not used anywhere in print preview (I think). Can we simplify this as follows?\n\ninput[type\u003d\u0027button\u0027],\ninput[type\u003d\u0027submit\u0027],\nselect,\n... {\n...\n}\n\nIs there a good reason to keeping it? Same question below.",
+      "revId": "ba84d39ae741ebdc5d111c45ca6a82b5ea1ccff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4fb3e3_7f330a00",
+        "filename": "chrome/browser/resources/print_preview/new/print_preview_shared_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-02T23:53:41Z",
+      "side": 1,
+      "message": "I don\u0027t think the -webkit prefix is needed anymore for Chrome (here and elsewhere in this file).",
+      "revId": "ba84d39ae741ebdc5d111c45ca6a82b5ea1ccff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc624e6_d5bd0699",
+        "filename": "chrome/browser/resources/print_preview/new/print_preview_shared_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-02T23:53:41Z",
+      "side": 1,
+      "message": "Let\u0027s remove this TODO.",
+      "revId": "ba84d39ae741ebdc5d111c45ca6a82b5ea1ccff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb5db17_8aa0f701",
+        "filename": "chrome/browser/resources/print_preview/print_preview_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-02T23:53:41Z",
+      "side": 1,
+      "message": "Since this file includes \u003cif expr\u003e tags, I think you need to add preprocess\u003dtrue, otherwise it will have invalid syntax (will not be processed). Is that not the case? See example https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_resources.grd?l\u003d270.",
+      "revId": "ba84d39ae741ebdc5d111c45ca6a82b5ea1ccff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
