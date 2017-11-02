@@ -22,6 +22,30 @@
       "revId": "3d039e15fbb97442c125db1c64a726879819cfeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863daa62_5672e124",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-02T22:38:19Z",
+      "side": 1,
+      "message": "Ok, as discussed I confused with full device discovery complete.\n\nLet\u0027s add a test line to \n  device/bluetooth/bluetooth_remote_gatt_service_unittest.cc\n    GetCharacteristics_and_GetCharacteristic\nthat expects that the observer sees\n  GattDiscoveryCompleteForService(this, service);",
+      "parentUuid": "31412a09_91f8833d",
+      "range": {
+        "startLine": 175,
+        "startChar": 6,
+        "endLine": 175,
+        "endChar": 41
+      },
+      "revId": "3d039e15fbb97442c125db1c64a726879819cfeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
