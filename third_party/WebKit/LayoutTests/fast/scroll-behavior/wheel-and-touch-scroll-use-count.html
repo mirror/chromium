@@ -18,7 +18,7 @@
     overflow: scroll;
   }
   #content {
-    height: 700px;
+    height: 2000px;
     width: 700px;
   }
  
@@ -77,7 +77,7 @@ var SCROLL_BY_TOUCH_COUNTER = 1847; // from enum Feature in UseCounter.h
 var SCROLL_BY_WHEEL_COUNTER = 1848; // from enum Feature in UseCounter.h
 
 promise_test(t => {
-  return scrollDown(50, start_x, start_y , WHEEL_SOURCE_TYPE, 4000)
+  return scrollDown(200, start_x, start_y , WHEEL_SOURCE_TYPE, 4000)
   .then(waitForScrollEnd)
   .then(() => {
     assert_true(internals.isUseCounted(document, SCROLL_BY_WHEEL_COUNTER));
@@ -87,7 +87,7 @@ promise_test(t => {
 const IS_MAC = navigator.platform.indexOf('Mac') == 0;
 if (!IS_MAC) {
   promise_test(t => {
-    return scrollDown(50, start_x, start_y , TOUCH_SOURCE_TYPE, 4000)
+    return scrollDown(200, start_x, start_y , TOUCH_SOURCE_TYPE, 4000)
     .then(waitForScrollEnd)
     .then(() => {
       assert_true(internals.isUseCounted(document, SCROLL_BY_TOUCH_COUNTER));
