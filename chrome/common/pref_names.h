@@ -839,9 +839,6 @@ extern const char kSearchGeolocationPostDisclosureMetricsRecorded[];
 
 extern const char kDSEGeolocationSetting[];
 
-// Deprecated Google-specific version of the above.
-extern const char kGoogleDSEGeolocationSettingDeprecated[];
-
 extern const char kWebShareVisitedTargets[];
 
 #if defined(OS_WIN)
