@@ -7,11 +7,14 @@
 #include "base/containers/span.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/stringprintf.h"
+#include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/v8_value_converter.h"
 #include "extensions/common/api/messaging/message.h"
+#include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest.h"
 #include "extensions/renderer/bindings/api_signature.h"
+#include "extensions/renderer/extension_frame_helper.h"
 #include "extensions/renderer/message_target.h"
 #include "extensions/renderer/messaging_util.h"
 #include "extensions/renderer/native_renderer_messaging_service.h"
@@ -19,6 +22,7 @@
 #include "extensions/renderer/script_context_set.h"
 #include "gin/converter.h"
 #include "gin/dictionary.h"
+#include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 namespace extensions {
 
@@ -49,68 +53,6 @@ bool GetTarget(ScriptContext* script_context,
   }
 
   return true;
-}
-
-// The result of trying to parse options passed to a messaging API.
-enum ParseOptionsResult {
-  TYPE_ERROR,  // Invalid values were passed.
-  THROWN,      // An error was thrown while parsing.
-  SUCCESS,     // Parsing succeeded.
-};
-
-struct MessageOptions {
-  std::string channel_name;
-  bool include_tls_channel_id = false;
-};
-
-// Parses the parameters sent to sendMessage or connect, returning the result of
-// the attempted parse. If |check_for_channel_name| is true, also checks for a
-// provided channel name (this is only true for connect() calls). Populates the
-// result in |options_out| or |error_out| (depending on the success of the
-// parse).
-ParseOptionsResult ParseMessageOptions(v8::Local<v8::Context> context,
-                                       v8::Local<v8::Object> v8_options,
-                                       bool check_for_channel_name,
-                                       MessageOptions* options_out,
-                                       std::string* error_out) {
-  DCHECK(!v8_options.IsEmpty());
-  DCHECK(!v8_options->IsNull());
-
-  v8::Isolate* isolate = context->GetIsolate();
-
-  MessageOptions options;
-
-  // Theoretically, our argument matching code already checked the types of
-  // the properties on v8_connect_options. However, since we don't make an
-  // independent copy, it's possible that author script has super sneaky
-  // getters/setters that change the result each time the property is
-  // queried. Make no assumptions.
-  v8::Local<v8::Value> v8_channel_name;
-  v8::Local<v8::Value> v8_include_tls_channel_id;
-  gin::Dictionary options_dict(isolate, v8_options);
-  if (!options_dict.Get("includeTlsChannelId", &v8_include_tls_channel_id) ||
-      (check_for_channel_name && !options_dict.Get("name", &v8_channel_name))) {
-    return THROWN;
-  }
-
-  if (check_for_channel_name && !v8_channel_name->IsUndefined()) {
-    if (!v8_channel_name->IsString()) {
-      *error_out = "connectInfo.name must be a string.";
-      return TYPE_ERROR;
-    }
-    options.channel_name = gin::V8ToString(v8_channel_name);
-  }
-
-  if (!v8_include_tls_channel_id->IsUndefined()) {
-    if (!v8_include_tls_channel_id->IsBoolean()) {
-      *error_out = "connectInfo.includeTlsChannelId must be a boolean.";
-      return TYPE_ERROR;
-    }
-    options.include_tls_channel_id = v8_include_tls_channel_id->BooleanValue();
-  }
-
-  *options_out = std::move(options);
-  return SUCCESS;
 }
 
 // Massages the sendMessage() arguments into the expected schema. These
@@ -200,13 +142,12 @@ constexpr char kConnectNative[] = "runtime.connectNative";
 constexpr char kSendMessage[] = "runtime.sendMessage";
 constexpr char kSendNativeMessage[] = "runtime.sendNativeMessage";
 
-constexpr char kSendMessageChannel[] = "chrome.runtime.sendMessage";
-
 }  // namespace
 
 RuntimeHooksDelegate::RuntimeHooksDelegate(
-    NativeRendererMessagingService* messaging_service)
-    : messaging_service_(messaging_service) {}
+    NativeRendererMessagingService* messaging_service,
+    const binding::RunJSFunctionSync& run_js_sync)
+    : messaging_service_(messaging_service), run_js_sync_(run_js_sync) {}
 RuntimeHooksDelegate::~RuntimeHooksDelegate() {}
 
 RequestResult RuntimeHooksDelegate::HandleRequest(
@@ -312,20 +253,22 @@ RequestResult RuntimeHooksDelegate::HandleSendMessage(
   }
 
   v8::Local<v8::Context> v8_context = script_context->v8_context();
-  MessageOptions options;
+  messaging_util::MessageOptions options;
   if (!arguments[2]->IsNull()) {
     std::string error;
-    ParseOptionsResult parse_result = ParseMessageOptions(
-        v8_context, arguments[2].As<v8::Object>(), false, &options, &error);
+    messaging_util::ParseOptionsResult parse_result =
+        messaging_util::ParseMessageOptions(
+            v8_context, arguments[2].As<v8::Object>(),
+            messaging_util::CHECK_INCLUDE_TLS_CHANNEL_ID, &options, &error);
     switch (parse_result) {
-      case TYPE_ERROR: {
+      case messaging_util::TYPE_ERROR: {
         RequestResult result(RequestResult::INVALID_INVOCATION);
         result.error = std::move(error);
         return result;
       }
-      case THROWN:
+      case messaging_util::THROWN:
         return RequestResult(RequestResult::THROWN);
-      case SUCCESS:
+      case messaging_util::SUCCESS:
         break;
     }
   }
@@ -345,8 +288,8 @@ RequestResult RuntimeHooksDelegate::HandleSendMessage(
 
   messaging_service_->SendOneTimeMessage(
       script_context, MessageTarget::ForExtension(target_id),
-      kSendMessageChannel, options.include_tls_channel_id, *message,
-      response_callback);
+      messaging_util::kSendMessageChannel, options.include_tls_channel_id,
+      *message, response_callback);
 
   return RequestResult(RequestResult::HANDLED);
 }
@@ -384,33 +327,42 @@ RequestResult RuntimeHooksDelegate::HandleConnect(
     ScriptContext* script_context,
     const std::vector<v8::Local<v8::Value>>& arguments) {
   DCHECK_EQ(2u, arguments.size());
+  LOG(WARNING) << "Handling connect";
 
   std::string target_id;
   if (!GetTarget(script_context, arguments[0], &target_id)) {
     RequestResult result(RequestResult::INVALID_INVOCATION);
+    LOG(WARNING) << "Invalid";
     result.error =
         base::StringPrintf(kExtensionIdRequiredErrorTemplate, "connect");
     return result;
   }
 
-  MessageOptions options;
+  messaging_util::MessageOptions options;
   if (!arguments[1]->IsNull()) {
+    LOG(WARNING) << "Parsing";
     std::string error;
-    ParseOptionsResult parse_result = ParseMessageOptions(
-        script_context->v8_context(), arguments[1].As<v8::Object>(), true,
-        &options, &error);
+    messaging_util::ParseOptionsResult parse_result =
+        messaging_util::ParseMessageOptions(
+            script_context->v8_context(), arguments[1].As<v8::Object>(),
+            messaging_util::CHECK_INCLUDE_TLS_CHANNEL_ID |
+                messaging_util::CHECK_CHANNEL_NAME,
+            &options, &error);
     switch (parse_result) {
-      case TYPE_ERROR: {
+      case messaging_util::TYPE_ERROR: {
         RequestResult result(RequestResult::INVALID_INVOCATION);
         result.error = std::move(error);
         return result;
       }
-      case THROWN:
+      case messaging_util::THROWN:
+        LOG(WARNING) << "Thrown";
         return RequestResult(RequestResult::THROWN);
-      case SUCCESS:
+      case messaging_util::SUCCESS:
         break;
     }
   }
+
+  LOG(WARNING) << "Parsed";
 
   gin::Handle<GinPort> port = messaging_service_->Connect(
       script_context, MessageTarget::ForExtension(target_id),
@@ -435,6 +387,64 @@ RequestResult RuntimeHooksDelegate::HandleConnectNative(
 
   RequestResult result(RequestResult::HANDLED);
   result.return_value = port.ToV8();
+  return result;
+}
+
+RequestResult RuntimeHooksDelegate::HandleGetBackgroundPage(
+    ScriptContext* script_context,
+    const std::vector<v8::Local<v8::Value>>& arguments) {
+  const Extension* extension = script_context->extension();
+  DCHECK(extension);
+
+  RequestResult result(RequestResult::HANDLED);
+  result.return_value =
+      ExtensionFrameHelper::GetV8BackgroundPageMainFrame(
+          script_context->isolate(), extension->id());
+  return result;
+}
+
+RequestResult RuntimeHooksDelegate::HandleGetPackageDirectoryEntryCallback(
+    ScriptContext* script_context,
+    const std::vector<v8::Local<v8::Value>>& arguments) {
+  v8::Isolate* isolate = script_context->isolate();
+  v8::Local<v8::Context> v8_context = script_context->v8_context();
+
+  ModuleSystem::NativesEnabledScope enable_natives(
+      script_context->module_system());
+
+  v8::Local<v8::Object> file_entry_binding_util;
+  if (!script_context->module_system()
+           ->Require("fileEntryBindingUtil")
+           .ToLocal(&file_entry_binding_util)) {
+    NOTREACHED();
+    // Abort, and consider the request handled.
+    return RequestResult(RequestResult::HANDLED);
+  }
+
+  v8::Local<v8::Value> get_bind_directory_entry_callback;
+  if (!file_entry_binding_util
+           ->Get(v8_context,
+                 gin::StringToSymbol(isolate, "getBindDirectoryEntryCallback"))
+           .ToLocal(&get_bind_directory_entry_callback) ||
+      !get_bind_directory_entry_callback->IsFunction()) {
+    NOTREACHED();
+    // Abort, and consider the request handled.
+    return RequestResult(RequestResult::HANDLED);
+  }
+
+  v8::Global<v8::Value> script_result =
+      run_js_sync_.Run(get_bind_directory_entry_callback.As<v8::Function>(),
+                       v8_context, 0, nullptr);
+  v8::Local<v8::Value> callback;
+  if (script_result.IsEmpty() ||
+      !(callback = script_result.Get(isolate))->IsFunction()) {
+    NOTREACHED();
+    // Abort, and consider the request handled.
+    return RequestResult(RequestResult::HANDLED);
+  }
+
+  RequestResult result(RequestResult::NOT_HANDLED);
+  result.custom_callback = callback.As<v8::Function>();
   return result;
 }
 

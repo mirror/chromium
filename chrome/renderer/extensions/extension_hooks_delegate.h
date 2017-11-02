@@ -2,26 +2,25 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_RENDERER_EXTENSIONS_RUNTIME_HOOKS_DELEGATE_H_
-#define CHROME_RENDERER_EXTENSIONS_RUNTIME_HOOKS_DELEGATE_H_
+#ifndef CHROME_RENDERER_EXTENSIONS_TABS_HOOKS_DELEGATE_H_
+#define CHROME_RENDERER_EXTENSIONS_TABS_HOOKS_DELEGATE_H_
 
 #include <vector>
 
 #include "base/macros.h"
 #include "extensions/renderer/bindings/api_binding_hooks_delegate.h"
-#include "extensions/renderer/bindings/api_binding_types.h"
 #include "v8/include/v8.h"
 
 namespace extensions {
 class NativeRendererMessagingService;
 class ScriptContext;
 
-// The custom hooks for the runtime API.
-class RuntimeHooksDelegate : public APIBindingHooksDelegate {
+// The custom hooks for the tabs API.
+class ExtensionHooksDelegate : public APIBindingHooksDelegate {
  public:
-  RuntimeHooksDelegate(NativeRendererMessagingService* messaging_service,
-                       const binding::RunJSFunctionSync& run_js_sync);
-  ~RuntimeHooksDelegate() override;
+  explicit ExtensionHooksDelegate(
+      NativeRendererMessagingService* messaging_service);
+  ~ExtensionHooksDelegate() override;
 
   // APIBindingHooksDelegate:
   APIBindingHooks::RequestResult HandleRequest(
@@ -36,28 +35,16 @@ class RuntimeHooksDelegate : public APIBindingHooksDelegate {
 
  private:
   // Request handlers for the corresponding API methods.
-  APIBindingHooks::RequestResult HandleGetManifest(
-      ScriptContext* script_context,
-      const std::vector<v8::Local<v8::Value>>& parsed_arguments);
-  APIBindingHooks::RequestResult HandleGetURL(
+  APIBindingHooks::RequestResult HandleSendRequest(
       ScriptContext* script_context,
       const std::vector<v8::Local<v8::Value>>& arguments);
-  APIBindingHooks::RequestResult HandleSendMessage(
+  APIBindingHooks::RequestResult HandleGetViews(
       ScriptContext* script_context,
       const std::vector<v8::Local<v8::Value>>& arguments);
-  APIBindingHooks::RequestResult HandleSendNativeMessage(
-      ScriptContext* script_context,
-      const std::vector<v8::Local<v8::Value>>& arguments);
-  APIBindingHooks::RequestResult HandleConnect(
-      ScriptContext* script_context,
-      const std::vector<v8::Local<v8::Value>>& arguments);
-  APIBindingHooks::RequestResult HandleConnectNative(
+  APIBindingHooks::RequestResult HandleGetExtensionTabs(
       ScriptContext* script_context,
       const std::vector<v8::Local<v8::Value>>& arguments);
   APIBindingHooks::RequestResult HandleGetBackgroundPage(
-      ScriptContext* script_context,
-      const std::vector<v8::Local<v8::Value>>& arguments);
-  APIBindingHooks::RequestResult HandleGetPackageDirectoryEntryCallback(
       ScriptContext* script_context,
       const std::vector<v8::Local<v8::Value>>& arguments);
 
@@ -65,11 +52,9 @@ class RuntimeHooksDelegate : public APIBindingHooksDelegate {
   // Guaranteed to outlive this object.
   NativeRendererMessagingService* const messaging_service_;
 
-  binding::RunJSFunctionSync run_js_sync_;
-
-  DISALLOW_COPY_AND_ASSIGN(RuntimeHooksDelegate);
+  DISALLOW_COPY_AND_ASSIGN(ExtensionHooksDelegate);
 };
 
 }  // namespace extensions
 
-#endif  // CHROME_RENDERER_EXTENSIONS_RUNTIME_HOOKS_DELEGATE_H_
+#endif  // CHROME_RENDERER_EXTENSIONS_TABS_HOOKS_DELEGATE_H_
