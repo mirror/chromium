@@ -13,6 +13,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "components/subresource_filter/content/browser/subresource_filter_safe_browsing_client.h"
+#include "components/subresource_filter/core/common/time_measurements.h"
 #include "content/public/browser/browser_thread.h"
 #include "url/gurl.h"
 
@@ -57,6 +58,8 @@ void SubresourceFilterSafeBrowsingClientRequest::Start(const GURL& url) {
       FROM_HERE, kCheckURLTimeout,
       base::Bind(&SubresourceFilterSafeBrowsingClientRequest::OnCheckUrlTimeout,
                  base::Unretained(this)));
+  UMA_HISTOGRAM_MICRO_TIMES("SubresourceFilter.SafeBrowsing.CheckDispatchTime",
+                            base::TimeTicks::Now() - start_time_);
 }
 
 void SubresourceFilterSafeBrowsingClientRequest::OnCheckBrowseUrlResult(
