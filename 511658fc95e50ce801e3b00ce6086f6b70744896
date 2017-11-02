@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c41cc4d1_a7df0672",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappTabDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-02T18:04:08Z",
+      "side": 1,
+      "message": "Most WebAPK opens CCT through |WebappInterceptNavigationDelegate|, but Twitter opens CCT through WebappTabDelegate#WebappTabDelegate.",
+      "range": {
+        "startLine": 41,
+        "startChar": 16,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "511658fc95e50ce801e3b00ce6086f6b70744896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
