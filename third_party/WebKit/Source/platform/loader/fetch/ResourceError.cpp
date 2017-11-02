@@ -42,7 +42,7 @@ constexpr char kThrottledErrorDescription[] =
 }  // namespace
 
 ResourceError ResourceError::CancelledError(const KURL& url) {
-  return WebURLError(url, false, net::ERR_ABORTED);
+  return WebURLError(url, false, net::ERR_ABORTED, base::nullopt);
 }
 
 ResourceError ResourceError::CancelledDueToAccessCheckError(
@@ -65,14 +65,18 @@ ResourceError ResourceError::CancelledDueToAccessCheckError(
 }
 
 ResourceError ResourceError::CacheMissError(const KURL& url) {
-  return ResourceError(Domain::kNet, net::ERR_CACHE_MISS, url);
+  return ResourceError(Domain::kNet, net::ERR_CACHE_MISS, base::nullopt, url);
 }
 
 ResourceError ResourceError::TimeoutError(const KURL& url) {
-  return ResourceError(Domain::kNet, net::ERR_TIMED_OUT, url);
+  return ResourceError(Domain::kNet, net::ERR_TIMED_OUT, base::nullopt, url);
 }
 
-ResourceError::ResourceError(Domain domain, int error_code, const KURL& url)
+ResourceError::ResourceError(
+    Domain domain,
+    int error_code,
+    base::Optional<network::mojom::CORSError> cors_error,
+    const KURL& url)
     : domain_(domain), error_code_(error_code), failing_url_(url) {
   DCHECK_NE(domain, Domain::kEmpty);
 
@@ -90,6 +94,7 @@ ResourceError ResourceError::Copy() const {
   ResourceError error_copy;
   error_copy.domain_ = domain_;
   error_copy.error_code_ = error_code_;
+  error_copy.cors_error_ = cors_error_;
   error_copy.failing_url_ = failing_url_.Copy();
   error_copy.localized_description_ = localized_description_.IsolatedCopy();
   error_copy.is_access_check_ = is_access_check_;
@@ -104,6 +109,9 @@ bool ResourceError::Compare(const ResourceError& a, const ResourceError& b) {
     return false;
 
   if (a.ErrorCode() != b.ErrorCode())
+    return false;
+
+  if (a.CORSError() != b.CORSError())
     return false;
 
   if (a.FailingURL() != b.FailingURL())

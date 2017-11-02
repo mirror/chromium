@@ -76,13 +76,17 @@ class MockRequestPeer : public content::RequestPeer {
   }
   MOCK_METHOD2(OnReceivedDataInternal, void(const char* data, int data_length));
   MOCK_METHOD1(OnTransferSizeUpdated, void(int transfer_size_diff));
-  MOCK_METHOD6(OnCompletedRequest,
+  MOCK_METHOD9(OnCompletedRequest,
                void(int error_code,
                     bool stale_copy_in_cache,
                     const base::TimeTicks& completion_time,
                     int64_t total_transfer_size,
                     int64_t encoded_body_size,
-                    int64_t decoded_body_size));
+                    int64_t decoded_body_size,
+                    int status_code,
+                    scoped_refptr<const net::HttpResponseHeaders>
+                        error_related_response_headers,
+                    base::Optional<network::mojom::CORSError> cors_error));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockRequestPeer);
@@ -150,12 +154,15 @@ MATCHER_P(IsURLRequestEqual, status, "") { return arg.status() == status; }
 TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestBadURLRequestStatus) {
   SetUpExtensionLocalizationPeer("text/css", GURL(kExtensionUrl_1));
 
+  scoped_refptr<const net::HttpResponseHeaders> null_headers;
+  base::Optional<network::mojom::CORSError> null_cors_error;
   EXPECT_CALL(*original_peer_, OnReceivedResponse(_));
-  EXPECT_CALL(*original_peer_, OnCompletedRequest(net::ERR_ABORTED, false,
-                                                  base::TimeTicks(), -1, 0, 0));
+  EXPECT_CALL(*original_peer_,
+              OnCompletedRequest(net::ERR_ABORTED, false, base::TimeTicks(), -1,
+                                 0, 0, 0, null_headers, null_cors_error));
 
   filter_peer_->OnCompletedRequest(net::ERR_FAILED, false, base::TimeTicks(),
-                                   -1, 0, 0);
+                                   -1, 0, 0, 0, nullptr, base::nullopt);
 }
 
 TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestEmptyData) {
@@ -164,11 +171,15 @@ TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestEmptyData) {
   EXPECT_CALL(*original_peer_, OnReceivedDataInternal(_, _)).Times(0);
   EXPECT_CALL(*sender_, Send(_)).Times(0);
 
+  scoped_refptr<const net::HttpResponseHeaders> null_headers;
+  base::Optional<network::mojom::CORSError> null_cors_error;
   EXPECT_CALL(*original_peer_, OnReceivedResponse(_));
   EXPECT_CALL(*original_peer_,
-              OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, 0, 0));
+              OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, 0, 0, 0,
+                                 null_headers, null_cors_error));
 
-  filter_peer_->OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, 0, 0);
+  filter_peer_->OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, 0, 0,
+                                   0, nullptr, base::nullopt);
 }
 
 TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestNoCatalogs) {
@@ -179,16 +190,19 @@ TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestNoCatalogs) {
   EXPECT_CALL(*sender_, Send(_));
 
   std::string data = GetData();
+  scoped_refptr<const net::HttpResponseHeaders> null_headers;
+  base::Optional<network::mojom::CORSError> null_cors_error;
   EXPECT_CALL(*original_peer_, OnReceivedResponse(_)).Times(1);
   EXPECT_CALL(*original_peer_,
               OnReceivedDataInternal(StrEq(data.c_str()), data.length()))
       .Times(1);
   EXPECT_CALL(*original_peer_,
-              OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, -1, -1))
+              OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, -1, -1,
+                                 0, null_headers, null_cors_error))
       .Times(1);
 
   filter_peer_->OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, -1,
-                                   -1);
+                                   -1, 0, nullptr, base::nullopt);
 
   // Test if Send gets called again (it shouldn't be) when first call returned
   // an empty dictionary.
@@ -198,11 +212,12 @@ TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestNoCatalogs) {
               OnReceivedDataInternal(StrEq(data.c_str()), data.length()))
       .Times(1);
   EXPECT_CALL(*original_peer_,
-              OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, -1, -1))
+              OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, -1, -1,
+                                 0, null_headers, null_cors_error))
       .Times(1);
   SetData("some text");
   filter_peer_->OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, -1,
-                                   -1);
+                                   -1, 0, nullptr, base::nullopt);
 }
 
 TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestWithCatalogs) {
@@ -225,12 +240,14 @@ TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestWithCatalogs) {
   EXPECT_CALL(*original_peer_,
               OnReceivedDataInternal(StrEq(data.c_str()), data.length()));
 
-  EXPECT_CALL(
-      *original_peer_,
-      OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, -1, -1));
+  scoped_refptr<const net::HttpResponseHeaders> null_headers;
+  base::Optional<network::mojom::CORSError> null_cors_error;
+  EXPECT_CALL(*original_peer_,
+              OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, -1, -1,
+                                 0, null_headers, null_cors_error));
 
   filter_peer_->OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, -1,
-                                   -1);
+                                   -1, 0, nullptr, base::nullopt);
 }
 
 TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestReplaceMessagesFails) {
@@ -253,8 +270,12 @@ TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestReplaceMessagesFails) {
   EXPECT_CALL(*original_peer_,
               OnReceivedDataInternal(StrEq(message.c_str()), message.length()));
 
+  scoped_refptr<const net::HttpResponseHeaders> null_headers;
+  base::Optional<network::mojom::CORSError> null_cors_error;
   EXPECT_CALL(*original_peer_,
-              OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, 0, 0));
+              OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, 0, 0, 0,
+                                 null_headers, null_cors_error));
 
-  filter_peer_->OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, 0, 0);
+  filter_peer_->OnCompletedRequest(net::OK, false, base::TimeTicks(), -1, 0, 0,
+                                   0, nullptr, base::nullopt);
 }

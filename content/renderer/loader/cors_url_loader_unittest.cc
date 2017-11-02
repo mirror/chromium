@@ -37,7 +37,8 @@ class TestURLLoaderFactory : public mojom::URLLoaderFactory {
 
   void NotifyClientOnComplete(int error_code) {
     DCHECK(client_ptr_);
-    client_ptr_->OnComplete(ResourceRequestCompletionStatus(error_code));
+    client_ptr_->OnComplete(
+        ResourceRequestCompletionStatus(error_code, 0 /* status_code */));
   }
 
   bool IsCreateLoaderAndStartCalled() { return !!client_ptr_; }

@@ -142,7 +142,11 @@ void ReplaceContentPeer::OnCompletedRequest(
     const base::TimeTicks& completion_time,
     int64_t total_transfer_size,
     int64_t encoded_body_size,
-    int64_t decoded_body_size) {
+    int64_t decoded_body_size,
+    int status_code,
+    scoped_refptr<const net::HttpResponseHeaders>
+        error_related_response_headers,
+    base::Optional<network::mojom::CORSError> cors_error) {
   content::ResourceResponseInfo info;
   ProcessResponseInfo(info, &info, mime_type_);
   info.content_length = static_cast<int>(data_.size());
@@ -151,7 +155,8 @@ void ReplaceContentPeer::OnCompletedRequest(
     original_peer_->OnReceivedData(base::MakeUnique<content::FixedReceivedData>(
         data_.data(), data_.size()));
   }
-  original_peer_->OnCompletedRequest(net::OK, stale_copy_in_cache,
-                                     completion_time, total_transfer_size,
-                                     encoded_body_size, decoded_body_size);
+  original_peer_->OnCompletedRequest(
+      net::OK, stale_copy_in_cache, completion_time, total_transfer_size,
+      encoded_body_size, decoded_body_size, status_code,
+      error_related_response_headers, cors_error);
 }

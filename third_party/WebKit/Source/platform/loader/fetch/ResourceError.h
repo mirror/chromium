@@ -33,8 +33,10 @@
 #include "platform/PlatformExport.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebURLError.h"
+#include "services/network/public/interfaces/cors.mojom-blink.h"
 
 namespace blink {
 
@@ -63,7 +65,17 @@ class PLATFORM_EXPORT ResourceError final {
   static ResourceError TimeoutError(const KURL&);
 
   ResourceError() = default;
-  ResourceError(Domain, int error_code, const KURL& failing_url);
+
+  ResourceError(Domain domain,
+                int error_code,
+                WTF::Optional<network::mojom::CORSError> cors_error,
+                const KURL& failing_url)
+      : domain_(domain),
+        error_code_(error_code),
+        cors_error_(cors_error),
+        failing_url_(failing_url) {
+    DCHECK_NE(domain, Domain::kEmpty);
+  }
 
   // Makes a deep copy. Useful for when you need to use a ResourceError on
   // another thread.
@@ -73,6 +85,9 @@ class PLATFORM_EXPORT ResourceError final {
 
   Domain GetDomain() const { return domain_; }
   int ErrorCode() const { return error_code_; }
+  WTF::Optional<network::mojom::CORSError> CORSError() const {
+    return cors_error_;
+  }
   const String& FailingURL() const { return failing_url_; }
   const String& LocalizedDescription() const { return localized_description_; }
 
@@ -104,6 +119,7 @@ class PLATFORM_EXPORT ResourceError final {
  private:
   Domain domain_ = Domain::kEmpty;
   int error_code_ = 0;
+  WTF::Optional<network::mojom::CORSError> cors_error_;
   KURL failing_url_;
   String localized_description_;
   bool is_access_check_ = false;

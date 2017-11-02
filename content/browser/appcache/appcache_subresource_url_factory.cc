@@ -75,8 +75,8 @@ class SubresourceLoader : public mojom::URLLoader,
 
   void Start() {
     if (!host_) {
-      remote_client_->OnComplete(
-          ResourceRequestCompletionStatus(net::ERR_FAILED));
+      remote_client_->OnComplete(ResourceRequestCompletionStatus(
+          net::ERR_FAILED, 0 /* status_code */));
       return;
     }
     handler_ = host_->CreateRequestHandler(
@@ -205,7 +205,8 @@ class SubresourceLoader : public mojom::URLLoader,
                          const ResourceResponseHead& response_head) override {
     DCHECK(network_loader_) << "appcache loader does not produce redirects";
     if (!redirect_limit_--) {
-      OnComplete(ResourceRequestCompletionStatus(net::ERR_TOO_MANY_REDIRECTS));
+      OnComplete(ResourceRequestCompletionStatus(
+          net::ERR_TOO_MANY_REDIRECTS, response_head.headers->response_code()));
       return;
     }
     if (!handler_) {

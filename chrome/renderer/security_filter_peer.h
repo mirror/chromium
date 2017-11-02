@@ -66,12 +66,17 @@ class ReplaceContentPeer : public SecurityFilterPeer {
   // content::RequestPeer Implementation.
   void OnReceivedResponse(const content::ResourceResponseInfo& info) override;
   void OnReceivedData(std::unique_ptr<ReceivedData> data) override;
-  void OnCompletedRequest(int error_code,
-                          bool stale_copy_in_cache,
-                          const base::TimeTicks& completion_time,
-                          int64_t total_transfer_size,
-                          int64_t encoded_body_size,
-                          int64_t decoded_body_size) override;
+  void OnCompletedRequest(
+      int error_code,
+      bool stale_copy_in_cache,
+      const base::TimeTicks& completion_time,
+      int64_t total_transfer_size,
+      int64_t encoded_body_size,
+      int64_t decoded_body_size,
+      int status_code,
+      scoped_refptr<const net::HttpResponseHeaders>
+          error_related_response_headers,
+      base::Optional<network::mojom::CORSError> cors_error) override;
 
  private:
   content::ResourceResponseInfo response_info_;

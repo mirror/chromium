@@ -128,7 +128,8 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
   if (!version_->context() || version_->is_redundant()) {
-    CommitCompleted(ResourceRequestCompletionStatus(net::ERR_FAILED));
+    CommitCompleted(ResourceRequestCompletionStatus(
+        net::ERR_FAILED, response_head.headers->response_code()));
     return;
   }
 
@@ -152,7 +153,8 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
     // Non-2XX HTTP status code is handled as an error.
     // TODO(nhiroki): Show an error message equivalent to kBadHTTPResponseError
     // in service_worker_write_to_cache_job.cc.
-    CommitCompleted(ResourceRequestCompletionStatus(net::ERR_INVALID_RESPONSE));
+    CommitCompleted(ResourceRequestCompletionStatus(
+        net::ERR_INVALID_RESPONSE, response_head.headers->response_code()));
     return;
   }
 
@@ -163,8 +165,8 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
   if (net::IsCertStatusError(response_head.cert_status)) {
     // TODO(nhiroki): Show an error message equivalent to kSSLError in
     // service_worker_write_to_cache_job.cc.
-    CommitCompleted(
-        ResourceRequestCompletionStatus(net::ERR_INSECURE_RESPONSE));
+    CommitCompleted(ResourceRequestCompletionStatus(
+        net::ERR_INSECURE_RESPONSE, response_head.headers->response_code()));
     return;
   }
 
@@ -172,8 +174,8 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
     if (!blink::IsSupportedJavascriptMimeType(response_head.mime_type)) {
       // TODO(nhiroki): Show an error message equivalent to kNoMIMEError or
       // kBadMIMEError in service_worker_write_to_cache_job.cc.
-      CommitCompleted(
-          ResourceRequestCompletionStatus(net::ERR_INSECURE_RESPONSE));
+      CommitCompleted(ResourceRequestCompletionStatus(
+          net::ERR_INSECURE_RESPONSE, response_head.headers->response_code()));
       return;
     }
 
@@ -188,8 +190,8 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
             version_->scope(), request_url_,
             has_header ? &service_worker_allowed : nullptr, &error_message)) {
       // TODO(nhiroki): Report |error_message|.
-      CommitCompleted(
-          ResourceRequestCompletionStatus(net::ERR_INSECURE_RESPONSE));
+      CommitCompleted(ResourceRequestCompletionStatus(
+          net::ERR_INSECURE_RESPONSE, response_head.headers->response_code()));
       return;
     }
 
@@ -205,7 +207,7 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
 
 void ServiceWorkerScriptURLLoader::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
-    const ResourceResponseHead& respoinse_head) {
+    const ResourceResponseHead& response_head) {
   // Resource requests for service worker scripts should not follow redirects.
   //
   // Step 7.5: "Set request's redirect mode to "error"."
@@ -213,7 +215,8 @@ void ServiceWorkerScriptURLLoader::OnReceiveRedirect(
   //
   // TODO(nhiroki): Show an error message equivalent to kRedirectError in
   // service_worker_write_to_cache_job.cc.
-  CommitCompleted(ResourceRequestCompletionStatus(net::ERR_UNSAFE_REDIRECT));
+  CommitCompleted(ResourceRequestCompletionStatus(
+      net::ERR_UNSAFE_REDIRECT, response_head.headers->response_code()));
 }
 
 void ServiceWorkerScriptURLLoader::OnDataDownloaded(int64_t data_len,
@@ -245,7 +248,8 @@ void ServiceWorkerScriptURLLoader::OnStartLoadingResponseBody(
   mojo::ScopedDataPipeConsumerHandle client_consumer;
   if (mojo::CreateDataPipe(nullptr, &client_producer_, &client_consumer) !=
       MOJO_RESULT_OK) {
-    CommitCompleted(ResourceRequestCompletionStatus(net::ERR_FAILED));
+    CommitCompleted(
+        ResourceRequestCompletionStatus(net::ERR_FAILED, 0 /* status_code */));
     return;
   }
 
@@ -274,7 +278,8 @@ void ServiceWorkerScriptURLLoader::OnComplete(
       // storage.
       return;
     case State::kWroteData:
-      CommitCompleted(ResourceRequestCompletionStatus(net::OK));
+      CommitCompleted(
+          ResourceRequestCompletionStatus(net::OK, status.status_code));
       return;
   }
   NOTREACHED() << static_cast<int>(state_);
@@ -323,7 +328,8 @@ void ServiceWorkerScriptURLLoader::WriteHeaders(
 void ServiceWorkerScriptURLLoader::OnWriteHeadersComplete(net::Error error) {
   DCHECK_NE(net::ERR_IO_PENDING, error);
   if (error != net::OK) {
-    CommitCompleted(ResourceRequestCompletionStatus(error));
+    CommitCompleted(
+        ResourceRequestCompletionStatus(error, 0 /* status_code */));
     return;
   }
   AdvanceState(State::kWroteHeaders);
@@ -365,8 +371,10 @@ void ServiceWorkerScriptURLLoader::OnNetworkDataAvailable(MojoResult) {
       // are read or there is an error. In the error case, the reason is
       // notified via OnComplete().
       AdvanceState(State::kWroteData);
-      if (network_load_completed_)
-        CommitCompleted(ResourceRequestCompletionStatus(net::OK));
+      if (network_load_completed_) {
+        CommitCompleted(
+            ResourceRequestCompletionStatus(net::OK, 0 /* status_code */));
+      }
       return;
     case MOJO_RESULT_SHOULD_WAIT:
       network_watcher_.ArmOrNotify();
@@ -390,7 +398,8 @@ void ServiceWorkerScriptURLLoader::WriteData(
     case MOJO_RESULT_OK:
       break;
     case MOJO_RESULT_FAILED_PRECONDITION:
-      CommitCompleted(ResourceRequestCompletionStatus(net::ERR_FAILED));
+      CommitCompleted(ResourceRequestCompletionStatus(net::ERR_FAILED,
+                                                      0 /* status_code */));
       return;
     case MOJO_RESULT_SHOULD_WAIT:
       // No data was written to |client_producer_| because the pipe was full.
@@ -426,7 +435,8 @@ void ServiceWorkerScriptURLLoader::OnWriteDataComplete(
     net::Error error) {
   DCHECK_NE(net::ERR_IO_PENDING, error);
   if (error != net::OK) {
-    CommitCompleted(ResourceRequestCompletionStatus(error));
+    CommitCompleted(
+        ResourceRequestCompletionStatus(error, 0 /* status_code */));
     return;
   }
   DCHECK(pending_buffer);

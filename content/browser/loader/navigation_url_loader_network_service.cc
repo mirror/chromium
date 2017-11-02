@@ -355,7 +355,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
                          const ResourceResponseHead& head) override {
     if (--redirect_limit_ == 0) {
-      OnComplete(ResourceRequestCompletionStatus(net::ERR_TOO_MANY_REDIRECTS));
+      OnComplete(ResourceRequestCompletionStatus(
+          net::ERR_TOO_MANY_REDIRECTS, head.headers->response_code()));
       return;
     }
 
