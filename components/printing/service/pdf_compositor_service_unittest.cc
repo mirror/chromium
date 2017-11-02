@@ -10,13 +10,69 @@
 #include "base/memory/shared_memory.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
+#include "base/test/test_discardable_memory_allocator.h"
+#include "components/printing/service/pdf_compositor_service.h"
 #include "components/printing/service/public/interfaces/pdf_compositor.mojom.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/system/platform_handle.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/cpp/service_context.h"
 #include "services/service_manager/public/cpp/service_test.h"
+#include "services/service_manager/public/interfaces/service_factory.mojom.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace printing {
+
+// In order to test PdfCompositorService, this class overrides PrepareToStart()
+// and uses the test discardable memory allocator.
+class PdfCompositorTestService : public printing::PdfCompositorService {
+ public:
+  explicit PdfCompositorTestService(const std::string& creator)
+      : PdfCompositorService(creator) {}
+  ~PdfCompositorTestService() override {}
+
+  // PdfCompositorService:
+  void PrepareToStart() override{};
+};
+
+class PdfServiceTestClient : public service_manager::test::ServiceTestClient,
+                             public service_manager::mojom::ServiceFactory {
+ public:
+  explicit PdfServiceTestClient(service_manager::test::ServiceTest* test)
+      : service_manager::test::ServiceTestClient(test) {
+    registry_.AddInterface<service_manager::mojom::ServiceFactory>(
+        base::Bind(&PdfServiceTestClient::Create, base::Unretained(this)));
+  }
+  ~PdfServiceTestClient() override {}
+
+  // service_manager::Service
+  void OnBindInterface(const service_manager::BindSourceInfo& source_info,
+                       const std::string& interface_name,
+                       mojo::ScopedMessagePipeHandle interface_pipe) override {
+    registry_.BindInterface(interface_name, std::move(interface_pipe));
+  }
+
+  // service_manager::mojom::ServiceFactory
+  void CreateService(service_manager::mojom::ServiceRequest request,
+                     const std::string& name) override {
+    if (!name.compare(mojom::kServiceName)) {
+      service_context_.reset(new service_manager::ServiceContext(
+          base::MakeUnique<PdfCompositorTestService>("pdf_compositor_unittest"),
+          std::move(request)));
+    }
+  }
+
+  void Create(service_manager::mojom::ServiceFactoryRequest request) {
+    service_factory_bindings_.AddBinding(this, std::move(request));
+  }
+
+ private:
+  service_manager::BinderRegistry registry_;
+  mojo::BindingSet<service_manager::mojom::ServiceFactory>
+      service_factory_bindings_;
+  std::unique_ptr<service_manager::ServiceContext> service_context_;
+};
 
 class PdfCompositorServiceTest : public service_manager::test::ServiceTest {
  public:
@@ -39,6 +95,8 @@ class PdfCompositorServiceTest : public service_manager::test::ServiceTest {
  protected:
   // service_manager::test::ServiceTest:
   void SetUp() override {
+    base::DiscardableMemoryAllocator::SetInstance(
+        &discardable_memory_allocator_);
     ServiceTest::SetUp();
 
     ASSERT_FALSE(compositor_);
@@ -51,6 +109,11 @@ class PdfCompositorServiceTest : public service_manager::test::ServiceTest {
   void TearDown() override {
     // Clean up
     compositor_.reset();
+    base::DiscardableMemoryAllocator::SetInstance(nullptr);
+  }
+
+  std::unique_ptr<service_manager::Service> CreateService() override {
+    return base::MakeUnique<PdfServiceTestClient>(this);
   }
 
   base::SharedMemoryHandle LoadFileInSharedMemory() {
@@ -69,9 +132,7 @@ class PdfCompositorServiceTest : public service_manager::test::ServiceTest {
     base::SharedMemory shared_memory;
     if (shared_memory.Create(options) && shared_memory.Map(len)) {
       memcpy(shared_memory.memory(), content.data(), len);
-      base::SharedMemoryHandle handle = shared_memory.handle();
-      if (len == handle.GetSize())
-        return base::SharedMemory::DuplicateHandle(handle);
+      return base::SharedMemory::DuplicateHandle(shared_memory.handle());
     }
     return invalid_handle;
   }
@@ -91,6 +152,7 @@ class PdfCompositorServiceTest : public service_manager::test::ServiceTest {
 
   std::unique_ptr<base::RunLoop> run_loop_;
   mojom::PdfCompositorPtr compositor_;
+  base::TestDiscardableMemoryAllocator discardable_memory_allocator_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PdfCompositorServiceTest);
