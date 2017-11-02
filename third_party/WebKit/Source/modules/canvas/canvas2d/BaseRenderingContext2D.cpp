@@ -1753,8 +1753,8 @@ void BaseRenderingContext2D::putImageData(ImageData* data,
     if (PixelFormat() == kF16CanvasPixelFormat)
       data_length *= 2;
     std::unique_ptr<uint8_t[]> converted_pixels(new uint8_t[data_length]);
-    data->ImageDataInCanvasColorSettings(ColorSpace(), PixelFormat(),
-                                         converted_pixels);
+    data->ImageDataInCanvasColorSettings(
+        ColorSpace(), PixelFormat(), converted_pixels, kDontPremultiplyAlpha);
 
     buffer->PutByteArray(converted_pixels.get(),
                          IntSize(data->width(), data->height()), source_rect,

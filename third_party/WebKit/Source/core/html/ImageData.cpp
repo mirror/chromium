@@ -35,6 +35,7 @@
 #include "platform/graphics/ColorBehavior.h"
 #include "platform/wtf/ByteSwap.h"
 #include "third_party/skia/include/core/SkColorSpaceXform.h"
+#include "third_party/skia/include/core/SkSwizzle.h"
 #include "v8/include/v8.h"
 
 namespace blink {
@@ -399,6 +400,44 @@ ImageData* ImageData::CreateForTest(
   return new ImageData(size, buffer_view, color_settings);
 }
 
+void ImageData::SetCropRect(const IntRect& crop_rect) {
+  crop_rect_ = crop_rect;
+};
+
+IntRect ImageData::GetCropRect() {
+  return crop_rect_;
+}
+
+void ImageData::ResetCropRect() {
+  crop_rect_ = IntRect(IntPoint(0, 0), IntSize(size_));
+}
+
+bool ImageData::IsCropped() {
+  return crop_rect_ != IntRect(IntPoint(0, 0), size_);
+}
+
+void ImageData::SwizzleIfNeeded() {
+  if ((kN32_SkColorType != kBGRA_8888_SkColorType) ||
+      !GetCanvasColorParams().NeedsSkColorSpaceXformCanvas())
+    return;
+  if (IsCropped()) {
+    uint32_t* data_u32 = static_cast<uint32_t*>(BufferBase()->Data());
+    for (int i = crop_rect_.Y(); i < crop_rect_.Y() + crop_rect_.Height();
+         i++) {
+      SkSwapRB(data_u32 + i * width() + crop_rect_.X(),
+               data_u32 + i * width() + crop_rect_.X(), crop_rect_.Width());
+    }
+  } else {
+    SkSwapRB(static_cast<uint32_t*>(BufferBase()->Data()),
+             static_cast<uint32_t*>(BufferBase()->Data()), Size().Area());
+  }
+}
+
+int ImageData::CroppedByteLength() {
+  return crop_rect_.Size().Area() * 4 *
+         ImageData::StorageFormatDataSize(color_settings_.storageFormat());
+}
+
 // Crops ImageData to the intersect of its size and the given rectangle. If the
 // intersection is empty or it cannot create the cropped ImageData it returns
 // nullptr. This function leaves the source ImageData intact. When crop_rect
@@ -703,7 +742,8 @@ void ImageData::SwapU16EndiannessForSkColorSpaceXform() {
 bool ImageData::ImageDataInCanvasColorSettings(
     CanvasColorSpace canvas_color_space,
     CanvasPixelFormat canvas_pixel_format,
-    std::unique_ptr<uint8_t[]>& converted_pixels) {
+    std::unique_ptr<uint8_t[]>& converted_pixels,
+    AlphaDisposition alpha_disposition) {
   if (!data_ && !data_u16_ && !data_f32_)
     return false;
 
@@ -771,6 +811,7 @@ ImageData::ImageData(const IntSize& size,
   data_ = nullptr;
   data_u16_ = nullptr;
   data_f32_ = nullptr;
+  crop_rect_ = IntRect(IntPoint(0, 0), size_);
 
   if (color_settings) {
     color_settings_.setColorSpace(color_settings->colorSpace());
