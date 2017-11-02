@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43d4c6e5_8e0a6933",
+        "filename": "base/test/android/java_handler_thread_helpers.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-11-02T21:34:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t actually check that the exception is successfully propagated back to Java any more, because you\u0027re clearing it in native. The purpose of the test is to make sure we return to the VM and throw a real Java exception, and that\u0027s no longer being done..",
+      "revId": "e6b3cbce32dc7a2f3bafb9376c469db9cd51ec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
