@@ -22,6 +22,30 @@
       "revId": "88283e4f47d99acf2caf02c5c9a8bfddfde49c10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12118601_e9837da6",
+        "filename": "chromecast/base/metrics/grouped_histogram.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-11-02T17:21:29Z",
+      "side": 1,
+      "message": "FactoryGet looks up known histograms held in a std::map which is not thread-safe and so needs a lock for correct access.  FactoryGet was never intended to be called repeatedly which is why the macros cache its return value.\n\nThe best solution would be to move from GetAppName to something like GetAppType (I\u0027m making up the name) that returns an enumeration.  Then use that enumeration with STATIC_HISTOGRAM_POINTER_GROUP to ensure that the FactoryGet need only be done once per entry.\n\nSee:  https://codereview.chromium.org/1829973002",
+      "parentUuid": "fe767fb7_cdae0379",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 45
+      },
+      "revId": "88283e4f47d99acf2caf02c5c9a8bfddfde49c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
