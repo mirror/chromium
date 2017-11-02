@@ -16,6 +16,24 @@
       "revId": "927a27bfe3df931463fbe39655663d6ba934ddbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c102a4_828c35f1",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-02T20:41:57Z",
+      "side": 1,
+      "message": "Done. The same way width/height is validated below.",
+      "parentUuid": "6c069bd1_3b962a19",
+      "revId": "927a27bfe3df931463fbe39655663d6ba934ddbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
