@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74f96552_9c4a253f",
+        "filename": "device/geolocation/public/interfaces/geoposition.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-02T13:08:23Z",
+      "side": 1,
+      "message": "Those values are from:\nhttps://cs.chromium.org/chromium/src/device/geolocation/geoposition.cc?rcl\u003d2e3f815437d4186aeb943e965f420e707b6a67b7\u0026l\u003d8",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "9d7e11e9d3cd69544b4b0a6ce8aa5e44db532050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

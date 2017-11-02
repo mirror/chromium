@@ -34,6 +34,24 @@
       "revId": "374c2d43d4262956b9d60a23707e0dd6d3348970",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dddbe2e_db384bc2",
+        "filename": "device/geolocation/geoposition.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-02T13:08:23Z",
+      "side": 0,
+      "message": "To correct above comment first, the newly created mojom::Geoposition can Not pass the ValidateGeoposition method because of the timestamp is initialized as zero.\nBut we still need to set those kBadxxx Values to the default constructor of mojom::Geoposition.\nDone.",
+      "parentUuid": "8f12cb82_a2cefc3d",
+      "revId": "374c2d43d4262956b9d60a23707e0dd6d3348970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
