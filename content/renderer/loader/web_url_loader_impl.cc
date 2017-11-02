@@ -1365,7 +1365,7 @@ void WebURLLoaderImpl::PopulateURLResponse(const WebURL& url,
 
 void WebURLLoaderImpl::LoadSynchronously(const WebURLRequest& request,
                                          WebURLResponse& response,
-                                         WebURLError& error,
+                                         base::Optional<WebURLError>& error,
                                          WebData& data,
                                          int64_t& encoded_data_length,
                                          int64_t& encoded_body_length) {
@@ -1382,12 +1382,12 @@ void WebURLLoaderImpl::LoadSynchronously(const WebURLRequest& request,
     // SyncResourceHandler returns ERR_ABORTED for CORS redirect errors,
     // so we treat the error as a web security violation.
     const bool is_web_security_violation = error_code == net::ERR_ABORTED;
-    error = WebURLError(WebURLError::Domain::kNet, error_code,
-                        WebURLError::HasCopyInCache::kFalse,
-                        is_web_security_violation
-                            ? WebURLError::IsWebSecurityViolation::kTrue
-                            : WebURLError::IsWebSecurityViolation::kFalse,
-                        final_url);
+    *error = WebURLError(WebURLError::Domain::kNet, error_code,
+                         WebURLError::HasCopyInCache::kFalse,
+                         is_web_security_violation
+                             ? WebURLError::IsWebSecurityViolation::kTrue
+                             : WebURLError::IsWebSecurityViolation::kFalse,
+                         final_url);
     return;
   }
 
