@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd943979_4908c49e",
+        "filename": "chrome/android/java/res/layout/contextual_search_bar_banner_text_view.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-02T22:08:56Z",
+      "side": 1,
+      "message": "Nit: 2017",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 60
+      },
+      "revId": "8dd26c88ab2b83f96fdf36d693e3ae05bc183587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01645972_bd7601cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-02T22:08:56Z",
+      "side": 1,
+      "message": "Nit: I think this should be changed to 2017 too.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "8dd26c88ab2b83f96fdf36d693e3ae05bc183587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49113ddb_c914187e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-02T22:08:56Z",
+      "side": 1,
+      "message": "Nit: indent to line up after the \"return \" so the first letter is below the A.",
+      "range": {
+        "startLine": 615,
+        "startChar": 7,
+        "endLine": 615,
+        "endChar": 10
+      },
+      "revId": "8dd26c88ab2b83f96fdf36d693e3ae05bc183587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991715f7_ba0ce0ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanelMetrics.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-02T22:08:56Z",
+      "side": 1,
+      "message": "Nit: add a period to the end.",
+      "range": {
+        "startLine": 159,
+        "startChar": 40,
+        "endLine": 159,
+        "endChar": 50
+      },
+      "revId": "8dd26c88ab2b83f96fdf36d693e3ae05bc183587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c1a254_8cd48a8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanelMetrics.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-02T22:08:56Z",
+      "side": 1,
+      "message": "I think we should move this whole section into the IPH class.  It could be a static method like:\nstatic void doSearchFinishedNotifications(Profile profile, boolean wasSearchContentViewSeen, boolean mWasActivatedByTap, boolean wasContextualCardsDataShown);\nThat would help localize all the IPH code in one place.",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 75
+      },
+      "revId": "8dd26c88ab2b83f96fdf36d693e3ae05bc183587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429370aa_7e7ea8c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-02T22:08:56Z",
+      "side": 1,
+      "message": "I think we should change this from an \"if\" to an \"assert\" so when things change if we forget to add code here it will let us know.",
+      "range": {
+        "startLine": 159,
+        "startChar": 15,
+        "endLine": 159,
+        "endChar": 17
+      },
+      "revId": "8dd26c88ab2b83f96fdf36d693e3ae05bc183587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37e00c5_d434e177",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 13
+      },
+      "lineNbr": 2847,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-02T22:08:56Z",
+      "side": 1,
+      "message": "Nit: Panel -\u003e panel",
+      "range": {
+        "startLine": 2847,
+        "startChar": 141,
+        "endLine": 2847,
+        "endChar": 146
+      },
+      "revId": "8dd26c88ab2b83f96fdf36d693e3ae05bc183587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26464b06_2038acb5",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 13
+      },
+      "lineNbr": 2850,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-02T22:08:56Z",
+      "side": 1,
+      "message": "Nit: Panel -\u003e panel",
+      "range": {
+        "startLine": 2850,
+        "startChar": 148,
+        "endLine": 2850,
+        "endChar": 153
+      },
+      "revId": "8dd26c88ab2b83f96fdf36d693e3ae05bc183587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9eff7fc_b34eda7b",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 5828,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-02T22:08:56Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this name be ... IPH_ContextualSearchPromotePanelOpen\"?",
+      "range": {
+        "startLine": 5828,
+        "startChar": 63,
+        "endLine": 5828,
+        "endChar": 88
+      },
+      "revId": "8dd26c88ab2b83f96fdf36d693e3ae05bc183587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
