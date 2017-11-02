@@ -135,6 +135,24 @@
       "revId": "c8e9bc612a66c84e4eeaffc3a3a9ca74f663c06a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866d29d3_bee373ba",
+        "filename": "chrome/install_static/install_constants.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-02T14:51:52Z",
+      "side": 1,
+      "message": "Sorry I made a mistake. I somehow typed \"const\" before CLSID, which makes it non-POD.\n\nI\u0027ve changed wchar_t to CLSID, and added unit tests for the conversion. All ClsidFromString calls are removed, together with the error handling.",
+      "parentUuid": "e34e36ad_438527dd",
+      "revId": "c8e9bc612a66c84e4eeaffc3a3a9ca74f663c06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
