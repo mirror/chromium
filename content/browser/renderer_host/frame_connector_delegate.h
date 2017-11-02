@@ -166,6 +166,9 @@ class CONTENT_EXPORT FrameConnectorDelegate {
       ui::mojom::WindowTreeClientPtr window_tree_client) {}
 #endif
 
+  virtual void ResizeDueToAutoResize(const gfx::Size& new_size,
+                                     uint64_t sequence_number) {}
+
  protected:
   virtual ~FrameConnectorDelegate() {}
 

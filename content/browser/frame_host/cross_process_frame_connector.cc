@@ -276,6 +276,7 @@ void CrossProcessFrameConnector::UnlockMouse() {
 void CrossProcessFrameConnector::OnUpdateResizeParams(
     const gfx::Rect& frame_rect,
     const ScreenInfo& screen_info,
+    uint64_t sequence_number,
     const viz::LocalSurfaceId& local_surface_id) {
   // If the |frame_rect| or |screen_info| of the frame has changed, then the
   // viz::LocalSurfaceId must also change.
@@ -291,6 +292,21 @@ void CrossProcessFrameConnector::OnUpdateResizeParams(
   screen_info_ = screen_info;
   local_surface_id_ = local_surface_id;
   SetRect(frame_rect);
+
+  if (!view_)
+    return;
+
+  RenderWidgetHostImpl* render_widget_host =
+      RenderWidgetHostImpl::From(view_->GetRenderWidgetHost());
+
+  if (!render_widget_host)
+    return;
+
+  if (render_widget_host->auto_resize_enabled()) {
+    render_widget_host->DidAllocateLocalSurfaceIdForAutoResize(sequence_number);
+    return;
+  }
+
   view_->GetRenderWidgetHost()->WasResized();
 }
 
@@ -427,6 +443,13 @@ void CrossProcessFrameConnector::EmbedRendererWindowTreeClientInParent(
                      parent->GetWeakPtr(), frame_routing_id));
 }
 #endif
+
+void CrossProcessFrameConnector::ResizeDueToAutoResize(
+    const gfx::Size& new_size,
+    uint64_t sequence_number) {
+  frame_proxy_in_parent_renderer_->Send(new FrameMsg_ResizeDueToAutoResize(
+      frame_proxy_in_parent_renderer_->GetRoutingID(), sequence_number));
+}
 
 void CrossProcessFrameConnector::SetVisibilityForChildViews(
     bool visible) const {
