@@ -16,6 +16,24 @@
       "revId": "eae844ca97e592df0b4063ee7289669cfe79fab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c7330e_2c51c480",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-02T21:07:12Z",
+      "side": 1,
+      "message": "Ideally we\u0027d create a new type like UNNECESSARY_DATA or CLICK_TO_FILL. I think it would be preferable to just skip the logs for this in the meantime? WDYT?",
+      "parentUuid": "6aac3b3d_db08e390",
+      "revId": "eae844ca97e592df0b4063ee7289669cfe79fab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
