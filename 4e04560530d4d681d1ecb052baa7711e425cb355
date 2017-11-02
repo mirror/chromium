@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34b67d67_e1481820",
+        "filename": "content/browser/frame_host/render_widget_host_view_guest.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-02T21:40:57Z",
+      "side": 1,
+      "message": "nit: This is no longer true.",
+      "revId": "4e04560530d4d681d1ecb052baa7711e425cb355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
