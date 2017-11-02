@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76ad2314_8a0253e2",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2546,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-02T07:17:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f63ef15_dba65f1a",
+      "range": {
+        "startLine": 2546,
+        "startChar": 17,
+        "endLine": 2546,
+        "endChar": 74
+      },
+      "revId": "e5697a46f76be7786e656f41c9fc9b5fd8d68f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24f0ca61_21847ae5",
         "filename": "tools/metrics/histograms/enums.before.pretty-print.xml",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-02T01:46:24Z",
       "side": 1,
       "message": "Remove this file.",
+      "revId": "e5697a46f76be7786e656f41c9fc9b5fd8d68f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a977100a_d2b17610",
+        "filename": "tools/metrics/histograms/enums.before.pretty-print.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-02T07:17:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24f0ca61_21847ae5",
       "revId": "e5697a46f76be7786e656f41c9fc9b5fd8d68f4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
