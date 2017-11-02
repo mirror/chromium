@@ -73,6 +73,10 @@ class AudioWorkletHandler final : public AudioHandler {
 
   HashMap<String, scoped_refptr<AudioParamHandler>> param_handler_map_;
   HashMap<String, std::unique_ptr<AudioFloatArray>> param_value_map_;
+
+  // TODO(): Adjust this if needed based on the result of the process
+  // emthod or the value of |tail_time_|.
+  bool RequiresTailProcessing() const { return true; }
 };
 
 class AudioWorkletNode final : public AudioNode,
