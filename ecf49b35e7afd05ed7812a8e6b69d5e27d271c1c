@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "f2524381_7f69fd6a",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-02T22:13:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c342472_6cb64f6d",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2b6fc07_679f405b",
         "filename": "ios/net/cookies/system_cookie_store_unittest.h",
         "patchSetId": 6
@@ -432,6 +456,30 @@
     },
     {
       "key": {
+        "uuid": "b91a89e1_13bd77d5",
+        "filename": "ios/net/cookies/system_cookie_store_unittest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-02T22:13:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e54f07a_ca7cb998",
+      "range": {
+        "startLine": 127,
+        "startChar": 19,
+        "endLine": 127,
+        "endChar": 42
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9cc3057_51f4ec6b",
         "filename": "ios/net/cookies/system_cookie_store_unittest.h",
         "patchSetId": 6
@@ -478,6 +526,30 @@
       "writtenOn": "2017-10-31T15:47:41Z",
       "side": 1,
       "message": "Do you need to include base/mac/availability.h?",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae828934_01983989",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-02T22:13:25Z",
+      "side": 1,
+      "message": "I don\u0027t think that we need it, it seems that it\u0027s required for mac code more than ios code as we compile ios code in SDK 10.12+ (this is my guess). did a quick search on  the code base and i didn\u0027t find base/mac/availability used anywhere in ios code.",
+      "parentUuid": "362c79b2_7d60c955",
       "range": {
         "startLine": 11,
         "startChar": 12,
@@ -593,6 +665,30 @@
       "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8ab474_ca03d78f",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-02T22:13:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb2fa778_29e1d400",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 19
+      },
+      "revId": "ecf49b35e7afd05ed7812a8e6b69d5e27d271c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
