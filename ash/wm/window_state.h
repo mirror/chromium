@@ -33,6 +33,7 @@ class WindowState;
 class WindowStateDelegate;
 class WindowStateObserver;
 class WMEvent;
+class ClientControlledState;
 
 // Returns the WindowState for the active window, null if there is no active
 // window.
@@ -325,6 +326,7 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
 
  private:
   friend class DefaultState;
+  friend class ash::wm::ClientControlledState;
   friend class ash::LockWindowState;
   friend class ash::TabletModeWindowState;
   friend WindowState* GetWindowState(aura::Window*);
@@ -367,10 +369,12 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   // new bounds will not exceeds the size of the work area.
   void SetBoundsConstrained(const gfx::Rect& bounds);
 
+ public:
   // Sets the wndow's |bounds| and transitions to the new bounds with
   // a scale animation.
   void SetBoundsDirectAnimated(const gfx::Rect& bounds);
 
+ private:
   // Sets the window's |bounds| and transition to the new bounds with
   // a cross fade animation.
   void SetBoundsDirectCrossFade(const gfx::Rect& bounds);

@@ -101,6 +101,10 @@ class ASH_EXPORT WMEvent {
 
   WMEventType type() const { return type_; }
 
+  bool IsWorkspaceEvent() const;
+  bool IsCompoundEvent() const;
+  bool IsPinEvent() const;
+
  private:
   WMEventType type_;
   DISALLOW_COPY_AND_ASSIGN(WMEvent);
