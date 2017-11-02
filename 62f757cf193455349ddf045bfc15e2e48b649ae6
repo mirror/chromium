@@ -22,6 +22,30 @@
       "revId": "62f757cf193455349ddf045bfc15e2e48b649ae6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76bfc7f_2fdbd503",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-02T11:59:14Z",
+      "side": 0,
+      "message": "Yes. We should adjust selection. I should check layout test result before\nasking review. m(_ _)m\n\nAlso, I missed that Modify() calls more than once, we need to use\nresult as input for next Modify() call.\n\nI name |current_selection_| instead of |result_| and use |selection_|\nas cached VisibleSelection during Modify().",
+      "parentUuid": "7af6565b_3822f308",
+      "range": {
+        "startLine": 593,
+        "startChar": 8,
+        "endLine": 593,
+        "endChar": 30
+      },
+      "revId": "62f757cf193455349ddf045bfc15e2e48b649ae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
