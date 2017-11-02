@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "72a6543e_f10a1ff9",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T08:33:58Z",
+      "side": 1,
+      "message": "Nit: remove this comment, it\u0027s not really needed (it\u0027s already stated by line 164-165)",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 47
+      },
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "846d21a7_62d4340e",
+        "filename": "content/renderer/media/audio_ipc_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T08:33:58Z",
+      "side": 1,
+      "message": "Did a test fail due to not doing this? I would have thought that the connection error handler below would handle automatically cleaning this up if the other end of the message pipe is dropped and never bound to anything.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2412fac3_cd15bcdd",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T08:33:58Z",
+      "side": 1,
+      "message": "Can we use service_manager::InterfaceProvider with the forwarding callback? https://cs.chromium.org/chromium/src/services/service_manager/public/cpp/interface_provider.h?rcl\u003d20c6e5af9f784dbee661d6ddd32d3b0fc5d911fd\u0026l\u003d77",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f5664f9_4299ca59",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 3971,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T08:33:58Z",
+      "side": 1,
+      "message": "Why does this need to happen here? It seems odd for one specific factory to have be registered here, but no others. At the very least, this needs a comment explaining why (or preferably, we should not need this at all \u003d)",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33809a0f_6b6df5e7",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 20
