@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f4c6ab4_5bc6f2b1",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-11-02T18:23:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "972df448_ad84d40b",
+      "revId": "6bf7f316db065c18d46f6a6f6ded657bc67a3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "089b2cdf_b90b65a9",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "6bf7f316db065c18d46f6a6f6ded657bc67a3829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c916fced_137dedb6",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-11-02T18:23:01Z",
+      "side": 1,
+      "message": "Since info files are based on asset files, unless we were editing info file formats, we wouldn\u0027t need them in the depfile_deps, right?",
+      "parentUuid": "089b2cdf_b90b65a9",
+      "revId": "6bf7f316db065c18d46f6a6f6ded657bc67a3829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
