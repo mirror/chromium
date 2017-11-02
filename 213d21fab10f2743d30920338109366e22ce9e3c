@@ -22,6 +22,52 @@
       "revId": "213d21fab10f2743d30920338109366e22ce9e3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ccf8883_89405068",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T08:49:09Z",
+      "side": 1,
+      "message": "Not needed for this CL, but I think this can just use initializer list syntax now, e.g.\n\nDEFINE_STATIC_LOCAL(FeatureNameMap, default_feature_name_map, ({\n  {\"fullscreen\", FeaturePolicyFeature::kFullscreen},\n  {\"payment\", FeaturePolicyFeature::kPayment},\n  ...\n});",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 252,
+        "endChar": 3
+      },
+      "revId": "213d21fab10f2743d30920338109366e22ce9e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac513548_8b247c94",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T08:49:09Z",
+      "side": 1,
+      "message": "feature_policy_feature.h?",
+      "range": {
+        "startLine": 38,
+        "startChar": 38,
+        "endLine": 38,
+        "endChar": 56
+      },
+      "revId": "213d21fab10f2743d30920338109366e22ce9e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
