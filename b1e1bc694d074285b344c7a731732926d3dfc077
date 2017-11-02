@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33cdbd0c_60fd0f0b",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-02T07:12:38Z",
+      "side": 1,
+      "message": "You have not marked the policy for ChromeOS below and I am not even sure if this policy can apply on ChromeOS please check and fix either here or below in the policy_templates.json.",
+      "range": {
+        "startLine": 873,
+        "startChar": 34,
+        "endLine": 873,
+        "endChar": 44
+      },
+      "revId": "b1e1bc694d074285b344c7a731732926d3dfc077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bca8360_7d430909",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10589,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-02T07:12:38Z",
+      "side": 1,
+      "message": "what do you think about calling this policy PromptForDownloadLocation?",
+      "range": {
+        "startLine": 10589,
+        "startChar": 15,
+        "endLine": 10589,
+        "endChar": 32
+      },
+      "revId": "b1e1bc694d074285b344c7a731732926d3dfc077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb7340f_58b24603",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10595,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-02T07:12:38Z",
+      "side": 1,
+      "message": "I would have guessed this will be true? Isn\u0027t this policy going to be mapped to a profile pref?",
+      "range": {
+        "startLine": 10595,
+        "startChar": 9,
+        "endLine": 10595,
+        "endChar": 28
+      },
+      "revId": "b1e1bc694d074285b344c7a731732926d3dfc077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e471c3c8_83724921",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10601,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-02T07:12:38Z",
+      "side": 1,
+      "message": "This is the default you can omit it.",
+      "range": {
+        "startLine": 10601,
+        "startChar": 6,
+        "endLine": 10601,
+        "endChar": 22
+      },
+      "revId": "b1e1bc694d074285b344c7a731732926d3dfc077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
