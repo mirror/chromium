@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6bb6420_1c4be73d",
+        "filename": "ui/login/account_picker/user_pod_row.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-02T21:48:59Z",
+      "side": 1,
+      "message": "FWIW, I tried reproducing the bug on ToT and I was not able to do so. Either way, are we 100% sure that the only thing that can get focus outside of the dialog is actionBoxAreaElement?",
+      "revId": "22666cc280a7d4906d0ddcad1363b9da5089206a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
