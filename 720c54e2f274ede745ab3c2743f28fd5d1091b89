@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf0b65de_9de013ad",
+        "filename": "components/browser_watcher/watcher_metrics_provider_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-11-02T01:27:02Z",
+      "side": 1,
+      "message": "This won\u0027t catch an overflow where a second or later increment of the same bucket cause it to overflow.\n\nI suggest calling samples_before-\u003eAccumulate(exit_code, 1) on line 136.",
+      "range": {
+        "startLine": 132,
+        "startChar": 28,
+        "endLine": 132,
+        "endChar": 42
+      },
+      "revId": "720c54e2f274ede745ab3c2743f28fd5d1091b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301103ff_576691d2",
+        "filename": "components/browser_watcher/watcher_metrics_provider_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-11-02T01:27:02Z",
+      "side": 1,
+      "message": "Can you dump the to_delete list as well?  It might be interesting to see exactly what the previous codes were and how many of them appeared.",
+      "range": {
+        "startLine": 134,
+        "startChar": 59,
+        "endLine": 134,
+        "endChar": 68
+      },
+      "revId": "720c54e2f274ede745ab3c2743f28fd5d1091b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
