@@ -219,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "63dd02e0_74329d86",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-02T17:28:34Z",
+      "side": 1,
+      "message": "Ah, I knew about std::vector::emplace() but not base::Optional::emplace() so I got confused. Thank you for clarifying. Done.",
+      "parentUuid": "f75af173_df1362b2",
+      "revId": "b272967f557bcbbae39c4f8281e6eef1fb0721f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1327ad36_1b1c7d2e",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 22
