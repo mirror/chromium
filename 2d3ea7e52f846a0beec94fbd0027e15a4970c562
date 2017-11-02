@@ -69,6 +69,24 @@
       "revId": "2d3ea7e52f846a0beec94fbd0027e15a4970c562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9961b56b_51a3244c",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-02T22:40:23Z",
+      "side": 0,
+      "message": "This code has largely been evicted from my mental cache, so I\u0027m not a lot of help here. I believe that reentrancy defense is the only case where the renderer process will block the navigation based on \"beforeunload\" without showing a dialog.\n\nMy CL was almost 3 years ago, and avi@ has done lots of good beforeunload dialog work since then. Is there any chance that work has renderered blink\u0027s reentrancy prevention unnecessary?",
+      "parentUuid": "58314dcd_e6fd80e7",
+      "revId": "2d3ea7e52f846a0beec94fbd0027e15a4970c562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
