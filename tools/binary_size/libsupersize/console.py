@@ -74,7 +74,7 @@ class _Session(object):
         'Print': self._PrintFunc,
         'Csv': self._CsvFunc,
         'Diff': self._DiffFunc,
-        'ReadStringLiterals': self._ReadStringLiterals,
+        'ReadLiterals': self._ReadLiterals,
         'Disassemble': self._DisassembleFunc,
         'ExpandRegex': match_util.ExpandRegexIdentifierPlaceholder,
         'ShowExamples': self._ShowExamplesFunc,
@@ -92,17 +92,18 @@ class _Session(object):
       for i, size_info in enumerate(size_infos):
         self._variables['size_info%d' % (i + 1)] = size_info
 
-  def _ReadStringLiterals(self, thing=None, all_rodata=False, elf_path=None):
-    """Returns a list of (symbol, string value) for all string literal symbols.
+  def _ReadLiterals(self, thing=None, all_rodata=False, elf_path=None):
+    """Returns a list of (symbol, string value) for all literal symbols.
 
     E.g.:
-      # Print sorted list of all string literals:
-      Print(sorted(x[1] for x in ReadStringLiterals()))
+      # Print sorted list of all literals:
+      Print(sorted(x[1] for x in ReadLiterals()))
     Args:
       thing: Can be a Symbol, iterable of symbols, or SizeInfo.
            Defaults to the current SizeInfo.
       all_rodata: Assume every symbol within .rodata that ends in a \0 is a
-           string literal.
+           literal. This works well for ASCII and UTF-8 strings, but not for
+           with wide strings and non-string constants.
       elf_path: Path to the executable containing the symbol. Required only
           when auto-detection fails.
     """
@@ -127,7 +128,7 @@ class _Session(object):
     with open(elf_path, 'rb') as f:
       for symbol in thing:
         if symbol.section != 'r' or (
-            not all_rodata and not symbol.IsStringLiteral()):
+            not all_rodata and not symbol.IsLiteral()):
           continue
         f.seek(symbol.address + adjust)
         data = f.read(symbol.size_without_padding)
@@ -136,7 +137,7 @@ class _Session(object):
         # pattern as to which variables lose their kConstant name (the more
         # common case), or which string literals don't get moved to
         # ** merge strings (less common).
-        if symbol.IsStringLiteral() or (
+        if symbol.IsLiteral() or (
             all_rodata and data and data[-1] == '\0'):
           ret.append((symbol, data))
     return ret
@@ -351,8 +352,8 @@ class _Session(object):
         '# Dump section info and all symbols in CSV format:',
         'Csv(size_info)',
         '',
-        '# Print sorted list of all string literals:',
-        'Print(sorted(x[1] for x in ReadStringLiterals()))',
+        '# Print sorted list of all literals:',
+        'Print(sorted(x[1] for x in ReadLiterals()))',
         '',
         '# Show two levels of .text, grouped by first two subdirectories',
         'text_syms = size_info.symbols.WhereInSection("t")',

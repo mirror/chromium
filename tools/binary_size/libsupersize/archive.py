@@ -366,13 +366,13 @@ def _DiscoverMissedObjectPaths(raw_symbols, elf_object_paths):
   return missed_inputs
 
 
-def _CreateMergeStringsReplacements(merge_string_syms,
+def _CreateMergeStringsReplacements(literal_syms,
                                     list_of_positions_by_object_path):
   """Creates replacement symbols for |merge_syms|."""
   ret = []
-  STRING_LITERAL_NAME = models.STRING_LITERAL_NAME
-  assert len(merge_string_syms) == len(list_of_positions_by_object_path)
-  tups = itertools.izip(merge_string_syms, list_of_positions_by_object_path)
+  LITERAL_NAME = models.LITERAL_NAME
+  assert len(literal_syms) == len(list_of_positions_by_object_path)
+  tups = itertools.izip(literal_syms, list_of_positions_by_object_path)
   for merge_sym, positions_by_object_path in tups:
     merge_sym_address = merge_sym.address
     new_symbols = []
@@ -381,19 +381,18 @@ def _CreateMergeStringsReplacements(merge_string_syms,
       for offset, size in positions:
         address = merge_sym_address + offset
         symbol = models.Symbol(
-            '.rodata', size, address, STRING_LITERAL_NAME,
-            object_path=object_path)
+            '.rodata', size, address, LITERAL_NAME, object_path=object_path)
         new_symbols.append(symbol)
 
-  logging.debug('Created %d string literal symbols', sum(len(x) for x in ret))
-  logging.debug('Sorting string literals')
+  logging.debug('Created %d literal symbols', sum(len(x) for x in ret))
+  logging.debug('Sorting literals')
   for symbols in ret:
     # In order to achieve a total ordering in the presense of aliases, need to
     # include both |address| and |object_path|.
     # In order to achieve consistent deduping, need to include |size|.
     symbols.sort(key=lambda x: (x.address, -x.size, x.object_path))
 
-  logging.debug('Deduping string literals')
+  logging.debug('Deduping literals')
   num_removed = 0
   size_removed = 0
   num_aliases = 0
@@ -432,7 +431,7 @@ def _CreateMergeStringsReplacements(merge_string_syms,
     ret[i].sort(key=lambda s: (s.address, s.object_path))
 
   logging.debug(
-      'Removed %d overlapping string literals (%d bytes) & created %d aliases',
+      'Removed %d overlapping literals (%d bytes) & created %d aliases',
                 num_removed, size_removed, num_aliases)
   return ret
 
@@ -468,7 +467,7 @@ def _CalculatePadding(raw_symbols):
     # TODO(agrieve): See if these thresholds make sense for architectures
     #     other than arm32.
     if (not symbol.full_name.startswith('*') and
-        not symbol.IsStringLiteral() and (
+        not symbol.IsLiteral() and (
         symbol.section in 'rd' and padding >= 256 or
         symbol.section in 't' and padding >= 64)):
       # Should not happen.
@@ -577,7 +576,7 @@ def CreateMetadata(map_path, elf_path, apk_path, tool_prefix, output_directory):
 
 
 def CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
-                   normalize_names=True, track_string_literals=True):
+                   normalize_names=True, track_literals=True):
   """Creates a SizeInfo.
 
   Args:
@@ -588,7 +587,7 @@ def CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
     output_directory: Build output directory. If None, source_paths and symbol
         alias information will not be recorded.
     normalize_names: Whether to normalize symbol names.
-    track_string_literals: Whether to break down "** merge string" sections into
+    track_literals: Whether to break down "** merge string" sections into
         smaller symbols (requires output_directory).
   """
   source_mapper = None
@@ -643,14 +642,14 @@ def CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
         raw_symbols, elf_object_paths)
     bulk_analyzer.AnalyzePaths(missed_object_paths)
     bulk_analyzer.SortPaths()
-    if track_string_literals:
-      merge_string_syms = [
+    if track_literals:
+      literal_syms = [
           s for s in raw_symbols if s.full_name == '** merge strings']
       # More likely for there to be a bug in supersize than an ELF to not have a
-      # single string literal.
-      assert merge_string_syms
-      string_positions = [(s.address, s.size) for s in merge_string_syms]
-      bulk_analyzer.AnalyzeStringLiterals(elf_path, string_positions)
+      # single literal.
+      assert literal_syms
+      string_positions = [(s.address, s.size) for s in literal_syms]
+      bulk_analyzer.AnalyzeLiterals(elf_path, string_positions)
 
   logging.info('Stripping linker prefixes from symbol names')
   _StripLinkerAddedSymbolPrefixes(raw_symbols)
@@ -676,23 +675,23 @@ def CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
       raw_symbols = _AssignNmAliasPathsAndCreatePathAliases(
           raw_symbols, object_paths_by_name)
 
-      if track_string_literals:
-        logging.info('Waiting for string literal extraction to complete.')
+      if track_literals:
+        logging.info('Waiting for literal extraction to complete.')
         list_of_positions_by_object_path = bulk_analyzer.GetStringPositions()
       bulk_analyzer.Close()
 
-      if track_string_literals:
+      if track_literals:
         logging.info('Deconstructing ** merge strings into literals')
-        replacements = _CreateMergeStringsReplacements(merge_string_syms,
+        replacements = _CreateMergeStringsReplacements(literal_syms,
             list_of_positions_by_object_path)
         for merge_sym, literal_syms in itertools.izip(
-            merge_string_syms, replacements):
+            literal_syms, replacements):
           # Don't replace if no literals were found.
           if literal_syms:
             # Re-find the symbols since aliases cause their indices to change.
             idx = raw_symbols.index(merge_sym)
             # This assignment is a bit slow (causes array to be shifted), but
-            # is fast enough since len(merge_string_syms) < 10.
+            # is fast enough since len(literal_syms) < 10.
             raw_symbols[idx:idx + 1] = literal_syms
 
   _ExtractSourcePathsAndNormalizeObjectPaths(raw_symbols, source_mapper)
@@ -771,7 +770,7 @@ def _ParseGnArgs(args_path):
   args = {}
   with open(args_path) as f:
     for l in f:
-      # Strips #s even if within string literal. Not a problem in practice.
+      # Strips #s even if within literal. Not a problem in practice.
       parts = l.split('#')[0].split('=')
       if len(parts) != 2:
         continue
@@ -810,7 +809,7 @@ def AddArguments(parser):
                       help='Path prefix for c++filt, nm, readelf.')
   parser.add_argument('--output-directory',
                       help='Path to the root build directory.')
-  parser.add_argument('--no-string-literals', dest='track_string_literals',
+  parser.add_argument('--no-literals', dest='track_literals',
                       default=True, action='store_false',
                       help='Disable breaking down "** merge strings" into more '
                            'granular symbols.')
@@ -870,7 +869,7 @@ def Run(args, parser):
 
   size_info = CreateSizeInfo(map_path, elf_path, tool_prefix, output_directory,
                              normalize_names=False,
-                             track_string_literals=args.track_string_literals)
+                             track_literals=args.track_literals)
 
   if metadata:
     size_info.metadata = metadata

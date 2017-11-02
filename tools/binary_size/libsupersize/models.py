@@ -82,8 +82,8 @@ DIFF_STATUS_ADDED = 2
 DIFF_STATUS_REMOVED = 3
 DIFF_PREFIX_BY_STATUS = ['= ', '~ ', '+ ', '- ']
 
-
-STRING_LITERAL_NAME = 'string literal'
+# TODO(huangs): Change to 'literal'.
+LITERAL_NAME = 'string literal'
 
 
 class SizeInfo(object):
@@ -255,8 +255,8 @@ class BaseSymbol(object):
     return '.' in self.name or (
         self.name.endswith(']') and not self.name.endswith('[]'))
 
-  def IsStringLiteral(self):
-    return self.full_name == STRING_LITERAL_NAME
+  def IsLiteral(self):
+    return self.full_name == LITERAL_NAME
 
   def IterLeafSymbols(self):
     yield self
@@ -825,7 +825,7 @@ class SymbolGroup(BaseSymbol):
     """
     def cluster_func(symbol):
       name = symbol.full_name
-      if not name or symbol.IsStringLiteral():
+      if not name or symbol.IsLiteral():
         # min_count=2 will ensure order is maintained while not being grouped.
         # "&" to distinguish from real symbol names, id() to ensure uniqueness.
         name = '&' + hex(id(symbol))

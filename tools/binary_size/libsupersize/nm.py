@@ -32,8 +32,8 @@ BulkObjectFileAnalyzer:
   * AnalyzePaths: Run "nm" on all .o files to collect symbol names that exist
     within each.
   * SortPaths: Sort results of AnalyzePaths().
-  * AnalyzeStringLiterals: Must be run after AnalyzePaths() has completed.
-    Extracts string literals from .o files, and then locates them within the
+  * AnalyzeLiterals: Must be run after AnalyzePaths() has completed.
+    Extracts literals from .o files, and then locates them within the
     "** merge strings" sections within an ELF's .rodata section.
 
 This file can also be run stand-alone in order to test out the logic on smaller
@@ -216,7 +216,7 @@ def _LookupStringSectionPositions(target, tool_prefix, output_directory):
       if progbits_idx != -1:
         fields = line[progbits_idx:].split()
         position = (int(fields[2], 16), int(fields[3], 16))
-        # The heuristics in _IterStringLiterals rely on str1 coming first.
+        # The heuristics in _IterLiterals rely on str1 coming first.
         if fields[-1] == '1':
           cur_offsets.insert(0, position)
         else:
@@ -329,14 +329,14 @@ def _ReadStringSections(target, output_directory, positions_by_path):
         os.path.join(output_directory, target)):
       path = '{}({})'.format(target, subpath)
       positions = positions_by_path.get(path)
-      # No positions if file has no string literals.
+      # No positions if file has no literals.
       if positions:
         string_sections_by_path[path] = (
             [chunk[offset:offset + size] for offset, size in positions])
   else:
     for path in target:
       positions = positions_by_path.get(path)
-      # We already log a warning about this in _IterStringLiterals().
+      # We already log a warning about this in _IterLiterals().
       if positions:
         string_sections_by_path[path] = _ReadFileChunks(
             os.path.join(output_directory, path), positions)
@@ -351,8 +351,8 @@ def _ExtractArchivePath(path):
   return None
 
 
-def _IterStringLiterals(path, addresses, obj_sections):
-  """Yields all string literals (including \0) for the given object path.
+def _IterLiterals(path, addresses, obj_sections):
+  """Yields all literals (including \0 for strings) for the given object path.
 
   Args:
     path: Object file path.
@@ -364,8 +364,8 @@ def _IterStringLiterals(path, addresses, obj_sections):
   next_offsets = sorted(int(a, 16) for a in addresses)
   if not obj_sections:
     # Happens when there is an address for a symbol which is not actually a
-    # string literal, or when string_sections_by_path is missing an entry.
-    logging.warning('Object has %d strings but no string sections: %s',
+    # literal, or when string_sections_by_path is missing an entry.
+    logging.warning('Object has %d literals but no .rodata sections: %s',
                     len(addresses), path)
     return
   for section_data in obj_sections:
@@ -413,12 +413,12 @@ def _ResolveStringPieces(encoded_string_addresses_by_path, string_data,
 
   # list of elf_positions_by_path.
   ret = [collections.defaultdict(list) for _ in string_data]
-  # Brute-force search of strings within ** merge strings sections.
-  # This is by far the slowest part of AnalyzeStringLiterals().
+  # Brute-force search of strings within "** merge strings" sections.
+  # This is by far the slowest part of AnalyzeLiterals().
   # TODO(agrieve): Pre-process string_data into a dict of literal->address (at
   #     least for ascii strings).
   for path, object_addresses in string_addresses_by_path.iteritems():
-    for value in _IterStringLiterals(
+    for value in _IterLiterals(
         path, object_addresses, string_sections_by_path.get(path)):
       first_match = -1
       first_match_dict = None
@@ -543,8 +543,8 @@ class _BulkObjectFileAnalyzerWorker(object):
     for paths in self._paths_by_name.itervalues():
       paths.sort()
 
-  def AnalyzeStringLiterals(self, elf_path, elf_string_positions):
-    logging.debug('worker: AnalyzeStringLiterals() started.')
+  def AnalyzeLiterals(self, elf_path, elf_string_positions):
+    logging.debug('worker: AnalyzeLiterals() started.')
     # Read string_data from elf_path, to be shared by forked processes.
     address, offset, _ = LookupElfRodataInfo(elf_path, self._tool_prefix)
     adjust = address - offset
@@ -565,7 +565,7 @@ class _BulkObjectFileAnalyzerWorker(object):
       final_result.append(
           concurrent.JoinEncodedDictOfLists([r[i] for r in results]))
     self._list_of_encoded_elf_string_positions_by_path = final_result
-    logging.debug('worker: AnalyzeStringLiterals() completed.')
+    logging.debug('worker: AnalyzeLiterals() completed.')
 
   def GetSymbolNames(self):
     return self._paths_by_name
@@ -628,7 +628,7 @@ class _BulkObjectFileAnalyzerMaster(object):
   def SortPaths(self):
     self._pipe.send((_MSG_SORT_PATHS,))
 
-  def AnalyzeStringLiterals(self, elf_path, string_positions):
+  def AnalyzeLiterals(self, elf_path, string_positions):
     self._pipe.send((_MSG_ANALYZE_STRINGS, elf_path, string_positions))
 
   def GetSymbolNames(self):
@@ -657,9 +657,9 @@ class _BulkObjectFileAnalyzerSlave(object):
   def __init__(self, worker_analyzer, pipe):
     self._worker_analyzer = worker_analyzer
     self._pipe = pipe
-    # Use a worker thread so that AnalyzeStringLiterals() is non-blocking. The
-    # thread allows the main thread to process a call to GetSymbolNames() while
-    # AnalyzeStringLiterals() is in progress.
+    # Use a worker thread so that AnalyzeLiterals() is non-blocking. The thread
+    # allows the main thread to process a call to GetSymbolNames() while
+    # AnalyzeLiterals() is in progress.
     self._job_queue = Queue.Queue()
     self._worker_thread = threading.Thread(target=self._WorkerThreadMain)
     self._allow_analyze_paths = True
@@ -682,18 +682,18 @@ class _BulkObjectFileAnalyzerSlave(object):
         message = self._pipe.recv()
         if message[0] == _MSG_ANALYZE_PATHS:
           assert self._allow_analyze_paths, (
-              'Cannot call AnalyzePaths() after AnalyzeStringLiterals()s.')
+              'Cannot call AnalyzePaths() after AnalyzeLiterals()s.')
           paths = message[1].split('\x01')
           self._job_queue.put(lambda: self._worker_analyzer.AnalyzePaths(paths))
         elif message[0] == _MSG_SORT_PATHS:
           assert self._allow_analyze_paths, (
-              'Cannot call SortPaths() after AnalyzeStringLiterals()s.')
+              'Cannot call SortPaths() after AnalyzeLiterals()s.')
           self._job_queue.put(self._worker_analyzer.SortPaths)
         elif message[0] == _MSG_ANALYZE_STRINGS:
           self._WaitForAnalyzePathJobs()
           elf_path, string_positions = message[1:]
           self._job_queue.put(
-              lambda: self._worker_analyzer.AnalyzeStringLiterals(
+              lambda: self._worker_analyzer.AnalyzeLiterals(
                   elf_path, string_positions))
         elif message[0] == _MSG_GET_SYMBOL_NAMES:
           self._WaitForAnalyzePathJobs()
@@ -757,10 +757,10 @@ def main():
   if args.elf_file:
     address, offset, size = LookupElfRodataInfo(
         args.elf_file, args.tool_prefix)
-    bulk_analyzer.AnalyzeStringLiterals(args.elf_file, ((address, size),))
+    bulk_analyzer.AnalyzeLiterals(args.elf_file, ((address, size),))
 
     positions_by_path = bulk_analyzer.GetStringPositions()[0]
-    print('Found {} string literals'.format(sum(
+    print('Found {} literals'.format(sum(
         len(v) for v in positions_by_path.itervalues())))
     if args.show_strings:
       logging.debug('.rodata adjust=%d', address - offset)

@@ -489,10 +489,10 @@ def DescribeSizeInfoCoverage(size_info):
           _Divide(star_syms.size, in_section.size))
 
     if section == 'r':
-      string_literals = in_section.Filter(lambda s: s.IsStringLiteral())
+      literals = in_section.Filter(lambda s: s.IsLiteral())
+      # TODO(huangs): Change "string literals" to "literals".
       yield '* Contains {} string literals. Total size={}, padding={}'.format(
-          len(string_literals), string_literals.size_without_padding,
-          string_literals.padding)
+          len(literals), literals.size_without_padding, literals.padding)
 
     aliased_symbols = in_section.Filter(lambda s: s.aliases)
     if len(aliased_symbols):

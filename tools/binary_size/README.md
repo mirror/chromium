@@ -223,8 +223,8 @@ Example session:
 >>> syms = size_info.symbols.WherePathMatches(r'skia').Sorted()
 >>> Print(syms, verbose=True)  # Show full symbol names with parameter types.
 ...
->>> # Dump all string literals from skia files to "strings.txt".
->>> Print((t[1] for t in ReadStringLiterals(syms)), to_file='strings.txt')
+>>> # Dump all literals from skia files to "strings.txt".
+>>> Print((t[1] for t in ReadLiterals(syms)), to_file='strings.txt')
 ```
 
 ### Roadmap
