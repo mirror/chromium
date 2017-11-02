@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fa3c669_440813ea",
+        "filename": "chrome/browser/ui/app_list/search/suggestions/url_suggestion_result.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T18:27:26Z",
+      "side": 1,
+      "message": "If you want, this can be \u003d {favicon_base::IconType::WEB_MANIFEST_ICON, favicon_base::IconType::FAVICON, ...};",
+      "range": {
+        "startLine": 62,
+        "startChar": 38,
+        "endLine": 66,
+        "endChar": 68
+      },
+      "revId": "c2389fd5bb00a6765bf024afa20eb2d0c56ae3f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
