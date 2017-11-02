@@ -372,6 +372,8 @@ bool Process::WaitForExitWithTimeout(TimeDelta timeout, int* exit_code) const {
   return WaitForExitWithTimeoutImpl(Handle(), exit_code, timeout);
 }
 
+void Process::Exited(int exit_code) const {}
+
 #if !defined(OS_LINUX) && !defined(OS_MACOSX) && !defined(OS_AIX)
 bool Process::IsProcessBackgrounded() const {
   // See SetProcessBackgrounded().

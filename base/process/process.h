@@ -134,6 +134,9 @@ class BASE_EXPORT Process {
   // is not required.
   bool WaitForExitWithTimeout(TimeDelta timeout, int* exit_code) const;
 
+  // Indicates that the process has exited with the specified |exit_code|.
+  void Exited(int exit_code) const;
+
 #if defined(OS_MACOSX)
   // The Mac needs a Mach port in order to manipulate a process's priority,
   // and there's no good way to get that from base given the pid. These Mac
