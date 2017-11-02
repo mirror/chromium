@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3c994efc_30e9e10c",
+        "filename": "build/secondary/third_party/crashpad/crashpad/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-02T18:08:41Z",
+      "side": 1,
+      "message": "\u003e Intentional empty group?\n\nI thought: I want the first target in here to either depend on all of Crashpad, or be harmless. I didn’t want someone to accidentally depend on //third_party/crashpad/crashpad and have it take on a dependency on just the tests.\n\nI couldn’t figure out how to mix deps with wildcards to pick up everything under //third_party/crashpad/crashpad, and I didn’t want to maintain the list of everything here manually, so I settled on “nothing.”\n\nIs there a common pattern for this kind of thing? Or should I provide some sort of comment?",
+      "parentUuid": "44e0ebf9_24af2253",
+      "revId": "1b340fdfbe2920b4231de7a6c923642bbf83c09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64c0b495_cff07303",
         "filename": "build/secondary/third_party/crashpad/crashpad/handler/BUILD.gn",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5264c240_33449a39",
+        "filename": "build/secondary/third_party/crashpad/crashpad/handler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-02T18:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64c0b495_cff07303",
+      "revId": "1b340fdfbe2920b4231de7a6c923642bbf83c09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df45a274_7207caf2",
         "filename": "build/secondary/third_party/crashpad/crashpad/tools/BUILD.gn",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-02T17:53:46Z",
       "side": 1,
       "message": "I think this is going to not get tracked as a dependency properly, but I don\u0027t think listing it as data[] on the target is right, either.",
+      "revId": "1b340fdfbe2920b4231de7a6c923642bbf83c09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03d48e2_fef49d5b",
+        "filename": "build/secondary/third_party/crashpad/crashpad/tools/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-02T18:08:41Z",
+      "side": 1,
+      "message": "\u003e I think this is going to not get tracked as a dependency properly, but I don\u0027t think listing it as data[] on the target is right, either.\n\nGood point. I think “inputs” is the way to do this, but I have to specify it in the target itself. If I try to specify it in the config, I get:\n\n\u003e You set the variable \"inputs\" here and it was unused before it went\n\u003e out of scope.\n\nDirk, do you know how to achieve this?",
+      "parentUuid": "df45a274_7207caf2",
       "revId": "1b340fdfbe2920b4231de7a6c923642bbf83c09e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
