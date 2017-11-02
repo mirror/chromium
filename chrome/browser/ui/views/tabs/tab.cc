@@ -1456,7 +1456,8 @@ void Tab::OnButtonColorMaybeChanged() {
   const SkColor title_color = theme_provider->GetColor(IsActive() ?
       ThemeProperties::COLOR_TAB_TEXT :
       ThemeProperties::COLOR_BACKGROUND_TAB_TEXT);
-  const SkColor new_button_color = SkColorSetA(title_color, 0xA0);
+  const SkColor new_button_color =
+      color_utils::DeriveDefaultIconColor(title_color);
   if (button_color_ != new_button_color) {
     button_color_ = new_button_color;
     title_->SetEnabledColor(title_color);
