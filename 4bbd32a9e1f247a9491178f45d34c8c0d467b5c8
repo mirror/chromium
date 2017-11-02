@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af4dcb10_7c18ed8c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/layout_test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1249639
+      },
+      "writtenOn": "2017-11-02T14:16:29Z",
+      "side": 0,
+      "message": "It seems like _shard_every_file() can be safely removed. Please provide feedback.",
+      "revId": "4bbd32a9e1f247a9491178f45d34c8c0d467b5c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
