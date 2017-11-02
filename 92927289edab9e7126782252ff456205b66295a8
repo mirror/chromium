@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a65fa0af_9df41d5a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-02T17:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d71f27d4_8098489a",
+      "revId": "92927289edab9e7126782252ff456205b66295a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "276c62a9_72bd23fd",
         "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.h",
         "patchSetId": 15
