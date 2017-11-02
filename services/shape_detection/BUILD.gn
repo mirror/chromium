@@ -30,6 +30,7 @@ source_set("lib") {
   } else if (is_win) {
     sources += [
       "barcode_detection_impl.cc",
+      "detection_utils_win.h",
       "face_detection_impl_win.cc",
       "face_detection_impl_win.h",
       "text_detection_impl.cc",
