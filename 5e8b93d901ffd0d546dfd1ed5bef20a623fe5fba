@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1fe4c81_9511c9ed",
+        "filename": "chrome/android/java/res/values/colors.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-02T23:03:08Z",
+      "side": 1,
+      "message": "I could make a new colors.xml file in sw600dp instead of using DeviceFormFactor.java, but this seemed a little bit lighter weight.",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 66
+      },
+      "revId": "5e8b93d901ffd0d546dfd1ed5bef20a623fe5fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
