@@ -22,6 +22,30 @@
       "revId": "2dc7e82614527392457a7d04ca09e1f352d823ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bd6305_9b99e603",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-02T17:18:40Z",
+      "side": 1,
+      "message": "Of course. Thank you for explanation.",
+      "parentUuid": "71143317_aecebdd2",
+      "range": {
+        "startLine": 321,
+        "startChar": 32,
+        "endLine": 321,
+        "endChar": 47
+      },
+      "revId": "2dc7e82614527392457a7d04ca09e1f352d823ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
