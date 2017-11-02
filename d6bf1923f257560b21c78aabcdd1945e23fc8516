@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "609f0a4d_e73800f4",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-11-02T14:55:18Z",
+      "side": 1,
+      "message": "Hmm, it seems to me that with these two functions and the changes in https://chromium-review.googlesource.com/c/chromium/src/+/670541/12/components/viz/service/gl/gpu_service_impl.cc, we can make CL:525672 work.\n\nWe can create the Mojo version of GpuJpegDecoder at https://chromium-review.googlesource.com/c/chromium/src/+/525672/18/content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc#272 with the approach here, probably in a #else section of the #if defined(BROWSER_GPU_CLIENT_LIB) block.\n\nCan you test if this works? It\u0027d be great if we can merge CL:525672 first, and then add your plumbing through the dispatcher to the camera HAL in this CL. It\u0027ll make the code base much cleaner.",
+      "revId": "d6bf1923f257560b21c78aabcdd1945e23fc8516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
