@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19680552_db2514ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T19:58:49Z",
+      "side": 1,
+      "message": "Nit: wrap to 72",
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b389294_b2579e88",
+        "filename": "device/vr/openvr/openvr_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T19:58:49Z",
+      "side": 1,
+      "message": "Per https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#Do-not-write-one_off-functions-to-convert-to_from-Mojo-types, please use the TypeConverter template.",
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c90e631_78de33d4",
+        "filename": "device/vr/openvr/openvr_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T19:58:49Z",
+      "side": 1,
+      "message": "Does .emplace({0, 0, 0, 1}) work here? Ditto below.",
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2ff55f_ef32cfb4",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T19:58:49Z",
+      "side": 1,
+      "message": "Maybe something in the style of IID_PPV_ARGS would be nicer here? It seems better if we don\u0027t have to manually write out the type several times (it would be even nicer if it could infer the type from vr_compositor_, but I\u0027m guessing that\u0027s not possible)",
+      "range": {
+        "startLine": 118,
+        "startChar": 19,
+        "endLine": 119,
+        "endChar": 69
+      },
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad84f9d_71cbf511",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T19:58:49Z",
+      "side": 1,
+      "message": "Would it be logical to call the other function SubmitFrameWithMailboxHolder? (this doesn\u0027t have to change in this CL, but it seems more consistent)\n\nAlso, any reason the argument order is different?\n\nFinally, please add a TODO(https://crbug.com/676224) pointer here, since I assume this is Windows only.",
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9461e915_36d4ec61",
+        "filename": "device/vr/windows/d3d11_texture_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T19:58:49Z",
+      "side": 1,
+      "message": "Let\u0027s unwrap the Mojo handle where it comes in over IPC and convert it to a ScopedHandle there, so we don\u0027t need to overload SetSourceTexture.",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 11
+      },
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f111623_b6f2a53b",
+        "filename": "third_party/openvr/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-02T19:58:49Z",
+      "side": 1,
+      "message": "We already have a jsoncpp in third_party... any chance we can patch openvr to just use that one instead?\n\n(separate CL for this one is fine)",
+      "revId": "9fd4c9e84bbf82e255d34e0b60d90577a06aa391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
