@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "968deaa1_28e142ea",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1158999
+      },
+      "writtenOn": "2017-11-02T18:30:07Z",
+      "side": 1,
+      "message": "Dont think I had anything to do with that. Looks like it was changed on Oct 27 by Jeremy Roman. Should I poke them and ask why?",
+      "parentUuid": "bdbf5ced_e7672a18",
+      "revId": "ed0e9ce196694a2c8cbec25c5b7e332716f74893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b6b5677_e2383232",
         "filename": "media/blink/video_frame_compositor.cc",
         "patchSetId": 22
@@ -33,6 +51,24 @@
       "revId": "ed0e9ce196694a2c8cbec25c5b7e332716f74893",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5692d576_73e45f91",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1158999
+      },
+      "writtenOn": "2017-11-02T18:30:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b6b5677_e2383232",
+      "revId": "ed0e9ce196694a2c8cbec25c5b7e332716f74893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9f883e2d_5643b30d",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1158999
+      },
+      "writtenOn": "2017-11-02T18:30:07Z",
+      "side": 1,
+      "message": "This group of functions interfaces with mojo, and usually get hopped back onto the media_thread. All functions besides the constructor get ran on the media thread.",
+      "parentUuid": "99bc2426_350258e2",
+      "revId": "ed0e9ce196694a2c8cbec25c5b7e332716f74893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acc87bf_a3a9976f",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
         "patchSetId": 22
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-02T17:24:50Z",
       "side": 1,
       "message": "you might want \"SEQUENCE_CHECKER\", unless this class has actual thread affinity.  THREAD_CHECKER gets mad if the thread changes, even if the scheduler has guaranteed proper ordering in the sequence.\n\ni don\u0027t know what the intended semantics are, but i suspect that sequence is strong enough.",
+      "revId": "ed0e9ce196694a2c8cbec25c5b7e332716f74893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33165c90_30ea86b0",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1158999
+      },
+      "writtenOn": "2017-11-02T18:30:07Z",
+      "side": 1,
+      "message": "As discussed offline, I added a comment explaining the dependency on media\u0027s ContextProvider.",
+      "parentUuid": "1acc87bf_a3a9976f",
       "revId": "ed0e9ce196694a2c8cbec25c5b7e332716f74893",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
