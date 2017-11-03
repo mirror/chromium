@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cde7fb71_3b01fcc4",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-03T09:42:04Z",
+      "side": 1,
+      "message": "I\u0027d add a comment and mention that the ScopedPagePauser is destroyed when the near-OOM intervention is declined and thus the mojo strong binding gets destructed.",
+      "revId": "a68d9d48ee2f962c1faa673d265b1de91b5d2d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
