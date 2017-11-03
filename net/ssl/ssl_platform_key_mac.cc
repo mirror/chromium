@@ -48,6 +48,21 @@ namespace net {
 
 namespace {
 
+// TODO(davidben): Remove this when we switch to building to the 10.13
+// SDK. https://crbug.com/780980
+#if !defined(MAC_OS_X_VERSION_10_13) || \
+    MAC_OS_X_VERSION_MIN_ALLOWED < MAC_OS_X_VERSION_10_13
+API_AVAILABLE(macosx(10.13))
+const SecKeyAlgorithm kSecKeyAlgorithmRSASignatureDigestPSSSHA256 =
+    CFSTR("algid:sign:RSA:digest-PSS:SHA256:SHA256:32");
+API_AVAILABLE(macosx(10.13))
+const SecKeyAlgorithm kSecKeyAlgorithmRSASignatureDigestPSSSHA384 =
+    CFSTR("algid:sign:RSA:digest-PSS:SHA384:SHA384:48");
+API_AVAILABLE(macosx(10.13))
+const SecKeyAlgorithm kSecKeyAlgorithmRSASignatureDigestPSSSHA512 =
+    CFSTR("algid:sign:RSA:digest-PSS:SHA512:SHA512:64");
+#endif
+
 class ScopedCSSM_CC_HANDLE {
  public:
   ScopedCSSM_CC_HANDLE() : handle_(0) {}
@@ -83,7 +98,7 @@ class SSLPlatformKeyCSSM : public ThreadedSSLPrivateKey::Delegate {
   ~SSLPlatformKeyCSSM() override {}
 
   std::vector<uint16_t> GetPreferences() override {
-    return SSLPrivateKey::DefaultPreferences(type_);
+    return SSLPrivateKey::DefaultPreferences(type_, false /* no PSS */);
   }
 
   Error SignDigest(uint16_t algorithm,
@@ -173,7 +188,9 @@ class API_AVAILABLE(macosx(10.12)) SSLPlatformKeySecKey
   ~SSLPlatformKeySecKey() override {}
 
   std::vector<uint16_t> GetPreferences() override {
-    return SSLPrivateKey::DefaultPreferences(type_);
+    // RSA-PSS is supported as of macOS 10.13.
+    return SSLPrivateKey::DefaultPreferences(type_,
+                                             base::mac::IsAtLeastOS10_13());
   }
 
   Error SignDigest(uint16_t algorithm,
@@ -209,6 +226,19 @@ class API_AVAILABLE(macosx(10.12)) SSLPlatformKeySecKey
         sec_algorithm = kSecKeyAlgorithmECDSASignatureDigestX962SHA1;
         break;
       default:
+        if (__builtin_available(macOS 10.13, *)) {
+          switch (algorithm) {
+            case SSL_SIGN_RSA_PSS_SHA512:
+              sec_algorithm = kSecKeyAlgorithmRSASignatureDigestPSSSHA512;
+              break;
+            case SSL_SIGN_RSA_PSS_SHA384:
+              sec_algorithm = kSecKeyAlgorithmRSASignatureDigestPSSSHA384;
+              break;
+            case SSL_SIGN_RSA_PSS_SHA256:
+              sec_algorithm = kSecKeyAlgorithmRSASignatureDigestPSSSHA256;
+              break;
+          }
+        }
         NOTREACHED();
         return ERR_FAILED;
     }
