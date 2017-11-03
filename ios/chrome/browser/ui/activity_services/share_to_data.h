@@ -27,8 +27,8 @@
 
 // NSURL versions of 'shareURL' and 'passwordManagerURL'. Use only for passing
 // to libraries that take NSURL.
-@property(nonatomic, readonly) NSURL* shareNSURL;
-@property(nonatomic, readonly) NSURL* passwordManagerNSURL;
+@property(strong, nonatomic, readonly) NSURL* shareNSURL;
+@property(strong, nonatomic, readonly) NSURL* passwordManagerNSURL;
 
 @property(nonatomic, readonly, copy) NSString* title;
 @property(nonatomic, readonly, assign) BOOL isOriginalTitle;

@@ -63,7 +63,7 @@
   if (self) {
     shareURL_ = shareURL;
     passwordManagerURL_ = passwordManagerURL;
-    title_ = [title copy];
+    title_ = title;
     isOriginalTitle_ = isOriginalTitle;
     isPagePrintable_ = isPagePrintable;
     thumbnailGenerator_ = thumbnailGenerator;

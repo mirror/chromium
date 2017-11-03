@@ -100,7 +100,7 @@
 - (id)activityViewControllerPlaceholderItem:
     (UIActivityViewController*)activityViewController {
   // Return the current URL as a placeholder
-  return [self.shareURL copy];
+  return self.shareURL;
 }
 
 - (NSString*)activityViewController:
@@ -113,7 +113,7 @@
          itemForActivityType:(NSString*)activityType {
   if (activity_type_util::TypeFromString(activityType) !=
       activity_type_util::APPEX_PASSWORD_MANAGEMENT)
-    return [self.shareURL copy];
+    return self.shareURL;
 
   // Constructs an NSExtensionItem object from the URL designated for password
   // managers.
