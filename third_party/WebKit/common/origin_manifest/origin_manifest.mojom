@@ -1,0 +1,23 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module blink.mojom;
+
+// TODO(dhausknecht): We should be reusing existing types here, like
+// "third_party/WebKit/public/platform/content_security_policy.mojom"
+// but we cannot at the moment because we are in common and this is in platform
+enum OriginManifestContentSecurityPolicyType {
+  kReport,
+  kEnforce,
+};
+
+struct OriginManifest {
+  array<OriginManifestContentSecurityPolicy> csp_baseline;
+  array<OriginManifestContentSecurityPolicy> csp_fallback;
+};
+
+struct OriginManifestContentSecurityPolicy {
+  string policy = "";
+  OriginManifestContentSecurityPolicyType disposition = OriginManifestContentSecurityPolicyType.kEnforce;
+};

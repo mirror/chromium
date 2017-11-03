@@ -1,0 +1,16 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//third_party/WebKit/common/origin_manifest/origin_manifest.mojom"
+public_headers =
+    [ "//third_party/WebKit/common/origin_manifest/origin_manifest.h" ]
+traits_headers = [ "//third_party/WebKit/common/origin_manifest/origin_manifest_struct_traits.h" ]
+sources = [
+  "//third_party/WebKit/common/origin_manifest/origin_manifest_struct_traits.cc",
+]
+type_mappings = [
+  "blink.mojom.OriginManifestContentSecurityPolicyType=blink::OriginManifest::ContentSecurityPolicyType",
+  "blink.mojom.OriginManifestContentSecurityPolicy=::blink::OriginManifest::ContentSecurityPolicy",
+  "blink.mojom.OriginManifest=blink::OriginManifest",
+]

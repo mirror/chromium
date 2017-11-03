@@ -94,6 +94,7 @@ mojom("mojo_platform_bindings") {
     "blob/blob.mojom",
     "blob/blob_registry.mojom",
     "blob/size_getter.mojom",
+    "origin_manifest/origin_manifest.mojom",
   ]
 
   public_deps = [
