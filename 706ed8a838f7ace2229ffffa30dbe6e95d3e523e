@@ -69,6 +69,24 @@
       "revId": "706ed8a838f7ace2229ffffa30dbe6e95d3e523e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c266ebd_604b5b73",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-03T19:48:11Z",
+      "side": 1,
+      "message": "Ah, I see... well in that case this documentation is right.",
+      "parentUuid": "6a9f3041_2f6af6cb",
+      "revId": "706ed8a838f7ace2229ffffa30dbe6e95d3e523e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
