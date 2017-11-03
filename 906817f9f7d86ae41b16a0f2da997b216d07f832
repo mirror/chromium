@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8e880e8b_7763c91e",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-03T19:25:04Z",
+      "side": 1,
+      "message": "Removed child layers. Thanks for the explanation.",
+      "parentUuid": "46ed6b28_c2eb69c9",
+      "revId": "906817f9f7d86ae41b16a0f2da997b216d07f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb2ddc66_df32ac78",
         "filename": "ash/login/ui/login_bubble.cc",
         "patchSetId": 3
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "Can you try set IMMEDIATELY_ANIMATE_TO_NEW_TARGET as PreemptionStrategy for the animation? We might be able to get rid of AbortAllAnimations() using that.\n\ni.e. add this after L299:\n  settings.SetPreemptionStrategy(\n      ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);",
       "parentUuid": "0eb816de_9cda52d7",
+      "revId": "906817f9f7d86ae41b16a0f2da997b216d07f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7937c7f_3af30212",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-03T19:25:04Z",
+      "side": 1,
+      "message": "set IMMEDIATELY_ANIMATE_TO_NEW_TARGET will still cause the previous animation to end. I changed AbortAllAnimations to StopAnimation and update the is_visible_ after that, this way, the bubble won\u0027t be closed immediately by OnLayerAnimationEnded.",
+      "parentUuid": "c7a15725_c6f2ed1c",
       "revId": "906817f9f7d86ae41b16a0f2da997b216d07f832",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
