@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34a9e49a_3ef9ff95",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Think this should be fine as well. Can\u0027t think of a reason to prefer one over another.",
+      "parentUuid": "d6b40f2d_7a446fa8",
+      "range": {
+        "startLine": 42,
+        "startChar": 20,
+        "endLine": 42,
+        "endChar": 43
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "075a20db_0226c9ea",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8e7682_0f5b20b8",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "075a20db_0226c9ea",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "86af71f2_e2e52a1b",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2acede80_ed5a14ed",
+      "range": {
+        "startLine": 207,
+        "startChar": 9,
+        "endLine": 207,
+        "endChar": 28
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39b5246d_9810fbe0",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "868d1971_1b8a18de",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Not each test case is specific to a single rule. I think it\u0027s helpful to just point out the rule which caused the url to get blocked, like is done currently.",
+      "parentUuid": "39b5246d_9810fbe0",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 209,
+        "endChar": 68
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9953be64_9f7c3c82",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cee868d_a767f706",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "That\u0027s affected by crbug.com/772260. Have a special disabled test case for it below - DISABLED_BlockRequests_SeparatorMatchesEndOfURL",
+      "parentUuid": "9953be64_9f7c3c82",
+      "range": {
+        "startLine": 221,
+        "startChar": 22,
+        "endLine": 221,
+        "endChar": 52
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +277,48 @@
     },
     {
       "key": {
+        "uuid": "02f66a5b_84cffea5",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Have added a comment about the behavior of separator character ^.",
+      "parentUuid": "7f8e793c_7221b8f0",
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0241d24a_a2a748ba",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Yeah I hadn\u0027t thought about url encoding/percent escaping. Think generally only non-ascii characters are escaped. Have added cases for space (%20) that should clarify the behavior.",
+      "parentUuid": "b9b9fc56_26482498",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 62
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79075ab7_f5a285f5",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 9
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "f9c0b4df_99e880b9",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79075ab7_f5a285f5",
+      "range": {
+        "startLine": 366,
+        "startChar": 9,
+        "endLine": 366,
+        "endChar": 23
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a710b560_5fa13d63",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 9
@@ -191,6 +377,30 @@
       "writtenOn": "2017-11-02T00:23:33Z",
       "side": 1,
       "message": "Will this ensure the 4*2 frames from domain_type_test.html completed loadstop?",
+      "range": {
+        "startLine": 423,
+        "startChar": 2,
+        "endLine": 423,
+        "endChar": 47
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08bc86b1_8070b166",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "As per my understanding it should.",
+      "parentUuid": "a710b560_5fa13d63",
       "range": {
         "startLine": 423,
         "startChar": 2,
@@ -220,6 +430,24 @@
     },
     {
       "key": {
+        "uuid": "73f8317e_52d9bfb6",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done. Also added some more comments.",
+      "parentUuid": "5635d64d_f525e880",
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2b79eb8_cae41f0e",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 9
@@ -240,6 +468,30 @@
       "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6815257c_b78f5895",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2b79eb8_cae41f0e",
+      "range": {
+        "startLine": 459,
+        "startChar": 37,
+        "endLine": 459,
+        "endChar": 40
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "66bfd98e_35d5559a",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d1f0b56_0f4c3901",
+      "range": {
+        "startLine": 499,
+        "startChar": 8,
+        "endLine": 499,
+        "endChar": 19
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcb4d19b_b2a3b242",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 9
@@ -289,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "854e6391_08d2e409",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Seems its ok as long as there are no lifetime issues - https://chromium-cpp.appspot.com/.",
+      "parentUuid": "fcb4d19b_b2a3b242",
+      "range": {
+        "startLine": 617,
+        "startChar": 35,
+        "endLine": 617,
+        "endChar": 38
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afd2530f_410fef55",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 9
@@ -300,6 +600,30 @@
       "writtenOn": "2017-11-02T00:23:33Z",
       "side": 1,
       "message": "Turn this into a TODO?",
+      "range": {
+        "startLine": 665,
+        "startChar": 5,
+        "endLine": 665,
+        "endChar": 12
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6463c6e8_6bc25177",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done. Do you have any ideas on how to test this in a browser test? The main thing I need is a way to determine whether the resource has loaded, which seems difficult to do for these.",
+      "parentUuid": "afd2530f_410fef55",
       "range": {
         "startLine": 665,
         "startChar": 5,
@@ -335,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "db34d038_9d0ade22",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "See comments in declarative_net_request.idl for the resourceTypes field. Have added some more clarification in code/comment.\n\nNote: TestRule is ultimately changed to a base::Value and then serialized to json.",
+      "parentUuid": "23bdd8ea_d7305a60",
+      "range": {
+        "startLine": 710,
+        "startChar": 4,
+        "endLine": 710,
+        "endChar": 52
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13136228_bbd42ce5",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 9
@@ -355,6 +703,30 @@
       "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ed1963_dcf0210d",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "13136228_bbd42ce5",
+      "range": {
+        "startLine": 821,
+        "startChar": 2,
+        "endLine": 821,
+        "endChar": 48
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -381,6 +753,30 @@
     },
     {
       "key": {
+        "uuid": "5851a28f_69cfc9c5",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "227ac317_da7f2d27",
+      "range": {
+        "startLine": 897,
+        "startChar": 66,
+        "endLine": 898,
+        "endChar": 38
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "472f0334_323cacce",
         "filename": "chrome/test/data/extensions/declarative_net_request/cached/page_with_cacheable_script",
         "patchSetId": 9
@@ -395,6 +791,24 @@
       "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181fe98b_62e1f6f9",
+        "filename": "chrome/test/data/extensions/declarative_net_request/cached/page_with_cacheable_script",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "472f0334_323cacce",
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -421,6 +835,30 @@
     },
     {
       "key": {
+        "uuid": "6660ed3f_99a9f1c6",
+        "filename": "chrome/test/data/extensions/declarative_net_request/cached/page_with_cacheable_script",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7e120be_f26829af",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 35
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1039d751_bf6cc637",
         "filename": "chrome/test/data/extensions/declarative_net_request/domain_type_test.html",
         "patchSetId": 9
@@ -438,6 +876,24 @@
     },
     {
       "key": {
+        "uuid": "13120b6e_3a0558c2",
+        "filename": "chrome/test/data/extensions/declarative_net_request/domain_type_test.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1039d751_bf6cc637",
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fec5c63_7a36a7bf",
         "filename": "chrome/test/data/extensions/declarative_net_request/pages_with_script/index",
         "patchSetId": 9
@@ -452,6 +908,24 @@
       "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba6bf68_0bb0e691",
+        "filename": "chrome/test/data/extensions/declarative_net_request/pages_with_script/index",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fec5c63_7a36a7bf",
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -478,6 +952,30 @@
     },
     {
       "key": {
+        "uuid": "cdbc6471_46a596cf",
+        "filename": "chrome/test/data/extensions/declarative_net_request/subresources.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7925b2b_2c354b58",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5ca07f9_31ae7fc5",
         "filename": "chrome/test/data/extensions/declarative_net_request/subresources.html",
         "patchSetId": 9
@@ -501,6 +999,30 @@
     },
     {
       "key": {
+        "uuid": "358d6818_de085393",
+        "filename": "chrome/test/data/extensions/declarative_net_request/subresources.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5ca07f9_31ae7fc5",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b55f1f3_593aac98",
         "filename": "chrome/test/data/extensions/declarative_net_request/subresources/subframe.html",
         "patchSetId": 9
@@ -515,6 +1037,24 @@
       "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d950d9c_fd5cfd97",
+        "filename": "chrome/test/data/extensions/declarative_net_request/subresources/subframe.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-03T04:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b55f1f3_593aac98",
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
