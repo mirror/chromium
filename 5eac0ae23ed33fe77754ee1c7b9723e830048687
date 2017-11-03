@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c116da66_5573947d",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-03T13:37:41Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a good idea to have lambdas this long, or nested lambdas like this, so please factor this out into helper functions or methods. If you do that I think that it will no longer be necessary to use [NSAnimationGroup runAnimationGroup:completionHandler:] either, and this function can instead do:\n\n[NSAnimationGrouping beginGrouping];\nif (paused_)\n  [self animatePause];\nelse\n  [self updateProgress];\n[NSAnimationGroup endGrouping];\n\nor something like that, since we aren\u0027t making use of the completion handlers here anyway.",
+      "range": {
+        "startLine": 131,
+        "startChar": 62,
+        "endLine": 131,
+        "endChar": 69
+      },
+      "revId": "5eac0ae23ed33fe77754ee1c7b9723e830048687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
