@@ -70,6 +70,30 @@
       "revId": "3dc188697bb5975b661a1053e3047d7de78b819b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f2fe3ff_cda37699",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-11-03T12:19:43Z",
+      "side": 1,
+      "message": "Done. Thanks.",
+      "parentUuid": "e825665e_1e21dd51",
+      "range": {
+        "startLine": 436,
+        "startChar": 23,
+        "endLine": 436,
+        "endChar": 47
+      },
+      "revId": "3dc188697bb5975b661a1053e3047d7de78b819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
