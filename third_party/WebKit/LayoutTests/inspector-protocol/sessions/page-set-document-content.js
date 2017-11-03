@@ -17,6 +17,7 @@
 
   testRunner.log('Setting document content in session1');
   await session1.protocol.Page.setDocumentContent({frameId: frameId1, html: '<div>Hello from session 1!</div>'});
+  await session2.protocol.Page.onceFrameNavigated();
   testRunner.log('Reading document content in session2:');
   testRunner.log(await session2.evaluate(`document.querySelector('div').textContent`));
 

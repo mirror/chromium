@@ -447,7 +447,11 @@
                 "description": "Sets given markup as the document's HTML.",
                 "parameters": [
                     { "name": "frameId", "$ref": "FrameId", "description": "Frame id to set HTML for." },
-                    { "name": "html", "type": "string", "description": "HTML content to set."  }
+                    { "name": "html", "type": "string", "description": "HTML content to set."  },
+                    { "name": "url", "type": "string", "description": "URL to assign to the document.", "optional": true }
+                ],
+                "returns": [
+                    { "name": "loaderId", "$ref": "Network.LoaderId", "experimental": true, "description": "Loader id that will be used to load document resources." }
                 ],
                 "experimental": true
             },
