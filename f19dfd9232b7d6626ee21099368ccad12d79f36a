@@ -16,6 +16,24 @@
       "revId": "f19dfd9232b7d6626ee21099368ccad12d79f36a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5ff283_a24387d3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 94064,
+      "author": {
+        "id": 1246244
+      },
+      "writtenOn": "2017-11-03T07:55:39Z",
+      "side": 1,
+      "message": "No, only when WebRTC audio is playing. I added text about that.",
+      "parentUuid": "5b421e5e_d5a64d40",
+      "revId": "f19dfd9232b7d6626ee21099368ccad12d79f36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
