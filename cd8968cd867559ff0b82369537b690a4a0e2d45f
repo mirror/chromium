@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e38a590a_2b39f960",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-03T14:57:37Z",
+      "side": 1,
+      "message": "Can we check dlerror here?",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 9
+      },
+      "revId": "cd8968cd867559ff0b82369537b690a4a0e2d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675b9ced_a80bc8f4",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-03T14:57:37Z",
+      "side": 1,
+      "message": "What happens if sdk_handle is null?",
+      "range": {
+        "startLine": 100,
+        "startChar": 41,
+        "endLine": 100,
+        "endChar": 51
+      },
+      "revId": "cd8968cd867559ff0b82369537b690a4a0e2d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e0fcc90_cf9a9170",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-03T14:57:37Z",
+      "side": 1,
+      "message": "Thjs will crash if we fail to load the keyboard, right?",
+      "range": {
+        "startLine": 1168,
+        "startChar": 16,
+        "endLine": 1168,
+        "endChar": 28
+      },
+      "revId": "cd8968cd867559ff0b82369537b690a4a0e2d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3069fba0_8d0fb744",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-03T14:57:37Z",
+      "side": 1,
+      "message": "please rename this to reflect the usecase.",
+      "range": {
+        "startLine": 259,
+        "startChar": 13,
+        "endLine": 259,
+        "endChar": 19
+      },
+      "revId": "cd8968cd867559ff0b82369537b690a4a0e2d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
