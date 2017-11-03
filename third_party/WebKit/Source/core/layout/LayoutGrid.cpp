@@ -318,6 +318,8 @@ void LayoutGrid::UpdateBlockLayout(bool relayout_children) {
     // Grid's layout logic controls the grid item's override size, hence
     // we need to clear any override size set previously, so it doesn't
     // interfere in current layout execution.
+    // Additionally, we need to reset any perviously resolved auto-margin,
+    // since we must compute them again during this layout.
     for (auto* child = FirstInFlowChildBox(); child;
          child = child->NextInFlowSiblingBox())
       child->ClearOverrideSize();
