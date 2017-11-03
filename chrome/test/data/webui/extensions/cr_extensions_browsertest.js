@@ -94,6 +94,7 @@ var CrExtensionsToolbarTest = class extends CrExtensionsBrowserTest {
   /** @override */
   get extraLibraries() {
     return super.extraLibraries.concat([
+      '../test_browser_proxy.js',
       'extension_toolbar_test.js',
     ]);
   }
@@ -294,14 +295,30 @@ TEST_F('CrExtensionsServiceTest', 'ProfileSettings', function() {
 ////////////////////////////////////////////////////////////////////////////////
 // Extension Manager Tests
 
-var CrExtensionsManagerTest = class extends CrExtensionsBrowserTest {
+var CrExtensionsManagerUnitTest = class extends CrExtensionsBrowserTest {
+  /** @override */
+  get browsePreload() {
+    return 'chrome://extensions/manager.html';
+  }
+
   /** @override */
   get extraLibraries() {
     return super.extraLibraries.concat([
-      'extension_manager_test.js',
+      '../fake_chrome_event.js',
+      '../test_browser_proxy.js',
+      'extension_manager_unit_test.js',
     ]);
   }
 };
+
+TEST_F('CrExtensionsManagerUnitTest', 'ItemOrder', function() {
+  mocha.grep(assert(extension_manager_tests.TestNames.ItemOrder)).run();
+});
+
+TEST_F('CrExtensionsManagerUnitTest', 'UpdateItemData', function() {
+  mocha.grep(assert(extension_manager_tests.TestNames.UpdateItemData)).run();
+});
+
 
 var CrExtensionsManagerTestWithMultipleExtensionTypesInstalled =
     class extends CrExtensionsBrowserTest {
@@ -336,10 +353,6 @@ var CrExtensionsManagerTestWithIdQueryParam =
   }
 };
 
-TEST_F('CrExtensionsManagerTest', 'ItemOrder', function() {
-  mocha.grep(assert(extension_manager_tests.TestNames.ItemOrder)).run();
-});
-
 TEST_F(
     'CrExtensionsManagerTestWithMultipleExtensionTypesInstalled',
     'ItemListVisibility', function() {
@@ -367,10 +380,6 @@ TEST_F(
               assert(extension_manager_tests.TestNames.UrlNavigationToDetails))
           .run();
     });
-
-TEST_F('CrExtensionsManagerTest', 'UpdateItemData', function() {
-  mocha.grep(assert(extension_manager_tests.TestNames.UpdateItemData)).run();
-});
 
 ////////////////////////////////////////////////////////////////////////////////
 // Extension Keyboard Shortcuts Tests
