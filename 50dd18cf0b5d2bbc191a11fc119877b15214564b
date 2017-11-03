@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd62850c_4e914ec0",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-03T14:20:15Z",
+      "side": 1,
+      "message": "we can assume surface synchronization is enabled if using Mus. I\u0027d delete these two lines of code.",
+      "revId": "50dd18cf0b5d2bbc191a11fc119877b15214564b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
