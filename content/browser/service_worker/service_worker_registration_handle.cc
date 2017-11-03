@@ -22,10 +22,10 @@ namespace content {
 
 namespace {
 
-const char kNoDocumentURLErrorMessage[] =
+const char kRegistrationHandleNoDocumentURLErrorMessage[] =
     "No URL is associated with the caller's document.";
-const char kShutdownErrorMessage[] = "The Service Worker system has shutdown.";
-const char kUserDeniedPermissionMessage[] =
+const char kRegistrationHandleShutdownErrorMessage[] = "The Service Worker system has shutdown.";
+const char kRegistrationHandleUserDeniedPermissionMessage[] =
     "The user denied permission to use Service Worker.";
 const char kGetNavigationPreloadStateErrorPrefix[] =
     "Failed to get navigation preload state: ";
@@ -34,11 +34,11 @@ const char kEnableNavigationPreloadErrorPrefix[] =
 const char kInvalidStateErrorMessage[] = "The object is in an invalid state.";
 const char kBadMessageImproperOrigins[] =
     "Origins are not matching, or some cannot access service worker.";
-const char kNoActiveWorkerErrorMessage[] =
+const char kRegistrationHandleNoActiveWorkerErrorMessage[] =
     "The registration does not have an active worker.";
-const char kDatabaseErrorMessage[] = "Failed to access storage.";
+const char kRegistrationHandleDatabaseErrorMessage[] = "Failed to access storage.";
 
-WebContents* GetWebContents(int render_process_id, int render_frame_id) {
+WebContents* RegistrationHandleGetWebContents(int render_process_id, int render_frame_id) {
   RenderFrameHost* rfh =
       RenderFrameHost::FromID(render_process_id, render_frame_id);
   return WebContents::FromRenderFrameHost(rfh);
@@ -170,7 +170,7 @@ void ServiceWorkerRegistrationHandle::EnableNavigationPreload(
   if (!registration_->active_version()) {
     std::move(callback).Run(blink::mojom::ServiceWorkerErrorType::kState,
                             std::string(kEnableNavigationPreloadErrorPrefix) +
-                                std::string(kNoActiveWorkerErrorMessage));
+                                std::string(kRegistrationHandleNoActiveWorkerErrorMessage));
     return;
   }
 
@@ -236,7 +236,7 @@ void ServiceWorkerRegistrationHandle::DidUpdateNavigationPreloadEnabled(
   if (status != SERVICE_WORKER_OK) {
     std::move(callback).Run(blink::mojom::ServiceWorkerErrorType::kUnknown,
                             std::string(kEnableNavigationPreloadErrorPrefix) +
-                                std::string(kDatabaseErrorMessage));
+                                std::string(kRegistrationHandleDatabaseErrorMessage));
     return;
   }
 
@@ -289,7 +289,7 @@ bool ServiceWorkerRegistrationHandle::CanServeRegistrationObjectHostMethods(
   if (!provider_host_ || !context_) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kAbort,
-        std::string(error_prefix) + std::string(kShutdownErrorMessage),
+        std::string(error_prefix) + std::string(kRegistrationHandleShutdownErrorMessage),
         args...);
     return false;
   }
@@ -299,7 +299,7 @@ bool ServiceWorkerRegistrationHandle::CanServeRegistrationObjectHostMethods(
   if (provider_host_->document_url().is_empty()) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kSecurity,
-        std::string(error_prefix) + std::string(kNoDocumentURLErrorMessage),
+        std::string(error_prefix) + std::string(kRegistrationHandleNoDocumentURLErrorMessage),
         args...);
     return false;
   }
@@ -314,11 +314,11 @@ bool ServiceWorkerRegistrationHandle::CanServeRegistrationObjectHostMethods(
   if (!GetContentClient()->browser()->AllowServiceWorker(
           registration_->pattern(), provider_host_->topmost_frame_url(),
           dispatcher_host_->resource_context(),
-          base::Bind(&GetWebContents, provider_host_->process_id(),
+          base::Bind(&RegistrationHandleGetWebContents, provider_host_->process_id(),
                      provider_host_->frame_id()))) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kDisabled,
-        std::string(error_prefix) + std::string(kUserDeniedPermissionMessage),
+        std::string(error_prefix) + std::string(kRegistrationHandleUserDeniedPermissionMessage),
         args...);
     return false;
   }

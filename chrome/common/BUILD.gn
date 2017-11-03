@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//build/buildflag_header.gni")
+import("//build/config/jumbo.gni")
 import("//build/util/process_version.gni")
 import("//chrome/common/features.gni")
 import("//chrome/process_version_rc_template.gni")  # For branding_file_path.
@@ -96,7 +97,7 @@ source_set("common_param_traits_macros") {
 
 # Use a static library here because many test binaries depend on this but don't
 # require many files from it. This makes linking more efficient.
-static_library("common") {
+jumbo_static_library("common") {
   sources = [
     "all_messages.h",
     "attrition_experiments.h",
@@ -283,6 +284,12 @@ static_library("common") {
     "//url",
   ]
 
+  jumbo_excluded_sources = [
+    # IPC
+    "common_param_traits.cc",
+    "common_message_generator.cc",
+  ]
+
   if (enable_plugins) {
     public_deps += [ "//ppapi/shared_impl" ]
   }
@@ -364,6 +371,16 @@ static_library("common") {
       "extensions/sync_helper.h",
       "extensions/webstore_install_result.cc",
       "extensions/webstore_install_result.h",
+    ]
+    jumbo_excluded_sources += [
+      # IPC
+      "cast_messages.cc",
+
+      # Namespaces
+      "extensions/chrome_extensions_client.cc",
+      "extensions/manifest_handlers/linked_app_icons.cc",
+      "extensions/manifest_handlers/theme_handler.cc",
+      "extensions/manifest_handlers/app_launch_info.cc",
     ]
     public_deps += [
       "//chrome/common/extensions:mojo_bindings",
@@ -538,7 +555,7 @@ static_library("non_code_constants") {
   ]
 }
 
-static_library("constants") {
+jumbo_static_library("constants") {
   sources = [
     "chrome_features.cc",
     "chrome_features.h",

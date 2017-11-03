@@ -53,6 +53,7 @@
 #endif
 
 #if defined(USE_X11)
+#include "ui/base/x/x11_util_internal.h"
 #include "ui/base/x/x11_util.h"       // nogncheck
 #include "ui/gfx/x/x11_atom_cache.h"  // nogncheck
 #endif
