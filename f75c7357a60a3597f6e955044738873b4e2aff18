@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5682c276_e9718548",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-03T14:29:48Z",
+      "side": 0,
+      "message": "Hmmm... any idea what this 6 is/was doing here? I notice it\u0027s changed in the new version (which, I think is the right thing to do)... but was this a bug?",
+      "range": {
+        "startLine": 841,
+        "startChar": 14,
+        "endLine": 841,
+        "endChar": 15
+      },
+      "revId": "f75c7357a60a3597f6e955044738873b4e2aff18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e54e639_335d7dda",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-03T14:29:48Z",
+      "side": 1,
+      "message": "nit: fields_to_use.data()",
+      "revId": "f25b07c1e88f01e6bab67ff0030c5e9aed7b4d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb1c239_28d4c2f7",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-03T14:29:48Z",
+      "side": 1,
+      "message": "nit: Is a DCHECK_LE(num_fields_to_use, included_fields_size) appropriate here?\n\nThe code below doesn\u0027t require this DCHECK, but num_fields_to_use \u003e included_fields_size would seem to be a error on the part of the caller.",
+      "revId": "f25b07c1e88f01e6bab67ff0030c5e9aed7b4d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
