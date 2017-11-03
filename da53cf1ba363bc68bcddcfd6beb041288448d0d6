@@ -34,6 +34,24 @@
       "revId": "da53cf1ba363bc68bcddcfd6beb041288448d0d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce5c1a7_96e76180",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-03T23:08:50Z",
+      "side": 0,
+      "message": "Slightly prefer going with sth like ServiceWorkerMessages static class if we\u0027ll only have string message constants.",
+      "parentUuid": "a6a56fd6_7552fec9",
+      "revId": "da53cf1ba363bc68bcddcfd6beb041288448d0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
