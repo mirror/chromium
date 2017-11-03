@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b684948_7b691f57",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-03T22:28:47Z",
+      "side": 1,
+      "message": "This check always fails in --mash and --mus\nIs there a way to fix this? The value is set when ui::DeviceDataManager::ConfigureTouchDevices() is called. But I guess in mash and mus this value is never set even when\nTouchTransformControllerTestApi(\n        Shell::Get()-\u003etouch_transformer_controller())\n        .touch_transform_setter()\n        -\u003eConfigureTouchDevices(transforms);\nis called.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "f00f74feef559540a7ff68a7da56200b86ba7eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
