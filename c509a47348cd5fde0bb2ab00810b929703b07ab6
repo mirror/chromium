@@ -22,6 +22,30 @@
       "revId": "c509a47348cd5fde0bb2ab00810b929703b07ab6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b2585c_695e96dd",
+        "filename": "components/exo/sub_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-03T00:35:45Z",
+      "side": 1,
+      "message": "Yes, good call, we shouldn\u0027t comment pending state for siblings. I added a \"synchronized\" flag to CommitSurfaceHierarchy in latest patch to fix this.\n\nA SurfaceTreeHost for async subsurfaces would be ideal but this is better than just failing to commit as that breaks GTK badly enough that we need a short term fix for M64.",
+      "parentUuid": "59c78b0f_1a23f229",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 32
+      },
+      "revId": "c509a47348cd5fde0bb2ab00810b929703b07ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
