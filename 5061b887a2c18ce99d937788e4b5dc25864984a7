@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5425549b_d1eec515",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-03T17:54:53Z",
+      "side": 1,
+      "message": "nit: Rather than remove the value partway through can we replace the function to calculate this with return 0 and a TODO to restore it?\n\nAlso you may have to disable a few of the tests as a result of this change.",
+      "revId": "5061b887a2c18ce99d937788e4b5dc25864984a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
