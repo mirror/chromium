@@ -10,7 +10,7 @@
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "content/browser/web_contents/web_contents_impl.h"
-#include "content/common/clipboard_messages.h"
+#include "content/common/clipboard.mojom.h"
 #include "content/common/frame_messages.h"
 #include "content/public/browser/browser_message_filter.h"
 #include "content/public/browser/browser_thread.h"
@@ -64,6 +64,12 @@ class TestInterstitialPageDelegate : public InterstitialPageDelegate {
   }
 };
 
+class ClipboardHostInterceptor
+    : public mojom::ClipboardHostInterceptorForTesting,
+      public RenderProcessHostObserver {
+ public:
+  ClipboardHostInterceptor(RenderProcessHostImpl*, mojom::ClipboardHostRequest);
+};
 // A message filter that watches for WriteText and CommitWrite clipboard IPC
 // messages to make sure cut/copy is working properly. It will mark these events
 // as handled to prevent modification of the actual clipboard.
@@ -101,22 +107,22 @@ class ClipboardMessageWatcher : public IPC::MessageFilter {
     if (!run_loop_)
       return false;
 
-    if (message.type() == ClipboardHostMsg_WriteText::ID) {
-      ClipboardHostMsg_WriteText::Param params;
-      if (ClipboardHostMsg_WriteText::Read(&message, &params)) {
-        BrowserThread::PostTask(
-            BrowserThread::UI, FROM_HERE,
-            base::BindOnce(&ClipboardMessageWatcher::OnWriteText, this,
-                           base::UTF16ToUTF8(std::get<1>(params))));
-      }
-      return true;
-    }
-    if (message.type() == ClipboardHostMsg_CommitWrite::ID) {
-      BrowserThread::PostTask(
-          BrowserThread::UI, FROM_HERE,
-          base::BindOnce(&ClipboardMessageWatcher::OnCommitWrite, this));
-      return true;
-    }
+    // if (message.type() == ClipboardHostMsg_WriteText::ID) {
+    //   ClipboardHostMsg_WriteText::Param params;
+    //   if (ClipboardHostMsg_WriteText::Read(&message, &params)) {
+    //     BrowserThread::PostTask(
+    //         BrowserThread::UI, FROM_HERE,
+    //         base::BindOnce(&ClipboardMessageWatcher::OnWriteText, this,
+    //                        base::UTF16ToUTF8(std::get<1>(params))));
+    //   }
+    //   return true;
+    // }
+    // if (message.type() == ClipboardHostMsg_CommitWrite::ID) {
+    //   BrowserThread::PostTask(
+    //       BrowserThread::UI, FROM_HERE,
+    //       base::BindOnce(&ClipboardMessageWatcher::OnCommitWrite, this));
+    //   return true;
+    // }
     return false;
   }
 
