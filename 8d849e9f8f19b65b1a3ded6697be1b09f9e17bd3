@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2b93ef8_8d08fe12",
+        "filename": "content/renderer/media_recorder/audio_track_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T23:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb196f2a_1f7b68b3",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e45b69fd_e7d8c12a",
         "filename": "content/renderer/media_recorder/audio_track_encoder.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78051c6_580be1e1",
+        "filename": "content/renderer/media_recorder/audio_track_encoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T23:06:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e45b69fd_e7d8c12a",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0d192dc3_4c32ac57",
+        "filename": "content/renderer/media_recorder/audio_track_encoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T23:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e19934_2af12334",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e785f1b_c634f792",
         "filename": "content/renderer/media_recorder/audio_track_encoder.h",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4feee97_52d8d827",
+        "filename": "content/renderer/media_recorder/audio_track_encoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T23:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e785f1b_c634f792",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "19661eb7_b86eebeb",
+        "filename": "content/renderer/media_recorder/audio_track_opus_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T23:06:56Z",
+      "side": 1,
+      "message": "I removed the comment. However, it does agree w/ the description here:\nhttps://cs.chromium.org/chromium/src/media/base/audio_converter.h?q\u003dmedia/base/audio_converter.h\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d56",
+      "parentUuid": "821a8e45_883f6f4a",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e8b7923_ccde5dad",
         "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d9fe3fc_f37cdc3f",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T23:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e8b7923_ccde5dad",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e5f4af8e_374e6d4c",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T23:06:56Z",
+      "side": 1,
+      "message": "Haha agreed! Done.",
+      "parentUuid": "2ff2b038_7e40f0eb",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b093bc00_5a1ed6ce",
         "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
         "patchSetId": 11
@@ -135,6 +261,24 @@
       "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5d4200_0a35be20",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T23:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b093bc00_5a1ed6ce",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "cc0fea53_c946a7df",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T23:06:56Z",
+      "side": 1,
+      "message": "Done. Is reinterpret_cast\u003cfloat*\u003e(char*) well defined? I can\u0027t quite figure it out from the spec. http://en.cppreference.com/w/cpp/language/reinterpret_cast suggests that int* --\u003e float* is undefined behavior, but I\u0027m not sure about char* --\u003e float*.",
+      "parentUuid": "243318c2_521b824d",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea79a55a_e4326a4e",
         "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
         "patchSetId": 11
@@ -169,6 +331,24 @@
       "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9ea7c2_afd511e4",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T23:06:56Z",
+      "side": 1,
+      "message": "Heh, wish I knew this from the start! :)",
+      "parentUuid": "ea79a55a_e4326a4e",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "c6d7929b_c701da8e",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T23:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9be7f3d4_5ef958b4",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "390d91ec_5751c4f2",
         "filename": "content/renderer/media_recorder/audio_track_recorder.h",
         "patchSetId": 11
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "8cb7f750_f9349b9b",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T23:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "390d91ec_5751c4f2",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77619458_bb85ecd6",
         "filename": "content/renderer/media_recorder/audio_track_recorder.h",
         "patchSetId": 11
@@ -220,6 +436,24 @@
       "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c0bd72_20f74cf2",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T23:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77619458_bb85ecd6",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
