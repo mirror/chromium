@@ -22,6 +22,30 @@
       "revId": "b9a1e8652ad3efe4b9f5851ba607b64df753af63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4933c309_e260a210",
+        "filename": "ios/chrome/browser/ui/animations/locationbar_animation_configurator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-03T00:38:48Z",
+      "side": 1,
+      "message": "I was actually was thinking of going in the opposite direction of what this CL is doing.  It looks like here, you\u0027re consolidating all the animation logic into one object to configure the UIViewPropertyAnimator.  This doesn\u0027t really work for fullscreen animations, where different UIViewControllers are manipulating their own UI.  For Fullscreen, the animator exposes all the knowledge that the UI needs to perform the animations, and the UIViewControllers manipulate their UI in animation blocks when the animator is exposed via an observer pattern. There are a couple benefits to doing it this way:\n- It splits up the animation into smaller logical chunks that are handled by more specific views/view controllers\n- The views are always updated in the same place.  The code that performs the layout of the subviews will be the same code that updates the views in the animation blocks.  As it\u0027s currently implemented, the configurator updates the frames of views to the layout values that are also calculated elsewhere.",
+      "parentUuid": "b539f781_2a7f60bb",
+      "range": {
+        "startLine": 10,
+        "startChar": 46,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "b9a1e8652ad3efe4b9f5851ba607b64df753af63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
