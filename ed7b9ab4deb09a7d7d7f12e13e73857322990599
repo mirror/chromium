@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb861c9e_e91d2297",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-03T08:26:05Z",
+      "side": 1,
+      "message": "Please remove those dependencies (all non \":unit_tests\" dependencies). See comment at the top of the target:\n\n  # Add only \":unit_tests\" dependencies here. If your tests have dependencies\n  # (this would at least include the component itself), they should be on the\n  # test source set and not here.",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 313,
+        "endChar": 38
+      },
+      "revId": "ed7b9ab4deb09a7d7d7f12e13e73857322990599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
