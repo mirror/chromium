@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb53bbcc_2504aa71",
+        "filename": "chrome/browser/extensions/tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-03T00:35:18Z",
+      "side": 1,
+      "message": "What do you think of adding this to the existing extensions tab helper? Or do you think it would be better to introduce another tab helper?",
+      "revId": "af13ac21ce59b40ab02272e44dd482b522fde771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf1be69_3c851fd3",
+        "filename": "chrome/browser/ui/views/extensions/hosted_app_error_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-03T00:35:18Z",
+      "side": 1,
+      "message": "This is just a barebones page. Will clean up before actual review.",
+      "revId": "af13ac21ce59b40ab02272e44dd482b522fde771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
