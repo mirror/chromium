@@ -7,9 +7,10 @@
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/layout_constants.h"
+#include "chrome/browser/ui/tabs/tab_features.h"
 #include "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.h"
 #include "chrome/browser/ui/views/tabs/browser_tab_strip_controller.h"
-#include "chrome/browser/ui/views/tabs/tab_strip.h"
+#include "chrome/browser/ui/views/tabs/tab_strip_impl.h"
 #include "components/feature_engagement/features.h"
 #include "third_party/skia/include/core/SkColorFilter.h"
 #include "third_party/skia/include/effects/SkBlurMaskFilter.h"
@@ -53,7 +54,8 @@ sk_sp<SkDrawLooper> CreateShadowDrawLooper(SkColor color) {
 
 }  // namespace
 
-NewTabButton::NewTabButton(TabStrip* tab_strip, views::ButtonListener* listener)
+NewTabButton::NewTabButton(TabStripImpl* tab_strip,
+                           views::ButtonListener* listener)
     : views::ImageButton(listener),
       tab_strip_(tab_strip),
       new_tab_promo_(nullptr),
@@ -82,16 +84,28 @@ int NewTabButton::GetTopOffset() {
 
 // static
 void NewTabButton::ShowPromoForLastActiveBrowser() {
+  // The TabStrip->Impl cast is only valid for the non-experimental tab strip.
+  // Skip promos for the experimental tab strip.
+  if (IsExperimentalTabStripEnabled())
+    return;
   BrowserView* browser = static_cast<BrowserView*>(
       BrowserList::GetInstance()->GetLastActive()->window());
-  browser->tabstrip()->new_tab_button()->ShowPromo();
+  static_cast<TabStripImpl*>(browser->tabstrip())
+      ->new_tab_button()
+      ->ShowPromo();
 }
 
 // static
 void NewTabButton::CloseBubbleForLastActiveBrowser() {
+  // The TabStrip->Impl cast is only valid for the non-experimental tab strip.
+  // Skip promos for the experimental tab strip.
+  if (IsExperimentalTabStripEnabled())
+    return;
   BrowserView* browser = static_cast<BrowserView*>(
       BrowserList::GetInstance()->GetLastActive()->window());
-  browser->tabstrip()->new_tab_button()->CloseBubble();
+  static_cast<TabStripImpl*>(browser->tabstrip())
+      ->new_tab_button()
+      ->CloseBubble();
 }
 
 void NewTabButton::ShowPromo() {
