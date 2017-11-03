@@ -529,8 +529,6 @@ modules_dictionary_idl_files =
                     "notifications/NotificationAction.idl",
                     "notifications/NotificationEventInit.idl",
                     "notifications/NotificationOptions.idl",
-                    "payments/AndroidPayMethodData.idl",
-                    "payments/AndroidPayTokenization.idl",
                     "payments/BasicCardRequest.idl",
                     "payments/CanMakePaymentEventInit.idl",
                     "payments/ImageObject.idl",

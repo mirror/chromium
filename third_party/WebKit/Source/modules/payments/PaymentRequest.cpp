@@ -10,7 +10,6 @@
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/ScriptRegexp.h"
 #include "bindings/core/v8/V8StringResource.h"
-#include "bindings/modules/v8/V8AndroidPayMethodData.h"
 #include "bindings/modules/v8/V8BasicCardRequest.h"
 #include "bindings/modules/v8/V8PaymentDetailsUpdate.h"
 #include "core/dom/DOMException.h"
@@ -27,8 +26,6 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/ConsoleTypes.h"
 #include "modules/event_target_modules_names.h"
-#include "modules/payments/AndroidPayMethodData.h"
-#include "modules/payments/AndroidPayTokenization.h"
 #include "modules/payments/BasicCardHelper.h"
 #include "modules/payments/BasicCardRequest.h"
 #include "modules/payments/HTMLIFrameElementPayments.h"
@@ -288,133 +285,6 @@ void ValidateAndConvertTotal(const PaymentItem& input,
   output = payments::mojom::blink::PaymentItem::From(input);
 }
 
-// Parses Android Pay data to avoid parsing JSON in the browser.
-void SetAndroidPayMethodData(const ScriptValue& input,
-                             PaymentMethodDataPtr& output,
-                             ExceptionState& exception_state) {
-  AndroidPayMethodData android_pay;
-  V8AndroidPayMethodData::ToImpl(input.GetIsolate(), input.V8Value(),
-                                 android_pay, exception_state);
-  if (exception_state.HadException())
-    return;
-
-  if (android_pay.hasEnvironment() && android_pay.environment() == "TEST")
-    output->environment = payments::mojom::blink::AndroidPayEnvironment::TEST;
-
-  if (android_pay.hasMerchantName() &&
-      android_pay.merchantName().length() > PaymentRequest::kMaxStringLength) {
-    exception_state.ThrowTypeError(
-        "Android Pay merchant name cannot be longer than 1024 characters");
-    return;
-  }
-  output->merchant_name = android_pay.merchantName();
-
-  if (android_pay.hasMerchantId() &&
-      android_pay.merchantId().length() > PaymentRequest::kMaxStringLength) {
-    exception_state.ThrowTypeError(
-        "Android Pay merchant id cannot be longer than 1024 characters");
-    return;
-  }
-  output->merchant_id = android_pay.merchantId();
-
-  // 0 means the merchant did not specify or it was an invalid value
-  output->min_google_play_services_version = 0;
-  if (android_pay.hasMinGooglePlayServicesVersion()) {
-    bool ok = false;
-    int min_google_play_services_version =
-        android_pay.minGooglePlayServicesVersion().ToIntStrict(&ok);
-    if (ok) {
-      output->min_google_play_services_version =
-          min_google_play_services_version;
-    }
-  }
-
-  // 0 means the merchant did not specify or it was an invalid value
-  output->api_version = 0;
-  if (android_pay.hasApiVersion())
-    output->api_version = android_pay.apiVersion();
-
-  if (android_pay.hasAllowedCardNetworks()) {
-    using ::payments::mojom::blink::AndroidPayCardNetwork;
-
-    const struct {
-      const AndroidPayCardNetwork code;
-      const char* const name;
-    } kAndroidPayNetwork[] = {{AndroidPayCardNetwork::AMEX, "AMEX"},
-                              {AndroidPayCardNetwork::DISCOVER, "DISCOVER"},
-                              {AndroidPayCardNetwork::MASTERCARD, "MASTERCARD"},
-                              {AndroidPayCardNetwork::VISA, "VISA"}};
-
-    for (const String& allowed_card_network :
-         android_pay.allowedCardNetworks()) {
-      for (size_t i = 0; i < arraysize(kAndroidPayNetwork); ++i) {
-        if (allowed_card_network == kAndroidPayNetwork[i].name) {
-          output->allowed_card_networks.push_back(kAndroidPayNetwork[i].code);
-          break;
-        }
-      }
-    }
-  }
-
-  if (android_pay.hasPaymentMethodTokenizationParameters()) {
-    const blink::AndroidPayTokenization& tokenization =
-        android_pay.paymentMethodTokenizationParameters();
-    output->tokenization_type =
-        payments::mojom::blink::AndroidPayTokenization::UNSPECIFIED;
-    if (tokenization.hasTokenizationType()) {
-      using ::payments::mojom::blink::AndroidPayTokenization;
-
-      const struct {
-        const AndroidPayTokenization code;
-        const char* const name;
-      } kAndroidPayTokenization[] = {
-          {AndroidPayTokenization::GATEWAY_TOKEN, "GATEWAY_TOKEN"},
-          {AndroidPayTokenization::NETWORK_TOKEN, "NETWORK_TOKEN"}};
-
-      for (size_t i = 0; i < arraysize(kAndroidPayTokenization); ++i) {
-        if (tokenization.tokenizationType() ==
-            kAndroidPayTokenization[i].name) {
-          output->tokenization_type = kAndroidPayTokenization[i].code;
-          break;
-        }
-      }
-    }
-
-    if (tokenization.hasParameters()) {
-      const Vector<String>& keys =
-          tokenization.parameters().GetPropertyNames(exception_state);
-      if (exception_state.HadException())
-        return;
-      if (keys.size() > PaymentRequest::kMaxListSize) {
-        exception_state.ThrowTypeError(
-            "At most 1024 tokenization parameters allowed for Android Pay");
-        return;
-      }
-      String value;
-      for (const String& key : keys) {
-        if (!DictionaryHelper::Get(tokenization.parameters(), key, value))
-          continue;
-        if (key.length() > PaymentRequest::kMaxStringLength) {
-          exception_state.ThrowTypeError(
-              "Android Pay tokenization parameter key cannot be longer than "
-              "1024 characters");
-          return;
-        }
-        if (value.length() > PaymentRequest::kMaxStringLength) {
-          exception_state.ThrowTypeError(
-              "Android Pay tokenization parameter value cannot be longer than "
-              "1024 characters");
-          return;
-        }
-        output->parameters.push_back(
-            payments::mojom::blink::AndroidPayTokenizationParameter::New());
-        output->parameters.back()->key = key;
-        output->parameters.back()->value = value;
-      }
-    }
-  }
-}
-
 // Parses basic-card data to avoid parsing JSON in the browser.
 void SetBasicCardMethodData(const ScriptValue& input,
                             PaymentMethodDataPtr& output,
@@ -449,15 +319,6 @@ void StringifyAndParseMethodSpecificData(
     return;
   }
 
-  // Serialize payment method specific data to be sent to the payment apps. The
-  // payment apps are responsible for validating and processing their method
-  // data asynchronously. Do not throw exceptions here.
-  if (supported_methods.Contains("https://android.com/pay") ||
-      supported_methods.Contains("https://google.com/pay")) {
-    SetAndroidPayMethodData(input, output, exception_state);
-    if (exception_state.HadException())
-      exception_state.ClearException();
-  }
   if (RuntimeEnabledFeatures::PaymentRequestBasicCardEnabled() &&
       supported_methods.Contains("basic-card")) {
     SetBasicCardMethodData(input, output, exception_state);
