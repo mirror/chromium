@@ -26,6 +26,7 @@ class BluetoothAdapterBlueZ;
 // for platforms that use BlueZ.
 class DEVICE_BLUETOOTH_EXPORT BluetoothAdvertisementBlueZ
     : public device::BluetoothAdvertisement,
+      public device::BluetoothAdapter::Observer,
       public bluez::BluetoothLEAdvertisementServiceProvider::Delegate {
  public:
   BluetoothAdvertisementBlueZ(
@@ -35,6 +36,10 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdvertisementBlueZ
   // BluetoothAdvertisement overrides:
   void Unregister(const SuccessCallback& success_callback,
                   const ErrorCallback& error_callback) override;
+
+  // BluetoothAdapter::Observer overrides:
+  void AdapterPresentChanged(device::BluetoothAdapter* adapter,
+                             bool powered) override;
 
   // bluez::BluetoothLEAdvertisementServiceProvider::Delegate overrides:
   void Released() override;
@@ -52,9 +57,20 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdvertisementBlueZ
  private:
   ~BluetoothAdvertisementBlueZ() override;
 
+  // Called when unregister advertisement succeeds.
+  void OnUnregisterSuccess(const SuccessCallback& success_callback);
+
   // Adapter this advertisement is advertising on.
   dbus::ObjectPath adapter_path_;
   std::unique_ptr<bluez::BluetoothLEAdvertisementServiceProvider> provider_;
+
+  // Indicates whether the advertisement is active. An advertisement becomes
+  // inactive when the adapter is no longer present.
+  bool is_active_;
+
+  // Note: This should remain the last member so it'll be destroyed and
+  // invalidate its weak pointers before any other members are destroyed.
+  base::WeakPtrFactory<BluetoothAdvertisementBlueZ> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(BluetoothAdvertisementBlueZ);
 };

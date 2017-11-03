@@ -279,6 +279,20 @@ TEST_F(BluetoothAdvertisementBlueZTest, UnregisterAfterAdapterShutdown) {
   ExpectError(BluetoothAdvertisement::ERROR_ADVERTISEMENT_DOES_NOT_EXIST);
 }
 
+TEST_F(BluetoothAdvertisementBlueZTest, UnregisterAdapterNotPresent) {
+  scoped_refptr<BluetoothAdvertisement> advertisement = CreateAdvertisement();
+  ExpectSuccess();
+  EXPECT_TRUE(advertisement);
+
+  // Simulates adapter goes missing.
+  BluetoothAdvertisementBlueZ* adv =
+      static_cast<BluetoothAdvertisementBlueZ*>(advertisement.get());
+  adv->AdapterPresentChanged(adapter_.get(), false);
+
+  UnregisterAdvertisement(advertisement);
+  ExpectSuccess();
+}
+
 TEST_F(BluetoothAdvertisementBlueZTest, ResetAdvertising) {
   bluez::FakeBluetoothLEAdvertisingManagerClient* adv_client =
       static_cast<bluez::FakeBluetoothLEAdvertisingManagerClient*>(
