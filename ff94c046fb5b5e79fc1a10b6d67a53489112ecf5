@@ -16,6 +16,24 @@
       "revId": "ff94c046fb5b5e79fc1a10b6d67a53489112ecf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb9451c_755feba0",
+        "filename": "services/service_manager/sandbox/sandbox_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-03T18:12:38Z",
+      "side": 1,
+      "message": "Yeah, there\u0027s still the stagnant smell of content/ lingering over this, in that we can\u0027t get every possible sandbox type from this function, because things like SANBOX_TYPE_RENDERER rely on spying on the --type command line flag.  That\u0027s the distinction I was trying to make with the word \"Utility\" until the underlying issue gets cleaned up.",
+      "parentUuid": "7163484c_74d29126",
+      "revId": "ff94c046fb5b5e79fc1a10b6d67a53489112ecf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
