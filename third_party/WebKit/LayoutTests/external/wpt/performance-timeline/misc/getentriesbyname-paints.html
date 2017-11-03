@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+<title>Performance Get Entries by Name: FP and FCP</title>
+</head>
+<body>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<div id="main"></div>
+<div id="image"></div>
+
+<script>
+async_test(function (t) {
+    const bufferedEntries = performance.getEntriesByName('first-paint');
+    assert_equals(bufferedEntries.length, 0, "No paint entries yet");
+    const div = document.createElement("div");
+    div.style.width = "100px";
+    div.style.height = "100px";
+    div.style.backgroundColor = "red";
+    div.style.color = "blue";
+    document.getElementById("main").appendChild(div);
+    function testPaintEntries() {
+      const bufferedEntries = performance.getEntriesByName('first-paint');
+      if (bufferedEntries.length < 1) {
+        t.step_timeout(function() {
+          testPaintEntries();
+        }, 20);
+        return;
+      }
+      t.step(function() {
+        assert_equals(bufferedEntries.length, 1, "FP only.");
+        assert_equals(bufferedEntries[0].entryType, "paint");
+        assert_equals(bufferedEntries[0].name, "first-paint");
+      });
+      const img = document.createElement("IMG");
+      img.src = "../resources/square.png";
+      img.onload = function() {
+        function secondTestPaintEntries() {
+          const moreBufferedEntries = performance.getEntriesByName('first-contentful-paint');
+          if (moreBufferedEntries.length < 1) {
+            t.step_timeout(function() {
+              secondTestPaintEntries();
+            }, 20);
+            return;
+          }
+          t.step(function() {
+            assert_equals(moreBufferedEntries.length, 1, "FCP only.");
+            assert_equals(moreBufferedEntries[0].entryType, "paint");
+            assert_equals(moreBufferedEntries[0].name, "first-contentful-paint");
+            t.done();
+          });
+        }
+        t.step(function() {
+          secondTestPaintEntries();
+        });
+      };
+      document.getElementById('image').appendChild(img);
+    }
+    t.step(function() {
+      testPaintEntries();
+    });
+}, "getEntriesByName are valid for first-paint and first-contentful-paint.");
+</script>
+</body>
+</html>
