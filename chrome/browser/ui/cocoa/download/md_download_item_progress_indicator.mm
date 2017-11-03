@@ -26,6 +26,10 @@ constexpr CGFloat kIndeterminateAnimationDuration = 4.5;
 // …stored under this key.
 NSString* const kIndeterminateAnimationKey = @"indeterminate";
 
+constexpr CGFloat kIndeterminateAnimationParkDistance = M_PI / 8;
+constexpr CGFloat kIndeterminateAnimationParkDuration = 0.8;
+constexpr CGFloat kIndeterminateAnimationUnparkDuration = 0.4;
+
 // Width of the progress stroke itself.
 constexpr CGFloat kStrokeWidth = 2;
 
@@ -124,30 +128,62 @@ base::ScopedCFTypeRef<CGPathRef> CheckPath() {
   if (paused_ == paused)
     return;
   paused_ = paused;
-  if (paused_) {
-    if (CAAnimation* indeterminateAnimation =
-            [strokeLayer_ animationForKey:kIndeterminateAnimationKey]) {
-      [strokeLayer_ setValue:[strokeLayer_.presentationLayer
-                                 valueForKeyPath:@"transform.rotation.z"]
-                  forKeyPath:@"transform.rotation.z"];
-      [strokeLayer_ removeAnimationForKey:kIndeterminateAnimationKey];
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context) {
+    context.timingFunction =
+        CAMediaTimingFunction.cr_materialEaseInOutTimingFunction;
+    context.duration = paused ? 0.4 : 0.2;
+    [self updateColors];
+    context.duration = 0.3;
+    backgroundLayer_.opacity = paused ? 0.08 : 0.15;
+    strokeLayer_.opacity = paused ? 0.2 : 1;
+    shapeLayer_.opacity = paused ? 0.2 : 1;
+    if (paused_) {
+      if (CAAnimation* indeterminateAnimation =
+              [strokeLayer_ animationForKey:kIndeterminateAnimationKey]) {
+        CGFloat rotation =
+            static_cast<NSNumber*>([strokeLayer_.presentationLayer
+                                       valueForKeyPath:@"transform.rotation.z"])
+                .doubleValue;
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context) {
+          context.duration = kIndeterminateAnimationParkDuration;
+          context.timingFunction =
+              CAMediaTimingFunction.cr_materialEaseOutTimingFunction;
+          [CATransaction setDisableActions:YES];
+          CABasicAnimation* strokeParkAnim =
+              [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+          strokeParkAnim.fromValue = @(rotation);
+          strokeParkAnim.byValue = @(-kIndeterminateAnimationParkDistance);
+          [strokeLayer_ removeAnimationForKey:kIndeterminateAnimationKey];
+          [strokeLayer_ addAnimation:strokeParkAnim forKey:nil];
+          [strokeLayer_
+                setValue:@(rotation - kIndeterminateAnimationParkDistance)
+              forKeyPath:@"transform.rotation.z"];
+        }
+                            completionHandler:nil];
+      }
+    } else {
+      [self updateProgress];
+      [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context) {
+        [CATransaction setDisableActions:YES];
+        [strokeLayer_ setValue:@0 forKey:@"transform.rotation.z"];
+      }
+                          completionHandler:nil];
     }
-  } else {
-    [strokeLayer_ setValue:@0 forKey:@"transform.rotation.z"];
-    [self updateProgress];
   }
+                      completionHandler:nil];
 }
 
 - (void)updateColors {
   CGColorRef indicatorColor =
       skia::SkColorToCalibratedNSColor(
-          state_ == MDDownloadItemProgressIndicatorState::kComplete
-              ? gfx::kGoogleGreen700
-              : gfx::kGoogleBlue700)
+          paused_ ? SK_ColorBLACK
+                  : state_ == MDDownloadItemProgressIndicatorState::kComplete
+                        ? gfx::kGoogleGreen700
+                        : gfx::kGoogleBlue700)
           .CGColor;
   backgroundLayer_.fillColor = indicatorColor;
   shapeLayer_.fillColor =
-      state_ == MDDownloadItemProgressIndicatorState::kInProgress
+      (state_ == MDDownloadItemProgressIndicatorState::kInProgress && !paused_)
           ? skia::SkColorToCalibratedNSColor(gfx::kGoogleBlue500).CGColor
           : indicatorColor;
   strokeLayer_.strokeColor = indicatorColor;
@@ -255,15 +291,6 @@ base::ScopedCFTypeRef<CGPathRef> CheckPath() {
   [self updateColors];
 }
 
-- (void)setCanceledState {
-  if (state_ == MDDownloadItemProgressIndicatorState::kCanceled)
-    return;
-  state_ = MDDownloadItemProgressIndicatorState::kCanceled;
-  backgroundLayer_.opacity = 0;
-  strokeLayer_.opacity = 0;
-  [self updateColors];
-}
-
 - (AnimationBlock)updateStateAnimation {
   return [[^{
     switch (targetState_) {
@@ -276,22 +303,45 @@ base::ScopedCFTypeRef<CGPathRef> CheckPath() {
       case MDDownloadItemProgressIndicatorState::kComplete:
         [self setCompleteState];
         break;
-      case MDDownloadItemProgressIndicatorState::kCanceled:
-        [self setCanceledState];
-        break;
     }
   } copy] autorelease];
 }
 
-- (void)updateIsIndeterminate {
+- (void)updateProgress {
+  if (paused_)
+    return;
+  if (progress_ < 0 &&
+      [strokeLayer_ animationForKey:kIndeterminateAnimationKey])
+    return;
+  NSAccessibilityPostNotification(self,
+                                  NSAccessibilityValueChangedNotification);
+  const CGFloat rotation =
+      static_cast<NSNumber*>([strokeLayer_.presentationLayer
+                                 valueForKeyPath:@"transform.rotation.z"])
+          .doubleValue;
   if (progress_ < 0) {
-    if ([strokeLayer_ animationForKey:kIndeterminateAnimationKey])
-      return;
+    CFTimeInterval indeterminateAnimationBeginTime =
+        CACurrentMediaTime() + kIndeterminateAnimationUnparkDuration;
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context) {
+      context.duration = kIndeterminateAnimationUnparkDuration;
+      context.timingFunction =
+          CAMediaTimingFunction.cr_materialEaseInTimingFunction;
+      CABasicAnimation* unparkAnim =
+          [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+      unparkAnim.byValue = @(-kIndeterminateAnimationParkDistance);
+      [strokeLayer_ addAnimation:unparkAnim forKey:nil];
+      context.timingFunction =
+          CAMediaTimingFunction.cr_materialEaseInOutTimingFunction;
+      strokeLayer_.strokeEnd = kIndeterminateArcSize;
+    }
+                        completionHandler:nil];
     // Attach the infinitely-repeating indeterminate animation in its own
     // transaction, so that it doesn't stop completion handlers from running.
     [CATransaction setCompletionBlock:^{
       CABasicAnimation* anim =
           [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+      anim.beginTime = indeterminateAnimationBeginTime;
+      anim.fromValue = @(rotation - kIndeterminateAnimationParkDistance);
       anim.byValue = @(M_PI * -2);
       anim.duration = kIndeterminateAnimationDuration;
       anim.repeatCount = HUGE_VALF;
@@ -301,10 +351,7 @@ base::ScopedCFTypeRef<CGPathRef> CheckPath() {
   } else {
     // If the bar was in an indeterminate state, replace the continuous
     // rotation animation with a one-shot animation that resets it.
-    if (CGFloat rotation =
-            static_cast<NSNumber*>([strokeLayer_.presentationLayer
-                                       valueForKeyPath:@"transform.rotation.z"])
-                .doubleValue) {
+    if (rotation) {
       CABasicAnimation* anim =
           [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
       anim.fromValue = @(rotation);
@@ -315,19 +362,13 @@ base::ScopedCFTypeRef<CGPathRef> CheckPath() {
       // existing rotation animation.
       [strokeLayer_ removeAnimationForKey:kIndeterminateAnimationKey];
     }
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context) {
+      // The stroke moves just a hair faster than other elements.
+      context.duration = 0.25;
+      strokeLayer_.strokeEnd = progress_;
+    }
+                        completionHandler:nil];
   }
-}
-
-- (void)updateProgress {
-  NSAccessibilityPostNotification(self,
-                                  NSAccessibilityValueChangedNotification);
-  [self updateIsIndeterminate];
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context) {
-    // The stroke moves just a hair faster than other elements.
-    context.duration = 0.25;
-    strokeLayer_.strokeEnd = progress_ < 0 ? kIndeterminateArcSize : progress_;
-  }
-                      completionHandler:nil];
 }
 
 - (AnimationBlock)updateProgressAnimation {
