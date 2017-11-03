@@ -1064,6 +1064,7 @@ void NavigationRequest::OnStartChecksComplete(
       std::move(navigation_ui_data),
       navigation_handle_->service_worker_handle(),
       navigation_handle_->appcache_handle(), this);
+  navigation_handle_->DidStartRequest();
 }
 
 void NavigationRequest::OnRedirectChecksComplete(

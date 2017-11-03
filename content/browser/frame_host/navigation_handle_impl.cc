@@ -516,6 +516,14 @@ NavigationData* NavigationHandleImpl::GetNavigationData() {
   return navigation_data_.get();
 }
 
+void NavigationHandleImpl::DidStartRequest() {
+  DCHECK(IsBrowserSideNavigationEnabled());
+  DCHECK(state_ == WILL_SEND_REQUEST || state_ == DEFERRING_START) << state_;
+  for (auto& throttle : throttles_) {
+    throttle->StartDidProceed();
+  }
+}
+
 void NavigationHandleImpl::SetOnDeferCallbackForTesting(
     const base::Closure& on_defer_callback) {
   on_defer_callback_for_testing_ = on_defer_callback;
