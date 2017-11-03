@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb541e14_9be75afa",
+        "filename": "services/service_manager/public/cpp/standalone_service/standalone_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-03T21:51:45Z",
+      "side": 1,
+      "message": "note: I\u0027m imagining a subsequent CL will fold this step into Sandbox::Initialize() under the control of an Options flag.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 53
+      },
+      "revId": "f44f605af44c79b31b15cfcb08dddbebd9db6bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
