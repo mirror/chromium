@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b056fc8d_e0d74261",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T21:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5926d8fd_801630a0",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd6d1f8a_2f2c5b7a",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 6
@@ -166,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "8d058f50_6dc7e235",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T21:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c963a3e8_f2d3f634",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "431efc85_ecd1eea8",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 6
@@ -180,6 +222,24 @@
       "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4700ed3_36f039a0",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T21:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "431efc85_ecd1eea8",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +293,24 @@
       "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17c26361_24e43de8",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T21:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d56a089a_f011f423",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

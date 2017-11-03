@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "35c73e8b_d75f63ca",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T21:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24de705a_43415fbe",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 55
+      },
+      "revId": "79ba1bd3929d76d7b28a2629508d30bcef539d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10c5c166_ab8551ef",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 8
@@ -62,6 +86,30 @@
       "revId": "79ba1bd3929d76d7b28a2629508d30bcef539d0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0407eb96_fc233f14",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T21:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fde948f_40ea1076",
+      "range": {
+        "startLine": 236,
+        "startChar": 30,
+        "endLine": 236,
+        "endChar": 34
+      },
+      "revId": "79ba1bd3929d76d7b28a2629508d30bcef539d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
