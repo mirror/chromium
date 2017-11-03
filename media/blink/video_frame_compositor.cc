@@ -130,8 +130,15 @@ void VideoFrameCompositor::SetVideoFrameProviderClient(
 }
 
 scoped_refptr<VideoFrame> VideoFrameCompositor::GetCurrentFrame() {
-  DCHECK(task_runner_->BelongsToCurrentThread());
+  base::AutoLock lock(current_frame_lock_);
   return current_frame_;
+}
+
+void VideoFrameCompositor::SetCurrentFrame_Locked(
+    const scoped_refptr<VideoFrame>& frame) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  base::AutoLock lock(current_frame_lock_);
+  current_frame_ = frame;
 }
 
 void VideoFrameCompositor::PutCurrentFrame() {
@@ -192,12 +199,11 @@ void VideoFrameCompositor::PaintSingleFrame(
   }
 }
 
-scoped_refptr<VideoFrame>
-VideoFrameCompositor::GetCurrentFrameAndUpdateIfStale() {
+void VideoFrameCompositor::UpdateCurrentFrameIfStale() {
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   if (IsClientSinkAvailable() || !rendering_ || !is_background_rendering_)
-    return current_frame_;
+    return;
 
   DCHECK(!last_background_render_.is_null());
 
@@ -206,24 +212,12 @@ VideoFrameCompositor::GetCurrentFrameAndUpdateIfStale() {
 
   // Cap updates to 250Hz which should be more than enough for everyone.
   if (interval < base::TimeDelta::FromMilliseconds(4))
-    return current_frame_;
+    return;
 
   // Update the interval based on the time between calls and call background
   // render which will give this information to the client.
   last_interval_ = interval;
   BackgroundRender();
-
-  return current_frame_;
-}
-
-base::TimeDelta VideoFrameCompositor::GetCurrentFrameTimestamp() const {
-  // When the VFC is stopped, |callback_| is cleared; this synchronously
-  // prevents CallRender() from invoking ProcessNewFrame(), and so
-  // |current_frame_| won't change again until after Start(). (Assuming that
-  // PaintSingleFrame() is not also called while stopped.)
-  if (!current_frame_)
-    return base::TimeDelta();
-  return current_frame_->timestamp();
 }
 
 void VideoFrameCompositor::SetOnNewProcessedFrameCallback(
@@ -246,7 +240,7 @@ bool VideoFrameCompositor::ProcessNewFrame(
   // subsequent PutCurrentFrame() call it will mark it as rendered.
   rendered_last_frame_ = false;
 
-  current_frame_ = frame;
+  SetCurrentFrame_Locked(frame);
 
   if (!new_processed_frame_cb_.is_null())
     base::ResetAndReturn(&new_processed_frame_cb_).Run(base::TimeTicks::Now());

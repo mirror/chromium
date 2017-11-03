@@ -99,7 +99,7 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   void PaintSingleFrame(const scoped_refptr<VideoFrame>& frame,
                         bool repaint_duplicate_frame = false) override;
 
-  // Returns |current_frame_| if |client_| is set.  If no |client_| is set,
+  // Updates |current_frame_| if |client_| is set.  If no |client_| is set,
   // |is_background_rendering_| is true, and |callback_| is set, it requests a
   // new frame from |callback_|, using the elapsed time between calls to this
   // function as the render interval; defaulting to 16.6ms if no prior calls
@@ -110,13 +110,7 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   // where the <video> tag is invisible (possibly not even in the DOM) and thus
   // does not receive a |client_|.  In this case, frame acquisition is driven by
   // the frequency of canvas or WebGL paints requested via JavaScript.
-  scoped_refptr<VideoFrame> GetCurrentFrameAndUpdateIfStale();
-
-  // Returns the timestamp of the current (possibly stale) frame, or
-  // base::TimeDelta() if there is no current frame. This method may be called
-  // from the media thread as long as the VFC is stopped. (Assuming that
-  // PaintSingleFrame() is not also called while stopped.)
-  base::TimeDelta GetCurrentFrameTimestamp() const;
+  void UpdateCurrentFrameIfStale();
 
   // Sets the callback to be run when the new frame has been processed. The
   // callback is only run once and then reset.
@@ -155,6 +149,8 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   // Handles setting of |current_frame_|.
   bool ProcessNewFrame(const scoped_refptr<VideoFrame>& frame,
                        bool repaint_duplicate_frame);
+
+  void SetCurrentFrame_Locked(const scoped_refptr<VideoFrame>& frame);
 
   // Called by |background_rendering_timer_| when enough time elapses where we
   // haven't seen a Render() call.
@@ -195,6 +191,7 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
 
   // These values are set on the compositor thread, but also read on the media
   // thread when the VFC is stopped.
+  base::Lock current_frame_lock_;
   scoped_refptr<VideoFrame> current_frame_;
 
   // These values are updated and read from the media and compositor threads.
