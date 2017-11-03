@@ -34,19 +34,20 @@ namespace media {
 #define PARAMETERS_ALIGNMENT 16
 static_assert(AudioBus::kChannelAlignment == PARAMETERS_ALIGNMENT,
               "Audio buffer parameters struct alignment not same as AudioBus");
+// Be cautious with memory alignment of member fields! See crbug.com/781095.
 struct MEDIA_SHMEM_EXPORT ALIGNAS(PARAMETERS_ALIGNMENT)
     AudioInputBufferParameters {
   double volume;
-  uint32_t size;
   int64_t capture_time;  // base::TimeTicks in microseconds.
+  uint32_t size;
   uint32_t id;
   bool key_pressed;
 };
 struct MEDIA_SHMEM_EXPORT ALIGNAS(PARAMETERS_ALIGNMENT)
     AudioOutputBufferParameters {
-  uint32_t frames_skipped;
   int64_t delay;            // base::TimeDelta in microseconds.
   int64_t delay_timestamp;  // base::TimeTicks in microseconds.
+  uint32_t frames_skipped;
   uint32_t bitstream_data_size;
   uint32_t bitstream_frames;
 };
