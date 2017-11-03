@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35626f2f_d3340f46",
+        "filename": "chrome/browser/extensions/tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:46:29Z",
+      "side": 1,
+      "message": "forward declare?",
+      "revId": "fb15a7016d3f60e52157db1e2133da6edf2ce0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f525aad_5461b00e",
+        "filename": "chrome/browser/extensions/tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:46:29Z",
+      "side": 1,
+      "message": "can it go inside this thing rather than on TabHelper?",
+      "revId": "fb15a7016d3f60e52157db1e2133da6edf2ce0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbb2499_43cb66ef",
+        "filename": "chrome/browser/ui/extensions/hosted_app_error.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:46:29Z",
+      "side": 1,
+      "message": "if (!browser)",
+      "revId": "fb15a7016d3f60e52157db1e2133da6edf2ce0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e9463f_ab385bc5",
+        "filename": "chrome/browser/ui/views/extensions/hosted_app_error_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:46:29Z",
+      "side": 1,
+      "message": "can you set context instead?",
+      "revId": "fb15a7016d3f60e52157db1e2133da6edf2ce0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb79d8f_f19a092b",
+        "filename": "chrome/browser/ui/views/extensions/hosted_app_error_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:46:29Z",
+      "side": 1,
+      "message": "this doesn\u0027t look right - doesn\u0027t this cause a leak?",
+      "revId": "fb15a7016d3f60e52157db1e2133da6edf2ce0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d507f1_e1d05d94",
+        "filename": "chrome/browser/ui/views/extensions/hosted_app_error_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:46:29Z",
+      "side": 1,
+      "message": "I think you probably want |this| to be a WidgetDelegate, not a View*. Instead, create the View hierarchy in WidgetDelegate::GetContentsView()",
+      "revId": "fb15a7016d3f60e52157db1e2133da6edf2ce0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0d6fbe_51ba5c22",
+        "filename": "chrome/browser/ui/views/extensions/hosted_app_error_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:46:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure this accounts for the window frame (when the window frame is drawn by Chrome rather than by the OS) - there\u0027s some complexities for sad tab around this.",
+      "revId": "fb15a7016d3f60e52157db1e2133da6edf2ce0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f6b282_75c98094",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:46:29Z",
+      "side": 1,
+      "message": "Yeah I am not sure if this is the right layer for this stuff to go :/. I suspect not. Maybe hosted apps should be setting a subclass for ChromeWebContentsViewDelegate as their WebContentsViewDelegate, then its Focus() can do the hosted app stuff before calling super::Focus. I think there\u0027s a method in chrome (on some other delegate) which generates WebContentsViewDelegate* for a WebContents - it might be good if that could detect a hosted app and use a different one (I think it looks at some CreateParams for the WebContents).",
+      "revId": "fb15a7016d3f60e52157db1e2133da6edf2ce0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0534b421_a8cdcd07",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:46:29Z",
+      "side": 1,
+      "message": "can there be both a SadTab and a HostedAppError?",
+      "revId": "fb15a7016d3f60e52157db1e2133da6edf2ce0de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
