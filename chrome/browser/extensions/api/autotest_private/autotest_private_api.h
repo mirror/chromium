@@ -14,6 +14,15 @@
 
 namespace extensions {
 
+class AutotestPrivateLoginFunction : public UIThreadExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("autotestPrivate.login", AUTOTESTPRIVATE_LOGIN)
+
+ private:
+  ~AutotestPrivateLoginFunction() override {}
+  ResponseAction Run() override;
+};
+
 class AutotestPrivateLogoutFunction : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("autotestPrivate.logout", AUTOTESTPRIVATE_LOGOUT)

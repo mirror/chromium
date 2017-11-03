@@ -76,6 +76,10 @@ namespace autotestPrivate {
   callback VoidCallback = void ();
 
   interface Functions {
+    // Login to a user session.
+    static void login(DOMString username, DOMString password,
+                      DOMString gaia_id, boolean using_saml);
+
     // Logout of a user session.
     static void logout();
 

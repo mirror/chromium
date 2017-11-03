@@ -30,8 +30,11 @@
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/login/lock/screen_locker.h"
+#include "chrome/browser/chromeos/login/screens/gaia_view.h"
+#include "chrome/browser/chromeos/login/ui/login_display_host.h"
 #include "chrome/browser/chromeos/system/input_device_settings.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/ui/webui/chromeos/login/oobe_ui.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "components/user_manager/user_manager.h"
@@ -75,6 +78,26 @@ bool IsTestMode(content::BrowserContext* context) {
 }
 
 }  // namespace
+
+ExtensionFunction::ResponseAction AutotestPrivateLoginFunction::Run() {
+  std::unique_ptr<api::autotest_private::Login::Params> params(
+      api::autotest_private::Login::Params::Create(*args_));
+  EXTENSION_FUNCTION_VALIDATE(params.get());
+
+  DVLOG(1) << "AutotestPrivateLoginFunction username=" << params->username
+           << ", gaia_id=" << params->gaia_id
+           << ", using_saml=" << params->using_saml;
+
+#if defined(OS_CHROMEOS)
+  chromeos::LoginDisplayHost::default_host()
+      ->GetOobeUI()
+      ->GetGaiaScreenView()
+      ->Login(params->username, params->password, params->gaia_id,
+              params->using_saml);
+#endif
+
+  return RespondNow(NoArguments());
+}
 
 ExtensionFunction::ResponseAction AutotestPrivateLogoutFunction::Run() {
   DVLOG(1) << "AutotestPrivateLogoutFunction";

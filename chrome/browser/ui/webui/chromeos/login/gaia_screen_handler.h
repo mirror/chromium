@@ -46,15 +46,19 @@ class GaiaScreenHandler : public BaseScreenHandler,
           active_directory_password_change_screen_handler);
   ~GaiaScreenHandler() override;
 
-  // GaiaView:
-  void MaybePreloadAuthExtension() override;
-  void DisableRestrictiveProxyCheckForTest() override;
-
  private:
   // TODO (antrim@): remove this dependency.
   friend class SigninScreenHandler;
 
   struct GaiaContext;
+
+  // GaiaView:
+  void MaybePreloadAuthExtension() override;
+  void Login(const std::string& username,
+             const std::string& password,
+             const std::string& gaia_id,
+             bool using_saml) override;
+  void DisableRestrictiveProxyCheckForTest() override;
 
   void LoadGaia(const GaiaContext& context);
 

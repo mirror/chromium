@@ -284,6 +284,13 @@ void GaiaScreenHandler::MaybePreloadAuthExtension() {
   }
 }
 
+void GaiaScreenHandler::Login(const std::string& username,
+                              const std::string& password,
+                              const std::string& gaia_id,
+                              bool using_saml) {
+  DoCompleteLogin(gaia_id, username, password, using_saml);
+}
+
 void GaiaScreenHandler::DisableRestrictiveProxyCheckForTest() {
   disable_restrictive_proxy_check_for_test_ = true;
 }

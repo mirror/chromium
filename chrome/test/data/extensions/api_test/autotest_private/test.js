@@ -5,6 +5,11 @@
 chrome.test.runTests([
   // logout/restart/shutdown don't do anything as we don't want to kill the
   // browser with these tests.
+  function login() {
+    chrome.autotestPrivate.login('test@test.test', 'testPassword',
+                                 'test_gaia_id');
+    chrome.test.succeed();
+  },
   function logout() {
     chrome.autotestPrivate.logout();
     chrome.test.succeed();
