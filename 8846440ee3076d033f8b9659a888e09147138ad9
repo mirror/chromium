@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af9a424d_3e3ecf6c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_resource_coordinator_signal_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-03T01:09:36Z",
+      "side": 1,
+      "message": "Does this just replace TabManager::GRCTabSignalObserver because we want to have a clearer boundary between GRC and TabManager?",
+      "revId": "8846440ee3076d033f8b9659a888e09147138ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "988968d7_554d39d8",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_resource_coordinator_signal_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-03T01:09:36Z",
+      "side": 1,
+      "message": "Why would we need this base class? Are there other PageSignalObservers?",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 31
+      },
+      "revId": "8846440ee3076d033f8b9659a888e09147138ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
