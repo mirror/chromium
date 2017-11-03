@@ -468,6 +468,7 @@ class AURA_EXPORT WindowTreeClient
   void WmCreateTopLevelWindow(
       uint32_t change_id,
       ClientSpecificId requesting_client_id,
+      const std::string& remote_service_name,
       const std::unordered_map<std::string, std::vector<uint8_t>>&
           transport_properties) override;
   void WmClientJankinessChanged(ClientSpecificId client_id,
