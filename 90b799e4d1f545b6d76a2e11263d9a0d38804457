@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "a40bf34e_ed89d9e5",
+        "filename": "ui/gfx/icc_profile.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-11-03T21:36:41Z",
+      "side": 1,
+      "message": "Not sure if this makes sense, but would be be possible to not put the id_ in the internal structure, and have ICCProfiles with the same data (but different IDs) share the same internals pointer?",
+      "range": {
+        "startLine": 114,
+        "startChar": 19,
+        "endLine": 114,
+        "endChar": 22
+      },
+      "revId": "90b799e4d1f545b6d76a2e11263d9a0d38804457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44cd62f9_3c867405",
+        "filename": "ui/gfx/icc_profile.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-11-03T21:36:41Z",
+      "side": 1,
+      "message": "Probably out of scope for this CL, but wouldn\u0027t it make more sense to have something like kICCNotParsedYet ?",
+      "range": {
+        "startLine": 118,
+        "startChar": 36,
+        "endLine": 118,
+        "endChar": 53
+      },
+      "revId": "90b799e4d1f545b6d76a2e11263d9a0d38804457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2a570b_b91a5461",
+        "filename": "ui/gfx/icc_profile.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-11-03T21:36:41Z",
+      "side": 1,
+      "message": "Can\u0027t it just be static?",
+      "range": {
+        "startLine": 138,
+        "startChar": 13,
+        "endLine": 138,
+        "endChar": 20
+      },
+      "revId": "90b799e4d1f545b6d76a2e11263d9a0d38804457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ebb3aa7_c621561a",
         "filename": "ui/gfx/ipc/color/gfx_param_traits.cc",
         "patchSetId": 2
