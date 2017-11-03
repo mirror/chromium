@@ -69,6 +69,24 @@
       "revId": "8450338743574a80fc7973316255003f578cd9bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c946f688_baf8b6d9",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-11-03T21:52:51Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s necessary to call the method explicitly as the RemoveAllResponseProvider will be eventually called before the server is destroyed (when server.Stop()). \nHere it is restarting the server in case some test case already stops the server, which will hit server.isRunning DChecks.",
+      "parentUuid": "b26cd720_49f26122",
+      "revId": "8450338743574a80fc7973316255003f578cd9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
