@@ -2089,7 +2089,8 @@
         {
             "platforms": [
                 "android",
-                "win"
+                "win",
+                "linux"
             ],
             "experiments": [
                 {

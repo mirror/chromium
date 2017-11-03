@@ -3291,4 +3291,30 @@ TEST(NetworkQualityEstimatorTest,
   EXPECT_EQ(12, estimator.ComputeIncreaseInTransportRTTForTests().value_or(0));
 }
 
+TEST(NetworkQualityEstimatorTest, MaybeComputeECTAfterNSamples) {
+  base::TimeTicks now = base::TimeTicks::Now();
+  base::TimeTicks historical = now - base::TimeDelta::FromMinutes(10);
+
+  std::map<std::string, std::string> variation_params;
+  TestNetworkQualityEstimator estimator(variation_params);
+
+  const base::TimeDelta rtt = base::TimeDelta::FromSeconds(1);
+  uint64_t host = 1u;
+
+  for (size_t i = 0; i < 400; ++i) {
+    estimator.AddAndNotifyObserversOfRTT(NetworkQualityEstimator::Observation(
+        rtt.InMilliseconds(), historical, INT32_MIN,
+        NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP, host));
+  }
+  EXPECT_EQ(rtt, estimator.GetHttpRTT());
+
+  const base::TimeDelta rtt_new = base::TimeDelta::FromSeconds(3);
+  for (size_t i = 0; i < 50; ++i) {
+    estimator.AddAndNotifyObserversOfRTT(NetworkQualityEstimator::Observation(
+        rtt_new.InMilliseconds(), now, INT32_MIN,
+        NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP, host));
+  }
+  EXPECT_NE(rtt, estimator.GetHttpRTT().value());
+}
+
 }  // namespace net
