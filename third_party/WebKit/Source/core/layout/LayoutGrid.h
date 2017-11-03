@@ -251,6 +251,7 @@ class LayoutGrid final : public LayoutBlock {
   bool HasAutoMarginsInRowAxis(const LayoutBox&) const;
   void UpdateAutoMarginsInColumnAxisIfNeeded(LayoutBox&);
   void UpdateAutoMarginsInRowAxisIfNeeded(LayoutBox&);
+  void ResetAutoMarginsIfNeeded(LayoutBox&, GridTrackSizingDirection) const;
 
   LayoutUnit BaselinePosition(
       FontBaseline,

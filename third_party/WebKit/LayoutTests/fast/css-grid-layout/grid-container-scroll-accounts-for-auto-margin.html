@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<style>
+html {
+   height: 100%;
+   position: relative;
+}
+body {
+   display: grid;
+   grid-template-columns: auto;
+   grid-template-rows: 1fr auto;
+   padding: 0px;
+   margin: 0px;
+   min-height: 100%;
+}
+.item1 {
+   background-color: blue;
+   width: 16em;
+   font-size: 18px;
+   line-height: 26px;
+   margin: 0px auto;
+}
+.item2 {
+   background-color: red;
+   height: 60px;
+   margin-bottom: -45px;
+}
+</style>
+<div class="item1"></div>
+<div class="item2"></div>
+<script>
+    document.body.style = "overflow: hidden;";
+    document.body.offsetLeft;
+    document.body.style = "overflow: auto;";
+</script>

@@ -318,9 +318,14 @@ void LayoutGrid::UpdateBlockLayout(bool relayout_children) {
     // Grid's layout logic controls the grid item's override size, hence
     // we need to clear any override size set previously, so it doesn't
     // interfere in current layout execution.
+    // Additionally, we need to reset any perviously resolved auto-margin,
+    // since we must compute them again during this layout.
     for (auto* child = FirstInFlowChildBox(); child;
-         child = child->NextInFlowSiblingBox())
+         child = child->NextInFlowSiblingBox()) {
       child->ClearOverrideSize();
+      ResetAutoMarginsIfNeeded(*child, kForColumns);
+      ResetAutoMarginsIfNeeded(*child, kForRows);
+    }
 
     UpdateLogicalWidth();
 
@@ -1619,6 +1624,29 @@ void LayoutGrid::UpdateAutoMarginsInColumnAxisIfNeeded(LayoutBox& child) {
     child.SetMarginBefore(available_alignment_space, Style());
   } else if (margin_after.IsAuto()) {
     child.SetMarginAfter(available_alignment_space, Style());
+  }
+}
+
+DISABLE_CFI_PERF
+void LayoutGrid::ResetAutoMarginsIfNeeded(
+    LayoutBox& child,
+    GridTrackSizingDirection direction) const {
+  bool is_row_axis = direction == kForColumns;
+  bool has_auto_margins = is_row_axis ? HasAutoMarginsInRowAxis(child)
+                                      : HasAutoMarginsInColumnAxis(child);
+  if (!has_auto_margins)
+    return;
+
+  if (is_row_axis) {
+    if (child.StyleRef().MarginStartUsing(StyleRef()).IsAuto())
+      child.SetMarginStart(LayoutUnit(), Style());
+    if (child.StyleRef().MarginEndUsing(StyleRef()).IsAuto())
+      child.SetMarginEnd(LayoutUnit(), Style());
+  } else {
+    if (child.StyleRef().MarginBeforeUsing(StyleRef()).IsAuto())
+      child.SetMarginBefore(LayoutUnit(), Style());
+    if (child.StyleRef().MarginAfterUsing(StyleRef()).IsAuto())
+      child.SetMarginAfter(LayoutUnit(), Style());
   }
 }
 
