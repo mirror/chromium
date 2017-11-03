@@ -16,6 +16,24 @@
       "revId": "22666cc280a7d4906d0ddcad1363b9da5089206a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3dc461_569133df",
+        "filename": "ui/login/account_picker/user_pod_row.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-03T10:21:32Z",
+      "side": 1,
+      "message": "This will only happen if you navigate to the remove option and press enter all with keyboard, then do shift-tab. In all other case (tabbing/shift-tabbing more to focus something else, or mouse-clicking somewhere outside the action menu) will correctly close the action menu, so the bug only happens when focus moves to actionBoxAreaElement.",
+      "parentUuid": "b6bb6420_1c4be73d",
+      "revId": "22666cc280a7d4906d0ddcad1363b9da5089206a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
