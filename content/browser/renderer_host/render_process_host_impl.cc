@@ -3654,7 +3654,14 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
   process_resource_coordinator_.reset();
   ResetChannelProxy();
 
-  UpdateProcessPriority();
+#if defined(OS_ANDROID)
+  bool update_process_priority = true;
+#else
+  bool update_process_priority = true;
+#endif
+
+  if (update_process_priority)
+    UpdateProcessPriority();
 
   within_process_died_observer_ = true;
   NotificationService::current()->Notify(
@@ -3764,9 +3771,9 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
 
   const ChildProcessLauncherPriority priority = {
     // We background a process as soon as it hosts no active audio/video streams
-    // and no visible widgets -- the callers must call this function whenever we
-    // transition in/out of those states.
-    visible_widgets_ == 0 && media_stream_count_ == 0 &&
+    // and no visible/pending widgets -- the callers must call this function
+    // whenever we transition in/out of those states.
+    visible_widgets_ == 0 && media_stream_count_ == 0 && pending_views_ == 0 &&
         !base::CommandLine::ForCurrentProcess()->HasSwitch(
             switches::kDisableRendererBackgrounding),
     // boost_for_pending_views
@@ -3851,16 +3858,7 @@ void RenderProcessHostImpl::OnProcessLaunched() {
         child_process_launcher_->GetProcess().IsProcessBackgrounded();
 #endif  // defined(OS_MACOSX)
 
-    // Disable updating process priority on startup on desktop platforms for now
-    // as it incorrectly results in backgrounding foreground navigations until
-    // their first commit is made. A better long term solution would be to be
-    // aware of the tab's visibility at this point. https://crbug.com/560446.
-    // This is still needed on Android which uses
-    // |priority_.boost_for_pending_views| and requires RenderProcessHostImpl to
-    // propagate priority changes immediately to ChildProcessLauncher.
-#if defined(OS_ANDROID)
     UpdateProcessPriority();
-#endif
 
     // Share histograms between the renderer and this process.
     CreateSharedRendererHistogramAllocator();
