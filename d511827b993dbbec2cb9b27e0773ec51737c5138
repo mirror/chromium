@@ -22,6 +22,30 @@
       "revId": "d511827b993dbbec2cb9b27e0773ec51737c5138",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4846154b_0059a7ef",
+        "filename": "content/browser/service_worker/service_worker_response_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-11-03T13:53:25Z",
+      "side": 1,
+      "message": "Aha, yes.",
+      "parentUuid": "a044aaa6_3854d058",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 17,
+        "endChar": 21
+      },
+      "revId": "d511827b993dbbec2cb9b27e0773ec51737c5138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
