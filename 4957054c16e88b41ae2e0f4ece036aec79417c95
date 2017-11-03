@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bcf2b696_a1c9d43a",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-03T22:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18f83a95_da8c8290",
+      "range": {
+        "startLine": 629,
+        "startChar": 15,
+        "endLine": 629,
+        "endChar": 26
+      },
+      "revId": "4957054c16e88b41ae2e0f4ece036aec79417c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83162419_2b350b87",
         "filename": "base/debug/stack_trace_posix.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-03T20:55:36Z",
       "side": 1,
       "message": "But you’ll still leave cur_base at whatever it was from a previous iteration of the loop, and you’ll wind up setting r.base.\n\nPerhaps it’s best to move the declaration and 0-initialization of cur_base just inside the loop. In that case, ET_EXEC can be handled in default: with the comment augmented to state that it’s where you expect to deal with ET_EXEC and that 0 is correct because they’re not relocatable.",
+      "revId": "4957054c16e88b41ae2e0f4ece036aec79417c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0597e228_7bbb7b87",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-03T22:06:33Z",
+      "side": 1,
+      "message": "Moving cur_base initialization into the loop wouldn\u0027t correctly handle the case where the executable segment is not the first segment, though (which is, after all, the whole point of this change). In that case we really do want to keep the base address from the previous iteration.\n\nI think we should handle a mapping which happens to start with an non-ET_DYN/ET_EXEC ELF header in the same way as a mapping which does not start with an ELF header, i.e. we preserve the base address.",
+      "parentUuid": "83162419_2b350b87",
       "revId": "4957054c16e88b41ae2e0f4ece036aec79417c95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
