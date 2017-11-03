@@ -207,11 +207,16 @@ void RendererImpl::Flush(const base::Closure& flush_cb) {
   // can be flushed again). OnStreamRestartCompleted will resume Flush
   // processing after audio/video restart has completed and there are no other
   // pending stream status changes.
-  if (restarting_audio_ || restarting_video_) {
+  // TODO(dalecurtis, servolk) We should abort the StartPlaying call post Flush
+  // to avoid unnecessary work.
+  if ((restarting_audio_ || restarting_video_) && pending_flush_) {
     pending_actions_.push_back(
         base::Bind(&RendererImpl::FlushInternal, weak_this_));
     return;
   }
+
+  // If a stream restart is pending, this Flush() will complete it. Upon flush
+  // completion any pending actions will be executed as well.
 
   FlushInternal();
 }
@@ -573,10 +578,12 @@ void RendererImpl::OnStreamStatusChanged(DemuxerStream* stream,
                        ? &RendererImpl::RestartVideoRenderer
                        : &RendererImpl::ReinitializeVideoRenderer,
                    weak_this_, stream, time);
-    if (state_ == STATE_FLUSHED)
+    if (state_ == STATE_FLUSHED) {
       handle_track_status_cb.Run();
-    else
+    } else {
+      pending_flush_ = true;
       video_renderer_->Flush(handle_track_status_cb);
+    }
   } else if (stream->type() == DemuxerStream::AUDIO) {
     DCHECK(audio_renderer_);
     DCHECK(time_source_);
@@ -601,6 +608,7 @@ void RendererImpl::OnStreamStatusChanged(DemuxerStream* stream,
       time_ticking_ = false;
       time_source_->StopTicking();
     }
+    pending_flush_ = true;
     audio_renderer_->Flush(handle_track_status_cb);
   }
 }
@@ -677,6 +685,7 @@ void RendererImpl::RestartAudioRenderer(DemuxerStream* stream,
   } else {
     // Stream restart will be completed when the audio renderer decodes enough
     // data and reports HAVE_ENOUGH to HandleRestartedStreamBufferingChanges.
+    pending_flush_ = false;
     audio_renderer_->StartPlaying();
   }
 }
@@ -698,6 +707,7 @@ void RendererImpl::RestartVideoRenderer(DemuxerStream* stream,
   } else {
     // Stream restart will be completed when the video renderer decodes enough
     // data and reports HAVE_ENOUGH to HandleRestartedStreamBufferingChanges.
+    pending_flush_ = false;
     video_renderer_->StartPlayingFrom(time);
   }
 }
