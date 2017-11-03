@@ -22,6 +22,30 @@
       "revId": "f00f74feef559540a7ff68a7da56200b86ba7eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fcf3258_aa9a0cd1",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-03T22:48:33Z",
+      "side": 1,
+      "message": "Always fails in tests, fails when running on linux desktop, or fails on device?\n\n--mus and --mash don\u0027t have a DeviceDataManager available to ash. It runs in the mus window server mojo service, which is on a different thread in --mus and --mash.\n\nUnder --mash and --mus the InputDeviceManager interface has a bridge between the mus service and the rest of the code. The mus implementation is in services/ui/public/cpp/input_devices/input_device_client.cc. However, in ash_unittests we don\u0027t talk to that. I suspect TouchTransformSetterMus just early exits in tests.\n\nRegardless of what you do with the tests, I\u0027d suggest making sure that in production your code is actually getting valid touchscreen target displays under --mus. It\u0027s possible something is now asynchronous that wasn\u0027t before.\n\nI\u0027m not super familiar with this display management code. If you have more questions, kylechar@ might be a good resource.",
+      "parentUuid": "5b684948_7b691f57",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "f00f74feef559540a7ff68a7da56200b86ba7eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
