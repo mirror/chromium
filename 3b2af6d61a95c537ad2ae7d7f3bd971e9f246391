@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ccb5ff4_bba2a576",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-03T20:12:07Z",
+      "side": 1,
+      "message": "The trace for DoRead includes the time the client spends handling it. We should have a separate event (like \"MojoCdmFileIO::ProcessRead\"?). Not sure if it should be nested or not.\n\nMaybe also add an event in OnError to record the time spent handling errors.",
+      "range": {
+        "startLine": 204,
+        "startChar": 11,
+        "endLine": 204,
+        "endChar": 25
+      },
+      "revId": "3b2af6d61a95c537ad2ae7d7f3bd971e9f246391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
