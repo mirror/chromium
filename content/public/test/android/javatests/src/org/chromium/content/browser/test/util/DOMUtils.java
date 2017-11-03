@@ -463,12 +463,11 @@ public class DOMUtils {
      * @return the click target of the node in the form of a [ x, y ] array.
      */
     private static int[] getClickTargetForBounds(ContentViewCore viewCore, Rect bounds) {
-        int browserControlsLayoutHeight = viewCore.doBrowserControlsShrinkBlinkSize()
-                ? viewCore.getTopControlsHeightPix()
-                : 0;
         int clickX = (int) viewCore.getRenderCoordinates().fromLocalCssToPix(bounds.exactCenterX());
+        // TODO(jinsukkim): Let embedder comes with its own top controls height to remove
+        //                  the test-only method in content layer.
         int clickY = (int) viewCore.getRenderCoordinates().fromLocalCssToPix(bounds.exactCenterY())
-                + browserControlsLayoutHeight;
+                + viewCore.getTopControlsHeightForTesting();
         return new int[] { clickX, clickY };
     }
 
