@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c5d5e51_75b315a9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-03T20:13:34Z",
+      "side": 1,
+      "message": "To avoid making this a slow test by design, you can instead do a rAF+postTask:\n\nrequestAnimationFrame(() \u003d\u003e {\n  setTimeout(() \u003d\u003e {\n    // By the time this runs, the frame should be in a steady state.\n  }, 0)\n});",
+      "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddcd839_4c609134",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-03T20:13:34Z",
+      "side": 1,
+      "message": "rAF+postTask should work here as well:\n\nrequestAnimationFrame(() \u003d\u003e {\n  setTimeout(() \u003d\u003e {\n    // If frame is not throttled, it will have run another rAF by now.\n  }, 0)\n});",
+      "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51420dd7_6d0e724f",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 3195,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-03T20:13:34Z",
+      "side": 1,
+      "message": "Fix wording (\"can be been calculated.\")",
+      "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf21e527_8f996a8c",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-03T20:13:34Z",
+      "side": 1,
+      "message": "Is this possible?",
+      "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7726ec61_ab861f58",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-03T20:13:34Z",
+      "side": 1,
+      "message": "This logic is now different from LocalFrameView::UpdateRenderThrottlingStatus; is that intended?",
+      "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b348162_95a74e2e",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-03T20:13:34Z",
+      "side": 1,
+      "message": "Can this be private?",
+      "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
