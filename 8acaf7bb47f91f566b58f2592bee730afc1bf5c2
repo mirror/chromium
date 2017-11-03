@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "379b776f_6c721e0a",
+        "filename": "chrome/browser/net/proxy_resolver_manager.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-03T17:04:52Z",
+      "side": 1,
+      "message": "Currently, if I just naively try to do this, it doesn\u0027t work.\n\nFor one thing, ProxyResolvers depend on their proxy_resolver::ProxyResolverFactoryImpl, so destroying the factory will either cancel the attempt to make a ProxyResolver, at best, or cause the ProxyResolver to crash on the first resolution, at worst, since the ProxyResolverV8TracingFactory it needs has been destroyed.\n\nAfter I fix that, I think I also have to have the ProxyResolvers hold onto ServiceContextRefFactories?",
+      "parentUuid": "6d021546_929f2537",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 64
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "418b52f9_d37b8b98",
         "filename": "chrome/browser/net/proxy_resolver_manager.h",
         "patchSetId": 27
