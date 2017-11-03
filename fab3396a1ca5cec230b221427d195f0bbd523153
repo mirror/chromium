@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f305e02a_b16bf028",
+        "filename": "chrome/test/data/webui/extensions/extension_load_error_test.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T20:46:44Z",
+      "side": 0,
+      "message": "Had to change this for the same reason as in toolbar tests (retryLoadUnpacked now returns a Promise).",
+      "revId": "fab3396a1ca5cec230b221427d195f0bbd523153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70734bd3_7bdc446a",
+        "filename": "chrome/test/data/webui/extensions/extension_toolbar_test.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T20:46:44Z",
+      "side": 0,
+      "message": "Had to change this to TestBrowserProxy since loadUnpacked now returns a Promise, and the code that uses attaches a catch() to that Promise. With ClickMock, the mock version of loadUnpacked does not return anything, so the code calling catch() would throw a runtime error during tests.\n\nI plan to cleanup all MockDelegate definitions we currently have in tests, to a use a single ServiceMockDelegate in a follow up CL.",
+      "revId": "fab3396a1ca5cec230b221427d195f0bbd523153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

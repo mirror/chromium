@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06c89758_2cd46cd8",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T20:46:44Z",
+      "side": 1,
+      "message": "In my mind Manager basically is App (and manager.html should be renamed to app.html). Is that what you mean by \"main page\"?",
+      "parentUuid": "40598905_390c5557",
+      "revId": "1db9d4e44f75deb80c6b4231e89bb58e5c21a43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb94a2fe_0095182f",
         "filename": "chrome/browser/resources/md_extensions/service.js",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-31T11:00:48Z",
       "side": 1,
       "message": "We could go one step further, and have manager handle all the logic via subscribing a callback or event listener, service just need to pass the data over. It makes more sense to me for manager to decide what to do with the data, since I think the service should really just be a data access layer.\n\nThis would also allow service to not keep any data (i,e. we can remove this.extensions_ from service), and not duplicate the extensionsInfo array both here and in manager. The only other place this.extensions_ is used in this file is to determine whether or not to open options in tab or modal, which we can easily move to manager too.",
+      "revId": "1db9d4e44f75deb80c6b4231e89bb58e5c21a43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e153527d_cac30eff",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T20:46:44Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "bb94a2fe_0095182f",
       "revId": "1db9d4e44f75deb80c6b4231e89bb58e5c21a43f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "1db9d4e44f75deb80c6b4231e89bb58e5c21a43f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75259f7_bf8c67d2",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T20:46:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a3fc0cf_174226fe",
+      "revId": "1db9d4e44f75deb80c6b4231e89bb58e5c21a43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
