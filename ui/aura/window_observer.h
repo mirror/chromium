@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/strings/string16.h"
 #include "ui/aura/aura_export.h"
+#include "ui/compositor/property_change_reason.h"
 
 namespace gfx {
 class Rect;
@@ -78,15 +79,21 @@ class AURA_EXPORT WindowObserver {
   // on.
   virtual void OnWindowVisibilityChanged(Window* window, bool visible) {}
 
-  // Invoked when SetBounds() is invoked on |window|. |old_bounds| and
-  // |new_bounds| are in parent coordinates.
+  // Invoked when the bounds of the |window|'s layer are set. |old_bounds| and
+  // |new_bounds| are in parent coordinates. |reason| indicates whether the
+  // bounds were set directly or by an animation. This will be called at every
+  // step of a bounds animation.
   virtual void OnWindowBoundsChanged(Window* window,
                                      const gfx::Rect& old_bounds,
-                                     const gfx::Rect& new_bounds) {}
+                                     const gfx::Rect& new_bounds,
+                                     ui::PropertyChangeReason reason) {}
 
-  // Invoked when the opacity of the |window|'s layer changes. Can be invoked
-  // multiple times during animation.
-  virtual void OnWindowOpacityChanged(Window* window) {}
+  // Invoked when the opacity of the |window|'s layer is set. |reason| indicates
+  // whether the opacity was set directly or by an animation. This won't
+  // necessarily be called at every step of an animation. However, it will be
+  // called at least once before the first frame of the animation is rendered.
+  virtual void OnWindowOpacityChanged(Window* window,
+                                      ui::PropertyChangeReason reason) {}
 
   // Invoked when SetTransform() is invoked on |window|.
   virtual void OnWindowTransforming(Window* window) {}
