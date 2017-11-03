@@ -59,11 +59,11 @@ namespace {
 // to trace similar data elsewhere in the codebase.
 std::unique_ptr<TracedValue> GetTraceArgsForScriptElement(
     ScriptElementBase* element,
-    const TextPosition& text_position,
-    const KURL& url) {
+    const TextPosition& text_position) {
   std::unique_ptr<TracedValue> value = TracedValue::Create();
-  if (!url.IsNull())
-    value->SetString("url", url.GetString());
+  ScriptLoader* script_loader = element->Loader();
+  if (script_loader && script_loader->GetResource())
+    value->SetString("url", script_loader->GetResource()->Url().GetString());
   if (element->GetDocument().GetFrame()) {
     value->SetString(
         "frame",
@@ -79,16 +79,6 @@ std::unique_ptr<TracedValue> GetTraceArgsForScriptElement(
   return value;
 }
 
-std::unique_ptr<TracedValue> GetTraceArgsForScriptElement(
-    const PendingScript* pending_script) {
-  return GetTraceArgsForScriptElement(
-      pending_script->GetElement(), pending_script->StartingPosition(),
-      (pending_script &&
-       pending_script->GetScriptType() == ScriptType::kClassic)
-          ? pending_script->UrlForClassicScript()
-          : NullURL());
-}
-
 void DoExecuteScript(PendingScript* pending_script, const KURL& document_url) {
   ScriptElementBase* element = pending_script->GetElement();
   ScriptLoader* script_loader = element->Loader();
@@ -99,7 +89,8 @@ void DoExecuteScript(PendingScript* pending_script, const KURL& document_url) {
           : "HTMLParserScriptRunner ExecuteScript";
   TRACE_EVENT_WITH_FLOW1("blink", trace_event_name, element,
                          TRACE_EVENT_FLAG_FLOW_IN, "data",
-                         GetTraceArgsForScriptElement(pending_script));
+                         GetTraceArgsForScriptElement(
+                             element, pending_script->StartingPosition()));
   script_loader->ExecuteScriptBlock(pending_script, document_url);
 }
 
@@ -125,21 +116,24 @@ void TraceParserBlockingScript(const PendingScript* pending_script,
   ScriptElementBase* element = pending_script->GetElement();
   if (!element)
     return;
+  TextPosition script_start_position = pending_script->StartingPosition();
   if (!pending_script->IsReady()) {
     if (waiting_for_resources) {
-      TRACE_EVENT_WITH_FLOW1("blink",
-                             "YieldParserForScriptLoadAndBlockingResources",
-                             element, TRACE_EVENT_FLAG_FLOW_OUT, "data",
-                             GetTraceArgsForScriptElement(pending_script));
+      TRACE_EVENT_WITH_FLOW1(
+          "blink", "YieldParserForScriptLoadAndBlockingResources", element,
+          TRACE_EVENT_FLAG_FLOW_OUT, "data",
+          GetTraceArgsForScriptElement(element, script_start_position));
     } else {
-      TRACE_EVENT_WITH_FLOW1("blink", "YieldParserForScriptLoad", element,
-                             TRACE_EVENT_FLAG_FLOW_OUT, "data",
-                             GetTraceArgsForScriptElement(pending_script));
+      TRACE_EVENT_WITH_FLOW1(
+          "blink", "YieldParserForScriptLoad", element,
+          TRACE_EVENT_FLAG_FLOW_OUT, "data",
+          GetTraceArgsForScriptElement(element, script_start_position));
     }
   } else if (waiting_for_resources) {
-    TRACE_EVENT_WITH_FLOW1("blink", "YieldParserForScriptBlockingResources",
-                           element, TRACE_EVENT_FLAG_FLOW_OUT, "data",
-                           GetTraceArgsForScriptElement(pending_script));
+    TRACE_EVENT_WITH_FLOW1(
+        "blink", "YieldParserForScriptBlockingResources", element,
+        TRACE_EVENT_FLAG_FLOW_OUT, "data",
+        GetTraceArgsForScriptElement(element, script_start_position));
   }
 }
 
@@ -574,8 +568,7 @@ void HTMLParserScriptRunner::ProcessScriptElementInternal(
 
     // FIXME: Align trace event name and function name.
     TRACE_EVENT1("blink", "HTMLParserScriptRunner::execute", "data",
-                 GetTraceArgsForScriptElement(element, script_start_position,
-                                              NullURL()));
+                 GetTraceArgsForScriptElement(element, script_start_position));
     DCHECK(script_loader->IsParserInserted());
 
     if (!IsExecutingScript())
