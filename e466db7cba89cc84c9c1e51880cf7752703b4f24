@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5926d8fd_801630a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-03T17:11:38Z",
+      "side": 1,
+      "message": "Not abstract anymore, right?",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd6d1f8a_2f2c5b7a",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 6

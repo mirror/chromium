@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "24de705a_43415fbe",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-03T17:11:38Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 55
+      },
+      "revId": "79ba1bd3929d76d7b28a2629508d30bcef539d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10c5c166_ab8551ef",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 8
@@ -13,6 +36,29 @@
       "writtenOn": "2017-11-03T17:03:20Z",
       "side": 1,
       "message": "Delete?",
+      "revId": "79ba1bd3929d76d7b28a2629508d30bcef539d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fde948f_40ea1076",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-03T17:11:38Z",
+      "side": 1,
+      "message": "micronit: Sometimes written \"opus\" and some other times \"Opus\", I\u0027d \nsay go for \"Opus\" throughout.",
+      "range": {
+        "startLine": 236,
+        "startChar": 30,
+        "endLine": 236,
+        "endChar": 34
+      },
       "revId": "79ba1bd3929d76d7b28a2629508d30bcef539d0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
