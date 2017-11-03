@@ -2,6 +2,97 @@
   "comments": [
     {
       "key": {
+        "uuid": "6628b877_58cac1bf",
+        "filename": "ui/ozone/platform/drm/gpu/drm_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-03T15:18:18Z",
+      "side": 1,
+      "message": "Can we somehow keep the change in page flip behavior as part of the plane manager impl? It would be unfortunate if we had to break that encapsulation for this.",
+      "revId": "a515ca15180d4fd5d2a1b74bd2b92e7a55d19c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5045a4c_f9476ca7",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-03T15:18:18Z",
+      "side": 1,
+      "message": "Not a new issue but this is really the wrong place to insert a fence. The same context used for compositing might not even be current anymore. I think We should work towards having this fence inserted by the compositor (buffer queue) and flushed at the correct time and then passed here. Not something that need to be done as part of this patch. Just FYI.",
+      "revId": "a515ca15180d4fd5d2a1b74bd2b92e7a55d19c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a89cf9e_03875588",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-03T15:18:18Z",
+      "side": 1,
+      "message": "DCHECK_NE instead? or do we need to allow this to fail?",
+      "revId": "a515ca15180d4fd5d2a1b74bd2b92e7a55d19c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e835014_a18e2017",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-03T15:18:18Z",
+      "side": 1,
+      "message": "\"else\" instead? I think we want to know if above fails and not silently continue and create this other fence type",
+      "revId": "a515ca15180d4fd5d2a1b74bd2b92e7a55d19c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9f6f70_f8eba741",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-03T15:18:18Z",
+      "side": 1,
+      "message": "HANDLE_EINTR(dup(fd))",
+      "range": {
+        "startLine": 130,
+        "startChar": 51,
+        "endLine": 130,
+        "endChar": 54
+      },
+      "revId": "a515ca15180d4fd5d2a1b74bd2b92e7a55d19c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88550ec2_5b292103",
         "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
         "patchSetId": 2
