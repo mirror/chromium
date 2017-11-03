@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a85e8347_1079c7d6",
+        "filename": "ios/chrome/browser/ui/activity_services/chrome_activity_item_source.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-03T00:13:08Z",
+      "side": 1,
+      "message": "Just to generally prohibit any unexpected mutations to the URL.\n\nI added copy calls to other places where the URL is returned to prevent this there as well.",
+      "parentUuid": "6bb1ca9b_38a666cc",
+      "range": {
+        "startLine": 64,
+        "startChar": 21,
+        "endLine": 64,
+        "endChar": 25
+      },
+      "revId": "4b112eae94e35ff7df5e328e6dff75f671420f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a15f97f1_3b775082",
         "filename": "ios/chrome/browser/ui/activity_services/share_to_data.h",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bb13b4e7_9e278ba7",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-03T00:13:08Z",
+      "side": 1,
+      "message": "There are many cases where strong and readonly are used together (such as if internal implementation synthesizes this property), but for this case, it did not add much value since accessor methods are defined in the implementation and use separate instance variables. So, I removed it.",
+      "parentUuid": "a15f97f1_3b775082",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "4b112eae94e35ff7df5e328e6dff75f671420f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e02cff9c_8a4d180b",
         "filename": "ios/chrome/browser/ui/activity_services/share_to_data.mm",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-02T23:35:42Z",
       "side": 1,
       "message": "Does this need to be [title copy] ?",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 18
+      },
+      "revId": "4b112eae94e35ff7df5e328e6dff75f671420f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4edbd38_532913e5",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-03T00:13:08Z",
+      "side": 1,
+      "message": "Added",
+      "parentUuid": "e02cff9c_8a4d180b",
       "range": {
         "startLine": 66,
         "startChar": 13,
