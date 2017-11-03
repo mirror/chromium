@@ -183,6 +183,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void DidChangeName(const String&) override;
   void DidEnforceInsecureRequestPolicy(WebInsecureRequestPolicy) override;
   void DidUpdateToUniqueOrigin() override;
+  void DidUpdateAboutBlank(const KURL&) override;
   void DidChangeFramePolicy(Frame* child_frame,
                             SandboxFlags,
                             const WebParsedFeaturePolicy&) override;

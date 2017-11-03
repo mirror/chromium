@@ -858,6 +858,7 @@ bool WebContentsImpl::OnMessageReceived(RenderFrameHostImpl* render_frame_host,
                         OnUpdatePageImportanceSignals)
     IPC_MESSAGE_HANDLER(FrameHostMsg_Find_Reply, OnFindReply)
     IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateFaviconURL, OnUpdateFaviconURL)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateAboutBlank, OnUpdateAboutBlank)
 #if BUILDFLAG(ENABLE_PLUGINS)
     IPC_MESSAGE_HANDLER(FrameHostMsg_PepperInstanceCreated,
                         OnPepperInstanceCreated)
@@ -4270,6 +4271,11 @@ void WebContentsImpl::OnPluginCrashed(RenderFrameHostImpl* source,
   // and is only used by BlinkTestController.
   for (auto& observer : observers_)
     observer.PluginCrashed(plugin_path, plugin_pid);
+}
+
+void WebContentsImpl::OnUpdateAboutBlank(const GURL& url) {
+  GetController().GetLastCommittedEntry()->SetVirtualURL(url);
+  DidChangeVisibleSecurityState();
 }
 
 void WebContentsImpl::OnRequestPpapiBrokerPermission(
