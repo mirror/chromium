@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a612a10b_cb1c4d65",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-03T09:15:25Z",
+      "side": 1,
+      "message": "Actually I get below error without \u0027class\u0027,\n../../components/viz/common/gpu/vulkan_in_process_context_provider.h:32:3: error: must use \u0027class\u0027 tag to refer to type \u0027GrContext\u0027 in this scope",
+      "parentUuid": "0f1d612e_65c4c436",
+      "revId": "8b9ef5aa8f8de02243d543af54ed3569ad68b0a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d06536b5_e951b322",
         "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
         "patchSetId": 18
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c42c7581_b32d1ac6",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-03T09:15:25Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "d06536b5_e951b322",
+      "revId": "8b9ef5aa8f8de02243d543af54ed3569ad68b0a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6329e7c3_ef7e4994",
         "filename": "components/viz/service/display/output_surface.h",
         "patchSetId": 18
@@ -50,6 +86,24 @@
       "revId": "8b9ef5aa8f8de02243d543af54ed3569ad68b0a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6248bcdc_7f3ced8c",
+        "filename": "components/viz/service/display/output_surface.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-03T09:15:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6329e7c3_ef7e4994",
+      "revId": "8b9ef5aa8f8de02243d543af54ed3569ad68b0a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "246eb678_2aadad81",
+        "filename": "DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-03T09:15:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b144b175_ffa6012c",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7afda11_7751f173",
         "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
         "patchSetId": 17
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "e489ac84_8632e23d",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-03T09:15:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd40539c_cb86ff59",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5056ead_ec189af4",
         "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
         "patchSetId": 17
@@ -155,6 +191,24 @@
       "side": 1,
       "message": "nit: and \u0027extension_flags\u0027 here.",
       "parentUuid": "32f1938a_9e619407",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9d82505_fa10caf2",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-03T09:15:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a8f6ca8_93671e32",
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -879,6 +933,24 @@
       "side": 1,
       "message": "All this line does is add something in the include path. It doesn\u0027t add/remove individual includes, so I\u0027m not sure how that can solve your problem in any way.\n\nYes, X11 headers are annoying, we should try to minimize where they are exposed (i.e. include only in .cc files as much as possible). Some other things we do is #undef macros that X.h / Xlib.h define (see e.g. ui/gl/gl_bindings.h)",
       "parentUuid": "6cbfd07a_cae89149",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7213f184_f4fe8972",
+        "filename": "gpu/vulkan/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-03T09:15:25Z",
+      "side": 1,
+      "message": "I agree on your point. But the issue is X11 headers are included in third_party/vulkan/include and not in third_party/skia/third_party/vulkan/\nAnd by adding vulkan_headers dependency here make Skia sources to refer third_party/vulkan/include and triggering these error. \nI tried to resolve this by adding def/undef, but I end up getting other error like below.\n\nOne probable solution would be updating vulkan_headers without X includes similar to third_party/skia/third_party/vulkan/.\n\n../../third_party/WebKit/Source/platform/wtf/Deque.h:183:8: error: expected member name or \u0027;\u0027 after declaration specifiers\n  void DestroyAll();\n  ~~~~ ^\n../../build/linux/debian_jessie_amd64-sysroot/usr/include/X11/X.h:456:33: note: expanded from macro \u0027DestroyAll\u0027\n#define DestroyAll              0\n                      \n./../v8/include/v8.h:320:25: error: expected member name or \u0027;\u0027 after declaration specifiers\n  friend Local\u003cBoolean\u003e True(Isolate* isolate);\n  ~~~~~~~~~~~~~~~~~~~~~ ^\n../../build/linux/debian_jessie_amd64-sysroot/usr/include/X11/Xlib.h:96:14: note: expanded from macro \u0027True\u0027\n#define True 1\n             ^\n../../v8/include/v8.h:321:25: error: expected member name or \u0027;\u0027 after declaration specifiers\n  friend Local\u003cBoolean\u003e False(Isolate* isolate);\n  ~~~~~~~~~~~~~~~~~~~~~ ^\n../../build/linux/debian_jessie_amd64-sysroot/usr/include/X11/Xlib.h:97:15: note: expanded from macro \u0027False\u0027\n#define False 0\n              ^\n../../v8/include/v8.h:1156:8: error: expected identifier or \u0027{\u0027\n  enum Status {\n       ^\n../../build/linux/debian_jessie_amd64-sysroot/usr/include/X11/Xlib.h:95:16: note: expanded from macro \u0027Status\u0027\n#define Status int\n../../v8/include/v8.h:1156:3: error: declaration does not declare anything [-Werror,-Wmissing-declarations]\n  enum Status {\n  ^\n../../v8/include/v8.h:3023:3: error: expected identifier\n  None \u003d 0,\n  ^\n../../build/linux/debian_jessie_amd64-sysroot/usr/include/X11/X.h:115:30: note: expanded from macro \u0027None\u0027\n#define None                 0L /* universal null resource or null atom */\n    \nIn file included from ../../media/base/ipc/media_param_traits_macros.h:18:\n../../media/base/decryptor.h:31:8: error: expected identifier or \u0027{\u0027\n  enum Status {\n       ^\n../../build/linux/debian_jessie_amd64-sysroot/usr/include/X11/Xlib.h:95:16: note: expanded from macro \u0027Status\u0027\n#define Status int",
+      "parentUuid": "3553f36f_953ebb24",
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
