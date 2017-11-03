@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3980039_cee3cf72",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-03T16:06:28Z",
+      "side": 1,
+      "message": "for non-mcount configuration, let\u0027s have it with __attribute__((always_inline))",
+      "range": {
+        "startLine": 119,
+        "startChar": 5,
+        "endLine": 119,
+        "endChar": 11
+      },
+      "revId": "7d39866e2968501411610cd7f5aae5303c555a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058357d2_36dab331",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-03T16:06:28Z",
+      "side": 1,
+      "message": "s/\u003e/\u003e\u003d/ for more pedantism?",
+      "range": {
+        "startLine": 128,
+        "startChar": 63,
+        "endLine": 128,
+        "endChar": 64
+      },
+      "revId": "7d39866e2968501411610cd7f5aae5303c555a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8eacdb_a09f6131",
+        "filename": "tools/cygprofile/patch_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-03T16:06:28Z",
+      "side": 1,
+      "message": "not sure expanding prefixes would add robustness, but I am OK with having it. Just curious, do you have evidence that it breaks somewhere without prefix expansion?",
+      "range": {
+        "startLine": 401,
+        "startChar": 2,
+        "endLine": 401,
+        "endChar": 26
+      },
+      "revId": "7d39866e2968501411610cd7f5aae5303c555a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
