@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/safe_browsing/download_protection/sandboxed_dmg_analyzer_mac.h"
+#include "chrome/services/file_util/public/cpp/sandboxed_dmg_analyzer_mac.h"
 
 #include <mach-o/loader.h>
 #include <stdint.h>
@@ -15,7 +15,7 @@
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "chrome/common/chrome_paths.h"
-#include "chrome/common/safe_browsing/archive_analyzer_results.h"
+#include "chrome/services/file_util/public/cpp/archive_analyzer_results.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"

@@ -5,16 +5,15 @@
 // This file contains the archive file analysis implementation for download
 // protection, which runs in a sandboxed utility process.
 
-#include "chrome/common/safe_browsing/archive_analyzer_results.h"
+#include "chrome/services/file_util/public/cpp/archive_analyzer_results.h"
 
-namespace safe_browsing {
+namespace chrome {
 
-ArchiveAnalyzerResults::ArchiveAnalyzerResults()
-    : success(false), has_executable(false), has_archive(false) {}
+ArchiveAnalyzerResults::ArchiveAnalyzerResults() = default;
 
 ArchiveAnalyzerResults::ArchiveAnalyzerResults(
     const ArchiveAnalyzerResults& other) = default;
 
 ArchiveAnalyzerResults::~ArchiveAnalyzerResults() {}
 
-}  // namespace safe_browsing
+}  // namespace chrome

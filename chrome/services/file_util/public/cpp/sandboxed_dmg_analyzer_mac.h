@@ -2,18 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_SAFE_BROWSING_DOWNLOAD_PROTECTION_SANDBOXED_DMG_ANALYZER_MAC_H_
-#define CHROME_BROWSER_SAFE_BROWSING_DOWNLOAD_PROTECTION_SANDBOXED_DMG_ANALYZER_MAC_H_
+#ifndef CHROME_SERVICES_FILE_UTIL_SANDBOXED_DMG_ANALYZER_MAC_H_
+#define CHROME_SERVICES_FILE_UTIL_SANDBOXED_DMG_ANALYZER_MAC_H_
 
 #include "base/callback.h"
 #include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "chrome/common/safe_browsing/safe_archive_analyzer.mojom.h"
-#include "content/public/browser/utility_process_mojo_client.h"
+#include "chrome/services/file_util/public/interfaces/safe_archive_analyzer.mojom.h"
 
-namespace safe_browsing {
+namespace service_manager {
+class Connector;
+}
+
+namespace chrome {
 
 // This class is used to analyze DMG files in a sandboxed utility process
 // for file download protection. This class lives on the UI thread, which
@@ -27,7 +30,7 @@ class SandboxedDMGAnalyzer
                        const ResultCallback& callback);
 
   // Starts the analysis. Must be called on the UI thread.
-  void Start();
+  void Start(service_manager::Connector* connector);
 
  private:
   friend class base::RefCountedThreadSafe<SandboxedDMGAnalyzer>;
@@ -50,9 +53,9 @@ class SandboxedDMGAnalyzer
   const base::FilePath file_path_;
 
   // Utility client used to send analyze tasks to the utility process.
-  std::unique_ptr<
-      content::UtilityProcessMojoClient<chrome::mojom::SafeArchiveAnalyzer>>
-      utility_process_mojo_client_;
+  // std::unique_ptr<
+  //     content::UtilityProcessMojoClient<chrome::mojom::SafeArchiveAnalyzer>>
+  //     utility_process_mojo_client_;
 
   // Callback invoked on the UI thread with the file analyze results.
   const ResultCallback callback_;
@@ -60,6 +63,6 @@ class SandboxedDMGAnalyzer
   DISALLOW_COPY_AND_ASSIGN(SandboxedDMGAnalyzer);
 };
 
-}  // namespace safe_browsing
+}  // namespace chrome
 
-#endif  // CHROME_BROWSER_SAFE_BROWSING_DOWNLOAD_PROTECTION_SANDBOXED_DMG_ANALYZER_MAC_H_
+#endif  // CHROME_SERVICES_FILE_UTIL_SANDBOXED_DMG_ANALYZER_MAC_H_

@@ -2,18 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/safe_browsing/download_protection/sandboxed_dmg_analyzer_mac.h"
+#include "chrome/services/file_util/public/cpp/sandboxed_dmg_analyzer_mac.h"
 
 #include <utility>
 
 #include "base/bind.h"
 #include "base/task_scheduler/post_task.h"
-#include "chrome/common/safe_browsing/archive_analyzer_results.h"
-#include "chrome/grit/generated_resources.h"
+#include "chrome/services/file_util/public/cpp/archive_analyzer_results.h"
 #include "content/public/browser/browser_thread.h"
-#include "ui/base/l10n/l10n_util.h"
 
-namespace safe_browsing {
+namespace chrome {
 
 SandboxedDMGAnalyzer::SandboxedDMGAnalyzer(const base::FilePath& dmg_file,
                                            const ResultCallback& callback)
@@ -21,7 +19,7 @@ SandboxedDMGAnalyzer::SandboxedDMGAnalyzer(const base::FilePath& dmg_file,
   DCHECK(callback);
 }
 
-void SandboxedDMGAnalyzer::Start() {
+void SandboxedDMGAnalyzer::Start(service_manager::Connector* connector) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   base::PostTaskWithTraits(
@@ -82,4 +80,4 @@ void SandboxedDMGAnalyzer::AnalyzeFileDone(
   callback_.Run(results);
 }
 
-}  // namespace safe_browsing
+}  // namespace chrome
