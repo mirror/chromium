@@ -12,6 +12,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/callback.h"
@@ -168,10 +169,6 @@ struct ResourceResponseHead;
 struct ScreenInfo;
 struct StartNavigationParams;
 struct StreamOverrideParameters;
-
-namespace {
-class CreateFrameWidgetParams;
-}
 
 class CONTENT_EXPORT RenderFrameImpl
     : public RenderFrame,
