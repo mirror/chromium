@@ -53,10 +53,12 @@
 #include "ui/compositor/test/layer_animator_test_controller.h"
 #include "ui/compositor/test/test_compositor_host.h"
 #include "ui/compositor/test/test_layers.h"
+#include "ui/gfx/animation/tween.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/gfx_paths.h"
+#include "ui/gfx/interpolated_transform.h"
 #include "ui/gfx/skia_util.h"
 
 using cc::MatchesPNGFile;
@@ -317,8 +319,10 @@ class TestLayerDelegate : public LayerDelegate {
     device_scale_factor_ = new_device_scale_factor;
   }
 
-  MOCK_METHOD0(OnLayerTransformed, void());
-  MOCK_METHOD2(OnLayerOpacityChanged, void(float, float));
+  MOCK_METHOD2(OnLayerBoundsChanged,
+               void(const gfx::Rect&, PropertyChangeReason));
+  MOCK_METHOD1(OnLayerTransformed, void(PropertyChangeReason));
+  MOCK_METHOD1(OnLayerOpacityChanged, void(PropertyChangeReason));
 
   void reset() {
     color_index_ = 0;
@@ -2301,32 +2305,142 @@ TEST(LayerDelegateTest, DelegatedFrameDamage) {
   EXPECT_EQ(damage_rect, delegate.delegated_frame_damage_rect());
 }
 
+// Verify that LayerDelegate::OnLayerBoundsChanged() is called when the bounds
+// are set without an animation.
+TEST(LayerDelegateTest, OnLayerBoundsChanged) {
+  auto layer = std::make_unique<Layer>(LAYER_TEXTURED);
+  testing::StrictMock<TestLayerDelegate> delegate;
+  layer->set_delegate(&delegate);
+  constexpr gfx::Rect kTargetBounds(1, 2, 3, 4);
+  EXPECT_CALL(delegate,
+              OnLayerBoundsChanged(layer->bounds(), PropertyChangeReason::SET))
+      .WillOnce(testing::Invoke(
+          [&layer, kTargetBounds](const gfx::Rect&, PropertyChangeReason) {
+            EXPECT_EQ(layer->bounds(), kTargetBounds);
+          }));
+  layer->SetBounds(kTargetBounds);
+}
+
+// Verify that LayerDelegate::OnLayerBoundsChanged() is called at every step of
+// a bounds animation.
+TEST(LayerDelegateTest, OnLayerBoundsChangedAnimation) {
+  ScopedAnimationDurationScaleMode scoped_animation_duration_scale_mode(
+      ScopedAnimationDurationScaleMode::NORMAL_DURATION);
+  LayerAnimatorTestController test_controller(
+      LayerAnimator::CreateImplicitAnimator());
+  LayerAnimator* const animator = test_controller.animator();
+
+  auto layer = std::make_unique<Layer>(LAYER_TEXTURED);
+  testing::StrictMock<TestLayerDelegate> delegate;
+  layer->set_delegate(&delegate);
+  layer->SetAnimator(animator);
+
+  const gfx::Rect initial_bounds = layer->bounds();
+  constexpr gfx::Rect kTargetBounds(10, 20, 30, 40);
+  const gfx::Rect step_bounds =
+      gfx::Tween::RectValueBetween(0.5, initial_bounds, kTargetBounds);
+
+  // Start the animation.
+  std::unique_ptr<LayerAnimationElement> element =
+      LayerAnimationElement::CreateBoundsElement(
+          kTargetBounds, base::TimeDelta::FromSeconds(1));
+  LayerAnimationElement* element_raw = element.get();
+  animator->StartAnimation(new LayerAnimationSequence(std::move(element)));
+  testing::Mock::VerifyAndClear(&delegate);
+
+  // Progress the animation.
+  EXPECT_CALL(delegate, OnLayerBoundsChanged(initial_bounds,
+                                             PropertyChangeReason::ANIMATION))
+      .WillOnce(testing::Invoke(
+          [&layer, step_bounds](const gfx::Rect&, PropertyChangeReason) {
+            EXPECT_EQ(layer->bounds(), step_bounds);
+          }));
+  test_controller.Step(element_raw->duration() / 2);
+  testing::Mock::VerifyAndClear(&delegate);
+
+  // End the animation.
+  EXPECT_CALL(delegate, OnLayerBoundsChanged(step_bounds,
+                                             PropertyChangeReason::ANIMATION))
+      .WillOnce(testing::Invoke(
+          [&layer, kTargetBounds](const gfx::Rect&, PropertyChangeReason) {
+            EXPECT_EQ(layer->bounds(), kTargetBounds);
+          }));
+  test_controller.Step(element_raw->duration() / 2);
+  testing::Mock::VerifyAndClear(&delegate);
+}
+
+// Verify that LayerDelegate::OnLayerTransformed() is called when the transform
+// is set without an animation.
 TEST(LayerDelegateTest, OnLayerTransformed) {
   auto layer = std::make_unique<Layer>(LAYER_TEXTURED);
   testing::StrictMock<TestLayerDelegate> delegate;
   layer->set_delegate(&delegate);
   gfx::Transform target_transform;
   target_transform.Skew(10.0f, 5.0f);
-  EXPECT_CALL(delegate, OnLayerTransformed())
-      .WillOnce(testing::Invoke([&layer, &target_transform]() {
-        EXPECT_EQ(layer->transform(), target_transform);
-      }));
+  EXPECT_CALL(delegate, OnLayerTransformed(PropertyChangeReason::SET))
+      .WillOnce(
+          testing::Invoke([&layer, &target_transform](PropertyChangeReason) {
+            EXPECT_EQ(layer->transform(), target_transform);
+          }));
   layer->SetTransform(target_transform);
 }
 
-TEST(LayerDelegateTest, OnLayerDidNotTransform) {
+// Verify that LayerDelegate::OnLayerTransformed() is called at every step of a
+// non-threaded transform transition.
+TEST(LayerDelegateTest, OnLayerTransformedNonThreadedAnimation) {
+  ScopedAnimationDurationScaleMode scoped_animation_duration_scale_mode(
+      ScopedAnimationDurationScaleMode::NORMAL_DURATION);
+  LayerAnimatorTestController test_controller(
+      LayerAnimator::CreateImplicitAnimator());
+  LayerAnimator* const animator = test_controller.animator();
+
   auto layer = std::make_unique<Layer>(LAYER_TEXTURED);
   testing::StrictMock<TestLayerDelegate> delegate;
   layer->set_delegate(&delegate);
-  ASSERT_EQ(layer->transform(), gfx::Transform());
-  // Since |delegate| is a StrictMock, the test will fail if the observer is
-  // notified.
-  layer->SetTransform(gfx::Transform());
+  layer->SetAnimator(animator);
+
+  auto interpolated_transform = std::make_unique<InterpolatedRotation>(10, 45);
+  const gfx::Transform initial_transform =
+      interpolated_transform->Interpolate(0.0);
+  const gfx::Transform step_transform =
+      interpolated_transform->Interpolate(0.5);
+  const gfx::Transform target_transform =
+      interpolated_transform->Interpolate(1.0);
+
+  // Start the animation.
+  std::unique_ptr<LayerAnimationElement> element =
+      LayerAnimationElement::CreateInterpolatedTransformElement(
+          std::move(interpolated_transform), base::TimeDelta::FromSeconds(1));
+  LayerAnimationElement* element_raw = element.get();
+  EXPECT_CALL(delegate, OnLayerTransformed(PropertyChangeReason::ANIMATION))
+      .WillOnce(
+          testing::Invoke([&layer, initial_transform](PropertyChangeReason) {
+            EXPECT_EQ(layer->transform(), initial_transform);
+          }));
+  animator->StartAnimation(new LayerAnimationSequence(std::move(element)));
+  testing::Mock::VerifyAndClear(&delegate);
+
+  // Progress the animation.
+  EXPECT_CALL(delegate, OnLayerTransformed(PropertyChangeReason::ANIMATION))
+      .WillOnce(testing::Invoke([&layer, step_transform](PropertyChangeReason) {
+        EXPECT_EQ(layer->transform(), step_transform);
+      }));
+  test_controller.Step(element_raw->duration() / 2);
+  testing::Mock::VerifyAndClear(&delegate);
+
+  // End the animation.
+  EXPECT_CALL(delegate, OnLayerTransformed(PropertyChangeReason::ANIMATION))
+      .WillOnce(
+          testing::Invoke([&layer, target_transform](PropertyChangeReason) {
+            EXPECT_EQ(layer->transform(), target_transform);
+          }));
+  test_controller.Step(element_raw->duration() / 2);
+  testing::Mock::VerifyAndClear(&delegate);
 }
 
-// Verify that LayerDelegate::OnLayerTransformed() is called when a transform
-// animation ends.
-TEST(LayerDelegateTest, OnLayerTransformedAnimation) {
+// Verify that LayerDelegate::OnLayerTransformed() is called at the beginning
+// and at the end of a threaded transform transition.
+TEST(LayerDelegateTest, OnLayerTransformedThreadedAnimation) {
   ScopedAnimationDurationScaleMode scoped_animation_duration_scale_mode(
       ScopedAnimationDurationScaleMode::NORMAL_DURATION);
   LayerAnimatorTestController test_controller(
@@ -2345,39 +2459,35 @@ TEST(LayerDelegateTest, OnLayerTransformedAnimation) {
       LayerAnimationElement::CreateTransformElement(
           target_transform, base::TimeDelta::FromSeconds(1));
   LayerAnimationElement* element_raw = element.get();
+  EXPECT_CALL(delegate, OnLayerTransformed(PropertyChangeReason::ANIMATION));
   animator->StartAnimation(new LayerAnimationSequence(std::move(element)));
+  testing::Mock::VerifyAndClear(&delegate);
   test_controller.StartThreadedAnimationsIfNeeded();
 
   // End the animation.
-  EXPECT_CALL(delegate, OnLayerTransformed())
-      .WillOnce(testing::Invoke([&layer, &target_transform]() {
-        EXPECT_EQ(layer->transform(), target_transform);
-      }));
+  EXPECT_CALL(delegate, OnLayerTransformed(PropertyChangeReason::ANIMATION))
+      .WillOnce(
+          testing::Invoke([&layer, &target_transform](PropertyChangeReason) {
+            EXPECT_EQ(layer->transform(), target_transform);
+          }));
   test_controller.Step(
       element_raw->duration() +
       (element_raw->effective_start_time() - animator->last_step_time()));
   testing::Mock::VerifyAndClear(&delegate);
 }
 
+// Verify that LayerDelegate::OnLayerOpacityChanged() is called when the opacity
+// is set without an animation.
 TEST(LayerDelegateTest, OnLayerOpacityChanged) {
   auto layer = std::make_unique<Layer>(LAYER_TEXTURED);
   testing::StrictMock<TestLayerDelegate> delegate;
   layer->set_delegate(&delegate);
-  EXPECT_CALL(delegate, OnLayerOpacityChanged(1.0f, 0.5f));
+  EXPECT_CALL(delegate, OnLayerOpacityChanged(PropertyChangeReason::SET));
   layer->SetOpacity(0.5f);
 }
 
-TEST(LayerDelegateTest, OnLayerOpacityDidNotChange) {
-  auto layer = std::make_unique<Layer>(LAYER_TEXTURED);
-  testing::StrictMock<TestLayerDelegate> delegate;
-  layer->set_delegate(&delegate);
-  // Since |delegate| is a StrictMock, the test will fail if the observer is
-  // notified.
-  layer->SetOpacity(1.0f);
-}
-
-// Verify that LayerDelegate::OnLayerOpacityChanged() is called when an opacity
-// animation ends.
+// Verify that LayerDelegate::OnLayerOpacityChanged() is called at the beginning
+// and at the end of a threaded opacity animation.
 TEST(LayerDelegateTest, OnLayerOpacityChangedAnimation) {
   ScopedAnimationDurationScaleMode scoped_animation_duration_scale_mode(
       ScopedAnimationDurationScaleMode::NORMAL_DURATION);
@@ -2396,11 +2506,13 @@ TEST(LayerDelegateTest, OnLayerOpacityChangedAnimation) {
       LayerAnimationElement::CreateOpacityElement(
           kTargetOpacity, base::TimeDelta::FromSeconds(1));
   LayerAnimationElement* element_raw = element.get();
+  EXPECT_CALL(delegate, OnLayerOpacityChanged(PropertyChangeReason::ANIMATION));
   animator->StartAnimation(new LayerAnimationSequence(std::move(element)));
+  testing::Mock::VerifyAndClear(&delegate);
   test_controller.StartThreadedAnimationsIfNeeded();
 
   // End the animation.
-  EXPECT_CALL(delegate, OnLayerOpacityChanged(1.0f, kTargetOpacity));
+  EXPECT_CALL(delegate, OnLayerOpacityChanged(PropertyChangeReason::ANIMATION));
   test_controller.Step(
       element_raw->duration() +
       (element_raw->effective_start_time() - animator->last_step_time()));
