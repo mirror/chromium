@@ -5,5 +5,7 @@
 #include "chrome/browser/profile_resetter/triggered_profile_resetter.h"
 
 void TriggeredProfileResetter::Activate() {
+#if DCHECK_IS_ON()
   activate_called_ = true;
+#endif  // DCHECK_IS_ON()
 }

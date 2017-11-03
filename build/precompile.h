@@ -11,6 +11,9 @@
 
 #define BUILD_PRECOMPILE_H_
 
+#ifndef _USE_MATH_DEFINES
+// Needed to get preprocessor macros like M_PI out of VS libraries.
+#endif
 #include <errno.h>
 #include <fcntl.h>
 #include <limits.h>

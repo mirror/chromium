@@ -30,7 +30,6 @@
 #include "net/disk_cache/simple/simple_util.h"
 #include "third_party/zlib/zlib.h"
 
-using base::File;
 using base::FilePath;
 using base::Time;
 
@@ -88,9 +87,9 @@ bool CanOmitEmptyFile(int file_index) {
 }
 
 bool TruncatePath(const FilePath& filename_to_truncate) {
-  File file_to_truncate;
-  int flags = File::FLAG_OPEN | File::FLAG_READ | File::FLAG_WRITE |
-              File::FLAG_SHARE_DELETE;
+  base::File file_to_truncate;
+  int flags = base::File::FLAG_OPEN | base::File::FLAG_READ | base::File::FLAG_WRITE |
+              base::File::FLAG_SHARE_DELETE;
   file_to_truncate.Initialize(filename_to_truncate, flags);
   if (!file_to_truncate.IsValid())
     return false;
@@ -411,7 +410,7 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
       *out_result = net::ERR_CACHE_WRITE_FAILURE;
       return;
     }
-    File::Error error;
+    base::File::Error error;
     if (!MaybeCreateFile(file_index, FILE_REQUIRED, &error)) {
       RecordWriteResult(cache_type_, SYNC_WRITE_RESULT_LAZY_CREATE_FAILURE);
       Doom();
@@ -904,18 +903,18 @@ SimpleSynchronousEntry::~SimpleSynchronousEntry() {
 
 bool SimpleSynchronousEntry::MaybeOpenFile(
     int file_index,
-    File::Error* out_error) {
+    base::File::Error* out_error) {
   DCHECK(out_error);
 
   FilePath filename = GetFilenameFromFileIndex(file_index);
-  int flags = File::FLAG_OPEN | File::FLAG_READ | File::FLAG_WRITE |
-              File::FLAG_SHARE_DELETE;
+  int flags = base::File::FLAG_OPEN | base::File::FLAG_READ | base::File::FLAG_WRITE |
+              base::File::FLAG_SHARE_DELETE;
   std::unique_ptr<base::File> file =
       std::make_unique<base::File>(filename, flags);
   *out_error = file->error_details();
 
   if (CanOmitEmptyFile(file_index) && !file->IsValid() &&
-      *out_error == File::FILE_ERROR_NOT_FOUND) {
+      *out_error == base::File::FILE_ERROR_NOT_FOUND) {
     empty_file_omitted_[file_index] = true;
     return true;
   }
@@ -931,7 +930,7 @@ bool SimpleSynchronousEntry::MaybeOpenFile(
 bool SimpleSynchronousEntry::MaybeCreateFile(
     int file_index,
     FileRequired file_required,
-    File::Error* out_error) {
+    base::File::Error* out_error) {
   DCHECK(out_error);
 
   if (CanOmitEmptyFile(file_index) && file_required == FILE_NOT_REQUIRED) {
@@ -940,8 +939,8 @@ bool SimpleSynchronousEntry::MaybeCreateFile(
   }
 
   FilePath filename = GetFilenameFromFileIndex(file_index);
-  int flags = File::FLAG_CREATE | File::FLAG_READ | File::FLAG_WRITE |
-              File::FLAG_SHARE_DELETE;
+  int flags = base::File::FLAG_CREATE | base::File::FLAG_READ | base::File::FLAG_WRITE |
+              base::File::FLAG_SHARE_DELETE;
   std::unique_ptr<base::File> file =
       std::make_unique<base::File>(filename, flags);
 
@@ -949,7 +948,7 @@ bool SimpleSynchronousEntry::MaybeCreateFile(
   // directory (e.g. because someone pressed "clear cache" on Android).
   // If so, we would keep failing for a while until periodic index snapshot
   // re-creates the cache dir, so try to recover from it quickly here.
-  if (!file->IsValid() && file->error_details() == File::FILE_ERROR_NOT_FOUND &&
+  if (!file->IsValid() && file->error_details() == base::File::FILE_ERROR_NOT_FOUND &&
       !base::DirectoryExists(path_)) {
     if (base::CreateDirectory(path_))
       file->Initialize(filename, flags);
@@ -967,7 +966,7 @@ bool SimpleSynchronousEntry::MaybeCreateFile(
 
 bool SimpleSynchronousEntry::OpenFiles(SimpleEntryStat* out_entry_stat) {
   for (int i = 0; i < kSimpleEntryNormalFileCount; ++i) {
-    File::Error error;
+    base::File::Error error;
     if (!MaybeOpenFile(i, &error)) {
       // TODO(juliatuttle,gavinp): Remove one each of these triplets of
       // histograms. We can calculate the third as the sum or difference of the
@@ -1002,7 +1001,7 @@ bool SimpleSynchronousEntry::OpenFiles(SimpleEntryStat* out_entry_stat) {
       continue;
     }
 
-    File::Info file_info;
+    base::File::Info file_info;
     SimpleFileTracker::FileHandle file =
         file_tracker_->Acquire(this, SubFileForFileIndex(i));
     bool success = file.IsOK() && file->GetInfo(&file_info);
@@ -1050,7 +1049,7 @@ bool SimpleSynchronousEntry::OpenFiles(SimpleEntryStat* out_entry_stat) {
 
 bool SimpleSynchronousEntry::CreateFiles(SimpleEntryStat* out_entry_stat) {
   for (int i = 0; i < kSimpleEntryNormalFileCount; ++i) {
-    File::Error error;
+    base::File::Error error;
     if (!MaybeCreateFile(i, FILE_NOT_REQUIRED, &error)) {
       // TODO(juliatuttle,gavinp): Remove one each of these triplets of
       // histograms. We can calculate the third as the sum or difference of the
@@ -1542,13 +1541,13 @@ bool SimpleSynchronousEntry::OpenSparseFileIfExists(
 
   FilePath filename =
       path_.AppendASCII(GetSparseFilenameFromEntryFileKey(entry_file_key_));
-  int flags = File::FLAG_OPEN | File::FLAG_READ | File::FLAG_WRITE |
-              File::FLAG_SHARE_DELETE;
+  int flags = base::File::FLAG_OPEN | base::File::FLAG_READ | base::File::FLAG_WRITE |
+              base::File::FLAG_SHARE_DELETE;
   std::unique_ptr<base::File> sparse_file =
       std::make_unique<base::File>(filename, flags);
   if (!sparse_file->IsValid())
     // No file -> OK, file open error -> trouble.
-    return sparse_file->error_details() == File::FILE_ERROR_NOT_FOUND;
+    return sparse_file->error_details() == base::File::FILE_ERROR_NOT_FOUND;
 
   if (!ScanSparseFile(sparse_file.get(), out_sparse_data_size))
     return false;
@@ -1564,8 +1563,8 @@ bool SimpleSynchronousEntry::CreateSparseFile() {
 
   FilePath filename =
       path_.AppendASCII(GetSparseFilenameFromEntryFileKey(entry_file_key_));
-  int flags = File::FLAG_CREATE | File::FLAG_READ | File::FLAG_WRITE |
-              File::FLAG_SHARE_DELETE;
+  int flags = base::File::FLAG_CREATE | base::File::FLAG_READ | base::File::FLAG_WRITE |
+              base::File::FLAG_SHARE_DELETE;
   std::unique_ptr<base::File> sparse_file =
       std::make_unique<base::File>(filename, flags);
   if (!sparse_file->IsValid())

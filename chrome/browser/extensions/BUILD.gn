@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//chrome/common/features.gni")
 import("//components/nacl/features.gni")
@@ -13,7 +14,7 @@ import("//rlz/features/features.gni")
 
 assert(enable_extensions)
 
-static_library("extensions") {
+jumbo_static_library("extensions") {
   sources = [
     # TODO These references to files in //chrome/browser/ should either be
     # moved to the browser target or the files moved to this directory.
@@ -1161,4 +1162,58 @@ static_library("extensions") {
   } else {
     sources += [ "api/braille_display_private/braille_controller_stub.cc" ]
   }
+
+  jumbo_excluded_sources = [
+    # Symbols
+    "api/content_settings/content_settings_api.cc",
+    "api/content_settings/content_settings_store.cc",
+    "api/cookies/cookies_api.cc",
+    "api/cookies/cookies_helpers.cc",
+    "api/debugger/debugger_api.cc",
+    "api/declarative_content/declarative_content_is_bookmarked_condition_tracker.cc",
+    "api/declarative_content/declarative_content_page_url_condition_tracker.cc",
+    "api/declarative_content/default_content_predicate_evaluators.cc",
+    "api/history/history_api.cc",
+    "api/identity/identity_get_accounts_function.cc",
+    "api/identity/identity_remove_cached_auth_token_function.cc",
+    "api/preference/preference_api.cc",
+    "api/processes/processes_api.cc",
+    "api/proxy/proxy_api.cc",
+    "api/sync_file_system/extension_sync_event_observer.cc",
+    "api/sync_file_system/sync_file_system_api.cc",
+    "api/sync_file_system/sync_file_system_api_helpers.cc",
+    "api/tabs/tabs_api.cc",
+    "api/tabs/windows_event_router.cc",
+    "api/web_navigation/web_navigation_api_helpers.cc",
+    "chrome_extensions_browser_client.cc",
+    "chrome_process_manager_delegate.cc",
+    "component_loader.cc",
+    "convert_user_script.cc",
+    "convert_web_app.cc",
+    "extension_install_prompt.cc",
+    "extension_system_impl.cc",
+    "extension_tab_util.cc",
+    "extension_util.cc",
+
+    # Colliding symbol CalculatePingDays resuting in "Unused function"
+    "updater/extension_updater.cc",
+
+    # Namespace confusion
+    "api/identity/identity_get_profile_user_info_function.cc",
+    "chrome_content_verifier_delegate.cc",
+    "api/web_view/chrome_web_view_internal_api.cc",
+
+    # X11
+    "global_shortcut_listener_x11.cc",
+
+    # IPC
+    "tab_helper.cc",
+    "api/page_capture/page_capture_api.cc",
+    "activity_log/activity_log.cc",
+    "api/automation_internal/automation_internal_api.cc",
+    "api/declarative_content/content_action.cc",
+    "extension_action_runner.cc",
+    "api/declarative_content/declarative_content_css_condition_tracker.cc",
+    "extension_service.cc",
+  ]
 }
