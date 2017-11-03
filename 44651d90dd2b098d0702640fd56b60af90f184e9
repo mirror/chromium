@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e555ad7f_9eb8873a",
+        "filename": "build/config/linux/atk/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-03T18:41:43Z",
+      "side": 1,
+      "message": "nit: move this into the below use_gtk3 block",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "44651d90dd2b098d0702640fd56b60af90f184e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f20d53_53326580",
+        "filename": "chrome/browser/ui/libgtkui/gtk_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-03T18:41:43Z",
+      "side": 1,
+      "message": "GTK_MAJOR_VERSION \u003e 3",
+      "range": {
+        "startLine": 421,
+        "startChar": 4,
+        "endLine": 421,
+        "endChar": 26
+      },
+      "revId": "44651d90dd2b098d0702640fd56b60af90f184e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36b9273_c7e8eaad",
+        "filename": "chrome/browser/ui/libgtkui/gtk_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-03T18:41:43Z",
+      "side": 1,
+      "message": "Please use base::Environment::SetVar() instead of bare setenv().\n\nstd::unique_ptr\u003cEnvironment\u003e env(Environment::Create());\nenv-\u003eSetVar(\"NO_AT_BRIDGE\", \"1\");",
+      "range": {
+        "startLine": 424,
+        "startChar": 2,
+        "endLine": 424,
+        "endChar": 33
+      },
+      "revId": "44651d90dd2b098d0702640fd56b60af90f184e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7c850b_2b31d844",
+        "filename": "ui/accessibility/platform/atk_util_auralinux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-03T18:41:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 199,
+        "endChar": 33
+      },
+      "revId": "44651d90dd2b098d0702640fd56b60af90f184e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
