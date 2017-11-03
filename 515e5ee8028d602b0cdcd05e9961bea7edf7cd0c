@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c20696c4_4cd2f7e0",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-03T18:17:57Z",
+      "side": 1,
+      "message": "Ah, I see. Thanks for explaining.",
+      "parentUuid": "ea8068db_a0fc034f",
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04b15832_1258053e",
         "filename": "content/browser/ssl/ssl_error_handler.h",
         "patchSetId": 10
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "This was the comment/logic I copied from ResourceLoader",
       "parentUuid": "eea1fbaf_755084f7",
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598695d9_3fbe80d1",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-03T18:17:57Z",
+      "side": 1,
+      "message": "(I haven\u0027t read ResourceLoader carefully to see whether that is an inaccurate comment or the logic needs to be fixed.)\nIn this case, however, we are fairly likely to have a null |url_request_| here.\nWhenever reading response body fails or completes or the client side closes the data pipe, this class resets |url_request_|. And we may get OnSSLCertificateErrorResponse call after that.\n\nWDYT? Thanks!",
+      "parentUuid": "ed47db1f_babf54c2",
       "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
