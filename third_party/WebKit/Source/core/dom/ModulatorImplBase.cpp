@@ -163,32 +163,6 @@ ScriptValue ModulatorImplBase::InstantiateModule(ScriptModule script_module) {
   return script_module.Instantiate(script_state_.get());
 }
 
-ScriptModuleState ModulatorImplBase::GetRecordStatus(
-    ScriptModule script_module) {
-  ScriptState::Scope scope(script_state_.get());
-  return script_module.Status(script_state_.get());
-}
-
-ScriptValue ModulatorImplBase::GetError(const ModuleScript* module_script) {
-  DCHECK(module_script);
-  ScriptState::Scope scope(script_state_.get());
-  // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-error
-  // "When a module script is errored, ..." [spec text]
-
-  // "we say that its error is either its pre-instantiation error, when its
-  // module record is null, ..." [spec text]
-  ScriptModule record = module_script->Record();
-  if (record.IsNull()) {
-    return ScriptValue(script_state_.get(), module_script->CreateErrorInternal(
-                                                script_state_->GetIsolate()));
-  }
-
-  // "or its module record's [[ErrorCompletion]] field's [[Value]] field,
-  // otherwise." [spec text]
-  return ScriptValue(script_state_.get(),
-                     record.ErrorCompletion(script_state_.get()));
-}
-
 Vector<Modulator::ModuleRequest>
 ModulatorImplBase::ModuleRequestsFromScriptModule(ScriptModule script_module) {
   ScriptState::Scope scope(script_state_.get());
@@ -213,9 +187,8 @@ ScriptValue ModulatorImplBase::ExecuteModule(
   // https://crbug.com/715376
   CHECK(RuntimeEnabledFeatures::ModuleScriptsEnabled());
 
-  // Step 1. "If rethrow errors is not given, let it be false." [spec text]
-
-  // Step 2. "Let settings be the settings object of s." [spec text]
+  // Step 1. "Let settings be the settings object of script." [spec text]
+  //
   // The settings object is |this|.
 
   // Step 3. "Check if we can run script with settings.
@@ -223,40 +196,50 @@ ScriptValue ModulatorImplBase::ExecuteModule(
   if (!GetExecutionContext()->CanExecuteScripts(kAboutToExecuteScript))
     return ScriptValue();
 
-  // Step 4. "Prepare to run script given settings." [spec text]
-  // This is placed here to also cover ScriptModule::ReportException().
+  // Step 3. "Prepare to run script given settings." [spec text]
   ScriptState::Scope scope(script_state_.get());
 
   // Step 5. "Let evaluationStatus be null." [spec text]
   // |error| corresponds to "evaluationStatus of [[Type]]: throw".
   ScriptValue error;
 
-  // Step 6. "If s is errored, then set evaluationStatus to Completion
-  // { [[Type]]: throw, [[Value]]: script's error, [[Target]]: empty }."
-  // [spec text]
-  if (module_script->IsErrored()) {
-    error = GetError(module_script);
+  // Step 5. "If script's error to rethrow is not null, then set
+  // evaluationStatus to Completion { [[Type]]: throw, [[Value]]: script's error
+  // to rethrow, [[Target]]: empty }." [spec text]
+  if (module_script->HasErrorToRethrow()) {
+    // Step 7. "If evaluationStatus is an abrupt completion, then report the
+    // exception given by evaluationStatus.[[Value]] for script."
+    error = module_script->CreateErrorToRethrow();
   } else {
-    // Step 7. "Otherwise:" [spec text]
-    // Step 7.1. "Let record be s's module record." [spec text]
+    // Step 6. "Otherwise:"
+    //
+    // Step 6.1. "Let record be script's record." [spec text]
     const ScriptModule& record = module_script->Record();
     CHECK(!record.IsNull());
 
-    // Step 7.2 "Let evaluationStatus be record.ModuleEvaluate()." [spec text]
+    // Step 6.2. "Set evaluationStatus to record.Evaluate()." [spec text]
     error = record.Evaluate(script_state_.get(), capture_error);
   }
 
-  // Step 8. "If evaluationStatus is an abrupt completion, then:" [spec text]
   if (!error.IsEmpty()) {
-    // Step 8.1. "If rethrow errors is true, rethrow the exception given by
-    // evaluationStatus.[[Value]] for s." [spec text]
-    if (capture_error == CaptureEvalErrorFlag::kCapture)
+    // "If Evaluate fails to complete as a result of the user agent aborting the
+    // running script, then set evaluationStatus to Completion { [[Type]]:
+    // throw,
+    // [[Value]]: a new "QuotaExceededError" DOMException, [[Target]]: empty }."
+    // [spec text]
+    if (capture_error == CaptureEvalErrorFlag::kCapture) {
+      // Step 7.1. "If rethrow errors is true, rethrow the exception given by
+      // evaluationStatus.[[Value]] for s." [spec text]
+      //
+      // TODO(hiroshige): Update the spec text.
       return error;
+    }
 
-    // Step 8.2. "Otherwise, report the exception given by
-    // evaluationStatus.[[Value]] for script." [spec text]
+    // Step 7. "If evaluationStatus is an abrupt completion, then report the
+    // exception given by evaluationStatus.[[Value]] for script."
+    //
+    // This is done inside ScriptModule::Evaluate() if capture_error == kReport.
     ScriptModule::ReportException(script_state_.get(), error.V8Value());
-
     return ScriptValue();
   }
 
