@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d965e18f_e600f45d",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-03T20:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85ee10c9_3408d515",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "743d6ed9_e068fc7f",
         "filename": "base/debug/stack_trace_posix.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a14ce7da_d11bdaf6",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-03T20:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "743d6ed9_e068fc7f",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "832afd9a_b10281b6",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-03T20:30:29Z",
+      "side": 1,
+      "message": "Yes, done. I still need the cast otherwise I get a signed/unsigned comparison warning.",
+      "parentUuid": "86e0f3ea_3cca469d",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d79072e_becc5f17",
         "filename": "base/debug/stack_trace_posix.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9407a6_3f5b0748",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-03T20:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d79072e_becc5f17",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "12b87b2b_be71c74e",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-03T20:30:29Z",
+      "side": 1,
+      "message": "Done, but no static_assert in base/third_party/symbolize/symbolize.cc because it can\u0027t use C++11.",
+      "parentUuid": "636c2f99_2911b380",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2143e94_d683aab5",
         "filename": "base/debug/stack_trace_posix.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "965a7f79_47718261",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-03T20:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2143e94_d683aab5",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d13be2b4_eda5a35b",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-03T20:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77502194_c02b30aa",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1484c2f5_79687e4d",
         "filename": "base/debug/stack_trace_posix.cc",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732f560e_32fde72b",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-03T20:30:29Z",
+      "side": 1,
+      "message": "Okay, I\u0027ve added a fallback to using the ELF header address as the base address if we don\u0027t find one.",
+      "parentUuid": "1484c2f5_79687e4d",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "30e10f93_c0141398",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-03T20:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deed7809_e10eebb8",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ba84c1d_9784f50b",
         "filename": "base/third_party/symbolize/symbolize.cc",
         "patchSetId": 4
@@ -169,6 +331,24 @@
       "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3adfd41d_86276d17",
+        "filename": "base/third_party/symbolize/symbolize.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-03T20:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ba84c1d_9784f50b",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
