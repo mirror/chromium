@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42db247c_bfff58c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-03T01:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3417ff0d_283d119d",
+      "range": {
+        "startLine": 183,
+        "startChar": 13,
+        "endLine": 183,
+        "endChar": 30
+      },
+      "revId": "c03794fb838a83a22a22c344bc0c0586ef9ab3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "becd24f6_cad98f1f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-03T00:13:27Z",
       "side": 1,
       "message": "Hmm...why do we need to have a MAX_NUMBER from the trial and then the year above?  Isn\u0027t that MAX_NUMBER * 365 (1 / MAX_NUMBER * 1 / 365)?  So then, why wouldn\u0027t we make that the max_number from finch?",
+      "range": {
+        "startLine": 195,
+        "startChar": 84,
+        "endLine": 195,
+        "endChar": 94
+      },
+      "revId": "c03794fb838a83a22a22c344bc0c0586ef9ab3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e920750c_c09bb583",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-03T01:57:54Z",
+      "side": 1,
+      "message": "See https://docs.google.com/document/d/1wz8oIDzKvkVMQ0n2g0MF3cIhqVPquZtJsi1UPt6BT1I/edit?ts\u003d59f7ec4e#\n\nI believe with your proposal there is a chance that the same user is queried more than once.\nWith this method we pool the users first so that each user is guaranteed to be queried at max once.",
+      "parentUuid": "becd24f6_cad98f1f",
       "range": {
         "startLine": 195,
         "startChar": 84,
@@ -62,6 +110,24 @@
       "revId": "c03794fb838a83a22a22c344bc0c0586ef9ab3ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e3a010_f8d4ccfa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-03T01:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b5e1455_a9107c59",
+      "revId": "c03794fb838a83a22a22c344bc0c0586ef9ab3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
