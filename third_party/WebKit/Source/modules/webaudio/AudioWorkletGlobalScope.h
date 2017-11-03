@@ -20,7 +20,34 @@ class AudioWorkletProcessor;
 class AudioWorkletProcessorDefinition;
 class CrossThreadAudioWorkletProcessorInfo;
 class ExceptionState;
+class MessagePortChannel;
 struct GlobalScopeCreationParams;
+
+// Temporary storage for the construction of AudioWorkletProcessor. Caches the
+// name and MessageChannelPort object and clears them after the instantiation.
+struct MODULES_EXPORT ProcessorInitParams final {
+  USING_FAST_MALLOC(ProcessorInitParams);
+ public:
+  ProcessorInitParams() {}
+  ~ProcessorInitParams() = default;
+
+  void Set(const String& new_name,
+           MessagePortChannel new_port_channel) {
+    CHECK(!is_set_);
+    name = new_name;
+    port_channel = new_port_channel;
+    is_set_ = true;
+  }
+
+  void Clear() {
+    CHECK(is_set_);
+    is_set_ = false;
+  }
+
+  String name;
+  MessagePortChannel port_channel;
+  bool is_set_ = false;
+};
 
 // This is constructed and destroyed on a worker thread, and all methods also
 // must be called on the worker thread.
@@ -39,10 +66,18 @@ class MODULES_EXPORT AudioWorkletGlobalScope final
                          const ScriptValue& class_definition,
                          ExceptionState&);
 
-  // Creates an instance of AudioWorkletProcessor from a registered name. This
-  // function may return nullptr when 1) a definition cannot be found or 2) a
-  // new V8 object cannot be constructed for some reason.
-  AudioWorkletProcessor* CreateInstance(const String& name, float sample_rate);
+  // Creates an instance of AudioWorkletProcessor from a registered name.
+  // This is invoked by AudioWorkletMessagingProxy upon the construction of
+  // AudioWorkletNode.
+  //
+  // This function may return nullptr when 1) a definition cannot be found or
+  // 2) a new V8 object cannot be constructed for some reason.
+  AudioWorkletProcessor* CreateProcessor(const String& name,
+                                         float sample_rate,
+                                         MessagePortChannel);
+
+  AudioWorkletProcessor* CreateProcessorInternal(const String& name,
+                                                 MessagePortChannel);
 
   // Invokes the JS audio processing function from an instance of
   // AudioWorkletProcessor, along with given AudioBuffer from the audio graph.
@@ -59,6 +94,8 @@ class MODULES_EXPORT AudioWorkletGlobalScope final
 
   std::unique_ptr<Vector<CrossThreadAudioWorkletProcessorInfo>>
       WorkletProcessorInfoListForSynchronization();
+
+  ProcessorInitParams* GetProcessorInitParams();
 
   // IDL
   double currentTime() const { return current_time_; }
@@ -80,6 +117,9 @@ class MODULES_EXPORT AudioWorkletGlobalScope final
 
   ProcessorDefinitionMap processor_definition_map_;
   ProcessorInstances processor_instances_;
+
+  ProcessorInitParams processor_init_params_;
+
   double current_time_ = 0.0;
   float sample_rate_ = 0.0;
 };
