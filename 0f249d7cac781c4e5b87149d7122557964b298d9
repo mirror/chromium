@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31d22a70_07ce5ae7",
+        "filename": "chrome/common/media_router/mojo/dial_app_info_parser.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T23:48:35Z",
+      "side": 1,
+      "message": "I think we are supposed to use to kValue naming style for enums now.",
+      "revId": "0f249d7cac781c4e5b87149d7122557964b298d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da867b9_f08f6143",
+        "filename": "chrome/utility/media_router/dial_app_info_parser_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T23:48:35Z",
+      "side": 1,
+      "message": "ThreadChecker doesn\u0027t seem necessary to me... I think we can assume the Mojo utility implementation already does the right thing.",
+      "revId": "0f249d7cac781c4e5b87149d7122557964b298d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
