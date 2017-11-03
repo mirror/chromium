@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "0e6f0ee1_3ec67ac6",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-03T08:58:01Z",
+      "side": 1,
+      "message": "See below, but I think you should not use a delegate pattern here, just a completion handler.",
+      "parentUuid": "d16ea9b8_a9c903bf",
+      "range": {
+        "startLine": 20,
+        "startChar": 22,
+        "endLine": 20,
+        "endChar": 38
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8153cbf4_e7edef9b",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.h",
         "patchSetId": 6
@@ -87,6 +111,29 @@
         "startChar": 50,
         "endLine": 27,
         "endChar": 13
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b53277_82172d36",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-03T08:58:01Z",
+      "side": 1,
+      "message": "\"(function() {\"\n\"var linkNode \u003d document.querySelector(\\\"link[rel\u003d\u0027canonical\u0027]\\\");\"\n\"linkNode ? linkNode.getAttribute(\\\"href\\\") : \\\"\\\";\";\n\"}) ()\";",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 17
       },
       "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -140,6 +187,75 @@
     },
     {
       "key": {
+        "uuid": "b164d5bc_8138a4f6",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-03T08:58:01Z",
+      "side": 1,
+      "message": "GURL::EmptyGURL()",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588886ce_2c6576bc",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-03T08:58:01Z",
+      "side": 1,
+      "message": "GURL::EmptyGURL()",
+      "range": {
+        "startLine": 35,
+        "startChar": 50,
+        "endLine": 35,
+        "endChar": 54
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad968b06_d6e381f5",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-03T08:58:01Z",
+      "side": 1,
+      "message": "open question: Is this enough or should we check SSL status?",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b756edeb_63b18baf",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
         "patchSetId": 6
@@ -163,6 +279,52 @@
     },
     {
       "key": {
+        "uuid": "6e409729_9ba00f0e",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-03T08:58:01Z",
+      "side": 1,
+      "message": "It seems that we disallow relative canonical links.\nI know they are discouraged, but they are allowed by RFC. Should we handle them? Or document somewhere that we don\u0027t?",
+      "range": {
+        "startLine": 45,
+        "startChar": 44,
+        "endLine": 45,
+        "endChar": 62
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1181d5_ad070bd0",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-03T08:58:01Z",
+      "side": 1,
+      "message": "GURL::EmptyGURL()",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43918882_66066a5a",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
         "patchSetId": 6
@@ -179,6 +341,29 @@
         "startChar": 5,
         "endLine": 52,
         "endChar": 14
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e80ad3b_246dfb26",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-03T08:58:01Z",
+      "side": 1,
+      "message": "In this case, delegate is only called in response to a call to retrieveCanonicalURLForWebState (and never on external event).\nWhy not just use a completion handler here?\nDo we plan to call delegate if canonical URL change in the page (which would justify the delegate pattern)?",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 36
       },
       "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -225,6 +410,29 @@
         "startChar": 4,
         "endLine": 39,
         "endChar": 31
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e678b5_89148404",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-03T08:58:01Z",
+      "side": 1,
+      "message": "This is actually odd, because the http site is the one being possibly hacked.",
+      "range": {
+        "startLine": 154,
+        "startChar": 31,
+        "endLine": 154,
+        "endChar": 59
       },
       "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
