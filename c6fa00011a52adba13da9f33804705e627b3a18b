@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "733bb827_1ec815a5",
+        "filename": "components/metrics/reporting_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-03T23:59:48Z",
+      "side": 1,
+      "message": "Once ReportingInfo is filled out this can probably just be derived as\nri.attempt_count() !\u003d 0 \u0026\u0026 ri.last_attempt_was_https() (and perhaps ri.last_attempt_error_code !\u003d 0)\n\nI think it might be simpler in that case to actually check this in LogUploader.",
+      "range": {
+        "startLine": 204,
+        "startChar": 6,
+        "endLine": 204,
+        "endChar": 32
+      },
+      "revId": "c6fa00011a52adba13da9f33804705e627b3a18b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
