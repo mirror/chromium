@@ -70,6 +70,24 @@
       "revId": "422918b918b9653d5848cc7577534a06851a1844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbef6cf5_1d3e457c",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-03T19:35:22Z",
+      "side": 1,
+      "message": "Sorry, I continue to think the AppendQuadsData from LTHI is the correct way to plumb this information through.  I don\u0027t think it\u0027s good practice to store temporary state on persistent objects if there\u0027s some way to avoid it.\n\nI think you could accumulate the temporary TileMaskLayer AppendQuadsData\u0027s statistics into the one being passed to RenderSurfaceImpl::AppendQuads after you\u0027ve generated the quads.",
+      "parentUuid": "90828e70_2484acfc",
+      "revId": "422918b918b9653d5848cc7577534a06851a1844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
