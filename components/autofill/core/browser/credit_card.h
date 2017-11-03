@@ -225,6 +225,10 @@ class CreditCard : public AutofillDataModel {
   base::string16 NetworkAndLastFourDigits() const;
   // A label for this card formatted as 'BankName - 2345'.
   base::string16 BankNameAndLastFourDigits() const;
+  // A label for this card formatted as 'BankName' - 2345' if bank name
+  // experiment turned on and bank name available; otherwise, formated as
+  // 'IssuerNetwork - 2345'.
+  base::string16 NetworkOrBankNameAndLastFourDigits() const;
   // Localized expiration for this card formatted as 'Exp: 06/17'.
   base::string16 AbbreviatedExpirationDateForDisplay() const;
   // Returns the date when the card was last used in autofill.
