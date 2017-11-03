@@ -52,8 +52,7 @@ void LayoutTestBrowserContext::Init() {
   position.altitude = 0;
   position.accuracy = 0;
   position.timestamp = base::Time::Now();
-  device::GeolocationProvider::GetInstance()->OverrideLocationForTesting(
-      position);
+  device::GeolocationProvider::Get("")->OverrideLocationForTesting(position);
 }
 
 ShellURLRequestContextGetter*

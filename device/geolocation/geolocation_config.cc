@@ -22,9 +22,10 @@ void GeolocationConfig::Create(
 }
 
 void GeolocationConfig::IsHighAccuracyLocationBeingCaptured(
+    const std::string& package_name,
     IsHighAccuracyLocationBeingCapturedCallback callback) {
   std::move(callback).Run(
-      GeolocationProvider::GetInstance()->HighAccuracyLocationInUse());
+      GeolocationProvider::Get(package_name)->HighAccuracyLocationInUse());
 }
 
 }  // namespace device

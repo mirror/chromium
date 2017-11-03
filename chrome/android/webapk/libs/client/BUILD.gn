@@ -12,6 +12,7 @@ android_library("client_java") {
     "src/org/chromium/webapk/lib/client/WebApkNavigationClient.java",
     "src/org/chromium/webapk/lib/client/WebApkIdentityServiceClient.java",
     "src/org/chromium/webapk/lib/client/WebApkServiceConnectionManager.java",
+    "src/org/chromium/webapk/lib/client/WebApkServiceImplClient.java",
     "src/org/chromium/webapk/lib/client/WebApkValidator.java",
     "src/org/chromium/webapk/lib/client/WebApkVerifySignature.java",
   ]

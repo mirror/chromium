@@ -626,7 +626,7 @@ public class NotificationPlatformBridge {
 
         String platformTag = makePlatformTag(notificationId, origin, tag);
         if (forWebApk) {
-            WebApkServiceClient.getInstance().notifyNotification(
+            WebApkServiceClient.notifyNotification(
                     webApkPackage, notificationBuilder, platformTag, PLATFORM_ID);
         } else {
             // Set up a pending intent for going to the settings screen for |origin|.
@@ -772,8 +772,7 @@ public class NotificationPlatformBridge {
         if (TextUtils.isEmpty(webApkPackage)) {
             mNotificationManager.cancel(platformTag, PLATFORM_ID);
         } else {
-            WebApkServiceClient.getInstance().cancelNotification(
-                    webApkPackage, platformTag, PLATFORM_ID);
+            WebApkServiceClient.cancelNotification(webApkPackage, platformTag, PLATFORM_ID);
         }
     }
 

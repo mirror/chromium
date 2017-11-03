@@ -94,8 +94,16 @@ blink::mojom::PermissionStatus ShellPermissionManager::GetPermissionStatus(
   return blink::mojom::PermissionStatus::DENIED;
 }
 
+blink::mojom::PermissionStatus ShellPermissionManager::GetPermissionStatus(
+    PermissionType permission,
+    content::RenderFrameHost* render_frame_host,
+    const GURL& requesting_origin,
+    const GURL& embedding_origin) {
+  return GetPermissionStatus(permission, requesting_origin, embedding_origin);
+}
 int ShellPermissionManager::SubscribePermissionStatusChange(
     PermissionType permission,
+    RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
     const GURL& embedding_origin,
     const base::Callback<void(blink::mojom::PermissionStatus)>& callback) {

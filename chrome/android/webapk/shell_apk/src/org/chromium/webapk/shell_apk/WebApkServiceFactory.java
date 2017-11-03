@@ -25,7 +25,6 @@ public class WebApkServiceFactory extends Service {
      */
     private static final String WEBAPK_SERVICE_IMPL_CLASS_NAME =
             "org.chromium.webapk.lib.runtime_library.WebApkServiceImpl";
-
     /**
      * Key for passing id of icon to represent WebAPK notifications in status bar.
      */

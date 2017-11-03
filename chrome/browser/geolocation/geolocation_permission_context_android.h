@@ -112,7 +112,8 @@ class GeolocationPermissionContextAndroid
   // will be prompted for permission.
   bool IsLocationAccessPossible(content::WebContents* web_contents,
                                 const GURL& requesting_origin,
-                                bool user_gesture);
+                                bool user_gesture,
+                                const std::string& package_name);
 
   bool IsRequestingOriginDSE(const GURL& requesting_origin) const;
 

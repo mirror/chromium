@@ -71,6 +71,12 @@ class CONTENT_EXPORT PermissionManager {
       const GURL& requesting_origin,
       const GURL& embedding_origin) = 0;
 
+  virtual blink::mojom::PermissionStatus GetPermissionStatus(
+      PermissionType permission,
+      content::RenderFrameHost* render_frame_host,
+      const GURL& requesting_origin,
+      const GURL& embedding_origin) = 0;
+
   // Sets the permission back to its default for the requesting_origin/
   // embedding_origin tuple.
   virtual void ResetPermission(PermissionType permission,
@@ -83,6 +89,7 @@ class CONTENT_EXPORT PermissionManager {
   // kNoPendingOperation if the subscribe was not successful.
   virtual int SubscribePermissionStatusChange(
       PermissionType permission,
+      content::RenderFrameHost* render_frame_host,
       const GURL& requesting_origin,
       const GURL& embedding_origin,
       const base::Callback<void(blink::mojom::PermissionStatus)>& callback) = 0;

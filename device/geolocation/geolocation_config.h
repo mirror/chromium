@@ -28,6 +28,7 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationConfig
                      const service_manager::BindSourceInfo& source_info);
 
   void IsHighAccuracyLocationBeingCaptured(
+      const std::string& package_name,
       IsHighAccuracyLocationBeingCapturedCallback callback) override;
 
  private:
