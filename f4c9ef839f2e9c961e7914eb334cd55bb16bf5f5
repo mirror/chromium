@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42a86a89_2e2e1f1f",
+        "filename": "third_party/WebKit/Source/core/exported/WebHistoryItem.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-03T00:14:41Z",
+      "side": 1,
+      "message": "nit: declaration can be inlined:\n\n  if (HistoryItem::ViewState* view_state \u003d private_-\u003eGetViewState())\n    return view_state-\u003escroll_anchor_data;",
+      "range": {
+        "startLine": 218,
+        "startChar": 27,
+        "endLine": 218,
+        "endChar": 29
+      },
+      "revId": "f4c9ef839f2e9c961e7914eb334cd55bb16bf5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8fcbdff_ea28d0ad",
+        "filename": "third_party/WebKit/Source/core/exported/WebHistoryItem.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-03T00:14:41Z",
+      "side": 1,
+      "message": "suggest giving ScrollAnchorData a no-args ctor so you can just do:\n\n  return ScrollAnchorData();",
+      "range": {
+        "startLine": 221,
+        "startChar": 38,
+        "endLine": 221,
+        "endChar": 40
+      },
+      "revId": "f4c9ef839f2e9c961e7914eb334cd55bb16bf5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4646cada_5be3c2de",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-03T00:14:41Z",
+      "side": 1,
+      "message": "GetScrollAnchor should never return null here, so I would make this a DCHECK.",
+      "range": {
+        "startLine": 340,
+        "startChar": 36,
+        "endLine": 340,
+        "endChar": 51
+      },
+      "revId": "f4c9ef839f2e9c961e7914eb334cd55bb16bf5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
