@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb34d8d7_806e9834",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-03T13:48:24Z",
+      "side": 1,
+      "message": "s/update  title/update the title/ ?",
+      "revId": "4661de8d84bb965cfe0841a62c6edd7e30d169fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d07e0e_0022d055",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-03T13:48:24Z",
+      "side": 1,
+      "message": "s/UpdateRegistrationUI/UpdateStoredRegistrationUI?\n\nRight now it sounds like this method\u0027s principal responsibility is updating the UI, which it actually only does indirectly in the \u0027Did..\u0027 method.",
+      "revId": "4661de8d84bb965cfe0841a62c6edd7e30d169fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467afe55_254c7063",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-03T13:48:24Z",
+      "side": 1,
+      "message": "s/DidUpdateRegistrationUI/DidUpdateStoredRegistrationUI?\n\nOr, do we even need to call it \u0027Did ...\u0027? I know this is a convention in Chromium C++ but personally I find it clearer when methods explain what they actually do. So, just UpdateUI? Since that\u0027s what it actually does..",
+      "revId": "4661de8d84bb965cfe0841a62c6edd7e30d169fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
