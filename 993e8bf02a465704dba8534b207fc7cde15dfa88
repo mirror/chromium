@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9f5852a3_17d2dea0",
+        "filename": "cc/trees/layer_tree_host_pixeltest_filters.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-11-03T15:50:30Z",
+      "side": 1,
+      "message": "Sorry, which layer? Offset just enlarges offsetY layer: \"Rect(int x, int y, int width, int height)\".",
+      "parentUuid": "2fc2d7ef_ac67e4d2",
+      "revId": "993e8bf02a465704dba8534b207fc7cde15dfa88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1e7cacc_9a69d9b2",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "993e8bf02a465704dba8534b207fc7cde15dfa88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d049dc_a1040455",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-11-03T15:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1e7cacc_9a69d9b2",
+      "revId": "993e8bf02a465704dba8534b207fc7cde15dfa88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4eb43d89_f1fd5fd0",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-11-03T15:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd091dcf_389baa02",
+      "revId": "993e8bf02a465704dba8534b207fc7cde15dfa88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "618dc823_4594d476",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c926adc9_257146ca",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-11-03T15:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "618dc823_4594d476",
+      "revId": "993e8bf02a465704dba8534b207fc7cde15dfa88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bd6c4e6_e2db05c5",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-25T20:01:29Z",
       "side": 1,
       "message": "This is no longer true, so the comment needs to be updated? But also why isn\u0027t this code changing?",
+      "revId": "993e8bf02a465704dba8534b207fc7cde15dfa88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa2fdfd_28cb745f",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-11-03T15:50:30Z",
+      "side": 1,
+      "message": "Hm... why it is not true? I didn\u0027t touch mask.",
+      "parentUuid": "8bd6c4e6_e2db05c5",
       "revId": "993e8bf02a465704dba8534b207fc7cde15dfa88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
