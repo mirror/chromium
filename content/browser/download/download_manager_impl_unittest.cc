@@ -553,6 +553,8 @@ TEST_F(DownloadManagerTest, StartDownload) {
   // Doing nothing will set the default download directory to null.
   EXPECT_CALL(GetMockDownloadManagerDelegate(), GetSaveDir(_, _, _, _));
 #endif
+  EXPECT_CALL(GetMockDownloadItem(local_id), RemoveObserver(_));
+  EXPECT_CALL(GetMockDownloadItem(local_id), AddObserver(_));
   EXPECT_CALL(GetMockDownloadManagerDelegate(),
               ApplicationClientIdForFileScanning())
       .WillRepeatedly(Return("client-id"));
