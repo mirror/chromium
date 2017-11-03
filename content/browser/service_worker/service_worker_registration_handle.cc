@@ -271,7 +271,14 @@ bool ServiceWorkerRegistrationHandle::CanServeRegistrationObjectHostMethods(
     CallbackType* callback,
     const char* error_prefix,
     Args... args) {
-  if (!provider_host_ || !context_) {
+  // |provider_host_| lifetime is tied with the remote corresponding
+  // WebServiceWorkerProviderImpl instance, as the remote callers
+  // (blink::ServiceWorkerRegistration and blink::NavigationPreloadManager) of
+  // interface ServiceWorkerRegistrationObjectHost are already confirming
+  // existence of the WebServiceWorkerProviderImpl instance before they make any
+  // calls, we are sure |provider_host_| is live at this moment.
+  DCHECK(provider_host_);
+  if (!context_) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kAbort,
         std::string(error_prefix) + std::string(kShutdownErrorMessage),
