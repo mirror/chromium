@@ -227,6 +227,9 @@ const char kAppListToggleMethodHistogram[] = "Apps.AppListShowSource";
 // The UMA histogram that logs which page gets opened by the user.
 const char kPageOpenedHistogram[] = "Apps.AppListPageOpened";
 
+// The UMA histogram that logs how many folders users have.
+const char kNumberOfFoldersHistogram[] = "Apps.NumberOfFolders";
+
 // The UMA histogram that logs the type of search result opened.
 const char kSearchResultOpenDisplayTypeHistogram[] =
     "Apps.AppListSearchResultOpenDisplayType";

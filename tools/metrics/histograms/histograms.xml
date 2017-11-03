@@ -2287,6 +2287,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Apps.NumberOfFolders" units="folder(s)">
+  <owner>newcomer@google.com</owner>
+  <summary>
+    The number of folders that users have in their Launcher. Computed on
+    initialization of AppListView. Includes OEM folders.
+  </summary>
+</histogram>
+
 <histogram name="Arc.AndroidBootTime" units="ms">
   <owner>elijahtaylor@google.com</owner>
   <owner>mitsuji@google.com</owner>
