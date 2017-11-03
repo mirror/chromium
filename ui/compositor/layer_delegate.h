@@ -6,6 +6,7 @@
 #define UI_COMPOSITOR_LAYER_DELEGATE_H_
 
 #include "ui/compositor/compositor_export.h"
+#include "ui/compositor/property_change_reason.h"
 
 namespace gfx {
 class Rect;
@@ -28,14 +29,18 @@ class COMPOSITOR_EXPORT LayerDelegate {
   virtual void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                           float new_device_scale_factor) = 0;
 
-  // Invoked when the bounds have changed.
-  virtual void OnLayerBoundsChanged(const gfx::Rect& old_bounds);
-
-  // Invoked when the transform has changed.
-  virtual void OnLayerTransformed();
-
-  // Invoked when the layer's opacity has changed.
-  virtual void OnLayerOpacityChanged(float old_opacity, float new_opacity);
+  // Invoked when the layer's bounds, transform or opacity is set. |reason|
+  // indicates whether the property was set directly or by an animation. These
+  // methods are called at every step of a *non-threaded* animation. These
+  // methods are called once before the first frame of a *threaded* animation is
+  // rendered and once when a *threaded* animation ends, but they aren't called
+  // at every step of a *threaded* animation.
+  //
+  // Note: A bounds animation is never threaded.
+  virtual void OnLayerBoundsChanged(const gfx::Rect& old_bounds,
+                                    PropertyChangeReason reason);
+  virtual void OnLayerTransformed(PropertyChangeReason reason);
+  virtual void OnLayerOpacityChanged(PropertyChangeReason reason);
 
  protected:
   virtual ~LayerDelegate() {}
