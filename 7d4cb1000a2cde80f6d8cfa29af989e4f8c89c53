@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50509c76_c375c417",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T15:32:44Z",
+      "side": 1,
+      "message": "susceptible",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "7d4cb1000a2cde80f6d8cfa29af989e4f8c89c53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47228fc2_27457fef",
+        "filename": "base/files/memory_mapped_file_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T15:32:44Z",
+      "side": 1,
+      "message": "You can reference https://openradar.appspot.com/32720223.",
+      "revId": "7d4cb1000a2cde80f6d8cfa29af989e4f8c89c53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177fdd5c_89b46b64",
+        "filename": "base/files/memory_mapped_file_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T15:32:44Z",
+      "side": 1,
+      "message": "Just recycle the fst_flags value: F_ALLOCATECONTIG instead of ALLOCATE_CONTIG. Also, the FD number isn’t terribly useful in a logged message, so I don’t see a need to stream file_.GetPlatformFile(). Same on line 122.",
+      "range": {
+        "startLine": 118,
+        "startChar": 25,
+        "endLine": 118,
+        "endChar": 40
+      },
+      "revId": "7d4cb1000a2cde80f6d8cfa29af989e4f8c89c53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354f01c7_11d11b32",
+        "filename": "base/files/memory_mapped_file_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T15:32:44Z",
+      "side": 1,
+      "message": "Well, actually, I think that fst_flags is a bit field. Really, you wanted F_ALLOCATEALL | F_ALLOCATECONTIG for the first try.\n\nBut in fact, I don’t think it’s important for our purposes that the allocation be contiguous, so I’d just do a single-shot try with only F_ALLOCATEALL set.",
+      "revId": "7d4cb1000a2cde80f6d8cfa29af989e4f8c89c53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
