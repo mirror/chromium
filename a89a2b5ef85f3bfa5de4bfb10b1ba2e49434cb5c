@@ -16,6 +16,24 @@
       "revId": "a89a2b5ef85f3bfa5de4bfb10b1ba2e49434cb5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6e978a_9f02c645",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-03T18:09:02Z",
+      "side": 1,
+      "message": "All the event handling is done is overview_drag_controller. There\u0027s three situation we want to account for:\n1) regular tap - activate window\n2) drag - snap window maybe\n3) long press - reset to previous state\n\nRight now both 1 and 2 are handled together by checking |location_in_screen|. To add 3 we have to pipe some more info to overview_drag_controller. If we check for TAP then we would have to pipe another event up to overview_drag_controller and then make sure GESTURE_END doesn\u0027t activate. Same goes for checking for SCROLL_UPDATE.\n\ncase ui::GESTURE_TAP:\nlistener()-\u003eHandleReleaseEvent(location, true /* tapped */);\nbreak;\ncase ui::GESTURE_END:\nlistener()-\u003eHandleReleaseEvent(location, false);\n\nand then\nCompleteDrag(location, tapped)\nif (tapped_) return;\ntapped_ \u003d tapped;\ndostuff...\n\nis that better?",
+      "parentUuid": "616d0abf_ee3dcbb0",
+      "revId": "a89a2b5ef85f3bfa5de4bfb10b1ba2e49434cb5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
