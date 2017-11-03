@@ -508,7 +508,10 @@ void ClientCertResolver::ResolveNetworks(
 
   if (networks_to_resolve->empty()) {
     VLOG(1) << "No networks to resolve.";
-    NotifyResolveRequestCompleted();
+    // If a resolve task is running, it will notify observers when it's
+    // finished.
+    if (!resolve_task_running_)
+      NotifyResolveRequestCompleted();
     return;
   }
 
@@ -581,18 +584,21 @@ void ClientCertResolver::ConfigureCertificates(
                         base::Bind(&LogError, it->service_path));
     network_state_handler_->RequestUpdateForNetwork(it->service_path);
   }
-  if (queued_networks_to_resolve_.empty())
+  resolve_task_running_ = false;
+  if (queued_networks_to_resolve_.empty()) {
     NotifyResolveRequestCompleted();
-  else
+  } else {
     ResolvePendingNetworks();
+  }
 }
 
 void ClientCertResolver::NotifyResolveRequestCompleted() {
-  VLOG(2) << "Notify observers: " << (network_properties_changed_ ? "" : "no ")
-          << "networks changed.";
-  resolve_task_running_ = false;
+  DCHECK(!resolve_task_running_);
+
   const bool changed = network_properties_changed_;
   network_properties_changed_ = false;
+  VLOG(2) << "Notify observers: " << (changed ? "" : "no ")
+          << "networks changed.";
   for (auto& observer : observers_)
     observer.ResolveRequestCompleted(changed);
 }
