@@ -38,18 +38,4 @@ TEST_F(NativeThemeMacTest, SystemColorsExist) {
   }
 }
 
-// Spot-check some system colours that can't be changed through System
-// Preferences.
-TEST_F(NativeThemeMacTest, SystemColorSpotChecks) {
-  NativeTheme* native_theme = NativeTheme::GetInstanceForNativeUi();
-  const SkColor kWindowColorCatsMavericks = SkColorSetARGB(255, 232, 232, 232);
-  const SkColor kWindowColorYosemite = SkColorSetARGB(255, 236, 236, 236);
-  SkColor dialogColor =
-      native_theme->GetSystemColor(NativeTheme::kColorId_WindowBackground);
-  if (base::mac::IsAtLeastOS10_10())
-    EXPECT_EQ(dialogColor, kWindowColorYosemite);
-  else
-    EXPECT_EQ(dialogColor, kWindowColorCatsMavericks);
-}
-
 }  // namespace ui
