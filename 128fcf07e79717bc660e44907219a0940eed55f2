@@ -16,6 +16,24 @@
       "revId": "128fcf07e79717bc660e44907219a0940eed55f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c2afa9_6b3979be",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-11-03T18:15:25Z",
+      "side": 1,
+      "message": "I just tested it. The old version was right.\n\nint i \u003d 10;\nfloat f \u003d 2.5f;\ni *\u003d f;\n\nmakes i \u003d 25, but\n\ni *\u003d (int) f;\n\nmakes i \u003d 20.",
+      "parentUuid": "fa47a727_744d96dd",
+      "revId": "128fcf07e79717bc660e44907219a0940eed55f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
