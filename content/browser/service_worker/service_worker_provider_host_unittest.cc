@@ -478,6 +478,7 @@ class MockServiceWorkerContainer : public mojom::ServiceWorkerContainer {
       blink::mojom::ServiceWorkerObjectInfoPtr controller,
       const base::string16& message,
       std::vector<mojo::ScopedMessagePipeHandle> message_pipes) override {}
+  void CountFeature(uint32_t feature) override {}
 
   bool was_set_controller_called() const { return was_set_controller_called_; }
 

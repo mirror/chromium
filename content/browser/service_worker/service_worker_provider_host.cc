@@ -555,9 +555,6 @@ void ServiceWorkerProviderHost::PostMessageToClient(
     const base::string16& message,
     const std::vector<blink::MessagePortChannel>& sent_message_ports) {
   DCHECK(IsProviderForClient());
-  if (!dispatcher_host_)
-    return;
-
   auto message_pipes =
       blink::MessagePortChannel::ReleaseHandles(sent_message_ports);
   container_->PostMessageToClient(GetOrCreateServiceWorkerHandle(version),
@@ -565,13 +562,9 @@ void ServiceWorkerProviderHost::PostMessageToClient(
 }
 
 void ServiceWorkerProviderHost::CountFeature(uint32_t feature) {
-  if (!dispatcher_host_)
-    return;
-
   // CountFeature message should be sent only for controllees.
   DCHECK(IsProviderForClient());
-  Send(new ServiceWorkerMsg_CountFeature(render_thread_id_, provider_id(),
-                                         feature));
+  container_->CountFeature(feature);
 }
 
 void ServiceWorkerProviderHost::AddScopedProcessReferenceToPattern(

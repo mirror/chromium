@@ -279,11 +279,11 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
   DCHECK(host_info.host_request.handle().is_valid());
 
   // current() may be null in tests.
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
+          ChildThreadImpl::current()->thread_safe_sender(),
+          base::ThreadTaskRunnerHandle::Get().get());
   if (ChildThreadImpl::current()) {
-    ServiceWorkerDispatcher* dispatcher =
-        ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
-            ChildThreadImpl::current()->thread_safe_sender(),
-            base::ThreadTaskRunnerHandle::Get().get());
     context_ = base::MakeRefCounted<ServiceWorkerProviderContext>(
         browser_provider_id, provider_type, std::move(client_request),
         std::move(host_ptr_info), dispatcher, default_loader_factory_getter);
