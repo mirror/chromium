@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a7954d2_50902587",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-03T16:49:31Z",
+      "side": 1,
+      "message": "Done:\n- s/RemoveDynamicFrameSuffixForTesting/ExtractStableNameForTesting/\n- s/PreserveOriginalUniqueNameForTesting/PreserveStableUniqueNameForTesting/\n\n(I also tried to look for and change \"original\" and \"dynamic\" substring where applicable).",
+      "parentUuid": "effc1b59_8f8c08d2",
+      "range": {
+        "startLine": 309,
+        "startChar": 30,
+        "endLine": 309,
+        "endChar": 64
+      },
+      "revId": "4603612ff17d4b7f90521b5b9b7865d886ddb691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48b2df95_c42d79a9",
         "filename": "content/common/unique_name_helper.h",
         "patchSetId": 25
@@ -45,6 +69,30 @@
       "revId": "4603612ff17d4b7f90521b5b9b7865d886ddb691",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3b75b9_5ac65702",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-03T16:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48b2df95_c42d79a9",
+      "range": {
+        "startLine": 139,
+        "startChar": 52,
+        "endLine": 139,
+        "endChar": 53
+      },
+      "revId": "4603612ff17d4b7f90521b5b9b7865d886ddb691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "daeb8505_af5d751b",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-03T16:49:31Z",
+      "side": 1,
+      "message": "Done (here).\n\nNote that I still left the following though:\n    constexpr char kDynamicFrameMarker[] \u003d \"\u003c!--dynamicFrame\";",
+      "parentUuid": "ae4c9879_8eb0eddc",
+      "range": {
+        "startLine": 145,
+        "startChar": 48,
+        "endLine": 145,
+        "endChar": 68
+      },
+      "revId": "4603612ff17d4b7f90521b5b9b7865d886ddb691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80085210_e08261b5",
         "filename": "content/public/test/test_runner_support.h",
         "patchSetId": 25
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "77e024fa_3d6bc83b",
+        "filename": "content/public/test/test_runner_support.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-03T16:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80085210_e08261b5",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "4603612ff17d4b7f90521b5b9b7865d886ddb691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd01697b_dc647b33",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 25
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "ddad00f6_4da07ce9",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 3302,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-03T16:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd01697b_dc647b33",
+      "revId": "4603612ff17d4b7f90521b5b9b7865d886ddb691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98d04217_1ea50d28",
         "filename": "third_party/WebKit/LayoutTests/fast/frames/unique-name-all-subframes-have-same-name-expected.txt",
         "patchSetId": 25
@@ -122,6 +236,30 @@
       "writtenOn": "2017-11-02T23:10:39Z",
       "side": 1,
       "message": "Maybe it\u0027s worth adding a suffix in testing mode? Though I guess that doesn\u0027t scale well once you have two script-inserted frames--but it does seem confusing that the test results don\u0027t match what one might expect (since the test was originally trying to verify that they are all different)",
+      "range": {
+        "startLine": 24,
+        "startChar": 60,
+        "endLine": 24,
+        "endChar": 61
+      },
+      "revId": "4603612ff17d4b7f90521b5b9b7865d886ddb691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9440db99_c5e71444",
+        "filename": "third_party/WebKit/LayoutTests/fast/frames/unique-name-all-subframes-have-same-name-expected.txt",
+        "patchSetId": 25
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-03T16:49:31Z",
+      "side": 1,
+      "message": "I am not sure what you mean.  We could maybe modify ExtractStableNameForTesting so that it doesn\u0027t entirely remove the random part of the unique name, but instead replaces it with something like \"\u003c!--dynamicFrame-randomUnguessableTokenWouldGoHereButWasReplacedForTesting--\u003e\".  This might work, but it would require modifying the output expected by quite a few tests - I am not sure if this is worth it...",
+      "parentUuid": "98d04217_1ea50d28",
       "range": {
         "startLine": 24,
         "startChar": 60,
