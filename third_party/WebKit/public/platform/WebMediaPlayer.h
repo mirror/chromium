@@ -154,6 +154,8 @@ class WebMediaPlayer {
   // True if the media is being played on a remote device.
   virtual bool IsRemote() const { return false; }
 
+  virtual bool IsEnded() const { return false; }
+
   // Dimension of the video.
   virtual WebSize NaturalSize() const = 0;
 
