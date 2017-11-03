@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "93509acf_e65847fa",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-03T23:49:02Z",
+      "side": 1,
+      "message": "Maybe you can do the comparison as the first condition, like:\nvoid WallpaperMananger::ShowUserWallpaper(..) {\n  if (!user_manager::UserManager::IsInitialized() || ...)\n    return;\n  if (IsSignInAccount()) {\n    DoSomething();\n    return;\n  }\n  ... (the other codes remain the same)\n}\nWhat do you think? IMO it should be fine as SignIn user can also regards as a particular type user. But I\u0027m also fine if you want to keep this function, but probably better to rename it to ShowDefaultSigninWallpaper() as this is only for new user case and the other normal users has his own signin wall[paper?",
+      "parentUuid": "394d9421_8d8ef62a",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be4bf23c_83ba0010",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 9
