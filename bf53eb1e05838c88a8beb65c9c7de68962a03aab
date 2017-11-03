@@ -22,6 +22,30 @@
       "revId": "bf53eb1e05838c88a8beb65c9c7de68962a03aab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f853710_bce34c14",
+        "filename": "third_party/protobuf/proto_library.gni",
+        "patchSetId": 10
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-03T17:59:42Z",
+      "side": 1,
+      "message": "Because within chrome, proto fuzzers are only used to fuzz code that doesn\u0027t accept protobufs. So the proto definition and generated code are only used for fuzzing.\n\nAny bugs in the proto generated code would be the fuzzer writer\u0027s fault (and not in the real program) and coverage wouldn\u0027t provide any useful information to libfuzzer.",
+      "parentUuid": "d4509658_bfe6268d",
+      "range": {
+        "startLine": 358,
+        "startChar": 57,
+        "endLine": 358,
+        "endChar": 0
+      },
+      "revId": "bf53eb1e05838c88a8beb65c9c7de68962a03aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
