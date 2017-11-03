@@ -20,7 +20,6 @@ const char kBrowserStateInfoCache[] = "profile.info_cache";
 
 // Directory of the browser state profile used.
 const char kBrowserStateLastUsed[] = "profile.last_used";
-
 // List of directories of the browser states last active.
 const char kBrowserStatesLastActive[] = "profile.last_active_profiles";
 
@@ -103,6 +102,11 @@ const char kSavingBrowserHistoryDisabled[] = "history.saving_disabled";
 
 // Boolean that is true when Suggest support is enabled.
 const char kSearchSuggestEnabled[] = "search.suggest_enabled";
+
+// The JSON representation of the user's language profile. Used as an input to
+// the user language model (i.e. for determining which languages a user
+// understands).
+const char kUserLanguageProfile[] = "language_profile";
 
 // A boolean pref set to true if prediction of network actions is allowed.
 // Actions include prerendering of web pages.
