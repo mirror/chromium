@@ -22,6 +22,30 @@
       "revId": "3b2af6d61a95c537ad2ae7d7f3bd971e9f246391",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8452bf_c0f11c4c",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-03T20:41:00Z",
+      "side": 1,
+      "message": "Added MojoCdmFileIO::ActualRead and MojoCdmFileIO::ActualWrite to catch the actual read/write time.\n\nOnError only post a task and it\u0027s not interesting to monitor.\n\nAlso, trace events are for performance analysis, so typically we are not very interested in failure cases, unless we believe error handling could have performance issues.",
+      "parentUuid": "2ccb5ff4_bba2a576",
+      "range": {
+        "startLine": 204,
+        "startChar": 11,
+        "endLine": 204,
+        "endChar": 25
+      },
+      "revId": "3b2af6d61a95c537ad2ae7d7f3bd971e9f246391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
