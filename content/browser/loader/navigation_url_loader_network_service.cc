@@ -341,6 +341,16 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     Restart();
   }
 
+  void ProceedWithResponse() {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+    if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+      DCHECK(response_url_loader_.is_bound());
+      response_url_loader_->ProceedWithResponse();
+      return;
+    }
+  }
+
   // Navigation is intercepted, transfer the |resource_request_|, |url_loader_|
   // and the |completion_status_| to the new owner. The new owner is
   // responsible for handling all the mojom::URLLoaderClient callbacks from now
@@ -620,7 +630,12 @@ void NavigationURLLoaderNetworkService::FollowRedirect() {
                      base::Unretained(request_controller_.get())));
 }
 
-void NavigationURLLoaderNetworkService::ProceedWithResponse() {}
+void NavigationURLLoaderNetworkService::ProceedWithResponse() {
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&URLLoaderRequestController::ProceedWithResponse,
+                     base::Unretained(request_controller_.get())));
+}
 
 void NavigationURLLoaderNetworkService::InterceptNavigation(
     NavigationURLLoader::NavigationInterceptionCB callback) {
@@ -642,6 +657,15 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
     NavigationResourceHandler::GetSSLStatusForRequest(*ssl_info, &ssl_status_);
   response_ = std::move(response);
   ssl_info_ = ssl_info;
+
+  // Temporarily, we pass both a stream (null) and the data pipe to the
+  // delegate until PlzNavigate has shipped and we can be comfortable fully
+  // switching to the data pipe.
+  delegate_->OnResponseStarted(
+      response_, nullptr, ssl_status_, std::unique_ptr<NavigationData>(),
+      GlobalRequestID(-1, g_next_request_id), IsDownload(),
+      false /* is_stream */,
+      request_controller_->TakeSubresourceLoaderParams());
 }
 
 void NavigationURLLoaderNetworkService::OnReceiveRedirect(
@@ -659,14 +683,7 @@ void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
                          "&NavigationURLLoaderNetworkService", this, "success",
                          true);
 
-  // Temporarily, we pass both a stream (null) and the data pipe to the
-  // delegate until PlzNavigate has shipped and we can be comfortable fully
-  // switching to the data pipe.
-  delegate_->OnResponseStarted(
-      response_, nullptr, std::move(body), ssl_status_,
-      std::unique_ptr<NavigationData>(), GlobalRequestID(-1, g_next_request_id),
-      IsDownload(), false /* is_stream */,
-      request_controller_->TakeSubresourceLoaderParams());
+  delegate_->OnStartLoadingResponseBody(std::move(body));
 }
 
 void NavigationURLLoaderNetworkService::OnComplete(

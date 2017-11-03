@@ -48,13 +48,15 @@ class CONTENT_EXPORT NavigationURLLoaderDelegate {
   virtual void OnResponseStarted(
       const scoped_refptr<ResourceResponse>& response,
       std::unique_ptr<StreamHandle> body_stream,
-      mojo::ScopedDataPipeConsumerHandle consumer_handle,
       const SSLStatus& ssl_status,
       std::unique_ptr<NavigationData> navigation_data,
       const GlobalRequestID& request_id,
       bool is_download,
       bool is_stream,
       base::Optional<SubresourceLoaderParams> subresource_loader_params) = 0;
+
+  virtual void OnStartLoadingResponseBody(
+      mojo::ScopedDataPipeConsumerHandle consumer_handle) = 0;
 
   // Called if the request fails before receving a response. |net_error| is a
   // network error code for the failure. |has_stale_copy_in_cache| is true if
