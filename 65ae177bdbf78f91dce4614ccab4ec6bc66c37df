@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "bc798b1c_3cf1e1d6",
+        "filename": "chrome/installer/zucchini/zucchini_tools.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-03T17:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f187fac_da5b8e4c",
+      "revId": "65ae177bdbf78f91dce4614ccab4ec6bc66c37df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aecde3a6_85652a56",
         "filename": "chrome/installer/zucchini/zucchini_tools.h",
         "patchSetId": 1
@@ -56,6 +74,30 @@
       "revId": "65ae177bdbf78f91dce4614ccab4ec6bc66c37df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eff0ee6_02a2f9c1",
+        "filename": "chrome/installer/zucchini/zucchini_tools.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-03T17:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aecde3a6_85652a56",
+      "range": {
+        "startLine": 25,
+        "startChar": 23,
+        "endLine": 25,
+        "endChar": 68
+      },
+      "revId": "65ae177bdbf78f91dce4614ccab4ec6bc66c37df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
