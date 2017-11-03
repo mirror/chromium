@@ -209,6 +209,7 @@ void TestRenderWidgetHostView::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
     viz::CompositorFrame frame) {
   did_swap_compositor_frame_ = true;
+  rwh_->DidProcessFrame(frame.metadata.frame_token);
 }
 
 bool TestRenderWidgetHostView::LockMouse() {
