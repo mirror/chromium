@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f5fa72a_f080378c",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-03T08:58:32Z",
+      "side": 1,
+      "message": "When can this happen?\n\nAlternately, can we make sure that task_runner is not null when V8PerIsolateData gets constructed? (I don\u0027t really want to expose base::ThreadTaskRunnerHandle::Get to Blink.)",
+      "revId": "b0aa92d8b1a11e158796a9c0dc35013b1dbbee46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
