@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a73838b7_0c29cdee",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-webvtt-non-snap-to-lines.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-03T09:33:02Z",
+      "side": 1,
+      "message": "Could you make this a ref-test instead?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "658f210ee0e3f28faf8afee1933f4cf00855bc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d87dc94_d3386abe",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-webvtt-non-snap-to-lines.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-03T09:33:02Z",
+      "side": 1,
+      "message": "For tests like this I usually just use video.addTextTrack and then add a VTTCue with the right properties. This avoids having to use things like this, and also avoids having additional (external) files. There should be a few tests to look at that follow those lines. (Let me know if need help finding one and I\u0027ll see what I can dig up.)",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "658f210ee0e3f28faf8afee1933f4cf00855bc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
