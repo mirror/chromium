@@ -46,6 +46,46 @@
       "revId": "b5556a3e8a3dd1bc0e36342571fa610c4a385e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc2ecae_f2bdae01",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 91644,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-03T17:45:35Z",
+      "side": 1,
+      "message": "If you\u0027re naming the metric BindStatus then BooleanSuccess doesn\u0027t make sense to me. I would suggest naming the metric BindSuccess - or using a different enum\u003d.",
+      "range": {
+        "startLine": 91644,
+        "startChar": 56,
+        "endLine": 91644,
+        "endChar": 70
+      },
+      "revId": "b5556a3e8a3dd1bc0e36342571fa610c4a385e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7fbb25b_48b16c46",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 91648,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-03T17:45:35Z",
+      "side": 1,
+      "message": "Please mention when this is recorded. Is this once per startup? Periodicially? On a certain event?",
+      "revId": "b5556a3e8a3dd1bc0e36342571fa610c4a385e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
