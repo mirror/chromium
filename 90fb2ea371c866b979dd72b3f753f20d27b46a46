@@ -22,6 +22,29 @@
       "revId": "90fb2ea371c866b979dd72b3f753f20d27b46a46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fbda700_8bcda8f7",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-03T03:21:51Z",
+      "side": 1,
+      "message": "I am unsure if we should fire this event if the app has been installed to run in a tab. I\u0027d suggest:\n- only firing this for things installed to run in a window\n- only firing this if the ExperimentalAppBanner flag is enabled.\n\nThis way, only PWAs will get it, and only with the new system we introduce for desktop PWAs.",
+      "range": {
+        "startLine": 743,
+        "startChar": 18,
+        "endLine": 743,
+        "endChar": 27
+      },
+      "revId": "90fb2ea371c866b979dd72b3f753f20d27b46a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
