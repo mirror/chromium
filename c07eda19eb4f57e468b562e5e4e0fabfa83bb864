@@ -16,6 +16,24 @@
       "revId": "c07eda19eb4f57e468b562e5e4e0fabfa83bb864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726370e4_07b10644",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 1742,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-03T16:57:27Z",
+      "side": 1,
+      "message": "Yes the file isn\u0027t built on mac and causes linkage failures otherwise. The other section is inside a \"toolkit_views\" conditional so it isn\u0027t the same.",
+      "parentUuid": "bc632981_f8c9d039",
+      "revId": "c07eda19eb4f57e468b562e5e4e0fabfa83bb864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
