@@ -35,7 +35,8 @@ class ConnectionFilter;
 class CONTENT_EXPORT ServiceManagerConnection {
  public:
   using ServiceRequestHandler =
-      base::Callback<void(service_manager::mojom::ServiceRequest)>;
+      base::Callback<void(const service_manager::Identity&,
+                          service_manager::mojom::ServiceRequest)>;
   using Factory =
       base::Callback<std::unique_ptr<ServiceManagerConnection>(void)>;
 

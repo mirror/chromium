@@ -51,7 +51,8 @@ TEST(ServiceManagerConnectionImplTest, ServiceLaunchThreading) {
                            mojo::MakeRequest(&factory).PassMessagePipe(),
                            base::BindOnce(&base::DoNothing));
   service_manager::mojom::ServicePtr created_service;
-  factory->CreateService(mojo::MakeRequest(&created_service), kTestServiceName);
+  factory->CreateService(mojo::MakeRequest(&created_service),
+                         service_manager::Identity(kTestServiceName));
   event.Wait();
 }
 

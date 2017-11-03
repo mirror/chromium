@@ -122,11 +122,11 @@ UtilityServiceFactory::~UtilityServiceFactory() {}
 
 void UtilityServiceFactory::CreateService(
     service_manager::mojom::ServiceRequest request,
-    const std::string& name) {
+    const service_manager::Identity& identity) {
   auto* trace_log = base::trace_event::TraceLog::GetInstance();
   if (trace_log->IsProcessNameEmpty())
-    trace_log->set_process_name("Service: " + name);
-  ServiceFactory::CreateService(std::move(request), name);
+    trace_log->set_process_name("Service: " + identity.name());
+  ServiceFactory::CreateService(std::move(request), identity);
 }
 
 void UtilityServiceFactory::RegisterServices(ServiceMap* services) {

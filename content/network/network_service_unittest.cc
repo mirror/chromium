@@ -95,8 +95,8 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
   }
 
   void CreateService(service_manager::mojom::ServiceRequest request,
-                     const std::string& name) override {
-    if (name == mojom::kNetworkServiceName) {
+                     const service_manager::Identity& identity) override {
+    if (identity.name() == mojom::kNetworkServiceName) {
       service_context_.reset(new service_manager::ServiceContext(
           NetworkServiceImpl::CreateForTesting(), std::move(request)));
     }
@@ -395,8 +395,8 @@ class NetworkServiceNetworkChangeTest
 
    protected:
     void CreateService(service_manager::mojom::ServiceRequest request,
-                       const std::string& name) override {
-      if (name == mojom::kNetworkServiceName) {
+                       const service_manager::Identity& identity) override {
+      if (identity.name() == mojom::kNetworkServiceName) {
         service_context_.reset(new service_manager::ServiceContext(
             NetworkServiceImpl::CreateForTesting(), std::move(request)));
         // Send a broadcast after NetworkService is actually created.
