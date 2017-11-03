@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <vector>
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
@@ -18,6 +19,10 @@
 #include "services/ui/public/cpp/gpu/client_gpu_memory_buffer_manager.h"
 #include "services/ui/public/interfaces/gpu.mojom.h"
 
+namespace gpu {
+struct GPUInfo;
+}
+
 namespace service_manager {
 class Connector;
 }
@@ -27,6 +32,9 @@ namespace ui {
 class Gpu : public gpu::GpuChannelHostFactory,
             public gpu::GpuChannelEstablishFactory {
  public:
+  using RequestCompleteGpuInfoCallback =
+      base::OnceCallback<void(const gpu::GPUInfo& gpu_info)>;
+
   ~Gpu() override;
 
   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager() const {
@@ -49,6 +57,8 @@ class Gpu : public gpu::GpuChannelHostFactory,
   void CreateVideoEncodeAcceleratorProvider(
       media::mojom::VideoEncodeAcceleratorProviderRequest vea_provider_request);
 
+  void RequestCompleteGpuInfo(RequestCompleteGpuInfoCallback callback);
+
   // gpu::GpuChannelEstablishFactory:
   void EstablishGpuChannel(
       const gpu::GpuChannelEstablishedCallback& callback) override;
@@ -62,6 +72,8 @@ class Gpu : public gpu::GpuChannelHostFactory,
   using GpuPtrFactory = base::RepeatingCallback<mojom::GpuPtr(void)>;
   Gpu(GpuPtrFactory factory,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+
+  void OnRequestCompleteGpuInfo(const gpu::GPUInfo& gpu_info);
 
   scoped_refptr<gpu::GpuChannelHost> GetGpuChannel();
   void OnEstablishedGpuChannel(int client_id,
@@ -83,6 +95,7 @@ class Gpu : public gpu::GpuChannelHostFactory,
   std::unique_ptr<ClientGpuMemoryBufferManager> gpu_memory_buffer_manager_;
 
   ui::mojom::GpuPtr gpu_;
+  std::vector<RequestCompleteGpuInfoCallback> request_info_callbacks_;
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_;
   std::vector<gpu::GpuChannelEstablishedCallback> establish_callbacks_;
 

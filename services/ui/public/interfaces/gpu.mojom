@@ -13,6 +13,9 @@ import "ui/gfx/geometry/mojo/geometry.mojom";
 import "ui/gfx/mojo/buffer_types.mojom";
 
 interface Gpu {
+  // Requests complete GPU info from the GPU service.
+  RequestCompleteGpuInfo() => (gpu.mojom.GpuInfo gpu_info);
+
   // Tells the GPU service to create a new channel for communication with a
   // client. The GPU service responds with client ID, IPC handle and
   // GPUInfo.

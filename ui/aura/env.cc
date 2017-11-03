@@ -153,6 +153,10 @@ void Env::ScheduleEmbed(
   window_tree_client_->ScheduleEmbed(std::move(client), std::move(callback));
 }
 
+ui::Gpu* Env::GetGpu() {
+  return window_tree_client_->gpu();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Env, private:
 

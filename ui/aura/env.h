@@ -40,6 +40,7 @@ class InterfacePtr;
 namespace ui {
 class ContextFactory;
 class ContextFactoryPrivate;
+class Gpu;
 class PlatformEventSource;
 namespace mojom {
 class WindowTreeClient;
@@ -134,6 +135,8 @@ class AURA_EXPORT Env : public ui::EventTarget,
   void ScheduleEmbed(
       mojo::InterfacePtr<ui::mojom::WindowTreeClient> client,
       base::OnceCallback<void(const base::UnguessableToken&)> callback);
+
+  ui::Gpu* GetGpu();
 
  private:
   friend class test::EnvTestHelper;

@@ -31,6 +31,8 @@ class GpuClient : public ui::mojom::Gpu {
                                const gfx::GpuMemoryBufferHandle& handle);
 
   // ui::mojom::Gpu overrides:
+  void RequestCompleteGpuInfo(
+      const RequestCompleteGpuInfoCallback& callback) override;
   void EstablishGpuChannel(
       const EstablishGpuChannelCallback& callback) override;
   void CreateJpegDecodeAccelerator(
