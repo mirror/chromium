@@ -90,18 +90,18 @@ class Embedder : public service_manager::Service,
 
   // mojom::ServiceFactory:
   void CreateService(service_manager::mojom::ServiceRequest request,
-                     const std::string& name) override {
-    if (name == "service_manager_unittest_all_users") {
+                     const service_manager::Identity& identity) override {
+    if (identity.name() == "service_manager_unittest_all_users") {
       context_.reset(new service_manager::ServiceContext(
           base::MakeUnique<AllUsersService>(), std::move(request)));
-    } else if (name == "service_manager_unittest_singleton") {
+    } else if (identity.name() == "service_manager_unittest_singleton") {
       context_.reset(new service_manager::ServiceContext(
           base::MakeUnique<SingletonService>(), std::move(request)));
-    } else if (name == "service_manager_unittest_regular") {
+    } else if (identity.name() == "service_manager_unittest_regular") {
       context_.reset(new service_manager::ServiceContext(
           base::MakeUnique<RegularService>(), std::move(request)));
     } else {
-      LOG(ERROR) << "Failed to create unknow service " << name;
+      LOG(ERROR) << "Failed to create unknow service " << identity.name();
     }
   }
 

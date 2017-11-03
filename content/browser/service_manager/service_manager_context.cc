@@ -89,7 +89,7 @@ void DestroyConnectorOnIOThread() { g_io_thread_connector.Get().reset(); }
 
 // Launch a process for a service once its sandbox type is known.
 void StartServiceInUtilityProcess(
-    const std::string& service_name,
+    const service_manager::Identity& service_identity,
     const base::string16& process_name,
     service_manager::mojom::ServiceRequest request,
     service_manager::mojom::ConnectResult query_result,
@@ -105,30 +105,32 @@ void StartServiceInUtilityProcess(
     process_host->AddFilter(new DWriteFontProxyMessageFilter());
 #endif
   process_host->SetName(process_name);
-  process_host->SetServiceIdentity(service_manager::Identity(service_name));
+  process_host->SetServiceIdentity(service_identity);
   process_host->SetSandboxType(sandbox_type);
   process_host->Start();
 
   service_manager::mojom::ServiceFactoryPtr service_factory;
   BindInterface(process_host, mojo::MakeRequest(&service_factory));
-  service_factory->CreateService(std::move(request), service_name);
+  service_factory->CreateService(std::move(request), service_identity);
 }
 
 // Determine a sandbox type for a service and launch a process for it.
 void QueryAndStartServiceInUtilityProcess(
     const std::string& service_name,
     const base::string16& process_name,
+    const service_manager::Identity& service_identity,
     service_manager::mojom::ServiceRequest request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   ServiceManagerContext::GetConnectorForIOThread()->QueryService(
-      service_manager::Identity(service_name),
-      base::BindOnce(&StartServiceInUtilityProcess, service_name, process_name,
-                     std::move(request)));
+      service_identity,
+      base::BindOnce(&StartServiceInUtilityProcess, service_identity,
+                     process_name, std::move(request)));
 }
 
 // Request service_manager::mojom::ServiceFactory from GPU process host. Must be
 // called on IO thread.
 void StartServiceInGpuProcess(const std::string& service_name,
+                              const service_manager::Identity& service_identity,
                               service_manager::mojom::ServiceRequest request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   GpuProcessHost* process_host = GpuProcessHost::Get();
@@ -143,7 +145,7 @@ void StartServiceInGpuProcess(const std::string& service_name,
   // load requests through ServiceFactory will also fail. Make sure we handle
   // these cases correctly.
   BindInterfaceInGpuProcess(mojo::MakeRequest(&service_factory));
-  service_factory->CreateService(std::move(request), service_name);
+  service_factory->CreateService(std::move(request), service_identity);
 }
 
 // A ManifestProvider which resolves application names to builtin manifest
