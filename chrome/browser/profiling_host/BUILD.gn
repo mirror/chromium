@@ -8,6 +8,8 @@ if (!is_android) {
 
     sources = [
       "memlog_browsertest.cc",
+      "profiling_test_driver.cc",
+      "profiling_test_driver.h",
     ]
 
     defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]
@@ -24,4 +26,20 @@ if (!is_android) {
   # In-process browser tests aren't supported on Android.
   group("profiling_browsertests") {
   }
+
+  shared_library("libprofiling_browser_test_helpers") {
+    testonly = true
+    deps = [
+      "//base",
+      "//chrome/browser",
+      "//content/public/browser",
+      "//content/public/common",
+    ]
+
+    sources = [
+      "profiling_test_driver.cc",
+      "profiling_test_driver.h",
+    ]
+  }
 }
+

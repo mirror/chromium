@@ -1071,6 +1071,7 @@ instrumentation_test_apk("chrome_public_test_apk") {
   android_manifest_dep = ":chrome_public_test_apk_manifest"
 
   deps = [
+    "//base:base_java", # This is needed to add shared libraries.
     ":chrome_test_java",
     "//chrome/android/webapk/libs/runtime_library:runtime_library_javatests",
     "//chrome/android/webapk/shell_apk:shell_apk_javatests",
@@ -1090,6 +1091,8 @@ instrumentation_test_apk("chrome_public_test_apk") {
     proguard_config_exclusions =
         [ "//base/android/proguard/disable_chromium_obfuscation.flags" ]
   }
+
+  shared_libraries = [ "//chrome/browser/profiling_host:libprofiling_browser_test_helpers" ]
 
   # The test APK contains code from both the APK under test and the
   # test APK when proguard is enabled. That causes this APK to exceed
