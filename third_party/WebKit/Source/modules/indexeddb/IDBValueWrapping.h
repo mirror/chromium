@@ -125,7 +125,7 @@ class MODULES_EXPORT IDBValueWrapper {
   // TODO(crbug.com/756754): 128MB is the maximum IPC size, so this threshold
   // effectively disables wrapping. Set the threshold back to 64 * 1024 after
   // the Blob leak issue is fixed.
-  static constexpr unsigned kWrapThreshold = 128 * 1024 * 1024;
+  static constexpr unsigned kWrapThreshold = 64 * 1024;
 
   // MIME type used for Blobs that wrap IDBValues.
   static constexpr const char* kWrapMimeType =

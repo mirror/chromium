@@ -114,6 +114,7 @@ class CORE_EXPORT FileReaderLoader final : public ThreadableLoaderClient {
   FileReaderLoader(ReadType, FileReaderLoaderClient*);
 
   void Cleanup();
+  void ClearData();
   void AdjustReportedMemoryUsageToV8(int64_t usage);
   void UnadjustReportedMemoryUsageToV8();
 
