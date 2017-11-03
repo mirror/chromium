@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c16547_4d5a3c03",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-03T20:35:31Z",
+      "side": 1,
+      "message": "Why don\u0027t you bind the QuitClosure callback to the HitTestCallback object? Then you don\u0027t need to busy wait.",
+      "range": {
+        "startLine": 404,
+        "startChar": 10,
+        "endLine": 404,
+        "endChar": 33
+      },
+      "revId": "12b32473cf9e75dafa15f4d375417a38067a15fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a854e8_8e29709d",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-03T20:35:31Z",
+      "side": 1,
+      "message": "Get rid of this and use a StrongBinding object instead.",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "12b32473cf9e75dafa15f4d375417a38067a15fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d69df7_9150c6be",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-03T20:35:31Z",
+      "side": 1,
+      "message": "Get rid of this function move it to the ctor.",
+      "revId": "12b32473cf9e75dafa15f4d375417a38067a15fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
