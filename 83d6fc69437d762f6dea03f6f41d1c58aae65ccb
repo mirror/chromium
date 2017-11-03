@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7355aa83_07392f3b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1139071
+      },
+      "writtenOn": "2017-11-03T02:55:56Z",
+      "side": 1,
+      "message": "sure !!! will check more on this. During first layout computeScrollbarExistence computes needs horizontal scrollbar true (box Horizontal overflow is true), bec of that horizontal scrollbar is created. Only during in_overflow_relayout it calculates horizontal scrollbar is not needed.",
+      "parentUuid": "a09c66ad_adced940",
+      "revId": "83d6fc69437d762f6dea03f6f41d1c58aae65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc80e457_3a1eae33",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 5
