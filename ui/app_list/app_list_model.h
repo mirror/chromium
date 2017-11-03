@@ -150,7 +150,7 @@ class APP_LIST_EXPORT AppListModel : public AppListItemListObserver {
 
   // Records the number of items stored in folders for UMA, not counting OEM
   // folders.
-  void RecordItemsInFoldersForUMA();
+  void RecordFolderMetrics();
 
   // Sets whether or not the custom launcher page should be enabled.
   void SetCustomLauncherPageEnabled(bool enabled);

@@ -297,7 +297,7 @@ void AppListView::Initialize(const InitParams& params) {
 
   UMA_HISTOGRAM_TIMES("Apps.AppListCreationTime",
                       base::Time::Now() - start_time);
-  app_list_main_view_->model()->RecordItemsInFoldersForUMA();
+  app_list_main_view_->model()->RecordFolderMetrics();
 }
 
 void AppListView::SetBubbleArrow(views::BubbleBorder::Arrow arrow) {
