@@ -192,6 +192,7 @@ interface WindowManager {
   // allows the window manager to track top level windows by client.
   WmCreateTopLevelWindow(uint32 change_id,
                          uint16 requesting_client_id,
+                         uint16 requesting_window_id,
                          map<string, array<uint8>> properties);
 
   // A WindowTreeClient is considered "janky" by Mus when it stops ACK'ing input
@@ -377,7 +378,9 @@ interface WindowManagerClient {
 
   // Response from WmCreateTopLevelWindow() informing the client of the id for
   // the new window.
-  OnWmCreatedTopLevelWindow(uint32 change_id, uint32 window_id);
+  OnWmCreatedTopLevelWindow(uint32 change_id, uint32 window_id,
+                            uint16 requesting_client_id,
+                            uint16 requesting_window_id);
 
   // See description in WindowManager::OnAccelerator(). |ack_id| is the value
   // that was passed to OnAccelerator(). If the accelerator is a pre-target
