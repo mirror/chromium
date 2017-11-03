@@ -16,6 +16,24 @@
       "revId": "cdae78400641eeba4cf4a92c482d5f17b3aec895",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c852fd_46c14c59",
+        "filename": "chrome/browser/previews/previews_infobar_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-03T23:37:26Z",
+      "side": 1,
+      "message": "Right, PS get updated from headers prior to this in ContentPreviewsRenderFrameObserver::DidCommitProvisionalLoad().",
+      "parentUuid": "c468e638_f9eb9bbc",
+      "revId": "cdae78400641eeba4cf4a92c482d5f17b3aec895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
