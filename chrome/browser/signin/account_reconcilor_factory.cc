@@ -42,7 +42,8 @@ KeyedService* AccountReconcilorFactory::BuildServiceInstanceFor(
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
       SigninManagerFactory::GetForProfile(profile),
       ChromeSigninClientFactory::GetForProfile(profile),
-      GaiaCookieManagerServiceFactory::GetForProfile(profile));
+      GaiaCookieManagerServiceFactory::GetForProfile(profile),
+      profile->IsNewProfile());
   reconcilor->Initialize(true /* start_reconcile_if_tokens_available */);
   return reconcilor;
 }
