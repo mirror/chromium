@@ -95,6 +95,34 @@ void BackgroundFetchContext::AddRegistrationObserver(
   registration_notifier_->AddObserver(unique_id, std::move(observer));
 }
 
+void BackgroundFetchContext::UpdateRegistrationUI(
+    const std::string& unique_id,
+    const std::string& title,
+    blink::mojom::BackgroundFetchService::UpdateUICallback callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  data_manager_.UpdateRegistrationUI(
+      unique_id, title,
+      base::BindOnce(&BackgroundFetchContext::DidUpdateRegistrationUI,
+                     weak_factory_.GetWeakPtr(), unique_id, title,
+                     std::move(callback)));
+}
+
+void BackgroundFetchContext::DidUpdateRegistrationUI(
+    const std::string& unique_id,
+    const std::string& title,
+    blink::mojom::BackgroundFetchService::UpdateUICallback callback,
+    blink::mojom::BackgroundFetchError error) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  if (error == blink::mojom::BackgroundFetchError::NONE &&
+      job_controllers_.count(unique_id)) {
+    job_controllers_[unique_id]->UpdateUI(title);
+  }
+
+  std::move(callback).Run(error);
+}
+
 void BackgroundFetchContext::CreateController(
     const BackgroundFetchRegistrationId& registration_id,
     const BackgroundFetchOptions& options,
@@ -155,6 +183,7 @@ void BackgroundFetchContext::DidMarkForDeletion(
     return;
 
   if (aborted) {
+    DCHECK(job_controllers_.count(registration_id.unique_id()));
     job_controllers_[registration_id.unique_id()]->Abort();
 
     CleanupRegistration(registration_id, {});
