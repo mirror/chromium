@@ -48,7 +48,7 @@
 #if defined(OS_WIN)
 #include "base/win/windows_version.h"
 #endif
-
+#include "base/debug/stack_trace.h" 
 namespace display {
 
 namespace {
@@ -698,6 +698,8 @@ gfx::Insets DisplayManager::GetOverscanInsets(int64_t display_id) const {
 
 void DisplayManager::OnNativeDisplaysChanged(
     const DisplayInfoList& updated_displays) {
+  LOG(ERROR) << "MSW OnNativeDisplaysChanged " << active_display_list_.size() << "+" << software_mirroring_display_list_.size() << "+" << hardware_mirroring_display_id_list_.size() <<" -> " << updated_displays.size(); 
+
   if (updated_displays.empty()) {
     DVLOG(1) << __func__
              << "(0): # of current displays=" << active_display_list_.size();
@@ -746,7 +748,12 @@ void DisplayManager::OnNativeDisplaysChanged(
     gfx::Point origin = display_info.bounds_in_native().origin();
     const auto iter = origins.find(origin);
     if (iter != origins.end()) {
-      InsertAndUpdateDisplayInfo(display_info);
+      LOG(ERROR) << "MSW OnNativeDisplaysChanged FOUND MIRROR!!!"; 
+      // TODO(msw): Add mirrors to new_display_info_list (for mus)???? 
+      // if (configure_displays_)
+      //   new_display_info_list.push_back(display_info);
+      // else
+        InsertAndUpdateDisplayInfo(display_info);
       if (hardware_mirroring_display_id_list_.empty()) {
         // Unlike software mirroring, hardware mirroring has no source and
         // target. All mirroring displays scan the same frame buffer. But for
@@ -804,19 +811,24 @@ void DisplayManager::OnNativeDisplaysChanged(
 
 #if defined(OS_CHROMEOS)
   if (!configure_displays_ && new_display_info_list.size() > 1) {
+    LOG(ERROR) << "MSW OnNativeDisplaysChanged !configure_displays... NEW DISPLAYS " << new_display_info_list.size(); 
     DisplayIdList list = GenerateDisplayIdList(
         new_display_info_list.begin(), new_display_info_list.end(),
         [](const ManagedDisplayInfo& info) { return info.id(); });
 
     const DisplayLayout& layout =
         layout_store_->GetRegisteredDisplayLayout(list);
-    // Mirror mode is set by DisplayConfigurator on the device.
-    // Emulate it when running on linux desktop.
+    // Mirror mode is set by DisplayConfigurator on the device (and on the desktop for mus/mash).
+    // Emulate it when running on linux desktop in classic ash.
+    LOG(ERROR) << "MSW OnNativeDisplaysChanged MIRRORED? " << layout.mirrored; 
     if (layout.mirrored)
       SetMultiDisplayMode(MIRRORING);
+  } else {
+    // TODO(msw): Add mirrors to new_display_info_list? (or do so above?) 
   }
 #endif
 
+  // LOG(ERROR) << "MSW OnNativeDisplaysChanged Z displays:" << new_display_info_list.size(); 
   UpdateDisplaysWith(new_display_info_list);
 }
 
@@ -825,6 +837,7 @@ void DisplayManager::UpdateDisplays() {
   for (const auto& display : active_display_list_)
     display_info_list.push_back(GetDisplayInfo(display.id()));
   AddMirrorDisplayInfoIfAny(&display_info_list);
+  // LOG(ERROR) << "MSW UpdateDisplays displays:" << display_info_list.size(); 
   UpdateDisplaysWith(display_info_list);
 }
 
@@ -838,6 +851,7 @@ void DisplayManager::UpdateDisplaysWith(
          "skip (don't disable) the test.";
 #endif
 
+  LOG(ERROR) << "MSW UpdateDisplaysWith active:" << active_display_list_.size() << " displays:" << updated_display_info_list.size() << " mode:" << multi_display_mode_; 
   DisplayInfoList new_display_info_list = updated_display_info_list;
   std::sort(active_display_list_.begin(), active_display_list_.end(),
             DisplaySortFunctor());
@@ -859,11 +873,12 @@ void DisplayManager::UpdateDisplaysWith(
     multi_display_mode_ = current_default_multi_display_mode_;
 
   CreateSoftwareMirroringDisplayInfo(&new_display_info_list);
+  LOG(ERROR) << "MSW UpdateDisplaysWith updated_display_info_list:" << updated_display_info_list.size() << " new_display_info_list:" << new_display_info_list.size(); 
 
   // Close the mirroring window if any here to avoid creating two compositor on
   // one display.
   if (delegate_)
-    delegate_->CloseMirroringDisplayIfNotNecessary();
+    delegate_->CloseMirroringDisplayIfNotNecessary(); // TODO(msw): Hmm??? 
 
   Displays new_displays;
   Displays removed_displays;
@@ -983,6 +998,7 @@ void DisplayManager::UpdateDisplaysWith(
   active_display_list_.insert(active_display_list_.end(),
                               removed_displays.begin(), removed_displays.end());
 
+  LOG(ERROR) << "MSW UpdateDisplaysWith removed_displays:" << removed_displays.size() << " added_display_indices:" << added_display_indices.size(); 
   for (const auto& display : removed_displays)
     NotifyDisplayRemoved(display);
 
@@ -1188,6 +1204,7 @@ int64_t DisplayManager::GetDisplayIdForUIScaling() const {
 }
 
 void DisplayManager::SetMirrorMode(bool mirror) {
+  LOG(ERROR) << "MSW SetMirrorMode mirror?" << mirror << " num_connected_displays():" << num_connected_displays() << " configure_displays_:" << configure_displays_; 
   // TODO(oshima): Enable mirror mode for 2> displays. crbug.com/589319.
   if (num_connected_displays() != 2)
     return;
@@ -1197,6 +1214,7 @@ void DisplayManager::SetMirrorMode(bool mirror) {
     MultipleDisplayState new_state =
         mirror ? MULTIPLE_DISPLAY_STATE_DUAL_MIRROR
                : MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED;
+    // LOG(ERROR) << "MSW SetMirrorMode calling SetDisplayMode"; 
     delegate_->display_configurator()->SetDisplayMode(new_state);
     return;
   }
@@ -1335,6 +1353,9 @@ void DisplayManager::SetDefaultMultiDisplayModeForCurrentDisplays(
 }
 
 void DisplayManager::SetMultiDisplayMode(MultiDisplayMode mode) {
+  LOG(ERROR) << "MSW SetMultiDisplayMode mode:" << multi_display_mode_ << "->" << mode; 
+  if (mode == multi_display_mode_)
+    return;
   multi_display_mode_ = mode;
   ClearMirroringSourceAndDestination();
 }
@@ -1386,11 +1407,16 @@ bool DisplayManager::UpdateDisplayBounds(int64_t display_id,
 }
 
 void DisplayManager::CreateMirrorWindowAsyncIfAny() {
+  LOG(ERROR) << "MSW CreateMirrorWindowAsyncIfAny A mirrors:" << software_mirroring_display_list_.size() << " delegate:" << delegate_; 
   // Do not post a task if the software mirroring doesn't exist, or
   // during initialization when compositor's init task isn't posted yet.
   // ash::Shell::Init() will call this after the compositor is initialized.
   if (software_mirroring_display_list_.empty() || !delegate_)
     return;
+  // if (configure_displays_ /* OR MAYBE JUST if(MUS)???*/) {
+  //   LOG(ERROR) << "MSW bailing from CreateMirrorWindowAsyncIfAny"; 
+  //   return; 
+  // }
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(&DisplayManager::CreateMirrorWindowIfAny,
                             weak_ptr_factory_.GetWeakPtr()));
@@ -1453,14 +1479,17 @@ void DisplayManager::ResetInternalDisplayZoom() {
 
 void DisplayManager::CreateSoftwareMirroringDisplayInfo(
     DisplayInfoList* display_info_list) {
+  LOG(ERROR) << "MSW CreateSoftwareMirroringDisplayInfo A displays:" << display_info_list->size() << " mode:" << multi_display_mode_; 
   // Use the internal display or 1st as the mirror source, then scale
   // the root window so that it matches the external display's
   // resolution. This is necessary in order for scaling to work while
   // mirrored.
   switch (multi_display_mode_) {
     case MIRRORING: {
-      if (display_info_list->size() != 2)
+      if (display_info_list->size() != 2) {
+        LOG(ERROR) << "MSW CreateSoftwareMirroringDisplayInfo bailing (1 display)... EXPECTED?"; 
         return;
+      }
 
       int64_t source_id = kInvalidDisplayId;
       if (Display::HasInternalDisplay()) {
@@ -1731,6 +1760,7 @@ Display* DisplayManager::FindDisplayForId(int64_t id) {
 
 void DisplayManager::AddMirrorDisplayInfoIfAny(
     DisplayInfoList* display_info_list) {
+  LOG(ERROR) << "MSW AddMirrorDisplayInfoIfAny IsInSoftwareMirrorMode:" << IsInSoftwareMirrorMode() << " IsInMirrorMode:" << IsInMirrorMode() << " list:" << software_mirroring_display_list_.size();
   if (!IsInSoftwareMirrorMode())
     return;
   for (const auto& display : software_mirroring_display_list_)
@@ -1833,6 +1863,7 @@ void DisplayManager::UpdateNonPrimaryDisplayBoundsForLayout(
 }
 
 void DisplayManager::CreateMirrorWindowIfAny() {
+  LOG(ERROR) << "MSW CreateMirrorWindowIfAny mirrors:" << software_mirroring_display_list_.size() << " delegate:" << delegate_; 
   if (software_mirroring_display_list_.empty() || !delegate_) {
     if (!created_mirror_window_.is_null())
       base::ResetAndReturn(&created_mirror_window_).Run();
