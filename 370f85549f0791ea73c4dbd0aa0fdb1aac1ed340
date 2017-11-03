@@ -197,6 +197,29 @@
     },
     {
       "key": {
+        "uuid": "5be1d272_ebbdd81a",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-03T19:36:11Z",
+      "side": 0,
+      "message": "I think this ASSERT_TRUE and the following ones are necessary and useful for knowing when tests fail. Try to add them somewhere in the new code.",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81ff5f56_d0f990cd",
         "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
         "patchSetId": 3

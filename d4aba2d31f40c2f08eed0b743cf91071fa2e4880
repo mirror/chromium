@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5a5021d_59bc2fd0",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-03T19:36:11Z",
+      "side": 1,
+      "message": "This function name is a little ambiguous since the footnote link also contains some help link. I think using turn_adapter_off_help() is more clear.",
+      "range": {
+        "startLine": 60,
+        "startChar": 22,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b172fe5d_69a10c4a",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-03T19:36:11Z",
+      "side": 1,
+      "message": "It is not obvious why the first line needs GetPairedText() function but the second line doesn\u0027t without closely looking at the code. (This issue already exists before this CL.)\n\nAdding some comments here may help, or even better if having a function which takes care of getting device name for both pair and unpaired devices.",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 65
+      },
+      "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693f9771_31c0b84f",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-03T19:36:11Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to test if a bluetooth device changes its name as the original test does. The FakeDevice struct doesn\u0027t have a name field:\nhttps://cs.chromium.org/chromium/src/chrome/browser/chooser_controller/fake_bluetooth_chooser_controller.h?l\u003d41-45\nwhile the MockChooserController has that:\nhttps://cs.chromium.org/chromium/src/chrome/browser/chooser_controller/mock_chooser_controller.h?l\u003d69-74\nAnd the GetOption() doesn\u0027t return the actual device name that is part of the FakeDevice:\nhttps://cs.chromium.org/chromium/src/chrome/browser/chooser_controller/fake_bluetooth_chooser_controller.cc?l\u003d44-46\n\nSo add a |name| field to the FakeDevice struct so that we can test the name change too.",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 80
+      },
+      "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2d2b79_b6d2fba8",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-03T19:36:11Z",
+      "side": 1,
+      "message": "Add the following line?\nEXPECT_EQ(-1, table_view()-\u003eFirstSelectedRow());",
+      "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3331d2b3_533f3b73",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-03T19:36:11Z",
+      "side": 1,
+      "message": "This function and the following ClickGetHelpLink() function seem to be only used here and not reused anywhere else, so it is not worth to put them into a function.",
+      "range": {
+        "startLine": 246,
+        "startChar": 2,
+        "endLine": 246,
+        "endChar": 20
+      },
+      "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa3a445_e16871d5",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-03T19:36:11Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 251,
+        "startChar": 2,
+        "endLine": 251,
+        "endChar": 21
+      },
+      "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
