@@ -23,6 +23,7 @@
 #include "content/renderer/service_worker/service_worker_handle_reference.h"
 #include "content/renderer/service_worker/service_worker_subresource_loader.h"
 #include "content/renderer/service_worker/web_service_worker_impl.h"
+#include "content/renderer/service_worker/web_service_worker_registration_impl.h"
 #include "content/renderer/worker_thread_registry.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -75,6 +76,10 @@ struct ServiceWorkerProviderContext::ControlleeState {
   // OnContainerHostConnectionClosed when container_host_ for the
   // provider is reset.
   scoped_refptr<ControllerServiceWorkerConnector> controller_connector;
+
+  // Tracks mapping between registration id and JavaScript service worker
+  // registration object against current client context.
+  std::map<int64_t, WebServiceWorkerRegistrationImpl*> registrations_;
 };
 
 // Holds state for service worker execution contexts.
@@ -104,7 +109,8 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     : provider_type_(provider_type),
       provider_id_(provider_id),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      binding_(this, std::move(request)) {
+      binding_(this, std::move(request)),
+      weak_factory_(this) {
   container_host_.Bind(std::move(host_ptr_info));
   if (provider_type == SERVICE_WORKER_PROVIDER_FOR_CONTROLLER) {
     controller_state_ = std::make_unique<ControllerState>();
@@ -146,13 +152,16 @@ void ServiceWorkerProviderContext::SetRegistrationForServiceWorkerGlobalScope(
   state->registration = std::move(registration);
 }
 
-blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
-ServiceWorkerProviderContext::TakeRegistrationForServiceWorkerGlobalScope() {
-  DCHECK(!main_thread_task_runner_->RunsTasksInCurrentSequence());
+scoped_refptr<WebServiceWorkerRegistrationImpl>
+ServiceWorkerProviderContext::TakeRegistrationForServiceWorkerGlobalScope(
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner) {
+  DCHECK_EQ(SERVICE_WORKER_PROVIDER_FOR_CONTROLLER, provider_type_);
   ControllerState* state = controller_state_.get();
   DCHECK(state);
   DCHECK(state->registration);
   DCHECK(state->registration->host_ptr_info.is_valid());
+  DCHECK_NE(state->registration->registration_id,
+            blink::mojom::kInvalidServiceWorkerRegistrationId);
 
   blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info =
       std::move(state->registration);
@@ -169,7 +178,27 @@ ServiceWorkerProviderContext::TakeRegistrationForServiceWorkerGlobalScope() {
   else
     info->active = blink::mojom::ServiceWorkerObjectInfo::New();
 
-  return info;
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetThreadSpecificInstance();
+  DCHECK(dispatcher);
+  std::unique_ptr<ServiceWorkerHandleReference> installing_ref =
+      dispatcher->Create(std::move(info->installing));
+  std::unique_ptr<ServiceWorkerHandleReference> waiting_ref =
+      dispatcher->Create(std::move(info->waiting));
+  std::unique_ptr<ServiceWorkerHandleReference> active_ref =
+      dispatcher->Create(std::move(info->active));
+  DCHECK(info->request.is_pending());
+  scoped_refptr<WebServiceWorkerRegistrationImpl> registration =
+      WebServiceWorkerRegistrationImpl::CreateForServiceWorkerGlobalScope(
+          std::move(info), std::move(io_task_runner));
+  registration->SetInstalling(
+      dispatcher->GetOrCreateServiceWorker(std::move(installing_ref)));
+  registration->SetWaiting(
+      dispatcher->GetOrCreateServiceWorker(std::move(waiting_ref)));
+  registration->SetActive(
+      dispatcher->GetOrCreateServiceWorker(std::move(active_ref)));
+
+  return registration;
 }
 
 ServiceWorkerHandleReference* ServiceWorkerProviderContext::controller() {
@@ -230,6 +259,51 @@ ServiceWorkerProviderContext::CloneContainerHostPtrInfo() {
   mojom::ServiceWorkerContainerHostPtrInfo container_host_ptr_info;
   container_host_->CloneForWorker(mojo::MakeRequest(&container_host_ptr_info));
   return container_host_ptr_info;
+}
+
+scoped_refptr<WebServiceWorkerRegistrationImpl>
+ServiceWorkerProviderContext::GetOrCreateRegistrationForServiceWorkerClient(
+    blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
+  DCHECK_EQ(SERVICE_WORKER_PROVIDER_FOR_WINDOW, provider_type_);
+  DCHECK(controllee_state_);
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetThreadSpecificInstance();
+  DCHECK(dispatcher);
+  std::unique_ptr<ServiceWorkerHandleReference> installing_ref =
+      dispatcher->Adopt(std::move(info->installing));
+  std::unique_ptr<ServiceWorkerHandleReference> waiting_ref =
+      dispatcher->Adopt(std::move(info->waiting));
+  std::unique_ptr<ServiceWorkerHandleReference> active_ref =
+      dispatcher->Adopt(std::move(info->active));
+
+  auto found = controllee_state_->registrations_.find(info->registration_id);
+  if (found != controllee_state_->registrations_.end()) {
+    DCHECK(!info->request.is_pending());
+    found->second->AttachForServiceWorkerClient(std::move(info));
+    return found->second;
+  }
+
+  DCHECK(info->request.is_pending());
+  // WebServiceWorkerRegistrationImpl constructor calls
+  // AddServiceWorkerRegistration to add itself into
+  // |controllee_state_->registrations_|.
+  scoped_refptr<WebServiceWorkerRegistrationImpl> registration =
+      WebServiceWorkerRegistrationImpl::CreateForServiceWorkerClient(
+          std::move(info), weak_factory_.GetWeakPtr());
+
+  registration->SetInstalling(
+      dispatcher->GetOrCreateServiceWorker(std::move(installing_ref)));
+  registration->SetWaiting(
+      dispatcher->GetOrCreateServiceWorker(std::move(waiting_ref)));
+  registration->SetActive(
+      dispatcher->GetOrCreateServiceWorker(std::move(active_ref)));
+  return registration;
+}
+
+void ServiceWorkerProviderContext::OnNetworkProviderDestroyed() {
+  container_host_.reset();
+  if (controllee_state_ && controllee_state_->controller_connector)
+    controllee_state_->controller_connector->OnContainerHostConnectionClosed();
 }
 
 void ServiceWorkerProviderContext::UnregisterWorkerFetchContext(
@@ -315,10 +389,26 @@ void ServiceWorkerProviderContext::PostMessageToClient(
   }
 }
 
-void ServiceWorkerProviderContext::OnNetworkProviderDestroyed() {
-  container_host_.reset();
-  if (controllee_state_ && controllee_state_->controller_connector)
-    controllee_state_->controller_connector->OnContainerHostConnectionClosed();
+void ServiceWorkerProviderContext::AddServiceWorkerRegistration(
+    int64_t registration_id,
+    WebServiceWorkerRegistrationImpl* registration) {
+  DCHECK(controllee_state_);
+  DCHECK(
+      !base::ContainsKey(controllee_state_->registrations_, registration_id));
+  controllee_state_->registrations_[registration_id] = registration;
+}
+
+void ServiceWorkerProviderContext::RemoveServiceWorkerRegistration(
+    int64_t registration_id) {
+  DCHECK(controllee_state_);
+  DCHECK(base::ContainsKey(controllee_state_->registrations_, registration_id));
+  controllee_state_->registrations_.erase(registration_id);
+}
+
+bool ServiceWorkerProviderContext::ContainsServiceWorkerRegistrationForTesting(
+    int64_t registration_id) {
+  DCHECK(controllee_state_);
+  return base::ContainsKey(controllee_state_->registrations_, registration_id);
 }
 
 void ServiceWorkerProviderContext::DestructOnMainThread() const {
