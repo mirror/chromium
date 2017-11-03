@@ -173,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "dd48b92d_7171ed78",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-03T20:58:00Z",
+      "side": 1,
+      "message": "You got it, done!",
+      "parentUuid": "f399fcb5_365e4df2",
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cefe5f10_57cf0143",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
@@ -264,6 +282,30 @@
       "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1cc0ee_7691af7d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2179,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-03T20:58:00Z",
+      "side": 1,
+      "message": "I think this has to stay a dispatcher call now that ToolBarCoordinator owns ToolsMenuCoordinator? (Is this an example of Dispatcher being useful?)",
+      "parentUuid": "bfeb0ff0_d743537d",
+      "range": {
+        "startLine": 2179,
+        "startChar": 2,
+        "endLine": 2179,
+        "endChar": 38
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -745,6 +787,30 @@
       "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e54ff7_3e22c07c",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2195,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-03T20:58:00Z",
+      "side": 1,
+      "message": "IMVHO this is the worst thing in the style guide, the ! is so easy to miss when reading, but I acquiesce! Done!",
+      "parentUuid": "c9b79e17_72c7ebfe",
+      "range": {
+        "startLine": 2195,
+        "startChar": 16,
+        "endLine": 2195,
+        "endChar": 74
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
