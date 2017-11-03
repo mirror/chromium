@@ -6,11 +6,17 @@
 #define WebVideoFrameSubmitter_h
 
 #include "WebCommon.h"
+#include "base/memory/weak_ptr.h"
 #include "cc/layers/video_frame_provider.h"
+
+namespace gpu {
+class GpuMemoryBufferManager;
+}
 
 namespace viz {
 class ContextProvider;
 class FrameSinkId;
+class SharedBitmapManager;
 }  // namespace viz
 
 namespace blink {
@@ -25,9 +31,11 @@ class BLINK_PLATFORM_EXPORT WebVideoFrameSubmitter
     : public cc::VideoFrameProvider::Client {
  public:
   static std::unique_ptr<WebVideoFrameSubmitter> Create(
-      cc::VideoFrameProvider*,
-      WebContextProviderCallback);
-  ~WebVideoFrameSubmitter() override = default;
+      WebContextProviderCallback,
+      viz::SharedBitmapManager*,
+      gpu::GpuMemoryBufferManager*);
+  virtual ~WebVideoFrameSubmitter() = default;
+  virtual void Initialize(cc::VideoFrameProvider*) = 0;
   virtual void StartSubmitting(const viz::FrameSinkId&) = 0;
 };
 
