@@ -87,6 +87,24 @@
       "revId": "8450338743574a80fc7973316255003f578cd9bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcd7460_1e54ca52",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-03T21:59:46Z",
+      "side": 1,
+      "message": "It seemed as though the server is only stopped after all tests have run.  I\u0027ve got two tests that each register a response provider, and I\u0027m hitting DCHECKs because multiple providers claim to handle a single request.  I think this can only happen if the provider I\u0027m setting in the first test remains active during the second test.",
+      "parentUuid": "c946f688_baf8b6d9",
+      "revId": "8450338743574a80fc7973316255003f578cd9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
