@@ -31,6 +31,7 @@ extern const char kMetricsReportingWifiOnly[];
 extern const char kNtpShownPage[];
 extern const char kSavingBrowserHistoryDisabled[];
 extern const char kSearchSuggestEnabled[];
+extern const char kUserLanguageProfile[];
 
 // TODO(crbug.com/538573): Consider migrating from these two bools to an integer
 // since only three cases are supported.

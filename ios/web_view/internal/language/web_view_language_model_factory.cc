@@ -10,6 +10,7 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/keyed_service/ios/browser_state_dependency_manager.h"
 #include "components/language/core/browser/baseline_language_model.h"
+#include "components/language/core/browser/heuristic_language_model.h"
 #include "components/language/core/browser/language_model.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "ios/web_view/internal/app/application_context.h"
@@ -38,16 +39,21 @@ WebViewLanguageModelFactory::WebViewLanguageModelFactory()
 std::unique_ptr<KeyedService>
 WebViewLanguageModelFactory::BuildServiceInstanceFor(
     web::BrowserState* const context) const {
-  if (base::FeatureList::IsEnabled(language::kUseBaselineLanguageModel)) {
-    WebViewBrowserState* const web_view_browser_state =
-        WebViewBrowserState::FromBrowserState(context);
-    return base::MakeUnique<language::BaselineLanguageModel>(
+  WebViewBrowserState* const web_view_browser_state =
+      WebViewBrowserState::FromBrowserState(context);
+
+  if (base::FeatureList::IsEnabled(language::kUseHeuristicLanguageModel)) {
+    return base::MakeUnique<language::HeuristicLanguageModel>(
         web_view_browser_state->GetPrefs(),
         ApplicationContext::GetInstance()->GetApplicationLocale(),
-        prefs::kAcceptLanguages);
+        prefs::kAcceptLanguages, prefs::kUserLanguageProfile);
   }
 
-  return nullptr;
+  return base::MakeUnique<language::BaselineLanguageModel>(
+      web_view_browser_state->GetPrefs(),
+      ApplicationContext::GetInstance()->GetApplicationLocale(),
+      prefs::kAcceptLanguages);
+  ;
 }
 
 }  // namespace ios_web_view
