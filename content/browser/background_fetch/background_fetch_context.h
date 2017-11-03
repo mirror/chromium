@@ -69,6 +69,11 @@ class CONTENT_EXPORT BackgroundFetchContext
       const std::string& unique_id,
       blink::mojom::BackgroundFetchRegistrationObserverPtr observer);
 
+  void UpdateRegistrationUI(
+      const std::string& unique_id,
+      const std::string& title,
+      blink::mojom::BackgroundFetchService::UpdateUICallback callback);
+
   BackgroundFetchDataManager& data_manager() { return data_manager_; }
 
  private:
@@ -92,6 +97,12 @@ class CONTENT_EXPORT BackgroundFetchContext
       blink::mojom::BackgroundFetchService::FetchCallback callback,
       blink::mojom::BackgroundFetchError error,
       const base::Optional<BackgroundFetchRegistration>& registration);
+
+  void DidUpdateRegistrationUI(
+      const std::string& unique_id,
+      const std::string& title,
+      blink::mojom::BackgroundFetchService::UpdateUICallback callback,
+      blink::mojom::BackgroundFetchError error);
 
   // Called by a JobController when it finishes processing. Also used to
   // implement |Abort|.
