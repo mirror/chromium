@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb196f2a_1f7b68b3",
+        "filename": "content/renderer/media_recorder/audio_track_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T22:43:58Z",
+      "side": 1,
+      "message": "Drop const",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45b69fd_e7d8c12a",
+        "filename": "content/renderer/media_recorder/audio_track_encoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T22:43:58Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be refcounted, but fine for now since that\u0027s how it already is.",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e19934_2af12334",
+        "filename": "content/renderer/media_recorder/audio_track_encoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T22:43:58Z",
+      "side": 1,
+      "message": "Want to fix this one while you\u0027re moving things around? Pass by value.",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e785f1b_c634f792",
+        "filename": "content/renderer/media_recorder/audio_track_encoder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T22:43:58Z",
+      "side": 1,
+      "message": "Should be defined by THREAD_CHECKER() macro these days.",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821a8e45_883f6f4a",
+        "filename": "content/renderer/media_recorder/audio_track_opus_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T22:43:58Z",
+      "side": 1,
+      "message": "This comment is incorrect. A volume \u003e 0 won\u0027t cause the converter to stop callbacks.",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8b7923_ccde5dad",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T22:43:58Z",
+      "side": 1,
+      "message": "std::move() ditto on all the other places you pass callbacks by value.",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff2b038_7e40f0eb",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T22:43:58Z",
+      "side": 1,
+      "message": "Kind of useless.",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b093bc00_5a1ed6ce",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T22:43:58Z",
+      "side": 1,
+      "message": "Combine with DVLOG(1) above?",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243318c2_521b824d",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T22:43:58Z",
+      "side": 1,
+      "message": "Skip this and just interleave directly into the string byte array.",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea79a55a_e4326a4e",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T22:43:58Z",
+      "side": 1,
+      "message": "Unnecessary, we don\u0027t ship any big endian platforms and never will (tons of issues).",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be7f3d4_5ef958b4",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T22:43:58Z",
+      "side": 1,
+      "message": "Can use AudioTimestampHelper::FramesToTime() if you want instead.",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390d91ec_5751c4f2",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T22:43:58Z",
+      "side": 1,
+      "message": "Drop?",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77619458_bb85ecd6",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T22:43:58Z",
+      "side": 1,
+      "message": "32-bit little-endian float.",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
