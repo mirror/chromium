@@ -94,6 +94,7 @@ var CrExtensionsToolbarTest = class extends CrExtensionsBrowserTest {
   /** @override */
   get extraLibraries() {
     return super.extraLibraries.concat([
+      '../test_browser_proxy.js',
       'extension_toolbar_test.js',
     ]);
   }
