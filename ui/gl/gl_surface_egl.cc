@@ -1020,7 +1020,9 @@ bool NativeViewGLSurfaceEGL::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers() {
+gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers(
+    const PresentationCallback& callback) {
+  // TODO(penghuang): Provide presentation feedback. https://crbug.com/776877
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceEGL:RealSwapBuffers",
       "width", GetSize().width(),
       "height", GetSize().height());
@@ -1232,7 +1234,9 @@ bool NativeViewGLSurfaceEGL::BuffersFlipped() const {
 }
 
 gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffersWithDamage(
-    const std::vector<int>& rects) {
+    const std::vector<int>& rects,
+    const PresentationCallback& callback) {
+  // TODO(penghuang): Provide presentation feedback. https://crbug.com/776877
   DCHECK(supports_swap_buffer_with_damage_);
   if (!CommitAndClearPendingOverlays()) {
     DVLOG(1) << "Failed to commit pending overlay planes.";
@@ -1249,10 +1253,13 @@ gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffersWithDamage(
   return gfx::SwapResult::SWAP_ACK;
 }
 
-gfx::SwapResult NativeViewGLSurfaceEGL::PostSubBuffer(int x,
-                                                      int y,
-                                                      int width,
-                                                      int height) {
+gfx::SwapResult NativeViewGLSurfaceEGL::PostSubBuffer(
+    int x,
+    int y,
+    int width,
+    int height,
+    const PresentationCallback& callback) {
+  // TODO(penghuang): Provide presentation feedback. https://crbug.com/776877
   DCHECK(supports_post_sub_buffer_);
   if (!CommitAndClearPendingOverlays()) {
     DVLOG(1) << "Failed to commit pending overlay planes.";
@@ -1280,7 +1287,9 @@ bool NativeViewGLSurfaceEGL::SupportsCommitOverlayPlanes() {
 #endif
 }
 
-gfx::SwapResult NativeViewGLSurfaceEGL::CommitOverlayPlanes() {
+gfx::SwapResult NativeViewGLSurfaceEGL::CommitOverlayPlanes(
+    const PresentationCallback& callback) {
+  // TODO(penghuang): Provide presentation feedback. https://crbug.com/776877
   DCHECK(SupportsCommitOverlayPlanes());
   // Here we assume that the overlays scheduled on this surface will display
   // themselves to the screen right away in |CommitAndClearPendingOverlays|,
@@ -1405,7 +1414,8 @@ bool PbufferGLSurfaceEGL::IsOffscreen() {
   return true;
 }
 
-gfx::SwapResult PbufferGLSurfaceEGL::SwapBuffers() {
+gfx::SwapResult PbufferGLSurfaceEGL::SwapBuffers(
+    const PresentationCallback& callback) {
   NOTREACHED() << "Attempted to call SwapBuffers on a PbufferGLSurfaceEGL.";
   return gfx::SwapResult::SWAP_FAILED;
 }
@@ -1489,7 +1499,8 @@ bool SurfacelessEGL::IsSurfaceless() const {
   return true;
 }
 
-gfx::SwapResult SurfacelessEGL::SwapBuffers() {
+gfx::SwapResult SurfacelessEGL::SwapBuffers(
+    const PresentationCallback& callback) {
   LOG(ERROR) << "Attempted to call SwapBuffers with SurfacelessEGL.";
   return gfx::SwapResult::SWAP_FAILED;
 }

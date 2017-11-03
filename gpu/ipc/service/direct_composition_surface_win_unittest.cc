@@ -67,8 +67,17 @@ class TestImageTransportSurfaceDelegate
   void SetLatencyInfoCallback(const LatencyInfoCallback& callback) override {}
   void UpdateVSyncParameters(base::TimeTicks timebase,
                              base::TimeDelta interval) override {}
+  void BufferPresented(uint32_t count,
+                       base::TimeTicks timestamp,
+                       base::TimeDelta refresh,
+                       uint32_t flags) override {}
   void AddFilter(IPC::MessageFilter* message_filter) override {}
   int32_t GetRouteID() const override { return 0; }
+
+  gfx::SwapResult SwapBuffers() {
+    return surface_->SwapBuffers(
+        base::Bind([](base::TimeTicks, base::TimeDelta, uint32_t) {}));
+  }
 
  private:
   scoped_refptr<gpu::gles2::FeatureInfo> feature_info_;
@@ -172,7 +181,7 @@ TEST(DirectCompositionSurfaceTest, TestMakeCurrent) {
   EXPECT_FALSE(surface1->SetDrawRectangle(gfx::Rect(0, 0, 100, 100)));
 
   EXPECT_TRUE(context1->MakeCurrent(surface1.get()));
-  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, surface1->SwapBuffers());
+  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, SwapBuffers());
 
   EXPECT_TRUE(context1->IsCurrent(surface1.get()));
 
@@ -241,7 +250,7 @@ TEST(DirectCompositionSurfaceTest, DXGIDCLayerSwitch) {
   EXPECT_FALSE(surface->SetDrawRectangle(gfx::Rect(0, 0, 100, 100)));
 
   EXPECT_TRUE(context->MakeCurrent(surface.get()));
-  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, surface->SwapBuffers());
+  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, SwapBuffers());
 
   EXPECT_TRUE(context->IsCurrent(surface.get()));
 
@@ -256,7 +265,7 @@ TEST(DirectCompositionSurfaceTest, DXGIDCLayerSwitch) {
 
   surface->SetEnableDCLayers(false);
 
-  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, surface->SwapBuffers());
+  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, SwapBuffers());
 
   // Surface switched to use IDXGISwapChain, so must draw to entire
   // surface.
@@ -352,7 +361,7 @@ TEST(DirectCompositionSurfaceTest, NoPresentTwice) {
       surface->GetLayerSwapChainForTesting(1);
   ASSERT_FALSE(swap_chain);
 
-  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, surface->SwapBuffers());
+  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, SwapBuffers());
 
   swap_chain = surface->GetLayerSwapChainForTesting(1);
   ASSERT_TRUE(swap_chain);
@@ -365,7 +374,7 @@ TEST(DirectCompositionSurfaceTest, NoPresentTwice) {
   EXPECT_EQ(2u, last_present_count);
 
   surface->ScheduleDCLayer(params);
-  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, surface->SwapBuffers());
+  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, SwapBuffers());
 
   Microsoft::WRL::ComPtr<IDXGISwapChain1> swap_chain2 =
       surface->GetLayerSwapChainForTesting(1);
@@ -383,7 +392,7 @@ TEST(DirectCompositionSurfaceTest, NoPresentTwice) {
       0);
   surface->ScheduleDCLayer(params2);
 
-  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, surface->SwapBuffers());
+  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, SwapBuffers());
 
   Microsoft::WRL::ComPtr<IDXGISwapChain1> swap_chain3 =
       surface->GetLayerSwapChainForTesting(1);
@@ -457,7 +466,7 @@ class DirectCompositionPixelTest : public testing::Test {
     glClearColor(1.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    EXPECT_EQ(gfx::SwapResult::SWAP_ACK, surface_->SwapBuffers());
+    EXPECT_EQ(gfx::SwapResult::SWAP_ACK, SwapBuffers());
 
     // Ensure DWM swap completed.
     Sleep(1000);
@@ -531,7 +540,7 @@ class DirectCompositionVideoPixelTest : public DirectCompositionPixelTest {
         0);
     surface_->ScheduleDCLayer(params);
 
-    EXPECT_EQ(gfx::SwapResult::SWAP_ACK, surface_->SwapBuffers());
+    EXPECT_EQ(gfx::SwapResult::SWAP_ACK, SwapBuffers());
 
     // Scaling up the swapchain with the same image should cause it to be
     // transformed again, but not presented again.
@@ -542,7 +551,7 @@ class DirectCompositionVideoPixelTest : public DirectCompositionPixelTest {
         0);
     surface_->ScheduleDCLayer(params2);
 
-    EXPECT_EQ(gfx::SwapResult::SWAP_ACK, surface_->SwapBuffers());
+    EXPECT_EQ(gfx::SwapResult::SWAP_ACK, SwapBuffers());
     Sleep(1000);
 
     if (check_color) {
@@ -625,7 +634,7 @@ TEST_F(DirectCompositionPixelTest, SoftwareVideoSwapchain) {
       gfx::RectF(gfx::Rect(y_size)), gfx::Rect(window_size), 0, 0, 1.0, 0);
   surface_->ScheduleDCLayer(params);
 
-  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, surface_->SwapBuffers());
+  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, SwapBuffers());
   Sleep(1000);
 
   SkColor expected_color = SkColorSetRGB(0xff, 0xb7, 0xff);
@@ -674,7 +683,7 @@ TEST_F(DirectCompositionPixelTest, VideoHandleSwapchain) {
       0);
   surface_->ScheduleDCLayer(params);
 
-  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, surface_->SwapBuffers());
+  EXPECT_EQ(gfx::SwapResult::SWAP_ACK, SwapBuffers());
 
   Sleep(1000);
 

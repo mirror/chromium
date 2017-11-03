@@ -168,6 +168,10 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   void SetLatencyInfoCallback(const LatencyInfoCallback& callback) override;
   void UpdateVSyncParameters(base::TimeTicks timebase,
                              base::TimeDelta interval) override;
+  void BufferPresented(uint32_t count,
+                       base::TimeTicks timestamp,
+                       base::TimeDelta refresh,
+                       uint32_t flags) override;
 
   void AddFilter(IPC::MessageFilter* message_filter) override;
   int32_t GetRouteID() const override;
@@ -178,6 +182,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   using SwapBuffersCompletionCallback = base::Callback<void(
       const std::vector<ui::LatencyInfo>& latency_info,
       gfx::SwapResult result,
+      uint32_t count,
       const GpuProcessHostedCALayerTreeParamsMac* params_mac)>;
   void SetSwapBuffersCompletionCallback(
       const SwapBuffersCompletionCallback& callback);
@@ -187,9 +192,19 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   void SetUpdateVSyncParametersCallback(
       const UpdateVSyncParametersCallback& callback);
 
+  using PresentationCallback = base::Callback<void(uint32_t count,
+                                                   base::TimeTicks timestamp,
+                                                   base::TimeDelta refresh,
+                                                   uint32_t flags)>;
+  void SetPresentationCallback(const PresentationCallback& callback);
+
   void DidSwapBuffersCompleteOnOriginThread(SwapBuffersCompleteParams params);
   void UpdateVSyncParametersOnOriginThread(base::TimeTicks timebase,
                                            base::TimeDelta interval);
+  void BufferPresentedOnOriginThread(uint32_t count,
+                                     base::TimeTicks timestamp,
+                                     base::TimeDelta refresh,
+                                     uint32_t flags);
 
   // Mostly the GpuFeatureInfo from GpuInit will be used to create a gpu thread
   // service. In certain tests GpuInit is not part of the execution path, so
@@ -376,6 +391,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
 
   SwapBuffersCompletionCallback swap_buffers_completion_callback_;
   UpdateVSyncParametersCallback update_vsync_parameters_completion_callback_;
+  PresentationCallback presentation_callback_;
 
   base::WeakPtr<InProcessCommandBuffer> client_thread_weak_ptr_;
   base::WeakPtr<InProcessCommandBuffer> gpu_thread_weak_ptr_;

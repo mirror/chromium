@@ -1089,7 +1089,8 @@ void VrShellGl::DrawFrameSubmitNow(int16_t frame_index,
   if (!surfaceless_rendering_) {
     // TODO(mthiesse): Support asynchronous SwapBuffers.
     TRACE_EVENT0("gpu", "VrShellGl::SwapBuffers");
-    surface_->SwapBuffers();
+    surface_->SwapBuffers(
+        base::Bind([](base::TimeTicks, base::TimeDelta, uint32_t) {}));
   }
 
   // Report rendering completion to WebVR so that it's permitted to submit
