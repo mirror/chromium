@@ -34,15 +34,15 @@ class ThreadedSSLPrivateKey : public SSLPrivateKey {
     Delegate() {}
     virtual ~Delegate() {}
 
-    // Returns the digests that are supported by the key in decreasing
-    // preference. This method must be callable on any thread.
-    virtual std::vector<SSLPrivateKey::Hash> GetDigestPreferences() = 0;
+    // Returns the algorithms that are supported by the key in decreasing
+    // preference.
+    virtual std::vector<uint16_t> GetPreferences() = 0;
 
     // Signs |input| as a digest of type |hash|. On success it returns OK and
     // sets |signature| to the resulting signature. Otherwise it returns a net
     // error code. It will only be called on the task runner passed to the
     // owning ThreadedSSLPrivateKey.
-    virtual Error SignDigest(Hash hash,
+    virtual Error SignDigest(uint16_t algorithm,
                              const base::StringPiece& input,
                              std::vector<uint8_t>* signature) = 0;
 
@@ -55,8 +55,8 @@ class ThreadedSSLPrivateKey : public SSLPrivateKey {
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   // SSLPrivateKey implementation.
-  std::vector<SSLPrivateKey::Hash> GetDigestPreferences() override;
-  void SignDigest(Hash hash,
+  std::vector<uint16_t> GetPreferences() override;
+  void SignDigest(uint16_t algorithm,
                   const base::StringPiece& input,
                   const SignCallback& callback) override;
 
