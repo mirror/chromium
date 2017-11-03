@@ -222,7 +222,7 @@ SkColor WallpaperController::GetProminentColor(
 
 wallpaper::WallpaperLayout WallpaperController::GetWallpaperLayout() const {
   if (current_wallpaper_)
-    return current_wallpaper_->layout();
+    return current_wallpaper_->wallpaper_info().layout;
   return wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED;
 }
 
@@ -246,7 +246,7 @@ void WallpaperController::SetWallpaperImage(
     color_calculator_.reset();
   }
   current_wallpaper_.reset(new wallpaper::WallpaperResizer(
-      image, GetMaxDisplaySizeInNative(), layout, sequenced_task_runner_));
+      image, GetMaxDisplaySizeInNative(), info, sequenced_task_runner_));
   current_wallpaper_->AddObserver(this);
   current_wallpaper_->StartResize();
 
@@ -360,7 +360,7 @@ bool WallpaperController::WallpaperIsAlreadyLoaded(
     return false;
 
   // Compare layouts only if necessary.
-  if (compare_layouts && layout != current_wallpaper_->layout())
+  if (compare_layouts && layout != current_wallpaper_->wallpaper_info().layout)
     return false;
 
   return wallpaper::WallpaperResizer::GetImageId(image) ==
@@ -372,6 +372,15 @@ void WallpaperController::OpenSetWallpaperPage() {
       Shell::Get()->wallpaper_delegate()->CanOpenSetWallpaperPage()) {
     wallpaper_picker_->Open();
   }
+}
+
+bool WallpaperController::ShouldApplyDimming() const {
+  return Shell::Get()->session_controller()->IsUserSessionBlocked();
+}
+
+bool WallpaperController::ShouldApplyBlur() const {
+  return Shell::Get()->session_controller()->IsUserSessionBlocked() &&
+         !IsDevicePolicyWallpaper();
 }
 
 void WallpaperController::AddObserver(
@@ -427,7 +436,7 @@ void WallpaperController::InstallDesktopController(aura::Window* root_window) {
       return;
   }
 
-  if (Shell::Get()->session_controller()->IsUserSessionBlocked())
+  if (ShouldApplyBlur())
     component->SetWallpaperBlur(login_constants::kBlurSigma);
 
   RootWindowController* controller =
@@ -553,6 +562,14 @@ bool WallpaperController::MoveToUnlockedContainer() {
 
   locked_ = false;
   return ReparentWallpaper(GetWallpaperContainerId(false));
+}
+
+bool WallpaperController::IsDevicePolicyWallpaper() const {
+  return true;
+  if (current_wallpaper_)
+    return current_wallpaper_->wallpaper_info().type ==
+           wallpaper::WallpaperType::DEVICE;
+  return false;
 }
 
 void WallpaperController::GetInternalDisplayCompositorLock() {
