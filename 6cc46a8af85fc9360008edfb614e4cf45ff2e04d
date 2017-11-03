@@ -16,6 +16,24 @@
       "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6903de5_fa43a0f6",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-03T15:16:52Z",
+      "side": 1,
+      "message": "Yeah that\u0027s normal - it depends on what\u0027s contained within each file, whether or not there are resources within the file that would benefit from being flattened, etc.",
+      "parentUuid": "0cdcd13c_61c480cf",
+      "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
