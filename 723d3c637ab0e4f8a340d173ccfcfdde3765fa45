@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82c5f78a_d1c482a6",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-03T06:34:34Z",
+      "side": 1,
+      "message": "Can you think of another name that does not end in \"Getter\"? It makes me think of ivar accessors. You used the verb \"retrieve\" in other parts of your API. Have you considered CanonicalURLRetriever as the class name? I know it is a bit longer than *Getter.",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16ea9b8_a9c903bf",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-03T06:34:34Z",
+      "side": 1,
+      "message": "This gives one the (false) impression that a \"notification\" is used. How about changing this to \"...is called after...\"",
+      "range": {
+        "startLine": 20,
+        "startChar": 22,
+        "endLine": 20,
+        "endChar": 38
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8153cbf4_e7edef9b",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-03T06:34:34Z",
+      "side": 1,
+      "message": "What would happen if you don\u0027t set delegate?\nWould you consider forcing the initializer to require a delegate to be specified, i.e. -initWithDelegate: ?",
+      "range": {
+        "startLine": 20,
+        "startChar": 71,
+        "endLine": 21,
+        "endChar": 6
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a477008_ab6e5215",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-03T06:34:34Z",
+      "side": 1,
+      "message": "...by calling -canonicalURLGetter:didRetrieveCanonicalURL: method of the delegate object.",
+      "range": {
+        "startLine": 26,
+        "startChar": 50,
+        "endLine": 27,
+        "endChar": 13
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde3cc82_b7f9f0a5",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-03T06:34:34Z",
+      "side": 1,
+      "message": "}  // namespace",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 1
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda80a72_83f2f005",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-03T06:34:34Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of this being a class method? Can it be a C++ function in the anonymous name space? Can it be inlined into where it is used since there\u0027s only one use.",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b756edeb_63b18baf",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-03T06:34:34Z",
+      "side": 1,
+      "message": "It may not be necessary to specify \"void\" here.",
+      "range": {
+        "startLine": 43,
+        "startChar": 52,
+        "endLine": 43,
+        "endChar": 56
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43918882_66066a5a",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-03T06:34:34Z",
+      "side": 1,
+      "message": "Do you need to strong-ify this weakSelf and check before use?",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983252ff_4b304528",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-03T06:34:34Z",
+      "side": 1,
+      "message": "For delegate methods, describe what it does instead of when it is called.\n\nHow about \"Tells the delegate that a canonical URL has been retrieved.\"",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 55
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea688997_2659a03f",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-03T06:34:34Z",
+      "side": 1,
+      "message": "No need to initialize to NO values.",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 31
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
