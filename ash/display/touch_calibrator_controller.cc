@@ -4,12 +4,17 @@
 
 #include "ash/display/touch_calibrator_controller.h"
 
+#include <algorithm>
 #include <memory>
 
 #include "ash/display/touch_calibrator_view.h"
+#include "ash/display/window_tree_host_manager.h"
+#include "ash/host/ash_window_tree_host.h"
 #include "ash/shell.h"
 #include "ash/touch/ash_touch_transform_controller.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "ui/aura/window_tree_host.h"
+#include "ui/display/manager/chromeos/touch_device_manager.h"
 #include "ui/display/screen.h"
 #include "ui/events/devices/input_device_manager.h"
 #include "ui/events/event.h"
@@ -19,22 +24,65 @@ namespace ash {
 namespace {
 
 void InitInternalTouchDeviceIds(std::set<int>& internal_touch_device_ids) {
-  if (!display::Display::HasInternalDisplay())
+  if (ui::InputDeviceManager::GetInstance()
+          ->AreTouchscreenTargetDisplaysValid()) {
     return;
-
-  DCHECK(ui::InputDeviceManager::GetInstance()
-             ->AreTouchscreenTargetDisplaysValid());
+  }
 
   internal_touch_device_ids.clear();
 
   const std::vector<ui::TouchscreenDevice>& device_list =
       ui::InputDeviceManager::GetInstance()->GetTouchscreenDevices();
-  int64_t internal_display_id = display::Display::InternalDisplayId();
 
   for (const auto& touchscreen_device : device_list) {
-    if (touchscreen_device.target_display_id == internal_display_id)
+    if (touchscreen_device.type == ui::InputDeviceType::INPUT_DEVICE_INTERNAL)
       internal_touch_device_ids.insert(touchscreen_device.id);
   }
+}
+
+// Returns a transform to undo any transformations that are applied to events
+// originating from the touch device identified with |touch_device_id|. This
+// transform converts the event's location to the raw touch location.
+gfx::Transform CalculateEventTransformer(int touch_device_id) {
+  const display::DisplayManager* display_manager =
+      Shell::Get()->display_manager();
+  const std::vector<ui::TouchscreenDevice>& device_list =
+      ui::InputDeviceManager::GetInstance()->GetTouchscreenDevices();
+
+  auto device_it = std::find_if(
+      device_list.begin(), device_list.end(),
+      [&](const auto& device) { return device.id == touch_device_id; });
+  DCHECK(device_it != device_list.end())
+      << "Device id " << touch_device_id
+      << " is invalid. No such device connected to system";
+
+  int64_t previous_display_id =
+      display_manager->touch_device_manager()->GetAssociatedDisplay(
+          display::TouchDeviceIdentifier::FromDevice(*device_it));
+
+  // If the touch device is not associated with any display. This may happen in
+  // tests when the test does not setup the |ui::TouchDeviceTransform| before
+  // generating a touch event.
+  if (previous_display_id == display::kInvalidDisplayId)
+    return gfx::Transform();
+
+  const display::ManagedDisplayInfo& previous_display_info =
+      display_manager->GetDisplayInfo(previous_display_id);
+
+  aura::WindowTreeHost* previous_display_host =
+      Shell::Get()
+          ->window_tree_host_manager()
+          ->GetAshWindowTreeHostForDisplayId(previous_display_id)
+          ->AsWindowTreeHost();
+
+  // Undo the event transformations that the previous display applied on the
+  // event location. We want to store the raw event location information.
+  gfx::Transform tm = previous_display_host->GetRootTransform();
+  gfx::Transform native_bounds_tm;
+  native_bounds_tm.Translate(
+      previous_display_info.bounds_in_native().OffsetFromOrigin());
+  tm.ConcatTransform(native_bounds_tm);
+  return tm;
 }
 
 }  // namespace
@@ -76,7 +124,8 @@ void TouchCalibratorController::StartCalibration(
   touch_device_id_ = ui::InputDevice::kInvalidId;
 
   // Populate |internal_touch_device_ids_| with the ids of touch devices that
-  // are currently associated with the internal display.
+  // are currently associated with the internal display and are of type
+  // |ui::InputDeviceType::INPUT_DEVICE_INTERNAL|.
   InitInternalTouchDeviceIds(internal_touch_device_ids_);
 
   // If this is a native touch calibration, then initialize the UX for it.
@@ -201,13 +250,17 @@ void TouchCalibratorController::OnTouchEvent(ui::TouchEvent* touch) {
   if (internal_touch_device_ids_.count(touch->source_device_id()))
     return;
 
-  if (touch_device_id_ == ui::InputDevice::kInvalidId)
+  if (touch_device_id_ == ui::InputDevice::kInvalidId) {
     touch_device_id_ = touch->source_device_id();
+    event_transformer_ = CalculateEventTransformer(touch_device_id_);
+  }
 
   // If this is a custom touch calibration, then everything else is managed
   // by the application responsible for the custom calibration UX.
   if (state_ == CalibrationState::kCustomCalibration)
     return;
+  else
+    touch->StopPropagation();
 
   TouchCalibratorView* target_screen_calibration_view =
       touch_calibrator_views_[target_display_.id()].get();
@@ -246,8 +299,22 @@ void TouchCalibratorController::OnTouchEvent(ui::TouchEvent* touch) {
   // Store touch point corresponding to its display point.
   gfx::Point display_point;
   if (target_screen_calibration_view->GetDisplayPointLocation(&display_point)) {
+    // If the screen has a root transform applied, the display point does not
+    // correctly map to the touch point. This is specially evident if the
+    // display is rotated or a device scale factor is applied. The display point
+    // needs to have the root transform applied as well to correctly pair it
+    // with the touch point.
+    aura::WindowTreeHost* target_display_host =
+        Shell::Get()
+            ->window_tree_host_manager()
+            ->GetAshWindowTreeHostForDisplayId(target_display_.id())
+            ->AsWindowTreeHost();
+    target_display_host->GetRootTransform().TransformPoint(&display_point);
+
+    gfx::Point event_location(touch->location());
+    event_transformer_.TransformPoint(&event_location);
     touch_point_quad_[state_index] =
-        std::make_pair(display_point, touch->location());
+        std::make_pair(display_point, event_location);
   } else {
     // TODO(malaykeshav): Display some kind of error for the user.
     NOTREACHED() << "Touch calibration failed. Could not retrieve location for"
