@@ -533,7 +533,7 @@ bool ColorSpace::GetICCProfile(ICCProfile* icc_profile) const {
   return true;
 }
 
-bool ColorSpace::GetICCProfileData(std::vector<char>* output_data) const {
+bool ColorSpace::GetICCProfileData(std::vector<uint8_t>* output_data) const {
   if (!IsValid()) {
     DLOG(ERROR) << "Cannot fetch ICCProfile for invalid space.";
     return false;
@@ -550,7 +550,7 @@ bool ColorSpace::GetICCProfileData(std::vector<char>* output_data) const {
   // If this was created from an ICC profile, retrieve that exact profile.
   ICCProfile icc_profile;
   if (ICCProfile::FromId(icc_profile_id_, &icc_profile)) {
-    *output_data = icc_profile.data_;
+    *output_data = icc_profile.internals_->data_;
     return true;
   }
 
@@ -568,9 +568,9 @@ bool ColorSpace::GetICCProfileData(std::vector<char>* output_data) const {
     DLOG(ERROR) << "Failed to create SkICC.";
     return false;
   }
-  const char* data_as_char = reinterpret_cast<const char*>(data->data());
-  output_data->insert(output_data->begin(), data_as_char,
-                      data_as_char + data->size());
+  const uint8_t* data_as_byte = reinterpret_cast<const uint8_t*>(data->data());
+  output_data->insert(output_data->begin(), data_as_byte,
+                      data_as_byte + data->size());
   return true;
 }
 
