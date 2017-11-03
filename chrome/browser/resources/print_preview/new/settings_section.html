@@ -1,0 +1,23 @@
+<link rel="import" href="chrome://resources/html/polymer.html">
+
+<dom-module id="print-preview-settings-section">
+  <template>
+    <style>
+      :host {
+        display: flex;
+      }
+
+      ::slotted([slot='title']) {
+        color: #646464;
+        flex: 1.2;
+      }
+
+      #right {
+        flex: 2;
+      }
+    </style>
+    <slot name="title"></slot>
+    <div id="right">Stuff goes here...</div>
+  </template>
+  <script src="settings_section.js"></script>
+</dom-module>
