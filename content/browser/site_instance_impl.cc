@@ -127,8 +127,23 @@ RenderProcessHost* SiteInstanceImpl::GetProcess() {
                  "site id", id_, "process id", process_->GetID());
     GetContentClient()->browser()->SiteInstanceGotProcess(this);
 
-    if (has_site_)
+    if (has_site_) {
+      // Sanity check that the process picked above is suitable for hosting
+      // |site_|. For example, if |site_| requires a dedicated process, we
+      // should never pick a process used by, or locked to, a different site.
+      if (!RenderProcessHostImpl::IsSuitableHost(process_, browser_context,
+                                                 site_)) {
+        ChildProcessSecurityPolicyImpl* policy =
+            ChildProcessSecurityPolicyImpl::GetInstance();
+        base::debug::SetCrashKeyValue("requested_site_url", site_.spec());
+        base::debug::SetCrashKeyValue(
+            "killed_process_origin_lock",
+            policy->GetOriginLock(process_->GetID()).spec());
+        CHECK(false) << "Unsuitable process picked for site " << site_;
+      }
+
       LockToOriginIfNeeded();
+    }
   }
   DCHECK(process_);
 
