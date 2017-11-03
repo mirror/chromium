@@ -16,6 +16,24 @@
       "revId": "c1f0dcdf079d1505b1e0a453cc1261f17e275240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930f56d6_81f3ec72",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-03T00:56:24Z",
+      "side": 1,
+      "message": "It\u0027s not. ParseFromString just tokenizes on , or ;.",
+      "parentUuid": "d7f81de7_88786e58",
+      "revId": "c1f0dcdf079d1505b1e0a453cc1261f17e275240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
