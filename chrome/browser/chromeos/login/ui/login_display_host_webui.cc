@@ -204,8 +204,7 @@ void ShowLoginWizardFinish(
       ShouldShowSigninScreen(first_screen)) {
     display_host = new chromeos::LoginDisplayHostViews();
   } else {
-    gfx::Rect screen_bounds(chromeos::CalculateScreenBounds(gfx::Size()));
-    display_host = new chromeos::LoginDisplayHostWebUi(screen_bounds);
+    display_host = new chromeos::LoginDisplayHostWebUi();
   }
 
   // Restore system timezone.
@@ -425,8 +424,8 @@ class LoginDisplayHostWebUi::LoginWidgetDelegate
 ////////////////////////////////////////////////////////////////////////////////
 // LoginDisplayHostWebUi, public
 
-LoginDisplayHostWebUi::LoginDisplayHostWebUi(const gfx::Rect& wallpaper_bounds)
-    : wallpaper_bounds_(wallpaper_bounds),
+LoginDisplayHostWebUi::LoginDisplayHostWebUi()
+    : wallpaper_bounds_(chromeos::CalculateScreenBounds(gfx::Size())),
       startup_sound_played_(StartupUtils::IsOobeCompleted()),
       pointer_factory_(this),
       animation_weak_ptr_factory_(this) {
@@ -1361,8 +1360,6 @@ void ShowLoginWizard(OobeScreen first_screen) {
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kNaturalScrollDefault));
 
-  gfx::Rect screen_bounds(chromeos::CalculateScreenBounds(gfx::Size()));
-
   session_manager::SessionManager::Get()->SetSessionState(
       StartupUtils::IsOobeCompleted()
           ? session_manager::SessionState::LOGIN_PRIMARY
@@ -1376,8 +1373,7 @@ void ShowLoginWizard(OobeScreen first_screen) {
     const bool diagnostic_mode = false;
     const bool auto_launch = true;
     // Manages its own lifetime. See ShutdownDisplayHost().
-    LoginDisplayHostWebUi* display_host =
-        new LoginDisplayHostWebUi(screen_bounds);
+    auto* display_host = new LoginDisplayHostWebUi();
     display_host->StartAppLaunch(auto_launch_app_id, diagnostic_mode,
                                  auto_launch);
     return;
@@ -1391,8 +1387,7 @@ void ShowLoginWizard(OobeScreen first_screen) {
   if (enrollment_config.should_enroll() &&
       first_screen == OobeScreen::SCREEN_UNKNOWN) {
     // Manages its own lifetime. See ShutdownDisplayHost().
-    LoginDisplayHostWebUi* display_host =
-        new LoginDisplayHostWebUi(screen_bounds);
+    auto* display_host = new LoginDisplayHostWebUi();
     // Shows networks screen instead of enrollment screen to resume the
     // interrupted auto start enrollment flow because enrollment screen does
     // not handle flaky network. See http://crbug.com/332572
