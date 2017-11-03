@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd942d3b_353cb04a",
+        "filename": "third_party/WebKit/LayoutTests/cssom/elementfrompoint.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-03T18:54:32Z",
+      "side": 1,
+      "message": "nit: extra \u003c/style\u003e",
+      "range": {
+        "startLine": 6,
+        "startChar": 2,
+        "endLine": 6,
+        "endChar": 7
+      },
+      "revId": "78f6f81ada4949515dc510c2e387663ba2fe8d39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e63b4f_0354123a",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-03T18:54:32Z",
+      "side": 1,
+      "message": "Yeah, this is what I was thinking. On second look though, we shouldn\u0027t be modifying point_in_frame if we return false so I\u0027d move the point_in_frame.Scale call below the return false. To make the Contains call correct in that case, just scale the visible_rect by 1/frame-\u003ePageZoomFactor.",
+      "range": {
+        "startLine": 213,
+        "startChar": 10,
+        "endLine": 213,
+        "endChar": 59
+      },
+      "revId": "78f6f81ada4949515dc510c2e387663ba2fe8d39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
