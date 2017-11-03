@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e07b7c57_74e4a8e8",
+        "filename": "chrome/installer/linux/debian/update_dist_package_versions.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-03T18:36:28Z",
+      "side": 1,
+      "message": "Don\u0027t worry about it since the CL just landed. Nit: Can this be sort this in the same order as dist_package_versions.json? libatk-bridge before libatk1.",
+      "revId": "cdcf70465b4a924a087bfd46f0cdc73af5743e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
