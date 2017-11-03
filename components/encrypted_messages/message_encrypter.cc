@@ -45,7 +45,6 @@ bool EncryptSerializedMessage(const uint8_t* server_public_key,
   // Generate an ephemeral key pair to generate a shared secret.
   uint8_t public_key[X25519_PUBLIC_VALUE_LEN];
   uint8_t private_key[X25519_PRIVATE_KEY_LEN];
-
   crypto::RandBytes(private_key, sizeof(private_key));
   X25519_public_from_private(public_key, private_key);
 

@@ -29,7 +29,9 @@ void AwMetricsLogUploader::UploadLog(
   std::string log_data;
   if (!metrics::DecodeLogData(compressed_log_data, &log_data)) {
     // If the log is corrupt, pretend the server rejected it (HTTP Bad Request).
-    on_upload_complete_.Run(400, 0);
+    // Set the was_https parameter to false, so retry over HTTP is not
+    // triggered on AW.
+    on_upload_complete_.Run(400, 0, false);
     return;
   }
 
@@ -41,7 +43,11 @@ void AwMetricsLogUploader::UploadLog(
   // The platform mechanism doesn't provide a response code or any way to handle
   // failures, so we have nothing to pass to on_upload_complete. Just pass 200
   // (HTTP OK) with error code 0 and pretend everything is peachy.
-  on_upload_complete_.Run(200, 0);
+  on_upload_complete_.Run(200, 0, false);
+}
+
+std::string AwMetricsLogUploader::GetInsecureUploadURL() {
+  return "";
 }
 
 }  // namespace android_webview

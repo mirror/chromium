@@ -30,6 +30,8 @@ class TestMetricsLogUploader : public MetricsLogUploader {
                  const std::string& log_hash,
                  const ReportingInfo& reporting_info) override;
 
+  std::string GetInsecureUploadURL() override;
+
   const MetricsLogUploader::UploadCallback on_upload_complete_;
   ReportingInfo last_reporting_info_;
   bool is_uploading_;
