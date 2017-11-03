@@ -34,6 +34,24 @@
       "revId": "e9110a6283eeb25712759a098a4ceb5e75fa49ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035b2d57_10bdeb54",
+        "filename": "ui/display/manager/chromeos/touch_transform_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-03T00:53:46Z",
+      "side": 1,
+      "message": "Added test API.",
+      "parentUuid": "ad930919_000dd920",
+      "revId": "e9110a6283eeb25712759a098a4ceb5e75fa49ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
