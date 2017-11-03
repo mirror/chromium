@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc8db4e2_af940c26",
+        "filename": "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-03T15:02:13Z",
+      "side": 1,
+      "message": "s/web view/WebState ?\n\nWould it be better if OverscrollActionsController subscribe to WebStateObserver::WebStateWasDestroyed, so owner of OverscrollActionsController does not have to call |invalidate|? On the other hand, it\u0027s unclear to me how long OverscrollActionsController will exist before folding into Fullscreen, so maybe leaving things as they are is better.",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 10
+      },
+      "revId": "f1edc58545353137f09d0fcb9f8658411069ba33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
