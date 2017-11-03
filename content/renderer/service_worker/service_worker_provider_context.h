@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner_helpers.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_container.mojom.h"
@@ -33,6 +34,7 @@ class URLLoaderFactory;
 }
 
 class ServiceWorkerHandleReference;
+class WebServiceWorkerRegistrationImpl;
 struct ServiceWorkerProviderContextDeleter;
 
 // ServiceWorkerProviderContext stores common state for service worker
@@ -143,6 +145,22 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // FetchEvents to the service worker.
   mojom::ServiceWorkerContainerHostPtrInfo CloneContainerHostPtrInfo();
 
+  // Returns the existing registration or a newly created one for a service
+  // worker execution context. When a new one is created, increments
+  // interprocess references to its versions via ServiceWorkerHandleReference.
+  // Called on the worker thread.
+  scoped_refptr<WebServiceWorkerRegistrationImpl>
+  GetOrCreateRegistrationForServiceWorkerGlobalScope(
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
+
+  // Returns the existing registration or a newly created one for service worker
+  // client contexts (document, shared worker). Always adopts
+  // interprocess references to its versions via ServiceWorkerHandleReference.
+  scoped_refptr<WebServiceWorkerRegistrationImpl>
+  GetOrCreateRegistrationForServiceWorkerClient(
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info);
+
   // Called when ServiceWorkerNetworkProvider is destructed. This function
   // severs the Mojo binding to the browser-side ServiceWorkerProviderHost. The
   // reason ServiceWorkerNetworkProvider is special compared to the other
@@ -164,6 +182,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   friend class base::DeleteHelper<ServiceWorkerProviderContext>;
   friend class base::RefCountedThreadSafe<ServiceWorkerProviderContext,
                                           ServiceWorkerProviderContextDeleter>;
+  friend class ServiceWorkerProviderContextTest;
+  friend class WebServiceWorkerRegistrationImpl;
   friend struct ServiceWorkerProviderContextDeleter;
   struct ControlleeState;
   struct ControllerState;
@@ -184,6 +204,15 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
       const base::string16& message,
       std::vector<mojo::ScopedMessagePipeHandle> message_pipes) override;
 
+  // Keeps map from registration_id to ServiceWorkerRegistration object.
+  void AddServiceWorkerRegistration(
+      int64_t registration_id,
+      WebServiceWorkerRegistrationImpl* registration);
+  void RemoveServiceWorkerRegistration(int64_t registration_id);
+
+  using RegistrationObjectMap =
+      std::map<int64_t, WebServiceWorkerRegistrationImpl*>;
+  RegistrationObjectMap registrations_;
   const ServiceWorkerProviderType provider_type_;
   const int provider_id_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
@@ -207,6 +236,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // Either |controllee_state_| or |controller_state_| is non-null.
   std::unique_ptr<ControlleeState> controllee_state_;
   std::unique_ptr<ControllerState> controller_state_;
+
+  base::WeakPtrFactory<ServiceWorkerProviderContext> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerProviderContext);
 };
