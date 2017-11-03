@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4509658_bfe6268d",
+        "filename": "third_party/protobuf/proto_library.gni",
+        "patchSetId": 10
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1149279
+      },
+      "writtenOn": "2017-11-03T17:51:37Z",
+      "side": 1,
+      "message": "I understand why you\u0027re not fuzzing the protobuf library, but why aren\u0027t you fuzzing generated proto code?",
+      "range": {
+        "startLine": 358,
+        "startChar": 57,
+        "endLine": 358,
+        "endChar": 0
+      },
+      "revId": "bf53eb1e05838c88a8beb65c9c7de68962a03aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
