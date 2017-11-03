@@ -402,6 +402,8 @@ size_t QuicFramer::BuildDataPacket(const QuicPacketHeader& header,
         break;
       case MTU_DISCOVERY_FRAME:
       // MTU discovery frames are serialized as ping frames.
+      case CONNECTIVITY_PROBING_FRAME:
+      // Connectivity probing frames are serialized as ping frames.
       case PING_FRAME:
         // Ping has no payload.
         break;
@@ -442,6 +444,41 @@ size_t QuicFramer::BuildDataPacket(const QuicPacketHeader& header,
         return 0;
     }
     ++i;
+  }
+
+  return writer.length();
+}
+
+size_t QuicFramer::BuildConnectivityProbingPacket(
+    const QuicPacketHeader& header,
+    char* buffer,
+    size_t packet_length) {
+  QuicDataWriter writer(packet_length, buffer, endianness());
+
+  if (!AppendPacketHeader(header, &writer)) {
+    QUIC_BUG << "AppendPacketHeader failed";
+    return 0;
+  }
+
+  // Write a probing frame. As probing frame is a PING now, there's no data
+  // payload.
+  QuicFrame probing_frame((QuicConnectivityProbingFrame()));
+  if (!AppendTypeByte(probing_frame, false, &writer)) {
+    QUIC_BUG << "AppendTypeByte failed for probing frame";
+    return 0;
+  }
+
+  // Add paddings to the rest of the packet.
+  QuicFrame padding_frame((QuicPaddingFrame()));
+  if (!AppendTypeByte(padding_frame, true, &writer)) {
+    QUIC_BUG << "AppendTypeByte failed for padding frame";
+    return 0;
+  }
+
+  if (!AppendPaddingFrame(padding_frame.padding_frame, &writer)) {
+    QUIC_BUG << "AppendPaddingFrame of "
+             << padding_frame.padding_frame.num_padding_bytes << " failed";
+    return 0;
   }
 
   return writer.length();
@@ -1859,6 +1896,8 @@ size_t QuicFramer::ComputeFrameLength(
       return GetStopWaitingFrameSize(transport_version_, packet_number_length);
     case MTU_DISCOVERY_FRAME:
     // MTU discovery frames are serialized as ping frames.
+    case CONNECTIVITY_PROBING_FRAME:
+    // Connectivity probing frames are serialized as ping frames.
     case PING_FRAME:
       // Ping has no payload.
       return kQuicFrameTypeSize;
@@ -1956,6 +1995,9 @@ bool QuicFramer::AppendTypeByte(const QuicFrame& frame,
     case ACK_FRAME:
       return true;
     case MTU_DISCOVERY_FRAME:
+      type_byte = static_cast<uint8_t>(PING_FRAME);
+      break;
+    case CONNECTIVITY_PROBING_FRAME:
       type_byte = static_cast<uint8_t>(PING_FRAME);
       break;
     default:

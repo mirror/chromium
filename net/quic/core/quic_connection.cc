@@ -2349,6 +2349,38 @@ QuicByteCount QuicConnection::GetLimitedMaxPacketSize(
   return max_packet_size;
 }
 
+void QuicConnection::SendProbingPacket(QuicByteCount packet_size) {
+  if (writer_->IsWriteBlocked()) {
+    QUIC_BUG << "Write Blocked when send probing";
+    visitor_->OnWriteBlocked();
+    return;
+  }
+
+  QUIC_DLOG(INFO) << ENDPOINT << "Send connectivity probing packet";
+
+  std::unique_ptr<QuicEncryptedPacket> probing_packet(
+      packet_generator_.SerializeConnectivityProbingPacket());
+
+  WriteResult result = writer_->WritePacket(
+      probing_packet->data(), probing_packet->length(), self_address().host(),
+      peer_address(), per_packet_options_);
+
+  if (result.status == WRITE_STATUS_ERROR) {
+    OnWriteError(result.error_code);
+    QUIC_BUG << "Write probing packet failed with error = "
+             << result.error_code;
+    return;
+  }
+
+  if (result.status == WRITE_STATUS_BLOCKED) {
+    visitor_->OnWriteBlocked();
+    if (writer_->IsWriteBlockedDataBuffered()) {
+      QUIC_BUG << "Write probing packet blocked";
+      return;
+    }
+  }
+}
+
 void QuicConnection::SendMtuDiscoveryPacket(QuicByteCount target_mtu) {
   // Currently, this limit is ensured by the caller.
   DCHECK_EQ(target_mtu, GetLimitedMaxPacketSize(target_mtu));

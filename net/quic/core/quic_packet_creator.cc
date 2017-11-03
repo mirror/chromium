@@ -463,6 +463,34 @@ QuicPacketCreator::SerializeVersionNegotiationPacket(
   return encrypted;
 }
 
+std::unique_ptr<QuicEncryptedPacket>
+QuicPacketCreator::SerializeConnectivityProbingPacket() {
+  DCHECK_EQ(Perspective::IS_CLIENT, framer_->perspective());
+
+  QuicPacketHeader header;
+  // FillPacketHeader increments packet_number_.
+  // TODO(zhongyi): figure out whether we want to update the packet number?
+  FillPacketHeader(&header);
+
+  std::unique_ptr<char[]> buffer(new char[kMaxPacketSize]);
+
+  size_t length = framer_->BuildConnectivityProbingPacket(header, buffer.get(),
+                                                          max_packet_length_);
+
+  DCHECK(length);
+
+  // TODO(zhongyi): buffer? max_packet_length_?
+  const size_t encrypted_length = framer_->EncryptInPlace(
+      packet_.encryption_level, packet_.packet_number,
+      GetStartOfEncryptedData(framer_->transport_version(), header), length,
+      kMaxPacketSize, buffer.get());
+
+  DCHECK(encrypted_length);
+
+  return QuicMakeUnique<QuicEncryptedPacket>(buffer.release(), encrypted_length,
+                                             true);
+}
+
 // TODO(jri): Make this a public method of framer?
 SerializedPacket QuicPacketCreator::NoPacket() {
   return SerializedPacket(0, PACKET_1BYTE_PACKET_NUMBER, nullptr, 0, false,
@@ -490,6 +518,7 @@ bool QuicPacketCreator::ShouldRetransmit(const QuicFrame& frame) {
     case PADDING_FRAME:
     case STOP_WAITING_FRAME:
     case MTU_DISCOVERY_FRAME:
+    case CONNECTIVITY_PROBING_FRAME:
       return false;
     default:
       return true;
