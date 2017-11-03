@@ -86,6 +86,9 @@ global:
   localtime64_r;
   localtime_r;
 
+  # Wayland specific symbols, needed on ozone/wayland linux builds.
+  wl_*;
+
 local:
   *;
 };
