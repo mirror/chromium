@@ -34,7 +34,7 @@ class ServiceFactory : public service_manager::mojom::ServiceFactory {
 
   // service_manager::mojom::ServiceFactory:
   void CreateService(service_manager::mojom::ServiceRequest request,
-                     const std::string& name) override;
+                     const service_manager::Identity& identity) override;
 
  private:
   // Called if CreateService fails to find a registered service.
