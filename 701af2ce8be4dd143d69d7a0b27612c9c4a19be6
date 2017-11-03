@@ -22,6 +22,30 @@
       "revId": "701af2ce8be4dd143d69d7a0b27612c9c4a19be6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986e4609_ab2e72c4",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-03T17:04:10Z",
+      "side": 1,
+      "message": "Doesn\u0027t work --- it doesn\u0027t know how to print iterators.\n\n../../base/logging.h:709:3: error: no matching function for call to \u0027MakeCheckOpValueString\u0027\n  MakeCheckOpValueString(\u0026ss, v1);\n  ^~~~~~~~~~~~~~~~~~~~~~",
+      "parentUuid": "45dc85bd_994d414a",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 8
+      },
+      "revId": "701af2ce8be4dd143d69d7a0b27612c9c4a19be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
