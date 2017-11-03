@@ -123,6 +123,24 @@
       "revId": "bfa9a3949b2a4d9a0ae7d40d8f0f0a4f667a69e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93b558f_606c7719",
+        "filename": "third_party/WebKit/public/platform/ScopedVirtualTimePauser.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-03T09:19:20Z",
+      "side": 1,
+      "message": "Would there be any option like this?\n\n  ScopedPauseVirtualTimer scope(frame-\u003eFrameScheduler());\n  storage_area_-\u003eRemoveItem(...);\n\nthen we can avoid passing the scope object around in many places.",
+      "parentUuid": "eb6192e4_9f85c1e2",
+      "revId": "bfa9a3949b2a4d9a0ae7d40d8f0f0a4f667a69e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
