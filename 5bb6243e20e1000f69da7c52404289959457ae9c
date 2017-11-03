@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9c17292_7d7ffa6e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-03T17:56:21Z",
+      "side": 1,
+      "message": "I think it would be less error prone and easier to track if you add a real function to get TabStripImpl rather than the cast. That is, TabStrip::AsTabStripImpl which returns null in TabStripExperimental. The return value from the function is null checked instead of IsExperimentalTabStripEnabled.",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 49
+      },
+      "revId": "5bb6243e20e1000f69da7c52404289959457ae9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6445a7de_6bae2561",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-03T17:56:21Z",
+      "side": 1,
+      "message": "I would imagine the two subclasses are going to share the exact same implementation. How about making this non-virtual?",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 24,
+        "endChar": 61
+      },
+      "revId": "5bb6243e20e1000f69da7c52404289959457ae9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
