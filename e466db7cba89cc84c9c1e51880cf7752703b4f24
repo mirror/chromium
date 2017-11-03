@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e5db5f11_862c3bdc",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T16:56:22Z",
+      "side": 1,
+      "message": "Never mind. I figured out the float vs. int issue. I\u0027m still unsure about float32 though. Any thoughts on doing the more popular int16 by default?\n\nAnyway, converter removed from the PCM path.",
+      "parentUuid": "5996f88c_76460ff6",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "431efc85_ecd1eea8",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 6
