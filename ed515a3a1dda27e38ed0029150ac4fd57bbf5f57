@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9dc19f8_d9234370",
+        "filename": "components/metrics/net/network_metrics_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-03T04:56:59Z",
+      "side": 1,
+      "message": "something reads off here.  perhaps omit \"if\"?",
+      "range": {
+        "startLine": 237,
+        "startChar": 17,
+        "endLine": 237,
+        "endChar": 19
+      },
+      "revId": "ed515a3a1dda27e38ed0029150ac4fd57bbf5f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bafc857e_06517967",
+        "filename": "components/metrics/net/network_metrics_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-03T04:56:59Z",
+      "side": 1,
+      "message": "Why do you need lines 263-265?  Or did you mean to have lines 264-265 check the value of the field in system_profile, not network_metrics_provider.  Right now they\u0027re identical to lines 260 and 261.",
+      "revId": "ed515a3a1dda27e38ed0029150ac4fd57bbf5f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7be00d6_dc5fc85b",
+        "filename": "components/metrics/net/network_metrics_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-03T04:56:59Z",
+      "side": 1,
+      "message": "ditto about this block",
+      "revId": "ed515a3a1dda27e38ed0029150ac4fd57bbf5f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
