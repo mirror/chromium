@@ -18,6 +18,7 @@
 #include "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store_utils.h"
 #include "components/offline_pages/core/prefetch/test_prefetch_dispatcher.h"
+#include "components/offline_pages/core/prefetch/test_prefetch_importer.h"
 #include "sql/connection.h"
 #include "sql/statement.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -42,12 +43,14 @@ class ImportCompletedTaskTest : public testing::Test {
   PrefetchStore* store() { return store_test_util_.store(); }
   TestPrefetchDispatcher* dispatcher() { return &dispatcher_; }
   PrefetchStoreTestUtil* store_util() { return &store_test_util_; }
+  TestPrefetchImporter* importer() { return &test_importer_; }
 
  private:
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
   TestPrefetchDispatcher dispatcher_;
   PrefetchStoreTestUtil store_test_util_;
+  TestPrefetchImporter test_importer_;
 };
 
 ImportCompletedTaskTest::ImportCompletedTaskTest()
@@ -85,13 +88,15 @@ void ImportCompletedTaskTest::PumpLoop() {
 TEST_F(ImportCompletedTaskTest, StoreFailure) {
   store_util()->SimulateInitializationError();
 
-  ImportCompletedTask task(dispatcher(), store(), kTestOfflineID, true);
+  ImportCompletedTask task(dispatcher(), store(), importer(), kTestOfflineID,
+                           true);
   task.Run();
   PumpLoop();
 }
 
 TEST_F(ImportCompletedTaskTest, ImportSuccess) {
-  ImportCompletedTask task(dispatcher(), store(), kTestOfflineID, true);
+  ImportCompletedTask task(dispatcher(), store(), importer(), kTestOfflineID,
+                           true);
   task.Run();
   PumpLoop();
 
@@ -102,7 +107,8 @@ TEST_F(ImportCompletedTaskTest, ImportSuccess) {
 }
 
 TEST_F(ImportCompletedTaskTest, ImportError) {
-  ImportCompletedTask task(dispatcher(), store(), kTestOfflineID, false);
+  ImportCompletedTask task(dispatcher(), store(), importer(), kTestOfflineID,
+                           false);
   task.Run();
   PumpLoop();
 
@@ -113,7 +119,8 @@ TEST_F(ImportCompletedTaskTest, ImportError) {
 }
 
 TEST_F(ImportCompletedTaskTest, NoUpdateOnMismatchedImportSuccess) {
-  ImportCompletedTask task(dispatcher(), store(), kTestOfflineID2, true);
+  ImportCompletedTask task(dispatcher(), store(), importer(), kTestOfflineID2,
+                           true);
   task.Run();
   PumpLoop();
 
@@ -128,7 +135,8 @@ TEST_F(ImportCompletedTaskTest, NoUpdateOnMismatchedImportSuccess) {
 }
 
 TEST_F(ImportCompletedTaskTest, NoUpdateOnMismatchedImportError) {
-  ImportCompletedTask task(dispatcher(), store(), kTestOfflineID2, false);
+  ImportCompletedTask task(dispatcher(), store(), importer(), kTestOfflineID2,
+                           false);
   task.Run();
   PumpLoop();
 

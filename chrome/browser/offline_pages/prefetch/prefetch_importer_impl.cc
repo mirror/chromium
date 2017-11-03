@@ -113,6 +113,8 @@ void PrefetchImporterImpl::ImportArchive(const PrefetchArchiveInfo& archive) {
   offline_page.original_url = original_url;
   offline_page.title = archive.title;
 
+  outstanding_import_offline_ids_.emplace(archive.offline_id);
+
   // Moves the file from download directory to offline archive directory. The
   // file move operation should be done on background thread.
   background_task_runner_->PostTask(
@@ -123,11 +125,19 @@ void PrefetchImporterImpl::ImportArchive(const PrefetchArchiveInfo& archive) {
                             weak_ptr_factory_.GetWeakPtr(), offline_page)));
 }
 
+void PrefetchImporterImpl::MarkImportCompleted(int64_t offline_id) {
+  outstanding_import_offline_ids_.erase(offline_id);
+}
+
+std::set<int64_t> PrefetchImporterImpl::GetOutstandingImports() const {
+  return outstanding_import_offline_ids_;
+}
+
 void PrefetchImporterImpl::OnMoveFileDone(const OfflinePageItem& offline_page,
                                           bool success) {
   if (!success) {
     ReportPageImportResult(PageImportResult::FILE_MOVE_ERROR);
-    NotifyImportCompleted(OfflinePageModel::kInvalidOfflineId, false);
+    NotifyArchiveImported(OfflinePageModel::kInvalidOfflineId, false);
     return;
   }
 
@@ -143,7 +153,7 @@ void PrefetchImporterImpl::OnMoveFileDone(const OfflinePageItem& offline_page,
 void PrefetchImporterImpl::OnPageAdded(AddPageResult result,
                                        int64_t offline_id) {
   ReportPageImportResult(FromAddPageResult(result));
-  NotifyImportCompleted(offline_id, result == AddPageResult::SUCCESS);
+  NotifyArchiveImported(offline_id, result == AddPageResult::SUCCESS);
 }
 
 }  // namespace offline_pages

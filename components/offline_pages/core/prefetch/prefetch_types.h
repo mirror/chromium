@@ -170,6 +170,7 @@ enum class PrefetchItemErrorCode {
   STALE_AT_RECEIVED_GCM = 800,
   STALE_AT_RECEIVED_BUNDLE = 900,
   STALE_AT_DOWNLOADING = 1000,
+  // Deprecated.
   STALE_AT_IMPORTING = 1050,
   STALE_AT_UNKNOWN = 1100,
   // Exceeded maximum retries for get operation request.
@@ -180,8 +181,11 @@ enum class PrefetchItemErrorCode {
   DOWNLOAD_MAX_ATTEMPTS_REACHED = 1400,
   // Clock was set back too far in time.
   MAXIMUM_CLOCK_BACKWARD_SKEW_EXCEEDED = 1500,
+  // The archive importing was lost because we did not receive the import
+  // completed event, probably due to that Chrome was killed before that.
+  IMPORT_LOST = 1600,
   // Note: Must always have the same value as the last actual entry.
-  MAX = MAXIMUM_CLOCK_BACKWARD_SKEW_EXCEEDED
+  MAX = IMPORT_LOST
 };
 
 // Callback invoked upon completion of a prefetch request.
