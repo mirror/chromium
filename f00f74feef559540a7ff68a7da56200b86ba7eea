@@ -46,6 +46,30 @@
       "revId": "f00f74feef559540a7ff68a7da56200b86ba7eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fbbfb21_7fcc2c89",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-03T23:16:15Z",
+      "side": 1,
+      "message": "Indeed, there is AreTouchscreenTargetDisplaysValid(). If that returns false you should install an observer to track when they become available.",
+      "parentUuid": "1fcf3258_aa9a0cd1",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "f00f74feef559540a7ff68a7da56200b86ba7eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
