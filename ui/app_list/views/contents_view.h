@@ -34,6 +34,7 @@ class AppsGridView;
 class CustomLauncherPageView;
 class PaginationModel;
 class SearchBoxView;
+class SearchResultAnswerCardView;
 class SearchResultListView;
 class SearchResultPageView;
 class SearchResultTileItemListView;
@@ -100,6 +101,9 @@ class APP_LIST_EXPORT ContentsView : public views::View,
   CustomLauncherPageView* custom_page_view() const { return custom_page_view_; }
   SearchResultPageView* search_results_page_view() const {
     return search_results_page_view_;
+  }
+  SearchResultAnswerCardView* search_result_answer_card_view_for_test() const {
+    return search_result_answer_card_view_;
   }
   SearchResultTileItemListView* search_result_tile_item_list_view_for_test()
       const {
@@ -200,6 +204,7 @@ class APP_LIST_EXPORT ContentsView : public views::View,
   // Sub-views of the ContentsView. All owned by the views hierarchy.
   AppsContainerView* apps_container_view_ = nullptr;
   SearchResultPageView* search_results_page_view_ = nullptr;
+  SearchResultAnswerCardView* search_result_answer_card_view_ = nullptr;
   SearchResultTileItemListView* search_result_tile_item_list_view_ = nullptr;
   SearchResultListView* search_result_list_view_ = nullptr;
   StartPageView* start_page_view_ = nullptr;

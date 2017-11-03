@@ -225,7 +225,14 @@ views::View* SearchResultAnswerCardView::GetSelectedView() const {
 }
 
 views::View* SearchResultAnswerCardView::SetFirstResultSelected(bool selected) {
+  if (num_results() <= 0)
+    return nullptr;
   search_answer_container_view_->SetSelected(selected);
+  return search_answer_container_view_;
+}
+
+views::View* SearchResultAnswerCardView::GetSearchAnswerContainerViewForTest()
+    const {
   return search_answer_container_view_;
 }
 
