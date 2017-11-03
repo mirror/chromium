@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7bc63721_c19c2267",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T03:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd6d1f8a_2f2c5b7a",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "170e99d7_e1c2010b",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "18d87dbe_bab690f3",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T03:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "170e99d7_e1c2010b",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ffb7402_8bdeac14",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-03T02:17:25Z",
       "side": 1,
       "message": "You don\u0027t need a converter for wave files, they can have any sample rate and any channel layout. So just write as pcm_f32le with whatever sample rate and channel layout you get.",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5996f88c_76460ff6",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T03:47:52Z",
+      "side": 1,
+      "message": "I\u0027ll try to remove the converter. That said, your comment about f32le puzzles me. Should the input be float32? I\u0027ve only seen int16. (I do like int16 since it\u0027s way more popular, but if we\u0027re losing bits and/or clipping somewhere... I don\u0027t believe it\u0027s here in the converter; if it\u0027s happening I think it\u0027s before this?)",
+      "parentUuid": "4ffb7402_8bdeac14",
       "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "369a66d2_e3f4d676",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T03:47:52Z",
+      "side": 1,
+      "message": "I think there\u0027re two issues here.\n\n1.) Whether these AudioEncoders are a \"public\" API where they might be used by other non-AudioTrackRecorder classes. If so, then I fully agree that they should be split out and have their own unittests. It seems to me though that these are private to AudioTrackRecorder, since they take AudioTrackEncoder enums and callbacks. In this case, I don\u0027t agree that they should have their own unittests; it\u0027s better to test the actual public API (AudioTrackRecorder)--and that\u0027s actually what we\u0027re already doing here. (go/tott-358)\n\n2.) Splitting out to another file. I do agree that this .cc is kinda big. Is there a way in chrome to split these classes out to another file but limit their visibility/access so that they\u0027re still private to AudioTrackEncoder?\n\nI dunno Chrome conventions, though, so lemmie know. Happy to make any/all changes.",
+      "parentUuid": "1334bfd9_5ba3df55",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a367a515_ac8b755d",
         "filename": "content/renderer/media_recorder/audio_track_recorder.h",
         "patchSetId": 6
@@ -101,6 +173,24 @@
       "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc086ec2_2d9621fb",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1250332
+      },
+      "writtenOn": "2017-11-03T03:47:52Z",
+      "side": 1,
+      "message": "Fixed anyway!",
+      "parentUuid": "a367a515_ac8b755d",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
