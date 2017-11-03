@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9bc1696_b4a2ab8d",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T22:06:57Z",
+      "side": 1,
+      "message": "return std::make_unique\u003cDiscoveryNetworkMonitor\u003e(strategy);",
+      "revId": "c502aaf3ffba47f7f2f10a0b4759757b0b7cba08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37dbb9a_bc5c30dd",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T22:06:57Z",
+      "side": 1,
+      "message": "Also create discovery_network_monitor_ here to be consistent with the other test?",
+      "revId": "c502aaf3ffba47f7f2f10a0b4759757b0b7cba08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
