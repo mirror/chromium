@@ -15,6 +15,7 @@
 #include "bindings/core/v8/V8GCController.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/dom/Document.h"
+#include "core/dom/MessagePort.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/testing/DummyPageHolder.h"
@@ -181,11 +182,14 @@ class AudioWorkletGlobalScopeTest : public ::testing::Test {
     EXPECT_TRUE(definition->ConstructorLocal(isolate)->IsFunction());
     EXPECT_TRUE(definition->ProcessLocal(isolate)->IsFunction());
 
-    AudioWorkletProcessor* processor =
-        global_scope->CreateInstance("testProcessor", kTestingSampleRate);
+    MessagePortChannel dummy_port_channel;
+    AudioWorkletProcessor* processor = global_scope->CreateProcessor(
+        "testProcessor", kTestingSampleRate, dummy_port_channel);
     EXPECT_TRUE(processor);
     EXPECT_EQ(processor->Name(), "testProcessor");
-    EXPECT_TRUE(processor->InstanceLocal(isolate)->IsObject());
+    v8::Local<v8::Value> processor_value =
+        ToV8(processor, script_state->GetContext()->Global(), isolate);
+    EXPECT_TRUE(processor_value->IsObject());
 
     wait_event->Signal();
   }
@@ -273,8 +277,9 @@ class AudioWorkletGlobalScopeTest : public ::testing::Test {
         )JS";
     ASSERT_TRUE(EvaluateScriptModule(global_scope, source_code));
 
-    AudioWorkletProcessor* processor =
-        global_scope->CreateInstance("testProcessor", kTestingSampleRate);
+    MessagePortChannel dummy_port_channel;
+    AudioWorkletProcessor* processor = global_scope->CreateProcessor(
+        "testProcessor", kTestingSampleRate, dummy_port_channel);
     EXPECT_TRUE(processor);
 
     Vector<AudioBus*> input_buses;
