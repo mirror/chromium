@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5e916ef8_7920f476",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-03T23:24:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand why we\u0027d expect the presence of a device to stop the table from becoming non-visible, but I added a device here to address the concern.",
+      "parentUuid": "8a65e8a9_f3ea464c",
+      "range": {
+        "startLine": 205,
+        "startChar": 37,
+        "endLine": 205,
+        "endChar": 58
+      },
+      "revId": "22d448ab5d4ee4476dd8ad6d88765ad2f97cb99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1084843c_2e878afa",
         "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
         "patchSetId": 3

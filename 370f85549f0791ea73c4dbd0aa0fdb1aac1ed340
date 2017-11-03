@@ -220,6 +220,30 @@
     },
     {
       "key": {
+        "uuid": "0dbae16e_96ca4a4e",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-03T23:24:16Z",
+      "side": 0,
+      "message": "I disagree. I would be really surprised if these controls came back null, and if they did a bunch of the tests would crash, so we wouldn\u0027t miss it coverage-wise.",
+      "parentUuid": "5be1d272_ebbdd81a",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81ff5f56_d0f990cd",
         "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
         "patchSetId": 3

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7cffde6_59138896",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-03T23:24:16Z",
+      "side": 1,
+      "message": "Done. I went with adapter_off_help_link()",
+      "parentUuid": "c5a5021d_59bc2fd0",
+      "range": {
+        "startLine": 60,
+        "startChar": 22,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b172fe5d_69a10c4a",
         "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9650736_a1b5e09f",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-03T23:24:16Z",
+      "side": 1,
+      "message": "Done. Changed the test slightly so that we remove the paired device, so just unpaired devices are left. I also changed the \"GetDeviceNameAtRow\" calls to have Paired/Unpaired versions, to match the AddPaired/UnPairedDevice calls.",
+      "parentUuid": "b172fe5d_69a10c4a",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 65
+      },
+      "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fcf40f2c_ccff8013",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-03T23:24:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "693f9771_31c0b84f",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 80
+      },
+      "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e2d2b79_b6d2fba8",
         "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3ef946_8a308a18",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-03T23:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e2d2b79_b6d2fba8",
+      "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "77ab69ab_c2a8b3bb",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-03T23:24:16Z",
+      "side": 1,
+      "message": "Done. I did it that way to remove the test friend from device_chooser_content_view.h, but I put it back.",
+      "parentUuid": "3331d2b3_533f3b73",
+      "range": {
+        "startLine": 246,
+        "startChar": 2,
+        "endLine": 246,
+        "endChar": 20
+      },
+      "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fa3a445_e16871d5",
         "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
         "patchSetId": 4
@@ -131,6 +245,30 @@
       "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6de946_2ed0e421",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-03T23:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fa3a445_e16871d5",
+      "range": {
+        "startLine": 251,
+        "startChar": 2,
+        "endLine": 251,
+        "endChar": 21
+      },
+      "revId": "d4aba2d31f40c2f08eed0b743cf91071fa2e4880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
