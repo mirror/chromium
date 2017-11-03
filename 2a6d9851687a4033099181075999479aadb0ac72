@@ -16,6 +16,24 @@
       "revId": "2a6d9851687a4033099181075999479aadb0ac72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7338d21c_b2b2e2c8",
+        "filename": "components/printing/service/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-11-03T17:47:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59b19465_45c3bbdb",
+      "revId": "2a6d9851687a4033099181075999479aadb0ac72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
