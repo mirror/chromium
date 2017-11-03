@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d196a349_26bc9389",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-webvtt-non-snap-to-lines.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-03T13:29:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a73838b7_0c29cdee",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "658f210ee0e3f28faf8afee1933f4cf00855bc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d87dc94_d3386abe",
         "filename": "third_party/WebKit/LayoutTests/media/track/track-webvtt-non-snap-to-lines.html",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "658f210ee0e3f28faf8afee1933f4cf00855bc0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe74757_76561c2b",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-webvtt-non-snap-to-lines.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-03T13:29:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d87dc94_d3386abe",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "658f210ee0e3f28faf8afee1933f4cf00855bc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
