@@ -112,4 +112,8 @@ void ContainerFullWidthBehavior::SetCanonicalBounds(
   container->SetBounds(new_keyboard_bounds);
 }
 
+bool ContainerFullWidthBehavior::TextBlurHidesKeyboard() const {
+  return !KeyboardController::GetInstance()->keyboard_locked();
+}
+
 }  //  namespace keyboard
