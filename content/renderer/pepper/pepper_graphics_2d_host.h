@@ -30,6 +30,7 @@ struct SyncToken;
 }
 
 namespace viz {
+class ContextProvider;
 class SharedBitmap;
 class SingleReleaseCallback;
 class TextureMailbox;
@@ -170,10 +171,23 @@ class CONTENT_EXPORT PepperGraphics2DHost
                                      gfx::Rect* op_rect,
                                      gfx::Point* delta);
 
-  void ReleaseCallback(std::unique_ptr<viz::SharedBitmap> bitmap,
-                       const gfx::Size& bitmap_size,
-                       const gpu::SyncToken& sync_token,
-                       bool lost_resource);
+  // Callback when compositor is done with a software resource given to it.
+  void ReleaseSoftwareCallback(std::unique_ptr<viz::SharedBitmap> bitmap,
+                               const gfx::Size& bitmap_size,
+                               const gpu::SyncToken& sync_token,
+                               bool lost_resource);
+  // Callback when compositor is done with a gpu resource given to it. Static
+  // for speed. Just kidding, it's so this can clean up the texture if the host
+  // has been destroyed.
+  static void ReleaseTextureCallback(
+      base::WeakPtr<PepperGraphics2DHost> host,
+      scoped_refptr<viz::ContextProvider> context,
+      uint32_t id,
+      const gpu::SyncToken& sync_token,
+      bool lost);
+  // Save the texture |id| so that it can be reused in future frames, saving
+  // mallocs and frees.
+  void RecycleTexture(uint32_t id);
 
   RendererPpapiHost* renderer_ppapi_host_;
 
@@ -212,6 +226,19 @@ class CONTENT_EXPORT PepperGraphics2DHost
   bool is_running_in_process_;
 
   bool texture_mailbox_modified_;
+
+  // Local cache of the compositing mode. This is sticky, once true it stays
+  // that way.
+  bool is_gpu_compositing_disabled_ = false;
+  // The shared main thread context provider, used to upload 2d pepper frames
+  // if the compositor is expecting gpu content.
+  scoped_refptr<viz::ContextProvider> main_thread_context_;
+  // The ids of textures holding the copied contents of software frames to
+  // give to the compositor via GL.
+  std::vector<uint32_t> texture_copies_;
+  // Texture ids move from |texture_copies_| to here once they are available for
+  // reuse.
+  std::vector<uint32_t> recycled_texture_copies_;
 
   // This is a bitmap that was recently released by the compositor and may be
   // used to transfer bytes to the compositor again.
