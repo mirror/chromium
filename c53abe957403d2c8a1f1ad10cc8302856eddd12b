@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af35a451_7fa40520",
+        "filename": "media/mojo/services/video_decode_stats_db.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T02:08:21Z",
+      "side": 1,
+      "message": "You claim DO NOT here, but happily buffer pending calls. Should there be DCHECKs instead?",
+      "revId": "c53abe957403d2c8a1f1ad10cc8302856eddd12b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf91bbe4_634d5b03",
+        "filename": "media/mojo/services/video_decode_stats_db_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T02:08:21Z",
+      "side": 1,
+      "message": "You should see if there are ways to add real tests for this. For things around user privacy it\u0027s probably best to have a full integration test that clearing actually works.",
+      "revId": "c53abe957403d2c8a1f1ad10cc8302856eddd12b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
