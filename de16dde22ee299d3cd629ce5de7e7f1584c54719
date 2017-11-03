@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a58db50_59f4379d",
+        "filename": "third_party/WebKit/LayoutTests/fast/table/intrinsic-padding-when-cell-child-doesnt-layout.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-11-03T20:42:36Z",
+      "side": 1,
+      "message": "I\u0027m probably just ignorant here, but why do we need the click? What state does it change?",
+      "revId": "de16dde22ee299d3cd629ce5de7e7f1584c54719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
