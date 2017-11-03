@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3891c620_3628479b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-03T01:38:59Z",
+      "side": 1,
+      "message": "Added SetDefaultWallpaper back after offline discussion.",
+      "parentUuid": "07695223_63b6ef57",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9211b18a_f2cc7c40",
         "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
         "patchSetId": 9
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "2b87b546_0d431748",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-03T01:38:59Z",
+      "side": 1,
+      "message": "Changed back.",
+      "parentUuid": "9646d90b_6e78fc80",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ba34502_52b746ad",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 9
@@ -83,6 +119,24 @@
       "writtenOn": "2017-10-30T17:43:57Z",
       "side": 1,
       "message": "I suggest not change the order of the previous function in this CL to avoid the possible regression... In previous function, it updates cache first and then set wallpaper. It does look inconsistent with SetCustomWallpaper(). If you think it\u0027s safe, you can ignore this comment. But if you\u0027re not very sure, I would suggest do it in a following small CL.",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d68556_fe2a0199",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-03T01:38:59Z",
+      "side": 1,
+      "message": "I\u0027m basically sure it won\u0027t introduce regression... so I\u0027ll keep the change.",
+      "parentUuid": "6ba34502_52b746ad",
       "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "394d9421_8d8ef62a",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-03T01:38:59Z",
+      "side": 1,
+      "message": "Unfortunately it\u0027s not very easy to integrate into ShowUserWallpaper(). ShowUserWallpaper() first finds the user from UserManager, but user_manager::SignInAccountId() returns an empty pointer. \n\nIf we adjust the call order in ShowUserWallpaper(), it still can\u0027t be done cleanly and may introduce regression, because the subsequent calls rely on the user pointer to be non-null.\n\nAlthough we can directly compare if (account_id \u003d\u003d user_manager::SignInAccountId()) and special handle this case, it looks a little hacky...\n\nSo I think it\u0027s fine to have a ShowSigninWallpaper() function.. since the concept of SigninWallpaper has existed in the code base for a long time.\n\nShowSigninWallpaper() will not take any parameter, and user_manager::SignInAccountId() becomes an implementation detail, in order to make it clear that all users should have the same sign in wallpaper.",
+      "parentUuid": "1704d058_3f2497d6",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be4bf23c_83ba0010",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 9
@@ -135,6 +207,24 @@
       "writtenOn": "2017-10-30T17:43:57Z",
       "side": 1,
       "message": "why this change?",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306d8b26_1cd3d6b4",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-03T01:38:59Z",
+      "side": 1,
+      "message": "This part has been separated to another CL.",
+      "parentUuid": "be4bf23c_83ba0010",
       "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -176,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "b819c87f_0edc28a7",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-03T01:38:59Z",
+      "side": 1,
+      "message": "Renamed to RemoveWallpaper, which replaces RemoveUserWallpaperInfo. It only removes the wallpaper and related info but do not set new ones.",
+      "parentUuid": "95b80d5c_6ddaaee7",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "065bae2e_e1c6f388",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
         "patchSetId": 9
@@ -190,6 +298,24 @@
       "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c82e47_a5f8b3ed",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-03T01:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "065bae2e_e1c6f388",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
