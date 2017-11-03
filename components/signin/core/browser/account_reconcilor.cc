@@ -100,7 +100,7 @@ AccountReconcilor::AccountReconcilor(
     DCHECK(prefs);
     if (!signin::IsDiceEnabledForProfile(prefs))
       VLOG(1) << "Profile is migrating to Dice";
-    signin::MigrateProfileToDice(client->GetPrefs());
+    signin::MigrateProfileToDice(prefs);
     DCHECK(signin::IsDiceEnabledForProfile(prefs));
   }
   UMA_HISTOGRAM_BOOLEAN("Signin.DiceEnabledForProfile",
