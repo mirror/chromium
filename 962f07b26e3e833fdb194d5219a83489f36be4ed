@@ -69,6 +69,30 @@
       "revId": "962f07b26e3e833fdb194d5219a83489f36be4ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ed924e_a46ded49",
+        "filename": "media/remoting/proto_utils_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-03T23:07:17Z",
+      "side": 1,
+      "message": "OIC, the two memsets\u0027s plus memcmp *do* detect whether the ConvertProtoToPipelineStatistics is not setting a field. So, PS9 lgtm as-is.",
+      "parentUuid": "0d3c4673_c9e53950",
+      "range": {
+        "startLine": 160,
+        "startChar": 5,
+        "endLine": 160,
+        "endChar": 9
+      },
+      "revId": "962f07b26e3e833fdb194d5219a83489f36be4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
