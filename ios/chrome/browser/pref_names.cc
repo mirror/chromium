@@ -104,6 +104,11 @@ const char kSavingBrowserHistoryDisabled[] = "history.saving_disabled";
 // Boolean that is true when Suggest support is enabled.
 const char kSearchSuggestEnabled[] = "search.suggest_enabled";
 
+// The JSON representation of the user's language profile. Used as an input to
+// the user language model (i.e. for determining which languages a user
+// understands).
+const char kUserLanguageProfile[] = "language_profile";
+
 // A boolean pref set to true if prediction of network actions is allowed.
 // Actions include prerendering of web pages.
 // NOTE: The "dns_prefetching.enabled" value is used so that historical user
