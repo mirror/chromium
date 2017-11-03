@@ -67,6 +67,7 @@ TEST_F(ManifestUnitTest, Extension) {
       new base::DictionaryValue());
   manifest_value->SetString(keys::kName, "extension");
   manifest_value->SetString(keys::kVersion, "1");
+  manifest_value->SetString(keys::kAction, "{}");
   // Only supported in manifest_version=1.
   manifest_value->SetString(keys::kBackgroundPageLegacy, "bg.html");
   manifest_value->SetString("unknown_key", "foo");
@@ -84,6 +85,11 @@ TEST_F(ManifestUnitTest, Extension) {
   std::string value;
   EXPECT_TRUE(manifest->GetString(keys::kBackgroundPageLegacy, &value));
   EXPECT_EQ("bg.html", value);
+
+  // The known key 'action' should be accessible.
+  value.clear();
+  EXPECT_TRUE(manifest->GetString(keys::kAction, &value));
+  EXPECT_EQ("{}", value);
 
   // The unknown key 'unknown_key' should be accesible.
   value.clear();
