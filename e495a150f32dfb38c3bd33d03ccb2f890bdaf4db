@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bd5e2c8_53afb6f9",
+        "filename": "chrome/browser/resources/print_preview/new/app.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T22:54:13Z",
+      "side": 1,
+      "message": "Let\u0027s move this to print_preview_new.html, similar to other places that have this in the top-most HTML file, see [1] and [2] for example.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/extensions.html?type\u003dcs\u0026q\u003dtext_defaults_md.css\u0026l\u003d33.\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings.html?q\u003dsettings.html\u0026dr\u0026l\u003d23",
+      "revId": "e495a150f32dfb38c3bd33d03ccb2f890bdaf4db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97641d32_273ea412",
+        "filename": "chrome/browser/resources/print_preview/new/compiled_resources2.gyp",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T22:54:13Z",
+      "side": 1,
+      "message": "Indentation off.",
+      "revId": "e495a150f32dfb38c3bd33d03ccb2f890bdaf4db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51beb3d_7dd72a05",
+        "filename": "chrome/browser/resources/print_preview/new/header.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T22:54:13Z",
+      "side": 1,
+      "message": "Nit for a future CL:\nLet\u0027s use only \u0027rem\u0027 units, instead of \u0027em\u0027. They are easier to work with because they only depend on the top level HTML elements, whereas \u0027em\u0027 depend on the entire parent chain (compounding effect).\n\nSee similar conversion at https://chromium-review.googlesource.com/c/chromium/src/+/734321.",
+      "revId": "e495a150f32dfb38c3bd33d03ccb2f890bdaf4db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
