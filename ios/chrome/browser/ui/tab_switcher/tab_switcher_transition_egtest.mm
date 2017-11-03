@@ -6,16 +6,23 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
+#include "base/strings/stringprintf.h"
+#include "base/strings/sys_string_conversions.h"
 #import "ios/chrome/app/main_controller.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/ui/tab_switcher/tab_switcher_egtest_util.h"
+#import "ios/chrome/browser/ui/tab_switcher/tab_switcher_panel_cell.h"
 #import "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
 #import "ios/chrome/test/app/tab_test_util.h"
+#import "ios/chrome/test/earl_grey/chrome_earl_grey.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
+#import "ios/web/public/test/http_server/html_response_provider.h"
+#import "ios/web/public/test/http_server/http_server.h"
+#include "ios/web/public/test/http_server/http_server_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -64,6 +71,56 @@ void ShowTabViewController() {
 
   [[EarlGrey selectElementWithMatcher:matcher] performAction:grey_tap()];
 }
+
+// Selects and focuses the tab with the given |title|.
+void SelectTab(NSString* title) {
+  if (IsIPadIdiom()) {
+    // The UILabel containing the tab's title is not tappable, but its parent
+    // TabSwitcherLocalSessionCell is.
+    [[EarlGrey
+        selectElementWithMatcher:grey_allOf(
+                                     grey_kindOfClass(
+                                         [TabSwitcherLocalSessionCell class]),
+                                     grey_descendant(grey_text(title)), nil)]
+        performAction:grey_tap()];
+  } else {
+    // On phone, tapping on the title UILabel will select the tab.
+    [[EarlGrey
+        selectElementWithMatcher:grey_allOf(grey_accessibilityLabel(title),
+                                            grey_accessibilityTrait(
+                                                UIAccessibilityTraitStaticText),
+                                            nil)] performAction:grey_tap()];
+  }
+}
+
+// A response provider that sets the URL's query as the title of the webpage.
+// This is useful for giving each tab a unique title.
+class TitleResponseProvider : public HtmlResponseProvider {
+ public:
+  TitleResponseProvider() = default;
+  ~TitleResponseProvider() override = default;
+
+  // Returns the URL for a test page with the given |title|.
+  static GURL MakeUrl(NSString* title) {
+    return web::test::HttpServer::MakeUrl("http://test/?" +
+                                          base::SysNSStringToUTF8(title));
+  }
+
+  bool CanHandleRequest(const Request& request) override {
+    return request.url.has_query();
+  }
+
+  void GetResponseHeadersAndBody(
+      const Request& request,
+      scoped_refptr<net::HttpResponseHeaders>* headers,
+      std::string* response_body) override {
+    *headers =
+        web::ResponseProvider::GetResponseHeaders("text/html", net::HTTP_OK);
+    *response_body = base::StringPrintf(
+        "<!DOCTYPE html><html><title>%s</title><body></body></html>",
+        request.url.query().c_str());
+  }
+};
 
 }  // namespace
 
@@ -130,11 +187,14 @@ void ShowTabViewController() {
   chrome_test_util::CloseAllTabsInCurrentMode();
 }
 
+// Tests exiting the switcher by tapping the switcher button.
 - (void)testLeaveSwitcherWithSwitcherButton {
   ShowTabSwitcher();
   ShowTabViewController();
 }
 
+// Tests exiting the switcher by tapping the new tab button or selecting new tab
+// from the menu (on phone only).
 - (void)testLeaveSwitcherByOpeningNewNormalTab {
   // Enter the switcher and open a new tab using the new tab button.
   ShowTabSwitcher();
@@ -156,6 +216,8 @@ void ShowTabViewController() {
   }
 }
 
+// Tests exiting the switcher by tapping the new incognito tab button or
+// selecting new incognito tab from the menu (on phone only).
 - (void)testLeaveSwitcherByOpeningNewIncognitoTab {
   // Set up by creating a new incognito tab and closing all normal tabs.
   [ChromeEarlGreyUI openNewIncognitoTab];
@@ -183,6 +245,7 @@ void ShowTabViewController() {
   }
 }
 
+// Tests exiting the switcher by opening a new tab in the other tab model.
 - (void)testLeaveSwitcherByOpeningTabInOtherMode {
   // Go from normal mode to incognito mode.
   ShowTabSwitcher();
@@ -207,6 +270,108 @@ void ShowTabViewController() {
   } else {
     [ChromeEarlGreyUI openNewTab];
   }
+}
+
+// Tests exiting the tab switcher by selecting a normal tab.
+- (void)testLeaveSwitcherBySelectingNormalTab {
+  NSString* tab1_title = @"NormalTab1";
+  NSString* tab2_title = @"NormalTab2";
+  NSString* tab3_title = @"NormalTab3";
+  web::test::AddResponseProvider(base::MakeUnique<TitleResponseProvider>());
+
+  // Create a few tabs and give them all unique titles.
+  [ChromeEarlGrey loadURL:TitleResponseProvider::MakeUrl(tab1_title)];
+  [ChromeEarlGreyUI openNewTab];
+  [ChromeEarlGrey loadURL:TitleResponseProvider::MakeUrl(tab2_title)];
+  [ChromeEarlGreyUI openNewTab];
+  [ChromeEarlGrey loadURL:TitleResponseProvider::MakeUrl(tab3_title)];
+
+  ShowTabSwitcher();
+  SelectTab(tab1_title);
+
+  ShowTabSwitcher();
+  SelectTab(tab3_title);
+}
+
+// Tests exiting the tab switcher by selecting an incognito tab.
+- (void)testLeaveSwitcherBySelectingIncognitoTab {
+  NSString* tab1_title = @"IncognitoTab1";
+  NSString* tab2_title = @"IncognitoTab2";
+  NSString* tab3_title = @"IncognitoTab3";
+  web::test::AddResponseProvider(base::MakeUnique<TitleResponseProvider>());
+
+  // Create a few tabs and give them all unique titles.
+  [ChromeEarlGreyUI openNewIncognitoTab];
+  [ChromeEarlGrey loadURL:TitleResponseProvider::MakeUrl(tab1_title)];
+  [ChromeEarlGreyUI openNewIncognitoTab];
+  [ChromeEarlGrey loadURL:TitleResponseProvider::MakeUrl(tab2_title)];
+  [ChromeEarlGreyUI openNewIncognitoTab];
+  [ChromeEarlGrey loadURL:TitleResponseProvider::MakeUrl(tab3_title)];
+  [GetNormalTabModel() closeAllTabs];
+
+  ShowTabSwitcher();
+  SelectTab(tab1_title);
+
+  ShowTabSwitcher();
+  SelectTab(tab3_title);
+}
+
+// Tests exiting the tab switcher by selecting a tab in the other tab model.
+- (void)testLeaveSwitcherBySelectingTabInOtherMode {
+  NSString* normal_title = @"NormalTab";
+  NSString* incognito_title = @"IncognitoTab";
+  web::test::AddResponseProvider(base::MakeUnique<TitleResponseProvider>());
+
+  // Create a few tabs and give them all unique titles.
+  [ChromeEarlGrey loadURL:TitleResponseProvider::MakeUrl(normal_title)];
+  [ChromeEarlGreyUI openNewIncognitoTab];
+  [ChromeEarlGrey loadURL:TitleResponseProvider::MakeUrl(incognito_title)];
+
+  ShowTabSwitcher();
+  if (IsIPadIdiom()) {
+    // On tablet, switch to the normal panel and select the one tab that is
+    // there.
+    [[EarlGrey selectElementWithMatcher:TabletTabSwitcherOpenTabsPanelButton()]
+        performAction:grey_tap()];
+  } else {
+    // On phone, get to the normal card stack by swiping right on the current
+    // incognito card.
+    [[EarlGrey
+        selectElementWithMatcher:grey_allOf(
+                                     grey_accessibilityLabel(incognito_title),
+                                     grey_accessibilityTrait(
+                                         UIAccessibilityTraitStaticText),
+                                     nil)]
+        performAction:grey_swipeFastInDirection(kGREYDirectionRight)];
+  }
+  SelectTab(normal_title);
+
+  ShowTabSwitcher();
+  if (IsIPadIdiom()) {
+    // On tablet, switch to the incognito panel and select the one tab that is
+    // there.
+    [[EarlGrey
+        selectElementWithMatcher:TabletTabSwitcherIncognitoTabsPanelButton()]
+        performAction:grey_tap()];
+  } else {
+    // On phone, get to the incognito card stack by swiping left on the current
+    // normal card.
+    [[EarlGrey
+        selectElementWithMatcher:grey_allOf(
+                                     grey_accessibilityLabel(normal_title),
+                                     grey_accessibilityTrait(
+                                         UIAccessibilityTraitStaticText),
+                                     nil)]
+        performAction:grey_swipeFastInDirection(kGREYDirectionLeft)];
+  }
+  SelectTab(incognito_title);
+}
+
+// Tests switching back and forth between the normal and incognito BVCs.
+- (void)testSwappingBVCModesWithoutEnteringSwitcher {
+  // Opening a new tab from the menu will force a change in BVC.
+  [ChromeEarlGreyUI openNewIncognitoTab];
+  [ChromeEarlGreyUI openNewTab];
 }
 
 @end
