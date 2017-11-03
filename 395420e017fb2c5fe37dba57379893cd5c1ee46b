@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "239378c4_ce1ba8f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/ImpressionFilter.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-03T11:40:47Z",
+      "side": 1,
+      "message": "Sure, done.",
+      "parentUuid": "80e590f4_6a89092b",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "395420e017fb2c5fe37dba57379893cd5c1ee46b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad32f7e0_a952381b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 15

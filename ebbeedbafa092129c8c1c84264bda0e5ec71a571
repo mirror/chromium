@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "b34839ba_50fce91a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/ImpressionFilter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-03T11:40:47Z",
+      "side": 1,
+      "message": "Sorry, what would be the advantage over a single method that returns early?",
+      "parentUuid": "773137e9_811bedbe",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "ebbeedbafa092129c8c1c84264bda0e5ec71a571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8890f4d_c87e4dd5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
         "patchSetId": 14
