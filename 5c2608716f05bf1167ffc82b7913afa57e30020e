@@ -70,6 +70,30 @@
       "revId": "5c2608716f05bf1167ffc82b7913afa57e30020e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9e2846_5ff6ebd8",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T02:46:05Z",
+      "side": 1,
+      "message": "I was able to find an alternate fix that doesn\u0027t involve rewriting the world since we\u0027ll need to merge this to M63. I think the ideal fix would have us track where in the restart we actually are, but this is a large change.",
+      "parentUuid": "311e767a_e6a2d987",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 80
+      },
+      "revId": "5c2608716f05bf1167ffc82b7913afa57e30020e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
