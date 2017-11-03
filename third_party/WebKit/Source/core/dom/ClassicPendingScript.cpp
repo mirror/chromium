@@ -431,6 +431,9 @@ bool ClassicPendingScript::WasCanceled() const {
 }
 
 KURL ClassicPendingScript::UrlForClassicScript() const {
+  if (!is_external_ || !GetResource())
+    return NullURL();
+
   return GetResource()->Url();
 }
 
