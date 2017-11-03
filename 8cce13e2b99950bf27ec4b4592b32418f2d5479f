@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e354db8e_5c8e4ea9",
+        "filename": "chrome/browser/media/router/presentation_navigation_policy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T19:30:25Z",
+      "side": 1,
+      "message": "Ctor not needed?",
+      "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6825b0_cffe235b",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T19:30:25Z",
+      "side": 1,
+      "message": "nit: Browser::CreateParams params(profile, true);",
+      "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f541db_ff43fae4",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T19:30:25Z",
+      "side": 1,
+      "message": "Actually it is not clear to me why this needs to happen in ProfileDestroyer rather than having PresentationReceiverWindow take ownership of the Profile it is based on, which this is the model OffscreenTab uses, IIUC. I was hoping we could use a similar model here, but I don\u0027t fully understand the relationship between the Browser and the Profile in this case.\n\nAs a side note, if you could document the sequence of how things get cleaned up (e.g., Starting from when Terminate() is called) that would clear things up a lot for me.",
+      "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f594d8_fc70404b",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T19:30:25Z",
+      "side": 1,
+      "message": "We\u0027d only want to delete if it\u0027s actually in g_receiver_profiles?",
+      "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b84c68_0dab9d96",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T19:30:25Z",
+      "side": 1,
+      "message": "base::ContainsValue(g_receiver_profiles.Get(), profile)",
+      "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edbfdf4f_dae69942",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T19:30:25Z",
+      "side": 1,
+      "message": "GetOffTheRecordProfile() contains side effects and shouldn\u0027t be used in a DCHECK. Maybe just remove it if we can guarantee the profile is a one-off OTR profile (e.g. factory method that takes original profile + making ctor private)",
+      "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
