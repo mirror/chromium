@@ -4,10 +4,14 @@
 
 #include "chrome/browser/feature_engagement/feature_tracker.h"
 
+#include "base/files/file_util.h"
 #include "base/metrics/field_trial_params.h"
+#include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/time/time.h"
 #include "chrome/browser/feature_engagement/tracker_factory.h"
+#include "chrome/common/chrome_constants.h"
+#include "chrome/common/chrome_paths.h"
 #include "components/feature_engagement/public/event_constants.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/tracker.h"
@@ -51,7 +55,7 @@ bool FeatureTracker::ShouldShowPromo() {
         session_duration_updater_.GetCumulativeElapsedSessionTime());
   }
 
-  return GetTracker()->ShouldTriggerHelpUI(*feature_);
+  return IsNewUser() ? GetTracker()->ShouldTriggerHelpUI(*feature_) : false;
 }
 
 Tracker* FeatureTracker::GetTracker() const {
@@ -92,6 +96,36 @@ bool FeatureTracker::HasEnoughSessionTimeElapsed(
     base::TimeDelta total_session_time) {
   return total_session_time.InSeconds() >=
          GetSessionTimeRequiredToShow().InSeconds();
+}
+
+bool FeatureTracker::IsNewUser() {
+  // Get the user data directory path of the first sentinel.
+  base::FilePath user_data_dir;
+  bool isFirstRunSentinelPresent =
+      !PathService::Get(chrome::DIR_USER_DATA, &user_data_dir) ||
+      base::PathExists(user_data_dir.Append(chrome::kFirstRunSentinel));
+
+  // Gets the creation time of the first sentinel.
+  base::Time firstRunSentinelCreationTime = base::Time();
+  if (isFirstRunSentinelPresent) {
+    base::File::Info info;
+    if (base::GetFileInfo(user_data_dir.Append(chrome::kFirstRunSentinel),
+                          &info))
+      firstRunSentinelCreationTime = info.creation_time;
+  }
+
+  // Gets the date the experiment was released.
+  std::string field_trial_string_value =
+      base::GetFieldTrialParamValueByFeature(*feature_, "date_released");
+  double field_trial_double_value;
+  base::StringToDouble(field_trial_string_value, &field_trial_double_value);
+  double twenty_four_hours_in_seconds = 86400;
+
+  // We consider a new user only if the user-data-dir has been created no more
+  // than 24 hours before the date released.
+  return (field_trial_double_value -
+          firstRunSentinelCreationTime.ToDoubleT()) <=
+         twenty_four_hours_in_seconds;
 }
 
 }  // namespace feature_engagement
