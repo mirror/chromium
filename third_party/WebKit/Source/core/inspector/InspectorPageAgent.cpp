@@ -769,7 +769,9 @@ void InspectorPageAgent::searchInResource(
 }
 
 Response InspectorPageAgent::setDocumentContent(const String& frame_id,
-                                                const String& html) {
+                                                const String& html,
+                                                Maybe<String> url,
+                                                String* loader_id) {
   LocalFrame* frame =
       IdentifiersFactory::FrameById(inspected_frames_, frame_id);
   if (!frame)
@@ -778,7 +780,18 @@ Response InspectorPageAgent::setDocumentContent(const String& frame_id,
   Document* document = frame->GetDocument();
   if (!document)
     return Response::Error("No Document instance to set HTML for");
-  document->SetContent(html);
+
+  KURL new_url = url.isJust() ? KURL(url.fromMaybe("")) : document->Url();
+  if (!new_url.IsValid())
+    return Response::Error("URL is not valid");
+
+  FrameLoadRequest request(nullptr, ResourceRequest(new_url),
+                           SubstituteData(SharedBuffer::Create(
+                               html.Utf8().data(), html.Utf8().length())));
+
+  frame->Loader().Load(request);
+  DocumentLoader* loader = frame->Loader().GetProvisionalDocumentLoader();
+  *loader_id = IdentifiersFactory::LoaderId(loader);
   return Response::OK();
 }
 

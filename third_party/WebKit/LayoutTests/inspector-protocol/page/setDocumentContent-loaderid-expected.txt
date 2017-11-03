@@ -1,0 +1,3 @@
+Tests that Page.setDocumentContent returns new loaderId for every call.
+loaders are different: true
+
