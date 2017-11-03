@@ -99,6 +99,8 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   void UnlockMouse() override;
   bool IsInert() const override;
   bool IsHidden() const override;
+  bool IsThrottled() const override;
+  bool IsSubtreeThrottled() const override;
 #if defined(USE_AURA)
   void EmbedRendererWindowTreeClientInParent(
       ui::mojom::WindowTreeClientPtr window_tree_client) override;
@@ -126,6 +128,7 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   void OnUpdateViewportIntersection(const gfx::Rect& viewport_intersection);
   void OnVisibilityChanged(bool visible);
   void OnSetIsInert(bool);
+  void OnUpdateRenderThrottlingStatus(bool, bool);
   void OnSatisfySequence(const viz::SurfaceSequence& sequence);
   void OnRequireSequence(const viz::SurfaceId& id,
                          const viz::SurfaceSequence& sequence);
@@ -141,6 +144,9 @@ class CONTENT_EXPORT CrossProcessFrameConnector
 
   gfx::Rect child_frame_rect_;
   bool is_inert_ = false;
+
+  bool is_throttled_ = false;
+  bool subtree_throttled_ = false;
 
   // Visibility state of the corresponding frame owner element in parent process
   // which is set through CSS.
