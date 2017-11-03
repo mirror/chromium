@@ -27,6 +27,7 @@ Polymer({
 
   /** @override */
   attached: function() {
+    console.log("change_password_page attached");
     this.browserProxy_ = settings.ChangePasswordBrowserProxyImpl.getInstance();
     this.browserProxy_.onChangePasswordPageShown();
     this.addWebUIListener(
@@ -47,5 +48,6 @@ Polymer({
    */
   onDismiss_: function() {
     this.fire('change-password-dismissed');
+    console.log("fire change-password-dismissed");
   }
 });

@@ -121,7 +121,16 @@ Polymer({
 
     this.addEventListener('change-password-dismissed', e => {
       this.showChangePassword = false;
+      console.log("showChangePassword assigned to false");
     });
+
+    if (settings.ChangePasswordBrowserProxyImpl) {
+      console.log("basic page call: change password initialize");
+      settings.ChangePasswordBrowserProxyImpl.getInstance().initializeChangePasswordHandler();
+      cr.addWebUIListener('change-password-on-show', e=> {
+        this.showChangePassword = true;
+      });
+    }
 
     if (settings.AndroidAppsBrowserProxyImpl) {
       cr.addWebUIListener(
