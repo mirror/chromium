@@ -4,10 +4,11 @@
 
 module service_manager.mojom;
 
+import "services/service_manager/public/interfaces/connector.mojom";
 import "services/service_manager/public/interfaces/service.mojom";
 
 // Implemented by a package containing multiple services identified by
 // unique names.
 interface ServiceFactory {
-  CreateService(Service& service, string name);
+  CreateService(Service& service, Identity identity);
 };

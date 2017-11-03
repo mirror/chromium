@@ -24,7 +24,7 @@ class UtilityServiceFactory : public ServiceFactory {
 
   // ServiceFactory overrides:
   void CreateService(service_manager::mojom::ServiceRequest request,
-                     const std::string& name) override;
+                     const service_manager::Identity& identity) override;
   void RegisterServices(ServiceMap* services) override;
   void OnServiceQuit() override;
 

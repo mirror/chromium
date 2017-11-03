@@ -56,8 +56,8 @@ class PdfServiceTestClient : public service_manager::test::ServiceTestClient,
 
   // service_manager::mojom::ServiceFactory
   void CreateService(service_manager::mojom::ServiceRequest request,
-                     const std::string& name) override {
-    if (!name.compare(mojom::kServiceName)) {
+                     const service_manager::Identity& identity) override {
+    if (!identity.name().compare(mojom::kServiceName)) {
       service_context_ = std::make_unique<service_manager::ServiceContext>(
           std::make_unique<PdfCompositorTestService>("pdf_compositor_unittest"),
           std::move(request));

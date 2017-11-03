@@ -210,11 +210,11 @@ class ConnectTestService : public Service,
 
   // mojom::ServiceFactory:
   void CreateService(mojom::ServiceRequest request,
-                     const std::string& name) override {
-    if (name == "connect_test_a") {
+                     const service_manager::Identity& identity) override {
+    if (identity.name() == "connect_test_a") {
       provided_services_.emplace_back(
           base::MakeUnique<ProvidedService>("A", std::move(request)));
-    } else if (name == "connect_test_b") {
+    } else if (identity.name() == "connect_test_b") {
       provided_services_.emplace_back(
           base::MakeUnique<ProvidedService>("B", std::move(request)));
     }
