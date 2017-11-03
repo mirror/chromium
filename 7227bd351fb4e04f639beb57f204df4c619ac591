@@ -22,6 +22,30 @@
       "revId": "7227bd351fb4e04f639beb57f204df4c619ac591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbafa20b_1030362a",
+        "filename": "components/bookmarks/browser/bookmark_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-03T09:11:47Z",
+      "side": 1,
+      "message": "There\u0027s a distinction between:\na) We don\u0027t yet have favicon data and hence may or may not be empty (LOADING state).\nb) We do know there\u0027s no favicon for the bookmark (LOADED_FAVICON state).\n\nNotifying observers on that transition makes sense and is needed for the purpose of this patch, where sync_bookmarks:: BookmarkChangeProcessor() takes care of sync-ing this lack-of-favicon state.\n\nDoes that answer your question?",
+      "parentUuid": "0854376e_b73d0d54",
+      "range": {
+        "startLine": 1030,
+        "startChar": 3,
+        "endLine": 1031,
+        "endChar": 24
+      },
+      "revId": "7227bd351fb4e04f639beb57f204df4c619ac591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
