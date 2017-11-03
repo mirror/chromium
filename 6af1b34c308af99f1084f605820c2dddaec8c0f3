@@ -69,6 +69,24 @@
       "revId": "6af1b34c308af99f1084f605820c2dddaec8c0f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94de833_38f2a19a",
+        "filename": "components/wallpaper/wallpaper_resizer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-03T23:27:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "21092b92_083ba747",
+      "revId": "6af1b34c308af99f1084f605820c2dddaec8c0f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
