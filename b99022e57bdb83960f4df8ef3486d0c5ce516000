@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07c1e023_997d9b2d",
+        "filename": "headless/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-03T07:48:50Z",
+      "side": 1,
+      "message": "I would expect to have a dependency on components/os_crypto here too:\n\n  if (is_linux \u0026\u0026 !is_chromeos) {\n    deps +\u003d [ \"//components/os_crypto\" ]\n  }",
+      "revId": "b99022e57bdb83960f4df8ef3486d0c5ce516000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c71f38d_a4d4928c",
+        "filename": "headless/lib/browser/headless_url_request_context_getter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-03T07:48:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this test be the same as below and check OS_CHROMEOS too?\n\n  #if defined(OS_LINUX) \u0026\u0026 !defined(OS_CHROMEOS)\n\nBTW, I tend to prefer put all conditional #includes after all the non-conditional one (but this may be a personal preference)",
+      "revId": "b99022e57bdb83960f4df8ef3486d0c5ce516000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
