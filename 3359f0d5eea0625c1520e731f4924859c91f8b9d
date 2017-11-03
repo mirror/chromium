@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b24370d9_e45c21ee",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-03T14:37:59Z",
+      "side": 1,
+      "message": "This seems wrong. Why do you need a special id here? Can\u0027t the client update it\u0027s ids appropriately if necessary?",
+      "range": {
+        "startLine": 138,
+        "startChar": 53,
+        "endLine": 138,
+        "endChar": 67
+      },
+      "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26212c1_e8004310",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-03T14:37:59Z",
+      "side": 1,
+      "message": "If the expectation is the WindowManager replies back with this id, why bother passing it to the windowmanager at all? Instead add it to waiting_for_top_level_window_info_ and then pull it from there in OnWindowManagerCreatedTopLevelWindow.",
+      "range": {
+        "startLine": 1576,
+        "startChar": 29,
+        "endLine": 1576,
+        "endChar": 56
+      },
+      "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
