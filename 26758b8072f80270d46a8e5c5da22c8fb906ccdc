@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "fd130490_b4bfd2a3",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-03T22:09:15Z",
+      "side": 1,
+      "message": "Per our offline discussion: Yes we are allowed to call it multiple times.",
+      "parentUuid": "65233481_b784662d",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0012321c_13dab325",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
         "patchSetId": 1
