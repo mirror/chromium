@@ -108,8 +108,6 @@ source_set("audio") {
   sources = [
     "audio_decoder_for_mixer.cc",
     "audio_decoder_for_mixer.h",
-    "cast_audio_json.cc",
-    "cast_audio_json.h",
     "filter_group.cc",
     "filter_group.h",
     "media_codec_support_cast_audio.cc",
@@ -130,13 +128,12 @@ source_set("audio") {
     "stream_mixer_input_impl.h",
     "system_volume_control.h",
     "volume_control.cc",
-    "volume_map.cc",
-    "volume_map.h",
   ]
 
   deps = [
     ":audio_features",
     ":null",
+    ":volume_map",
     "//base",
     "//chromecast/base",
     "//chromecast/media/base",
@@ -145,6 +142,20 @@ source_set("audio") {
     "//chromecast/public/media",
     "//media",
     "//media:shared_memory_support",
+  ]
+}
+
+source_set("volume_map") {
+  sources = [
+    "cast_audio_json.cc",
+    "cast_audio_json.h",
+    "volume_map.cc",
+    "volume_map.h",
+  ]
+
+  deps = [
+    "//base",
+    "//chromecast/base",
   ]
 }
 
