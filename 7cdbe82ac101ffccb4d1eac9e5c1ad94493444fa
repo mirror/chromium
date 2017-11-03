@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "0262730e_a2b2ab7c",
+        "filename": "chrome/browser/policy/policy_blacklist_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-11-03T00:45:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ca4c303_24ec4b1e",
+      "revId": "7cdbe82ac101ffccb4d1eac9e5c1ad94493444fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2519c2d1_e916a5ce",
         "filename": "components/policy/core/browser/url_blacklist_manager.h",
         "patchSetId": 5
@@ -50,6 +68,24 @@
       "revId": "7cdbe82ac101ffccb4d1eac9e5c1ad94493444fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40568ec4_4f9ca264",
+        "filename": "components/policy/core/browser/url_blacklist_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-11-03T00:45:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2519c2d1_e916a5ce",
+      "revId": "7cdbe82ac101ffccb4d1eac9e5c1ad94493444fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
