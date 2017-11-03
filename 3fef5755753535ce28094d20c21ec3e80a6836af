@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "bb8dfe77_97433386",
+        "filename": "chrome/browser/history/history_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-03T00:41:32Z",
+      "side": 1,
+      "message": "We\u0027ve got a \"DO NOT USE!\" comment on this in the public API. :)  Should this be GetVisibleURL?",
+      "range": {
+        "startLine": 507,
+        "startChar": 66,
+        "endLine": 507,
+        "endChar": 75
+      },
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84edbcbe_52d820fd",
         "filename": "chrome/browser/translate/translate_browsertest.cc",
         "patchSetId": 11
@@ -30,6 +53,29 @@
       "writtenOn": "2017-11-01T22:45:13Z",
       "side": 1,
       "message": "toyoshim@: I\u0027m curious for your thoughts on this expectation change.\n\nAt first glance, it seems to be regressing https://crbug.com/236781, since the translate infobar now sticks around after a client redirect.  However, similar to the history case I mentioned to sky@, this is already broken today for cross-process client redirects (e.g., for a foreign page redirecting to the Chrome Web Store).\n\nThe behavior change is due to my fix in NavigationControllerImpl::RendererDidNavigate (line 864).  Before, we were incorrectly setting did_replace_entry to false for cross-document navigations, including same-process client redirects and location.replace.\n\nAfter pkasting@\u0027s work on on InfoBarDelegate::ShouldExpire in https://codereview.chromium.org/1142153002/ and https://codereview.chromium.org/1215053007, we have code that tries to keep infobars around if did_replace_entry is true (in contrast to what was expected for the translate infobar):\n\nhttps://cs.chromium.org/chromium/src/components/infobars/core/infobar_delegate.cc?type\u003dcs\u0026q\u003dinfobardelegate::shouldexpire\u0026l\u003d67\n\nIt seems that the motivation is that other types of infobars do want to stick around after a client redirect (e.g., the session crashed infobar).  I can see that the translate case is a bit different, but maybe there should be something custom within the translate code to make the infobar expire in that case?\n\n(I was planning to ask pkasting@ about this as well, but he\u0027s OOO for a while.)\n\nMy current change makes the same-process case consistent with the cross-process case, such that ShouldExpire always returns false when the navigation replaces the current entry.  That changes the expectation of these tests.  Should we proceed with that and fix infobars to dismiss on cross-document redirects separately, or is there a way to make them dismiss here in this CL?",
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17e246d_707498fa",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-03T00:41:32Z",
+      "side": 1,
+      "message": "Just curious - this isn\u0027t simulating a location.replace or client redirect, so why does it still end up changing the navigation type?  Because navigating to the same URL sets ReplacesCurrentHistoryItem(), so that also matches the new condition for setting did_create_new_entry?",
+      "range": {
+        "startLine": 1009,
+        "startChar": 4,
+        "endLine": 1009,
+        "endChar": 40
+      },
       "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +96,24 @@
       "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f86e7b_174a327b",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-03T00:41:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "69f514db_641b5a91",
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -81,6 +145,75 @@
       "writtenOn": "2017-11-01T22:45:13Z",
       "side": 1,
       "message": "I think this is what the test intended, given line 2756 and the test\u0027s name.",
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a5f5f4_7e0fc740",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2746,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-03T00:41:32Z",
+      "side": 1,
+      "message": "In the SendDidCommitProvisionalLoad params.did_create_new_entry assignment, the new case explicitly skips the was_within_same_document case (line 5145).  Since location.replace should be an inert commit, shouldn\u0027t did_create_new_entry be false here and in ClientRedirectAfterInPageNavigation on line 2796 below, to be consistent with what SendDidCommitProvisionalLoad would assign in this case?",
+      "range": {
+        "startLine": 2746,
+        "startChar": 0,
+        "endLine": 2746,
+        "endChar": 37
+      },
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de1f5aa_96360cac",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 5136,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-03T00:41:32Z",
+      "side": 1,
+      "message": "Is it ok to not check that the commit is inert below?  I suppose this shouldn\u0027t ever affect the other commit types (kWebBackForwardCommit, kWebInitialCommitInChildFrame)?",
+      "range": {
+        "startLine": 5136,
+        "startChar": 16,
+        "endLine": 5136,
+        "endChar": 23
+      },
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b6a7de_be817d0e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 5145,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-03T00:41:32Z",
+      "side": 1,
+      "message": "So this means that this won\u0027t apply to a location.replace(\"#foo\"), but we don\u0027t care about that case as it doesn\u0027t replace all subframes, right?",
+      "range": {
+        "startLine": 5145,
+        "startChar": 7,
+        "endLine": 5145,
+        "endChar": 40
+      },
       "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
