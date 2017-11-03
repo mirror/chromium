@@ -1580,6 +1580,7 @@ split_static_library("browser") {
     "//components/dom_distiller/content/browser",
     "//components/domain_reliability",
     "//components/download/content/factory",
+    "//components/download/in_progress_metadata",
     "//components/download/public",
     "//components/error_page/common",
     "//components/favicon/content",
