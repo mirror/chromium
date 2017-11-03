@@ -153,6 +153,10 @@ void HungPagesTableModel::TabDestroyed(WebContentsObserverImpl* tab) {
   // WARNING: we've likely been deleted.
 }
 
+void HungPagesTableModel::TabUpdated(WebContentsObserverImpl* tab) {
+  delegate_->TabUpdated();
+}
+
 HungPagesTableModel::WebContentsObserverImpl::WebContentsObserverImpl(
     HungPagesTableModel* model, WebContents* tab)
     : content::WebContentsObserver(tab),
@@ -162,6 +166,19 @@ HungPagesTableModel::WebContentsObserverImpl::WebContentsObserverImpl(
 void HungPagesTableModel::WebContentsObserverImpl::RenderProcessGone(
     base::TerminationStatus status) {
   model_->TabDestroyed(this);
+}
+
+void HungPagesTableModel::WebContentsObserverImpl::RenderViewHostChanged(
+    content::RenderViewHost* old_host,
+    content::RenderViewHost* new_host) {
+  // If |new_host| is currently responsive dismiss this dialog, otherwise
+  // let the model know the tab has been updated. Updating the tab will
+  // dismiss the current dialog but restart the hung renderer timeout.
+  if (!new_host->GetWidget()->IsCurrentlyUnresponsive()) {
+    model_->TabDestroyed(this);
+    return;
+  }
+  model_->TabUpdated(this);
 }
 
 void HungPagesTableModel::WebContentsObserverImpl::WebContentsDestroyed() {
@@ -399,6 +416,11 @@ bool HungRendererDialogView::ShouldUseCustomFrame() const {
 
 ///////////////////////////////////////////////////////////////////////////////
 // HungRendererDialogView, HungPagesTableModel::Delegate overrides:
+
+void HungRendererDialogView::TabUpdated() {
+  // Simulate clicking Wait.
+  Accept();
+}
 
 void HungRendererDialogView::TabDestroyed() {
   GetWidget()->Close();
