@@ -61,15 +61,17 @@ FileReaderLoader::FileReaderLoader(ReadType read_type,
 
 FileReaderLoader::~FileReaderLoader() {
   Cleanup();
-  UnadjustReportedMemoryUsageToV8();
-  if (!url_for_reading_.IsEmpty()) {
-    BlobRegistry::RevokePublicBlobURL(url_for_reading_);
-  }
+  ClearData();
 }
 
 void FileReaderLoader::Start(ExecutionContext* execution_context,
                              scoped_refptr<BlobDataHandle> blob_data) {
   DCHECK(execution_context);
+
+  // Clean up from the last run.
+  if (!url_for_reading_.IsEmpty())
+    ClearData();
+
   // The blob is read by routing through the request handling layer given a
   // temporary public url.
   url_for_reading_ =
@@ -123,13 +125,21 @@ void FileReaderLoader::Cleanup() {
   }
 
   // If we get any error, we do not need to keep a buffer around.
-  if (error_code_) {
-    raw_data_.reset();
-    string_result_ = "";
-    is_raw_data_converted_ = true;
-    decoder_.reset();
-    array_buffer_result_ = nullptr;
-    UnadjustReportedMemoryUsageToV8();
+  if (error_code_)
+    ClearData();
+}
+
+void FileReaderLoader::ClearData() {
+  raw_data_.reset();
+  string_result_ = "";
+  is_raw_data_converted_ = true;
+  decoder_.reset();
+  array_buffer_result_ = nullptr;
+  UnadjustReportedMemoryUsageToV8();
+
+  if (!url_for_reading_.IsEmpty()) {
+    BlobRegistry::RevokePublicBlobURL(url_for_reading_);
+    url_for_reading_ = KURL();
   }
 }
 
