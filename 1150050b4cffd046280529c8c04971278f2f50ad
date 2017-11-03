@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "a7c0c333_5a820b6e",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-03T01:22:54Z",
+      "side": 1,
+      "message": "Renamed to OnAvatarButtonPressed().",
+      "parentUuid": "91b3a229_431d55d5",
+      "revId": "1150050b4cffd046280529c8c04971278f2f50ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74f21333_7dbe0c2f",
         "filename": "chrome/browser/ui/views/profiles/avatar_button.h",
         "patchSetId": 6
