@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3e98984a_63297047",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-03T22:29:15Z",
+      "side": 1,
+      "message": "The data is now left compressed for encrypted requests, and the\"content encoding: gzip\" header is now only added for unencrypted requests. Will submit a CL for the server side changes to decompress after decrypting.",
+      "parentUuid": "e62c19dc_11d9202b",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 45
+      },
+      "revId": "ba7286139672fc723bfcb6f75192b606ad1d54c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3cd1060_3e2334f4",
         "filename": "components/metrics/net/net_metrics_log_uploader.cc",
         "patchSetId": 7
@@ -141,6 +165,30 @@
       "revId": "ba7286139672fc723bfcb6f75192b606ad1d54c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf160ad3_10ffc18b",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-03T22:29:15Z",
+      "side": 1,
+      "message": "Updated the code, now the retry logic happens in reporting_service through the existing retry logic.",
+      "parentUuid": "0fddbc69_df51b217",
+      "range": {
+        "startLine": 253,
+        "startChar": 2,
+        "endLine": 257,
+        "endChar": 63
+      },
+      "revId": "ba7286139672fc723bfcb6f75192b606ad1d54c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
