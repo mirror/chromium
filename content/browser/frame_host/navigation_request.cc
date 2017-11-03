@@ -44,6 +44,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/stream_handle.h"
 #include "content/public/common/appcache_info.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
@@ -724,7 +725,6 @@ void NavigationRequest::OnRequestRedirected(
 void NavigationRequest::OnResponseStarted(
     const scoped_refptr<ResourceResponse>& response,
     std::unique_ptr<StreamHandle> body,
-    mojo::ScopedDataPipeConsumerHandle consumer_handle,
     const SSLStatus& ssl_status,
     std::unique_ptr<NavigationData> navigation_data,
     const GlobalRequestID& request_id,
@@ -801,7 +801,6 @@ void NavigationRequest::OnResponseStarted(
   // Store the response and the StreamHandle until checks have been processed.
   response_ = response;
   body_ = std::move(body);
-  handle_ = std::move(consumer_handle);
   ssl_status_ = ssl_status;
   is_download_ = is_download;
 
@@ -844,6 +843,14 @@ void NavigationRequest::OnResponseStarted(
       base::Closure(),
       base::Bind(&NavigationRequest::OnWillProcessResponseChecksComplete,
                  base::Unretained(this)));
+}
+
+void NavigationRequest::OnStartLoadingResponseBody(
+    mojo::ScopedDataPipeConsumerHandle handle) {
+  DCHECK(!handle_.is_valid());
+  DCHECK(handle.is_valid());
+  handle_ = std::move(handle);
+  CommitNavigation();
 }
 
 void NavigationRequest::OnRequestFailed(
@@ -1167,7 +1174,10 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
     return;
   }
 
-  CommitNavigation();
+  if (!base::FeatureList::IsEnabled(features::kNetworkService) &&
+      !IsNavigationMojoResponseEnabled()) {
+    CommitNavigation();
+  }
 
   // DO NOT ADD CODE after this. The previous call to CommitNavigation caused
   // the destruction of the NavigationRequest.
@@ -1199,6 +1209,7 @@ void NavigationRequest::CommitNavigation() {
 
   TransferNavigationHandleOwnership(render_frame_host);
 
+  DCHECK(body_ || handle_.is_valid());
   render_frame_host->CommitNavigation(
       response_.get(), std::move(body_), std::move(handle_), common_params_,
       request_params_, is_view_source_, std::move(subresource_loader_params_));

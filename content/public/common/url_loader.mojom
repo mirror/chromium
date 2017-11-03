@@ -36,6 +36,11 @@ interface URLLoader {
   // |FollowRedirect| may be called to load the URL indicated by the redirect.
   FollowRedirect();
 
+  // If the associated request has |pause_on_response| set to true,
+  // then upon receiving an URLResponse with a NULL |redirect_url| field,
+  // |ProceedWithResponse| may be called to load the URL.
+  ProceedWithResponse();
+
   // Sets the request priority.
   // |intra_priority_value| is a lesser priority which is used to prioritize
   // requests within a given priority level.
@@ -107,4 +112,3 @@ interface URLLoaderClient {
   // this client after this message arrives.
   OnComplete(URLLoaderStatus completion_status);
 };
-
