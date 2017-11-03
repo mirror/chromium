@@ -631,6 +631,8 @@ void OobeUI::ShowOobeUI(bool show) {
 void OobeUI::ShowSigninScreen(const LoginScreenContext& context,
                               SigninScreenHandlerDelegate* delegate,
                               NativeWindowDelegate* native_window_delegate) {
+  LOG(ERROR) << "!! OobeUI::ShowSigninScreen";
+
   // Check our device mode.
   policy::BrowserPolicyConnectorChromeOS* connector =
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
