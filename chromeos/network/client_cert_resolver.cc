@@ -186,8 +186,8 @@ std::vector<CertAndIssuer> CreateSortedCertAndIssuerList(
     CERTCertificate* cert = it->get();
     base::Time not_after;
     if (!net::x509_util::GetValidityTimes(cert, nullptr, &not_after) ||
-        now > not_after || !HasPrivateKey(cert) ||
-        !CertLoader::IsCertificateHardwareBacked(cert)) {
+        now > not_after || !CertLoader::IsCertificateHardwareBacked(cert) ||
+        !HasPrivateKey(cert)) {
       continue;
     }
     std::string pem_encoded_issuer = GetPEMEncodedIssuer(cert);
