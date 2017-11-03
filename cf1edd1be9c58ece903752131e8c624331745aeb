@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac4b067e_31c503cc",
+        "filename": "chrome/browser/metrics/out_of_memory_reporter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-03T14:29:04Z",
+      "side": 1,
+      "message": "Ack, good catch! Done. Also added a test for this case.",
+      "parentUuid": "2fa77c7a_a17826a3",
+      "revId": "cf1edd1be9c58ece903752131e8c624331745aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f47bea0e_16869ebe",
         "filename": "chrome/browser/metrics/out_of_memory_reporter.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "cf1edd1be9c58ece903752131e8c624331745aeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4606481_42f9ad31",
+        "filename": "chrome/browser/metrics/out_of_memory_reporter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-03T14:29:04Z",
+      "side": 1,
+      "message": "Hm, I think if the tab is visible it should be OOM protected, but let me ifdef it just in case. I\u0027m fairly sure we only care about OOM protected crashes here.",
+      "parentUuid": "f47bea0e_16869ebe",
+      "revId": "cf1edd1be9c58ece903752131e8c624331745aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "220bd011_8ddb7d02",
+        "filename": "chrome/browser/metrics/out_of_memory_reporter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-03T14:29:04Z",
+      "side": 1,
+      "message": "Yes, I\u0027m pretty sure this is the case. Let me add a comment explaining why. I modified the unit tests so this code path is properly tested, with the correct asynchronous guarantees.",
+      "parentUuid": "1aca0b23_9df4e996",
+      "range": {
+        "startLine": 86,
+        "startChar": 33,
+        "endLine": 86,
+        "endChar": 59
+      },
+      "revId": "cf1edd1be9c58ece903752131e8c624331745aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57c8c560_4ccb5224",
         "filename": "chrome/browser/metrics/out_of_memory_reporter.h",
         "patchSetId": 10
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-02T01:50:01Z",
       "side": 1,
       "message": "IIUC, right now an observer has to register to all the oom detectors to listen to oom signals. I am not sure how a client would observer since the handles to the reporter are owned by the tab_helper.\nCan we make a global list of observers instead of having a list per each WebContents.\nMaybe the structure could be a singleton OOMReporter and multiple WebContentObserver(s).\n\nclass SingletonOOMReporter {\n  Add/Remove Observer;\n\n  class OOMDetector :: WebContentObserver, WebContentsUserData {\n    OnOomDetected() {\n      reporter_-\u003ereportOOM(url, ukm_id_);\n    }\n    ukm_id_\n    renderer_id_;\n  }\n  base::ObserverList\u003cObserver\u003e\n};\n\nIdeally we should have the SingletonOOMReporter be the CrashDumpManager::Observer. But, it looks like we need the rph id to source_id mapping. For this we need to insert and remove entries into the map at each navigation. So, I am not sure which is better here.",
+      "revId": "cf1edd1be9c58ece903752131e8c624331745aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68855206_6c66979b",
+        "filename": "chrome/browser/metrics/out_of_memory_reporter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-03T14:29:04Z",
+      "side": 1,
+      "message": "Yeah, the CrashDumpManager::Observer has to listen to all crashes from all processes. I originally wanted the UI thread observer to be a singleton, but I thought it seems OK to have an observer per tab since usually (afaik) users don\u0027t use a lot of tabs on mobile.\n\nIn terms of subsequent observers, my idea was to just have them observe from this class using the idiom:\nOutOfMemoryReporter::FromWebContents(contents)-\u003eAddObserver(this);\n\nSince this class is a WebContentsUserData.",
+      "parentUuid": "57c8c560_4ccb5224",
       "revId": "cf1edd1be9c58ece903752131e8c624331745aeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
