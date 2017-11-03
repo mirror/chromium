@@ -22,6 +22,30 @@
       "revId": "2b4c2e2781f72269d033236231bdee2aebdecb95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809e893e_e7ae13ce",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-11-03T14:12:56Z",
+      "side": 1,
+      "message": "I accidentally switched the RunSoon usage here to the other copy in service_worker_common.cc, but this version is subtly different.  This version has a null check, the other doesn\u0027t.  Is this null check redundant due to the use of a reference?  Or should the other version also have a null check?",
+      "parentUuid": "9cb86278_e18d1cf6",
+      "range": {
+        "startLine": 73,
+        "startChar": 11,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "2b4c2e2781f72269d033236231bdee2aebdecb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
