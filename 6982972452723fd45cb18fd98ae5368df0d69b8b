@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1454beb_90e5e40a",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-03T22:23:42Z",
+      "side": 1,
+      "message": "nits, let arrange _UpdatePerfData, _UpdateBenchmarkShardingMap \u0026 _CheckNoUncommittedFiles in a contiguous block \u0026 document that _CheckNoUncommittedFiles will ensure that uncommited updated files will block PRESUBMIT",
+      "revId": "6982972452723fd45cb18fd98ae5368df0d69b8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
