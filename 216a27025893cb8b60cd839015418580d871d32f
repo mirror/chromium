@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79c2d8d3_56bda7fd",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T11:54:45Z",
+      "side": 1,
+      "message": "Since this is only called once, can we inline the function body here? It would make things more clear, for example creating the Dispatcher in WorkerContextStarted() may make more sense then in SetRegistration().",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3127265a_42d2e29b",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T11:54:45Z",
+      "side": 1,
+      "message": "Adopt and Create are vague names at the scope of ServiceWorkerDispatcher.\n\nCould we instead just expose a function SWDispatcher::thread_safe_sender(), so the caller calls ServiceWorkerHandleReference::Adopt/Create directly?",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ee83c5_a4bc3edc",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T11:54:45Z",
+      "side": 1,
+      "message": "For service worker clients. Tracks mapping...",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a385558_89a03df1",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T11:54:45Z",
+      "side": 1,
+      "message": "Could we instead make the test class a friend?",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47cc8ee9_164609d4",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T11:54:45Z",
+      "side": 1,
+      "message": "ControllerState::registration is internal impl details that we should ideally avoid talking about in the public method comment. Could we say this takes \"the registration that was passed to SetRegistrationForServiceWorkerScope()\"",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad294695_46e1503b",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T11:54:45Z",
+      "side": 1,
+      "message": "We can just say \"For service worker clients.\" at the beginning, like the other members.\n\n// For service worker clients. Returns the registration object described by |info|. Creates a new object if needed, or else returns the existing one.\n\n\"always\" seems unnecessary. Actually I\u0027m not sure if talking about interprocess references is really useful (the caller could just assume it all works since I think mojo ptrs are move-only types), but I guess we could leave it just in case?",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204c8bcc_92926379",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T11:54:45Z",
+      "side": 1,
+      "message": "For service worker clients. Keeps the mapping...",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae95a63_ff6c2f65",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T11:54:45Z",
+      "side": 1,
+      "message": "Just make this class a friend?",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff0614f_74365bbe",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T11:54:45Z",
+      "side": 1,
+      "message": "I think it should be invalid to pass a null context to this ctor, wdyt?",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2b6154_92a3d124",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T11:54:45Z",
+      "side": 1,
+      "message": "no longer need explicit",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
