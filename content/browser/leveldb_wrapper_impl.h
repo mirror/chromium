@@ -26,6 +26,19 @@ class ProcessMemoryDump;
 
 namespace content {
 
+// Pure vitual class given to the delagate to perform operations on the
+// wrapper implementation. Since operations & the delegate can outlive the
+// wrapper, the object passed to the delegate is an internal class instead.
+class LevelDBWrapperControl {
+ public:
+  ~LevelDBWrapperControl();
+
+  virtual bool empty() const = 0;
+  virtual size_t bytes_used() const = 0;
+
+  virtual void ScheduleImmediateCommit() = 0;
+};
+
 // This is a wrapper around a leveldb::mojom::LevelDBDatabase. Multiple
 // interface
 // pointers can be bound to the same object. The wrapper adds a couple of
@@ -43,8 +56,14 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
   using Change =
       std::pair<std::vector<uint8_t>, base::Optional<std::vector<uint8_t>>>;
 
+  // Note: This class can be called after the destruction of the
+  // LevelDBWrapperImpl, so the delegate should never access the
+  // LevelDBWrapperImpl.
   class CONTENT_EXPORT Delegate {
    public:
+    virtual ~Delegate();
+    // This given control is valid for the lifetime of this object.
+    virtual void Initialize(LevelDBWrapperControl* control) = 0;
     virtual void OnNoBindings() = 0;
     virtual std::vector<leveldb::mojom::BatchedOperationPtr>
     PrepareToCommit() = 0;
@@ -65,17 +84,15 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
                      base::TimeDelta default_commit_delay,
                      int max_bytes_per_hour,
                      int max_commits_per_hour,
-                     Delegate* delegate);
+                     std::unique_ptr<Delegate> delegate);
   ~LevelDBWrapperImpl() override;
 
   void Bind(mojom::LevelDBWrapperRequest request);
 
-  bool empty() const { return bytes_used_ == 0; }
-  size_t bytes_used() const { return bytes_used_; }
+  bool empty() const;
+  size_t bytes_used() const;
 
-  bool has_pending_load_tasks() const {
-    return !on_load_complete_tasks_.empty();
-  }
+  bool has_pending_load_tasks() const;
 
   // Commence aggressive flushing. This should be called early during startup,
   // before any localStorage writing. Currently scheduled writes will not be
@@ -116,6 +133,10 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
       GetAllCallback callback) override;
 
  private:
+  // All state is maintained in an inner class so that deletion doesn't drop
+  // db operations.
+  class Worker;
+
   // Used to rate limit commits.
   class RateLimiter {
    public:
@@ -148,32 +169,10 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
   };
 
   void OnConnectionError();
-  void LoadMap(const base::Closure& completion_callback);
-  void OnMapLoaded(leveldb::mojom::DatabaseError status,
-                   std::vector<leveldb::mojom::KeyValuePtr> data);
-  void OnGotMigrationData(std::unique_ptr<ValueMap> data);
   void OnLoadComplete();
-  void CreateCommitBatchIfNeeded();
-  void StartCommitTimer();
-  base::TimeDelta ComputeCommitDelay() const;
-  void CommitChanges();
-  void OnCommitComplete(leveldb::mojom::DatabaseError error);
 
-  std::vector<uint8_t> prefix_;
+  scoped_refptr<Worker> worker_;
   mojo::BindingSet<mojom::LevelDBWrapper> bindings_;
-  mojo::AssociatedInterfacePtrSet<mojom::LevelDBObserver> observers_;
-  Delegate* delegate_;
-  leveldb::mojom::LevelDBDatabase* database_;
-  std::unique_ptr<ValueMap> map_;
-  std::vector<base::Closure> on_load_complete_tasks_;
-  size_t bytes_used_;
-  size_t max_size_;
-  base::TimeTicks start_time_;
-  base::TimeDelta default_commit_delay_;
-  RateLimiter data_rate_limiter_;
-  RateLimiter commit_rate_limiter_;
-  int commit_batches_in_flight_ = 0;
-  std::unique_ptr<CommitBatch> commit_batch_;
   base::WeakPtrFactory<LevelDBWrapperImpl> weak_ptr_factory_;
 
   static bool s_aggressive_flushing_enabled_;

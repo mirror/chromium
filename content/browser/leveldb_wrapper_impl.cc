@@ -5,6 +5,7 @@
 #include "content/browser/leveldb_wrapper_impl.h"
 
 #include "base/bind.h"
+#include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
@@ -13,6 +14,10 @@
 #include "content/public/browser/browser_thread.h"
 
 namespace content {
+
+LevelDBWrapperControl::~LevelDBWrapperControl() {}
+
+LevelDBWrapperImpl::Delegate::~Delegate() {}
 
 void LevelDBWrapperImpl::Delegate::MigrateData(
     base::OnceCallback<void(std::unique_ptr<ValueMap>)> callback) {
@@ -49,16 +54,97 @@ base::TimeDelta LevelDBWrapperImpl::RateLimiter::ComputeDelayNeeded(
 LevelDBWrapperImpl::CommitBatch::CommitBatch() : clear_all_first(false) {}
 LevelDBWrapperImpl::CommitBatch::~CommitBatch() {}
 
-LevelDBWrapperImpl::LevelDBWrapperImpl(
-    leveldb::mojom::LevelDBDatabase* database,
-    const std::string& prefix,
-    size_t max_size,
-    base::TimeDelta default_commit_delay,
-    int max_bytes_per_hour,
-    int max_commits_per_hour,
-    Delegate* delegate)
-    : prefix_(leveldb::StdStringToUint8Vector(prefix)),
-      delegate_(delegate),
+class LevelDBWrapperImpl::Worker
+    : public base::RefCounted<LevelDBWrapperImpl::Worker>,
+      public LevelDBWrapperControl {
+ public:
+  Worker(leveldb::mojom::LevelDBDatabase* database,
+         std::vector<uint8_t> prefix,
+         size_t max_size,
+         base::TimeDelta default_commit_delay,
+         int max_bytes_per_hour,
+         int max_commits_per_hour,
+         std::unique_ptr<Delegate> delegate);
+
+  bool empty() const override { return bytes_used_ == 0; }
+  size_t bytes_used() const override { return bytes_used_; }
+
+  bool has_pending_load_tasks() const {
+    return !on_load_complete_tasks_.empty();
+  }
+
+  LevelDBWrapperImpl::Delegate* delegate() { return delegate_.get(); }
+
+  void ScheduleImmediateCommit() override;
+
+  void PurgeMemory();
+
+  void OnMemoryDump(const std::string& name,
+                    base::trace_event::ProcessMemoryDump* pmd);
+
+  void AddObserver(mojom::LevelDBObserverAssociatedPtrInfo observer);
+  void Put(const std::vector<uint8_t>& key,
+           const std::vector<uint8_t>& value,
+           const base::Optional<std::vector<uint8_t>>& client_old_value,
+           const std::string& source,
+           PutCallback callback);
+  void Delete(const std::vector<uint8_t>& key,
+              const base::Optional<std::vector<uint8_t>>& client_old_value,
+              const std::string& source,
+              DeleteCallback callback);
+  void DeleteAll(const std::string& source, DeleteAllCallback callback);
+  void Get(const std::vector<uint8_t>& key, GetCallback callback);
+  void GetAll(
+      mojom::LevelDBWrapperGetAllCallbackAssociatedPtrInfo complete_callback,
+      GetAllCallback callback);
+
+ private:
+  friend class base::RefCounted<Worker>;
+
+  virtual ~Worker();
+
+  void LoadMap(base::OnceClosure completion_callback);
+  void OnMapLoaded(leveldb::mojom::DatabaseError status,
+                   std::vector<leveldb::mojom::KeyValuePtr> data);
+  void OnGotMigrationData(std::unique_ptr<ValueMap> data);
+  void OnLoadComplete();
+  void CreateCommitBatchIfNeeded();
+  void StartCommitTimer();
+  base::TimeDelta ComputeCommitDelay() const;
+  void CommitChanges();
+  void OnCommitComplete(leveldb::mojom::DatabaseError error);
+
+  std::vector<uint8_t> prefix_;
+  mojo::AssociatedInterfacePtrSet<mojom::LevelDBObserver> observers_;
+  std::unique_ptr<Delegate> delegate_;
+  leveldb::mojom::LevelDBDatabase* database_;
+  std::unique_ptr<ValueMap> map_;
+  std::vector<base::OnceClosure> on_load_complete_tasks_;
+  size_t bytes_used_;
+  size_t max_size_;
+  base::TimeTicks start_time_;
+  base::TimeDelta default_commit_delay_;
+  RateLimiter data_rate_limiter_;
+  RateLimiter commit_rate_limiter_;
+  int commit_batches_in_flight_ = 0;
+  std::unique_ptr<CommitBatch> commit_batch_;
+
+  base::WeakPtr<LevelDBWrapperImpl> wrapper_impl_;
+
+  base::WeakPtrFactory<Worker> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(Worker);
+};
+
+LevelDBWrapperImpl::Worker::Worker(leveldb::mojom::LevelDBDatabase* database,
+                                   std::vector<uint8_t> prefix,
+                                   size_t max_size,
+                                   base::TimeDelta default_commit_delay,
+                                   int max_bytes_per_hour,
+                                   int max_commits_per_hour,
+                                   std::unique_ptr<Delegate> delegate)
+    : prefix_(std::move(prefix)),
+      delegate_(std::move(delegate)),
       database_(database),
       bytes_used_(0),
       max_size_(max_size),
@@ -67,27 +153,17 @@ LevelDBWrapperImpl::LevelDBWrapperImpl(
       data_rate_limiter_(max_bytes_per_hour, base::TimeDelta::FromHours(1)),
       commit_rate_limiter_(max_commits_per_hour, base::TimeDelta::FromHours(1)),
       weak_ptr_factory_(this) {
-  bindings_.set_connection_error_handler(base::Bind(
-      &LevelDBWrapperImpl::OnConnectionError, base::Unretained(this)));
+  delegate_->Initialize(this);
 }
 
-LevelDBWrapperImpl::~LevelDBWrapperImpl() {
+LevelDBWrapperImpl::Worker::~Worker() {
   if (commit_batch_)
     CommitChanges();
 }
 
-void LevelDBWrapperImpl::Bind(mojom::LevelDBWrapperRequest request) {
-  bindings_.AddBinding(this, std::move(request));
-}
-
-void LevelDBWrapperImpl::EnableAggressiveCommitDelay() {
-  s_aggressive_flushing_enabled_ = true;
-}
-
-void LevelDBWrapperImpl::ScheduleImmediateCommit() {
+void LevelDBWrapperImpl::Worker::ScheduleImmediateCommit() {
   if (!on_load_complete_tasks_.empty()) {
-    LoadMap(base::Bind(&LevelDBWrapperImpl::ScheduleImmediateCommit,
-                       base::Unretained(this)));
+    LoadMap(base::BindOnce(&Worker::ScheduleImmediateCommit, this));
     return;
   }
 
@@ -96,7 +172,7 @@ void LevelDBWrapperImpl::ScheduleImmediateCommit() {
   CommitChanges();
 }
 
-void LevelDBWrapperImpl::OnMemoryDump(
+void LevelDBWrapperImpl::Worker::OnMemoryDump(
     const std::string& name,
     base::trace_event::ProcessMemoryDump* pmd) {
   if (!map_)
@@ -129,7 +205,7 @@ void LevelDBWrapperImpl::OnMemoryDump(
     pmd->AddSuballocation(map_mad->guid(), system_allocator_name);
 }
 
-void LevelDBWrapperImpl::PurgeMemory() {
+void LevelDBWrapperImpl::Worker::PurgeMemory() {
   if (!map_ ||          // We're not using any memory.
       commit_batch_ ||  // We leave things alone with changes pending.
       !database_) {  // Don't purge anything if we're not backed by a database.
@@ -139,23 +215,23 @@ void LevelDBWrapperImpl::PurgeMemory() {
   map_.reset();
 }
 
-void LevelDBWrapperImpl::AddObserver(
+void LevelDBWrapperImpl::Worker::AddObserver(
     mojom::LevelDBObserverAssociatedPtrInfo observer) {
   mojom::LevelDBObserverAssociatedPtr observer_ptr;
   observer_ptr.Bind(std::move(observer));
   observers_.AddPtr(std::move(observer_ptr));
 }
 
-void LevelDBWrapperImpl::Put(
+void LevelDBWrapperImpl::Worker::Put(
     const std::vector<uint8_t>& key,
     const std::vector<uint8_t>& value,
     const base::Optional<std::vector<uint8_t>>& client_old_value,
     const std::string& source,
     PutCallback callback) {
   if (!map_) {
-    LoadMap(base::Bind(&LevelDBWrapperImpl::Put, base::Unretained(this), key,
-                       value, client_old_value, source,
-                       base::Passed(&callback)));
+    // Callback grabs a refptr to keep the worker alive during the operation.
+    LoadMap(base::BindOnce(&Worker::Put, this, key, value, client_old_value,
+                           source, base::Passed(&callback)));
     return;
   }
 
@@ -206,14 +282,15 @@ void LevelDBWrapperImpl::Put(
   std::move(callback).Run(true);
 }
 
-void LevelDBWrapperImpl::Delete(
+void LevelDBWrapperImpl::Worker::Delete(
     const std::vector<uint8_t>& key,
     const base::Optional<std::vector<uint8_t>>& client_old_value,
     const std::string& source,
     DeleteCallback callback) {
   if (!map_) {
-    LoadMap(base::Bind(&LevelDBWrapperImpl::Delete, base::Unretained(this), key,
-                       client_old_value, source, base::Passed(&callback)));
+    // Callback grabs a refptr to keep the worker alive during the operation.
+    LoadMap(base::BindOnce(&Worker::Delete, this, key, client_old_value, source,
+                           base::Passed(&callback)));
     return;
   }
 
@@ -238,11 +315,12 @@ void LevelDBWrapperImpl::Delete(
   std::move(callback).Run(true);
 }
 
-void LevelDBWrapperImpl::DeleteAll(const std::string& source,
-                                   DeleteAllCallback callback) {
+void LevelDBWrapperImpl::Worker::DeleteAll(const std::string& source,
+                                           DeleteAllCallback callback) {
   if (!map_) {
-    LoadMap(base::Bind(&LevelDBWrapperImpl::DeleteAll, base::Unretained(this),
-                       source, base::Passed(&callback)));
+    // Callback grabs a refptr to keep the worker alive during the operation.
+    LoadMap(base::BindOnce(&Worker::DeleteAll, this, source,
+                           base::Passed(&callback)));
     return;
   }
 
@@ -266,11 +344,11 @@ void LevelDBWrapperImpl::DeleteAll(const std::string& source,
   std::move(callback).Run(true);
 }
 
-void LevelDBWrapperImpl::Get(const std::vector<uint8_t>& key,
-                             GetCallback callback) {
+void LevelDBWrapperImpl::Worker::Get(const std::vector<uint8_t>& key,
+                                     GetCallback callback) {
   if (!map_) {
-    LoadMap(base::Bind(&LevelDBWrapperImpl::Get, base::Unretained(this), key,
-                       base::Passed(&callback)));
+    // Callback grabs a refptr to keep the worker alive during the operation.
+    LoadMap(base::BindOnce(&Worker::Get, this, key, base::Passed(&callback)));
     return;
   }
 
@@ -282,13 +360,14 @@ void LevelDBWrapperImpl::Get(const std::vector<uint8_t>& key,
   std::move(callback).Run(true, found->second);
 }
 
-void LevelDBWrapperImpl::GetAll(
+void LevelDBWrapperImpl::Worker::GetAll(
     mojom::LevelDBWrapperGetAllCallbackAssociatedPtrInfo complete_callback,
     GetAllCallback callback) {
   if (!map_) {
-    LoadMap(base::Bind(&LevelDBWrapperImpl::GetAll, base::Unretained(this),
-                       base::Passed(&complete_callback),
-                       base::Passed(&callback)));
+    // Callback grabs a refptr to keep the worker alive during the operation.
+    LoadMap(base::BindOnce(&Worker::GetAll, this,
+                           base::Passed(&complete_callback),
+                           base::Passed(&callback)));
     return;
   }
 
@@ -307,19 +386,10 @@ void LevelDBWrapperImpl::GetAll(
   }
 }
 
-void LevelDBWrapperImpl::OnConnectionError() {
-  if (!bindings_.empty())
-    return;
-  // If any tasks are waiting for load to complete, delay calling the
-  // no_bindings_callback_ until all those tasks have completed.
-  if (!on_load_complete_tasks_.empty())
-    return;
-  delegate_->OnNoBindings();
-}
-
-void LevelDBWrapperImpl::LoadMap(const base::Closure& completion_callback) {
+void LevelDBWrapperImpl::Worker::LoadMap(
+    base::OnceClosure completion_callback) {
   DCHECK(!map_);
-  on_load_complete_tasks_.push_back(completion_callback);
+  on_load_complete_tasks_.push_back(std::move(completion_callback));
   if (on_load_complete_tasks_.size() > 1)
     return;
 
@@ -329,20 +399,21 @@ void LevelDBWrapperImpl::LoadMap(const base::Closure& completion_callback) {
     return;
   }
 
-  database_->GetPrefixed(prefix_,
-                         base::BindOnce(&LevelDBWrapperImpl::OnMapLoaded,
-                                        weak_ptr_factory_.GetWeakPtr()));
+  // WeakPtr because the completion callback should hold a reference if it
+  // needs the worker to stay alive.
+  database_->GetPrefixed(
+      prefix_,
+      base::BindOnce(&Worker::OnMapLoaded, weak_ptr_factory_.GetWeakPtr()));
 }
 
-void LevelDBWrapperImpl::OnMapLoaded(
+void LevelDBWrapperImpl::Worker::OnMapLoaded(
     leveldb::mojom::DatabaseError status,
     std::vector<leveldb::mojom::KeyValuePtr> data) {
   DCHECK(!map_);
 
   if (data.empty() && status == leveldb::mojom::DatabaseError::OK) {
-    delegate_->MigrateData(
-        base::BindOnce(&LevelDBWrapperImpl::OnGotMigrationData,
-                       weak_ptr_factory_.GetWeakPtr()));
+    delegate_->MigrateData(base::BindOnce(&Worker::OnGotMigrationData,
+                                          weak_ptr_factory_.GetWeakPtr()));
     return;
   }
 
@@ -389,7 +460,8 @@ void LevelDBWrapperImpl::OnMapLoaded(
   OnLoadComplete();
 }
 
-void LevelDBWrapperImpl::OnGotMigrationData(std::unique_ptr<ValueMap> data) {
+void LevelDBWrapperImpl::Worker::OnGotMigrationData(
+    std::unique_ptr<ValueMap> data) {
   map_ = data ? std::move(data) : std::make_unique<ValueMap>();
   bytes_used_ = 0;
   for (const auto& it : *map_)
@@ -405,30 +477,28 @@ void LevelDBWrapperImpl::OnGotMigrationData(std::unique_ptr<ValueMap> data) {
   OnLoadComplete();
 }
 
-void LevelDBWrapperImpl::OnLoadComplete() {
-  std::vector<base::Closure> tasks;
+void LevelDBWrapperImpl::Worker::OnLoadComplete() {
+  std::vector<base::OnceClosure> tasks;
   on_load_complete_tasks_.swap(tasks);
   for (auto& task : tasks)
-    task.Run();
+    std::move(task).Run();
 
-  // We might need to call the no_bindings_callback_ here if bindings became
-  // empty while waiting for load to complete.
-  if (bindings_.empty())
-    delegate_->OnNoBindings();
+  if (wrapper_impl_)
+    wrapper_impl_->OnLoadComplete();
 }
 
-void LevelDBWrapperImpl::CreateCommitBatchIfNeeded() {
+void LevelDBWrapperImpl::Worker::CreateCommitBatchIfNeeded() {
   if (commit_batch_)
     return;
 
   commit_batch_.reset(new CommitBatch());
   BrowserThread::PostAfterStartupTask(
       FROM_HERE, base::ThreadTaskRunnerHandle::Get(),
-      base::BindOnce(&LevelDBWrapperImpl::StartCommitTimer,
+      base::BindOnce(&Worker::StartCommitTimer,
                      weak_ptr_factory_.GetWeakPtr()));
 }
 
-void LevelDBWrapperImpl::StartCommitTimer() {
+void LevelDBWrapperImpl::Worker::StartCommitTimer() {
   if (!commit_batch_)
     return;
 
@@ -440,12 +510,11 @@ void LevelDBWrapperImpl::StartCommitTimer() {
 
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
-      base::BindOnce(&LevelDBWrapperImpl::CommitChanges,
-                     weak_ptr_factory_.GetWeakPtr()),
+      base::BindOnce(&Worker::CommitChanges, weak_ptr_factory_.GetWeakPtr()),
       ComputeCommitDelay());
 }
 
-base::TimeDelta LevelDBWrapperImpl::ComputeCommitDelay() const {
+base::TimeDelta LevelDBWrapperImpl::Worker::ComputeCommitDelay() const {
   if (s_aggressive_flushing_enabled_)
     return base::TimeDelta::FromSeconds(1);
 
@@ -458,7 +527,7 @@ base::TimeDelta LevelDBWrapperImpl::ComputeCommitDelay() const {
   return delay;
 }
 
-void LevelDBWrapperImpl::CommitChanges() {
+void LevelDBWrapperImpl::Worker::CommitChanges() {
   // Note: commit_batch_ may be null if ScheduleImmediateCommit was called
   // after a delayed commit task was scheduled.
   if (!commit_batch_)
@@ -506,14 +575,125 @@ void LevelDBWrapperImpl::CommitChanges() {
   // TODO(michaeln): Currently there is no guarantee LevelDBDatabaseImp::Write
   // will run during a clean shutdown. We need that to avoid dataloss.
   database_->Write(std::move(operations),
-                   base::BindOnce(&LevelDBWrapperImpl::OnCommitComplete,
+                   base::BindOnce(&Worker::OnCommitComplete,
                                   weak_ptr_factory_.GetWeakPtr()));
 }
 
-void LevelDBWrapperImpl::OnCommitComplete(leveldb::mojom::DatabaseError error) {
+void LevelDBWrapperImpl::Worker::OnCommitComplete(
+    leveldb::mojom::DatabaseError error) {
   --commit_batches_in_flight_;
   StartCommitTimer();
   delegate_->DidCommit(error);
+}
+
+LevelDBWrapperImpl::LevelDBWrapperImpl(
+    leveldb::mojom::LevelDBDatabase* database,
+    const std::string& prefix,
+    size_t max_size,
+    base::TimeDelta default_commit_delay,
+    int max_bytes_per_hour,
+    int max_commits_per_hour,
+    std::unique_ptr<Delegate> delegate)
+    : worker_(new Worker(database,
+                         leveldb::StdStringToUint8Vector(prefix),
+                         max_size,
+                         default_commit_delay,
+                         max_bytes_per_hour,
+                         max_commits_per_hour,
+                         std::move(delegate))),
+      weak_ptr_factory_(this) {
+  bindings_.set_connection_error_handler(base::Bind(
+      &LevelDBWrapperImpl::OnConnectionError, base::Unretained(this)));
+}
+
+bool LevelDBWrapperImpl::empty() const {
+  return worker_->empty();
+}
+size_t LevelDBWrapperImpl::bytes_used() const {
+  return worker_->bytes_used();
+}
+
+bool LevelDBWrapperImpl::has_pending_load_tasks() const {
+  return worker_->has_pending_load_tasks();
+}
+
+LevelDBWrapperImpl::~LevelDBWrapperImpl() {}
+
+void LevelDBWrapperImpl::Bind(mojom::LevelDBWrapperRequest request) {
+  bindings_.AddBinding(this, std::move(request));
+}
+
+void LevelDBWrapperImpl::EnableAggressiveCommitDelay() {
+  s_aggressive_flushing_enabled_ = true;
+}
+
+void LevelDBWrapperImpl::ScheduleImmediateCommit() {
+  worker_->ScheduleImmediateCommit();
+}
+
+void LevelDBWrapperImpl::OnMemoryDump(
+    const std::string& name,
+    base::trace_event::ProcessMemoryDump* pmd) {
+  worker_->OnMemoryDump(name, pmd);
+}
+
+void LevelDBWrapperImpl::PurgeMemory() {
+  worker_->PurgeMemory();
+}
+
+void LevelDBWrapperImpl::AddObserver(
+    mojom::LevelDBObserverAssociatedPtrInfo observer) {
+  worker_->AddObserver(std::move(observer));
+}
+
+void LevelDBWrapperImpl::Put(
+    const std::vector<uint8_t>& key,
+    const std::vector<uint8_t>& value,
+    const base::Optional<std::vector<uint8_t>>& client_old_value,
+    const std::string& source,
+    PutCallback callback) {
+  worker_->Put(key, value, client_old_value, source, std::move(callback));
+}
+
+void LevelDBWrapperImpl::Delete(
+    const std::vector<uint8_t>& key,
+    const base::Optional<std::vector<uint8_t>>& client_old_value,
+    const std::string& source,
+    DeleteCallback callback) {
+  worker_->Delete(key, client_old_value, source, std::move(callback));
+}
+
+void LevelDBWrapperImpl::DeleteAll(const std::string& source,
+                                   DeleteAllCallback callback) {
+  worker_->DeleteAll(source, std::move(callback));
+}
+
+void LevelDBWrapperImpl::Get(const std::vector<uint8_t>& key,
+                             GetCallback callback) {
+  worker_->Get(key, std::move(callback));
+}
+
+void LevelDBWrapperImpl::GetAll(
+    mojom::LevelDBWrapperGetAllCallbackAssociatedPtrInfo complete_callback,
+    GetAllCallback callback) {
+  worker_->GetAll(std::move(complete_callback), std::move(callback));
+}
+
+void LevelDBWrapperImpl::OnConnectionError() {
+  if (!bindings_.empty())
+    return;
+  // If any tasks are waiting for load to complete, delay calling the
+  // no_bindings_callback_ until all those tasks have completed.
+  if (!worker_->has_pending_load_tasks())
+    return;
+  worker_->delegate()->OnNoBindings();
+}
+
+void LevelDBWrapperImpl::OnLoadComplete() {
+  // We might need to call the no_bindings_callback_ here if bindings became
+  // empty while waiting for load to complete.
+  if (bindings_.empty())
+    worker_->delegate()->OnNoBindings();
 }
 
 }  // namespace content

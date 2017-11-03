@@ -163,45 +163,39 @@ void RecordCachePurgedHistogram(CachePurgeReason reason,
 
 }  // namespace
 
-class LocalStorageContextMojo::LevelDBWrapperHolder final
+class LocalStorageContextMojo::LevelDBDelegate final
     : public LevelDBWrapperImpl::Delegate {
  public:
-  LevelDBWrapperHolder(LocalStorageContextMojo* context,
-                       const url::Origin& origin)
-      : context_(context), origin_(origin) {
-    // Delay for a moment after a value is set in anticipation
-    // of other values being set, so changes are batched.
-    const int kCommitDefaultDelaySecs = 5;
+  LevelDBDelegate(base::WeakPtr<LocalStorageContextMojo> context,
+                  url::Origin origin)
+      : context_(std::move(context)), origin_(std::move(origin)) {}
+  ~LevelDBDelegate() override {}
 
-    // To avoid excessive IO we apply limits to the amount of data being written
-    // and the frequency of writes.
-    const int kMaxBytesPerHour = kPerStorageAreaQuota;
-    const int kMaxCommitsPerHour = 60;
-
-    level_db_wrapper_ = std::make_unique<LevelDBWrapperImpl>(
-        context_->database_.get(),
-        kDataPrefix + origin_.Serialize() + kOriginSeparator,
-        kPerStorageAreaQuota + kPerStorageAreaOverQuotaAllowance,
-        base::TimeDelta::FromSeconds(kCommitDefaultDelaySecs), kMaxBytesPerHour,
-        kMaxCommitsPerHour, this);
-    level_db_wrapper_ptr_ = level_db_wrapper_.get();
+  void Initialize(LevelDBWrapperControl* control) override {
+    control_ = control;
   }
 
-  LevelDBWrapperImpl* level_db_wrapper() { return level_db_wrapper_ptr_; }
+  bool has_bindings() const { return has_bindings_; }
 
+  void OnBindings() { has_bindings_ = true; }
+
+  // NOTE: Instead of doing it this way, we could have a method called
+  // Initialize(wrapper) - like SetWrapper above - that would give this to the
+  // class. This would help people from being confused about what to use
   void OnNoBindings() override {
     has_bindings_ = false;
     // Don't delete ourselves, but do schedule an immediate commit. Possible
     // deletion will happen under memory pressure or when another localstorage
     // area is opened.
-    level_db_wrapper()->ScheduleImmediateCommit();
+    control_->ScheduleImmediateCommit();
   }
 
   std::vector<leveldb::mojom::BatchedOperationPtr> PrepareToCommit() override {
     std::vector<leveldb::mojom::BatchedOperationPtr> operations;
 
     // Write schema version if not already done so before.
-    if (!context_->database_initialized_) {
+    // Note: We don't write the schema if the context is gone.
+    if (context_ && !context_->database_initialized_) {
       leveldb::mojom::BatchedOperationPtr item =
           leveldb::mojom::BatchedOperation::New();
       item->type = leveldb::mojom::BatchOperationType::PUT_KEY;
@@ -216,13 +210,13 @@ class LocalStorageContextMojo::LevelDBWrapperHolder final
         leveldb::mojom::BatchedOperation::New();
     item->type = leveldb::mojom::BatchOperationType::PUT_KEY;
     item->key = CreateMetaDataKey(origin_);
-    if (level_db_wrapper()->empty()) {
+    if (control_->empty()) {
       item->type = leveldb::mojom::BatchOperationType::DELETE_KEY;
     } else {
       item->type = leveldb::mojom::BatchOperationType::PUT_KEY;
       LocalStorageOriginMetaData data;
       data.set_last_modified(base::Time::Now().ToInternalValue());
-      data.set_size_bytes(level_db_wrapper()->bytes_used());
+      data.set_size_bytes(control_->bytes_used());
       item->value = leveldb::StdStringToUint8Vector(data.SerializeAsString());
     }
     operations.push_back(std::move(item));
@@ -238,8 +232,8 @@ class LocalStorageContextMojo::LevelDBWrapperHolder final
     // Delete any old database that might still exist if we successfully wrote
     // data to LevelDB, and our LevelDB is actually disk backed.
     if (error == leveldb::mojom::DatabaseError::OK && !deleted_old_data_ &&
-        !context_->subdirectory_.empty() && context_->task_runner_ &&
-        !context_->old_localstorage_path_.empty()) {
+        context_ && !context_->subdirectory_.empty() &&
+        context_->task_runner_ && !context_->old_localstorage_path_.empty()) {
       deleted_old_data_ = true;
       context_->task_runner_->PostShutdownBlockingTask(
           FROM_HERE, DOMStorageTaskRunner::PRIMARY_SEQUENCE,
@@ -251,7 +245,8 @@ class LocalStorageContextMojo::LevelDBWrapperHolder final
   }
 
   void MigrateData(LevelDBWrapperImpl::ValueMapCallback callback) override {
-    if (context_->task_runner_ && !context_->old_localstorage_path_.empty()) {
+    if (context_ && context_->task_runner_ &&
+        !context_->old_localstorage_path_.empty()) {
       context_->task_runner_->PostShutdownBlockingTask(
           FROM_HERE, DOMStorageTaskRunner::PRIMARY_SEQUENCE,
           base::BindOnce(
@@ -322,31 +317,62 @@ class LocalStorageContextMojo::LevelDBWrapperHolder final
                                 leveldb_env::LEVELDB_STATUS_MAX);
   }
 
-  void Bind(mojom::LevelDBWrapperRequest request) {
-    has_bindings_ = true;
-    level_db_wrapper()->Bind(std::move(request));
-  }
-
-  bool has_bindings() const { return has_bindings_; }
-
  private:
   base::FilePath sql_db_path() const {
-    if (context_->old_localstorage_path_.empty())
+    if (!context_ || context_->old_localstorage_path_.empty())
       return base::FilePath();
     return context_->old_localstorage_path_.Append(
         DOMStorageArea::DatabaseFileNameFromOrigin(origin_.GetURL()));
   }
 
-  LocalStorageContextMojo* context_;
+  base::WeakPtr<LocalStorageContextMojo> context_;
   url::Origin origin_;
-  std::unique_ptr<LevelDBWrapperImpl> level_db_wrapper_;
-  // Holds the same value as |level_db_wrapper_|. The reason for this is that
-  // during destruction of the LevelDBWrapperImpl instance we might still get
-  // called and need access  to the LevelDBWrapperImpl instance. The unique_ptr
-  // could already be null, but this field should still be valid.
-  LevelDBWrapperImpl* level_db_wrapper_ptr_;
+  LevelDBWrapperControl* control_ = nullptr;
   bool deleted_old_data_ = false;
   bool has_bindings_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(LevelDBDelegate);
+};
+
+class LocalStorageContextMojo::LevelDBWrapperHolder {
+ public:
+  LevelDBWrapperHolder(base::WeakPtr<LocalStorageContextMojo> context,
+                       url::Origin origin) {
+    // Delay for a moment after a value is set in anticipation
+    // of other values being set, so changes are batched.
+    const int kCommitDefaultDelaySecs = 5;
+
+    // To avoid excessive IO we apply limits to the amount of data being written
+    // and the frequency of writes.
+    const int kMaxBytesPerHour = kPerStorageAreaQuota;
+    const int kMaxCommitsPerHour = 60;
+
+    leveldb::mojom::LevelDBDatabase* database = context->database_.get();
+    std::string prefix = kDataPrefix + origin.Serialize() + kOriginSeparator;
+    delegate_ = new LevelDBDelegate(std::move(context), std::move(origin));
+    level_db_wrapper_ = std::make_unique<LevelDBWrapperImpl>(
+        database, prefix,
+        kPerStorageAreaQuota + kPerStorageAreaOverQuotaAllowance,
+        base::TimeDelta::FromSeconds(kCommitDefaultDelaySecs), kMaxBytesPerHour,
+        kMaxCommitsPerHour, base::WrapUnique(delegate_));
+  }
+
+  LevelDBWrapperImpl* level_db_wrapper() const {
+    return level_db_wrapper_.get();
+  }
+
+  bool has_bindings() const { return delegate_->has_bindings(); }
+
+  void Bind(mojom::LevelDBWrapperRequest request) {
+    delegate_->OnBindings();
+    level_db_wrapper()->Bind(std::move(request));
+  }
+
+ private:
+  LevelDBDelegate* delegate_;
+  std::unique_ptr<LevelDBWrapperImpl> level_db_wrapper_;
+
+  DISALLOW_COPY_AND_ASSIGN(LevelDBWrapperHolder);
 };
 
 LocalStorageContextMojo::LocalStorageContextMojo(
@@ -863,7 +889,8 @@ LocalStorageContextMojo::GetOrCreateDBWrapper(const url::Origin& origin) {
 
   PurgeUnusedWrappersIfNeeded();
 
-  auto holder = std::make_unique<LevelDBWrapperHolder>(this, origin);
+  auto holder = std::make_unique<LevelDBWrapperHolder>(
+      weak_ptr_factory_.GetWeakPtr(), origin);
   LevelDBWrapperHolder* holder_ptr = holder.get();
   level_db_wrappers_[origin] = std::move(holder);
   return holder_ptr;
