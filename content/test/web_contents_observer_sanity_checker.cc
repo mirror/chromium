@@ -43,6 +43,7 @@ void WebContentsObserverSanityChecker::Enable(WebContents* web_contents) {
 
 void WebContentsObserverSanityChecker::RenderFrameCreated(
     RenderFrameHost* render_frame_host) {
+  hosts_.insert(render_frame_host);
   CHECK(!web_contents_destroyed_);
   GlobalRoutingID routing_pair = GetRoutingPair(render_frame_host);
   bool frame_exists = !live_routes_.insert(routing_pair).second;
@@ -78,6 +79,7 @@ void WebContentsObserverSanityChecker::RenderFrameCreated(
 
 void WebContentsObserverSanityChecker::RenderFrameDeleted(
     RenderFrameHost* render_frame_host) {
+  hosts_.erase(render_frame_host);
   CHECK(!web_contents_destroyed_);
   GlobalRoutingID routing_pair = GetRoutingPair(render_frame_host);
   bool was_live = !!live_routes_.erase(routing_pair);
@@ -199,7 +201,6 @@ void WebContentsObserverSanityChecker::ReadyToCommitNavigation(
 void WebContentsObserverSanityChecker::DidFinishNavigation(
     NavigationHandle* navigation_handle) {
   CHECK(NavigationIsOngoing(navigation_handle));
-
   CHECK(!(navigation_handle->HasCommitted() &&
           !navigation_handle->IsErrorPage()) ||
         navigation_handle->GetNetErrorCode() == net::OK);
@@ -312,6 +313,7 @@ WebContentsObserverSanityChecker::WebContentsObserverSanityChecker(
 
 WebContentsObserverSanityChecker::~WebContentsObserverSanityChecker() {
   CHECK(web_contents_destroyed_);
+  CHECK(hosts_.empty());
 }
 
 void WebContentsObserverSanityChecker::AssertRenderFrameExists(
