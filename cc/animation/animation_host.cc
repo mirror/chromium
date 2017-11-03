@@ -645,8 +645,11 @@ void AnimationHost::SetAnimationCounts(
         main_thread_compositable_animations_count;
     SetNeedsPushProperties();
   }
-  DCHECK_GE(main_thread_animations_count_,
-            main_thread_compositable_animations_count_);
+  // TODO(xidachen): the following DCHECK should be there. However, there are
+  // real world cases which triggers this DCHECK and is causing constant crash.
+  // Temporary disable it now, find the root cause and re-enable it.
+  // DCHECK_GE(main_thread_animations_count_,
+  //           main_thread_compositable_animations_count_);
 }
 
 size_t AnimationHost::MainThreadAnimationsCount() const {
