@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1375d5e2_c4357a55",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-03T00:49:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f919ede9_4fe7a923",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43d142d7_273dd1f9",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e092a2_d02feb89",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-03T00:49:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43d142d7_273dd1f9",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "645d6cb2_2975761b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-03T00:49:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "807c3c5a_32793c69",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c9d5ce9_3a5aa2a0",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3529d7b_b5b2a1b7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-03T00:49:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c9d5ce9_3a5aa2a0",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ebd0bd11_caaf550e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-03T00:49:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1bebbb3_4fdbc3e5",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "498ec766_4453ce04",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd9465f_1446b5f8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-03T00:49:28Z",
+      "side": 1,
+      "message": "Changed to \"root baseline\" in consistence with other comments.",
+      "parentUuid": "498ec766_4453ce04",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a312bcf1_e2ec51aa",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-03T00:49:28Z",
+      "side": 1,
+      "message": "That seems a bit more than I\u0027d like to include in this CL. I do have another local branch fixing/improving some comments in webkitpy that I came across when researching this issue. I\u0027ll take a look and put the changes in that branch.",
+      "parentUuid": "c78fcb94_2714aae4",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f421941_61d71a03",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer_unittest.py",
         "patchSetId": 1
@@ -132,6 +258,30 @@
       "writtenOn": "2017-10-31T20:40:57Z",
       "side": 1,
       "message": "Does this make it so test-webkitpy -vv prints debug\nlog statements in the code under test to stderr?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 50
+      },
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c07561a_69804d38",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-03T00:49:28Z",
+      "side": 1,
+      "message": "Oh, this was actually an artifact from my local debugging. But yes, that\u0027d be the effect. And nothing happens when running `test-webkitpy` or with `-v`, so perhaps we can keep it?\n\nBaselineOptimizer has some of the most useful debug messages in webkitpy, especially the tree before and after optimization, which is very helpful when tests fail.",
+      "parentUuid": "8f421941_61d71a03",
       "range": {
         "startLine": 39,
         "startChar": 0,
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "84f37aaf_8bb569b6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-03T00:49:28Z",
+      "side": 1,
+      "message": "Yeah. This, combined with the lack of checking the non-existence of files in _assert_optimization, essentially rendered most of the tests useless (e.g. those referring \u0027mac-snowleopard\u0027 should\u0027ve failed outright).\n\nChanged to self.assertEqual.",
+      "parentUuid": "ee8b91c1_ec0bc9d6",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 93
+      },
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e41dc09_58babdd8",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer_unittest.py",
         "patchSetId": 1
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "5cea5e5a_326911de",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-03T00:49:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e41dc09_58babdd8",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc78b564_f7890236",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/optimize_baselines.py",
         "patchSetId": 1
@@ -198,6 +390,24 @@
       "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5bda13d_f85d3ad0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/optimize_baselines.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-11-03T00:49:28Z",
+      "side": 1,
+      "message": "Yay!",
+      "parentUuid": "fc78b564_f7890236",
+      "revId": "e3b78c7be9f9063e90c6c5e3cd27214d252ae922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
