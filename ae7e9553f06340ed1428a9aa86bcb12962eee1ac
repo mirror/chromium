@@ -116,6 +116,52 @@
       "revId": "ae7e9553f06340ed1428a9aa86bcb12962eee1ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee81794_fc3f5e19",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-03T17:59:37Z",
+      "side": 1,
+      "message": "Doesn\u0027t this run on the GPU service side in viz? The UkmRecorder singleton is only in the browser process.",
+      "range": {
+        "startLine": 104,
+        "startChar": 35,
+        "endLine": 104,
+        "endChar": 58
+      },
+      "revId": "ae7e9553f06340ed1428a9aa86bcb12962eee1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3515422d_87a41d51",
+        "filename": "ui/latency/latency_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-03T17:59:37Z",
+      "side": 1,
+      "message": "Looks like this can be private now?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 37
+      },
+      "revId": "ae7e9553f06340ed1428a9aa86bcb12962eee1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
