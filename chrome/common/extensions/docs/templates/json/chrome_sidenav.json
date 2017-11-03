@@ -544,8 +544,8 @@
               },
 
               {
-                "title": "Event Pages",
-                "href": "/extensions/event_pages"
+                "title": "Event Management",
+                "href": "/extensions/background_pages"
               },
               {
                 "title": "Content Scripts",
@@ -554,6 +554,10 @@
               {
                 "title": "activeTab Permission",
                 "href": "/extensions/activeTab"
+              },
+              {
+                "title": "Background Migration",
+                "href": "/extensions/background_migration"
               },
               {
                 "title": "What's New?",

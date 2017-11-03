@@ -1,163 +1,271 @@
-<h1>Background Pages</h1>
-
-
-<p id="eventPageWarning" class="warning">
-  <em>Caution:</em> Consider using event pages instead.
-  <a href="event_pages">Learn more</a>.
-</p>
+<h1>Event Management with Background Scripts</h1>
 
 <p>
-A common need for extensions is to have
-a single long-running script to manage some task or state.
-Background pages to the rescue.
+Extension functionality often relies on interaction with outside browser events,
+such as receiving a <a href="extensions/samples#search:notifications">notification</a>,
+<a href="extensions/samples#search:new%20tab">opening a new tab</a> or
+<a href="extensions/samples#search:bookmarks">removing a bookmark</a>.
+Create effective background scripts that stay dormant until these events are fired
+and unload after they've responded.
 </p>
 
+<h2 id="manifest">Registering Background Scripts</h2>
 <p>
-As the <a href="overview#arch">architecture overview</a> explains,
-the background page is an HTML page that runs in the extension process.
-It exists for the lifetime of your extension,
-and only one instance of it at a time is active. (Exception: if your
-extension uses <a href="manifest/incognito">incognito</a>
-"split" mode, a second instance is created for incognito windows.)
-</p>
-
-<p>
-In a typical extension with a background page,
-the UI &mdash;
-for example, the browser action or page action
-and any options page &mdash;
-is implemented by dumb views.
-When the view needs some state,
-it requests the state from the background page.
-When the background page notices a state change,
-the background page tells the views to update.
-</p>
-
-<h2 id="manifest">Manifest</h2>
-
-<p>
-Register your background page in the
-<a href="manifest">extension manifest</a>.
-In the common case, a background page
-does not require any HTML markup.
-These kind of background pages can be
-implemented using JavaScript files alone,
-like this:
+Background scripts must be registered in the manifest
+under the background section with the "persistence" field set to false:
 </p>
 
 <pre data-filename="manifest.json">
 {
-  "name": "My extension",
+  "name": "Awesome Test Extension",
   ...
   <b>"background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js"],
+    "persistent": false
   }</b>,
   ...
-}</pre>
+}
+</pre>
 
 <p>
-A background page will be generated
-by the extension system
-that includes each of the files listed
-in the <code>scripts</code> property.
-</p>
-
-<p>
-If you need to specify HTML
-in your background page, you can
-do that using the <code>page</code>
-property instead:
+Multiple background scripts can be registered for modularized code.
 </p>
 
 <pre data-filename="manifest.json">
+  {
+     "name": "Awesome Test Extension",
+     ...
+     "background": {
+       "scripts": [
+       "backgroundContextMenus.js",
+       "backgroundOmniBox.js",
+       "backgroundOauth.js"
+       ],
+       "persistent": false
+     },
+     ...
+   }
+</pre>
+
+<p>
+If a background script relies on creating HTML elements dymanically with JavaScript,
+it can be registered as a page:
+</p>
+<pre data-filename="manifest.json">
 {
-  "name": "My extension",
+  "name": "Awesome Test Extension",
   ...
   <b>"background": {
-    "page": "background.html"
+    "page": "background.html",
+    "persistent": false
   }</b>,
   ...
-}</pre>
+}
+</pre>
 
 <p>
-If you need the browser to start up early&mdash;so
-you can display notifications, for example&mdash;then
-you might also want to specify the
-<a href="declare_permissions#background">"background" permission</a>.
+The background script can then be called in a script tag:
 </p>
+<pre data-filename="background.html">
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;Awesome Test Extension&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      // call to background script
+     &lt;script src="background.js">&lt;/script&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+</pre>
 
-
-<h2 id="details">Details</h2>
-
-<p>
-You can communicate between your various pages using direct script calls,
-similar to how frames can communicate.
-The $(ref:extension.getViews) method
-returns a list of window objects
-for every active page belonging to your extension,
-and the
-$(ref:extension.getBackgroundPage) method
-returns the background page.
-</p>
-
-<h2 id="example">Example</h2>
-
-<p>
-The following code snippet demonstrates
-how the background page
-can interact with other pages in the extension.
-It also shows how you can use
-the background page to handle events
-such as user clicks.
+<p id="persistentWarning" class="warning">
+<strong>Background scripts and pages should only have persistent field set to true under the most dire of functionality circumstances.
+Setting them to true will keep them active at all times,
+reducing browser efficiency.</strong>
 </p>
 
 <p>
-The extension in this example
-has a background page
-and multiple pages created
-(with
-$(ref:tabs.create))
-from a file named <code>image.html</code>.
+If an extensions currently uses a persistent background page, refer to
+<a href="/background_migration">Background Migration Guide</a>
+for instruction on how to switch to a non-persistent model.
+</p>
 
+<h2 id="listeners">Setting Up Listeners</h2>
+
+<p>
+Structure event listeners synchronously
+so that the background script lays dormant until a top-level event is invoked.
+This frees up memory and other system resources,
+providing considerable performance advantages.
+</p>
+
+<p>
+An effective background script includes something like this:
 </p>
 
 <pre data-filename="background.js">
-// React when a browser action's icon is clicked.
-chrome.browserAction.onClicked.addListener(function(tab) {
-  var viewTabUrl = chrome.extension.getURL('image.html');
-  var imageUrl = <em>/* an image's URL */</em>;
+  chrome.runtime.onMessage.addListener(function(message) {
+    alert(message)
+  });
 
-  // Look through all the pages in this extension to find one we can use.
-  var views = chrome.extension.getViews();
-  for (var i = 0; i < views.length; i++) {
-    var view = views[i];
-
-    // If this view has the right URL and hasn't been used yet...
-    if (view.location.href == viewTabUrl && !view.imageAlreadySet) {
-
-      // ...call one of its functions and set a property.
-      view.setImageUrl(imageUrl);
-      view.imageAlreadySet = true;
-      break; // we're done
-    }
-  }
-});
+  chrome.runtime.onMessageExternal.addListener(function(messageExternal) {
+    alert(messageExternal)
+  });
 </pre>
-<pre data-filename="image.html">
-&lt;html>
-  &lt;script>
-    function setImageUrl(url) {
-      document.getElementById('target').src = url;
-    }
-  &lt;/script>
 
-  &lt;body>
-    &lt;p>
-    Image here:
-    &lt;/p>
+<p>
+The following would not work inside a background script:
+</p>
+<pre data-filename="notGoodBackground.js">
+  const eventList = ['onMessage', 'onMessageExternal'];
 
-    &lt;img id="target" src="white.png" width="640" height="480">
-
-  &lt;/body>
-&lt;/html>
+  eventList.forEach(function(event) {
+    chrome.runtime.event.addListener(function(message) {
+      alert(message)
+    });
+  });
 </pre>
+
+<h2 id="initiation">Initialize an extension</h2>
+<p>
+Listen to the <code>$(ref:runtime.onInstalled)</code> event
+to initialize an extension on installation.
+Use this event to set a state or for one-time initialization,
+such as a <a href="contextMenus">Context Menu</a>.
+</p>
+
+<pre data-filename="background.js">
+  chrome.runtime.onInstalled.addListener(function() {
+    chrome.contextMenus.create({
+      "id": "sampleContextMenu",
+      "title": "Sample Context Menu",
+      "contexts": ["selection"]
+    });
+  });
+</pre>
+
+<h2 id="filters">Filtering event listeners</h2>
+<p>
+Use APIs that support <a href="events#filtered">event filters</a>
+to restrict listeners to the cases the extension cares about.
+For example, if listening to the
+<code><a href="extensions/tabs#event-onUpdated">tabs.onUpdated</a></code> event,
+try using the <code>$(ref:webNavigation.onCompleted)</code> event with filters instead,
+as the tabs API does not support filters.
+</p>
+
+<pre data-filename="background.js">
+  chrome.webNavigation.onCompleted.addListener(function() {
+      alert("This is my favorite website!");
+  }, {url: [{urlMatches : 'https://www.google.com/'}]})
+</pre>
+
+
+<h2 id="responding">Responding to Listeners</h2>
+
+<p>
+Background scripts respond to events in multiple ways.
+<br>
+Include API calls inside listeners:
+</p>
+<pre data-filename="background.js">
+  chrome.runtime.onMessage.addListener(
+    function(message, callback) {
+     	if (message == “setAlarm”){
+      chrome.alarms.create({delayInMinutes: 5})
+      }
+   });
+</pre>
+
+<p>
+Make calls to outside JavaScript files:
+</p>
+<pre data-filename="background.js">
+  chrome.runtime.onMessage.addListener(
+    function(message, callback) {
+      if (message == “runLogic”){
+        chrome.tabs.executeScript({
+          file: 'logic.js'
+        });
+      }
+   });
+</pre>
+
+<p>
+And insert content scripts directly:
+</p>
+<pre data-filename="background.js">
+  chrome.runtime.onMessage.addListener(
+    function(message, callback) {
+      if (message == “changeColor”){
+        chrome.tabs.executeScript({
+          code: 'document.body.style.backgroundColor="orange"'
+        });
+      }
+   });
+</pre>
+
+<h2 id="unloading">Unloading Background Scrips</h2>
+
+<p>
+Background scripts unload after a few seconds of inactivity.
+If any last minute cleanup is required,
+listen to the <code>$(ref:runtime.onSuspend)</code> event.
+</p>
+
+<pre data-filename="background.js">
+  chrome.runtime.onSuspend.addListener(function() {
+    console.log("Unloading.");
+    chrome.browserAction.setBadgeText({text: ""});
+  });
+</pre>
+
+<p>
+Data should be persisted periodically
+so that important information is not lost i
+f an extension crashes without receiving
+<code>onSuspend</code>
+Use the <a href="/storage">Storage API</a> to assist with this:
+</p>
+
+<pre data-filename="background.js">
+chrome.runtime.onInstalled.addListener(function() {
+  chrome.storage.local.set({ 'variable': variableInformation });
+})
+</pre>
+
+<p>
+If an extension uses <a href="messaging">message passing</a>,
+ensure all ports are closed.
+The background script will not unload until all message ports have shut.
+Listening to the $(ref:runtime.Port.onDisconnect) event will give insight to
+when open ports are closing.
+Mnually close them with $(ref:runtime.Port.disconnect).
+</p>
+
+<pre data-filename="background.js">
+  chrome.runtime.onMessage.addListener(
+    function(message, callback) {
+      if(message == "hello"){
+        sendResponse({greeting: "welcome!"})
+      }
+      else if (message == “goodbye”){
+        chrome.runtime.Port.disconnect();
+      }
+   });
+</pre>
+
+<p>
+The lifetime of a background script is observable by monitoring
+when an entry for the extension appears and dissapears from Chrome's task manager.
+</p>
+
+<img src="{{static}}/images/taskManager"
+     height="600"
+     alt="Chrome with an extension's popup open.">
+
+<p>
+Open the task manager by clicking Chrome's menu icon,
+the three dots in the upper right corner of the browser,
+hovering over more tools and selecting "Task Manager".
+</p>
