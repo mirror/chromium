@@ -2,13 +2,16 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-source_set("thunk") {
+import("//build/config/jumbo.gni")
+
+jumbo_source_set("thunk") {
   # In GYP this is the same target as shared_impl. In GN these are split apart
   # for clarity but to get component builds correct, targets must only depend
   # on these via the shared_impl component.
   # TODO(brettw) separate these when GYP compat is no longer required.
   visibility = [ "//ppapi/shared_impl" ]
 
+  never_build_jumbo = true # Not finished
   sources = [
     "enter.cc",
     "enter.h",
@@ -161,6 +164,18 @@ source_set("thunk") {
     "thunk.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Symbols
+    "ppb_audio_config_thunk.cc",
+    "ppb_audio_encoder_thunk.cc",
+    "ppb_compositor_thunk.cc",
+    "ppb_file_io_thunk.cc",
+    "ppb_device_ref_dev_thunk.cc",
+    "ppb_camera_device_private_thunk.cc",
+    "ppb_media_stream_audio_track_thunk.cc",
+    "ppb_tcp_socket_private_thunk.cc",
+  ]
+
   if (!is_nacl) {
     sources += [
       "ppb_audio_input_dev_thunk.cc",
@@ -201,6 +216,9 @@ source_set("thunk") {
       "ppb_tcp_socket_private_thunk.cc",
       "ppb_udp_socket_private_thunk.cc",
       "ppb_x509_certificate_private_thunk.cc",
+    ]
+    jumbo_excluded_sources -= [
+      "ppb_tcp_socket_private_thunk.cc",
     ]
   }
 

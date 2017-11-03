@@ -136,6 +136,14 @@ viz_component("service") {
     "viz_service_export.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Macros
+    "gl/gpu_service_impl.cc",
+
+    # Symbols
+    "display/software_renderer.cc",
+  ]
+
   defines = [ "VIZ_SERVICE_IMPLEMENTATION" ]
 
   configs = [ "//build/config/compiler:no_size_t_to_int_warning" ]
@@ -231,6 +239,7 @@ viz_component("service") {
 }
 
 viz_source_set("unit_tests") {
+  never_build_jumbo = true # Not tested but bots don't like it.
   testonly = true
   sources = [
     "display/bsp_tree_unittest.cc",

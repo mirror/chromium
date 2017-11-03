@@ -5,6 +5,7 @@
 import("features.gni")
 import("//build/buildflag_header.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//media/media_options.gni")
 import("//mojo/public/tools/bindings/mojom.gni")
@@ -26,7 +27,7 @@ buildflag_header("features") {
   ]
 }
 
-source_set("common") {
+jumbo_source_set("common") {
   # Targets external to content should always link to the public API.
   # In addition, targets outside of the content component (shell and tests)
   # must not link to this because it will duplicate the code in the component
@@ -329,6 +330,22 @@ source_set("common") {
     "zygote_commands_linux.h",
   ]
 
+  jumbo_excluded_sources = [
+    # IPC Headers. Nothing more to say.
+    "content_ipc_logging.cc",
+    "content_message_generator.cc",
+    "input/input_event_struct_traits.cc",  # IPC stuff
+    "input/input_param_traits.cc",  # IPC stuff
+    "input/touch_action_optional_struct_traits.cc",  # IPC stuff
+    "media/media_devices_param_traits.cc",  # IPC stuff
+    "media/media_stream_param_traits.cc",
+    "resource_messages.cc",  # IPC stuff
+    "swapped_out_messages.cc",  # IPC stuff
+
+    # ScrollRestorationType missing (namespaces?)
+    "page_state_serialization.cc",
+  ]
+
   configs += [
     "//content:content_implementation",
     "//build/config:precompiled_headers",
@@ -509,27 +526,6 @@ source_set("common") {
 
   if (!is_win || !use_aura) {
     sources -= [ "cursors/webcursor_aurawin.cc" ]
-  }
-
-  if (!use_seccomp_bpf) {
-    if (is_linux && current_cpu != "s390x" && current_cpu != "ppc64") {
-      sources -= [
-        "sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
-        "sandbox_linux/bpf_cros_amd_gpu_policy_linux.h",
-        "sandbox_linux/bpf_cros_arm_gpu_policy_linux.cc",
-        "sandbox_linux/bpf_cros_arm_gpu_policy_linux.h",
-        "sandbox_linux/bpf_gpu_policy_linux.cc",
-        "sandbox_linux/bpf_gpu_policy_linux.h",
-        "sandbox_linux/bpf_ppapi_policy_linux.cc",
-        "sandbox_linux/bpf_ppapi_policy_linux.h",
-        "sandbox_linux/bpf_renderer_policy_linux.cc",
-        "sandbox_linux/bpf_renderer_policy_linux.h",
-        "sandbox_linux/bpf_utility_policy_linux.cc",
-        "sandbox_linux/bpf_utility_policy_linux.h",
-        "sandbox_linux/sandbox_bpf_base_policy_linux.cc",
-        "sandbox_linux/sandbox_bpf_base_policy_linux.h",
-      ]
-    }
   }
 
   if (is_mac) {

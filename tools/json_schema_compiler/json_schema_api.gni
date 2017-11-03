@@ -64,6 +64,8 @@
 # The generated library target also inherits the visibility and output_name
 # of its invoker.
 
+import("//build/config/jumbo.gni")
+
 template("json_schema_api") {
   assert(defined(invoker.sources),
          "\"sources\" must be defined for the $target_name template.")
@@ -238,7 +240,7 @@ template("json_schema_api") {
     lib_deps += invoker.deps
   }
 
-  static_library(target_name) {
+  jumbo_static_library(target_name) {
     sources = lib_sources
     deps = lib_deps
     public_deps = lib_public_deps

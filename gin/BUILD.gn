@@ -2,10 +2,12 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//testing/test.gni")
 import("//v8/gni/v8.gni")
 
-component("gin") {
+jumbo_component("gin") {
+  never_build_jumbo = true
   sources = [
     "arguments.cc",
     "arguments.h",
@@ -68,6 +70,17 @@ component("gin") {
     "wrappable.h",
     "wrapper_info.cc",
   ]
+
+  jumbo_excluded_sources = [
+    # Templates something
+    "converter.cc",
+
+    # Symbols
+    "modules/module_registry.cc",
+
+    # Namespaces
+    "per_isolate_data.cc",
+ ]
 
   if (v8_use_external_startup_data) {
     data = [

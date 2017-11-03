@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//mojo/public/tools/bindings/mojom.gni")
 
 mojom("mojo_bindings") {
@@ -11,7 +12,7 @@ mojom("mojo_bindings") {
   ]
 }
 
-static_library("browser") {
+jumbo_static_library("browser") {
   sources = [
     "browser/contextual_search_js_api_service_impl.cc",
     "browser/contextual_search_js_api_service_impl.h",
@@ -19,6 +20,10 @@ static_library("browser") {
     "browser/ctr_aggregator.h",
     "browser/weekly_activity_storage.cc",
     "browser/weekly_activity_storage.h",
+  ]
+  jumbo_excluded_sources = [
+    # Symbols (kReasonableMinWeek)
+    "browser/weekly_activity_storage.cc",
   ]
   deps = [
     ":mojo_bindings",

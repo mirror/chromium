@@ -48,10 +48,10 @@ namespace content {
 
 namespace {
 
-const char kNoDocumentURLErrorMessage[] =
+const char kProviderHostNoDocumentURLErrorMessage[] =
     "No URL is associated with the caller's document.";
-const char kShutdownErrorMessage[] = "The Service Worker system has shutdown.";
-const char kUserDeniedPermissionMessage[] =
+const char kProviderHostShutdownErrorMessage[] = "The Service Worker system has shutdown.";
+const char kProviderHostUserDeniedPermissionMessage[] =
     "The user denied permission to use Service Worker.";
 
 const char kBadMessageInvalidURL[] = "Some URLs are invalid.";
@@ -135,7 +135,7 @@ void RemoveProviderHost(base::WeakPtr<ServiceWorkerContextCore> context,
   context->RemoveProviderHost(process_id, provider_id);
 }
 
-WebContents* GetWebContents(int render_process_id, int render_frame_id) {
+WebContents* ProviderHostGetWebContents(int render_process_id, int render_frame_id) {
   RenderFrameHost* rfh =
       RenderFrameHost::FromID(render_process_id, render_frame_id);
   return WebContents::FromRenderFrameHost(rfh);
@@ -930,7 +930,7 @@ void ServiceWorkerProviderHost::RegistrationComplete(
   if (!dispatcher_host_ || !IsContextAlive()) {
     std::move(callback).Run(blink::mojom::ServiceWorkerErrorType::kAbort,
                             std::string(kServiceWorkerRegisterErrorPrefix) +
-                                std::string(kShutdownErrorMessage),
+                                std::string(kProviderHostShutdownErrorMessage),
                             nullptr);
     return;
   }
@@ -1027,7 +1027,7 @@ void ServiceWorkerProviderHost::GetRegistrationComplete(
     std::move(callback).Run(
         blink::mojom::ServiceWorkerErrorType::kAbort,
         std::string(kServiceWorkerGetRegistrationErrorPrefix) +
-            std::string(kShutdownErrorMessage),
+            std::string(kProviderHostShutdownErrorMessage),
         nullptr);
     return;
   }
@@ -1065,7 +1065,7 @@ void ServiceWorkerProviderHost::GetRegistrationsComplete(
     std::move(callback).Run(
         blink::mojom::ServiceWorkerErrorType::kAbort,
         std::string(kServiceWorkerGetRegistrationsErrorPrefix) +
-            std::string(kShutdownErrorMessage),
+            std::string(kProviderHostShutdownErrorMessage),
         base::nullopt);
     return;
   }
@@ -1233,7 +1233,7 @@ bool ServiceWorkerProviderHost::CanServeContainerHostMethods(
   if (!dispatcher_host_ || !IsContextAlive()) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kAbort,
-        std::string(error_prefix) + std::string(kShutdownErrorMessage),
+        std::string(error_prefix) + std::string(kProviderHostShutdownErrorMessage),
         args...);
     return false;
   }
@@ -1243,17 +1243,17 @@ bool ServiceWorkerProviderHost::CanServeContainerHostMethods(
   if (document_url().is_empty()) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kSecurity,
-        std::string(error_prefix) + std::string(kNoDocumentURLErrorMessage),
+        std::string(error_prefix) + std::string(kProviderHostNoDocumentURLErrorMessage),
         args...);
     return false;
   }
 
   if (!GetContentClient()->browser()->AllowServiceWorker(
           scope, topmost_frame_url(), dispatcher_host_->resource_context(),
-          base::Bind(&GetWebContents, render_process_id_, frame_id()))) {
+          base::Bind(&ProviderHostGetWebContents, render_process_id_, frame_id()))) {
     std::move(*callback).Run(
         blink::mojom::ServiceWorkerErrorType::kDisabled,
-        std::string(error_prefix) + std::string(kUserDeniedPermissionMessage),
+        std::string(error_prefix) + std::string(kProviderHostUserDeniedPermissionMessage),
         args...);
     return false;
   }

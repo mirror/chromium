@@ -214,7 +214,7 @@ std::string HashHost(const std::string& canonicalized_host) {
 
 // Returns true if the intersection of |a| and |b| is not empty. If either
 // |a| or |b| is empty, returns false.
-bool HashesIntersect(const HashValueVector& a,
+bool HashesIntersect2(const HashValueVector& a,
                      const HashValueVector& b) {
   for (const auto& hash : a) {
     if (base::ContainsValue(b, hash))
@@ -1818,7 +1818,7 @@ bool TransportSecurityState::PKPState::CheckPublicKeyPins(
     return false;
   }
 
-  if (HashesIntersect(bad_spki_hashes, hashes)) {
+  if (HashesIntersect2(bad_spki_hashes, hashes)) {
     failure_log->append("Rejecting public key chain for domain " + domain +
                         ". Validated chain: " + HashesToBase64String(hashes) +
                         ", matches one or more bad hashes: " +
@@ -1830,7 +1830,7 @@ bool TransportSecurityState::PKPState::CheckPublicKeyPins(
   if (spki_hashes.empty())
     return true;
 
-  if (HashesIntersect(spki_hashes, hashes)) {
+  if (HashesIntersect2(spki_hashes, hashes)) {
     return true;
   }
 

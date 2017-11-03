@@ -4,6 +4,7 @@
 
 import("//build/buildflag_header.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//components/vector_icons/vector_icons.gni")
 import("//testing/test.gni")
@@ -38,7 +39,7 @@ buildflag_header("features") {
       [ "ENABLE_NATIVE_WINDOW_NAV_BUTTONS=$enable_native_window_nav_buttons" ]
 }
 
-component("views") {
+jumbo_component("views") {
   all_dependent_configs = [ ":flags" ]
 
   public = [
@@ -430,6 +431,29 @@ component("views") {
 
   sources += get_target_outputs(":views_vector_icons")
 
+  jumbo_excluded_sources = [
+    # : explicit specialization of 'GetProperty<gfx::Insets *>' after instantiation
+    "view_properties.cc",
+    "view_constants_aura.cc",
+
+    # Symbols
+    "controls/combobox/combobox.cc",
+
+    # X11
+    "controls/scrollbar/overlay_scroll_bar.cc",
+    "controls/textfield/textfield.cc",
+    "widget/desktop_aura/desktop_drag_drop_client_aurax11.cc",
+    "widget/desktop_aura/desktop_screen_x11.cc",
+    "widget/desktop_aura/desktop_window_tree_host_x11.cc",
+    "widget/desktop_aura/x11_desktop_handler.cc",
+    "widget/desktop_aura/x11_desktop_window_move_client.cc",
+    "widget/desktop_aura/x11_pointer_grab.cc",
+    "widget/desktop_aura/x11_topmost_window_finder.cc",
+    "widget/desktop_aura/x11_whole_screen_move_loop.cc",
+    "widget/desktop_aura/x11_window_event_filter.cc",
+    "widget/native_widget_aura.cc",
+  ]
+
   configs += [
     "//build/config:precompiled_headers",
 
@@ -712,7 +736,7 @@ component("views") {
   }
 }
 
-static_library("test_support_internal") {
+jumbo_static_library("test_support_internal") {
   testonly = true
   sources = [
     "animation/test/flood_fill_ink_drop_ripple_test_api.cc",
@@ -824,6 +848,8 @@ static_library("test_support_internal") {
     "test/platform_test_helper_cocoa.mm",
   ]
 
+  jumbo_excluded_sources = []
+
   if (use_aura) {
     sources += [
       "corewm/tooltip_controller_test_helper.cc",
@@ -832,6 +858,10 @@ static_library("test_support_internal") {
       "test/test_views_delegate_aura.cc",
       "test/views_test_helper_aura.cc",
       "test/views_test_helper_aura.h",
+      "test/widget_test_aura.cc",
+    ]
+    jumbo_excluded_sources += [
+      # X11
       "test/widget_test_aura.cc",
     ]
     deps += [
@@ -849,6 +879,10 @@ static_library("test_support_internal") {
         "test/test_desktop_screen_x11.h",
         "test/ui_controls_factory_desktop_aurax11.cc",
         "test/ui_controls_factory_desktop_aurax11.h",
+      ]
+      jumbo_excluded_sources += [
+        # X11
+        "test/ui_controls_factory_desktop_aurax11.cc",
       ]
     }
   }

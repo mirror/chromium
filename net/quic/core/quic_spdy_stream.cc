@@ -311,4 +311,6 @@ void QuicSpdyStream::ClearSession() {
   spdy_session_ = nullptr;
 }
 
+#undef ENDPOINT
+
 }  // namespace net

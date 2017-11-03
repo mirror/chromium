@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-component("js") {
+import("//build/config/jumbo.gni")
+
+jumbo_component("js") {
   sources = [
     "core.cc",
     "core.h",
@@ -20,6 +22,12 @@ component("js") {
     "threading.h",
     "waiting_callback.cc",
     "waiting_callback.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Symbols (g_wrapper_info)
+    "support.cc",
+    "threading.cc",
   ]
 
   public_deps = [

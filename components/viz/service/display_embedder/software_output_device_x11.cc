@@ -10,6 +10,8 @@
 #include <stdint.h>
 #include <string.h>
 
+#undef None // Defined by X11/X.h to 0L which collides with other headers
+
 #include "third_party/skia/include/core/SkImageInfo.h"
 #include "ui/base/x/x11_util.h"
 #include "ui/base/x/x11_util_internal.h"

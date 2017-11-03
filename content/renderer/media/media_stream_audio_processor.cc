@@ -29,8 +29,10 @@
 #include "media/base/audio_fifo.h"
 #include "media/base/audio_parameters.h"
 #include "media/base/channel_layout.h"
+#undef FOURCC // Leaky macro from both libyuv and webrtc
 #include "third_party/webrtc/api/mediaconstraintsinterface.h"
 #include "third_party/webrtc/modules/audio_processing/typing_detection.h"
+#undef FOURCC // Leaky macro from both libyuv and webrtc
 
 namespace content {
 

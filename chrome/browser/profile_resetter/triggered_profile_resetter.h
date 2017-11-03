@@ -7,6 +7,7 @@
 
 #include <stddef.h>
 
+#include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
 #include "build/build_config.h"
@@ -73,7 +74,9 @@ class TriggeredProfileResetter : public KeyedService {
 #endif  // defined(OS_WIN)
 
   bool has_reset_trigger_ = false;
+#if DCHECK_IS_ON()
   bool activate_called_ = false;
+#endif  // DCHECK_IS_ON()
 
   base::string16 tool_name_;
 

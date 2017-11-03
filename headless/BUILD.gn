@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/chrome_build.gni")
 import("//build/util/process_version.gni")
 import("//headless/headless.gni")
@@ -255,7 +256,7 @@ if (headless_fontconfig_utils && !is_fuchsia) {
   }
 }
 
-component("headless") {
+jumbo_component("headless") {
   sources = [
     "app/headless_shell_switches.cc",
     "app/headless_shell_switches.h",
@@ -340,15 +341,26 @@ component("headless") {
     "public/util/virtual_time_controller.cc",
     "public/util/virtual_time_controller.h",
   ]
+  jumbo_excluded_sources = [
+    # namespaces?
+    "lib/browser/headless_browser_main_parts.cc",
+  ]
 
   if (!is_fuchsia) {
     sources += [
       "lib/headless_crash_reporter_client.cc",
       "lib/headless_crash_reporter_client.h",
     ]
+    jumbo_excluded_sources += [
+      # namespaces?
+      "lib/headless_crash_reporter_client.cc",
+    ]
   }
 
   sources += generated_devtools_api
+
+  # Too many ToValue
+  jumbo_excluded_sources += generated_devtools_api
 
   if (use_aura) {
     sources += [
@@ -415,6 +427,10 @@ component("headless") {
       "lib/renderer/headless_tab_socket_bindings.h",
       "lib/utility/headless_content_utility_client.cc",
       "lib/utility/headless_content_utility_client.h",
+    ]
+    jumbo_excluded_sources += [
+      # namespaces?
+      "lib/headless_content_main_delegate.cc",
     ]
 
     deps += [
@@ -840,7 +856,7 @@ if (is_win) {
 
 # Headless library with all included dependencies. Use this library unless you
 # have browser/child dependencies restrictions.
-static_library("headless_shell_lib") {
+jumbo_static_library("headless_shell_lib") {
   sources = [
     "app/headless_shell.cc",
     "app/headless_shell.h",
@@ -853,6 +869,10 @@ static_library("headless_shell_lib") {
     "lib/utility/headless_content_utility_client.cc",
     "lib/utility/headless_content_utility_client.h",
     "public/headless_shell.h",
+  ]
+  jumbo_excluded_sources = [
+    # Linking
+    "lib/browser/headless_content_browser_client.cc",
   ]
 
   deps = [

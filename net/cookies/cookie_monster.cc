@@ -213,7 +213,7 @@ struct OrderByCreationTimeDesc {
 // Constants for use in VLOG
 const int kVlogPerCookieMonster = 1;
 const int kVlogGarbageCollection = 5;
-const int kVlogSetCookies = 7;
+const int kVlogSetCookies2 = 7;
 const int kVlogGetCookies = 9;
 
 // Mozilla sorts on the path length (longest first), and then it
@@ -1424,7 +1424,7 @@ void CookieMonster::SetCookieWithCreationTimeAndOptions(
     SetCookiesCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  VLOG(kVlogSetCookies) << "SetCookie() line: " << cookie_line;
+  VLOG(kVlogSetCookies2) << "SetCookie() line: " << cookie_line;
 
   Time creation_time = creation_time_or_null;
   if (creation_time.is_null()) {
@@ -1436,7 +1436,7 @@ void CookieMonster::SetCookieWithCreationTimeAndOptions(
       CanonicalCookie::Create(url, cookie_line, creation_time, options));
 
   if (!cc.get()) {
-    VLOG(kVlogSetCookies) << "WARNING: Failed to allocate CanonicalCookie";
+    VLOG(kVlogSetCookies2) << "WARNING: Failed to allocate CanonicalCookie";
     MaybeRunCookieCallback(std::move(callback), false);
     return;
   }
@@ -1478,12 +1478,12 @@ void CookieMonster::SetCanonicalCookie(std::unique_ptr<CanonicalCookie> cc,
         "SetCookie() not clobbering httponly cookie or secure cookie for "
         "insecure scheme";
 
-    VLOG(kVlogSetCookies) << error;
+    VLOG(kVlogSetCookies2) << error;
     MaybeRunCookieCallback(std::move(callback), false);
     return;
   }
 
-  VLOG(kVlogSetCookies) << "SetCookie() key: " << key
+  VLOG(kVlogSetCookies2) << "SetCookie() key: " << key
                         << " cc: " << cc->DebugString();
 
   // Realize that we might be setting an expired cookie, and the only point
@@ -1519,7 +1519,7 @@ void CookieMonster::SetCanonicalCookie(std::unique_ptr<CanonicalCookie> cc,
 
     InternalInsertCookie(key, std::move(cc), true);
   } else {
-    VLOG(kVlogSetCookies) << "SetCookie() not storing already expired cookie.";
+    VLOG(kVlogSetCookies2) << "SetCookie() not storing already expired cookie.";
   }
 
   // We assume that hopefully setting a cookie will be less common than
@@ -1595,7 +1595,7 @@ void CookieMonster::InternalDeleteCookie(CookieMap::iterator it,
                 "kChangeCauseMapping size should match DeletionCause size");
 
   CanonicalCookie* cc = it->second.get();
-  VLOG(kVlogSetCookies) << "InternalDeleteCookie()"
+  VLOG(kVlogSetCookies2) << "InternalDeleteCookie()"
                         << ", cause:" << deletion_cause
                         << ", cc: " << cc->DebugString();
 

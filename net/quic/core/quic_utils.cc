@@ -175,6 +175,7 @@ string QuicUtils::PeerAddressChangeTypeToString(PeerAddressChangeType type) {
   }
   return "INVALID_PEER_ADDRESS_CHANGE_TYPE";
 }
+#undef RETURN_STRING_LITERAL
 
 // static
 PeerAddressChangeType QuicUtils::DetermineAddressChangeType(

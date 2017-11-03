@@ -82,7 +82,11 @@ def main():
 
   header_files = set([x for x in all_inputs if x.endswith(".h")])
   assert set(args.outputs) == written_output_set, "Did not fill all outputs"
-  files_not_included = set(all_inputs) - written_input_set - header_files
+  random_files_to_ignore = set([x for x in all_inputs if x.endswith((".py",
+                                                                     ".json",
+                                                                     ".g", # ??
+                                                                     ".idl"))])
+  files_not_included = set(all_inputs) - written_input_set - header_files - random_files_to_ignore
   assert not files_not_included, ("Jumbo build left out files: %s" %
                                   files_not_included)
   if args.verbose:

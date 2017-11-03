@@ -630,6 +630,11 @@ blink_core_sources("html") {
 
   jumbo_excluded_sources = [ "canvas/CanvasRenderingContext.cpp" ]  # https://crbug.com/716395
 
+  jumbo_excluded_sources += [
+    # kDefaultWidth
+    "track/vtt/VTTRegion.cpp",
+  ]
+
   configs += [
     # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
     "//build/config/compiler:no_size_t_to_int_warning",

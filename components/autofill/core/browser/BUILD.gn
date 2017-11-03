@@ -3,8 +3,9 @@
 # found in the LICENSE file.
 
 import("//build/config/chrome_build.gni")
+import("//build/config/jumbo.gni")
 
-static_library("browser") {
+jumbo_static_library("browser") {
   sources = [
     "address.cc",
     "address.h",
@@ -205,6 +206,24 @@ static_library("browser") {
   if (!is_android) {
     sources += [ "ui/save_card_bubble_controller.h" ]
   }
+
+  jumbo_excluded_sources = [
+    # Namespaces
+    "autofill_address_util.cc",
+    "autofill_profile.cc",
+    "form_field.cc",
+
+    # Symbols
+    "autofill_manager.cc",
+    "phone_number_i18n.cc",
+    "webdata/autofill_profile_syncable_service.cc",
+    "webdata/autocomplete_syncable_service.cc",
+    "webdata/autofill_wallet_syncable_service.cc",
+    "webdata/autofill_wallet_metadata_syncable_service.cc",
+
+    # Collision between {BEGIN, END} macros in third_party/fips and //net
+    "payments/payments_client.cc",
+  ]
 
   configs += [ "//build/config:precompiled_headers" ]
 

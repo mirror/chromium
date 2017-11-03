@@ -2,11 +2,13 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
+
 if (is_android) {
   import("//build/config/android/rules.gni")
 }
 
-static_library("core") {
+jumbo_static_library("core") {
   sources = [
     "archive_manager.cc",
     "archive_manager.h",
@@ -69,6 +71,20 @@ static_library("core") {
     "task_queue.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Very similar to clear_storage_task.
+    "model/delete_page_task.cc",
+
+    # Symbols
+    "offline_page_metadata_store_sql.cc",
+
+    # Weird
+    "offline_page_model_impl.cc",
+
+    # Macros
+    "model/temporary_pages_consistency_check_task.cc",
+  ]
+
   deps = [
     ":switches",
     "//base",
@@ -81,7 +97,7 @@ static_library("core") {
   ]
 }
 
-static_library("test_support") {
+jumbo_static_library("test_support") {
   testonly = true
   sources = [
     "model/offline_page_item_generator.cc",
@@ -124,7 +140,7 @@ static_library("switches") {
   ]
 }
 
-source_set("unit_tests") {
+jumbo_source_set("unit_tests") {
   testonly = true
   sources = [
     "archive_manager_unittest.cc",

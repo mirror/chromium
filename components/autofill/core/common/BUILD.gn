@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("common") {
+import("//build/config/jumbo.gni")
+
+jumbo_static_library("common") {
   sources = [
     "autofill_clock.cc",
     "autofill_clock.h",
@@ -43,6 +45,11 @@ static_library("common") {
     "save_password_progress_logger.h",
     "signatures_util.cc",
     "signatures_util.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Symbols
+    "form_field_data.cc",
   ]
 
   deps = [

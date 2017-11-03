@@ -96,6 +96,7 @@
 
 #if defined(USE_AURA) && defined(USE_X11)
 #include <X11/Xlib.h>
+#undef None // Defined by X11/X.h to 0L which collides with other headers
 #include "base/memory/ptr_util.h"
 #include "ui/events/event_constants.h"
 #include "ui/events/keycodes/keyboard_code_conversion.h"

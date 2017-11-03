@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//build/buildflag_header.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/chrome_build.gni")
 import("//build/config/linux/pkg_config.gni")
 import("//build/config/ui.gni")
@@ -41,7 +42,7 @@ config("gl_config") {
   }
 }
 
-component("gl") {
+jumbo_component("gl") {
   output_name = "gl_wrapper"  # Avoid colliding with OS X"s libGL.dylib.
 
   sources = [
@@ -137,6 +138,15 @@ component("gl") {
     "trace_util.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Weird
+    "gl_context_osmesa.cc",
+
+    # Symbols
+    "gl_enums.cc",
+    "gl_surface_osmesa.cc",
+  ]
+
   configs += [ "//build/config:precompiled_headers" ]
   defines = [ "GL_IMPLEMENTATION" ]
 
@@ -186,6 +196,10 @@ component("gl") {
         "gl_image_native_pixmap.cc",
         "gl_image_native_pixmap.h",
       ]
+      jumbo_excluded_sources += [
+        # Symbols
+        "gl_image_native_pixmap.cc",
+      ]
     }
 
     if (is_android) {
@@ -211,6 +225,13 @@ component("gl") {
       "gl_surface_osmesa_x11.h",
     ]
 
+    jumbo_excluded_sources += [
+      # X11
+      "gl_surface_egl_x11.cc",
+      "gl_surface_glx_x11.cc",
+      "gl_surface_osmesa_x11.cc",
+    ]
+
     deps += [ "//ui/base/x" ]
 
     data_deps += [
@@ -232,6 +253,14 @@ component("gl") {
       "gl_surface_glx.h",
       "gl_visual_picker_glx.cc",
       "gl_visual_picker_glx.h",
+    ]
+
+    jumbo_excluded_sources += [
+      # X11
+      "gl_context_glx.cc",
+
+      # Symbols
+      "gl_surface_glx.cc",
     ]
 
     configs += [
@@ -312,7 +341,7 @@ component("gl") {
   }
 }
 
-static_library("gl_unittest_utils") {
+jumbo_static_library("gl_unittest_utils") {
   testonly = true
   sources = [
     "gl_bindings_autogen_mock.cc",
@@ -322,6 +351,11 @@ static_library("gl_unittest_utils") {
     "gl_mock_autogen_gl.h",
     "gpu_timing_fake.cc",
     "gpu_timing_fake.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # MakeFunctionUnique
+    "gl_mock.cc",
   ]
 
   configs += [ "//third_party/khronos:khronos_headers" ]

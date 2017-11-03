@@ -343,7 +343,13 @@ template("proto_library") {
                              "visibility",
                            ])
 
-    sources = get_target_outputs(":$action_name")
+    action_outputs = get_target_outputs(":$action_name")
+    sources = []
+    foreach(action_output, action_outputs) {
+      if (get_path_info(action_output, "extension") != "py") {
+        sources += [ action_output ]
+      }
+    }
 
     if (defined(invoker.extra_configs)) {
       configs += invoker.extra_configs

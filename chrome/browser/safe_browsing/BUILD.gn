@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//extensions/features/features.gni")
 import("//third_party/protobuf/proto_library.gni")
 
@@ -11,7 +12,7 @@ proto_library("chunk_proto") {
   ]
 }
 
-static_library("safe_browsing") {
+jumbo_static_library("safe_browsing") {
   sources = [
     "chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
     "chrome_cleaner/chrome_cleaner_controller_impl_win.h",
@@ -105,6 +106,10 @@ static_library("safe_browsing") {
       "test_safe_browsing_service.h",
       "ui_manager.cc",
       "ui_manager.h",
+    ]
+    jumbo_excluded_sources = [
+      # Symbols
+      "permission_reporter.cc",
     ]
     deps += [
       "//chrome/browser/safe_browsing:chunk_proto",
@@ -231,6 +236,20 @@ static_library("safe_browsing") {
         "signature_evaluator_mac.mm",
         "trigger_creator.cc",
         "trigger_creator.h",
+      ]
+      jumbo_excluded_sources += [
+        # Symbols
+        "incident_reporting/incident_report_uploader_impl.cc",
+
+        # Namespaces
+        "incident_reporting/incident_reporting_service.cc",
+        "services_delegate_impl.cc",
+
+        # IPC
+        "client_side_detection_service.cc",
+        "client_side_model_loader.cc",
+        "chrome_password_protection_service.cc",
+        "incident_reporting/incident_report_uploader.cc",
       ]
       deps += [
         "//components/content_settings/core/browser:browser",

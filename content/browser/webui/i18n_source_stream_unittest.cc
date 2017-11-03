@@ -12,7 +12,7 @@
 
 namespace content {
 
-namespace {
+namespace i18n_source_stream_unittest {
 
 // This constant is rather arbitrary, though the offsets and other sizes must
 // be less than kBufferSize.
@@ -78,8 +78,6 @@ struct I18nTestParam {
   const net::MockSourceStream::Mode mode;
   const I18nTest* test;
 };
-
-}  // namespace
 
 class I18nSourceStreamTest : public ::testing::TestWithParam<I18nTestParam> {
  protected:
@@ -261,5 +259,7 @@ TEST_P(I18nSourceStreamTest, LargeFilterTests) {
   EXPECT_EQ(expected_output, &actual_output[total_padding]);
   EXPECT_EQ("i18n", stream()->Description());
 }
+
+}  // namespace i18n_source_stream_unittest
 
 }  // namespace content

@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/linux/pangocairo/pangocairo.gni")
 import("//build/config/ui.gni")
 import("//device/vr/features/features.gni")
@@ -23,7 +24,7 @@ source_set("gfx_export") {
   ]
 }
 
-component("geometry_skia") {
+jumbo_component("geometry_skia") {
   sources = [
     "skia_util.cc",
     "skia_util.h",
@@ -43,7 +44,7 @@ component("geometry_skia") {
   defines = [ "GFX_IMPLEMENTATION" ]
 }
 
-component("gfx") {
+jumbo_component("gfx") {
   sources = [
     "android/java_bitmap.cc",
     "android/java_bitmap.h",
@@ -400,7 +401,7 @@ component("gfx") {
   }
 }
 
-component("color_space") {
+jumbo_component("color_space") {
   sources = [
     "color_space.cc",
     "color_space.h",
@@ -514,7 +515,7 @@ group("memory_buffer") {
 }
 
 # Cannot be a static_library in component builds due to exported functions
-source_set("memory_buffer_sources") {
+jumbo_source_set("memory_buffer_sources") {
   visibility = [ ":*" ]  # Depend on through ":memory_buffer".
 
   # TODO(brettw) refactor this so these sources are in a coherent directory
@@ -575,7 +576,7 @@ source_set("memory_buffer_sources") {
 }
 
 # TODO(ccameron): This can be moved into a separate source_set.
-component("gfx_switches") {
+jumbo_component("gfx_switches") {
   sources = [
     "switches.cc",
     "switches.h",
@@ -589,7 +590,7 @@ component("gfx_switches") {
   ]
 }
 
-static_library("test_support") {
+jumbo_static_library("test_support") {
   testonly = true
   sources = [
     "animation/animation_test_api.cc",

@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//third_party/protobuf/proto_library.gni")
 
 if (is_android) {
@@ -11,7 +12,7 @@ if (is_android) {
 # TODO(crbug.com/706392): Fix password reuse detection for Android.
 password_reuse_detection_support = !is_android && !is_ios
 
-static_library("browser") {
+jumbo_static_library("browser") {
   sources = [
     "android_affiliation/affiliated_match_helper.cc",
     "android_affiliation/affiliated_match_helper.h",
@@ -145,6 +146,12 @@ static_library("browser") {
     "webdata/logins_table_win.cc",
     "webdata/password_web_data_service_win.cc",
     "webdata/password_web_data_service_win.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Symbols
+    "import/password_importer.cc",
+    "statistics_table.cc",
   ]
 
   if (password_reuse_detection_support) {

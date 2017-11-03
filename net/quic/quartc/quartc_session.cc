@@ -14,7 +14,7 @@ namespace {
 
 // Default priority for incoming QUIC streams.
 // TODO(zhihuang): Determine if this value is correct.
-static const SpdyPriority kDefaultPriority = 3;
+static const SpdyPriority kDefaultSpdyPriority = 3;
 
 // Arbitrary server port number for net::QuicCryptoClientConfig.
 const int kQuicServerPort = 0;
@@ -163,7 +163,7 @@ QuicCryptoStream* QuartcSession::GetMutableCryptoStream() {
 
 QuartcStream* QuartcSession::CreateOutgoingDynamicStream() {
   return ActivateDataStream(
-      CreateDataStream(GetNextOutgoingStreamId(), kDefaultPriority));
+      CreateDataStream(GetNextOutgoingStreamId(), kDefaultSpdyPriority));
 }
 
 void QuartcSession::OnCryptoHandshakeEvent(CryptoHandshakeEvent event) {
@@ -314,7 +314,7 @@ void QuartcSession::SetServerCryptoConfig(
 }
 
 QuicStream* QuartcSession::CreateIncomingDynamicStream(QuicStreamId id) {
-  return ActivateDataStream(CreateDataStream(id, kDefaultPriority));
+  return ActivateDataStream(CreateDataStream(id, kDefaultSpdyPriority));
 }
 
 std::unique_ptr<QuartcStream> QuartcSession::CreateDataStream(

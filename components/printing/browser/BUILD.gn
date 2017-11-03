@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("browser") {
+import("//build/config/jumbo.gni")
+
+jumbo_static_library("browser") {
   sources = [
     "print_composite_client.cc",
     "print_composite_client.h",
@@ -10,6 +12,11 @@ static_library("browser") {
     "print_manager.h",
     "print_manager_utils.cc",
     "print_manager_utils.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # IPC
+    "print_manager_utils.cc",
   ]
 
   public_deps = [

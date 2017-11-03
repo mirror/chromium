@@ -143,14 +143,14 @@ void HistogramAndLogMigrationSuccess(const NetLogWithSource& net_log,
 
 // Histogram for recording the different reasons that a QUIC session is unable
 // to complete the handshake.
-enum HandshakeFailureReason {
+enum HandshakeFailureReason2 {
   HANDSHAKE_FAILURE_UNKNOWN = 0,
   HANDSHAKE_FAILURE_BLACK_HOLE = 1,
   HANDSHAKE_FAILURE_PUBLIC_RESET = 2,
   NUM_HANDSHAKE_FAILURE_REASONS = 3,
 };
 
-void RecordHandshakeFailureReason(HandshakeFailureReason reason) {
+void RecordHandshakeFailureReason(HandshakeFailureReason2 reason) {
   UMA_HISTOGRAM_ENUMERATION(
       "Net.QuicSession.ConnectionClose.HandshakeNotConfirmed.Reason", reason,
       NUM_HANDSHAKE_FAILURE_REASONS);

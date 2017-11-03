@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//third_party/protobuf/proto_library.gni")
 
@@ -22,7 +23,7 @@ if (is_component_build) {
 } else {
   link_target_type = "static_library"
 }
-target(link_target_type, "service_sources") {
+target("jumbo_" + link_target_type, "service_sources") {
   # External code should depend on this via //gpu/command_buffer/service above
   # rather than depending on this directly or the component build will break.
   visibility = [ "//gpu/*" ]
@@ -150,6 +151,21 @@ target(link_target_type, "service_sources") {
     "vertex_array_manager.h",
     "vertex_attrib_manager.cc",
     "vertex_attrib_manager.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Macros
+    "shader_translator.cc",
+    "shader_translator_cache.cc",
+
+    # Symbols
+    "gles2_cmd_clear_framebuffer.cc",
+    "gles2_cmd_copy_tex_image.cc",
+    "gles2_cmd_decoder_passthrough.cc",
+    "gles2_cmd_srgb_converter.cc",
+
+    # Namespaces
+    "passthrough_program_cache.cc",
   ]
 
   configs += [

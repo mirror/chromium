@@ -1995,7 +1995,7 @@ group("blink_platform_unittests_data") {
 }
 
 if (current_cpu == "arm") {
-  source_set("blink_arm_neon") {
+  jumbo_source_set("blink_arm_neon") {
     sources = blink_platform_neon_files
     # The *NEON.cpp files fail to compile when -mthumb is passed. Force
     # them to build in ARM mode.
@@ -2011,13 +2011,13 @@ if (current_cpu == "arm") {
 }
 
 if (current_cpu == "mipsel" || current_cpu == "mips64el") {
-  source_set("blink_mips_msa") {
+  jumbo_source_set("blink_mips_msa") {
     sources = blink_platform_msa_files
   }
 }
 
 if (current_cpu == "x86" || current_cpu == "x64") {
-  source_set("blink_x86_sse") {
+  jumbo_source_set("blink_x86_sse") {
     sources = blink_platform_sse_files
   }
 }

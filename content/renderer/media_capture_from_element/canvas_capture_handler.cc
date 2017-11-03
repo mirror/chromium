@@ -20,7 +20,9 @@
 #include "media/base/limits.h"
 #include "third_party/WebKit/public/platform/WebMediaStreamSource.h"
 #include "third_party/WebKit/public/platform/WebString.h"
+#undef FOURCC // Leaky macro from both libyuv and webrtc
 #include "third_party/libyuv/include/libyuv.h"
+#undef FOURCC // Leaky macro from both libyuv and webrtc
 #include "third_party/skia/include/core/SkImage.h"
 
 namespace {
