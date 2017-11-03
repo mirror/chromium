@@ -104,6 +104,8 @@ ChromeAPIPermissions::GetAllPermissions() const {
        APIPermissionInfo::kFlagCannotBeOptional},
       {APIPermission::kActivityLogPrivate, "activityLogPrivate",
        APIPermissionInfo::kFlagCannotBeOptional},
+      {APIPermission::kAuthPrivate, "authPrivate",
+       APIPermissionInfo::kFlagCannotBeOptional},
       {APIPermission::kAutoTestPrivate, "autotestPrivate",
        APIPermissionInfo::kFlagCannotBeOptional},
       {APIPermission::kBookmarkManagerPrivate, "bookmarkManagerPrivate",
