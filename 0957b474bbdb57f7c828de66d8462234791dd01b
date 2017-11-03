@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e601dfb5_99f2831d",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1442,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-03T23:56:17Z",
+      "side": 1,
+      "message": "Comment before the class to explain its purpose.",
+      "revId": "0957b474bbdb57f7c828de66d8462234791dd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b870a1c_5a0b0cfd",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-03T23:56:17Z",
+      "side": 1,
+      "message": "Same as the other one, small comment to explain its purpose.",
+      "revId": "0957b474bbdb57f7c828de66d8462234791dd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a36c273_8d3520ee",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1697,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-03T23:56:17Z",
+      "side": 1,
+      "message": "Can you explain why in the comment?",
+      "revId": "0957b474bbdb57f7c828de66d8462234791dd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
