@@ -68,15 +68,21 @@ class TestCupsPrintersBrowserProxy extends TestBrowserProxy {
 }
 
 suite('CupsAddPrinterDialogTests', function() {
-  function fillAddManuallyDialog(addDialog) {
+  function fillName(addDialog) {
     var name = addDialog.$$('#printerNameInput');
-    var address = addDialog.$$('#printerAddressInput');
-
     assertTrue(!!name);
     name.value = 'Test Printer';
+  }
 
+  function getAddressInput(addDialog) {
+    var address = addDialog.$$('#printerAddressInput');
     assertTrue(!!address);
-    address.value = '127.0.0.1';
+    return address;
+  }
+
+  function fillAddManuallyDialog(addDialog) {
+    fillName(addDialog);
+    getAddressInput(addDialog).value = '127.0.0.1';
   }
 
   function clickAddButton(dialog) {
@@ -339,5 +345,69 @@ suite('CupsAddPrinterDialogTests', function() {
           assertEquals(expectedPrinter, printer.printerId);
           assertDeepEquals(usbInfo, printer.printerUsbInfo);
         });
+  });
+
+  /**
+   * Test that the Add button is disabled for invalid addresses.
+   */
+  test('InvalidAddress', function() {
+    // Start on add manually.
+    dialog.fire('open-manually-add-printer-dialog');
+    Polymer.dom.flush();
+
+    var addDialog = dialog.$$('add-printer-manually-dialog');
+    assertTrue(!!addDialog);
+
+    var addButton = addDialog.$$('.action-button');
+    assertTrue(addButton.disabled);
+
+    fillName(addDialog);
+    var address = getAddressInput(addDialog);
+    address.set('value', '$ $ $ $ $');
+    Polymer.dom.flush();
+
+    assertTrue(addButton.disabled);
+  });
+
+  /**
+   * Test that the Add button is enabled for a valid address.
+   */
+  test('ValidIpAddress', function() {
+    // Start on add manually.
+    dialog.fire('open-manually-add-printer-dialog');
+    Polymer.dom.flush();
+
+    var addDialog = dialog.$$('add-printer-manually-dialog');
+    assertTrue(!!addDialog);
+
+    var addButton = addDialog.$$('.action-button');
+    assertTrue(addButton.disabled);
+
+    fillName(addDialog);
+    var address = getAddressInput(addDialog);
+    address.set('value', '10.4.2.3');
+    Polymer.dom.flush();
+
+    assertFalse(addButton.disabled);
+  });
+
+  /**
+   * Test that the Add button is enabled for a valid address and port.
+   */
+  test('ValidAddressAndPort', function() {
+    // Start on add manually.
+    dialog.fire('open-manually-add-printer-dialog');
+    Polymer.dom.flush();
+
+    var addDialog = dialog.$$('add-printer-manually-dialog');
+    assertTrue(!!addDialog);
+
+    fillName(addDialog);
+    var address = getAddressInput(addDialog);
+    address.set('value', 'printer.chromium.org:42');
+    Polymer.dom.flush();
+
+    var addButton = addDialog.$$('.action-button');
+    assertFalse(addButton.disabled);
   });
 });
