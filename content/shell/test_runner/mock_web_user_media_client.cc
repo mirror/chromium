@@ -150,4 +150,8 @@ void MockWebUserMediaClient::ApplyConstraints(
   request.RequestSucceeded();
 }
 
+void MockWebUserMediaClient::StopTrack(const WebMediaStreamTrack& track) {
+  track.Source().SetReadyState(blink::WebMediaStreamSource::kReadyStateEnded);
+}
+
 }  // namespace test_runner
