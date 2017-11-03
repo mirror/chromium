@@ -16,6 +16,57 @@
       "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d393cc_117c35d7",
+        "filename": "components/offline_pages/core/prefetch/import_completed_task.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-03T20:02:07Z",
+      "side": 1,
+      "message": "This should be outside the success block, correct?",
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d9e0e2c_a51a4dad",
+        "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-03T20:02:07Z",
+      "side": 1,
+      "message": "please document that it is required to do this inside a task, or reconciliation could be affected by races.",
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a848988_19b20316",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 29515,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-03T20:02:07Z",
+      "side": 1,
+      "message": "IMHO, the deprecated not should be in the description, not the label.",
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
