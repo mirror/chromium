@@ -17,8 +17,13 @@ constexpr SkColor kDefaultBaseColor = SK_ColorBLACK;
 // The alpha value for the login/lock screen background.
 constexpr int kTranslucentAlpha = 153;
 
-// The alpha value for the scrollable container on the account picker.
-constexpr int kScrollTranslucentAlpha = 76;
+// The alpha value for the scrollable container on the account picker, when a
+// lighter color is needed.
+constexpr int kScrollTranslucentAlphaSmall = 76;
+
+// The alpha value for the scrollable container on the account picker, when a
+// darker color is needed.
+constexpr int kScrollTranslucentAlphaLarge = 229;
 
 // The alpha value used to darken the login/lock screen.
 constexpr int kTranslucentColorDarkenAlpha = 128;
