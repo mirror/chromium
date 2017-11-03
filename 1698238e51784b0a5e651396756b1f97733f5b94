@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef9156c0_53fb8456",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c214dbc_560c946f",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4ec0939_48b0b6a6",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76486939_c26a0e62",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "Sounds good :)",
+      "parentUuid": "f4ec0939_48b0b6a6",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "168b56ad_39ec05f5",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2288b03_25a12d32",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c85103b_8a7ae27a",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1482e3c_2517ce14",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "Fixed, we now show the spinner.",
+      "parentUuid": "0c85103b_8a7ae27a",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6c37acfd_f9113d74",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "I know :(",
+      "parentUuid": "55451772_3081917e",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5399027_8479c31e",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-01T11:28:01Z",
       "side": 1,
       "message": "What would happen if the element is removed from the DOM? Would we clean up? What if the src is changed?",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b1f742_ea161cd0",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "If the element is removed from the DOM the shadow DOM will be automatically cleaned up. If the src changes that would trigger a UpdateDisplayState which will then repopulate the Shadow DOM if it needs to.",
+      "parentUuid": "f5399027_8479c31e",
       "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "3f99b1bd_e5ef4b06",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cef07af_90deabc0",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad7cf335_48dfdc5d",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.h",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d598b295_b457f0ff",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad7cf335_48dfdc5d",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "4a5cab75_bf63cede",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "337eb026_c71b26ee",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b914fd4_d4a1e689",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.h",
         "patchSetId": 1
@@ -169,6 +331,24 @@
       "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927c90a5_3788b699",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b914fd4_d4a1e689",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ce5846c6_475bc378",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae0a0013_07dee8b0",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0be90267_de38706f",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
         "patchSetId": 1
@@ -200,6 +398,24 @@
       "writtenOn": "2017-11-01T11:28:01Z",
       "side": 1,
       "message": "Setting all four positions to 0 seems unexpected to me unless the object size is 0. What\u0027s the intent?",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c8e35e_3f916a45",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "Since this is absolutely positioned it will fill the entire parent element.",
+      "parentUuid": "0be90267_de38706f",
       "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "ab728bbb_f164d82e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "We still want to show the play button which is part of the panel",
+      "parentUuid": "ff66487a_712a099d",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd8dba2e_fb4a246b",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls_loading.css",
         "patchSetId": 1
@@ -237,6 +471,24 @@
       "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e292bab3_6e34d81c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls_loading.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-03T13:38:22Z",
+      "side": 1,
+      "message": "Okay :)",
+      "parentUuid": "dd8dba2e_fb4a246b",
+      "revId": "1698238e51784b0a5e651396756b1f97733f5b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
