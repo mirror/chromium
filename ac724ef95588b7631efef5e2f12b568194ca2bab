@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f99e303c_f00eb52e",
+        "filename": "ios/net/cookies/system_cookie_store_unittest_template.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-03T17:51:00Z",
+      "side": 1,
+      "message": "Sorry, missed previously. Please add ARC guards",
+      "revId": "ac724ef95588b7631efef5e2f12b568194ca2bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21160bce_43c126c0",
+        "filename": "ios/net/cookies/system_cookie_store_unittest_template.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-03T17:51:00Z",
+      "side": 1,
+      "message": "Is this return needed?",
+      "revId": "ac724ef95588b7631efef5e2f12b568194ca2bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6abbe520_31ae2d91",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-03T17:51:00Z",
+      "side": 1,
+      "message": "No need for endline here",
+      "revId": "ac724ef95588b7631efef5e2f12b568194ca2bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7b80cb_9b40cf62",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-03T17:51:00Z",
+      "side": 1,
+      "message": "s/callbackCounter/callback_counter",
+      "range": {
+        "startLine": 120,
+        "startChar": 35,
+        "endLine": 120,
+        "endChar": 50
+      },
+      "revId": "ac724ef95588b7631efef5e2f12b568194ca2bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
