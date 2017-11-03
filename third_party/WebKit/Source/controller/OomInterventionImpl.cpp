@@ -15,22 +15,8 @@ void OomInterventionImpl::Create(mojom::blink::OomInterventionRequest request) {
                           std::move(request));
 }
 
-OomInterventionImpl::OomInterventionImpl() = default;
+OomInterventionImpl::OomInterventionImpl() : pauser_(new ScopedPagePauser()) {}
 
 OomInterventionImpl::~OomInterventionImpl() = default;
-
-void OomInterventionImpl::OnNearOomDetected(
-    OnNearOomDetectedCallback callback) {
-  if (!pauser_) {
-    pauser_.reset(new ScopedPagePauser());
-  }
-  std::move(callback).Run();
-}
-
-void OomInterventionImpl::OnInterventionDeclined(
-    OnInterventionDeclinedCallback callback) {
-  pauser_.reset();
-  std::move(callback).Run();
-}
 
 }  // namespace blink

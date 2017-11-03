@@ -114,13 +114,12 @@ void Initialize(Platform* platform, InterfaceRegistry* registry) {
   }
 }
 
-void BlinkInitializer::InitLocalFrame(LocalFrame& frame) const {
-  ModulesInitializer::InitLocalFrame(frame);
-
-  if (frame.IsMainFrame()) {
-    frame.GetInterfaceRegistry()->AddInterface(
-        WTF::Bind(&OomInterventionImpl::Create));
-  }
+void BlinkInitializer::RegisterInterfaces(InterfaceRegistry& registry) {
+  ModulesInitializer::RegisterInterfaces(registry);
+  WebThread* main_thread = Platform::Current()->MainThread();
+  DCHECK(main_thread);
+  registry.AddInterface(CrossThreadBind(&OomInterventionImpl::Create),
+                        main_thread->GetSingleThreadTaskRunner());
 }
 
 }  // namespace blink
