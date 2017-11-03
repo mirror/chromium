@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb938305_dbd33eba",
+        "filename": "chrome/install_static/install_details.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-03T11:30:33Z",
+      "side": 1,
+      "message": "do you see any problem with returning this by constref (same q for install_static::GetToastActivatorClsid())?",
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7c9c60_1e3ae98a",
+        "filename": "chrome/install_static/install_modes_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-03T11:30:33Z",
+      "side": 1,
+      "message": "is this needed? if so, move down above ctype.h -- windows.h is by itself here because it should generally be included before other window-ish headers.",
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a07dd99_d746bf76",
+        "filename": "chrome/install_static/install_util.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-03T11:30:33Z",
+      "side": 1,
+      "message": "remove this since it\u0027s now included in the .h",
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cedfa1b8_0dcec448",
+        "filename": "chrome/install_static/install_util_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-03T11:30:33Z",
+      "side": 1,
+      "message": "nit: \"const\" not needed",
+      "range": {
+        "startLine": 461,
+        "startChar": 19,
+        "endLine": 461,
+        "endChar": 24
+      },
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a03055b_0896b6d6",
+        "filename": "chrome/install_static/install_util_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-03T11:30:33Z",
+      "side": 1,
+      "message": "copy-n-paste gone awry. :-)",
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3759b7_346ff9c4",
+        "filename": "chrome/install_static/install_util_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-03T11:30:33Z",
+      "side": 1,
+      "message": "no \"const\"",
+      "range": {
+        "startLine": 492,
+        "startChar": 19,
+        "endLine": 492,
+        "endChar": 24
+      },
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67dc7f8_278e205b",
+        "filename": "chrome/install_static/install_util_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-03T11:30:33Z",
+      "side": 1,
+      "message": "add an assert for the return value of this?",
+      "range": {
+        "startLine": 511,
+        "startChar": 3,
+        "endLine": 511,
+        "endChar": 17
+      },
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b6de96_4ca204e7",
+        "filename": "chrome/installer/util/shell_util_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-03T11:30:33Z",
+      "side": 1,
+      "message": "is this needed?",
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
