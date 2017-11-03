@@ -22,6 +22,30 @@
       "revId": "ed7b9ab4deb09a7d7d7f12e13e73857322990599",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0d3051_728320d7",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-11-03T17:44:48Z",
+      "side": 1,
+      "message": "Done. I am not sure why these were added, but they are not needed any more.",
+      "parentUuid": "bb861c9e_e91d2297",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 313,
+        "endChar": 38
+      },
+      "revId": "ed7b9ab4deb09a7d7d7f12e13e73857322990599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
