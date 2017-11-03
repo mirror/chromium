@@ -66,6 +66,22 @@ class MediaPerceptionPrivateGetDiagnosticsFunction
   DISALLOW_COPY_AND_ASSIGN(MediaPerceptionPrivateGetDiagnosticsFunction);
 };
 
+class MediaPerceptionPrivateLoadComponentFunction
+    : public UIThreadExtensionFunction {
+ public:
+  MediaPerceptionPrivateLoadComponentFunction();
+  DECLARE_EXTENSION_FUNCTION("mediaPerceptionPrivate.loadComponent",
+                             MEDIAPERCEPTIONPRIVATE_LOADCOMPONENT);
+
+ private:
+  ~MediaPerceptionPrivateLoadComponentFunction() override;
+
+  // ExtensionFunction:
+  ResponseAction Run() override;
+
+  DISALLOW_COPY_AND_ASSIGN(MediaPerceptionPrivateLoadComponentFunction);
+};
+
 }  // namespace extensions
 
 #endif  // EXTENSIONS_BROWSER_API_MEDIA_PERCEPTION_PRIVATE_MEDIA_PERCEPTION_PRIVATE_API_H_
