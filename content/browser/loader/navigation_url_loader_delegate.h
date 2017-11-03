@@ -11,6 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/optional.h"
 #include "content/common/content_export.h"
+#include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 
 namespace net {
@@ -54,7 +55,8 @@ class CONTENT_EXPORT NavigationURLLoaderDelegate {
       const GlobalRequestID& request_id,
       bool is_download,
       bool is_stream,
-      base::Optional<SubresourceLoaderParams> subresource_loader_params) = 0;
+      base::Optional<SubresourceLoaderParams> subresource_loader_params,
+      mojom::URLLoaderClientRequest url_loader_client) = 0;
 
   // Called if the request fails before receving a response. |net_error| is a
   // network error code for the failure. |has_stale_copy_in_cache| is true if

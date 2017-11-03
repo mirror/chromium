@@ -49,7 +49,9 @@ class CONTENT_EXPORT NavigationURLLoaderNetworkService
                          mojom::DownloadedTempFilePtr downloaded_file);
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
                          scoped_refptr<ResourceResponse> response);
-  void OnStartLoadingResponseBody(mojo::ScopedDataPipeConsumerHandle body);
+  void OnStartLoadingResponseBody(
+      mojo::ScopedDataPipeConsumerHandle body,
+      mojom::URLLoaderClientRequest url_loader_client);
   void OnComplete(const ResourceRequestCompletionStatus& completion_status);
 
  private:

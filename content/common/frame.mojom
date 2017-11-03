@@ -46,7 +46,8 @@ interface FrameNavigationControl {
                    CommonNavigationParams common_params,
                    RequestNavigationParams request_params,
                    handle<data_pipe_consumer>? body_data,
-                   URLLoaderFactoryBundle? subresource_loader_factories);
+                   URLLoaderFactoryBundle? subresource_loader_factories,
+                   URLLoaderClient&? url_loader_client);
 };
 
 // Implemented by the frame (e.g. renderer processes).

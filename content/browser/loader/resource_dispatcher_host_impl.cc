@@ -1588,7 +1588,8 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
   handler.reset(new ThrottlingResourceHandler(
       std::move(handler), request, std::move(post_mime_sniffing_throttles)));
 
-  if (IsBrowserSideNavigationEnabled() && IsResourceTypeFrame(resource_type)) {
+  if (IsBrowserSideNavigationEnabled() && IsResourceTypeFrame(resource_type) &&
+      !IsNavigationMojoResponseEnabled()) {
     DCHECK(navigation_loader_core);
     DCHECK(stream_handle);
     // PlzNavigate
@@ -2017,11 +2018,20 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
     const NavigationRequestInfo& info,
     std::unique_ptr<NavigationUIData> navigation_ui_data,
     NavigationURLLoaderImplCore* loader,
+    mojom::URLLoaderClientPtr url_loader_client,
+    mojom::URLLoader** url_loader,
     ServiceWorkerNavigationHandleCore* service_worker_handle_core,
     AppCacheNavigationHandleCore* appcache_handle_core) {
   // PlzNavigate: BeginNavigationRequest currently should only be used for the
   // browser-side navigations project.
   CHECK(IsBrowserSideNavigationEnabled());
+
+  // NavigationMojoResponse => (url_loader_client, url_loader) are used.
+  DCHECK(!IsNavigationMojoResponseEnabled() ||
+         (!loader && url_loader_client.is_bound() && url_loader));
+  // !NavigationMojoResponse => loader is used.
+  DCHECK(IsNavigationMojoResponseEnabled() ||
+         (loader && !url_loader_client.is_bound() && !url_loader));
 
   ResourceType resource_type = info.is_main_frame ?
       RESOURCE_TYPE_MAIN_FRAME : RESOURCE_TYPE_SUB_FRAME;
@@ -2047,6 +2057,8 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
           info.common_params.url,
           resource_type,
           resource_context))) {
+    // TODO(arthursonzogni) WIP.
+    DCHECK(loader);
     loader->NotifyRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
     return;
   }
@@ -2093,6 +2105,8 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
   if (body) {
     if (!GetBodyBlobDataHandles(body, resource_context, &blob_handles)) {
       new_request->CancelWithError(net::ERR_INSUFFICIENT_RESOURCES);
+      // TODO(arthursonzogni) WIP.
+      DCHECK(loader);
       loader->NotifyRequestFailed(false, net::ERR_ABORTED, base::nullopt,
                                   false);
       return;
@@ -2172,19 +2186,32 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
         new_request.get(), appcache_handle_core->host(), resource_type, false);
   }
 
-  StreamContext* stream_context =
-      GetStreamContextForResourceContext(resource_context);
-  // Note: the stream should be created with immediate mode set to true to
-  // ensure that data read will be flushed to the reader as soon as it's
-  // available. Otherwise, we risk delaying transmitting the body of the
-  // resource to the renderer, which will delay parsing accordingly.
-  std::unique_ptr<ResourceHandler> handler(
-      new StreamResourceHandler(new_request.get(), stream_context->registry(),
-                                new_request->url().GetOrigin(), true));
-  std::unique_ptr<StreamHandle> stream_handle =
-      static_cast<StreamResourceHandler*>(handler.get())
-          ->stream()
-          ->CreateHandle();
+  std::unique_ptr<ResourceHandler> handler;
+  std::unique_ptr<StreamHandle> stream_handle;
+  if (url_loader_client) {
+    mojom::URLLoaderRequest url_loader_request;
+    MojoAsyncResourceHandler* mojo_async_resource_handler =
+        new MojoAsyncResourceHandler(
+            new_request.get(), this, std::move(url_loader_request),
+            std::move(url_loader_client), resource_type);
+    handler.reset(mojo_async_resource_handler);
+    *url_loader = mojo_async_resource_handler;
+  } else if (loader) {
+    StreamContext* stream_context =
+        GetStreamContextForResourceContext(resource_context);
+    // Note: the stream should be created with immediate mode set to true to
+    // ensure that data read will be flushed to the reader as soon as it's
+    // available. Otherwise, we risk delaying transmitting the body of the
+    // resource to the renderer, which will delay parsing accordingly.
+    handler = std::make_unique<StreamResourceHandler>(
+        new_request.get(), stream_context->registry(),
+        new_request->url().GetOrigin(), true);
+    stream_handle = static_cast<StreamResourceHandler*>(handler.get())
+                        ->stream()
+                        ->CreateHandle();
+  } else {
+    NOTREACHED();
+  }
 
   // TODO(davidben): Fix the dependency on child_id/route_id. Those are used
   // by the ResourceScheduler. currently it's a no-op.
