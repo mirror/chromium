@@ -2720,6 +2720,10 @@ const char kEnableVrShellName[] = "Enable Chrome VR.";
 const char kEnableVrShellDescription[] =
     "Allow browsing with a VR headset if available for this device.";
 
+const char kEnableVrShellKeyboardName[] = "Enable Chrome VR virtual keyboard.";
+const char kEnableVrShellKeyboardDescription[] =
+    "Enables a virtual keyboard DescriptionR as an input modality.";
+
 const char kVrCustomTabBrowsingName[] = "Enable Custom Tab browsing in VR.";
 const char kVrCustomTabBrowsingDescription[] =
     "Allow browsing with a VR headset in a Custom Tab if available for this "
