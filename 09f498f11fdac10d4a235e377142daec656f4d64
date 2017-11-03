@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b4031b7_0586b892",
+        "filename": "device/vr/openvr/openvr_helpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-03T01:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "377964bd_6b23dc73",
+      "revId": "09f498f11fdac10d4a235e377142daec656f4d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48d9d000_2968434c",
         "filename": "device/vr/openvr/openvr_helpers.h",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "78efd189_49fe3abb",
+        "filename": "device/vr/openvr/openvr_helpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-03T01:05:13Z",
+      "side": 1,
+      "message": "I moved the body to .cc, but the emplace is giving compiler errors.  I think I might need to turn the {0.0f, 0.0f, 0.0f, 1.0f} into a std::initializer_list explicitly, or something equally complicated, which doesn\u0027t look any nicer than what I have here.",
+      "parentUuid": "48d9d000_2968434c",
+      "revId": "09f498f11fdac10d4a235e377142daec656f4d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecfb051e_89274726",
         "filename": "device/vr/vr_service.mojom",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "09f498f11fdac10d4a235e377142daec656f4d64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8361e54_51e23465",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-03T01:05:13Z",
+      "side": 1,
+      "message": "Indeed - we want to host it in a sandboxed utility process in the future, but currently it is in the browser process on all platforms.\n\nI added a comment.",
+      "parentUuid": "ecfb051e_89274726",
+      "revId": "09f498f11fdac10d4a235e377142daec656f4d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
