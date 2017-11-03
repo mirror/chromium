@@ -79,7 +79,11 @@ public class AutofillProfilesFragment
                 PorterDuff.Mode.SRC_IN);
         pref.setIcon(plusIcon);
         pref.setTitle(R.string.autofill_create_profile);
-        pref.setKey(PREF_NEW_PROFILE); // For testing.
+
+        // The key is set only for tests. Otherwise, there will be a strict mode violation.
+        if (sObserverForTest != null) {
+            pref.setKey(PREF_NEW_PROFILE);
+        }
         getPreferenceScreen().addPreference(pref);
     }
 
