@@ -382,6 +382,4 @@ IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
           ->empty());
 }
 
-// TODO(jialiul): Add more tests where multiple browser windows are involved.
-
 }  // namespace safe_browsing

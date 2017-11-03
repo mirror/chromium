@@ -115,6 +115,7 @@ void MdSettingsUI::RegisterProfilePrefs(
 MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
     : content::WebUIController(web_ui),
       WebContentsObserver(web_ui->GetWebContents()) {
+  LOG(ERROR) << "MdSettingsUI::MdSettingsUI";
 #if BUILDFLAG(OPTIMIZE_WEBUI)
   std::vector<std::string> exclude_from_gzip;
 #endif
@@ -224,6 +225,7 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
 #endif  // defined(OS_WIN)
 
 #if defined(SAFE_BROWSING_DB_LOCAL)
+  LOG(ERROR) << "Create ChangePasswordHandler";
   AddSettingsPageUIHandler(base::MakeUnique<ChangePasswordHandler>(profile));
   html_source->AddBoolean("changePasswordEnabled",
                           safe_browsing::ChromePasswordProtectionService::

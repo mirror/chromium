@@ -65,6 +65,10 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
     // Called when user marks the site as legitimate.
     virtual void OnMarkingSiteAsLegitimate(const GURL& url) = 0;
 
+    // Called when we start showing a Gaia password reuse modal warning.
+    // No-op by default.
+    virtual void OnGaiaPasswordReuseWarningShown();
+
     // Only to be used by tests. Subclasses must override to manually call the
     // respective button click handler.
     virtual void InvokeActionForTesting(
@@ -90,6 +94,10 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
 
   void ShowModalWarning(content::WebContents* web_contents,
                         const std::string& verdict_token) override;
+
+  // Record UMA stats, inform observers and update prefs.
+  void OnWarningShown(content::WebContents* web_contents,
+                      WarningUIType ui_type);
 
   // Called when user interacts with password protection UIs.
   void OnUserAction(content::WebContents* web_contents,
