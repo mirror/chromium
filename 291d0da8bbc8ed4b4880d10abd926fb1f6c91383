@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9d3bf82_cfe5d62b",
+        "filename": "testing/scripts/check_network_annotations.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-03T18:02:14Z",
+      "side": 1,
+      "message": "OK, I had tried to make it easier to find. I will revert it to previous state and just change the result to a 3 state result for OK/Warning/Failure. Is there an standard for it?",
+      "parentUuid": "36460c7d_c21b6f66",
+      "revId": "291d0da8bbc8ed4b4880d10abd926fb1f6c91383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f631788_65e45a0a",
         "filename": "tools/traffic_annotation/scripts/check_annotations.py",
         "patchSetId": 18
@@ -39,6 +57,30 @@
       "revId": "291d0da8bbc8ed4b4880d10abd926fb1f6c91383",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492d0542_bf5ab163",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-03T18:02:14Z",
+      "side": 1,
+      "message": "This file is located in traffic_annotation/scripts, and the executable is in traffic_annotation/bin/[platform].",
+      "parentUuid": "2f631788_65e45a0a",
+      "range": {
+        "startLine": 46,
+        "startChar": 39,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "291d0da8bbc8ed4b4880d10abd926fb1f6c91383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6260e07f_54e76474",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-03T18:02:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b07c4211_28ec11d1",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 26
+      },
+      "revId": "291d0da8bbc8ed4b4880d10abd926fb1f6c91383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0455ee6b_f0f2b6a4",
         "filename": "tools/traffic_annotation/scripts/check_annotations.py",
         "patchSetId": 18
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "411a605e_7b5607a3",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-03T18:02:14Z",
+      "side": 1,
+      "message": "It was done to return errors and warnings to the calling script, but now that it is reported in this script, it\u0027s no more needed.",
+      "parentUuid": "0455ee6b_f0f2b6a4",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 21
+      },
+      "revId": "291d0da8bbc8ed4b4880d10abd926fb1f6c91383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79df6cab_1470ecdc",
         "filename": "tools/traffic_annotation/scripts/check_annotations.py",
         "patchSetId": 18
@@ -108,6 +198,30 @@
       "revId": "291d0da8bbc8ed4b4880d10abd926fb1f6c91383",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f625c9d_b3f406f2",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-03T18:02:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79df6cab_1470ecdc",
+      "range": {
+        "startLine": 169,
+        "startChar": 18,
+        "endLine": 169,
+        "endChar": 23
+      },
+      "revId": "291d0da8bbc8ed4b4880d10abd926fb1f6c91383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
