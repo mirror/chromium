@@ -58,6 +58,10 @@ pin-keyboard {
   opacity: 1;
 }
 
+.pod.rounded-corner {
+  border-radius: 8px;
+}
+
 .user-image-pane {
   height: 96px;
   left: 105px;
