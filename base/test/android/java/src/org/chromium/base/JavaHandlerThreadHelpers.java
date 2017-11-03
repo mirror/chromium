@@ -10,7 +10,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.CalledByNativeUnchecked;
 import org.chromium.base.annotations.JNINamespace;
 
-@JNINamespace("base")
+@JNINamespace("base::android")
 class JavaHandlerThreadHelpers {
     private static boolean sTaskExecuted;
     // This is executed as part of base_unittests. This tests that JavaHandlerThread can be used
@@ -51,4 +51,16 @@ class JavaHandlerThreadHelpers {
     private static void throwException() {
         throw new RuntimeException("Test exception for base_unittests");
     }
+
+    @CalledByNative
+    private static void postJavaTask() {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                nativeOnJavaTaskRun();
+            }
+        });
+    }
+
+    private static native void nativeOnJavaTaskRun();
 }

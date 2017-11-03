@@ -7,6 +7,8 @@
 
 #include <memory>
 
+#include "base/callback.h"
+
 namespace base {
 namespace android {
 
@@ -20,6 +22,11 @@ class JavaHandlerThreadHelpers {
   static std::unique_ptr<JavaHandlerThread> CreateJavaFirst();
 
   static void HandleJniExceptionAndAbort();
+
+  static void SetOnJavaTaskRunCallback(
+      const RepeatingCallback<void(bool)>& callback);
+
+  static void PostJavaTask();
 
  private:
   JavaHandlerThreadHelpers() = default;
