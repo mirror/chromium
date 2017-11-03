@@ -136,6 +136,7 @@ void Ui::OnControllerUpdated(const ControllerModel& controller_model,
                              const ReticleModel& reticle_model) {
   model_->controller = controller_model;
   model_->reticle = reticle_model;
+  model_->controller.quiescent = input_manager_->controller_quiescent();
 }
 
 void Ui::OnProjMatrixChanged(const gfx::Transform& proj_matrix) {
@@ -153,6 +154,11 @@ void Ui::OnWebVrTimeoutImminent() {
 
 void Ui::OnWebVrTimedOut() {
   model_->web_vr_timeout_state = kWebVrTimedOut;
+}
+
+bool Ui::IsControllerVisible() const {
+  UiElement* controller_group = scene_->GetUiElementByName(kControllerGroup);
+  return controller_group && controller_group->GetTargetOpacity() > 0.0f;
 }
 
 }  // namespace vr
