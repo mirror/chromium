@@ -432,7 +432,9 @@ ImageResourceContent::UpdateImageResult ImageResourceContent::UpdateImage(
         }
       }
 
-      if (!image_ || image_->IsNull()) {
+      if (!image_ ||
+          (image_->IsNull() && (!image_->IsSVGImage() ||
+                                size_available_ == Image::kSizeUnavailable))) {
         ClearImage();
         return UpdateImageResult::kShouldDecodeError;
       }
