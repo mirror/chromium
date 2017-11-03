@@ -194,8 +194,11 @@ void LayoutTableRow::UpdateLayout() {
     cell->SetLogicalTop(LogicalTop());
     if (!cell->NeedsLayout())
       Section()->MarkChildForPaginationRelayoutIfNeeded(*cell, layouter);
-    if (cell->NeedsLayout())
+    if (cell->NeedsLayout()) {
+      if (cell->CellChildrenNeedLayout())
+        cell->ClearIntrinsicPadding();
       cell->UpdateLayout();
+    }
     if (paginated)
       Section()->UpdateFragmentationInfoForChild(*cell);
   }
