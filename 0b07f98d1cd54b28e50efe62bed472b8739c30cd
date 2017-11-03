@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "57499da0_2ed3417a",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-03T07:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cfcb1ad_da62012a",
+      "range": {
+        "startLine": 36,
+        "startChar": 29,
+        "endLine": 36,
+        "endChar": 37
+      },
+      "revId": "0b07f98d1cd54b28e50efe62bed472b8739c30cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee607545_bde6471d",
         "filename": "components/cronet/ios/Cronet.h",
         "patchSetId": 4
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "921dfbec_27e9435f",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-03T07:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f2c47ac_7f77c48a",
+      "range": {
+        "startLine": 205,
+        "startChar": 31,
+        "endLine": 205,
+        "endChar": 37
+      },
+      "revId": "0b07f98d1cd54b28e50efe62bed472b8739c30cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33c17459_4fcd7ecc",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 4
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "eba8f234_958766b8",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-03T07:14:50Z",
+      "side": 1,
+      "message": "How do I do that?",
+      "parentUuid": "33c17459_4fcd7ecc",
+      "range": {
+        "startLine": 3,
+        "startChar": 16,
+        "endLine": 3,
+        "endChar": 23
+      },
+      "revId": "0b07f98d1cd54b28e50efe62bed472b8739c30cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d1da5a9_37edda4f",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 4
@@ -105,6 +177,30 @@
       "writtenOn": "2017-11-02T20:50:36Z",
       "side": 1,
       "message": "Can you elaborate on the question?",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 16
+      },
+      "revId": "0b07f98d1cd54b28e50efe62bed472b8739c30cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce18c35_d7169219",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-03T07:14:50Z",
+      "side": 1,
+      "message": "Putting the entire test in an |if (@available(iOS 10, *))| block seems like it will be annoying, especially if the tests gets larger or there are multiple test cases.\n\nIt would be nice if there was a way to mark the entire file as depending on iOS 10.",
+      "parentUuid": "9d1da5a9_37edda4f",
       "range": {
         "startLine": 37,
         "startChar": 14,
