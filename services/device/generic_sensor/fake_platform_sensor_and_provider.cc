@@ -4,6 +4,8 @@
 
 #include "services/device/generic_sensor/fake_platform_sensor_and_provider.h"
 
+using ::testing::Return;
+
 namespace device {
 
 FakePlatformSensor::FakePlatformSensor(mojom::SensorType type,
@@ -58,6 +60,18 @@ void FakePlatformSensorProvider::CreateSensorInternal(
   auto sensor =
       base::MakeRefCounted<FakePlatformSensor>(type, std::move(mapping), this);
   DoCreateSensorInternal(type, std::move(sensor), callback);
+}
+
+MockPlatformSensorClient::MockPlatformSensorClient(
+    scoped_refptr<PlatformSensor> sensor)
+    : sensor_(sensor) {
+  DCHECK(sensor_);
+  sensor_->AddClient(this);
+  ON_CALL(*this, IsSuspended()).WillByDefault(Return(false));
+}
+
+MockPlatformSensorClient::~MockPlatformSensorClient() {
+  sensor_->RemoveClient(this);
 }
 
 }  // namespace device
