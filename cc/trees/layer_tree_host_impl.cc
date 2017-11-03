@@ -244,6 +244,7 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       requires_high_res_to_draw_(false),
       is_likely_to_require_a_draw_(false),
       has_valid_layer_tree_frame_sink_(false),
+      oop_raster_enabled_(false),
       scroll_animating_latched_element_id_(kInvalidElementId),
       has_scrolled_by_wheel_(false),
       has_scrolled_by_touch_(false),
@@ -2489,8 +2490,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
         compositor_context_provider, worker_context_provider,
         resource_provider_.get(), settings_.use_distance_field_text,
         msaa_sample_count, settings_.preferred_tile_format,
-        settings_.async_worker_context_enabled,
-        settings_.enable_oop_rasterization);
+        settings_.async_worker_context_enabled, oop_raster_enabled_);
     return;
   }
 
@@ -2673,6 +2673,11 @@ bool LayerTreeHostImpl::InitializeRenderer(
   // already.
   SetNeedUpdateGpuRasterizationStatus();
   UpdateGpuRasterizationStatus();
+
+  const auto& caps =
+      layer_tree_frame_sink_->context_provider()->ContextCapabilities();
+  oop_raster_enabled_ =
+      settings_.enable_oop_rasterization && caps.supports_oop_raster;
 
   // See note in LayerTreeImpl::UpdateDrawProperties, new LayerTreeFrameSink
   // means a new max texture size which affects draw properties. Also, if the

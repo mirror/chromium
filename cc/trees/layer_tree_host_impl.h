@@ -910,6 +910,8 @@ class CC_EXPORT LayerTreeHostImpl
   // it's lost instead of having this bool.
   bool has_valid_layer_tree_frame_sink_;
 
+  bool oop_raster_enabled_;
+
   std::unique_ptr<Viewport> viewport_;
 
   std::unique_ptr<PendingTreeDurationHistogramTimer>
