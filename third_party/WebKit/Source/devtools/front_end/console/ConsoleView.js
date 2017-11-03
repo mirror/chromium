@@ -70,6 +70,8 @@ Console.ConsoleView = class extends UI.VBox {
     this._visibleViewMessages = [];
     this._urlToMessageCount = {};
     this._hiddenByFilterCount = 0;
+    /** @type {!Map<!Console.ConsoleViewMessage, boolean>} */
+    this._shouldBeVisibleCache = new Map();
 
     /** @type {!Map<string, !Array<!Console.ConsoleViewMessage>>} */
     this._groupableMessages = new Map();
@@ -232,7 +234,15 @@ Console.ConsoleView = class extends UI.VBox {
   _onFilterChanged() {
     this._filter._currentFilter.levelsMask = this._isSidebarOpen ? Console.ConsoleFilter.allLevelsFilterValue() :
                                                                    this._filter._messageLevelFiltersSetting.get();
-    this._updateMessageList();
+    this._cancelBuildVisibleCache();
+    if (this._immediatelyFilterMessagesForTest)
+      this._updateMessageList();
+    else
+      this._buildVisibleCache(0, this._consoleMessages.slice());
+  }
+
+  _setImmediatelyFilterMessagesForTest() {
+    this._immediatelyFilterMessagesForTest = true;
   }
 
   /**
@@ -526,8 +536,12 @@ Console.ConsoleView = class extends UI.VBox {
    * @return {boolean}
    */
   _shouldMessageBeVisible(viewMessage) {
-    return this._filter.shouldBeVisible(viewMessage) &&
+    if (this._shouldBeVisibleCache.has(viewMessage))
+      return this._shouldBeVisibleCache.get(viewMessage);
+    var shouldBeVisible = this._filter.shouldBeVisible(viewMessage) &&
         (!this._isSidebarOpen || this._sidebar.shouldBeVisible(viewMessage));
+    this._shouldBeVisibleCache.set(viewMessage, shouldBeVisible);
+    return shouldBeVisible;
   }
 
   /**
@@ -589,6 +603,7 @@ Console.ConsoleView = class extends UI.VBox {
   }
 
   _consoleCleared() {
+    this._cancelBuildVisibleCache();
     this._currentMatchRangeIndex = -1;
     this._consoleMessages = [];
     this._groupableMessages.clear();
@@ -697,6 +712,35 @@ Console.ConsoleView = class extends UI.VBox {
     }
 
     return false;
+  }
+
+  /**
+   * @param {number} startIndex
+   * @param {!Array<!Console.ConsoleViewMessage>} viewMessages
+   */
+  _buildVisibleCache(startIndex, viewMessages) {
+    var workDone = 0;
+    var startTime = Date.now();
+    for (var i = startIndex; i < viewMessages.length && (workDone < 5 || Date.now() - startTime < 12); ++i) {
+      var viewMessage = viewMessages[i];
+      this._shouldBeVisibleCache.set(viewMessage, this._shouldMessageBeVisible(viewMessage));
+      workDone++;
+    }
+
+    if (i >= viewMessages.length) {
+      this._updateMessageList();
+      return;
+    }
+    this._buildVisibleCacheTimeout =
+        this.element.window().requestAnimationFrame(this._buildVisibleCache.bind(this, i, viewMessages));
+  }
+
+  _cancelBuildVisibleCache() {
+    this._shouldBeVisibleCache.clear();
+    if (this._buildVisibleCacheTimeout) {
+      this.element.window().cancelAnimationFrame(this._buildVisibleCacheTimeout);
+      delete this._buildVisibleCacheTimeout;
+    }
   }
 
   _updateMessageList() {
