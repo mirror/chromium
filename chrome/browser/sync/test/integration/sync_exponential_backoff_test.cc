@@ -79,7 +79,7 @@ IN_PROC_BROWSER_TEST_F(SyncExponentialBackoffTest, OfflineToOnline) {
   // Trigger network change notification and remember time when it happened.
   // Ensure that scheduler runs canary job immediately.
   GetFakeServer()->EnableNetwork();
-  net::NetworkChangeNotifier::NotifyObserversOfConnectionTypeChangeForTests(
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_ETHERNET);
 
   base::Time network_notification_time = base::Time::Now();
