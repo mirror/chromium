@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06134a91_e0a61281",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-03T22:26:18Z",
+      "side": 1,
+      "message": "typo: an → and",
+      "revId": "f6d1a0e16fef4bbec5d0cf57067b81109644a359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a705897d_5bc2aa0d",
+        "filename": "base/allocator/partition_allocator/page_allocator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-03T22:26:18Z",
+      "side": 1,
+      "message": "Typo: aviod → avoid",
+      "revId": "f6d1a0e16fef4bbec5d0cf57067b81109644a359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f325c5_26c60d5b",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-03T22:26:18Z",
+      "side": 1,
+      "message": "ASSERT → CHECK\n\nOS can support → the OS can support",
+      "revId": "f6d1a0e16fef4bbec5d0cf57067b81109644a359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
