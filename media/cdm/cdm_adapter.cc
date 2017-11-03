@@ -1154,6 +1154,8 @@ cdm::FileIO* CdmAdapter::CreateFileIO(cdm::FileIOClient* client) {
 }
 
 void CdmAdapter::RequestStorageId(uint32_t version) {
+  DCHECK_LT(version, 0x80000000) << "Requesting a reserved version.";
+
   helper_->GetStorageId(version, base::Bind(&CdmAdapter::OnStorageIdObtained,
                                             weak_factory_.GetWeakPtr()));
 }
