@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f171c61_ee16b473",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-03T01:44:42Z",
+      "side": 1,
+      "message": "s/struct/class to be consistent with what you said in the CL description.",
+      "revId": "4574d9a5d9486ce581bdf2fa7741adaa5b0be6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecd9efe_79efb014",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-03T01:44:42Z",
+      "side": 1,
+      "message": "MAybe this could be IsFlushRequest? Otherwise it might seem like the grammar is off if you parse flush as a verb.",
+      "revId": "4574d9a5d9486ce581bdf2fa7741adaa5b0be6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d770f7_b55652cf",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-03T01:44:42Z",
+      "side": 1,
+      "message": "Should we change this to a unique_ptr while we\u0027re at it?\n\nAlternatively, could this just be a queue\u003cInputBuffer\u003e?",
+      "revId": "4574d9a5d9486ce581bdf2fa7741adaa5b0be6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
