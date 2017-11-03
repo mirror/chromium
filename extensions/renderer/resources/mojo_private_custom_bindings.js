@@ -12,7 +12,7 @@ binding.registerCustomHook(function(bindingsAPI) {
   let apiFunctions = bindingsAPI.apiFunctions;
 
   apiFunctions.setHandleRequest('requireAsync', function(moduleName) {
-    return requireAsync(moduleName);
+    return requireAsyncAMD(moduleName);
   });
 });
 

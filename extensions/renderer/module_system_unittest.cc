@@ -37,6 +37,29 @@ class CounterNatives : public ObjectBackedNativeHandler {
   int counter_;
 };
 
+class ModuleSystemForwarderNatives : public ObjectBackedNativeHandler {
+ public:
+  explicit ModuleSystemForwarderNatives(
+      ScriptContext* context,
+      base::WeakPtr<ModuleSystem> module_system)
+      : ObjectBackedNativeHandler(context),
+        module_system_(std::move(module_system)) {
+    RouteFunction("Get", base::Bind(&ModuleSystemForwarderNatives::Get,
+                                    base::Unretained(this)));
+  }
+
+  void Get(const v8::FunctionCallbackInfo<v8::Value>& args) {
+    if (!module_system_) {
+      args.GetReturnValue().SetUndefined();
+      return;
+    }
+    args.GetReturnValue().Set(module_system_->NewInstance());
+  }
+
+ private:
+  base::WeakPtr<ModuleSystem> module_system_;
+};
+
 class TestExceptionHandler : public ModuleSystem::ExceptionHandler {
  public:
   TestExceptionHandler()
@@ -283,13 +306,9 @@ TEST_F(ModuleSystemTest, TestRequireAsync) {
   ModuleSystem::NativesEnabledScope natives_enabled_scope(
       env()->module_system());
   env()->RegisterModule("add",
-                        "define('add', [], function() {"
-                        "  return { Add: function(x, y) { return x + y; } };"
-                        "});");
-  env()->RegisterModule("math",
-                        "define('math', ['add'], function(add) {"
-                        "  return { Add: add.Add };"
-                        "});");
+                        "exports.$set('Add',"
+                        "function(x, y) { return x + y; });");
+  env()->RegisterModule("math", "exports.$set('Add', require('add').Add);");
   env()->RegisterModule(
       "test",
       "requireAsync('math').then(function(math) {"
@@ -299,18 +318,29 @@ TEST_F(ModuleSystemTest, TestRequireAsync) {
   RunResolvedPromises();
 }
 
+TEST_F(ModuleSystemTest, TestRequireAsyncReject) {
+  ExpectNoAssertionsMade();
+  ModuleSystem::NativesEnabledScope natives_enabled_scope(
+      env()->module_system());
+  env()->RegisterModule(
+      "test",
+      "var assert = requireNative('assert');"
+      "requireAsync('non_existent_module').then(function(non_existent_module) {"
+      "  assert.AssertTrue(false);"
+      "}).catch(function() {});");
+  env()->module_system()->Require("test");
+  RunResolvedPromises();
+}
+
 TEST_F(ModuleSystemTest, TestRequireAsyncInParallel) {
   ModuleSystem::NativesEnabledScope natives_enabled_scope(
       env()->module_system());
   env()->RegisterModule("add",
-                        "define('add', [], function() {"
-                        "  return { Add: function(x, y) { return x + y; } };"
-                        "});");
-  env()->RegisterModule(
-      "subtract",
-      "define('subtract', [], function() {"
-      "  return { Subtract: function(x, y) { return x - y; } };"
-      "});");
+                        "exports.$set('Add',"
+                        "function(x, y) { return x + y; });");
+  env()->RegisterModule("subtract",
+                        "exports.$set('Subtract',"
+                        "function(x, y) { return x - y; });");
   env()->RegisterModule(
       "math",
       "exports.$set('AddAndSubtract', function(x, y, z) {"
@@ -332,14 +362,8 @@ TEST_F(ModuleSystemTest, TestRequireAsyncInParallel) {
 TEST_F(ModuleSystemTest, TestNestedRequireAsyncs) {
   ModuleSystem::NativesEnabledScope natives_enabled_scope(
       env()->module_system());
-  env()->RegisterModule("first",
-                        "define('first', [], function() {"
-                        "  return { next: 'second' };"
-                        "});");
-  env()->RegisterModule("second",
-                        "define('second', [], function() {"
-                        "  return { next: '' };"
-                        "});");
+  env()->RegisterModule("first", "exports.$set('next', 'second');");
+  env()->RegisterModule("second", "exports.$set('next', '');");
   env()->RegisterModule(
       "test",
       "requireAsync('first').then(function(module) {"
@@ -351,78 +375,25 @@ TEST_F(ModuleSystemTest, TestNestedRequireAsyncs) {
   RunResolvedPromises();
 }
 
-TEST_F(ModuleSystemTest, TestRequireFromAMDModule) {
-  ModuleSystem::NativesEnabledScope natives_enabled_scope(
-      env()->module_system());
-  env()->RegisterModule(
-      "add", "exports.$set('Add', function(x, y) { return x + y; });");
-  env()->RegisterModule("math",
-                        "define('math', [], function() {"
-                        "  var add = require('add');"
-                        "  return { Add: add.Add };"
-                        "});");
-  env()->RegisterModule(
-      "test",
-      "requireAsync('math').then(function(math) {"
-      "  requireNative('assert').AssertTrue(math.Add(3, 5) == 8);"
-      "});");
-  env()->module_system()->Require("test");
-  RunResolvedPromises();
-}
-
-TEST_F(ModuleSystemTest, TestRequireAsyncFromAMDModule) {
-  ModuleSystem::NativesEnabledScope natives_enabled_scope(
-      env()->module_system());
-  env()->RegisterModule("add",
-                        "define('add', [], function() {"
-                        "  return { Add: function(x, y) { return x + y; } };"
-                        "});");
-  env()->RegisterModule("math",
-                        "define('math', [], function() {"
-                        "  function Add(x, y) {"
-                        "    return requireAsync('add').then(function(add) {"
-                        "      return add.Add(x, y);"
-                        "    });"
-                        "  }"
-                        "  return { Add: Add };"
-                        "});");
-  env()->RegisterModule("test",
-                        "requireAsync('math').then(function(math) {"
-                        "  return math.Add(3, 6);"
-                        "}).then(function(result) {"
-                        "  requireNative('assert').AssertTrue(result == 9);"
-                        "});");
-  env()->module_system()->Require("test");
-  RunResolvedPromises();
-}
-
 TEST_F(ModuleSystemTest, TestRequireAsyncFromAnotherContext) {
   ModuleSystem::NativesEnabledScope natives_enabled_scope(
       env()->module_system());
   env()->RegisterModule(
       "test",
-      "requireAsync('natives').then(function(natives) {"
-      "  natives.requireAsync('ping').then(function(ping) {"
-      "    return ping();"
-      "  }).then(function(result) {"
-      "    requireNative('assert').AssertTrue(result == 'pong');"
-      "  });"
+      "var natives = requireNative('natives').Get();"
+      "natives.requireAsync('ping').then(function(ping) {"
+      "  return ping.Ping();"
+      "}).then(function(result) {"
+      "  requireNative('assert').AssertTrue(result == 'pong');"
       "});");
   std::unique_ptr<ModuleSystemTestEnvironment> other_env = CreateEnvironment();
   other_env->RegisterModule("ping",
-                            "define('ping', ['natives'], function(natives) {"
-                            "  return function() {"
-                            "    return 'pong';"
-                            "  }"
-                            "});");
-  gin::ModuleRegistry::From(env()->context()->v8_context())
-      ->AddBuiltinModule(
-          env()->isolate(), "natives",
-          other_env->module_system()->NewInstance());
-  gin::ModuleRegistry::From(other_env->context()->v8_context())
-      ->AddBuiltinModule(
-          env()->isolate(), "natives",
-          env()->module_system()->NewInstance());
+                            "exports.$set('Ping', function() {"
+                            "  return 'pong';"
+                            "})");
+  env()->module_system()->RegisterNativeHandler(
+      "natives", std::make_unique<ModuleSystemForwarderNatives>(
+                     env()->context(), other_env->module_system_weak_ptr()));
   env()->module_system()->Require("test");
   RunResolvedPromises();
 }
@@ -431,76 +402,33 @@ TEST_F(ModuleSystemTest, TestRequireAsyncBetweenContexts) {
   ModuleSystem::NativesEnabledScope natives_enabled_scope(
       env()->module_system());
   env()->RegisterModule("pong",
-                        "define('pong', [], function() {"
-                        "  return function() { return 'done'; };"
+                        "exports.$set('Pong', function() {"
+                        "  return 'done';"
                         "});");
   env()->RegisterModule(
       "test",
-      "requireAsync('natives').then(function(natives) {"
-      "  natives.requireAsync('ping').then(function(ping) {"
-      "    return ping();"
-      "  }).then(function(pong) {"
-      "    return pong();"
-      "  }).then(function(result) {"
-      "    requireNative('assert').AssertTrue(result == 'done');"
-      "  });"
+      "var natives = requireNative('natives').Get();"
+      "natives.requireAsync('ping').then(function(ping) {"
+      "  return ping.Ping();"
+      "}).then(function(pong) {"
+      "  return pong.Pong();"
+      "}).then(function(result) {"
+      "  requireNative('assert').AssertTrue(result == 'done');"
       "});");
   std::unique_ptr<ModuleSystemTestEnvironment> other_env = CreateEnvironment();
+  ModuleSystem::NativesEnabledScope other_natives_enabled_scope(
+      other_env->module_system());
   other_env->RegisterModule("ping",
-                            "define('ping', ['natives'], function(natives) {"
-                            "  return function() {"
-                            "    return natives.requireAsync('pong');"
-                            "  }"
+                            "var natives = requireNative('natives').Get();"
+                            "exports.$set('Ping', function() {"
+                            "  return natives.requireAsync('pong');"
                             "});");
-  gin::ModuleRegistry::From(env()->context()->v8_context())
-      ->AddBuiltinModule(
-          env()->isolate(), "natives",
-          other_env->module_system()->NewInstance());
-  gin::ModuleRegistry::From(other_env->context()->v8_context())
-      ->AddBuiltinModule(
-          env()->isolate(), "natives",
-          env()->module_system()->NewInstance());
-  env()->module_system()->Require("test");
-  RunResolvedPromises();
-}
-
-TEST_F(ModuleSystemTest, TestRequireAsyncFromContextWithNoModuleRegistry) {
-  ModuleSystem::NativesEnabledScope natives_enabled_scope(
-      env()->module_system());
-  env()->RegisterModule("test",
-                        "requireAsync('natives').then(function(natives) {"
-                        "  var AssertTrue = requireNative('assert').AssertTrue;"
-                        "  natives.requireAsync('foo').then(function() {"
-                        "    AssertTrue(false);"
-                        "  }).catch(function(error) {"
-                        "    AssertTrue(error.message == "
-                        "               'Extension view no longer exists');"
-                        "  });"
-                        "});");
-  std::unique_ptr<ModuleSystemTestEnvironment> other_env = CreateEnvironment();
-  gin::ModuleRegistry::From(env()->context()->v8_context())
-      ->AddBuiltinModule(
-          env()->isolate(), "natives",
-          other_env->module_system()->NewInstance());
-  other_env->ShutdownGin();
-  env()->module_system()->Require("test");
-  RunResolvedPromises();
-}
-
-TEST_F(ModuleSystemTest, TestRequireAsyncFromContextWithNoModuleSystem) {
-  ModuleSystem::NativesEnabledScope natives_enabled_scope(
-      env()->module_system());
-  env()->RegisterModule("test",
-                        "requireAsync('natives').then(function(natives) {"
-                        "  requireNative('assert').AssertTrue("
-                        "      natives.requireAsync('foo') === undefined);"
-                        "});");
-  std::unique_ptr<ModuleSystemTestEnvironment> other_env = CreateEnvironment();
-  gin::ModuleRegistry::From(env()->context()->v8_context())
-      ->AddBuiltinModule(
-          env()->isolate(), "natives",
-          other_env->module_system()->NewInstance());
-  other_env->ShutdownModuleSystem();
+  env()->module_system()->RegisterNativeHandler(
+      "natives", std::make_unique<ModuleSystemForwarderNatives>(
+                     env()->context(), other_env->module_system_weak_ptr()));
+  other_env->module_system()->RegisterNativeHandler(
+      "natives", std::make_unique<ModuleSystemForwarderNatives>(
+                     other_env->context(), env()->module_system_weak_ptr()));
   env()->module_system()->Require("test");
   RunResolvedPromises();
 }

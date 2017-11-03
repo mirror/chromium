@@ -176,6 +176,8 @@ ModuleSystem::ModuleSystem(ScriptContext* context, const SourceMap* source_map)
   RouteFunction(
       "requireNative",
       base::Bind(&ModuleSystem::RequireNative, base::Unretained(this)));
+  RouteFunction("requireAsyncAMD", base::Bind(&ModuleSystem::RequireAsyncAMD,
+                                              base::Unretained(this)));
   RouteFunction(
       "requireAsync",
       base::Bind(&ModuleSystem::RequireAsync, base::Unretained(this)));
@@ -625,7 +627,7 @@ v8::MaybeLocal<v8::Object> ModuleSystem::RequireNativeFromString(
   return i->second->NewInstance();
 }
 
-void ModuleSystem::RequireAsync(
+void ModuleSystem::RequireAsyncAMD(
     const v8::FunctionCallbackInfo<v8::Value>& args) {
   CHECK_EQ(1, args.Length());
   std::string module_name = *v8::String::Utf8Value(args[0]);
@@ -655,14 +657,38 @@ void ModuleSystem::RequireAsync(
     LoadModule(module_name);
 }
 
+void ModuleSystem::RequireAsync(
+    const v8::FunctionCallbackInfo<v8::Value>& args) {
+  CHECK_EQ(1, args.Length());
+  v8::Local<v8::Context> v8_context = context_->v8_context();
+  v8::Local<v8::Promise::Resolver> resolver(
+      v8::Promise::Resolver::New(v8_context).ToLocalChecked());
+  args.GetReturnValue().Set(resolver->GetPromise());
+  std::unique_ptr<v8::Global<v8::Promise::Resolver>> global_resolver(
+      new v8::Global<v8::Promise::Resolver>(GetIsolate(), resolver));
+
+  v8::Local<v8::Value> module;
+  v8::Local<v8::String> module_name = args[0].As<v8::String>();
+  module = RequireForJsInner(module_name, true /* create */);
+
+  auto maybe =
+      module->IsUndefined()
+          ? resolver->Reject(context()->v8_context(),
+                             v8::Exception::Error(ToV8StringUnsafe(
+                                 GetIsolate(), "Failed to load module")))
+          : resolver->Resolve(context()->v8_context(), module);
+  CHECK(IsTrue(maybe));
+}
+
 v8::Local<v8::String> ModuleSystem::WrapSource(v8::Local<v8::String> source) {
   v8::EscapableHandleScope handle_scope(GetIsolate());
   // Keep in order with the arguments in RequireForJsInner.
   v8::Local<v8::String> left = ToV8StringUnsafe(
       GetIsolate(),
-      "(function(define, require, requireNative, requireAsync, exports, "
-      "console, privates, apiBridge, bindingUtil, getInternalApi,"
-      "$Array, $Function, $JSON, $Object, $RegExp, $String, $Error) {"
+      "(function(define, require, requireNative, requireAsyncAMD, "
+      "requireAsync, exports, console, privates, apiBridge, bindingUtil, "
+      "getInternalApi, $Array, $Function, $JSON, $Object, $RegExp, $String, "
+      "$Error) {"
       "'use strict';");
   v8::Local<v8::String> right = ToV8StringUnsafe(GetIsolate(), "\n})");
   return handle_scope.Escape(v8::Local<v8::String>(
@@ -789,6 +815,8 @@ v8::Local<v8::Value> ModuleSystem::LoadModuleWithNativeAPIBridge(
       GetPropertyUnsafe(v8_context, natives, "require",
                         v8::NewStringType::kInternalized),
       GetPropertyUnsafe(v8_context, natives, "requireNative",
+                        v8::NewStringType::kInternalized),
+      GetPropertyUnsafe(v8_context, natives, "requireAsyncAMD",
                         v8::NewStringType::kInternalized),
       GetPropertyUnsafe(v8_context, natives, "requireAsync",
                         v8::NewStringType::kInternalized),

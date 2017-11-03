@@ -17,7 +17,7 @@ unittestBindings.exportTests([
     test.assertTrue(!!define);
     test.assertTrue(!!require);
     test.assertTrue(!!requireNative);
-    test.assertTrue(!!requireAsync);
+    test.assertTrue(!!requireAsyncAMD);
     test.assertEq(undefined, chrome.runtime.lastError);
     // chrome.extension is defined at the //chrome layer, and so won't be
     // available.
@@ -40,9 +40,9 @@ unittestBindings.exportTests([
   },
   function testMojoModulesAreAvailable() {
     Promise.all([
-      requireAsync('mojo/public/js/bindings'),
-      requireAsync('mojo/public/js/core'),
-      requireAsync('content/public/renderer/frame_interfaces'),
+      requireAsyncAMD('mojo/public/js/bindings'),
+      requireAsyncAMD('mojo/public/js/core'),
+      requireAsyncAMD('content/public/renderer/frame_interfaces'),
     ]).then(test.callback(function(modules) {
       var bindings = modules[0];
       var core = modules[1];

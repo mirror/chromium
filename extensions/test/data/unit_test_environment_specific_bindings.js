@@ -8,19 +8,19 @@ function registerHooks(api) {
   var apiFunctions = api.apiFunctions;
 
   apiFunctions.setHandleRequest('notifyPass', function() {
-    requireAsync('testNatives').then(function(natives) {
+    requireAsyncAMD('testNatives').then(function(natives) {
       natives.NotifyPass();
     });
   });
 
   apiFunctions.setHandleRequest('notifyFail', function(message) {
-    requireAsync('testNatives').then(function(natives) {
+    requireAsyncAMD('testNatives').then(function(natives) {
       natives.NotifyFail(message);
     });
   });
 
   apiFunctions.setHandleRequest('log', function() {
-    requireAsync('testNatives').then(function(natives) {
+    requireAsyncAMD('testNatives').then(function(natives) {
       natives.Log($Array.join(arguments, ' '));
     });
   });

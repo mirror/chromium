@@ -41,6 +41,8 @@ class SourceMap;
 // Note that a ModuleSystem must be used only in conjunction with a single
 // v8::Context.
 // TODO(koz): Rename this to JavaScriptModuleSystem.
+// TODO(yzshen): crbug.com/718047 Remove all gin-related things. Mojo no longer
+// relies on gin.
 class ModuleSystem : public ObjectBackedNativeHandler,
                      public gin::ModuleRegistryObserver {
  public:
@@ -212,6 +214,7 @@ class ModuleSystem : public ObjectBackedNativeHandler,
 
   // Return a promise for a requested module.
   // |args[0]| - the name of a module.
+  void RequireAsyncAMD(const v8::FunctionCallbackInfo<v8::Value>& args);
   void RequireAsync(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wraps |source| in a (function(define, require, requireNative, ...) {...}).
