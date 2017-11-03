@@ -7,6 +7,7 @@ import("//build/config/chromecast_build.gni")
 import("//build/config/compiler/compiler.gni")
 import("//build/config/crypto.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//media/media_options.gni")
 import("//net/features.gni")
@@ -20,7 +21,7 @@ import("//v8/gni/v8.gni")
 
 # Use a static library here because many test binaries depend on this but don't
 # require many files from it. This makes linking more efficient.
-static_library("test_support") {
+jumbo_static_library("test_support") {
   testonly = true
 
   # See comment at the top of //content/BUILD.gn for why this is disabled in
@@ -263,6 +264,23 @@ static_library("test_support") {
     "web_gesture_curve_mock.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Symbols
+    "../public/test/test_fileapi_operation_waiter.cc",
+    "../public/test/test_download_request_handler.cc",
+
+    # X11
+    "appcache_test_helper.cc",
+    "mock_google_streaming_server.cc",
+    "test_background_sync_context.cc",
+    "test_background_sync_manager.cc",
+    "test_blink_web_unit_test_support.cc",
+    "test_render_frame.cc",
+
+    # Wrong function selected (CreateStubInterfaceProvider)
+    "../public/test/render_view_test.cc",
+  ]
+
   configs += [
     "//build/config:precompiled_headers",
     "//v8:external_startup_data",
@@ -352,6 +370,7 @@ static_library("test_support") {
       "mock_google_streaming_server.cc",
       "mock_google_streaming_server.h",
     ]
+    jumbo_excluded_sources -= [ "mock_google_streaming_server.cc" ]
     deps += [ "//mojo/android:libsystem_java" ]
   }
 
@@ -385,6 +404,12 @@ static_library("test_support") {
       "../renderer/media/mock_web_rtc_peer_connection_handler_client.h",
       "../renderer/media/webrtc/mock_peer_connection_dependency_factory.cc",
       "../renderer/media/webrtc/mock_peer_connection_dependency_factory.h",
+    ]
+
+    jumbo_excluded_sources += [
+      # X11
+      "../renderer/media/mock_peer_connection_impl.cc",
+      "../renderer/media/webrtc/mock_peer_connection_dependency_factory.cc",
     ]
 
     deps += [
@@ -648,6 +673,28 @@ if (is_android) {
 }
 
 test("content_browsertests") {
+  deps = [ ":content_browsertests_sources" ]
+  # See comment at the top of //content/BUILD.gn for why this is disabled in
+  # component builds.
+  if (is_android) {
+    deps += [
+      ":content_browsertests_java",
+      "//content/shell:content_shell_lib",
+      "//content/shell/android:content_shell_assets",
+      "//content/shell/android:content_shell_jni_headers",
+      "//testing/android/native_test:native_test_support",
+      "//ui/android:android",
+    ]
+    android_manifest =
+        "${target_gen_dir}/content_browsertests_manifest/AndroidManifest.xml"
+    android_manifest_dep = ":content_browsertests_manifest"
+    use_default_launcher = false
+  }
+}
+
+jumbo_source_set("content_browsertests_sources") {
+  testonly = true
+  never_build_jumbo = true # Need to cleanup more
   # See comment at the top of //content/BUILD.gn for why this is disabled in
   # component builds.
   if (is_component_build) {
@@ -804,6 +851,16 @@ test("content_browsertests") {
     "../test/browser_test_utils_browsertest.cc",
     "../test/content_browser_test_test.cc",
     "../test/webui_resource_browsertest.cc",
+  ]
+
+  jumbo_excluded_sources = [
+    # Symbols
+    "../browser/renderer_host/input/wheel_scroll_latching_browsertest.cc",
+    "../browser/tracing/memory_tracing_browsertest.cc",
+    "../browser/tracing/tracing_controller_browsertest.cc",
+    "../browser/web_contents/web_contents_view_aura_browsertest.cc",
+
+    # X11
   ]
 
   defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]
@@ -977,24 +1034,16 @@ test("content_browsertests") {
       "../browser/pointer_lock_browsertest.cc",
       "../browser/pointer_lock_browsertest.h",
     ]
-    deps += [
-      ":content_browsertests_java",
-      "//content/shell:content_shell_lib",
-      "//content/shell/android:content_shell_assets",
-      "//content/shell/android:content_shell_jni_headers",
-      "//testing/android/native_test:native_test_support",
-      "//ui/android:android",
-    ]
-    android_manifest =
-        "${target_gen_dir}/content_browsertests_manifest/AndroidManifest.xml"
-    android_manifest_dep = ":content_browsertests_manifest"
-    use_default_launcher = false
   } else {
     # Non-Android.
     sources += [
       "../browser/host_zoom_map_impl_browsertest.cc",
       "../browser/speech/speech_recognition_browsertest.cc",
       "../browser/zoom_browsertest.cc",
+    ]
+    jumbo_excluded_sources += [
+      # X11
+      "../browser/speech/speech_recognition_browsertest.cc",
     ]
   }
 
@@ -1041,6 +1090,10 @@ test("content_browsertests") {
       "../browser/webrtc/webrtc_video_capture_browsertest.cc",
       "../browser/webrtc/webrtc_webcam_browsertest.cc",
       "../browser/webrtc/webrtc_webcam_browsertest.h",
+    ]
+    jumbo_excluded_sources += [
+      # X11 (and symbols)
+      "../browser/webrtc/webrtc_getusermedia_browsertest.cc",
     ]
     deps += [
       "//content/public/common:features",
@@ -1098,6 +1151,9 @@ test("content_browsertests") {
       "../browser/renderer_host/input/touch_selection_controller_client_aura_browsertest.cc",
       "../browser/web_contents/web_contents_view_aura_browsertest.cc",
     ]
+    jumbo_excluded_sources -= [
+      "../browser/web_contents/web_contents_view_aura_browsertest.cc",
+    ]
   }
 
   if (is_chromecast) {
@@ -1119,6 +1175,23 @@ test("content_browsertests") {
 }
 
 test("content_unittests") {
+  deps = [ ":content_unittests_sources" ]
+  if (is_android) {
+    deps += [
+      "//base:base_java_unittest_support",
+      "//content/public/android:content_java",
+      "//device/geolocation:geolocation_java",
+      "//media/capture/content/android",
+      "//media/capture/content/android:screen_capture_java",
+      "//ui/android:android",
+      "//v8:v8_external_startup_data_assets",
+    ]
+  }
+}
+
+jumbo_source_set("content_unittests_sources") {
+  testonly = true
+  never_build_jumbo = true # Need to cleanup more
   # See comment at the top of //content/BUILD.gn for why this is disabled in
   # component builds.
   if (is_component_build) {
@@ -1573,6 +1646,49 @@ test("content_unittests") {
     "url_request_context_builder_mojo_unittest.cc",
   ]
 
+  jumbo_excluded_sources = [
+    # Symbols
+    "../browser/appcache/appcache_storage_unittest.cc",
+    "../browser/appcache/appcache_update_job_unittest.cc",
+    "../browser/appcache/appcache_url_request_job_unittest.cc",
+    "../browser/background_fetch/background_fetch_event_dispatcher_unittest.cc",
+    "../browser/background_fetch/background_fetch_job_controller_unittest.cc",
+    "../browser/background_fetch/background_fetch_service_unittest.cc",
+    "../browser/background_sync/background_sync_service_impl_unittest.cc",
+    "../browser/blob_storage/blob_dispatcher_host_unittest.cc",
+    "../browser/bluetooth/frame_connected_bluetooth_devices_unittest.cc",
+    "../browser/browsing_data/browsing_data_remover_impl_unittest.cc",
+    "../browser/cache_storage/cache_storage_cache_unittest.cc",
+    "../browser/cache_storage/cache_storage_scheduler_unittest.cc",
+    "../browser/indexed_db/indexed_db_tombstone_sweeper_unittest.cc",
+    "../browser/indexed_db/indexed_db_transaction_unittest.cc",
+    "../browser/indexed_db/leveldb/leveldb_unittest.cc",
+    "../browser/loader/mojo_async_resource_handler_unittest.cc",
+    "../browser/loader/resource_dispatcher_host_unittest.cc",
+    "../browser/loader/url_loader_factory_impl_unittest.cc",
+    "../browser/media/capture/audio_mirroring_manager_unittest.cc",
+    "../browser/media/capture/web_contents_audio_input_stream_unittest.cc",
+    "../browser/media/midi_host_unittest.cc",
+    "../browser/media/session/media_session_impl_service_routing_unittest.cc",
+    "../browser/media/session/media_session_impl_uma_unittest.cc",
+    "../browser/notification_service_impl_unittest.cc",
+    "../browser/renderer_host/input/synthetic_pointer_action_unittest.cc",
+    "../browser/renderer_host/media/audio_output_authorization_handler_unittest.cc",
+    "../browser/renderer_host/media/audio_output_delegate_impl_unittest.cc",
+    "../browser/renderer_host/media/audio_renderer_host_unittest.cc",
+    "../browser/renderer_host/media/media_devices_manager_unittest.cc",
+    "../browser/renderer_host/media/media_stream_dispatcher_host_unittest.cc",
+    "../browser/renderer_host/media/render_frame_audio_output_stream_factory_unittest.cc",
+    "../browser/renderer_host/media/service_video_capture_provider_unittest.cc",
+    "../browser/renderer_host/media/video_capture_manager_unittest.cc",
+    "../browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+    "../common/content_security_policy/csp_context_unittest.cc",
+    "../common/throttling_url_loader_unittest.cc",
+    "../network/network_service_unittest.cc",
+    "../network/url_loader_unittest.cc",
+    "../renderer/dom_storage/local_storage_cached_areas_unittest.cc",
+  ]
+
   # Chromecasts do not have extended attributes enabled; even if it were
   # enabled, the devices use tmpfs which restricts the extended attributes that
   # can be set such that quarantining still would not work. (The platform
@@ -1818,6 +1934,17 @@ test("content_unittests") {
       "../renderer/p2p/filtering_network_manager_unittest.cc",
       "../renderer/p2p/ipc_network_manager_unittest.cc",
     ]
+    jumbo_excluded_sources += [
+      "../renderer/media/media_stream_constraints_util_audio_unittest.cc",
+      "../renderer/media/media_stream_constraints_util_video_device_unittest.cc",
+      "../renderer/media/media_stream_video_source_unittest.cc",
+      "../renderer/media/media_stream_video_track_unittest.cc",
+      "../renderer/media/user_media_client_impl_unittest.cc",
+      "../renderer/media/webrtc/media_stream_remote_video_source_unittest.cc",
+      "../renderer/media/webrtc/processed_local_audio_source_unittest.cc",
+      "../renderer/media_capture_from_element/canvas_capture_handler_unittest.cc",
+      "../renderer/media_capture_from_element/html_audio_element_capturer_source_unittest.cc",
+    ]
     deps += [
       "//services/device/public/interfaces",
       "//third_party/opus",
@@ -1879,6 +2006,11 @@ test("content_unittests") {
     }
   }
   if (is_win) {
+    defines += [
+      # Must be defined to get access to M_PI and M_PI_2 in VS.
+      "_USE_MATH_DEFINES",
+    ]
+
     deps += [ "//third_party/iaccessible2" ]
     libs = [ "dwrite.lib" ]
   }
@@ -1914,16 +2046,6 @@ test("content_unittests") {
       "../browser/webui/url_data_manager_backend_unittest.cc",
     ]
 
-    deps += [
-      "//base:base_java_unittest_support",
-      "//content/public/android:content_java",
-      "//device/geolocation:geolocation_java",
-      "//media/capture/content/android",
-      "//media/capture/content/android:screen_capture_java",
-      "//ui/android:android",
-      "//v8:v8_external_startup_data_assets",
-    ]
-
     defines += [ "APPCACHE_USE_SIMPLE_CACHE" ]
   } else {
     # Non-Android.
@@ -1950,6 +2072,9 @@ test("content_unittests") {
       "../browser/web_contents/aura/overscroll_window_animation_unittest.cc",
       "../browser/web_contents/aura/overscroll_window_delegate_unittest.cc",
       "../browser/web_contents/web_contents_view_aura_unittest.cc",
+    ]
+    jumbo_excluded_sources -= [
+      "../browser/renderer_host/render_widget_host_view_aura_unittest.cc",
     ]
   }
 

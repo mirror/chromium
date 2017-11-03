@@ -12,7 +12,9 @@
 
 #include "base/sequence_checker.h"
 #include "content/common/content_export.h"
+#undef FOURCC // Macro from third_party/libyuv
 #include "third_party/webrtc/api/peerconnectioninterface.h"
+#undef FOURCC  // Macro from third_party/webrtc
 
 namespace webrtc {
 class MediaStreamInterface;

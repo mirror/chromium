@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("renderer") {
+import("//build/config/jumbo.gni")
+
+jumbo_static_library("renderer") {
   sources = [
     "print_render_frame_helper.cc",
     "print_render_frame_helper.h",
@@ -11,6 +13,13 @@ static_library("renderer") {
     "print_render_frame_helper_mac.mm",
     "print_render_frame_helper_pdf_win.cc",
   ]
+
+  if (is_linux) {
+    jumbo_excluded_sources = [
+      # IPC
+      "print_render_frame_helper_linux.cc",
+    ]
+  }
 
   deps = [
     "//base",

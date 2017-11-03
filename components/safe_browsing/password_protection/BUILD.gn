@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-source_set("password_protection") {
+import("//build/config/jumbo.gni")
+
+jumbo_source_set("password_protection") {
   if (!is_android && !is_ios) {
     sources = [
       "password_protection_navigation_throttle.cc",

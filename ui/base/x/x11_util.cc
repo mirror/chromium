@@ -96,18 +96,12 @@ bool GetProperty(XID window, const std::string& property_name, long max_length,
                  unsigned char** property) {
   XAtom property_atom = gfx::GetAtom(property_name.c_str());
   unsigned long remaining_bytes = 0;
-  return XGetWindowProperty(gfx::GetXDisplay(),
-                            window,
-                            property_atom,
-                            0,          // offset into property data to read
-                            max_length, // max length to get
-                            False,      // deleted
-                            AnyPropertyType,
-                            type,
-                            format,
-                            num_items,
-                            &remaining_bytes,
-                            property);
+  return XGetWindowProperty(gfx::GetXDisplay(), window, property_atom,
+                            0,           // offset into property data to read
+                            max_length,  // max length to get
+                            X11Constants::False,  // deleted
+                            AnyPropertyType, type, format, num_items,
+                            &remaining_bytes, property);
 }
 
 bool SupportsEWMH() {
@@ -630,7 +624,7 @@ bool WindowContainsPoint(XID window, gfx::Point screen_loc) {
 
 
 bool PropertyExists(XID window, const std::string& property_name) {
-  XAtom type = None;
+  XAtom type = X11Constants::None;
   int format = 0;  // size in bits of each item in 'property'
   unsigned long num_items = 0;
   unsigned char* property = NULL;
@@ -638,7 +632,7 @@ bool PropertyExists(XID window, const std::string& property_name) {
   int result = GetProperty(window, property_name, 1,
                            &type, &format, &num_items, &property);
   gfx::XScopedPtr<unsigned char> scoped_property(property);
-  if (result != Success)
+  if (result != X11Constants::Success)
     return false;
 
   return num_items > 0;
@@ -652,18 +646,18 @@ bool GetRawBytesOfProperty(XID window,
   // Retrieve the data from our window.
   unsigned long nitems = 0;
   unsigned long nbytes = 0;
-  XAtom prop_type = None;
+  XAtom prop_type = X11Constants::None;
   int prop_format = 0;
   unsigned char* property_data = NULL;
-  if (XGetWindowProperty(gfx::GetXDisplay(), window, property,
-                         0, 0x1FFFFFFF /* MAXINT32 / 4 */, False,
-                         AnyPropertyType, &prop_type, &prop_format,
-                         &nitems, &nbytes, &property_data) != Success) {
+  if (XGetWindowProperty(gfx::GetXDisplay(), window, property, 0,
+                         0x1FFFFFFF /* MAXINT32 / 4 */, X11Constants::False,
+                         AnyPropertyType, &prop_type, &prop_format, &nitems,
+                         &nbytes, &property_data) != X11Constants::Success) {
     return false;
   }
   gfx::XScopedPtr<unsigned char> scoped_property(property_data);
 
-  if (prop_type == None)
+  if (prop_type == X11Constants::None)
     return false;
 
   size_t bytes = 0;
@@ -698,7 +692,7 @@ bool GetRawBytesOfProperty(XID window,
 }
 
 bool GetIntProperty(XID window, const std::string& property_name, int* value) {
-  XAtom type = None;
+  XAtom type = X11Constants::None;
   int format = 0;  // size in bits of each item in 'property'
   unsigned long num_items = 0;
   unsigned char* property = NULL;
@@ -706,7 +700,7 @@ bool GetIntProperty(XID window, const std::string& property_name, int* value) {
   int result = GetProperty(window, property_name, 1,
                            &type, &format, &num_items, &property);
   gfx::XScopedPtr<unsigned char> scoped_property(property);
-  if (result != Success)
+  if (result != X11Constants::Success)
     return false;
 
   if (format != 32 || num_items != 1)
@@ -717,7 +711,7 @@ bool GetIntProperty(XID window, const std::string& property_name, int* value) {
 }
 
 bool GetXIDProperty(XID window, const std::string& property_name, XID* value) {
-  XAtom type = None;
+  XAtom type = X11Constants::None;
   int format = 0;  // size in bits of each item in 'property'
   unsigned long num_items = 0;
   unsigned char* property = NULL;
@@ -725,7 +719,7 @@ bool GetXIDProperty(XID window, const std::string& property_name, XID* value) {
   int result = GetProperty(window, property_name, 1,
                            &type, &format, &num_items, &property);
   gfx::XScopedPtr<unsigned char> scoped_property(property);
-  if (result != Success)
+  if (result != X11Constants::Success)
     return false;
 
   if (format != 32 || num_items != 1)
@@ -738,7 +732,7 @@ bool GetXIDProperty(XID window, const std::string& property_name, XID* value) {
 bool GetIntArrayProperty(XID window,
                          const std::string& property_name,
                          std::vector<int>* value) {
-  XAtom type = None;
+  XAtom type = X11Constants::None;
   int format = 0;  // size in bits of each item in 'property'
   unsigned long num_items = 0;
   unsigned char* properties = NULL;
@@ -747,7 +741,7 @@ bool GetIntArrayProperty(XID window,
                            (~0L), // (all of them)
                            &type, &format, &num_items, &properties);
   gfx::XScopedPtr<unsigned char> scoped_properties(properties);
-  if (result != Success)
+  if (result != X11Constants::Success)
     return false;
 
   if (format != 32)
@@ -764,7 +758,7 @@ bool GetIntArrayProperty(XID window,
 bool GetAtomArrayProperty(XID window,
                           const std::string& property_name,
                           std::vector<XAtom>* value) {
-  XAtom type = None;
+  XAtom type = X11Constants::None;
   int format = 0;  // size in bits of each item in 'property'
   unsigned long num_items = 0;
   unsigned char* properties = NULL;
@@ -773,7 +767,7 @@ bool GetAtomArrayProperty(XID window,
                            (~0L), // (all of them)
                            &type, &format, &num_items, &properties);
   gfx::XScopedPtr<unsigned char> scoped_properties(properties);
-  if (result != Success)
+  if (result != X11Constants::Success)
     return false;
 
   if (type != XA_ATOM)
@@ -787,7 +781,7 @@ bool GetAtomArrayProperty(XID window,
 
 bool GetStringProperty(
     XID window, const std::string& property_name, std::string* value) {
-  XAtom type = None;
+  XAtom type = X11Constants::None;
   int format = 0;  // size in bits of each item in 'property'
   unsigned long num_items = 0;
   unsigned char* property = NULL;
@@ -795,7 +789,7 @@ bool GetStringProperty(
   int result = GetProperty(window, property_name, 1024,
                            &type, &format, &num_items, &property);
   gfx::XScopedPtr<unsigned char> scoped_property(property);
-  if (result != Success)
+  if (result != X11Constants::Success)
     return false;
 
   if (format != 8)
@@ -1045,13 +1039,8 @@ bool GetXWindowStack(Window window, std::vector<XID>* windows) {
   int format;
   unsigned long count;
   unsigned char *data = NULL;
-  if (GetProperty(window,
-                  "_NET_CLIENT_LIST_STACKING",
-                  ~0L,
-                  &type,
-                  &format,
-                  &count,
-                  &data) != Success) {
+  if (GetProperty(window, "_NET_CLIENT_LIST_STACKING", ~0L, &type, &format,
+                  &count, &data) != X11Constants::Success) {
     return false;
   }
   gfx::XScopedPtr<unsigned char> scoped_data(data);
@@ -1173,8 +1162,8 @@ std::string GuessWindowManagerName() {
 
 bool IsCompositingManagerPresent() {
   static bool is_compositing_manager_present =
-      XGetSelectionOwner(gfx::GetXDisplay(), gfx::GetAtom("_NET_WM_CM_S0")) !=
-      None;
+      XGetSelectionOwner(gfx::GetXDisplay(),
+                         gfx::GetAtom("_NET_WM_CM_S0")) != X11Constants::None;
   return is_compositing_manager_present;
 }
 
@@ -1377,7 +1366,7 @@ XVisualManager::XVisualManager()
     visuals_[visual_list[i].visualid].reset(new XVisualData(visual_list[i]));
 
   XAtom NET_WM_CM_S0 = gfx::GetAtom("_NET_WM_CM_S0");
-  using_compositing_wm_ = XGetSelectionOwner(display_, NET_WM_CM_S0) != None;
+  using_compositing_wm_ = XGetSelectionOwner(display_, NET_WM_CM_S0) != X11Constants::None;
 
   // Choose the opaque visual.
   default_visual_id_ =

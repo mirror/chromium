@@ -5,6 +5,7 @@
 import("//build/config/chrome_build.gni")
 import("//build/config/crypto.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//build/split_static_library.gni")
 import("//chrome/common/features.gni")
@@ -58,7 +59,7 @@ if (is_win) {
 
 # Use a static library here because many test binaries depend on this but don't
 # require many files from it. This makes linking more efficient.
-split_static_library("browser") {
+jumbo_split_static_library("browser") {
   # Split into multiple static libraries on Windows builds. We have hit size
   # limits on Windows official builds and on goma builds when symbol_level = 2
   # is selected. Always splitting on Windows builds is simpler than trying to
@@ -1505,6 +1506,46 @@ split_static_library("browser") {
     "win/titlebar_config.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Symbols
+    "browsing_data/browsing_data_cookie_helper.cc",
+    "browsing_data/browsing_data_service_worker_helper.cc",
+    "component_updater/optimization_hints_component_installer.cc",
+    "component_updater/pnacl_component_installer.cc",
+    "component_updater/recovery_improved_component_installer.cc",
+    "component_updater/sth_set_component_installer.cc",
+    "component_updater/subresource_filter_component_installer.cc",
+    "page_load_metrics/observers/tab_restore_page_load_metrics_observer.cc",
+    "profiles/off_the_record_profile_impl.cc",
+    "profiles/profile_info_cache.cc",
+    "ssl/captive_portal_blocking_page.cc",
+    "ssl/mitm_software_blocking_page.cc",
+    "supervised_user/child_accounts/family_info_fetcher.cc",
+    "supervised_user/child_accounts/permission_request_creator_apiary.cc",
+    "supervised_user/supervised_user_service.cc",
+    "supervised_user/supervised_user_whitelist_service.cc",
+    "tracing/navigation_tracing.cc",
+
+    # X11
+    "metrics/chrome_metrics_service_client.cc",
+    "metrics/metrics_memory_details.cc",
+    "net/spdyproxy/data_reduction_proxy_chrome_settings.cc",
+    "supervised_user/child_accounts/child_account_service.cc",
+    "supervised_user/supervised_user_navigation_observer.cc",
+    "supervised_user/supervised_user_settings_service.cc",
+
+    # IPC/Traits
+    "content_settings/tab_specific_content_settings.cc",
+    "media/webrtc/webrtc_event_log_handler.cc",
+    "media/webrtc/webrtc_text_log_handler.cc",
+    "net/net_error_tab_helper.cc",
+    "prerender/prerender_link_manager.cc",
+    "prerender/prerender_message_filter.cc",
+    "renderer_host/chrome_render_message_filter.cc",
+    "speech/tts_message_filter.cc",
+#    "spellchecker/spellcheck_message_filter_platform_mac.cc",
+  ]
+
   configs += [
     "//build/config/compiler:wexit_time_destructors",
     "//build/config:precompiled_headers",
@@ -1772,6 +1813,10 @@ split_static_library("browser") {
   ]
 
   if (is_android) {
+    # Way too many Init() functions for jumbo
+    # Todo: Extract the problematic files to their own target so the
+    # rest can compile fast.
+    never_build_jumbo = true
     sources += [
       "after_startup_task_utils_android.cc",
       "android/accessibility/font_size_prefs_android.cc",
@@ -2229,6 +2274,28 @@ split_static_library("browser") {
       "sync/profile_sync_service_android.h",
       "sync/sessions/sync_sessions_metrics_android.cc",
     ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "android/accessibility/font_size_prefs_android.cc",
+      "android/compositor/scene_layer/static_tab_scene_layer.cc",
+      "android/compositor/scene_layer/tab_list_scene_layer.cc",
+      "android/compositor/scene_layer/tab_strip_scene_layer.cc",
+      "android/contextualsearch/contextual_search_context.cc",
+      "android/omnibox/omnibox_prerender.cc",
+      "android/omnibox/autocomplete_controller_android.cc",
+      "android/ntp/ntp_snippets_bridge.cc",
+      "android/ntp/most_visited_sites_bridge.cc",
+      "android/metrics/uma_session_stats.cc",
+      "android/bookmarks/partner_bookmarks_reader.cc",
+      "android/bottombar/overlay_panel_content.cc",
+      "android/password_ui_view_android.cc",
+      "android/provider/chrome_browser_provider.cc",
+      "android/download/download_manager_service.cc",
+      "android/history_report/history_report_jni_bridge.cc",
+      "android/large_icon_bridge.cc",
+      "android/tab_android.cc",
+#      "policy/cloud/user_policy_signin_service.cc",
+    ]
     deps += [
       ":client_discourse_context_proto",
       ":delta_file_proto",
@@ -2664,6 +2731,20 @@ split_static_library("browser") {
       "usb/web_usb_detector.cc",
       "usb/web_usb_detector.h",
     ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "media_galleries/media_file_system_registry.cc",
+      "metrics/tab_stats_tracker.cc",
+      "task_manager/providers/child_process_task.cc",
+      "task_manager/providers/web_contents/background_contents_task.cc",
+      "task_manager/providers/web_contents/extension_task.cc",
+      "task_manager/providers/web_contents/prerender_task.cc",
+      "usb/usb_chooser_controller.cc",
+      # X11
+      "upgrade_detector_impl.cc",
+      # Linker
+      "embedded_ui_service_info_factory.cc",
+    ]
     deps += [
       ":theme_properties",
       "//chrome/app/vector_icons",
@@ -3015,6 +3096,11 @@ split_static_library("browser") {
       "upgrade_detector_impl.cc",
       "upgrade_detector_impl.h",
     ]
+    jumbo_excluded_sources += [
+      "metrics/desktop_session_duration/chrome_visibility_observer.cc",
+      "policy/cloud/user_policy_signin_service.cc",
+      "profiles/profile_statistics_aggregator.cc",
+    ]
   } else {
     sources += [
       "media/protected_media_identifier_permission_context.cc",
@@ -3048,6 +3134,11 @@ split_static_library("browser") {
       "payments/chrome_payment_request_delegate.h",
       "payments/payment_request_factory.cc",
       "payments/payment_request_factory.h",
+    ]
+    jumbo_excluded_sources += [
+      # X11
+      "payments/chrome_payment_request_delegate.cc",
+      "payments/payment_request_factory.cc",
     ]
     deps += [ "//components/payments/content" ]
   }
@@ -3157,6 +3248,13 @@ split_static_library("browser") {
       "printing/printing_message_filter.cc",
       "printing/printing_message_filter.h",
     ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "printing/print_job_worker.cc",
+
+      # IPC/Trait
+      "printing/printing_message_filter.cc",
+    ]
     deps += [
       "//components/printing/browser",
       "//components/printing/service/public/interfaces",
@@ -3203,6 +3301,12 @@ split_static_library("browser") {
         "service_process/service_process_control.cc",
         "service_process/service_process_control.h",
         "service_process/service_process_control_mac.mm",
+      ]
+      jumbo_excluded_sources += [
+        # IPC/Traits
+        "printing/print_preview_message_handler.cc",
+        "printing/print_view_manager.cc",
+        "printing/pwg_raster_converter.cc",
       ]
       public_deps += [ "//chrome/common:service_process_mojom" ]
     } else {
@@ -3253,6 +3357,11 @@ split_static_library("browser") {
       "feature_engagement/session_duration_updater.h",
       "feature_engagement/session_duration_updater_factory.cc",
       "feature_engagement/session_duration_updater_factory.h",
+    ]
+
+    jumbo_excluded_sources += [
+      "feature_engagement/bookmark/bookmark_tracker.cc",
+      "feature_engagement/new_tab/new_tab_tracker.cc",
     ]
   }
 
@@ -3475,6 +3584,10 @@ split_static_library("browser") {
       "//chrome/browser/apps",
       "//chrome/browser/extensions",
     ]
+    jumbo_excluded_sources += [
+      # IPC/Traits
+      "renderer_host/chrome_extension_message_filter.cc",
+    ]
     allow_circular_includes_from += [
       "//chrome/browser/apps",
       "//chrome/browser/extensions",
@@ -3591,6 +3704,13 @@ split_static_library("browser") {
       "offline_pages/recent_tab_helper.h",
       "offline_pages/request_coordinator_factory.h",
       "offline_pages/resource_loading_observer.h",
+    ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "offline_pages/prefetch/prefetch_importer_impl.cc",
+
+      # Weird
+      "offline_pages/recent_tab_helper.cc",
     ]
     if (is_android) {
       sources += [
@@ -3721,6 +3841,16 @@ split_static_library("browser") {
       "renderer_host/pepper/pepper_platform_verification_message_filter.cc",
       "renderer_host/pepper/pepper_platform_verification_message_filter.h",
     ]
+    jumbo_excluded_sources += [
+      # IPC/Traits
+      "plugins/plugin_info_message_filter.cc",
+      "plugins/plugin_observer.cc",
+      "renderer_host/pepper/pepper_broker_message_filter.cc",
+      "renderer_host/pepper/pepper_flash_clipboard_message_filter.cc",
+      "renderer_host/pepper/pepper_isolated_file_system_message_filter.cc",
+      "renderer_host/pepper/pepper_output_protection_message_filter.cc",
+      "renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+    ]
     deps += [
       "//components/pdf/browser",
       "//media:media_features",
@@ -3783,6 +3913,14 @@ split_static_library("browser") {
       "printing/cloud_print/privet_notifications_factory.h",
       "printing/cloud_print/privet_url_fetcher.cc",
       "printing/cloud_print/privet_url_fetcher.h",
+    ]
+    jumbo_excluded_sources += [
+      # X11
+      "printing/cloud_print/cloud_print_printer_list.cc",
+      "printing/cloud_print/gcd_api_flow.cc",
+      "printing/cloud_print/gcd_api_flow_impl.cc",
+      "printing/cloud_print/privet_confirm_api_flow.cc",
+      "printing/cloud_print/privet_notifications.cc",
     ]
   }
 
@@ -3931,6 +4069,15 @@ split_static_library("browser") {
       "supervised_user/supervised_user_theme.cc",
       "supervised_user/supervised_user_theme.h",
     ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "supervised_user/legacy/supervised_user_refresh_token_fetcher.cc",
+      "supervised_user/legacy/supervised_user_registration_utility.cc",
+      "supervised_user/legacy/supervised_user_shared_settings_service.cc",
+      "supervised_user/legacy/supervised_user_sync_service.cc",
+      # X11
+      "supervised_user/legacy/permission_request_creator_sync.cc",
+    ]
   }
   if (enable_supervised_users && !is_android && !is_chromeos) {
     sources += [
@@ -4002,6 +4149,10 @@ split_static_library("browser") {
     sources += [
       "password_manager/native_backend_gnome_x.cc",
       "password_manager/native_backend_gnome_x.h",
+    ]
+    jumbo_excluded_sources += [
+      # Using namespace
+      "password_manager/native_backend_gnome_x.cc",
     ]
     configs += [ "//components/os_crypt:gnome_keyring" ]
   }

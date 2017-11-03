@@ -253,7 +253,7 @@ using blink::WebView;
 using blink::WebWidget;
 using blink::WebWindowFeatures;
 using blink::WebRuntimeFeatures;
-using base::Time;
+//using base::Time; // Colliding with X11 Time typedef and is not used
 using base::TimeDelta;
 
 

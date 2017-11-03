@@ -2,11 +2,12 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//services/service_manager/public/cpp/service.gni")
 import("//services/service_manager/public/service_manifest.gni")
 import("//services/service_manager/public/tools/test/service_test.gni")
 
-static_library("service") {
+jumbo_static_library("service") {
   sources = [
     "pdf_compositor_impl.cc",
     "pdf_compositor_impl.h",
