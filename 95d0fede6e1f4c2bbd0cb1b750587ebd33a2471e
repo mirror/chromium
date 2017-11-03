@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "13b94bd3_4f42bb91",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-03T15:00:38Z",
+      "side": 1,
+      "message": "Could you elaborate on why mojoms are safe and other non-POD type includes aren\u0027t? It\u0027s very hard as a reviewer to know what these rules are and why. It would be far better if *all* of third_party/WebKit/public could be included and that\u0027s what the rule was here. If that isn\u0027t possibly, how about a new directory that is safe to include all from? Presumably webkit owners know the rules for what can and can\u0027t be allowed in the new directory far better than I would.",
+      "parentUuid": "0e1e0ce8_b64ff337",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 63
+      },
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ef6e895_1be4ea81",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 2
