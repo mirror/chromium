@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0568855_4a35567c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-03T17:21:37Z",
+      "side": 1,
+      "message": "Update comment pls",
+      "range": {
+        "startLine": 959,
+        "startChar": 2,
+        "endLine": 961,
+        "endChar": 62
+      },
+      "revId": "75e64e954f57826ea5bd4e4b5584e8db348efdd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d97b57_ae56494c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-03T17:21:37Z",
+      "side": 1,
+      "message": "I don\u0027t think you want to pass the time into this function at all. I think both the fps meter and the submit time for webVR scheduling were correctly getting the current time after the swapbuffers call.",
+      "range": {
+        "startLine": 1122,
+        "startChar": 51,
+        "endLine": 1122,
+        "endChar": 63
+      },
+      "revId": "75e64e954f57826ea5bd4e4b5584e8db348efdd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

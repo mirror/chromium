@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa521e6a_ab0d0c4b",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-03T17:21:37Z",
+      "side": 0,
+      "message": "I don\u0027t think you want to change this... Certainly not in this CL at least, and probably not ever because it looks correct.",
+      "range": {
+        "startLine": 1142,
+        "startChar": 0,
+        "endLine": 1142,
+        "endChar": 49
+      },
+      "revId": "56b69dba31540f80c692a04e84adc9a2e031271c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
