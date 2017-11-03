@@ -1149,7 +1149,8 @@ def update_benchmark_csv():
     csv_data.append([
         benchmark_name,
         benchmark_metadata[benchmark_name].emails,
-        benchmark_metadata[benchmark_name].component
+        benchmark_metadata[benchmark_name].component,
+        'hello!'
     ])
 
   csv_data = sorted(csv_data, key=lambda b: b[0])
