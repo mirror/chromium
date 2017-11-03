@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0f2d2cbc_e0d0eeba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-03T19:05:43Z",
+      "side": 1,
+      "message": "\u003e Thanks for the links.\n\u003e \n\u003e The GlobalReplace profile trace you linked to points to pattern compilation as its problem (i.e., the constructor for the regular expression) as a new RE instance is passed on each invocation, instead of a cached instance.\n\nThanks for fast review.\nhttps://bugs.chromium.org/p/chromium/issues/attachmentText?aid\u003d309244#1234 points to GlobalSearch \u003d\u003e Match \u003d\u003e SearchDFA.\nCompilation takes about 800, search takes about 300. It is considerable, I believe manual search would be much faster.",
+      "parentUuid": "be9b6f5e_b94203cd",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 9,
+        "endChar": 85
+      },
+      "revId": "2ae97fd28eb3932a1dfe3e50482bdce84498579e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5b23a11_4b993d35",
         "filename": "components/autofill/core/common/signatures_util.cc",
         "patchSetId": 3
