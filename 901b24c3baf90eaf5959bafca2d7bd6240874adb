@@ -46,6 +46,30 @@
       "revId": "901b24c3baf90eaf5959bafca2d7bd6240874adb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7639cc_2014d284",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20372,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-03T18:43:49Z",
+      "side": 1,
+      "message": "This seems to be the only metric where that\u0027s happening. Do you mind taking a look at the python code we use for formatting to figure out where this order is coming from?",
+      "parentUuid": "07d21946_3588c9c2",
+      "range": {
+        "startLine": 20372,
+        "startChar": 12,
+        "endLine": 20372,
+        "endChar": 0
+      },
+      "revId": "901b24c3baf90eaf5959bafca2d7bd6240874adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
