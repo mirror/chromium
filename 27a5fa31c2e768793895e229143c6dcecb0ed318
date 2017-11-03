@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00c8e23d_40204e1d",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-03T08:02:47Z",
+      "side": 1,
+      "message": "I am curious why this needs to use CrossThreadBind: is Blink not initialized on the main thread?",
+      "range": {
+        "startLine": 121,
+        "startChar": 24,
+        "endLine": 121,
+        "endChar": 39
+      },
+      "revId": "27a5fa31c2e768793895e229143c6dcecb0ed318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8f7f13_51a36f97",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-03T08:02:47Z",
+      "side": 1,
+      "message": "Nit: auto intervention \u003d ...;",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 51
+      },
+      "revId": "27a5fa31c2e768793895e229143c6dcecb0ed318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

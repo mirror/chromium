@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "041ea57a_7e43c879",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-03T08:02:47Z",
+      "side": 1,
+      "message": "Perhaps it\u0027d be better to put the mojom headers in a separate section. But it does seem like for the current goals (to move as much of content/renderer into Blink as possible to remove the need to convert between non-Blink and Blink types), we need to allow this by default.",
+      "parentUuid": "aa044db6_a6f7efa5",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 63
+      },
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ef6e895_1be4ea81",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 2
