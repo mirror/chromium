@@ -87,10 +87,9 @@ void FindBarController::EndFindSession(SelectionAction selection_action,
 
 void FindBarController::FindBarVisibilityChanged() {
   if (web_contents_) {
-    chrome::FindBrowserWithWebContents(web_contents_)
-        ->window()
-        ->GetLocationBar()
-        ->UpdateFindBarIconVisibility();
+    Browser* browser = chrome::FindBrowserWithWebContents(web_contents_);
+    if (browser)
+      browser->window()->GetLocationBar()->UpdateFindBarIconVisibility();
   }
 }
 
