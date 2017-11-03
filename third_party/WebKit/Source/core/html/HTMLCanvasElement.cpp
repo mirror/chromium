@@ -1364,7 +1364,7 @@ scoped_refptr<Image> HTMLCanvasElement::GetSourceImageForCanvas(
   return image;
 }
 
-bool HTMLCanvasElement::WouldTaintOrigin(SecurityOrigin*) const {
+bool HTMLCanvasElement::WouldTaintOrigin(const SecurityOrigin*) const {
   return !OriginClean();
 }
 

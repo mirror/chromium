@@ -187,7 +187,7 @@ void Notification::PrepareShow() {
 void Notification::DidLoadResources(NotificationResourcesLoader* loader) {
   DCHECK_EQ(loader, loader_.Get());
 
-  SecurityOrigin* origin = GetExecutionContext()->GetSecurityOrigin();
+  const SecurityOrigin* origin = GetExecutionContext()->GetSecurityOrigin();
   DCHECK(origin);
 
   GetNotificationManager()->Show(WebSecurityOrigin(origin), data_,
@@ -216,7 +216,7 @@ void Notification::close() {
 
   state_ = State::kClosed;
 
-  SecurityOrigin* origin = GetExecutionContext()->GetSecurityOrigin();
+  const SecurityOrigin* origin = GetExecutionContext()->GetSecurityOrigin();
   DCHECK(origin);
 
   GetNotificationManager()->ClosePersistent(WebSecurityOrigin(origin),

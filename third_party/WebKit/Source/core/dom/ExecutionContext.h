@@ -104,7 +104,7 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
 
   virtual bool IsContextThread() const { return true; }
 
-  SecurityOrigin* GetSecurityOrigin();
+  const SecurityOrigin* GetSecurityOrigin();
   ContentSecurityPolicy* GetContentSecurityPolicy();
   virtual const KURL& Url() const = 0;
   virtual const KURL& BaseURL() const = 0;

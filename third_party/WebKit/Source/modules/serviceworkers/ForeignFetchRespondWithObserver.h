@@ -23,7 +23,7 @@ class MODULES_EXPORT ForeignFetchRespondWithObserver final
       WebURLRequest::FetchRedirectMode,
       WebURLRequest::FrameType,
       WebURLRequest::RequestContext,
-      scoped_refptr<SecurityOrigin>,
+      scoped_refptr<const SecurityOrigin>,
       WaitUntilObserver*);
 
   void OnResponseFulfilled(const ScriptValue&) override;
@@ -36,10 +36,10 @@ class MODULES_EXPORT ForeignFetchRespondWithObserver final
                                   WebURLRequest::FetchRedirectMode,
                                   WebURLRequest::FrameType,
                                   WebURLRequest::RequestContext,
-                                  scoped_refptr<SecurityOrigin>,
+                                  scoped_refptr<const SecurityOrigin>,
                                   WaitUntilObserver*);
 
-  scoped_refptr<SecurityOrigin> request_origin_;
+  scoped_refptr<const SecurityOrigin> request_origin_;
 };
 
 }  // namespace blink

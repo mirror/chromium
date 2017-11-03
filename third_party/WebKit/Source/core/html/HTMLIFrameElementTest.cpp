@@ -11,7 +11,7 @@ namespace blink {
 
 class HTMLIFrameElementTest : public ::testing::Test {
  public:
-  scoped_refptr<SecurityOrigin> GetOriginForFeaturePolicy(
+  scoped_refptr<const SecurityOrigin> GetOriginForFeaturePolicy(
       HTMLIFrameElement* element) {
     return element->GetOriginForFeaturePolicy();
   }
@@ -28,7 +28,7 @@ TEST_F(HTMLIFrameElementTest, FramesUseCorrectOrigin) {
   HTMLIFrameElement* frame_element = HTMLIFrameElement::Create(*document);
 
   frame_element->setAttribute(HTMLNames::srcAttr, "about:blank");
-  scoped_refptr<SecurityOrigin> effective_origin =
+  scoped_refptr<const SecurityOrigin> effective_origin =
       GetOriginForFeaturePolicy(frame_element);
   EXPECT_TRUE(
       effective_origin->IsSameSchemeHostPort(document->GetSecurityOrigin()));
@@ -59,7 +59,7 @@ TEST_F(HTMLIFrameElementTest, SandboxFramesUseCorrectOrigin) {
 
   frame_element->setAttribute(HTMLNames::sandboxAttr, "");
   frame_element->setAttribute(HTMLNames::srcAttr, "http://example.com/");
-  scoped_refptr<SecurityOrigin> effective_origin =
+  scoped_refptr<const SecurityOrigin> effective_origin =
       GetOriginForFeaturePolicy(frame_element);
   EXPECT_FALSE(
       effective_origin->IsSameSchemeHostPort(document->GetSecurityOrigin()));
@@ -84,7 +84,7 @@ TEST_F(HTMLIFrameElementTest, SameOriginSandboxFramesUseCorrectOrigin) {
 
   frame_element->setAttribute(HTMLNames::sandboxAttr, "allow-same-origin");
   frame_element->setAttribute(HTMLNames::srcAttr, "http://example.com/");
-  scoped_refptr<SecurityOrigin> effective_origin =
+  scoped_refptr<const SecurityOrigin> effective_origin =
       GetOriginForFeaturePolicy(frame_element);
   EXPECT_TRUE(
       effective_origin->IsSameSchemeHostPort(document->GetSecurityOrigin()));
@@ -102,7 +102,7 @@ TEST_F(HTMLIFrameElementTest, SrcdocFramesUseCorrectOrigin) {
   HTMLIFrameElement* frame_element = HTMLIFrameElement::Create(*document);
 
   frame_element->setAttribute(HTMLNames::srcdocAttr, "<title>title</title>");
-  scoped_refptr<SecurityOrigin> effective_origin =
+  scoped_refptr<const SecurityOrigin> effective_origin =
       GetOriginForFeaturePolicy(frame_element);
   EXPECT_TRUE(
       effective_origin->IsSameSchemeHostPort(document->GetSecurityOrigin()));
@@ -120,7 +120,7 @@ TEST_F(HTMLIFrameElementTest, SandboxedSrcdocFramesUseCorrectOrigin) {
 
   frame_element->setAttribute(HTMLNames::sandboxAttr, "");
   frame_element->setAttribute(HTMLNames::srcdocAttr, "<title>title</title>");
-  scoped_refptr<SecurityOrigin> effective_origin =
+  scoped_refptr<const SecurityOrigin> effective_origin =
       GetOriginForFeaturePolicy(frame_element);
   EXPECT_FALSE(
       effective_origin->IsSameSchemeHostPort(document->GetSecurityOrigin()));
@@ -139,7 +139,7 @@ TEST_F(HTMLIFrameElementTest, RelativeURLsUseCorrectOrigin) {
 
   // Host-relative URLs should resolve to the same domain as the parent.
   frame_element->setAttribute(HTMLNames::srcAttr, "index2.html");
-  scoped_refptr<SecurityOrigin> effective_origin =
+  scoped_refptr<const SecurityOrigin> effective_origin =
       GetOriginForFeaturePolicy(frame_element);
   EXPECT_TRUE(
       effective_origin->IsSameSchemeHostPort(document->GetSecurityOrigin()));
