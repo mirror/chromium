@@ -17,7 +17,7 @@ void TestMetricsLogUploader::CompleteUpload(int response_code) {
   DCHECK(is_uploading_);
   is_uploading_ = false;
   last_reporting_info_.Clear();
-  on_upload_complete_.Run(response_code, 0);
+  on_upload_complete_.Run(response_code, 0, false);
 }
 
 void TestMetricsLogUploader::UploadLog(const std::string& compressed_log_data,
@@ -26,6 +26,10 @@ void TestMetricsLogUploader::UploadLog(const std::string& compressed_log_data,
   DCHECK(!is_uploading_);
   is_uploading_ = true;
   last_reporting_info_ = reporting_info;
+}
+
+std::string TestMetricsLogUploader::GetInsecureUploadURL() {
+  return "";
 }
 
 }  // namespace metrics
