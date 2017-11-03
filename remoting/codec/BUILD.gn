@@ -5,8 +5,6 @@
 source_set("encoder") {
   sources = [
     "audio_encoder.h",
-    "audio_encoder_opus.cc",
-    "audio_encoder_opus.h",
     "frame_processing_time_estimator.cc",
     "frame_processing_time_estimator.h",
     "video_encoder.cc",
@@ -30,8 +28,6 @@ source_set("encoder") {
   deps = [
     ":vpx_codec",
     "//base/third_party/dynamic_annotations",
-    "//media",
-    "//media:shared_memory_support",
     "//remoting/proto",
     "//third_party/libvpx",
     "//third_party/libyuv",
@@ -60,14 +56,17 @@ source_set("encoder") {
   # Opus depends on //media, which is not a supported include for iOS.
   # Also disabled it on Android, to avoid dependency on //media.
   # TODO(sergeyu): Cleanup host-only deps in client targets.
-  if (is_ios || is_android) {
-    sources -= [
+  if (!is_ios && !is_android) {
+    sources += [
       "audio_encoder_opus.cc",
       "audio_encoder_opus.h",
+      "cast_software_video_encoder_adapter.cc",
+      "cast_software_video_encoder_adapter.h",
     ]
-    deps -= [
+    deps += [
       "//media",
       "//media:shared_memory_support",
+      "//media/cast:sender",
     ]
   }
 }
