@@ -39,6 +39,7 @@
 #include "ash/wayland/wayland_server_controller.h"
 #include "ash/wm/ash_focus_rules.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "ash/wm/window_properties.h"
 #include "ash/wm/window_state.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/common/accelerator_util.h"
@@ -87,6 +88,9 @@ WindowManager::WindowManager(service_manager::Connector* connector,
       show_primary_host_on_connect_(show_primary_host_on_connect),
       wm_state_(std::make_unique<::wm::WMState>()),
       property_converter_(std::make_unique<aura::PropertyConverter>()) {
+  property_converter_->RegisterPrimitiveProperty(
+      kCanConsumeSystemKeysKey, ash::mojom::kCanConsumeSystemKeys_Property,
+      aura::PropertyConverter::CreateAcceptAnyValueCallback());
   property_converter_->RegisterPrimitiveProperty(
       kPanelAttachedKey, ui::mojom::WindowManager::kPanelAttached_Property,
       aura::PropertyConverter::CreateAcceptAnyValueCallback());
@@ -340,6 +344,9 @@ bool WindowManager::OnWmSetProperty(
     aura::Window* window,
     const std::string& name,
     std::unique_ptr<std::vector<uint8_t>>* new_data) {
+  // We don't receive the property changes that we really want here. Try
+  // checking in WindowState instead.
+
   if (property_converter_->IsTransportNameRegistered(name))
     return true;
   DVLOG(1) << "unknown property changed, ignoring " << name;
@@ -370,13 +377,21 @@ void WindowManager::OnWmSetCanFocus(aura::Window* window, bool can_focus) {
 
 aura::Window* WindowManager::OnWmCreateTopLevelWindow(
     ui::mojom::WindowType window_type,
+    const std::string& remote_service_name,
     std::map<std::string, std::vector<uint8_t>>* properties) {
   if (window_type == ui::mojom::WindowType::UNKNOWN) {
     LOG(WARNING) << "Request to create top level of unknown type, failing";
     return nullptr;
   }
 
-  return CreateAndParentTopLevelWindow(this, window_type, properties);
+  if (remote_service_name != "content_browser")
+    FilterRestrictedProperties(properties);
+
+  aura::Window* window =
+      CreateAndParentTopLevelWindow(this, window_type, properties);
+  window->SetProperty(kRemoteServiceNameKey,
+                      new std::string(remote_service_name));
+  return window;
 }
 
 void WindowManager::OnWmClientJankinessChanged(

@@ -559,6 +559,16 @@ void WindowState::OnWindowPropertyChanged(aura::Window* window,
     }
     return;
   }
+  if (key == kCanConsumeSystemKeysKey) {
+    std::string* name = window->GetProperty(kRemoteServiceNameKey);
+    if (name && *name == "content_browser") {
+      LOG(ERROR) << "------------ SETTING CAN CONSUME SYSTEM";
+      can_consume_system_keys_ = window->GetProperty(kCanConsumeSystemKeysKey);
+    } else {
+      window->SetProperty(kCanConsumeSystemKeysKey, static_cast<bool>(old));
+    }
+    return;
+  }
 }
 
 }  // namespace wm

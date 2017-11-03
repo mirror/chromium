@@ -4,7 +4,9 @@
 
 #include "ash/mus/property_util.h"
 
+#include "ash/public/cpp/window_properties.h"
 #include "ash/public/cpp/window_style.h"
+#include "ash/public/interfaces/window_properties.mojom.h"
 #include "ash/public/interfaces/window_style.mojom.h"
 #include "services/ui/public/cpp/property_type_converters.h"
 #include "services/ui/public/interfaces/window_manager.mojom.h"
@@ -84,6 +86,11 @@ void ApplyProperties(
     property_converter->SetPropertyFromTransportValue(
         window, property_pair.first, &property_pair.second);
   }
+}
+
+void FilterRestrictedProperties(
+    std::map<std::string, std::vector<uint8_t>>* properties) {
+  properties->erase(mojom::kCanConsumeSystemKeys_Property);
 }
 
 }  // namespace mus

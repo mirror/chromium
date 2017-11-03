@@ -192,6 +192,7 @@ interface WindowManager {
   // allows the window manager to track top level windows by client.
   WmCreateTopLevelWindow(uint32 change_id,
                          uint16 requesting_client_id,
+                         string remote_service_name,
                          map<string, array<uint8>> properties);
 
   // A WindowTreeClient is considered "janky" by Mus when it stops ACK'ing input
