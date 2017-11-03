@@ -16,6 +16,24 @@
       "revId": "546d2e1f91284a6bfd8e5be62493cc22b3938139",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc4500af_521b55db",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-11-03T17:40:25Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure git cl upload does the check to uncommitted files before running the presubmit checks. So when the file changes are generated during the presubmit, it\u0027s already past the point where git cl does its check so we have to check again :(\n\nFWIW, this isn\u0027t the only case where a file might get changed during the presubmit checks. I\u0027m going to update perf_data_generator to just regen files instead of validating that a user manually ran the script and there\u0027s a similar change being made to regen the system health csv file on presubmit as well. It should take a bit of the burden off of the user",
+      "parentUuid": "b62ce190_f2da6632",
+      "revId": "546d2e1f91284a6bfd8e5be62493cc22b3938139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
