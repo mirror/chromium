@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c920ad8_67521116",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-03T23:31:49Z",
+      "side": 1,
+      "message": "This looks wrong, I think you need to increment current offset by result instead.",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05be89a1_8eecfd08",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-03T23:31:49Z",
+      "side": 1,
+      "message": "Let\u0027s break a potential long recursion here by posting a task.",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75201fee_ad1d19f9",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-03T23:31:49Z",
+      "side": 1,
+      "message": "Why are we passing an enum by reference? Let\u0027s just pass by value.",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dad33be_6e9a0053",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-03T23:31:49Z",
+      "side": 1,
+      "message": "nit: no need for base::Passed() here.",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4206ced_d1b10e91",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-03T23:31:49Z",
+      "side": 1,
+      "message": "Yeah, you really want this to be a bitmask.",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71cbf208_68cc1566",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-03T23:31:49Z",
+      "side": 1,
+      "message": "I think this would get simpler if you make it a bitfield, e.g. \nInterceptionState {\n  NONE \u003d 0,\n  REQUEST \u003d (1 \u003c\u003c 0),\n  RESPONSE \u003d (1 \u003c\u003c 1),\n  BOTH \u003d (REQUEST | RESPONSE)\n};",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb91d98_3c14cafb",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-03T23:31:49Z",
+      "side": 1,
+      "message": "Let\u0027s move this to NetworkHandler, all input arguments conversion really belongs there. We already do it for other parts of Pattern anyway.",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77f7aa0_285a0821",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/interception-test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-03T23:31:49Z",
+      "side": 1,
+      "message": "I don\u0027t think we use default parameters in JavaScript yet.",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c03349_5251f2c1",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-03T23:31:49Z",
+      "side": 1,
+      "message": "after",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48503643_a0fbb250",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-03T23:31:49Z",
+      "side": 1,
+      "message": "Swap two sentences in the description.",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66da0aa4_dc00bb32",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 1942,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-03T23:31:49Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
