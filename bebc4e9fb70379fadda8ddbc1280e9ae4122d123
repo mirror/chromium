@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20158832_ed7c6f10",
+        "filename": "net/quic/chromium/mock_crypto_client_stream_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-03T21:01:28Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like the changes in this file need \u003cmemory\u003e, but I\u0027m guessing the existing code does?",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21604c7d_324d225f",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-03T21:01:28Z",
+      "side": 1,
+      "message": "nit: comment please (admittedly it\u0027s pretty obvious, so a one-liner will do)",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f94f19_31e5c6f2",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-03T21:01:28Z",
+      "side": 1,
+      "message": "Is this clang-formatted? It looks off, but that\u0027s probably because Env() is so short?",
+      "range": {
+        "startLine": 56,
+        "startChar": 68,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c89d81_cb3a0c91",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-03T21:01:28Z",
+      "side": 1,
+      "message": "nit: newline before",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ee1d0a_a4498c82",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-03T21:01:28Z",
+      "side": 1,
+      "message": "Can you add a comment for 0? \n\n/*some_arg\u003d*/ 0\n\n(Or extract to a constant)",
+      "range": {
+        "startLine": 113,
+        "startChar": 42,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2240d541_60573c71",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-03T21:01:28Z",
+      "side": 1,
+      "message": "nit: in net/ no {}s around 1-line ifs.",
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048227ac_2ccb9ec4",
+        "filename": "net/quic/test_tools/mock_decrypter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-03T21:01:28Z",
+      "side": 1,
+      "message": "Can you add a class comment which explains what this does? I\u0027m guessing the ciphertext is simply equal to the plaintext with no auth hash? (I\u0027ve not looked at the .cc file yet:\u003e)",
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abfceb0b_33375baa",
+        "filename": "net/quic/test_tools/mock_encrypter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-03T21:01:28Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 19,
+        "startChar": 64,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
