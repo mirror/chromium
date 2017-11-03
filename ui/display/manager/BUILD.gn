@@ -68,3 +68,4 @@ component("manager") {
     deps += [ "//chromeos" ]
   }
 }
+#JAMES test target
