@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51101955_8f541115",
+        "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-03T23:21:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78c0d7e5_4c2622f9",
+      "revId": "6af1b34c308af99f1084f605820c2dddaec8c0f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "903810f1_4fd8a01b",
         "filename": "components/wallpaper/wallpaper_resizer.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-03T22:53:24Z",
       "side": 1,
       "message": "why does it have to be the full info?",
+      "revId": "6af1b34c308af99f1084f605820c2dddaec8c0f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21092b92_083ba747",
+        "filename": "components/wallpaper/wallpaper_resizer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-03T23:21:55Z",
+      "side": 1,
+      "message": "WallpaperResizer needs to provide both layout and type to WallpaperController, so I think it\u0027s reasonable to store a WallpaperInfo directly.",
+      "parentUuid": "903810f1_4fd8a01b",
       "revId": "6af1b34c308af99f1084f605820c2dddaec8c0f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
