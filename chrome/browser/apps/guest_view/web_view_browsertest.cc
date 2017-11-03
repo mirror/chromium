@@ -95,6 +95,7 @@
 #include "ui/display/display_switches.h"
 #include "ui/events/gesture_detection/gesture_configuration.h"
 #include "ui/gl/gl_switches.h"
+#include "ui/touch_selection/touch_selection_menu_runner.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 
@@ -2303,6 +2304,29 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, TestContextMenu) {
 
   // Wait for the context menu to be visible.
   menu_observer.Wait();
+}
+
+IN_PROC_BROWSER_TEST_P(WebViewTest, TestLongPressContextMenu) {
+  LoadAppWithGuest("web_view/context_menus/basic");
+  content::WebContents* guest_web_contents = GetGuestWebContents();
+
+  // Register an observer for the context menu.
+  content::WindowedNotificationObserver menu_observer(
+      chrome::NOTIFICATION_RENDER_VIEW_CONTEXT_MENU_SHOWN,
+      base::Bind(ContextMenuNotificationCallback));
+
+  gfx::Rect view_rect =
+      guest_web_contents->GetRenderWidgetHostView()->GetViewBounds();
+  int mid_x = view_rect.x() + view_rect.width() / 2;
+  int mid_y = view_rect.y() + view_rect.height() / 2;
+
+  content::SimulateRoutedLongPressAt(guest_web_contents, 0, mid_x, mid_y);
+
+  // Wait for the context menu to be visible.
+  menu_observer.Wait();
+
+  EXPECT_TRUE(ui::TouchSelectionMenuRunner::GetInstance()->IsRunning());
+  EXPECT_FALSE(guest_web_contents->IsShowingContextMenu());
 }
 
 IN_PROC_BROWSER_TEST_P(WebViewTest, MediaAccessAPIAllow_TestAllow) {
