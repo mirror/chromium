@@ -70,6 +70,30 @@
       "revId": "b61ee4a3bd160d3153418e8a407379c205700179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf03070_848749a3",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-03T21:10:23Z",
+      "side": 1,
+      "message": "It does, but only when I have the node with the long label selected.\n\nI got:\nGetBoundsForNode: (-22,22)x(790,22)\nGetBackgroundBoundsForNode: (22,22)x(751,22)\n\nSince they have different x coordinates, I guess one is accounting for the horizontal scroll and the other isn\u0027t. I dug into the code a little bit, and maybe it\u0027s because GetBoundsForNode is using the TreeView\u0027s bounds, whereas GetForegroundBoundsForNodeImpl is using the text\u0027s bounds?",
+      "parentUuid": "af817d71_a62c996d",
+      "range": {
+        "startLine": 744,
+        "startChar": 22,
+        "endLine": 744,
+        "endChar": 48
+      },
+      "revId": "b61ee4a3bd160d3153418e8a407379c205700179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
