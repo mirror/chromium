@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5df23a28_23a0a24f",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwContentsAnchorViewTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-03T00:07:39Z",
+      "side": 1,
+      "message": "Use camel case for variables.",
+      "revId": "ce711f07bd42f96b0b0e94abb901b10a0dbcee59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "169d5416_af0f044e",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 7
@@ -13,6 +30,40 @@
       "writtenOn": "2017-11-02T16:52:54Z",
       "side": 1,
       "message": "puts this above PostEarlyInitialization",
+      "revId": "ce711f07bd42f96b0b0e94abb901b10a0dbcee59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80cb3b43_86d9679b",
+        "filename": "ui/android/java/src/org/chromium/ui/base/ViewAndroidDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-03T00:07:39Z",
+      "side": 1,
+      "message": "nit: the naming makes it look like it is doing conversion while the params are already in physical pixel. How about widthInt, heightInt, etc?",
+      "revId": "ce711f07bd42f96b0b0e94abb901b10a0dbcee59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04989975_0c9e4fa1",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-03T00:07:39Z",
+      "side": 1,
+      "message": "Use gfx::ScaleRect.",
       "revId": "ce711f07bd42f96b0b0e94abb901b10a0dbcee59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
