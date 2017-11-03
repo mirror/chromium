@@ -909,8 +909,8 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
   }
 
   void CreateService(service_manager::mojom::ServiceRequest request,
-                     const std::string& name) override {
-    if (name == file::mojom::kServiceName) {
+                     const service_manager::Identity& identity) override {
+    if (identity.name() == file::mojom::kServiceName) {
       file_service_context_.reset(new service_manager::ServiceContext(
           file::CreateFileService(), std::move(request)));
     }

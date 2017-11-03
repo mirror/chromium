@@ -45,8 +45,8 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
   }
 
   void CreateService(service_manager::mojom::ServiceRequest request,
-                     const std::string& name) override {
-    if (name == device::mojom::kServiceName) {
+                     const service_manager::Identity& identity) override {
+    if (identity.name() == device::mojom::kServiceName) {
 #if defined(OS_ANDROID)
       device_service_context_.reset(new service_manager::ServiceContext(
           CreateDeviceService(file_task_runner_, io_task_runner_,

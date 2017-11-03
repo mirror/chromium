@@ -56,11 +56,11 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
   }
 
   void CreateService(service_manager::mojom::ServiceRequest request,
-                     const std::string& name) override {
-    if (name == prefs::mojom::kServiceName) {
+                     const service_manager::Identity& identity) override {
+    if (identity.name() == prefs::mojom::kServiceName) {
       pref_service_context_.reset(new service_manager::ServiceContext(
           service_factory_.Run(), std::move(request)));
-    } else if (name == "prefs_unittest_helper") {
+    } else if (identity.name() == "prefs_unittest_helper") {
       test_helper_service_context_ =
           base::MakeUnique<service_manager::ServiceContext>(
               base::MakeUnique<service_manager::Service>(), std::move(request));

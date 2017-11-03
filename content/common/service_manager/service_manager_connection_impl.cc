@@ -282,14 +282,15 @@ class ServiceManagerConnectionImpl::IOThreadContext
   // service_manager::mojom::ServiceFactory:
 
   void CreateService(service_manager::mojom::ServiceRequest request,
-                     const std::string& name) override {
+                     const service_manager::Identity& identity) override {
     DCHECK(io_thread_checker_.CalledOnValidThread());
-    auto it = request_handlers_.find(name);
+    auto it = request_handlers_.find(identity.name());
     if (it == request_handlers_.end()) {
-      LOG(ERROR) << "Can't create service " << name << ". No handler found.";
+      LOG(ERROR) << "Can't create service " << identity.name()
+                 << ". No handler found.";
       return;
     }
-    it->second.Run(std::move(request));
+    it->second.Run(identity, std::move(request));
   }
 
   base::ThreadChecker io_thread_checker_;
