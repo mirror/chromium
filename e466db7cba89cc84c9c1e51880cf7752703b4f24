@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd6d1f8a_2f2c5b7a",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T02:17:25Z",
+      "side": 1,
+      "message": "Don\u0027t mix enum and const int syntax, keep this as an enum.",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "170e99d7_e1c2010b",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T02:17:25Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ffb7402_8bdeac14",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T02:17:25Z",
+      "side": 1,
+      "message": "You don\u0027t need a converter for wave files, they can have any sample rate and any channel layout. So just write as pcm_f32le with whatever sample rate and channel layout you get.",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431efc85_ecd1eea8",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T02:17:25Z",
+      "side": 1,
+      "message": "Skip this and just write f32le.",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1334bfd9_5ba3df55",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T02:17:25Z",
+      "side": 1,
+      "message": "These should probably be split out into their own classes now, one inner class is a reasonable way to hide complexity, three is just adding complexity and avoiding unit tests :)",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a367a515_ac8b755d",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T02:17:25Z",
+      "side": 1,
+      "message": "CB should be passed by value nowadays, but since this is existing code this is okay.",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
