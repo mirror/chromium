@@ -52,6 +52,12 @@ enum ChromeDistanceMetric {
   // default preferred width (ideally smaller than this size). Also add a way of
   // enforcing different snap points for modal dialogs (exclude 320px).
   DISTANCE_MODAL_DIALOG_WIDTH_CONTAINING_MULTILINE_TEXT,
+  // Vertical spacing at the beginning and end of a content list containing only
+  // one item.
+  DISTANCE_SINGLE_HOVER_CONTENT_LIST_VERTICAL,
+  // Vertical spacing at the beginning and end of a content list containing more
+  // than one item.
+  DISTANCE_MULTI_HOVER_CONTENT_LIST_VERTICAL,
 };
 
 class ChromeLayoutProvider : public views::LayoutProvider {
