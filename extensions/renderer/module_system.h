@@ -41,6 +41,8 @@ class SourceMap;
 // Note that a ModuleSystem must be used only in conjunction with a single
 // v8::Context.
 // TODO(koz): Rename this to JavaScriptModuleSystem.
+// TODO(yzshen): crbug.com/718047 Remove all gin-related things. Mojo no longer
+// relies on gin.
 class ModuleSystem : public ObjectBackedNativeHandler,
                      public gin::ModuleRegistryObserver {
  public:

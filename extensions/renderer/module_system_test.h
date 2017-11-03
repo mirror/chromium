@@ -57,6 +57,10 @@ class ModuleSystemTestEnvironment {
 
   ModuleSystem* module_system() { return context_->module_system(); }
 
+  base::WeakPtr<ModuleSystem> module_system_weak_ptr() {
+    return context_->module_system()->weak_factory_.GetWeakPtr();
+  }
+
   ScriptContext* context() { return context_; }
 
   v8::Isolate* isolate() { return isolate_; }

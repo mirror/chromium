@@ -25,6 +25,7 @@
 #include "extensions/renderer/v8_helpers.h"
 #include "gin/converter.h"
 #include "gin/modules/module_registry.h"
+#include "third_party/WebKit/public/web/WebContextFeatures.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 
 namespace extensions {
@@ -191,8 +192,7 @@ ModuleSystem::ModuleSystem(ScriptContext* context, const SourceMap* source_map)
   if (context_->GetRenderFrame() &&
       context_->context_type() == Feature::BLESSED_EXTENSION_CONTEXT &&
       ContextNeedsMojoBindings(context_)) {
-    context_->GetRenderFrame()->EnsureMojoBuiltinsAreAvailable(
-        context->isolate(), context->v8_context());
+    blink::WebContextFeatures::EnableMojoJS(context->v8_context(), true);
   }
 }
 
@@ -628,31 +628,24 @@ v8::MaybeLocal<v8::Object> ModuleSystem::RequireNativeFromString(
 void ModuleSystem::RequireAsync(
     const v8::FunctionCallbackInfo<v8::Value>& args) {
   CHECK_EQ(1, args.Length());
-  std::string module_name = *v8::String::Utf8Value(args[0]);
   v8::Local<v8::Context> v8_context = context_->v8_context();
   v8::Local<v8::Promise::Resolver> resolver(
       v8::Promise::Resolver::New(v8_context).ToLocalChecked());
   args.GetReturnValue().Set(resolver->GetPromise());
   std::unique_ptr<v8::Global<v8::Promise::Resolver>> global_resolver(
       new v8::Global<v8::Promise::Resolver>(GetIsolate(), resolver));
-  gin::ModuleRegistry* module_registry =
-      gin::ModuleRegistry::From(v8_context);
-  if (!module_registry) {
-    Warn(GetIsolate(), "Extension view no longer exists");
-    auto maybe = resolver->Reject(
-        v8_context,
-        v8::Exception::Error(ToV8StringUnsafe(
-            GetIsolate(),
-            "Extension view no longer exists")));
-    CHECK(IsTrue(maybe));
-    return;
-  }
-  module_registry->LoadModule(
-      GetIsolate(), module_name,
-      base::Bind(&ModuleSystem::OnModuleLoaded, weak_factory_.GetWeakPtr(),
-                 base::Passed(&global_resolver)));
-  if (module_registry->available_modules().count(module_name) == 0)
-    LoadModule(module_name);
+
+  v8::Local<v8::Value> module;
+  v8::Local<v8::String> module_name = args[0].As<v8::String>();
+  module = RequireForJsInner(module_name, true /* create */);
+
+  auto maybe =
+      module->IsUndefined()
+          ? resolver->Reject(context()->v8_context(),
+                             v8::Exception::Error(ToV8StringUnsafe(
+                                 GetIsolate(), "Failed to load module")))
+          : resolver->Resolve(context()->v8_context(), module);
+  CHECK(IsTrue(maybe));
 }
 
 v8::Local<v8::String> ModuleSystem::WrapSource(v8::Local<v8::String> source) {

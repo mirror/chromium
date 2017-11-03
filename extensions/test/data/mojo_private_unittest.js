@@ -14,6 +14,7 @@ unittestBindings.exportTests([
     mojoPrivate.requireAsync('add').then(
         test.callbackPass(function(add) {
           test.assertEq('function', typeof add.Add);
+          test.assertEq(5, add.Add(3,2));
         }));
   },
 ], test.runTests, exports);
