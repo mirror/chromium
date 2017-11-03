@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d28e5334_052110e7",
+        "filename": "third_party/zlib/contrib/tests/fuzzers/deflate_set_dictionary_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-11-03T16:51:01Z",
+      "side": 1,
+      "message": "I noticed that the buffer vector + a few includes are common to all the tests (inflate \u0026 uncompress).\n\nI wonder if it is worthwhile to have a common header with it?",
+      "revId": "3c1c059ccae512413da2144a826323f2cd83d4fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
