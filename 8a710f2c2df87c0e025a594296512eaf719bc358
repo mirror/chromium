@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2101ea0e_4f8a8f0a",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T23:59:18Z",
+      "side": 1,
+      "message": "Is there a different check you could do instead of this one? What conditions would cause this to be true? If this is based on a specific platform (say Win only), please use \u003cif expr\u003e tags instead of a runtime check.",
+      "revId": "8a710f2c2df87c0e025a594296512eaf719bc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed11bd4a_e42eb0a5",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T23:59:18Z",
+      "side": 1,
+      "message": "When is this listener removed? It seems that even if this element is removed from the DOM (detached), the listener would still be alive (especially problematic for tests). See how this can be addressed with WebUIListenerBehavior [1].\n\n[1] https://cs.chromium.org/search/?q\u003dWebUIListenerBehavior\u0026sq\u003dpackage:chromium\u0026type\u003dcs.\n\nThis element already implements that behavior, so this should be\nthis.addWebUIListener.",
+      "revId": "8a710f2c2df87c0e025a594296512eaf719bc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd13a0c_b68e8e7b",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T23:59:18Z",
+      "side": 1,
+      "message": "Same here. This should be this.addWebUIListener instead.",
+      "revId": "8a710f2c2df87c0e025a594296512eaf719bc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93f7002_7d590344",
+        "filename": "chrome/test/data/webui/settings/change_password_page_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T23:59:18Z",
+      "side": 1,
+      "message": "No calls to this method are monitored in this test, should you can probably just omit until tests are added.",
+      "range": {
+        "startLine": 22,
+        "startChar": 23,
+        "endLine": 22,
+        "endChar": 48
+      },
+      "revId": "8a710f2c2df87c0e025a594296512eaf719bc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aeead81_dfb4a796",
+        "filename": "chrome/test/data/webui/settings/change_password_page_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T23:59:18Z",
+      "side": 1,
+      "message": "Since this is a new file, let\u0027s use let/const instead of var.",
+      "revId": "8a710f2c2df87c0e025a594296512eaf719bc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8edf66_e6f3e545",
+        "filename": "chrome/test/data/webui/settings/change_password_page_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T23:59:18Z",
+      "side": 1,
+      "message": "JS variable names should be starting with a lower case letter.\n\nAlso (nit): s/ChangePasswordBrowserProxy/browserProxy, since there is no ambiguity within this file (there is no other browser proxy type).",
+      "revId": "8a710f2c2df87c0e025a594296512eaf719bc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f5d241_3bfca614",
+        "filename": "chrome/test/data/webui/settings/change_password_page_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T23:59:18Z",
+      "side": 1,
+      "message": "Did you mean to test that the page is actually calling initializeChangePasswordHandler once it is attached? If so, let\u0027s add the following\n\nreturn browserProxy.whenCalled(\u0027initializeChangePasswordHandler\u0027);",
+      "revId": "8a710f2c2df87c0e025a594296512eaf719bc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597f02dd_d5be16e9",
+        "filename": "chrome/test/data/webui/settings/change_password_page_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T23:59:18Z",
+      "side": 1,
+      "message": "This is unnecessary since you are calling clearBody() within setup() anyway.",
+      "revId": "8a710f2c2df87c0e025a594296512eaf719bc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c14a771_b733b850",
+        "filename": "chrome/test/data/webui/settings/settings_main_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T23:59:18Z",
+      "side": 1,
+      "message": "Nit: A more thorough test, instead of just checking the boolean changed value would be to actually query the DOM for the existence of settings-change-password-page.",
+      "revId": "8a710f2c2df87c0e025a594296512eaf719bc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
