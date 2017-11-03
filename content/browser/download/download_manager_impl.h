@@ -41,6 +41,25 @@ class DownloadItemImpl;
 class DownloadRequestHandleInterface;
 class ResourceContext;
 
+// Responsible for persisting the in-progress metadata associated with a
+// download.
+class InProgressDownloadObserver : public DownloadItem::Observer {
+ public:
+  explicit InProgressDownloadObserver(
+      download::InProgressMetadataCache* metadata_cache);
+  ~InProgressDownloadObserver() override;
+
+ private:
+  // DownloadItem::Observer
+  void OnDownloadUpdated(DownloadItem* download) override;
+  void OnDownloadRemoved(DownloadItem* download) override;
+
+  // The persistent cache to store in-progress metadata.
+  download::InProgressMetadataCache* metadata_cache_;
+
+  DISALLOW_COPY_AND_ASSIGN(InProgressDownloadObserver);
+};
+
 class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
                                            public UrlDownloadHandler::Delegate,
                                            private DownloadItemImplDelegate {
@@ -244,6 +263,9 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
 
   // Observers that want to be notified of changes to the set of downloads.
   base::ObserverList<Observer> observers_;
+
+  // Stores information about in-progress download items.
+  std::unique_ptr<InProgressDownloadObserver> in_progress_download_observer_;
 
   // The current active browser context.
   BrowserContext* browser_context_;
