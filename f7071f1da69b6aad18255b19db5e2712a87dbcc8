@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd9a2a6b_71c45bfd",
+        "filename": "base/files/memory_mapped_file_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T17:29:06Z",
+      "side": 1,
+      "message": "Since we’re just doing one fcntl operation now, let’s just log the top-level command name, which is most meaningful: F_PREALLOCATE.",
+      "revId": "f7071f1da69b6aad18255b19db5e2712a87dbcc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
