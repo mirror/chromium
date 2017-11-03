@@ -22,6 +22,30 @@
       "revId": "b1227e6f132f72543c2cde24cac1b2b467a46420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e0c5f2_26600255",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/visual-viewport/viewport-dimensions-custom-scrollbars-manual.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-03T18:51:02Z",
+      "side": 1,
+      "message": "Good suggestion. Done.",
+      "parentUuid": "f7214a23_af222174",
+      "range": {
+        "startLine": 121,
+        "startChar": 20,
+        "endLine": 121,
+        "endChar": 67
+      },
+      "revId": "b1227e6f132f72543c2cde24cac1b2b467a46420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
