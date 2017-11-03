@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8c6dcc9_65f8a0f0",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T14:56:04Z",
+      "side": 1,
+      "message": "typo: s/thenumber/the number/",
+      "revId": "e30d48dd0a2dee23ed026463836fbc25fe829c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b935d42_0a79ce2e",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T14:56:04Z",
+      "side": 1,
+      "message": "Here and below: probably no need to use the getter.",
+      "revId": "e30d48dd0a2dee23ed026463836fbc25fe829c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589c5222_f61e445e",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T14:56:04Z",
+      "side": 1,
+      "message": "style: set_audible_playbacks() (same below)",
+      "revId": "e30d48dd0a2dee23ed026463836fbc25fe829c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
