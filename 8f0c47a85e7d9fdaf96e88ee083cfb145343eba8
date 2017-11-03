@@ -16,6 +16,24 @@
       "revId": "8f0c47a85e7d9fdaf96e88ee083cfb145343eba8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ae486e4_6ffbbfc2",
+        "filename": "gpu/command_buffer/common/gles2_cmd_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-03T01:05:02Z",
+      "side": 1,
+      "message": "I\u0027d suggest changing the name to that (or \"should_enable_swap_timestamps\"? or similar) here and elsewhere relevant, to avoid confusion when reading this code in the future. The new virtual methods on GLSurface can stay named as they are.",
+      "parentUuid": "8e415340_f912fb95",
+      "revId": "8f0c47a85e7d9fdaf96e88ee083cfb145343eba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
