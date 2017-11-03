@@ -16,6 +16,7 @@
 #include "base/scoped_observer.h"
 #include "chrome/browser/extensions/active_tab_permission_granter.h"
 #include "chrome/browser/extensions/extension_reenabler.h"
+#include "chrome/browser/ui/extensions/hosted_app_error.h"
 #include "chrome/common/extensions/mojom/inline_install.mojom.h"
 #include "chrome/common/extensions/webstore_install_result.h"
 #include "chrome/common/web_application_info.h"
@@ -111,6 +112,9 @@ class TabHelper : public content::WebContentsObserver,
   void SetWebstoreInlineInstallerFactoryForTests(
       WebstoreInlineInstallerFactory* factory);
 
+  void ShowHostedAppErrorPage(base::OnceClosure on_web_contents_reparented);
+  HostedAppError* hosted_app_error_page() { return hosted_app_error_.get(); }
+
  private:
   class InlineInstallObserver;
 
@@ -180,6 +184,9 @@ class TabHelper : public content::WebContentsObserver,
 
   const Extension* GetExtension(const ExtensionId& extension_app_id);
 
+  void OnHostedAppErrorPageProceed(
+      base::OnceClosure on_web_contents_reparented);
+
   void OnImageLoaded(const gfx::Image& image);
 
   // WebstoreStandaloneInstaller::Callback.
@@ -232,6 +239,8 @@ class TabHelper : public content::WebContentsObserver,
   std::unique_ptr<ActiveTabPermissionGranter> active_tab_permission_granter_;
 
   std::unique_ptr<BookmarkAppHelper> bookmark_app_helper_;
+
+  std::unique_ptr<HostedAppError> hosted_app_error_;
 
   // Creates WebstoreInlineInstaller instances for inline install triggers.
   std::unique_ptr<WebstoreInlineInstallerFactory>
