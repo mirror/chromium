@@ -26,6 +26,7 @@ static const gfx::Transform kIdentity;
 #define MAYBE(x) x
 #endif
 
+// TODO(bsheedy): Make this not retry on failure
 TEST_F(UiPixelTest, MAYBE(DrawVrBrowsingMode)) {
   // Set up scene.
   UiInitialState ui_initial_state;
@@ -43,8 +44,11 @@ TEST_F(UiPixelTest, MAYBE(DrawVrBrowsingMode)) {
          kPixelDaydreamProjMatrix);
 
   // Read pixels into SkBitmap.
-  auto bitmap = SaveCurrentFrameBufferToSkBitmap();
-  EXPECT_TRUE(bitmap);
+  /*auto bitmap = SaveCurrentFrameBufferToSkBitmap();
+  auto digest = CalculateMd5FromSkBitmap(*bitmap);
+  SaveSkBitmapToPng(*bitmap, base::MD5DigestToBase16(*digest) + ".png");*/
+  CaptureAndCompareFrameBufferToGolden();
+  // EXPECT_TRUE(bitmap);
 }
 
 }  // namespace vr

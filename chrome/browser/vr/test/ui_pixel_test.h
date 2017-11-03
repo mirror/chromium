@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_VR_TEST_UI_PIXEL_TEST_H_
 #define CHROME_BROWSER_VR_TEST_UI_PIXEL_TEST_H_
 
+#include "base/files/file_path.h"
+#include "base/md5.h"
 #include "chrome/browser/vr/test/gl_test_environment.h"
 #include "chrome/browser/vr/test/mock_browser_interface.h"
 #include "chrome/browser/vr/test/mock_content_input_delegate.h"
@@ -36,9 +38,14 @@ class UiPixelTest : public testing::Test {
               const gfx::Transform& view_matrix,
               const gfx::Transform& proj_matrix);
   std::unique_ptr<SkBitmap> SaveCurrentFrameBufferToSkBitmap();
+  std::unique_ptr<base::MD5Digest> CalculateMd5FromSkBitmap(
+      const SkBitmap& bitmap);
+  void CaptureAndCompareFrameBufferToGolden();
   bool SaveSkBitmapToPng(const SkBitmap& bitmap, const std::string& filename);
 
  private:
+  static constexpr char kOutputDirSwitch[] = "image-output-directory";
+  base::FilePath image_output_directory_;
   std::unique_ptr<GlTestEnvironment> gl_test_environment_;
   std::unique_ptr<MockBrowserInterface> browser_;
   std::unique_ptr<MockContentInputDelegate> content_input_delegate_;
