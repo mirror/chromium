@@ -13,10 +13,11 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/tabs/tab_features.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/tabs/tab.h"
-#include "chrome/browser/ui/views/tabs/tab_strip.h"
+#include "chrome/browser/ui/views/tabs/tab_strip_impl.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
 #include "ui/aura/window.h"
@@ -32,21 +33,27 @@ const int64_t kActivationDelayMS = 200;
 inline float Clamp(float value, float low, float high) {
   return std::min(high, std::max(value, low));
 }
-}
+
+}  // namespace
 
 // static
 TabScrubber* TabScrubber::GetInstance() {
-  static TabScrubber* instance = NULL;
+  static TabScrubber* instance = nullptr;
+
+  // This class will not run with the experimental tab strip enabled since it
+  // casts to TabStripImpl.
+  if (IsExperimentalTabStripEnabled())
+    return nullptr;
+
   if (!instance)
     instance = new TabScrubber();
   return instance;
 }
 
 // static
-gfx::Point TabScrubber::GetStartPoint(
-    TabStrip* tab_strip,
-    int index,
-    TabScrubber::Direction direction) {
+gfx::Point TabScrubber::GetStartPoint(TabStripImpl* tab_strip,
+                                      int index,
+                                      TabScrubber::Direction direction) {
   int initial_tab_offset = Tab::GetPinnedWidth() / 2;
   // In RTL layouts the tabs are mirrored. We hence use GetMirroredBounds()
   // which will give us the correct bounds of tabs in RTL layouts as well as
@@ -113,7 +120,10 @@ void TabScrubber::OnScrollEvent(ui::ScrollEvent* event) {
   BrowserView* browser_view =
       BrowserView::GetBrowserViewForNativeWindow(
           browser->window()->GetNativeWindow());
-  TabStrip* tab_strip = browser_view->tabstrip();
+  // The GetInstance() function ensures that this class is only used with
+  // TabStripImpl so this cast is valid.
+  TabStripImpl* tab_strip =
+      static_cast<TabStripImpl*>(browser_view->tabstrip());
 
   if (tab_strip->IsAnimating()) {
     FinishScrub(false);
@@ -183,7 +193,7 @@ void TabScrubber::Observe(int type,
   }
 }
 
-void TabScrubber::TabStripAddedTabAt(TabStrip* tab_strip, int index) {
+void TabScrubber::TabStripAddedTabAt(TabStripImpl* tab_strip, int index) {
   if (highlighted_tab_ == -1)
     return;
 
@@ -191,7 +201,7 @@ void TabScrubber::TabStripAddedTabAt(TabStrip* tab_strip, int index) {
     ++highlighted_tab_;
 }
 
-void TabScrubber::TabStripMovedTab(TabStrip* tab_strip,
+void TabScrubber::TabStripMovedTab(TabStripImpl* tab_strip,
                                    int from_index,
                                    int to_index) {
   if (highlighted_tab_ == -1)
@@ -205,7 +215,7 @@ void TabScrubber::TabStripMovedTab(TabStrip* tab_strip,
     ++highlighted_tab_;
 }
 
-void TabScrubber::TabStripRemovedTabAt(TabStrip* tab_strip, int index) {
+void TabScrubber::TabStripRemovedTabAt(TabStripImpl* tab_strip, int index) {
   if (highlighted_tab_ == -1)
     return;
   if (index == highlighted_tab_) {
@@ -216,7 +226,7 @@ void TabScrubber::TabStripRemovedTabAt(TabStrip* tab_strip, int index) {
     --highlighted_tab_;
 }
 
-void TabScrubber::TabStripDeleted(TabStrip* tab_strip) {
+void TabScrubber::TabStripDeleted(TabStripImpl* tab_strip) {
   if (highlighted_tab_ == -1)
     return;
 }
@@ -239,6 +249,8 @@ void TabScrubber::BeginScrub(Browser* browser,
 
   scrubbing_ = true;
   browser_ = browser;
+
+  // This class
   tab_strip_ = browser_view->tabstrip();
 
   Direction direction = (x_offset < 0) ? LEFT : RIGHT;
@@ -261,7 +273,8 @@ void TabScrubber::FinishScrub(bool activate) {
     BrowserView* browser_view =
         BrowserView::GetBrowserViewForNativeWindow(
             browser_->window()->GetNativeWindow());
-    TabStrip* tab_strip = browser_view->tabstrip();
+    TabStripImpl* tab_strip =
+        static_cast<TabStripImpl*>(browser_view->tabstrip());
     if (activate && highlighted_tab_ != -1) {
       Tab* tab = tab_strip->tab_at(highlighted_tab_);
       tab->hover_controller()->HideImmediately();

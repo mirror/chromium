@@ -9,10 +9,11 @@
 #include "chrome/browser/devtools/devtools_window_testing.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_tabstrip.h"
+#include "chrome/browser/ui/tabs/tab_features.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bar_view.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bar_view_observer.h"
-#include "chrome/browser/ui/views/tabs/tab_strip.h"
+#include "chrome/browser/ui/views/tabs/tab_strip_impl.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
@@ -252,11 +253,20 @@ IN_PROC_BROWSER_TEST_F(BrowserViewTest, AvoidUnnecessaryVisibilityChanges) {
 // is set before load finishes and the throbber state updates when the title
 // changes. Regression test for crbug.com/752266
 IN_PROC_BROWSER_TEST_F(BrowserViewTest, TitleAndLoadState) {
+  // This test reaches into the TabStripImpl.
+  if (IsExperimentalTabStripEnabled())
+    return;
+
   const base::string16 test_title(base::ASCIIToUTF16("Title Of Awesomeness"));
   auto* contents = browser()->tab_strip_model()->GetActiveWebContents();
   content::TitleWatcher title_watcher(contents, test_title);
   content::TestNavigationObserver navigation_watcher(
       contents, 1, content::MessageLoopRunner::QuitMode::DEFERRED);
+
+  // This static_cast is valid when using the non-experimental tab strip
+  // (checked above).
+  TabStripImpl* tab_strip =
+      static_cast<TabStripImpl*>(browser_view()->tabstrip());
 
   // Navigate without blocking.
   ui_test_utils::NavigateToURLWithDispositionBlockUntilNavigationsComplete(
@@ -267,15 +277,15 @@ IN_PROC_BROWSER_TEST_F(BrowserViewTest, TitleAndLoadState) {
       0, WindowOpenDisposition::CURRENT_TAB, ui_test_utils::BROWSER_TEST_NONE);
   EXPECT_TRUE(browser()->tab_strip_model()->TabsAreLoading());
   EXPECT_EQ(TabRendererData::NETWORK_STATE_WAITING,
-            browser_view()->tabstrip()->tab_at(0)->data().network_state);
+            tab_strip->tab_at(0)->data().network_state);
   EXPECT_EQ(test_title, title_watcher.WaitAndGetTitle());
   EXPECT_TRUE(browser()->tab_strip_model()->TabsAreLoading());
   EXPECT_EQ(TabRendererData::NETWORK_STATE_LOADING,
-            browser_view()->tabstrip()->tab_at(0)->data().network_state);
+            tab_strip->tab_at(0)->data().network_state);
 
   // Now block for the navigation to complete.
   navigation_watcher.Wait();
   EXPECT_FALSE(browser()->tab_strip_model()->TabsAreLoading());
   EXPECT_EQ(TabRendererData::NETWORK_STATE_NONE,
-            browser_view()->tabstrip()->tab_at(0)->data().network_state);
+            tab_strip->tab_at(0)->data().network_state);
 }
