@@ -22,6 +22,30 @@
       "revId": "81acf2ef6bd58539967a19af15ab3f8e2813be0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404fe65b_e4e7c6cb",
+        "filename": "chrome/browser/ui/cocoa/translate/translate_bubble_test_utils_views_cocoa.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T22:38:18Z",
+      "side": 1,
+      "message": "\u003e After patching and debugging, I found it weird that the code was trying to \"RevertTranslation\" and the test was only trying to translate.\n\u003e \n\u003e Turns out, this should be BUTTON_ID_TRANSLATE (see https://cs.chromium.org/chromium/src/chrome/browser/ui/views/translate/translate_bubble_test_utils_views.cc?rcl\u003d37363e67e0a89d927a8fbc3f6df3fd601cf1bd9e\u0026l\u003d21).\n\u003e \n\u003e I verified the change.\n\nGah! That\u0027s my copy-paste error. Thanks for checking!. I\u0027ll update this next week and see if we can bring the test back.\n\nI\u0027ll probably paramaterise the UI test so we get coverage regardless of the setting of the feature.",
+      "parentUuid": "ddcb4d6a_6ff760dc",
+      "range": {
+        "startLine": 47,
+        "startChar": 53,
+        "endLine": 47,
+        "endChar": 76
+      },
+      "revId": "81acf2ef6bd58539967a19af15ab3f8e2813be0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
