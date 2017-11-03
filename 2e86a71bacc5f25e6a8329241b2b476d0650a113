@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8438520b_3bb460ae",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-03T05:17:59Z",
+      "side": 1,
+      "message": "private?",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 10
+      },
+      "revId": "2e86a71bacc5f25e6a8329241b2b476d0650a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe47710_7bd07c68",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-03T05:17:59Z",
+      "side": 1,
+      "message": "we might want to come up with some annotation that makes it easier to read from the embedder that these are intentionally not publicly visible outside of the content layer.  Not in this CL, just something to consider.\n\nAlso, we javadoc public methods normally, but for simple getters it is less critical.",
+      "range": {
+        "startLine": 734,
+        "startChar": 4,
+        "endLine": 734,
+        "endChar": 10
+      },
+      "revId": "2e86a71bacc5f25e6a8329241b2b476d0650a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd420ad8_417002e8",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-03T05:17:59Z",
+      "side": 1,
+      "message": "If we find ourselves needing many more classes like this (i.e. it just hangs off of webcontents), then i\u0027d rather see them be extracted to be a web contents user data instead of it being owned by this class.  i.e. RenderCoordinates would just have a concept of ForWebContents that would and the native call would come to that.  I don\u0027t know if that is worth it yet, but I want to highlight it.\n\nThe original concept of this class and web_contents_android was that it matched the web_contents.h interface exactly and was just a bridge to java.  I\u0027m not sure we should start adding a bunch more logic to this.",
+      "range": {
+        "startLine": 739,
+        "startChar": 17,
+        "endLine": 739,
+        "endChar": 32
+      },
+      "revId": "2e86a71bacc5f25e6a8329241b2b476d0650a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
