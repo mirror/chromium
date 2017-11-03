@@ -49,6 +49,13 @@ const base::Feature kBrotliEncoding{"brotli-encoding",
 const base::Feature kBrowserSideNavigation{"browser-side-navigation",
                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Browser side navigation (aka PlzNavigate) is using blob URLs to deliver
+// the body of the main resource to the renderer process. When enabled, the
+// NavigationMojoResponse feature replaces this mechanism by a Mojo DataPipe.
+// Design doc: https://goo.gl/Rrrc7n.
+const base::Feature kNavigationMojoResponse{"NavigationMojoResponse",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Toggles whether the buggy RSA parser is used.
 //
 // TODO(davidben): Remove this after Chrome 61 is released to
