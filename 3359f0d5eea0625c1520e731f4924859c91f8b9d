@@ -37,6 +37,41 @@
     },
     {
       "key": {
+        "uuid": "bcc33881_4062e8d2",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-03T17:47:01Z",
+      "side": 1,
+      "message": "Yep, this is handled by HostFrameSinkManager. Delete the TODO.",
+      "parentUuid": "fb3ebe7d_1e759ccf",
+      "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b897baa2_3641fedf",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-03T17:47:01Z",
+      "side": 1,
+      "message": "Is this ever false?",
+      "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b24370d9_e45c21ee",
         "filename": "services/ui/ws/window_server.cc",
         "patchSetId": 6
