@@ -21,7 +21,8 @@
             },
             {
                 "domain": "Emulation",
-                "include": ["setGeolocationOverride", "clearGeolocationOverride", "setEmitTouchEventsForMouse", "canEmulate", "setDeviceMetricsOverride", "clearDeviceMetricsOverride", "setVisibleSize"]
+                "include": ["setGeolocationOverride", "clearGeolocationOverride", "setEmitTouchEventsForMouse", "canEmulate", "setDeviceMetricsOverride", "clearDeviceMetricsOverride",
+                "setVisibleSize", "setTimeOverride"]
             },
             {
                 "domain": "Input",
