@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e9935b5_80df6cf9",
+        "filename": "gpu/command_buffer/client/client_transfer_cache.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-03T22:10:44Z",
+      "side": 1,
+      "message": "I\u0027m a little confused why this parameter is a unique_ptr.  Are you expecting entries to be always be moved in? It seems like you could theoretically pass an const ref to an entry on the stack because it gets serialized and never reused.",
+      "revId": "c18c39decac9adee9ea9be458a4b011476feda9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8115ef_79513e7c",
+        "filename": "gpu/command_buffer/service/service_transfer_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-03T22:10:44Z",
+      "side": 1,
+      "message": "Could you maybe add a linebreak between these functions? I find this block of code hard to parse.",
+      "revId": "c18c39decac9adee9ea9be458a4b011476feda9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a671c186_8764b34d",
+        "filename": "gpu/command_buffer/service/service_transfer_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-03T22:10:44Z",
+      "side": 1,
+      "message": "It seems like you could also return false here and fail the creation? That seems cleaner to me and then you wouldn\u0027t leak the handle in the renderer.",
+      "revId": "c18c39decac9adee9ea9be458a4b011476feda9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d122d4ab_9256e789",
+        "filename": "gpu/command_buffer/service/service_transfer_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-03T22:10:44Z",
+      "side": 1,
+      "message": "Should this return false and throw a gl error in the command decoder if the id is bogus? (Same question with DeleteEntry.)",
+      "revId": "c18c39decac9adee9ea9be458a4b011476feda9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64650c3a_47ca3841",
+        "filename": "gpu/command_buffer/service/service_transfer_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-03T22:10:44Z",
+      "side": 1,
+      "message": "Is there any need to check for underflow here? What happens if a client double unlocks?",
+      "revId": "c18c39decac9adee9ea9be458a4b011476feda9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
