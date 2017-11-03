@@ -828,9 +828,19 @@ Rect RenderText::GetCursorBounds(const SelectionModel& caret,
       insert_mode ? caret.caret_affinity() : CURSOR_FORWARD;
   int x = 0, width = 1;
   Size size = GetStringSize();
-  if (caret_pos == (caret_affinity == CURSOR_BACKWARD ? 0 : text().length())) {
-    // The caret is attached to the boundary. Always return a 1-dip width caret,
-    // since there is nothing to overtype.
+
+  // Check whether the caret is attached to a boundary. Always return a 1-dip
+  // width caret at the boundary. Avoid calling to IndexOfAdjacentGrapheme(),
+  // which is slow and can impact browser startup here.
+  // In insert mode, index 0 is always a boundary. The end, however, is not at a
+  // boundary when the string ends in RTL text and there is LTR text around it.
+  // But since the caret_affinity is usually CURSOR_FORWARD when typing, the
+  // end-boundary of LTR text is catered for in the general case.
+  bool at_boundary = insert_mode && caret_pos == 0;
+  at_boundary =
+      at_boundary ||
+      caret_pos == (caret_affinity == CURSOR_BACKWARD ? 0 : text().length());
+  if (at_boundary) {
     if ((GetDisplayTextDirection() == base::i18n::RIGHT_TO_LEFT)
         == (caret_pos == 0)) {
       x = size.width();
