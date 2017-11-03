@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dd1015a_168de0b8",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-03T19:12:45Z",
+      "side": 1,
+      "message": "Suggest just if-defing out the entire file instead, since any other test we add here will also not work, though I don\u0027t think we run browser_tests on Android, anyways.",
+      "range": {
+        "startLine": 47,
+        "startChar": 23,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "53689576d191147b495fc734d69a3b2e5e61a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d053e4_4455fdb0",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-03T19:12:45Z",
+      "side": 1,
+      "message": "Typically, network contexts will be accessed through the storage partition.  The only thing I\u0027m aware of that may have its own is SafeBrowsing (Though the service process may also have its own).  The IOThread has its own as well, I suppose, but that one\u0027s a little magic.\n\nYou can get the storage partition in a content browsertest by:          content::BrowserContext::GetDefaultStoragePartition(\n    shell()-\u003eweb_contents()-\u003eGetBrowserContext())\n\nOr are you planning to work on storage partitions in another CL?  Note that we\u0027ll also need chrome browsertests for this that cover both the IOThread\u0027s NetworkContext and the storage partition NetworkContexts, though those definitely should be in another CL.",
+      "range": {
+        "startLine": 66,
+        "startChar": 45,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "53689576d191147b495fc734d69a3b2e5e61a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5614c9a_bbce5bda",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-03T19:12:45Z",
+      "side": 1,
+      "message": "nit:  think network_context2 is a little more common.",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "53689576d191147b495fc734d69a3b2e5e61a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04489015_b62a3dfc",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-03T19:12:45Z",
+      "side": 1,
+      "message": "Issue a request and make sure it works, both with the old context, and then with the new one?  See browsertests that use SimpleURLLoader.",
+      "range": {
+        "startLine": 81,
+        "startChar": 33,
+        "endLine": 81,
+        "endChar": 50
+      },
+      "revId": "53689576d191147b495fc734d69a3b2e5e61a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968e6242_23ec4cbb",
+        "filename": "content/public/browser/network_service_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-03T19:12:45Z",
+      "side": 1,
+      "message": "What\u0027s the difference here?",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 61
+      },
+      "revId": "53689576d191147b495fc734d69a3b2e5e61a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca5b3c7_5c7afa24",
+        "filename": "content/public/test/network_service_test_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-03T19:12:45Z",
+      "side": 1,
+      "message": "NOTREACHED only triggers in debug builds.  CHECK(false)?",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "53689576d191147b495fc734d69a3b2e5e61a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
