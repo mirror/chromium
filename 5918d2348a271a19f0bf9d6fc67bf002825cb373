@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4798827b_b04725e2",
+        "filename": "chrome/browser/resources/vr_daydream_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-03T02:02:22Z",
+      "side": 1,
+      "message": "My goal was that this resources file would conditionally include resources for all platforms, not that it would become the home for only daydream stuff. Could we just elide the includes below via conditionals rather than renaming stuff?",
+      "revId": "5918d2348a271a19f0bf9d6fc67bf002825cb373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1929210d_822a2812",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-03T02:02:22Z",
+      "side": 1,
+      "message": "So is the plan that if we wanted a controller mesh for another platform, we\u0027d include a different .cc file for that platform? The .h file doesn\u0027t seem daydream specific, but is it sufficiently general for cross platform purposes?",
+      "revId": "5918d2348a271a19f0bf9d6fc67bf002825cb373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
