@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6fc977c4_885e509a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-03T19:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2165aaf6_f8795d4a",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "391ad54d0206b3c2012be3fd7cb286259dce57cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f3ea2e8_1706e552",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "391ad54d0206b3c2012be3fd7cb286259dce57cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af1a99c_d3b85f9c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-03T19:18:08Z",
+      "side": 1,
+      "message": "I think this is fine as-is.  If the CSM is null, we can still create a SelectionClientManager and that will enable SmartSelection.  Since the SCM doesn\u0027t know anything about the CSM that should be safe, and updateContextualSearchHooks will just add the CS stuff when the CSM is available.\n\nThanks for asking!",
+      "parentUuid": "0f3ea2e8_1706e552",
+      "revId": "391ad54d0206b3c2012be3fd7cb286259dce57cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "8831c33c_2a4cc224",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabObserver.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-03T19:18:08Z",
+      "side": 1,
+      "message": "Done.  crbug.com/781359",
+      "parentUuid": "c5d8a9f2_42007136",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 11
+      },
+      "revId": "391ad54d0206b3c2012be3fd7cb286259dce57cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb450e1f_6f4edc2b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabObserver.java",
         "patchSetId": 10
@@ -108,6 +174,30 @@
       "revId": "391ad54d0206b3c2012be3fd7cb286259dce57cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b12a65_650bf867",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabObserver.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-03T19:18:08Z",
+      "side": 1,
+      "message": "I deprecated onReparentingFinished, assuming we\u0027ll refactor it in a separate CL (I need to merge this one).",
+      "parentUuid": "bb450e1f_6f4edc2b",
+      "range": {
+        "startLine": 300,
+        "startChar": 8,
+        "endLine": 300,
+        "endChar": 14
+      },
+      "revId": "391ad54d0206b3c2012be3fd7cb286259dce57cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
