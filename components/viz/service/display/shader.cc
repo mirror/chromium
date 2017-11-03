@@ -424,6 +424,7 @@ void FragmentShader::Init(GLES2Interface* context,
     uniforms.push_back("s_backdropTexture");
     uniforms.push_back("s_originalBackdropTexture");
     uniforms.push_back("backdropRect");
+    uniforms.push_back("originalBackdropRect");
   }
   if (mask_mode_ != NO_MASK) {
     uniforms.push_back("s_mask");
@@ -480,6 +481,7 @@ void FragmentShader::Init(GLES2Interface* context,
     backdrop_location_ = locations[index++];
     original_backdrop_location_ = locations[index++];
     backdrop_rect_location_ = locations[index++];
+    original_backdrop_rect_location_ = locations[index++];
   }
   if (mask_mode_ != NO_MASK) {
     mask_sampler_location_ = locations[index++];
@@ -529,11 +531,7 @@ void FragmentShader::Init(GLES2Interface* context,
 }
 
 void FragmentShader::SetBlendModeFunctions(std::string* shader_string) const {
-  if (shader_string->find("ApplyBlendMode") == std::string::npos)
-    return;
-
   if (!has_blend_mode()) {
-    shader_string->insert(0, "#define ApplyBlendMode(X, Y) (X)\n");
     return;
   }
 
@@ -541,41 +539,37 @@ void FragmentShader::SetBlendModeFunctions(std::string* shader_string) const {
     uniform sampler2D s_backdropTexture;
     uniform sampler2D s_originalBackdropTexture;
     uniform TexCoordPrecision vec4 backdropRect;
+    uniform TexCoordPrecision vec4 originalBackdropRect;
   });
 
-  base::StringPiece mixFunction;
+  base::StringPiece functionApplyBlendMode;
   if (mask_for_background_) {
-    static constexpr base::StringPiece kMixFunctionWithMask = SHADER0([]() {
-      vec4 MixBackdrop(TexCoordPrecision vec2 bgTexCoord, float mask) {
+    static constexpr base::StringPiece kFunctionApplyBlendMode = SHADER0([]() {
+      vec4 ApplyBlendMode(vec4 src, float mask) {
+        TexCoordPrecision vec2 bgTexCoord = gl_FragCoord.xy - backdropRect.xy;
+        bgTexCoord *= backdropRect.zw;
+        TexCoordPrecision vec2 origBgTexCoord =
+            gl_FragCoord.xy - originalBackdropRect.xy;
+        origBgTexCoord *= originalBackdropRect.zw;
         vec4 backdrop = texture2D(s_backdropTexture, bgTexCoord);
         vec4 original_backdrop =
-            texture2D(s_originalBackdropTexture, bgTexCoord);
-        return mix(original_backdrop, backdrop, mask);
+            texture2D(s_originalBackdropTexture, origBgTexCoord);
+        vec4 dst = mix(original_backdrop, backdrop, mask);
+        return Blend(src, dst);
       }
     });
-    mixFunction = kMixFunctionWithMask;
+    functionApplyBlendMode = kFunctionApplyBlendMode;
   } else {
-    static constexpr base::StringPiece kMixFunctionWithoutMask = SHADER0([]() {
-      vec4 MixBackdrop(TexCoordPrecision vec2 bgTexCoord, float mask) {
-        return texture2D(s_backdropTexture, bgTexCoord);
+    static constexpr base::StringPiece kFunctionApplyBlendMode = SHADER0([]() {
+      vec4 ApplyBlendMode(vec4 src) {
+        TexCoordPrecision vec2 bgTexCoord = gl_FragCoord.xy - backdropRect.xy;
+        bgTexCoord *= backdropRect.zw;
+        vec4 dst = texture2D(s_backdropTexture, bgTexCoord);
+        return Blend(src, dst);
       }
     });
-    mixFunction = kMixFunctionWithoutMask;
+    functionApplyBlendMode = kFunctionApplyBlendMode;
   }
-
-  static constexpr base::StringPiece kFunctionApplyBlendMode = SHADER0([]() {
-    vec4 GetBackdropColor(float mask) {
-      TexCoordPrecision vec2 bgTexCoord = gl_FragCoord.xy - backdropRect.xy;
-      bgTexCoord.x /= backdropRect.z;
-      bgTexCoord.y /= backdropRect.w;
-      return MixBackdrop(bgTexCoord, mask);
-    }
-
-    vec4 ApplyBlendMode(vec4 src, float mask) {
-      vec4 dst = GetBackdropColor(mask);
-      return Blend(src, dst);
-    }
-  });
 
   std::string shader;
   shader.reserve(shader_string->size() + 1024);
@@ -583,8 +577,7 @@ void FragmentShader::SetBlendModeFunctions(std::string* shader_string) const {
   AppendHelperFunctions(&shader);
   AppendBlendFunction(&shader);
   kUniforms.AppendToString(&shader);
-  mixFunction.AppendToString(&shader);
-  kFunctionApplyBlendMode.AppendToString(&shader);
+  functionApplyBlendMode.AppendToString(&shader);
   shader += *shader_string;
   *shader_string = std::move(shader);
 }
@@ -1050,10 +1043,16 @@ std::string FragmentShader::GetShaderSource() const {
       SRC("gl_FragColor = vec4(texColor.rgb, 1.0);");
       break;
     case FRAG_COLOR_MODE_APPLY_BLEND_MODE:
-      if (mask_mode_ != NO_MASK)
-        SRC("gl_FragColor = ApplyBlendMode(texColor, maskColor.w);");
-      else
-        SRC("gl_FragColor = ApplyBlendMode(texColor, 0.0);");
+      if (!has_blend_mode()) {
+        SRC("gl_FragColor = texColor;");
+      } else if (mask_mode_ != NO_MASK) {
+        if (mask_for_background_)
+          SRC("gl_FragColor = ApplyBlendMode(texColor, maskColor.w);");
+        else
+          SRC("gl_FragColor = ApplyBlendMode(texColor);");
+      } else {
+        SRC("gl_FragColor = ApplyBlendMode(texColor);");
+      }
       break;
   }
   source += "}\n";

@@ -204,10 +204,9 @@ struct DrawRenderPassDrawQuadParams {
 
   bool use_aa = false;
 
-  // Some filters affect pixels outside the original contents bounds. This
-  // requires translation of the source when texturing, as well as a change in
-  // the bounds of the destination.
-  gfx::Point src_offset;
+  // Real drawn rect.
+  // Some filters affect pixels outside the original contents bounds, so we can
+  // change this destination rect.
   gfx::RectF dst_rect;
 
   // A Skia image that should be sampled from instead of the original
@@ -222,19 +221,6 @@ struct DrawRenderPassDrawQuadParams {
   std::unique_ptr<cc::DisplayResourceProvider::ScopedSamplerGL>
       mask_resource_lock;
 
-  // Original background texture.
-  uint32_t background_texture = 0;
-
-  // Backdrop bounding box.
-  gfx::Rect background_rect;
-
-  // Filtered background texture.
-  sk_sp<SkImage> background_image;
-  GLuint background_image_id = 0;
-
-  // Whether the original background texture is needed for the mask.
-  bool mask_for_background = false;
-
   // Whether a color matrix needs to be applied by the shaders when drawing
   // the RPDQ.
   bool use_color_matrix = false;
@@ -248,6 +234,29 @@ struct DrawRenderPassDrawQuadParams {
   // The color space of the texture bound for sampling (from filter_image or
   // contents_resource_lock, depending on the path taken).
   gfx::ColorSpace contents_color_space;
+
+  // Background filters block.
+  // Original background texture.
+  uint32_t background_texture = 0;
+
+  // Backdrop bounding box.
+  gfx::Rect background_rect;
+
+  // This is the amount to translate the resulting image relative to the src
+  // when it is drawn.
+  SkIPoint background_offset = { 0, 0 };
+
+  // The subset represents the active portion of image.
+  // Some background filters use texture-backed images, where the texture
+  // may be approx-match and thus larger than the required size.
+  SkIRect background_subset = { 0, 0, 0, 0 };
+
+  // Filtered background texture.
+  sk_sp<SkImage> background_image;
+  GLuint background_image_id = 0;
+
+  // Whether the original background texture is needed for the mask.
+  bool mask_for_background = false;
 };
 
 static GLint GetActiveTextureUnit(GLES2Interface* gl) {
@@ -662,23 +671,16 @@ static sk_sp<SkImage> WrapTexture(uint32_t texture_id,
                                   kPremul_SkAlphaType, nullptr);
 }
 
-static sk_sp<SkImage> ApplyImageFilter(
-    std::unique_ptr<GLRenderer::ScopedUseGrContext> use_gr_context,
-    const gfx::RectF& src_rect,
-    const gfx::RectF& dst_rect,
-    const gfx::Vector2dF& scale,
-    sk_sp<SkImageFilter> filter,
-    const cc::DisplayResourceProvider::ScopedReadLockGL& source_texture_lock,
-    SkIPoint* offset,
-    SkIRect* subset,
-    bool flip_texture,
-    const gfx::PointF& origin) {
-  if (!filter || !use_gr_context)
+static sk_sp<SkImage> ApplyImageFilter(const gfx::RectF& src_rect,
+                                       const gfx::RectF& dst_rect,
+                                       const gfx::Vector2dF& scale,
+                                       sk_sp<SkImageFilter> filter,
+                                       sk_sp<SkImage> src_image,
+                                       SkIPoint* offset,
+                                       SkIRect* subset,
+                                       const gfx::PointF& origin) {
+  if (!filter)
     return nullptr;
-
-  sk_sp<SkImage> src_image = WrapTexture(
-      source_texture_lock.texture_id(), source_texture_lock.target(),
-      source_texture_lock.size(), use_gr_context->context(), flip_texture);
 
   if (!src_image) {
     TRACE_EVENT_INSTANT0("cc",
@@ -943,9 +945,11 @@ sk_sp<SkImage> GLRenderer::ApplyBackgroundFilters(
     const cc::FilterOperations& background_filters,
     uint32_t background_texture,
     const gfx::Rect& rect,
-    const gfx::Rect& unclipped_rect) {
+    const gfx::Rect& unclipped_rect,
+    SkIPoint* offset,
+    SkIRect* subset,
+    bool flip_texture) {
   DCHECK(ShouldApplyBackgroundFilters(quad, &background_filters));
-  auto use_gr_context = ScopedUseGrContext::Create(this);
 
   gfx::Vector2d clipping_offset =
       (rect.top_right() - unclipped_rect.top_right()) +
@@ -954,56 +958,18 @@ sk_sp<SkImage> GLRenderer::ApplyBackgroundFilters(
       background_filters, gfx::SizeF(rect.size()),
       gfx::Vector2dF(clipping_offset));
 
-  // TODO(senorblanco): background filters should be moved to the
-  // makeWithFilter fast-path, and go back to calling ApplyImageFilter().
-  // See http://crbug.com/613233.
-  if (!filter || !use_gr_context)
+  auto use_gr_context = ScopedUseGrContext::Create(this);
+  if (!use_gr_context)
     return nullptr;
 
-  bool flip_texture = true;
   sk_sp<SkImage> src_image =
       WrapTexture(background_texture, GL_TEXTURE_2D, rect.size(),
                   use_gr_context->context(), flip_texture);
-  if (!src_image) {
-    TRACE_EVENT_INSTANT0(
-        "cc", "ApplyBackgroundFilters wrap background texture failed",
-        TRACE_EVENT_SCOPE_THREAD);
-    return nullptr;
-  }
 
-  // Create surface to draw into.
-  SkImageInfo dst_info =
-      SkImageInfo::MakeN32Premul(rect.width(), rect.height());
-  sk_sp<SkSurface> surface = SkSurface::MakeRenderTarget(
-      use_gr_context->context(), SkBudgeted::kYes, dst_info);
-  if (!surface) {
-    TRACE_EVENT_INSTANT0("cc",
-                         "ApplyBackgroundFilters surface allocation failed",
-                         TRACE_EVENT_SCOPE_THREAD);
-    return nullptr;
-  }
-
-  // Big filters can sometimes fallback to CPU. Therefore, we need
-  // to disable subnormal floats for performance and security reasons.
-  cc::ScopedSubnormalFloatDisabler disabler;
-  SkMatrix local_matrix;
-  local_matrix.setScale(quad->filters_scale.x(), quad->filters_scale.y());
-
-  SkPaint paint;
-  paint.setImageFilter(filter->makeWithLocalMatrix(local_matrix));
-  surface->getCanvas()->translate(-rect.x(), -rect.y());
-  surface->getCanvas()->drawImage(src_image, rect.x(), rect.y(), &paint);
-  // Flush the drawing before source texture read lock goes out of scope.
-  // Skia API does not guarantee that when the SkImage goes out of scope,
-  // its externally referenced resources would force the rendering to be
-  // flushed.
-  surface->getCanvas()->flush();
-  sk_sp<SkImage> image = surface->makeImageSnapshot();
-  if (!image || !image->isTextureBacked()) {
-    return nullptr;
-  }
-
-  return image;
+  return ApplyImageFilter(gfx::RectF(rect), gfx::RectF(rect),
+                          quad->filters_scale, std::move(filter),
+                          std::move(src_image), offset, subset,
+                          quad->filters_origin);
 }
 
 // Map device space quad to local space. Device_transform has no 3d
@@ -1216,7 +1182,8 @@ void GLRenderer::UpdateRPDQShadersForBlending(
         // pixels' coordinate space.
         params->background_image = ApplyBackgroundFilters(
             quad, *params->background_filters, params->background_texture,
-            params->background_rect, unclipped_rect);
+            params->background_rect, unclipped_rect, &params->background_offset,
+            &params->background_subset, params->flip_texture);
         if (params->background_image) {
           params->background_image_id =
               skia::GrBackendObjectToGrGLTextureInfo(
@@ -1232,8 +1199,10 @@ void GLRenderer::UpdateRPDQShadersForBlending(
       DCHECK(!params->background_image_id);
       params->use_shaders_for_blending = false;
     } else if (params->background_image_id) {
-      // Reset original background texture if there is not any mask.
-      if (!quad->mask_resource_id()) {
+      // Reset original background texture if there is not any mask
+      // and we did not reuse original background texture for filtered texture.
+      if (!quad->mask_resource_id() &&
+          params->background_texture != params->background_image_id) {
         gl_->DeleteTextures(1, &params->background_texture);
         params->background_texture = 0;
       }
@@ -1248,15 +1217,9 @@ void GLRenderer::UpdateRPDQShadersForBlending(
 
   // Need original background texture for mask?
   params->mask_for_background =
-      params->background_texture &&  // Have original background texture
-      params->background_image_id;   // Have mask texture
-  // If we have background texture + background image, then we also have mask
-  // resource.
-  if (params->background_texture && params->background_image_id) {
-    DCHECK(params->mask_for_background);
-    DCHECK(quad->mask_resource_id());
-  }
-
+      params->background_texture &&   // Have original background texture
+      params->background_image_id &&  // Have filtered background texture
+      quad->mask_resource_id();       // Have mask texture
   DCHECK_EQ(params->background_texture || params->background_image_id,
             params->use_shaders_for_blending);
 }
@@ -1299,23 +1262,30 @@ bool GLRenderer::UpdateRPDQWithSkiaFilters(
         SkIRect subset;
         gfx::RectF src_rect(quad->rect);
 
+        auto use_gr_context = ScopedUseGrContext::Create(this);
+        if (!use_gr_context)
+          return false;
+
         cc::DisplayResourceProvider::ScopedReadLockGL
             prefilter_contents_texture_lock(resource_provider_,
                                             params->contents_texture->id());
+        sk_sp<SkImage> src_image =
+            WrapTexture(prefilter_contents_texture_lock.texture_id(),
+                        prefilter_contents_texture_lock.target(),
+                        prefilter_contents_texture_lock.size(),
+                        use_gr_context->context(), params->flip_texture);
+
         params->contents_color_space =
             prefilter_contents_texture_lock.color_space();
         params->filter_image = ApplyImageFilter(
-            ScopedUseGrContext::Create(this), src_rect, params->dst_rect,
-            quad->filters_scale, std::move(filter),
-            prefilter_contents_texture_lock, &offset, &subset,
-            params->flip_texture, quad->filters_origin);
+            src_rect, params->dst_rect, quad->filters_scale, std::move(filter),
+            std::move(src_image), &offset, &subset, quad->filters_origin);
         if (!params->filter_image)
           return false;
         params->dst_rect =
             gfx::RectF(src_rect.x() + offset.fX, src_rect.y() + offset.fY,
                        subset.width(), subset.height());
-        params->src_offset.SetPoint(subset.x(), subset.y());
-        gfx::RectF tex_rect = gfx::RectF(gfx::PointF(params->src_offset),
+        gfx::RectF tex_rect = gfx::RectF(gfx::PointF(subset.x(), subset.y()),
                                          params->dst_rect.size());
         params->tex_coord_rect = tex_rect;
       }
@@ -1488,10 +1458,36 @@ void GLRenderer::UpdateRPDQUniforms(DrawRenderPassDrawQuadParams* params) {
     ++last_texture_unit;
     gl_->Uniform1i(current_program_->backdrop_location(), last_texture_unit);
 
+    gfx::RectF tex_rect(params->background_rect);
+    if (params->background_image) {
+      tex_rect.set_width(params->background_image->width());
+      tex_rect.set_height(params->background_image->height());
+      tex_rect.set_x(params->background_rect.x() -
+                     params->background_subset.x() +
+                     params->background_offset.x());
+      tex_rect.set_y(params->background_rect.y() +
+                     params->background_subset.y() -
+                     (params->background_image->height() -
+                      params->background_subset.height()));
+    }
+
+    gfx::RectF original_background_rect(params->background_rect);
+    original_background_rect.set_width(1.0f / original_background_rect.width());
+    original_background_rect.set_height(1.0f /
+                                        original_background_rect.height());
+
+    gfx::RectF background_rect(tex_rect);
+    background_rect.set_width(1.0f / background_rect.width());
+    background_rect.set_height(1.0f / background_rect.height());
+
+    gl_->Uniform4f(current_program_->original_backdrop_rect_location(),
+                   original_background_rect.x(), original_background_rect.y(),
+                   original_background_rect.width(),
+                   original_background_rect.height());
+
     gl_->Uniform4f(current_program_->backdrop_rect_location(),
-                   params->background_rect.x(), params->background_rect.y(),
-                   params->background_rect.width(),
-                   params->background_rect.height());
+                   background_rect.x(), background_rect.y(),
+                   background_rect.width(), background_rect.height());
 
     // Either |background_image_id| or |background_texture| will be the
     // |backdrop_location| in the shader.

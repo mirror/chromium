@@ -22,6 +22,72 @@ namespace {
 
 class LayerTreeHostFiltersPixelTest : public LayerTreePixelTest {};
 
+class LayerTreeHostOffsetImageFilterTest
+    : public LayerTreeHostFiltersPixelTest {
+ protected:
+  void RunPixelTestParams(SkScalar offset_x,
+                          SkScalar offset_y,
+                          bool is_background,
+                          base::FilePath image_name) {
+    scoped_refptr<SolidColorLayer> root =
+        CreateSolidColorLayer(gfx::Rect(200, 200), SK_ColorWHITE);
+
+    scoped_refptr<SolidColorLayer> green =
+        CreateSolidColorLayer(gfx::Rect(20, 20, 20, 20), kCSSGreen);
+    root->AddChild(green);
+
+    FilterOperations filters;
+    filters.Append(FilterOperation::CreateReferenceFilter(
+        SkOffsetImageFilter::Make(offset_x, offset_y, nullptr)));
+    if (is_background) {
+      scoped_refptr<SolidColorLayer> offsetY = CreateSolidColorLayer(
+          gfx::Rect(20, 20, 20 + offset_x, 20 + offset_y), SK_ColorTRANSPARENT);
+      offsetY->SetBackgroundFilters(filters);
+      root->AddChild(offsetY);
+    } else {
+      green->SetFilters(filters);
+    }
+
+    RunPixelTest(PIXEL_TEST_GL, root, image_name);
+  }
+};
+
+TEST_F(LayerTreeHostOffsetImageFilterTest, ForegroundOffsetImageFilterX) {
+  RunPixelTestParams(
+      20, 0, false,
+      base::FilePath(FILE_PATH_LITERAL("offset_image_filter_byx.png")));
+}
+
+TEST_F(LayerTreeHostOffsetImageFilterTest, ForegroundOffsetImageFilterY) {
+  RunPixelTestParams(
+      0, 20, false,
+      base::FilePath(FILE_PATH_LITERAL("offset_image_filter_byy.png")));
+}
+
+TEST_F(LayerTreeHostOffsetImageFilterTest, ForegroundOffsetImageFilterXY) {
+  RunPixelTestParams(
+      20, 20, false,
+      base::FilePath(FILE_PATH_LITERAL("offset_image_filter_byxy.png")));
+}
+
+TEST_F(LayerTreeHostOffsetImageFilterTest, BackgroundOffsetImageFilterX) {
+  RunPixelTestParams(
+      20, 0, true,
+      base::FilePath(FILE_PATH_LITERAL("offset_image_filter_byx.png")));
+}
+
+TEST_F(LayerTreeHostOffsetImageFilterTest, BackgroundOffsetImageFilterY) {
+  RunPixelTestParams(
+      0, 20, true,
+      base::FilePath(FILE_PATH_LITERAL("offset_image_filter_byy.png")));
+}
+
+TEST_F(LayerTreeHostOffsetImageFilterTest, BackgroundOffsetImageFilterXY) {
+  RunPixelTestParams(
+      20, 20, true,
+      base::FilePath(FILE_PATH_LITERAL("offset_image_filter_byxy.png")));
+}
+
 TEST_F(LayerTreeHostFiltersPixelTest, BackgroundFilterBlur) {
   scoped_refptr<SolidColorLayer> background = CreateSolidColorLayer(
       gfx::Rect(200, 200), SK_ColorWHITE);
