@@ -17,10 +17,12 @@
 #include "chrome/renderer/extensions/app_bindings.h"
 #include "chrome/renderer/extensions/app_hooks_delegate.h"
 #include "chrome/renderer/extensions/automation_internal_custom_bindings.h"
+#include "chrome/renderer/extensions/extension_hooks_delegate.h"
 #include "chrome/renderer/extensions/media_galleries_custom_bindings.h"
 #include "chrome/renderer/extensions/notifications_native_handler.h"
 #include "chrome/renderer/extensions/page_capture_custom_bindings.h"
 #include "chrome/renderer/extensions/sync_file_system_custom_bindings.h"
+#include "chrome/renderer/extensions/tabs_hooks_delegate.h"
 #include "chrome/renderer/extensions/webstore_bindings.h"
 #include "components/version_info/version_info.h"
 #include "content/public/common/content_switches.h"
@@ -39,6 +41,7 @@
 #include "extensions/renderer/dispatcher.h"
 #include "extensions/renderer/i18n_custom_bindings.h"
 #include "extensions/renderer/lazy_background_page_native_handler.h"
+#include "extensions/renderer/native_extension_bindings_system.h"
 #include "extensions/renderer/native_handler.h"
 #include "extensions/renderer/resource_bundle_source_map.h"
 #include "extensions/renderer/script_context.h"
@@ -197,7 +200,6 @@ void ChromeExtensionsDispatcherDelegate::PopulateSourceMap(
   source_map->RegisterSource("systemIndicator",
                              IDR_SYSTEM_INDICATOR_CUSTOM_BINDINGS_JS);
   source_map->RegisterSource("tabCapture", IDR_TAB_CAPTURE_CUSTOM_BINDINGS_JS);
-  source_map->RegisterSource("tabs", IDR_TABS_CUSTOM_BINDINGS_JS);
   source_map->RegisterSource("tts", IDR_TTS_CUSTOM_BINDINGS_JS);
   source_map->RegisterSource("ttsEngine", IDR_TTS_ENGINE_CUSTOM_BINDINGS_JS);
 
@@ -285,6 +287,7 @@ void ChromeExtensionsDispatcherDelegate::PopulateSourceMap(
   // These bindings are unnecessary with native bindings enabled.
   if (!extensions::FeatureSwitch::native_crx_bindings()->IsEnabled()) {
     source_map->RegisterSource("app", IDR_APP_CUSTOM_BINDINGS_JS);
+    source_map->RegisterSource("tabs", IDR_TABS_CUSTOM_BINDINGS_JS);
 
     // Custom types sources.
     source_map->RegisterSource("ChromeSetting", IDR_CHROME_SETTING_JS);
@@ -317,9 +320,16 @@ void ChromeExtensionsDispatcherDelegate::OnActiveExtensionsUpdated(
 
 void ChromeExtensionsDispatcherDelegate::InitializeBindingsSystem(
     extensions::Dispatcher* dispatcher,
-    extensions::APIBindingsSystem* bindings_system) {
+    extensions::NativeExtensionBindingsSystem* bindings_system) {
   DCHECK(extensions::FeatureSwitch::native_crx_bindings()->IsEnabled());
-  bindings_system->GetHooksForAPI("app")->SetDelegate(
+  extensions::APIBindingsSystem* bindings = bindings_system->api_system();
+  bindings->GetHooksForAPI("app")->SetDelegate(
       base::MakeUnique<extensions::AppHooksDelegate>(
-          dispatcher, bindings_system->request_handler()));
+          dispatcher, bindings->request_handler()));
+  bindings->GetHooksForAPI("extension")->SetDelegate(
+      std::make_unique<extensions::ExtensionHooksDelegate>(
+          bindings_system->messaging_service()));
+  bindings->GetHooksForAPI("tabs")->SetDelegate(
+      std::make_unique<extensions::TabsHooksDelegate>(
+          bindings_system->messaging_service()));
 }

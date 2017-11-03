@@ -7,11 +7,14 @@
 #include "base/containers/span.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/stringprintf.h"
+#include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/v8_value_converter.h"
 #include "extensions/common/api/messaging/message.h"
+#include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest.h"
 #include "extensions/renderer/bindings/api_signature.h"
+#include "extensions/renderer/extension_frame_helper.h"
 #include "extensions/renderer/message_target.h"
 #include "extensions/renderer/messaging_util.h"
 #include "extensions/renderer/native_renderer_messaging_service.h"
@@ -33,10 +36,12 @@ using RequestResult = APIBindingHooks::RequestResult;
 void MassageSendMessageArguments(
     v8::Isolate* isolate,
     std::vector<v8::Local<v8::Value>>* arguments_out) {
+  LOG(WARNING) << "massing arguments";
   base::span<const v8::Local<v8::Value>> arguments = *arguments_out;
   if (arguments.empty() || arguments.size() > 4u)
     return;
 
+  LOG(WARNING) << "Size: " << arguments.size();
   v8::Local<v8::Value> target_id = v8::Null(isolate);
   v8::Local<v8::Value> message = v8::Null(isolate);
   v8::Local<v8::Value> options = v8::Null(isolate);
@@ -45,16 +50,19 @@ void MassageSendMessageArguments(
   // If the last argument is a function, it is the response callback.
   // Ignore it for the purposes of further argument parsing.
   if ((*arguments.rbegin())->IsFunction()) {
+    LOG(WARNING) << "popped function";
     response_callback = *arguments.rbegin();
     arguments = arguments.first(arguments.size() - 1);
   }
 
   switch (arguments.size()) {
     case 0:
+      LOG(WARNING) << "No message";
       // Required argument (message) is missing.
       // Early-out and rely on normal signature parsing to report this error.
       return;
     case 1:
+      LOG(WARNING) << "Message is 0th";
       // Argument must be the message.
       message = arguments[0];
       break;
@@ -62,14 +70,17 @@ void MassageSendMessageArguments(
       // Assume the meaning is (id, message) if id would be a string.
       // Otherwise the meaning is (message, options).
       if (arguments[0]->IsString()) {
+        LOG(WARNING) << "Id 0, message 1";
         target_id = arguments[0];
         message = arguments[1];
       } else {
+        LOG(WARNING) << "message 0, options 1";
         message = arguments[0];
         options = arguments[1];
       }
       break;
     case 3:
+      LOG(WARNING) << "one of each";
       // The meaning in this case is unambiguous.
       target_id = arguments[0];
       message = arguments[1];
@@ -83,6 +94,7 @@ void MassageSendMessageArguments(
       NOTREACHED();
   }
 
+  LOG(WARNING) << "Parsed";
   *arguments_out = {target_id, message, options, response_callback};
 }
 
@@ -114,8 +126,9 @@ constexpr char kSendNativeMessage[] = "runtime.sendNativeMessage";
 }  // namespace
 
 RuntimeHooksDelegate::RuntimeHooksDelegate(
-    NativeRendererMessagingService* messaging_service)
-    : messaging_service_(messaging_service) {}
+    NativeRendererMessagingService* messaging_service,
+    const binding::RunJSFunctionSync& run_js_sync)
+    : messaging_service_(messaging_service), run_js_sync_(run_js_sync) {}
 RuntimeHooksDelegate::~RuntimeHooksDelegate() {}
 
 RequestResult RuntimeHooksDelegate::HandleRequest(
@@ -353,6 +366,64 @@ RequestResult RuntimeHooksDelegate::HandleConnectNative(
 
   RequestResult result(RequestResult::HANDLED);
   result.return_value = port.ToV8();
+  return result;
+}
+
+RequestResult RuntimeHooksDelegate::HandleGetBackgroundPage(
+    ScriptContext* script_context,
+    const std::vector<v8::Local<v8::Value>>& arguments) {
+  const Extension* extension = script_context->extension();
+  DCHECK(extension);
+
+  RequestResult result(RequestResult::HANDLED);
+  result.return_value =
+      ExtensionFrameHelper::GetV8BackgroundPageMainFrame(
+          script_context->isolate(), extension->id());
+  return result;
+}
+
+RequestResult RuntimeHooksDelegate::HandleGetPackageDirectoryEntryCallback(
+    ScriptContext* script_context,
+    const std::vector<v8::Local<v8::Value>>& arguments) {
+  v8::Isolate* isolate = script_context->isolate();
+  v8::Local<v8::Context> v8_context = script_context->v8_context();
+
+  ModuleSystem::NativesEnabledScope enable_natives(
+      script_context->module_system());
+
+  v8::Local<v8::Object> file_entry_binding_util;
+  if (!script_context->module_system()
+           ->Require("fileEntryBindingUtil")
+           .ToLocal(&file_entry_binding_util)) {
+    NOTREACHED();
+    // Abort, and consider the request handled.
+    return RequestResult(RequestResult::HANDLED);
+  }
+
+  v8::Local<v8::Value> get_bind_directory_entry_callback;
+  if (!file_entry_binding_util
+           ->Get(v8_context,
+                 gin::StringToSymbol(isolate, "getBindDirectoryEntryCallback"))
+           .ToLocal(&get_bind_directory_entry_callback) ||
+      !get_bind_directory_entry_callback->IsFunction()) {
+    NOTREACHED();
+    // Abort, and consider the request handled.
+    return RequestResult(RequestResult::HANDLED);
+  }
+
+  v8::Global<v8::Value> script_result =
+      run_js_sync_.Run(get_bind_directory_entry_callback.As<v8::Function>(),
+                       v8_context, 0, nullptr);
+  v8::Local<v8::Value> callback;
+  if (script_result.IsEmpty() ||
+      !(callback = script_result.Get(isolate))->IsFunction()) {
+    NOTREACHED();
+    // Abort, and consider the request handled.
+    return RequestResult(RequestResult::HANDLED);
+  }
+
+  RequestResult result(RequestResult::NOT_HANDLED);
+  result.custom_callback = callback.As<v8::Function>();
   return result;
 }
 
