@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59b19465_45c3bbdb",
+        "filename": "components/printing/service/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-03T05:11:46Z",
+      "side": 1,
+      "message": "nit: I think it\u0027s really OK to just change the deps entry above to +services/service_manager/public and get rid of the specific_include_rules.\n\nThere are very few restrictions on who can depend on public service manager APIs",
+      "revId": "2a6d9851687a4033099181075999479aadb0ac72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
