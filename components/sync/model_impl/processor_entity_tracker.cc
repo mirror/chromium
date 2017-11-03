@@ -180,13 +180,17 @@ void ProcessorEntityTracker::MakeLocalChange(std::unique_ptr<EntityData> data) {
   SetCommitData(data.get());
 }
 
-void ProcessorEntityTracker::Delete() {
+bool ProcessorEntityTracker::Delete() {
   IncrementSequenceNumber();
   metadata_.set_modification_time(TimeToProtoTime(base::Time::Now()));
   metadata_.set_is_deleted(true);
   metadata_.clear_specifics_hash();
   // Clear any cached pending commit data.
   commit_data_.reset();
+  // Return true if server night know about this entity.
+  return (metadata_.server_version() != kUncommittedVersion) ||
+         (commit_requested_sequence_number_ >
+          metadata_.acked_sequence_number());
 }
 
 void ProcessorEntityTracker::InitializeCommitRequestData(
