@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7e20782_83accc33",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-03T16:02:54Z",
+      "side": 1,
+      "message": "Why isn\u0027t this a BindOnce?",
+      "revId": "2001734a1f4568151584d284b0cb06c64632457d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf09d18_dfb29c93",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-03T16:02:54Z",
+      "side": 1,
+      "message": "Sorry I\u0027m not clear why you need an input_event_queue_.\n\nThis mojo interface is just bound on the main thread isn\u0027t it. So no queuing is necessary.",
+      "revId": "2001734a1f4568151584d284b0cb06c64632457d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
