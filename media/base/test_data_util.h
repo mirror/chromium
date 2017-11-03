@@ -17,6 +17,12 @@ namespace media {
 
 class DecoderBuffer;
 
+// Common test results.
+MEDIA_EXPORT extern const char kFailed[];
+MEDIA_EXPORT extern const char kEnded[];
+MEDIA_EXPORT extern const char kErrorEvent[];
+MEDIA_EXPORT extern const char kError[];
+
 // Returns a file path for a file in the media/test/data directory.
 base::FilePath GetTestDataFilePath(const std::string& name);
 
