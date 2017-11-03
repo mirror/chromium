@@ -34,6 +34,24 @@
       "revId": "eae844ca97e592df0b4063ee7289669cfe79fab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2a46cb_33578b43",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-03T00:54:14Z",
+      "side": 1,
+      "message": "I agree.\n\nI can make the change for metrics in a separate CL, I might need some help to make the server side change.",
+      "parentUuid": "72c7330e_2c51c480",
+      "revId": "eae844ca97e592df0b4063ee7289669cfe79fab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
