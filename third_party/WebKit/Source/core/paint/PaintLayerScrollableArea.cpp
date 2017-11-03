@@ -1215,8 +1215,10 @@ int PaintLayerScrollableArea::HorizontalScrollbarStart(int min_x) const {
 IntSize PaintLayerScrollableArea::ScrollbarOffset(
     const Scrollbar& scrollbar) const {
   if (&scrollbar == VerticalScrollbar()) {
-    return IntSize(VerticalScrollbarStart(0, Layer()->Size().Width()),
-                   Box().BorderTop().ToInt());
+    return IntSize(
+        VerticalScrollbarStart(
+            0, SnapSizeToPixel(Layer()->Size().Width(), Box().Location().X())),
+        Box().BorderTop().ToInt());
   }
 
   if (&scrollbar == HorizontalScrollbar()) {
@@ -1550,13 +1552,14 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
   int resize_control_size = max(resize_control_rect.Height(), 0);
   if (HasVerticalScrollbar() &&
       VerticalScrollbar()->ShouldParticipateInHitTesting()) {
-    LayoutRect v_bar_rect(VerticalScrollbarStart(0, Layer()->Size().Width()),
-                          Box().BorderTop().ToInt(),
-                          VerticalScrollbar()->ScrollbarThickness(),
-                          VisibleContentRect(kIncludeScrollbars).Height() -
-                              (HasHorizontalScrollbar()
-                                   ? HorizontalScrollbar()->ScrollbarThickness()
-                                   : resize_control_size));
+    LayoutRect v_bar_rect(
+        VerticalScrollbarStart(
+            0, SnapSizeToPixel(Layer()->Size().Width(), Box().Location().X())),
+        Box().BorderTop().ToInt(), VerticalScrollbar()->ScrollbarThickness(),
+        VisibleContentRect(kIncludeScrollbars).Height() -
+            (HasHorizontalScrollbar()
+                 ? HorizontalScrollbar()->ScrollbarThickness()
+                 : resize_control_size));
     if (v_bar_rect.Contains(local_point)) {
       result.SetScrollbar(VerticalScrollbar());
       return true;
@@ -1626,7 +1629,8 @@ bool PaintLayerScrollableArea::IsPointInResizeControl(
 
   IntPoint local_point =
       RoundedIntPoint(Box().AbsoluteToLocal(absolute_point, kUseTransforms));
-  IntRect local_bounds(IntPoint(), Layer()->Size());
+  IntRect local_bounds(IntPoint(),
+                       PixelSnappedIntSize(Layer()->Size(), Box().Location()));
   return ResizerCornerRect(local_bounds, resizer_hit_test_type)
       .Contains(local_point);
 }
@@ -1716,7 +1720,7 @@ IntSize PaintLayerScrollableArea::OffsetFromResizeCorner(
   // left corner.
   // FIXME: This assumes the location is 0, 0. Is this guaranteed to always be
   // the case?
-  IntSize element_size = Layer()->Size();
+  IntSize element_size = PixelSnappedIntSize(Layer()->Size(), Box().Location());
   if (Box().ShouldPlaceBlockDirectionScrollbarOnLogicalLeft())
     element_size.SetWidth(0);
   IntPoint resizer_point = IntPoint(element_size);
