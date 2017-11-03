@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "963a5642_2f196918",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-03T22:54:06Z",
+      "side": 1,
+      "message": "nit: remove unused include",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "5d779967eb2f5fe8dd1de461cf296ff7f3bfb33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8edea969_fbd0a363",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-03T22:54:06Z",
+      "side": 1,
+      "message": "Can you remove the \"virtual\" here? It looks like you haven\u0027t subclassed it anywhere.",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 38
+      },
+      "revId": "5d779967eb2f5fe8dd1de461cf296ff7f3bfb33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e49fce6_9c9a7464",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-03T22:54:06Z",
+      "side": 1,
+      "message": "nit: remove unused include",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "5d779967eb2f5fe8dd1de461cf296ff7f3bfb33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ac39a5_b2350d68",
+        "filename": "components/data_reduction_proxy/proto/network_properties.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-03T22:54:06Z",
+      "side": 1,
+      "message": "nit: If you want, you could also move the per-proxy fields into a separate proto message in this file, so that it\u0027s easier to add new per-proxy fields. E.g., maybe something like:\n\nmessage ProtoFlags {\n  optional bool disallowed_due_to_warmup_probe_failure \u003d 1;\n}\n\nmessage NetworkProperties {\n  optional bool secure_proxy_disallowed_by_carrier \u003d 1;\n  optional bool has_captive_portal \u003d 2;\n  optional ProtoFlags secure_proxy_flags \u003d 3;\n  optional ProtoFlags insecure_proxy_flags \u003d 4;\n}",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 67
+      },
+      "revId": "5d779967eb2f5fe8dd1de461cf296ff7f3bfb33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
