@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "d0a5de65_4f176add",
+        "filename": "gpu/command_buffer/common/capabilities.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-03T21:48:38Z",
+      "side": 1,
+      "message": "You will need to add the field to  gpu/ipc/common/gpu_command_buffer_traits_multi.h so that it is transferred over IPC.",
+      "revId": "7ab4b5f6899af86d619d39180e3198508975aba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc65165e_8e96e699",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 5
