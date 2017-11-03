@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1d333e0_69f9b234",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentTimeline.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-03T19:29:47Z",
+      "side": 1,
+      "message": "nit: It\u0027s not commented out, but you can just link to the bug here.",
+      "range": {
+        "startLine": 196,
+        "startChar": 51,
+        "endLine": 197,
+        "endChar": 11
+      },
+      "revId": "1901f5df04363c48cb27f74c48918e954127056b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
