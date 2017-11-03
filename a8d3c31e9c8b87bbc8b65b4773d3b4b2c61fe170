@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d6061c2_5406f020",
+        "filename": "remoting/base/descending_samples.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-03T22:28:36Z",
+      "side": 1,
+      "message": "Yes, indeed the test case is written in this way.\nI have no preference between these two solutions, I think either way is reliable enough for our scenarios.\nDone.",
+      "parentUuid": "c61304d0_26607041",
+      "range": {
+        "startLine": 26,
+        "startChar": 14,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "274b6dce_c41ac4b0",
         "filename": "remoting/base/descending_samples.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "03b9a42b_d9637789",
+        "filename": "remoting/base/descending_samples.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-03T22:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274b6dce_c41ac4b0",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51cf693b_032782f9",
         "filename": "remoting/base/descending_samples.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-03T02:33:47Z",
       "side": 1,
       "message": "Need 64 bits for a counter?\nIf it\u0027s needed to avoid arithmetic overflow, maybe do the casting there?",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0e462b_56b4b1ce",
+        "filename": "remoting/base/descending_samples.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-03T22:28:36Z",
+      "side": 1,
+      "message": "By using int32, it will overflow in one day if we insert 25k records per second, which is still possible. But by using int64_t, we do not need to care about this problem anymore.",
+      "parentUuid": "51cf693b_032782f9",
       "range": {
         "startLine": 24,
         "startChar": 2,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "b565bbc9_e21af5ab",
+        "filename": "remoting/base/descending_samples_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-03T22:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "798201da_6a7127bd",
+      "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37b91098_91843ee5",
         "filename": "remoting/base/descending_samples_unittest.cc",
         "patchSetId": 4
@@ -99,6 +189,30 @@
       "writtenOn": "2017-11-03T02:33:47Z",
       "side": 1,
       "message": "Does this really work? As I implied in my comment above, you generally don\u0027t test floats for exact equality, but maybe EXPECT_EQ treats floats as a special case and allows approximate equality?",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 11
+      },
+      "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054d4c13_709c9f9e",
+        "filename": "remoting/base/descending_samples_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-03T22:28:36Z",
+      "side": 1,
+      "message": "If we calculate the weighted average by using two different ways, they should be the same without needing EXPECT_DOUBLE_EQ. But if we are using some predefined numbers, we may end up with precision issue.",
+      "parentUuid": "37b91098_91843ee5",
       "range": {
         "startLine": 23,
         "startChar": 2,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "0b421b02_ba84e0cd",
+        "filename": "remoting/codec/encoder_bitrate_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-03T22:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc7e1886_7e7eb311",
+      "range": {
+        "startLine": 18,
+        "startChar": 23,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef389afb_e9644f8f",
         "filename": "remoting/codec/encoder_bitrate_filter.cc",
         "patchSetId": 4
@@ -154,6 +292,30 @@
       "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90232c77_921df55c",
+        "filename": "remoting/codec/encoder_bitrate_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-03T22:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef389afb_e9644f8f",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 50
+      },
+      "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "5d438eaf_87c2a60e",
+        "filename": "remoting/codec/encoder_bitrate_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-03T22:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0508401d_3d4a1996",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 34
+      },
+      "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faa7754c_64499bbc",
         "filename": "remoting/codec/encoder_bitrate_filter.h",
         "patchSetId": 4
@@ -200,6 +386,30 @@
       "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e56812_efd5f238",
+        "filename": "remoting/codec/encoder_bitrate_filter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-03T22:28:36Z",
+      "side": 1,
+      "message": "I just want to avoid the cast (static_cast\u003cint64_t\u003e is looong).\nDone.",
+      "parentUuid": "faa7754c_64499bbc",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 15
+      },
+      "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "22226997_869d21fd",
+        "filename": "remoting/codec/encoder_bitrate_filter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-03T22:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "283edfc6_800ff07d",
+      "range": {
+        "startLine": 46,
+        "startChar": 59,
+        "endLine": 46,
+        "endChar": 63
+      },
+      "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73ec3a81_3ec803f8",
         "filename": "remoting/codec/encoder_bitrate_filter_unittest.cc",
         "patchSetId": 4
@@ -246,6 +480,30 @@
       "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ecc828_42432488",
+        "filename": "remoting/codec/encoder_bitrate_filter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-03T22:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73ec3a81_3ec803f8",
+      "range": {
+        "startLine": 59,
+        "startChar": 52,
+        "endLine": 59,
+        "endChar": 56
+      },
+      "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "b95d5ac6_38c87eec",
+        "filename": "remoting/codec/encoder_bitrate_filter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-03T22:28:36Z",
+      "side": 1,
+      "message": "Done.\nBut I think Reset() is not a valid scenario in our system: EncoderBitrateFilter itself should be recreated with the new encoder.",
+      "parentUuid": "fb25eab4_a39151b4",
+      "range": {
+        "startLine": 81,
+        "startChar": 31,
+        "endLine": 81,
+        "endChar": 49
+      },
+      "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a800556_5e9ce5c0",
         "filename": "remoting/codec/encoder_bitrate_filter_unittest.cc",
         "patchSetId": 4
@@ -286,6 +568,24 @@
       "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a47faa1_7fb50e92",
+        "filename": "remoting/codec/encoder_bitrate_filter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-03T22:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a800556_5e9ce5c0",
+      "revId": "a8d3c31e9c8b87bbc8b65b4773d3b4b2c61fe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
