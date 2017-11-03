@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ddbbd3d_ca89e25e",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2679,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-03T21:07:16Z",
+      "side": 1,
+      "message": "Why store this off in a member variable? Can you check the caps up when creating the raster buffer provider and skip the indirection?",
+      "revId": "7ab4b5f6899af86d619d39180e3198508975aba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc65165e_8e96e699",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3756,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-03T21:07:16Z",
+      "side": 1,
+      "message": "I think your patch is addressing this todo.",
+      "revId": "7ab4b5f6899af86d619d39180e3198508975aba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24465429_9838bbec",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3760,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-03T21:07:16Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "7ab4b5f6899af86d619d39180e3198508975aba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1aaa4d2_eb2fb2cf",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3786,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-03T21:07:16Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "7ab4b5f6899af86d619d39180e3198508975aba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
