@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb7c6acc_065e4858",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-03T13:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24f184bb_e72f141d",
+      "revId": "5f29d3fc1d63e8f4ab0517ae9bd986ca62f6e966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1faa323c_ab2ecb33",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "5f29d3fc1d63e8f4ab0517ae9bd986ca62f6e966",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1e80cb_d5f364bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-03T13:30:14Z",
+      "side": 1,
+      "message": "Done.\n\n(You would have got bonus points for the totally bogus next sentence that belonged to a different CL...)",
+      "parentUuid": "1faa323c_ab2ecb33",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "5f29d3fc1d63e8f4ab0517ae9bd986ca62f6e966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

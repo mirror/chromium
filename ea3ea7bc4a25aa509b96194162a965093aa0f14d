@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07e8c901_f89f0362",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-03T13:30:14Z",
+      "side": 1,
+      "message": "I agree it\u0027s confusing. It all comes from:https://wicg.github.io/background-fetch/#dom-backgroundfetchupdateevent-updateui\n\nWe define a method called UpdateUI on the Javascript Background Fetch Registration object, which calls in BackgroundFetchServiceImpl.\n\nThe DataManager is just a data store (or at least it will be when I\u0027m done). So this is saying update the storage for Registration\u0027s UI.\n\nThe JobController actually changes what\u0027s shown to the user.\n\nThe UpdateUICallback is the signal that\u0027s sent back (ultimately to Javascript) to say that the callback succeeded. (it doesn\u0027t update any UI).\n\nI\u0027ve renamed the JobController method to UpdateJobTitle as suggested in your other comment - although I suspect in the future the JS method may be updated to add other kinds of UI like images.",
+      "parentUuid": "b4ba732c_d5469dd0",
+      "revId": "ea3ea7bc4a25aa509b96194162a965093aa0f14d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de3ff01f_c0b67292",
         "filename": "content/browser/background_fetch/background_fetch_job_controller.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a4b26ae1_1520605c",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-03T13:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de3ff01f_c0b67292",
+      "revId": "ea3ea7bc4a25aa509b96194162a965093aa0f14d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cdc29d2_74f54009",
         "filename": "content/browser/background_fetch/background_fetch_service_impl.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "ea3ea7bc4a25aa509b96194162a965093aa0f14d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6189e934_d30ae37b",
+        "filename": "content/browser/background_fetch/background_fetch_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-03T13:30:14Z",
+      "side": 1,
+      "message": "I was fixing a lint error because somewhere else in the file, there\u0027s a std::make_unique. Just a tidy up while I\u0027m here.\n\nutility is not needed because the header file includes it.\n\nAdditionally I\u0027ve noticed that about half of these header files can be removed.",
+      "parentUuid": "2cdc29d2_74f54009",
+      "revId": "ea3ea7bc4a25aa509b96194162a965093aa0f14d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
