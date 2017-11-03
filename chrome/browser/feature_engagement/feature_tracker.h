@@ -65,6 +65,10 @@ class FeatureTracker : public SessionDurationUpdater::Observer,
   // subclass to show its promo.
   base::TimeDelta GetSessionTimeRequiredToShow();
 
+  // Returns whether the FirstSentinel for the user has been created no more
+  // than 24 hours before the date the |feature_| was enabled.
+  bool IsNewUser();
+
  private:
   // Notifies In-Product Help and removes the session duration obverser if the
   // session time requirement has been met for the feature.
