@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "ash/lock_screen_action/lock_screen_action.h"
 #include "ash/login/ui/lock_contents_view.h"
 #include "ash/login/ui/lock_debug_view.h"
 #include "ash/login/ui/lock_window.h"
@@ -16,7 +17,6 @@
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
-#include "ash/tray_action/tray_action.h"
 #include "ash/wallpaper/wallpaper_widget_controller.h"
 #include "base/command_line.h"
 #include "chromeos/chromeos_switches.h"
@@ -27,8 +27,9 @@
 namespace ash {
 namespace {
 
-views::View* BuildContentsView(mojom::TrayActionState initial_note_action_state,
-                               LoginDataDispatcher* data_dispatcher) {
+views::View* BuildContentsView(
+    mojom::LockScreenActionState initial_note_action_state,
+    LoginDataDispatcher* data_dispatcher) {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kShowLoginDevOverlay)) {
     return new LockDebugView(initial_note_action_state, data_dispatcher);
@@ -50,8 +51,8 @@ LockScreen* instance_ = nullptr;
 }  // namespace
 
 LockScreen::LockScreen()
-    : tray_action_observer_(this), session_observer_(this) {
-  tray_action_observer_.Add(ash::Shell::Get()->tray_action());
+    : lock_screen_action_observer_(this), session_observer_(this) {
+  lock_screen_action_observer_.Add(ash::Shell::Get()->lock_screen_action());
 }
 
 LockScreen::~LockScreen() = default;
@@ -68,9 +69,9 @@ void LockScreen::Show() {
   instance_ = new LockScreen();
 
   auto data_dispatcher = std::make_unique<LoginDataDispatcher>();
-  auto* contents = BuildContentsView(
-      ash::Shell::Get()->tray_action()->GetLockScreenNoteState(),
-      data_dispatcher.get());
+  auto* contents =
+      BuildContentsView(ash::Shell::Get()->lock_screen_action()->GetNoteState(),
+                        data_dispatcher.get());
 
   auto* window = instance_->window_ = new LockWindow(Shell::GetAshConfig());
   window->SetBounds(display::Screen::GetScreen()->GetPrimaryDisplay().bounds());
@@ -117,9 +118,9 @@ LoginDataDispatcher* LockScreen::data_dispatcher() {
   return window_->data_dispatcher();
 }
 
-void LockScreen::OnLockScreenNoteStateChanged(mojom::TrayActionState state) {
+void LockScreen::OnNoteStateChanged(mojom::LockScreenActionState state) {
   if (data_dispatcher())
-    data_dispatcher()->SetLockScreenNoteState(state);
+    data_dispatcher()->SetNoteActionState(state);
 }
 
 void LockScreen::OnLockStateChanged(bool locked) {

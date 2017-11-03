@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "ash/public/cpp/ash_switches.h"
-#include "ash/public/interfaces/tray_action.mojom.h"
+#include "ash/public/interfaces/lock_screen_action.mojom.h"
 #include "ash/session/test_session_controller_client.h"
 #include "base/base64.h"
 #include "base/files/file_path.h"
@@ -64,7 +64,7 @@
 
 using ash::mojom::CloseLockScreenNoteReason;
 using ash::mojom::LockScreenNoteOrigin;
-using ash::mojom::TrayActionState;
+using ash::mojom::LockScreenActionState;
 using extensions::DictionaryBuilder;
 using extensions::ListBuilder;
 using extensions::lock_screen_data::LockScreenItemStorage;
@@ -250,62 +250,62 @@ class TestStateObserver : public lock_screen_apps::StateObserver {
   TestStateObserver() = default;
   ~TestStateObserver() override = default;
 
-  void OnLockScreenNoteStateChanged(TrayActionState state) override {
+  void OnNoteStateChanged(LockScreenActionState state) override {
     observed_states_.push_back(state);
   }
 
-  const std::vector<TrayActionState>& observed_states() const {
+  const std::vector<LockScreenActionState>& observed_states() const {
     return observed_states_;
   }
 
   void ClearObservedStates() { observed_states_.clear(); }
 
  private:
-  std::vector<TrayActionState> observed_states_;
+  std::vector<LockScreenActionState> observed_states_;
 
   DISALLOW_COPY_AND_ASSIGN(TestStateObserver);
 };
 
-class TestTrayAction : public ash::mojom::TrayAction {
+class TestLockScreenAction : public ash::mojom::LockScreenAction {
  public:
-  TestTrayAction() : binding_(this) {}
+  TestLockScreenAction() : binding_(this) {}
 
-  ~TestTrayAction() override = default;
+  ~TestLockScreenAction() override = default;
 
-  ash::mojom::TrayActionPtr CreateInterfacePtrAndBind() {
-    ash::mojom::TrayActionPtr ptr;
+  ash::mojom::LockScreenActionPtr CreateInterfacePtrAndBind() {
+    ash::mojom::LockScreenActionPtr ptr;
     binding_.Bind(mojo::MakeRequest(&ptr));
     return ptr;
   }
 
-  void SetClient(ash::mojom::TrayActionClientPtr client,
-                 TrayActionState state) override {
+  void SetClient(ash::mojom::LockScreenActionClientPtr client,
+                 LockScreenActionState state) override {
     client_ = std::move(client);
-    EXPECT_EQ(TrayActionState::kNotAvailable, state);
+    EXPECT_EQ(LockScreenActionState::kNotAvailable, state);
   }
 
-  void UpdateLockScreenNoteState(TrayActionState state) override {
+  void UpdateNoteState(LockScreenActionState state) override {
     observed_states_.push_back(state);
   }
 
   void SendNewNoteRequest(LockScreenNoteOrigin origin) {
     ASSERT_TRUE(client_);
-    client_->RequestNewLockScreenNote(origin);
+    client_->RequestNewNote(origin);
   }
 
-  const std::vector<TrayActionState>& observed_states() const {
+  const std::vector<LockScreenActionState>& observed_states() const {
     return observed_states_;
   }
 
   void ClearObservedStates() { observed_states_.clear(); }
 
  private:
-  mojo::Binding<ash::mojom::TrayAction> binding_;
-  ash::mojom::TrayActionClientPtr client_;
+  mojo::Binding<ash::mojom::LockScreenAction> binding_;
+  ash::mojom::LockScreenActionClientPtr client_;
 
-  std::vector<TrayActionState> observed_states_;
+  std::vector<LockScreenActionState> observed_states_;
 
-  DISALLOW_COPY_AND_ASSIGN(TestTrayAction);
+  DISALLOW_COPY_AND_ASSIGN(TestLockScreenAction);
 };
 
 // Wrapper around AppWindow used to manage the app window lifetime, and provide
@@ -448,15 +448,15 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
     tick_clock_ = tick_clock.get();
 
     state_controller_ = base::MakeUnique<lock_screen_apps::StateController>();
-    state_controller_->SetTrayActionPtrForTesting(
-        tray_action_.CreateInterfacePtrAndBind());
+    state_controller_->SetLockScreenActionPtrForTesting(
+        lock_screen_action_.CreateInterfacePtrAndBind());
     state_controller_->SetTickClockForTesting(std::move(tick_clock));
     state_controller_->SetLockScreenLockScreenProfileCreatorForTesting(
         std::move(profile_creator));
     state_controller_->SetAppManagerForTesting(std::move(app_manager));
     state_controller_->SetReadyCallbackForTesting(ready_waiter_.QuitClosure());
     state_controller_->Initialize();
-    state_controller_->FlushTrayActionForTesting();
+    state_controller_->FlushLockScreenActionForTesting();
     state_controller_->SetFocusCyclerDelegate(focus_cycler_delegate_.get());
 
     state_controller_->AddObserver(&observer_);
@@ -524,11 +524,12 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
         false /* autoupdate_enabled */);
   }
 
-  void ExpectObservedStatesMatch(const std::vector<TrayActionState>& states,
-                                 const std::string& message) {
-    state_controller_->FlushTrayActionForTesting();
+  void ExpectObservedStatesMatch(
+      const std::vector<LockScreenActionState>& states,
+      const std::string& message) {
+    state_controller_->FlushLockScreenActionForTesting();
     EXPECT_EQ(states, observer()->observed_states()) << message;
-    EXPECT_EQ(states, tray_action()->observed_states()) << message;
+    EXPECT_EQ(states, lock_screen_action()->observed_states()) << message;
   }
 
   // Helper method to create and register an app window for lock screen note
@@ -547,9 +548,9 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
   }
 
   void ClearObservedStates() {
-    state_controller_->FlushTrayActionForTesting();
+    state_controller_->FlushLockScreenActionForTesting();
     observer_.ClearObservedStates();
-    tray_action_.ClearObservedStates();
+    lock_screen_action_.ClearObservedStates();
   }
 
   void SetPrimaryProfileAndWaitUntilReady() {
@@ -568,13 +569,13 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
 
   // Helper method to move state controller to the specified state.
   // Should be called at the begining of tests, at most once.
-  bool InitializeNoteTakingApp(TrayActionState target_state,
+  bool InitializeNoteTakingApp(LockScreenActionState target_state,
                                bool enable_app_launch) {
     app_manager_->SetInitialAppState(kTestAppId, enable_app_launch);
 
     SetPrimaryProfileAndWaitUntilReady();
 
-    if (target_state == TrayActionState::kNotAvailable)
+    if (target_state == LockScreenActionState::kNotAvailable)
       return true;
 
     lock_screen_profile_creator_->CreateProfile();
@@ -596,28 +597,28 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
 
     ClearObservedStates();
 
-    if (state_controller_->GetLockScreenNoteState() !=
-        TrayActionState::kAvailable) {
+    if (state_controller_->GetNoteState() !=
+        LockScreenActionState::kAvailable) {
       ADD_FAILURE() << "Unable to move to available state.";
       return false;
     }
-    if (target_state == TrayActionState::kAvailable)
+    if (target_state == LockScreenActionState::kAvailable)
       return true;
 
-    tray_action()->SendNewNoteRequest(
+    lock_screen_action()->SendNewNoteRequest(
         LockScreenNoteOrigin::kLockScreenButtonTap);
-    state_controller_->FlushTrayActionForTesting();
+    state_controller_->FlushLockScreenActionForTesting();
 
     ClearObservedStates();
 
-    if (state_controller_->GetLockScreenNoteState() !=
-        TrayActionState::kLaunching) {
+    if (state_controller_->GetNoteState() !=
+        LockScreenActionState::kLaunching) {
       ADD_FAILURE() << "Unable to move to launching state.";
       return false;
     }
     app_manager_->ResetLaunchCount();
 
-    if (target_state == TrayActionState::kLaunching)
+    if (target_state == LockScreenActionState::kLaunching)
       return true;
 
     app_window_ = CreateNoteTakingWindow(lock_screen_profile, app());
@@ -630,23 +631,22 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
 
     ClearObservedStates();
 
-    return state_controller()->GetLockScreenNoteState() ==
-           TrayActionState::kActive;
+    return state_controller()->GetNoteState() == LockScreenActionState::kActive;
   }
 
   bool RelaunchLockScreenApp() {
-    state_controller_->CloseLockScreenNote(
+    state_controller_->CloseNote(
         CloseLockScreenNoteReason::kUnlockButtonPressed);
-    tray_action_.SendNewNoteRequest(LockScreenNoteOrigin::kLockScreenButtonTap);
-    state_controller_->FlushTrayActionForTesting();
+    lock_screen_action_.SendNewNoteRequest(
+        LockScreenNoteOrigin::kLockScreenButtonTap);
+    state_controller_->FlushLockScreenActionForTesting();
 
     app_window_ = CreateNoteTakingWindow(LockScreenProfile(), app());
     app_window_->Initialize(true /* shown */);
 
     ClearObservedStates();
 
-    return state_controller()->GetLockScreenNoteState() ==
-           TrayActionState::kActive;
+    return state_controller()->GetNoteState() == LockScreenActionState::kActive;
   }
 
   void CreateLockScreenProfile() {
@@ -672,7 +672,7 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
 
   TestStateObserver* observer() { return &observer_; }
 
-  TestTrayAction* tray_action() { return &tray_action_; }
+  TestLockScreenAction* lock_screen_action() { return &lock_screen_action_; }
 
   lock_screen_apps::StateController* state_controller() {
     return state_controller_.get();
@@ -728,7 +728,7 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
   std::unique_ptr<TestFocusCyclerDelegate> focus_cycler_delegate_;
 
   TestStateObserver observer_;
-  TestTrayAction tray_action_;
+  TestLockScreenAction lock_screen_action_;
   FakeLockScreenProfileCreator* lock_screen_profile_creator_ = nullptr;
   TestAppManager* app_manager_ = nullptr;
 
@@ -786,8 +786,8 @@ TEST_F(LockScreenAppStateKioskUserTest, SetPrimaryProfile) {
   SetPrimaryProfileAndWaitUntilReady();
 
   EXPECT_EQ(TestAppManager::State::kNotInitialized, app_manager()->state());
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
   EXPECT_EQ(0u, observer()->observed_states().size());
   EXPECT_FALSE(lock_screen_profile_creator()->Initialized());
 }
@@ -796,7 +796,8 @@ TEST_F(LockScreenAppStateNoStylusInputTest,
        StylusDetectedAfterInitializationAndScreenLock) {
   ui::test::DeviceDataManagerTestAPI devices_test_api;
 
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kNotAvailable, true));
+  ASSERT_TRUE(
+      InitializeNoteTakingApp(LockScreenActionState::kNotAvailable, true));
   EXPECT_EQ(TestAppManager::State::kStopped, app_manager()->state());
   EXPECT_TRUE(LockScreenItemStorage::GetIfAllowed(profile()));
 
@@ -805,8 +806,8 @@ TEST_F(LockScreenAppStateNoStylusInputTest,
   // Even though session was locked, test app manager is still stopped, and
   // lock screen apps are unavailable due to stylus not being detected.
   EXPECT_EQ(TestAppManager::State::kStopped, app_manager()->state());
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
   EXPECT_EQ(0u, observer()->observed_states().size());
 
   // Enable stylus input.
@@ -814,21 +815,23 @@ TEST_F(LockScreenAppStateNoStylusInputTest,
 
   // Given that stylus was enabled, lock screen apps should be avaialble.
   EXPECT_EQ(TestAppManager::State::kStarted, app_manager()->state());
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
-  ExpectObservedStatesMatch({TrayActionState::kAvailable}, "Stylus enabled");
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
+  ExpectObservedStatesMatch({LockScreenActionState::kAvailable},
+                            "Stylus enabled");
   ClearObservedStates();
 
   // Ejecting the stylus should trigger lock screen app launch.
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
-  ExpectObservedStatesMatch({TrayActionState::kLaunching},
+  ExpectObservedStatesMatch({LockScreenActionState::kLaunching},
                             "Launch on stylus ejected");
 }
 
 TEST_F(LockScreenAppStateNoStylusInputTest, StylusDetectedAfterInitialization) {
   ui::test::DeviceDataManagerTestAPI devices_test_api;
 
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kNotAvailable, true));
+  ASSERT_TRUE(
+      InitializeNoteTakingApp(LockScreenActionState::kNotAvailable, true));
   EXPECT_EQ(TestAppManager::State::kStopped, app_manager()->state());
 
   // Enable stylus input after state controller initialization finishes, but
@@ -838,15 +841,15 @@ TEST_F(LockScreenAppStateNoStylusInputTest, StylusDetectedAfterInitialization) {
   // Given that the session is still unlocked, lock screen apps are still
   // unavailable.
   EXPECT_EQ(TestAppManager::State::kStopped, app_manager()->state());
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
   EXPECT_EQ(0u, observer()->observed_states().size());
 
   // Given that the screen is locked, lock screen apps should become available.
   session_manager()->SetSessionState(session_manager::SessionState::LOCKED);
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
   EXPECT_EQ(TestAppManager::State::kStarted, app_manager()->state());
 }
 
@@ -855,18 +858,18 @@ TEST_F(LockScreenAppStateNotSupportedTest, NoInstance) {
 }
 
 TEST_F(LockScreenAppStateTest, InitialState) {
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
 
   EXPECT_EQ(TestAppManager::State::kNotInitialized, app_manager()->state());
-  state_controller()->CloseLockScreenNote(
+  state_controller()->CloseNote(
       CloseLockScreenNoteReason::kUnlockButtonPressed);
 
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
 
   EXPECT_EQ(0u, observer()->observed_states().size());
-  EXPECT_EQ(0u, tray_action()->observed_states().size());
+  EXPECT_EQ(0u, lock_screen_action()->observed_states().size());
 }
 
 TEST_F(LockScreenAppStateTest, SetPrimaryProfile) {
@@ -874,15 +877,15 @@ TEST_F(LockScreenAppStateTest, SetPrimaryProfile) {
   SetPrimaryProfileAndWaitUntilReady();
 
   EXPECT_EQ(TestAppManager::State::kStopped, app_manager()->state());
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
   EXPECT_EQ(0u, observer()->observed_states().size());
 }
 
 TEST_F(LockScreenAppStateTest, SetPrimaryProfileWhenSessionLocked) {
   session_manager()->SetSessionState(session_manager::SessionState::LOCKED);
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
 
   EXPECT_EQ(TestAppManager::State::kNotInitialized, app_manager()->state());
 
@@ -891,10 +894,11 @@ TEST_F(LockScreenAppStateTest, SetPrimaryProfileWhenSessionLocked) {
 
   ASSERT_EQ(TestAppManager::State::kStarted, app_manager()->state());
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
 
-  ExpectObservedStatesMatch({TrayActionState::kAvailable}, "Available on lock");
+  ExpectObservedStatesMatch({LockScreenActionState::kAvailable},
+                            "Available on lock");
 }
 
 TEST_F(LockScreenAppStateTest, InitLockScreenDataLockScreenItemStorage) {
@@ -984,21 +988,21 @@ TEST_F(LockScreenAppStateTest, NoLockScreenProfile) {
   EXPECT_FALSE(LockScreenItemStorage::GetIfAllowed(profile()));
   ASSERT_EQ(TestAppManager::State::kStarted, app_manager()->state());
 
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
 
   EXPECT_TRUE(lock_screen_profile_creator()->Initialized());
 
   // Make sure that calling different methods does not crash, nor change state.
-  tray_action()->SendNewNoteRequest(
+  lock_screen_action()->SendNewNoteRequest(
       LockScreenNoteOrigin::kLockScreenButtonSwipe);
-  state_controller()->CloseLockScreenNote(
+  state_controller()->CloseNote(
       CloseLockScreenNoteReason::kUnlockButtonPressed);
 
-  ExpectObservedStatesMatch(std::vector<TrayActionState>(),
+  ExpectObservedStatesMatch(std::vector<LockScreenActionState>(),
                             "Expect no changes with no lock screen profile");
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
 
   scoped_refptr<extensions::Extension> app =
       CreateTestNoteTakingApp(kTestAppId);
@@ -1019,10 +1023,11 @@ TEST_F(LockScreenAppStateTest, SessionLock) {
 
   ASSERT_EQ(TestAppManager::State::kStarted, app_manager()->state());
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
 
-  ExpectObservedStatesMatch({TrayActionState::kAvailable}, "Available on lock");
+  ExpectObservedStatesMatch({LockScreenActionState::kAvailable},
+                            "Available on lock");
   ClearObservedStates();
 
   // When the session is unlocked again, app manager is stopped, and tray action
@@ -1031,17 +1036,17 @@ TEST_F(LockScreenAppStateTest, SessionLock) {
 
   EXPECT_EQ(TestAppManager::State::kStopped, app_manager()->state());
 
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
 
-  ExpectObservedStatesMatch({TrayActionState::kNotAvailable},
+  ExpectObservedStatesMatch({LockScreenActionState::kNotAvailable},
                             "Not available on unlock");
   ClearObservedStates();
 
   // Test that subsequent session lock works as expected.
   session_manager()->SetSessionState(session_manager::SessionState::LOCKED);
   ASSERT_EQ(TestAppManager::State::kStarted, app_manager()->state());
-  ExpectObservedStatesMatch({TrayActionState::kAvailable},
+  ExpectObservedStatesMatch({LockScreenActionState::kAvailable},
                             "Available on second lock");
 }
 
@@ -1056,11 +1061,11 @@ TEST_F(LockScreenAppStateTest, SessionUnlockedWhileStartingAppManager) {
   session_manager()->SetSessionState(session_manager::SessionState::ACTIVE);
   ASSERT_EQ(TestAppManager::State::kStopped, app_manager()->state());
 
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
-  state_controller()->FlushTrayActionForTesting();
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
+  state_controller()->FlushLockScreenActionForTesting();
   EXPECT_EQ(0u, observer()->observed_states().size());
-  EXPECT_EQ(0u, tray_action()->observed_states().size());
+  EXPECT_EQ(0u, lock_screen_action()->observed_states().size());
 
   // Test that subsequent session lock works as expected.
   session_manager()->SetSessionState(session_manager::SessionState::LOCKED);
@@ -1068,9 +1073,10 @@ TEST_F(LockScreenAppStateTest, SessionUnlockedWhileStartingAppManager) {
   ASSERT_EQ(TestAppManager::State::kStarted, app_manager()->state());
   app_manager()->UpdateApp(kTestAppId, true);
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
-  ExpectObservedStatesMatch({TrayActionState::kAvailable}, "Available on lock");
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
+  ExpectObservedStatesMatch({LockScreenActionState::kAvailable},
+                            "Available on lock");
 }
 
 TEST_F(LockScreenAppStateTest, AppManagerNoApp) {
@@ -1081,20 +1087,20 @@ TEST_F(LockScreenAppStateTest, AppManagerNoApp) {
 
   EXPECT_EQ(TestAppManager::State::kStarted, app_manager()->state());
 
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
-  state_controller()->FlushTrayActionForTesting();
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
+  state_controller()->FlushLockScreenActionForTesting();
   EXPECT_EQ(0u, observer()->observed_states().size());
-  EXPECT_EQ(0u, tray_action()->observed_states().size());
+  EXPECT_EQ(0u, lock_screen_action()->observed_states().size());
 
-  tray_action()->SendNewNoteRequest(
+  lock_screen_action()->SendNewNoteRequest(
       LockScreenNoteOrigin::kLockScreenButtonSwipe);
 
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
-  state_controller()->FlushTrayActionForTesting();
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
+  state_controller()->FlushLockScreenActionForTesting();
   EXPECT_EQ(0u, observer()->observed_states().size());
-  EXPECT_EQ(0u, tray_action()->observed_states().size());
+  EXPECT_EQ(0u, lock_screen_action()->observed_states().size());
 
   // App manager should be started on next session lock.
   session_manager()->SetSessionState(session_manager::SessionState::ACTIVE);
@@ -1103,9 +1109,10 @@ TEST_F(LockScreenAppStateTest, AppManagerNoApp) {
 
   session_manager()->SetSessionState(session_manager::SessionState::LOCKED);
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
-  ExpectObservedStatesMatch({TrayActionState::kAvailable}, "Available on lock");
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
+  ExpectObservedStatesMatch({LockScreenActionState::kAvailable},
+                            "Available on lock");
 }
 
 TEST_F(LockScreenAppStateTest, AppAvailabilityChanges) {
@@ -1117,119 +1124,120 @@ TEST_F(LockScreenAppStateTest, AppAvailabilityChanges) {
 
   EXPECT_EQ(TestAppManager::State::kStarted, app_manager()->state());
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
-  ExpectObservedStatesMatch({TrayActionState::kAvailable}, "Available on lock");
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
+  ExpectObservedStatesMatch({LockScreenActionState::kAvailable},
+                            "Available on lock");
   ClearObservedStates();
 
   app_manager()->UpdateApp("", false);
 
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
-  ExpectObservedStatesMatch({TrayActionState::kNotAvailable},
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
+  ExpectObservedStatesMatch({LockScreenActionState::kNotAvailable},
                             "Not available on app cleared");
   ClearObservedStates();
 
   app_manager()->UpdateApp(kSecondaryTestAppId, true);
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
-  ExpectObservedStatesMatch({TrayActionState::kAvailable},
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
+  ExpectObservedStatesMatch({LockScreenActionState::kAvailable},
                             "Available on other app set");
 }
 
 TEST_F(LockScreenAppStateTest, CloseAppWhileLaunching) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kLaunching,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kLaunching,
                                       true /* enable_app_launch */));
 
-  state_controller()->CloseLockScreenNote(
+  state_controller()->CloseNote(
       CloseLockScreenNoteReason::kUnlockButtonPressed);
-  state_controller()->FlushTrayActionForTesting();
+  state_controller()->FlushLockScreenActionForTesting();
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
 
   EXPECT_FALSE(state_controller()->CreateAppWindowForLockScreenAction(
       profile(), app(), extensions::api::app_runtime::ACTION_TYPE_NEW_NOTE,
       base::MakeUnique<ChromeAppDelegate>(true)));
 
-  ExpectObservedStatesMatch({TrayActionState::kAvailable},
+  ExpectObservedStatesMatch({LockScreenActionState::kAvailable},
                             "Close app window cancels launch.");
 }
 
 TEST_F(LockScreenAppStateTest, HandleActionWhenNotAvaiable) {
-  ASSERT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
+  ASSERT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
 
-  tray_action()->SendNewNoteRequest(
+  lock_screen_action()->SendNewNoteRequest(
       LockScreenNoteOrigin::kLockScreenButtonSwipe);
-  state_controller()->FlushTrayActionForTesting();
+  state_controller()->FlushLockScreenActionForTesting();
 
   EXPECT_EQ(0u, observer()->observed_states().size());
-  EXPECT_EQ(0u, tray_action()->observed_states().size());
+  EXPECT_EQ(0u, lock_screen_action()->observed_states().size());
 }
 
 TEST_F(LockScreenAppStateTest, HandleAction) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kAvailable,
                                       true /* enable_app_launch */));
 
-  tray_action()->SendNewNoteRequest(
+  lock_screen_action()->SendNewNoteRequest(
       LockScreenNoteOrigin::kLockScreenButtonSwipe);
-  state_controller()->FlushTrayActionForTesting();
+  state_controller()->FlushLockScreenActionForTesting();
 
-  ExpectObservedStatesMatch({TrayActionState::kLaunching},
+  ExpectObservedStatesMatch({LockScreenActionState::kLaunching},
                             "Launch on new note request");
   ClearObservedStates();
   EXPECT_EQ(1, app_manager()->launch_count());
 
-  tray_action()->SendNewNoteRequest(
+  lock_screen_action()->SendNewNoteRequest(
       LockScreenNoteOrigin::kLockScreenButtonSwipe);
-  state_controller()->FlushTrayActionForTesting();
+  state_controller()->FlushLockScreenActionForTesting();
 
   // There should be no state change - the state_controller was already in
   // launching state when the request was received.
   EXPECT_EQ(0u, observer()->observed_states().size());
-  EXPECT_EQ(0u, tray_action()->observed_states().size());
+  EXPECT_EQ(0u, lock_screen_action()->observed_states().size());
   EXPECT_EQ(1, app_manager()->launch_count());
 }
 
 TEST_F(LockScreenAppStateTest, HandleActionWithLaunchFailure) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kAvailable,
                                       false /* enable_app_launch */));
 
-  tray_action()->SendNewNoteRequest(
+  lock_screen_action()->SendNewNoteRequest(
       LockScreenNoteOrigin::kLockScreenButtonSwipe);
-  state_controller()->FlushTrayActionForTesting();
+  state_controller()->FlushLockScreenActionForTesting();
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
   ExpectObservedStatesMatch(
-      {TrayActionState::kLaunching, TrayActionState::kAvailable},
+      {LockScreenActionState::kLaunching, LockScreenActionState::kAvailable},
       "Failed launch on new note request");
   ClearObservedStates();
 
   EXPECT_EQ(1, app_manager()->launch_count());
 
-  tray_action()->SendNewNoteRequest(
+  lock_screen_action()->SendNewNoteRequest(
       LockScreenNoteOrigin::kLockScreenButtonSwipe);
-  state_controller()->FlushTrayActionForTesting();
+  state_controller()->FlushLockScreenActionForTesting();
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
 
   ExpectObservedStatesMatch(
-      {TrayActionState::kLaunching, TrayActionState::kAvailable},
+      {LockScreenActionState::kLaunching, LockScreenActionState::kAvailable},
       "Second failed launch on new note request");
   EXPECT_EQ(2, app_manager()->launch_count());
 }
 
 TEST_F(LockScreenAppStateTest, LaunchActionWhenStylusGetsRemoved) {
   ui::test::DeviceDataManagerTestAPI devices_test_api;
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kAvailable,
                                       true /* enable_app_launch */));
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
 
-  ExpectObservedStatesMatch({TrayActionState::kLaunching},
+  ExpectObservedStatesMatch({LockScreenActionState::kLaunching},
                             "Launch on new note request");
   ClearObservedStates();
   // The app should not be launched until the lock UI reports the animation as
@@ -1243,18 +1251,18 @@ TEST_F(LockScreenAppStateTest, LaunchActionWhenStylusGetsRemoved) {
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::INSERTED);
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
   EXPECT_EQ(0u, observer()->observed_states().size());
-  EXPECT_EQ(0u, tray_action()->observed_states().size());
+  EXPECT_EQ(0u, lock_screen_action()->observed_states().size());
   state_controller()->NewNoteLaunchAnimationDone();
   EXPECT_EQ(1, app_manager()->launch_count());
 }
 
 TEST_F(LockScreenAppStateMdLoginTest, LaunchActionWhenStylusGetsRemoved) {
   ui::test::DeviceDataManagerTestAPI devices_test_api;
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kAvailable,
                                       true /* enable_app_launch */));
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
 
-  ExpectObservedStatesMatch({TrayActionState::kLaunching},
+  ExpectObservedStatesMatch({LockScreenActionState::kLaunching},
                             "Launch on new note request");
   ClearObservedStates();
   // When show-md-login flag is present, the action launch process should not
@@ -1267,28 +1275,28 @@ TEST_F(LockScreenAppStateMdLoginTest, LaunchActionWhenStylusGetsRemoved) {
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::INSERTED);
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
   EXPECT_EQ(0u, observer()->observed_states().size());
-  EXPECT_EQ(0u, tray_action()->observed_states().size());
+  EXPECT_EQ(0u, lock_screen_action()->observed_states().size());
   EXPECT_EQ(1, app_manager()->launch_count());
 }
 
 TEST_F(LockScreenAppStateTest,
        LaunchActionWhenStylusRemoved_ActionClosedBeforeAnimationDone) {
   ui::test::DeviceDataManagerTestAPI devices_test_api;
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kAvailable,
                                       true /* enable_app_launch */));
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
 
-  ExpectObservedStatesMatch({TrayActionState::kLaunching},
+  ExpectObservedStatesMatch({LockScreenActionState::kLaunching},
                             "Launch on new note request");
   ClearObservedStates();
   // The app should not be launched until the lock UI reports the animation as
   // complete.
   EXPECT_EQ(0, app_manager()->launch_count());
 
-  state_controller()->CloseLockScreenNote(
+  state_controller()->CloseNote(
       CloseLockScreenNoteReason::kUnlockButtonPressed);
 
-  ExpectObservedStatesMatch({TrayActionState::kAvailable},
+  ExpectObservedStatesMatch({LockScreenActionState::kAvailable},
                             "Close note before launch animation done.");
   ClearObservedStates();
 
@@ -1297,12 +1305,12 @@ TEST_F(LockScreenAppStateTest,
   state_controller()->NewNoteLaunchAnimationDone();
   EXPECT_EQ(0, app_manager()->launch_count());
   EXPECT_TRUE(observer()->observed_states().empty());
-  EXPECT_TRUE(tray_action()->observed_states().empty());
+  EXPECT_TRUE(lock_screen_action()->observed_states().empty());
 }
 
 TEST_F(LockScreenAppStateTest, StylusRemovedBeforeScreenLock) {
   ui::test::DeviceDataManagerTestAPI devices_test_api;
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kNotAvailable,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kNotAvailable,
                                       true /* enable_app_launch */));
 
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
@@ -1311,7 +1319,7 @@ TEST_F(LockScreenAppStateTest, StylusRemovedBeforeScreenLock) {
   // Stylus removed event should be ignored if it came before note taking on
   // lock screen was available (in this case due to session being active).
   // Screen unlock should still make lock screen note taking available.
-  ExpectObservedStatesMatch({TrayActionState::kAvailable},
+  ExpectObservedStatesMatch({LockScreenActionState::kAvailable},
                             "Remove stylus, then unlock.");
 
   ClearObservedStates();
@@ -1320,7 +1328,7 @@ TEST_F(LockScreenAppStateTest, StylusRemovedBeforeScreenLock) {
 
 TEST_F(LockScreenAppStateTest, StylusRemovedWhileScreenOff) {
   ui::test::DeviceDataManagerTestAPI devices_test_api;
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kAvailable,
                                       true /* enable_app_launch */));
 
   GetPowerManagerClient()->SendBrightnessChanged(0 /* level */,
@@ -1329,18 +1337,18 @@ TEST_F(LockScreenAppStateTest, StylusRemovedWhileScreenOff) {
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
 
   // State should not change if the stylus is removed while the screen is off.
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
   EXPECT_TRUE(observer()->observed_states().empty());
-  EXPECT_TRUE(tray_action()->observed_states().empty());
+  EXPECT_TRUE(lock_screen_action()->observed_states().empty());
 
   // The note action should be launched if the screen brightness is turned back
   // up soon after stylus eject.
   GetPowerManagerClient()->SendBrightnessChanged(70 /* level */,
                                                  true /* user_initiated */);
-  EXPECT_EQ(TrayActionState::kLaunching,
-            state_controller()->GetLockScreenNoteState());
-  ExpectObservedStatesMatch({TrayActionState::kLaunching},
+  EXPECT_EQ(LockScreenActionState::kLaunching,
+            state_controller()->GetNoteState());
+  ExpectObservedStatesMatch({LockScreenActionState::kLaunching},
                             "Launch on new note request");
   ClearObservedStates();
 
@@ -1351,7 +1359,7 @@ TEST_F(LockScreenAppStateTest, StylusRemovedWhileScreenOff) {
 TEST_F(LockScreenAppStateTest,
        StylusRemovedWhileScreenOff_LongDelayBeforeScreenOn) {
   ui::test::DeviceDataManagerTestAPI devices_test_api;
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kAvailable,
                                       true /* enable_app_launch */));
 
   GetPowerManagerClient()->SendBrightnessChanged(0 /* level */,
@@ -1360,10 +1368,10 @@ TEST_F(LockScreenAppStateTest,
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
 
   // State should not change if the stylus is removed while the screen is off.
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
   EXPECT_TRUE(observer()->observed_states().empty());
-  EXPECT_TRUE(tray_action()->observed_states().empty());
+  EXPECT_TRUE(lock_screen_action()->observed_states().empty());
 
   // If sufficient time has passed, turning screen brightness up should not
   // launch a lock screen note.
@@ -1371,15 +1379,15 @@ TEST_F(LockScreenAppStateTest,
   GetPowerManagerClient()->SendBrightnessChanged(70 /* level */,
                                                  true /* user_initiated */);
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
   EXPECT_TRUE(observer()->observed_states().empty());
-  EXPECT_TRUE(tray_action()->observed_states().empty());
+  EXPECT_TRUE(lock_screen_action()->observed_states().empty());
 }
 
 TEST_F(LockScreenAppStateTest, StylusRemovedAndInsertedWhileScreenOff) {
   ui::test::DeviceDataManagerTestAPI devices_test_api;
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kAvailable,
                                       true /* enable_app_launch */));
 
   GetPowerManagerClient()->SendBrightnessChanged(0 /* level */,
@@ -1388,52 +1396,52 @@ TEST_F(LockScreenAppStateTest, StylusRemovedAndInsertedWhileScreenOff) {
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
 
   // State should not change if the stylus is removed while the screen is off.
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
   EXPECT_TRUE(observer()->observed_states().empty());
-  EXPECT_TRUE(tray_action()->observed_states().empty());
+  EXPECT_TRUE(lock_screen_action()->observed_states().empty());
 
   // Turning the screen brightness up soon after stylus eject should not launch
   // note taking app if the stylus has been inserted back.
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::INSERTED);
   GetPowerManagerClient()->SendBrightnessChanged(70 /* level */,
                                                  true /* user_initiated */);
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
   EXPECT_TRUE(observer()->observed_states().empty());
-  EXPECT_TRUE(tray_action()->observed_states().empty());
+  EXPECT_TRUE(lock_screen_action()->observed_states().empty());
 }
 
 TEST_F(LockScreenAppStateTest, StylusRemovedWhileActive) {
   ui::test::DeviceDataManagerTestAPI devices_test_api;
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kActive,
                                       true /* enable_app_launch */));
 
   devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
 
   EXPECT_EQ(0u, observer()->observed_states().size());
-  EXPECT_EQ(0u, tray_action()->observed_states().size());
+  EXPECT_EQ(0u, lock_screen_action()->observed_states().size());
 
   ClearObservedStates();
   EXPECT_EQ(0, app_manager()->launch_count());
 }
 
 TEST_F(LockScreenAppStateTest, AppWindowRegistration) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kAvailable,
                                       true /* enable_app_launch */));
 
   std::unique_ptr<TestAppWindow> app_window =
       CreateNoteTakingWindow(LockScreenProfile(), app());
   EXPECT_FALSE(app_window->window());
 
-  tray_action()->SendNewNoteRequest(
+  lock_screen_action()->SendNewNoteRequest(
       LockScreenNoteOrigin::kLockScreenButtonSwipe);
-  state_controller()->FlushTrayActionForTesting();
+  state_controller()->FlushLockScreenActionForTesting();
 
-  EXPECT_EQ(TrayActionState::kLaunching,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kLaunching,
+            state_controller()->GetNoteState());
   observer()->ClearObservedStates();
-  tray_action()->ClearObservedStates();
+  lock_screen_action()->ClearObservedStates();
 
   std::unique_ptr<TestAppWindow> non_eligible_app_window =
       CreateNoteTakingWindow(profile(), app());
@@ -1448,8 +1456,7 @@ TEST_F(LockScreenAppStateTest, AppWindowRegistration) {
   ASSERT_TRUE(app_window->window());
 
   app_window->Initialize(true /* shown */);
-  EXPECT_EQ(TrayActionState::kActive,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kActive, state_controller()->GetNoteState());
 
   // Test that second app window cannot be registered.
   std::unique_ptr<TestAppWindow> second_app_window =
@@ -1460,21 +1467,19 @@ TEST_F(LockScreenAppStateTest, AppWindowRegistration) {
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(app_window->closed());
 
-  EXPECT_EQ(TrayActionState::kActive,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kActive, state_controller()->GetNoteState());
 
   // Closing the second app window, will not change the state.
   second_app_window->Close();
-  EXPECT_EQ(TrayActionState::kActive,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kActive, state_controller()->GetNoteState());
 
   app_window->Close();
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
 }
 
 TEST_F(LockScreenAppStateTest, AppWindowClosedBeforeBeingShown) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kLaunching,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kLaunching,
                                       true /* enable_app_launch */));
 
   std::unique_ptr<TestAppWindow> app_window =
@@ -1483,70 +1488,67 @@ TEST_F(LockScreenAppStateTest, AppWindowClosedBeforeBeingShown) {
   app_window->Initialize(false /* shown */);
 
   app_window->Close();
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
 }
 
 TEST_F(LockScreenAppStateTest, AppWindowClosedOnSessionUnlock) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kActive,
                                       true /* enable_app_launch */));
 
   session_manager()->SetSessionState(session_manager::SessionState::ACTIVE);
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
 
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(app_window()->closed());
 }
 
 TEST_F(LockScreenAppStateTest, CloseAppWindowOnSuspend) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kActive,
                                       true /* enable_app_launch */));
 
   GetPowerManagerClient()->SendSuspendImminent(
       power_manager::SuspendImminent_Reason_OTHER);
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
 
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(app_window()->closed());
 }
 
 TEST_F(LockScreenAppStateTest, CloseAppWindowOnScreenOff) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kActive,
                                       true /* enable_app_launch */));
 
   GetPowerManagerClient()->SendBrightnessChanged(10 /* level */,
                                                  true /* user_initiated */);
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(app_window()->closed());
-  EXPECT_EQ(TrayActionState::kActive,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kActive, state_controller()->GetNoteState());
 
   GetPowerManagerClient()->SendBrightnessChanged(0 /* level */,
                                                  true /* user_initiated */);
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(app_window()->closed());
-  EXPECT_EQ(TrayActionState::kActive,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kActive, state_controller()->GetNoteState());
 
   GetPowerManagerClient()->SendBrightnessChanged(10 /* level */,
                                                  false /* user_initiated */);
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(app_window()->closed());
-  EXPECT_EQ(TrayActionState::kActive,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kActive, state_controller()->GetNoteState());
 
   GetPowerManagerClient()->SendBrightnessChanged(0 /* level */,
                                                  false /* user_initiated */);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(app_window()->closed());
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
 }
 
 TEST_F(LockScreenAppStateTest, AppWindowClosedOnAppUnload) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kActive,
                                       true /* enable_app_launch */));
 
   extensions::ExtensionSystem::Get(LockScreenProfile())
@@ -1555,15 +1557,15 @@ TEST_F(LockScreenAppStateTest, AppWindowClosedOnAppUnload) {
                         extensions::UnloadedExtensionReason::UNINSTALL);
   app_manager()->UpdateApp("", false);
 
-  EXPECT_EQ(TrayActionState::kNotAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kNotAvailable,
+            state_controller()->GetNoteState());
 
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(app_window()->closed());
 }
 
 TEST_F(LockScreenAppStateTest, AppWindowClosedOnNoteTakingAppChange) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kActive,
                                       true /* enable_app_launch */));
 
   scoped_refptr<extensions::Extension> secondary_app =
@@ -1575,29 +1577,28 @@ TEST_F(LockScreenAppStateTest, AppWindowClosedOnNoteTakingAppChange) {
 
   app_manager()->UpdateApp(secondary_app->id(), true);
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
 
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(app_window()->closed());
 
-  tray_action()->SendNewNoteRequest(
+  lock_screen_action()->SendNewNoteRequest(
       LockScreenNoteOrigin::kLockScreenButtonSwipe);
-  state_controller()->FlushTrayActionForTesting();
+  state_controller()->FlushLockScreenActionForTesting();
 
   std::unique_ptr<TestAppWindow> app_window =
       CreateNoteTakingWindow(LockScreenProfile(), app());
   EXPECT_FALSE(app_window->window());
-  ASSERT_EQ(TrayActionState::kLaunching,
-            state_controller()->GetLockScreenNoteState());
+  ASSERT_EQ(LockScreenActionState::kLaunching,
+            state_controller()->GetNoteState());
 
   std::unique_ptr<TestAppWindow> secondary_app_window =
       CreateNoteTakingWindow(LockScreenProfile(), secondary_app.get());
   ASSERT_TRUE(secondary_app_window->window());
 
   secondary_app_window->Initialize(true /* shown*/);
-  EXPECT_EQ(TrayActionState::kActive,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kActive, state_controller()->GetNoteState());
 
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(secondary_app_window->closed());
@@ -1616,19 +1617,19 @@ TEST_F(LockScreenAppStateTest, AppWindowClosedOnNoteTakingAppChange) {
 TEST_F(LockScreenAppStateTest, NoFocusCyclerDelegate) {
   lock_screen_apps::StateController::Get()->SetFocusCyclerDelegate(nullptr);
 
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kActive,
                                       true /* enable_app_launch */));
 
-  state_controller()->CloseLockScreenNote(
+  state_controller()->CloseNote(
       CloseLockScreenNoteReason::kUnlockButtonPressed);
-  state_controller()->FlushTrayActionForTesting();
+  state_controller()->FlushLockScreenActionForTesting();
 
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(app_window()->closed());
 }
 
 TEST_F(LockScreenAppStateTest, ResetFocusCyclerDelegateWhileActive) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kActive,
                                       true /* enable_app_launch */));
 
   lock_screen_apps::StateController::Get()->SetFocusCyclerDelegate(nullptr);
@@ -1640,12 +1641,12 @@ TEST_F(LockScreenAppStateTest, ResetFocusCyclerDelegateWhileActive) {
 }
 
 TEST_F(LockScreenAppStateTest, FocusCyclerDelegateGetsSetOnAppWindowCreation) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kAvailable,
                                       true /* enable_app_launch */));
 
-  tray_action()->SendNewNoteRequest(
+  lock_screen_action()->SendNewNoteRequest(
       LockScreenNoteOrigin::kLockScreenButtonSwipe);
-  state_controller()->FlushTrayActionForTesting();
+  state_controller()->FlushLockScreenActionForTesting();
 
   EXPECT_FALSE(focus_cycler_delegate()->HasHandler());
 
@@ -1655,7 +1656,7 @@ TEST_F(LockScreenAppStateTest, FocusCyclerDelegateGetsSetOnAppWindowCreation) {
 
   EXPECT_TRUE(focus_cycler_delegate()->HasHandler());
 
-  state_controller()->CloseLockScreenNote(
+  state_controller()->CloseNote(
       CloseLockScreenNoteReason::kUnlockButtonPressed);
 
   base::RunLoop().RunUntilIdle();
@@ -1664,7 +1665,7 @@ TEST_F(LockScreenAppStateTest, FocusCyclerDelegateGetsSetOnAppWindowCreation) {
 }
 
 TEST_F(LockScreenAppStateTest, TakeFocus) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kActive,
                                       true /* enable_app_launch */));
 
   auto regular_app_window = base::MakeUnique<TestAppWindow>(
@@ -1683,17 +1684,17 @@ TEST_F(LockScreenAppStateTest, TakeFocus) {
 }
 
 TEST_F(LockScreenAppStateTest, CloseNoteInActiveState) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kActive,
                                       true /* enable_app_launch */));
 
-  state_controller()->CloseLockScreenNote(
+  state_controller()->CloseNote(
       CloseLockScreenNoteReason::kUnlockButtonPressed);
-  state_controller()->FlushTrayActionForTesting();
+  state_controller()->FlushLockScreenActionForTesting();
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
 
-  ExpectObservedStatesMatch({TrayActionState::kAvailable},
+  ExpectObservedStatesMatch({LockScreenActionState::kAvailable},
                             "Close lock screen note.");
   ClearObservedStates();
 
@@ -1701,28 +1702,28 @@ TEST_F(LockScreenAppStateTest, CloseNoteInActiveState) {
 }
 
 TEST_F(LockScreenAppStateTest, CloseNoteWhileLaunching) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kLaunching,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kLaunching,
                                       true /* enable_app_launch */));
 
-  state_controller()->CloseLockScreenNote(
+  state_controller()->CloseNote(
       CloseLockScreenNoteReason::kUnlockButtonPressed);
-  state_controller()->FlushTrayActionForTesting();
+  state_controller()->FlushLockScreenActionForTesting();
 
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
+  EXPECT_EQ(LockScreenActionState::kAvailable,
+            state_controller()->GetNoteState());
 
   EXPECT_FALSE(state_controller()->CreateAppWindowForLockScreenAction(
       profile(), app(), extensions::api::app_runtime::ACTION_TYPE_NEW_NOTE,
       base::MakeUnique<ChromeAppDelegate>(true)));
 
-  ExpectObservedStatesMatch({TrayActionState::kAvailable},
+  ExpectObservedStatesMatch({LockScreenActionState::kAvailable},
                             "Close lock screen note.");
 }
 
 TEST_F(LockScreenAppStateTest, ToastDialogShownOnFirstAppRun) {
   is_first_app_run_test_ = true;
 
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
+  ASSERT_TRUE(InitializeNoteTakingApp(LockScreenActionState::kActive,
                                       true /* enable_app_launch */));
   // Make sure that the app window is activated, because the toast dialog is
   // shown only after lock screen app window activation.

@@ -43,7 +43,7 @@ class AccountId;
 
 namespace ash {
 namespace mojom {
-enum class TrayActionState;
+enum class LockScreenActionState;
 }
 }
 
@@ -370,7 +370,7 @@ class SigninScreenHandler
   void OnTabletModeToggled(bool enabled) override;
 
   // lock_screen_apps::StateObserver:
-  void OnLockScreenNoteStateChanged(ash::mojom::TrayActionState state) override;
+  void OnNoteStateChanged(ash::mojom::LockScreenActionState state) override;
 
   void UpdateAddButtonStatus();
 

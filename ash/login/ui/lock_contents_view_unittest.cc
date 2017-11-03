@@ -11,7 +11,7 @@
 #include "ash/login/ui/login_display_style.h"
 #include "ash/login/ui/login_test_base.h"
 #include "ash/login/ui/login_user_view.h"
-#include "ash/public/interfaces/tray_action.mojom.h"
+#include "ash/public/interfaces/lock_screen_action.mojom.h"
 #include "ash/shell.h"
 #include "base/strings/utf_string_conversions.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -27,8 +27,8 @@ using LockContentsViewUnitTest = LoginTestBase;
 
 TEST_F(LockContentsViewUnitTest, DisplayMode) {
   // Build lock screen with 1 user.
-  auto* contents = new LockContentsView(mojom::TrayActionState::kNotAvailable,
-                                        data_dispatcher());
+  auto* contents = new LockContentsView(
+      mojom::LockScreenActionState::kNotAvailable, data_dispatcher());
   SetUserCount(1);
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(contents);
 
@@ -71,8 +71,8 @@ TEST_F(LockContentsViewUnitTest, DisplayMode) {
 
 // Verifies that the single user view is centered.
 TEST_F(LockContentsViewUnitTest, SingleUserCentered) {
-  auto* contents = new LockContentsView(mojom::TrayActionState::kNotAvailable,
-                                        data_dispatcher());
+  auto* contents = new LockContentsView(
+      mojom::LockScreenActionState::kNotAvailable, data_dispatcher());
   SetUserCount(1);
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(contents);
 
@@ -92,8 +92,8 @@ TEST_F(LockContentsViewUnitTest, SingleUserCentered) {
 // Verifies that the single user view is centered when lock screen notes are
 // enabled.
 TEST_F(LockContentsViewUnitTest, SingleUserCenteredNoteActionEnabled) {
-  auto* contents = new LockContentsView(mojom::TrayActionState::kAvailable,
-                                        data_dispatcher());
+  auto* contents = new LockContentsView(
+      mojom::LockScreenActionState::kAvailable, data_dispatcher());
   SetUserCount(1);
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(contents);
 
@@ -115,8 +115,8 @@ TEST_F(LockContentsViewUnitTest, SingleUserCenteredNoteActionEnabled) {
 // mode.
 TEST_F(LockContentsViewUnitTest, AutoLayoutAfterRotation) {
   // Build lock screen with three users.
-  auto* contents = new LockContentsView(mojom::TrayActionState::kNotAvailable,
-                                        data_dispatcher());
+  auto* contents = new LockContentsView(
+      mojom::LockScreenActionState::kNotAvailable, data_dispatcher());
   LockContentsView::TestApi test_api(contents);
   SetUserCount(3);
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(contents);
@@ -164,8 +164,8 @@ TEST_F(LockContentsViewUnitTest, AutoLayoutAfterRotation) {
 // Ensures that when swapping between two users, only auth method display swaps.
 TEST_F(LockContentsViewUnitTest, SwapAuthUsersInTwoUserLayout) {
   // Build lock screen with two users.
-  auto* contents = new LockContentsView(mojom::TrayActionState::kNotAvailable,
-                                        data_dispatcher());
+  auto* contents = new LockContentsView(
+      mojom::LockScreenActionState::kNotAvailable, data_dispatcher());
   LockContentsView::TestApi test_api(contents);
   SetUserCount(2);
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(contents);
@@ -209,8 +209,8 @@ TEST_F(LockContentsViewUnitTest, SwapAuthUsersInTwoUserLayout) {
 // Ensures that when swapping from a user list, the entire user info is swapped.
 TEST_F(LockContentsViewUnitTest, SwapUserListToPrimaryAuthUser) {
   // Build lock screen with five users.
-  auto* contents = new LockContentsView(mojom::TrayActionState::kNotAvailable,
-                                        data_dispatcher());
+  auto* contents = new LockContentsView(
+      mojom::LockScreenActionState::kNotAvailable, data_dispatcher());
   LockContentsView::TestApi test_api(contents);
   SetUserCount(5);
   EXPECT_EQ(users().size() - 1, test_api.user_views().size());
@@ -248,8 +248,8 @@ TEST_F(LockContentsViewUnitTest, SwapUserListToPrimaryAuthUser) {
 
 // Verifies note action view bounds.
 TEST_F(LockContentsViewUnitTest, NoteActionButtonBounds) {
-  auto* contents = new LockContentsView(mojom::TrayActionState::kNotAvailable,
-                                        data_dispatcher());
+  auto* contents = new LockContentsView(
+      mojom::LockScreenActionState::kNotAvailable, data_dispatcher());
   SetUserCount(1);
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(contents);
 
@@ -261,7 +261,8 @@ TEST_F(LockContentsViewUnitTest, NoteActionButtonBounds) {
 
   // When the note action becomes available, the note action button should be
   // shown.
-  data_dispatcher()->SetLockScreenNoteState(mojom::TrayActionState::kAvailable);
+  data_dispatcher()->SetNoteActionState(
+      mojom::LockScreenActionState::kAvailable);
   EXPECT_TRUE(test_api.note_action()->visible());
 
   // Verify the bounds of the note action button are as expected.
@@ -274,16 +275,16 @@ TEST_F(LockContentsViewUnitTest, NoteActionButtonBounds) {
 
   // If the note action is disabled again, the note action button should be
   // hidden.
-  data_dispatcher()->SetLockScreenNoteState(
-      mojom::TrayActionState::kNotAvailable);
+  data_dispatcher()->SetNoteActionState(
+      mojom::LockScreenActionState::kNotAvailable);
   EXPECT_FALSE(test_api.note_action()->visible());
 }
 
 // Verifies the note action view bounds when note action is available at lock
 // contents view creation.
 TEST_F(LockContentsViewUnitTest, NoteActionButtonBoundsInitiallyAvailable) {
-  auto* contents = new LockContentsView(mojom::TrayActionState::kAvailable,
-                                        data_dispatcher());
+  auto* contents = new LockContentsView(
+      mojom::LockScreenActionState::kAvailable, data_dispatcher());
   SetUserCount(1);
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(contents);
 
@@ -300,14 +301,14 @@ TEST_F(LockContentsViewUnitTest, NoteActionButtonBoundsInitiallyAvailable) {
             test_api.note_action()->GetBoundsInScreen());
 
   // If the note action is disabled, the note action button should be hidden.
-  data_dispatcher()->SetLockScreenNoteState(
-      mojom::TrayActionState::kNotAvailable);
+  data_dispatcher()->SetNoteActionState(
+      mojom::LockScreenActionState::kNotAvailable);
   EXPECT_FALSE(test_api.note_action()->visible());
 }
 
 // Verifies the easy unlock tooltip is automatically displayed when requested.
 TEST_F(LockContentsViewUnitTest, EasyUnlockForceTooltipCreatesTooltipWidget) {
-  auto* lock = new LockContentsView(mojom::TrayActionState::kNotAvailable,
+  auto* lock = new LockContentsView(mojom::LockScreenActionState::kNotAvailable,
                                     data_dispatcher());
 
   SetUserCount(1);
@@ -336,8 +337,8 @@ TEST_F(LockContentsViewUnitTest, EasyUnlockForceTooltipCreatesTooltipWidget) {
 // Verifies that easy unlock icon state persists when changing auth user.
 TEST_F(LockContentsViewUnitTest, EasyUnlockIconUpdatedDuringUserSwap) {
   // Build lock screen with two users.
-  auto* contents = new LockContentsView(mojom::TrayActionState::kNotAvailable,
-                                        data_dispatcher());
+  auto* contents = new LockContentsView(
+      mojom::LockScreenActionState::kNotAvailable, data_dispatcher());
   SetUserCount(2);
   SetWidget(CreateWidgetWithContent(contents));
 

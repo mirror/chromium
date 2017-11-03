@@ -47,7 +47,7 @@
 
 using ash::mojom::CloseLockScreenNoteReason;
 using ash::mojom::LockScreenNoteOrigin;
-using ash::mojom::TrayActionState;
+using ash::mojom::LockScreenActionState;
 
 namespace lock_screen_apps {
 
@@ -109,13 +109,13 @@ StateController::~StateController() {
   g_instance = nullptr;
 }
 
-void StateController::SetTrayActionPtrForTesting(
-    ash::mojom::TrayActionPtr tray_action_ptr) {
-  tray_action_ptr_ = std::move(tray_action_ptr);
+void StateController::SetLockScreenActionPtrForTesting(
+    ash::mojom::LockScreenActionPtr lock_screen_action_ptr) {
+  lock_screen_action_ptr_ = std::move(lock_screen_action_ptr);
 }
 
-void StateController::FlushTrayActionForTesting() {
-  tray_action_ptr_.FlushForTesting();
+void StateController::FlushLockScreenActionForTesting() {
+  lock_screen_action_ptr_.FlushForTesting();
 }
 
 void StateController::SetReadyCallbackForTesting(
@@ -149,14 +149,16 @@ void StateController::Initialize() {
 
   // The tray action ptr might be set previously if the client was being created
   // for testing.
-  if (!tray_action_ptr_) {
+  if (!lock_screen_action_ptr_) {
     service_manager::Connector* connector =
         content::ServiceManagerConnection::GetForProcess()->GetConnector();
-    connector->BindInterface(ash::mojom::kServiceName, &tray_action_ptr_);
+    connector->BindInterface(ash::mojom::kServiceName,
+                             &lock_screen_action_ptr_);
   }
-  ash::mojom::TrayActionClientPtr client;
+  ash::mojom::LockScreenActionClientPtr client;
   binding_.Bind(mojo::MakeRequest(&client));
-  tray_action_ptr_->SetClient(std::move(client), lock_screen_note_state_);
+  lock_screen_action_ptr_->SetClient(std::move(client),
+                                     lock_screen_note_state_);
 }
 
 void StateController::SetPrimaryProfile(Profile* profile) {
@@ -302,12 +304,12 @@ void StateController::SetFocusCyclerDelegate(FocusCyclerDelegate* delegate) {
   }
 }
 
-TrayActionState StateController::GetLockScreenNoteState() const {
+LockScreenActionState StateController::GetNoteState() const {
   return lock_screen_note_state_;
 }
 
-void StateController::RequestNewLockScreenNote(LockScreenNoteOrigin origin) {
-  if (lock_screen_note_state_ != TrayActionState::kAvailable)
+void StateController::RequestNewNote(LockScreenNoteOrigin origin) {
+  if (lock_screen_note_state_ != LockScreenActionState::kAvailable)
     return;
 
   DCHECK(app_manager_->IsNoteTakingAppAvailable());
@@ -317,7 +319,7 @@ void StateController::RequestNewLockScreenNote(LockScreenNoteOrigin origin) {
 
   // Update state to launching even if app fails to launch - this is to notify
   // listeners that a lock screen note request was handled.
-  UpdateLockScreenNoteState(TrayActionState::kLaunching);
+  UpdateNoteState(LockScreenActionState::kLaunching);
 
   // Defer app launch for stylus eject with Web UI based lock screen until the
   // note action launch animation finishes. The goal is to ensure the app
@@ -336,17 +338,17 @@ void StateController::RequestNewLockScreenNote(LockScreenNoteOrigin origin) {
 }
 
 void StateController::StartLaunchRequest() {
-  DCHECK_EQ(lock_screen_note_state_, TrayActionState::kLaunching);
+  DCHECK_EQ(lock_screen_note_state_, LockScreenActionState::kLaunching);
 
   if (!app_manager_->LaunchNoteTaking()) {
-    UpdateLockScreenNoteState(TrayActionState::kAvailable);
+    UpdateNoteState(LockScreenActionState::kAvailable);
     return;
   }
 
   note_app_window_metrics_->AppLaunchRequested();
 }
 
-void StateController::CloseLockScreenNote(CloseLockScreenNoteReason reason) {
+void StateController::CloseNote(CloseLockScreenNoteReason reason) {
   ResetNoteTakingWindowAndMoveToNextState(true /*close_window*/, reason);
 }
 
@@ -387,7 +389,7 @@ void StateController::OnAppWindowRemoved(extensions::AppWindow* app_window) {
 }
 
 void StateController::OnStylusStateChanged(ui::StylusState state) {
-  if (lock_screen_note_state_ != TrayActionState::kAvailable)
+  if (lock_screen_note_state_ != LockScreenActionState::kAvailable)
     return;
 
   if (state != ui::StylusState::REMOVED) {
@@ -396,7 +398,7 @@ void StateController::OnStylusStateChanged(ui::StylusState state) {
   }
 
   if (screen_state_ == ScreenState::kOn) {
-    RequestNewLockScreenNote(LockScreenNoteOrigin::kStylusEject);
+    RequestNewNote(LockScreenNoteOrigin::kStylusEject);
   } else {
     stylus_eject_timestamp_ = tick_clock_->NowTicks();
   }
@@ -430,7 +432,7 @@ extensions::AppWindow* StateController::CreateAppWindowForLockScreenAction(
   if (action != extensions::api::app_runtime::ACTION_TYPE_NEW_NOTE)
     return nullptr;
 
-  if (lock_screen_note_state_ != TrayActionState::kLaunching)
+  if (lock_screen_note_state_ != LockScreenActionState::kLaunching)
     return nullptr;
 
   // StateController should not be able to get into kLaunching state if the
@@ -454,7 +456,8 @@ extensions::AppWindow* StateController::CreateAppWindowForLockScreenAction(
       new extensions::AppWindow(context, app_delegate.release(), extension);
   app_window_observer_.Add(extensions::AppWindowRegistry::Get(
       lock_screen_profile_creator_->lock_screen_profile()));
-  UpdateLockScreenNoteState(TrayActionState::kActive);
+  UpdateNoteState(LockScreenActionState::kActive);
+
   if (focus_cycler_delegate_) {
     focus_cycler_delegate_->RegisterLockScreenAppFocusHandler(base::Bind(
         &StateController::FocusAppWindow, weak_ptr_factory_.GetWeakPtr()));
@@ -465,7 +468,7 @@ extensions::AppWindow* StateController::CreateAppWindowForLockScreenAction(
 bool StateController::HandleTakeFocus(content::WebContents* web_contents,
                                       bool reverse) {
   if (!focus_cycler_delegate_ ||
-      GetLockScreenNoteState() != TrayActionState::kActive ||
+      GetNoteState() != LockScreenActionState::kActive ||
       note_app_window_->web_contents() != web_contents) {
     return false;
   }
@@ -477,7 +480,7 @@ bool StateController::HandleTakeFocus(content::WebContents* web_contents,
 void StateController::NewNoteLaunchAnimationDone() {
   if (!app_launch_delayed_for_animation_)
     return;
-  DCHECK_EQ(TrayActionState::kLaunching, lock_screen_note_state_);
+  DCHECK_EQ(LockScreenActionState::kLaunching, lock_screen_note_state_);
 
   app_launch_delayed_for_animation_ = false;
   StartLaunchRequest();
@@ -493,13 +496,13 @@ void StateController::OnNoteTakingAvailabilityChanged() {
     return;
   }
 
-  if (GetLockScreenNoteState() == TrayActionState::kNotAvailable)
-    UpdateLockScreenNoteState(TrayActionState::kAvailable);
+  if (GetNoteState() == LockScreenActionState::kNotAvailable)
+    UpdateNoteState(LockScreenActionState::kAvailable);
 }
 
 void StateController::FocusAppWindow(bool reverse) {
   // If the app window is not active, pass the focus on to the delegate..
-  if (GetLockScreenNoteState() != TrayActionState::kActive) {
+  if (GetNoteState() != LockScreenActionState::kActive) {
     focus_cycler_delegate_->HandleLockScreenAppFocusOut(reverse);
     return;
   }
@@ -528,7 +531,7 @@ void StateController::SetScreenState(ScreenState screen_state) {
       tick_clock_->NowTicks() - stylus_eject_timestamp_ <
           base::TimeDelta::FromMilliseconds(kStylusEjectValidityMs)) {
     stylus_eject_timestamp_ = base::TimeTicks();
-    RequestNewLockScreenNote(LockScreenNoteOrigin::kStylusEject);
+    RequestNewNote(LockScreenNoteOrigin::kStylusEject);
   }
 }
 
@@ -544,8 +547,8 @@ void StateController::ResetNoteTakingWindowAndMoveToNextState(
   if (note_app_window_metrics_)
     note_app_window_metrics_->Reset();
 
-  if (lock_screen_note_state_ != TrayActionState::kAvailable &&
-      lock_screen_note_state_ != TrayActionState::kNotAvailable) {
+  if (lock_screen_note_state_ != LockScreenActionState::kAvailable &&
+      lock_screen_note_state_ != LockScreenActionState::kNotAvailable) {
     UMA_HISTOGRAM_ENUMERATION(
         "Apps.LockScreen.NoteTakingApp.NoteTakingExitReason", reason,
         CloseLockScreenNoteReason::kCount);
@@ -566,26 +569,26 @@ void StateController::ResetNoteTakingWindowAndMoveToNextState(
     note_app_window_ = nullptr;
   }
 
-  UpdateLockScreenNoteState(app_manager_->IsNoteTakingAppAvailable()
-                                ? TrayActionState::kAvailable
-                                : TrayActionState::kNotAvailable);
+  UpdateNoteState(app_manager_->IsNoteTakingAppAvailable()
+                      ? LockScreenActionState::kAvailable
+                      : LockScreenActionState::kNotAvailable);
 }
 
-bool StateController::UpdateLockScreenNoteState(TrayActionState state) {
-  const TrayActionState old_state = GetLockScreenNoteState();
+bool StateController::UpdateNoteState(LockScreenActionState state) {
+  const LockScreenActionState old_state = GetNoteState();
   if (old_state == state)
     return false;
 
   lock_screen_note_state_ = state;
-  NotifyLockScreenNoteStateChanged();
+  NotifyNoteStateChanged();
   return true;
 }
 
-void StateController::NotifyLockScreenNoteStateChanged() {
+void StateController::NotifyNoteStateChanged() {
   for (auto& observer : observers_)
-    observer.OnLockScreenNoteStateChanged(lock_screen_note_state_);
+    observer.OnNoteStateChanged(lock_screen_note_state_);
 
-  tray_action_ptr_->UpdateLockScreenNoteState(lock_screen_note_state_);
+  lock_screen_action_ptr_->UpdateNoteState(lock_screen_note_state_);
 }
 
 }  // namespace lock_screen_apps

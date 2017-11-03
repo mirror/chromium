@@ -157,7 +157,7 @@ class SystemTrayNotifier;
 class ToplevelWindowEventHandler;
 class ToastManager;
 class TouchDevicesController;
-class TrayAction;
+class LockScreenAction;
 class TrayBluetoothHelper;
 class VirtualKeyboardController;
 class VideoActivityNotifier;
@@ -358,6 +358,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   LocaleNotificationController* locale_notification_controller() {
     return locale_notification_controller_.get();
   }
+  LockScreenAction* lock_screen_action() { return lock_screen_action_.get(); }
   LockScreenController* lock_screen_controller() {
     return lock_screen_controller_.get();
   }
@@ -445,7 +446,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   AshTouchTransformController* touch_transformer_controller() {
     return touch_transformer_controller_.get();
   }
-  TrayAction* tray_action() { return tray_action_.get(); }
   TrayBluetoothHelper* tray_bluetooth_helper() {
     return tray_bluetooth_helper_.get();
   }
@@ -656,6 +656,7 @@ class ASH_EXPORT Shell : public SessionObserver,
       keyboard_brightness_control_delegate_;
   std::unique_ptr<KeyboardUI> keyboard_ui_;
   std::unique_ptr<LocaleNotificationController> locale_notification_controller_;
+  std::unique_ptr<LockScreenAction> lock_screen_action_;
   std::unique_ptr<LockScreenController> lock_screen_controller_;
   std::unique_ptr<LogoutConfirmationController> logout_confirmation_controller_;
   std::unique_ptr<TabletModeController> tablet_mode_controller_;
@@ -674,7 +675,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<SystemTrayNotifier> system_tray_notifier_;
   std::unique_ptr<ToastManager> toast_manager_;
   std::unique_ptr<TouchDevicesController> touch_devices_controller_;
-  std::unique_ptr<TrayAction> tray_action_;
   std::unique_ptr<VoiceInteractionController> voice_interaction_controller_;
   std::unique_ptr<VpnList> vpn_list_;
   std::unique_ptr<WallpaperController> wallpaper_controller_;

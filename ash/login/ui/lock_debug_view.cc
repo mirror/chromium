@@ -52,7 +52,7 @@ class LockDebugView::DebugDataDispatcherTransformer
     : public LoginDataDispatcher::Observer {
  public:
   DebugDataDispatcherTransformer(
-      mojom::TrayActionState initial_lock_screen_note_state,
+      mojom::LockScreenActionState initial_lock_screen_note_state,
       LoginDataDispatcher* dispatcher)
       : root_dispatcher_(dispatcher),
         lock_screen_note_state_(initial_lock_screen_note_state) {
@@ -168,13 +168,13 @@ class LockDebugView::DebugDataDispatcherTransformer
   }
 
   void ToggleLockScreenNoteButton() {
-    if (lock_screen_note_state_ == mojom::TrayActionState::kAvailable) {
-      lock_screen_note_state_ = mojom::TrayActionState::kNotAvailable;
+    if (lock_screen_note_state_ == mojom::LockScreenActionState::kAvailable) {
+      lock_screen_note_state_ = mojom::LockScreenActionState::kNotAvailable;
     } else {
-      lock_screen_note_state_ = mojom::TrayActionState::kAvailable;
+      lock_screen_note_state_ = mojom::LockScreenActionState::kAvailable;
     }
 
-    debug_dispatcher_.SetLockScreenNoteState(lock_screen_note_state_);
+    debug_dispatcher_.SetNoteActionState(lock_screen_note_state_);
   }
 
   // LoginDataDispatcher::Observer:
@@ -210,9 +210,9 @@ class LockDebugView::DebugDataDispatcherTransformer
       }
     }
   }
-  void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override {
+  void OnNoteActionStateChanged(mojom::LockScreenActionState state) override {
     lock_screen_note_state_ = state;
-    debug_dispatcher_.SetLockScreenNoteState(state);
+    debug_dispatcher_.SetNoteActionState(state);
   }
   void OnShowEasyUnlockIcon(
       const AccountId& user,
@@ -234,13 +234,14 @@ class LockDebugView::DebugDataDispatcherTransformer
   std::vector<UserMetadata> debug_users_;
 
   // The current lock screen note action state.
-  mojom::TrayActionState lock_screen_note_state_;
+  mojom::LockScreenActionState lock_screen_note_state_;
 
   DISALLOW_COPY_AND_ASSIGN(DebugDataDispatcherTransformer);
 };
 
-LockDebugView::LockDebugView(mojom::TrayActionState initial_note_action_state,
-                             LoginDataDispatcher* data_dispatcher)
+LockDebugView::LockDebugView(
+    mojom::LockScreenActionState initial_note_action_state,
+    LoginDataDispatcher* data_dispatcher)
     : debug_data_dispatcher_(std::make_unique<DebugDataDispatcherTransformer>(
           initial_note_action_state,
           data_dispatcher)) {

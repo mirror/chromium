@@ -45,6 +45,7 @@
 #include "ash/ime/ime_controller.h"
 #include "ash/keyboard/keyboard_ui.h"
 #include "ash/laser/laser_pointer_controller.h"
+#include "ash/lock_screen_action/lock_screen_action.h"
 #include "ash/login/lock_screen_controller.h"
 #include "ash/login_status.h"
 #include "ash/magnifier/magnification_controller.h"
@@ -98,7 +99,6 @@
 #include "ash/system/tray_caps_lock.h"
 #include "ash/touch/ash_touch_transform_controller.h"
 #include "ash/touch/touch_devices_controller.h"
-#include "ash/tray_action/tray_action.h"
 #include "ash/utility/screenshot_controller.h"
 #include "ash/virtual_keyboard_controller.h"
 #include "ash/voice_interaction/voice_interaction_controller.h"
@@ -595,6 +595,7 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
           std::make_unique<KeyboardBrightnessController>()),
       locale_notification_controller_(
           std::make_unique<LocaleNotificationController>()),
+      lock_screen_action_(std::make_unique<LockScreenAction>()),
       lock_screen_controller_(std::make_unique<LockScreenController>()),
       media_controller_(std::make_unique<MediaController>()),
       new_window_controller_(std::make_unique<NewWindowController>()),
@@ -605,7 +606,6 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       shutdown_controller_(std::make_unique<ShutdownController>()),
       system_tray_controller_(std::make_unique<SystemTrayController>()),
       system_tray_notifier_(std::make_unique<SystemTrayNotifier>()),
-      tray_action_(std::make_unique<TrayAction>()),
       vpn_list_(std::make_unique<VpnList>()),
       window_cycle_controller_(std::make_unique<WindowCycleController>()),
       window_selector_controller_(std::make_unique<WindowSelectorController>()),

@@ -94,7 +94,7 @@ class LoginMetricsRecorderTest : public LoginTestBase {
 TEST_F(LoginMetricsRecorderTest, UnlockAttempts) {
   std::unique_ptr<MockLockScreenClient> client = BindMockLockScreenClient();
   client->set_authenticate_user_callback_result(false);
-  auto* contents = new LockContentsView(mojom::TrayActionState::kNotAvailable,
+  auto* contents = new LockContentsView(mojom::LockScreenActionState::kNotAvailable,
                                         data_dispatcher());
   LockContentsView::TestApi test_api(contents);
   SetUserCount(1);
@@ -169,7 +169,7 @@ TEST_F(LoginMetricsRecorderTest, UnlockAttempts) {
 
 // Verifies that click on the note action button is recorded correctly.
 TEST_F(LoginMetricsRecorderTest, NoteActionButtonClick) {
-  auto* contents = new LockContentsView(mojom::TrayActionState::kAvailable,
+  auto* contents = new LockContentsView(mojom::LockScreenActionState::kAvailable,
                                         data_dispatcher());
   SetUserCount(1);
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(contents);

@@ -8,7 +8,7 @@
 #include <memory>
 #include <string>
 
-#include "ash/public/interfaces/tray_action.mojom.h"
+#include "ash/public/interfaces/lock_screen_action.mojom.h"
 #include "base/callback.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
@@ -64,7 +64,7 @@ class FirstAppRunToastManager;
 // Manages state of lock screen action handler apps, and notifies
 // interested parties as the state changes.
 // Currently assumes single supported action - NEW_NOTE.
-class StateController : public ash::mojom::TrayActionClient,
+class StateController : public ash::mojom::LockScreenActionClient,
                         public session_manager::SessionManagerObserver,
                         public extensions::AppWindowRegistry::Observer,
                         public ui::InputDeviceEventObserver,
@@ -89,8 +89,9 @@ class StateController : public ash::mojom::TrayActionClient,
 
   // Sets the tray action that should be used by |StateController|.
   // Has to be called before |Initialize|.
-  void SetTrayActionPtrForTesting(ash::mojom::TrayActionPtr tray_action_ptr);
-  void FlushTrayActionForTesting();
+  void SetLockScreenActionPtrForTesting(
+      ash::mojom::LockScreenActionPtr lock_screen_action_ptr);
+  void FlushLockScreenActionForTesting();
   // Sets the callback that will be run when the state controller is fully
   // initialized and ready for action.
   void SetReadyCallbackForTesting(const base::Closure& ready_callback);
@@ -128,13 +129,11 @@ class StateController : public ash::mojom::TrayActionClient,
   void SetFocusCyclerDelegate(FocusCyclerDelegate* delegate);
 
   // Gets current state assiciated with the lock screen note action.
-  ash::mojom::TrayActionState GetLockScreenNoteState() const;
+  ash::mojom::LockScreenActionState GetNoteState() const;
 
-  // ash::mojom::TrayActionClient:
-  void RequestNewLockScreenNote(
-      ash::mojom::LockScreenNoteOrigin origin) override;
-  void CloseLockScreenNote(
-      ash::mojom::CloseLockScreenNoteReason reason) override;
+  // ash::mojom::LockScreenActionClient:
+  void RequestNewNote(ash::mojom::LockScreenNoteOrigin origin) override;
+  void CloseNote(ash::mojom::CloseLockScreenNoteReason reason) override;
 
   // session_manager::SessionManagerObserver:
   void OnSessionStateChanged() override;
@@ -224,10 +223,10 @@ class StateController : public ash::mojom::TrayActionClient,
 
   // Requests lock screen note action state change to |state|.
   // Returns whether the action state has changed.
-  bool UpdateLockScreenNoteState(ash::mojom::TrayActionState state);
+  bool UpdateNoteState(ash::mojom::LockScreenActionState state);
 
   // Notifies observers that the lock screen note action state changed.
-  void NotifyLockScreenNoteStateChanged();
+  void NotifyNoteStateChanged();
 
   // Passed as a focus handler to |focus_cycler_delegate_| when the assiciated
   // app window is visible (active or in background).
@@ -245,13 +244,13 @@ class StateController : public ash::mojom::TrayActionClient,
   void SetScreenState(ScreenState screen_state);
 
   // Lock screen note action state.
-  ash::mojom::TrayActionState lock_screen_note_state_ =
-      ash::mojom::TrayActionState::kNotAvailable;
+  ash::mojom::LockScreenActionState lock_screen_note_state_ =
+      ash::mojom::LockScreenActionState::kNotAvailable;
 
   base::ObserverList<StateObserver> observers_;
 
-  mojo::Binding<ash::mojom::TrayActionClient> binding_;
-  ash::mojom::TrayActionPtr tray_action_ptr_;
+  mojo::Binding<ash::mojom::LockScreenActionClient> binding_;
+  ash::mojom::LockScreenActionPtr lock_screen_action_ptr_;
 
   std::unique_ptr<LockScreenProfileCreator> lock_screen_profile_creator_;
 
