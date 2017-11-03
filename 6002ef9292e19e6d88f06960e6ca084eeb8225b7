@@ -16,6 +16,24 @@
       "revId": "6002ef9292e19e6d88f06960e6ca084eeb8225b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0208d1d_7761c00a",
+        "filename": "ios/web_view/internal/web_view_web_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-03T23:59:55Z",
+      "side": 1,
+      "message": "Oh, sorry you want TestWebState, not WebState. I think you can use WebTest as base class for tests which need BrowserState, which partially solves your problem. \n\nWebViewWebTest is named like a superclass for all CWVWebView tests, but most CWVWebView test do not need TestWebState. I think WebTest also suffers from the same problem, providing BrowserState, so I should probably fix WebTest at some point.\n\nI believe those tests which need TestWebView can just create a TestWebView. We already have to many \"base\" test fixtures, so I would prefer to avoid creating a new one (at least for now).",
+      "parentUuid": "7a556b3d_2b75bf67",
+      "revId": "6002ef9292e19e6d88f06960e6ca084eeb8225b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
