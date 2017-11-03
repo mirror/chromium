@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b62ce190_f2da6632",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-03T17:10:22Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this; AFAIK git cl upload will complain if you have uncommitted files. Or it probably should anyways, if it doesn\u0027t.",
+      "revId": "546d2e1f91284a6bfd8e5be62493cc22b3938139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
