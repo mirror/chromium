@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c9e9990_8bce7aef",
+        "filename": "components/viz/common/gpu/vulkan_context_provider.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-03T19:51:08Z",
+      "side": 1,
+      "message": "Maybe name this function \"GetGrContext()\" so that you don\u0027t need to specify \u0027class\u0027",
+      "revId": "cab701f788030fcffc38f228ad7141cb7b5330ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

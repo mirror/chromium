@@ -320,6 +320,24 @@
     },
     {
       "key": {
+        "uuid": "e24006fb_b0ff18f0",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-03T19:51:08Z",
+      "side": 1,
+      "message": "Not done... Please name GetGrContext, so that you don\u0027t have to specify \u0027class\u0027.",
+      "parentUuid": "749596f2_75496d54",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46dfb5c8_1cf5a268",
         "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
         "patchSetId": 17
@@ -810,6 +828,24 @@
       "writtenOn": "2017-10-06T23:11:00Z",
       "side": 1,
       "message": "Actually, the code looks wrong in this function, maybe we can just fix it without ifdefs. +weiliangc?",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7b9574_9132db56",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-03T19:51:08Z",
+      "side": 1,
+      "message": "@weilianc: doesn\u0027t this need a fix? RESOURCE_TYPE_GPU_MEMORY_BUFFER/RESOURCE_TYPE_GL_TEXTURE should return false, and RESOURCE_TYPE_BITMAP should return true, right?\nThat way we also don\u0027t need this ifdef.",
+      "parentUuid": "4e504699_69f43623",
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
