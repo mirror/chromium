@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f15eec6c_e1765cad",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T15:02:54Z",
+      "side": 1,
+      "message": "Hmmm... Actually, should this be \"visitsWithMediaTag\"?",
+      "revId": "e30d48dd0a2dee23ed026463836fbc25fe829c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8c6dcc9_65f8a0f0",
         "filename": "chrome/browser/media/media_engagement_score.h",
         "patchSetId": 3
