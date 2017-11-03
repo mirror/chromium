@@ -99,6 +99,30 @@
       "revId": "8846440ee3076d033f8b9659a888e09147138ad9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b3c7832_f7b623df",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_resource_coordinator_signal_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-03T17:52:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "717eb7fb_23842cdf",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 31
+      },
+      "revId": "8846440ee3076d033f8b9659a888e09147138ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
