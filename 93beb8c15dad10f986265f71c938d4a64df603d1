@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b922ef07_21171d01",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T19:14:34Z",
+      "side": 1,
+      "message": "Nit: @private {!print_preview_new.Model}",
+      "revId": "93beb8c15dad10f986265f71c938d4a64df603d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8618825c_36a6dbf8",
+        "filename": "chrome/browser/resources/print_preview/new/header.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T19:14:34Z",
+      "side": 1,
+      "message": "Indent of by -2.",
+      "revId": "93beb8c15dad10f986265f71c938d4a64df603d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "777a6e9f_26ebbca3",
+        "filename": "chrome/browser/resources/print_preview/new/header.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T19:14:34Z",
+      "side": 1,
+      "message": "Let\u0027s follow the naming convention from other Polymer pages\ns/onCancelButtonTapped_/onCancelButtonTap_\n\nSame below.",
+      "range": {
+        "startLine": 74,
+        "startChar": 37,
+        "endLine": 74,
+        "endChar": 58
+      },
+      "revId": "93beb8c15dad10f986265f71c938d4a64df603d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc90e4e3_d0376d50",
+        "filename": "chrome/browser/resources/print_preview/new/header.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T19:14:34Z",
+      "side": 1,
+      "message": "Nit: You can use shorthand syntax\n\n/** @type {!print_preview_new.Model} */\nmodel: Object,",
+      "revId": "93beb8c15dad10f986265f71c938d4a64df603d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "078d0f8e_e859fc14",
+        "filename": "chrome/browser/resources/print_preview/new/header.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T19:14:34Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "93beb8c15dad10f986265f71c938d4a64df603d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67eac031_53a66fe1",
+        "filename": "chrome/browser/resources/print_preview/new/header.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T19:14:34Z",
+      "side": 1,
+      "message": "Should we rename this to printInProrgress_?",
+      "revId": "93beb8c15dad10f986265f71c938d4a64df603d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176d4b80_21f8b3ef",
+        "filename": "chrome/browser/resources/print_preview/new/header.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T19:14:34Z",
+      "side": 1,
+      "message": "Nit: Can fit in one line (here and elsewhere)\n/** @private */",
+      "revId": "93beb8c15dad10f986265f71c938d4a64df603d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb82eeb_8822a390",
+        "filename": "chrome/browser/resources/print_preview/new/print_preview_shared_css.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T19:14:34Z",
+      "side": 1,
+      "message": "Let\u0027s also import polymer.html here, since we depend on it (dom-module). See example\n\nhttps://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/shared_style_css.html?l\u003d1",
+      "revId": "93beb8c15dad10f986265f71c938d4a64df603d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6263bfa5_5e0b0e33",
+        "filename": "chrome/browser/resources/print_preview/print_preview_resources.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T19:14:34Z",
+      "side": 1,
+      "message": "model.js?\n\nBut also, since model.js is purely used for the Closure compiler for now. We don\u0027t really need to add it to the grd file yet. Let\u0027s just remove. IIUC it is not used at runtime anywhere yet.",
+      "revId": "93beb8c15dad10f986265f71c938d4a64df603d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
