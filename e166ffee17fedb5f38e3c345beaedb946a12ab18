@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1d1e264_433bbfed",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-03T21:18:46Z",
+      "side": 1,
+      "message": "nit: newline between CloseImmediately and ProcessPressedEvent",
+      "revId": "e166ffee17fedb5f38e3c345beaedb946a12ab18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ddcc57c_08c1bce0",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-03T21:18:46Z",
+      "side": 1,
+      "message": "nit: comment",
+      "revId": "e166ffee17fedb5f38e3c345beaedb946a12ab18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
