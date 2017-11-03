@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4a43f11_047182a4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetBackBehaviorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-03T14:36:30Z",
+      "side": 1,
+      "message": "I don\u0027t particular like the auto formatting here. This looks more natural to me:\n\n        ThreadUtils.runOnUiThreadBlocking(() -\u003e\n                tab.getActivity()\n                           .getFullscreenManager()\n                           .setHideBrowserControlsAndroidView(true));",
+      "range": {
+        "startLine": 269,
+        "startChar": 16,
+        "endLine": 272,
+        "endChar": 75
+      },
+      "revId": "4e9fd67f3592986a7710b6f18b9d807b8f8438fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
