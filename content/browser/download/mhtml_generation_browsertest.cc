@@ -149,7 +149,7 @@ class MHTMLGenerationTest : public ContentBrowserTest {
   }
 
   int64_t ReadFileSizeFromDisk(base::FilePath path) {
-    base::ThreadRestrictions::ScopedAllowIO allow_io_to_test_file_size;
+    base::ScopedAllowBlockingForTesting allow_blocking;
     int64_t file_size;
     if (!base::GetFileSize(path, &file_size)) return -1;
     return file_size;
