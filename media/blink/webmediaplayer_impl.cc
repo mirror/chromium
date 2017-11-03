@@ -52,6 +52,7 @@
 #include "media/blink/webmediasource_impl.h"
 #include "media/filters/chunk_demuxer.h"
 #include "media/filters/ffmpeg_demuxer.h"
+#include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/platform/WebEncryptedMediaTypes.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerClient.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerEncryptedMediaClient.h"
@@ -62,7 +63,6 @@
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
 #include "third_party/WebKit/public/platform/WebString.h"
-#include "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
@@ -156,6 +156,29 @@ constexpr int kMaxNumPlaybackRateLogs = 10;
 }  // namespace
 
 class BufferedDataSourceHostImpl;
+
+std::unique_ptr<blink::WebSurfaceLayerBridge>
+MediaPlayerSurfaceLayerBridge::Create(
+    blink::WebSurfaceLayerBridgeObserver* observer) {
+  return base::WrapUnique(new MediaPlayerSurfaceLayerBridge(observer));
+}
+
+MediaPlayerSurfaceLayerBridge::MediaPlayerSurfaceLayerBridge(
+    blink::WebSurfaceLayerBridgeObserver* observer)
+    : observer_(observer),
+      frame_sink_id_(blink::Platform::Current()->GenerateFrameSinkId()) {}
+
+blink::WebLayer* MediaPlayerSurfaceLayerBridge::GetWebLayer() const {
+  return nullptr;
+}
+
+const viz::FrameSinkId& MediaPlayerSurfaceLayerBridge::GetFrameSinkId() const {
+  return frame_sink_id_;
+}
+
+MediaPlayerSurfaceLayerBridge::~MediaPlayerSurfaceLayerBridge() {
+  observer_ = nullptr;
+}
 
 STATIC_ASSERT_ENUM(WebMediaPlayer::kCORSModeUnspecified,
                    UrlData::CORS_UNSPECIFIED);
@@ -369,10 +392,12 @@ void WebMediaPlayerImpl::Load(LoadType load_type,
   DoLoad(load_type, url, cors_mode);
 }
 
-void WebMediaPlayerImpl::OnWebLayerReplaced() {
+void WebMediaPlayerImpl::OnWebLayerUpdated() {
   DCHECK(bridge_);
-  bridge_->GetWebLayer()->CcLayer()->SetContentsOpaque(opaque_);
-  bridge_->GetWebLayer()->SetContentsOpaqueIsFixed(true);
+  if (bridge_->GetWebLayer()) {
+    bridge_->GetWebLayer()->CcLayer()->SetContentsOpaque(opaque_);
+    bridge_->GetWebLayer()->SetContentsOpaqueIsFixed(true);
+  }
   // TODO(lethalantidote): Figure out how to pass along rotation information.
   // https://crbug/750313.
   client_->SetWebLayer(bridge_->GetWebLayer());
