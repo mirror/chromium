@@ -8,6 +8,7 @@
 namespace prefs {
 
 extern const char kAcceptLanguages[];
+extern const char kUserLanguageProfile[];
 
 }  // namespace prefs
 
