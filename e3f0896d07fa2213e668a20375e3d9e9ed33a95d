@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0c36a9c_74d2f98d",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-03T20:37:46Z",
+      "side": 1,
+      "message": "s/Callback/Delegate/",
+      "range": {
+        "startLine": 37,
+        "startChar": 12,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "e3f0896d07fa2213e668a20375e3d9e9ed33a95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
