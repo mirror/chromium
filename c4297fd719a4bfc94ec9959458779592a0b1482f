@@ -22,6 +22,30 @@
       "revId": "c4297fd719a4bfc94ec9959458779592a0b1482f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe81a49_f00ce1d6",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-03T09:16:49Z",
+      "side": 1,
+      "message": "yes. thanks",
+      "parentUuid": "d53967b5_48d25250",
+      "range": {
+        "startLine": 440,
+        "startChar": 69,
+        "endLine": 440,
+        "endChar": 77
+      },
+      "revId": "c4297fd719a4bfc94ec9959458779592a0b1482f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
