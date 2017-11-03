@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce7c48cd_92e7d8fd",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-03T18:54:52Z",
+      "side": 1,
+      "message": "Oops?",
+      "range": {
+        "startLine": 896,
+        "startChar": 13,
+        "endLine": 896,
+        "endChar": 14
+      },
+      "revId": "ccd2c8b43b4d9bf5b9f821d2f2a99726722afd85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
