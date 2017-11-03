@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "ccd17b87_6bc179f5",
+        "filename": "build/android/buildhooks/java/org/chromium/build/Callback.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-03T15:49:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb47d1b3_da9a9cc6",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "25fffd0757144c1a3d0db4af2aef954a841b38d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05602234_1341fe1e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
         "patchSetId": 12
@@ -117,6 +141,30 @@
       "revId": "25fffd0757144c1a3d0db4af2aef954a841b38d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de7fbee_edcbd5bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-03T15:49:44Z",
+      "side": 1,
+      "message": "Rebased on the enable PureJavaExceptionHandler CL.",
+      "parentUuid": "05602234_1341fe1e",
+      "range": {
+        "startLine": 50,
+        "startChar": 23,
+        "endLine": 50,
+        "endChar": 49
+      },
+      "revId": "25fffd0757144c1a3d0db4af2aef954a841b38d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
