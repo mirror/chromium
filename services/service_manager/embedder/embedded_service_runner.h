@@ -34,7 +34,8 @@ class SERVICE_MANAGER_EMBEDDER_EXPORT EmbeddedServiceRunner {
 
   // Binds an incoming ServiceRequest for this service. This creates a new
   // instance of the Service implementation.
-  void BindServiceRequest(service_manager::mojom::ServiceRequest request);
+  void BindServiceRequest(const Identity& identity,
+                          mojom::ServiceRequest request);
 
   // Sets a callback to run when all instances of the service have stopped.
   void SetQuitClosure(const base::Closure& quit_closure);
