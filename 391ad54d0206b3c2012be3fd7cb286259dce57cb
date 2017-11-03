@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2165aaf6_f8795d4a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-03T17:01:49Z",
+      "side": 1,
+      "message": "I would actually remove recently/recent.  I think your ownership/lifetime tracking now is cleaned up that you can comment that it represents the active content view core for the tab (unless it is detached)\n\nSame for the manager below.",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "391ad54d0206b3c2012be3fd7cb286259dce57cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3ea2e8_1706e552",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-03T17:01:49Z",
+      "side": 1,
+      "message": "should we be doing this if mRecentContextualSearchManager \u003d\u003d null?",
+      "revId": "391ad54d0206b3c2012be3fd7cb286259dce57cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb057ef_786bb922",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-03T17:01:49Z",
+      "side": 1,
+      "message": "can we remove this now?  Seems like all callers should move over to onActivityAttachmentChanged.\n\n+yusufo to comment.  I didn\u0027t see anything in the finalize callback that would break if we shifted this around, but maybe you know if the ordering matters (if it does, we should just pass the finalize callback into attach(...) below and have it do all the things.",
+      "range": {
+        "startLine": 1454,
+        "startChar": 21,
+        "endLine": 1454,
+        "endChar": 42
+      },
+      "revId": "391ad54d0206b3c2012be3fd7cb286259dce57cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d8a9f2_42007136",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabObserver.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-03T17:01:49Z",
+      "side": 1,
+      "message": "I wouldn\u0027t add default yet as that isn\u0027t the pattern we have.  We should do it when we remove EmptyTabObserver completely and switch this over to default full sail.  Maybe file a bug to do that refactoring?",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 11
+      },
+      "revId": "391ad54d0206b3c2012be3fd7cb286259dce57cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb450e1f_6f4edc2b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabObserver.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-03T17:01:49Z",
+      "side": 1,
+      "message": "looks like this got indented along the way",
+      "range": {
+        "startLine": 300,
+        "startChar": 8,
+        "endLine": 300,
+        "endChar": 14
+      },
+      "revId": "391ad54d0206b3c2012be3fd7cb286259dce57cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
