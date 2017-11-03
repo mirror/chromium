@@ -58,8 +58,7 @@ DiscoveryNetworkMonitor* DiscoveryNetworkMonitor::GetInstance() {
 // static
 std::unique_ptr<DiscoveryNetworkMonitor>
 DiscoveryNetworkMonitor::CreateInstanceForTest(NetworkInfoFunction strategy) {
-  auto* discovery_network_monitor = new DiscoveryNetworkMonitor();
-  discovery_network_monitor->SetNetworkInfoFunctionForTest(std::move(strategy));
+  auto* discovery_network_monitor = new DiscoveryNetworkMonitor(strategy);
   return std::unique_ptr<DiscoveryNetworkMonitor>(discovery_network_monitor);
 }
 
@@ -88,18 +87,26 @@ void DiscoveryNetworkMonitor::GetNetworkId(NetworkIdCallback callback) {
 }
 
 DiscoveryNetworkMonitor::DiscoveryNetworkMonitor()
+    : DiscoveryNetworkMonitor(&GetDiscoveryNetworkInfoList) {}
+
+DiscoveryNetworkMonitor::DiscoveryNetworkMonitor(NetworkInfoFunction strategy)
     : network_id_(kNetworkIdDisconnected),
       observers_(new base::ObserverListThreadSafe<Observer>(
           base::ObserverListThreadSafe<
               Observer>::NotificationType::NOTIFY_EXISTING_ONLY)),
       task_runner_(base::CreateSequencedTaskRunnerWithTraits(base::MayBlock())),
-      network_info_function_(&GetDiscoveryNetworkInfoList),
+      network_info_function_(strategy),
       metric_observer_(base::MakeUnique<DiscoveryNetworkMonitorMetricObserver>(
           base::MakeUnique<base::DefaultTickClock>(),
           base::MakeUnique<DiscoveryNetworkMonitorMetrics>())) {
   DETACH_FROM_SEQUENCE(sequence_checker_);
   AddObserver(metric_observer_.get());
   net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(
+          base::IgnoreResult(&DiscoveryNetworkMonitor::UpdateNetworkInfo),
+          base::Unretained(this)));
 }
 
 DiscoveryNetworkMonitor::~DiscoveryNetworkMonitor() {
