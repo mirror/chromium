@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1538d6f6_4a957f8d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-03T20:10:07Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 12,
+        "startChar": 9,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "1436d62e2728f70a55811ae3f3971cac4411ea17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a0b8b9_5ef7ff34",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-03T20:10:07Z",
+      "side": 1,
+      "message": "Hmm, maybe I\u0027m wrong, but I\u0027m afraid this modification can lead to an unwanted change of behavior in a corner case.\nSuppose ConfigureCertificates() raises |network_properties_changed_| and then calls into ResolvePendingNetworks() due to non-empty |queued_networks_to_resolve_|, and then it goes into ResolveNetworks() and |networks_to_resolve| turns out to be empty (for instance, due to the network being disappeared or the policy having changed for it). In this case, notifications will be fired with |false| from here, while they should have been |true|.\n\nMaybe I\u0027m wrong with the above?.. And if not, then, unfortunately, I haven\u0027t put much thought into how this code could be restructured to avoid this problem.",
+      "revId": "1436d62e2728f70a55811ae3f3971cac4411ea17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad05a612_dd63112e",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-03T20:10:07Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 599,
+        "startChar": 33,
+        "endLine": 599,
+        "endChar": 38
+      },
+      "revId": "1436d62e2728f70a55811ae3f3971cac4411ea17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
