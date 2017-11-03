@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4256d1e8_167d90ba",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-03T19:23:33Z",
+      "side": 1,
+      "message": "DCHECK(io_thread_)?",
+      "range": {
+        "startLine": 581,
+        "startChar": 34,
+        "endLine": 581,
+        "endChar": 51
+      },
+      "revId": "6fc7f52a6a620f7aa34af51b7964c4859adac8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f5daae_3aa00755",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-03T19:23:33Z",
+      "side": 1,
+      "message": "Maybe add DCHECK(network_service_request_)?",
+      "range": {
+        "startLine": 770,
+        "startChar": 15,
+        "endLine": 770,
+        "endChar": 44
+      },
+      "revId": "6fc7f52a6a620f7aa34af51b7964c4859adac8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb01083_5f5a2f23",
+        "filename": "chrome/browser/io_thread.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-03T19:23:33Z",
+      "side": 1,
+      "message": "Maybe mention that, when the network service is disabled, this is a Mojo interface to the IOThread\u0027s in-process NetworkService that lives on the IO thread, and when enabled, it\u0027s a reference to the service created through ServiceManager?\n\nAlso, ui -\u003e UI",
+      "range": {
+        "startLine": 228,
+        "startChar": 27,
+        "endLine": 228,
+        "endChar": 41
+      },
+      "revId": "6fc7f52a6a620f7aa34af51b7964c4859adac8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "043e7b20_c8fb2b98",
+        "filename": "chrome/browser/io_thread.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-03T19:23:33Z",
+      "side": 1,
+      "message": "Not sure this comment adds anything.  Fine with either removing it or beefing it up.",
+      "range": {
+        "startLine": 345,
+        "startChar": 20,
+        "endLine": 345,
+        "endChar": 23
+      },
+      "revId": "6fc7f52a6a620f7aa34af51b7964c4859adac8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa6ad65_6b937882",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-03T19:23:33Z",
+      "side": 1,
+      "message": "DCHECK(!request)?",
+      "range": {
+        "startLine": 77,
+        "startChar": 18,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "6fc7f52a6a620f7aa34af51b7964c4859adac8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbe61d0_5c62f0b2",
+        "filename": "content/public/common/network_connection_tracker_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-03T19:23:33Z",
+      "side": 1,
+      "message": "Does this test work if this is switch to network_service_ptr.get(), to use the Mojo interface?",
+      "range": {
+        "startLine": 222,
+        "startChar": 50,
+        "endLine": 222,
+        "endChar": 51
+      },
+      "revId": "6fc7f52a6a620f7aa34af51b7964c4859adac8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
