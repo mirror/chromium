@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<title>Tests that position is not adjusted for non snap-to-lines cues.</title>
+<script src="../media-file.js"></script>
+<script src="../media-controls.js"></script>
+<video controls>
+    <track src="captions-webvtt/non-snap-to-lines.vtt">
+</video>
+<script>
+window.testRunner.waitUntilDone();
+var video = document.querySelector("video");
+video.textTracks[0].mode = "hidden";
+video.oncanplay = function() {
+  clickCaptionButton(video);
+  window.testRunner.notifyDone();
+};
+video.src = findMediaFile("video", "../content/test")
+</script>
