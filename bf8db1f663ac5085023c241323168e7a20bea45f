@@ -22,6 +22,30 @@
       "revId": "bf8db1f663ac5085023c241323168e7a20bea45f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28652bf_38965076",
+        "filename": "services/service_manager/sandbox/sandbox_type.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-03T05:26:18Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "a2015b04_b8a90af8",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 3
+      },
+      "revId": "bf8db1f663ac5085023c241323168e7a20bea45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
