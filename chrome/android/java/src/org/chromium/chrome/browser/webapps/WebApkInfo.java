@@ -10,6 +10,12 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.AdaptiveIconDrawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -129,8 +135,7 @@ public class WebApkInfo extends WebappInfo {
         String manifestStartUrl = IntentUtils.safeGetString(bundle, WebApkMetaDataKeys.START_URL);
         Map<String, String> iconUrlToMurmur2HashMap = getIconUrlAndIconMurmur2HashMap(bundle);
 
-        int primaryIconId = IntentUtils.safeGetInt(bundle, WebApkMetaDataKeys.ICON_ID, 0);
-        Bitmap primaryIcon = decodeImageResource(res, primaryIconId);
+        Bitmap primaryIcon = getPrimaryIcon(res, bundle);
 
         int badgeIconId = IntentUtils.safeGetInt(bundle, WebApkMetaDataKeys.BADGE_ICON_ID, 0);
         Bitmap badgeIcon = decodeImageResource(res, badgeIconId);
@@ -140,6 +145,34 @@ public class WebApkInfo extends WebappInfo {
                 orientation, source, themeColor, backgroundColor, webApkPackageName,
                 shellApkVersion, manifestUrl, manifestStartUrl, iconUrlToMurmur2HashMap,
                 forceNavigation);
+    }
+
+    @SuppressWarnings("deprecation")
+    private static Bitmap getPrimaryIcon(Resources resources, Bundle metadata) {
+        int primaryIconId = IntentUtils.safeGetInt(metadata, WebApkMetaDataKeys.ICON_ID, 0);
+        Drawable drawable = resources.getDrawable(primaryIconId);
+        if (drawable == null) return null;
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        } else {
+            if (drawable instanceof BitmapDrawable) {
+                return ((BitmapDrawable) drawable).getBitmap();
+            } else if (drawable instanceof AdaptiveIconDrawable) {
+                Drawable[] drawableArray = new Drawable[2];
+                drawableArray[0] = ((AdaptiveIconDrawable) drawable).getBackground();
+                drawableArray[1] = ((AdaptiveIconDrawable) drawable).getForeground();
+                LayerDrawable layerDrawable = new LayerDrawable(drawableArray);
+                Bitmap primaryIcon = Bitmap.createBitmap(layerDrawable.getIntrinsicWidth(),
+                        layerDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+
+                Canvas canvas = new Canvas(primaryIcon);
+                layerDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+                layerDrawable.draw(canvas);
+                return primaryIcon;
+            }
+        }
+        return null;
     }
 
     /**
