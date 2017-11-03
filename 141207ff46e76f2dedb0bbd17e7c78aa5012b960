@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95d36c06_32bdb03a",
+        "filename": "chrome/browser/chromeos/login/resource_loader_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-03T09:54:40Z",
+      "side": 1,
+      "message": "nit: I think this could be using \"net::FilePathToFileURL\".",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 62
+      },
+      "revId": "141207ff46e76f2dedb0bbd17e7c78aa5012b960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
