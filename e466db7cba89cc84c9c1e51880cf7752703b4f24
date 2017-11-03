@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "c963a3e8_f2d3f634",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T17:03:20Z",
+      "side": 1,
+      "message": "No, lets leave it as f32le; there\u0027s no reason to use int16. The data is already comes in as f32, so lets avoid extra steps unless there\u0027s a compelling reason.",
+      "parentUuid": "e5db5f11_862c3bdc",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "431efc85_ecd1eea8",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 6
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "I think there\u0027re two issues here.\n\n1.) Whether these AudioEncoders are a \"public\" API where they might be used by other non-AudioTrackRecorder classes. If so, then I fully agree that they should be split out and have their own unittests. It seems to me though that these are private to AudioTrackRecorder, since they take AudioTrackEncoder enums and callbacks. In this case, I don\u0027t agree that they should have their own unittests; it\u0027s better to test the actual public API (AudioTrackRecorder)--and that\u0027s actually what we\u0027re already doing here. (go/tott-358)\n\n2.) Splitting out to another file. I do agree that this .cc is kinda big. Is there a way in chrome to split these classes out to another file but limit their visibility/access so that they\u0027re still private to AudioTrackEncoder?\n\nI dunno Chrome conventions, though, so lemmie know. Happy to make any/all changes.",
       "parentUuid": "1334bfd9_5ba3df55",
+      "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56a089a_f011f423",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T17:03:20Z",
+      "side": 1,
+      "message": "This directory is an internal node anyways. So everything inside it is private APIs; you don\u0027t need to worry about further limiting the visibility beyond that.",
+      "parentUuid": "369a66d2_e3f4d676",
       "revId": "e466db7cba89cc84c9c1e51880cf7752703b4f24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

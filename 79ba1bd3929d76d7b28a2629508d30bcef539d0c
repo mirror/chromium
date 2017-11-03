@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10c5c166_ab8551ef",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T17:03:20Z",
+      "side": 1,
+      "message": "Delete?",
+      "revId": "79ba1bd3929d76d7b28a2629508d30bcef539d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047399a2_bcc11673",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-03T17:03:20Z",
+      "side": 1,
+      "message": "Run \"git cl format\" this formatting looks wrong.",
+      "revId": "79ba1bd3929d76d7b28a2629508d30bcef539d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
