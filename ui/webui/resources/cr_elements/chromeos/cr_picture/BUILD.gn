@@ -4,6 +4,16 @@
 
 import("//third_party/closure_compiler/compile_js.gni")
 
+js_group("closure_compile") {
+  deps = [
+    ":cr_camera",
+    ":cr_picture_list",
+    ":cr_picture_pane",
+    ":cr_picture_types",
+    ":cr_png_behavior",
+  ]
+}
+
 js_library("cr_camera") {
   deps = [
     ":cr_png_behavior",

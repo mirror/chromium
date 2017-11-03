@@ -4,6 +4,25 @@
 
 import("//third_party/closure_compiler/compile_js.gni")
 
+js_group("closure_compile") {
+  deps = [
+    ":action_link",
+    ":assert",
+    ":cr",
+    ":event_tracker",
+    ":i18n_behavior",
+    ":i18n_template",
+    ":i18n_template_no_process",
+    ":icon",
+    ":load_time_data",
+    ":parse_html_subset",
+    ":promise_resolver",
+    ":util",
+    ":web_ui_listener_behavior",
+    ":webui_listener_tracker",
+  ]
+}
+
 js_library("action_link") {
 }
 
