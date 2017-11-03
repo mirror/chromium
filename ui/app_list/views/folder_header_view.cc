@@ -255,6 +255,35 @@ void FolderHeaderView::ContentsChanged(views::Textfield* sender,
   Layout();
 }
 
+bool FolderHeaderView::HandleKeyEvent(views::Textfield* sender,
+                                      const ui::KeyEvent& key_event) {
+  if (!features::IsAppListFocusEnabled())
+    return false;
+
+  if (!CanProcessLeftRightKeyTraversal(key_event))
+    return false;
+
+  if (key_event.key_code() == ui::VKEY_LEFT &&
+      folder_name_view_->GetCursorPosition() == 0 &&
+      !folder_name_view_->HasSelection()) {
+    // The cursor is at the beginning of the |folder_name_view_| and there's no
+    // text selection, so advance focus to previous element.
+    GetFocusManager()->AdvanceFocus(true);
+    return true;
+  }
+
+  if (key_event.key_code() == ui::VKEY_RIGHT &&
+      folder_name_view_->GetCursorPosition() ==
+          folder_name_view_->text().length() &&
+      !folder_name_view_->HasSelection()) {
+    // The cursor is at the end of the |folder_name_view_| and there's no text
+    // selection, so advance focus to next element.
+    GetFocusManager()->AdvanceFocus(false);
+    return true;
+  }
+  return false;
+}
+
 void FolderHeaderView::ButtonPressed(views::Button* sender,
                                      const ui::Event& event) {
   delegate_->NavigateBack(folder_item_, event);

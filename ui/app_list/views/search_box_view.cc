@@ -671,12 +671,9 @@ void SearchBoxView::OnMouseEvent(ui::MouseEvent* event) {
 }
 
 void SearchBoxView::OnKeyEvent(ui::KeyEvent* event) {
-  app_list_view_->OnKeyEvent(event);
+  app_list_view_->RedirectKeyEventToSearchBox(event);
 
-  if (event->handled() || event->type() != ui::ET_KEY_PRESSED)
-    return;
-
-  if (event->key_code() != ui::VKEY_UP && event->key_code() != ui::VKEY_DOWN)
+  if (!CanProcessUpDownKeyTraversal(*event))
     return;
 
   // If focus is in search box view, up key moves focus to the last element of
@@ -877,6 +874,27 @@ bool SearchBoxView::HandleKeyEvent(views::Textfield* sender,
 
       if (!is_search_box_active()) {
         SetSearchBoxActive(true);
+        return true;
+      }
+      return false;
+    }
+
+    if (CanProcessLeftRightKeyTraversal(key_event)) {
+      if (key_event.key_code() == ui::VKEY_LEFT &&
+          search_box_->GetCursorPosition() == 0 &&
+          !search_box_->HasSelection()) {
+        // The cursor is at the beginning of the |search_box_| and there's no
+        // text selection, so advance focus to previous element.
+        GetFocusManager()->AdvanceFocus(true);
+        return true;
+      }
+
+      if (key_event.key_code() == ui::VKEY_RIGHT &&
+          search_box_->GetCursorPosition() == search_box_->text().length() &&
+          !search_box_->HasSelection()) {
+        // The cursor is at the end of the |search_box_| and there's no text
+        // selection, so advance focus to next element.
+        GetFocusManager()->AdvanceFocus(false);
         return true;
       }
     }

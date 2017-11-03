@@ -424,6 +424,79 @@ class AppListViewFocusTest : public views::ViewsTestBase {
     }
   }
 
+  // Test the behavior triggered by left and right key when focus is on the
+  // textfield.
+  void TestLeftAndRightKeyOnTextfield(views::Textfield* textfield) {
+    EXPECT_TRUE(textfield->text().empty());
+    EXPECT_TRUE(textfield->HasFocus());
+
+    // Only need to hit left or right key once to move focus from the textfield
+    // when it is empty.
+    SimulateKeyPress(ui::VKEY_RIGHT, false);
+    EXPECT_FALSE(textfield->HasFocus());
+
+    SimulateKeyPress(ui::VKEY_LEFT, false);
+    EXPECT_TRUE(textfield->HasFocus());
+
+    SimulateKeyPress(ui::VKEY_LEFT, false);
+    EXPECT_FALSE(textfield->HasFocus());
+
+    SimulateKeyPress(ui::VKEY_RIGHT, false);
+    EXPECT_TRUE(textfield->HasFocus());
+
+    // Type something in textfield.
+    textfield->InsertText(base::UTF8ToUTF16("test"));
+    EXPECT_EQ(4U, textfield->GetCursorPosition());
+    EXPECT_FALSE(textfield->HasSelection());
+    EXPECT_TRUE(textfield->HasFocus());
+
+    // Hitting left key moves cursor left.
+    SimulateKeyPress(ui::VKEY_LEFT, false);
+    EXPECT_EQ(3U, textfield->GetCursorPosition());
+    EXPECT_TRUE(textfield->HasFocus());
+
+    // Hitting right key moves cursor right.
+    SimulateKeyPress(ui::VKEY_RIGHT, false);
+    EXPECT_EQ(4U, textfield->GetCursorPosition());
+    EXPECT_TRUE(textfield->HasFocus());
+
+    // Hitting right key moves focus outside textfield.
+    SimulateKeyPress(ui::VKEY_RIGHT, false);
+    EXPECT_FALSE(textfield->HasFocus());
+
+    // Hitting left key moves focus back to textfield and select all text.
+    SimulateKeyPress(ui::VKEY_LEFT, false);
+    EXPECT_EQ(base::UTF8ToUTF16("test"), textfield->GetSelectedText());
+    EXPECT_TRUE(textfield->HasFocus());
+
+    // Hitting left key moves cursor to the left end.
+    SimulateKeyPress(ui::VKEY_LEFT, false);
+    EXPECT_EQ(0U, textfield->GetCursorPosition());
+    EXPECT_FALSE(textfield->HasSelection());
+    EXPECT_TRUE(textfield->HasFocus());
+
+    // Hitting left key moves focus outside the textfield.
+    SimulateKeyPress(ui::VKEY_LEFT, false);
+    EXPECT_FALSE(textfield->HasFocus());
+
+    // Hitting right key moves focus back to textfield and select all text.
+    SimulateKeyPress(ui::VKEY_RIGHT, false);
+    EXPECT_EQ(base::UTF8ToUTF16("test"), textfield->GetSelectedText());
+    EXPECT_TRUE(textfield->HasFocus());
+
+    // Hitting right key moves cursor to the right end.
+    SimulateKeyPress(ui::VKEY_RIGHT, false);
+    EXPECT_EQ(4U, textfield->GetCursorPosition());
+    EXPECT_FALSE(textfield->HasSelection());
+    EXPECT_TRUE(textfield->HasFocus());
+
+    // Hitting right key moves focus outside the textfield.
+    SimulateKeyPress(ui::VKEY_RIGHT, false);
+    EXPECT_FALSE(textfield->HasFocus());
+
+    textfield->SetText(base::UTF8ToUTF16(""));
+  }
+
   AppListView* app_list_view() { return view_; }
 
   AppListMainView* main_view() { return view_->app_list_main_view(); }
@@ -497,16 +570,10 @@ TEST_F(AppListViewFocusTest, LinearFocusTraversalInPeekingState) {
   // Test traversal triggered by shift+tab.
   TestFocusTraversal(backward_view_list, ui::VKEY_TAB, true);
 
-  // Test traversal triggered by right, Left and right key are handled by
-  // search box when focus is on it, so focus will not move. Move focus to
-  // next element before testing.
-  forward_view_list.erase(forward_view_list.begin());
-  forward_view_list.front()->RequestFocus();
+  // Test traversal triggered by right.
   TestFocusTraversal(forward_view_list, ui::VKEY_RIGHT, false);
 
   // Test traversal triggered by left.
-  backward_view_list.erase(backward_view_list.begin());
-  backward_view_list.front()->RequestFocus();
   TestFocusTraversal(backward_view_list, ui::VKEY_LEFT, false);
 }
 
@@ -533,16 +600,10 @@ TEST_F(AppListViewFocusTest, LinearFocusTraversalInFullscreenAllAppsState) {
   // Test traversal triggered by shift+tab.
   TestFocusTraversal(backward_view_list, ui::VKEY_TAB, true);
 
-  // Test traversal triggered by right, Left and right key are handled by
-  // search box when focus is on it, so focus will not move. Move focus to
-  // next element before testing.
-  forward_view_list.erase(forward_view_list.begin());
-  forward_view_list.front()->RequestFocus();
+  // Test traversal triggered by right.
   TestFocusTraversal(forward_view_list, ui::VKEY_RIGHT, false);
 
   // Test traversal triggered by left.
-  backward_view_list.erase(backward_view_list.begin());
-  backward_view_list.front()->RequestFocus();
   TestFocusTraversal(backward_view_list, ui::VKEY_LEFT, false);
 }
 
@@ -582,16 +643,18 @@ TEST_F(AppListViewFocusTest, LinearFocusTraversalInHalfState) {
   // Test traversal triggered by shift+tab.
   TestFocusTraversal(backward_view_list, ui::VKEY_TAB, true);
 
-  // Test traversal triggered by right, Left and right key are handled by
-  // search box when focus is on it, so focus will not move. Move focus to
-  // next element before testing.
-  forward_view_list.erase(forward_view_list.begin());
-  forward_view_list.front()->RequestFocus();
+  // Test traversal triggered by right. When the search box is focused, all
+  // text are selected. Hitting right key will move the cursor to the right end
+  // and unselect the text. Hitting right key again will move the focus to the
+  // next view. Left key is handled in similar way.
+
+  forward_view_list.insert(forward_view_list.begin(),
+                           search_box_view()->search_box());
   TestFocusTraversal(forward_view_list, ui::VKEY_RIGHT, false);
 
   // Test traversal triggered by left.
-  backward_view_list.erase(backward_view_list.begin());
-  backward_view_list.front()->RequestFocus();
+  backward_view_list.insert(backward_view_list.begin(),
+                            search_box_view()->search_box());
   TestFocusTraversal(backward_view_list, ui::VKEY_LEFT, false);
 }
 
@@ -624,18 +687,10 @@ TEST_F(AppListViewFocusTest, LinearFocusTraversalInFolder) {
   // Test traversal triggered by shift+tab.
   TestFocusTraversal(backward_view_list, ui::VKEY_TAB, true);
 
-  // Test traversal triggered by right, Left and right key are handled by
-  // search box when focus is on it, so focus will not move. Move focus to
-  // non-textfield element before testing.
-  forward_view_list.erase(forward_view_list.begin(),
-                          forward_view_list.begin() + 2);
-  forward_view_list.front()->RequestFocus();
+  // Test traversal triggered by right.
   TestFocusTraversal(forward_view_list, ui::VKEY_RIGHT, false);
 
   // Test traversal triggered by left.
-  backward_view_list.erase(backward_view_list.begin());
-  backward_view_list.erase(backward_view_list.end() - 1);
-  backward_view_list.front()->RequestFocus();
   TestFocusTraversal(backward_view_list, ui::VKEY_LEFT, false);
 }
 
@@ -937,6 +992,27 @@ TEST_F(AppListViewFocusTest, SetFocusOnSearchboxWhenActivated) {
   // Deactivate the search box won't move focus away.
   search_box_view()->SetSearchBoxActive(false);
   EXPECT_TRUE(search_box_view()->search_box()->HasFocus());
+}
+
+// Tests the left and right key when focus is on the textfield.
+TEST_F(AppListViewFocusTest, HittingLeftRightWhenFocusOnTextfield) {
+  Show();
+
+  // Test search box.
+  TestLeftAndRightKeyOnTextfield(search_box_view()->search_box());
+
+  // Transition to FULLSCREEN_ALL_APPS state and open the folder.
+  SetAppListState(AppListView::FULLSCREEN_ALL_APPS);
+  folder_item_view()->RequestFocus();
+  SimulateKeyPress(ui::VKEY_RETURN, false);
+
+  // Set focus on the folder name.
+  views::Textfield* folder_name_view = static_cast<views::Textfield*>(
+      app_list_folder_view()->folder_header_view()->GetFolderNameViewForTest());
+  folder_name_view->RequestFocus();
+
+  // Test folder name.
+  TestLeftAndRightKeyOnTextfield(folder_name_view);
 }
 
 // Tests that opening the app list opens in peeking mode by default.

@@ -300,4 +300,30 @@ const gfx::FontList& FullscreenAppListAppTitleFont() {
   return kFullscreenAppListAppTitleFont;
 }
 
+bool CanProcessLeftRightKeyTraversal(const ui::KeyEvent& event) {
+  if (event.handled() || event.type() != ui::ET_KEY_PRESSED)
+    return false;
+
+  if (event.key_code() != ui::VKEY_LEFT && event.key_code() != ui::VKEY_RIGHT)
+    return false;
+
+  if (event.IsShiftDown() || event.IsControlDown() || event.IsAltDown())
+    return false;
+
+  return true;
+}
+
+bool CanProcessUpDownKeyTraversal(const ui::KeyEvent& event) {
+  if (event.handled() || event.type() != ui::ET_KEY_PRESSED)
+    return false;
+
+  if (event.key_code() != ui::VKEY_UP && event.key_code() != ui::VKEY_DOWN)
+    return false;
+
+  if (event.IsShiftDown() || event.IsControlDown() || event.IsAltDown())
+    return false;
+
+  return true;
+}
+
 }  // namespace app_list
