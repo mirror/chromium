@@ -170,37 +170,6 @@ class ServiceWorkerDispatcherTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerDispatcherTest);
 };
 
-class MockWebServiceWorkerProviderClientImpl
-    : public blink::WebServiceWorkerProviderClient {
- public:
-  MockWebServiceWorkerProviderClientImpl(int provider_id,
-                                         ServiceWorkerDispatcher* dispatcher)
-      : provider_id_(provider_id), dispatcher_(dispatcher) {
-    dispatcher_->AddProviderClient(provider_id, this);
-  }
-
-  ~MockWebServiceWorkerProviderClientImpl() override {
-    dispatcher_->RemoveProviderClient(provider_id_);
-  }
-
-  void SetController(std::unique_ptr<blink::WebServiceWorker::Handle> handle,
-                     bool should_notify_controller_change) override {}
-
-  void DispatchMessageEvent(
-      std::unique_ptr<blink::WebServiceWorker::Handle> handle,
-      const blink::WebString& message,
-      blink::WebVector<blink::MessagePortChannel> ports) override {}
-
-  void CountFeature(uint32_t feature) override {
-    used_features_.insert(feature);
-  }
-
- private:
-  const int provider_id_;
-  ServiceWorkerDispatcher* dispatcher_;
-  std::set<uint32_t> used_features_;
-};
-
 TEST_F(ServiceWorkerDispatcherTest, GetServiceWorker) {
   blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info =
       CreateServiceWorkerRegistrationObjectInfo();

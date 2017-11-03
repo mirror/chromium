@@ -123,7 +123,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
 
   using ProviderClientMap =
       std::map<int, blink::WebServiceWorkerProviderClient*>;
-  using ProviderContextMap = std::map<int, ServiceWorkerProviderContext*>;
   using WorkerToProviderMap = std::map<int, ServiceWorkerProviderContext*>;
   using WorkerObjectMap = std::map<int, WebServiceWorkerImpl*>;
   using RegistrationObjectMap =
@@ -145,7 +144,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   void OnServiceWorkerStateChanged(int thread_id,
                                    int handle_id,
                                    blink::mojom::ServiceWorkerState state);
-  void OnCountFeature(int thread_id, int provider_id, uint32_t feature);
 
   // Keeps map from handle_id to ServiceWorker object.
   void AddServiceWorker(int handle_id, WebServiceWorkerImpl* worker);
@@ -162,7 +160,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
       set_navigation_preload_header_callbacks_;
 
   ProviderClientMap provider_clients_;
-  ProviderContextMap provider_contexts_;
 
   WorkerObjectMap service_workers_;
   RegistrationObjectMap registrations_;

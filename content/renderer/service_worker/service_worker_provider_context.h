@@ -15,7 +15,6 @@
 #include "content/common/service_worker/service_worker_provider.mojom.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/renderer/child_url_loader_factory_getter.h"
-#include "content/renderer/service_worker/service_worker_dispatcher.h"
 #include "content/renderer/service_worker/web_service_worker_provider_impl.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h"
@@ -63,7 +62,6 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // browser process. |request| is an endpoint which is connected to
   // the content::ServiceWorkerProviderHost that notifies of changes to the
   // registration's and workers' status. |request| is bound with |binding_|.
-  // The new instance is registered to |dispatcher|, which is not owned.
   //
   // For S13nServiceWorker:
   // |default_loader_factory_getter| contains a set of default loader
@@ -76,7 +74,6 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
       ServiceWorkerProviderType provider_type,
       mojom::ServiceWorkerContainerAssociatedRequest request,
       mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
-      ServiceWorkerDispatcher* dispatcher,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter);
 
   ServiceWorkerProviderType provider_type() const { return provider_type_; }
@@ -113,8 +110,6 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // subresources with the controller ServiceWorker.
   mojom::URLLoaderFactory* subresource_loader_factory();
 
-  // For service worker clients. Keeps track of feature usage for UseCounter.
-  void CountFeature(uint32_t feature);
   const std::set<uint32_t>& used_features() const;
 
   // For service worker clients. Sets a weak pointer back to the
@@ -183,6 +178,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
       blink::mojom::ServiceWorkerObjectInfoPtr source,
       const base::string16& message,
       std::vector<mojo::ScopedMessagePipeHandle> message_pipes) override;
+  void CountFeature(uint32_t feature) override;
 
   const ServiceWorkerProviderType provider_type_;
   const int provider_id_;
