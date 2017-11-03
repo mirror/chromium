@@ -257,6 +257,24 @@
       "revId": "1e5ad493d1ae4503c10c69dff9d85855daf1944c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbbbfd31_96312ffe",
+        "filename": "third_party/WebKit/public/platform/WebSecurityOrigin.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-03T21:20:17Z",
+      "side": 1,
+      "message": "This is needed for compile. \n\nIn file included from ../../third_party/WebKit/public/platform/WebURLRequest.h:38:\n../../third_party/WebKit/public/platform/WebSecurityOrigin.h:34:10: fatal error: \u0027public/platform/WebCommon.h\u0027 file not found\n#include \"public/platform/WebCommon.h\"\n         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.",
+      "parentUuid": "d468ee9c_ab1d2191",
+      "revId": "1e5ad493d1ae4503c10c69dff9d85855daf1944c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
