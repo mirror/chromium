@@ -138,6 +138,19 @@ class CORE_EXPORT InputMethodController final
                        ContainerNode* base_element,
                        unsigned offset_in_plain_chars);
 
+  // Checks if the text after the text replacement matches what would be
+  // expecteed in the absence of JavaScript changing stuff.
+  bool CurrentTextMatchesExpected(const String& expected_text,
+                                  int length_before_selection,
+                                  int length_after_selection) const;
+  // Returns the text we expect the editable region containing replacement_range
+  // to contain (in the absence of JavaScript event handlers running) after
+  // replacing replacement_range with replacement_text.
+  String ExpectedTextAfterReplacement(const EphemeralRange& replacement_range,
+                                      const String& replacement_text,
+                                      int length_before_replacement,
+                                      int length_after_replacement) const;
+
   bool InsertText(const String&);
   bool InsertTextAndMoveCaret(const String&,
                               int relative_caret_position,

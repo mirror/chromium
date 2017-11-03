@@ -2497,4 +2497,371 @@ TEST_F(
                               Vector<ImeTextSpan>(), 1, 1);
 }
 
+TEST_F(InputMethodControllerTest,
+       CommitTextWithOpenCompositionAndInputEventHandlerChangingText) {
+  InsertHTMLElement("<div id='sample' contenteditable>hello world</div>",
+                    "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('input', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    node.textContent = 'HELLO WORLD';"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 11);"
+      "    selection.extend(node.firstChild, 11);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Open composition on "world".
+  Controller().SetCompositionFromExistingText(Vector<ImeTextSpan>(), 6, 11);
+
+  // Commit text and attempt to move cursor back to beginning of text. Cursor
+  // should not be moved because the JavaScript input event handler changed the
+  // text.
+  Controller().CommitText("WORLD", Vector<ImeTextSpan>(), -11);
+
+  // The IME cursor update should have been ignored.
+  EXPECT_EQ(11, GetFrame()
+                    .Selection()
+                    .GetSelectionInDOMTree()
+                    .Base()
+                    .ComputeOffsetInContainerNode());
+}
+
+TEST_F(InputMethodControllerTest,
+       CommitTextWithOpenCompositionAndInputEventHandlerChangingSelection) {
+  InsertHTMLElement("<div id='sample' contenteditable>hello world</div>",
+                    "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('input', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 11);"
+      "    selection.extend(node.firstChild, 11);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Open composition.
+  Controller().SetCompositionFromExistingText(Vector<ImeTextSpan>(), 0, 5);
+
+  // Commit text and attempt to move cursor back to beginning of text. Cursor
+  // should not be moved because the JavaScript input event handler changed the
+  // selection.
+  Controller().CommitText("HELLO", Vector<ImeTextSpan>(), -5);
+
+  // The IME cursor update should have been ignored.
+  EXPECT_EQ(11, GetFrame()
+                    .Selection()
+                    .GetSelectionInDOMTree()
+                    .Base()
+                    .ComputeOffsetInContainerNode());
+}
+
+TEST_F(InputMethodControllerTest,
+       CommitTextWithoutCompositionAndInputEventHandlerChangingText) {
+  Element* div = InsertHTMLElement(
+      "<div id='sample' contenteditable>hello world</div>", "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('input', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    node.textContent = 'HELLO WORLD';"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 11);"
+      "    selection.extend(node.firstChild, 11);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Select "world".
+  GetFrame().Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(EphemeralRange(Position(div->firstChild(), 6),
+                                           Position(div->firstChild(), 11)))
+          .Build());
+
+  // Commit text and attempt to move cursor back to beginning of text. Cursor
+  // should not be moved because the JavaScript input event handler changed the
+  // text.
+  Controller().CommitText("WORLD", Vector<ImeTextSpan>(), -11);
+
+  // The IME cursor update should have been ignored.
+  EXPECT_EQ(11, GetFrame()
+                    .Selection()
+                    .GetSelectionInDOMTree()
+                    .Base()
+                    .ComputeOffsetInContainerNode());
+}
+
+TEST_F(InputMethodControllerTest,
+       CommitTextWithoutCompositionAndInputEventHandlerChangingSelection) {
+  Element* div = InsertHTMLElement(
+      "<div id='sample' contenteditable>hello world</div>", "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('input', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 11);"
+      "    selection.extend(node.firstChild, 11);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Select "hello".
+  GetFrame().Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(EphemeralRange(Position(div->firstChild(), 0),
+                                           Position(div->firstChild(), 5)))
+          .Build());
+
+  // Commit text and attempt to move cursor back to beginning of text. Cursor
+  // should not be moved because the JavaScript input event handler changed the
+  // selection.
+  Controller().CommitText("HELLO", Vector<ImeTextSpan>(), -5);
+
+  // The IME cursor update should have been ignored.
+  EXPECT_EQ(11, GetFrame()
+                    .Selection()
+                    .GetSelectionInDOMTree()
+                    .Base()
+                    .ComputeOffsetInContainerNode());
+}
+
+TEST_F(
+    InputMethodControllerTest,
+    SetCompositionToEmptyStringWithOpenCompositionAndInputEventHandlerChangingText) {
+  InsertHTMLElement("<div id='sample' contenteditable>hello world</div>",
+                    "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('input', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    node.textContent = 'HELLO ';"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 6);"
+      "    selection.extend(node.firstChild, 6);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Open composition on "world".
+  Controller().SetCompositionFromExistingText(Vector<ImeTextSpan>(), 6, 11);
+
+  // Change the composition text and attempt to move cursor back to the
+  // beginning of the text. Cursor should not be moved because the JavaScript
+  // input event handler changed the text.
+  Controller().SetComposition("", Vector<ImeTextSpan>(), -6, -6);
+
+  // The IME cursor update should have been ignored.
+  EXPECT_EQ(6, GetFrame()
+                   .Selection()
+                   .GetSelectionInDOMTree()
+                   .Base()
+                   .ComputeOffsetInContainerNode());
+}
+
+TEST_F(
+    InputMethodControllerTest,
+    SetCompositionToEmptyStringWithOpenCompositionAndInputEventHandlerChangingSelection) {
+  InsertHTMLElement("<div id='sample' contenteditable>hello world</div>",
+                    "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('input', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 5);"
+      "    selection.extend(node.firstChild, 5);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Open composition on "world".
+  Controller().SetCompositionFromExistingText(Vector<ImeTextSpan>(), 6, 11);
+
+  // Change the composition text and attempt to move cursor back to the
+  // beginning of the text. Cursor should not be moved because the JavaScript
+  // input event handler changed the selection.
+  Controller().SetComposition("", Vector<ImeTextSpan>(), -6, -6);
+
+  // The IME cursor update should have been ignored.
+  EXPECT_EQ(5, GetFrame()
+                   .Selection()
+                   .GetSelectionInDOMTree()
+                   .Base()
+                   .ComputeOffsetInContainerNode());
+}
+
+TEST_F(
+    InputMethodControllerTest,
+    SetCompositionToEmptyStringWithoutCompositionAndInputEventHandlerChangingText) {
+  Element* div = InsertHTMLElement(
+      "<div id='sample' contenteditable>hello world</div>", "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('input', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    node.textContent = 'HELLO ';"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 6);"
+      "    selection.extend(node.firstChild, 6);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Select "world".
+  GetFrame().Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(EphemeralRange(Position(div->firstChild(), 6),
+                                           Position(div->firstChild(), 11)))
+          .Build());
+
+  // Change the composition text (really, the selection, since there's no open
+  // composition) and attempt to move cursor back to the beginning of the text.
+  // Cursor should not be moved because the JavaScript input event handler
+  // changed the text.
+  Controller().SetComposition("", Vector<ImeTextSpan>(), -6, -6);
+
+  // The IME cursor update should have been ignored.
+  EXPECT_EQ(6, GetFrame()
+                   .Selection()
+                   .GetSelectionInDOMTree()
+                   .Base()
+                   .ComputeOffsetInContainerNode());
+}
+
+TEST_F(
+    InputMethodControllerTest,
+    SetCompositionToEmptyStringWithoutCompositionAndInputEventHandlerChangingSelection) {
+  Element* div = InsertHTMLElement(
+      "<div id='sample' contenteditable>hello world</div>", "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('input', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 5);"
+      "    selection.extend(node.firstChild, 5);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Select "world".
+  GetFrame().Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(EphemeralRange(Position(div->firstChild(), 6),
+                                           Position(div->firstChild(), 11)))
+          .Build());
+
+  // Change the composition text (really, the selection, since there's no open
+  // composition) and attempt to move cursor back to the beginning of the text.
+  // Cursor should not be moved because the JavaScript input event handler
+  // changed the selection.
+  Controller().SetComposition("", Vector<ImeTextSpan>(), -6, -6);
+
+  // The IME cursor update should have been ignored.
+  EXPECT_EQ(5, GetFrame()
+                   .Selection()
+                   .GetSelectionInDOMTree()
+                   .Base()
+                   .ComputeOffsetInContainerNode());
+}
+
+TEST_F(InputMethodControllerTest,
+       SetCompositionWithOpenCompositionAndInputEventHandlerChangingText) {
+  InsertHTMLElement("<div id='sample' contenteditable>hello world</div>",
+                    "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('input', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    node.textContent = 'HELLO WORLD';"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 11);"
+      "    selection.extend(node.firstChild, 11);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Open composition on "world".
+  Controller().SetCompositionFromExistingText(Vector<ImeTextSpan>(), 6, 11);
+
+  // Change the composition text and attempt to move cursor back to the
+  // beginning of the text. Cursor should not be moved because the JavaScript
+  // input event handler changed the text.
+  Controller().SetComposition("WORLD", Vector<ImeTextSpan>(), -11, -11);
+
+  // The IME cursor update should have been ignored.
+  EXPECT_EQ(11, GetFrame()
+                    .Selection()
+                    .GetSelectionInDOMTree()
+                    .Base()
+                    .ComputeOffsetInContainerNode());
+}
+
+TEST_F(InputMethodControllerTest,
+       SetCompositionWithOpenCompositionAndInputEventHandlerChangingSelection) {
+  InsertHTMLElement("<div id='sample' contenteditable>hello world</div>",
+                    "sample");
+
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "document.getElementById('sample').addEventListener('input', "
+      "  event => {"
+      "    const node = event.currentTarget;"
+      "    const selection = getSelection();"
+      "    selection.collapse(node.firstChild, 5);"
+      "    selection.extend(node.firstChild, 5);"
+      "});");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Open composition on "world".
+  Controller().SetCompositionFromExistingText(Vector<ImeTextSpan>(), 6, 11);
+
+  // Change the composition text and attempt to move cursor back to the
+  // beginning of the text. Cursor should not be moved because the JavaScript
+  // input event handler changed the selection.
+  Controller().SetComposition("WORLD", Vector<ImeTextSpan>(), -11, -11);
+
+  // The IME cursor update should have been ignored.
+  EXPECT_EQ(5, GetFrame()
+                   .Selection()
+                   .GetSelectionInDOMTree()
+                   .Base()
+                   .ComputeOffsetInContainerNode());
+}
+
 }  // namespace blink

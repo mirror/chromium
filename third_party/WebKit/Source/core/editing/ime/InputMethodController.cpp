@@ -547,6 +547,77 @@ void InputMethodController::AddImeTextSpans(
   }
 }
 
+bool InputMethodController::CurrentTextMatchesExpected(
+    const String& expected_text,
+    int length_before_selection,
+    int length_after_selection) const {
+  const std::pair<ContainerNode*, PlainTextRange>&
+      root_element_and_plain_text_range =
+          PlainTextRangeForEphemeralRange(FirstEphemeralRangeOf(
+              GetFrame().Selection().ComputeVisibleSelectionInDOMTree()));
+
+  const int expanded_range_start = std::max(
+      0, static_cast<int>(root_element_and_plain_text_range.second.Start()) -
+             length_before_selection);
+  const int expanded_range_end =
+      root_element_and_plain_text_range.second.End() + length_after_selection;
+
+  const PlainTextRange expanded_range(expanded_range_start, expanded_range_end);
+
+  const String& current_text = PlainText(
+      expanded_range.CreateRange(*root_element_and_plain_text_range.first),
+      TextIteratorBehavior::Builder()
+          .SetEmitsCharactersBetweenAllVisiblePositions(true)
+          .SetEmitsObjectReplacementCharacter(true)
+          .SetEmitsSpaceForNbsp(true)
+          .Build());
+
+  return current_text == expected_text;
+}
+
+String InputMethodController::ExpectedTextAfterReplacement(
+    const EphemeralRange& replacement_range,
+    const String& replacement_text,
+    int length_before_replacement,
+    int length_after_replacement) const {
+  const std::pair<ContainerNode*, PlainTextRange>&
+      root_element_and_plain_text_range =
+          PlainTextRangeForEphemeralRange(replacement_range);
+
+  // If length_before_replacement is greater than the actual number of
+  // characters we have to work with, decrease it to the number we actually
+  // have (doing it here makes some math easier).
+  length_before_replacement = std::min(
+      length_before_replacement,
+      static_cast<int>(root_element_and_plain_text_range.second.Start()));
+  const int expanded_range_start =
+      root_element_and_plain_text_range.second.Start() -
+      length_before_replacement;
+  const int expanded_range_end =
+      root_element_and_plain_text_range.second.End() + length_after_replacement;
+
+  const PlainTextRange expanded_range(expanded_range_start, expanded_range_end);
+
+  // This string includes length_before_replacement characters before
+  // replacement_range, whatever text is *currently* in replacement_range, and
+  // length_after_replacement characters after replacement_range.
+  String current_text = PlainText(
+      expanded_range.CreateRange(*root_element_and_plain_text_range.first),
+      TextIteratorBehavior::Builder()
+          .SetEmitsCharactersBetweenAllVisiblePositions(true)
+          .SetEmitsObjectReplacementCharacter(true)
+          .SetEmitsSpaceForNbsp(true)
+          .Build());
+
+  // Replace the part of the string corresponding to replacement_range with
+  // replacement_text.
+  current_text.replace(length_before_replacement,
+                       root_element_and_plain_text_range.second.End() -
+                           root_element_and_plain_text_range.second.Start(),
+                       replacement_text);
+  return current_text;
+}
+
 bool InputMethodController::ReplaceCompositionAndMoveCaret(
     const String& text,
     int relative_caret_position,
@@ -565,12 +636,30 @@ bool InputMethodController::ReplaceCompositionAndMoveCaret(
     return false;
   int text_start = composition_range.Start();
 
+  // For CommitText() (the caller of ReplaceCompositionAndMoveCaret()),
+  // relative_caret_position is relative to the *end* of the inserted text,
+  // after the replacement.
+  const int length_before_replacement =
+      std::max(0, -relative_caret_position - static_cast<int>(text.length()));
+  const int length_after_replacement = std::max(0, relative_caret_position - 1);
+
+  const String& expected_text = ExpectedTextAfterReplacement(
+      CompositionEphemeralRange(), text, length_before_replacement,
+      length_after_replacement);
+
   if (!ReplaceComposition(text))
     return false;
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited. see http://crbug.com/590369 for more details.
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  // Skip adding ImeTextSpans and performing IME cursor update if JavaScript
+  // changed the text or selection from what the IME was expecting.
+  if (!CurrentTextMatchesExpected(expected_text,
+                                  length_before_replacement + text.length(),
+                                  length_after_replacement))
+    return true;
 
   AddImeTextSpans(ime_text_spans, root_editable_element, text_start);
 
@@ -596,16 +685,35 @@ bool InputMethodController::InsertTextAndMoveCaret(
     return false;
   int text_start = selection_range.Start();
 
+  // For CommitText() (the caller of InsertTextAndMoveCaret()),
+  // relative_caret_position is relative to the *end* of the inserted text,
+  // after the replacement.
+  const int length_before_replacement =
+      std::max(0, -relative_caret_position - static_cast<int>(text.length()));
+  const int length_after_replacement = std::max(0, relative_caret_position - 1);
+
+  const String& expected_text = ExpectedTextAfterReplacement(
+      FirstEphemeralRangeOf(
+          GetFrame().Selection().ComputeVisibleSelectionInDOMTree()),
+      text, length_before_replacement, length_after_replacement);
+
   if (!InsertText(text))
     return false;
+
+  // Skip adding ImeTextSpans and performing IME cursor update if JavaScript
+  // changed the text or selection from what the IME was expecting.
+  if (!CurrentTextMatchesExpected(expected_text,
+                                  length_before_replacement + text.length(),
+                                  length_after_replacement))
+    return true;
+
   Element* root_editable_element =
       GetFrame()
           .Selection()
           .ComputeVisibleSelectionInDOMTreeDeprecated()
           .RootEditableElement();
-  if (root_editable_element) {
+  if (root_editable_element)
     AddImeTextSpans(ime_text_spans, root_editable_element, text_start);
-  }
 
   int absolute_caret_position = ComputeAbsoluteCaretPosition(
       text_start, text.length(), relative_caret_position);
@@ -672,6 +780,18 @@ void InputMethodController::SetComposition(
   PlainTextRange selected_range = CreateSelectionRangeForSetComposition(
       selection_start, selection_end, text.length());
 
+  // For SetComposition(), selection_start and selection_end are relative to
+  // the start of the composition range, after the replacement.
+  const int length_before_replacement =
+      std::max(0, -(selection_start + static_cast<int>(text.length())));
+  const int length_after_replacement =
+      std::max(0, selection_end - 1 - static_cast<int>(text.length()));
+
+  const String& expected_text = ExpectedTextAfterReplacement(
+      FirstEphemeralRangeOf(
+          GetFrame().Selection().ComputeVisibleSelectionInDOMTree()),
+      text, length_before_replacement, length_after_replacement);
+
   // Dispatch an appropriate composition event to the focused node.
   // We check the composition status and choose an appropriate composition event
   // since this function is used for three purposes:
@@ -702,6 +822,12 @@ void InputMethodController::SetComposition(
     // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
     // needs to be audited. see http://crbug.com/590369 for more details.
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+    // Skip adding ImeTextSpans and performing IME cursor update if JavaScript
+    // changed the text or selection from what the IME was expecting.
+    if (!CurrentTextMatchesExpected(expected_text, length_before_replacement,
+                                    length_after_replacement))
+      return;
 
     SetEditableSelectionOffsets(selected_range);
     return;
@@ -761,6 +887,43 @@ void InputMethodController::SetComposition(
   // needs to be audited. see http://crbug.com/590369 for more details.
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
+  // Skip adding ImeTextSpans and performing IME cursor update if JavaScript
+  // changed the text or selection from what the IME was expecting.
+  if (!CurrentTextMatchesExpected(expected_text, length_before_replacement,
+                                  length_after_replacement)) {
+    // JavaScript has changed the text or cursor position from what the IME was
+    // expecting. At this point, we're not really sure what the JavaScript
+    // wanted because our normal flow of events is as follows:
+    //
+    // 1. Select composition range
+    // 2. Perform edit, leaving newly-inserted text selected
+    // 3. Use the selection on the newly-inserted text to set the composition
+    //    range
+    // 4. Update the selection based on the offsets from the IME
+    //
+    // So at this point, if JavaScript has made changes, we're not really sure
+    // if the intent was to actually leave text selected after the replacement,
+    // to make the composition range update based on the selection, or just to
+    // change the text without affecting how we update selection.
+    //
+    // Prior to adding this logic, our behavior in this case was to do steps 1
+    // through 3, and then try to do step 4 (which was known to break things
+    // because the offsets were wrong). We know we can't do step 4 because we
+    // know some JavaScript needs to be able to make a caret selection without
+    // us disturbing it. We can't just eliminate step 4 though because then we'd
+    // end up with range selections in the case where JavaScript changes text
+    // but doesn't touch the selection, which should not happen. So we also need
+    // to collapse the current selection to its end position.
+    //
+    // TODO(rlanday): figure out if it makes sense to implement SetComposition()
+    // and CommitText() without creating selections to avoid this problem.
+    const Position extent =
+        GetFrame().Selection().ComputeVisibleSelectionInDOMTree().Extent();
+    GetFrame().Selection().SetSelection(
+        SelectionInDOMTree::Builder().Collapse(extent).Build());
+    return;
+  }
+
   // We shouldn't close typing in the middle of setComposition.
   SetEditableSelectionOffsets(selected_range, TypingContinuation::kContinue);
 
@@ -768,7 +931,7 @@ void InputMethodController::SetComposition(
   // with an empty string, the composition range could still be empty right now
   // due to Unicode grapheme cluster position normalization (e.g. if
   // SetComposition() were passed an extending character which doesn't allow a
-  // grapheme cluster break immediately before.
+  // grapheme cluster break immediately before).
   if (!HasComposition())
     return;
 
