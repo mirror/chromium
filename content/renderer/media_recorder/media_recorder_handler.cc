@@ -255,8 +255,9 @@ bool MediaRecorderHandler::Start(int timeslice) {
         media::BindToCurrentLoop(base::Bind(
             &MediaRecorderHandler::OnEncodedAudio, weak_factory_.GetWeakPtr()));
 
-    audio_recorders_.emplace_back(new AudioTrackRecorder(
-        audio_track, on_encoded_audio_cb, audio_bits_per_second_));
+    audio_recorders_.emplace_back(
+        new AudioTrackRecorder(AudioTrackRecorder::CodecId::OPUS, audio_track,
+                               on_encoded_audio_cb, audio_bits_per_second_));
   }
 
   recording_ = true;
