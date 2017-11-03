@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e625ed1b_8b78fef6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-03T16:36:07Z",
+      "side": 1,
+      "message": "This is what the preceding call to HasHorizontalOverflow() is supposed to compute.",
+      "range": {
+        "startLine": 1332,
+        "startChar": 24,
+        "endLine": 1332,
+        "endChar": 52
+      },
+      "revId": "639b5a236002984ee06b78091f492cea2073e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86adcea_d6586046",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-03T16:36:07Z",
+      "side": 1,
+      "message": "Ditto for HasVerticalOverflow().",
+      "revId": "639b5a236002984ee06b78091f492cea2073e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
