@@ -45,6 +45,46 @@
       "revId": "75e64e954f57826ea5bd4e4b5584e8db348efdd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6a43bd_46e6d171",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-03T17:31:29Z",
+      "side": 1,
+      "message": "The ternary should be in the FromMillseconds() arg list IMO.",
+      "range": {
+        "startLine": 659,
+        "startChar": 56,
+        "endLine": 659,
+        "endChar": 75
+      },
+      "revId": "75e64e954f57826ea5bd4e4b5584e8db348efdd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c08562_dcc4e746",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-03T17:31:29Z",
+      "side": 1,
+      "message": "These numbers looks really close to the actual fade times.  Possibly better to use \"a very short time\" and \"a very long time\" instead so the test doesn\u0027t inadvertently break?  Or do you want picky times to check the differing fade times on in/out?",
+      "revId": "75e64e954f57826ea5bd4e4b5584e8db348efdd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
