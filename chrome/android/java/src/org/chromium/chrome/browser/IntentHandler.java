@@ -19,6 +19,7 @@ import android.provider.MediaStore;
 import android.speech.RecognizerResultsIntent;
 import android.text.TextUtils;
 import android.util.Pair;
+import android.webkit.URLUtil;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ContextUtils;
@@ -787,12 +788,19 @@ public class IntentHandler {
 
     @VisibleForTesting
     boolean intentHasValidUrl(Intent intent) {
-        String url = getUrlFromIntent(intent);
+        String url = extractUrlFromIntent(intent);
+
+        // Check if this is a valid googlechrome:// URL.
+        if (isGoogleChromeScheme(url)) {
+            url = getUrlFromGoogleChromeSchemeUrl(url);
+            if (url == null) return false;
+        }
 
         // Always drop insecure urls.
         if (url != null && isJavascriptSchemeOrInvalidUrl(url)) {
             return false;
         }
+
         return true;
     }
 
@@ -956,22 +964,32 @@ public class IntentHandler {
 
     /**
      * Retrieve the URL from the Intent, which may be in multiple locations.
+     * If the URL is googlechrome:// scheme, parse the actual navigation URL.
      * @param intent Intent to examine.
      * @return URL from the Intent, or null if a valid URL couldn't be found.
      */
     public static String getUrlFromIntent(Intent intent) {
-        if (intent == null) return null;
+        String url = extractUrlFromIntent(intent);
+        if (isGoogleChromeScheme(url)) {
+            url = getUrlFromGoogleChromeSchemeUrl(url);
+        }
+        return url;
+    }
 
+    /**
+     * Helper method to extract the raw URL from the intent, without further processing.
+     * The URL may be in multiple locations.
+     * @param intent Intent to examine.
+     * @return Raw URL from the intent, or null if raw URL could't be found.
+     */
+    private static String extractUrlFromIntent(Intent intent) {
+        if (intent == null) return null;
         String url = getUrlFromVoiceSearchResult(intent);
         if (url == null) url = ActivityDelegate.getInitialUrlForDocument(intent);
         if (url == null) url = getUrlForCustomTab(intent);
         if (url == null) url = intent.getDataString();
         if (url == null) return null;
-
         url = url.trim();
-        if (isGoogleChromeScheme(url)) {
-            url = getUrlFromGoogleChromeSchemeUrl(url);
-        }
         return TextUtils.isEmpty(url) ? null : url;
     }
 
@@ -984,14 +1002,16 @@ public class IntentHandler {
 
     /**
      * Adjusts the URL to account for the googlechrome:// scheme.
-     * Currently, its only use is to handle navigations.
+     * Currently, its only use is to handle navigations, only http and https URL is allowed.
      * @param url URL to be processed
      * @return The string with the scheme and prefixes chopped off, if a valid prefix was used.
      *         Otherwise returns null.
      */
     public static String getUrlFromGoogleChromeSchemeUrl(String url) {
         if (url.toLowerCase(Locale.US).startsWith(GOOGLECHROME_NAVIGATE_PREFIX)) {
-            return url.substring(GOOGLECHROME_NAVIGATE_PREFIX.length());
+            String parsedUrl = url.substring(GOOGLECHROME_NAVIGATE_PREFIX.length());
+            String guessUrl = URLUtil.guessUrl(parsedUrl);
+            if (URLUtil.isHttpsUrl(guessUrl) || URLUtil.isHttpUrl(guessUrl)) return parsedUrl;
         }
 
         return null;
