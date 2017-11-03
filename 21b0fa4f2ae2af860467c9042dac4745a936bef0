@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c6634ea_eb472740",
+        "filename": "chrome/browser/ui/views/ash/tab_scrubber.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-03T22:04:55Z",
+      "side": 1,
+      "message": "I can\u0027t easily check that TabStrip since this is instantiated in a singleton near the top of the file and there\u0027s no TabStrip context at that point. In the previous cycle I had a check there and returned null which I removed with this latest round.\n\nI at least made this not crash. If you\u0027d like me to put back the code in singleton I can, but that will be a call to IsExperimentalTabStripEnabled().",
+      "parentUuid": "0fab3ba3_5ba4c172",
+      "range": {
+        "startLine": 285,
+        "startChar": 4,
+        "endLine": 285,
+        "endChar": 13
+      },
+      "revId": "21b0fa4f2ae2af860467c9042dac4745a936bef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc09f97e_b03335a7",
         "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-03T21:17:17Z",
       "side": 1,
       "message": "Doesn\u0027t style guide say no protected members? Did that get removed?",
+      "range": {
+        "startLine": 83,
+        "startChar": 1,
+        "endLine": 83,
+        "endChar": 10
+      },
+      "revId": "21b0fa4f2ae2af860467c9042dac4745a936bef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c84c98e_250e5bb0",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-03T22:04:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "bc09f97e_b03335a7",
       "range": {
         "startLine": 83,
         "startChar": 1,
