@@ -7,7 +7,6 @@
 #include <string>
 
 #include "ash/public/cpp/ash_switches.h"
-#include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shelf_prefs.h"
 #include "ash/root_window_controller.h"
 #include "ash/screen_util.h"
@@ -1323,10 +1322,6 @@ TEST_F(TabletModeWindowManagerTest, ExitsOverview) {
 
 // Test that an edge swipe from the top will end full screen mode.
 TEST_F(TabletModeWindowManagerTest, ExitFullScreenWithEdgeSwipeFromTop) {
-  // TODO: investigate failure. http://crbug.com/698093.
-  if (Shell::GetAshConfig() == Config::MASH)
-    return;
-
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> background_window(
       CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
@@ -1367,10 +1362,6 @@ TEST_F(TabletModeWindowManagerTest, ExitFullScreenWithEdgeSwipeFromTop) {
 
 // Test that an edge swipe from the bottom will end full screen mode.
 TEST_F(TabletModeWindowManagerTest, ExitFullScreenWithEdgeSwipeFromBottom) {
-  // TODO: investigate failure. http://crbug.com/698093.
-  if (Shell::GetAshConfig() == Config::MASH)
-    return;
-
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> background_window(
       CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
@@ -1405,10 +1396,6 @@ TEST_F(TabletModeWindowManagerTest, ExitFullScreenWithEdgeSwipeFromBottom) {
 
 // Test that an edge touch press at the top will end full screen mode.
 TEST_F(TabletModeWindowManagerTest, ExitFullScreenWithEdgeTouchAtTop) {
-  // TODO: investigate failure. http://crbug.com/698093.
-  if (Shell::GetAshConfig() == Config::MASH)
-    return;
-
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> background_window(
       CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
@@ -1445,10 +1432,6 @@ TEST_F(TabletModeWindowManagerTest, ExitFullScreenWithEdgeTouchAtTop) {
 
 // Test that an edge touch press at the bottom will end full screen mode.
 TEST_F(TabletModeWindowManagerTest, ExitFullScreenWithEdgeTouchAtBottom) {
-  // TODO: investigate failure. http://crbug.com/698093.
-  if (Shell::GetAshConfig() == Config::MASH)
-    return;
-
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> background_window(
       CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
