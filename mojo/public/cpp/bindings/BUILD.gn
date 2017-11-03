@@ -3,8 +3,12 @@
 # found in the LICENSE file.
 
 import("//build/buildflag_header.gni")
+import("//build/config/jumbo.gni")
+
 interfaces_bindings_gen_dir = "$root_gen_dir/mojo/public/interfaces/bindings"
 
+# Can't do jumbo_component because there is another bindings target in
+# interfaces which use the same output directory.
 declare_args() {
   enable_mojo_tracing = false
 }

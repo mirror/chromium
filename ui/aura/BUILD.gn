@@ -2,10 +2,11 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//testing/test.gni")
 
-component("aura") {
+jumbo_component("aura") {
   public = [
     "client/aura_constants.h",
     "client/capture_client.h",
@@ -136,6 +137,11 @@ component("aura") {
     "window_tree_host_platform.cc",
   ]
 
+  jumbo_excluded_sources = [
+    # Symbols
+    "client/window_stacking_client.cc",
+  ]
+
   defines = [ "AURA_IMPLEMENTATION" ]
 
   deps = [
@@ -190,6 +196,10 @@ component("aura") {
       "//ui/gfx/x",
     ]
     sources += [ "window_tree_host_x11.cc" ]
+    jumbo_excluded_sources += [
+      # X11
+      "window_tree_host_x11.cc",
+    ]
     public += [ "window_tree_host_x11.h" ]
   }
 
@@ -214,7 +224,7 @@ component("aura") {
   }
 }
 
-static_library("test_support") {
+jumbo_static_library("test_support") {
   testonly = true
   sources = [
     "test/aura_mus_test_base.cc",

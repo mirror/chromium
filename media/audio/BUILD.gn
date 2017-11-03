@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/linux/pkg_config.gni")
 import("//media/media_options.gni")
 
@@ -49,7 +50,7 @@ config("platform_config") {
   }
 }
 
-source_set("audio") {
+jumbo_source_set("audio") {
   # Do not expand the visibility here without double-checking with OWNERS, this
   # is a roll-up target which is part of the //media component. Most other DEPs
   # should be using //media and not directly DEP this roll-up target.
@@ -155,6 +156,13 @@ source_set("audio") {
     "virtual_audio_sink.cc",
     "virtual_audio_sink.h",
   ]
+
+  jumbo_excluded_sources = [
+    # Symbols
+    "audio_manager_base.cc",
+    "audio_output_controller.cc",
+    "sounds/wav_audio_handler.cc",
+  ]
   deps = [
     "//base",
     "//media/base",
@@ -257,6 +265,10 @@ source_set("audio") {
       "alsa/audio_manager_alsa.cc",
       "alsa/audio_manager_alsa.h",
     ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "alsa/audio_manager_alsa.cc",
+    ]
   }
 
   if (use_cras) {
@@ -282,6 +294,11 @@ source_set("audio") {
       "pulse/pulse_output.h",
       "pulse/pulse_util.cc",
       "pulse/pulse_util.h",
+    ]
+
+    jumbo_excluded_sources += [
+      # Symbols
+      "pulse/audio_manager_pulse.cc",
     ]
 
     if (link_pulseaudio) {
