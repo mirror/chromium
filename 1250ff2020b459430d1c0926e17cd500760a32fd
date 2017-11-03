@@ -140,6 +140,30 @@
       "revId": "1250ff2020b459430d1c0926e17cd500760a32fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d59938e6_5f9bce4d",
+        "filename": "base/cpu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-11-03T11:54:59Z",
+      "side": 1,
+      "message": "Not too worried about the current code, but I could see somebody touching this code in future and screwing this up.\n\n\u003e test cases which looks for the same thing in base/cpu_unittest.cc?\n\nAh I completely missed that. I think that works, thanks. no need for a dcheck.",
+      "parentUuid": "5e0937b2_563bd5b9",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 1
+      },
+      "revId": "1250ff2020b459430d1c0926e17cd500760a32fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
