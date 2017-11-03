@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "cb1e33c2_ee03d648",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-03T18:55:11Z",
+      "side": 1,
+      "message": "private?",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 259,
+        "endChar": 10
+      },
+      "revId": "6d860696e7555ccaffe4f6c2dd3fedb17eae3f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbc2c03_945b82e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-03T18:55:11Z",
+      "side": 1,
+      "message": "I wonder if we should be calling this onTabbedModeForegrounded.  reset to me doesn\u0027t imply it should necessarily be logging any metrics",
+      "revId": "6d860696e7555ccaffe4f6c2dd3fedb17eae3f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cb7e2d_158fefcf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-03T18:55:11Z",
+      "side": 1,
+      "message": "I would call remove(PREF_NUM_TAB_CREATED_IN_BACKGROUND) here instead of setting 0",
+      "range": {
+        "startLine": 299,
+        "startChar": 21,
+        "endLine": 299,
+        "endChar": 27
+      },
+      "revId": "6d860696e7555ccaffe4f6c2dd3fedb17eae3f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e2cd25c_9a6dff05",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
