@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27bacac8_3f4773ba",
+        "filename": "chrome/common/extensions/api/extension_action/action_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-03T01:46:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbdf295b_d2606dee",
+      "revId": "0960be601cb6927a43f8a2838e73835ed331f03f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f1f323c_4484c9e0",
         "filename": "chrome/common/extensions/manifest_unittest.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-24T15:40:42Z",
       "side": 1,
       "message": "Let\u0027s test a bit more than just this.  We should probably add an extension-action_handler_unittest.cc file, and test things like invalid values for the default state key, providing the default state key for page/browser action keys, etc.\n\nAdditionally, note that since the key is restricted to trunk, we\u0027ll need to fake out the channel in unittests (otherwise they\u0027ll fail on dev/beta/stable builders)",
+      "revId": "0960be601cb6927a43f8a2838e73835ed331f03f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914f7ee1_f5715f51",
+        "filename": "chrome/common/extensions/manifest_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-03T01:46:04Z",
+      "side": 1,
+      "message": "Would you like me to remove the the tests in this file?",
+      "parentUuid": "9f1f323c_4484c9e0",
       "revId": "0960be601cb6927a43f8a2838e73835ed331f03f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
