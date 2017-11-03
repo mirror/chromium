@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bcf9945d_ce06cc1b",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_resource_coordinator_signal_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-03T17:19:52Z",
+      "side": 1,
+      "message": "ACK.\n\nIt would also be nice to explain the reason for this CL in the description, in addition to what this CL does.",
+      "parentUuid": "1211b636_e757dc02",
+      "revId": "8846440ee3076d033f8b9659a888e09147138ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "988968d7_554d39d8",
         "filename": "chrome/browser/resource_coordinator/tab_manager_resource_coordinator_signal_observer.h",
         "patchSetId": 1
