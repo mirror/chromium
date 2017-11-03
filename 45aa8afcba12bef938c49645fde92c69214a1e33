@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e855609_fe1d38b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppIndexingUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-03T21:49:36Z",
+      "side": 1,
+      "message": "Thanks!",
+      "range": {
+        "startLine": 50,
+        "startChar": 32,
+        "endLine": 50,
+        "endChar": 58
+      },
+      "revId": "45aa8afcba12bef938c49645fde92c69214a1e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfce6012_e97f11de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/IntentHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-03T21:49:36Z",
+      "side": 1,
+      "message": "Should we use URL(parsedUrl).getProtocol() here? Looks like we don\u0027t need sanitation.",
+      "range": {
+        "startLine": 1006,
+        "startChar": 32,
+        "endLine": 1006,
+        "endChar": 64
+      },
+      "revId": "45aa8afcba12bef938c49645fde92c69214a1e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23078c91_aa704a02",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/IntentHandlerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-03T21:49:36Z",
+      "side": 1,
+      "message": "Didn\u0027t know this is valid https scheme without \"//\", but turned out to be valid.",
+      "range": {
+        "startLine": 82,
+        "startChar": 13,
+        "endLine": 82,
+        "endChar": 19
+      },
+      "revId": "45aa8afcba12bef938c49645fde92c69214a1e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
