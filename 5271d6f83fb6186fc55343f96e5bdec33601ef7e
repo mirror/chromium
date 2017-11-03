@@ -22,6 +22,30 @@
       "revId": "5271d6f83fb6186fc55343f96e5bdec33601ef7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14503c3_5610f4de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-03T20:20:13Z",
+      "side": 1,
+      "message": "Yes. Modified the CL a little bit so that invalid protocols in googlechrome:// URL will cause intentHasValidUrl() to return false. Currently null URL is considered a valid URL by that function, so we need to special handle the googlechrome URL case.",
+      "parentUuid": "ce6a1967_8a7c68f5",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 103
+      },
+      "revId": "5271d6f83fb6186fc55343f96e5bdec33601ef7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
