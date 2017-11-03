@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0669fba7_4a67341e",
+        "filename": "components/exo/sub_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-03T14:34:19Z",
+      "side": 1,
+      "message": "I think this code only works when the parent_ is an async surface (ShellSurface or Async SubSurface).\nI think we need find a parent or grandparent which is async, and then call parent_-\u003eOnSubSurfaceCommit().\nI think it is better to also pass the this pointer to OnSubSurfaceCommit(), and then we can check it in\nCommitSurfaceHierarchy() of all surfaces to decide which part of surface tree should be committed.",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 34
+      },
+      "revId": "a9cbdd35df06953b46f64fa48e376d80d8dbf28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
