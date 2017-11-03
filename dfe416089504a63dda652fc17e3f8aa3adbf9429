@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55c2f2f4_eeae5b7c",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1133169
+      },
+      "writtenOn": "2017-11-03T10:11:15Z",
+      "side": 1,
+      "message": "PermissionSelectorRow creates child views on behalf of the parent View in which |layout| is installed. I think it\u0027s logically more correct to pass label_\u0027s parent instead of label_ to CalculatePaddingBeneathPermissionRow() because we want to obtain values in context of that parent (since PermissionSelectorRow works on behalf on the parent). It doesn\u0027t matter for the final result however. Values will be the same if I pass *label_. Should I change this?",
+      "parentUuid": "71b1e14b_47ae5d75",
+      "range": {
+        "startLine": 319,
+        "startChar": 1,
+        "endLine": 319,
+        "endChar": 27
+      },
+      "revId": "dfe416089504a63dda652fc17e3f8aa3adbf9429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0393c44b_f4e78430",
         "filename": "ui/views/controls/label.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "31ba8fe3_cb222f2d",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1133169
+      },
+      "writtenOn": "2017-11-03T10:11:15Z",
+      "side": 1,
+      "message": "Fixed in patch set 7.",
+      "parentUuid": "0393c44b_f4e78430",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 3
+      },
+      "revId": "dfe416089504a63dda652fc17e3f8aa3adbf9429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57e06abe_2eb3e762",
         "filename": "ui/views/controls/label.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-02T17:47:47Z",
       "side": 1,
       "message": "Seems counter intuitive to make this a non-static function. If you can make this an instance function, do you really need it? Seems like most of the places use this to derive a font, could they just as well do label-\u003efont_list().Derive?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 55
+      },
+      "revId": "dfe416089504a63dda652fc17e3f8aa3adbf9429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceff7716_e65991f9",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1133169
+      },
+      "writtenOn": "2017-11-03T10:11:15Z",
+      "side": 1,
+      "message": "I agree that making GetDefaultFontList() a non-static method isn\u0027t the best solution. Especially that it\u0027s possible to initialize Label with custom text context and style. It can be unclear what context and style is used to obtain the default font list.\n\nUsing label-\u003efont_list().Derive() will work unless label-\u003eSetFontList() is called before. After this call, we won\u0027t derive from the default font list anymore.\n\nAnother option is to revert GetDefaultFontList() to static function and implement it like this:\n\nconst gfx::FontList\u0026 Label::GetDefaultFontList() {\n  return style::GetFont(Label(), style::CONTEXT_LABEL, style::STYLE_PRIMARY);\n}\n\nThe drawback is a need of creating temporary Label object which should be avoided during layouts, paints, etc.\n\nWe can avoid temporary object by using global FontList object:\n\nstruct DefaultFontListTraits\n    : public base::internal::LeakyLazyInstanceTraits\u003cgfx::FontList\u003e {\n  static gfx::FontList* New(void* instance) {\n    return new (instance) gfx::FontList(\n        style::GetFont(Label(), style::CONTEXT_LABEL, style::STYLE_PRIMARY));\n  }\n};\nbase::LazyInstance\u003cgfx::FontList, DefaultFontListTraits\u003e g_default_font_list \u003d\n    LAZY_INSTANCE_INITIALIZER;\nconst gfx::FontList\u0026 Label::GetDefaultFontList() {\n  return g_default_font_list.Get();\n}\n\nIn this case, the default font list won\u0027t change when NativeTheme or ThemeProvider changes. But I don\u0027t see font being dependent on these classes currently so it shouldn\u0027t be a problem.\n\nWhat do you think?",
+      "parentUuid": "57e06abe_2eb3e762",
       "range": {
         "startLine": 73,
         "startChar": 0,
