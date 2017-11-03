@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fa48664_5a922f42",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-03T22:40:06Z",
+      "side": 1,
+      "message": "If the test class doesn\u0027t really do anything, I usually just write:\n\nusing PDFToEMFConverterBrowserTest \u003d InProcessBrowserTest;",
+      "revId": "742d458f14705e01bc94ab0b7b2861a260b7a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b09dce_543846be",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-03T22:40:06Z",
+      "side": 1,
+      "message": "- Use chrome::DIR_TEST_DATA\n- Add test_data_dir \u003d test_data_dir.AppendASCII(\"printing\");\n- Skip \"chrome/test/data/printing/\" in AppendASCII() calls below.",
+      "range": {
+        "startLine": 65,
+        "startChar": 31,
+        "endLine": 65,
+        "endChar": 52
+      },
+      "revId": "742d458f14705e01bc94ab0b7b2861a260b7a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f807eff_de4cc2fe",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-03T22:40:06Z",
+      "side": 1,
+      "message": "Not needed. Already in namespace printing.",
+      "range": {
+        "startLine": 125,
+        "startChar": 4,
+        "endLine": 125,
+        "endChar": 14
+      },
+      "revId": "742d458f14705e01bc94ab0b7b2861a260b7a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b318201_b3f570e3",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-03T22:40:06Z",
+      "side": 1,
+      "message": "Curious, what value do we get here?",
+      "revId": "742d458f14705e01bc94ab0b7b2861a260b7a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f0d3a1_865a45e8",
+        "filename": "content/browser/download/mhtml_generation_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-03T22:40:06Z",
+      "side": 1,
+      "message": "Is this change intentional?",
+      "revId": "742d458f14705e01bc94ab0b7b2861a260b7a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
