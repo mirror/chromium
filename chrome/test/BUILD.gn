@@ -1539,7 +1539,6 @@ test("browser_tests") {
       "../browser/ui/views/chrome_cleaner_dialog_browsertest_win.cc",
       "../browser/ui/views/chrome_cleaner_reboot_dialog_browsertest_win.cc",
       "../browser/ui/views/device_chooser_browsertest.cc",
-      "../browser/ui/views/hung_renderer_view_browsertest.cc",
       "../browser/ui/views/try_chrome_dialog_browsertest.cc",
       "../browser/ui/webui/bookmarks_ui_browsertest.cc",
       "../browser/ui/webui/chrome_url_data_manager_browsertest.cc",
@@ -1739,7 +1738,9 @@ test("browser_tests") {
         "$root_out_dir/resources.pak",
       ]
     }
-
+    if (!is_mac || mac_views_browser) {
+      sources += [ "../browser/ui/views/hung_renderer_view_browsertest.cc" ]
+    }
     if (enable_captive_portal_detection) {
       sources +=
           [ "../browser/ssl/captive_portal_blocking_page_browsertest.cc" ]
@@ -2400,9 +2401,8 @@ test("browser_tests") {
         sources -= [ "../browser/ui/views/select_file_dialog_extension_browsertest.cc" ]
       }
       if (is_win || is_linux) {
-        sources += [
-          "../browser/ui/views/ime/input_ime_apitest_nonchromeos.cc",
-        ]
+        sources +=
+            [ "../browser/ui/views/ime/input_ime_apitest_nonchromeos.cc" ]
       }
     }
     if (enable_desktop_in_product_help) {
