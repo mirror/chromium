@@ -97,10 +97,12 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
     ResourceDispatcherHostImpl* rdh,
     mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client,
-    ResourceType resource_type)
+    ResourceType resource_type,
+    bool wait_for_proceed_with_response)
     : ResourceHandler(request),
       rdh_(rdh),
       binding_(this, std::move(mojo_request)),
+      wait_for_proceed_with_response_(wait_for_proceed_with_response),
       handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       url_loader_client_(std::move(url_loader_client)),
       weak_factory_(this) {
@@ -191,6 +193,13 @@ void MojoAsyncResourceHandler::OnResponseStarted(
 
     url_loader_client_->OnReceiveCachedMetadata(
         std::vector<uint8_t>(data, data + metadata->size()));
+  }
+
+  if (wait_for_proceed_with_response_) {
+    did_defer_on_response_started_ = true;
+    DCHECK(!has_controller());
+    HoldController(std::move(controller));
+    return;
   }
 
   controller->Resume();
@@ -284,6 +293,7 @@ void MojoAsyncResourceHandler::OnWillRead(
 
   *buf = buffer_;
   *buf_size = buffer_->size();
+
   controller->Resume();
 }
 
@@ -308,7 +318,9 @@ void MojoAsyncResourceHandler::OnReadCompleted(
       url_loader_client_->OnTransferSizeUpdated(transfer_size_diff);
   }
 
+  bool start_loading_response_body_called = false;
   if (response_body_consumer_handle_.is_valid()) {
+    start_loading_response_body_called = true;
     // Send the data pipe on the first OnReadCompleted call.
     url_loader_client_->OnStartLoadingResponseBody(
         std::move(response_body_consumer_handle_));
@@ -340,6 +352,7 @@ void MojoAsyncResourceHandler::OnReadCompleted(
   }
 
   buffer_ = nullptr;
+
   controller->Resume();
 }
 
@@ -363,6 +376,11 @@ void MojoAsyncResourceHandler::FollowRedirect() {
   DCHECK(!did_defer_on_writing_);
   did_defer_on_redirect_ = false;
   request()->LogUnblocked();
+  Resume();
+}
+
+void MojoAsyncResourceHandler::ProceedWithResponse() {
+  DCHECK(did_defer_on_response_started_);
   Resume();
 }
 

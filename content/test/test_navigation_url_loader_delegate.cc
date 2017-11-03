@@ -45,7 +45,6 @@ void TestNavigationURLLoaderDelegate::WaitForRequestStarted() {
 
 void TestNavigationURLLoaderDelegate::ReleaseBody() {
   body_.reset();
-  handle_.reset();
 }
 
 void TestNavigationURLLoaderDelegate::OnRequestRedirected(
@@ -60,7 +59,6 @@ void TestNavigationURLLoaderDelegate::OnRequestRedirected(
 void TestNavigationURLLoaderDelegate::OnResponseStarted(
     const scoped_refptr<ResourceResponse>& response,
     std::unique_ptr<StreamHandle> body,
-    mojo::ScopedDataPipeConsumerHandle consumer_handle,
     const SSLStatus& ssl_status,
     std::unique_ptr<NavigationData> navigation_data,
     const GlobalRequestID& request_id,
@@ -70,11 +68,13 @@ void TestNavigationURLLoaderDelegate::OnResponseStarted(
   LOG(ERROR) << "TestNavigationURLLoaderDelegate::" << __func__;
   response_ = response;
   body_ = std::move(body);
-  handle_ = std::move(consumer_handle);
   is_download_ = is_download;
   if (response_started_)
     response_started_->Quit();
 }
+
+void TestNavigationURLLoaderDelegate::OnStartLoadingResponseBody(
+    mojo::ScopedDataPipeConsumerHandle consumer_handle) {}
 
 void TestNavigationURLLoaderDelegate::OnRequestFailed(
     bool in_cache,

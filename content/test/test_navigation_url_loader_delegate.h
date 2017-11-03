@@ -63,7 +63,6 @@ class TestNavigationURLLoaderDelegate : public NavigationURLLoaderDelegate {
       const scoped_refptr<ResourceResponse>& response) override;
   void OnResponseStarted(const scoped_refptr<ResourceResponse>& response,
                          std::unique_ptr<StreamHandle> body,
-                         mojo::ScopedDataPipeConsumerHandle consumer_handle,
                          const SSLStatus& ssl_status,
                          std::unique_ptr<NavigationData> navigation_data,
                          const GlobalRequestID& request_id,
@@ -71,6 +70,8 @@ class TestNavigationURLLoaderDelegate : public NavigationURLLoaderDelegate {
                          bool is_stream,
                          base::Optional<SubresourceLoaderParams>
                              subresource_loader_params) override;
+  void OnStartLoadingResponseBody(
+      mojo::ScopedDataPipeConsumerHandle consumer_handle) override;
   void OnRequestFailed(bool in_cache,
                        int net_error,
                        const base::Optional<net::SSLInfo>& ssl_info,
