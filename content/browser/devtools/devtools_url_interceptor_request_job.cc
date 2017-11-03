@@ -31,8 +31,7 @@ class DevToolsURLInterceptorRequestJob::SubRequest {
  public:
   SubRequest(DevToolsURLInterceptorRequestJob::RequestDetails& request_details,
              DevToolsURLInterceptorRequestJob* devtools_interceptor_request_job,
-             scoped_refptr<DevToolsURLRequestInterceptor::State>
-                 devtools_url_request_interceptor_state);
+             DevToolsURLRequestInterceptor* interceptor);
   ~SubRequest();
 
   void Cancel();
@@ -45,19 +44,16 @@ class DevToolsURLInterceptorRequestJob::SubRequest {
   DevToolsURLInterceptorRequestJob*
       devtools_interceptor_request_job_;  // NOT OWNED.
 
-  scoped_refptr<DevToolsURLRequestInterceptor::State>
-      devtools_url_request_interceptor_state_;
+  DevToolsURLRequestInterceptor* const interceptor_;
   bool fetch_in_progress_;
 };
 
 DevToolsURLInterceptorRequestJob::SubRequest::SubRequest(
     DevToolsURLInterceptorRequestJob::RequestDetails& request_details,
     DevToolsURLInterceptorRequestJob* devtools_interceptor_request_job,
-    scoped_refptr<DevToolsURLRequestInterceptor::State>
-        devtools_url_request_interceptor_state)
+    DevToolsURLRequestInterceptor* interceptor)
     : devtools_interceptor_request_job_(devtools_interceptor_request_job),
-      devtools_url_request_interceptor_state_(
-          devtools_url_request_interceptor_state),
+      interceptor_(interceptor),
       fetch_in_progress_(true) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   net::NetworkTrafficAnnotationTag traffic_annotation =
@@ -127,13 +123,13 @@ DevToolsURLInterceptorRequestJob::SubRequest::SubRequest(
   if (request_details.post_data)
     request_->set_upload(std::move(request_details.post_data));
 
-  devtools_url_request_interceptor_state_->RegisterSubRequest(request_.get());
+  interceptor_->RegisterSubRequest(request_.get());
   request_->Start();
 }
 
 DevToolsURLInterceptorRequestJob::SubRequest::~SubRequest() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  devtools_url_request_interceptor_state_->UnregisterSubRequest(request_.get());
+  interceptor_->UnregisterSubRequest(request_.get());
 }
 
 void DevToolsURLInterceptorRequestJob::SubRequest::Cancel() {
@@ -386,8 +382,7 @@ std::unique_ptr<net::UploadDataStream> GetUploadData(net::URLRequest* request) {
 }  // namespace
 
 DevToolsURLInterceptorRequestJob::DevToolsURLInterceptorRequestJob(
-    scoped_refptr<DevToolsURLRequestInterceptor::State>
-        devtools_url_request_interceptor_state,
+    DevToolsURLRequestInterceptor* interceptor,
     const std::string& interception_id,
     net::URLRequest* original_request,
     net::NetworkDelegate* original_network_delegate,
@@ -397,8 +392,7 @@ DevToolsURLInterceptorRequestJob::DevToolsURLInterceptorRequestJob(
     bool is_redirect,
     ResourceType resource_type)
     : net::URLRequestJob(original_request, original_network_delegate),
-      devtools_url_request_interceptor_state_(
-          devtools_url_request_interceptor_state),
+      interceptor_(interceptor),
       request_details_(original_request->url(),
                        original_request->method(),
                        GetUploadData(original_request),
@@ -429,7 +423,7 @@ DevToolsURLInterceptorRequestJob::~DevToolsURLInterceptorRequestJob() {
                             base::BindOnce(UnregisterNavigationRequestOnUI,
                                            network_handler_, interception_id_));
   }
-  devtools_url_request_interceptor_state_->JobFinished(interception_id_);
+  interceptor_->JobFinished(interception_id_);
 }
 
 // net::URLRequestJob implementation:
@@ -445,8 +439,7 @@ void DevToolsURLInterceptorRequestJob::Start() {
     // Network.requestIntercepted event and the user opted to allow it so
     // there's no need to send another. We can just start the SubRequest.
     // If we're not intercepting results we can also just start the SubRequest.
-    sub_request_.reset(new SubRequest(request_details_, this,
-                                      devtools_url_request_interceptor_state_));
+    sub_request_.reset(new SubRequest(request_details_, this, interceptor_));
   } else {
     waiting_for_user_response_ =
         WaitingForUserResponse::WAITING_FOR_REQUEST_ACK;
@@ -817,8 +810,7 @@ void DevToolsURLInterceptorRequestJob::ProcessInterceptionRespose(
 
     std::string value;
     if (mock_response_details_->response_headers()->IsRedirect(&value)) {
-      devtools_url_request_interceptor_state_->ExpectRequestAfterRedirect(
-          request(), interception_id_);
+      interceptor_->ExpectRequestAfterRedirect(request(), interception_id_);
     }
     NotifyHeadersComplete();
     return;
@@ -839,8 +831,7 @@ void DevToolsURLInterceptorRequestJob::ProcessInterceptionRespose(
         base::TimeTicks::Now()));
     redirect_.reset();
 
-    devtools_url_request_interceptor_state_->ExpectRequestAfterRedirect(
-        request(), interception_id_);
+    interceptor_->ExpectRequestAfterRedirect(request(), interception_id_);
     NotifyHeadersComplete();
   } else {
     // Note this redirect is not visible to the caller by design. If they want a
@@ -876,8 +867,7 @@ void DevToolsURLInterceptorRequestJob::ProcessInterceptionRespose(
     // The reason we start a sub request is because we are in full control of it
     // and can choose to ignore it if, for example, the fetch encounters a
     // redirect that the user chooses to replace with a mock response.
-    sub_request_.reset(new SubRequest(request_details_, this,
-                                      devtools_url_request_interceptor_state_));
+    sub_request_.reset(new SubRequest(request_details_, this, interceptor_));
   }
 }
 

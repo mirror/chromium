@@ -29,8 +29,7 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob,
                                          public net::URLRequest::Delegate {
  public:
   DevToolsURLInterceptorRequestJob(
-      scoped_refptr<DevToolsURLRequestInterceptor::State>
-          devtools_url_request_interceptor_state,
+      DevToolsURLRequestInterceptor* interceptor,
       const std::string& interception_id,
       net::URLRequest* original_request,
       net::NetworkDelegate* original_network_delegate,
@@ -130,8 +129,7 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob,
     WAITING_FOR_AUTH_ACK,
   };
 
-  scoped_refptr<DevToolsURLRequestInterceptor::State>
-      devtools_url_request_interceptor_state_;
+  DevToolsURLRequestInterceptor* const interceptor_;
   RequestDetails request_details_;
   std::unique_ptr<SubRequest> sub_request_;
   std::unique_ptr<MockResponseDetails> mock_response_details_;
