@@ -70,6 +70,30 @@
       "revId": "c00c53558589f96c9f4ac1eab085ecb3e03fc8cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d17328_b4a4b872",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-03T02:41:11Z",
+      "side": 1,
+      "message": "Applied Ted\u0027s suggestion to add TabObserver#onActivityAttachmentChanged in PatchSet 9.",
+      "parentUuid": "c7d19fcd_4942a49d",
+      "range": {
+        "startLine": 41,
+        "startChar": 48,
+        "endLine": 41,
+        "endChar": 59
+      },
+      "revId": "c00c53558589f96c9f4ac1eab085ecb3e03fc8cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
