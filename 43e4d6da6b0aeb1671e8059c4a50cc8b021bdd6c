@@ -22,6 +22,30 @@
       "revId": "43e4d6da6b0aeb1671e8059c4a50cc8b021bdd6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aaac246_a3df6a3c",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10683,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-03T19:49:22Z",
+      "side": 1,
+      "message": "Very good point, thanks Maksim! Fixed.",
+      "parentUuid": "8a5f1714_00d949e3",
+      "range": {
+        "startLine": 10683,
+        "startChar": 0,
+        "endLine": 10683,
+        "endChar": 6
+      },
+      "revId": "43e4d6da6b0aeb1671e8059c4a50cc8b021bdd6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
