@@ -85,6 +85,23 @@ class WatchTimeReporter;
 class WebAudioSourceProviderImpl;
 class WebMediaPlayerDelegate;
 
+class MEDIA_BLINK_EXPORT MediaPlayerSurfaceLayerBridge
+    : public blink::WebSurfaceLayerBridge {
+ public:
+  static std::unique_ptr<blink::WebSurfaceLayerBridge> Create(
+      blink::WebSurfaceLayerBridgeObserver*);
+  ~MediaPlayerSurfaceLayerBridge() override;
+  blink::WebLayer* GetWebLayer() const override;
+  const viz::FrameSinkId& GetFrameSinkId() const override;
+
+ protected:
+  MediaPlayerSurfaceLayerBridge(blink::WebSurfaceLayerBridgeObserver*);
+
+ private:
+  blink::WebSurfaceLayerBridgeObserver* observer_;
+  const viz::FrameSinkId frame_sink_id_;
+};
+
 // The canonical implementation of blink::WebMediaPlayer that's backed by
 // Pipeline. Handles normal resource loading, Media Source, and
 // Encrypted Media.
@@ -109,7 +126,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   ~WebMediaPlayerImpl() override;
 
   // WebSurfaceLayerBridgeObserver implementation.
-  void OnWebLayerReplaced() override;
+  void OnWebLayerUpdated() override;
 
   void Load(LoadType load_type,
             const blink::WebMediaPlayerSource& source,

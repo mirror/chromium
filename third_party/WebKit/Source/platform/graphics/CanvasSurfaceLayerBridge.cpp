@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "platform/graphics/SurfaceLayerBridge.h"
+#include "platform/graphics/CanvasSurfaceLayerBridge.h"
 
 #include "base/feature_list.h"
 #include "cc/layers/layer.h"
@@ -30,7 +30,8 @@ namespace {
 class SequenceSurfaceReferenceFactoryImpl
     : public viz::SequenceSurfaceReferenceFactory {
  public:
-  SequenceSurfaceReferenceFactoryImpl(base::WeakPtr<SurfaceLayerBridge> bridge)
+  SequenceSurfaceReferenceFactoryImpl(
+      base::WeakPtr<CanvasSurfaceLayerBridge> bridge)
       : bridge_(bridge) {}
 
  private:
@@ -48,15 +49,16 @@ class SequenceSurfaceReferenceFactoryImpl
       bridge_->SatisfyCallback(sequence);
   }
 
-  base::WeakPtr<SurfaceLayerBridge> bridge_;
+  base::WeakPtr<CanvasSurfaceLayerBridge> bridge_;
 
   DISALLOW_COPY_AND_ASSIGN(SequenceSurfaceReferenceFactoryImpl);
 };
 
 }  // namespace
 
-SurfaceLayerBridge::SurfaceLayerBridge(WebLayerTreeView* layer_tree_view,
-                                       WebSurfaceLayerBridgeObserver* observer)
+CanvasSurfaceLayerBridge::CanvasSurfaceLayerBridge(
+    WebLayerTreeView* layer_tree_view,
+    WebSurfaceLayerBridgeObserver* observer)
     : weak_factory_(this),
       observer_(observer),
       binding_(this),
@@ -78,22 +80,27 @@ SurfaceLayerBridge::SurfaceLayerBridge(WebLayerTreeView* layer_tree_view,
   provider->CreateOffscreenCanvasSurface(parent_frame_sink_id_, frame_sink_id_,
                                          std::move(client),
                                          mojo::MakeRequest(&service_));
+
+  // Creates a placeholder layer first before Surface is created.
+  CreateSolidColorLayer();
 }
 
-SurfaceLayerBridge::~SurfaceLayerBridge() {
+CanvasSurfaceLayerBridge::~CanvasSurfaceLayerBridge() {
   observer_ = nullptr;
 }
 
-void SurfaceLayerBridge::SatisfyCallback(const viz::SurfaceSequence& sequence) {
+void CanvasSurfaceLayerBridge::SatisfyCallback(
+    const viz::SurfaceSequence& sequence) {
   service_->Satisfy(sequence);
 }
 
-void SurfaceLayerBridge::RequireCallback(const viz::SurfaceId& surface_id,
-                                         const viz::SurfaceSequence& sequence) {
+void CanvasSurfaceLayerBridge::RequireCallback(
+    const viz::SurfaceId& surface_id,
+    const viz::SurfaceSequence& sequence) {
   service_->Require(surface_id, sequence);
 }
 
-void SurfaceLayerBridge::CreateSolidColorLayer() {
+void CanvasSurfaceLayerBridge::CreateSolidColorLayer() {
   cc_layer_ = cc::SolidColorLayer::Create();
   cc_layer_->SetBackgroundColor(SK_ColorTRANSPARENT);
 
@@ -103,7 +110,7 @@ void SurfaceLayerBridge::CreateSolidColorLayer() {
   GraphicsLayer::RegisterContentsLayer(web_layer_.get());
 }
 
-void SurfaceLayerBridge::OnFirstSurfaceActivation(
+void CanvasSurfaceLayerBridge::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
   if (!current_surface_id_.is_valid() && surface_info.is_valid()) {
     // First time a SurfaceId is received
@@ -124,6 +131,8 @@ void SurfaceLayerBridge::OnFirstSurfaceActivation(
     web_layer_ =
         Platform::Current()->CompositorSupport()->CreateLayerFromCCLayer(
             cc_layer_.get());
+
+    GraphicsLayer::RegisterContentsLayer(web_layer_.get());
   } else if (current_surface_id_ != surface_info.id()) {
     // A different SurfaceId is received, prompting change to existing
     // SurfaceLayer
@@ -135,7 +144,7 @@ void SurfaceLayerBridge::OnFirstSurfaceActivation(
   }
 
   if (observer_)
-    observer_->OnWebLayerReplaced();
+    observer_->OnWebLayerUpdated();
   cc_layer_->SetBounds(surface_info.size_in_pixels());
 }
 
