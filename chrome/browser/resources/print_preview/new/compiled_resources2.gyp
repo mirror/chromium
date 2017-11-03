@@ -6,6 +6,14 @@
     {
       'target_name': 'app',
       'dependencies': [
+        'header',
+      ],
+      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'header',
+      'dependencies': [
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     }
