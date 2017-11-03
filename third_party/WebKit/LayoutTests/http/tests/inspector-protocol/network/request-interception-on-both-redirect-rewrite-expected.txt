@@ -1,0 +1,75 @@
+Tests interception for redirects in a chain but rewrite last response.
+Test Ready.
+Request interception patterns sent.
+Request Intercepted: redirect1.php
+  responseStatusCode: undefined
+  responseHeaders: <Empty>
+  responseBody:
+    Error<Can only get response body on requests captured after headers received.>
+Continuing redirect1.php request.
+
+Request Intercepted: redirect1.php
+  responseStatusCode: undefined
+  responseHeaders: <Empty>
+  redirectStatusCode: 307
+  redirectUrl: redirect2.php
+  redirectHeaders:
+    Date: <Masked>
+    Server: <Masked>
+    X-Powered-By: <Masked>
+    Expires: <Masked>
+    Cache-Control: no-cache, must-revalidate
+    Pragma: no-cache
+    Location: redirect2.php
+    Content-Length: 0
+    Keep-Alive: <Masked>
+    Connection: Keep-Alive
+    Content-Type: text/html
+  responseBody:
+    Error<Can only get response body on requests captured after headers received.>
+Continuing redirect1.php and allow to redirect to redirect2.php.
+
+Request Intercepted: redirect2.php
+  responseStatusCode: undefined
+  responseHeaders: <Empty>
+  redirectStatusCode: 307
+  redirectUrl: final.html
+  redirectHeaders:
+    Date: <Masked>
+    Server: <Masked>
+    X-Powered-By: <Masked>
+    Expires: <Masked>
+    Cache-Control: no-cache, must-revalidate
+    Pragma: no-cache
+    Location: final.html
+    Content-Length: 0
+    Keep-Alive: <Masked>
+    Connection: Keep-Alive
+    Content-Type: text/html
+  responseBody:
+    Error<Can only get response body on requests captured after headers received.>
+Continuing redriect2.php and allow to redirect to final.html.
+
+Request Intercepted: final.html
+  responseStatusCode: 200
+  responseHeaders:
+    Date: <Masked>
+    Server: <Masked>
+    Last-Modified: <Masked>
+    ETag: <Masked>
+    Accept-Ranges: bytes
+    Content-Length: 56
+    Keep-Alive: <Masked>
+    Connection: Keep-Alive
+    Content-Type: text/html
+  responseBody:
+<html><body>This is the final destination.</body></html>
+Modifying final.html's response after we receive response.
+Modifying request with new body.
+
+Body content received by renderer for final.html:
+<html>
+<body>This content was rewritten!</body>
+</html>
+
+

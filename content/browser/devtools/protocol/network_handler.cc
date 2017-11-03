@@ -1082,7 +1082,9 @@ DispatchResponse NetworkHandler::SetRequestInterception(
         }
       }
       interceptor_patterns.push_back(DevToolsURLRequestInterceptor::Pattern(
-          patterns->get(i)->GetUrlPattern("*"), std::move(resource_types)));
+          patterns->get(i)->GetUrlPattern("*"), std::move(resource_types),
+          patterns->get(i)->GetInterceptionStage(
+              protocol::Network::InterceptionStageEnum::Request)));
     }
 
     devtools_url_request_interceptor->StartInterceptingRequests(
@@ -1122,7 +1124,6 @@ bool GetPostData(const net::URLRequest* request, std::string* post_data) {
 }
 }  // namespace
 
-// TODO(alexclarke): Support structured data as well as |base64_raw_response|.
 void NetworkHandler::ContinueInterceptedRequest(
     const std::string& interception_id,
     Maybe<std::string> error_reason,
@@ -1182,6 +1183,20 @@ void NetworkHandler::ContinueInterceptedRequest(
           std::move(method), std::move(post_data), std::move(headers),
           std::move(auth_challenge_response), mark_as_canceled),
       std::move(callback));
+}
+
+void NetworkHandler::GetResponseBodyForInterception(
+    const String& interception_id,
+    std::unique_ptr<GetResponseBodyForInterceptionCallback> callback) {
+  DevToolsURLRequestInterceptor* devtools_url_request_interceptor =
+      DevToolsURLRequestInterceptor::FromBrowserContext(
+          process_->GetBrowserContext());
+  if (!devtools_url_request_interceptor) {
+    callback->sendFailure(Response::InternalError());
+    return;
+  }
+  devtools_url_request_interceptor->GetResponseBody(interception_id,
+                                                    std::move(callback));
 }
 
 // static
