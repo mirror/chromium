@@ -163,6 +163,24 @@
       "revId": "7d4cb1000a2cde80f6d8cfa29af989e4f8c89c53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb63cca_f1f71f23",
+        "filename": "base/files/memory_mapped_file_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T16:22:35Z",
+      "side": 1,
+      "message": "\u003e I was thinking performance when accessing and flushing memory.  Still want me to remove it?\n\nI think we should leave this to the filesystem’s own devices. Normally, a well-written filesystem would give you a contiguous block if possible. Assuming that, there’s not much of a reason to try to mandate contiguous on our side if we’re just going to fall back to non-contiguous.",
+      "parentUuid": "1745405e_507516b9",
+      "revId": "7d4cb1000a2cde80f6d8cfa29af989e4f8c89c53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

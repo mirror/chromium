@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c36c1dad_b793b185",
+        "filename": "base/files/memory_mapped_file_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T16:22:35Z",
+      "side": 1,
+      "message": "nit: it’s called “macOS” now.",
+      "range": {
+        "startLine": 112,
+        "startChar": 9,
+        "endLine": 112,
+        "endChar": 16
+      },
+      "revId": "dc9641f11dbe4d3d35504cc45cfe3ffbaff09eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2fe37b_68945a6d",
+        "filename": "base/files/memory_mapped_file_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T16:22:35Z",
+      "side": 1,
+      "message": "Also, call out APFS by name, for people who might not be familiar.",
+      "range": {
+        "startLine": 112,
+        "startChar": 61,
+        "endLine": 112,
+        "endChar": 75
+      },
+      "revId": "dc9641f11dbe4d3d35504cc45cfe3ffbaff09eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
