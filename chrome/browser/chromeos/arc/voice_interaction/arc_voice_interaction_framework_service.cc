@@ -26,7 +26,7 @@
 #include "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h"
 #include "chrome/browser/chromeos/ash_config.h"
 #include "chrome/browser/chromeos/login/helper.h"
-#include "chrome/browser/chromeos/login/ui/login_display_host_impl.h"
+#include "chrome/browser/chromeos/login/ui/login_display_host_webui.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/browser.h"
@@ -588,8 +588,8 @@ void ArcVoiceInteractionFrameworkService::StartVoiceInteractionOobe() {
     return;
   gfx::Rect screen_bounds(chromeos::CalculateScreenBounds(gfx::Size()));
   // The display host will be destructed at the end of OOBE flow.
-  chromeos::LoginDisplayHostImpl* display_host =
-      new chromeos::LoginDisplayHostImpl(screen_bounds);
+  chromeos::LoginDisplayHostWebUi* display_host =
+      new chromeos::LoginDisplayHostWebUi(screen_bounds);
   display_host->StartVoiceInteractionOobe();
 }
 

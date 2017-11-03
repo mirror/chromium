@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_CHROMEOS_LOGIN_UI_LOGIN_DISPLAY_HOST_IMPL_H_
-#define CHROME_BROWSER_CHROMEOS_LOGIN_UI_LOGIN_DISPLAY_HOST_IMPL_H_
+#ifndef CHROME_BROWSER_CHROMEOS_LOGIN_UI_LOGIN_DISPLAY_HOST_WEBUI_H_
+#define CHROME_BROWSER_CHROMEOS_LOGIN_UI_LOGIN_DISPLAY_HOST_WEBUI_H_
 
 #include <stdint.h>
 
@@ -49,18 +49,18 @@ class WebUILoginView;
 
 // An implementation class for OOBE/login WebUI screen host.
 // It encapsulates controllers, wallpaper integration and flow.
-class LoginDisplayHostImpl : public LoginDisplayHost,
-                             public content::NotificationObserver,
-                             public content::WebContentsObserver,
-                             public chromeos::SessionManagerClient::Observer,
-                             public chromeos::CrasAudioHandler::AudioObserver,
-                             public display::DisplayObserver,
-                             public ui::InputDeviceEventObserver,
-                             public views::WidgetRemovalsObserver,
-                             public chrome::MultiUserWindowManager::Observer {
+class LoginDisplayHostWebUi : public LoginDisplayHost,
+                              public content::NotificationObserver,
+                              public content::WebContentsObserver,
+                              public chromeos::SessionManagerClient::Observer,
+                              public chromeos::CrasAudioHandler::AudioObserver,
+                              public display::DisplayObserver,
+                              public ui::InputDeviceEventObserver,
+                              public views::WidgetRemovalsObserver,
+                              public chrome::MultiUserWindowManager::Observer {
  public:
-  explicit LoginDisplayHostImpl(const gfx::Rect& wallpaper_bounds);
-  ~LoginDisplayHostImpl() override;
+  explicit LoginDisplayHostWebUi(const gfx::Rect& wallpaper_bounds);
+  ~LoginDisplayHostWebUi() override;
 
   // LoginDisplayHost implementation:
   LoginDisplay* CreateLoginDisplay(LoginDisplay::Delegate* delegate) override;
@@ -309,12 +309,12 @@ class LoginDisplayHostImpl : public LoginDisplayHost,
 
   bool is_voice_interaction_oobe_ = false;
 
-  base::WeakPtrFactory<LoginDisplayHostImpl> pointer_factory_;
-  base::WeakPtrFactory<LoginDisplayHostImpl> animation_weak_ptr_factory_;
+  base::WeakPtrFactory<LoginDisplayHostWebUi> pointer_factory_;
+  base::WeakPtrFactory<LoginDisplayHostWebUi> animation_weak_ptr_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(LoginDisplayHostImpl);
+  DISALLOW_COPY_AND_ASSIGN(LoginDisplayHostWebUi);
 };
 
 }  // namespace chromeos
 
-#endif  // CHROME_BROWSER_CHROMEOS_LOGIN_UI_LOGIN_DISPLAY_HOST_IMPL_H_
+#endif  // CHROME_BROWSER_CHROMEOS_LOGIN_UI_LOGIN_DISPLAY_HOST_WEBUI_H_
