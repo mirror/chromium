@@ -105,6 +105,24 @@
       "revId": "8450338743574a80fc7973316255003f578cd9bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "175dce14_c97e5b81",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-11-03T22:35:06Z",
+      "side": 1,
+      "message": "Oh I see, it could happen if the server is not destroyed.  Since web::test::HttpServer has been deprecated, it\u0027s better to use the EmbeddedTestServer directly instead of registering response providers through HttpServer.  That would destroy and re-create the test server for each test case,  and each test has the corresponding response handler. \nhttps://docs.google.com/document/d/1tTnjQIvN3gaF4iM3NI9NxHM7hBSHiVIBesssJxyq63I/edit?ts\u003d5970bfd9#",
+      "parentUuid": "8dcd7460_1e54ca52",
+      "revId": "8450338743574a80fc7973316255003f578cd9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
