@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "be9b6f5e_b94203cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-03T17:24:48Z",
+      "side": 1,
+      "message": "Thanks for the links.\n\nThe GlobalReplace profile trace you linked to points to pattern compilation as its problem (i.e., the constructor for the regular expression) as a new RE instance is passed on each invocation, instead of a cached instance.",
+      "parentUuid": "2f16f9d2_0b3868c6",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 9,
+        "endChar": 85
+      },
+      "revId": "2ae97fd28eb3932a1dfe3e50482bdce84498579e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5b23a11_4b993d35",
         "filename": "components/autofill/core/common/signatures_util.cc",
         "patchSetId": 3
