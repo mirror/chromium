@@ -72,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "65426917_0d5ed138",
+        "filename": "chrome/browser/resource_coordinator/page_signal_receiver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-03T22:11:51Z",
+      "side": 1,
+      "message": "Some comment is also needed for this observer API.\n\nIt is probably good to have an overall explanation for both PageSignalObserver and PageSignalReceiver, and how the entire workflow works.",
+      "revId": "8ef00cd899ce811100fd81537026dd6e296d79a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdfe77d2_25eb8b4c",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 4
@@ -142,6 +159,30 @@
       "side": 1,
       "message": "I want this to be general, not tied to any specific observer. A TabManager::ResourceCoordinatorSignalObserver could be:\n\nclass TabManager::ResourceCoordinatorSignalObserver : public PageSignalObserver, public ProcessSignalObserver, public ...\n\nWe currently don\u0027t have such use cases, but the name reflects the fact that it can observe signals from ResourceCoordinator in general.",
       "parentUuid": "a2b095c3_4da9d66e",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "8ef00cd899ce811100fd81537026dd6e296d79a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c96786ad_96f41bba",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_resource_coordinator_signal_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-03T22:11:51Z",
+      "side": 1,
+      "message": "I see. Please add some comments to the class and also explain that.",
+      "parentUuid": "14f5e54c_fb44f53a",
       "range": {
         "startLine": 14,
         "startChar": 18,
