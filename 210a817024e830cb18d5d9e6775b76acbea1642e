@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5cbd086_1ea8e8a1",
+        "filename": "content/browser/background_fetch/background_fetch_context.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-03T14:45:59Z",
+      "side": 1,
+      "message": "nit: what\u0027s the benefit of calling this UpdateRegistrationUI instead of UpdateUI like the Web-exposed API and the Mojo call?",
+      "revId": "210a817024e830cb18d5d9e6775b76acbea1642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75f76af_a4251bb3",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-03T14:45:59Z",
+      "side": 1,
+      "message": "nit: I\u0027d continue to call this UpdateUI as we may add title/body/etc in the future. It\u0027s unfortunate that we now went from one method name for the same thing to three.",
+      "revId": "210a817024e830cb18d5d9e6775b76acbea1642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
