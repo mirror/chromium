@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6126e047_b23b1dbb",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-03T23:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6efecd4f_7880bc94",
+      "revId": "c421c54e318aa2cfbb17eadd8037418ff9882478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2867ccc0_6e47bdc5",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
         "patchSetId": 23
@@ -33,6 +51,24 @@
       "revId": "c421c54e318aa2cfbb17eadd8037418ff9882478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ab99ac_591f8765",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-03T23:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2867ccc0_6e47bdc5",
+      "revId": "c421c54e318aa2cfbb17eadd8037418ff9882478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "43fd56c9_dd0f2110",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-03T23:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49e0301f_28ec4e18",
+      "revId": "c421c54e318aa2cfbb17eadd8037418ff9882478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c88cddda_2b1e0f73",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
         "patchSetId": 23
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c1298534_12a87ebd",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-03T23:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c88cddda_2b1e0f73",
+      "revId": "c421c54e318aa2cfbb17eadd8037418ff9882478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db0ca3f3_3635f847",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
         "patchSetId": 23
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-03T22:36:15Z",
       "side": 1,
       "message": "Could you call this media_thread_checker_ for clarity?\n\nWhat makes sure that tasks run on the media thread are part of the same sequence as the mojo tasks?  Mostly just trying to understand what prevents races between the two.",
+      "revId": "c421c54e318aa2cfbb17eadd8037418ff9882478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883069d6_7a805246",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-03T23:06:18Z",
+      "side": 1,
+      "message": "done. and added a dcheck in the mojo call to make the code more clear.",
+      "parentUuid": "db0ca3f3_3635f847",
       "revId": "c421c54e318aa2cfbb17eadd8037418ff9882478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
