@@ -34,6 +34,24 @@
       "revId": "c07eda19eb4f57e468b562e5e4e0fabfa83bb864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78fb6cf8_06d44f4c",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 1742,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-03T18:41:34Z",
+      "side": 1,
+      "message": "Alex is right-- I just verified that this bug exists on Mac as well (presumably in hung_renderer_controller.mm).  Let\u0027s fix that in a separate CL so we can get this one landed.",
+      "parentUuid": "726370e4_07b10644",
+      "revId": "c07eda19eb4f57e468b562e5e4e0fabfa83bb864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
