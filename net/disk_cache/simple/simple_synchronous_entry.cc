@@ -839,11 +839,13 @@ void SimpleSynchronousEntry::Close(
       break;
     }
   }
+  CHECK(have_open_files_);
   for (int i = 0; i < kSimpleEntryNormalFileCount; ++i) {
     if (empty_file_omitted_[i])
       continue;
 
     if (header_and_key_check_needed_[i]) {
+      CHECK(false);
       SimpleFileTracker::FileHandle file =
           file_tracker_->Acquire(this, SubFileForFileIndex(i));
       if (!file.IsOK() || !CheckHeaderAndKey(file.get(), i))
