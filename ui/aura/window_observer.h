@@ -92,7 +92,7 @@ class AURA_EXPORT WindowObserver {
   // Invoked when the opacity of the |window|'s layer is set. |reason| indicates
   // whether the opacity was set directly or by an animation. This won't
   // necessarily be called at every step of an animation. However, it will be
-  // called at least once before the first frame of the animation is rendered.
+  // called at leat once before the first frame of the animation is rendered.
   virtual void OnWindowOpacityChanged(Window* window,
                                       ui::PropertyChangeReason reason) {}
 

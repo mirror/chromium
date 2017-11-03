@@ -14,8 +14,7 @@ PointTransformer::PointTransformer() {
   root_window_ = ash::Shell::GetPrimaryRootWindow();
   root_window_->AddObserver(this);
   // Set the initial display rotation.
-  OnWindowTargetTransformChanging(root_window_,
-                                  root_window_->GetTargetTransform());
+  OnWindowTransformed(root_window_);
 }
 
 PointTransformer::~PointTransformer() {
