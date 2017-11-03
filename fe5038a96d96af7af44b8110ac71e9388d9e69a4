@@ -22,6 +22,30 @@
       "revId": "fe5038a96d96af7af44b8110ac71e9388d9e69a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6ec784_425783ac",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-03T15:49:06Z",
+      "side": 1,
+      "message": "Thanks for the comment Adam! I added a clarifying comment that the intention of this function is that it should be called every time a client starts using the API, with the expectation that you\u0027ll get errors on the other API calls until this has been done.\n\nI think we could discuss the broader, more general design offline, which would be implemented as part of MPP V2. My intention with this CL is to augment the existing API to be able to use either CU OR the existing mri_package binary. Depending on timeline, your team could continue to piggyback off of this API (like your POC) until the drastically revamped V2 is completed.",
+      "parentUuid": "663ef964_f0facb2b",
+      "range": {
+        "startLine": 244,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 63
+      },
+      "revId": "fe5038a96d96af7af44b8110ac71e9388d9e69a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
