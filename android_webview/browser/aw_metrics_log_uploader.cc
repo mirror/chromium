@@ -44,4 +44,8 @@ void AwMetricsLogUploader::UploadLog(
   on_upload_complete_.Run(200, 0);
 }
 
+std::string AwMetricsLogUploader::GetInsecureUploadURL() {
+  return "";
+}
+
 }  // namespace android_webview
