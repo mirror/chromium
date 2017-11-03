@@ -22,6 +22,30 @@
       "revId": "5eac0ae23ed33fe77754ee1c7b9723e830048687",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed77f244_76b1b155",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-03T14:23:25Z",
+      "side": 1,
+      "message": "OK. I\u0027ve been using runAnimationGroup:completionHandler: for scoping (so that it\u0027s not possible to skip -endGrouping with an early return or something). I could make a ScopedNSAnimationGroup or similar, but kinda like the built-in way. Thoughts?",
+      "parentUuid": "c116da66_5573947d",
+      "range": {
+        "startLine": 131,
+        "startChar": 62,
+        "endLine": 131,
+        "endChar": 69
+      },
+      "revId": "5eac0ae23ed33fe77754ee1c7b9723e830048687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
