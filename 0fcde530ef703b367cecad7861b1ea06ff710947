@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "60254ee6_9bf2b915",
+        "filename": "remoting/host/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-03T21:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f49b486_f0d0c523",
+      "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c333c2b2_f961afff",
         "filename": "services/device/wake_lock/power_save_blocker/BUILD.gn",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae36923_ebda4516",
+        "filename": "services/device/wake_lock/power_save_blocker/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-03T21:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c333c2b2_f961afff",
+      "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "87e3e12a_4c1acf22",
+        "filename": "services/device/wake_lock/power_save_blocker/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-03T21:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec005229_ccb4a99d",
+      "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f4962e2_8394c8c0",
         "filename": "services/device/wake_lock/power_save_blocker/power_save_blocker_x11.cc",
         "patchSetId": 1
@@ -81,6 +135,24 @@
       "writtenOn": "2017-11-03T21:18:39Z",
       "side": 1,
       "message": "I may have missed this in (or simply not participated in) a previous review, and I\u0027m not asking you to change it here, but I think these enum values should be changed to follow enum naming style rules and be, e.g., mojom::WakeLockType::kPreventDisplaySleep.",
+      "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f6fdc2_37487fc4",
+        "filename": "services/device/wake_lock/power_save_blocker/power_save_blocker_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-03T21:33:42Z",
+      "side": 1,
+      "message": "makes sense to me (i wasn\u0027t involved in the design of the interface). i\u0027ll do that will also removing the extra \"Type\" prefixes.",
+      "parentUuid": "5f4962e2_8394c8c0",
       "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
