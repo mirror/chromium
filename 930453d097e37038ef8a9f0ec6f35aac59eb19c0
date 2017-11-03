@@ -93,6 +93,29 @@
     },
     {
       "key": {
+        "uuid": "8288f21e_b3034f17",
+        "filename": "ash/sidebar/sidebar_mode.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-11-03T00:57:05Z",
+      "side": 1,
+      "message": "It would be nice to have a description of NORMAL.\n(I suppose this is named NORMAL instead of NOTIFICATION_LIST or sth., because we would eventually have both notification list and quick settings on the same mode?)",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "930453d097e37038ef8a9f0ec6f35aac59eb19c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0585d482_24486327",
         "filename": "ash/sidebar/sidebar_widget.cc",
         "patchSetId": 3
