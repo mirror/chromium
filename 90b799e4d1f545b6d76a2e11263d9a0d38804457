@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a51ae631_961875ef",
+        "filename": "ui/gfx/icc_profile.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-03T23:11:13Z",
+      "side": 1,
+      "message": "The \"id\" thing is a pretty horrible mess -- every process can potentially generate conflicting ids, and we can end up with different ids for the same data (over time).\n\nThis is also complicated because the \"id\" thing is trying to solve 2 problems\n1. look up the SkColorSpace for LUT-based transforms\n2. look up the ICC profile data from a ColorSpace for Mac\n\nThe next patch I have in mind gets rid of \"id\" entirely and:\nSolve 1: Just store a pointer in ColorSpace (which we do already...)\nSolve 2: Just have a ColorSpace-\u003eICCProfile map",
+      "parentUuid": "a40bf34e_ed89d9e5",
+      "range": {
+        "startLine": 114,
+        "startChar": 19,
+        "endLine": 114,
+        "endChar": 22
+      },
+      "revId": "90b799e4d1f545b6d76a2e11263d9a0d38804457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44cd62f9_3c867405",
         "filename": "ui/gfx/icc_profile.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "148f4f08_a3ae4c5f",
+        "filename": "ui/gfx/icc_profile.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-03T23:11:13Z",
+      "side": 1,
+      "message": "Yes -- I want to add a \"ICC profile not specified\" and histogram that (we currently only histogram non-empty profiles, and I suspect that the vast majority of users have no profile or an empty profile).",
+      "parentUuid": "44cd62f9_3c867405",
+      "range": {
+        "startLine": 118,
+        "startChar": 36,
+        "endLine": 118,
+        "endChar": 53
+      },
+      "revId": "90b799e4d1f545b6d76a2e11263d9a0d38804457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a2a570b_b91a5461",
         "filename": "ui/gfx/icc_profile.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-03T21:36:41Z",
       "side": 1,
       "message": "Can\u0027t it just be static?",
+      "range": {
+        "startLine": 138,
+        "startChar": 13,
+        "endLine": 138,
+        "endChar": 20
+      },
+      "revId": "90b799e4d1f545b6d76a2e11263d9a0d38804457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62be7b48_011e9328",
+        "filename": "ui/gfx/icc_profile.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-03T23:11:13Z",
+      "side": 1,
+      "message": "My thought was that if a display is assigned multiple profiles over time, I want to capture all of them.\n\nTrue, it is a bit of an edge case.",
+      "parentUuid": "6a2a570b_b91a5461",
       "range": {
         "startLine": 138,
         "startChar": 13,
