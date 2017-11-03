@@ -168,7 +168,6 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
     const VisiblePosition& new_end =
         PreviousPositionOf(visible_end, kCannotCrossEditingBoundary);
     SelectionInDOMTree::Builder builder;
-    builder.SetIsDirectional(EndingSelection().IsDirectional());
     builder.Collapse(visible_start.ToPositionWithAffinity());
     if (new_end.IsNotNull())
       builder.Extend(new_end.DeepEquivalent());
@@ -307,7 +306,6 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
             .SetBaseAndExtentDeprecated(
                 visible_start_of_selection.DeepEquivalent(),
                 visible_end_of_selection.DeepEquivalent())
-            .SetIsDirectional(EndingSelection().IsDirectional())
             .Build()));
     return;
   }
