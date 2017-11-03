@@ -418,6 +418,11 @@ GtkUi::GtkUi() : middle_click_action_(GetDefaultMiddleClickAction()) {
   if (_gdk_set_allowed_backends)
     _gdk_set_allowed_backends("x11");
 #endif
+#if GTK_MAJOR_VERSION == 3
+  // Avoid GTK initializing atk-bridge, and let AuraLinux implementation
+  // do it once it is ready.
+  setenv("NO_AT_BRIDGE", "1", 1);
+#endif
   GtkInitFromCommandLine(*base::CommandLine::ForCurrentProcess());
 #if GTK_MAJOR_VERSION == 2
   native_theme_ = NativeThemeGtk2::instance();
