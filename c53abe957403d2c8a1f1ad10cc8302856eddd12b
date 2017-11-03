@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "38f08fbf_799ef3eb",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T11:05:42Z",
+      "side": 1,
+      "message": "Doesn\u0027t need to be in this CL but it might be a good idea to have a UserAction recording when this happens so we have some idea of how common it is given that it will reduce the API \"accuracy\".",
+      "revId": "c53abe957403d2c8a1f1ad10cc8302856eddd12b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af35a451_7fa40520",
         "filename": "media/mojo/services/video_decode_stats_db.h",
         "patchSetId": 1
