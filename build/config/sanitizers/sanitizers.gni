@@ -19,6 +19,9 @@ declare_args() {
   # Compile for Thread Sanitizer to find threading bugs.
   is_tsan = false
 
+  # Compile for Type Sanitizer to find typing bugs.
+  is_tysan = false
+
   # Compile for Undefined Behaviour Sanitizer to find various types of
   # undefined behaviour (excludes vptr checks).
   is_ubsan = false
@@ -117,6 +120,7 @@ if (current_toolchain != default_toolchain) {
   is_msan = false
   is_syzyasan = false
   is_tsan = false
+  is_tysan = false
   is_ubsan = false
   is_ubsan_null = false
   is_ubsan_no_recover = false
@@ -157,9 +161,9 @@ if ((use_afl || use_libfuzzer) && sanitizer_coverage_flags == "") {
 # Whether we are linking against a sanitizer runtime library. Among other
 # things, this changes the default symbol level and other settings in order to
 # prepare to create stack traces "live" using the sanitizer runtime.
-using_sanitizer =
-    is_asan || is_lsan || is_tsan || is_msan || is_ubsan || is_ubsan_null ||
-    is_ubsan_vptr || is_ubsan_security || use_sanitizer_coverage || use_cfi_diag
+using_sanitizer = is_asan || is_lsan || is_tsan || is_msan || is_ubsan ||
+                  is_ubsan_null || is_ubsan_vptr || is_ubsan_security ||
+                  use_sanitizer_coverage || use_cfi_diag || is_tysan
 
 # Whether we are doing a fuzzer build. Normally this should be checked instead
 # of checking "use_libfuzzer || use_afl" because often developers forget to
