@@ -12,6 +12,7 @@
 
 namespace gfx {
 class Rect;
+class Transform;
 }  // namespace gfx
 
 namespace aura {
@@ -95,9 +96,17 @@ class AURA_EXPORT WindowObserver {
   virtual void OnWindowOpacityChanged(Window* window,
                                       ui::PropertyChangeReason reason) {}
 
-  // Invoked when SetTransform() is invoked on |window|.
-  virtual void OnWindowTransforming(Window* window) {}
-  virtual void OnWindowTransformed(Window* window) {}
+  // Invoked before Window::SetTransform() sets the transform of a window.
+  virtual void OnWindowTargetTransformChanging(
+      Window* window,
+      const gfx::Transform& new_transform) {}
+
+  // Invoked when the transform of |window| changes. |reason| indicates whether
+  // the transform was set directly or by an animation. This won't necessarily
+  // be called at every step of an animation. However, it will be called at
+  // least once before the first frame of the animation is rendered.
+  virtual void OnWindowTransformed(Window* window,
+                                   ui::PropertyChangeReason reason) {}
 
   // Invoked when |window|'s position among its siblings in the stacking order
   // has changed.
