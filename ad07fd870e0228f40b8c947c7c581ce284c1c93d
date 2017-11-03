@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e0642f4_5aef27d7",
+        "filename": "chrome/browser/ui/webui/signin/user_manager_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-11-03T13:53:04Z",
+      "side": 1,
+      "message": "nit: wording and more details.\n\nProposal:\n // If force sign in is enabled, do not allow users to sign in to a pre-existing profile, as this may force unexpected profile data merge. We consider a profile as pre-existing if it has been active previously.",
+      "range": {
+        "startLine": 473,
+        "startChar": 37,
+        "endLine": 473,
+        "endChar": 44
+      },
+      "revId": "ad07fd870e0228f40b8c947c7c581ce284c1c93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
