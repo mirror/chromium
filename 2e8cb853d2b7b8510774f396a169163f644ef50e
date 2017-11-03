@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f03278fd_c2b829fa",
+        "filename": "components/sync/model_impl/processor_entity_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-03T18:46:26Z",
+      "side": 1,
+      "message": "might",
+      "range": {
+        "startLine": 190,
+        "startChar": 27,
+        "endLine": 190,
+        "endChar": 32
+      },
+      "revId": "2e8cb853d2b7b8510774f396a169163f644ef50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24a08a6_f27ae6c8",
+        "filename": "components/sync/model_impl/processor_entity_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-03T18:46:26Z",
+      "side": 1,
+      "message": "This isn\u0027t actually correct though... Isn\u0027t commit_requested_sequence_number_ transient? We could make an item, commit it, crash during that commit request, restart, the user deletes the item. The deletion is going to no-op here because these values are going to be equal, but the server knows about it. We\u0027d ignore the invalidation because it was a reflection, and we would go on our merry way until the next GU. That could be another 8 hours, when sudden this piece of data re-appears.\n\nI guess this is all predicated on a Chrome crash, which should almost never happen. But shutdown should be able to trigger this just as easily. The model type could get disconnected from the syncer during mid commit, right. And then we\u0027d never persist that the commit completed.",
+      "revId": "2e8cb853d2b7b8510774f396a169163f644ef50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4828fad_1696f192",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-03T18:46:26Z",
+      "side": 1,
+      "message": "While you\u0027re in here, I\u0027d remove this newline :)",
+      "revId": "2e8cb853d2b7b8510774f396a169163f644ef50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550137cf_2907a428",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-03T18:46:26Z",
+      "side": 1,
+      "message": "This one seems pretty useless as well!",
+      "revId": "2e8cb853d2b7b8510774f396a169163f644ef50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
