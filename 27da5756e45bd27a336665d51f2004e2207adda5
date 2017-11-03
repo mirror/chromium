@@ -22,6 +22,30 @@
       "revId": "27da5756e45bd27a336665d51f2004e2207adda5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2700599_ffbec6d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-11-03T18:26:29Z",
+      "side": 1,
+      "message": "Per offline discussion, I should log this histogram right before reset.",
+      "parentUuid": "702416fd_5e1ee783",
+      "range": {
+        "startLine": 263,
+        "startChar": 24,
+        "endLine": 263,
+        "endChar": 44
+      },
+      "revId": "27da5756e45bd27a336665d51f2004e2207adda5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
