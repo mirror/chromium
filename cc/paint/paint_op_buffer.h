@@ -766,6 +766,12 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
                 ImageProvider* image_provider = nullptr,
                 SkPicture::AbortCallback* callback = nullptr) const;
 
+  static sk_sp<PaintOpBuffer> MakeFromMemory(
+      const volatile void* input,
+      size_t input_size,
+      const PaintOp::DeserializeOptions& options);
+  sk_sp<SkData> Serialize(const PaintOp::SerializeOptions& options) const;
+
   // Returns the size of the paint op buffer. That is, the number of ops
   // contained in it.
   size_t size() const { return op_count_; }
