@@ -34,6 +34,98 @@
       "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b587ac_f7f2c901",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T18:34:38Z",
+      "side": 1,
+      "message": "FWIW\n\u0027preprocess\u0027 processes GRIT \u003cif expr\u003d\"...\"\u003e tags to throw away platform-specific code.\n\u0027flattenhtml\u0027 does the above as well as inlines various URLs (background-image etc).",
+      "parentUuid": "e6903de5_fa43a0f6",
+      "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959a0a20_7b81cfbd",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome.css",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T18:34:38Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59280bad_80350d1a",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T18:34:38Z",
+      "side": 1,
+      "message": "Are you planning to move these chrome.send() behind a browser proxy in a later CL? Maybe add a TODO here, so that we don\u0027t lose track.",
+      "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc95377_51c64476",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T18:34:38Z",
+      "side": 1,
+      "message": "I suggest moving the contents of welcome.html to a Polymer top-level app.html, so that you can use normal Polymer syntax to attach listeners (on-click, on-tap etc).",
+      "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc40b23_c18efca4",
+        "filename": "chrome/browser/ui/webui/welcome_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-03T18:34:38Z",
+      "side": 1,
+      "message": "Do we really need to clone welcome.css? IDR_DICE_WELCOME_CSS and IDR_WELCOME_CSS contents seem identical. Can we just change this line to \n\nhtml_source-\u003eAddResourcePath(\"welcome.css\", IDR_WELCOME_CSS);",
+      "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
