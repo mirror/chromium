@@ -10,7 +10,6 @@ var ROOT_PATH = '../../../../../';
 // Polymer BrowserTest fixture.
 GEN_INCLUDE(
     [ROOT_PATH + 'chrome/test/data/webui/polymer_browser_test_base.js']);
-GEN('#include "base/command_line.h"');
 
 /**
  * @constructor
@@ -25,8 +24,7 @@ UserManagerBrowserTest.prototype = {
   browsePreload: 'chrome://md-user-manager/',
 
   /** @override */
-  commandLineSwitches: [{switchName: 'enable-features',
-                         switchValue: 'SupervisedUserCreation'}],
+  featureList: ['SupervisedUserCreation', ''],
 
   /** @override */
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([

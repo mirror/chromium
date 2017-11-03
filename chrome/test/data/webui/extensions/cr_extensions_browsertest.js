@@ -10,7 +10,6 @@ var ROOT_PATH = '../../../../../';
 // Polymer BrowserTest fixture.
 GEN_INCLUDE([
     ROOT_PATH + 'chrome/test/data/webui/polymer_browser_test_base.js']);
-GEN('#include "base/command_line.h"');
 GEN('#include "chrome/browser/ui/webui/extensions/' +
     'extension_settings_browsertest.h"');
 
@@ -25,11 +24,8 @@ var CrExtensionsBrowserTest = class extends PolymerTest {
   }
 
   /** @override */
-  get commandLineSwitches() {
-    return [{
-      switchName: 'enable-features',
-      switchValue: 'MaterialDesignExtensions',
-    }];
+  get featureList() {
+    return ['MaterialDesignExtensions', ''];
   }
 
   /** @override */

@@ -25,11 +25,8 @@ var ExtensionsA11yTestFixture = class extends PolymerTest {
   }
 
   /** @override */
-  get commandLineSwitches() {
-    return [{
-      switchName: 'enable-features',
-      switchValue: 'MaterialDesignExtensions',
-    }];
+  get featureList() {
+    return ['MaterialDesignExtensions', ''];
   }
 
   // Include files that define the mocha tests.

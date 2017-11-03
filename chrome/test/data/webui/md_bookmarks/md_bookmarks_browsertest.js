@@ -9,7 +9,6 @@ var ROOT_PATH = '../../../../../';
 
 GEN_INCLUDE(
     [ROOT_PATH + 'chrome/test/data/webui/polymer_browser_test_base.js']);
-GEN('#include "base/command_line.h"');
 GEN('#include "chrome/browser/prefs/incognito_mode_prefs.h"');
 GEN('#include "chrome/browser/ui/webui/md_bookmarks/md_bookmarks_browsertest.h"');
 
@@ -20,8 +19,7 @@ MaterialBookmarksBrowserTest.prototype = {
 
   browsePreload: 'chrome://bookmarks',
 
-  commandLineSwitches: [{switchName: 'enable-features',
-                         switchValue: 'MaterialDesignBookmarks'}],
+  featureList: ['MaterialDesignBookmarks', ''],
 
   typedefCppFixture: 'MdBookmarksBrowserTest',
 

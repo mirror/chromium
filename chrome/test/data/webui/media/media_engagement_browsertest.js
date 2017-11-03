@@ -9,7 +9,6 @@ var ROOT_PATH = '../../../../../';
 var EXAMPLE_URL_1 = 'http://example.com/';
 var EXAMPLE_URL_2 = 'http://shmlexample.com/';
 
-GEN('#include "base/command_line.h"');
 GEN('#include "chrome/browser/media/media_engagement_service.h"');
 GEN('#include "chrome/browser/media/media_engagement_service_factory.h"');
 GEN('#include "chrome/browser/ui/browser.h"');
@@ -21,10 +20,7 @@ MediaEngagementWebUIBrowserTest.prototype = {
 
   browsePreload: 'chrome://media-engagement',
 
-  commandLineSwitches: [{
-    switchName: 'enable-features',
-    switchValue: 'RecordMediaEngagementScores'
-  }],
+  featureList: ['RecordMediaEngagementScores', ''],
 
   runAccessibilityChecks: false,
 

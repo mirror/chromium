@@ -21,8 +21,8 @@ SysInternalsBrowserTest.prototype = {
 
   isAsync: true,
 
-  commandLineSwitches:
-      [{switchName: 'enable-features', switchValue: 'SysInternals'}],
+  featureList:
+      ['SysInternals', ''],
 
   extraLibraries: [
     'api_test.js',
