@@ -18,10 +18,10 @@ Http2PushPromiseIndex::~Http2PushPromiseIndex() {
 
 base::WeakPtr<SpdySession> Http2PushPromiseIndex::Find(
     const SpdySessionKey& key,
-    const GURL& url) {
+    const GURL& url) const {
   DCHECK(!url.is_empty());
 
-  UnclaimedPushedStreamMap::iterator url_it =
+  UnclaimedPushedStreamMap::const_iterator url_it =
       unclaimed_pushed_streams_.find(url);
 
   if (url_it == unclaimed_pushed_streams_.end()) {
@@ -29,7 +29,7 @@ base::WeakPtr<SpdySession> Http2PushPromiseIndex::Find(
   }
 
   DCHECK(url.SchemeIsCryptographic());
-  for (WeakSessionList::iterator it = url_it->second.begin();
+  for (WeakSessionList::const_iterator it = url_it->second.begin();
        it != url_it->second.end();) {
     base::WeakPtr<SpdySession> spdy_session = *it;
     ++it;
@@ -43,9 +43,6 @@ base::WeakPtr<SpdySession> Http2PushPromiseIndex::Find(
       continue;
     }
     return spdy_session;
-  }
-  if (url_it->second.empty()) {
-    unclaimed_pushed_streams_.erase(url_it);
   }
 
   return base::WeakPtr<SpdySession>();
@@ -80,20 +77,18 @@ void Http2PushPromiseIndex::UnregisterUnclaimedPushedStream(
   UnclaimedPushedStreamMap::iterator url_it =
       unclaimed_pushed_streams_.find(url);
   DCHECK(url_it != unclaimed_pushed_streams_.end());
-  size_t removed = 0;
   for (WeakSessionList::iterator it = url_it->second.begin();
        it != url_it->second.end();) {
     if (it->get() == spdy_session) {
-      it = url_it->second.erase(it);
-      ++removed;
-      break;
+      url_it->second.erase(it);
+      if (url_it->second.empty()) {
+        unclaimed_pushed_streams_.erase(url_it);
+      }
+      return;
     }
     ++it;
   }
-  if (url_it->second.empty()) {
-    unclaimed_pushed_streams_.erase(url_it);
-  }
-  DCHECK_EQ(1u, removed);
+  NOTREACHED();
 }
 
 }  // namespace net
