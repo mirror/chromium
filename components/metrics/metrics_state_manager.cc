@@ -19,9 +19,11 @@
 #include "components/metrics/cloned_install_detector.h"
 #include "components/metrics/enabled_state_provider.h"
 #include "components/metrics/machine_id_provider.h"
+#include "components/metrics/metrics_log.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/metrics_provider.h"
 #include "components/metrics/metrics_switches.h"
+#include "components/metrics/proto/chrome_user_metrics_extension.pb.h"
 #include "components/metrics/proto/system_profile.pb.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -67,10 +69,20 @@ int64_t RoundSecondsToHour(int64_t time_in_seconds) {
   return 3600 * (time_in_seconds / 3600);
 }
 
+// Records the cloned install histogram.
+void LogClonedInstall() {
+  // Equivalent to UMA_HISTOGRAM_BOOLEAN with the stability flag set.
+  UMA_STABILITY_HISTOGRAM_ENUMERATION("UMA.IsClonedInstall", 1, 2);
+}
+
 class MetricsStateMetricsProvider : public MetricsProvider {
  public:
-  MetricsStateMetricsProvider(PrefService* local_state)
-      : local_state_(local_state) {}
+  MetricsStateMetricsProvider(PrefService* local_state,
+                              bool metrics_ids_were_reset,
+                              std::string previous_client_id)
+      : local_state_(local_state),
+        metrics_ids_were_reset_(metrics_ids_were_reset),
+        previous_client_id_(previous_client_id) {}
 
   // MetricsProvider:
   void ProvideSystemProfileMetrics(
@@ -81,14 +93,29 @@ class MetricsStateMetricsProvider : public MetricsProvider {
         RoundSecondsToHour(ReadInstallDate(local_state_)));
   }
 
+  void ProvidePreviousSessionData(
+      ChromeUserMetricsExtension* uma_proto) override {
+    if (metrics_ids_were_reset_) {
+      LogClonedInstall();
+      // Overwrite the client id for the previous session log so the log
+      // contains the client id at the time of the previous session.  This
+      // allows better attribution of crashes to earlier behavior.
+      uma_proto->set_client_id(MetricsLog::Hash(previous_client_id_));
+    }
+  }
+
   void ProvideCurrentSessionData(
       ChromeUserMetricsExtension* uma_proto) override {
     if (local_state_->GetBoolean(prefs::kMetricsResetIds))
-      UMA_HISTOGRAM_BOOLEAN("UMA.IsClonedInstall", true);
+      LogClonedInstall();
   }
 
  private:
   PrefService* local_state_;
+  bool metrics_ids_were_reset_;
+  // |previous_client_id_| is only valid if |metrics_ids_were_reset_|.
+  std::string previous_client_id_;
+
   DISALLOW_COPY_AND_ASSIGN(MetricsStateMetricsProvider);
 };
 
@@ -109,10 +136,16 @@ MetricsStateManager::MetricsStateManager(
       load_client_info_(retrieve_client_info),
       clean_exit_beacon_(backup_registry_key, local_state),
       low_entropy_source_(kLowEntropySourceNotSet),
-      entropy_source_returned_(ENTROPY_SOURCE_NONE) {
+      entropy_source_returned_(ENTROPY_SOURCE_NONE),
+      metrics_ids_were_reset_(false) {
   ResetMetricsIDsIfNecessary();
-  if (enabled_state_provider_->IsConsentGiven())
-    ForceClientIdCreation();
+  if (enabled_state_provider_->IsConsentGiven()) {
+    if (ForceClientIdCreation()) {
+      // If the client id already existed (a brand new one was not created),
+      // it must've been the one used in the previous session.
+      previous_client_id_ = client_id_;
+    }
+  }
 
   // Set the install date if this is our first run.
   int64_t install_date = local_state_->GetInt64(prefs::kInstallDate);
@@ -129,7 +162,8 @@ MetricsStateManager::~MetricsStateManager() {
 }
 
 std::unique_ptr<MetricsProvider> MetricsStateManager::GetProvider() {
-  return base::MakeUnique<MetricsStateMetricsProvider>(local_state_);
+  return base::MakeUnique<MetricsStateMetricsProvider>(
+      local_state_, metrics_ids_were_reset_, previous_client_id_);
 }
 
 bool MetricsStateManager::IsMetricsReportingEnabled() {
@@ -140,18 +174,18 @@ int64_t MetricsStateManager::GetInstallDate() const {
   return ReadInstallDate(local_state_);
 }
 
-void MetricsStateManager::ForceClientIdCreation() {
+bool MetricsStateManager::ForceClientIdCreation() {
   {
     std::string client_id_from_prefs =
         local_state_->GetString(prefs::kMetricsClientID);
     // If client id in prefs matches the cached copy, return early.
     if (!client_id_from_prefs.empty() && client_id_from_prefs == client_id_)
-      return;
+      return true;
     client_id_.swap(client_id_from_prefs);
   }
 
   if (!client_id_.empty())
-    return;
+    return true;
 
   const std::unique_ptr<ClientInfo> client_info_backup = LoadClientInfo();
   if (client_info_backup) {
@@ -184,7 +218,7 @@ void MetricsStateManager::ForceClientIdCreation() {
     // Flush the backup back to persistent storage in case we re-generated
     // missing data above.
     BackUpCurrentClientInfo();
-    return;
+    return true;
   }
 
   // Failing attempts at getting an existing client ID, generate a new one.
@@ -196,6 +230,7 @@ void MetricsStateManager::ForceClientIdCreation() {
                          base::Time::Now().ToTimeT());
 
   BackUpCurrentClientInfo();
+  return false;
 }
 
 void MetricsStateManager::CheckForClonedInstall() {
@@ -343,6 +378,7 @@ void MetricsStateManager::UpdateEntropySourceReturnedValue(
 void MetricsStateManager::ResetMetricsIDsIfNecessary() {
   if (!local_state_->GetBoolean(prefs::kMetricsResetIds))
     return;
+  metrics_ids_were_reset_ = true;
 
   UMA_HISTOGRAM_BOOLEAN("UMA.MetricsIDsReset", true);
 
