@@ -186,6 +186,11 @@ void QuicPacketGenerator::GenerateMtuDiscoveryPacket(QuicByteCount target_mtu) {
   SetMaxPacketLength(current_mtu);
 }
 
+std::unique_ptr<QuicEncryptedPacket>
+QuicPacketGenerator::SerializeConnectivityProbingPacket() {
+  return packet_creator_.SerializeConnectivityProbingPacket();
+}
+
 bool QuicPacketGenerator::CanSendWithNextPendingFrameAddition() const {
   DCHECK(HasPendingFrames() || packet_creator_.pending_padding_bytes() > 0);
   HasRetransmittableData retransmittable =
