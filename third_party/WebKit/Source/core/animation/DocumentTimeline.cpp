@@ -193,11 +193,13 @@ void DocumentTimeline::DocumentTimelineTiming::Trace(blink::Visitor* visitor) {
 
 size_t DocumentTimeline::MainThreadCompositableAnimationsCount() const {
   size_t main_thread_compositable_animations_count = 0;
-  for (Animation* animation : animations_needing_update_) {
+  // TODO(xidachen): Restore the calculation here. It is temporary commented out
+  // due to crbug.com/781305.
+  /*for (Animation* animation : animations_needing_update_) {
     if (animation->IsNonCompositedCompositable() &&
         animation->PlayStateInternal() != Animation::kFinished)
       main_thread_compositable_animations_count++;
-  }
+  }*/
   return main_thread_compositable_animations_count;
 }
 

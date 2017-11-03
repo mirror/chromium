@@ -1358,7 +1358,8 @@ TEST_F(AnimationCompositorAnimationsTest, canStartElementOnCompositorEffect) {
   EXPECT_EQ(host->GetMainThreadCompositableAnimationsCountForTesting(), 0u);
   EXPECT_EQ(host->GetCompositedAnimationsCountForTesting(), 1u);
 }
-
+// TODO(xidachen): test temporary disabled due to crbug.com/781305.
+/*
 TEST_F(AnimationCompositorAnimationsTest,
        cannotStartElementOnCompositorEffectWithRuntimeFeature) {
   ScopedTurnOff2DAndOpacityCompositorAnimationsForTest
@@ -1383,5 +1384,5 @@ TEST_F(AnimationCompositorAnimationsTest,
   EXPECT_EQ(host->GetMainThreadCompositableAnimationsCountForTesting(), 1u);
   EXPECT_EQ(host->GetCompositedAnimationsCountForTesting(), 0u);
 }
-
+*/
 }  // namespace blink
