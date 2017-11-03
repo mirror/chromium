@@ -46,6 +46,30 @@
       "revId": "a9cbdd35df06953b46f64fa48e376d80d8dbf28f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06855a7a_a2c321b1",
+        "filename": "components/exo/sub_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-03T15:06:11Z",
+      "side": 1,
+      "message": "I understood. Thanks for explanation.",
+      "parentUuid": "d1b52797_10301969",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 34
+      },
+      "revId": "a9cbdd35df06953b46f64fa48e376d80d8dbf28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
