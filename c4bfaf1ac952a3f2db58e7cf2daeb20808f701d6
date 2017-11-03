@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9dd69719_c69faca9",
+        "filename": "content/browser/compositor/software_browser_compositor_output_surface.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-03T16:04:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2d6cf30_32d7561c",
+      "revId": "c4bfaf1ac952a3f2db58e7cf2daeb20808f701d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac2186b3_a2ecd03a",
         "filename": "gpu/ipc/common/gpu_messages.h",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "c4bfaf1ac952a3f2db58e7cf2daeb20808f701d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b7a463_278e1a46",
+        "filename": "gpu/ipc/common/gpu_messages.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-03T16:04:38Z",
+      "side": 1,
+      "message": "I added a new switch --enable-presentaion-callback in gl_switches.h.\nWe will only send this IPC with this new switch. And the GpuCommandBufferMsg_UpdateVSyncParameters\nwill not be used with this flag.\n\nDone",
+      "parentUuid": "ac2186b3_a2ecd03a",
+      "revId": "c4bfaf1ac952a3f2db58e7cf2daeb20808f701d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0b8e569c_7d10fdf9",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-03T16:04:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ba7188b_9098e355",
+      "revId": "c4bfaf1ac952a3f2db58e7cf2daeb20808f701d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d8f37ea_e8011a92",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "c4bfaf1ac952a3f2db58e7cf2daeb20808f701d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f82936e_8fa2591b",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-03T16:04:38Z",
+      "side": 1,
+      "message": "This is for testing the plumbing on workstation. I will remove it.",
+      "parentUuid": "7d8f37ea_e8011a92",
+      "revId": "c4bfaf1ac952a3f2db58e7cf2daeb20808f701d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
