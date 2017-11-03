@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "142bc61e_101585a7",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-03T19:01:23Z",
+      "side": 1,
+      "message": "Just for my own education, where is the current version defined?",
+      "revId": "97663072285173731608b708325fdea3c0aaaef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f6e332_4740f637",
+        "filename": "content/common/page_state_serialization.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-03T19:01:23Z",
+      "side": 1,
+      "message": "Is there a reason to sort these fields by type, or can we group the scroll anchor ones together?",
+      "revId": "97663072285173731608b708325fdea3c0aaaef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "758e26bf_c74eeab4",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-03T19:01:23Z",
+      "side": 1,
+      "message": "I think I agree with putting the new version test where you did, but we should probably update this comment to that effect (i.e., version tests go there, and field tests go here).",
+      "revId": "97663072285173731608b708325fdea3c0aaaef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
