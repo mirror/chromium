@@ -12,12 +12,14 @@
 #include "base/containers/hash_tables.h"
 #include "base/containers/queue.h"
 #include "base/feature_list.h"
+#include "base/files/scoped_temp_dir.h"
 #include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/process/kill.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "cc/base/switches.h"
@@ -576,7 +578,45 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       GetProcess()->GetID(), routing_id_);
 }
 
+static void WriteToFile(int i) {
+  LOG(ERROR) << __func__ << ": file #" << i;
+  base::ScopedTempDir temp_dir;
+  DCHECK(temp_dir.CreateUniqueTempDir());
+  base::FilePath file_path = temp_dir.GetPath().AppendASCII("read_write_file");
+  base::File file(file_path, base::File::FLAG_CREATE | base::File::FLAG_READ |
+                                 base::File::FLAG_WRITE);
+  char data_to_write[] = "test";
+  const int kTestDataSize = 4;
+  // Write "test" to the file.
+  int bytes_written = file.Write(0, data_to_write, kTestDataSize);
+  LOG(ERROR) << __func__ << ": bytes_written = " << bytes_written;
+}
+
+static void WriteToFileTask(int i) {
+  LOG(ERROR) << __func__ << ": start";
+
+  WriteToFile(i);
+
+  if (i == 1000)
+    return;
+
+  scoped_refptr<base::SequencedTaskRunner> task_runner =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+  task_runner->PostTask(FROM_HERE, base::Bind(&WriteToFileTask, i + 1));
+
+  LOG(ERROR) << __func__ << ": end";
+}
+
 RenderFrameHostImpl::~RenderFrameHostImpl() {
+  LOG(ERROR) << __func__ << ": destructing RFHI!!!!!!!";
+
+  scoped_refptr<base::SequencedTaskRunner> task_runner =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+  //        {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
+  task_runner->PostTask(FROM_HERE, base::Bind(&WriteToFileTask, 0));
+
   // Destroying navigation handle may call into delegates/observers,
   // so we do it early while |this| object is still in a sane state.
   navigation_handle_.reset();
