@@ -16,6 +16,24 @@
       "revId": "3c1c059ccae512413da2144a826323f2cd83d4fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f62290_30da97c4",
+        "filename": "third_party/zlib/contrib/tests/fuzzers/deflate_set_dictionary_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-03T21:28:22Z",
+      "side": 1,
+      "message": "Yeah, I think a lot can be shared between the tests.\nI\u0027ll make a separate CL for that.",
+      "parentUuid": "d28e5334_052110e7",
+      "revId": "3c1c059ccae512413da2144a826323f2cd83d4fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
