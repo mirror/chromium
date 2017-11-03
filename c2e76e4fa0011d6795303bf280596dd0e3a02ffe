@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d27d3f7f_3cf435f5",
+        "filename": "chrome/browser/media/media_engagement_score_details.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T13:58:56Z",
+      "side": 1,
+      "message": "nit: \"// Data used for experiments.\"?",
+      "revId": "c2e76e4fa0011d6795303bf280596dd0e3a02ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
