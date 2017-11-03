@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee15f517_6d7fe577",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-03T18:25:52Z",
+      "side": 1,
+      "message": "Use DISABLED_AnimationCompositorAnimationsTest rather than commenting out the test.",
+      "revId": "ba5b330a64f7fc3a8699970c90af072c75fc2e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a642ab_3cce6ad7",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentTimeline.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-03T18:25:52Z",
+      "side": 1,
+      "message": "Just remove the code - it can be looked up in the commit history.",
+      "revId": "ba5b330a64f7fc3a8699970c90af072c75fc2e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
