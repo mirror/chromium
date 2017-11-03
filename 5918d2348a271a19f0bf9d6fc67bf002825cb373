@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b55201ed_18a9aabe",
+        "filename": "chrome/browser/resources/vr_daydream_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-03T17:33:05Z",
+      "side": 1,
+      "message": "That was what I started with, but just because we don\u0027t have the controller model in the product doesn\u0027t mean we don\u0027t want it in tests.  The linux test app in particular uses the controller assets (and it makes sense to continue doing that), and we could unittest the ControllerMesh on all platforms even though it isn\u0027t in the product on Windows.\n\nThis setup allows us to use the resources in tests on all platforms, but only include them in the product on the platforms where we want them.",
+      "parentUuid": "4798827b_b04725e2",
+      "revId": "5918d2348a271a19f0bf9d6fc67bf002825cb373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1929210d_822a2812",
         "filename": "chrome/browser/vr/BUILD.gn",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-03T02:02:22Z",
       "side": 1,
       "message": "So is the plan that if we wanted a controller mesh for another platform, we\u0027d include a different .cc file for that platform? The .h file doesn\u0027t seem daydream specific, but is it sufficiently general for cross platform purposes?",
+      "revId": "5918d2348a271a19f0bf9d6fc67bf002825cb373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a633806a_7348d83d",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-03T17:33:05Z",
+      "side": 1,
+      "message": "The existing .h file is somewhat platform-specific but has some utility methods and overall shape that could be reused.  In particular, the State enum seems quite daydream-specific, but exposing index/vertex/texture buffers seems fairly cross-platform.\n\nIf we follow the same pattern of using GLTF models + textures for assets, the existing class/implementation could be adapted to be cross platform.  However, if we obtain models through OpenVR APIs, a new implementation cc file may be needed.",
+      "parentUuid": "1929210d_822a2812",
       "revId": "5918d2348a271a19f0bf9d6fc67bf002825cb373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
