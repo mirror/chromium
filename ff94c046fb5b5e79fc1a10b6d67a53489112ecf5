@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7163484c_74d29126",
+        "filename": "services/service_manager/sandbox/sandbox_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-03T18:09:18Z",
+      "side": 1,
+      "message": "nit: Can we just say StringFromSandboxType? though i guess that would mean also changing the below to SandboxTypeFromString. Maybe we can just do this later",
+      "revId": "ff94c046fb5b5e79fc1a10b6d67a53489112ecf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
