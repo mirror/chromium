@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27bf7b99_51c9e705",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-03T17:35:09Z",
+      "side": 1,
+      "message": "nit: remove empty line.",
+      "revId": "3061a166b6049615ee028204774c44e039accb85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f467d6_17aa4a09",
+        "filename": "components/offline_pages/core/model/create_archive_task.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-03T17:35:09Z",
+      "side": 1,
+      "message": "nit: putting parameter\u0027s name here is inconsistent with this signature.\nEither add it everywhere (commented out) or drop this one.",
+      "range": {
+        "startLine": 55,
+        "startChar": 49,
+        "endLine": 55,
+        "endChar": 55
+      },
+      "revId": "3061a166b6049615ee028204774c44e039accb85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
