@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78c0d7e5_4c2622f9",
+        "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-03T22:53:24Z",
+      "side": 1,
+      "message": "Should |shouldAddPodBackground| be equal to !WallpaperController::ShouldApplyBlur()? This way you can get rid of WallpaperController::IsDevicePolicyWallpaper() function and integrate it into WallpaperController::ShouldApplyBlur() or make IsDevicePolicyWallpaper() a private function.",
+      "revId": "6af1b34c308af99f1084f605820c2dddaec8c0f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "903810f1_4fd8a01b",
+        "filename": "components/wallpaper/wallpaper_resizer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-03T22:53:24Z",
+      "side": 1,
+      "message": "why does it have to be the full info?",
+      "revId": "6af1b34c308af99f1084f605820c2dddaec8c0f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
