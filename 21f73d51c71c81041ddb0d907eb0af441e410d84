@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa2f8457_7941654d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console-show-all-messages.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-03T01:54:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c31fa4db_b871a518",
+      "revId": "21f73d51c71c81041ddb0d907eb0af441e410d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76f7a0db_934198a7",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-02T23:05:13Z",
       "side": 1,
       "message": "Move this into this._cancelBuildVisibleCache?",
+      "revId": "21f73d51c71c81041ddb0d907eb0af441e410d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4aeba9b_ca06afa3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-03T01:54:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "76f7a0db_934198a7",
       "revId": "21f73d51c71c81041ddb0d907eb0af441e410d84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6f2a60e9_e7c3975a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-03T01:54:16Z",
+      "side": 1,
+      "message": "Okay, how about both?  Date.now() wasn\u0027t expensive in the timeline, but we can lower bound the # of messages required, similar to FilteredListWidget.\n\nYeah, almost forgot that we spliced messages into the middle.  To address this case, I\u0027ve added a .set() inside shouldMesageBeVisible().  When a message is added to the middle, our throttled full updates will take care of them shortly, ask whether they are visible, and store them in ConsoleView\u0027s cache.\n\nWe can make a copy of the _consoleMessages list to make it clear that the order / messages don\u0027t change while we index them.",
+      "parentUuid": "9ed75ddb_12415a8f",
+      "revId": "21f73d51c71c81041ddb0d907eb0af441e410d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9371fb62_e7c11df3",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-02T23:05:13Z",
       "side": 1,
       "message": "Use raf 16ms instead?",
+      "revId": "21f73d51c71c81041ddb0d907eb0af441e410d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a882a953_9c4b22af",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-03T01:54:16Z",
+      "side": 1,
+      "message": "Done.  I also checked requestIdleCallback, but it is only supported on Chrome and Firefox rn.",
+      "parentUuid": "9371fb62_e7c11df3",
       "revId": "21f73d51c71c81041ddb0d907eb0af441e410d84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
