@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c03ce10b_5bb000ac",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-11-03T22:38:50Z",
+      "side": 1,
+      "message": "See my comment on https://canary-chromium-review.googlesource.com/c/chromium/tools/depot_tools/+/754003#3008\n\nThis doesn\u0027t work on Windows, since the subprocess can\u0027t open and read the file until this process has closed it. So you need to pass delete\u003dFalse to NamedTemporaryFile, close the file, and then manually os.remove it after the subprocess terminates.\n\nEither that, or leave a comment here saying that we don\u0027t expect this code to run on windows, so this is safe.",
+      "revId": "628d176eb9ee6deb9ddbd0aa0268ba9c2718bcb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed37e91c_08769ffe",
+        "filename": "tools/checkperms/checkperms.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-11-03T22:38:50Z",
+      "side": 1,
+      "message": "Throw an argparse.ArgumentError if both --file and --file-list are specified.",
+      "revId": "628d176eb9ee6deb9ddbd0aa0268ba9c2718bcb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
