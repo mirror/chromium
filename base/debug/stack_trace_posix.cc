@@ -565,24 +565,10 @@ class SandboxSymbolizeHelper {
     // std::vector<MappedMemoryRegion> using a const_iterator does not allocate
     // dynamic memory, hence it is async-signal-safe.
     std::vector<MappedMemoryRegion>::const_iterator it;
-    bool is_first = true;
-    for (it = instance->regions_.begin(); it != instance->regions_.end();
-         ++it, is_first = false) {
-      const MappedMemoryRegion& region = *it;
+    for (const MappedMemoryRegion& region : instance->regions_) {
       if (region.start <= pc && pc < region.end) {
         start_address = region.start;
-        // Don't subtract 'start_address' from the first entry:
-        // * If a binary is compiled w/o -pie, then the first entry in
-        //   process maps is likely the binary itself (all dynamic libs
-        //   are mapped higher in address space). For such a binary,
-        //   instruction offset in binary coincides with the actual
-        //   instruction address in virtual memory (as code section
-        //   is mapped to a fixed memory range).
-        // * If a binary is compiled with -pie, all the modules are
-        //   mapped high at address space (in particular, higher than
-        //   shadow memory of the tool), so the module can't be the
-        //   first entry.
-        base_address = (is_first ? 0U : start_address) - region.offset;
+        base_address = region.base;
         if (file_path && file_path_size > 0) {
           strncpy(file_path, region.path.c_str(), file_path_size);
           // Ensure null termination.
@@ -592,6 +578,54 @@ class SandboxSymbolizeHelper {
       }
     }
     return -1;
+  }
+
+  void SetBaseAddr() {
+    int mem_fd = open("/proc/self/mem", O_RDONLY | O_CLOEXEC);
+    if (mem_fd == -1)
+      return;
+
+    auto safe_memcpy = [mem_fd](void* dst, uintptr_t src, size_t size) {
+      if (lseek(mem_fd, src, SEEK_SET) == (off_t)-1)
+        return false;
+      return read(mem_fd, dst, size) == (ssize_t)size;
+    };
+
+    uintptr_t cur_base = 0;
+    for (auto& r : regions_) {
+      if (r.permissions & MappedMemoryRegion::READ) {
+        ElfW(Ehdr) ehdr;
+        if (safe_memcpy(&ehdr, r.start, sizeof(ElfW(Ehdr)))) {
+          if (memcmp(ehdr.e_ident, ELFMAG, SELFMAG) == 0) {
+            if (ehdr.e_type == ET_EXEC) {
+              cur_base = 0;
+            }
+            if (ehdr.e_type == ET_DYN) {
+              // Find the segment containing file offset 0. This will correspond
+              // to the ELF header that we just read. Normally this will have
+              // virtual address 0, but this is not guaranteed. We must subtract
+              // the virtual address from the address where the ELF header was
+              // mapped to get the base address.
+              for (unsigned i = 0; i != ehdr.e_phnum; ++i) {
+                ElfW(Phdr) phdr;
+                if (safe_memcpy(&phdr,
+                                r.start + ehdr.e_phoff + i * sizeof(phdr),
+                                sizeof(phdr))) {
+                  if (phdr.p_type == PT_LOAD && phdr.p_offset == 0) {
+                    cur_base = r.start - phdr.p_vaddr;
+                    break;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      r.base = cur_base;
+    }
+
+    close(mem_fd);
   }
 
   // Parses /proc/self/maps in order to compile a list of all object file names
@@ -610,6 +644,8 @@ class SandboxSymbolizeHelper {
       LOG(ERROR) << "Failed to parse the contents of /proc/self/maps";
       return false;
     }
+
+    SetBaseAddr();
 
     is_initialized_ = true;
     return true;
