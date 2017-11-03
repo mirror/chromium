@@ -50,18 +50,17 @@ void WebNotificationDelegate::Close(bool by_user) {
   auto* display_service =
       NotificationDisplayServiceFactory::GetForProfile(profile_);
   display_service->ProcessNotificationOperation(
-      NotificationCommon::CLOSE, notification_type_, origin().spec(),
-      notification_id_, base::nullopt /* action_index */,
-      base::nullopt /* reply */, by_user);
+      NotificationCommon::CLOSE, notification_type_, origin(), notification_id_,
+      base::nullopt /* action_index */, base::nullopt /* reply */, by_user);
 }
 
 void WebNotificationDelegate::Click() {
   auto* display_service =
       NotificationDisplayServiceFactory::GetForProfile(profile_);
   display_service->ProcessNotificationOperation(
-      NotificationCommon::CLICK, notification_type_, origin().spec(),
-      notification_id_, base::nullopt /* action_index */,
-      base::nullopt /* reply */, base::nullopt /* by_user */);
+      NotificationCommon::CLICK, notification_type_, origin(), notification_id_,
+      base::nullopt /* action_index */, base::nullopt /* reply */,
+      base::nullopt /* by_user */);
 }
 
 void WebNotificationDelegate::ButtonClick(int action_index) {
@@ -69,9 +68,8 @@ void WebNotificationDelegate::ButtonClick(int action_index) {
   auto* display_service =
       NotificationDisplayServiceFactory::GetForProfile(profile_);
   display_service->ProcessNotificationOperation(
-      NotificationCommon::CLICK, notification_type_, origin().spec(),
-      notification_id_, action_index, base::nullopt /* reply */,
-      base::nullopt /* by_user */);
+      NotificationCommon::CLICK, notification_type_, origin(), notification_id_,
+      action_index, base::nullopt /* reply */, base::nullopt /* by_user */);
 }
 
 void WebNotificationDelegate::ButtonClickWithReply(
@@ -80,6 +78,6 @@ void WebNotificationDelegate::ButtonClickWithReply(
   auto* display_service =
       NotificationDisplayServiceFactory::GetForProfile(profile_);
   display_service->ProcessNotificationOperation(
-      NotificationCommon::CLICK, notification_type_, origin().spec(),
-      notification_id_, action_index, reply, base::nullopt /* by_user */);
+      NotificationCommon::CLICK, notification_type_, origin(), notification_id_,
+      action_index, reply, base::nullopt /* by_user */);
 }

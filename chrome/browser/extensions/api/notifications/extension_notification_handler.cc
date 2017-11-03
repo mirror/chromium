@@ -26,8 +26,7 @@ namespace notifications = api::notifications;
 
 namespace {
 
-std::string GetExtensionId(const std::string& extension_url) {
-  GURL url(extension_url);
+std::string GetExtensionId(const GURL& url) {
   if (!url.is_valid() || !url.SchemeIs(extensions::kExtensionScheme))
     return "";
   return url.GetOrigin().host_piece().as_string();
@@ -57,7 +56,7 @@ void ExtensionNotificationHandler::OnShow(Profile* profile,
                                           const std::string& notification_id) {}
 
 void ExtensionNotificationHandler::OnClose(Profile* profile,
-                                           const std::string& origin,
+                                           const GURL& origin,
                                            const std::string& notification_id,
                                            bool by_user) {
   EventRouter::UserGestureState gesture =
@@ -80,7 +79,7 @@ void ExtensionNotificationHandler::OnClose(Profile* profile,
 
 void ExtensionNotificationHandler::OnClick(
     Profile* profile,
-    const std::string& origin,
+    const GURL& origin,
     const std::string& notification_id,
     const base::Optional<int>& action_index,
     const base::Optional<base::string16>& reply) {
@@ -113,10 +112,10 @@ bool ExtensionNotificationHandler::ShouldDisplayOnFullScreen(
     Profile* profile,
     const std::string& origin) {
   DCHECK(profile);
-  DCHECK(!GetExtensionId(origin).empty());
+  DCHECK(!GetExtensionId(GURL(origin)).empty());
   AppWindowRegistry::AppWindowList windows =
       AppWindowRegistry::Get(profile)->GetAppWindowsForApp(
-          GetExtensionId(origin));
+          GetExtensionId(GURL(origin)));
   for (auto* window : windows) {
     // Window must be fullscreen and visible
     if (window->IsFullscreen() && window->GetBaseWindow()->IsActive())
