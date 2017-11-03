@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "46ed6b28_c2eb69c9",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-03T17:06:22Z",
+      "side": 1,
+      "message": "It seems that the animation is only on the parent and the children do not have their own animation (opacity or transform). In this case, having layer enabled on the parent is enough.\n\nEnabling layer implies allocating texture for the view, which cost GPU memory. We should be conservative and try to achieve what we want using minimum layers since GPU memory is a scarce resource.",
+      "parentUuid": "469daa20_9080c808",
+      "revId": "906817f9f7d86ae41b16a0f2da997b216d07f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb2ddc66_df32ac78",
         "filename": "ash/login/ui/login_bubble.cc",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Not abort here has some corner cases:\nFor example, if a show(visible\u003d\u003dtrue) animation is ongoing and we click outside bubble to schedule a close animation(visible\u003d\u003dfalse), if we don\u0027t abort the show animation, it will call OnLayerAnimationEnded immediately and then close the bubble widget(since visible\u003d\u003dfalse now). We won\u0027t be enable to see a close animation.\nIf we don\u0027t care about this, we could probably merge OnLayerAnimationAborted and OnLayerAnimationEnded.",
       "parentUuid": "da8094d6_358c6e66",
+      "revId": "906817f9f7d86ae41b16a0f2da997b216d07f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a15725_c6f2ed1c",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-03T17:06:22Z",
+      "side": 1,
+      "message": "Can you try set IMMEDIATELY_ANIMATE_TO_NEW_TARGET as PreemptionStrategy for the animation? We might be able to get rid of AbortAllAnimations() using that.\n\ni.e. add this after L299:\n  settings.SetPreemptionStrategy(\n      ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);",
+      "parentUuid": "0eb816de_9cda52d7",
       "revId": "906817f9f7d86ae41b16a0f2da997b216d07f832",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
