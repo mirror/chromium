@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d0a91dc_0ea55cd2",
+        "filename": "ash/wm/workspace/workspace_window_resizer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-03T22:42:52Z",
+      "side": 0,
+      "message": "nit: cite this (or the dup bug) in BUG\u003d",
+      "revId": "1d2d5ce69bbc0c4cb07204aed7dad82ace633eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5829c0_298e34b0",
+        "filename": "testing/buildbot/filters/ash_unittests_mash.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-03T22:42:52Z",
+      "side": 0,
+      "message": "q: Is this comment not relevant to the tests below?",
+      "revId": "1d2d5ce69bbc0c4cb07204aed7dad82ace633eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
