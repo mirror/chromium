@@ -356,6 +356,8 @@ class NET_EXPORT NetworkQualityEstimator
   FRIEND_TEST_ALL_PREFIXES(
       NetworkQualityEstimatorTest,
       TestComputeIncreaseInTransportRTTPartialHostsOverlap);
+  FRIEND_TEST_ALL_PREFIXES(NetworkQualityEstimatorTest,
+                           ObservationDiscardedIfCachedEstimateAvailable);
 
   typedef nqe::internal::Observation Observation;
   typedef nqe::internal::ObservationBuffer ObservationBuffer;
@@ -625,6 +627,10 @@ class NET_EXPORT NetworkQualityEstimator
 
   // Stores the qualities of different networks.
   std::unique_ptr<nqe::internal::NetworkQualityStore> network_quality_store_;
+
+  // True if a cached RTT or throughput estimate was available and the
+  // corresponding observation has been added on the current network.
+  bool cached_estimate_applied_;
 
   base::ThreadChecker thread_checker_;
 
