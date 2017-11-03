@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7abb1e3d_790ae47a",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-03T15:55:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f171c61_ee16b473",
+      "revId": "4574d9a5d9486ce581bdf2fa7741adaa5b0be6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ecd9efe_79efb014",
         "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2fb63eaa_5ca46d24",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-03T15:55:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ecd9efe_79efb014",
+      "revId": "4574d9a5d9486ce581bdf2fa7741adaa5b0be6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4d770f7_b55652cf",
         "filename": "media/gpu/vaapi_video_decode_accelerator.h",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-03T01:44:42Z",
       "side": 1,
       "message": "Should we change this to a unique_ptr while we\u0027re at it?\n\nAlternatively, could this just be a queue\u003cInputBuffer\u003e?",
+      "revId": "4574d9a5d9486ce581bdf2fa7741adaa5b0be6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48628aab_0caf9a5b",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-03T15:55:59Z",
+      "side": 1,
+      "message": "InputBuffer has a std::unique_ptr\u003c\u003e inside so\nit should not be copyable. I\u0027d rather leave\nlinked_ptr to keep this CL small, and remove\nthe linked_ptr later when encapsulating this\ndata type and associated queue and condition\nvariable into some kind of blocking queue. WDYT?",
+      "parentUuid": "c4d770f7_b55652cf",
       "revId": "4574d9a5d9486ce581bdf2fa7741adaa5b0be6cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
