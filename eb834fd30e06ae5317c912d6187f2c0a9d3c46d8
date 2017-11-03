@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c730bc5a_2aa896c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T23:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eff7a0f_8f064e6f",
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66d393cc_117c35d7",
         "filename": "components/offline_pages/core/prefetch/import_completed_task.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069edf75_b2ede12a",
+        "filename": "components/offline_pages/core/prefetch/import_completed_task.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T23:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66d393cc_117c35d7",
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "813e3d55_aa70d884",
+        "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T23:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d9e0e2c_a51a4dad",
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a848988_19b20316",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-03T20:02:07Z",
       "side": 1,
       "message": "IMHO, the deprecated not should be in the description, not the label.",
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b73230_c38b5f58",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 29515,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T23:22:28Z",
+      "side": 1,
+      "message": "We tend to put \"deprecated\" in the label most of time.",
+      "parentUuid": "5a848988_19b20316",
       "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
