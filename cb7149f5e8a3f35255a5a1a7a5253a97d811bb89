@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1078389f_f4f0794c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-03T22:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c5d5e51_75b315a9",
+      "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ddcd839_4c609134",
         "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf3d1ad_978417bb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-03T22:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ddcd839_4c609134",
+      "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3a51a6b9_99445a4e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 3195,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-03T22:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51420dd7_6d0e724f",
+      "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf21e527_8f996a8c",
         "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-03T20:13:34Z",
       "side": 1,
       "message": "Is this possible?",
+      "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc668fda_538a02d2",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-03T22:28:22Z",
+      "side": 1,
+      "message": "LocalFrameView has that check in its ElementVisibilityObserver callback, but now that I look at it, I don\u0027t see how this can happen. If the RemoteFrameView is destroyed the callback should not be possible. Removed.",
+      "parentUuid": "bf21e527_8f996a8c",
       "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "287ee731_c505e1aa",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-03T22:28:22Z",
+      "side": 1,
+      "message": "Yes I had to change LocalFrameView::UpdateRenderThrottlingStatus() to still work when there isn\u0027t a local owner element (i.e. the actual iframe DOM element is in a different process, which is the case for OOPIFs). RemoteFrameView doesn\u0027t have to deal with that, because it is only created for RemoteFrames that have LocalFrame parents.",
+      "parentUuid": "7726ec61_ab861f58",
+      "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b348162_95a74e2e",
         "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.h",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d96c4f_bbfd5251",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-03T22:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b348162_95a74e2e",
+      "revId": "cb7149f5e8a3f35255a5a1a7a5253a97d811bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
