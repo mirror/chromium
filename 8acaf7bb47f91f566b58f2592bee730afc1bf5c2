@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "2fb4330e_9c0d76d9",
+        "filename": "chrome/browser/net/proxy_resolver_manager.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-03T17:36:17Z",
+      "side": 1,
+      "message": "Not sure about the ProxyResolverV8TracingFactory. Could it be ref counted (or wrapped in a ref couned object) and passed to each ProxyResolverInstance?\nAs for the ServiceContextRef, you should pass one to each ProxyResolverImpl instances when creating them. You can call ServiceContextRef::Clone on the one from the ProxyResolverFactoryImpl.\nThis is what will keep the service alive as long as you have a ProxyResolver bound.",
+      "parentUuid": "379b776f_6c721e0a",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 64
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "418b52f9_d37b8b98",
         "filename": "chrome/browser/net/proxy_resolver_manager.h",
         "patchSetId": 27
