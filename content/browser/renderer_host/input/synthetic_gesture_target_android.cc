@@ -5,6 +5,8 @@
 #include "content/browser/renderer_host/input/synthetic_gesture_target_android.h"
 
 #include "base/trace_event/trace_event.h"
+#include "content/browser/renderer_host/render_widget_host_impl.h"
+#include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "jni/SyntheticGestureTarget_jni.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
@@ -50,10 +52,11 @@ void SyntheticGestureTargetAndroid::TouchSetScrollDeltas(int x,
                                                          int dy) {
   TRACE_EVENT0("input", "SyntheticGestureTargetAndroid::TouchSetScrollDeltas");
   JNIEnv* env = base::android::AttachCurrentThread();
-  float scale_factor = view_->GetDipScale();
-  Java_SyntheticGestureTarget_setScrollDeltas(
-      env, java_ref_, x * scale_factor, y * scale_factor, dx * scale_factor,
-      dy * scale_factor);
+  int wheel_ticks_multiplier =
+      render_widget_host()->GetView()->GetMouseWheelMinimumGranularity();
+  Java_SyntheticGestureTarget_setScrollDeltas(env, java_ref_, x, y,
+                                              dx / wheel_ticks_multiplier,
+                                              dy / wheel_ticks_multiplier);
 }
 
 void SyntheticGestureTargetAndroid::TouchInject(MotionEventAction action,
