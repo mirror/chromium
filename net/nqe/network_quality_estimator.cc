@@ -236,6 +236,8 @@ NetworkQualityEstimator::NetworkQualityEstimator(
           base::TimeDelta::FromSeconds(10)),
       rtt_observations_size_at_last_ect_computation_(0),
       throughput_observations_size_at_last_ect_computation_(0),
+      new_rtt_observations_since_last_ect_computation_(0),
+      new_throughput_observations_since_last_ect_computation_(0),
       increase_in_transport_rtt_updater_posted_(false),
       effective_connection_type_(EFFECTIVE_CONNECTION_TYPE_UNKNOWN),
       net_log_(NetLogWithSource::Make(
@@ -786,6 +788,8 @@ void NetworkQualityEstimator::OnConnectionTypeChanged(
       EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
   rtt_observations_size_at_last_ect_computation_ = 0;
   throughput_observations_size_at_last_ect_computation_ = 0;
+  new_rtt_observations_since_last_ect_computation_ = 0;
+  new_throughput_observations_since_last_ect_computation_ = 0;
   estimated_quality_at_last_main_frame_ = nqe::internal::NetworkQuality();
 
   GatherEstimatesForNextConnectionType();
@@ -1143,6 +1147,8 @@ void NetworkQualityEstimator::ComputeEffectiveConnectionType() {
   rtt_observations_size_at_last_ect_computation_ = rtt_ms_observations_.Size();
   throughput_observations_size_at_last_ect_computation_ =
       downstream_throughput_kbps_observations_.Size();
+  new_rtt_observations_since_last_ect_computation_ = 0;
+  new_throughput_observations_since_last_ect_computation_ = 0;
 }
 
 EffectiveConnectionType NetworkQualityEstimator::GetEffectiveConnectionType()
@@ -1640,6 +1646,7 @@ void NetworkQualityEstimator::AddAndNotifyObserversOfRTT(
             base::TimeDelta::FromMilliseconds(observation.value()));
   DCHECK_GT(NETWORK_QUALITY_OBSERVATION_SOURCE_MAX, observation.source());
 
+  ++new_rtt_observations_since_last_ect_computation_;
   rtt_ms_observations_.AddObservation(observation);
 
   UMA_HISTOGRAM_ENUMERATION("NQE.RTT.ObservationSource", observation.source(),
@@ -1666,6 +1673,7 @@ void NetworkQualityEstimator::AddAndNotifyObserversOfThroughput(
   DCHECK_NE(nqe::internal::INVALID_RTT_THROUGHPUT, observation.value());
   DCHECK_GT(NETWORK_QUALITY_OBSERVATION_SOURCE_MAX, observation.source());
 
+  ++new_throughput_observations_since_last_ect_computation_;
   downstream_throughput_kbps_observations_.AddObservation(observation);
 
   UMA_HISTOGRAM_ENUMERATION("NQE.Kbps.ObservationSource", observation.source(),
@@ -1705,6 +1713,12 @@ void NetworkQualityEstimator::MaybeComputeEffectiveConnectionType() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   const base::TimeTicks now = tick_clock_->NowTicks();
+
+  LOG(WARNING) << "xxx MaybeComputeEffectiveConnectionType cp0 "
+                  "rtt_observations_size_at_last_ect_computation_="
+               << rtt_observations_size_at_last_ect_computation_
+               << " rtt_ms_observations_.Size()="
+               << rtt_ms_observations_.Size();
   // Recompute effective connection type only if
   // |effective_connection_type_recomputation_interval_| has passed since it was
   // last computed or a connection change event was observed since the last
@@ -1723,9 +1737,13 @@ void NetworkQualityEstimator::MaybeComputeEffectiveConnectionType() {
       rtt_observations_size_at_last_ect_computation_ * 1.5 >=
           rtt_ms_observations_.Size() &&
       throughput_observations_size_at_last_ect_computation_ * 1.5 >=
-          downstream_throughput_kbps_observations_.Size()) {
+          downstream_throughput_kbps_observations_.Size() &&
+      (new_rtt_observations_since_last_ect_computation_ +
+       new_throughput_observations_since_last_ect_computation_) < 50) {
+    LOG(WARNING) << "xxx MaybeComputeEffectiveConnectionType cp1";
     return;
   }
+  LOG(WARNING) << "xxx MaybeComputeEffectiveConnectionType cp2";
   ComputeEffectiveConnectionType();
 }
 
