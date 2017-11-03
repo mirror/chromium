@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30ec40b2_2db1a1b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/PermissionUpdateInfoBarDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-03T21:02:14Z",
+      "side": 1,
+      "message": "kinda ugly to use instanceof for this but I guess I\u0027m not too fussed since it\u0027s for gather metrics. I imagine though if/when we implement webapk permissions you wouldn\u0027t just bolt it on here and would have to refactor somewhat, right? We\u0027d need a way to plumb through knowledge of whether the permission request is for a webapk?",
+      "range": {
+        "startLine": 72,
+        "startChar": 25,
+        "endLine": 72,
+        "endChar": 35
+      },
+      "revId": "407bdcbc6cbc336170fdd24f5555fc7bfd747d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b212b2bb_44bf552e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-03T21:02:14Z",
+      "side": 1,
+      "message": "aren\u0027t course/fine location bundled into one geolocation permission?",
+      "range": {
+        "startLine": 66,
+        "startChar": 29,
+        "endLine": 66,
+        "endChar": 62
+      },
+      "revId": "407bdcbc6cbc336170fdd24f5555fc7bfd747d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28001cc5_eb5bf286",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-03T21:02:14Z",
+      "side": 1,
+      "message": "what about storage permission for downloads?",
+      "range": {
+        "startLine": 68,
+        "startChar": 29,
+        "endLine": 68,
+        "endChar": 50
+      },
+      "revId": "407bdcbc6cbc336170fdd24f5555fc7bfd747d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
