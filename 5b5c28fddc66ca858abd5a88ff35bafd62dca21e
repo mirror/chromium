@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ff14168_c7198845",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-03T16:17:32Z",
+      "side": 1,
+      "message": "How about net::URLRequest::kMaxRedirects + 1 ?",
+      "range": {
+        "startLine": 483,
+        "startChar": 31,
+        "endLine": 483,
+        "endChar": 33
+      },
+      "revId": "5b5c28fddc66ca858abd5a88ff35bafd62dca21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
