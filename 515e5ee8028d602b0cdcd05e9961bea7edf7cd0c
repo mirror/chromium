@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "391275f6_e58ba392",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-03T17:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "602cd82d_e8688c53",
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e78e8386_cde1b78a",
         "filename": "content/browser/network_service_client.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-03T17:09:18Z",
       "side": 1,
       "message": "One idea for consideration: it seems simpler if we let NetworkServiceClient directly implements SSLErrorHandler::Delegate. When NetworkServiceClient is gone it disconnects the pipe. After that, running |response| is a no-op anyway, so there is no need to have different lifespan for the delegate.",
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8068db_a0fc034f",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-03T17:45:08Z",
+      "side": 1,
+      "message": "There\u0027s one global NetworkServiceClient, while we need n SSLErrorHandler::Delegate objects as the C++ callbacks don\u0027t have state.",
+      "parentUuid": "e78e8386_cde1b78a",
       "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1a4e4680_3221af1f",
+        "filename": "content/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-03T17:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04b15832_1258053e",
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eea1fbaf_755084f7",
         "filename": "content/network/url_loader.cc",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-03T17:09:18Z",
       "side": 1,
       "message": "I think we should check whether |url_request_| is null here?",
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed47db1f_babf54c2",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-03T17:45:08Z",
+      "side": 1,
+      "message": "This was the comment/logic I copied from ResourceLoader",
+      "parentUuid": "eea1fbaf_755084f7",
       "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3fec04_8098a4a6",
+        "filename": "content/public/browser/network_service_instance.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-03T17:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67d08cda_0cbfccfa",
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +244,30 @@
       "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec648d1_931f8399",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-03T17:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "176cb9df_4f068868",
+      "range": {
+        "startLine": 131,
+        "startChar": 46,
+        "endLine": 131,
+        "endChar": 54
+      },
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
