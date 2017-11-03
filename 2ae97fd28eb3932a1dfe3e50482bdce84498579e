@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f16f9d2_0b3868c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-03T09:24:45Z",
+      "side": 1,
+      "message": "\u003e more precisely, the profiler trace from the bug indicates that compiling the regular expression on each invocation is too slow, not that using the regular expression is slow. Regular expression engines definitely trade of time/space in compilation for extremely low time/space requirements at runtime.\n\u003e \n\u003e Cacheing the RegexMatcher (see autofill::AutofillRegexes and autofill::MatchesPattern) would almost certainly make this go away.\n\u003e \n\u003e The next thing to wonder is: how often is the password manager calculating signatures?\n\u003e \n\u003e Then: why is password manager in the critical path (or sufficiently in the critical path) that its slowing down the browser\u0027s responsiveness?\n\nI would argue. GlobalReplace also takes a lot of time (see https://bugs.chromium.org/p/chromium/issues/attachmentText?aid\u003d309244#1234). FYI, we also use lazy matchers (https://cs.chromium.org/chromium/src/components/autofill/content/renderer/page_passwords_analyser.cc?rcl\u003d5d6f8bb299ca72222f1db245aa6e1806eaae62c1\u0026l\u003d90). But my understanding is that matching is too slow. It is why I decided to exclude RE entirely.",
+      "parentUuid": "a34e1a22_23a54d83",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 9,
+        "endChar": 85
+      },
+      "revId": "2ae97fd28eb3932a1dfe3e50482bdce84498579e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5b23a11_4b993d35",
         "filename": "components/autofill/core/common/signatures_util.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "2ae97fd28eb3932a1dfe3e50482bdce84498579e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aaa08b4_1a9d874f",
+        "filename": "components/autofill/core/common/signatures_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-03T09:24:45Z",
+      "side": 1,
+      "message": "\u003e You can do this in a single pass/loop, but your current implementation is probably easier to read. For your consideration...\n\u003e \n\u003e   string result;\n\u003e   result.reserve(input_utf8.length());\n\u003e   size_t start \u003d std::string::npos;\n\u003e   for (size_t i \u003d 0; i \u003c input_utf8.length(); ++i) {\n\u003e     const char c \u003d input_utf8[i];\n\u003e     result.push_back(c);\n\u003e     if (std::isdigit(c)) {\n\u003e       if (start \u003d\u003d std::string::npos)\n\u003e         start \u003d result.length() - 1;\n\u003e     } else if (start !\u003d std::string::npos) {\n\u003e       if (result.length() - start \u003e 5)\n\u003e         result.resize(start);\n\u003e       start \u003d std::string::npos;\n\u003e     }\n\u003e   }\n\u003e \n\u003e You can probably also skip the creation of input_utf8 and just read/copy from the string16 input.\n\nThanks. That\u0027s interesting approach :) But let me keep it as it is.",
+      "parentUuid": "c5b23a11_4b993d35",
+      "revId": "2ae97fd28eb3932a1dfe3e50482bdce84498579e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

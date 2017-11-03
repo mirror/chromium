@@ -16,6 +16,24 @@
       "revId": "7be2339a4685ff57d991716d415dd5bbf3959f8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c2a4dd_be83ec95",
+        "filename": "components/autofill/core/common/signatures_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-03T09:24:45Z",
+      "side": 0,
+      "message": "\u003e is the slowness here the use of regular expressions, or the recompilation of the regular expression?\n\u003e \n\u003e Could you use?\n\u003e \n\u003e   static const base::string16* kFiveConsectiveDigits \u003d\n\u003e       new base::string16(base::UTFToUTF16(\"\\\\d{5,}\"));\n\u003e   // Get compiled regex matcher from cache.\n\u003e   // see autofill::MatchesPattern\n\u003e   auto * matcher \u003d\n\u003e       AutofillRegexes::GetInstance()-\u003eGetMatcher(kFiveConsecutiveDigits);\n\u003e   ...\n\u003e   matcher-\u003ereplaceAll(...)\nAnswered in another comment.",
+      "parentUuid": "b7fab137_0df3a08e",
+      "revId": "7be2339a4685ff57d991716d415dd5bbf3959f8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
