@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27fbbdeb_cbb35336",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-03T00:35:42Z",
+      "side": 1,
+      "message": "I think this should be true? If a tab is added in a interval, the interaction is \"creating a tab\", right?",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 13
+      },
+      "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68900e94_e16b0b4f",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-03T00:35:42Z",
+      "side": 1,
+      "message": "I think you can just set it to true here because active is visible.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 69
+      },
+      "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786007bc_06ed3a57",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-03T00:35:42Z",
+      "side": 1,
+      "message": "I think you also need to update |interacted_during_interval| and |interacted_during_interval| here?",
+      "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a80412c_043def1a",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-03T00:35:42Z",
+      "side": 1,
+      "message": "Can you also illustrate in comments here what kind of interactions are tracked?",
+      "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79e8fd0_368964d2",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-03T00:35:42Z",
+      "side": 1,
+      "message": "12 hours as mentioned in the doc?",
+      "range": {
+        "startLine": 41,
+        "startChar": 21,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3977481_891a37f0",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-03T00:35:42Z",
+      "side": 1,
+      "message": "Could new_contents also be nullptr?\n\nI saw chrisha\u0027s comments in his prototype CL for other things. https://chromium-review.googlesource.com/c/chromium/src/+/636044/2/chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc#482",
+      "revId": "2f1c3a4f1330079fa92f16ca0eb25798f801c627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
