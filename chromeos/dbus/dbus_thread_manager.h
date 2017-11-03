@@ -37,6 +37,7 @@ class DBusClientsCommon;
 class DBusThreadManagerSetter;
 class DebugDaemonClient;
 class EasyUnlockClient;
+class EventLoggerClient;
 class GsmSMSClient;
 class ImageBurnerClient;
 class ImageLoaderClient;
@@ -133,6 +134,7 @@ class CHROMEOS_EXPORT DBusThreadManager {
   CryptohomeClient* GetCryptohomeClient();
   DebugDaemonClient* GetDebugDaemonClient();
   EasyUnlockClient* GetEasyUnlockClient();
+  EventLoggerClient* GetEventLoggerClient();
   GsmSMSClient* GetGsmSMSClient();
   ImageBurnerClient* GetImageBurnerClient();
   ImageLoaderClient* GetImageLoaderClient();
@@ -209,6 +211,7 @@ class CHROMEOS_EXPORT DBusThreadManagerSetter {
   void SetSystemClockClient(std::unique_ptr<SystemClockClient> client);
   void SetUpdateEngineClient(std::unique_ptr<UpdateEngineClient> client);
   void SetUpstartClient(std::unique_ptr<UpstartClient> client);
+  void SetEventLoggerClient(std::unique_ptr<EventLoggerClient> client);
 
  private:
   friend class DBusThreadManager;

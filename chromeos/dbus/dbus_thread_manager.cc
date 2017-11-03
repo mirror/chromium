@@ -25,6 +25,7 @@
 #include "chromeos/dbus/dbus_clients_common.h"
 #include "chromeos/dbus/debug_daemon_client.h"
 #include "chromeos/dbus/easy_unlock_client.h"
+#include "chromeos/dbus/event_logger_client.h"
 #include "chromeos/dbus/gsm_sms_client.h"
 #include "chromeos/dbus/image_burner_client.h"
 #include "chromeos/dbus/image_loader_client.h"
@@ -245,6 +246,10 @@ VirtualFileProviderClient* DBusThreadManager::GetVirtualFileProviderClient() {
              : nullptr;
 }
 
+EventLoggerClient* DBusThreadManager::GetEventLoggerClient() {
+  return clients_browser_ ? clients_browser_->event_logger_client_.get() : nullptr;
+}
+
 void DBusThreadManager::InitializeClients() {
   // Some clients call DBusThreadManager::Get() during initialization.
   DCHECK(g_dbus_thread_manager);
@@ -449,6 +454,12 @@ void DBusThreadManagerSetter::SetUpdateEngineClient(
 void DBusThreadManagerSetter::SetUpstartClient(
     std::unique_ptr<UpstartClient> client) {
   DBusThreadManager::Get()->clients_browser_->upstart_client_ =
+      std::move(client);
+}
+
+void DBusThreadManagerSetter::SetEventLoggerClient(
+    std::unique_ptr<EventLoggerClient> client) {
+  DBusThreadManager::Get()->clients_browser_->event_logger_client_ =
       std::move(client);
 }
 

@@ -162,6 +162,8 @@ component("chromeos") {
     "dbus/debug_daemon_client.h",
     "dbus/easy_unlock_client.cc",
     "dbus/easy_unlock_client.h",
+    "dbus/event_logger_client.h",
+    "dbus/event_logger_client.cc",
     "dbus/fake_arc_midis_client.cc",
     "dbus/fake_arc_midis_client.h",
     "dbus/fake_arc_obb_mounter_client.cc",

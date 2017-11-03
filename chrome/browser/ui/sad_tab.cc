@@ -17,6 +17,8 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/event_logger_client.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/ui_metrics/sadtab_metrics_types.h"
 #include "content/public/browser/browser_context.h"
@@ -269,6 +271,9 @@ SadTab::SadTab(content::WebContents* web_contents, SadTabKind kind)
         const std::string spec = web_contents->GetURL().GetOrigin().spec();
         memory::OomMemoryDetails::Log(
             "Tab OOM-Killed Memory details: " + spec + ", ", base::Closure());
+        chromeos::EventLoggerClient* client =
+        chromeos::DBusThreadManager::Get()->GetEventLoggerClient();
+        client->LogEvent("oom-kill");
       }
 #endif
     // Fall through

@@ -14,6 +14,7 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/debug_daemon_client.h"
 #include "chromeos/dbus/easy_unlock_client.h"
+#include "chromeos/dbus/event_logger_client.h"
 #include "chromeos/dbus/fake_arc_midis_client.h"
 #include "chromeos/dbus/fake_arc_obb_mounter_client.h"
 #include "chromeos/dbus/fake_arc_oemcrypto_client.h"
@@ -32,6 +33,7 @@
 #include "chromeos/dbus/media_analytics_client.h"
 #include "chromeos/dbus/upstart_client.h"
 #include "chromeos/dbus/virtual_file_provider_client.h"
+#include "chromeos/dbus/event_logger_client.h"
 
 namespace chromeos {
 
@@ -99,6 +101,11 @@ DBusClientsBrowser::DBusClientsBrowser(bool use_real_clients) {
     virtual_file_provider_client_.reset(VirtualFileProviderClient::Create());
   else
     virtual_file_provider_client_.reset(new FakeVirtualFileProviderClient);
+
+  if (use_real_clients)
+    event_logger_client_.reset(EventLoggerClient::Create());
+  else
+    event_logger_client_.reset(0);
 }
 
 DBusClientsBrowser::~DBusClientsBrowser() {}
@@ -119,6 +126,9 @@ void DBusClientsBrowser::Initialize(dbus::Bus* system_bus) {
   media_analytics_client_->Init(system_bus);
   upstart_client_->Init(system_bus);
   virtual_file_provider_client_->Init(system_bus);
+  if (event_logger_client_) {
+    event_logger_client_->Init(system_bus);
+  }
 }
 
 }  // namespace chromeos
