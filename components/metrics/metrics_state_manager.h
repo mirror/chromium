@@ -64,8 +64,9 @@ class MetricsStateManager {
   }
 
   // Forces the client ID to be generated. This is useful in case it's needed
-  // before recording.
-  void ForceClientIdCreation();
+  // before recording.  Returns true if the client id already existed (e.g.,
+  // was stored in prefs); returns false if a brand new client id was created.
+  bool ForceClientIdCreation();
 
   // Checks if this install was cloned or imaged from another machine. If a
   // clone is detected, resets the client id and low entropy source. This
@@ -194,6 +195,14 @@ class MetricsStateManager {
 
   // The last entropy source returned by this service, used for testing.
   EntropySourceType entropy_source_returned_;
+
+  // The value of prefs::kMetricsResetIds seen upon startup, i.e., the value
+  // that was appropriate in the previous session.  Used when reporting previous
+  // session (stability) data.
+  bool metrics_ids_were_reset_;
+
+  // The value of client_id_ seen upon startup.
+  std::string previous_client_id_;
 
   std::unique_ptr<ClonedInstallDetector> cloned_install_detector_;
 
