@@ -18,10 +18,23 @@ if (!is_android) {
       "//chrome/test:test_support_ui",
       "//testing/gmock",
       "//testing/gtest",
+      ":libprofiling_browser_test_helpers",
     ]
   }
 } else {
   # In-process browser tests aren't supported on Android.
   group("profiling_browsertests") {
   }
+}
+
+shared_library("libprofiling_browser_test_helpers") {
+  testonly = true
+  deps = [
+    "//base",
+  ]
+
+  sources = [
+    "profiling_test_driver.cc",
+    "profiling_test_driver.h",
+  ]
 }
