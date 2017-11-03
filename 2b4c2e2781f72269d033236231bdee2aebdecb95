@@ -46,6 +46,30 @@
       "revId": "2b4c2e2781f72269d033236231bdee2aebdecb95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9c0212_07736a5a",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T14:19:18Z",
+      "side": 1,
+      "message": "The null check here looks not needed since the only callsite is passing a non-null closure to it (this code has been changing a lot and there may have been other callsites before).\n\nI would just do base::ThreadTaskRunnerHandle::Get()-\u003ePostTask() at the callsite in this file instead of making sw_dh namespace. And we can update it to use BindOnce.",
+      "parentUuid": "809e893e_e7ae13ce",
+      "range": {
+        "startLine": 73,
+        "startChar": 11,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "2b4c2e2781f72269d033236231bdee2aebdecb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
