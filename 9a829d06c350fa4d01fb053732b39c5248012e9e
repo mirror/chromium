@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0c017a0_8a5ebc54",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-11-03T17:54:25Z",
+      "side": 1,
+      "message": "Initially this looks like a vary bad idea, but given that it is actually done for a single Client ID and we expect it to return just a few pages, I think it can stay that way.\nI\u0027d still document that with a comment.",
+      "range": {
+        "startLine": 219,
+        "startChar": 32,
+        "endLine": 219,
+        "endChar": 56
+      },
+      "revId": "9a829d06c350fa4d01fb053732b39c5248012e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
