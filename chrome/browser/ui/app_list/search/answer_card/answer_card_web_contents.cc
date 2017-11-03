@@ -1,4 +1,4 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -26,6 +26,8 @@
 #include "ui/views/controls/webview/web_contents_set_background_color.h"
 #include "ui/views/controls/webview/webview.h"
 #include "ui/views/widget/widget.h"
+
+#include "content/public/browser/render_widget_host_view.h"
 
 namespace app_list {
 
@@ -175,8 +177,8 @@ void AnswerCardWebContents::LoadURL(const GURL& url) {
   load_params.should_clear_history_list = true;
   web_contents_->GetController().LoadURLWithParams(load_params);
 
-  web_contents_->GetRenderViewHost()->EnableAutoResize(
-      gfx::Size(1, 1), gfx::Size(INT_MAX, INT_MAX));
+  //web_contents_->GetRenderViewHost()->EnableAutoResize(
+      //gfx::Size(1, 1), gfx::Size(INT_MAX, INT_MAX));
 }
 
 views::View* AnswerCardWebContents::GetView() {
@@ -249,6 +251,18 @@ void AnswerCardWebContents::DidFinishNavigation(
 
 void AnswerCardWebContents::DidStopLoading() {
   delegate()->DidStopLoading(this);
+  content::RenderWidgetHostView* rwhv = web_contents_->GetRenderWidgetHostView();
+  if (rwhv) {
+    rwhv->GetRenderWidgetHost()->WasResized();
+  }
+}
+
+void AnswerCardWebContents::DidFirstVisuallyNonEmptyPaint() {
+  LOG(ERROR) << "*** did first visually non empty paint ***";
+}
+
+void AnswerCardWebContents::MainFrameWasResized(bool width_changed) {
+  LOG(ERROR) << "*** main frame was resized ***";
 }
 
 void AnswerCardWebContents::DidGetUserInteraction(

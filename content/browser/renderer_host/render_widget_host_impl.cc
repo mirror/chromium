@@ -817,21 +817,37 @@ void RenderWidgetHostImpl::SetInitialRenderSizeParams(
 }
 
 void RenderWidgetHostImpl::WasResized() {
+  LOG(ERROR) << "... was resized begins ...";
+  if (resize_ack_pending_)
+    LOG(ERROR) << "resize ack pending...";
+  if (!view_)
+    LOG(ERROR) << "no view_";
+  if (!process_->HasConnection())
+    LOG(ERROR) << "process_ has no connection";
+  if (!renderer_initialized_)
+    LOG(ERROR) << "! renderer initialized";
+  if (auto_resize_enabled_)
+    LOG(ERROR) << "auto resize enabled";
+  if (!delegate_)
+    LOG(ERROR) << "!delegate_";
   // Skip if the |delegate_| has already been detached because
   // it's web contents is being deleted.
   if (resize_ack_pending_ || !process_->HasConnection() || !view_ ||
       !renderer_initialized_ || auto_resize_enabled_ || !delegate_) {
     return;
   }
+  LOG(ERROR) << "check if this is reached";
 
   std::unique_ptr<ResizeParams> params(new ResizeParams);
   if (!GetResizeParams(params.get()))
     return;
+  LOG(ERROR) << "again check if this is reached";
 
   bool width_changed =
       !old_resize_params_ ||
       old_resize_params_->new_size.width() != params->new_size.width();
   if (Send(new ViewMsg_Resize(routing_id_, *params))) {
+    LOG(ERROR) << "then check if msg resize is sent...";
     resize_ack_pending_ = params->needs_resize_ack;
     old_resize_params_.swap(params);
   }
