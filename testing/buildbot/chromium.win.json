@@ -1716,6 +1716,11 @@
         "name": "webkit_layout_tests",
         "swarming": {
           "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "os": "Windows-10-14393"
+            }
+          ],
           "hard_timeout": 900,
           "shards": 10
         }
