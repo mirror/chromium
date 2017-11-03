@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65570c29_7664d4fb",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-11-03T07:11:51Z",
+      "side": 1,
+      "message": "I added DCHECK, just in case someone will use mock and provide nullptr.",
+      "parentUuid": "1e944fbb_2447bdf1",
+      "revId": "d6993cb9c863fe5392bbf891b7469afed54b8400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66224cfb_a08ee27e",
         "filename": "services/device/generic_sensor/platform_sensor.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-02T17:27:03Z",
       "side": 1,
       "message": "Maybe keep one method, i.e. UpdateSensorReading(const SensorReading\u0026 reading, bool notifyChange \u003d true)?",
+      "revId": "d6993cb9c863fe5392bbf891b7469afed54b8400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb5f182_ec940a5a",
+        "filename": "services/device/generic_sensor/platform_sensor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-11-03T07:11:51Z",
+      "side": 1,
+      "message": "I would rather keep the split or rename method, and still, split it :)\n\nAt the moment, UpdateSensorReading updates shared buffer and fires notification, so, semantically it is named wrongly, should be \"UpdateSharedBufferAndNotifyClients\".\n\nPersonally I don\u0027t like \u0027bool\u0027 parameters that modify behavior, e.g., UpdateReading(reading, true) vs ( UpdateSharedBufferAndNotifyClients / UpdateSharedBuffer )",
+      "parentUuid": "66224cfb_a08ee27e",
       "revId": "d6993cb9c863fe5392bbf891b7469afed54b8400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
