@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5858e855_54c6cde1",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "I have a plan for this. But for now I rather put it here after we implement some other digest related handling and get a clear understanding what needs to  be factor into a common function.",
+      "parentUuid": "a77ad2bd_e3c054b1",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 9
+      },
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ff1f350_551690ac",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-27T23:19:53Z",
       "side": 1,
       "message": "I am wondering if this is going to be working, for files loaded using content:// links from Download Manager or other apps. Did you consider that?",
+      "range": {
+        "startLine": 32,
+        "startChar": 40,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b47b6463_a1024558",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "Computing a digest for content Uri will be very different since we more likely access it via stream.",
+      "parentUuid": "7ff1f350_551690ac",
       "range": {
         "startLine": 32,
         "startChar": 40,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "c4cffba1_cb08d995",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76d79bed_c48e98b7",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd8f6f94_2f103a2d",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
         "patchSetId": 3
@@ -76,6 +142,24 @@
       "writtenOn": "2017-10-27T23:19:53Z",
       "side": 1,
       "message": "nit: empty line after?",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f6739e_31d121b2",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "I think this error check is part of file reading. So adding an empty line is not necessary.",
+      "parentUuid": "cd8f6f94_2f103a2d",
       "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "70d0233c_0e21809a",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "This is just another way to do this. Updated.",
+      "parentUuid": "0e5cb03d_22ba6549",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91b66f76_576605aa",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
         "patchSetId": 3
@@ -113,6 +215,24 @@
       "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef6ffd1_ca9ac7e3",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91b66f76_576605aa",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "0fd1f903_b0ea298e",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "I don\u0027t think it is necessary to do this. If we decide to update the algorithm, we\u0027d better not to support validating pages based on the old algorithm.",
+      "parentUuid": "4b938d96_df7c37dd",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d0c1a9a_052249e8",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
         "patchSetId": 3
@@ -144,6 +282,24 @@
       "writtenOn": "2017-11-02T20:58:33Z",
       "side": 1,
       "message": "This leaves a file behind that should be removed.",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306e8759_a8b7e9a7",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "8d0c1a9a_052249e8",
       "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "8b095cc7_2df2822e",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41bbb40a_b2c7d957",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 69,
+        "endChar": 24
+      },
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec92295e_4da28930",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.h",
         "patchSetId": 3
@@ -184,6 +364,24 @@
       "writtenOn": "2017-11-02T20:56:49Z",
       "side": 1,
       "message": "This implementation is subject to races, so it will not be secure as soon as we use a file that is not in Chrome\u0027s data dir. This should be documented in a very obvious place to prevent future errors.",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcdfdff9_7d9e7b03",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "Yes, there is a chance, but should be extremely small. I thought about hashing it after we finish archiving but still holding file handle, but this can\u0027t be done because the file is opened without read access for security reason. So it seems that the only way is to put it in an internal directory, hash it and then move it. I added a TODO at OfflinePageMHTMLArchiver::OnGenerateMHTMLDone.",
+      "parentUuid": "ec92295e_4da28930",
       "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -204,6 +402,24 @@
       "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd62b49_95997201",
+        "filename": "components/offline_pages/core/model/create_archive_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7eca0b9_a0c4a1a8",
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -230,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "fafd448e_e3dcbaab",
+        "filename": "components/offline_pages/core/offline_page_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a55dc62d_da48d8cf",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "890b5a6e_05ebe5e2",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
@@ -253,6 +493,30 @@
     },
     {
       "key": {
+        "uuid": "d90e7305_5c9a9597",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29237,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "890b5a6e_05ebe5e2",
+      "range": {
+        "startLine": 29237,
+        "startChar": 25,
+        "endLine": 29237,
+        "endChar": 34
+      },
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23042428_7ed67537",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
@@ -273,6 +537,30 @@
       "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2ce33e_b732d12c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29238,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-03T00:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23042428_7ed67537",
+      "range": {
+        "startLine": 29238,
+        "startChar": 26,
+        "endLine": 29238,
+        "endChar": 37
+      },
+      "revId": "bc3601aecdd2e4b3df56007694e61c0c8c97db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
