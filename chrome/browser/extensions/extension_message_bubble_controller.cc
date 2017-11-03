@@ -31,9 +31,14 @@ const int kMaxExtensionsToShow = 7;
 // Whether or not to ignore the learn more link navigation for testing.
 bool g_should_ignore_learn_more_for_testing = false;
 
-using ProfileSetMap = std::map<std::string, std::set<Profile*>>;
-base::LazyInstance<ProfileSetMap>::DestructorAtExit g_shown_for_profiles =
-    LAZY_INSTANCE_INITIALIZER;
+using ProfileExtensionsMap = std::map<Profile*, std::set<ExtensionId>>;
+using DelegateType = std::string;
+using DelegateToProfileExtensionsMap =
+    std::map<DelegateType, ProfileExtensionsMap>;
+
+// Keeps track of the profiles and their extensions associated with bubbles.
+base::LazyInstance<DelegateToProfileExtensionsMap>::DestructorAtExit
+    g_shown_for_profile_extension_pairs = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
@@ -46,15 +51,15 @@ ExtensionMessageBubbleController::Delegate::Delegate(Profile* profile)
       registry_(ExtensionRegistry::Get(profile)) {
 }
 
-ExtensionMessageBubbleController::Delegate::~Delegate() {
-}
+ExtensionMessageBubbleController::Delegate::~Delegate() {}
 
 base::string16 ExtensionMessageBubbleController::Delegate::GetLearnMoreLabel()
     const {
   return l10n_util::GetStringUTF16(IDS_LEARN_MORE);
 }
 
-bool ExtensionMessageBubbleController::Delegate::ClearProfileSetAfterAction() {
+bool ExtensionMessageBubbleController::Delegate::
+    ClearProfileExtensionsMapAfterAction() {
   return true;
 }
 
@@ -81,6 +86,10 @@ void ExtensionMessageBubbleController::Delegate::SetBubbleInfoBeenAcknowledged(
       value ? base::MakeUnique<base::Value>(value) : nullptr);
 }
 
+void ExtensionMessageBubbleController::Delegate::ClearProfileExtensionsMap() {
+  GetProfileExtensionsMap()->clear();
+}
+
 std::string
 ExtensionMessageBubbleController::Delegate::get_acknowledged_flag_pref_name()
     const {
@@ -90,6 +99,11 @@ ExtensionMessageBubbleController::Delegate::get_acknowledged_flag_pref_name()
 void ExtensionMessageBubbleController::Delegate::
     set_acknowledged_flag_pref_name(const std::string& pref_name) {
   acknowledged_pref_name_ = pref_name;
+}
+
+std::map<Profile*, std::set<ExtensionId>>*
+ExtensionMessageBubbleController::Delegate::GetProfileExtensionsMap() {
+  return &g_shown_for_profile_extension_pairs.Get()[GetKey()];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -127,8 +141,8 @@ bool ExtensionMessageBubbleController::ShouldShow() {
   // check if each extension entry is still installed, and, if not, remove it
   // from the list.
   UpdateExtensionIdList();
-  std::set<Profile*>* profiles = GetProfileSet();
-  return !profiles->count(profile()->GetOriginalProfile()) &&
+  return delegate_->ShouldShow(profile()->GetOriginalProfile(),
+                               GetExtensionIdList()) &&
          (!model_->has_active_bubble() || is_active_bubble_) &&
          !GetExtensionIdList().empty();
 }
@@ -207,7 +221,18 @@ void ExtensionMessageBubbleController::OnShown(
     const base::Closure& close_bubble_callback) {
   close_bubble_callback_ = close_bubble_callback;
   DCHECK(is_active_bubble_);
-  GetProfileSet()->insert(profile()->GetOriginalProfile());
+  if (delegate_->GetProfileExtensionsMap()->count(
+          profile()->GetOriginalProfile())) {
+    auto found = delegate_->GetProfileExtensionsMap()->find(
+        profile()->GetOriginalProfile());
+    found->second.insert(GetExtensionIdList()[0]);
+
+  } else {
+    std::set<ExtensionId> affected_extensions;
+    affected_extensions.insert(GetExtensionIdList()[0]);
+    delegate_->GetProfileExtensionsMap()->insert(
+        {profile()->GetOriginalProfile(), affected_extensions});
+  }
 }
 
 void ExtensionMessageBubbleController::OnBubbleAction() {
@@ -237,7 +262,6 @@ void ExtensionMessageBubbleController::OnBubbleDismiss(
            user_action_ == ACTION_DISMISS_DEACTIVATION);
     return;
   }
-
   user_action_ = closed_by_deactivation ? ACTION_DISMISS_DEACTIVATION
                                         : ACTION_DISMISS_USER_ACTION;
 
@@ -271,7 +295,7 @@ void ExtensionMessageBubbleController::SetIsActiveBubble() {
 }
 
 void ExtensionMessageBubbleController::ClearProfileListForTesting() {
-  GetProfileSet()->clear();
+  delegate_->ClearProfileExtensionsMap();
 }
 
 // static
@@ -283,8 +307,9 @@ void ExtensionMessageBubbleController::set_should_ignore_learn_more_for_testing(
 void ExtensionMessageBubbleController::HandleExtensionUnloadOrUninstall() {
   UpdateExtensionIdList();
   // If the callback is set, then that means that OnShown() was called, and the
-  // bubble is displayed.
-  if (close_bubble_callback_ && GetExtensionIdList().empty()) {
+  // bubble was displayed.
+  if (close_bubble_callback_ && GetExtensionIdList().empty() &&
+      is_active_bubble_) {
     base::ResetAndReturn(&close_bubble_callback_).Run();
   }
   // If the bubble refers to multiple extensions, we do not close the bubble.
@@ -361,13 +386,12 @@ void ExtensionMessageBubbleController::OnClose() {
   if (user_action_ != ACTION_DISMISS_DEACTIVATION ||
       delegate_->ShouldAcknowledgeOnDeactivate()) {
     AcknowledgeExtensions();
-    if (delegate_->ClearProfileSetAfterAction())
-      GetProfileSet()->clear();
+    if (delegate_->ClearProfileExtensionsMapAfterAction())
+      delegate_->ClearProfileExtensionsMap();
   }
-}
 
-std::set<Profile*>* ExtensionMessageBubbleController::GetProfileSet() {
-  return &g_shown_for_profiles.Get()[delegate_->GetKey()];
+  is_active_bubble_ = false;
+  model_->set_has_active_bubble(false);
 }
 
 }  // namespace extensions

@@ -107,6 +107,12 @@ bool SuspiciousExtensionBubbleDelegate::ShouldAcknowledgeOnDeactivate() const {
   return false;
 }
 
+bool SuspiciousExtensionBubbleDelegate::ShouldShow(
+    Profile* profile,
+    const ExtensionIdList& affected_extensions) {
+  return !GetProfileExtensionsMap()->count(profile);
+}
+
 bool SuspiciousExtensionBubbleDelegate::ShouldShowExtensionList() const {
   return true;
 }
