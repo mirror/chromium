@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15c3113b_eb0e7b89",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T13:43:46Z",
+      "side": 1,
+      "message": "`const std::pair\u003c...\u003e\u0026` would avoid a copy.",
+      "revId": "17417628804c7b88e1775b060ee2e2979ebf4d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de6ba75a_bcfbb1a1",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T13:43:46Z",
+      "side": 1,
+      "message": "nit: s/audible_players_count \u003d\u003d 0/!audible_players_count/",
+      "revId": "17417628804c7b88e1775b060ee2e2979ebf4d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5950915_76c5bd36",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T13:43:46Z",
+      "side": 1,
+      "message": "style: drop { }",
+      "revId": "17417628804c7b88e1775b060ee2e2979ebf4d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56fdf29_cb008b98",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T13:43:46Z",
+      "side": 1,
+      "message": "Isn\u0027t `IsPlayerStateComplete()` above guaranteeing that `muted`, `playing` and `has_audio` are defined?",
+      "revId": "17417628804c7b88e1775b060ee2e2979ebf4d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd48386_3ed5145d",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T13:43:46Z",
+      "side": 1,
+      "message": "Would it be possible that `audible_players_[id]` is already set? What if it\u0027s set with `true`? Is there any DCHECK() we could add here to strengthen some assumptions?",
+      "revId": "17417628804c7b88e1775b060ee2e2979ebf4d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2eb31a_2e37f648",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T13:43:46Z",
+      "side": 1,
+      "message": "It\u0027s a good practice to use `enum` instead of `bool` for things like this to help readability. I\u0027m not sure what would be the right enum name though.",
+      "revId": "17417628804c7b88e1775b060ee2e2979ebf4d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a91685e5_d3147489",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T13:43:46Z",
+      "side": 1,
+      "message": "Should we run `ExpectScores()` here?",
+      "revId": "17417628804c7b88e1775b060ee2e2979ebf4d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc54c8c_651bb566",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T13:43:46Z",
+      "side": 1,
+      "message": "Default value for parameters is frown upon. Maybe you could change the call sites? Same applies below.",
+      "revId": "17417628804c7b88e1775b060ee2e2979ebf4d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
