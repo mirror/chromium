@@ -142,7 +142,9 @@ class CORE_EXPORT InspectorPageAgent final
                         Maybe<bool> is_regex,
                         std::unique_ptr<SearchInResourceCallback>) override;
   protocol::Response setDocumentContent(const String& frame_id,
-                                        const String& html) override;
+                                        const String& html,
+                                        Maybe<String> url,
+                                        String* loader_id) override;
   protocol::Response startScreencast(Maybe<String> format,
                                      Maybe<int> quality,
                                      Maybe<int> max_width,

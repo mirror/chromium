@@ -4,4 +4,5 @@ Main Frame obtained
 Document content before: <html><head></head><body><div>Привет мир</div></body></html>
 Document content set
 Document content after: <html><head></head><body><div>こんにちは世界</div></body></html>
+    Document URL after: https://google.com/
 
