@@ -55,9 +55,10 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
   bool use_partial_swap() const { return use_partial_swap_; }
 
   void SetVisible(bool visible);
-  void DecideRenderPassAllocationsForFrame(
-      const RenderPassList& render_passes_in_draw_order);
-  bool HasAllocatedResourcesForTesting(RenderPassId render_pass_id) const;
+  virtual void DecideRenderPassAllocationsForFrame(
+      const RenderPassList& render_passes_in_draw_order) = 0;
+  virtual bool HasAllocatedResourcesForTesting(
+      RenderPassId render_pass_id) const = 0;
   void DrawFrame(RenderPassList* render_passes_in_draw_order,
                  float device_scale_factor,
                  const gfx::Size& device_viewport_size);
@@ -142,6 +143,12 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
   void DrawRenderPassAndExecuteCopyRequests(RenderPass* render_pass);
   void DrawRenderPass(const RenderPass* render_pass);
   bool UseRenderPass(const RenderPass* render_pass);
+  virtual bool AllocateAndBindFramebufferToTexture(
+      const RenderPassId render_pass_id,
+      const gfx::Rect& output_rect,
+      const gfx::Size& enlarged_size,
+      cc::ResourceProvider::TextureHint texturehint,
+      bool cache_render_pass_without_damage) = 0;
 
   void DoDrawPolygon(const DrawPolygon& poly,
                      const gfx::Rect& render_pass_scissor,
@@ -207,9 +214,6 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
   // DirectComposition layers needed to be used.
   int frames_since_using_dc_layers_ = 0;
 
-  // A map from RenderPass id to the texture used to draw the RenderPass from.
-  base::flat_map<RenderPassId, std::unique_ptr<cc::ScopedResource>>
-      render_pass_textures_;
   // A map from RenderPass id to the single quad present in and replacing the
   // RenderPass.
   base::flat_map<RenderPassId, TileDrawQuad> render_pass_bypass_quads_;
@@ -221,6 +225,7 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
 
   bool visible_ = false;
   bool disable_color_checks_for_testing_ = false;
+  gfx::Size enlarge_pass_texture_amount_;
 
   // For use in coordinate conversion, this stores the output rect, viewport
   // rect (= unflipped version of glViewport rect), the size of target
@@ -248,7 +253,6 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
 #if DCHECK_IS_ON()
   bool overdraw_feedback_support_missing_logged_once_ = false;
 #endif
-  gfx::Size enlarge_pass_texture_amount_;
 
   // The current drawing frame is valid only during the duration of the
   // DrawFrame function. Use the accessor current_frame() to ensure that use
