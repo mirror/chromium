@@ -81,6 +81,24 @@
       "revId": "f381cc39f7df899218245130b6f9b3735283894e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60fd5447_062c250a",
+        "filename": "components/autofill/core/browser/credit_card_field.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-03T17:45:54Z",
+      "side": 1,
+      "message": "Let\u0027s leave it here for now.",
+      "parentUuid": "dcf3918d_b9a3ba2d",
+      "revId": "f381cc39f7df899218245130b6f9b3735283894e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
