@@ -244,6 +244,8 @@ suite('<history-list>', function() {
           assertEquals(
               'www.google.com',
               toolbar.$['main-toolbar'].getSearchField().getValue());
+          element.$.sharedMenu.get();
+          assertTrue(element.$$('#menuMoreButton').hidden);
           done();
         });
       });
