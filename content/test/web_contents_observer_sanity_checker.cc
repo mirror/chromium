@@ -199,7 +199,7 @@ void WebContentsObserverSanityChecker::ReadyToCommitNavigation(
 void WebContentsObserverSanityChecker::DidFinishNavigation(
     NavigationHandle* navigation_handle) {
   CHECK(NavigationIsOngoing(navigation_handle));
-
+  CHECK(navigation_handle->GetRenderFrameHost()->IsRenderFrameLive());
   CHECK(!(navigation_handle->HasCommitted() &&
           !navigation_handle->IsErrorPage()) ||
         navigation_handle->GetNetErrorCode() == net::OK);
