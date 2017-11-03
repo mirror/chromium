@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b472fd0c_3229263b",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:19:33Z",
+      "side": 1,
+      "message": "Should this open the url in an existing incognito window?\n\nOr.. can a hosted app be opened incognito? (should this allow opening in a non-incognito window?). Maybe pass `false` and comment.\n\n(It would probably be bad to teleport a WebContents between different profiles..)",
+      "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2307004e_1e9ea653",
+        "filename": "chrome/browser/ui/chrome_pages.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:19:33Z",
+      "side": 1,
+      "message": "does this open in the hosted app? (is that weird?) how does NEW_FOREGROUND_TAB work in that case.",
+      "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6abb07_088cbac9",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:19:33Z",
+      "side": 1,
+      "message": "Add comments explaining the tests.",
+      "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2671c2e_be8673cd",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:19:33Z",
+      "side": 1,
+      "message": "perhaps call chrome::ExecuteCommand(browser, id) from browser_commands.h for extra coverage? Same below.",
+      "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8122651_820b545b",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:19:33Z",
+      "side": 1,
+      "message": "check MIME type as well?",
+      "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59088bd6_897de424",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T02:19:33Z",
+      "side": 1,
+      "message": "why the curly?",
+      "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
