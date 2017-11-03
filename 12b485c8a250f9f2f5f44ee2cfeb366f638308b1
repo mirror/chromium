@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ca9ddfe_cad4b63f",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2517,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-03T00:08:09Z",
+      "side": 1,
+      "message": "nit: can you either rename it expired_card or otherwise mention that it\u0027s expired? Thanks!",
+      "range": {
+        "startLine": 2517,
+        "startChar": 13,
+        "endLine": 2517,
+        "endChar": 24
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad732ad_23b5b135",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3558,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-03T00:08:09Z",
+      "side": 1,
+      "message": "We could set constants for the default values? so that they are easier to change.\n\nEx: kDefauldCardNumber \u003d \"4234567890654321\"",
+      "range": {
+        "startLine": 3557,
+        "startChar": 27,
+        "endLine": 3558,
+        "endChar": 43
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35fcb93e_a7a6680f",
+        "filename": "components/autofill/core/browser/country_combobox_model_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-03T00:08:09Z",
+      "side": 1,
+      "message": "Is this necessary now? It seems like the test personal data manager doesn\u0027t need it, unless there is a test that uses non virtual methods?",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 45
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b20b2d1_27dc4a47",
+        "filename": "components/autofill/core/browser/test_personal_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-03T00:08:09Z",
+      "side": 1,
+      "message": "I\u0027m curious, do you know if this is necessary and if so which tests checks it?",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 59
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4ece08_26c66459",
+        "filename": "components/autofill/core/browser/test_personal_data_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-03T00:08:09Z",
+      "side": 1,
+      "message": "nit: can you mention why they are overriden? I think for most it\u0027s to skip the DB related code right?",
+      "range": {
+        "startLine": 25,
+        "startChar": 35,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
