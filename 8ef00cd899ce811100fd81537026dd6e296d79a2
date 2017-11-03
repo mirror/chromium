@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d0f99024_fa0dc8f0",
+        "filename": "chrome/browser/resource_coordinator/page_signal_receiver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-03T23:24:13Z",
+      "side": 1,
+      "message": "I added the workflow description in the comments of PageSignalReceiver, as well as some comments for PageSignalObserver.",
+      "parentUuid": "65426917_0d5ed138",
+      "revId": "8ef00cd899ce811100fd81537026dd6e296d79a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdfe77d2_25eb8b4c",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 4
@@ -192,6 +210,30 @@
       "revId": "8ef00cd899ce811100fd81537026dd6e296d79a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68b78b6_31ae7533",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_resource_coordinator_signal_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-03T23:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c96786ad_96f41bba",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "8ef00cd899ce811100fd81537026dd6e296d79a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
