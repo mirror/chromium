@@ -85,7 +85,7 @@ class TabManager : public TabStripModelObserver,
                    public chrome::BrowserListObserver {
  public:
   // Forward declaration of tab signal observer.
-  class GRCTabSignalObserver;
+  class PageSignalReceiver;
   // Needs to be public for DEFINE_WEB_CONTENTS_USER_DATA_KEY.
   class WebContentsData;
 
