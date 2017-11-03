@@ -4,11 +4,12 @@
 
 body {
   align-items: center;
-  color: var(--paper-grey-900);
+  color: var(--google-grey-700);
   display: flex;
   flex-direction: column;
   font-size: 100%;
   justify-content: center;
+  text-align: center;
   margin: 0;
   min-height: 100vh;
 }
@@ -42,13 +43,6 @@ body {
 @keyframes spin {
   from {
     transform: rotate(1440deg) scale(0.8);
-  }
-}
-
-@keyframes fadeInAndSlideDownShadow {
-  from {
-    opacity: .6;
-    top: 0;
   }
 }
 
@@ -118,16 +112,12 @@ body {
   font-size: 2.125em;
   margin-bottom: .25em;
   margin-top: 1.5em;
-  text-align: center;
 }
 
 .subheading {
   animation: fadeInAndSlideUp 600ms 1.9s cubic-bezier(.4, .2, 0, 1) both;
-  color: #939393;
   font-size: 1em;
-  font-weight: 500;
   margin-top: .25em;
-  text-align: center;
 }
 
 .logo {
@@ -147,27 +137,16 @@ body {
   width: 96px;
 }
 
-.logo-shadow {
-  animation: fadeInAndSlideDownShadow 300ms 600ms both;
-  background: rgba(0, 0, 0, .2);
-  border-radius: 50%;
-  filter: blur(16px);
-  height: 96px;
-  position: absolute;
-  top: 16px;
-  width: 96px;
-  z-index: -1;
-}
-
 .signin {
   animation: fadeInAndSlideUp 600ms 2s cubic-bezier(.4, .2, 0, 1) both;
-  margin-top: 3em;
+  margin-top: 2em;
   text-align: left;
 }
 
 .signin-description {
   font-size: .875em;
   line-height: 1.725em;
+  text-align: center;
   max-width: 344px;
 }
 
@@ -175,42 +154,41 @@ body {
   align-items: center;
   display: flex;
   flex-direction: column;
+  text-transform: uppercase;
   margin-top: 2em;
+  font-size: .8125em;
+  font-weight: 500;
 }
 
-.action {
+#accept-button {
   -webkit-font-smoothing: antialiased;
   background: var(--google-blue-500);
   border-radius: 2px;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1);
   color: white;
-  font-size: .8125em;
-  font-weight: 500;
   line-height: 2.25rem;
   padding: 0 1.5em;
   transition: 300ms cubic-bezier(.4, .2, 0, 1);
   will-change: box-shadow;
 }
 
-.action:hover {
+#accept-button:hover {
   background: var(--paper-blue-a400);
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1), 0 1px 2px rgba(0, 0, 0, .24);
 }
 
-.action:active {
+#accept-button:active {
   background: var(--google-blue-500);
 }
 
-.action.keyboard-focus {
+#accept-button.keyboard-focus {
   background: var(--google-blue-700);
 }
 
-.link {
-  color: var(--google-blue-700);
+#decline-button {
+  color: var(--google-grey-700);
   display: inline-block;
-  font-size: .8125em;
   margin: 1.5em;
-  text-align: center;
   text-decoration: none;
 }
 
