@@ -268,6 +268,8 @@ double V8Platform::MonotonicallyIncreasingTime() {
 }
 
 double V8Platform::CurrentClockTimeMillis() {
+  if (clock_time_in_millis_override_)
+    return *clock_time_in_millis_override_;
   return base::Time::Now().ToJsTime();
 }
 
@@ -277,6 +279,22 @@ v8::TracingController* V8Platform::GetTracingController() {
 
 v8::Platform::StackTracePrinter V8Platform::GetStackTracePrinter() {
   return PrintStackTrace;
+}
+
+void V8Platform::SetCurrentTimeOverride(
+    const base::Optional<double> time_millis,
+    const base::Optional<std::string> time_zone) {
+  clock_time_in_millis_override_ = time_millis;
+  if (time_zone) {
+    if (!saved_time_zone_)
+      saved_time_zone_.reset(icu::TimeZone::createDefault());
+    icu::TimeZone* tz = icu::TimeZone::createTimeZone(
+        icu::UnicodeString(time_zone->c_str(), -1, US_INV));
+    DCHECK(tz);
+    icu::TimeZone::adoptDefault(tz);
+  } else if (saved_time_zone_) {
+    icu::TimeZone::adoptDefault(saved_time_zone_.release());
+  }
 }
 
 }  // namespace gin
