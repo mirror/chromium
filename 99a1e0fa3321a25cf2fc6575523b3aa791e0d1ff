@@ -270,6 +270,30 @@
       "revId": "99a1e0fa3321a25cf2fc6575523b3aa791e0d1ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9b5a0ae_9f604ba1",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-11-03T00:36:51Z",
+      "side": 1,
+      "message": "Ack.  And discussed in person that Bluetooth Test doesn\u0027t have that ability now.",
+      "parentUuid": "c78051c2_cc6bb585",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "99a1e0fa3321a25cf2fc6575523b3aa791e0d1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
