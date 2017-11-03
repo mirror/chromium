@@ -112,13 +112,13 @@ AccessibilityExpanded AXMenuList::IsExpanded() const {
 void AXMenuList::DidUpdateActiveOption(int option_index) {
   bool suppress_notifications =
       (GetNode() && !GetNode()->IsFinishedParsingChildren());
-  const auto& child_objects = Children();
-  if (!child_objects.IsEmpty()) {
-    DCHECK(child_objects.size() == 1);
-    DCHECK(child_objects[0]->IsMenuListPopup());
 
-    if (child_objects[0]->IsMenuListPopup()) {
-      if (AXMenuListPopup* popup = ToAXMenuListPopup(child_objects[0].Get()))
+  if (!children_.IsEmpty()) {
+    DCHECK_EQ(children_.size(), 1ul);
+    DCHECK(children_[0]->IsMenuListPopup());
+
+    if (children_[0]->IsMenuListPopup()) {
+      if (AXMenuListPopup* popup = ToAXMenuListPopup(children_[0].Get()))
         popup->DidUpdateActiveOption(option_index, !suppress_notifications);
     }
   }
@@ -128,18 +128,18 @@ void AXMenuList::DidUpdateActiveOption(int option_index) {
 }
 
 void AXMenuList::DidShowPopup() {
-  if (Children().size() != 1)
+  if (children_.size() != 1)
     return;
 
-  AXMenuListPopup* popup = ToAXMenuListPopup(Children()[0].Get());
+  AXMenuListPopup* popup = ToAXMenuListPopup(children_[0].Get());
   popup->DidShow();
 }
 
 void AXMenuList::DidHidePopup() {
-  if (Children().size() != 1)
+  if (children_.size() != 1)
     return;
 
-  AXMenuListPopup* popup = ToAXMenuListPopup(Children()[0].Get());
+  AXMenuListPopup* popup = ToAXMenuListPopup(children_[0].Get());
   popup->DidHide();
 
   if (GetNode() && GetNode()->IsFocused())
