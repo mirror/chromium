@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35544464_14777626",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-11-03T15:48:24Z",
+      "side": 1,
+      "message": "Don\u0027t we also need to scale down the sigma by 0.5 to compensate? Or does this scale factor end up in Skia\u0027s CTM? If so, that\u0027s probably a good thing, since I think we\u0027ll to scale down all the pixel-moving filter parameters for filters in the chain after the blur as well.\n\nI\u0027m also not clear on how the upsampling will apply the final 2X scale, since Skia will only see the scaled-down layer. Is it the compositor which will now apply it?",
+      "revId": "e67ed9451e7110b6da3440abe48dfa24e615fe0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
