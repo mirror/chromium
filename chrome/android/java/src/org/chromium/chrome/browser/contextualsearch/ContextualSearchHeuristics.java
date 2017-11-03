@@ -24,10 +24,13 @@ public class ContextualSearchHeuristics {
      * Logs the results seen for the heuristics and whether they would have activated if enabled.
      * @param wasSearchContentViewSeen Whether the panel contents were seen.
      * @param wasActivatedByTap Whether the panel was activated by a Tap or not.
+     * @param panelViewDurationMs The duration that the panel was viewed (opened only) by the user.
      */
-    public void logResultsSeen(boolean wasSearchContentViewSeen, boolean wasActivatedByTap) {
+    public void logResultsSeen(
+            boolean wasSearchContentViewSeen, boolean wasActivatedByTap, long panelViewDurationMs) {
         for (ContextualSearchHeuristic heuristic : mHeuristics) {
-            heuristic.logResultsSeen(wasSearchContentViewSeen, wasActivatedByTap);
+            heuristic.logResultsSeen(
+                    wasSearchContentViewSeen, wasActivatedByTap, panelViewDurationMs);
         }
     }
 

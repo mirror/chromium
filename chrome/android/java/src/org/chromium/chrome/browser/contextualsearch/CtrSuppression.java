@@ -77,7 +77,8 @@ public class CtrSuppression extends ContextualSearchHeuristic {
     }
 
     @Override
-    protected void logResultsSeen(boolean wasSearchContentViewSeen, boolean wasActivatedByTap) {
+    protected void logResultsSeen(
+            boolean wasSearchContentViewSeen, boolean wasActivatedByTap, long panelViewDurationMs) {
         if (wasActivatedByTap) {
             nativeRecordImpression(mNativePointer, wasSearchContentViewSeen);
         }

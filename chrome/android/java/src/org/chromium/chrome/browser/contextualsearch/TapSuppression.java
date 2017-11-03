@@ -52,7 +52,8 @@ class TapSuppression extends ContextualSearchHeuristic {
     }
 
     @Override
-    protected void logResultsSeen(boolean wasSearchContentViewSeen, boolean wasActivatedByTap) {
+    protected void logResultsSeen(
+            boolean wasSearchContentViewSeen, boolean wasActivatedByTap, long panelViewDurationMs) {
         // TODO(donnd): consider logging counter-factual data rather than checking if enabled.
         if (wasActivatedByTap && mIsTapSuppressionEnabled) {
             ContextualSearchUma.logTapSuppressionResultsSeen(

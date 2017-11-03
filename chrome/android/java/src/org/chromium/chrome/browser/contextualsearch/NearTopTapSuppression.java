@@ -39,7 +39,8 @@ public class NearTopTapSuppression extends ContextualSearchHeuristic {
     }
 
     @Override
-    protected void logResultsSeen(boolean wasSearchContentViewSeen, boolean wasActivatedByTap) {
+    protected void logResultsSeen(
+            boolean wasSearchContentViewSeen, boolean wasActivatedByTap, long panelViewDurationMs) {
         if (wasActivatedByTap) {
             ContextualSearchUma.logScreenTopTapLocation(
                     wasSearchContentViewSeen, wasActivatedByTap, mYDp);
