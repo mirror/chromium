@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdfccd76_ed0d1dff",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/dynamic-markup-insertion/opening-the-input-stream/document.open-02.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-11-03T17:21:08Z",
+      "side": 1,
+      "message": "nit: don\u0027t bother changing this text.  These are web-platform-tests that are shared by all browsers, so \"should throw\" is still accurate.",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "04d6d8c41834eac8fee036b0c28dd2200f6661a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
