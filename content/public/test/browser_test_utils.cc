@@ -740,6 +740,34 @@ void SimulateRoutedMouseClickAt(WebContents* web_contents,
                                                             ui::LatencyInfo());
 }
 
+void SimulateRoutedLongPressAt(WebContents* web_contents,
+                               int modifiers,
+                               int x,
+                               int y) {
+  content::WebContentsImpl* web_contents_impl =
+      static_cast<content::WebContentsImpl*>(web_contents);
+  content::RenderWidgetHostViewBase* rwhvb =
+      static_cast<content::RenderWidgetHostViewBase*>(
+          web_contents->GetRenderWidgetHostView());
+
+  blink::WebTouchEvent touch_event(
+      blink::WebInputEvent::kTouchStart, modifiers,
+      ui::EventTimeStampToSeconds(ui::EventTimeForNow()));
+  touch_event.touches_length = 1;
+  touch_event.touches[0].state = blink::WebTouchPoint::kStatePressed;
+  touch_event.touches[0].SetPositionInWidget(x, y);
+  web_contents_impl->GetInputEventRouter()->RouteTouchEvent(rwhvb, &touch_event,
+                                                            ui::LatencyInfo());
+  auto filter = std::make_unique<content::InputMsgWatcher>(
+      rwhvb->GetRenderWidgetHost(), blink::WebInputEvent::kGestureLongPress);
+  EXPECT_EQ(content::INPUT_EVENT_ACK_STATE_CONSUMED,
+            filter->GetAckStateWaitIfNecessary());
+
+  touch_event.SetType(blink::WebInputEvent::kTouchEnd);
+  web_contents_impl->GetInputEventRouter()->RouteTouchEvent(rwhvb, &touch_event,
+                                                            ui::LatencyInfo());
+}
+
 void SimulateMouseEvent(WebContents* web_contents,
                         blink::WebInputEvent::Type type,
                         const gfx::Point& point) {
