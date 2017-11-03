@@ -550,6 +550,8 @@ WindowPortMus::CreateLayerTreeFrameSink() {
       nullptr,
       aura::Env::GetInstance()->context_factory()->GetGpuMemoryBufferManager());
   local_surface_id_ = local_surface_id_allocator_.GenerateId();
+  last_surface_size_in_pixels_ =
+      gfx::ConvertSizeToPixel(GetDeviceScaleFactor(), window_->bounds().size());
   frame_sink->SetLocalSurfaceId(local_surface_id_);
   local_layer_tree_frame_sink_ = frame_sink->GetWeakPtr();
   return std::move(frame_sink);
