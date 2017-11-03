@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eb0dd50_d892cd73",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-03T20:28:17Z",
+      "side": 1,
+      "message": "Since the CANCEL and CANCEL_AND_IGNORE cannot return ERR_BLOCKED_BY_CLIENT, this DCHECK can be simplified to be just result.net_error_code() is ERR_ABORTED.",
+      "revId": "74cca8382f2fdbf27444339c381ff7d68a55fbbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
