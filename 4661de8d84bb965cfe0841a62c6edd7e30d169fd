@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "6d310555_11388f0f",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-03T13:54:32Z",
+      "side": 1,
+      "message": "Its primary responsibility is to update the UI (and ensure that the update sticks through browser restarts).\n\nThe fact that it does this by first calling through to the data manager and waiting for it to call back again doesn\u0027t change this.",
+      "parentUuid": "35d07e0e_0022d055",
+      "revId": "4661de8d84bb965cfe0841a62c6edd7e30d169fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "467afe55_254c7063",
         "filename": "content/browser/background_fetch/background_fetch_context.cc",
         "patchSetId": 5
@@ -50,6 +68,24 @@
       "revId": "4661de8d84bb965cfe0841a62c6edd7e30d169fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69379366_7910ea2c",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-03T13:54:32Z",
+      "side": 1,
+      "message": "I\u0027ve updated to use Stored.\n\nThink of \"Did...\" as like \"On...\" in Java/Android Listener interfaces. It\u0027s signalling that it\u0027s called after a certain thing has happened.\n\nThis means that someone looking at this code would typically look for a Bind site rather than a direct method call.",
+      "parentUuid": "467afe55_254c7063",
+      "revId": "4661de8d84bb965cfe0841a62c6edd7e30d169fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
