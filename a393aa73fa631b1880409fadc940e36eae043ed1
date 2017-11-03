@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32de31c9_64ee307d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuUi.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-03T18:24:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e888251_8de06b5a",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 22
+      },
+      "revId": "a393aa73fa631b1880409fadc940e36eae043ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d948fa19_42b78fa0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuUi.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "a393aa73fa631b1880409fadc940e36eae043ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8de987a_065a82b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuUi.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-03T18:24:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d948fa19_42b78fa0",
+      "range": {
+        "startLine": 304,
+        "startChar": 17,
+        "endLine": 304,
+        "endChar": 37
+      },
+      "revId": "a393aa73fa631b1880409fadc940e36eae043ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
