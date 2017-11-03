@@ -16,6 +16,24 @@
       "revId": "32b21e3ad45cbf56637478799e7a26b2ba863019",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0309d12e_1c120322",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/NavigationPreloadManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-03T01:38:37Z",
+      "side": 1,
+      "message": "Yeah, I investigate again, and think we can remove this check now. \n\nprovider_host is only used for getting some information in ServiceWorkerDispatcherHost before, but we do that in ServiceWorkerRegistrationHandle now and there is also a provider_host check.",
+      "parentUuid": "fba09e77_4d1ab7cc",
+      "revId": "32b21e3ad45cbf56637478799e7a26b2ba863019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
