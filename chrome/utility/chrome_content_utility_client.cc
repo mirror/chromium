@@ -32,6 +32,7 @@
 #include "printing/features/features.h"
 #include "services/service_manager/embedder/embedded_service_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/sandbox/switches.h"
 
 #if !defined(OS_ANDROID)
 #include "chrome/common/resource_usage_reporter.mojom.h"
@@ -224,9 +225,11 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
   extensions::utility_handler::UtilityThreadStarted();
 #endif
 
+#if defined(OS_WIN)
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kUtilityProcessRunningElevated))
-    utility_process_running_elevated_ = true;
+  utility_process_running_elevated_ = command_line->HasSwitch(
+      service_manager::switches::kNoSandboxAndElevatedPrivileges);
+#endif
 
   content::ServiceManagerConnection* connection =
       content::ChildThread::Get()->GetServiceManagerConnection();

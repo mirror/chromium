@@ -21,6 +21,7 @@ const char kServiceSandboxType[] = "service-sandbox-type";
 // Must be in sync with "sandbox_type" values as used in service manager's
 // manifest.json catalog files.
 const char kNoneSandbox[] = "none";
+const char kNoneSandboxAndElevatedPrivileges[] = "none_and_elevated";
 const char kNetworkSandbox[] = "network";
 const char kPpapiSandbox[] = "ppapi";
 const char kUtilitySandbox[] = "utility";
@@ -70,6 +71,7 @@ const char kRendererProcess[] = "renderer";
 const char kUtilityProcess[] = "utility";
 const char kDisableGpuSandbox[] = "disable-gpu-sandbox";
 const char kNoSandbox[] = "no-sandbox";
+const char kNoSandboxAndElevatedPrivileges[] = "no-sandbox-and-elevated";
 const char kEnableSandboxLogging[] = "enable-sandbox-logging";
 
 }  // namespace switches
