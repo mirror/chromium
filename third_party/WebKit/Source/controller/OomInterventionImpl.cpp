@@ -19,18 +19,10 @@ OomInterventionImpl::OomInterventionImpl() = default;
 
 OomInterventionImpl::~OomInterventionImpl() = default;
 
-void OomInterventionImpl::OnNearOomDetected(
-    OnNearOomDetectedCallback callback) {
+void OomInterventionImpl::OnNearOomDetected() {
   if (!pauser_) {
     pauser_.reset(new ScopedPagePauser());
   }
-  std::move(callback).Run();
-}
-
-void OomInterventionImpl::OnInterventionDeclined(
-    OnInterventionDeclinedCallback callback) {
-  pauser_.reset();
-  std::move(callback).Run();
 }
 
 }  // namespace blink

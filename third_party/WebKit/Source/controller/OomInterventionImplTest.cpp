@@ -13,14 +13,6 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace {
-
-void ResponseCallback() {
-  // Do nothing
-}
-
-}  // namespace
-
 namespace blink {
 
 class OomInterventionImplTest : public ::testing::Test {
@@ -33,14 +25,13 @@ TEST_F(OomInterventionImplTest, DetectedAndDeclined) {
   Page* page = web_view->MainFrameImpl()->GetFrame()->GetPage();
   EXPECT_FALSE(page->Paused());
 
-  OomInterventionImpl intervention;
+  std::unique_ptr<OomInterventionImpl> intervention =
+      std::make_unique<OomInterventionImpl>();
 
-  intervention.OnNearOomDetected(
-      ConvertToBaseCallback(WTF::Bind(&ResponseCallback)));
+  intervention->OnNearOomDetected();
   EXPECT_TRUE(page->Paused());
 
-  intervention.OnInterventionDeclined(
-      ConvertToBaseCallback(WTF::Bind(&ResponseCallback)));
+  intervention.reset();
   EXPECT_FALSE(page->Paused());
 }
 
