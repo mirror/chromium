@@ -13,8 +13,10 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/hash.h"
 #include "base/logging.h"
 #include "base/strings/string16.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/win/core_winrt_util.h"
 #include "base/win/scoped_hstring.h"
 #include "chrome/browser/browser_process.h"
@@ -269,6 +271,30 @@ void NotificationPlatformBridgeWin::Display(
   hr = toast->add_Dismissed(dismissed_handler.Get(), &dismissed_token);
   if (FAILED(hr)) {
     LOG(ERROR) << "Unable to add toast dismissed event handler";
+    return;
+  }
+
+  mswr::ComPtr<winui::Notifications::IToastNotification2> toast2;
+  hr = toast.As<winui::Notifications::IToastNotification2>(&toast2);
+  if (FAILED(hr)) {
+    LOG(ERROR) << "Failed to get IToastNotification2 object";
+    return;
+  }
+
+  ScopedHString group = ScopedHString::Create(
+      base::UintToString16(base::Hash(notification.origin_url().spec())));
+  ScopedHString tag = ScopedHString::Create(
+      base::UintToString16(base::Hash(notification.id())));
+
+  hr = toast2->put_Group(group.get());
+  if (FAILED(hr)) {
+    LOG(ERROR) << "Failed to set Group";
+    return;
+  }
+
+  hr = toast2->put_Tag(tag.get());
+  if (FAILED(hr)) {
+    LOG(ERROR) << "Failed to set Tag";
     return;
   }
 
