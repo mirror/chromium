@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa347897_6fb0fdb6",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-03T16:15:49Z",
+      "side": 0,
+      "message": "Removing these three lines was made possible by the removal of lazy deletion at https://crrev.com/c/749902.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "a031341bfb974f6fa296675b8f745dc9365ada05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
