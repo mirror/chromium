@@ -281,5 +281,16 @@ cr.define('settings_main_page', function() {
 
       return assertPageVisibility('block', 'block');
     });
+
+    test('verify showChangePassword value', function() {
+      settings.navigateTo(settings.routes.BASIC);
+      Polymer.dom.flush();
+      var basicPage = settingsMain.$$('settings-basic-page');
+      assertTrue(!!basicPage);
+      assertFalse(basicPage.showChangePassword);
+
+      cr.webUIListenerCallback('change-password-on-show');
+      assertTrue(basicPage.showChangePassword);
+    });
   });
 });
