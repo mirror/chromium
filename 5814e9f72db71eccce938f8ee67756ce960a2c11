@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfe20a7b_e58ed13b",
+        "filename": "content/shell/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-03T19:14:10Z",
+      "side": 0,
+      "message": "don\u0027t see a corresponding generic sensors dependency, does this mean content_shell does not depend on sensors anymore?",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8085d1_e43d3c82",
+        "filename": "content/shell/android/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-03T19:14:10Z",
+      "side": 0,
+      "message": "Do we have equivalent javatests on the generic sensors side?",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780df888_8524ec03",
+        "filename": "content/shell/test_runner/test_runner_for_specific_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-03T19:14:10Z",
+      "side": 0,
+      "message": "hmm that\u0027s weird, does this mean these includes were not used anyway?",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a60385_a5700a2f",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-03T19:14:10Z",
+      "side": 0,
+      "message": "do we actually have any sensors tests in content_unittests now?",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b329a5_caa330b6",
+        "filename": "device/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-03T19:14:10Z",
+      "side": 0,
+      "message": "are there any similar unittests in generic sensors?",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc94df0e_4ce8ea38",
+        "filename": "device/sensors/android/javatests/src/org/chromium/device/sensors/DeviceSensorsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-03T19:14:10Z",
+      "side": 0,
+      "message": "do we have some equivalent tests in generic sensors?",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

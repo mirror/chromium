@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4b97dea_e52a47ad",
+        "filename": "services/device/generic_sensor/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-03T19:14:10Z",
+      "side": 1,
+      "message": "line wrapping in this section seems different from the rest (probably different max line length used?)",
+      "revId": "486502884976ddbb1370c53ddde7bb1c61d49e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2a1e41_c6052467",
+        "filename": "services/device/public/cpp/generic_sensor/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-03T19:14:10Z",
+      "side": 1,
+      "message": "is there a \"full\" target?",
+      "revId": "486502884976ddbb1370c53ddde7bb1c61d49e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f8e5eb_da5c1884",
+        "filename": "services/device/public/cpp/generic_sensor/motion_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-03T19:14:10Z",
+      "side": 1,
+      "message": "For completeness sake, could you please add to the description that motion_data.* and orientation_data.* files have been moved from device/sensors/.. to services/device/public..?\n(strictly speaking this is patch is not only about deletion)",
+      "revId": "486502884976ddbb1370c53ddde7bb1c61d49e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
