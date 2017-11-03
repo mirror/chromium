@@ -104,6 +104,24 @@
       "revId": "0974c65819d04770bd15f9e173609f523865e878",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed782a84_7c457c7d",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-03T21:21:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e00353aa_86ca4c9c",
+      "revId": "0974c65819d04770bd15f9e173609f523865e878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
