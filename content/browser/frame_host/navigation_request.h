@@ -205,7 +205,6 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
       const scoped_refptr<ResourceResponse>& response) override;
   void OnResponseStarted(const scoped_refptr<ResourceResponse>& response,
                          std::unique_ptr<StreamHandle> body,
-                         mojo::ScopedDataPipeConsumerHandle consumer_handle,
                          const SSLStatus& ssl_status,
                          std::unique_ptr<NavigationData> navigation_data,
                          const GlobalRequestID& request_id,
@@ -213,6 +212,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
                          bool is_stream,
                          base::Optional<SubresourceLoaderParams>
                              subresource_loader_params) override;
+  void OnStartLoadingResponseBody(
+      mojo::ScopedDataPipeConsumerHandle consumer_handle) override;
   void OnRequestFailed(bool has_stale_copy_in_cache,
                        int net_error,
                        const base::Optional<net::SSLInfo>& ssl_info,
