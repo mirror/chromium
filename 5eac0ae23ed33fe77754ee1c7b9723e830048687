@@ -46,6 +46,30 @@
       "revId": "5eac0ae23ed33fe77754ee1c7b9723e830048687",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdca031_6a9ee2b7",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-03T14:39:23Z",
+      "side": 1,
+      "message": "Hmmm. Sticking with the builtin way seems okay to me, but the ScopedWhatever approach is more chrome-y. This makes me wish we had a base::ScopedAnything, which took a pair of lambdas to run at entry and exit of the scope :)\n\nin any case, I think it\u0027s fine to stick to the builtin way here.",
+      "parentUuid": "ed77f244_76b1b155",
+      "range": {
+        "startLine": 131,
+        "startChar": 62,
+        "endLine": 131,
+        "endChar": 69
+      },
+      "revId": "5eac0ae23ed33fe77754ee1c7b9723e830048687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
