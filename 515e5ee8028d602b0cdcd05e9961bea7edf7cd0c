@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "602cd82d_e8688c53",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-03T17:09:18Z",
+      "side": 1,
+      "message": "nit: For consistency, please also add /* param_name */ to the newly added arguments.",
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78e8386_cde1b78a",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-03T17:09:18Z",
+      "side": 1,
+      "message": "One idea for consideration: it seems simpler if we let NetworkServiceClient directly implements SSLErrorHandler::Delegate. When NetworkServiceClient is gone it disconnects the pipe. After that, running |response| is a no-op anyway, so there is no need to have different lifespan for the delegate.",
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b15832_1258053e",
+        "filename": "content/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-03T17:09:18Z",
+      "side": 1,
+      "message": "Please update the comments now that it could be used on UI/IO thread.",
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea1fbaf_755084f7",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-03T17:09:18Z",
+      "side": 1,
+      "message": "I think we should check whether |url_request_| is null here?",
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d08cda_0cbfccfa",
+        "filename": "content/public/browser/network_service_instance.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-03T17:09:18Z",
+      "side": 1,
+      "message": "I think there is no need to make it a static local. The creation is guarded by whether |g_network_service| is bound, and |g_network_service| is a static local already.\nSo a leaking object seems sufficient.",
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6356de61_3282abc6",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 10
@@ -46,6 +131,29 @@
       "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "176cb9df_4f068868",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-03T17:09:18Z",
+      "side": 1,
+      "message": "nit: does it make sense to name the parameter \"net_error\"? It seems to be a very common name in the network-related code. So people will immediately understand the meaning without reading the comment.",
+      "range": {
+        "startLine": 131,
+        "startChar": 46,
+        "endLine": 131,
+        "endChar": 54
+      },
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
