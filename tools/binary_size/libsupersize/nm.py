@@ -57,6 +57,7 @@ import sys
 import threading
 
 import concurrent
+import paths
 
 _MSG_ANALYZE_PATHS = 1
 _MSG_SORT_PATHS = 2
@@ -135,8 +136,8 @@ def CollectAliasesByAddress(elf_path, tool_prefix):
 
   # About 60mb of output, but piping takes ~30s, and loading it into RAM
   # directly takes 3s.
-  args = [tool_prefix + 'nm', '--no-sort', '--defined-only', '--demangle',
-          elf_path]
+  args = [paths.GetNmPath(tool_prefix), '--no-sort', '--defined-only',
+          '--demangle', elf_path]
   output = subprocess.check_output(args)
   for line in output.splitlines():
     space_idx = line.find(' ')
@@ -183,7 +184,7 @@ def _LookupStringSectionPositions(target, tool_prefix, output_directory):
     target: An archive path string (e.g., "foo.a") or a list of object paths.
   """
   is_archive = isinstance(target, basestring)
-  args = [tool_prefix + 'readelf', '-S', '--wide']
+  args = [paths.GetReadElfPath(tool_prefix), '-S', '--wide']
   if is_archive:
     args.append(target)
   else:
@@ -228,7 +229,7 @@ def _LookupStringSectionPositions(target, tool_prefix, output_directory):
 
 def LookupElfRodataInfo(elf_path, tool_prefix):
   """Returns (address, offset, size) for the .rodata section."""
-  args = [tool_prefix + 'readelf', '-S', '--wide', elf_path]
+  args = [paths.GetReadElfPath(tool_prefix), '-S', '--wide', elf_path]
   output = subprocess.check_output(args)
   lines = output.splitlines()
   for line in lines:
@@ -460,7 +461,8 @@ def _RunNmOnIntermediates(target, tool_prefix, output_directory):
     target: Either a single path to a .a (as a string), or a list of .o paths.
   """
   is_archive = isinstance(target, basestring)
-  args = [tool_prefix + 'nm', '--no-sort', '--defined-only', '--demangle']
+  args = [paths.GetNmPath(tool_prefix), '--no-sort', '--defined-only',
+          '--demangle']
   if is_archive:
     args.append(target)
   else:
@@ -508,10 +510,10 @@ class _BulkObjectFileAnalyzerWorker(object):
     self._encoded_string_addresses_by_path_chunks = []
     self._list_of_encoded_elf_string_positions_by_path = None
 
-  def AnalyzePaths(self, paths):
+  def AnalyzePaths(self, _paths):
     def iter_job_params():
       object_paths = []
-      for path in paths:
+      for path in _paths:
         # Note: _ResolveStringPieces relies upon .a not being grouped.
         if path.endswith('.a'):
           yield path, self._tool_prefix, self._output_directory
@@ -540,8 +542,8 @@ class _BulkObjectFileAnalyzerWorker(object):
     logging.debug('worker: AnalyzePaths() completed.')
 
   def SortPaths(self):
-    for paths in self._paths_by_name.itervalues():
-      paths.sort()
+    for _paths in self._paths_by_name.itervalues():
+      _paths.sort()
 
   def AnalyzeStringLiterals(self, elf_path, elf_string_positions):
     logging.debug('worker: AnalyzeStringLiterals() started.')
@@ -617,12 +619,12 @@ class _BulkObjectFileAnalyzerMaster(object):
       slave = _BulkObjectFileAnalyzerSlave(worker_analyzer, child_conn)
       slave.Run()
 
-  def AnalyzePaths(self, paths):
+  def AnalyzePaths(self, _paths):
     if self._child_pid is None:
       self._Spawn()
 
-    logging.debug('Sending batch of %d paths to subprocess', len(paths))
-    payload = '\x01'.join(paths)
+    logging.debug('Sending batch of %d paths to subprocess', len(_paths))
+    payload = '\x01'.join(_paths)
     self._pipe.send((_MSG_ANALYZE_PATHS, payload))
 
   def SortPaths(self):
@@ -683,8 +685,9 @@ class _BulkObjectFileAnalyzerSlave(object):
         if message[0] == _MSG_ANALYZE_PATHS:
           assert self._allow_analyze_paths, (
               'Cannot call AnalyzePaths() after AnalyzeStringLiterals()s.')
-          paths = message[1].split('\x01')
-          self._job_queue.put(lambda: self._worker_analyzer.AnalyzePaths(paths))
+          _paths = message[1].split('\x01')
+          self._job_queue.put(
+              lambda: self._worker_analyzer.AnalyzePaths(_paths))
         elif message[0] == _MSG_SORT_PATHS:
           assert self._allow_analyze_paths, (
               'Cannot call SortPaths() after AnalyzeStringLiterals()s.')
@@ -751,8 +754,8 @@ def main():
   names_to_paths = bulk_analyzer.GetSymbolNames()
   print('Found {} names'.format(len(names_to_paths)))
   if args.show_names:
-    for name, paths in names_to_paths.iteritems():
-      print('{}: {!r}'.format(name, paths))
+    for name, _paths in names_to_paths.iteritems():
+      print('{}: {!r}'.format(name, _paths))
 
   if args.elf_file:
     address, offset, size = LookupElfRodataInfo(
