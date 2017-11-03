@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb05c3cc_160444d5",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-03T19:17:26Z",
+      "side": 1,
+      "message": "nit: also include task_traits.h?",
+      "revId": "7bf9b9cb09146a59f313831032f485295bdead60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
