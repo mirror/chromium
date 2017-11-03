@@ -16,7 +16,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/tabs/tab.h"
-#include "chrome/browser/ui/views/tabs/tab_strip.h"
+#include "chrome/browser/ui/views/tabs/tab_strip_impl.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
 #include "ui/aura/window.h"
@@ -32,21 +32,21 @@ const int64_t kActivationDelayMS = 200;
 inline float Clamp(float value, float low, float high) {
   return std::min(high, std::max(value, low));
 }
-}
+
+}  // namespace
 
 // static
 TabScrubber* TabScrubber::GetInstance() {
-  static TabScrubber* instance = NULL;
+  static TabScrubber* instance = nullptr;
   if (!instance)
     instance = new TabScrubber();
   return instance;
 }
 
 // static
-gfx::Point TabScrubber::GetStartPoint(
-    TabStrip* tab_strip,
-    int index,
-    TabScrubber::Direction direction) {
+gfx::Point TabScrubber::GetStartPoint(TabStripImpl* tab_strip,
+                                      int index,
+                                      TabScrubber::Direction direction) {
   int initial_tab_offset = Tab::GetPinnedWidth() / 2;
   // In RTL layouts the tabs are mirrored. We hence use GetMirroredBounds()
   // which will give us the correct bounds of tabs in RTL layouts as well as
@@ -113,7 +113,12 @@ void TabScrubber::OnScrollEvent(ui::ScrollEvent* event) {
   BrowserView* browser_view =
       BrowserView::GetBrowserViewForNativeWindow(
           browser->window()->GetNativeWindow());
-  TabStrip* tab_strip = browser_view->tabstrip();
+  TabStripImpl* tab_strip = browser_view->tabstrip()->AsTabStripImpl();
+  if (!tab_strip) {
+    // This scrubber only works with the non-experimental tab strip.
+    DLOG(WARNING) << "TabScrubber disabled for experimental tab strip.";
+    return;
+  }
 
   if (tab_strip->IsAnimating()) {
     FinishScrub(false);
@@ -237,9 +242,15 @@ void TabScrubber::BeginScrub(Browser* browser,
   DCHECK(browser);
   DCHECK(browser_view);
 
+  tab_strip_ = browser_view->tabstrip()->AsTabStripImpl();
+  if (!tab_strip) {
+    // This scrubber only works with the non-experimental tab strip.
+    DLOG(WARNING) << "TabScrubber disabled for experimental tab strip.";
+    return;
+  }
+
   scrubbing_ = true;
   browser_ = browser;
-  tab_strip_ = browser_view->tabstrip();
 
   Direction direction = (x_offset < 0) ? LEFT : RIGHT;
   ScrubDirectionChanged(direction);
@@ -261,8 +272,8 @@ void TabScrubber::FinishScrub(bool activate) {
     BrowserView* browser_view =
         BrowserView::GetBrowserViewForNativeWindow(
             browser_->window()->GetNativeWindow());
-    TabStrip* tab_strip = browser_view->tabstrip();
-    if (activate && highlighted_tab_ != -1) {
+    TabStripImpl* tab_strip = browser_view->tabstrip()->AsTabStripImpl();
+    if (tab_strip && activate && highlighted_tab_ != -1) {
       Tab* tab = tab_strip->tab_at(highlighted_tab_);
       tab->hover_controller()->HideImmediately();
       int distance =
