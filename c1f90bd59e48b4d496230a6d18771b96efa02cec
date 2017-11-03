@@ -22,6 +22,99 @@
       "revId": "c1f90bd59e48b4d496230a6d18771b96efa02cec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3327e3_040bcc00",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-03T20:45:36Z",
+      "side": 1,
+      "message": "Also add:\n#include \u003cutility\u003e\nfor std::move().",
+      "parentUuid": "5bb172b4_71cbbb9f",
+      "range": {
+        "startLine": 67,
+        "startChar": 14,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "c1f90bd59e48b4d496230a6d18771b96efa02cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0a068e_810d5d80",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-03T20:45:36Z",
+      "side": 1,
+      "message": "nit: change it to:\n// PlatformSensor::Client:\n\nSimilar to the style in the following:\nhttps://cs.chromium.org/chromium/src/services/device/generic_sensor/platform_sensor_fusion.h?l\u003d52\nhttps://cs.chromium.org/chromium/src/services/device/generic_sensor/platform_sensor_fusion.h?l\u003d61",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 38
+      },
+      "revId": "c1f90bd59e48b4d496230a6d18771b96efa02cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2198787_1ae7cb7a",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-03T20:45:36Z",
+      "side": 1,
+      "message": "Add:\n#include \"base/memory/scoped_refptr.h\"\nfor this.",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 15
+      },
+      "revId": "c1f90bd59e48b4d496230a6d18771b96efa02cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c6cc33_774db1e0",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-03T20:45:36Z",
+      "side": 1,
+      "message": "Add:\n#include \"base/macros.h\"\nfor this.",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 26
+      },
+      "revId": "c1f90bd59e48b4d496230a6d18771b96efa02cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
