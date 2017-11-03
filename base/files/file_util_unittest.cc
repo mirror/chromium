@@ -1051,6 +1051,36 @@ TEST_F(FileUtilTest, CopyDirectoryPermissionsOverExistingFile) {
   EXPECT_EQ(0777, mode);
 }
 
+TEST_F(FileUtilTest, CopyDirectoryExclFailure) {
+  // Create source directory.
+  FilePath dir_name_from =
+      temp_dir_.GetPath().Append(FILE_PATH_LITERAL("Copy_From_Subdir"));
+  CreateDirectory(dir_name_from);
+  ASSERT_TRUE(PathExists(dir_name_from));
+
+  // Create a file under the directory.
+  FilePath file_name_from =
+      dir_name_from.Append(FILE_PATH_LITERAL("Reggy-1.txt"));
+  CreateTextFile(file_name_from, L"Mordecai");
+  ASSERT_TRUE(PathExists(file_name_from));
+
+  // Create destination directory.
+  FilePath dir_name_to =
+      temp_dir_.GetPath().Append(FILE_PATH_LITERAL("Copy_To_Subdir"));
+  CreateDirectory(dir_name_to);
+  ASSERT_TRUE(PathExists(dir_name_to));
+
+  // Create a file under the directory with the same name.
+  FilePath file_name_to = dir_name_to.Append(FILE_PATH_LITERAL("Reggy-1.txt"));
+  CreateTextFile(file_name_to, L"Rigby");
+  ASSERT_TRUE(PathExists(file_name_to));
+
+  // Ensure that copying failed and the file was not overwritten.
+  EXPECT_FALSE(CopyDirectoryExcl(dir_name_from, dir_name_to, false));
+  ASSERT_TRUE(PathExists(file_name_to));
+  ASSERT_EQ(L"Rigby", ReadTextFile(file_name_to));
+}
+
 TEST_F(FileUtilTest, CopyFileExecutablePermission) {
   FilePath src = temp_dir_.GetPath().Append(FPL("src.txt"));
   const std::wstring file_contents(L"Gooooooooooooooooooooogle");
@@ -1774,6 +1804,24 @@ TEST_F(FileUtilTest, CopyFileWithCopyDirectoryRecursiveToExistingDirectory) {
 
   // Check the has been copied
   EXPECT_TRUE(PathExists(file_name_to));
+}
+
+TEST_F(FileUtilTest, CopyFileFailureWithCopyDirectoryExcl) {
+  // Create a file
+  FilePath file_name_from =
+      temp_dir_.GetPath().Append(FILE_PATH_LITERAL("Copy_Test_File.txt"));
+  CreateTextFile(file_name_from, L"Gooooooooooooooooooooogle");
+  ASSERT_TRUE(PathExists(file_name_from));
+
+  // Make a destination file.
+  FilePath file_name_to = temp_dir_.GetPath().Append(
+      FILE_PATH_LITERAL("Copy_Test_File_Destination.txt"));
+  CreateTextFile(file_name_to, L"Old file content");
+  ASSERT_TRUE(PathExists(file_name_to));
+
+  // Overwriting the destination should fail.
+  EXPECT_FALSE(CopyDirectoryExcl(file_name_from, file_name_to, true));
+  EXPECT_EQ(L"Old file content", ReadTextFile(file_name_to));
 }
 
 TEST_F(FileUtilTest, CopyDirectoryWithTrailingSeparators) {
