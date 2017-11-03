@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bd7abb5_586a0486",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 6270,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-03T17:03:14Z",
+      "side": 1,
+      "message": "Can you add \"net_\" prefix to the target name, all fuzzers targeting //net code use that format.",
+      "range": {
+        "startLine": 6270,
+        "startChar": 13,
+        "endLine": 6270,
+        "endChar": 39
+      },
+      "revId": "762303cb383d3f2f09854be40032950df34e0af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5815cc97_4e11ce4c",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-03T17:03:14Z",
+      "side": 1,
+      "message": "no \"(c)\": https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#file-headers\n\nsame applies to other new files being added",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "762303cb383d3f2f09854be40032950df34e0af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7915c0_bc3bc91e",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-03T17:03:14Z",
+      "side": 1,
+      "message": "Would it make sense to fuzz these values later? Or it actually doesn\u0027t really matter in the target code?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 54
+      },
+      "revId": "762303cb383d3f2f09854be40032950df34e0af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0d8925_d7282a0b",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-03T17:03:14Z",
+      "side": 1,
+      "message": "Are all of the objects created below needed to be created on each input? I guess there are some constant / stateless things that can be created once as static / global stuff, it might speed up the fuzzer",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 37
+      },
+      "revId": "762303cb383d3f2f09854be40032950df34e0af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
