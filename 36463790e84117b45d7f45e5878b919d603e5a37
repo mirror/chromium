@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d0d245b_d5395953",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-03T23:42:36Z",
+      "side": 1,
+      "message": "I\u0027m doing this because there doesn\u0027t appear to be a histogram that can record the range of numbers I\u0027d want for dp/ms. Maybe I\u0027m wrong?",
+      "range": {
+        "startLine": 492,
+        "startChar": 8,
+        "endLine": 492,
+        "endChar": 33
+      },
+      "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c163ad76_335ba021",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-03T23:42:36Z",
+      "side": 1,
+      "message": "This is a bit spooky; I can use the proper APIs but this gives enough accuracy.",
+      "range": {
+        "startLine": 493,
+        "startChar": 51,
+        "endLine": 493,
+        "endChar": 67
+      },
+      "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
