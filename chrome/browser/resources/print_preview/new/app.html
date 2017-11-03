@@ -1,5 +1,6 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
 
+<link rel="import" href="settings_section.html">
 <link rel="import" href="header.html">
 
 <dom-module id="print-preview-app">
@@ -35,17 +36,49 @@
     <div id="sidebar">
       <print-preview-header></print-preview-header>
       <div id="settings">
-        <div>Destination</div>
-        <div>Pages</div>
-        <div>Copies</div>
-        <div>Layout</div>
-        <div>Color</div>
-        <div>Paper size</div>
-        <div>Margins</div>
-        <div>Quality</div>
-        <div>Scale</div>
-        <div>Options</div>
-        <div>Advanced</div>
+        <print-preview-settings-section>
+          <span slot="title">Destination</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Pages</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Copies</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Layout</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Color</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Paper size</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Margins</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Quality</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Scale</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Options</span>
+        </print-preview-settings-section>
+
+        <print-preview-settings-section>
+          <span slot="title">Advanced</span>
+        </print-preview-settings-section>
       </div>
     </div>
     <div id="previewArea">preview area</div>
