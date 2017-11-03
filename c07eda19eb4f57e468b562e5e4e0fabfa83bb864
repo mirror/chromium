@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc632981_f8c9d039",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 1742,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-03T16:55:25Z",
+      "side": 1,
+      "message": "Presumably this is because hung_renderer_view.cc isn\u0027t used on Mac?  There\u0027s another section for tests with \"if (!is_mac || mac_views_browser)\" on line 2118 below - can we move this there?\n\nAlso, do you know if Mac has another view that might have this problem?  chrome/browser/ui/cocoa/hung_renderer_controller.mm, maybe?  (Probably ok to fix that separately, if needed.)",
+      "revId": "c07eda19eb4f57e468b562e5e4e0fabfa83bb864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
