@@ -4998,6 +4998,7 @@ test("net_unittests") {
     "quic/core/crypto/quic_crypto_server_config_test.cc",
     "quic/core/crypto/quic_random_test.cc",
     "quic/core/crypto/quic_tls_adapter_test.cc",
+    "quic/core/frames/quic_ack_frame.cc",
     "quic/core/frames/quic_frames_test.cc",
     "quic/core/packet_number_indexed_queue_test.cc",
     "quic/core/quic_alarm_test.cc",
@@ -6247,8 +6248,8 @@ proto_library("reporting_policy_proto") {
 fuzzer_test("net_reporting_header_parser_fuzzer") {
   sources = [
     "reporting/reporting_header_parser_fuzzer.cc",
-    "reporting/reporting_test_util.h",
     "reporting/reporting_test_util.cc",
+    "reporting/reporting_test_util.h",
   ]
 
   deps = [
