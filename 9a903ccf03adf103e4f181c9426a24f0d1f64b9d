@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fec4749_f8d1b9a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-03T14:28:47Z",
+      "side": 1,
+      "message": "How about just:\n  Skips hidden field...\n?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "9a903ccf03adf103e4f181c9426a24f0d1f64b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee06622_5c26e3af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-03T14:28:47Z",
+      "side": 1,
+      "message": "non-focusable",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "9a903ccf03adf103e4f181c9426a24f0d1f64b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8fcefa7_5470fa02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-03T14:28:47Z",
+      "side": 1,
+      "message": "Example",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "9a903ccf03adf103e4f181c9426a24f0d1f64b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
