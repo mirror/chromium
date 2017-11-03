@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e342c88_b7b6e00e",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-03T01:54:28Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "d7a4aba0_7a102d07",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1826d4da_d9a9c3f5",
         "filename": "components/viz/service/display/direct_renderer.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b988e44_9ed75f3d",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-03T01:54:28Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "1826d4da_d9a9c3f5",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "64fb3f8a_37faa0f4",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-03T01:54:28Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "40f52aad_794b2da3",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e73b0eaa_72dbdbc4",
         "filename": "components/viz/service/display/direct_renderer.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-02T15:14:30Z",
       "side": 0,
       "message": "Looks like this loop should stay here, so it can do the pass-\u003e call. But will have to delegate to the subclass to make the resource (and get back a return value if it had to make something or not)",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4c92e6_5ae79877",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-03T01:54:28Z",
+      "side": 0,
+      "message": "Still move this into subclass, Because this heavily depends on local resources.",
+      "parentUuid": "e73b0eaa_72dbdbc4",
       "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d2ad5550_d041675b",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-03T01:54:28Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "91753326_d1b4740c",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7f92812_d8f89460",
         "filename": "components/viz/service/display/direct_renderer.cc",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "0a5c667a_64215241",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-03T01:54:28Z",
+      "side": 0,
+      "message": "The else logic here indicates:\nif texture-\u003eid()), and if render_pass-\u003ecache_render_pass or scissor IsEmpty, then return false.\n\nThis means the else path depends on texture-\u003eid()).  So suggest keep it here.",
+      "parentUuid": "a7f92812_d8f89460",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "baa779c8_6b807653",
         "filename": "components/viz/service/display/direct_renderer.cc",
         "patchSetId": 4
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-02T15:14:30Z",
       "side": 0,
       "message": "This doesn\u0027t need to move to the subclass, if it works with renderpass id instead of a resource* ?",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a162dae_97882f9e",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-03T01:54:28Z",
+      "side": 0,
+      "message": "The followup InitializeViewport requires the resource size (texture-\u003esize()). This is subclass specific. But if we have a common base local resource (which keeps properties like size), keep this in base should be possible.  So suggest keep it here currently. When local resource done, will turn back to this.",
+      "parentUuid": "baa779c8_6b807653",
       "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
