@@ -228,7 +228,7 @@ void DownloadRequestLimiter::TabDownloadState::SetContentSetting(
   if (!settings)
     return;
   settings->SetContentSettingDefaultScope(
-      web_contents_->GetURL(), GURL(),
+      web_contents_->GetVisibleURL(), GURL(),
       CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS, std::string(), setting);
 }
 
@@ -302,7 +302,7 @@ void DownloadRequestLimiter::TabDownloadState::OnContentSettingChanged(
     return;
 
   ContentSetting setting = content_settings->GetContentSetting(
-      web_contents()->GetURL(), web_contents()->GetURL(),
+      web_contents()->GetVisibleURL(), web_contents()->GetVisibleURL(),
       CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS, std::string());
 
   // Update the internal state to match if necessary.
@@ -479,7 +479,8 @@ void DownloadRequestLimiter::CanDownloadImpl(
       ContentSetting setting = CONTENT_SETTING_ASK;
       if (content_settings)
         setting = content_settings->GetContentSetting(
-            originating_contents->GetURL(), originating_contents->GetURL(),
+            originating_contents->GetVisibleURL(),
+            originating_contents->GetVisibleURL(),
             CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS, std::string());
       switch (setting) {
         case CONTENT_SETTING_ALLOW: {

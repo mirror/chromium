@@ -1289,7 +1289,7 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
   // Make a new tab and add it to the strip. Keep track of its controller.
   TabController* newController = [self newTab];
   [newController setPinned:tabStripModel_->IsTabPinned(modelIndex)];
-  [newController setUrl:contents->GetURL()];
+  [newController setUrl:contents->GetVisibleURL()];
   [tabArray_ insertObject:newController atIndex:index];
   NSView* newView = [newController view];
 
@@ -1719,7 +1719,7 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
     return;
 
   [tabController setPinned:tabStripModel_->IsTabPinned(modelIndex)];
-  [tabController setUrl:contents->GetURL()];
+  [tabController setUrl:contents->GetVisibleURL()];
   [self updateIconsForContents:contents atIndex:modelIndex];
   // If the tab is being restored and it's pinned, the pinned state is set after
   // the tab has already been rendered, so re-layout the tabstrip. In all other

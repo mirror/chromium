@@ -145,7 +145,7 @@ void AdSamplerTrigger::DidFinishLoad(
 
   security_interstitials::UnsafeResource resource;
   resource.threat_type = SB_THREAT_TYPE_AD_SAMPLE;
-  resource.url = web_contents()->GetURL();
+  resource.url = web_contents()->GetLastCommittedURL();
   resource.web_contents_getter = resource.GetWebContentsGetter(
       web_contents()->GetMainFrame()->GetProcess()->GetID(),
       web_contents()->GetMainFrame()->GetRoutingID());

@@ -331,25 +331,29 @@ void FirstRunBubbleLauncher::Observe(
 
   // Suppress the first run bubble if a Gaia sign in page or the sync setup
   // page is showing.
-  if (contents && (contents->GetURL().GetOrigin().spec() ==
-                       chrome::kChromeUIChromeSigninURL ||
-                   gaia::IsGaiaSignonRealm(contents->GetURL().GetOrigin()) ||
-                   contents->GetURL() ==
-                       chrome::GetSettingsUrl(chrome::kSyncSetupSubPage) ||
-                   first_run::IsOnWelcomePage(contents))) {
+  if (contents &&
+      (contents->GetLastCommittedURL().GetOrigin().spec() ==
+           chrome::kChromeUIChromeSigninURL ||
+       gaia::IsGaiaSignonRealm(contents->GetLastCommittedURL().GetOrigin()) ||
+       contents->GetLastCommittedURL() ==
+           chrome::GetSettingsUrl(chrome::kSyncSetupSubPage) ||
+       first_run::IsOnWelcomePage(contents))) {
     return;
   }
 
-  if (contents && contents->GetURL().SchemeIs(content::kChromeUIScheme)) {
+  if (contents &&
+      contents->GetLastCommittedURL().SchemeIs(content::kChromeUIScheme)) {
 #if defined(OS_WIN)
     // Suppress the first run bubble if 'make chrome metro' flow is showing.
-    if (contents->GetURL().host_piece() == chrome::kChromeUIMetroFlowHost)
+    if (contents->GetLastCommittedURL().host_piece() ==
+        chrome::kChromeUIMetroFlowHost)
       return;
 #endif
 
     // Suppress the first run bubble if the NTP sync promo bubble is showing
     // or if sign in is in progress.
-    if (contents->GetURL().host_piece() == chrome::kChromeUINewTabHost) {
+    if (contents->GetLastCommittedURL().host_piece() ==
+        chrome::kChromeUINewTabHost) {
       Profile* profile =
           Profile::FromBrowserContext(contents->GetBrowserContext());
       SigninManagerBase* manager =
@@ -584,7 +588,7 @@ bool ShouldShowWelcomePage() {
 bool IsOnWelcomePage(content::WebContents* contents) {
   const GURL welcome_page(chrome::kChromeUIWelcomeURL);
   const GURL welcome_page_win10(chrome::kChromeUIWelcomeWin10URL);
-  const GURL current = contents->GetURL().GetWithEmptyPath();
+  const GURL current = contents->GetLastCommittedURL().GetWithEmptyPath();
   return current == welcome_page || current == welcome_page_win10;
 }
 

@@ -115,7 +115,8 @@ BackgroundContents::~BackgroundContents() {
 }
 
 const GURL& BackgroundContents::GetURL() const {
-  return web_contents_.get() ? web_contents_->GetURL() : GURL::EmptyGURL();
+  return web_contents_.get() ? web_contents_->GetVisibleURL()
+                             : GURL::EmptyGURL();
 }
 
 void BackgroundContents::CreateRenderViewSoon(const GURL& url) {

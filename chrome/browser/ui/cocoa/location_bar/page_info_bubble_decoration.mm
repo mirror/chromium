@@ -268,7 +268,7 @@ NSPasteboard* PageInfoBubbleDecoration::GetDragPasteboard() {
   content::WebContents* tab = owner_->GetWebContents();
   DCHECK(tab);  // See |IsDraggable()|.
 
-  NSString* url = base::SysUTF8ToNSString(tab->GetURL().spec());
+  NSString* url = base::SysUTF8ToNSString(tab->GetVisibleURL().spec());
   NSString* title = base::SysUTF16ToNSString(tab->GetTitle());
 
   NSPasteboard* pboard = [NSPasteboard pasteboardWithName:NSDragPboard];

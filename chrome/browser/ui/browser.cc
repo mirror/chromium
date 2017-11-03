@@ -2085,8 +2085,9 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
       // - The extension_app check is for apps, which can have non-extension
       // schemes, e.g. https://mail.google.com if you have the Gmail app
       // installed.
-      if ((web_contents->GetURL().SchemeIs(extensions::kExtensionScheme) &&
-           web_contents->GetURL().host_piece() == extension->id()) ||
+      if ((web_contents->GetVisibleURL().SchemeIs(
+               extensions::kExtensionScheme) &&
+           web_contents->GetVisibleURL().host_piece() == extension->id()) ||
           (extensions::TabHelper::FromWebContents(web_contents)
                ->extension_app() == extension)) {
         tab_strip_model_->CloseWebContentsAt(i, TabStripModel::CLOSE_NONE);

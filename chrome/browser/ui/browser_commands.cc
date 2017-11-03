@@ -968,7 +968,8 @@ void EmailPageLocation(Browser* browser) {
 
   std::string title = net::EscapeQueryParamValue(
       base::UTF16ToUTF8(wc->GetTitle()), false);
-  std::string page_url = net::EscapeQueryParamValue(wc->GetURL().spec(), false);
+  std::string page_url =
+      net::EscapeQueryParamValue(wc->GetVisibleURL().spec(), false);
   std::string mailto = std::string("mailto:?subject=Fwd:%20") +
       title + "&body=%0A%0A" + page_url;
   platform_util::OpenExternal(browser->profile(), GURL(mailto));
@@ -976,7 +977,10 @@ void EmailPageLocation(Browser* browser) {
 
 bool CanEmailPageLocation(const Browser* browser) {
   return browser->toolbar_model()->ShouldDisplayURL() &&
-      browser->tab_strip_model()->GetActiveWebContents()->GetURL().is_valid();
+         browser->tab_strip_model()
+             ->GetActiveWebContents()
+             ->GetVisibleURL()
+             .is_valid();
 }
 
 void CutCopyPaste(Browser* browser, int command_id) {

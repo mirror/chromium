@@ -56,7 +56,7 @@ base::string16 GetApplicationTitle(content::WebContents* web_contents,
     title = extension->name();
     return base::UTF8ToUTF16(title);
   }
-  GURL url = web_contents->GetURL();
+  GURL url = web_contents->GetVisibleURL();
   title = content::IsOriginSecure(url) ? net::GetHostAndOptionalPort(url)
                                        : url.GetOrigin().spec();
   return base::UTF8ToUTF16(title);

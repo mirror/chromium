@@ -998,7 +998,7 @@ bool IsInternalURL(const GURL& url) {
                       (const PageInfoUI::PermissionInfo&)permissionInfo
                                        toView:(NSView*)view
                                       atPoint:(NSPoint)point {
-  GURL url = webContents_ ? webContents_->GetURL() : GURL();
+  GURL url = webContents_ ? webContents_->GetVisibleURL() : GURL();
   __block PageInfoBubbleController* weakSelf = self;
   PermissionMenuModel::ChangeCallback callback =
       base::BindBlock(^(const PageInfoUI::PermissionInfo& permission) {

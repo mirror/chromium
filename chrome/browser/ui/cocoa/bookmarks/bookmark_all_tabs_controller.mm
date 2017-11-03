@@ -53,7 +53,8 @@ using content::WebContents;
   const int tabCount = browser->tab_strip_model()->count();
   for (int i = 0; i < tabCount; ++i) {
     WebContents* contents = browser->tab_strip_model()->GetWebContentsAt(i);
-    ActiveTabNameURLPair tabPair(contents->GetTitle(), contents->GetURL());
+    ActiveTabNameURLPair tabPair(contents->GetTitle(),
+                                 contents->GetVisibleURL());
     activeTabPairsVector_.push_back(tabPair);
   }
 }

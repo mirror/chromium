@@ -109,8 +109,8 @@ void TabsEventRouter::TabEntry::NavigationEntryCommitted(
   std::set<std::string> changed_property_names;
   changed_property_names.insert(tabs_constants::kStatusKey);
 
-  if (web_contents()->GetURL() != url_) {
-    url_ = web_contents()->GetURL();
+  if (web_contents()->GetLastCommittedURL() != url_) {
+    url_ = web_contents()->GetLastCommittedURL();
     changed_property_names.insert(tabs_constants::kUrlKey);
   }
 

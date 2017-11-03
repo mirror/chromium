@@ -937,7 +937,7 @@ ExtensionFunction::ResponseAction TabsQueryFunction::Run() {
                 ExtensionTabUtil::GetTabId(web_contents),
                 APIPermission::kTab) &&
             !extension_->permissions_data()->HasHostPermission(
-                web_contents->GetURL())) {
+                web_contents->GetVisibleURL())) {
           continue;
         }
 

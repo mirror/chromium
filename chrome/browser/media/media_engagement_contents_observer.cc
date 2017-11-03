@@ -418,7 +418,7 @@ void MediaEngagementContentsObserver::SetTimerForTest(
 void MediaEngagementContentsObserver::ReadyToCommitNavigation(
     content::NavigationHandle* handle) {
   // TODO(beccahughes): Convert MEI API to using origin.
-  GURL url = handle->GetWebContents()->GetURL();
+  GURL url = handle->GetWebContents()->GetVisibleURL();
   if (service_->HasHighEngagement(url)) {
     SendEngagementLevelToFrame(url::Origin(handle->GetURL()),
                                handle->GetRenderFrameHost());

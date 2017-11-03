@@ -58,7 +58,7 @@ const extensions::Extension* GetExtension(WebContents* web_contents) {
   extensions::ExtensionRegistry* registry =
       extensions::ExtensionRegistry::Get(web_contents->GetBrowserContext());
   return registry->enabled_extensions().GetExtensionOrAppByURL(
-      web_contents->GetURL());
+      web_contents->GetVisibleURL());
 }
 
 bool IsWhitelistedExtension(const extensions::Extension* extension) {
@@ -89,7 +89,8 @@ base::string16 GetTitle(WebContents* web_contents) {
     return base::UTF8ToUTF16(extension->name());
 #endif
 
-  return url_formatter::FormatUrlForSecurityDisplay(web_contents->GetURL());
+  return url_formatter::FormatUrlForSecurityDisplay(
+      web_contents->GetVisibleURL());
 }
 
 }  // namespace

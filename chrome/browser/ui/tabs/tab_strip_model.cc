@@ -1128,13 +1128,13 @@ std::vector<WebContents*> TabStripModel::GetWebContentsFromIndices(
 
 void TabStripModel::GetIndicesWithSameDomain(int index,
                                              std::vector<int>* indices) {
-  std::string domain = GetWebContentsAt(index)->GetURL().host();
+  std::string domain = GetWebContentsAt(index)->GetVisibleURL().host();
   if (domain.empty())
     return;
   for (int i = 0; i < count(); ++i) {
     if (i == index)
       continue;
-    if (GetWebContentsAt(i)->GetURL().host_piece() == domain)
+    if (GetWebContentsAt(i)->GetVisibleURL().host_piece() == domain)
       indices->push_back(i);
   }
 }
@@ -1168,7 +1168,7 @@ std::vector<int> TabStripModel::GetIndicesForCommand(int index) const {
 }
 
 bool TabStripModel::IsNewTabAtEndOfTabStrip(WebContents* contents) const {
-  const GURL& url = contents->GetURL();
+  const GURL& url = contents->GetVisibleURL();
   return url.SchemeIs(content::kChromeUIScheme) &&
          url.host_piece() == chrome::kChromeUINewTabHost &&
          contents == GetWebContentsAtImpl(count() - 1) &&

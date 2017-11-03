@@ -104,7 +104,8 @@ base::string16 JavaScriptDialogManager::GetTitle(
   // Otherwise, return the formatted URL. For non-standard URLs such as |data:|,
   // just say "This page".
   bool is_same_origin_as_main_frame =
-      (web_contents->GetURL().GetOrigin() == alerting_frame_url.GetOrigin());
+      (web_contents->GetLastCommittedURL().GetOrigin() ==
+       alerting_frame_url.GetOrigin());
   if (alerting_frame_url.IsStandard() && !alerting_frame_url.SchemeIsFile() &&
       !alerting_frame_url.SchemeIsFileSystem()) {
 #if defined(OS_ANDROID)

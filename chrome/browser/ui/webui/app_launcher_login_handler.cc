@@ -132,7 +132,7 @@ void AppLauncherLoginHandler::HandleShowSyncLoginUI(
 
   // The user isn't signed in, show the sign in promo.
   signin_metrics::AccessPoint access_point =
-      web_contents->GetURL().spec() == chrome::kChromeUIAppsURL
+      web_contents->GetVisibleURL().spec() == chrome::kChromeUIAppsURL
           ? signin_metrics::AccessPoint::ACCESS_POINT_APPS_PAGE_LINK
           : signin_metrics::AccessPoint::ACCESS_POINT_NTP_LINK;
   chrome::ShowBrowserSignin(browser, access_point);
@@ -159,7 +159,7 @@ void AppLauncherLoginHandler::HandleShowAdvancedLoginUI(
   if (!browser)
     return;
   signin_metrics::AccessPoint access_point =
-      web_contents->GetURL().spec() == chrome::kChromeUIAppsURL
+      web_contents->GetVisibleURL().spec() == chrome::kChromeUIAppsURL
           ? signin_metrics::AccessPoint::ACCESS_POINT_APPS_PAGE_LINK
           : signin_metrics::AccessPoint::ACCESS_POINT_NTP_LINK;
   chrome::ShowBrowserSignin(browser, access_point);
@@ -208,7 +208,7 @@ void AppLauncherLoginHandler::UpdateLogin() {
           IDS_SYNC_PROMO_NOT_SIGNED_IN_STATUS_SUB_HEADER, signed_in_link);
 
       base::RecordAction(
-          web_ui()->GetWebContents()->GetURL().spec() ==
+          web_ui()->GetWebContents()->GetVisibleURL().spec() ==
                   chrome::kChromeUIAppsURL
               ? base::UserMetricsAction("Signin_Impression_FromAppsPageLink")
               : base::UserMetricsAction("Signin_Impression_FromNTP"));

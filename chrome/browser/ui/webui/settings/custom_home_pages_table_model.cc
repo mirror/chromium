@@ -170,7 +170,7 @@ void CustomHomePagesTableModel::SetToCurrentlyOpenPages(
           browser->tab_strip_model()->GetWebContentsAt(tab_index);
       if (contents == ignore_contents)
         continue;
-      const GURL url = contents->GetURL();
+      const GURL url = contents->GetVisibleURL();
       if (!url.is_empty() && !url.SchemeIs(content::kChromeDevToolsScheme))
         AddWithoutNotification(add_index++, url);
     }

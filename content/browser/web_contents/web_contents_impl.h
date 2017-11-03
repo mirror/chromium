@@ -303,7 +303,6 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   NavigationControllerImpl& GetController() override;
   const NavigationControllerImpl& GetController() const override;
   BrowserContext* GetBrowserContext() const override;
-  const GURL& GetURL() const override;
   const GURL& GetVisibleURL() const override;
   const GURL& GetLastCommittedURL() const override;
   RenderFrameHostImpl* GetMainFrame() const override;

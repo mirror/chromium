@@ -98,7 +98,7 @@ std::unique_ptr<base::DictionaryValue> BuildTargetDescriptor(
   if (web_contents) {
     // TODO(nasko): Fix the following code to use a consistent set of data
     // across the URL, title, and favicon.
-    url = web_contents->GetURL();
+    url = web_contents->GetVisibleURL();
     title = base::UTF16ToUTF8(web_contents->GetTitle());
     NavigationController& controller = web_contents->GetController();
     NavigationEntry* entry = controller.GetVisibleEntry();

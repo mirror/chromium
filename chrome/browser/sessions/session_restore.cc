@@ -82,7 +82,7 @@ bool HasSingleNewTabPage(Browser* browser) {
     return false;
   const content::WebContents* active_tab =
       browser->tab_strip_model()->GetWebContentsAt(0);
-  return active_tab->GetURL() == chrome::kChromeUINewTabURL ||
+  return active_tab->GetVisibleURL() == chrome::kChromeUINewTabURL ||
          search::IsInstantNTP(active_tab);
 }
 

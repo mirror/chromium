@@ -159,7 +159,7 @@ void InspectableViewsFinder::GetViewsForExtensionProcess(
       continue;
     }
 
-    GURL url = web_contents->GetURL();
+    GURL url = web_contents->GetVisibleURL();
     // If this is a background page that just opened, there might not be a
     // committed (or visible) url yet. In this case, use the initial url.
     if (url.is_empty()) {

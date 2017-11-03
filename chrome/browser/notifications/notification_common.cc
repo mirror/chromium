@@ -84,7 +84,7 @@ bool NotificationCommon::ShouldDisplayOnFullScreen(Profile* profile,
     //      notification.
     //  (b) the browser is fullscreen
     //  (c) the browser has focus.
-    if (active_contents->GetURL().GetOrigin() == origin &&
+    if (active_contents->GetLastCommittedURL().GetOrigin() == origin &&
         browser->exclusive_access_manager()->context()->IsFullscreen() &&
         browser->window()->IsActive()) {
       bool enabled = base::FeatureList::IsEnabled(

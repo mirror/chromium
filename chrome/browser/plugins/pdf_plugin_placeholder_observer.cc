@@ -61,7 +61,7 @@ void PDFPluginPlaceholderObserver::OnOpenPDF(
   }
 
   content::Referrer referrer = content::Referrer::SanitizeForRequest(
-      url, content::Referrer(web_contents()->GetURL(),
+      url, content::Referrer(web_contents()->GetLastCommittedURL(),
                              blink::kWebReferrerPolicyDefault));
 
 #if BUILDFLAG(ENABLE_PLUGINS)

@@ -532,7 +532,7 @@ void InlineLoginHandlerImpl::SetExtraInitParams(base::DictionaryValue& params) {
     params.SetBoolean("dontResizeNonEmbeddedPages", true);
 
   content::WebContents* contents = web_ui()->GetWebContents();
-  const GURL& current_url = contents->GetURL();
+  const GURL& current_url = contents->GetVisibleURL();
   signin_metrics::Reason reason =
       signin::GetSigninReasonForPromoURL(current_url);
 
@@ -569,7 +569,7 @@ void InlineLoginHandlerImpl::SetExtraInitParams(base::DictionaryValue& params) {
 
 void InlineLoginHandlerImpl::CompleteLogin(const base::ListValue* args) {
   content::WebContents* contents = web_ui()->GetWebContents();
-  const GURL& current_url = contents->GetURL();
+  const GURL& current_url = contents->GetVisibleURL();
 
   const base::DictionaryValue* dict = NULL;
   args->GetDictionary(0, &dict);
