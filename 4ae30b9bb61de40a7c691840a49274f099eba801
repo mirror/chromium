@@ -52,6 +52,24 @@
       "revId": "4ae30b9bb61de40a7c691840a49274f099eba801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72807bee_4164cdc2",
+        "filename": "storage/browser/fileapi/async_file_util_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-03T16:26:01Z",
+      "side": 1,
+      "message": "You should be able to eliminate this function entirely, either with a closure or just referencing base::File::Close. Then there\u0027s nothing to name.\n\ncontext-\u003etask_runner()-\u003ePostTask(\n  FROM_HERE,\n  Bind([](base::File file) { file.Close(); }, Passed(\u0026file));\n\nor:\n\ncontext-\u003etask_runner()-\u003ePostTask(\n  FROM_HERE,\n  \u0026base::File::Close, Passed(\u0026file));\n\n(I probably got the syntax wrong on one or both of those.)",
+      "parentUuid": "3626d853_ab345dcd",
+      "revId": "4ae30b9bb61de40a7c691840a49274f099eba801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
