@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9cbaeea8_1b50f740",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f864afd7_f70d78d7",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "837df697_12439f12",
         "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "deb145e82942295529ebf363630c4c05f51d628a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80585b1_0565c190",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "837df697_12439f12",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ba10e242_396656a0",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3ccff2b_054b7807",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bd2021f_8cad9733",
         "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "deb145e82942295529ebf363630c4c05f51d628a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d59269_5f6f6de7",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bd2021f_8cad9733",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4c51824e_cdb883c0",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e58fcffb_c3d422d2",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14145fbe_7438caf8",
         "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "deb145e82942295529ebf363630c4c05f51d628a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a05cec_c2fc7b20",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14145fbe_7438caf8",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ab157f7d_70f14786",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71fcd3ec_a4ec2e45",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9863b1fb_1f51223b",
         "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "deb145e82942295529ebf363630c4c05f51d628a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ec004a_3f1551a6",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9863b1fb_1f51223b",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "5bc1936c_afdb8879",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "950be074_61546b7b",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ca28947_fb4471f0",
         "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
         "patchSetId": 8
@@ -169,6 +331,24 @@
       "revId": "deb145e82942295529ebf363630c4c05f51d628a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c37ec9f_9edb0f03",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ca28947_fb4471f0",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "22b2c2fe_c9dd2bb9",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13f5c5bd_77d0337a",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7e35b48_f82bfda4",
         "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
         "patchSetId": 8
@@ -203,6 +401,24 @@
       "revId": "deb145e82942295529ebf363630c4c05f51d628a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49921895_c3251d7d",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7e35b48_f82bfda4",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "548b6f44_d8f320f7",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9941c47e_5947e219",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79bf9908_dd3ad7c7",
         "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
         "patchSetId": 8
@@ -237,6 +471,24 @@
       "revId": "deb145e82942295529ebf363630c4c05f51d628a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54711f9e_b8478434",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79bf9908_dd3ad7c7",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "c07b49ef_86837013",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "251957ff_42b98ce7",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "997927ec_baeaabb5",
         "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
         "patchSetId": 8
@@ -271,6 +541,24 @@
       "revId": "deb145e82942295529ebf363630c4c05f51d628a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e12d10b_eaa2a6da",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "997927ec_baeaabb5",
+      "revId": "deb145e82942295529ebf363630c4c05f51d628a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

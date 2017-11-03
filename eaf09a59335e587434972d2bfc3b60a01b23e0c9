@@ -422,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "35ea8537_67988a66",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-11-03T23:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a93c1346_dc21a210",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbcaab47_0e91fa0a",
         "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
         "patchSetId": 7
