@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "72b666cc_da5cd14f",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-03T22:30:31Z",
+      "side": 1,
+      "message": "The reason is mostly readability, document is uncommon, so preferable avoid it. Unless there\u0027s a strong reason to deviate from common constructs.",
+      "parentUuid": "34a9e49a_3ef9ff95",
+      "range": {
+        "startLine": 42,
+        "startChar": 20,
+        "endLine": 42,
+        "endChar": 43
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "075a20db_0226c9ea",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 9
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "ceedde59_d5966976",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-03T22:30:31Z",
+      "side": 1,
+      "message": "Ya, I noticed later on in the file. In that case mind adding a comment above \"test_cases\" clarifying what these \"Rule X\" mean?",
+      "parentUuid": "868d1971_1b8a18de",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 209,
+        "endChar": 68
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9953be64_9f7c3c82",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 9
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "That\u0027s affected by crbug.com/772260. Have a special disabled test case for it below - DISABLED_BlockRequests_SeparatorMatchesEndOfURL",
       "parentUuid": "9953be64_9f7c3c82",
+      "range": {
+        "startLine": 221,
+        "startChar": 22,
+        "endLine": 221,
+        "endChar": 52
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "048ae5d5_84e9f3e2",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-03T22:30:31Z",
+      "side": 1,
+      "message": "Ah, I skipped all the DISABLED_ tests ;)",
+      "parentUuid": "5cee868d_a767f706",
       "range": {
         "startLine": 221,
         "startChar": 22,
@@ -307,6 +379,30 @@
       "side": 1,
       "message": "Yeah I hadn\u0027t thought about url encoding/percent escaping. Think generally only non-ascii characters are escaped. Have added cases for space (%20) that should clarify the behavior.",
       "parentUuid": "b9b9fc56_26482498",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 62
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0471d7ba_3b6805d8",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-03T22:30:31Z",
+      "side": 1,
+      "message": "What I meant was say you have a rule\nurl_filter \u003d \"pages_with_script/page.html?q\u003d3\"\nand you make sure\n\"/pages_with_script/page2?q\u003dbye\u0026#51;\nis blocked.",
+      "parentUuid": "0241d24a_a2a748ba",
       "range": {
         "startLine": 224,
         "startChar": 0,
@@ -410,6 +506,30 @@
       "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1bd3117_aa8107c8",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-03T22:30:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "08bc86b1_8070b166",
+      "range": {
+        "startLine": 423,
+        "startChar": 2,
+        "endLine": 423,
+        "endChar": 47
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -589,6 +709,30 @@
     },
     {
       "key": {
+        "uuid": "0ea90b8a_ebe612c1",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-03T22:30:31Z",
+      "side": 1,
+      "message": "Ty.",
+      "parentUuid": "854e6391_08d2e409",
+      "range": {
+        "startLine": 617,
+        "startChar": 35,
+        "endLine": 617,
+        "endChar": 38
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afd2530f_410fef55",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 9
@@ -636,6 +780,30 @@
     },
     {
       "key": {
+        "uuid": "59ef4b96_bbae5814",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-03T22:30:31Z",
+      "side": 1,
+      "message": "I only know about object, \u003cobject\u003e is used to load plugin object and there should be chrome tests that load plugin objects.\n\nFor other ones, I do not have any idea, you\u0027d have to tackle them individually after some digging.",
+      "parentUuid": "6463c6e8_6bc25177",
+      "range": {
+        "startLine": 665,
+        "startChar": 5,
+        "endLine": 665,
+        "endChar": 12
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23bdd8ea_d7305a60",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 9
@@ -671,6 +839,30 @@
       "side": 1,
       "message": "See comments in declarative_net_request.idl for the resourceTypes field. Have added some more clarification in code/comment.\n\nNote: TestRule is ultimately changed to a base::Value and then serialized to json.",
       "parentUuid": "23bdd8ea_d7305a60",
+      "range": {
+        "startLine": 710,
+        "startChar": 4,
+        "endLine": 710,
+        "endChar": 52
+      },
+      "revId": "a2145bd41558592055a5347042a679c3cdf80bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46b48ff1_98e41087",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-03T22:30:31Z",
+      "side": 1,
+      "message": "Got it, maybe you want to change \"resourceTypes\" to \"resourceTypes (i.e. |rule.condition-\u003eresource_types|)\" to avoid confusion.",
+      "parentUuid": "db34d038_9d0ade22",
       "range": {
         "startLine": 710,
         "startChar": 4,

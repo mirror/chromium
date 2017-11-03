@@ -34,6 +34,24 @@
       "revId": "c419b45ea91d92d29bb6434af809f411a7a08778",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "126670dd_f188874f",
+        "filename": "chrome/test/data/extensions/declarative_net_request/subresources/extension_types.png",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-03T22:30:31Z",
+      "side": 0,
+      "message": "I still see the old image, there are 1x1 px pngs in our test directory I believe.",
+      "parentUuid": "54d669bd_20bdc227",
+      "revId": "c419b45ea91d92d29bb6434af809f411a7a08778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
