@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "469daa20_9080c808",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-03T16:44:54Z",
+      "side": 1,
+      "message": "I think this could help to reduce overdraw when apply animations to child views separately?",
+      "parentUuid": "20db37e2_b8040622",
+      "revId": "906817f9f7d86ae41b16a0f2da997b216d07f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb2ddc66_df32ac78",
         "filename": "ash/login/ui/login_bubble.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "91a7f017_1012295f",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-03T16:44:54Z",
+      "side": 1,
+      "message": "The only difference between abort animation and end animation here is whether we will try to close the bubble widget. If we don\u0027t care about the corner cases I mentioned below, we can probably merge these two.",
+      "parentUuid": "cb2ddc66_df32ac78",
+      "revId": "906817f9f7d86ae41b16a0f2da997b216d07f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da8094d6_358c6e66",
         "filename": "ash/login/ui/login_bubble.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-31T20:24:47Z",
       "side": 1,
       "message": "Why do we need to abort?",
+      "revId": "906817f9f7d86ae41b16a0f2da997b216d07f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb816de_9cda52d7",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-03T16:44:54Z",
+      "side": 1,
+      "message": "Not abort here has some corner cases:\nFor example, if a show(visible\u003d\u003dtrue) animation is ongoing and we click outside bubble to schedule a close animation(visible\u003d\u003dfalse), if we don\u0027t abort the show animation, it will call OnLayerAnimationEnded immediately and then close the bubble widget(since visible\u003d\u003dfalse now). We won\u0027t be enable to see a close animation.\nIf we don\u0027t care about this, we could probably merge OnLayerAnimationAborted and OnLayerAnimationEnded.",
+      "parentUuid": "da8094d6_358c6e66",
       "revId": "906817f9f7d86ae41b16a0f2da997b216d07f832",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
