@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdc156c3_0f17f75f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-03T18:54:21Z",
+      "side": 1,
+      "message": "This summary is too long. The usual recommendation of \u003c\u003d 50 characters can be a little tight in Chromium, but certainly don\u0027t go over 72.\n\nPerhaps \"[media] Move browser test result messages to test_data_util\"?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 96
+      },
+      "revId": "513822a2e8bf14a52e0a94ec7316a22bfa12ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23a786c_1b471e8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-03T18:54:21Z",
+      "side": 1,
+      "message": "There is no point to repeating the summary here. Once the summary has been shortened, some of this may be required to add specific detail, but in general this should be more about documenting the intent of and choices made in the patch.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "513822a2e8bf14a52e0a94ec7316a22bfa12ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
