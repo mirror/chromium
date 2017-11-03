@@ -304,7 +304,7 @@ using blink::WebFloatPoint;
 using blink::WebFloatRect;
 #endif
 
-#define STATIC_ASSERT_ENUM(a, b)                            \
+#define STATIC_ASSERT_RENDER_ENUM(a, b)                            \
   static_assert(static_cast<int>(a) == static_cast<int>(b), \
                 "mismatching enums: " #a)
 
@@ -5993,11 +5993,11 @@ void RenderFrameImpl::OnClearActiveFindMatch() {
 
 // Ensure that content::StopFindAction and blink::WebLocalFrame::StopFindAction
 // are kept in sync.
-STATIC_ASSERT_ENUM(STOP_FIND_ACTION_CLEAR_SELECTION,
+STATIC_ASSERT_RENDER_ENUM(STOP_FIND_ACTION_CLEAR_SELECTION,
                    WebLocalFrame::kStopFindActionClearSelection);
-STATIC_ASSERT_ENUM(STOP_FIND_ACTION_KEEP_SELECTION,
+STATIC_ASSERT_RENDER_ENUM(STOP_FIND_ACTION_KEEP_SELECTION,
                    WebLocalFrame::kStopFindActionKeepSelection);
-STATIC_ASSERT_ENUM(STOP_FIND_ACTION_ACTIVATE_SELECTION,
+STATIC_ASSERT_RENDER_ENUM(STOP_FIND_ACTION_ACTIVATE_SELECTION,
                    WebLocalFrame::kStopFindActionActivateSelection);
 
 void RenderFrameImpl::OnStopFinding(StopFindAction action) {

@@ -357,6 +357,11 @@ blink_core_sources("dom") {
 
   jumbo_excluded_sources = [ "Modulator.cpp" ]  # https://crbug.com/716395
 
+  jumbo_excluded_sources += [
+    # ShadowFor and CanBeDistributedToV0InsertionPoint
+    "ng/flat_tree_traversal_ng.cc",
+  ]
+
   configs += [
     # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
     "//build/config/compiler:no_size_t_to_int_warning",

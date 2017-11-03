@@ -38,12 +38,12 @@ size_t CryptoSecretBoxer::GetKeySize() {
   return kKeySize;
 }
 
-// kAEAD is the AEAD used for boxing: AES-128-GCM-SIV.
-static const EVP_AEAD* (*const kAEAD)() = EVP_aead_aes_128_gcm_siv;
+// kAEAD_fn is the AEAD used for boxing: AES-128-GCM-SIV.
+static const EVP_AEAD* (*const kAEAD_fn)() = EVP_aead_aes_128_gcm_siv;
 
 void CryptoSecretBoxer::SetKeys(const std::vector<string>& keys) {
   DCHECK(!keys.empty());
-  const EVP_AEAD* const aead = kAEAD();
+  const EVP_AEAD* const aead = kAEAD_fn();
   std::unique_ptr<State> new_state(new State);
 
   for (const string& key : keys) {
@@ -70,7 +70,7 @@ string CryptoSecretBoxer::Box(QuicRandom* rand,
   //   n bytes of ciphertext
   //   16 bytes of authenticator
   size_t out_len =
-      kBoxNonceSize + plaintext.size() + EVP_AEAD_max_overhead(kAEAD());
+      kBoxNonceSize + plaintext.size() + EVP_AEAD_max_overhead(kAEAD_fn());
 
   string ret;
   uint8_t* out = reinterpret_cast<uint8_t*>(base::WriteInto(&ret, out_len + 1));

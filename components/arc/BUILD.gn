@@ -2,10 +2,11 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//mojo/public/tools/bindings/mojom.gni")
 import("//testing/test.gni")
 
-static_library("arc") {
+jumbo_static_library("arc") {
   sources = [
     "audio/arc_audio_bridge.cc",
     "audio/arc_audio_bridge.h",

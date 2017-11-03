@@ -1183,6 +1183,10 @@ jumbo_component("base") {
         "allocator/allocator_shim_default_dispatch_to_tcmalloc.cc",
         "allocator/allocator_shim_override_glibc_weak_symbols.h",
       ]
+      jumbo_excluded_sources = [
+        # "use of undeclared identifier tc_mallinfo, did you mean mallinfo.
+        "allocator/allocator_shim_default_dispatch_to_tcmalloc.cc",
+      ]
       deps += [ "//base/allocator:tcmalloc" ]
     } else if (is_linux && use_allocator == "none") {
       sources += [ "allocator/allocator_shim_default_dispatch_to_glibc.cc" ]
@@ -1758,7 +1762,7 @@ static_library("base_static") {
   }
 }
 
-component("i18n") {
+jumbo_component("i18n") {
   output_name = "base_i18n"
   sources = [
     "i18n/base_i18n_export.h",

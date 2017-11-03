@@ -2,12 +2,14 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
+
 if (is_android) {
   import("//build/config/android/config.gni")
   import("//build/config/android/rules.gni")
 }
 
-static_library("internal") {
+jumbo_static_library("internal") {
   visibility = [
     ":*",
     "//components/download/content/factory",
@@ -68,6 +70,10 @@ static_library("internal") {
     "store.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Symbols
+    "debugging_client.cc",
+  ]
   deps = [
     "//base",
     "//components/download/internal/proto",
