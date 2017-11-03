@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18f83a95_da8c8290",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T20:55:36Z",
+      "side": 1,
+      "message": "“Relocatable” is somewhat imperfect terminology in that it’s ELF shorthand for what most people less intimately familiar with ELF would probably understand as “object file.” Certainly, ET_DYN files are relocatable in a related but different sense. Best to say “relocatable object file” to avoid ambiguity, or settle on using the constants ET_REL and ET_CORE which at least put things into context.",
+      "range": {
+        "startLine": 629,
+        "startChar": 15,
+        "endLine": 629,
+        "endChar": 26
+      },
+      "revId": "4957054c16e88b41ae2e0f4ece036aec79417c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83162419_2b350b87",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T20:55:36Z",
+      "side": 1,
+      "message": "But you’ll still leave cur_base at whatever it was from a previous iteration of the loop, and you’ll wind up setting r.base.\n\nPerhaps it’s best to move the declaration and 0-initialization of cur_base just inside the loop. In that case, ET_EXEC can be handled in default: with the comment augmented to state that it’s where you expect to deal with ET_EXEC and that 0 is correct because they’re not relocatable.",
+      "revId": "4957054c16e88b41ae2e0f4ece036aec79417c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
