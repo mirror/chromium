@@ -34,6 +34,24 @@
       "revId": "fa0ab678540511a261a329059b7541a52e7e4ce1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef7a0c8_5b32ad77",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-03T15:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc5da436_f840fc55",
+      "revId": "fa0ab678540511a261a329059b7541a52e7e4ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
