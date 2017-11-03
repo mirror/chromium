@@ -6,6 +6,7 @@
 
 #include "base/callback.h"
 #include "components/policy/core/common/external_data_fetcher.h"
+#include "components/policy/core/common/features.h"
 #include "components/policy/core/common/policy_map.h"
 
 namespace policy {
@@ -43,10 +44,15 @@ bool ConfigurationPolicyProvider::IsInitializationComplete(
 
 void ConfigurationPolicyProvider::UpdatePolicy(
     std::unique_ptr<PolicyBundle> bundle) {
+#if BUILDFLAG(IS_POLICY_LOADING_DISABLED)
+  policy_bundle_.Clear();
+#else
   if (bundle.get())
     policy_bundle_.Swap(bundle.get());
   else
     policy_bundle_.Clear();
+#endif
+
   for (auto& observer : observer_list_)
     observer.OnUpdatePolicy(this);
 }
