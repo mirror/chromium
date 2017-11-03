@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0beafdb2_6ad6b6a2",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-03T19:37:30Z",
+      "side": 1,
+      "message": "We would only want to create a new mailbox when creating a new texture, otherwise we will have a logical leak of the mailbox - similar to crbug.com/762860.\nSo I would extend recycled_texture_copies_ to have a {texture_id, mailbox} pair, and recycle both at once.",
+      "revId": "b09b1a9573bb4990683a08e7c5a1bb7eba8e8041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
