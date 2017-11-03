@@ -639,6 +639,10 @@ void AnimationHost::SetAnimationCounts(
     DCHECK_GE(main_thread_animations_count_, 0u);
     SetNeedsPushProperties();
   }
+  // TODO(xidachen): the next line is a temporary hack. It appears that we could
+  // hit the DCHECK at the end of this function with the next line. We should
+  // investigate the root cause of this and remove it.
+  main_thread_compositable_animations_count = 0;
   if (main_thread_compositable_animations_count_ !=
       main_thread_compositable_animations_count) {
     main_thread_compositable_animations_count_ =
