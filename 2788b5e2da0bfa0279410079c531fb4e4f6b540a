@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deec4217_82ef236a",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1593,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-03T12:27:14Z",
+      "side": 1,
+      "message": "I think I would prefer making these as separate test cases and remove the need for signin::UndoDiceMigrationForTesting(\u0026pref_service) in this function.",
+      "range": {
+        "startLine": 1593,
+        "startChar": 3,
+        "endLine": 1593,
+        "endChar": 0
+      },
+      "revId": "2788b5e2da0bfa0279410079c531fb4e4f6b540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f62df3d_aa7cfdb7",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-03T12:27:14Z",
+      "side": 1,
+      "message": "I would strongly prefer if we could avoid having to reset the migration state after the reconcilor is created (this basically never happens in production code). We could do that in 2 ways:\n* add a boolean to AccountReconcilorFactory that tells it to ignore whether the profile is new\n* subclass AccountReconcilorFactory for testing and create an account reconcilor for an old profile.\n\nThat would allow us to remove the UndoDiceMigrationForTesting function.",
+      "range": {
+        "startLine": 791,
+        "startChar": 10,
+        "endLine": 791,
+        "endChar": 37
+      },
+      "revId": "2788b5e2da0bfa0279410079c531fb4e4f6b540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "861cce9b_91db8978",
+        "filename": "components/signin/core/browser/profile_management_switches.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-03T12:27:14Z",
+      "side": 1,
+      "message": "Optional: How about ResetDiceMigrationForTesting?",
+      "range": {
+        "startLine": 141,
+        "startChar": 5,
+        "endLine": 141,
+        "endChar": 32
+      },
+      "revId": "2788b5e2da0bfa0279410079c531fb4e4f6b540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7e2d88_8eba34c4",
+        "filename": "ios/chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-03T12:27:14Z",
+      "side": 1,
+      "message": "Change this to profile-\u003eIsNewProfile() to match the expected parameter and to match the semantics of the parameter.",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "2788b5e2da0bfa0279410079c531fb4e4f6b540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
