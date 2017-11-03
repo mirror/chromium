@@ -115,7 +115,7 @@ void AutofillPaymentInstrument::RecordUse() {
 }
 
 base::string16 AutofillPaymentInstrument::GetLabel() const {
-  return credit_card_.NetworkAndLastFourDigits();
+  return credit_card_.NetworkOrBankNameAndLastFourDigits();
 }
 
 base::string16 AutofillPaymentInstrument::GetSublabel() const {
