@@ -26,8 +26,11 @@
 
 namespace content {
 
-std::unique_ptr<NetworkService> NetworkService::Create(net::NetLog* net_log) {
-  return std::make_unique<NetworkServiceImpl>(nullptr, net_log);
+std::unique_ptr<NetworkService> NetworkService::Create(
+    mojom::NetworkServiceRequest request,
+    net::NetLog* net_log) {
+  return std::make_unique<NetworkServiceImpl>(nullptr, std::move(request),
+                                              net_log);
 }
 
 class NetworkServiceImpl::MojoNetLog : public net::NetLog {
@@ -64,6 +67,7 @@ class NetworkServiceImpl::MojoNetLog : public net::NetLog {
 
 NetworkServiceImpl::NetworkServiceImpl(
     std::unique_ptr<service_manager::BinderRegistry> registry,
+    mojom::NetworkServiceRequest request,
     net::NetLog* net_log)
     : registry_(std::move(registry)), binding_(this) {
   // |registry_| is nullptr when an in-process NetworkService is
@@ -73,6 +77,8 @@ NetworkServiceImpl::NetworkServiceImpl(
   if (registry_) {
     registry_->AddInterface<mojom::NetworkService>(
         base::Bind(&NetworkServiceImpl::Create, base::Unretained(this)));
+  } else {
+    Create(std::move(request));
   }
 
   std::unique_ptr<net::NetworkChangeNotifier> network_change_notifier;
