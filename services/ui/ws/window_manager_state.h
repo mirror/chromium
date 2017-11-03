@@ -335,6 +335,9 @@ class WindowManagerState : public EventDispatcherDelegate,
   // destroyed.
   WindowManagerDisplayRoots orphaned_window_manager_display_roots_;
 
+  // TODO(msw): Keep orphaned displays here? (Ash deletes and re-creates the window for mirroring...)
+  // std::vector<std::unique_ptr<Display>> orphaned_displays_;
+
   // All state regarding what the current cursor is.
   CursorState cursor_state_;
 

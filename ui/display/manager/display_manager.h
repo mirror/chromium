@@ -350,6 +350,14 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // if not found.
   const Display GetMirroringDisplayById(int64_t id) const;
 
+  // Creates a display object from the ManagedDisplayInfo for |display_id| for
+  // mirroring. The size of the display will be scaled using |scale| with the
+  // offset using |origin|.
+  // TODO(msw): Avoid exposing this? 
+  Display CreateMirroringDisplayFromDisplayInfoById(int64_t display_id,
+                                                    const gfx::Point& origin,
+                                                    float scale);
+
   // Retuns the display info associated with |display_id|.
   const ManagedDisplayInfo& GetDisplayInfo(int64_t display_id) const;
 
@@ -474,16 +482,8 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // |GetDisplayInfo| to get the correct ManagedDisplayInfo for a display.
   void InsertAndUpdateDisplayInfo(const ManagedDisplayInfo& new_info);
 
-  // Creates a display object from the ManagedDisplayInfo for
-  // |display_id|.
+  // Creates a display object from the ManagedDisplayInfo for |display_id|.
   Display CreateDisplayFromDisplayInfoById(int64_t display_id);
-
-  // Creates a display object from the ManagedDisplayInfo for |display_id| for
-  // mirroring. The size of the display will be scaled using |scale| with the
-  // offset using |origin|.
-  Display CreateMirroringDisplayFromDisplayInfoById(int64_t display_id,
-                                                    const gfx::Point& origin,
-                                                    float scale);
 
   // Updates the bounds of all non-primary displays in |display_list| and append
   // the indices of displays updated to |updated_indices|.  When the size of

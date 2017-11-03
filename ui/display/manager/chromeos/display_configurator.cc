@@ -285,6 +285,11 @@ bool DisplayConfigurator::DisplayLayoutManagerImpl::GetDisplayLayout(
 
       for (size_t i = 0; i < states.size(); ++i) {
         const DisplayState* state = &states[i];
+        // TODO(msw): Bail attempting to use hardware mirroring on linux-desktop fake display windows... 
+        if (state->display->type() == DISPLAY_CONNECTION_TYPE_UNKNOWN) {
+          LOG(ERROR) << "MSW GetDisplayLayout BAILING ON MIRROR "; 
+          return false;
+        }
         (*requests)[i].mode = display_power[i] ? state->mirror_mode : NULL;
       }
       break;
@@ -874,8 +879,7 @@ void DisplayConfigurator::SetDisplayMode(MultipleDisplayState new_state) {
   if (!configure_display_ || display_externally_controlled_)
     return;
 
-  VLOG(1) << "SetDisplayMode: state="
-          << MultipleDisplayStateToString(new_state);
+  LOG(ERROR) << "MSW SetDisplayMode: state:" << MultipleDisplayStateToString(current_display_state_) << "->" << MultipleDisplayStateToString(new_state);
   if (current_display_state_ == new_state) {
     // Cancel software mirroring if the state is moving from
     // MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED to
@@ -976,6 +980,7 @@ void DisplayConfigurator::ConfigureDisplays() {
 }
 
 void DisplayConfigurator::RunPendingConfiguration() {
+  LOG(ERROR) << "MSW RunPendingConfiguration task:" << configuration_task_.get(); 
   // Configuration task is currently running. Do not start a second
   // configuration.
   if (configuration_task_)
@@ -1040,6 +1045,7 @@ void DisplayConfigurator::OnConfigured(
 
   if (success && !configure_timer_.IsRunning() &&
       ShouldRunConfigurationTask()) {
+    LOG(ERROR) << "MSW DisplayConfigurator TIMER START FOR RunPendingConfiguration!"; 
     configure_timer_.Start(FROM_HERE,
                            base::TimeDelta::FromMilliseconds(kConfigureDelayMs),
                            this, &DisplayConfigurator::RunPendingConfiguration);

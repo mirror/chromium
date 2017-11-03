@@ -37,6 +37,7 @@ class PlatformDisplay : public ui::EventSource {
 
   static std::unique_ptr<PlatformDisplay> Create(
       ServerWindow* root_window,
+      const display::Display& display,
       const display::ViewportMetrics& metrics,
       ThreadedImageCursorsFactory* threaded_image_cursors_factory);
 

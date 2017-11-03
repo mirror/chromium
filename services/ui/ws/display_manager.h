@@ -142,9 +142,12 @@ class DisplayManager : public UserIdTrackerObserver,
   std::unique_ptr<ui::EventRewriter> event_rewriter_;
 
   // Displays are initially added to |pending_displays_|. When the display is
-  // initialized it is moved to |displays_|. WindowServer owns the Displays.
+  // initialized it is moved to |displays_|. When the display is destroyed it is
+  // moved to |destroyed_displays_|, in case it may be needed again soon. 
+  // WindowServer owns the Displays.
   std::set<Display*> pending_displays_;
   std::set<Display*> displays_;
+  // TODO(msw): When to acutally destroy? std::set<Display*> destroyed_displays_; 
 
   std::map<UserId, std::unique_ptr<UserDisplayManager>> user_display_managers_;
 

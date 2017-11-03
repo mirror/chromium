@@ -96,6 +96,11 @@ void UpdateDisplayConfigurationTask::EnterState(
     callback.Run(ConfigureDisplaysTask::ERROR);
     return;
   }
+  if (new_display_state_ == MULTIPLE_DISPLAY_STATE_DUAL_MIRROR &&
+      !cached_displays_.empty() &&
+      cached_displays_[0]->type() == DISPLAY_CONNECTION_TYPE_UNKNOWN) {
+  }
+  
   if (!requests.empty()) {
     configure_task_.reset(
         new ConfigureDisplaysTask(delegate_, requests, callback));
@@ -133,6 +138,15 @@ void UpdateDisplayConfigurationTask::OnStateEntered(
       if (success)
         new_display_state_ = MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED;
     }
+
+    // // TODO(msw): Fall back to software mirroring on linux-desktop (with Mus)... 
+    // if (new_display_state_ == MULTIPLE_DISPLAY_STATE_DUAL_MIRROR &&
+    //     status == ConfigureDisplaysTask::SUCCESS && !cached_displays_.empty() &&
+    //     cached_displays_[0]->type() == DISPLAY_CONNECTION_TYPE_UNKNOWN) {
+    //   // TODO(msw): Change new_display_state_? 
+    //   new_display_state_ = MULTIPLE_DISPLAY_STATE_DUAL_MIRROR; 
+    //   enable_software_mirroring = true; 
+    // }
 
     layout_manager_->GetSoftwareMirroringController()->SetSoftwareMirroring(
         enable_software_mirroring);

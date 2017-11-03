@@ -43,6 +43,7 @@ void DisplaySynchronizer::SendDisplayConfigurationToServer() {
   if (display_count == 0)
     return;
 
+  // TODO(msw): Just include mirrors in the displays list? 
   std::vector<display::Display> displays;
   std::vector<ui::mojom::WmViewportMetricsPtr> metrics;
   for (size_t i = 0; i < display_count; ++i) {
@@ -50,16 +51,36 @@ void DisplaySynchronizer::SendDisplayConfigurationToServer() {
     ui::mojom::WmViewportMetricsPtr viewport_metrics =
         ui::mojom::WmViewportMetrics::New();
     const display::ManagedDisplayInfo& display_info =
-        display_manager->GetDisplayInfo(displays.back().id());
+        display_manager->GetDisplayInfo(displays[i].id());
     viewport_metrics->bounds_in_pixels = display_info.bounds_in_native();
     viewport_metrics->device_scale_factor = display_info.device_scale_factor();
     viewport_metrics->ui_scale_factor = display_info.configured_ui_scale();
     metrics.push_back(std::move(viewport_metrics));
   }
+  // TODO(msw): Append mirror metrics to the same list, or to another list? 
+  std::vector<display::Display> mirrors =
+      display_manager->software_mirroring_display_list();
+  // // TODO(msw): Append hardware mirrors? Expose CreateDisplayFromDisplayInfoById? 
+  // for (const auto& id : display_manager->GetMirroringDstDisplayIdList())
+  //   mirrors.push_back(display_manager->CreateMirroringDisplayFromDisplayInfoById(id, gfx::Point(), 1.0f));
+  for (size_t i = 0; i < mirrors.size(); ++i) {
+    ui::mojom::WmViewportMetricsPtr viewport_metrics =
+        ui::mojom::WmViewportMetrics::New();
+    const display::ManagedDisplayInfo& mirror_info =
+        display_manager->GetDisplayInfo(mirrors[i].id());
+    viewport_metrics->bounds_in_pixels = mirror_info.bounds_in_native();
+    viewport_metrics->device_scale_factor = mirror_info.device_scale_factor();
+    viewport_metrics->ui_scale_factor = mirror_info.configured_ui_scale();
+    metrics.push_back(std::move(viewport_metrics));
+  }
+  LOG(ERROR) << "MSW SetDisplayConfiguration displays:" << displays.size() << " mirrors:" << mirrors.size() << " hardware:" << display_manager->GetMirroringDstDisplayIdList().size(); 
+  // if (displays.size() == 1 && mirrors.size() < 1) {
+  //   LOG(ERROR) << "MSW SKIPPING SetDisplayConfiguration"; 
+  //   return;
+  // }
   window_manager_client_->SetDisplayConfiguration(
       displays, std::move(metrics),
-      WindowTreeHostManager::GetPrimaryDisplayId(),
-      display_manager->software_mirroring_display_list());
+      WindowTreeHostManager::GetPrimaryDisplayId(), mirrors);
 
   sent_initial_config_ = true;
 }
