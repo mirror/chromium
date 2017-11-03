@@ -11,15 +11,17 @@
 #include "base/files/file.h"
 #include "components/safe_browsing/proto/csd.pb.h"
 
-namespace safe_browsing {
-
+namespace chrome {
 struct ArchiveAnalyzerResults;
+}
+
+namespace safe_browsing {
 
 namespace zip_analyzer {
 
 void AnalyzeZipFile(base::File zip_file,
                     base::File temp_file,
-                    ArchiveAnalyzerResults* results);
+                    chrome::ArchiveAnalyzerResults* results);
 
 }  // namespace zip_analyzer
 }  // namespace safe_browsing

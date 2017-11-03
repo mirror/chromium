@@ -5,8 +5,8 @@
 // This file contains the archive analyzer analysis implementation for download
 // protection, which runs in a sandboxed utility process.
 
-#ifndef CHROME_COMMON_SAFE_BROWSING_ARCHIVE_ANALYZER_RESULTS_H_
-#define CHROME_COMMON_SAFE_BROWSING_ARCHIVE_ANALYZER_RESULTS_H_
+#ifndef CHROME_SERVICES_FILE_UTIL_PUBLIC_CPP_ARCHIVE_ANALYZER_RESULTS_H_
+#define CHROME_SERVICES_FILE_UTIL_PUBLIC_CPP_ARCHIVE_ANALYZER_RESULTS_H_
 
 #include <vector>
 
@@ -14,13 +14,14 @@
 #include "build/build_config.h"
 #include "components/safe_browsing/proto/csd.pb.h"
 
-namespace safe_browsing {
+namespace chrome {
 
 struct ArchiveAnalyzerResults {
-  bool success;
-  bool has_executable;
-  bool has_archive;
-  google::protobuf::RepeatedPtrField<ClientDownloadRequest_ArchivedBinary>
+  bool success = false;
+  bool has_executable = false;
+  bool has_archive = false;
+  google::protobuf::RepeatedPtrField<
+      safe_browsing::ClientDownloadRequest_ArchivedBinary>
       archived_binary;
   std::vector<base::FilePath> archived_archive_filenames;
 #if defined(OS_MACOSX)
@@ -31,6 +32,6 @@ struct ArchiveAnalyzerResults {
   ~ArchiveAnalyzerResults();
 };
 
-}  // namespace safe_browsing
+}  // namespace chrome
 
-#endif  // CHROME_COMMON_SAFE_BROWSING_ARCHIVE_ANALYZER_RESULTS_H_
+#endif  // CHROME_SERVICES_FILE_UTIL_PUBLIC_CPP_ARCHIVE_ANALYZER_RESULTS_H_

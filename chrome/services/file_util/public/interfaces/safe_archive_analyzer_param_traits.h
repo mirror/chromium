@@ -9,8 +9,8 @@
 #endif
 
 #include "build/build_config.h"
-#include "chrome/common/safe_browsing/archive_analyzer_results.h"
 #include "chrome/common/safe_browsing/ipc_protobuf_message_macros.h"
+#include "chrome/services/file_util/public/cpp/archive_analyzer_results.h"
 #include "ipc/ipc_message_macros.h"
 #include "ipc/ipc_message_protobuf_utils.h"
 
@@ -86,7 +86,7 @@ IPC_PROTOBUF_MESSAGE_TRAITS_BEGIN(
   IPC_PROTOBUF_MESSAGE_TRAITS_OPTIONAL_COMPLEX_MEMBER(image_headers)
 IPC_PROTOBUF_MESSAGE_TRAITS_END()
 
-IPC_STRUCT_TRAITS_BEGIN(safe_browsing::ArchiveAnalyzerResults)
+IPC_STRUCT_TRAITS_BEGIN(chrome::ArchiveAnalyzerResults)
   IPC_STRUCT_TRAITS_MEMBER(success)
   IPC_STRUCT_TRAITS_MEMBER(has_executable)
   IPC_STRUCT_TRAITS_MEMBER(has_archive)

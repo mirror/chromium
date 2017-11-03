@@ -37,6 +37,7 @@ static_library("utility") {
     "//chrome/common/printing:interfaces",
     "//chrome/common/profiling",
     "//chrome/profiling",
+    "//chrome/services/file_util:lib",
     "//components/search_engines",
     "//components/strings",
     "//components/url_formatter",
@@ -169,7 +170,6 @@ static_library("utility") {
       "//ash/autoclick/mus:lib",
       "//ash/mus:lib",
       "//ash/touch_hud/mus:lib",
-      "//chrome/services/file_util:lib",
     ]
   }
 
