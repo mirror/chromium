@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28021b48_1e60ac9f",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T10:13:01Z",
+      "side": 1,
+      "message": "Can these go in HarmonyLayoutProvider instead? They should be implemented in terms of kHarmonyLayoutUnit",
+      "revId": "14189e7b35adf0faf62c8405bc2b57d7d9b08ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634cc753_19288419",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T10:13:01Z",
+      "side": 1,
+      "message": "maybe move this into the method. (otherwise, comment)",
+      "revId": "14189e7b35adf0faf62c8405bc2b57d7d9b08ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10a985b_15686b87",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T10:13:01Z",
+      "side": 1,
+      "message": "is this new? (will it change the behaviour of the profile menu?)",
+      "revId": "14189e7b35adf0faf62c8405bc2b57d7d9b08ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679331bd_ff970290",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T10:13:01Z",
+      "side": 1,
+      "message": "this should probably take a unique_ptr\u003cviews::View\u003e so the ownership transfer is clear",
+      "revId": "14189e7b35adf0faf62c8405bc2b57d7d9b08ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b254ba_ca1f2056",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T10:13:01Z",
+      "side": 1,
+      "message": "comment about this? (any why not for all constructors like the old code?)",
+      "revId": "14189e7b35adf0faf62c8405bc2b57d7d9b08ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d09f84a_31a9869b",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T10:13:01Z",
+      "side": 1,
+      "message": "should this be STYLE_HINT or STYLE_SECONDARY (what do the mocks say?). DISABLED is a different color under Harmony.",
+      "range": {
+        "startLine": 117,
+        "startChar": 47,
+        "endLine": 117,
+        "endChar": 61
+      },
+      "revId": "14189e7b35adf0faf62c8405bc2b57d7d9b08ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9bf8df_9f231a58",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T10:13:01Z",
+      "side": 1,
+      "message": "is this needed? (comment?)",
+      "revId": "14189e7b35adf0faf62c8405bc2b57d7d9b08ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ab8c65_21426e86",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T10:13:01Z",
+      "side": 1,
+      "message": "this should use style::GetColor(PRIMARY) I think.. LabelEnabledColor could be something random from the OS theme",
+      "revId": "14189e7b35adf0faf62c8405bc2b57d7d9b08ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f1f133_5ebc07d9",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T10:13:01Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "14189e7b35adf0faf62c8405bc2b57d7d9b08ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35ee86d_5ede0319",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T10:13:01Z",
+      "side": 1,
+      "message": "nit: since InkDrop* are in overridden method signatures only, IWYU doesn\u0027t require the forward decs",
+      "revId": "14189e7b35adf0faf62c8405bc2b57d7d9b08ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a384711_caba4397",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T10:13:01Z",
+      "side": 1,
+      "message": "Maybe \"Create a HoverButton with custom subviews. |icon_view| replaces the LabelButton icon, and titles appear on separate rows. An empty |subtitle| will vertically center |title|.",
+      "range": {
+        "startLine": 39,
+        "startChar": 43,
+        "endLine": 39,
+        "endChar": 47
+      },
+      "revId": "14189e7b35adf0faf62c8405bc2b57d7d9b08ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80df391e_c2096382",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-03T10:13:01Z",
+      "side": 1,
+      "message": "{} should move to .cc",
+      "revId": "14189e7b35adf0faf62c8405bc2b57d7d9b08ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
