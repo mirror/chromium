@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e788767c_12f6a8db",
+        "filename": "ios/build/bots/tests/eg_tests.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-03T22:14:30Z",
+      "side": 0,
+      "message": "What do you think about naming this file eg_cq_tests.json? then the other one can be eg_tests.json?",
+      "revId": "a2d7bb85bbd16caa7bb1a063d85ab6b1e1d74ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
