@@ -12,6 +12,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/default_clock.h"
 #include "build/build_config.h"
+#include "components/google/core/browser/google_util.h"
 #include "components/image_fetcher/core/image_decoder.h"
 #include "components/search_engines/search_terms_data.h"
 #include "components/search_engines/template_url_service.h"
@@ -198,9 +199,13 @@ void LogoServiceImpl::GetLogo(LogoCallbacks callbacks) {
   const bool is_google = template_url->url_ref().HasGoogleBaseURLs(
       template_url_service_->search_terms_data());
   if (is_google) {
-    // TODO(treib): Put the Google doodle URL into prepopulated_engines.json.
-    base_url =
-        GURL(template_url_service_->search_terms_data().GoogleBaseURLValue());
+    if (google_util::CommandLineGoogleBaseURL().is_valid()) {
+      base_url = google_util::CommandLineGoogleBaseURL();
+    } else {
+      // TODO(treib): Put the Google doodle URL into prepopulated_engines.json.
+      base_url =
+          GURL(template_url_service_->search_terms_data().GoogleBaseURLValue());
+    }
     doodle_url = search_provider_logos::GetGoogleDoodleURL(base_url);
   } else if (base::FeatureList::IsEnabled(features::kThirdPartyDoodles)) {
     // First try to get the Doodle URL from the command line, then from a
