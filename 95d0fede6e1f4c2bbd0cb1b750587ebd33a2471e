@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa044db6_a6f7efa5",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-03T07:33:48Z",
+      "side": 1,
+      "message": "Probably we should update the comment? Using mojo bindings seems to align chrome componentization/servicification.",
+      "parentUuid": "0fbf267f_6162a5b8",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 63
+      },
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ef6e895_1be4ea81",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 2
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "99aa863a_db4bd3f4",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-03T07:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4953b417_a96d81ea",
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22afa77f_8f2bacdb",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 2
@@ -92,6 +134,24 @@
       "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b723b4d_3d493a25",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-03T07:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5ab5cec_15563cf1",
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -148,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "85b869c6_af6fbfed",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-03T07:33:48Z",
+      "side": 1,
+      "message": "Changed to per-process.",
+      "parentUuid": "9f07535d_8ef45008",
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04f74357_d179d54c",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 2
@@ -177,6 +255,24 @@
       "side": 1,
       "message": "Maybe we don\u0027t need, but I need a response to write tests. I\u0027m fine with removing this response too.",
       "parentUuid": "04f74357_d179d54c",
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a24a88e_304422d5",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-03T07:33:48Z",
+      "side": 1,
+      "message": "Removed response callback.",
+      "parentUuid": "4caeed8a_e974ab62",
       "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
