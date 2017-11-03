@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0e1e0ce8_b64ff337",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-03T08:39:05Z",
+      "side": 1,
+      "message": "I\u0027ll do that if chrome/browser onwers are fine with that (but I\u0027d like to do in a separate CL).",
+      "parentUuid": "041ea57a_7e43c879",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 63
+      },
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ef6e895_1be4ea81",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 2
