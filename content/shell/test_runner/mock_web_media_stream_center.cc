@@ -46,12 +46,6 @@ void MockWebMediaStreamCenter::DidDisableMediaStreamTrack(
   track.Source().SetReadyState(blink::WebMediaStreamSource::kReadyStateMuted);
 }
 
-bool MockWebMediaStreamCenter::DidStopMediaStreamTrack(
-    const blink::WebMediaStreamTrack& track) {
-  track.Source().SetReadyState(blink::WebMediaStreamSource::kReadyStateEnded);
-  return true;
-}
-
 blink::WebAudioSourceProvider*
 MockWebMediaStreamCenter::CreateWebAudioSourceFromMediaStreamTrack(
     const blink::WebMediaStreamTrack& track) {

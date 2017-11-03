@@ -82,7 +82,8 @@ void MediaStreamVideoSource::AddTrack(
   }
 }
 
-void MediaStreamVideoSource::RemoveTrack(MediaStreamVideoTrack* video_track) {
+void MediaStreamVideoSource::RemoveTrack(MediaStreamVideoTrack* video_track,
+                                         base::OnceClosure callback) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   std::vector<MediaStreamVideoTrack*>::iterator it =
       std::find(tracks_.begin(), tracks_.end(), video_track);
@@ -101,8 +102,25 @@ void MediaStreamVideoSource::RemoveTrack(MediaStreamVideoTrack* video_track) {
   // failed and |frame_adapter_->AddCallback| has not been called.
   track_adapter_->RemoveTrack(video_track);
 
-  if (tracks_.empty())
-    StopSource();
+  if (tracks_.empty()) {
+    if (callback) {
+      StopForRestart(base::BindOnce(&MediaStreamVideoSource::RemovedLastTrack,
+                                    weak_factory_.GetWeakPtr(),
+                                    std::move(callback)));
+    } else {
+      StopSource();
+    }
+  } else if (callback) {
+    std::move(callback).Run();
+  }
+}
+
+void MediaStreamVideoSource::RemovedLastTrack(base::OnceClosure callback,
+                                              RestartResult) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(callback);
+  std::move(callback).Run();
+  StopSource();
 }
 
 void MediaStreamVideoSource::ReconfigureTrack(
