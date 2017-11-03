@@ -25,6 +25,8 @@ class AwMetricsLogUploader : public ::metrics::MetricsLogUploader {
                  const std::string& log_hash,
                  const metrics::ReportingInfo& reporting_info) override;
 
+  std::string GetInsecureUploadURL() override;
+
  private:
   const metrics::MetricsLogUploader::UploadCallback on_upload_complete_;
 

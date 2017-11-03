@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "components/metrics/data_use_tracker.h"
@@ -30,6 +31,7 @@ ReportingService::ReportingService(MetricsServiceClient* client,
       max_retransmit_size_(max_retransmit_size),
       reporting_active_(false),
       log_upload_in_progress_(false),
+      try_next_upload_over_http_(false),
       data_use_tracker_(DataUseTracker::Create(local_state)),
       self_ptr_factory_(this) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -146,7 +148,8 @@ void ReportingService::SendStagedLog() {
 
   if (!log_uploader_) {
     log_uploader_ = client_->CreateUploader(
-        GetUploadUrl(), upload_mime_type(), service_type(),
+        GetUploadUrl(), GetInsecureUploadUrl(), upload_mime_type(),
+        service_type(),
         base::Bind(&ReportingService::OnLogUploadComplete,
                    self_ptr_factory_.GetWeakPtr()));
   }
@@ -156,10 +159,18 @@ void ReportingService::SendStagedLog() {
   const std::string hash =
       base::HexEncode(log_store()->staged_log_hash().data(),
                       log_store()->staged_log_hash().size());
+  if (try_next_upload_over_http_) {
+    log_uploader_->UploadLogToInsecureURL(log_store()->staged_log(), hash,
+                                          reporting_info_);
+    try_next_upload_over_http_ = false;
+    return;
+  }
   log_uploader_->UploadLog(log_store()->staged_log(), hash, reporting_info_);
 }
 
-void ReportingService::OnLogUploadComplete(int response_code, int error_code) {
+void ReportingService::OnLogUploadComplete(int response_code,
+                                           int error_code,
+                                           bool was_https) {
   DVLOG(1) << "OnLogUploadComplete:" << response_code;
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(log_upload_in_progress_);
@@ -168,6 +179,7 @@ void ReportingService::OnLogUploadComplete(int response_code, int error_code) {
   reporting_info_.set_last_response_code(response_code);
 
   // Log a histogram to track response success vs. failure rates.
+  // TODO(carlosil): Split histogram into http vs https.
   LogResponseOrErrorCode(response_code, error_code);
 
   bool upload_succeeded = response_code == 200;
@@ -186,6 +198,10 @@ void ReportingService::OnLogUploadComplete(int response_code, int error_code) {
     } else if (response_code == 400) {
       // Bad syntax.  Retransmission won't work.
       discard_log = true;
+    } else if (was_https && !log_uploader_->GetInsecureUploadURL().empty() &&
+               base::CommandLine::ForCurrentProcess()->HasSwitch(
+                   "retry-uma-over-http")) {
+      try_next_upload_over_http_ = true;
     }
 
     if (upload_succeeded || discard_log) {
@@ -197,7 +213,10 @@ void ReportingService::OnLogUploadComplete(int response_code, int error_code) {
 
   // Error 400 indicates a problem with the log, not with the server, so
   // don't consider that a sign that the server is in trouble.
-  bool server_is_healthy = upload_succeeded || response_code == 400;
+  // If the next upload will be over HTTPS, the server is considered as healthy,
+  // in order to retry the upload after the normal interval.
+  bool server_is_healthy =
+      upload_succeeded || response_code == 400 || try_next_upload_over_http_;
   if (!log_store()->has_unsent_logs()) {
     DVLOG(1) << "Stopping upload_scheduler_.";
     upload_scheduler_->Stop();
