@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbf3bec0_1583b9ef",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16988,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T14:17:47Z",
+      "side": 1,
+      "message": "Here and below, you should also add media-dev@chromium.org so we have a larger fallback.",
+      "revId": "6ba6cdf872420c71b512263ada5d1772d7b41fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f87d50_594cec8a",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 17031,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-03T14:17:47Z",
+      "side": 1,
+      "message": "What\u0027s the difference between this and \".SiteSettings\"?",
+      "revId": "6ba6cdf872420c71b512263ada5d1772d7b41fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
