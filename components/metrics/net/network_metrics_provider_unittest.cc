@@ -234,4 +234,34 @@ TEST_F(NetworkMetricsProviderTest, ECTNotAmbiguousOnOffline) {
   }
 }
 
+// Verifies that if the connection type is ambiguous is correctly set.
+TEST_F(NetworkMetricsProviderTest, ConnectionTypeIsAmbiguous) {
+  net::TestNetworkQualityEstimator estimator;
+  std::unique_ptr<NetworkMetricsProvider::NetworkQualityEstimatorProvider>
+      estimator_provider(base::WrapUnique(
+          new TestNetworkQualityEstimatorProvider(&estimator)));
+  SystemProfileProto system_profile;
+  NetworkMetricsProvider network_metrics_provider(
+      std::move(estimator_provider));
+  estimator.RunOneRequest();
+
+  EXPECT_EQ(net::NetworkChangeNotifier::CONNECTION_UNKNOWN,
+            network_metrics_provider.connection_type_);
+  EXPECT_FALSE(network_metrics_provider.connection_type_is_ambiguous_);
+  EXPECT_FALSE(network_metrics_provider.network_change_notifier_initialized_);
+
+  network_metrics_provider.OnConnectionTypeChanged(
+      net::NetworkChangeNotifier::CONNECTION_2G);
+  EXPECT_EQ(net::NetworkChangeNotifier::CONNECTION_2G,
+            network_metrics_provider.connection_type_);
+  EXPECT_FALSE(network_metrics_provider.connection_type_is_ambiguous_);
+  EXPECT_TRUE(network_metrics_provider.network_change_notifier_initialized_);
+
+  network_metrics_provider.ProvideSystemProfileMetrics(&system_profile);
+  network_metrics_provider.OnConnectionTypeChanged(
+      net::NetworkChangeNotifier::CONNECTION_3G);
+  EXPECT_TRUE(network_metrics_provider.connection_type_is_ambiguous_);
+  EXPECT_TRUE(network_metrics_provider.network_change_notifier_initialized_);
+}
+
 }  // namespace metrics
