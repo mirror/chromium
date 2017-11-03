@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aff52f94_7de2c04e",
+        "filename": "ui/compositor/layer_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-03T19:19:54Z",
+      "side": 0,
+      "message": "Since a threaded animation can change the opacity without OnLayerOpacityChanged() being notified, it doesn\u0027t make much sense to provide the old opacity (new_opacity from a call isn\u0027t necessarily equal to old_opacity from the next call).",
+      "range": {
+        "startLine": 38,
+        "startChar": 37,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "2017eba866f49936c6132ee4aae3e45a61a1b0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
