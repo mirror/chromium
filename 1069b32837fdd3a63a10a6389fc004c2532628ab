@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "6d16d6d3_ef9da6dd",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5368,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-03T11:18:05Z",
+      "side": 1,
+      "message": "Understood; that resolves my comment.",
+      "parentUuid": "547be23b_03280d78",
+      "revId": "1069b32837fdd3a63a10a6389fc004c2532628ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "047ad1b2_2ce901eb",
         "filename": "ios/chrome/browser/ui/settings/sync_utils/sync_error_infobar_delegate.mm",
         "patchSetId": 3
