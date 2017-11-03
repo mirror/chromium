@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3ae79eb_86b42290",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-03T06:17:54Z",
+      "side": 1,
+      "message": "I\u0027m not super sure this still matches what it does. For me, the name sounds like it\u0027s only counting the current session, not previously recorded observed session time. My naming skills are apparently not great tonight, but maybe you could find something that you think describes it better?\n\n  - GetTotalSessionElapsedTime\n  - GetCumulativeElapsedSessionTime\n\nI think maybe the latter one of those could make sense?",
+      "range": {
+        "startLine": 63,
+        "startChar": 18,
+        "endLine": 63,
+        "endChar": 45
+      },
+      "revId": "eff699f62e6677e5c21352c90bbb81a2776c744c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0989a3_ae97f6cd",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-03T06:17:54Z",
+      "side": 1,
+      "message": "Note: If you end up changing then name of GetActiveSessionElapsedTime, I think the comment and test name here should probably also be changed.",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 65
+      },
+      "revId": "eff699f62e6677e5c21352c90bbb81a2776c744c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
