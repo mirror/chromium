@@ -2,6 +2,126 @@
   "comments": [
     {
       "key": {
+        "uuid": "954588d6_93b1a719",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T00:25:09Z",
+      "side": 1,
+      "message": "Do we still need this method?",
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7db16db_e2b09c22",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T00:25:09Z",
+      "side": 1,
+      "message": "same",
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9565aeb_8b2da193",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1253,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T00:25:09Z",
+      "side": 1,
+      "message": "could we std::move it?",
+      "range": {
+        "startLine": 1253,
+        "startChar": 32,
+        "endLine": 1253,
+        "endChar": 49
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcd5c16_a8572277",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2031,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T00:25:09Z",
+      "side": 1,
+      "message": "if credit_card is owned by the PDM, std::move it?",
+      "range": {
+        "startLine": 2031,
+        "startChar": 35,
+        "endLine": 2031,
+        "endChar": 46
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7211296_3156c4a2",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2164,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T00:25:09Z",
+      "side": 1,
+      "message": "still relevant comment?",
+      "range": {
+        "startLine": 2163,
+        "startChar": 24,
+        "endLine": 2164,
+        "endChar": 17
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60c9cce_3d24e7e9",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2165,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T00:25:09Z",
+      "side": 1,
+      "message": "should we clear? there doesn\u0027t seem to be 4 cards anymore",
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ca9ddfe_cad4b63f",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 1
@@ -71,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "cb0313d1_a7e4d427",
+        "filename": "components/autofill/core/browser/country_combobox_model_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T00:25:09Z",
+      "side": 1,
+      "message": "I seem to remember a test crashing if we didn\u0027t set it. Could be wrong, testing without will reveal the answer :)",
+      "parentUuid": "35fcb93e_a7a6680f",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 45
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b20b2d1_27dc4a47",
         "filename": "components/autofill/core/browser/test_personal_data_manager.cc",
         "patchSetId": 1
@@ -94,6 +238,29 @@
     },
     {
       "key": {
+        "uuid": "1062568f_453604c3",
+        "filename": "components/autofill/core/browser/test_personal_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T00:25:09Z",
+      "side": 1,
+      "message": "unh, web_profiles_ is a bunch of std::unique_ptr? odd.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 15
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed4ece08_26c66459",
         "filename": "components/autofill/core/browser/test_personal_data_manager.h",
         "patchSetId": 1
@@ -111,6 +278,23 @@
         "endLine": 25,
         "endChar": 0
       },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4327de27_41b9a8ed",
+        "filename": "components/autofill/core/browser/test_personal_data_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T00:25:09Z",
+      "side": 1,
+      "message": "as mentioned elsewhere, would make this AutofillProfile and std::move stuff. Same for cards",
       "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
