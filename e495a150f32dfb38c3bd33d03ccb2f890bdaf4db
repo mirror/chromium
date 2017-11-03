@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e485533_4e774a9c",
+        "filename": "chrome/browser/resources/print_preview/new/app.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-03T23:25:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bd5e2c8_53afb6f9",
+      "revId": "e495a150f32dfb38c3bd33d03ccb2f890bdaf4db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97641d32_273ea412",
         "filename": "chrome/browser/resources/print_preview/new/compiled_resources2.gyp",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "31db058d_39dcaebb",
+        "filename": "chrome/browser/resources/print_preview/new/compiled_resources2.gyp",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-03T23:25:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97641d32_273ea412",
+      "revId": "e495a150f32dfb38c3bd33d03ccb2f890bdaf4db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e51beb3d_7dd72a05",
         "filename": "chrome/browser/resources/print_preview/new/header.html",
         "patchSetId": 12
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-03T22:54:13Z",
       "side": 1,
       "message": "Nit for a future CL:\nLet\u0027s use only \u0027rem\u0027 units, instead of \u0027em\u0027. They are easier to work with because they only depend on the top level HTML elements, whereas \u0027em\u0027 depend on the entire parent chain (compounding effect).\n\nSee similar conversion at https://chromium-review.googlesource.com/c/chromium/src/+/734321.",
+      "revId": "e495a150f32dfb38c3bd33d03ccb2f890bdaf4db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "567e55ae_666f2499",
+        "filename": "chrome/browser/resources/print_preview/new/header.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-03T23:25:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e51beb3d_7dd72a05",
       "revId": "e495a150f32dfb38c3bd33d03ccb2f890bdaf4db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
