@@ -192,6 +192,11 @@ static constexpr float kSuggestionTextFieldWidth = 0.3f;
 static constexpr float kSuggestionContentTextHeight = 0.02f;
 static constexpr float kSuggestionDescriptionTextHeight = 0.015f;
 
+static constexpr float kControllerQuiescenceAngularThresholdDegrees = 3.5f;
+static constexpr float kControllerQuiescenceTemporalThresholdSeconds = 1.2f;
+static constexpr int kControllerFadeInMs = 200;
+static constexpr int kControllerFadeOutMs = 550;
+
 }  // namespace vr
 
 #endif  // CHROME_BROWSER_VR_UI_SCENE_CONSTANTS_H_

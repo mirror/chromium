@@ -19,6 +19,7 @@
 #include "chrome/browser/android/vr_shell/vr_controller.h"
 #include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/controller_mesh.h"
+#include "chrome/browser/vr/model/controller_model.h"
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_renderer.h"
 #include "device/vr/vr_service.mojom.h"
@@ -130,17 +131,20 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
                       int viewport_offset,
                       const gfx::Size& render_size,
                       vr::RenderInfo* out_render_info);
-  void DrawFrame(int16_t frame_index);
-  void DrawIntoAcquiredFrame(int16_t frame_index);
+  void DrawFrame(int16_t frame_index, base::TimeTicks current_time);
+  void DrawIntoAcquiredFrame(int16_t frame_index, base::TimeTicks current_time);
   void DrawFrameSubmitWhenReady(int16_t frame_index,
                                 const gfx::Transform& head_pose,
                                 std::unique_ptr<gl::GLFenceEGL> fence);
-  void DrawFrameSubmitNow(int16_t frame_index, const gfx::Transform& head_pose);
+  void DrawFrameSubmitNow(int16_t frame_index,
+                          const gfx::Transform& head_pose,
+                          base::TimeTicks current_time);
   bool ShouldDrawWebVr();
   void DrawWebVr();
   bool WebVrPoseByteIsValid(int pose_index_byte);
 
-  void UpdateController(const gfx::Transform& head_pose);
+  void UpdateController(const gfx::Transform& head_pose,
+                        base::TimeTicks current_time);
   std::unique_ptr<blink::WebMouseEvent> MakeMouseEvent(
       blink::WebInputEvent::Type type,
       const gfx::PointF& normalized_web_content_location);
@@ -166,7 +170,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
 
   void SendImmediateExitRequestIfNecessary();
   void HandleControllerInput(const gfx::Point3F& laser_origin,
-                             const gfx::Vector3dF& head_direction);
+                             const gfx::Vector3dF& head_direction,
+                             base::TimeTicks current_time);
   void HandleControllerAppButtonActivity(
       const gfx::Vector3dF& controller_direction);
   void SendGestureToContent(std::unique_ptr<blink::WebInputEvent> event);
@@ -282,6 +287,9 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   gfx::Point3F pointer_start_;
 
   vr::RenderInfo render_info_primary_;
+
+  base::TimeTicks last_significant_controller_update_time_;
+  vr::ControllerModel last_significant_controller_model_;
 
   AndroidVSyncHelper vsync_helper_;
 
