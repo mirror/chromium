@@ -23,8 +23,8 @@ EmbeddedServiceRunner::~EmbeddedServiceRunner() {
   instance_manager_->ShutDown();
 }
 
-void EmbeddedServiceRunner::BindServiceRequest(
-    service_manager::mojom::ServiceRequest request) {
+void EmbeddedServiceRunner::BindServiceRequest(const Identity& identity,
+                                               mojom::ServiceRequest request) {
   instance_manager_->BindServiceRequest(std::move(request));
 }
 
