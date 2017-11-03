@@ -15,11 +15,11 @@ def _CommonChecks(input_api, output_api):
   """Performs common checks, which includes running pylint."""
   results = []
 
-  results.extend(_CheckWprShaFiles(input_api, output_api))
-  results.extend(_CheckJson(input_api, output_api))
   _UpdateBenchmarkShardingMap(input_api)
-  results.extend(_CheckPerfJsonUpToDate(input_api, output_api))
+  _UpdatePerfData(input_api)
   results.extend(_CheckExpectations(input_api, output_api))
+  results.extend(_CheckJson(input_api, output_api))
+  results.extend(_CheckWprShaFiles(input_api, output_api))
   results.extend(input_api.RunTests(input_api.canned_checks.GetPylint(
       input_api, output_api, extra_paths_list=_GetPathsToPrepend(input_api),
       pylintrc='pylintrc')))
@@ -57,6 +57,21 @@ def _RunArgs(args, input_api):
   return (out, p.returncode)
 
 
+def _UpdateBenchmarkShardingMap(input_api):
+  perf_dir = input_api.PresubmitLocalPath()
+  _RunArgs([
+      input_api.python_executable,
+      input_api.os_path.join(perf_dir, 'generate_perf_sharding')],
+      input_api)
+
+
+def _UpdatePerfData(input_api):
+  perf_dir = input_api.PresubmitLocalPath()
+  _RunArgs([
+      input_api.python_executable,
+      input_api.os_path.join(perf_dir, 'generate_perf_data')], input_api)
+
+
 def _CheckExpectations(input_api, output_api):
   results = []
   perf_dir = input_api.PresubmitLocalPath()
@@ -70,25 +85,17 @@ def _CheckExpectations(input_api, output_api):
   return results
 
 
-def _UpdateBenchmarkShardingMap(input_api):
-  perf_dir = input_api.PresubmitLocalPath()
-  _RunArgs([
-      input_api.python_executable,
-      input_api.os_path.join(perf_dir, 'generate_perf_sharding')],
-      input_api)
-
-
-def _CheckPerfJsonUpToDate(input_api, output_api):
-  results = []
-  perf_dir = input_api.PresubmitLocalPath()
-  out, return_code = _RunArgs([
-      input_api.python_executable,
-      input_api.os_path.join(perf_dir, 'generate_perf_data'),
-      '--validate-only'], input_api)
-  if return_code:
-      results.append(output_api.PresubmitError(
-          'Validating Perf JSON configs failed.', long_text=out))
-  return results
+def _CheckJson(input_api, output_api):
+  """Checks whether JSON files in this change can be parsed."""
+  for affected_file in input_api.AffectedFiles(include_deletes=False):
+    filename = affected_file.AbsoluteLocalPath()
+    if os.path.splitext(filename)[1] != '.json':
+      continue
+    try:
+      input_api.json.load(open(filename))
+    except ValueError:
+      return [output_api.PresubmitError('Error parsing JSON in %s!' % filename)]
+  return []
 
 
 def _CheckWprShaFiles(input_api, output_api):
@@ -112,19 +119,6 @@ def _CheckWprShaFiles(input_api, output_api):
     results.append(output_api.PresubmitError(
         'Validating WPR archives failed:', long_text=out))
   return results
-
-
-def _CheckJson(input_api, output_api):
-  """Checks whether JSON files in this change can be parsed."""
-  for affected_file in input_api.AffectedFiles(include_deletes=False):
-    filename = affected_file.AbsoluteLocalPath()
-    if os.path.splitext(filename)[1] != '.json':
-      continue
-    try:
-      input_api.json.load(open(filename))
-    except ValueError:
-      return [output_api.PresubmitError('Error parsing JSON in %s!' % filename)]
-  return []
 
 
 def _CheckNoUncommittedFiles(input_api, output_api):
