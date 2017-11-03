@@ -1,0 +1,13 @@
+module viz.mojom;
+
+import "ui/gfx/geometry/mojo/geometry.mojom";
+
+// TODO(nzolghadr): This interface should be relocated to services/ui/public
+// when all Chrome implementation use the services/ui windows server.
+
+// Returns the hit-tested remote frame id for the given coordinates.
+interface InputTargetClient {
+
+  // Returns the routing id of the frame that the given point belongs to.
+  WidgetRoutingIdAt(gfx.mojom.Point point) => (int32 frame_id);
+};
