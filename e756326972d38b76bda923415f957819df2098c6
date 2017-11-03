@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82d4b0c8_db8eec14",
+        "filename": "media/renderers/renderer_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-03T21:43:39Z",
+      "side": 1,
+      "message": "nit: Typically we interpret !flush_cb_ as \"flush is pending\". Since this is specific stream status change, how about pending_flush_during_stream_status_change_ or something like that?",
+      "revId": "e756326972d38b76bda923415f957819df2098c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
