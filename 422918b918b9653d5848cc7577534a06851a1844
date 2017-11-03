@@ -52,6 +52,24 @@
       "revId": "422918b918b9653d5848cc7577534a06851a1844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90828e70_2484acfc",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-11-03T19:17:34Z",
+      "side": 1,
+      "message": "Got that. Another problem is that AppendQuadsData used in mask tiling is a temporary variable created in RenderSurfaceImpl. In order to use it in LTHI, we still need to store it somewhere which I think it should be PictureLayerImpl, wdyt?",
+      "parentUuid": "a385b626_b852ebf1",
+      "revId": "422918b918b9653d5848cc7577534a06851a1844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
