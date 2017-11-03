@@ -39,11 +39,12 @@ void WorkletModuleTreeClient::NotifyModuleTreeLoadFinished(
   // TODO(nhiroki): Call WorkerReportingProxy::WillEvaluateWorkerScript() or
   // something like that (e.g., WillEvaluateModuleScript()).
   // Step 4: "Run a module script given script."
-  modulator_->ExecuteModule(module_script);
+  bool success = true;
+  modulator_->ExecuteModule(module_script /*, &success */);
   WorkletGlobalScope* global_scope = ToWorkletGlobalScope(
       ExecutionContext::From(modulator_->GetScriptState()));
-  global_scope->ReportingProxy().DidEvaluateModuleScript(
-      !module_script->IsErrored());
+
+  global_scope->ReportingProxy().DidEvaluateModuleScript(success);
 
   // Step 5: "Queue a task on outsideSettings's responsible event loop to run
   // these steps:"
