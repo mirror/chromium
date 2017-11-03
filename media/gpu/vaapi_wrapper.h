@@ -209,53 +209,15 @@ class MEDIA_GPU_EXPORT VaapiWrapper
  private:
   friend class base::RefCountedThreadSafe<VaapiWrapper>;
 
-  struct ProfileInfo {
-    VAProfile va_profile;
-    gfx::Size max_resolution;
-  };
-
-  class LazyProfileInfos {
-   public:
-    LazyProfileInfos();
-    ~LazyProfileInfos();
-    std::vector<ProfileInfo> GetSupportedProfileInfosForCodecMode(
-        CodecMode mode);
-    bool IsProfileSupported(CodecMode mode, VAProfile va_profile);
-
-   private:
-    std::vector<ProfileInfo> supported_profiles_[kCodecModeMax];
-  };
-
   VaapiWrapper();
   ~VaapiWrapper();
 
   bool Initialize(CodecMode mode, VAProfile va_profile);
   void Deinitialize();
   bool VaInitialize(const base::Closure& report_error_to_uma_cb);
-  bool GetSupportedVaProfiles(std::vector<VAProfile>* profiles);
 
   // Free all memory allocated in CreateSurfaces.
   void DestroySurfaces_Locked();
-
-  // Check if |va_profile| supports |entrypoint| or not. |va_lock_| must be
-  // held on entry.
-  bool IsEntrypointSupported_Locked(VAProfile va_profile,
-                                    VAEntrypoint entrypoint);
-
-  // Return true if |va_profile| for |entrypoint| with |required_attribs| is
-  // supported. |va_lock_| must be held on entry.
-  bool AreAttribsSupported_Locked(
-      VAProfile va_profile,
-      VAEntrypoint entrypoint,
-      const std::vector<VAConfigAttrib>& required_attribs);
-
-  // Get maximum resolution for |va_profile| and |entrypoint| with
-  // |required_attribs|. If return value is true, |resolution| is the maximum
-  // resolution. |va_lock_| must be held on entry.
-  bool GetMaxResolution_Locked(VAProfile va_profile,
-                               VAEntrypoint entrypoint,
-                               std::vector<VAConfigAttrib>& required_attribs,
-                               gfx::Size* resolution);
 
   // Destroys a |va_surface| created using CreateUnownedSurface.
   void DestroyUnownedSurface(VASurfaceID va_surface_id);
@@ -275,10 +237,6 @@ class MEDIA_GPU_EXPORT VaapiWrapper
   // Attempt to set render mode to "render to texture.". Failure is non-fatal.
   void TryToSetVADisplayAttributeToLocalGPU();
 
-  // Get supported profile infos for |mode|.
-  std::vector<ProfileInfo> GetSupportedProfileInfosForCodecModeInternal(
-      CodecMode mode);
-
   // Lazily initialize static data after sandbox is enabled.  Return false on
   // init failure.
   static bool PostSandboxInitialization();
@@ -288,9 +246,6 @@ class MEDIA_GPU_EXPORT VaapiWrapper
   // and it is not supported, we try constrained baseline.
   static VAProfile ProfileToVAProfile(VideoCodecProfile profile,
                                       CodecMode mode);
-
-  // Singleton accessors.
-  static LazyProfileInfos* GetProfileInfos();
 
   // Pointer to VADisplayState's member |va_lock_|. Guaranteed to be valid for
   // the lifetime of VaapiWrapper.
