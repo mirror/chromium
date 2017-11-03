@@ -213,7 +213,7 @@ TEST_F(ChooserDialogCocoaControllerTest, AddOption) {
   // |table_view_| should be enabled since there is an option.
   EXPECT_TRUE(table_view_.enabled);
   EXPECT_EQ(-1, table_view_.selectedRow);
-  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGrey);
+  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGray);
   ExpectRowTextIs(0, @"a");
   EXPECT_TRUE(IsRowPaired(0));
   EXPECT_FALSE(connect_button_.enabled);
@@ -294,7 +294,7 @@ TEST_F(ChooserDialogCocoaControllerTest, RemoveOption) {
   EXPECT_EQ(1, table_view_.numberOfColumns);
   EXPECT_TRUE(table_view_.enabled);
   EXPECT_EQ(-1, table_view_.selectedRow);
-  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGrey);
+  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGray);
   ExpectRowTextIs(0, @"a");
   EXPECT_TRUE(IsRowPaired(0));
   ExpectSignalStrengthLevelImageIs(
@@ -358,10 +358,10 @@ TEST_F(ChooserDialogCocoaControllerTest, UpdateOption) {
   EXPECT_EQ(1, table_view_.numberOfColumns);
   EXPECT_TRUE(table_view_.enabled);
   EXPECT_EQ(-1, table_view_.selectedRow);
-  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGrey);
+  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGray);
   ExpectRowTextIs(0, @"a");
   EXPECT_TRUE(IsRowPaired(0));
-  ExpectRowImageIsConnectedImage(1, gfx::kChromeIconGrey);
+  ExpectRowImageIsConnectedImage(1, gfx::kChromeIconGray);
   ExpectRowTextIs(1, @"d");
   EXPECT_TRUE(IsRowPaired(1));
   ExpectSignalStrengthLevelImageIs(
@@ -427,7 +427,7 @@ TEST_F(ChooserDialogCocoaControllerTest, UpdateAndRemoveTheUpdatedOption) {
   EXPECT_EQ(1, table_view_.numberOfColumns);
   EXPECT_TRUE(table_view_.enabled);
   EXPECT_EQ(-1, table_view_.selectedRow);
-  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGrey);
+  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGray);
   ExpectRowTextIs(0, @"a");
   EXPECT_TRUE(IsRowPaired(0));
   ExpectSignalStrengthLevelImageIs(
@@ -453,7 +453,7 @@ TEST_F(ChooserDialogCocoaControllerTest,
       base::ASCIIToUTF16("c"), MockChooserController::kSignalStrengthLevel1Bar,
       MockChooserController::ConnectedPairedStatus::NONE);
 
-  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGrey);
+  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGray);
   ExpectSignalStrengthLevelImageIs(
       1, MockChooserController::kSignalStrengthLevel0Bar,
       MockChooserController::kImageColorUnselected);
@@ -488,7 +488,7 @@ TEST_F(ChooserDialogCocoaControllerTest,
   // Deselect option 0.
   [table_view_ deselectRow:0];
   EXPECT_EQ(-1, table_view_.selectedRow);
-  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGrey);
+  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGray);
   ExpectSignalStrengthLevelImageIs(
       1, MockChooserController::kSignalStrengthLevel0Bar,
       MockChooserController::kImageColorUnselected);
@@ -508,7 +508,7 @@ TEST_F(ChooserDialogCocoaControllerTest,
   [table_view_ selectRowIndexes:[NSIndexSet indexSetWithIndex:1]
            byExtendingSelection:NO];
   EXPECT_EQ(1, table_view_.selectedRow);
-  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGrey);
+  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGray);
   ExpectSignalStrengthLevelImageIs(
       1, MockChooserController::kSignalStrengthLevel0Bar,
       MockChooserController::kImageColorSelected);
@@ -524,7 +524,7 @@ TEST_F(ChooserDialogCocoaControllerTest,
   // Deselect option 1.
   [table_view_ deselectRow:1];
   EXPECT_EQ(-1, table_view_.selectedRow);
-  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGrey);
+  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGray);
   ExpectSignalStrengthLevelImageIs(
       1, MockChooserController::kSignalStrengthLevel0Bar,
       MockChooserController::kImageColorUnselected);
@@ -547,7 +547,7 @@ TEST_F(ChooserDialogCocoaControllerTest,
   [table_view_ selectRowIndexes:[NSIndexSet indexSetWithIndex:1]
            byExtendingSelection:NO];
   EXPECT_EQ(1, table_view_.selectedRow);
-  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGrey);
+  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGray);
   ExpectSignalStrengthLevelImageIs(
       1, MockChooserController::kSignalStrengthLevel0Bar,
       MockChooserController::kImageColorSelected);
@@ -761,7 +761,7 @@ TEST_F(ChooserDialogCocoaControllerTest,
           MockChooserController::ConnectedPairedStatus::PAIRED);
 
   EXPECT_EQ(1, table_view_.selectedRow);
-  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGrey);
+  ExpectRowImageIsConnectedImage(0, gfx::kChromeIconGray);
   ExpectRowTextIs(0, @"a");
   EXPECT_TRUE(IsRowPaired(0));
   ExpectRowImageIsConnectedImage(1, SK_ColorWHITE);

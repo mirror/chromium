@@ -480,7 +480,7 @@ void DownloadItemNotification::UpdateNotificationIcon() {
                             message_center::kSystemNotificationColorNormal);
       } else {
         if (is_off_the_record) {
-          SetNotificationIcon(kFileDownloadIncognitoIcon, gfx::kChromeIconGrey);
+          SetNotificationIcon(kFileDownloadIncognitoIcon, gfx::kChromeIconGray);
         } else {
           SetNotificationIcon(kFileDownloadIcon, gfx::kGoogleBlue500);
         }

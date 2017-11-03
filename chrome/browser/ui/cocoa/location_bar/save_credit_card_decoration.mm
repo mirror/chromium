@@ -23,7 +23,7 @@ SaveCreditCardDecoration::~SaveCreditCardDecoration() {}
 
 void SaveCreditCardDecoration::SetIcon(bool locationBarIsDark) {
   SkColor theColor = theColor =
-      locationBarIsDark ? SK_ColorWHITE : gfx::kChromeIconGrey;
+      locationBarIsDark ? SK_ColorWHITE : gfx::kChromeIconGray;
 
   SetImage(NSImageFromImageSkia(
       gfx::CreateVectorIcon(kCreditCardIcon, 16, theColor)));

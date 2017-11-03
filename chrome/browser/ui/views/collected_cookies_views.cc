@@ -142,7 +142,7 @@ class InfobarView : public views::View {
 
     info_image_ = new views::ImageView();
     info_image_->SetImage(gfx::CreateVectorIcon(vector_icons::kInfoOutlineIcon,
-                                                16, gfx::kChromeIconGrey));
+                                                16, gfx::kChromeIconGray));
     label_ = new views::Label();
   }
   ~InfobarView() override {}

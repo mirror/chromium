@@ -193,7 +193,7 @@ bool ContentSettingDecoration::UpdateFromWebContents(
   bool decoration_changed = was_visible != IsVisible() || did_icon_change;
   if (IsVisible()) {
     SkColor icon_color =
-        owner_->IsLocationBarDark() ? kVectorIconColor : gfx::kChromeIconGrey;
+        owner_->IsLocationBarDark() ? kVectorIconColor : gfx::kChromeIconGray;
     SetImage(content_setting_image_model_->GetIcon(icon_color).ToNSImage());
 
     SetToolTip(
@@ -244,7 +244,7 @@ ContentSettingDecoration::CreateAnimatedText() {
   [style setLineBreakMode:NSLineBreakByClipping];
 
   SkColor text_color = owner_->IsLocationBarDark() ? kMaterialDarkModeTextColor
-                                                   : gfx::kChromeIconGrey;
+                                                   : gfx::kChromeIconGray;
   NSDictionary* attributes = @{
     NSFontAttributeName : GetFont(),
     NSParagraphStyleAttributeName : style,

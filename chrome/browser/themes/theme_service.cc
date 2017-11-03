@@ -425,7 +425,7 @@ SkColor ThemeService::GetDefaultColor(int id, bool incognito) const {
   switch (id) {
     case ThemeProperties::COLOR_TOOLBAR_BUTTON_ICON:
       return color_utils::HSLShift(
-          gfx::kChromeIconGrey,
+          gfx::kChromeIconGray,
           GetTint(ThemeProperties::TINT_BUTTONS, incognito));
     case ThemeProperties::COLOR_TOOLBAR_BUTTON_ICON_INACTIVE:
       // The active color is overridden in GtkUi.
