@@ -16,6 +16,24 @@
       "revId": "1aeb27a6d05f4cdfd3df6e2ddc2af5081f5d46ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c058a2_58411612",
+        "filename": "build/toolchain/mac/compile_xcassets.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-11-03T14:00:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c13913cf_fa58eaac",
+      "revId": "1aeb27a6d05f4cdfd3df6e2ddc2af5081f5d46ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
