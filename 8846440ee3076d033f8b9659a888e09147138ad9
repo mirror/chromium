@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1211b636_e757dc02",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_resource_coordinator_signal_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-03T05:36:16Z",
+      "side": 1,
+      "message": "yeah :)\n\nand the goal is to make sure that component of GRC doesn\u0027t depend on TabManager, and TabManager can depend on GRC if needed. Right now the TabManager::GRCTabSignalObserver actually depends on TabManager. Once we remove it, we can eventually move the PageCU holder, a.k.a. ResourceCoordinatorWebContentsObserver and the PageSignalReceiver to content/. But that\u0027s a non-goal, the main goal is decouple from being dependent on TabManager.",
+      "parentUuid": "af9a424d_3e3ecf6c",
+      "revId": "8846440ee3076d033f8b9659a888e09147138ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "988968d7_554d39d8",
         "filename": "chrome/browser/resource_coordinator/tab_manager_resource_coordinator_signal_observer.h",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-03T01:09:36Z",
       "side": 1,
       "message": "Why would we need this base class? Are there other PageSignalObservers?",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 31
+      },
+      "revId": "8846440ee3076d033f8b9659a888e09147138ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717eb7fb_23842cdf",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_resource_coordinator_signal_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-03T05:36:16Z",
+      "side": 1,
+      "message": "To make sure PageSignalReceiver not depend on anything relates to TabManager.",
+      "parentUuid": "988968d7_554d39d8",
       "range": {
         "startLine": 15,
         "startChar": 13,
