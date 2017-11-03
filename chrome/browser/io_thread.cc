@@ -34,9 +34,9 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/data_usage/tab_id_annotator.h"
 #include "chrome/browser/data_use_measurement/chrome_data_use_ascriber.h"
-#include "chrome/browser/net/chrome_mojo_proxy_resolver_factory.h"
 #include "chrome/browser/net/chrome_network_delegate.h"
 #include "chrome/browser/net/dns_probe_service.h"
+#include "chrome/browser/net/proxy_resolver_manager.h"
 #include "chrome/browser/net/proxy_service_factory.h"
 #include "chrome/browser/net/sth_distributor_provider.h"
 #include "chrome/common/chrome_content_client.h"
@@ -740,10 +740,10 @@ void IOThread::SetUpProxyConfigService(
     if (command_line.HasSwitch(switches::kSingleProcess)) {
       LOG(ERROR) << "Cannot use V8 Proxy resolver in single process mode.";
     } else {
-      builder->set_mojo_proxy_resolver_factory(
-          ChromeMojoProxyResolverFactory::GetInstance());
+      builder->SetMojoProxyResolverFactory(
+          ProxyResolverManager::CreateWithStrongBinding());
 #if defined(OS_CHROMEOS)
-      builder->set_dhcp_fetcher_factory(
+      builder->SetDhcpFetcherFactory(
           base::MakeUnique<chromeos::DhcpProxyScriptFetcherFactoryChromeos>());
 #endif
     }
