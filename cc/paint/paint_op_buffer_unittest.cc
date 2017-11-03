@@ -2197,6 +2197,43 @@ TEST_P(PaintOpSerializationTest, DeserializationFailures) {
   }
 }
 
+TEST_P(PaintOpSerializationTest, CompleteBufferSerialization) {
+  PushTestOps(GetParamType());
+
+  PaintOp::SerializeOptions s_options;
+  sk_sp<SkData> data = buffer_.Serialize(s_options);
+
+  PaintOp::DeserializeOptions d_options;
+  auto d_buffer =
+      PaintOpBuffer::MakeFromMemory(data->data(), data->size(), d_options);
+  ASSERT_TRUE(d_buffer);
+
+  auto d_iter = PaintOpBuffer::Iterator(d_buffer.get());
+  for (const auto* op : PaintOpBuffer::Iterator(&buffer_)) {
+    ExpectOpsEqual(op, *d_iter);
+    *++d_iter;
+  }
+}
+
+TEST(PaintOpBufferTest, SerializesNestedRecords) {
+  auto record = sk_make_sp<PaintOpBuffer>();
+  record->push<ScaleOp>(0.5, 0.75);
+  PaintOpBuffer buffer;
+  buffer.push<DrawRecordOp>(record);
+
+  PaintOp::SerializeOptions s_options;
+  sk_sp<SkData> data = buffer.Serialize(s_options);
+
+  PaintOp::DeserializeOptions d_options;
+  auto d_buffer =
+      PaintOpBuffer::MakeFromMemory(data->data(), data->size(), d_options);
+  ASSERT_TRUE(d_buffer);
+
+  EXPECT_EQ(d_buffer->size(), 1u);
+  PaintOpSerializationTest::ExpectOpsEqual(record->GetFirstOp(),
+                                           d_buffer->GetFirstOp());
+}
+
 // Test generic PaintOp deserializing failure cases.
 TEST(PaintOpBufferTest, PaintOpDeserialize) {
   static constexpr size_t kSize = sizeof(LargestPaintOp) + 100;

@@ -90,6 +90,40 @@ void RasterWithAlpha(const PaintOpWithFlags* op,
   }
 }
 
+size_t SerializeRecursive(const PaintOpBuffer* buffer,
+                          std::vector<char>* memory,
+                          const PaintOp::SerializeOptions& options) {
+  DCHECK_NE(buffer->size(), 0u);
+
+  size_t bytes_written = 0u;
+  for (const auto* op : PaintOpBuffer::Iterator(buffer)) {
+    size_t op_bytes = 0u;
+
+    if (op->GetType() == PaintOpType::DrawRecord) {
+      // DrawRecords are inlined during serialization.
+      op_bytes = SerializeRecursive(
+          static_cast<const DrawRecordOp*>(op)->record.get(), memory, options);
+    } else {
+      op_bytes = op->Serialize(memory->data() + bytes_written,
+                               memory->size() - bytes_written, options);
+      if (!op_bytes) {
+        static const size_t kReallocSize = 512 * 1024;
+        memory->reserve(memory->size() + kReallocSize);
+        op_bytes = op->Serialize(memory->data() + bytes_written,
+                                 memory->size() - bytes_written, options);
+      }
+    }
+
+    DCHECK_GE(op_bytes, 4u);
+    DCHECK_EQ(op_bytes % PaintOpBuffer::PaintOpAlign, 0u);
+
+    bytes_written += op_bytes;
+    DCHECK_LE(bytes_written, memory->size());
+  }
+
+  return bytes_written;
+}
+
 }  // namespace
 
 #define TYPES(M)      \
@@ -126,6 +160,10 @@ static constexpr size_t kNumOpTypes =
 // Verify that every op is in the TYPES macro.
 #define M(T) +1
 static_assert(kNumOpTypes == TYPES(M), "Missing op in list");
+#undef M
+
+#define M(T) sizeof(T),
+static const size_t g_type_to_size[kNumOpTypes] = {TYPES(M)};
 #undef M
 
 template <typename T, bool HasFlags>
@@ -1783,6 +1821,56 @@ void PaintOpBuffer::Playback(SkCanvas* canvas,
     // are so we can skip them correctly.
     op->Raster(canvas, params);
   }
+}
+
+sk_sp<PaintOpBuffer> PaintOpBuffer::MakeFromMemory(
+    const volatile void* input,
+    size_t input_size,
+    const PaintOp::DeserializeOptions& options) {
+  auto buffer = sk_make_sp<PaintOpBuffer>();
+
+  size_t total_bytes_read = 0u;
+  while (total_bytes_read < input_size) {
+    const volatile void* next_op =
+        static_cast<const volatile char*>(input) + total_bytes_read;
+
+    uint32_t first_word =
+        reinterpret_cast<const volatile uint32_t*>(next_op)[0];
+    uint8_t type = static_cast<uint8_t>(first_word & 0xFF);
+    uint32_t skip = first_word >> 8;
+
+    if (input_size - total_bytes_read < skip)
+      return nullptr;
+    if (skip % PaintOpBuffer::PaintOpAlign != 0)
+      return nullptr;
+    if (type > static_cast<uint8_t>(PaintOpType::LastPaintOpType))
+      return nullptr;
+
+    auto pair = buffer->AllocatePaintOp(g_type_to_size[type]);
+    const auto* op = g_deserialize_functions[type](next_op, skip, pair.first,
+                                                   pair.second, options);
+    if (!op)
+      return nullptr;
+
+    buffer->AnalyzeAddedOp(op);
+    total_bytes_read += skip;
+  }
+
+  return buffer;
+}
+
+sk_sp<SkData> PaintOpBuffer::Serialize(
+    const PaintOp::SerializeOptions& options) const {
+  // TODO(khushalsagar): For PaintRecords in PaintShaders, we know the raster
+  // scale and pre-decoded images will be at that scale. We'll need to take care
+  // of using the scale here when serializing images.
+  if (this->size() == 0)
+    return SkData::MakeEmpty();
+
+  // Allocate an additional kInitialBufferSize for the references in PaintOps.
+  std::vector<char> memory(used_ + kInitialBufferSize);
+  size_t bytes_written = SerializeRecursive(this, &memory, options);
+  return SkData::MakeWithCopy(memory.data(), bytes_written);
 }
 
 void PaintOpBuffer::ReallocBuffer(size_t new_size) {
