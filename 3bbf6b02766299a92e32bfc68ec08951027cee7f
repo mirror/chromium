@@ -16,6 +16,24 @@
       "revId": "3bbf6b02766299a92e32bfc68ec08951027cee7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9940277c_34164707",
+        "filename": "tools/binary_size/libsupersize/paths.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-03T17:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc2758e9_af5d71f1",
+      "revId": "3bbf6b02766299a92e32bfc68ec08951027cee7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
