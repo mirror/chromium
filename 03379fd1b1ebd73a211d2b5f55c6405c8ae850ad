@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2770d183_22903fc0",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/dom/dom-getBoxModel-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-03T21:03:57Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2e9955f3_c07450ef",
+      "range": {
+        "startLine": 29,
+        "startChar": 1,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "03379fd1b1ebd73a211d2b5f55c6405c8ae850ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cef80f93_472129a8",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-01T22:17:35Z",
       "side": 1,
       "message": "move it down",
+      "revId": "03379fd1b1ebd73a211d2b5f55c6405c8ae850ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a77d64_e6ea5102",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-03T21:03:57Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "cef80f93_472129a8",
       "revId": "03379fd1b1ebd73a211d2b5f55c6405c8ae850ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f4cc04c1_2971381a",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-03T21:03:57Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "1bc8f811_2f32bb48",
+      "range": {
+        "startLine": 54,
+        "startChar": 31,
+        "endLine": 54,
+        "endChar": 40
+      },
+      "revId": "03379fd1b1ebd73a211d2b5f55c6405c8ae850ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c828c7a_e5af7ee1",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 3
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "ea445852_bf9c3ebd",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2939,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-03T21:03:57Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0c828c7a_e5af7ee1",
+      "revId": "03379fd1b1ebd73a211d2b5f55c6405c8ae850ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "202a8c59_13b7e040",
         "filename": "third_party/WebKit/Source/devtools/front_end/screencast/ScreencastView.js",
         "patchSetId": 3
@@ -93,6 +177,24 @@
       "writtenOn": "2017-11-01T22:17:35Z",
       "side": 1,
       "message": "/* devicePixels */",
+      "revId": "03379fd1b1ebd73a211d2b5f55c6405c8ae850ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66afc667_8bdc4ee3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/screencast/ScreencastView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-03T21:03:57Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "202a8c59_13b7e040",
       "revId": "03379fd1b1ebd73a211d2b5f55c6405c8ae850ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
