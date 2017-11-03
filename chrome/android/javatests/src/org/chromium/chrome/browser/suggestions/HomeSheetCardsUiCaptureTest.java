@@ -47,10 +47,7 @@ public class HomeSheetCardsUiCaptureTest {
 
     @Rule
     public SuggestionsDependenciesRule setupSuggestions() {
-        FakeSuggestionsSource suggestionsSource = new FakeSuggestionsSource();
-        NtpUiCaptureTestData.registerArticleSamples(suggestionsSource);
-        mDepsFactory.suggestionsSource = suggestionsSource;
-        return new SuggestionsDependenciesRule(mDepsFactory);
+        return new SuggestionsDependenciesRule(NtpUiCaptureTestData.createFactory());
     }
 
     @Rule
