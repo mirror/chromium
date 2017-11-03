@@ -15,8 +15,12 @@ ChromeBrowserMainExtraPartsProfiling::~ChromeBrowserMainExtraPartsProfiling() =
 
 void ChromeBrowserMainExtraPartsProfiling::ServiceManagerConnectionStarted(
     content::ServiceManagerConnection* connection) {
+#if defined(ADDRESS_SANITIZER) || defined(SYZYASAN)
+  (void)connection;  // Unused variable.
+#else
   profiling::ProfilingProcessHost::Mode mode =
       profiling::ProfilingProcessHost::GetCurrentMode();
   if (mode != profiling::ProfilingProcessHost::Mode::kNone)
     profiling::ProfilingProcessHost::Start(connection, mode);
+#endif
 }
