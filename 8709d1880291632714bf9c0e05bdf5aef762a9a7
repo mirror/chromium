@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efa8eb0b_6001abd4",
+        "filename": "device/gamepad/xbox_data_fetcher_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-11-03T19:58:29Z",
+      "side": 1,
+      "message": "I stole this from cardboard_gamepad_data_fetcher.cc, but modified it to zero out the rest of the unused buffer. The logic is duplicated as CopyNSStringAsUTF16LittleEndian in Mac files, and on Windows we just use swprintf because the underlying char type matches. In a future cleanup it would be nice to move all of these to use a single cross-platform implementation, perhaps in GamepadDataFetcher.",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "8709d1880291632714bf9c0e05bdf5aef762a9a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
