@@ -852,6 +852,24 @@
     },
     {
       "key": {
+        "uuid": "5b365f76_a543eeff",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-11-03T21:25:57Z",
+      "side": 1,
+      "message": "Yes I think so. There has been some DCHECK for checking this, but can probably changed in another CL (if we want to keep this just vulkan change).",
+      "parentUuid": "9a7b9574_9132db56",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6794639_84fa943d",
         "filename": "components/viz/service/display/skia_renderer.cc",
         "patchSetId": 17
