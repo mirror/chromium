@@ -155,6 +155,7 @@ class RenderWidget;
 class RenderWidgetFullscreenPepper;
 class ScreenOrientationDispatcher;
 class SharedWorkerRepository;
+class URLLoadingCompletion;
 class UserMediaClientImpl;
 struct CSPViolationParams;
 struct CommonNavigationParams;
@@ -518,13 +519,14 @@ class CONTENT_EXPORT RenderFrameImpl
   void AllowBindings(int32_t enabled_bindings_flags) override;
 
   // mojom::FrameNavigationControl implemenentation:
-  void CommitNavigation(const ResourceResponseHead& head,
-                        const GURL& body_url,
-                        const CommonNavigationParams& common_params,
-                        const RequestNavigationParams& request_params,
-                        mojo::ScopedDataPipeConsumerHandle body_data,
-                        mojom::URLLoaderFactoryPtr
-                            default_subresource_url_loader_factory) override;
+  void CommitNavigation(
+      const ResourceResponseHead& head,
+      const GURL& body_url,
+      const CommonNavigationParams& common_params,
+      const RequestNavigationParams& request_params,
+      mojo::ScopedDataPipeConsumerHandle body_data,
+      mojom::URLLoaderFactoryPtr default_subresource_url_loader_factory,
+      mojom::URLLoaderClientRequest url_loader_client) override;
 
   // mojom::HostZoom implementation:
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;
@@ -1561,6 +1563,8 @@ class CONTENT_EXPORT RenderFrameImpl
   // |devtools_frame_token_| is only defined by the browser and is never
   // sent back from the renderer in the control calls.
   blink::WebString devtools_frame_token_;
+
+  std::unique_ptr<URLLoadingCompletion> url_loading_completion_;
 
   base::WeakPtrFactory<RenderFrameImpl> weak_factory_;
 

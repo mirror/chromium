@@ -557,7 +557,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
       bool is_view_source,
-      base::Optional<SubresourceLoaderParams> subresource_loader_params);
+      base::Optional<SubresourceLoaderParams> subresource_loader_params,
+      mojom::URLLoaderClientRequest url_loader_client);
 
   // PlzNavigate
   // Indicates that a navigation failed and that this RenderFrame should display

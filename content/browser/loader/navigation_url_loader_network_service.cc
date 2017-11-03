@@ -387,15 +387,18 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body) override {
+    auto url_loader_client = mojo::MakeRequest(&forwarding_completion_client_);
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(
             &NavigationURLLoaderNetworkService::OnStartLoadingResponseBody,
-            owner_, base::Passed(&body)));
+            owner_, base::Passed(&body), base::Passed(&url_loader_client)));
   }
 
   void OnComplete(
       const ResourceRequestCompletionStatus& completion_status) override {
+    forwarding_completion_client_->OnComplete(completion_status);
+
     if (completion_status.error_code != net::OK && !received_response_) {
       // If the default loader (network) was used to handle the URL load
       // request we need to see if the handlers want to potentially create a
@@ -473,6 +476,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   // already called while we are transferring the |url_loader_| and response
   // body to download code.
   base::Optional<ResourceRequestCompletionStatus> completion_status_;
+
+  mojom::URLLoaderClientPtr forwarding_completion_client_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderRequestController);
 };
@@ -618,7 +623,8 @@ void NavigationURLLoaderNetworkService::OnReceiveRedirect(
 }
 
 void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
-    mojo::ScopedDataPipeConsumerHandle body) {
+    mojo::ScopedDataPipeConsumerHandle body,
+    mojom::URLLoaderClientRequest url_loader_client) {
   DCHECK(response_);
 
   TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted", this,
@@ -632,7 +638,8 @@ void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
       response_, nullptr, std::move(body), ssl_status_,
       std::unique_ptr<NavigationData>(), GlobalRequestID(-1, g_next_request_id),
       IsDownload(), false /* is_stream */,
-      request_controller_->TakeSubresourceLoaderParams());
+      request_controller_->TakeSubresourceLoaderParams(),
+      std::move(url_loader_client));
 }
 
 void NavigationURLLoaderNetworkService::OnComplete(
