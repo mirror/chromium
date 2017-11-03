@@ -72,7 +72,7 @@ MediaEngagementContentsObserver::~MediaEngagementContentsObserver() = default;
 
 void MediaEngagementContentsObserver::WebContentsDestroyed() {
   // Commit a visit if we have not had a playback.
-  MaybeCommitPendingData();
+  MaybeCommitPendingData(kVisitEnd);
 
   playback_timer_->Stop();
   RecordUkmMetrics();
@@ -108,25 +108,53 @@ void MediaEngagementContentsObserver::RecordUkmMetrics() {
       .Record(ukm_recorder);
 }
 
-void MediaEngagementContentsObserver::MaybeCommitPendingData() {
-  if (!pending_data_to_commit_.has_value())
+void MediaEngagementContentsObserver::MaybeCommitPendingData(
+    CommitTrigger trigger) {
+  // The audible players should only be recorded when the WCO is being destroyed
+  // or we are navigating away.
+  int audible_players_count = 0;
+  int significant_players_count = 0;
+  if (trigger == kVisitEnd) {
+    audible_players_count = audible_players_.size();
+    for (const std::pair<MediaPlayerId, bool>& row : audible_players_) {
+      significant_players_count += row.second;
+    }
+  }
+
+  if (!pending_data_to_commit_.has_value() && !audible_players_count)
     return;
 
   // If the current origin is not a valid URL then we should just silently reset
   // any pending data.
   if (!committed_origin_.GetURL().is_valid()) {
     pending_data_to_commit_.reset();
+    audible_players_.clear();
     return;
   }
 
   MediaEngagementScore score =
       service_->CreateEngagementScore(committed_origin_.GetURL());
-  score.IncrementVisits();
+
+  if (pending_data_to_commit_.has_value())
+    score.IncrementVisits();
+
   if (pending_data_to_commit_.value_or(false))
     score.IncrementMediaPlaybacks();
+
+  if (audible_players_count > 0)
+    score.IncrementAudiblePlaybacks(audible_players_count);
+
+  if (significant_players_count > 0)
+    score.IncrementSignificantPlaybacks(significant_players_count);
+
   score.Commit();
 
   pending_data_to_commit_.reset();
+
+  // Reset the audible players set. This should be safe to do since the WCO is
+  // either being destroyed or we are navigating away.
+  if (audible_players_count)
+    audible_players_.clear();
 }
 
 void MediaEngagementContentsObserver::DidFinishNavigation(
@@ -146,7 +174,7 @@ void MediaEngagementContentsObserver::DidFinishNavigation(
 
   // Commit a visit if we have not had a playback before the new origin is
   // updated.
-  MaybeCommitPendingData();
+  MaybeCommitPendingData(kVisitEnd);
 
   RecordUkmMetrics();
 
@@ -295,7 +323,7 @@ void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
   // to commit.
   DCHECK(pending_data_to_commit_.has_value());
   pending_data_to_commit_ = true;
-  MaybeCommitPendingData();
+  MaybeCommitPendingData(kSignificantMediaPlayback);
 }
 
 void MediaEngagementContentsObserver::RecordInsignificantReasons(
@@ -347,6 +375,17 @@ void MediaEngagementContentsObserver::MaybeInsertRemoveSignificantPlayer(
   PlayerState& state = GetPlayerState(id);
   if (!IsPlayerStateComplete(state))
     return;
+
+  // If the player has an audio track, is un-muted and is playing then we should
+  // add it to the audible players map.
+  if (state.muted == false && state.playing == true &&
+      state.has_audio == true &&
+      audible_players_.find(id) == audible_players_.end()) {
+#if DCHECK_IS_ON()
+    DCHECK(!audible_players_[id]);
+#endif
+    audible_players_[id] = false;
+  }
 
   bool is_currently_significant =
       significant_players_.find(id) != significant_players_.end();

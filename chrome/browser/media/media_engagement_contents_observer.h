@@ -150,8 +150,17 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
       const MediaPlayerId& id,
       MediaEngagementContentsObserver::InsignificantHistogram histogram);
 
-  // Commits any pending data to website settings.
-  void MaybeCommitPendingData();
+  // Commits any pending data to website settings. CommitTrigger is the event
+  // that is triggering the commit.
+  enum CommitTrigger {
+    // A significant media playback has occured.
+    kSignificantMediaPlayback,
+
+    // A visit has ended either by navigating off the origin or when the
+    // observer is destroyed.
+    kVisitEnd,
+  };
+  void MaybeCommitPendingData(CommitTrigger);
 
   static const char* const kHistogramSignificantNotAddedAfterFirstTimeName;
   static const char* const kHistogramSignificantNotAddedFirstTimeName;
@@ -172,6 +181,10 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   // when we have had a media playback. A visit is automatically implied. If
   // the bool is true then a playback will be recorded too.
   base::Optional<bool> pending_data_to_commit_;
+
+  // Stores the ids of the players that were audible. The boolean will be true
+  // if the player was significant.
+  std::map<MediaPlayerId, bool> audible_players_;
 
   url::Origin committed_origin_;
 
