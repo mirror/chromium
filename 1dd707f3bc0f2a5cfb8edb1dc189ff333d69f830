@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98f6a6a8_17ab0253",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/performance-timeline/misc/getentriesbyname-paints.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-11-03T19:53:21Z",
+      "side": 1,
+      "message": "Test should live here:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/paint-timing/",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "1dd707f3bc0f2a5cfb8edb1dc189ff333d69f830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7be433_f78461f6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/performance-timeline/misc/getentriesbyname-paints.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-11-03T19:53:21Z",
+      "side": 1,
+      "message": "Since this is essentially identical to this existing test, maybe just add another assert there for getEntriesByName (after getEntriesByType) instead of replicating full test?\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-contentful-paint.html",
+      "range": {
+        "startLine": 3,
+        "startChar": 58,
+        "endLine": 3,
+        "endChar": 0
+      },
+      "revId": "1dd707f3bc0f2a5cfb8edb1dc189ff333d69f830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
