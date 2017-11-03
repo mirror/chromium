@@ -1716,7 +1716,6 @@ void RenderProcessHostImpl::CreateMessageFilters() {
       new MidiHost(GetID(), BrowserMainLoop::GetInstance()->midi_service()));
   AddFilter(new AppCacheDispatcherHost(
       storage_partition_impl_->GetAppCacheService(), GetID()));
-  AddFilter(new ClipboardMessageFilter(blob_storage_context));
   AddFilter(new DOMStorageMessageFilter(
       storage_partition_impl_->GetDOMStorageContext()));
 
@@ -1848,6 +1847,18 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
         base::Bind(&CreateProcessResourceCoordinator, base::Unretained(this)));
   }
 
+  BrowserContext* browser_context = GetBrowserContext();
+  scoped_refptr<ChromeBlobStorageContext> blob_storage_context =
+      ChromeBlobStorageContext::GetFor(browser_context);
+
+#if !defined(OS_WIN)
+  AddUIThreadInterface(registry.get(),
+                       base::Bind(&ClipboardMessageFilter::Create,
+                                  std::move(blob_storage_context)));
+#elif
+  registry->AddInterface(base::Bind(&ClipboardMessageFilter::Create,
+                                    std::move(blob_storage_context)));
+#endif
   media::VideoDecodePerfHistory* video_perf_history =
       GetBrowserContext()->GetVideoDecodePerfHistory();
   AddUIThreadInterface(
