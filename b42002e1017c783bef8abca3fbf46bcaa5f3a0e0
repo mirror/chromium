@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38b5baba_87d8bca0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-03T21:29:12Z",
+      "side": 1,
+      "message": "is a little weird that this is checking for needs update and the first thing it does is ignores the passed in values and checkes a member variable. Probably a bit cleaner to make this function static and pass in mInfo",
+      "range": {
+        "startLine": 298,
+        "startChar": 12,
+        "endLine": 298,
+        "endChar": 38
+      },
+      "revId": "b42002e1017c783bef8abca3fbf46bcaa5f3a0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
