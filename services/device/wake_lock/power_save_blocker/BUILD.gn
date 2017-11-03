@@ -32,6 +32,7 @@ source_set("power_save_blocker") {
 
   deps = [
     "//base",
+    "//services/device/public/interfaces",
   ]
 
   if (use_dbus) {
