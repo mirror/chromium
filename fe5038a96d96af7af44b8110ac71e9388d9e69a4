@@ -46,6 +46,30 @@
       "revId": "fe5038a96d96af7af44b8110ac71e9388d9e69a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14bb5d22_c1192735",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1206860
+      },
+      "writtenOn": "2017-11-03T16:01:22Z",
+      "side": 1,
+      "message": "Thanks for the clarification. Sounds like a good first step towards integrating CU.",
+      "parentUuid": "4a6ec784_425783ac",
+      "range": {
+        "startLine": 244,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 63
+      },
+      "revId": "fe5038a96d96af7af44b8110ac71e9388d9e69a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
