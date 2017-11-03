@@ -24,6 +24,8 @@ import org.chromium.ui.text.SpanApplier.SpanInfo;
  * An {@link InfoBar} that prompts the user to take an optional survey.
  */
 public class SurveyInfoBar extends InfoBar {
+    public static final String SURVEY_INFO_BAR_DISPLAYED = "chrome_home_survey_info_bar_displayed";
+
     // The site to pull a survey from.
     private final String mSiteId;
 
@@ -86,6 +88,11 @@ public class SurveyInfoBar extends InfoBar {
         prompt.setGravity(Gravity.CENTER_VERTICAL);
         ApiCompatibilityUtils.setTextAppearance(prompt, R.style.BlackTitle1);
         layout.addContent(prompt, 1f);
+    }
+
+    @Override
+    public void onCloseButtonClicked() {
+        super.onCloseButtonClicked();
     }
 
     @CalledByNative
