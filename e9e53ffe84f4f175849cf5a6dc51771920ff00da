@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63af1860_b5f1a34b",
+        "filename": "content/browser/gpu/gpu_internals_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-03T18:13:21Z",
+      "side": 1,
+      "message": "dcastagna@ commented offline that reading e.g.\n \"up to 4096x4096 pixels and/or 30/1 fps\" is confusing,\nso changed it to a float: \n \"up to 4096x4096 pixels and/or 30.000 fps\"",
+      "range": {
+        "startLine": 463,
+        "startChar": 31,
+        "endLine": 463,
+        "endChar": 41
+      },
+      "revId": "e9e53ffe84f4f175849cf5a6dc51771920ff00da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
