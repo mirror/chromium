@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a8559e3_134987d8",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-03T19:24:27Z",
+      "side": 1,
+      "message": "// DevToolsURLInterceptorRequestJob::SubRequest ---------------------",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857acb26_ec3e41a4",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-03T19:24:27Z",
+      "side": 1,
+      "message": "You can use protected for better OOP",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fddb5f9b_c8d32d21",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-03T19:24:27Z",
+      "side": 1,
+      "message": "// DevToolsURLInterceptorRequestJob::InterceptedRequest ---------------------",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15471bd1_878fbdab",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-03T19:24:27Z",
+      "side": 1,
+      "message": "Respon_SE_Body\n\nFetchResponseBody would read better - too many \"Request\"s around.",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a0cf31_503199e0",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-03T19:24:27Z",
+      "side": 1,
+      "message": "note to self: use growable buffer position.",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d96deb04_5d3fe0f6",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-03T19:24:27Z",
+      "side": 1,
+      "message": "Use buffer pos for reading as you use it for writing?",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646b41d0_2a9f9696",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-03T19:24:27Z",
+      "side": 1,
+      "message": "Why would you call OnInterceptedRequestResponseReady() multiple times?",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0012321c_13dab325",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-03T19:24:27Z",
+      "side": 1,
+      "message": "You can now express intercepting_requests_ via stage_to_intercept_.",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39695d13_1ccdd03b",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-03T19:24:27Z",
+      "side": 1,
+      "message": "Drop the \u0027else\u0027, you return before.",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30995303_ac821542",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-03T19:24:27Z",
+      "side": 1,
+      "message": "Comment saying \"If we are a redirect and we do not plan on grabbing the response\", but I am planning on grabbing the response, because I am InterceptionStage::BOTH.",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2013c6_d7882919",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-03T19:24:27Z",
+      "side": 1,
+      "message": "DCHECK(stage_to_intercept_ | InterceptionStage::REQUEST)",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f36bd60_22c5d0a7",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-03T19:24:27Z",
+      "side": 1,
+      "message": "You should never compare to using \u003d\u003d RESPONSE, should always be |",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
