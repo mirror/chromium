@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ad8ddf9_079d5c36",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-03T17:06:52Z",
+      "side": 1,
+      "message": "good tip! Added dlerror to log.",
+      "parentUuid": "e38a590a_2b39f960",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 9
+      },
+      "revId": "cd8968cd867559ff0b82369537b690a4a0e2d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675b9ced_a80bc8f4",
         "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "cd8968cd867559ff0b82369537b690a4a0e2d45f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905b4855_f4c0c0fd",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_shim.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-03T17:06:52Z",
+      "side": 1,
+      "message": "Good catch. We shouldn\u0027t do anything if sdk_handle is null.",
+      "parentUuid": "675b9ced_a80bc8f4",
+      "range": {
+        "startLine": 100,
+        "startChar": 41,
+        "endLine": 100,
+        "endChar": 51
+      },
+      "revId": "cd8968cd867559ff0b82369537b690a4a0e2d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3ea2d1de_dc91da39",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-03T17:06:52Z",
+      "side": 1,
+      "message": "It shouldn\u0027t crash since gvr_keyboard_ will be null and we\u0027ll just return early. I clarified this by setting keyboard_enabled only if we\u0027re able to load the keyboard from the sdk.",
+      "parentUuid": "8e0fcc90_cf9a9170",
+      "range": {
+        "startLine": 1168,
+        "startChar": 16,
+        "endLine": 1168,
+        "endChar": 28
+      },
+      "revId": "cd8968cd867559ff0b82369537b690a4a0e2d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3069fba0_8d0fb744",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "cd8968cd867559ff0b82369537b690a4a0e2d45f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7076b323_430110aa",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-03T17:06:52Z",
+      "side": 1,
+      "message": "We don\u0027t actually need this at all. The example app had it for a specific lifecycle reason that\u0027s not relevant to us.",
+      "parentUuid": "3069fba0_8d0fb744",
+      "range": {
+        "startLine": 259,
+        "startChar": 13,
+        "endLine": 259,
+        "endChar": 19
+      },
+      "revId": "cd8968cd867559ff0b82369537b690a4a0e2d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
