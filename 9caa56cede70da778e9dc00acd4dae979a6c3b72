@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "f7c264b8_d7cbddc6",
+        "filename": "chrome/browser/media/router/mojo/mock_mojo_media_router.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T23:19:30Z",
+      "side": 1,
+      "message": "would it be possible to merge these methods into MockMediaRouter?",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd42752_5e4b91af",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T23:19:30Z",
+      "side": 1,
+      "message": "We should also exclude legacy Cast URLs. See https://cs.chromium.org/chromium/src/chrome/browser/media/router/media_router_metrics.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d18. The constant can be moved to media_source_helper.h.",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6d1494_60d5aae8",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T23:19:30Z",
+      "side": 1,
+      "message": "Can this be routes_.emplace(presentation_id, route)?",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dbdfa78_522fbfc0",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T23:19:30Z",
+      "side": 1,
+      "message": "Can this just be std::string(\"...\") ? Similar for above.",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554dac65_2c078c72",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T23:19:30Z",
+      "side": 1,
+      "message": "Use auto to be consistent? Similar for below.",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00ba883_7412cc40",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-03T23:19:30Z",
+      "side": 1,
+      "message": "nit: Can you modify all_displays in-place?\n\nbase::EraseIf(all_displays, [\u0026primary_display_bounds](...) { return display.bounds() \u003d\u003d primary_display_bounds; });\nstd::sort(all_displays...);\nreturn all_displays;",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e8df53d_a8f9057a",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
         "patchSetId": 17
