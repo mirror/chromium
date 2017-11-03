@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3c41a883_2c807e15",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-03T15:14:32Z",
+      "side": 1,
+      "message": "The flow is:\n 1. each user assigns itself to a day.\n 2. on their day, they check to see if they get a 1 when generating a random between 1 and N\n 3. if they get a 1 they download, otherwise they don\u0027t\n\n#2 is supposed to help with \"filtering\" so that we can limit the number of users making requests to the survey server.\n\nPerhaps that\u0027s unnecessary, though, and we can eliminate #2 simply by tweaking population group sizes in our server-side Chrome experiment. Instead of an experiment population group of 10% with an N of 10, we could have an experiment population group with 1%.\n\nI left a comment on Kingston\u0027s doc.",
+      "parentUuid": "e920750c_c09bb583",
+      "range": {
+        "startLine": 195,
+        "startChar": 84,
+        "endLine": 195,
+        "endChar": 94
+      },
+      "revId": "c03794fb838a83a22a22c344bc0c0586ef9ab3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b5e1455_a9107c59",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 4
