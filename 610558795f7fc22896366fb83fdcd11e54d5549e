@@ -22,6 +22,30 @@
       "revId": "610558795f7fc22896366fb83fdcd11e54d5549e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8907f32e_0e9049c8",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-03T05:17:48Z",
+      "side": 0,
+      "message": "Yes, this UMA is problematic that it always reports the first file read, not really the latest file. So I am stopping to report it here, and only report in CdmAdapter from now on.",
+      "parentUuid": "1d3f6591_227a878e",
+      "range": {
+        "startLine": 748,
+        "startChar": 18,
+        "endLine": 748,
+        "endChar": 39
+      },
+      "revId": "610558795f7fc22896366fb83fdcd11e54d5549e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
