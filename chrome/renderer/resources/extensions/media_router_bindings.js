@@ -85,6 +85,7 @@ define('media_router_bindings', [
   function routeToMojo_(route) {
     return new mediaRouterMojom.MediaRoute({
       'media_route_id': route.id,
+      'presentation_id': route.presentationId,
       'media_source': route.mediaSource,
       'media_sink_id': route.sinkId,
       'description': route.description,
