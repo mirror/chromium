@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bac7e3b_58122b23",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002539
+      },
+      "writtenOn": "2017-11-03T22:44:06Z",
+      "side": 1,
+      "message": "6fd3c7b6eb7c60f89e83f8ab1f93c133488f984e\n\nTo also pick up https://chromium.googlesource.com/infra/luci/client-py/+/6fd3c7b6eb7c60f89e83f8ab1f93c133488f984e",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 64
+      },
+      "revId": "72be82612fb25a6073fb1ce03691614b7dcadaab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
