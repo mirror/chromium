@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3d8e7f6_c3c9dcf9",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-03T19:49:30Z",
+      "side": 1,
+      "message": "nit: insert an empty line before this block.",
+      "revId": "0974c65819d04770bd15f9e173609f523865e878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03df235b_f004cbf2",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-03T19:49:30Z",
+      "side": 1,
+      "message": "nit: Split the declaration so that each var gets its own line and use 0.0f/1.0f for float literal.\ni.e.\n  float opacity_start \u003d 0.0f;\n  float opacity_end \u003d 1.0f;",
+      "revId": "0974c65819d04770bd15f9e173609f523865e878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604e3d38_b9b71e32",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-03T19:49:30Z",
+      "side": 1,
+      "message": "nit: This is not necessary since we could animate from the current opacity to target opacity. Probably replace |opacity_start| and |opacity_end| with a |target_opacity|.",
+      "revId": "0974c65819d04770bd15f9e173609f523865e878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
