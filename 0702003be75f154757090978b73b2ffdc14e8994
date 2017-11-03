@@ -353,6 +353,30 @@
       "revId": "0702003be75f154757090978b73b2ffdc14e8994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7f8777_4c84ca1c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-11-03T19:23:04Z",
+      "side": 1,
+      "message": "I will be happy to accept weaker version of this deal: you leave this as an assert and buy me a beer if we get any reports of this assert failing.",
+      "parentUuid": "cc717d6c_7ade6366",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 42
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
