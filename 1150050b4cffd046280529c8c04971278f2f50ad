@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "91b3a229_431d55d5",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-03T00:38:22Z",
+      "side": 1,
+      "message": "Hmm, then it\u0027s a little strange that this is called right after AvatarButtonManager calls ShowAvatarBubbleFromAvatarButton, and I think the new name is a little misleading (this isn\u0027t called if the bubble closed because the user selected a choice from the bubble, clicked elsewhere outside the bubble, or hit escape, etc.). Maybe consider a name like OnAvatarButtonPressed, or some more thoughtful refactoring (like making the button itself the MenuButtonListener).",
+      "parentUuid": "bd66b09a_75425747",
+      "revId": "1150050b4cffd046280529c8c04971278f2f50ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74f21333_7dbe0c2f",
         "filename": "chrome/browser/ui/views/profiles/avatar_button.h",
         "patchSetId": 6
