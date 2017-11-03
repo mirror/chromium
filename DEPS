@@ -1429,6 +1429,8 @@ hooks = [
     ],
   },
 
+  # Downloads the latest Fuchsia SDK binaries.
+  # Built by running 'fx full-build --config=packages/gn/sdk'.
   {
     'name': 'fuchsia_sdk',
     'pattern': '.',

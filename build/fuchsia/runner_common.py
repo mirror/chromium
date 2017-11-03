@@ -10,11 +10,13 @@ to run, or starts the bootserver to allow running on a hardware device."""
 
 import argparse
 import os
+import platform
 import re
 import shutil
 import signal
 import subprocess
 import sys
+import time
 import uuid
 
 
@@ -494,8 +496,10 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
     # Deploy the boot image to the device.
     bootserver_path = os.path.join(SDK_ROOT, 'tools', 'bootserver')
     bootserver_command = [bootserver_path, '-1', kernel_path,
-                          bootfs_data.bootfs, '--', '-o',
-                          'zircon.nodename=%s' % INSTANCE_ID]
+                          bootfs_data.bootfs, '--',
+                          '-o', 'zircon.nodename=%s' % INSTANCE_ID,
+                          '-o', 'devmgr.epoch=%d' % time.time()
+                          ]
     _RunAndCheck(dry_run, bootserver_command)
 
     # Start listening for logging lines.
@@ -530,17 +534,23 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
       ]
 
     # Configure the machine & CPU to emulate, based on the target architecture.
+    # Use KVM if the host and guest OS run on the same architecture.
     if bootfs_data.target_cpu == 'arm64':
       qemu_command.extend([
           '-machine','virt',
           '-cpu', 'cortex-a53',
       ])
+
+      if platform.machine() == 'aarch64':
+        qemu_command.append('-enable-kvm')
     else:
       qemu_command.extend([
-          '-enable-kvm',
           '-machine', 'q35',
           '-cpu', 'host,migratable=no',
       ])
+
+      if platform.machine() == 'x86_64':
+        qemu_command.append('-enable-kvm')
 
     if test_launcher_summary_output:
       # Make and mount a 100M minfs formatted image that is used to copy the
