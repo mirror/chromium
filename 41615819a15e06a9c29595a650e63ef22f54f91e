@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b41c5cd9_2a80f562",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-03T14:46:13Z",
+      "side": 1,
+      "message": "nit: this is an enum - let\u0027s just copy it rather than having a const \u0026.",
+      "revId": "41615819a15e06a9c29595a650e63ef22f54f91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "452104cb_7739f4f8",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-03T14:46:13Z",
+      "side": 1,
+      "message": "nit: instead of having RearrangeLanguage() in each of these places, let\u0027s do something like:\ntranslate::TranslatePrefs::RearrangeSpecifier direction;\nswitch (move_type) {\n  case MOVE_TYPE_TOP:\n    direction \u003d TOP;\n    break;\n  case MOVE_TYPE_UP:\n    direction \u003d UP;\n    break;\n  case MOVE_TYPE_DOWN:\n    direction \u003d DOWN;\n    break;\n  case MOVE_TYPE_NONE:\n  case MOVE_TYPE_LAST:\n    NOTREACHED();\n}\ntranslate_prefs-\u003eRearrangeLanguage(language_code, direction, supported_language_codes);\n\nThis makes it easier to see what the switch is changing, as well as reducing the risk of accidentally introducing variance in the calls.",
+      "revId": "41615819a15e06a9c29595a650e63ef22f54f91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e271ca35_3c1b474a",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-03T14:46:13Z",
+      "side": 1,
+      "message": "nit: alluded to above - prefer specifying LAST and NONE types explicitly.  That way, introducing a new type results in a compile error.",
+      "revId": "41615819a15e06a9c29595a650e63ef22f54f91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
