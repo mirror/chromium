@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a5d85c9_3f30f591",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-03T16:25:38Z",
+      "side": 1,
+      "message": "nit: OnceClosure?",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb74e8e_d35de034",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-03T16:25:38Z",
+      "side": 1,
+      "message": "nit: can this be a for (auto\u0026 entry : data) {} loop rather than the explicit indexing?",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd1c7f1_7be15ce3",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-03T16:25:38Z",
+      "side": 1,
+      "message": "I still don\u0027t understand why extra checks are needed here, and hwy this can\u0027t be a unguarded call to UnloadMapIfPossible? After a commit UnloadMapIfPossible is called unconditionally anyway, so why do we need extra checks here for the state of the various maps and desired load state?",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dae8909_990fbb2e",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-03T16:25:38Z",
+      "side": 1,
+      "message": "Here too, I would get rid of the if() and just add a comment something like \"Will unload the values if only keys are desired.\"",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef6ad056_f3833289",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-03T16:25:38Z",
+      "side": 1,
+      "message": "I know this came up earlier in this review, but I don\u0027t remember what the conclusion was. I still don\u0027t understand why commit batches being in flight matters for unloading the map... As soon as commit_batch_ is reset/Write is called there really aren\u0027t any uncommitted changes. The commit might fail, but we just ignore that, and assume that anything that was written actually ends up being written. So as far as I can tell you should just be able to call UnloadMapIfPossible at the end of CommitChanges, rather than wait till here.\n\n(actually looking at the rest of the code it seems you got rid of the commit_batches_in_flight_ check, so it really seems like you should be able to move the UnloadMapIfPossible call to the end of CommitChanges)",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2443c9d9_62224474",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-03T16:25:38Z",
+      "side": 1,
+      "message": "nit: have a default value?",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc1547e_f75ae832",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-03T16:25:38Z",
+      "side": 1,
+      "message": "nit: comment what the bool param is for (or just make it a LevelDBWrapperImpl::CacheMode, since that\u0027s what you convert it to anyway)",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f329ce9_3e6a8d7e",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-03T16:25:38Z",
+      "side": 1,
+      "message": "you\u0027re still not verifying that they actually are called synchronously. If you\u0027re going to write your test to rely on the fact that their callbacks are called sync, at least add assertions to verify that that is still the case. Otherwise the implementation can change possibly without the  tests failing.",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
