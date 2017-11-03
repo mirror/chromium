@@ -68,6 +68,30 @@
       "revId": "7d39866e2968501411610cd7f5aae5303c555a96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77f1608_f15547c0",
+        "filename": "tools/cygprofile/patch_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-03T16:08:49Z",
+      "side": 1,
+      "message": "It doesn\u0027t, and the suffixes are not needed with clang. Kept it for consistency with the surrounding code.\nWould you prefer to have the whole prefix logic removed? Would saves bytes, and indirectly probably trees as well.",
+      "parentUuid": "ad8eacdb_a09f6131",
+      "range": {
+        "startLine": 401,
+        "startChar": 2,
+        "endLine": 401,
+        "endChar": 26
+      },
+      "revId": "7d39866e2968501411610cd7f5aae5303c555a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
