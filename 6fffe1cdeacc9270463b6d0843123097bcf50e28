@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b912abeb_ff416742",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-03T12:41:35Z",
+      "side": 1,
+      "message": "Keep passing the signed_out_accounts to match the expectation of the function OnGaiaAccountsInCookieUpdated.",
+      "range": {
+        "startLine": 369,
+        "startChar": 20,
+        "endLine": 369,
+        "endChar": 33
+      },
+      "revId": "6fffe1cdeacc9270463b6d0843123097bcf50e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10580023_09aea011",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-03T12:41:35Z",
+      "side": 1,
+      "message": "Nit: Consider extracting this to a function to make the code easier to read:\nauto verified_gaia_accounts \u003d FilterVerfiedAccounts(gaia_accounts);",
+      "range": {
+        "startLine": 393,
+        "startChar": 4,
+        "endLine": 393,
+        "endChar": 7
+      },
+      "revId": "6fffe1cdeacc9270463b6d0843123097bcf50e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ecc65c_40d61123",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-03T12:41:35Z",
+      "side": 1,
+      "message": "It looks like this function will actually change the gaia_accounts vector. I find that a bit dangerous as the caller may not expect this. I would prefer is we passed this by value (I know that would actually mean some copying), make it a const FinishReconcile\u0026 and copy it internally  or change the name of the parameter somehow to indicate this potential change.",
+      "range": {
+        "startLine": 543,
+        "startChar": 22,
+        "endLine": 543,
+        "endChar": 35
+      },
+      "revId": "6fffe1cdeacc9270463b6d0843123097bcf50e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3c44c6_f1e2f1ee",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-03T12:41:35Z",
+      "side": 1,
+      "message": "Nits: Remove Google (\"accounts in the Gaia cookies\" should be clear enough).\ns/gaia/Gaia",
+      "range": {
+        "startLine": 193,
+        "startChar": 29,
+        "endLine": 193,
+        "endChar": 35
+      },
+      "revId": "6fffe1cdeacc9270463b6d0843123097bcf50e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c40afda_bc6fbdc7",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-03T12:41:35Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 211,
+        "startChar": 37,
+        "endLine": 211,
+        "endChar": 43
+      },
+      "revId": "6fffe1cdeacc9270463b6d0843123097bcf50e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
