@@ -41,6 +41,7 @@
 #include "ios/chrome/browser/ssl/captive_portal_features.h"
 #include "ios/chrome/browser/ui/activity_services/canonical_url_feature.h"
 #include "ios/chrome/browser/ui/external_search/features.h"
+#include "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
 #import "ios/chrome/browser/ui/history/history_base_feature.h"
 #include "ios/chrome/browser/ui/main/main_feature_flags.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
@@ -200,7 +201,10 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
     {"property-animations-toolbar",
      flag_descriptions::kPropertyAnimationsToolbarName,
      flag_descriptions::kPropertyAnimationsToolbarDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(kPropertyAnimationsToolbar)}};
+     FEATURE_VALUE_TYPE(kPropertyAnimationsToolbar)},
+    {"new-fullscreen-controller", flag_descriptions::kNewFullscreenName,
+     flag_descriptions::kNewFullscreenDescription, flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(fullscreen::features::kNewFullscreen)}};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {

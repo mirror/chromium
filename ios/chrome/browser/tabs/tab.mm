@@ -422,7 +422,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   if (_isPrerenderTab)
     return;
 
-  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+  if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     [_fullScreenController moveContentBelowHeader];
   }
 
@@ -440,7 +440,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
 - (void)setFullScreenControllerDelegate:
     (id<FullScreenControllerDelegate>)fullScreenControllerDelegate {
-  DCHECK(!base::FeatureList::IsEnabled(features::kNewFullscreen));
+  DCHECK(!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen));
   if (fullScreenControllerDelegate == fullScreenControllerDelegate_)
     return;
   // Lazily create a FullScreenController.
@@ -534,7 +534,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   _overscrollActionsController = nil;
 
   // Clean up legacy fullscreen.
-  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+  if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     self.fullScreenControllerDelegate = nil;
     if (_fullScreenController)
       [self.webController removeObserver:_fullScreenController];
@@ -778,7 +778,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 #pragma mark FindInPageControllerDelegate
 
 - (void)willAdjustScrollPosition {
-  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+  if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     // Skip the next attempt to correct the scroll offset for the toolbar
     // height.  Used when programatically scrolling down the y offset.
     [_fullScreenController shouldSkipNextScrollOffsetForHeader];
@@ -789,7 +789,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 #pragma mark FullScreen
 
 - (void)updateFullscreenWithToolbarVisible:(BOOL)visible {
-  DCHECK(!base::FeatureList::IsEnabled(features::kNewFullscreen));
+  DCHECK(!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen));
   [_fullScreenController moveHeaderToRestingPosition:visible];
 }
 
@@ -882,7 +882,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 - (void)webState:(web::WebState*)webState
     didStartNavigation:(web::NavigationContext*)navigation {
   if (!navigation->IsSameDocument() &&
-      !base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+      !base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     // Move the toolbar to visible during page load.
     [_fullScreenController disableFullScreen];
   }
@@ -904,7 +904,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 - (void)webState:(web::WebState*)webState
     didCommitNavigationWithDetails:(const web::LoadCommittedDetails&)details {
   DCHECK([self navigationManager]);
-  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+  if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     // |webWillAddPendingURL:transition:| is not called for native page loads.
     // TODO(crbug.com/381201): Move this call there once that bug is fixed so
     // that |disableFullScreen| is called only from one place.
@@ -966,7 +966,8 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     lastCommittedURL = lastCommittedItem->GetVirtualURL();
   }
   [_webControllerSnapshotHelper setSnapshotCoalescingEnabled:YES];
-  if (!base::FeatureList::IsEnabled(features::kNewFullscreen) && !loadSuccess)
+  if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen) &&
+      !loadSuccess)
     [_fullScreenController disableFullScreen];
   [self recordInterfaceOrientation];
   navigation_metrics::RecordMainFrameNavigation(
@@ -1016,7 +1017,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 }
 
 - (void)webStateDidStopLoading:(web::WebState*)webState {
-  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+  if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     // This is the maximum that a page will ever load and it is safe to allow
     // fullscreen mode.
     [_fullScreenController enableFullScreen];
@@ -1170,7 +1171,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 }
 
 - (void)webStateDidChangeVisibleSecurityState:(web::WebState*)webState {
-  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+  if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     // Disable fullscreen if SSL cert is invalid.
     web::NavigationItem* item = [self navigationManager]->GetTransientItem();
     if (item) {
@@ -1182,12 +1183,14 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   }
 
   [_parentTabModel notifyTabChanged:self];
-  [self updateFullscreenWithToolbarVisible:YES];
+  if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
+    [self updateFullscreenWithToolbarVisible:YES];
+  }
 }
 
 - (void)renderProcessGoneForWebState:(web::WebState*)webState {
   DCHECK(webState == _webStateImpl);
-  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+  if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     UIApplicationState state =
         [UIApplication sharedApplication].applicationState;
     if (webState->IsVisible() && state == UIApplicationStateActive) {
@@ -1212,13 +1215,17 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 }
 
 - (void)wasShown {
-  [self updateFullscreenWithToolbarVisible:YES];
+  if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
+    [self updateFullscreenWithToolbarVisible:YES];
+  }
   if (self.webState)
     self.webState->WasShown();
 }
 
 - (void)wasHidden {
-  [self updateFullscreenWithToolbarVisible:YES];
+  if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
+    [self updateFullscreenWithToolbarVisible:YES];
+  }
   if (self.webState)
     self.webState->WasHidden();
 }
