@@ -246,8 +246,9 @@ class MockWebMediaPlayerDelegate : public WebMediaPlayerDelegate {
   bool is_closed_ = false;
 };
 
-class MockSurfaceLayerBridge : public blink::WebSurfaceLayerBridge {
+class MockSurfaceLayerBridge : public MediaPlayerSurfaceLayerBridge {
  public:
+  MockSurfaceLayerBridge() : MediaPlayerSurfaceLayerBridge(nullptr) {}
   MOCK_CONST_METHOD0(GetWebLayer, blink::WebLayer*());
   MOCK_CONST_METHOD0(GetFrameSinkId, const viz::FrameSinkId&());
 };
@@ -1002,6 +1003,7 @@ TEST_F(WebMediaPlayerImplTest, OnWebLayerReplacedGetsWebLayerFromBridge) {
   surface_layer_bridge_ = new StrictMock<MockSurfaceLayerBridge>();
 
   viz::FrameSinkId id = viz::FrameSinkId(1, 1);
+
   EXPECT_CALL(*surface_layer_bridge_, GetFrameSinkId()).WillOnce(ReturnRef(id));
   InitializeWebMediaPlayerImpl();
 
@@ -1010,7 +1012,7 @@ TEST_F(WebMediaPlayerImplTest, OnWebLayerReplacedGetsWebLayerFromBridge) {
 
   EXPECT_CALL(*surface_layer_bridge_, GetWebLayer())
       .WillRepeatedly(Return(web_layer.get()));
-  wmpi_->OnWebLayerReplaced();
+  wmpi_->OnWebLayerUpdated();
 }
 
 TEST_F(WebMediaPlayerImplTest, PlaybackRateChangeMediaLogs) {

@@ -300,7 +300,7 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
           watch_time_recorder_provider_.get(),
           base::Bind(&MediaFactory::CreateVideoDecodeStatsRecorder,
                      base::Unretained(this)),
-          base::Bind(&blink::WebSurfaceLayerBridge::Create, layer_tree_view),
+          base::Bind(&media::MediaPlayerSurfaceLayerBridge::Create),
           base::BindRepeating(
               &PostMediaContextProviderToCallback,
               RenderThreadImpl::current()->GetCompositorMainThreadTaskRunner()),

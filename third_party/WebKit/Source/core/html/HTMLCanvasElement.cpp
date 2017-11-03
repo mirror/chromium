@@ -1502,14 +1502,11 @@ void HTMLCanvasElement::CreateLayer() {
     layer_tree_view =
         frame->GetPage()->GetChromeClient().GetWebLayerTreeView(frame);
     surface_layer_bridge_ =
-        WTF::MakeUnique<::blink::SurfaceLayerBridge>(layer_tree_view, this);
-    // Creates a placeholder layer first before Surface is created.
-    surface_layer_bridge_->CreateSolidColorLayer();
+        WTF::WrapUnique(new CanvasSurfaceLayerBridge(layer_tree_view, this));
   }
 }
 
-void HTMLCanvasElement::OnWebLayerReplaced() {
-  GraphicsLayer::RegisterContentsLayer(surface_layer_bridge_->GetWebLayer());
+void HTMLCanvasElement::OnWebLayerUpdated() {
   SetNeedsCompositingUpdate();
 }
 
