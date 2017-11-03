@@ -7,13 +7,24 @@
 #include <string>
 
 #include "base/logging.h"
+#include "base/strings/stringprintf.h"
 #include "extensions/common/api/messaging/message.h"
+#include "extensions/common/extension.h"
+#include "extensions/renderer/script_context.h"
 #include "gin/converter.h"
 #include "gin/dictionary.h"
 #include "third_party/WebKit/public/web/WebUserGestureIndicator.h"
 
 namespace extensions {
 namespace messaging_util {
+
+namespace {
+
+constexpr char kExtensionIdRequiredErrorTemplate[] =
+    "chrome.%s() called from a webpage must specify an "
+    "Extension ID (string) for its first argument.";
+
+}  // namespace
 
 const char kSendMessageChannel[] = "chrome.runtime.sendMessage";
 const char kSendRequestChannel[] = "chrome.extension.sendRequest";
@@ -152,6 +163,30 @@ ParseOptionsResult ParseMessageOptions(v8::Local<v8::Context> context,
 
   *options_out = std::move(options);
   return SUCCESS;
+}
+
+bool GetTargetExtensionId(ScriptContext* script_context,
+                          v8::Local<v8::Value> v8_target_id,
+                          const char* method_name,
+                          std::string* target_out,
+                          std::string* error_out) {
+  DCHECK(!v8_target_id.IsEmpty());
+
+  std::string target_id;
+  if (v8_target_id->IsNull()) {
+    if (!script_context->extension()) {
+      *error_out =
+          base::StringPrintf(kExtensionIdRequiredErrorTemplate, method_name);
+      return false;
+    }
+
+    *target_out = script_context->extension()->id();
+  } else {
+    DCHECK(v8_target_id->IsString());
+    *target_out = gin::V8ToString(v8_target_id);
+  }
+
+  return true;
 }
 
 }  // namespace messaging_util

@@ -24,32 +24,6 @@ namespace extensions {
 namespace {
 using RequestResult = APIBindingHooks::RequestResult;
 
-constexpr char kExtensionIdRequiredErrorTemplate[] =
-    "chrome.runtime.%s() called from a webpage must "
-    "specify an Extension ID (string) for its first argument.";
-
-// Parses the target from |v8_target_id|, or uses the extension associated with
-// the |script_context| as a default. Returns true on success, and false on
-// failure.
-bool GetTarget(ScriptContext* script_context,
-               v8::Local<v8::Value> v8_target_id,
-               std::string* target_out) {
-  DCHECK(!v8_target_id.IsEmpty());
-
-  std::string target_id;
-  if (v8_target_id->IsNull()) {
-    if (!script_context->extension())
-      return false;
-
-    *target_out = script_context->extension()->id();
-  } else {
-    DCHECK(v8_target_id->IsString());
-    *target_out = gin::V8ToString(v8_target_id);
-  }
-
-  return true;
-}
-
 // Massages the sendMessage() arguments into the expected schema. These
 // arguments are ambiguous (could match multiple signatures), so we can't just
 // rely on the normal signature parsing. Sets |arguments| to the result if
@@ -239,10 +213,12 @@ RequestResult RuntimeHooksDelegate::HandleSendMessage(
   DCHECK_EQ(4u, arguments.size());
 
   std::string target_id;
-  if (!GetTarget(script_context, arguments[0], &target_id)) {
+  std::string error;
+  if (!messaging_util::GetTargetExtensionId(script_context, arguments[0],
+                                            "runtime.sendMessage", &target_id,
+                                            &error)) {
     RequestResult result(RequestResult::INVALID_INVOCATION);
-    result.error =
-        base::StringPrintf(kExtensionIdRequiredErrorTemplate, "sendMessage");
+    result.error = std::move(error);
     return result;
   }
 
@@ -323,10 +299,12 @@ RequestResult RuntimeHooksDelegate::HandleConnect(
   DCHECK_EQ(2u, arguments.size());
 
   std::string target_id;
-  if (!GetTarget(script_context, arguments[0], &target_id)) {
+  std::string error;
+  if (!messaging_util::GetTargetExtensionId(script_context, arguments[0],
+                                            "runtime.connect", &target_id,
+                                            &error)) {
     RequestResult result(RequestResult::INVALID_INVOCATION);
-    result.error =
-        base::StringPrintf(kExtensionIdRequiredErrorTemplate, "connect");
+    result.error = std::move(error);
     return result;
   }
 
