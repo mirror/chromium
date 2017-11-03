@@ -70,6 +70,24 @@
       "revId": "8743364b8c74e19a062225e5e5de1d7fd174de86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5686232_315207f9",
+        "filename": "third_party/WebKit/public/platform/WebSecurityOrigin.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-03T09:43:09Z",
+      "side": 0,
+      "message": "Test + DCHECK would be enough :)",
+      "parentUuid": "3c2a4721_310f5def",
+      "revId": "8743364b8c74e19a062225e5e5de1d7fd174de86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
