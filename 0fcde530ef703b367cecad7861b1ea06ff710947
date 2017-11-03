@@ -156,6 +156,24 @@
       "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905c2fb6_904a3a86",
+        "filename": "services/device/wake_lock/power_save_blocker/power_save_blocker_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-03T21:37:00Z",
+      "side": 1,
+      "message": "Hmm, not sure about removing \"Type\" - \"mojom::WakeLock\" is already an interface typename.",
+      "parentUuid": "53f6fdc2_37487fc4",
+      "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
