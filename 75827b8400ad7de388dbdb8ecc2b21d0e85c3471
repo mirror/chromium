@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9b632d2_5efe7037",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-03T12:54:34Z",
+      "side": 1,
+      "message": "\"New\" is a bad choice in terms on naming - we already had a bunch of cases when the new became old and the naming was very confusing. Let\u0027s rename this to DICE:\n\"IDR_DICE_WELCOME_CSS.",
+      "range": {
+        "startLine": 67,
+        "startChar": 25,
+        "endLine": 67,
+        "endChar": 44
+      },
+      "revId": "75827b8400ad7de388dbdb8ecc2b21d0e85c3471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
