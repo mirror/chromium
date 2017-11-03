@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ebb3aa7_c621561a",
+        "filename": "ui/gfx/ipc/color/gfx_param_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-03T21:10:39Z",
+      "side": 1,
+      "message": "Note that by calling FromDataWithId, we are guaranteed to add this to the relevant caches.",
+      "revId": "90b799e4d1f545b6d76a2e11263d9a0d38804457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
