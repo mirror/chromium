@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3687ac2e_9e41dd18",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16988,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-03T17:34:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbf3bec0_1583b9ef",
+      "revId": "6ba6cdf872420c71b512263ada5d1772d7b41fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f87d50_594cec8a",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "6ba6cdf872420c71b512263ada5d1772d7b41fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935ad086_cef6cbae",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 17031,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-03T17:34:29Z",
+      "side": 1,
+      "message": "Desktop: You get to the Site Settings page through the Page Info bubble, and it shows all content settings for one particular *site*. The patterns are set in the privacy page, which shows the default setting and lists all existing exceptions for a particular *content setting type*.\n\nAndroid: You can get to the Site Settings page (aka SingleWebsitePreferences) either through the page info bubble, or by clicking on the site in the \"All sites\" list. This shows non-default settings for a particular *site*. The patterns are set on the SingleCategoryPreferences page, which shows the default setting and lists all existing exceptions for a particular *content setting type*.\n\nI have confirmed with Jon that we do want to track Site Settings changes and explicit pattern exception changes separately",
+      "parentUuid": "23f87d50_594cec8a",
+      "revId": "6ba6cdf872420c71b512263ada5d1772d7b41fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
