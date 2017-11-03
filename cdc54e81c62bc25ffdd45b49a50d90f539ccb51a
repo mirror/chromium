@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91731a8e_618b77aa",
+        "filename": "components/cronet/ios/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-03T06:59:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9064745e_275036cc",
+      "range": {
+        "startLine": 82,
+        "startChar": 3,
+        "endLine": 82,
+        "endChar": 18
+      },
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62fecc78_a56c2822",
         "filename": "components/cronet/ios/CronetMetrics.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e711ef06_6c42ab78",
+        "filename": "components/cronet/ios/CronetMetrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-03T06:59:56Z",
+      "side": 1,
+      "message": "It\u0027s needed for GRPC_SUPPORT_EXPORT, which is needed to make the tests link.",
+      "parentUuid": "62fecc78_a56c2822",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "eaaaa89e_1b5bce16",
+        "filename": "components/cronet/ios/CronetMetrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-03T06:59:56Z",
+      "side": 1,
+      "message": "The tests fail to link if I omit this.",
+      "parentUuid": "c9ee2c95_c0aacd58",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 37
+      },
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77167db4_3e4138f9",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc5412b_487808b7",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-03T06:59:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77167db4_3e4138f9",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 7
+      },
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "84df1925_31d34518",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-03T06:59:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f45c32ee_c7a04432",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70fc4613_2880eec8",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 5
@@ -131,6 +251,24 @@
       "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7f1d11_ffbf05b6",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-03T06:59:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70fc4613_2880eec8",
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +292,30 @@
       "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1384af95_746a5291",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-03T06:59:56Z",
+      "side": 1,
+      "message": "That was from when they were not being initialized - I don\u0027t think this comment is necessary anymore.",
+      "parentUuid": "bc48f2c9_eb1ba871",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "cdc54e81c62bc25ffdd45b49a50d90f539ccb51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
