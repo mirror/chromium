@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89cc9142_64aa41cb",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-03T17:33:35Z",
+      "side": 1,
+      "message": "Note to self: might need\n// clang-format off\nsince clang format doesn\u0027t like it.\n\nSee https://bugs.chromium.org/p/chromium/issues/detail?id\u003d764582",
+      "range": {
+        "startLine": 387,
+        "startChar": 36,
+        "endLine": 387,
+        "endChar": 41
+      },
+      "revId": "5a007875591effa96175b70e223fb4e8bfe182a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
