@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95a0c245_c29a37dd",
+        "filename": "content/public/browser/download_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-03T00:01:04Z",
+      "side": 1,
+      "message": "nit: the enum name and values don\u0027t match. did you consider either DownloadSource and then SOURCE_FOO (also dont abbreviate per style guide). or keep it as DownloadType, but then TYPE_FOO?",
+      "revId": "9de6b84f5c975a0eb624b4d43b7f60674c71b269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
