@@ -16,6 +16,24 @@
       "revId": "b0aa92d8b1a11e158796a9c0dc35013b1dbbee46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a78aed4_0208edca",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-03T23:43:20Z",
+      "side": 1,
+      "message": "I do not know when this can happen actually. From all my local testing it looks like the isolate holder is always created in the right thread.\n\nI see, I can move this getter to IsolateHolder.",
+      "parentUuid": "0f5fa72a_f080378c",
+      "revId": "b0aa92d8b1a11e158796a9c0dc35013b1dbbee46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
