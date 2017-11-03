@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c8157dd_b5938e98",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-03T22:23:28Z",
+      "side": 1,
+      "message": "maybe \n\n if (num_android_requests_ \u003e 1)\n  return;\n\nfor symmetry with L67",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 37
+      },
+      "revId": "4f69a4e815b6b51c1a7c69cce02e7651a5063a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934a3e1c_6578a12c",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-03T22:23:28Z",
+      "side": 1,
+      "message": "nit: Connector* const connector_",
+      "range": {
+        "startLine": 106,
+        "startChar": 30,
+        "endLine": 106,
+        "endChar": 40
+      },
+      "revId": "4f69a4e815b6b51c1a7c69cce02e7651a5063a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
