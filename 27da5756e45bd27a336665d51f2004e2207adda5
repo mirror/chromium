@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "702416fd_5e1ee783",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-03T16:46:07Z",
+      "side": 1,
+      "message": "what is the intent of this metric?\n\nWon\u0027t we be logging the histogram for each time a tab is opened?  So if you open 10 tabs, wouldn\u0027t we be logging, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10?\n\nShould we only be logging this in resetBrowserActionsService?  Wouldn\u0027t we want to log the number of tabs someone opened in the background before someone came to Chrome?",
+      "range": {
+        "startLine": 263,
+        "startChar": 24,
+        "endLine": 263,
+        "endChar": 44
+      },
+      "revId": "27da5756e45bd27a336665d51f2004e2207adda5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
