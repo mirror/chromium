@@ -381,8 +381,9 @@ class DiceBrowserTestBase : public InProcessBrowserTest,
     reconcilor->AbortReconcile();
     reconcilor->AddObserver(this);
 
+    // New profiles are automatically migrated to Dice.
     ASSERT_EQ(
-        account_consistency_method_ == signin::AccountConsistencyMethod::kDice,
+        signin::IsDiceMigrationEnabled(),
         signin::IsDiceEnabledForProfile(browser()->profile()->GetPrefs()));
   }
 
@@ -791,6 +792,9 @@ IN_PROC_BROWSER_TEST_F(DiceFixAuthErrorsBrowserTest, Signout) {
 // Checks that signin on Gaia triggers the fetch for a refresh token.
 IN_PROC_BROWSER_TEST_F(DiceMigrationBrowserTest, Signin) {
   EXPECT_EQ(0, reconcilor_started_count_);
+  PrefService* prefs = browser()->profile()->GetPrefs();
+  signin::UndoDiceMigrationForTesting(prefs);
+  ASSERT_FALSE(signin::IsDiceEnabledForProfile(prefs));
 
   // Navigate to Gaia and sign in.
   NavigateToURL(kSigninURL);
@@ -815,6 +819,8 @@ IN_PROC_BROWSER_TEST_F(DiceMigrationBrowserTest, Signin) {
 }
 
 IN_PROC_BROWSER_TEST_F(DiceMigrationBrowserTest, Signout) {
+  signin::UndoDiceMigrationForTesting(browser()->profile()->GetPrefs());
+
   // Start from a signed-in state.
   SetupSignedInAccounts();
 
