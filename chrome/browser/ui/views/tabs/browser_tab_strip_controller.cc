@@ -26,7 +26,7 @@
 #include "chrome/browser/ui/tabs/tab_utils.h"
 #include "chrome/browser/ui/views/tabs/tab.h"
 #include "chrome/browser/ui/views/tabs/tab_renderer_data.h"
-#include "chrome/browser/ui/views/tabs/tab_strip.h"
+#include "chrome/browser/ui/views/tabs/tab_strip_impl.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "components/feature_engagement/features.h"
@@ -217,7 +217,7 @@ BrowserTabStripController::~BrowserTabStripController() {
   model_->RemoveObserver(this);
 }
 
-void BrowserTabStripController::InitFromModel(TabStrip* tabstrip) {
+void BrowserTabStripController::InitFromModel(TabStripImpl* tabstrip) {
   tabstrip_ = tabstrip;
 
   UpdateStackedLayout();
@@ -357,7 +357,7 @@ void BrowserTabStripController::PerformDrop(bool drop_before,
   chrome::Navigate(&params);
 }
 
-bool BrowserTabStripController::IsCompatibleWith(TabStrip* other) const {
+bool BrowserTabStripController::IsCompatibleWith(TabStripImpl* other) const {
   Profile* other_profile = other->controller()->GetProfile();
   return other_profile == GetProfile();
 }
