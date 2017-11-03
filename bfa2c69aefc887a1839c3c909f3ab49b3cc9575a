@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "090eed94_f4cd1e88",
+        "filename": "extensions/renderer/request_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-03T17:10:50Z",
+      "side": 1,
+      "message": "As discussed offline: I\u0027d also put TODO for service workers, to ensure they work to and refer crbug/733679 here.",
+      "revId": "bfa2c69aefc887a1839c3c909f3ab49b3cc9575a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e37c4b26_c7d9c6f2",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 5
