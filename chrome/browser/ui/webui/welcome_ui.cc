@@ -57,7 +57,6 @@ WelcomeUI::WelcomeUI(content::WebUI* web_ui, const GURL& url)
   html_source->AddString("subheaderText", subheader);
 #endif
 
-  html_source->AddLocalizedString("descriptionText", IDS_WELCOME_DESCRIPTION);
   html_source->AddLocalizedString("acceptText", IDS_WELCOME_ACCEPT_BUTTON);
   html_source->AddLocalizedString("declineText", IDS_WELCOME_DECLINE_BUTTON);
 
@@ -70,6 +69,7 @@ WelcomeUI::WelcomeUI(content::WebUI* web_ui, const GURL& url)
     html_source->AddResourcePath("welcome.css", IDR_DICE_WELCOME_CSS);
     html_source->SetDefaultResource(IDR_DICE_WELCOME_HTML);
   } else {
+    html_source->AddLocalizedString("descriptionText", IDS_WELCOME_DESCRIPTION);
     html_source->AddResourcePath("welcome.js", IDR_WELCOME_JS);
     html_source->AddResourcePath("welcome.css", IDR_WELCOME_CSS);
     html_source->SetDefaultResource(IDR_WELCOME_HTML);
