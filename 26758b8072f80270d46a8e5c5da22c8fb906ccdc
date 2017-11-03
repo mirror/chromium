@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9fcab37_7c901f9d",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-03T21:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a8559e3_134987d8",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "857acb26_ec3e41a4",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e8510f_4ab65893",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-03T21:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "857acb26_ec3e41a4",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c859b3ef_acfdb193",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-03T21:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fddb5f9b_c8d32d21",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15471bd1_878fbdab",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b6ea90_0e8d748a",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-03T21:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15471bd1_878fbdab",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "86784f09_c554b3df",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-03T21:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8a0cf31_503199e0",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d96deb04_5d3fe0f6",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
         "patchSetId": 1
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "2e0af097_230a7f5e",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-03T21:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d96deb04_5d3fe0f6",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "646b41d0_2a9f9696",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
         "patchSetId": 1
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-03T19:24:27Z",
       "side": 1,
       "message": "Why would you call OnInterceptedRequestResponseReady() multiple times?",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4de5fc_a2844029",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-03T21:35:01Z",
+      "side": 1,
+      "message": "Since the InterceptedRequest has the data, the user is allowed to call RequestResponseBodyForInterception() multiple times we need a way to ask multiple times before it\u0027s continued.",
+      "parentUuid": "646b41d0_2a9f9696",
       "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "4e87fac0_d7ad572c",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-03T21:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0012321c_13dab325",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39695d13_1ccdd03b",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
         "patchSetId": 1
@@ -152,6 +296,24 @@
       "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb800d53_477de3b6",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-03T21:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39695d13_1ccdd03b",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "c33c2951_b2c92f99",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-03T21:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30995303_ac821542",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a2013c6_d7882919",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
         "patchSetId": 1
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ca1476eb_1fad1342",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-03T21:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a2013c6_d7882919",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f36bd60_22c5d0a7",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
         "patchSetId": 1
@@ -203,6 +401,24 @@
       "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0635d14_7ad0fd41",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-03T21:35:01Z",
+      "side": 1,
+      "message": "it\u0027s an Enum.",
+      "parentUuid": "0f36bd60_22c5d0a7",
+      "revId": "26758b8072f80270d46a8e5c5da22c8fb906ccdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
