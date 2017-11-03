@@ -138,6 +138,7 @@ TEST_F(ProtoUtilsTest, PipelineStatisticsConversion) {
   original.audio_bytes_decoded = 123;
   original.video_bytes_decoded = 456;
   original.video_frames_decoded = 789;
+  original.video_frames_decoded_power_efficient = 0;
   original.video_frames_dropped = 21;
   original.audio_memory_usage = 32;
   original.video_memory_usage = 43;
@@ -156,7 +157,11 @@ TEST_F(ProtoUtilsTest, PipelineStatisticsConversion) {
       original.video_frame_duration_average.InMicroseconds());
 
   PipelineStatistics converted;
-  memset(&converted, ~0xcd, sizeof(converted));  // See note above.
+  // TODO(xjz): this is memset-ing to 0xcd instead of ~0xcd because the object
+  // has some padding on 64 bits that prevents from running memcmp on it
+  // otherwise. As a side effect this test will not automatically detect newly
+  // added fields. See https://crbug.com/781226
+  memset(&converted, 0xcd, sizeof(converted));  // See note above.
   ConvertProtoToPipelineStatistics(pb_stats, &converted);
 
   // If this fails, did media::PipelineStatistics add/change fields that are not
