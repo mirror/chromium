@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e73c6a25_0c0c36ed",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T14:09:40Z",
+      "side": 0,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/751101 is removing all this (the strings + GetWebContents) from SWDispatcherHost... are you in a hurry or could you just wait for that one?",
+      "revId": "da53cf1ba363bc68bcddcfd6beb041288448d0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

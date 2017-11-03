@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bd9d33b_077dfc93",
+        "filename": "content/browser/service_worker/service_worker_common.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T14:09:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure service_worker::RunSoon(closure) is that much better than base::ThreadTaskRunnerHandle::Get()-\u003ePostTask(FROM_HERE, closure)... I\u0027m inclined to just replace RunSoon() callsites with the inline function body. kinuko: WDYT?",
+      "revId": "54b59a5e88cd22a88d6a0c455c527e98af27f3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
