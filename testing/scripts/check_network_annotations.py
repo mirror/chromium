@@ -22,12 +22,14 @@ def main_run(args):
       os.path.join(args.paths['checkout'], 'out', args.build_config_fs),
   ])
 
-  json.dump({
-      'valid': True,
-      'failures': ['failure'] if rc else [],
-  }, args.output)
+  report = {'valid': True}
+  if rc == 1:
+    report['failures'] = ['Please refer to stdout for errors.']
+  elif rc == 2:
+    report['warnings'] = ['Please refer to stdout for warnings.']
+  json.dump(report, args.output)
 
-  return rc
+  return 1 if rc else 0
 
 
 def main_compile_targets(args):

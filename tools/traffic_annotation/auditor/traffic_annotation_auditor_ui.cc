@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/files/file_util.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -24,7 +25,12 @@ and coverage, produces reports, and updates related files.
 Usage: traffic_annotation_auditor [OPTION]... [path_filters]
 
 Extracts network traffic annotations from source files. If path filter(s) are
-specified, only those directories of the source  will be analyzed.
+specified, only those directories of the source will be analyzed.
+Outputs all errors and warnings to stdout and returns with the following exit
+codes:
+  0: Everything is OK.
+  1: There are errors.
+  2: There are warnings.
 
 Options:
   -h, --help          Shows help.
@@ -51,6 +57,8 @@ Options:
                       be called to update downstream files.
   --summary-file      Optional path to the output file with all annotations.
   --annotations-file  Optional path to a TSV output file with all annotations.
+  --limit             Limit for the maximum number of returned errors and
+                      warnings. Use 0 for unlimited.
   path_filters        Optional paths to filter what files the tool is run on.
 
 Example:
@@ -64,6 +72,11 @@ const base::FilePath kDownstreamUpdater =
         .Append(FILE_PATH_LITERAL("annotations_xml_downstream_caller.py"));
 
 const std::string kCodeSearchLink("https://cs.chromium.org/chromium/src/");
+
+// Checks if the given result type is considered an error or warning.
+bool IsResultConsidererdError(const AuditorResult::Type& result_type) {
+  return true;
+}
 
 }  // namespace
 
@@ -306,6 +319,16 @@ int main(int argc, char* argv[]) {
   base::FilePath annotations_file =
       command_line.GetSwitchValuePath("annotations-file");
   std::vector<std::string> path_filters;
+  int outputs_limit = 0;
+  if (command_line.HasSwitch("limit")) {
+    if (!base::StringToInt(command_line.GetSwitchValueNative("limit"),
+                           &outputs_limit) ||
+        outputs_limit < 0) {
+      LOG(ERROR)
+          << "The value for 'limit' switch should be a positive integer.";
+      return 1;
+    }
+  }
 
 #if defined(OS_WIN)
   for (const auto& path : command_line.GetArgs())
@@ -390,31 +413,54 @@ int main(int argc, char* argv[]) {
 
   std::vector<AuditorResult> errors = auditor.errors();
 
-  // Test/Update annotations.xml.
-  TrafficAnnotationExporter exporter(source_path);
-  if (!exporter.UpdateAnnotations(
-          auditor.extracted_annotations(),
-          TrafficAnnotationAuditor::GetReservedUniqueIDs())) {
-    return 1;
-  }
-  if (exporter.modified()) {
-    if (test_only) {
-      errors.push_back(
-          AuditorResult(AuditorResult::Type::ERROR_ANNOTATIONS_XML_UPDATE,
-                        exporter.GetRequiredUpdates()));
-    } else if (!exporter.SaveAnnotationsXML() ||
-               !RunAnnotationDownstreamUpdater(source_path)) {
-      LOG(ERROR) << "Could not update annotations XML or downstream files.";
+  // Test/Update annotations.xml if everything else is OK.
+  if (errors.empty()) {
+    TrafficAnnotationExporter exporter(source_path);
+    if (!exporter.UpdateAnnotations(
+            auditor.extracted_annotations(),
+            TrafficAnnotationAuditor::GetReservedUniqueIDs())) {
       return 1;
+    }
+    if (exporter.modified()) {
+      if (test_only) {
+        errors.push_back(
+            AuditorResult(AuditorResult::Type::ERROR_ANNOTATIONS_XML_UPDATE,
+                          exporter.GetRequiredUpdates()));
+      } else if (!exporter.SaveAnnotationsXML() ||
+                 !RunAnnotationDownstreamUpdater(source_path)) {
+        LOG(ERROR) << "Could not update annotations XML or downstream files.";
+        return 1;
+      }
     }
   }
 
   // Dump Errors to stdout.
+  int errors_count = 0;
   for (const auto& error : errors) {
-    printf("%s: %s\n",
-           "Error",  // "Warning" can be used for minor nags.
-           error.ToText().c_str());
+    if (IsResultConsidererdError(error.type())) {
+      if (!errors_count)
+        printf("[Errors]\n");
+      errors_count++;
+      printf("  (%i)\t%s\n", errors_count, error.ToText().c_str());
+      if (errors_count == outputs_limit)
+        break;
+    }
   }
 
-  return 0;
+  // Dump Warnings to stdout.
+  int warnings_count = 0;
+  if (!outputs_limit || outputs_limit != errors_count) {
+    for (const auto& error : errors) {
+      if (!IsResultConsidererdError(error.type())) {
+        if (!warnings_count)
+          printf("[Warnings]\n");
+        warnings_count++;
+        printf("  (%i)\t%s\n", warnings_count, error.ToText().c_str());
+        if (errors_count + warnings_count == outputs_limit)
+          break;
+      }
+    }
+  }
+
+  return errors_count ? 1 : (warnings_count ? 2 : 0);
 }
