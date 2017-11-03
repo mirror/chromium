@@ -2,6 +2,9 @@
   "tests": [
     {
       "app": "ios_chrome_integration_egtests",
+      "test args": [
+        "--enable-features=CredentialManager"
+      ],
       "xctest": true
     },
     {
