@@ -102,17 +102,17 @@ bool MemoryMappedFile::MapFileRegionToMemory(
       // Realize the extent of the file so that it can't fail (and crash) later
       // when trying to write to a memory page that can't be created. This can
       // fail if the disk is full and the file is sparse.
-      //
-      // Only Android API>=21 supports the fallocate call. Older versions need
-      // to manually extend the file by writing zeros at block intervals.
-      //
-      // Mac OSX doesn't support this call but the primary filesystem doesn't
-      // support sparse files so is unneeded.
       bool do_manual_extension = false;
 
 #if defined(OS_ANDROID) && __ANDROID_API__ < 21
+      // Only Android API>=21 supports the fallocate call. Older versions need
+      // to manually extend the file by writing zeros at block intervals.
       do_manual_extension = true;
-#elif !defined(OS_MACOSX)
+#elif defined(OS_MACOSX)
+      // Mac OSX doesn't support this call even though their new filesystem
+      // does support sparse files. Always use fallback method.
+      do_manual_extension = true;
+#else
       if (posix_fallocate(file_.GetPlatformFile(), region.offset,
                           region.size) != 0) {
         DPLOG(ERROR) << "posix_fallocate " << file_.GetPlatformFile();
