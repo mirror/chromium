@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4909e15f_ef76046b",
+        "filename": "chrome/browser/media/router/presentation_navigation_policy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-03T20:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e354db8e_5c8e4ea9",
+      "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e6825b0_cffe235b",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3b78a2_73090b14",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-03T20:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e6825b0_cffe235b",
+      "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a5938cc5_95ae7cb8",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-03T20:38:38Z",
+      "side": 1,
+      "message": "I added some comments here explaining the reasoning for this destruction dance.  Hopefully that clears things up.  OffscreenTab can do things differently because its Profile isn\u0027t attached to a Browser.",
+      "parentUuid": "94f541db_ff43fae4",
+      "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7f594d8_fc70404b",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4908ed_d47abe9e",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-03T20:38:38Z",
+      "side": 1,
+      "message": "Done.  This is already checked by ProfileDestroyer before calling this but it\u0027s not expensive to check the result of std::remove for safety.",
+      "parentUuid": "a7f594d8_fc70404b",
+      "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7d82b2f4_39400110",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-03T20:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9b84c68_0dab9d96",
+      "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edbfdf4f_dae69942",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd303fa5_f761337d",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-03T20:38:38Z",
+      "side": 1,
+      "message": "If you\u0027re referring to the side-effect of creating the OTR profile if it doesn\u0027t exist then that\u0027s avoided by the short-circuit of ||.  However, at this point I do like the factory method more at this point since we have a rather specific requirement on the profile.  I added a factory method + private ctor.",
+      "parentUuid": "edbfdf4f_dae69942",
+      "revId": "8cce13e2b99950bf27ec4b4592b32418f2d5479f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
