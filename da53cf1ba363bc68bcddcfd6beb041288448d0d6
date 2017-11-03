@@ -16,6 +16,24 @@
       "revId": "da53cf1ba363bc68bcddcfd6beb041288448d0d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a56fd6_7552fec9",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-11-03T14:27:10Z",
+      "side": 0,
+      "message": "I can watch that CL, and see if this is still needed afterwards.  Thanks for the heads-up.\n\nMaybe we can rename service_worker_common.* to service_worker_consts.* if it only contains string constants.",
+      "parentUuid": "e73c6a25_0c0c36ed",
+      "revId": "da53cf1ba363bc68bcddcfd6beb041288448d0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
