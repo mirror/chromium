@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af37cd95_e4760e79",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-03T17:55:51Z",
+      "side": 1,
+      "message": "Can this be written as a range forloop?",
+      "revId": "74448ca8f22c075a9102a12d0e257134d779c078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18902fab_fb48bf92",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-03T17:55:51Z",
+      "side": 1,
+      "message": "can we not dereference the iterator if it \u003d\u003d end() ?\nMaybe just return early and add a NOTREACHED inside of the early return.\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d777728 scared me.",
+      "revId": "74448ca8f22c075a9102a12d0e257134d779c078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f538a81c_cfcc85a7",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-03T17:55:51Z",
+      "side": 1,
+      "message": "nit: there is an extra \"on\"",
+      "revId": "74448ca8f22c075a9102a12d0e257134d779c078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
