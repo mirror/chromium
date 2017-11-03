@@ -341,6 +341,12 @@ def ZipResources(resource_dirs, zip_path):
         if parent_dir != '.':
           archive_path = os.path.join(parent_dir, f)
         path = os.path.join(root, f)
+        # Ensure only one of -fil and -tl is used (both are for Filipino).
+        # Chrome uses only -tl, but it's possible that dependencies might
+        # use -fil. Aapt is not smart enough to de-dupe them.
+        archive_dir, archive_file = os.path.split(archive_path)
+        archive_dir = archive_dir.replace('-fil', '-tl')
+        archive_path = os.path.join(archive_dir, archive_file)
         files_to_zip[archive_path] = path
   build_utils.DoZip(files_to_zip.iteritems(), zip_path)
 
