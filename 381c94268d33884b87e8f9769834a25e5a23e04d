@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8d4a2d0_c35f852b",
+        "filename": "build/android/gyp/java_cpp_enum.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-11-03T14:57:50Z",
+      "side": 1,
+      "message": "Looks good! I should have added more detail when I filed this issue, can we also make it strip kPrefixes? For example \n https://cs.chromium.org/chromium/src/third_party/WebKit/public/platform/WebReferrerPolicy.h?rcl\u003dd1c910879ed03b3016a4f51ca1a1080534e8cbf2\u0026l\u003d42\n\nWebReferrerPolicy {\n  kWebReferrerPolicyAlways,...\n\nWould become WebReferrerPolicy.ALWAYS on the java side.\n\nProbably just a matter of changing startswith to re.match. Then you\u0027ll also have to fix the java side uses (it doesn\u0027t look like there are that many thankfully).",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 26
+      },
+      "revId": "381c94268d33884b87e8f9769834a25e5a23e04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
