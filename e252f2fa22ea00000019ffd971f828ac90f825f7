@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "285e9da4_6c1c09f9",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-03T22:24:38Z",
+      "side": 1,
+      "message": "Philippe: NB",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "e252f2fa22ea00000019ffd971f828ac90f825f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339ceb65_8798c2a9",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-03T22:24:38Z",
+      "side": 1,
+      "message": "Philippe: NB",
+      "range": {
+        "startLine": 38,
+        "startChar": 15,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "e252f2fa22ea00000019ffd971f828ac90f825f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59162b47_fb0b6664",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-03T22:24:38Z",
+      "side": 1,
+      "message": "Philippe: NB",
+      "range": {
+        "startLine": 137,
+        "startChar": 21,
+        "endLine": 137,
+        "endChar": 29
+      },
+      "revId": "e252f2fa22ea00000019ffd971f828ac90f825f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
