@@ -21,6 +21,7 @@
 #include "ui/display/display.h"
 #include "ui/display/display_layout.h"
 #include "ui/display/display_layout_builder.h"
+#include "ui/display/manager/chromeos/touch_device_manager.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/types/display_constants.h"
 #include "ui/gfx/geometry/point.h"
@@ -420,11 +421,6 @@ bool ValidateParamsForTouchCalibration(
     return false;
   }
 
-  if (display.touch_support() != display::Display::TOUCH_SUPPORT_AVAILABLE) {
-    *error = "Display Id(" + id + ") does not support touch.";
-    return false;
-  }
-
   return true;
 }
 
@@ -460,6 +456,11 @@ const char DisplayInfoProviderChromeOS::kTouchCalibrationPointsTooLargeError[] =
 // static
 const char DisplayInfoProviderChromeOS::kNativeTouchCalibrationActiveError[] =
     "Another touch calibration is already active.";
+
+// static
+const char DisplayInfoProviderChromeOS::kNoExternalTouchDevicePresent[] =
+    "Touch calibration can only be performed on external devices. No external"
+    " touch devices found.";
 
 DisplayInfoProviderChromeOS::DisplayInfoProviderChromeOS() {}
 
@@ -789,6 +790,11 @@ bool DisplayInfoProviderChromeOS::ShowNativeTouchCalibration(
   }
   VLOG(1) << "StartNativeTouchCalibration: " << id;
 
+  if (!display::HasExternalTouchscreenDevice()) {
+    *error = kNoExternalTouchDevicePresent;
+    return false;
+  }
+
   // If a custom calibration is already running, then throw an error.
   if (custom_touch_calibration_active_) {
     *error = kCustomTouchCalibrationInProgressError;
@@ -815,6 +821,11 @@ bool DisplayInfoProviderChromeOS::StartCustomTouchCalibration(
     return false;
   }
   VLOG(1) << "StartCustomTouchCalibration: " << id;
+  if (!display::HasExternalTouchscreenDevice()) {
+    *error = kNoExternalTouchDevicePresent;
+    return false;
+  }
+
   const display::Display display = GetDisplay(id);
   if (!ValidateParamsForTouchCalibration(id, display, GetTouchCalibrator(),
                                          error)) {

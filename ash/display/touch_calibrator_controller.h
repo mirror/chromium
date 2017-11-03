@@ -80,6 +80,14 @@ class ASH_EXPORT TouchCalibratorController
   FRIEND_TEST_ALL_PREFIXES(TouchCalibratorControllerTest, CustomCalibration);
   FRIEND_TEST_ALL_PREFIXES(TouchCalibratorControllerTest,
                            CustomCalibrationInvalidTouchId);
+  FRIEND_TEST_ALL_PREFIXES(TouchCalibratorControllerTest,
+                           IgnoreInternalTouchDevices);
+  FRIEND_TEST_ALL_PREFIXES(TouchCalibratorControllerTest,
+                           HighDPIMonitorsCalibration);
+  FRIEND_TEST_ALL_PREFIXES(TouchCalibratorControllerTest,
+                           RotatedHighDPIMonitorsCalibration);
+  FRIEND_TEST_ALL_PREFIXES(TouchCalibratorControllerTest,
+                           InternalTouchDeviceIsRejected);
 
   enum class CalibrationState {
     // Indicates that the touch calibration is currently active with the built
@@ -113,7 +121,8 @@ class ASH_EXPORT TouchCalibratorController
   int touch_device_id_ = ui::InputDevice::kInvalidId;
 
   // A set of ids that belong to touch devices associated with the internal
-  // display. This is only valid when |state_| is not |kInactive|.
+  // display and are of type |ui::InputDeviceType::INPUT_DEVICE_INTERNAL|. This
+  // is only valid when |state_| is not |kInactive|.
   std::set<int> internal_touch_device_ids_;
 
   // An array of Calibration point pairs. This stores all the 4 display and
@@ -122,6 +131,13 @@ class ASH_EXPORT TouchCalibratorController
 
   // A callback to be called when touch calibration completes.
   TouchCalibrationCallback opt_callback_;
+
+  // The touch device under calibration may be re-associated to another display
+  // during calibration. In such a case, the events originating from the touch
+  // device are tranformed based on parameters of the previous display it was
+  // linked to. We need to undo these transformations before recording the event
+  // locations.
+  gfx::Transform event_transformer_;
 
   DISALLOW_COPY_AND_ASSIGN(TouchCalibratorController);
 };
