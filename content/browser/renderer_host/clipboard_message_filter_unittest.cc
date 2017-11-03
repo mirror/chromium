@@ -13,6 +13,7 @@
 #include "base/run_loop.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/base/test/test_clipboard.h"
@@ -25,7 +26,7 @@ class ClipboardMessageFilterTest : public ::testing::Test {
   ClipboardMessageFilterTest()
       : filter_(new ClipboardMessageFilter(nullptr)),
         clipboard_(ui::TestClipboard::CreateForCurrentThread()) {
-    filter_->set_peer_process_for_testing(base::Process::Current());
+    // ? filter_->set_peer_process_for_testing(base::Process::Current());
   }
 
   ~ClipboardMessageFilterTest() override {
@@ -51,22 +52,27 @@ class ClipboardMessageFilterTest : public ::testing::Test {
   }
 
   void CallWriteImage(const gfx::Size& size,
-                      base::SharedMemory* shared_memory) {
+                      base::SharedMemory* shared_memory,
+                      size_t sharede_memory_size) {
     base::SharedMemoryHandle handle = shared_memory->GetReadOnlyHandle();
     shared_memory->Unmap();
     shared_memory->Close();
     ASSERT_TRUE(handle.IsValid());
-    CallWriteImageDirectly(size, handle);
+    CallWriteImageDirectly(size, handle, sharede_memory_size);
   }
 
   // Prefer to use CallWriteImage() in tests.
   void CallWriteImageDirectly(const gfx::Size& size,
-                              base::SharedMemoryHandle handle) {
-    filter_->OnWriteImage(ui::CLIPBOARD_TYPE_COPY_PASTE, size, handle);
+                              base::SharedMemoryHandle handle,
+                              size_t shared_memory_size) {
+    mojo::ScopedSharedBufferHandle shared_buffer_handle =
+        mojo::WrapSharedMemoryHandle(handle, shared_memory_size, false);
+    filter_->WriteImage(ui::CLIPBOARD_TYPE_COPY_PASTE, size,
+                        std::move(shared_buffer_handle));
   }
 
   void CallCommitWrite() {
-    filter_->OnCommitWrite(ui::CLIPBOARD_TYPE_COPY_PASTE);
+    filter_->CommitWrite(ui::CLIPBOARD_TYPE_COPY_PASTE);
     base::RunLoop().RunUntilIdle();
   }
 
@@ -74,7 +80,7 @@ class ClipboardMessageFilterTest : public ::testing::Test {
 
  private:
   const TestBrowserThreadBundle thread_bundle_;
-  const scoped_refptr<ClipboardMessageFilter> filter_;
+  const std::unique_ptr<ClipboardMessageFilter> filter_;
   ui::Clipboard* const clipboard_;
 };
 
@@ -91,7 +97,7 @@ TEST_F(ClipboardMessageFilterTest, SimpleImage) {
       CreateAndMapReadOnlySharedMemory(sizeof(bitmap_data));
   memcpy(shared_memory->memory(), bitmap_data, sizeof(bitmap_data));
 
-  CallWriteImage(gfx::Size(4, 4), shared_memory.get());
+  CallWriteImage(gfx::Size(4, 4), shared_memory.get(), sizeof(bitmap_data));
   uint64_t sequence_number =
       clipboard()->GetSequenceNumber(ui::CLIPBOARD_TYPE_COPY_PASTE);
   CallCommitWrite();
@@ -114,7 +120,7 @@ TEST_F(ClipboardMessageFilterTest, ImageSizeOverflows32BitRowBytes) {
   std::unique_ptr<base::SharedMemory> shared_memory =
       CreateReadOnlySharedMemory(0x20000000);
 
-  CallWriteImage(gfx::Size(0x20000000, 1), shared_memory.get());
+  CallWriteImage(gfx::Size(0x20000000, 1), shared_memory.get(), 0x20000000);
   uint64_t sequence_number =
       clipboard()->GetSequenceNumber(ui::CLIPBOARD_TYPE_COPY_PASTE);
   CallCommitWrite();
@@ -124,7 +130,7 @@ TEST_F(ClipboardMessageFilterTest, ImageSizeOverflows32BitRowBytes) {
 }
 
 TEST_F(ClipboardMessageFilterTest, InvalidSharedMemoryHandle) {
-  CallWriteImageDirectly(gfx::Size(5, 5), base::SharedMemoryHandle());
+  CallWriteImageDirectly(gfx::Size(5, 5), base::SharedMemoryHandle(), 0);
   uint64_t sequence_number =
       clipboard()->GetSequenceNumber(ui::CLIPBOARD_TYPE_COPY_PASTE);
   CallCommitWrite();
