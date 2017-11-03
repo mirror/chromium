@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ae83107_0ca4a143",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-03T11:29:50Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s right: the browser process can\u0027t trust the renderer process to do anything. If the renderer process is supposed to verify WebServiceWorkerProviderImpl before it makes the IPC call, the browser process should still check and kill the render process if it violated the contract.",
+      "revId": "382f155210d34890f6fdeccb3c99f99d9ecdf1de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
