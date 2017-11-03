@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30282e46_c217d088",
+        "filename": "ui/base/x/x11_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-03T17:52:43Z",
+      "side": 1,
+      "message": "does this need locking too?",
+      "range": {
+        "startLine": 1364,
+        "startChar": 16,
+        "endLine": 1364,
+        "endChar": 30
+      },
+      "revId": "43cf7972417fefe4fd386eccc17583a630cc1282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
