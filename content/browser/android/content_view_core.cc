@@ -528,13 +528,6 @@ void ContentViewCore::DidStopFlinging() {
     Java_ContentViewCore_onNativeFlingStopped(env, obj);
 }
 
-gfx::Size ContentViewCore::GetViewSize() const {
-  gfx::Size size = GetViewportSizeDip();
-  if (DoBrowserControlsShrinkBlinkSize())
-    size.Enlarge(0, -GetTopControlsHeightDip() - GetBottomControlsHeightDip());
-  return size;
-}
-
 gfx::Size ContentViewCore::GetViewportSizePix() const {
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jobject> j_obj = java_ref_.get(env);
@@ -542,42 +535,6 @@ gfx::Size ContentViewCore::GetViewportSizePix() const {
     return gfx::Size();
   return gfx::Size(Java_ContentViewCore_getViewportWidthPix(env, j_obj),
                    Java_ContentViewCore_getViewportHeightPix(env, j_obj));
-}
-
-int ContentViewCore::GetTopControlsHeightPix() const {
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> j_obj = java_ref_.get(env);
-  if (j_obj.is_null())
-    return 0;
-  return Java_ContentViewCore_getTopControlsHeightPix(env, j_obj);
-}
-
-int ContentViewCore::GetBottomControlsHeightPix() const {
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> j_obj = java_ref_.get(env);
-  if (j_obj.is_null())
-    return 0;
-  return Java_ContentViewCore_getBottomControlsHeightPix(env, j_obj);
-}
-
-gfx::Size ContentViewCore::GetViewportSizeDip() const {
-  return gfx::ScaleToCeiledSize(GetViewportSizePix(), 1.0f / dpi_scale());
-}
-
-bool ContentViewCore::DoBrowserControlsShrinkBlinkSize() const {
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> j_obj = java_ref_.get(env);
-  if (j_obj.is_null())
-    return false;
-  return Java_ContentViewCore_doBrowserControlsShrinkBlinkSize(env, j_obj);
-}
-
-float ContentViewCore::GetTopControlsHeightDip() const {
-  return GetTopControlsHeightPix() / dpi_scale();
-}
-
-float ContentViewCore::GetBottomControlsHeightDip() const {
-  return GetBottomControlsHeightPix() / dpi_scale();
 }
 
 void ContentViewCore::SendScreenRectsAndResizeWidget() {
@@ -651,6 +608,14 @@ void ContentViewCore::SetFocusInternal(bool focused) {
     GetRenderWidgetHostViewAndroid()->GotFocus();
   else
     GetRenderWidgetHostViewAndroid()->LostFocus();
+}
+
+int ContentViewCore::GetTopControlsHeightPix(JNIEnv* env,
+                                             const JavaParamRef<jobject>& obj) {
+  RenderWidgetHostViewAndroid* rwhv = GetRenderWidgetHostViewAndroid();
+  return !rwhv || !rwhv->DoBrowserControlsShrinkBlinkSize()
+             ? 0
+             : rwhv->GetTopControlsHeight();
 }
 
 void ContentViewCore::SendOrientationChangeEvent(

@@ -75,6 +75,9 @@ class ContentViewCore : public WebContentsObserver {
       jlong selectPopupSourceFrame,
       const base::android::JavaParamRef<jintArray>& indices);
 
+  int GetTopControlsHeightPix(JNIEnv* env,
+                              const base::android::JavaParamRef<jobject>& obj);
+
   void SendOrientationChangeEvent(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
@@ -241,7 +244,6 @@ class ContentViewCore : public WebContentsObserver {
   // Methods called from native code
   // --------------------------------------------------------------------------
 
-  gfx::Size GetViewportSizeDip() const;
   bool DoBrowserControlsShrinkBlinkSize() const;
   float GetTopControlsHeightDip() const;
   float GetBottomControlsHeightDip() const;
