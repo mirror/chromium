@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d7f54d8_92514583",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002539
+      },
+      "writtenOn": "2017-11-03T01:25:01Z",
+      "side": 1,
+      "message": "this is not needed now, there\u0027s luci_project tag injected by Buildbucket automatically that is used by Milo instead",
+      "range": {
+        "startLine": 386,
+        "startChar": 22,
+        "endLine": 386,
+        "endChar": 34
+      },
+      "revId": "d5ee61401d47e175590c3cba02c383af809534bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f96c87_c353ca12",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002539
+      },
+      "writtenOn": "2017-11-03T01:25:01Z",
+      "side": 1,
+      "message": "this is very creative alignment... please use default 2 spaces, it would be more copy-pastable.",
+      "range": {
+        "startLine": 402,
+        "startChar": 4,
+        "endLine": 403,
+        "endChar": 65
+      },
+      "revId": "d5ee61401d47e175590c3cba02c383af809534bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d48547_4d53744c",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002539
+      },
+      "writtenOn": "2017-11-03T01:25:01Z",
+      "side": 1,
+      "message": "I hope this doesn\u0027t break luci-config and/or milo...",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "d5ee61401d47e175590c3cba02c383af809534bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
