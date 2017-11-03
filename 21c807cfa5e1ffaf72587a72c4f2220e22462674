@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b313e1b_aa1647fb",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-03T00:28:31Z",
+      "side": 1,
+      "message": "nit: using statements (here and a few other places) would make these a little more readable?\n\nUp to you since it\u0027s a formatting suggestion.",
+      "revId": "21c807cfa5e1ffaf72587a72c4f2220e22462674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
