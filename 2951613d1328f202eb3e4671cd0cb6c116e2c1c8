@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f9dc4db_84e824ef",
+        "filename": "third_party/WebKit/LayoutTests/compositing/squashing/dont-squash-into-animated-layers.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1139071
+      },
+      "writtenOn": "2017-11-03T05:39:40Z",
+      "side": 1,
+      "message": "can you declare the layer name instead of layer ?(var scrolling_layer kindof) which could be more informative than instead a layer.",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "2951613d1328f202eb3e4671cd0cb6c116e2c1c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
