@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "566213b3_e10f5895",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRWebGLLayer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-03T17:09:54Z",
+      "side": 1,
+      "message": "Can you use base::ClampToRange in blink?",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 75
+      },
+      "revId": "eec42226a5dbc44fcb6c27c874743e9af3422d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae21d3c_aaa7563a",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRWebGLLayer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-03T17:09:54Z",
+      "side": 1,
+      "message": "Magic numbers to constants. Also, explain in a comment what you\u0027re going here? Presumably capping the scalefactor to avoid footguns like textures that are so big you crash?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 68
+      },
+      "revId": "eec42226a5dbc44fcb6c27c874743e9af3422d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93aadee_261d408c",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRWebGLLayer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-03T17:09:54Z",
+      "side": 1,
+      "message": "magic numbers. (also ClampToRange if that\u0027s allowed)",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 60
+      },
+      "revId": "eec42226a5dbc44fcb6c27c874743e9af3422d90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
