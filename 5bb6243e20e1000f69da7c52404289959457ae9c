@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c32ef125_5dd68b37",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-03T20:51:01Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "e9c17292_7d7ffa6e",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 49
+      },
+      "revId": "5bb6243e20e1000f69da7c52404289959457ae9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6445a7de_6bae2561",
         "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "5bb6243e20e1000f69da7c52404289959457ae9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86db34fe_62621e61",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-03T20:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6445a7de_6bae2561",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 24,
+        "endChar": 61
+      },
+      "revId": "5bb6243e20e1000f69da7c52404289959457ae9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
