@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c226eab_fcbf8a13",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1593,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-03T13:24:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deec4217_82ef236a",
+      "range": {
+        "startLine": 1593,
+        "startChar": 3,
+        "endLine": 1593,
+        "endChar": 0
+      },
+      "revId": "2788b5e2da0bfa0279410079c531fb4e4f6b540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f62df3d_aa7cfdb7",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "2788b5e2da0bfa0279410079c531fb4e4f6b540a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0548171_6099e15d",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-03T13:24:42Z",
+      "side": 1,
+      "message": "Done (with first suggestion).",
+      "parentUuid": "7f62df3d_aa7cfdb7",
+      "range": {
+        "startLine": 791,
+        "startChar": 10,
+        "endLine": 791,
+        "endChar": 37
+      },
+      "revId": "2788b5e2da0bfa0279410079c531fb4e4f6b540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +130,30 @@
       "writtenOn": "2017-11-03T12:27:14Z",
       "side": 1,
       "message": "Change this to profile-\u003eIsNewProfile() to match the expected parameter and to match the semantics of the parameter.",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "2788b5e2da0bfa0279410079c531fb4e4f6b540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d48d73_4276411d",
+        "filename": "ios/chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-03T13:24:42Z",
+      "side": 1,
+      "message": "ios::ChromeBrowserState does not have this function.\n\nOne solution would be to rename this parameter to |force_dice_enabled|.\nWe could keep the same code, but the semantic would be a bit different (it breaks the encapsulation a little).",
+      "parentUuid": "ca7e2d88_8eba34c4",
       "range": {
         "startLine": 53,
         "startChar": 6,
