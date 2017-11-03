@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f77cbfd1_4dace8a3",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_target_android.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-03T20:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8001c5e0_f7d1b8e2",
+      "revId": "be371bf19e71144822e7d39a124634f1ced1b8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18a11109_f8264750",
         "filename": "content/renderer/gpu/gpu_benchmarking_extension.cc",
         "patchSetId": 15
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-03T20:14:19Z",
       "side": 1,
       "message": "Why is this here? Seems unrelated to this change.",
+      "range": {
+        "startLine": 587,
+        "startChar": 18,
+        "endLine": 587,
+        "endChar": 41
+      },
+      "revId": "be371bf19e71144822e7d39a124634f1ced1b8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e37d95a_1ba8199b",
+        "filename": "content/renderer/gpu/gpu_benchmarking_extension.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-03T20:43:11Z",
+      "side": 1,
+      "message": "Ah, yes, it seems that way because it\u0027s not used in this patch...but it\u0027s used in the tests I add for this patch (in Catapult, https://chromium-review.googlesource.com/c/catapult/+/751684) to make it easy to measure the scroll distance by first hiding the URL bar - so that all the scroll delta goes into changing the page scroll offset.",
+      "parentUuid": "18a11109_f8264750",
       "range": {
         "startLine": 587,
         "startChar": 18,
