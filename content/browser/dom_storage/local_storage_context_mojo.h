@@ -89,6 +89,7 @@ class CONTENT_EXPORT LocalStorageContextMojo
  private:
   friend class MojoDOMStorageBrowserTest;
 
+  class LevelDBDelegate;
   class LevelDBWrapperHolder;
 
   ~LocalStorageContextMojo() override;

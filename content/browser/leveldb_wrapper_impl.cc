@@ -46,6 +46,8 @@ base::TimeDelta LevelDBWrapperImpl::RateLimiter::ComputeDelayNeeded(
   return base::TimeDelta();
 }
 
+LevelDBWrapperImpl::Delegate::~Delegate() {}
+
 LevelDBWrapperImpl::CommitBatch::CommitBatch() : clear_all_first(false) {}
 LevelDBWrapperImpl::CommitBatch::~CommitBatch() {}
 
@@ -56,9 +58,9 @@ LevelDBWrapperImpl::LevelDBWrapperImpl(
     base::TimeDelta default_commit_delay,
     int max_bytes_per_hour,
     int max_commits_per_hour,
-    Delegate* delegate)
+    std::unique_ptr<Delegate> delegate)
     : prefix_(leveldb::StdStringToUint8Vector(prefix)),
-      delegate_(delegate),
+      delegate_(std::move(delegate)),
       database_(database),
       bytes_used_(0),
       max_size_(max_size),
@@ -86,8 +88,8 @@ void LevelDBWrapperImpl::EnableAggressiveCommitDelay() {
 
 void LevelDBWrapperImpl::ScheduleImmediateCommit() {
   if (!on_load_complete_tasks_.empty()) {
-    LoadMap(base::Bind(&LevelDBWrapperImpl::ScheduleImmediateCommit,
-                       base::Unretained(this)));
+    LoadMap(base::BindOnce(&LevelDBWrapperImpl::ScheduleImmediateCommit,
+                           base::Unretained(this)));
     return;
   }
 
@@ -153,9 +155,9 @@ void LevelDBWrapperImpl::Put(
     const std::string& source,
     PutCallback callback) {
   if (!map_) {
-    LoadMap(base::Bind(&LevelDBWrapperImpl::Put, base::Unretained(this), key,
-                       value, client_old_value, source,
-                       base::Passed(&callback)));
+    // Callback stores refcount to ensure operation completes.
+    LoadMap(base::BindOnce(&LevelDBWrapperImpl::Put, this, key, value,
+                           client_old_value, source, base::Passed(&callback)));
     return;
   }
 
@@ -212,8 +214,9 @@ void LevelDBWrapperImpl::Delete(
     const std::string& source,
     DeleteCallback callback) {
   if (!map_) {
-    LoadMap(base::Bind(&LevelDBWrapperImpl::Delete, base::Unretained(this), key,
-                       client_old_value, source, base::Passed(&callback)));
+    // Callback stores refcount to ensure operation completes.
+    LoadMap(base::BindOnce(&LevelDBWrapperImpl::Delete, this, key,
+                           client_old_value, source, base::Passed(&callback)));
     return;
   }
 
@@ -241,8 +244,9 @@ void LevelDBWrapperImpl::Delete(
 void LevelDBWrapperImpl::DeleteAll(const std::string& source,
                                    DeleteAllCallback callback) {
   if (!map_) {
-    LoadMap(base::Bind(&LevelDBWrapperImpl::DeleteAll, base::Unretained(this),
-                       source, base::Passed(&callback)));
+    // Callback stores refcount to ensure operation completes.
+    LoadMap(base::BindOnce(&LevelDBWrapperImpl::DeleteAll, this, source,
+                           base::Passed(&callback)));
     return;
   }
 
@@ -269,8 +273,9 @@ void LevelDBWrapperImpl::DeleteAll(const std::string& source,
 void LevelDBWrapperImpl::Get(const std::vector<uint8_t>& key,
                              GetCallback callback) {
   if (!map_) {
-    LoadMap(base::Bind(&LevelDBWrapperImpl::Get, base::Unretained(this), key,
-                       base::Passed(&callback)));
+    // Callback stores refcount to ensure operation completes.
+    LoadMap(base::BindOnce(&LevelDBWrapperImpl::Get, this, key,
+                           base::Passed(&callback)));
     return;
   }
 
@@ -286,9 +291,10 @@ void LevelDBWrapperImpl::GetAll(
     mojom::LevelDBWrapperGetAllCallbackAssociatedPtrInfo complete_callback,
     GetAllCallback callback) {
   if (!map_) {
-    LoadMap(base::Bind(&LevelDBWrapperImpl::GetAll, base::Unretained(this),
-                       base::Passed(&complete_callback),
-                       base::Passed(&callback)));
+    // Callback stores refcount to ensure operation completes.
+    LoadMap(base::BindOnce(&LevelDBWrapperImpl::GetAll, this,
+                           base::Passed(&complete_callback),
+                           base::Passed(&callback)));
     return;
   }
 
@@ -317,9 +323,9 @@ void LevelDBWrapperImpl::OnConnectionError() {
   delegate_->OnNoBindings();
 }
 
-void LevelDBWrapperImpl::LoadMap(const base::Closure& completion_callback) {
+void LevelDBWrapperImpl::LoadMap(base::OnceClosure completion_callback) {
   DCHECK(!map_);
-  on_load_complete_tasks_.push_back(completion_callback);
+  on_load_complete_tasks_.push_back(std::move(completion_callback));
   if (on_load_complete_tasks_.size() > 1)
     return;
 
@@ -329,6 +335,8 @@ void LevelDBWrapperImpl::LoadMap(const base::Closure& completion_callback) {
     return;
   }
 
+  // Weakptr because callback should hold a refcount if it needs the operation
+  // to complete.
   database_->GetPrefixed(prefix_,
                          base::BindOnce(&LevelDBWrapperImpl::OnMapLoaded,
                                         weak_ptr_factory_.GetWeakPtr()));
@@ -406,10 +414,10 @@ void LevelDBWrapperImpl::OnGotMigrationData(std::unique_ptr<ValueMap> data) {
 }
 
 void LevelDBWrapperImpl::OnLoadComplete() {
-  std::vector<base::Closure> tasks;
+  std::vector<base::OnceClosure> tasks;
   on_load_complete_tasks_.swap(tasks);
   for (auto& task : tasks)
-    task.Run();
+    std::move(task).Run();
 
   // We might need to call the no_bindings_callback_ here if bindings became
   // empty while waiting for load to complete.
