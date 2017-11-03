@@ -46,6 +46,30 @@
       "revId": "b61ee4a3bd160d3153418e8a407379c205700179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af817d71_a62c996d",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-03T12:41:11Z",
+      "side": 1,
+      "message": "That\u0027s weird. If you add a DCHECK here that GetBoundsForNode(n).Contains(GetBackgroundBoundsForNode(n)) does it trip?",
+      "parentUuid": "dd1ae727_eae090c8",
+      "range": {
+        "startLine": 744,
+        "startChar": 22,
+        "endLine": 744,
+        "endChar": 48
+      },
+      "revId": "b61ee4a3bd160d3153418e8a407379c205700179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
