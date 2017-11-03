@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "fb13d983_ededd17a",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-03T19:24:15Z",
+      "side": 1,
+      "message": "ok you\u0027ve convinced me. added null check",
+      "parentUuid": "598695d9_3fbe80d1",
+      "revId": "515e5ee8028d602b0cdcd05e9961bea7edf7cd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67d08cda_0cbfccfa",
         "filename": "content/public/browser/network_service_instance.cc",
         "patchSetId": 10
