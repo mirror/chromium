@@ -135,6 +135,8 @@ WindowTree* WindowServer::EmbedAtWindow(
   std::unique_ptr<WindowTree> tree_ptr(
       new WindowTree(this, user_id, root, std::move(access_policy)));
   WindowTree* tree = tree_ptr.get();
+  root->UpdateFrameSinkId(ClientWindowId(tree->id(), kEmbedWindowId));
+
   if (flags & mojom::kEmbedFlagEmbedderInterceptsEvents)
     tree->set_embedder_intercepts_events();
 
