@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ab03ca_76643797",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-column-axis-alignment-positioned-items-001.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-03T17:41:00Z",
+      "side": 1,
+      "message": "I guess \"align-self: start;\" should be here to avoid repeating it in all the items.",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c571ac_dbb79490",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-column-axis-alignment-positioned-items-001.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-03T17:41:00Z",
+      "side": 1,
+      "message": "There\u0027s a \"support/grid.css\" defining this stuff.\nActually the class name is \"onlyFirstRowOnlyFirstColumn\" for this case.\nThat would also allow you to remove the lines for the colors above.",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6b4d04_e005a8c5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-non-static-positioned-items-002.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-03T17:41:00Z",
+      "side": 1,
+      "message": "You have this very same class above, better move this line there.",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a5bd7b_df4d6c09",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-non-static-positioned-items-003.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-03T17:41:00Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e4dcd2_09081b6f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-non-static-positioned-items-005.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-03T17:41:00Z",
+      "side": 1,
+      "message": "Are this extra lines really useful?\n\nAlso maybe adding \u003cdiv id\u003d\"log\"\u003e\u003c/div\u003e before the grid containers make the output more readable when running them manually on a browser.",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e3c6e5_670f5319",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-non-static-positioned-items-009-expected.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-03T17:41:00Z",
+      "side": 1,
+      "message": "I\u0027m fine with having this failing but this should be explained in the commit message.\nAlso it might be interesting to add a comment on the test itself pointing to the bug too.",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2190cb02_ded04682",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2051,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-03T17:41:00Z",
+      "side": 1,
+      "message": "This line can be moved after the next if.",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6265b48d_026b22ca",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2072,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-03T17:41:00Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15842aa_33bd2869",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2143,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-03T17:41:00Z",
+      "side": 1,
+      "message": "I guess we still haven\u0027t investigated this further.",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
