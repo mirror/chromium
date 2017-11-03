@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2139795e_43f5743c",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 6270,
+      "author": {
+        "id": 1210939
+      },
+      "writtenOn": "2017-11-03T17:52:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bd7abb5_586a0486",
+      "range": {
+        "startLine": 6270,
+        "startChar": 13,
+        "endLine": 6270,
+        "endChar": 39
+      },
+      "revId": "762303cb383d3f2f09854be40032950df34e0af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5815cc97_4e11ce4c",
         "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "762303cb383d3f2f09854be40032950df34e0af0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e808586_88d70b3d",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1210939
+      },
+      "writtenOn": "2017-11-03T17:52:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5815cc97_4e11ce4c",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "762303cb383d3f2f09854be40032950df34e0af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c371d6bd_bd2272bd",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1210939
+      },
+      "writtenOn": "2017-11-03T17:52:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure - I\u0027ll defer to rch for this. I wanted to avoid the noise of GURL parser fuzzing, but if there is different behavior for different urls here it may make sense to just fuzz them or pick from an array.",
+      "parentUuid": "fc7915c0_bc3bc91e",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 54
+      },
+      "revId": "762303cb383d3f2f09854be40032950df34e0af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f0d8925_d7282a0b",
         "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-03T17:03:14Z",
       "side": 1,
       "message": "Are all of the objects created below needed to be created on each input? I guess there are some constant / stateless things that can be created once as static / global stuff, it might speed up the fuzzer",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 37
+      },
+      "revId": "762303cb383d3f2f09854be40032950df34e0af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6708e8_44953fe4",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1210939
+      },
+      "writtenOn": "2017-11-03T17:52:15Z",
+      "side": 1,
+      "message": "I moved things out to a static initializer. Hopefully there\u0027s no state in those objects.",
+      "parentUuid": "0f0d8925_d7282a0b",
       "range": {
         "startLine": 53,
         "startChar": 15,
