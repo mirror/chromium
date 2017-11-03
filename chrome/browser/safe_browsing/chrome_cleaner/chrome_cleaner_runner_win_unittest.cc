@@ -55,36 +55,41 @@ enum class ReporterEngine {
 //       enabled
 // - reporter_engine (ReporterEngine): the type of Cleaner engine specified in
 //       the SwReporterInvocation.
+// - cleaner_logs_enabled (bool): if logs can be collected in the cleaner
+//       process running in scanning mode.
 class ChromeCleanerRunnerSimpleTest
     : public testing::TestWithParam<
           std::tuple<ChromeCleanerRunner::ChromeMetricsStatus,
-                     ReporterEngine>>,
+                     ReporterEngine,
+                     bool>>,
       public ChromeCleanerRunnerTestDelegate {
  public:
   ChromeCleanerRunnerSimpleTest()
       : command_line_(base::CommandLine::NO_PROGRAM) {}
 
   void SetUp() override {
-    std::tie(metrics_status_, reporter_engine_) = GetParam();
+    std::tie(metrics_status_, reporter_engine_, cleaner_logs_enabled_) =
+        GetParam();
 
     SetChromeCleanerRunnerTestDelegateForTesting(this);
   }
 
   void CallRunChromeCleaner() {
-    SwReporterInvocation reporter_invocation;
+    base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
     switch (reporter_engine_) {
       case ReporterEngine::kUnspecified:
         // No engine switch.
         break;
       case ReporterEngine::kOldEngine:
-        reporter_invocation.command_line.AppendSwitchASCII(
-            chrome_cleaner::kEngineSwitch, "1");
+        command_line.AppendSwitchASCII(chrome_cleaner::kEngineSwitch, "1");
         break;
       case ReporterEngine::kNewEngine:
-        reporter_invocation.command_line.AppendSwitchASCII(
-            chrome_cleaner::kEngineSwitch, "2");
+        command_line.AppendSwitchASCII(chrome_cleaner::kEngineSwitch, "2");
         break;
     }
+
+    SwReporterInvocation reporter_invocation(command_line);
+    reporter_invocation.set_cleaner_logs_upload_enabled(cleaner_logs_enabled_);
 
     ChromeCleanerRunner::RunChromeCleanerAndReplyWithExitCode(
         base::FilePath(FILE_PATH_LITERAL("cleaner.exe")), reporter_invocation,
@@ -130,6 +135,7 @@ class ChromeCleanerRunnerSimpleTest
   // Test fixture parameters.
   ChromeCleanerRunner::ChromeMetricsStatus metrics_status_;
   ReporterEngine reporter_engine_;
+  bool cleaner_logs_enabled_;
 
   // Set by LaunchTestProcess.
   base::CommandLine command_line_;
@@ -170,6 +176,9 @@ TEST_P(ChromeCleanerRunnerSimpleTest, LaunchParams) {
   EXPECT_EQ(
       metrics_status_ == ChromeMetricsStatus::kEnabled,
       command_line_.HasSwitch(chrome_cleaner::kEnableCrashReportingSwitch));
+  EXPECT_EQ(cleaner_logs_enabled_,
+            command_line_.HasSwitch(
+                chrome_cleaner::kEnableCleanupLoggingInScanningModeSwitch));
 }
 
 INSTANTIATE_TEST_CASE_P(
@@ -179,7 +188,8 @@ INSTANTIATE_TEST_CASE_P(
                    ChromeCleanerRunner::ChromeMetricsStatus::kDisabled),
             Values(ReporterEngine::kUnspecified,
                    ReporterEngine::kOldEngine,
-                   ReporterEngine::kNewEngine)));
+                   ReporterEngine::kNewEngine),
+            Bool()));
 
 // Enum to be used as parameter for the ChromeCleanerRunnerTest fixture below.
 enum class UwsFoundState {
@@ -233,7 +243,8 @@ class ChromeCleanerRunnerTest
   void CallRunChromeCleaner() {
     ChromeCleanerRunner::RunChromeCleanerAndReplyWithExitCode(
         base::FilePath(FILE_PATH_LITERAL("cleaner.exe")),
-        SwReporterInvocation(), ChromeMetricsStatus::kDisabled,
+        SwReporterInvocation(base::CommandLine(base::CommandLine::NO_PROGRAM)),
+        ChromeMetricsStatus::kDisabled,
         base::BindOnce(&ChromeCleanerRunnerTest::OnPromptUser,
                        base::Unretained(this)),
         base::BindOnce(&ChromeCleanerRunnerTest::OnConnectionClosed,

@@ -33,6 +33,11 @@ extern const char kChromeSystemInstallSwitch[];
 // The Chrome version string.
 extern const char kChromeVersionSwitch[];
 
+// Identify that the cleaner process in scanning mode is allowed to collect
+// logs. This should only be set if |kExecutionModeSwitch| is
+// ExecutionMode::kScanning.
+extern const char kEnableCleanupLoggingInScanningModeSwitch[];
+
 // Indicates that crash reporting is enabled for the current user.
 extern const char kEnableCrashReportingSwitch[];
 
@@ -95,7 +100,11 @@ extern const wchar_t kVersionValueName[];
 constexpr int kSwReporterCleanupNeeded = 0;
 constexpr int kSwReporterNothingFound = 2;
 constexpr int kSwReporterPostRebootCleanupNeeded = 4;
+constexpr int kSwReporterNonRemovableOnly = 10;
 constexpr int kSwReporterDelayedPostRebootCleanupNeeded = 15;
+constexpr int kSwReporterSuspiciousOnly = 32;
+constexpr int kSwReporterTimeoutWithoutUwS = 34;
+constexpr int kSwReporterTimeoutWithUwS = 35;
 
 // Values to be passed to the kChromePromptSwitch of the Chrome Cleanup Tool to
 // indicate how the user interacted with the accept button.
