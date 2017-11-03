@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da9ac4a0_7e9ef858",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-03T19:42:44Z",
+      "side": 1,
+      "message": "nit: IsPresentationCallbackEnabled()\n\nEnablePresentationCallback sounds like an action (\"do enable presentation callback\"), whereas IsPresentationCallbackEnabled probably conveys the meaning better.",
+      "revId": "9de7afb3d68f2b138555056d29d56c3d35d8e041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d01013db_eb0cdd20",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-03T19:42:44Z",
+      "side": 1,
+      "message": "nit: !a || (a\u0026\u0026b) \u003d\u003d\u003d !a || b, so you can simplify.",
+      "revId": "9de7afb3d68f2b138555056d29d56c3d35d8e041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a556a787_79ee6182",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-03T19:42:44Z",
+      "side": 1,
+      "message": "nit: could you save the value in a bool field? Otherwise we\u0027re testing strings every frame, which is unnecessary overhead.",
+      "revId": "9de7afb3d68f2b138555056d29d56c3d35d8e041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
