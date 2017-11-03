@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "3a45540b_ffaac41f",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-03T14:51:07Z",
+      "side": 0,
+      "message": "Right the if() depends on the texture id, but if you call the subclass for that, then the else does not need to.\n\nMore concretely.. like..\n\nbool did_alloc \u003d AllocateRenderPassResourceIfNeeded(size, hint, ...);\nif (!did_alloc) {\n  if (pass-\u003ecache_render_pass...)\n    return false;\n  else if (current_frame()-\u003ecompute scissor...)\n    return false;\n}\n\nNow the lines of code that are general (things dealing with the pass, the current frame, and logic about returning true/false) are all here, and just the allocation of a texture is moved.",
+      "parentUuid": "0a5c667a_64215241",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "baa779c8_6b807653",
         "filename": "components/viz/service/display/direct_renderer.cc",
         "patchSetId": 4
