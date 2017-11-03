@@ -2,10 +2,12 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
+
 if (is_component_build) {
-  link_target_type = "source_set"
+  link_target_type = "jumbo_source_set"
 } else {
-  link_target_type = "static_library"
+  link_target_type = "jumbo_static_library"
 }
 target(link_target_type, "service") {
   visibility = [
@@ -28,6 +30,13 @@ target(link_target_type, "service") {
     "media_gpu_channel.h",
     "media_gpu_channel_manager.cc",
     "media_gpu_channel_manager.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # IPC
+    "gpu_video_decode_accelerator.cc",
+    "gpu_video_encode_accelerator.cc",
+    "media_gpu_channel.cc",
   ]
 
   include_dirs = [ "//third_party/mesa/src/include" ]

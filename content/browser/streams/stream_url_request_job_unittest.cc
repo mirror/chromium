@@ -23,15 +23,13 @@
 
 namespace content {
 
-namespace {
+namespace stream_url_request_job_unittest {
 
 const int kBufferSize = 1024;
 const char kTestData1[] = "Hello";
 const char kTestData2[] = "Here it is data.";
 
 const GURL kStreamURL("blob://stream");
-
-}  // namespace
 
 class StreamURLRequestJobTest : public testing::Test {
  public:
@@ -186,5 +184,7 @@ TEST_F(StreamURLRequestJobTest, TestInvalidRangeDataRequest) {
   TestRequest("GET", kStreamURL, extra_headers, 405,
               net::ERR_METHOD_NOT_SUPPORTED, std::string());
 }
+
+}  // namespace stream_url_request_job_unittest
 
 }  // namespace content

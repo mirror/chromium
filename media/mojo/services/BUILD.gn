@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//media/media_options.gni")
 import("//services/catalog/public/tools/catalog.gni")
 import("//services/service_manager/public/cpp/service.gni")
@@ -16,7 +17,7 @@ proto_library("video_decode_stats_proto") {
   ]
 }
 
-component("services") {
+jumbo_component("services") {
   output_name = "media_mojo_services"
   sources = [
     "gpu_mojo_media_client.cc",
@@ -118,6 +119,13 @@ component("services") {
       "android_mojo_media_client.h",
       "mojo_media_drm_storage.cc",
       "mojo_media_drm_storage.h",
+    ]
+    jumbo_excluded_sources = [
+      # Macros (gpu/GL macros)
+      "test_mojo_media_client.cc",
+
+      # Symbols
+      "android_mojo_media_client.cc",
     ]
   }
 
