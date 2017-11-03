@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc8f86ab_3169a0be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-11-03T01:26:46Z",
+      "side": 0,
+      "message": "Nit: this newline seemed reasonable here.",
+      "revId": "fc0da1b6e997510cccc57c76f3eba921165ccd32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

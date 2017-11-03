@@ -305,6 +305,30 @@
       "revId": "0702003be75f154757090978b73b2ffdc14e8994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a1c012b_af6f9d05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-11-03T01:26:46Z",
+      "side": 1,
+      "message": "\u003e On RecyclerView.Adapter? AFAIK, onViewRecycled() is guaranteed to be called before any view holder is bound again, so they should be symmetric.\n\nIUUC, onBindViewHolder is also called to update view whenever data is updated. Will it call onViewRecycled() before?\n\n\u003e Hm, good point. It looks like Preference will directly reuse a previously bound view. I added a call to detach() before setting the promo view up again.\n\nI\u0027m afraid this breaks \"...ImpressionsTilDismiss\" histograms, as these are supposed to be counted only once per histogram impression.",
+      "parentUuid": "1f9b4388_d4466c59",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 42
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
