@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc03f3d6_fafcbcf5",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-03T16:10:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e54e639_335d7dda",
+      "revId": "f25b07c1e88f01e6bab67ff0030c5e9aed7b4d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbb1c239_28d4c2f7",
         "filename": "components/autofill/core/browser/autofill_profile.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "f25b07c1e88f01e6bab67ff0030c5e9aed7b4d2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e399149_b0fbc3dd",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-03T16:10:18Z",
+      "side": 1,
+      "message": "I am not sure about what the function is trying to do exactly so I did not try to change the code to much. But you are correct, that it is not meaningful if num_fields_to_use \u003e included_fields_size, so I added the check in.",
+      "parentUuid": "dbb1c239_28d4c2f7",
+      "revId": "f25b07c1e88f01e6bab67ff0030c5e9aed7b4d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

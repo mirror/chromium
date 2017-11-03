@@ -22,6 +22,30 @@
       "revId": "f75c7357a60a3597f6e955044738873b4e2aff18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b40c326_9c6a8169",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-03T16:10:18Z",
+      "side": 0,
+      "message": "it got changed in commit 33a338b, it looks to be a bug, since the one above was fixed but not this one, when the number of items changed.",
+      "parentUuid": "5682c276_e9718548",
+      "range": {
+        "startLine": 841,
+        "startChar": 14,
+        "endLine": 841,
+        "endChar": 15
+      },
+      "revId": "f75c7357a60a3597f6e955044738873b4e2aff18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
