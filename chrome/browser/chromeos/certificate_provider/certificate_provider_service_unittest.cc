@@ -57,14 +57,14 @@ certificate_provider::CertificateInfo CreateCertInfo(
   cert_info.certificate =
       net::ImportCertFromFile(net::GetTestCertsDirectory(), cert_filename);
   EXPECT_TRUE(cert_info.certificate) << "Could not load " << cert_filename;
-  cert_info.supported_hashes.push_back(net::SSLPrivateKey::Hash::SHA256);
+  cert_info.supported_algorithms.push_back(SSL_SIGN_RSA_PKCS1_SHA256);
 
   return cert_info;
 }
 
 bool IsKeyEqualToCertInfo(const certificate_provider::CertificateInfo& info,
                           net::SSLPrivateKey* key) {
-  return info.supported_hashes == key->GetDigestPreferences();
+  return info.supported_algorithms == key->GetPreferences();
 }
 
 bool ClientCertIdentityAlphabeticSorter(
@@ -94,7 +94,7 @@ class TestDelegate : public CertificateProviderService::Delegate {
   bool DispatchSignRequestToExtension(
       const std::string& extension_id,
       int sign_request_id,
-      net::SSLPrivateKey::Hash hash,
+      uint16_t algorithm,
       const scoped_refptr<net::X509Certificate>& certificate,
       const std::string& input) override {
     EXPECT_EQ(expected_request_type_, RequestType::SIGN);
@@ -469,7 +469,7 @@ TEST_F(CertificateProviderServiceTest, SignRequest) {
 
   std::vector<uint8_t> received_signature;
   private_key->SignDigest(
-      net::SSLPrivateKey::Hash::SHA256, std::string("any input data"),
+      SSL_SIGN_RSA_PKCS1_SHA256, std::string("any input data"),
       base::Bind(&ExpectOKAndStoreSignature, &received_signature));
 
   task_runner_->RunUntilIdle();
@@ -505,7 +505,7 @@ TEST_F(CertificateProviderServiceTest, UnloadExtensionDuringSign) {
 
   net::Error error = net::OK;
   private_key->SignDigest(
-      net::SSLPrivateKey::Hash::SHA256, std::string("any input data"),
+      SSL_SIGN_RSA_PKCS1_SHA256, std::string("any input data"),
       base::Bind(&ExpectEmptySignatureAndStoreError, &error));
 
   task_runner_->RunUntilIdle();
