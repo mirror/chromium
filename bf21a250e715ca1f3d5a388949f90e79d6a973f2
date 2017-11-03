@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85ee10c9_3408d515",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T14:17:25Z",
+      "side": 1,
+      "message": "This does more than set a single base address. It operates on everything in regions_. Its name should reflect that.\n\nA brief comment describing what it does would also be helpful.",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743d6ed9_e068fc7f",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T14:17:25Z",
+      "side": 1,
+      "message": "HANDLE_EINTR is good practice, although not strictly necessary because you should never see EINTR when working with /proc. Same goes for the read().",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e0f3ea_3cca469d",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T14:17:25Z",
+      "side": 1,
+      "message": "Does pread() work on /proc/pid/mem?\n\nUse C++-style casts, not C casts, although prefer no cast at all if you don\u0027t need one. Same on line 591.",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d79072e_becc5f17",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T14:17:25Z",
+      "side": 1,
+      "message": "These conditionals nest pretty deeply, but logically, they just AND together. Can you rewrite them that way so that there are fewer nested scopes to have to keep track of?\n\nIt shouldn’t be any problem to declare ehdr on the preceding line.",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636c2f99_2911b380",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T14:17:25Z",
+      "side": 1,
+      "message": "#include \u003cstring.h\u003e. Also, static_assert SELFMAG ≤ size of(ehdr)?",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2143e94_d683aab5",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T14:17:25Z",
+      "side": 1,
+      "message": "Can be “else if,” or use case/switch (my preference).",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77502194_c02b30aa",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T14:17:25Z",
+      "side": 1,
+      "message": "These next two conditionals can also be \u0026\u0026-joined.",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1484c2f5_79687e4d",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T14:17:25Z",
+      "side": 1,
+      "message": "If you never find one of these, cur_base will be leftover junk from a previous iteration.",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deed7809_e10eebb8",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T14:17:25Z",
+      "side": 1,
+      "message": "A scoper would make me more comfortable. You never know who\u0027s going to come along with an innocent early return.",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba84c1d_9784f50b",
+        "filename": "base/third_party/symbolize/symbolize.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-03T14:17:25Z",
+      "side": 1,
+      "message": "Similar comments apply here.",
+      "revId": "bf21a250e715ca1f3d5a388949f90e79d6a973f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
