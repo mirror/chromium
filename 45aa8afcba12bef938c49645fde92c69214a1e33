@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "9fbd586c_f3ef1c17",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/IntentHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-03T23:57:51Z",
+      "side": 1,
+      "message": "if parsedUrl doesn\u0027t have a protocol, URL(parsedUrl) will throw a MalformedURLException. And we cannot use the catch block to handle all urls without protocols, as there are other cases that cause the MalformedURLException to be thrown.",
+      "parentUuid": "cfce6012_e97f11de",
+      "range": {
+        "startLine": 1006,
+        "startChar": 32,
+        "endLine": 1006,
+        "endChar": 64
+      },
+      "revId": "45aa8afcba12bef938c49645fde92c69214a1e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23078c91_aa704a02",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/IntentHandlerTest.java",
         "patchSetId": 4
@@ -59,6 +83,30 @@
       "writtenOn": "2017-11-03T21:49:36Z",
       "side": 1,
       "message": "Didn\u0027t know this is valid https scheme without \"//\", but turned out to be valid.",
+      "range": {
+        "startLine": 82,
+        "startChar": 13,
+        "endLine": 82,
+        "endChar": 19
+      },
+      "revId": "45aa8afcba12bef938c49645fde92c69214a1e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6885d73a_f592105f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/IntentHandlerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-03T23:57:51Z",
+      "side": 1,
+      "message": "Yes, it works, both chrome and firefox supports it",
+      "parentUuid": "23078c91_aa704a02",
       "range": {
         "startLine": 82,
         "startChar": 13,
