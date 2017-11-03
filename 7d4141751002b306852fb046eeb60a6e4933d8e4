@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5df77b0d_02761a99",
+        "filename": "ash/public/cpp/ash_switches.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-03T20:39:51Z",
+      "side": 1,
+      "message": "nit: Is this comment correct? Feel free to delete it or update it.",
+      "revId": "7d4141751002b306852fb046eeb60a6e4933d8e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
