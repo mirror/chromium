@@ -84,8 +84,9 @@ Polymer({
    * 'photoDataURL' property containing the photo encoded as a data URL.
    */
   takePhoto: function() {
-    if (!this.cameraOnline_)
+    if (!this.cameraOnline_ || this.cameraCaptureInProgress_)
       return;
+    this.cameraCaptureInProgress_ = true;
 
     /** Pre-allocate all frames needed for capture. */
     var frames = [];
@@ -117,6 +118,7 @@ Polymer({
             'photo-taken',
             {photoDataUrl: this.convertFramesToPng_(capturedFrames)});
         this.$.userImageStreamCrop.classList.remove('capture');
+        this.cameraCaptureInProgress_ = false;
       }
     }, CAPTURE_INTERVAL_MS);
   },
