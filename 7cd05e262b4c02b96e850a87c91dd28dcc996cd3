@@ -22,6 +22,120 @@
       "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d10f835_b653ebc7",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T13:42:47Z",
+      "side": 1,
+      "message": "no \"the\"",
+      "range": {
+        "startLine": 24,
+        "startChar": 19,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3597e986_57407283",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T13:42:47Z",
+      "side": 1,
+      "message": "could we use base::ContainsValue(capabilities, static_cast\u003cint32_t\u003e(request));",
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0024a7_d7a45cba",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T13:42:47Z",
+      "side": 1,
+      "message": "would it ever happen that capabilities is empty and request-\u003esupported_networks + supported_types are empty?",
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19724df0_5008ba94",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T13:42:47Z",
+      "side": 1,
+      "message": "can you explain the copy in a comment?",
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436c802d_0ddbb456",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T13:42:47Z",
+      "side": 1,
+      "message": "of",
+      "range": {
+        "startLine": 43,
+        "startChar": 33,
+        "endLine": 43,
+        "endChar": 35
+      },
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55162d05_7da4ccb2",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-03T13:42:47Z",
+      "side": 1,
+      "message": "Getting a bit intense.\n\nCreate a ServiceWorkerPaymentAppFactoryTest class that all your test cases inherit from and that forwards the calls of RemoveAppsWithoutMatchingMethodData?\n\nthen you could \"friend class ServiceWorkerPaymentAppFactoryTest\"",
+      "revId": "7cd05e262b4c02b96e850a87c91dd28dcc996cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
