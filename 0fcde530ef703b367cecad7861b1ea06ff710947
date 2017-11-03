@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23e6194b_b6432d09",
+        "filename": "remoting/host/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-03T21:18:39Z",
+      "side": 1,
+      "message": "same",
+      "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f49b486_f0d0c523",
+        "filename": "remoting/host/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-03T21:18:39Z",
+      "side": 1,
+      "message": "nit: I might prefer more generic deps where granularity isn\u0027t really important. It\u0027s fine to make this broadly services/device/public imho",
+      "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c333c2b2_f961afff",
+        "filename": "services/device/wake_lock/power_save_blocker/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-03T21:18:39Z",
+      "side": 1,
+      "message": "public_deps please, since it\u0027s exposed via power_save_blocker.h",
+      "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec005229_ccb4a99d",
+        "filename": "services/device/wake_lock/power_save_blocker/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-03T21:18:39Z",
+      "side": 1,
+      "message": "same as other deps comments re granularity",
+      "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4962e2_8394c8c0",
+        "filename": "services/device/wake_lock/power_save_blocker/power_save_blocker_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-03T21:18:39Z",
+      "side": 1,
+      "message": "I may have missed this in (or simply not participated in) a previous review, and I\u0027m not asking you to change it here, but I think these enum values should be changed to follow enum naming style rules and be, e.g., mojom::WakeLockType::kPreventDisplaySleep.",
+      "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
