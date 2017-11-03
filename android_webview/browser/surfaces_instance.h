@@ -97,6 +97,8 @@ class SurfacesInstance : public base::RefCounted<SurfacesInstance>,
 
   gfx::Size surface_size_;
 
+  uint32_t swap_count_ = 0;
+
   DISALLOW_COPY_AND_ASSIGN(SurfacesInstance);
 };
 
