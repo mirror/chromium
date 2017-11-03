@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af51bbe5_21f00366",
+        "filename": "ios/web/interstitials/web_interstitial_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-03T16:34:46Z",
+      "side": 0,
+      "message": "Thank you for reverting.\n\nThe issue is that WebInterstitialImpl::DontProceed() does end with \"delete this\", so after the call web_state_ is released memory. Eugene, do we have WebStateInterstitialImpl unit tests? I would have expected them to catch this instead of EG tests.",
+      "revId": "0d974c4f5314897a66c6621e59ebbdf13cb6b12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
