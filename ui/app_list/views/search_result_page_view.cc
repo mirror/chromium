@@ -226,11 +226,16 @@ void SearchResultPageView::AddSearchResultContainerView(
 
 bool SearchResultPageView::OnKeyPressed(const ui::KeyEvent& event) {
   if (is_app_list_focus_enabled_) {
+    // Let the FocusManager handle Left/Right keys.
+    if (!CanProcessUpDownKeyTraversal(event))
+      return false;
+
     views::View* next_focusable_view = nullptr;
     if (event.key_code() == ui::VKEY_UP) {
       next_focusable_view = GetFocusManager()->GetNextFocusableView(
           GetFocusManager()->GetFocusedView(), GetWidget(), true, false);
-    } else if (event.key_code() == ui::VKEY_DOWN) {
+    } else {
+      DCHECK((event.key_code() == ui::VKEY_DOWN));
       next_focusable_view = GetFocusManager()->GetNextFocusableView(
           GetFocusManager()->GetFocusedView(), GetWidget(), false, false);
     }
