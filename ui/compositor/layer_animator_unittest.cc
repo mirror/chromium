@@ -365,6 +365,7 @@ TEST(LayerAnimatorTest, ImplicitAnimation) {
   EXPECT_TRUE(animator->is_animating());
   animator->Step(now + base::TimeDelta::FromSeconds(1));
   EXPECT_FLOAT_EQ(delegate.GetBrightnessForAnimation(), 0.5);
+  delegate.ExpectLastPropertyChangeReason(PropertyChangeReason::ANIMATION);
 }
 
 // Checks that if the animator is a default animator, that implicit animations
@@ -375,6 +376,7 @@ TEST(LayerAnimatorTest, NoImplicitAnimation) {
   animator->SetBrightness(0.5);
   EXPECT_FALSE(animator->is_animating());
   EXPECT_FLOAT_EQ(delegate.GetBrightnessForAnimation(), 0.5);
+  delegate.ExpectLastPropertyChangeReason(PropertyChangeReason::SET);
 }
 
 // Checks that StopAnimatingProperty stops animation for that property, and also
@@ -418,8 +420,8 @@ TEST(LayerAnimatorTest, AbortAllAnimations) {
   TestLayerAnimationDelegate delegate;
   double initial_opacity(1.0);
   gfx::Rect initial_bounds(0, 0, 10, 10);
-  delegate.SetOpacityFromAnimation(initial_opacity);
-  delegate.SetBoundsFromAnimation(initial_bounds);
+  delegate.SetOpacityFromAnimation(initial_opacity, PropertyChangeReason::SET);
+  delegate.SetBoundsFromAnimation(initial_bounds, PropertyChangeReason::SET);
   scoped_refptr<LayerAnimator> animator(CreateImplicitTestAnimator(&delegate));
   double target_opacity(0.5);
   gfx::Rect target_bounds(0, 0, 50, 50);
@@ -444,7 +446,8 @@ TEST(LayerAnimatorTest, ScheduleAnimationThatCanRunImmediately) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetBrightnessFromAnimation(start_brightness);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
 
   animator->ScheduleAnimation(
       new LayerAnimationSequence(
@@ -480,7 +483,7 @@ TEST(LayerAnimatorTest, ScheduleThreadedAnimationThatCanRunImmediately) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetOpacityFromAnimation(start_opacity);
+  delegate.SetOpacityFromAnimation(start_opacity, PropertyChangeReason::SET);
 
   test_controller.animator()->ScheduleAnimation(
       new LayerAnimationSequence(
@@ -529,8 +532,9 @@ TEST(LayerAnimatorTest, ScheduleTwoAnimationsThatCanRunImmediately) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetBrightnessFromAnimation(start_brightness);
-  delegate.SetBoundsFromAnimation(start_bounds);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
+  delegate.SetBoundsFromAnimation(start_bounds, PropertyChangeReason::SET);
 
   animator->ScheduleAnimation(
       new LayerAnimationSequence(
@@ -579,8 +583,8 @@ TEST(LayerAnimatorTest, ScheduleThreadedAndNonThreadedAnimations) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetOpacityFromAnimation(start_opacity);
-  delegate.SetBoundsFromAnimation(start_bounds);
+  delegate.SetOpacityFromAnimation(start_opacity, PropertyChangeReason::SET);
+  delegate.SetBoundsFromAnimation(start_bounds, PropertyChangeReason::SET);
 
   std::vector<LayerAnimationSequence*> animations;
   animations.push_back(
@@ -634,7 +638,8 @@ TEST(LayerAnimatorTest, ScheduleTwoAnimationsOnSameProperty) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetBrightnessFromAnimation(start_brightness);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
 
   animator->ScheduleAnimation(
       new LayerAnimationSequence(
@@ -690,8 +695,9 @@ TEST(LayerAnimatorTest, ScheduleBlockedAnimation) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetGrayscaleFromAnimation(start_grayscale);
-  delegate.SetBoundsFromAnimation(start_bounds);
+  delegate.SetGrayscaleFromAnimation(start_grayscale,
+                                     PropertyChangeReason::SET);
+  delegate.SetBoundsFromAnimation(start_bounds, PropertyChangeReason::SET);
 
   animator->ScheduleAnimation(
       new LayerAnimationSequence(
@@ -765,8 +771,9 @@ TEST(LayerAnimatorTest, ScheduleTogether) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetGrayscaleFromAnimation(start_grayscale);
-  delegate.SetBoundsFromAnimation(start_bounds);
+  delegate.SetGrayscaleFromAnimation(start_grayscale,
+                                     PropertyChangeReason::SET);
+  delegate.SetBoundsFromAnimation(start_bounds, PropertyChangeReason::SET);
 
   animator->ScheduleAnimation(
       new LayerAnimationSequence(
@@ -812,7 +819,8 @@ TEST(LayerAnimatorTest, StartAnimationThatCanRunImmediately) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetBrightnessFromAnimation(start_brightness);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
 
   animator->StartAnimation(
       new LayerAnimationSequence(
@@ -848,7 +856,7 @@ TEST(LayerAnimatorTest, StartThreadedAnimationThatCanRunImmediately) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetOpacityFromAnimation(start_opacity);
+  delegate.SetOpacityFromAnimation(start_opacity, PropertyChangeReason::SET);
 
   test_controller.animator()->StartAnimation(
       new LayerAnimationSequence(
@@ -889,7 +897,7 @@ TEST(LayerAnimatorTest, PreemptBySettingNewTarget) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetOpacityFromAnimation(start_opacity);
+  delegate.SetOpacityFromAnimation(start_opacity, PropertyChangeReason::SET);
 
   animator->set_preemption_strategy(LayerAnimator::IMMEDIATELY_SET_NEW_TARGET);
 
@@ -916,7 +924,8 @@ TEST(LayerAnimatorTest, PreemptByImmediatelyAnimatingToNewTarget) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetBrightnessFromAnimation(start_brightness);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
 
   animator->set_preemption_strategy(
       LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
@@ -971,7 +980,7 @@ TEST(LayerAnimatorTest, PreemptThreadedByImmediatelyAnimatingToNewTarget) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetOpacityFromAnimation(start_opacity);
+  delegate.SetOpacityFromAnimation(start_opacity, PropertyChangeReason::SET);
 
   test_controller.animator()->set_preemption_strategy(
       LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
@@ -1036,7 +1045,8 @@ TEST(LayerAnimatorTest, PreemptEnqueueNewAnimation) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetBrightnessFromAnimation(start_brightness);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
 
   animator->set_preemption_strategy(LayerAnimator::ENQUEUE_NEW_ANIMATION);
 
@@ -1088,7 +1098,8 @@ TEST(LayerAnimatorTest, PreemptyByReplacingQueuedAnimations) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetBrightnessFromAnimation(start_brightness);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
 
   animator->set_preemption_strategy(LayerAnimator::REPLACE_QUEUED_ANIMATIONS);
 
@@ -1143,8 +1154,10 @@ TEST(LayerAnimatorTest, StartTogetherSetsLastStepTime) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetGrayscaleFromAnimation(start_grayscale);
-  delegate.SetBrightnessFromAnimation(start_brightness);
+  delegate.SetGrayscaleFromAnimation(start_grayscale,
+                                     PropertyChangeReason::SET);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
 
   animator->set_preemption_strategy(
       LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
@@ -1180,8 +1193,9 @@ TEST(LayerAnimatorTest, MultiPreemptBySettingNewTarget) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetOpacityFromAnimation(start_opacity);
-  delegate.SetBrightnessFromAnimation(start_brightness);
+  delegate.SetOpacityFromAnimation(start_opacity, PropertyChangeReason::SET);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
 
   animator->set_preemption_strategy(LayerAnimator::IMMEDIATELY_SET_NEW_TARGET);
 
@@ -1219,8 +1233,10 @@ TEST(LayerAnimatorTest, MultiPreemptByImmediatelyAnimatingToNewTarget) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetGrayscaleFromAnimation(start_grayscale);
-  delegate.SetBrightnessFromAnimation(start_brightness);
+  delegate.SetGrayscaleFromAnimation(start_grayscale,
+                                     PropertyChangeReason::SET);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
 
   animator->set_preemption_strategy(
       LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
@@ -1288,8 +1304,9 @@ TEST(LayerAnimatorTest, MultiPreemptThreadedByImmediatelyAnimatingToNewTarget) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetOpacityFromAnimation(start_opacity);
-  delegate.SetBrightnessFromAnimation(start_brightness);
+  delegate.SetOpacityFromAnimation(start_opacity, PropertyChangeReason::SET);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
 
   test_controller.animator()->set_preemption_strategy(
       LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
@@ -1370,8 +1387,10 @@ TEST(LayerAnimatorTest, MultiPreemptEnqueueNewAnimation) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetGrayscaleFromAnimation(start_grayscale);
-  delegate.SetBrightnessFromAnimation(start_brightness);
+  delegate.SetGrayscaleFromAnimation(start_grayscale,
+                                     PropertyChangeReason::SET);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
 
   animator->set_preemption_strategy(LayerAnimator::ENQUEUE_NEW_ANIMATION);
 
@@ -1434,8 +1453,10 @@ TEST(LayerAnimatorTest, MultiPreemptByReplacingQueuedAnimations) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetGrayscaleFromAnimation(start_grayscale);
-  delegate.SetBrightnessFromAnimation(start_brightness);
+  delegate.SetGrayscaleFromAnimation(start_grayscale,
+                                     PropertyChangeReason::SET);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
 
   animator->set_preemption_strategy(LayerAnimator::REPLACE_QUEUED_ANIMATIONS);
 
@@ -1498,7 +1519,8 @@ TEST(LayerAnimatorTest, CyclicSequences) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetBrightnessFromAnimation(start_brightness);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
 
   std::unique_ptr<LayerAnimationSequence> sequence(
       new LayerAnimationSequence(LayerAnimationElement::CreateBrightnessElement(
@@ -1557,7 +1579,7 @@ TEST(LayerAnimatorTest, ThreadedCyclicSequences) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetOpacityFromAnimation(start_opacity);
+  delegate.SetOpacityFromAnimation(start_opacity, PropertyChangeReason::SET);
 
   std::unique_ptr<LayerAnimationSequence> sequence(new LayerAnimationSequence(
       LayerAnimationElement::CreateOpacityElement(target_opacity, delta)));
@@ -1643,7 +1665,7 @@ TEST(LayerAnimatorTest, AddObserverExplicit) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetBrightnessFromAnimation(0.0f);
+  delegate.SetBrightnessFromAnimation(0.0f, PropertyChangeReason::SET);
 
   LayerAnimationSequence* sequence = new LayerAnimationSequence(
       LayerAnimationElement::CreateBrightnessElement(1.0f, delta));
@@ -2408,7 +2430,7 @@ TEST(LayerAnimatorTest, ObserverReleasedBeforeAnimationSequenceEnds) {
   scoped_refptr<LayerAnimator> animator(
       CreateDefaultTestAnimator(&delegate, observer.get()));
 
-  delegate.SetOpacityFromAnimation(0.0f);
+  delegate.SetOpacityFromAnimation(0.0f, PropertyChangeReason::SET);
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
   LayerAnimationSequence* sequence = new LayerAnimationSequence(
@@ -2432,7 +2454,7 @@ TEST(LayerAnimatorTest, ObserverAttachedAfterAnimationStarted) {
 
   TestImplicitAnimationObserver observer(false);
 
-  delegate.SetBrightnessFromAnimation(0.0f);
+  delegate.SetBrightnessFromAnimation(0.0f, PropertyChangeReason::SET);
 
   {
     ScopedLayerAnimationSettings setter(animator.get());
@@ -2464,7 +2486,7 @@ TEST(LayerAnimatorTest, ObserverDetachedBeforeAnimationFinished) {
 
   TestImplicitAnimationObserver observer(false);
 
-  delegate.SetBrightnessFromAnimation(0.0f);
+  delegate.SetBrightnessFromAnimation(0.0f, PropertyChangeReason::SET);
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
   LayerAnimationSequence* sequence = new LayerAnimationSequence(
       LayerAnimationElement::CreateBrightnessElement(1.0f, delta));
@@ -2511,8 +2533,9 @@ TEST(LayerAnimatorTest, ObserverDeletesAnimationsOnEnd) {
   gfx::Rect start_bounds(0, 0, 50, 50);
   gfx::Rect target_bounds(5, 5, 5, 5);
 
-  delegate.SetBrightnessFromAnimation(start_brightness);
-  delegate.SetBoundsFromAnimation(start_bounds);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
+  delegate.SetBoundsFromAnimation(start_bounds, PropertyChangeReason::SET);
 
   base::TimeDelta brightness_delta = base::TimeDelta::FromSeconds(1);
   base::TimeDelta halfway_delta = base::TimeDelta::FromSeconds(2);
@@ -2556,8 +2579,9 @@ TEST(LayerAnimatorTest, CallbackDeletesAnimationInProgress) {
         max_width_(max_width) {
     }
 
-    void SetBoundsFromAnimation(const gfx::Rect& bounds) override {
-      TestLayerAnimationDelegate::SetBoundsFromAnimation(bounds);
+    void SetBoundsFromAnimation(const gfx::Rect& bounds,
+                                PropertyChangeReason reason) override {
+      TestLayerAnimationDelegate::SetBoundsFromAnimation(bounds, reason);
       if (bounds.width() > max_width_)
         animator_->StopAnimating();
     }
@@ -2577,7 +2601,7 @@ TEST(LayerAnimatorTest, CallbackDeletesAnimationInProgress) {
   gfx::Rect start_bounds(0, 0, 0, 0);
   gfx::Rect target_bounds(5, 5, 50, 50);
 
-  delegate.SetBoundsFromAnimation(start_bounds);
+  delegate.SetBoundsFromAnimation(start_bounds, PropertyChangeReason::SET);
 
   base::TimeDelta bounds_delta1 = base::TimeDelta::FromMilliseconds(333);
   base::TimeDelta bounds_delta2 = base::TimeDelta::FromMilliseconds(666);
@@ -2622,8 +2646,9 @@ TEST(LayerAnimatorTest, ObserverDeletesAnimationsOnAbort) {
   base::TimeDelta brightness_delta = base::TimeDelta::FromSeconds(1);
   base::TimeDelta bounds_delta = base::TimeDelta::FromSeconds(2);
 
-  delegate.SetBrightnessFromAnimation(start_brightness);
-  delegate.SetBoundsFromAnimation(start_bounds);
+  delegate.SetBrightnessFromAnimation(start_brightness,
+                                      PropertyChangeReason::SET);
+  delegate.SetBoundsFromAnimation(start_bounds, PropertyChangeReason::SET);
 
   std::unique_ptr<DeletingLayerAnimationObserver> observer(
       new DeletingLayerAnimationObserver(animator.get()));
@@ -2664,7 +2689,7 @@ TEST(LayerAnimatorTest, SettingPropertyDuringAnAnimation) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetOpacityFromAnimation(start_opacity);
+  delegate.SetOpacityFromAnimation(start_opacity, PropertyChangeReason::SET);
 
   std::unique_ptr<LayerAnimationSequence> sequence =
       std::make_unique<LayerAnimationSequence>(
@@ -2689,7 +2714,7 @@ TEST(LayerAnimatorTest, ImmediatelySettingNewTargetDoesNotLeak) {
   gfx::Rect middle_bounds(10, 10, 100, 100);
   gfx::Rect target_bounds(5, 5, 5, 5);
 
-  delegate.SetBoundsFromAnimation(start_bounds);
+  delegate.SetBoundsFromAnimation(start_bounds, PropertyChangeReason::SET);
 
   {
     // start an implicit bounds animation.
@@ -2723,7 +2748,7 @@ TEST(LayerAnimatorTest, GetTargetOpacity) {
   scoped_refptr<LayerAnimator> animator(CreateDefaultTestAnimator(&delegate));
   animator->set_preemption_strategy(LayerAnimator::ENQUEUE_NEW_ANIMATION);
 
-  delegate.SetOpacityFromAnimation(0.0);
+  delegate.SetOpacityFromAnimation(0.0, PropertyChangeReason::SET);
 
   {
     ScopedLayerAnimationSettings settings(animator.get());
@@ -2742,7 +2767,7 @@ TEST(LayerAnimatorTest, GetTargetBrightness) {
   scoped_refptr<LayerAnimator> animator(CreateDefaultTestAnimator(&delegate));
   animator->set_preemption_strategy(LayerAnimator::ENQUEUE_NEW_ANIMATION);
 
-  delegate.SetBrightnessFromAnimation(0.0);
+  delegate.SetBrightnessFromAnimation(0.0, PropertyChangeReason::SET);
 
   {
     ScopedLayerAnimationSettings settings(animator.get());
@@ -2761,7 +2786,7 @@ TEST(LayerAnimatorTest, GetTargetGrayscale) {
   scoped_refptr<LayerAnimator> animator(CreateDefaultTestAnimator(&delegate));
   animator->set_preemption_strategy(LayerAnimator::ENQUEUE_NEW_ANIMATION);
 
-  delegate.SetGrayscaleFromAnimation(0.0);
+  delegate.SetGrayscaleFromAnimation(0.0, PropertyChangeReason::SET);
 
   {
     ScopedLayerAnimationSettings settings(animator.get());
@@ -2785,7 +2810,7 @@ TEST(LayerAnimatorTest, Color) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetColorFromAnimation(start_color);
+  delegate.SetColorFromAnimation(start_color, PropertyChangeReason::SET);
 
   animator->ScheduleAnimation(
       new LayerAnimationSequence(
@@ -2821,7 +2846,8 @@ TEST(LayerAnimatorTest, Temperature) {
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
 
-  delegate.SetTemperatureFromAnimation(start_temperature);
+  delegate.SetTemperatureFromAnimation(start_temperature,
+                                       PropertyChangeReason::SET);
 
   animator->ScheduleAnimation(new LayerAnimationSequence(
       LayerAnimationElement::CreateTemperatureElement(target_temperature,
@@ -2966,12 +2992,12 @@ TEST(LayerAnimatorTest, ObserverDeletesAnimatorAfterFinishingAnimation) {
   TestLayerAnimationDelegate delegate;
   animator->SetDelegate(&delegate);
 
-  delegate.SetBrightnessFromAnimation(0.0f);
+  delegate.SetBrightnessFromAnimation(0.0f, PropertyChangeReason::SET);
 
   gfx::Rect start_bounds(0, 0, 50, 50);
   gfx::Rect target_bounds(10, 10, 100, 100);
 
-  delegate.SetBoundsFromAnimation(start_bounds);
+  delegate.SetBoundsFromAnimation(start_bounds, PropertyChangeReason::SET);
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
   LayerAnimationSequence* brightness_sequence = new LayerAnimationSequence(
@@ -2998,12 +3024,12 @@ TEST(LayerAnimatorTest, ObserverDeletesAnimatorAfterStoppingAnimating) {
   TestLayerAnimationDelegate delegate;
   animator->SetDelegate(&delegate);
 
-  delegate.SetOpacityFromAnimation(0.0f);
+  delegate.SetOpacityFromAnimation(0.0f, PropertyChangeReason::SET);
 
   gfx::Rect start_bounds(0, 0, 50, 50);
   gfx::Rect target_bounds(10, 10, 100, 100);
 
-  delegate.SetBoundsFromAnimation(start_bounds);
+  delegate.SetBoundsFromAnimation(start_bounds, PropertyChangeReason::SET);
 
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
   LayerAnimationSequence* opacity_sequence = new LayerAnimationSequence(
@@ -3028,12 +3054,12 @@ TEST(LayerAnimatorTest, ObserverDeletesAnimatorAfterScheduling) {
   LayerAnimator* animator = observer->animator();
   animator->SetDelegate(&delegate);
 
-  delegate.SetOpacityFromAnimation(0.0f);
+  delegate.SetOpacityFromAnimation(0.0f, PropertyChangeReason::SET);
 
   gfx::Rect start_bounds(0, 0, 50, 50);
   gfx::Rect target_bounds(10, 10, 100, 100);
 
-  delegate.SetBoundsFromAnimation(start_bounds);
+  delegate.SetBoundsFromAnimation(start_bounds, PropertyChangeReason::SET);
 
   std::vector<LayerAnimationSequence*> to_start;
 
@@ -3060,12 +3086,12 @@ TEST(LayerAnimatorTest, ObserverDeletesAnimatorAfterAborted) {
       LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
   animator->SetDelegate(&delegate);
 
-  delegate.SetOpacityFromAnimation(0.0f);
+  delegate.SetOpacityFromAnimation(0.0f, PropertyChangeReason::SET);
 
   gfx::Rect start_bounds(0, 0, 50, 50);
   gfx::Rect target_bounds(10, 10, 100, 100);
 
-  delegate.SetBoundsFromAnimation(start_bounds);
+  delegate.SetBoundsFromAnimation(start_bounds, PropertyChangeReason::SET);
 
   std::vector<LayerAnimationSequence*> to_start;
 
@@ -3096,7 +3122,7 @@ TEST(LayerAnimatorTest, TestSetterRespectEnqueueStrategy) {
   float target_opacity = 1.0f;
   float magic_opacity = 0.123f;
 
-  delegate.SetOpacityFromAnimation(start_opacity);
+  delegate.SetOpacityFromAnimation(start_opacity, PropertyChangeReason::SET);
 
   ScopedLayerAnimationSettings settings(animator.get());
   settings.SetPreemptionStrategy(
@@ -3352,8 +3378,8 @@ TEST(LayerAnimatorTest, ObserverDeletesLayerInStopAnimating) {
   const gfx::Rect target_bounds(10, 10, 100, 100);
   const double target_opacity = 1.0;
 
-  delegate->SetOpacityFromAnimation(0.0f);
-  delegate->SetBoundsFromAnimation(start_bounds);
+  delegate->SetOpacityFromAnimation(0.0f, PropertyChangeReason::SET);
+  delegate->SetBoundsFromAnimation(start_bounds, PropertyChangeReason::SET);
 
   base::TimeDelta time_delta = base::TimeDelta::FromSeconds(1);
   LayerAnimationSequence* opacity = new LayerAnimationSequence(
