@@ -22,6 +22,30 @@
       "revId": "a9cbdd35df06953b46f64fa48e376d80d8dbf28f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b52797_10301969",
+        "filename": "components/exo/sub_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-03T14:46:13Z",
+      "side": 1,
+      "message": "See paragraph 6 in https://wayland.freedesktop.org/docs/html/apa.html#protocol-spec-wl_subsurface. If the parent surface is not desync then the commit should not happen until parent commits.",
+      "parentUuid": "0669fba7_4a67341e",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 34
+      },
+      "revId": "a9cbdd35df06953b46f64fa48e376d80d8dbf28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
