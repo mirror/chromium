@@ -109,7 +109,7 @@ class CHROMEOS_EXPORT ClientCertResolver : public NetworkStateHandlerObserver,
       std::unique_ptr<std::vector<NetworkAndMatchingCert>> matches);
 
   // Trigger a ResolveRequestCompleted event on all observers.
-  void NotifyResolveRequestCompleted();
+  void NotifyResolveRequestCompleted(bool network_properties_changed);
 
   // Returns Time::Now() unless a mock clock has been installed with
   // SetClockForTesting, in which case the time according to that clock is used
