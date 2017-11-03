@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a5f1714_00d949e3",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10683,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-03T15:59:45Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure I understand the translator\u0027s concerns fully, but were they also asking to remove those space indents as well?",
+      "range": {
+        "startLine": 10683,
+        "startChar": 0,
+        "endLine": 10683,
+        "endChar": 6
+      },
+      "revId": "43e4d6da6b0aeb1671e8059c4a50cc8b021bdd6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
