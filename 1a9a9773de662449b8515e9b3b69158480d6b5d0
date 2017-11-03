@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "317585d4_8ea32939",
+        "filename": "components/viz/common/resources/resource_format_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-03T14:54:02Z",
+      "side": 1,
+      "message": "This function is duplicated in https://cs.chromium.org/chromium/src/cc/resources/resource_provider.cc?rcl\u003dd1c910879ed03b3016a4f51ca1a1080534e8cbf2\u0026l\u003d92 can we merge them?",
+      "revId": "1a9a9773de662449b8515e9b3b69158480d6b5d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
