@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "53531b3f_53e2c11f",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-03T20:59:19Z",
+      "side": 1,
+      "message": "Won\u0027t the high bits be set for that window, so that client shouldn\u0027t have to worry?",
+      "parentUuid": "e9201664_d6c62ba5",
+      "range": {
+        "startLine": 138,
+        "startChar": 53,
+        "endLine": 138,
+        "endChar": 67
+      },
+      "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d26212c1_e8004310",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 6
@@ -195,6 +219,24 @@
       "side": 1,
       "message": "This IPC tells the embedder the FrameSinkId of the embed window. I think we do still need it so that embedder knows about the updated FrameSinkId to use for its embed window?",
       "parentUuid": "9780380b_bb7199e9",
+      "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a346788_04e04dd1",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2641,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-03T20:59:19Z",
+      "side": 1,
+      "message": "Doesn\u0027t this conflict with what you\u0027re saying above (my question about WmCreateTopLevelWindow(). client() in this case is the wm, so why do you need to tell the wm the framsinkid in two places? I also find it confusing that you\u0027re overloading ClientSpecificId for frame sink id in some places. Please make the mojom clear when the ids are frame sink ids.",
+      "parentUuid": "6bd9ac58_a91e2bea",
       "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
