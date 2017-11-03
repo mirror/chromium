@@ -16,6 +16,24 @@
       "revId": "fa0ab678540511a261a329059b7541a52e7e4ce1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5da436_f840fc55",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-03T09:14:02Z",
+      "side": 1,
+      "message": "It seems like that the strings are guaranteed to be ASCII. See my comment in the other file.\n\nHowever, it would be nicer to use String::FromUTF8() here just in case.",
+      "parentUuid": "46a82dbf_3e6ce5e1",
+      "revId": "fa0ab678540511a261a329059b7541a52e7e4ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
