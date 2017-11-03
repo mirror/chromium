@@ -98,6 +98,21 @@ TEST(GIFImageDecoderTest, decodeTwoFrames) {
   EXPECT_EQ(kAnimationLoopInfinite, decoder->RepetitionCount());
 }
 
+TEST(GIFImageDecoderTest, crbug779261) {
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+  RefPtr<SharedBuffer> data =
+      ReadFile(kLayoutTestResourcesDir, "crbug779261.gif");
+  ASSERT_TRUE(data.get());
+  decoder->SetData(data.get(), true);
+
+  for (size_t i = 0; i < decoder->FrameCount(); ++i) {
+    ImageFrame* frame = decoder->DecodeFrameBufferAtIndex(i);
+    EXPECT_EQ(ImageFrame::kFrameComplete, frame->GetStatus());
+  }
+
+  EXPECT_FALSE(decoder->Failed());
+}
+
 TEST(GIFImageDecoderTest, parseAndDecode) {
   std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
 
