@@ -247,14 +247,6 @@ void RunExperimentalSwReporter(const base::FilePath& exe_path,
     command_line.AppendSwitchASCII(chrome_cleaner::kSessionIdSwitch,
                                    session_id);
 
-    const std::string experiment_group =
-        variations::GetVariationParamValueByFeature(
-            kExperimentalEngineFeature, "experiment_group_for_reporting");
-    command_line.AppendSwitchNative(
-        chrome_cleaner::kEngineExperimentGroupSwitch,
-        experiment_group.empty() ? L"missing_experiment_group"
-                                 : base::UTF8ToUTF16(experiment_group));
-
     // Add the histogram suffix to the command-line as well, so that the
     // reporter will add the same suffix to registry keys where it writes
     // metrics.
