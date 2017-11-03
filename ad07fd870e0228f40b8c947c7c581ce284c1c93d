@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1926575e_321f50bd",
+        "filename": "chrome/browser/ui/webui/signin/user_manager_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-11-03T14:13:08Z",
+      "side": 1,
+      "message": "Can you explain what this is checking?",
+      "range": {
+        "startLine": 471,
+        "startChar": 13,
+        "endLine": 471,
+        "endChar": 51
+      },
+      "revId": "ad07fd870e0228f40b8c947c7c581ce284c1c93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e0642f4_5aef27d7",
         "filename": "chrome/browser/ui/webui/signin/user_manager_screen_handler.cc",
         "patchSetId": 1
