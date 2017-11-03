@@ -16,6 +16,24 @@
       "revId": "748a43adfc05142166e09a834ed895708dad5fe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d3a4577_f8986ae7",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsEmulator.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-03T15:16:53Z",
+      "side": 1,
+      "message": "Ignore me, gerrit collapsed the method declaration and fooled me, you are doing the right thing.",
+      "parentUuid": "9c511c0b_eda41b88",
+      "revId": "748a43adfc05142166e09a834ed895708dad5fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
