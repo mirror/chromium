@@ -9,6 +9,9 @@
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/ui/activity_services/activity_service_controller.h"
+#import "ios/chrome/browser/ui/activity_services/canonical_url_feature.h"
+#import "ios/chrome/browser/ui/activity_services/canonical_url_getter.h"
+#import "ios/chrome/browser/ui/activity_services/canonical_url_getter_delegate.h"
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_password.h"
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_positioner.h"
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_presentation.h"
@@ -23,7 +26,8 @@
 #error "This file requires ARC support."
 #endif
 
-@interface ActivityServiceLegacyCoordinator ()<ActivityServicePassword>
+@interface ActivityServiceLegacyCoordinator ()<ActivityServicePassword,
+                                               CanonicalURLGetterDelegate>
 @end
 
 @implementation ActivityServiceLegacyCoordinator
@@ -65,8 +69,29 @@
 #pragma mark - Command handlers
 
 - (void)sharePage {
-  ShareToData* data =
-      activity_services::ShareToDataForTab([self.tabModel currentTab], GURL());
+  if (!base::FeatureList::IsEnabled(activity_services::kShareCanonicalURL)) {
+    [self canonicalURLGetter:nil didRetrieveCanonicalURL:GURL()];
+  } else {
+    CanonicalURLGetter* getter = [[CanonicalURLGetter alloc] init];
+    [getter retrieveCanonicalURLForWebState:self.tabModel.currentTab.webState];
+  }
+}
+
+#pragma mark - Providers
+
+- (id<PasswordFormFiller>)currentPasswordFormFiller {
+  web::WebState* webState = self.tabModel.currentTab.webState;
+  return webState ? PasswordTabHelper::FromWebState(webState)
+                        ->GetPasswordFormFiller()
+                  : nil;
+}
+
+#pragma mark - CanonicalURLGetterDelegate
+
+- (void)canonicalURLGetter:(CanonicalURLGetter*)getter
+    didRetrieveCanonicalURL:(const GURL&)canonicalURL {
+  ShareToData* data = activity_services::ShareToDataForTab(
+      [self.tabModel currentTab], canonicalURL);
   if (!data)
     return;
 
@@ -81,15 +106,6 @@
            passwordProvider:self
            positionProvider:self.positionProvider
        presentationProvider:self.presentationProvider];
-}
-
-#pragma mark - Providers
-
-- (id<PasswordFormFiller>)currentPasswordFormFiller {
-  web::WebState* webState = self.tabModel.currentTab.webState;
-  return webState ? PasswordTabHelper::FromWebState(webState)
-                        ->GetPasswordFormFiller()
-                  : nil;
 }
 
 @end
