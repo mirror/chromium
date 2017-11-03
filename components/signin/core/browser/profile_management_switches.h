@@ -108,6 +108,9 @@ std::unique_ptr<BooleanPrefMember> CreateDicePrefMember(
 // Called to migrate a profile to Dice. After this call, it is enabled forever.
 void MigrateProfileToDice(PrefService* user_prefs);
 
+// Cancels the Dice migration. Only used for testing.
+void UndoDiceMigrationForTesting(PrefService* user_prefs);
+
 ////////////////////////////////////////////////////////////////////////////////
 // Other functions:
 
