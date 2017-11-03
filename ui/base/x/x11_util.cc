@@ -1410,6 +1410,7 @@ void XVisualManager::ChooseVisualForWindow(bool want_argb_visual,
                                            int* depth,
                                            Colormap* colormap,
                                            bool* using_argb_visual) {
+  base::AutoLock lock(lock_);
   bool use_argb = want_argb_visual && ArgbVisualAvailable();
   VisualID visual_id = use_argb && transparent_visual_id_
                            ? transparent_visual_id_
@@ -1432,6 +1433,7 @@ void XVisualManager::ChooseVisualForWindow(bool want_argb_visual,
 bool XVisualManager::OnGPUInfoChanged(bool software_rendering,
                                       VisualID system_visual_id,
                                       VisualID transparent_visual_id) {
+  base::AutoLock lock(lock_);
   // TODO(thomasanderson): Cache these visual IDs as a property of the root
   // window so that newly created browser processes can get them immediately.
   if ((system_visual_id && !visuals_.count(system_visual_id)) ||
@@ -1447,6 +1449,7 @@ bool XVisualManager::OnGPUInfoChanged(bool software_rendering,
 }
 
 bool XVisualManager::ArgbVisualAvailable() const {
+  base::AutoLock lock(lock_);
   return using_compositing_wm_ &&
          (using_software_rendering_ || have_gpu_argb_visual_);
 }
