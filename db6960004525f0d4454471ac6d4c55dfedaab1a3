@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53a0db5c_08455c0a",
+        "filename": "testing/scripts/check_network_annotations.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-03T23:48:01Z",
+      "side": 1,
+      "message": "I don\u0027t think the \u0027warnings\u0027 field is looked at (and hence will have any effect).",
+      "revId": "db6960004525f0d4454471ac6d4c55dfedaab1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
