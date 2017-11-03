@@ -2,10 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/ui/tabs/tab_features.h"
 #include "chrome/browser/ui/test/test_browser_dialog.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/tabs/new_tab_button.h"
-#include "chrome/browser/ui/views/tabs/tab_strip.h"
+#include "chrome/browser/ui/views/tabs/tab_strip_impl.h"
 
 class NewTabPromoDialogTest : public DialogBrowserTest {
  public:
@@ -13,9 +14,13 @@ class NewTabPromoDialogTest : public DialogBrowserTest {
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {
+    // This test should only be run for the non-experimental tab strip, where
+    // the TabStrip -> TabStripImpl cast is safe.
     BrowserView* browser_view =
         BrowserView::GetBrowserViewForBrowser(browser());
-    browser_view->tabstrip()->new_tab_button()->ShowPromo();
+    static_cast<TabStripImpl*>(browser_view->tabstrip())
+        ->new_tab_button()
+        ->ShowPromo();
   }
 
  private:
@@ -26,5 +31,7 @@ class NewTabPromoDialogTest : public DialogBrowserTest {
 // ../browser_tests --gtest_filter=BrowserDialogTest.Invoke
 // --interactive --dialog=NewTabPromoDialogTest.InvokeDialog_NewTabPromo
 IN_PROC_BROWSER_TEST_F(NewTabPromoDialogTest, InvokeDialog_NewTabPromo) {
+  if (IsExperimentalTabStripEnabled())
+    return;
   RunDialog();
 }
