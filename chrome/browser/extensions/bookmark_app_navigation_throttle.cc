@@ -22,6 +22,7 @@
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
+#include "ui/base/mojo/window_open_disposition_struct_traits.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/base/window_open_disposition.h"
 #include "url/gurl.h"
@@ -90,6 +91,28 @@ BookmarkAppNavigationThrottle::CheckNavigation() {
   if (!(PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK))) {
     DVLOG(1) << "Don't intercept: Transition type is "
              << PageTransitionGetCoreTransitionString(transition_type);
+    return content::NavigationThrottle::PROCEED;
+  }
+
+  // CURRENT_TAB is used when clicking on links that just navigate the frame or
+  // clicking on links that open a new tab/window e.g. target=_blank links
+  // (clicking on a target=_blank link causes the renderer to create a new
+  // window which is then navigated with a CURRENT_TAB disposition).
+  // These are navigations we want to intercept so check for them.
+  //
+  // NEW_WINDOW is used when pressing shift and clicking a link or when clicking
+  // "Open in new window" in the context menu. We want to intercept these
+  // navigations but only if they come from an app.
+  // TODO(crbug.com/758774): Don't intercept NEW_WINDOW navigations in regular
+  // websites.
+  if (navigation_handle()->GetDisposition() !=
+          WindowOpenDisposition::CURRENT_TAB &&
+      navigation_handle()->GetDisposition() !=
+          WindowOpenDisposition::NEW_WINDOW) {
+    DVLOG(1) << "Don't override: Disposition is "
+             << mojo::EnumTraits<ui::mojom::WindowOpenDisposition,
+                                 WindowOpenDisposition>::
+                    ToMojom(navigation_handle()->GetDisposition());
     return content::NavigationThrottle::PROCEED;
   }
 
