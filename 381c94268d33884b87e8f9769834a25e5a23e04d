@@ -22,6 +22,30 @@
       "revId": "381c94268d33884b87e8f9769834a25e5a23e04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4263fcb9_c07ec333",
+        "filename": "build/android/gyp/java_cpp_enum.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-11-03T19:22:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8d4a2d0_c35f852b",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 26
+      },
+      "revId": "381c94268d33884b87e8f9769834a25e5a23e04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
