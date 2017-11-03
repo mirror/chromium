@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0aa789e0_b3bc858a",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-03T21:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3d8e7f6_c3c9dcf9",
+      "revId": "0974c65819d04770bd15f9e173609f523865e878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03df235b_f004cbf2",
         "filename": "ash/login/ui/login_bubble.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d107c9d6_60a8d026",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-03T21:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03df235b_f004cbf2",
+      "revId": "0974c65819d04770bd15f9e173609f523865e878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "604e3d38_b9b71e32",
         "filename": "ash/login/ui/login_bubble.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-03T19:49:30Z",
       "side": 1,
       "message": "nit: This is not necessary since we could animate from the current opacity to target opacity. Probably replace |opacity_start| and |opacity_end| with a |target_opacity|.",
+      "revId": "0974c65819d04770bd15f9e173609f523865e878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00353aa_86ca4c9c",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-11-03T21:09:33Z",
+      "side": 1,
+      "message": "Looks like the default opacity for layers is 1.0f, so if we don\u0027t set this line, the show animation is opacity 1.0f-\u003e 1.0f which doesn\u0027t have any visual indications.",
+      "parentUuid": "604e3d38_b9b71e32",
       "revId": "0974c65819d04770bd15f9e173609f523865e878",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
