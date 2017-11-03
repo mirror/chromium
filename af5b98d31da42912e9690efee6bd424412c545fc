@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ae6b5b3_bf426694",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-03T01:30:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f8ab72e_42a5d99e",
+      "revId": "af5b98d31da42912e9690efee6bd424412c545fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69040ee9_022a6c3b",
         "filename": "ui/views/controls/button/label_button.cc",
         "patchSetId": 4
@@ -69,6 +87,24 @@
       "revId": "af5b98d31da42912e9690efee6bd424412c545fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d9a306_52320d90",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-03T01:30:19Z",
+      "side": 1,
+      "message": "Replaced comment.",
+      "parentUuid": "e7b82902_a8b94f8b",
+      "revId": "af5b98d31da42912e9690efee6bd424412c545fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
