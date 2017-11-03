@@ -10,6 +10,7 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/views/style/typography.h"
+#include "ui/views/view.h"
 
 #if defined(OS_MACOSX)
 #include "base/mac/mac_util.h"
@@ -58,7 +59,8 @@ Font::Weight TypographyProvider::MediumWeightForUI() {
 #endif
 }
 
-const gfx::FontList& DefaultTypographyProvider::GetFont(int context,
+const gfx::FontList& DefaultTypographyProvider::GetFont(const View& view,
+                                                        int context,
                                                         int style) const {
   int size_delta;
   Font::Weight font_weight;
@@ -67,10 +69,9 @@ const gfx::FontList& DefaultTypographyProvider::GetFont(int context,
       size_delta, Font::NORMAL, font_weight);
 }
 
-SkColor DefaultTypographyProvider::GetColor(
-    int context,
-    int style,
-    const ui::NativeTheme& theme) const {
+SkColor DefaultTypographyProvider::GetColor(const View& view,
+                                            int context,
+                                            int style) const {
   ui::NativeTheme::ColorId color_id =
       ui::NativeTheme::kColorId_LabelEnabledColor;
   if (context == style::CONTEXT_BUTTON_MD) {
@@ -92,10 +93,15 @@ SkColor DefaultTypographyProvider::GetColor(
   } else if (style == style::STYLE_DISABLED) {
     color_id = ui::NativeTheme::kColorId_LabelDisabledColor;
   }
-  return theme.GetSystemColor(color_id);
+
+  const ui::NativeTheme* native_theme = view.GetNativeTheme();
+  DCHECK(native_theme);
+  return native_theme->GetSystemColor(color_id);
 }
 
-int DefaultTypographyProvider::GetLineHeight(int context, int style) const {
+int DefaultTypographyProvider::GetLineHeight(const View& view,
+                                             int context,
+                                             int style) const {
   return 0;
 }
 

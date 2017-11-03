@@ -61,7 +61,7 @@ class VIEWS_EXPORT Label : public View,
 
   ~Label() override;
 
-  static const gfx::FontList& GetDefaultFontList();
+  const gfx::FontList& GetDefaultFontList() const;
 
   // Gets or sets the fonts used by this label.
   const gfx::FontList& font_list() const { return render_text_->font_list(); }
@@ -317,7 +317,7 @@ class VIEWS_EXPORT Label : public View,
   void ApplyTextColors() const;
 
   // Updates any colors that have not been explicitly set from the theme.
-  void UpdateColorsFromTheme(const ui::NativeTheme* theme);
+  void UpdateColorsFromTheme();
 
   bool ShouldShowDefaultTooltip() const;
 

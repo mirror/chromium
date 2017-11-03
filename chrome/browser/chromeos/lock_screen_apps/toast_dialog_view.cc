@@ -74,7 +74,7 @@ ToastDialogView::ToastDialogView(const base::string16& app_name,
   label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   label->SetEnabledColor(SkColorSetARGB(138, 0, 0, 0));
   label->SetLineHeight(kDialogMessageLineHeightDp);
-  label->SetFontList(views::Label::GetDefaultFontList().Derive(
+  label->SetFontList(label->GetDefaultFontList().Derive(
       1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL));
   label->SetPreferredSize(
       gfx::Size(kDialogWidthDp, label->GetHeightForWidth(kDialogWidthDp)));
@@ -109,7 +109,7 @@ bool ToastDialogView::Close() {
 void ToastDialogView::AddedToWidget() {
   std::unique_ptr<views::Label> title =
       views::BubbleFrameView::CreateDefaultTitleLabel(GetWindowTitle());
-  title->SetFontList(views::Label::GetDefaultFontList().Derive(
+  title->SetFontList(title->GetDefaultFontList().Derive(
       3, gfx::Font::NORMAL, gfx::Font::Weight::MEDIUM));
   GetBubbleFrameView()->SetTitleView(std::move(title));
 }

@@ -35,9 +35,11 @@ namespace {
 constexpr int kTextContext = views::style::CONTEXT_LABEL;
 constexpr int kTextStyle = views::style::STYLE_PRIMARY;
 
-// Calculates the amount of padding to add beneath a |PermissionSelectorRow|
-// depending on whether it has an accompanying permission decision reason.
-int CalculatePaddingBeneathPermissionRow(bool has_reason) {
+// Calculates the amount of padding to add beneath a |PermissionSelectorRow| in
+// |view| depending on whether it has an accompanying permission decision
+// reason.
+int CalculatePaddingBeneathPermissionRow(const views::View& view,
+                                         bool has_reason) {
   const int list_item_padding = ChromeLayoutProvider::Get()->GetDistanceMetric(
                                     DISTANCE_CONTROL_LIST_VERTICAL) /
                                 2;
@@ -45,13 +47,13 @@ int CalculatePaddingBeneathPermissionRow(bool has_reason) {
     return list_item_padding;
 
   const int combobox_height =
-      PermissionSelectorRow::MinHeightForPermissionRow();
+      PermissionSelectorRow::MinHeightForPermissionRow(view);
   // Match the amount of padding above the |PermissionSelectorRow| title text
   // here by calculating its full height of this |PermissionSelectorRow| and
   // subtracting the line height, then dividing everything by two. Note it is
   // assumed the combobox is the tallest part of the row.
   return (list_item_padding * 2 + combobox_height -
-          views::style::GetLineHeight(kTextContext, kTextStyle)) /
+          views::style::GetLineHeight(view, kTextContext, kTextStyle)) /
          2;
 }
 
@@ -330,8 +332,9 @@ PermissionSelectorRow::PermissionSelectorRow(
     layout->AddView(permission_decision_reason, kColumnSpan, 1,
                     views::GridLayout::LEADING, views::GridLayout::CENTER);
   }
-  layout->AddPaddingRow(0,
-                        CalculatePaddingBeneathPermissionRow(!reason.empty()));
+  DCHECK(label_->parent());
+  layout->AddPaddingRow(0, CalculatePaddingBeneathPermissionRow(
+                               *label_->parent(), !reason.empty()));
 }
 
 PermissionSelectorRow::~PermissionSelectorRow() {
@@ -349,9 +352,9 @@ PermissionSelectorRow::~PermissionSelectorRow() {
 }
 
 // static
-int PermissionSelectorRow::MinHeightForPermissionRow() {
+int PermissionSelectorRow::MinHeightForPermissionRow(const views::View& view) {
   return ChromeLayoutProvider::Get()->GetControlHeightForFont(
-      kTextContext, kTextStyle, views::Combobox::GetFontList());
+      view, kTextContext, kTextStyle, views::Combobox::GetFontList());
 }
 
 void PermissionSelectorRow::AddObserver(

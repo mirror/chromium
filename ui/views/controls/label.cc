@@ -53,14 +53,12 @@ Label::Label(const base::string16& text)
 
 Label::Label(const base::string16& text, int text_context, int text_style)
     : text_context_(text_context), context_menu_contents_(this) {
-  Init(text, style::GetFont(text_context, text_style));
-  SetLineHeight(style::GetLineHeight(text_context, text_style));
+  Init(text, style::GetFont(*this, text_context, text_style));
+  SetLineHeight(style::GetLineHeight(*this, text_context, text_style));
 
   // If an explicit style is given, ignore color changes due to the NativeTheme.
-  if (text_style != style::STYLE_PRIMARY) {
-    SetEnabledColor(
-        style::GetColor(text_context, text_style, GetNativeTheme()));
-  }
+  if (text_style != style::STYLE_PRIMARY)
+    SetEnabledColor(style::GetColor(*this, text_context, text_style));
 }
 
 Label::Label(const base::string16& text, const CustomFont& font)
@@ -71,9 +69,8 @@ Label::Label(const base::string16& text, const CustomFont& font)
 Label::~Label() {
 }
 
-// static
-const gfx::FontList& Label::GetDefaultFontList() {
-  return style::GetFont(style::CONTEXT_LABEL, style::STYLE_PRIMARY);
+const gfx::FontList& Label::GetDefaultFontList() const {
+  return style::GetFont(*this, style::CONTEXT_LABEL, style::STYLE_PRIMARY);
 }
 
 void Label::SetFontList(const gfx::FontList& font_list) {
@@ -526,7 +523,7 @@ void Label::OnPaint(gfx::Canvas* canvas) {
 }
 
 void Label::OnNativeThemeChanged(const ui::NativeTheme* theme) {
-  UpdateColorsFromTheme(theme);
+  UpdateColorsFromTheme();
 }
 
 gfx::NativeCursor Label::GetCursor(const ui::MouseEvent& event) {
@@ -832,7 +829,7 @@ void Label::Init(const base::string16& text, const gfx::FontList& font_list) {
   auto_color_readability_ = true;
   multi_line_ = false;
   max_lines_ = 0;
-  UpdateColorsFromTheme(GetNativeTheme());
+  UpdateColorsFromTheme();
   handles_tooltips_ = true;
   collapse_when_hidden_ = false;
   fixed_width_ = 0;
@@ -1000,21 +997,23 @@ void Label::ApplyTextColors() const {
   }
 }
 
-void Label::UpdateColorsFromTheme(const ui::NativeTheme* theme) {
+void Label::UpdateColorsFromTheme() {
   if (!enabled_color_set_) {
     requested_enabled_color_ =
-        style::GetColor(text_context_, style::STYLE_PRIMARY, theme);
+        style::GetColor(*this, text_context_, style::STYLE_PRIMARY);
   }
+  const ui::NativeTheme* native_theme = GetNativeTheme();
+  DCHECK(native_theme);
   if (!background_color_set_) {
-    background_color_ =
-        theme->GetSystemColor(ui::NativeTheme::kColorId_DialogBackground);
+    background_color_ = native_theme->GetSystemColor(
+        ui::NativeTheme::kColorId_DialogBackground);
   }
   if (!selection_text_color_set_) {
-    requested_selection_text_color_ = theme->GetSystemColor(
+    requested_selection_text_color_ = native_theme->GetSystemColor(
         ui::NativeTheme::kColorId_LabelTextSelectionColor);
   }
   if (!selection_background_color_set_) {
-    selection_background_color_ = theme->GetSystemColor(
+    selection_background_color_ = native_theme->GetSystemColor(
         ui::NativeTheme::kColorId_LabelTextSelectionBackgroundFocused);
   }
   RecalculateColors();

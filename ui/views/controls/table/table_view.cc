@@ -149,8 +149,8 @@ TableView::TableView(ui::TableModel* model,
       in_set_visible_column_width_(false) {
   constexpr int kTextContext = style::CONTEXT_TABLE_ROW;
   constexpr int kTextStyle = style::STYLE_PRIMARY;
-  font_list_ = style::GetFont(kTextContext, kTextStyle);
-  row_height_ = LayoutProvider::GetControlHeightForFont(kTextContext,
+  font_list_ = style::GetFont(*this, kTextContext, kTextStyle);
+  row_height_ = LayoutProvider::GetControlHeightForFont(*this, kTextContext,
                                                         kTextStyle, font_list_);
 
   for (size_t i = 0; i < columns.size(); ++i) {

@@ -795,7 +795,8 @@ void PageInfoBubbleView::SetPermissionInfo(
     // plus padding.
     layout->StartRow(
         1, kChosenObjectSectionId,
-        PermissionSelectorRow::MinHeightForPermissionRow() + list_item_padding);
+        PermissionSelectorRow::MinHeightForPermissionRow(*permissions_view_) +
+            list_item_padding);
     // The view takes ownership of the object info.
     auto object_view = std::make_unique<ChosenObjectRow>(std::move(object));
     object_view->AddObserver(this);

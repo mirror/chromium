@@ -155,7 +155,7 @@ class LoginUserView::UserLabel : public NonAccessibleView {
     user_name_->SetAutoColorReadabilityEnabled(false);
 
     // TODO(jdufault): Figure out the correct font.
-    const gfx::FontList& base_font_list = views::Label::GetDefaultFontList();
+    const gfx::FontList& base_font_list = user_name_->GetDefaultFontList();
 
     switch (style) {
       case LoginDisplayStyle::kLarge:
