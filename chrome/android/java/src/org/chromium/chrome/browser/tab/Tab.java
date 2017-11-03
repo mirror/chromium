@@ -1422,6 +1422,10 @@ public class Tab
         // with an activity, and will crash. crbug.com/657007
         if (mContentViewCore != null) mContentViewCore.updateWindowAndroid(null);
         attachTabContentManager(null);
+
+        for (TabObserver observer : mObservers) {
+            observer.onActivityAttachmentChanged(this, false);
+        }
     }
 
     /**
@@ -1489,6 +1493,10 @@ public class Tab
             setInterceptNavigationDelegate(
                     mDelegateFactory.createInterceptNavigationDelegate(this));
             getAppBannerManager().setIsEnabledForTab(mDelegateFactory.canShowAppBanners(this));
+        }
+
+        for (TabObserver observer : mObservers) {
+            observer.onActivityAttachmentChanged(this, true);
         }
     }
 

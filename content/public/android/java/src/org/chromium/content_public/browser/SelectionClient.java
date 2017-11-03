@@ -121,6 +121,8 @@ public interface SelectionClient {
     /**
      * Sets the TextClassifier for the Smart Text Selection feature. Pass {@code null} to use the
      * system classifier.
+     * @param textClassifier The custom {@link TextClassifier} to start using or {@code null} to
+     *        switch back to the system's classifier.
      */
     default void setTextClassifier(TextClassifier textClassifier) {}
 
