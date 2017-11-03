@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "7d2c3a77_ec530b05",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002539
+      },
+      "writtenOn": "2017-11-03T02:11:16Z",
+      "side": 1,
+      "message": "I don\u0027t like that aligned \u0027:\u0027 belong to different levels. One is part of proto, another is part of the dimension string. It looks misleading. Whatever.",
+      "parentUuid": "55da0ae0_c834bfb1",
+      "range": {
+        "startLine": 402,
+        "startChar": 4,
+        "endLine": 403,
+        "endChar": 65
+      },
+      "revId": "d5ee61401d47e175590c3cba02c383af809534bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56d48547_4d53744c",
         "filename": "luci-milo.cfg",
         "patchSetId": 1
