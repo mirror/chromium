@@ -84,7 +84,7 @@ class SSLPlatformKeyAndroid : public ThreadedSSLPrivateKey::Delegate {
   ~SSLPlatformKeyAndroid() override {}
 
   std::vector<uint16_t> GetPreferences() override {
-    return SSLPrivateKey::DefaultPreferences(type_);
+    return SSLPrivateKey::DefaultPreferences(type_, false /* no PSS */);
   }
 
   Error SignDigest(uint16_t algorithm,
