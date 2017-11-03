@@ -1,5 +1,6 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
 
+<link rel="stylesheet" href="chrome://resources/css/text_defaults.css">
 <link rel="import" href="header.html">
 
 <dom-module id="print-preview-app">
@@ -33,7 +34,7 @@
       }
     </style>
     <div id="sidebar">
-      <print-preview-header></print-preview-header>
+      <print-preview-header model="[[model_]]"></print-preview-header>
       <div id="settings">
         <div>Destination</div>
         <div>Pages</div>
