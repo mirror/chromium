@@ -46,6 +46,20 @@
 
 namespace blink {
 
+namespace {
+mojom::ServiceWorkerUpdateViaCache ParseUpdateViaCache(
+    const AtomicString& value) {
+  if (value == "imports")
+    return mojom::ServiceWorkerUpdateViaCache::kImports;
+  if (value == "all")
+    return mojom::ServiceWorkerUpdateViaCache::kAll;
+  if (value == "none")
+    return mojom::ServiceWorkerUpdateViaCache::kNone;
+  // Default value
+  return mojom::ServiceWorkerUpdateViaCache::kImports;
+}
+}  // namespace
+
 using namespace HTMLNames;
 
 inline HTMLLinkElement::HTMLLinkElement(Document& document,
@@ -55,6 +69,7 @@ inline HTMLLinkElement::HTMLLinkElement(Document& document,
       referrer_policy_(kReferrerPolicyDefault),
       sizes_(DOMTokenList::Create(*this, HTMLNames::sizesAttr)),
       rel_list_(RelList::Create(this)),
+      update_via_cache_(mojom::ServiceWorkerUpdateViaCache::kImports),
       created_by_parser_(created_by_parser) {}
 
 HTMLLinkElement* HTMLLinkElement::Create(Document& document,
@@ -102,6 +117,9 @@ void HTMLLinkElement::ParseAttribute(
     Process();
   } else if (name == scopeAttr) {
     scope_ = value;
+    Process();
+  } else if (name == updateviacacheAttr) {
+    update_via_cache_ = ParseUpdateViaCache(value);
     Process();
   } else if (name == disabledAttr) {
     UseCounter::Count(GetDocument(), WebFeature::kHTMLLinkElementDisabled);

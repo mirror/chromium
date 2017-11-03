@@ -2385,6 +2385,7 @@ interface HTMLLinkElement : HTMLElement
     getter sizes
     getter target
     getter type
+    getter updateViaCache
     method constructor
     setter as
     setter charset
@@ -2401,6 +2402,7 @@ interface HTMLLinkElement : HTMLElement
     setter sizes
     setter target
     setter type
+    setter updateViaCache
 interface HTMLMapElement : HTMLElement
     attribute @@toStringTag
     getter areas
@@ -5688,6 +5690,7 @@ interface ServiceWorkerRegistration : EventTarget
     getter pushManager
     getter scope
     getter sync
+    getter updateViaCache
     getter waiting
     method constructor
     method getNotifications

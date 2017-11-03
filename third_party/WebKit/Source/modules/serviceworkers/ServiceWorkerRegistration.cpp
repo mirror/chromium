@@ -88,6 +88,21 @@ String ServiceWorkerRegistration::scope() const {
   return handle_->Registration()->Scope().GetString();
 }
 
+String ServiceWorkerRegistration::updateViaCache() const {
+  switch (handle_->Registration()->UpdateViaCache()) {
+    case mojom::ServiceWorkerUpdateViaCache::kImports:
+      return "imports";
+    case mojom::ServiceWorkerUpdateViaCache::kAll:
+      return "all";
+    case mojom::ServiceWorkerUpdateViaCache::kNone:
+      return "none";
+    case mojom::ServiceWorkerUpdateViaCache::kUnknown:
+      break;
+  }
+  NOTREACHED();
+  return "imports";
+}
+
 ScriptPromise ServiceWorkerRegistration::update(ScriptState* script_state) {
   ServiceWorkerContainerClient* client =
       ServiceWorkerContainerClient::From(GetExecutionContext());

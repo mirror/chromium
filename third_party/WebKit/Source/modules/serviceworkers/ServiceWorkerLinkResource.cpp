@@ -51,7 +51,7 @@ class RegistrationCallback
 
   Persistent<HTMLLinkElement> owner_;
 };
-}
+}  // namespace
 
 ServiceWorkerLinkResource* ServiceWorkerLinkResource::Create(
     HTMLLinkElement* owner) {
@@ -79,6 +79,9 @@ void ServiceWorkerLinkResource::Process() {
     scope_url = document.CompleteURL(scope);
   scope_url.RemoveFragmentIdentifier();
 
+  mojom::ServiceWorkerUpdateViaCache update_via_cache =
+      owner_->UpdateViaCache();
+
   String error_message;
   ServiceWorkerContainer* container = NavigatorServiceWorker::serviceWorker(
       ToScriptStateForMainWorld(owner_->GetDocument().GetFrame()),
@@ -96,7 +99,7 @@ void ServiceWorkerLinkResource::Process() {
   }
 
   container->RegisterServiceWorkerImpl(
-      &document, script_url, scope_url,
+      &document, script_url, scope_url, update_via_cache,
       WTF::MakeUnique<RegistrationCallback>(owner_));
 }
 
