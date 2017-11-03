@@ -664,6 +664,24 @@
       "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ccc42e0_e3c68b4f",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-03T23:01:12Z",
+      "side": 1,
+      "message": "(testing Gerrit)",
+      "parentUuid": "f41375c2_bc83494e",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
