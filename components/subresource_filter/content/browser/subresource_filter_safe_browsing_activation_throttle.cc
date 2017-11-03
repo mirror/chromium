@@ -20,6 +20,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
@@ -46,9 +47,10 @@ SubresourceFilterSafeBrowsingActivationThrottle::
                        base::OnTaskRunnerDeleter(io_task_runner_)),
       client_(client) {
   DCHECK(handle->IsInMainFrame());
-
-  CheckCurrentUrl();
-  DCHECK(!database_client_ || !check_results_.empty());
+  if (!content::IsBrowserSideNavigationEnabled()) {
+    CheckCurrentUrl();
+    DCHECK(!database_client_ || !check_results_.empty());
+  }
 }
 
 SubresourceFilterSafeBrowsingActivationThrottle::
@@ -113,6 +115,13 @@ bool SubresourceFilterSafeBrowsingActivationThrottle::NavigationIsPageReload(
                                       ui::PAGE_TRANSITION_RELOAD) ||
          // Some pages 'reload' from JavaScript by navigating to themselves.
          handle->GetURL() == handle->GetReferrer().url;
+}
+
+void SubresourceFilterSafeBrowsingActivationThrottle::StartDidProceed() {
+  if (content::IsBrowserSideNavigationEnabled()) {
+    CheckCurrentUrl();
+    DCHECK(!database_client_ || !check_results_.empty());
+  }
 }
 
 content::NavigationThrottle::ThrottleCheckResult

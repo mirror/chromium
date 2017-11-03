@@ -184,6 +184,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
 
   NavigationData* GetNavigationData() override;
 
+  void DidStartRequest();
+
   // Used in tests.
   State state_for_testing() const { return state_; }
   void SetOnDeferCallbackForTesting(const base::Closure& on_defer_callback);

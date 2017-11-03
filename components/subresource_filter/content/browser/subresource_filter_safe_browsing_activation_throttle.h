@@ -51,6 +51,7 @@ class SubresourceFilterSafeBrowsingActivationThrottle
   static bool NavigationIsPageReload(content::NavigationHandle* handle);
 
   // content::NavigationThrottle:
+  void StartDidProceed() override;
   content::NavigationThrottle::ThrottleCheckResult WillRedirectRequest()
       override;
   content::NavigationThrottle::ThrottleCheckResult WillProcessResponse()

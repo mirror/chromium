@@ -132,6 +132,13 @@ class CONTENT_EXPORT NavigationThrottle {
   // CANCEL_AND_IGNORE or DEFER and perform the destruction asynchronously.
   virtual ThrottleCheckResult WillStartRequest();
 
+  // PlzNavigate:
+  // Called when all throttles have received WillStartRequest, and all of them
+  // proceeded with the navigation. Use this method if you have expensive work
+  // to do that should *not* block the navigation from reaching the network
+  // stack.
+  virtual void StartDidProceed();
+
   // Called when a server redirect is received by the navigation.
   //
   // The implementer is responsible for ensuring that the WebContents this

@@ -66,6 +66,8 @@ NavigationThrottle::ThrottleCheckResult NavigationThrottle::WillStartRequest() {
   return NavigationThrottle::PROCEED;
 }
 
+void NavigationThrottle::StartDidProceed() {}
+
 NavigationThrottle::ThrottleCheckResult
 NavigationThrottle::WillRedirectRequest() {
   return NavigationThrottle::PROCEED;
